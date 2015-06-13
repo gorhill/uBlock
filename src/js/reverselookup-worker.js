@@ -29,32 +29,161 @@ var listEntries = Object.create(null);
 
 /******************************************************************************/
 
-var lookup = function(details) {
-    var matches = [];
+// Helpers
+
+var rescape = function(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+/******************************************************************************/
+
+var fromNetFilter = function(details) {
+    var lists = [];
+
     var entry, pos;
     for ( var path in listEntries ) {
         entry = listEntries[path];
         if ( entry === undefined ) {
             continue;
         }
-        pos = entry.content.indexOf(details.filter);
+        pos = entry.content.indexOf(details.compiledFilter);
         if ( pos === -1 ) {
             continue;
         }
-        matches.push({
+        lists.push({
             title: entry.title,
             supportURL: entry.supportURL
         });
     }
 
+    var response = {};
+    response[details.rawFilter] = lists;
+
     postMessage({
         id: details.id,
-        response: {
-            filter: details.filter,
-            matches: matches
-        }
+        response: response
     });
 };
+
+/******************************************************************************/
+
+// Looking up filter lists from a cosmetic filter is a bit more complicated
+// than with network filters:
+//
+// The filter is its raw representation, not its compiled version. This is
+// because the cosmetic filtering engine can't translate a live cosmetic
+// filter into its compiled version. Reason is I do not want to burden
+// cosmetic filtering with the resource overhead of being able to re-compile
+// live cosmetic filters. I want the cosmetic filtering code to be left
+// completely unaffected by reverse lookup requirements.
+//
+// Mainly, given a CSS selector and a hostname as context, we will derive
+// various versions of compiled filters and see if there are matches. This way
+// the whole CPU cost is incurred by the reverse lookup code -- in a worker
+// thread, and the cosmetic filtering engine incurred zero cost.
+//
+// For this though, the reverse lookup code here needs some knowledge of
+// the inners of the cosmetic filtering engine.
+// FilterContainer.fromCompiledContent() is our reference code to create
+// the various compiled versions.
+
+var fromCosmeticFilter = function(details) {
+    var filter = details.rawFilter;
+    var exception = filter.lastIndexOf('#@#', 0) === 0;
+
+    filter = exception ? filter.slice(3) : filter.slice(2);
+
+    var candidates = Object.create(null);
+    var response = Object.create(null);
+
+    // First step: assuming the filter is generic, find out its compiled
+    // representation.
+    // Reference: FilterContainer.compileGenericSelector().
+    var reStr = '';
+    var matches = rePlainSelector.exec(filter);
+    if ( matches ) {
+        if ( matches[0] === filter ) {          // simple CSS selector
+            reStr = rescape('c\vlg\v') + '\\w+' + rescape('\v' + filter);
+        } else {                                // complex CSS selector
+            reStr = rescape('c\vlg+\v') + '\\w+' + rescape('\v' + filter);
+        }
+    } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
+        reStr = rescape('c\vhlg0\v' + filter) + '(?:\\n|$)';
+    } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
+        reStr = rescape('c\vhmg0\v') + '\\w+' + rescape('\v' + filter);
+    } else {                                    // all else
+        reStr = rescape('c\vhhg0\v' + filter);
+    }
+    candidates[details.rawFilter] = new RegExp(reStr + '(?:\\n|$)');
+
+    var pos;
+    var domain = details.domain;
+    var hostname = details.hostname;
+
+    if ( hostname !== '' ) {
+        for ( ;; ) {
+            candidates[hostname + '##' + filter] = new RegExp(
+                rescape('c\vh\v') +
+                '\\w+' +
+                rescape('\v' + hostname + '\v' + filter) +
+                '(?:\\n|$)'
+            );
+            // If there is no valid domain, there won't be any other
+            // version of this hostname-based filter.
+            if ( domain === '' ) {
+                break;
+            }
+            if ( hostname === domain ) {
+                break;
+            }
+            pos = hostname.indexOf('.');
+            if ( pos === -1 ) {
+                break;
+            }
+            hostname = hostname.slice(pos + 1);
+        }
+    }
+
+    // Entity-based
+    pos = domain.indexOf('.');
+    if ( pos !== -1 ) {
+        var entity = domain.slice(0, pos);
+        candidates[entity + '.*##' + filter] = new RegExp(
+            rescape('c\ve\v' + entity + '\v' + filter) +
+            '(?:\\n|$)'
+        );
+    }
+
+    var re, path, entry;
+    for ( var candidate in candidates ) {
+        re = candidates[candidate];
+        for ( path in listEntries ) {
+            entry = listEntries[path];
+            if ( entry === undefined ) {
+                continue;
+            }
+            if ( re.test(entry.content) === false ) {
+                continue;
+            }
+            if ( response[candidate] === undefined ) {
+                response[candidate] = [];
+            }
+            response[candidate].push({
+                title: entry.title,
+                supportURL: entry.supportURL
+            });
+        }
+    }
+
+    postMessage({
+        id: details.id,
+        response: response
+    });
+};
+
+var rePlainSelector = /^([#.][\w-]+)/;
+var reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
+var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
 /******************************************************************************/
 
@@ -70,8 +199,12 @@ onmessage = function(e) {
         listEntries[msg.details.path] = msg.details;
         break;
 
-    case 'reverseLookup':
-        lookup(msg);
+    case 'fromNetFilter':
+        fromNetFilter(msg);
+        break;
+
+    case 'fromCosmeticFilter':
+        fromCosmeticFilter(msg);
         break;
     }
 };

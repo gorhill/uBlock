@@ -117,7 +117,7 @@ var FilterPlainMore = function(s) {
 };
 
 FilterPlainMore.prototype.retrieve = function(s, out) {
-    if ( s === this.s.slice(0, s.length) ) {
+    if ( this.s.lastIndexOf(s, 0) === 0 ) {
         out.push(this.s);
     }
 };

@@ -44,7 +44,18 @@ var details = {};
 
 (function() {
     var onReponseReady = function(response) {
-        var lists = response.matches;
+        if ( typeof response !== 'object' ) {
+            return;
+        }
+        var lists;
+        for ( var rawFilter in response ) {
+            if ( response.hasOwnProperty(rawFilter) === false ) {
+                continue;
+            }
+            lists = response[rawFilter];
+            break;
+        }
+        
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return;
         }
@@ -72,8 +83,9 @@ var details = {};
     };
 
     messager.send({
-        what: 'reverseLookupFilter',
-        filter: details.fc
+        what: 'listsFromNetFilter',
+        compiledFilter: details.fc,
+        rawFilter: details.fs
     }, onReponseReady);
 })();
 

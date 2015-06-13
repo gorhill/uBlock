@@ -66,8 +66,20 @@ var onMessage = function(request, sender, callback) {
         µb.reloadAllFilters(callback);
         return;
 
-    case 'reverseLookupFilter':
-        µb.staticFilteringReverseLookup.lookup(request.filter, callback);
+    case 'listsFromNetFilter':
+        µb.staticFilteringReverseLookup.fromNetFilter(
+            request.compiledFilter,
+            request.rawFilter,
+            callback
+        );
+        return;
+
+    case 'listsFromCosmeticFilter':
+        µb.staticFilteringReverseLookup.fromCosmeticFilter(
+            request.hostname,
+            request.rawFilter,
+            callback
+        );
         return;
 
     default:
@@ -1351,7 +1363,9 @@ var logCosmeticFilters = function(tabId, details) {
             'cosmetic',
             'cb:##' + selectors[i],
             'dom',
-            details.pageURL
+            details.frameURL,
+            null,
+            details.frameHostname
         );
     }
 };

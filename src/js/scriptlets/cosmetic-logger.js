@@ -83,7 +83,8 @@ var localMessager = vAPI.messaging.channel('scriptlets');
 
 localMessager.send({
     what: 'logCosmeticFilteringData',
-    pageURL: window.location.href,
+    frameURL: window.location.href,
+    frameHostname: window.location.hostname,
     matchedSelectors: matchedSelectors
 }, function() {
     localMessager.close();

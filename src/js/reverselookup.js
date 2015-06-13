@@ -123,8 +123,13 @@ var initWorker = function(callback) {
 
 /******************************************************************************/
 
-var lookup = function(compiledFilter, callback) {
+var fromNetFilter = function(compiledFilter, rawFilter, callback) {
     if ( typeof callback !== 'function' ) {
+        return;
+    }
+
+    if ( compiledFilter === '' || rawFilter === '' ) {
+        callback();
         return;
     }
 
@@ -136,9 +141,46 @@ var lookup = function(compiledFilter, callback) {
     var onWorkerReady = function() {
         var id = messageId++;
         var message = {
-            what: 'reverseLookup',
+            what: 'fromNetFilter',
             id: id,
-            filter: compiledFilter
+            compiledFilter: compiledFilter,
+            rawFilter: rawFilter
+        };
+        pendingResponses[id] = callback;
+        worker.postMessage(message);
+
+        // The worker will be shutdown after n minutes without being used.
+        workerTTLTimer = vAPI.setTimeout(stopWorker, workerTTL);
+    };
+
+    initWorker(onWorkerReady);
+};
+
+/******************************************************************************/
+
+var fromCosmeticFilter = function(hostname, rawFilter, callback) {
+    if ( typeof callback !== 'function' ) {
+        return;
+    }
+
+    if ( rawFilter === '' ) {
+        callback();
+        return;
+    }
+
+    if ( workerTTLTimer !== null ) {
+        clearTimeout(workerTTLTimer);
+        workerTTLTimer = null;
+    }
+
+    var onWorkerReady = function() {
+        var id = messageId++;
+        var message = {
+            what: 'fromCosmeticFilter',
+            id: id,
+            domain: µBlock.URI.domainFromHostname(hostname),
+            hostname: hostname,
+            rawFilter: rawFilter
         };
         pendingResponses[id] = callback;
         worker.postMessage(message);
@@ -165,7 +207,8 @@ var resetLists = function() {
 /******************************************************************************/
 
 return {
-    lookup: lookup,
+    fromNetFilter: fromNetFilter,
+    fromCosmeticFilter: fromCosmeticFilter,
     resetLists: resetLists,
     shutdown: stopWorker
 };

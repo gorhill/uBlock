@@ -389,10 +389,7 @@ var createHiddenTextNode = function(text) {
 
 var createGap = function(tabId, url) {
     var tr = createRow('1');
-    tr.classList.add('tab');
-    tr.classList.add('canMtx');
-    tr.classList.add('tab_' + tabId);
-    tr.classList.add('maindoc');
+    tr.classList.add('tab', 'canMtx', 'tab_' + tabId, 'maindoc');
     tr.cells[firstVarDataCol].textContent = url;
     tbody.insertBefore(tr, tbody.firstChild);
 };
@@ -400,12 +397,13 @@ var createGap = function(tabId, url) {
 /******************************************************************************/
 
 var renderNetLogEntry = function(tr, entry) {
+    var trcl = tr.classList;
     var filter = entry.d0;
     var type = entry.d1;
     var url = entry.d2;
     var td;
 
-    tr.classList.add('canMtx');
+    trcl.add('canMtx');
 
     // If the request is that of a root frame, insert a gap in the table
     // in order to visually separate entries for different documents. 
@@ -423,7 +421,7 @@ var renderNetLogEntry = function(tr, entry) {
 
     var filterCat = filter.slice(0, 3);
     if ( filterCat.charAt(2) === ':' ) {
-        tr.classList.add(filterCat.slice(0, 2));
+        trcl.add(filterCat.slice(0, 2));
     }
 
     var filteringType = filterCat.charAt(0);
@@ -432,7 +430,11 @@ var renderNetLogEntry = function(tr, entry) {
         filter = filter.slice(3);
         if ( filteringType === 's' ) {
             td.textContent = filterDecompiler.toString(filter);
+            trcl.add('canLookup');
             tr.setAttribute('data-filter', filter);
+        } else if ( filteringType === 'c' ) {
+            td.textContent = filter;
+            trcl.add('canLookup');
         } else {
             td.textContent = filter;
         }
@@ -441,13 +443,13 @@ var renderNetLogEntry = function(tr, entry) {
     td = tr.cells[3];
     var filteringOp = filterCat.charAt(1);
     if ( filteringOp === 'b' ) {
-        tr.classList.add('blocked');
+        trcl.add('blocked');
         td.textContent = '--';
     } else if ( filteringOp === 'a' ) {
-        tr.classList.add('allowed');
+        trcl.add('allowed');
         td.textContent = '++';
     } else if ( filteringOp === 'n' ) {
-        tr.classList.add('nooped');
+        trcl.add('nooped');
         td.textContent = '**';
     } else {
         td.textContent = '';
@@ -1262,7 +1264,6 @@ var netFilteringManager = (function() {
 /******************************************************************************/
 
 var reverseLookupManager = (function() {
-    var rawFilter = '';
     var reSentence1 = /\{\{filter\}\}/g;
     var sentence1Template = vAPI.i18n('loggerStaticFilteringFinderSentence1');
 
@@ -1284,16 +1285,12 @@ var reverseLookupManager = (function() {
         ev.stopPropagation();
     };
 
-    var reverseLookupDone = function(response) {
-        var lists = response.matches;
-        if ( Array.isArray(lists) === false ) {
-            return;
+    var nodeFromFilter = function(filter, lists) {
+        if ( Array.isArray(lists) === false || lists.length === 0 ) {
+            return null;
         }
-
-        var dialog = filterFinderDialog.querySelector('.dialog');
-        var p = dialog.querySelector('p');
-        removeAllChildren(p);
         var node;
+        var p = document.createElement('p');
 
         reSentence1.lastIndex = 0;
         var matches = reSentence1.exec(sentence1Template);
@@ -1302,13 +1299,12 @@ var reverseLookupManager = (function() {
         } else {
             node = uDom.nodeFromSelector('#filterFinderDialogSentence1 > span').cloneNode(true);
             node.childNodes[0].textContent = sentence1Template.slice(0, matches.index);
-            node.childNodes[1].textContent = rawFilter;
+            node.childNodes[1].textContent = filter;
             node.childNodes[2].textContent = sentence1Template.slice(reSentence1.lastIndex);
         }
         p.appendChild(node);
 
-        var ul = dialog.querySelector('ul');
-        removeAllChildren(ul);
+        var ul = document.createElement('ul');
         var list, li;
         for ( var i = 0; i < lists.length; i++ ) {
             list = lists[i];
@@ -1324,6 +1320,26 @@ var reverseLookupManager = (function() {
             li.appendChild(node);
             ul.appendChild(li);
         }
+        p.appendChild(ul);
+
+        return p;
+    };
+
+    var reverseLookupDone = function(response) {
+        if ( typeof response !== 'object' ) {
+            return;
+        }
+
+        var dialog = filterFinderDialog.querySelector('.dialog');
+        removeAllChildren(dialog);
+
+        for ( var filter in response ) {
+            var p = nodeFromFilter(filter, response[filter]);
+            if ( p === null ) {
+                continue;
+            }
+            dialog.appendChild(p);
+        }
 
         document.body.appendChild(filterFinderDialog);
         filterFinderDialog.addEventListener('click', onClick, true);
@@ -1331,15 +1347,24 @@ var reverseLookupManager = (function() {
 
     var toggleOn = function(ev) {
         var row = ev.target.parentElement;
-        var filter = row.getAttribute('data-filter') || '';
-        if ( filter === '' ) {
+        var rawFilter = row.cells[2].textContent;
+        if ( rawFilter === '' ) {
             return;
         }
-        rawFilter = row.cells[2].textContent;
-        messager.send({
-            what: 'reverseLookupFilter',
-            filter: filter
-        }, reverseLookupDone);
+
+        if ( row.classList.contains('cat_net') ) {
+            messager.send({
+                what: 'listsFromNetFilter',
+                compiledFilter: row.getAttribute('data-filter') || '',
+                rawFilter: rawFilter
+            }, reverseLookupDone);
+        } else if ( row.classList.contains('cat_cosmetic') ) {
+            messager.send({
+                what: 'listsFromCosmeticFilter',
+                hostname: row.getAttribute('data-hn-frame') || '',
+                rawFilter: rawFilter,
+            }, reverseLookupDone);
+        }
     };
 
     var toggleOff = function() {
@@ -1656,7 +1681,7 @@ uDom.onLoad(function() {
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
     uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
-    uDom('#content').on('click', 'tr[data-filter] > td:nth-of-type(3)', reverseLookupManager.toggleOn);
+    uDom('#content').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
 });
 
 /******************************************************************************/
