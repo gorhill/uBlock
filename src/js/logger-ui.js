@@ -728,15 +728,20 @@ var reloadTab = function() {
 /******************************************************************************/
 
 var onMaxEntriesChanged = function() {
-    var raw = uDom(this).val();
+    var input = this;
     try {
-        maxEntries = parseInt(raw, 10);
-        if ( isNaN(maxEntries) ) {
-            maxEntries = 0;
+        maxEntries = parseInt(input.value, 10);
+        if ( maxEntries === 0 || isNaN(maxEntries) ) {
+            maxEntries = 1000;
         }
     } catch (e) {
-        maxEntries = 0;
+        maxEntries = 1000;
     }
+
+    maxEntries = Math.min(maxEntries, 5000);
+    maxEntries = Math.max(maxEntries, 10);
+
+    input.value = maxEntries.toString(10);
 
     messager.send({
         what: 'userSettings',
