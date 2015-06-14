@@ -97,3 +97,8 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^
+
+# http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
+# Using `other` will cause the whole site to be blocked through strict blocking,
+# yet the site will render properly if a user still decide to go ahead.
+||sourceforge.net^$other
