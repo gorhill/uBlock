@@ -59,7 +59,7 @@ var details = {};
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return;
         }
-        var parent = uDom.nodeFromSelector('#whyex > span');
+        var parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
         var separator = '';
         var entry, url, node;
         for ( var i = 0; i < lists.length; i++ ) {
