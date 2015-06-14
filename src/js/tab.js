@@ -461,14 +461,17 @@ vAPI.tabs.onPopup = function(details) {
     if ( tabContext.tabId === details.openerTabId ) {
         openerURL = tabContext.normalURL;
     }
-
     if ( openerURL === '' ) {
         return;
     }
 
     var µburi = µb.URI;
-    var openerHostname = µburi.hostnameFromURI(openerURL);
-    var openerDomain = µburi.domainFromHostname(openerHostname);
+
+    // https://github.com/gorhill/uBlock/issues/341
+    // Allow popups if uBlock is turned off in opener's context.
+    if ( µb.getNetFilteringSwitch(openerURL) === false ) {
+        return;
+    }
 
     var targetURL = details.targetURL;
 
@@ -481,6 +484,8 @@ vAPI.tabs.onPopup = function(details) {
         }
     }
 
+    var openerHostname = µburi.hostnameFromURI(openerURL);
+    var openerDomain = µburi.domainFromHostname(openerHostname);
     var context = {
         pageHostname: openerHostname,
         pageDomain: openerDomain,
@@ -501,15 +506,13 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/323
     // https://github.com/chrisaljoudi/uBlock/issues/1142
-    // If popup OR opener URL is whitelisted, do not block the popup
+    // Don't block if uBlock is turned off in popup's context
     if (
         result === '' &&
-        µb.getNetFilteringSwitch(openerURL) &&
-        µb.getNetFilteringSwitch(targetURL)
+        µb.getNetFilteringSwitch(targetURL) &&
+        µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined
     ) {
-        if ( µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined ) {
-            result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
-        }
+        result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/91
@@ -517,6 +520,7 @@ vAPI.tabs.onPopup = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
+
     if ( loggerEnabled ) {
         µb.logger.writeOne(
             details.openerTabId,
