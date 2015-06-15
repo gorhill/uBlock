@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Aller au journal des requêtes",
+    "message":"Consulter le journal des requêtes",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{

@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"నిరోధించబడిన అభ్యర్ధనలు",
+    "message":"నిలువరించబడిన అభ్యర్ధనలు",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -552,7 +552,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"ఈ తరువాయి పేజిని uBlock₀ బ్రౌజరులోకి ఎక్కిన్చనివ్వలేదు:",
+    "message":"ఈ తరువాయి పేజిని uBlock Origin బ్రౌజరులోకి ఎక్కిన్చనివ్వలేదు:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -560,7 +560,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"ఇందులో కలదు:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
