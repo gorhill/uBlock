@@ -1534,14 +1534,25 @@ var toJunkyard = function(trs) {
 /******************************************************************************/
 
 var clearBuffer = function() {
+    var tabId = uDom.nodeFromId('pageSelector').value || null;
     var tbody = document.querySelector('#content tbody');
-    var tr;
-    while ( tbody.firstChild !== null ) {
-        tr = tbody.lastElementChild;
-        trJunkyard.push(tbody.removeChild(tr));
+    var tr = tbody.lastElementChild;
+    var trPrevious;
+    while ( tr !== null ) {
+        trPrevious = tr.previousElementSibling;
+        if ( tabId === null || tr.classList.contains(tabId) ) {
+            trJunkyard.push(tbody.removeChild(tr));
+        }
+        tr = trPrevious;
     }
-    uDom('#clear').addClass('disabled');
-    uDom('#clean').addClass('disabled');
+    uDom.nodeFromId('clear').classList.toggle(
+        'disabled',
+        tbody.childElementCount === 0
+    );
+    uDom.nodeFromId('clean').classList.toggle(
+        'disabled',
+        tbody.querySelector('tr.tab:not(.canMtx)') === null
+    );
 };
 
 /******************************************************************************/
