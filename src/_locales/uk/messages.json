@@ -424,7 +424,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} мережеві запити {{type}}, {{br}}посилання яких збігаються з {{url}} {{br}}та які {{origin}},{{br}}{{importance}} є відповідний фільтр-виняток.",
+    "message":"{{action}} мережеві запити {{type}}, {{br}}посилання яких збігаються з {{url}} {{br}}та які походять з {{origin}},{{br}}{{importance}} є відповідний фільтр-виняток.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -558,6 +558,10 @@
   "docblockedPrompt2":{
     "message":"Через наступний фільтр",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Знайдено в:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Повернутись назад",

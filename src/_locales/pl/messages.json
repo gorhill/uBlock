@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ zablokował wczytywanie strony:",
+    "message":"uBlock₀ zablokował wczytywanie strony",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"ponieważ jest blokowana przez filtr",
+    "message":"Powodem zablokowania jest filtr",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Filtr znajduje się na liście:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Wstecz",

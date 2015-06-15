@@ -559,6 +559,10 @@
     "message":"Sakarā ar šādu filtru",
     "description":"English: Because of the following filter"
   },
+  "docblockedFoundIn":{
+    "message":"Found in:",
+    "description":"English: List of filter list names follows"
+  },
   "docblockedBack":{
     "message":"Doties atpakaļ",
     "description":"English: Go back"

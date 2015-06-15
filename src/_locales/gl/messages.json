@@ -424,7 +424,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} peticións de rede tipo {{type}} {{br}} nas cales o enderezo contenga {{url}} {{br}}e que teñan como orixe {{origin}},{{br}}{{importance}} hai un filtro de excepción aplicable.",
+    "message":"{{action}} peticións de rede tipo {{type}} {{br}} nas cales o enderezo contenga {{url}} {{br}}e que teñan como orixe {{origin}},{{br}}{{importance}} haxa un filtro de excepción aplicable.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -558,6 +558,10 @@
   "docblockedPrompt2":{
     "message":"Por mor deste filtro:",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Atopado en:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Retroceder",

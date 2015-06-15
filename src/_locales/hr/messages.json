@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ je onemogućio učitavanje sljedeće stranice:",
+    "message":"uBlock Origin je onemogućio učitavanje sljedeće stranice:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Zbog sljedećeg filtera",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Pronađeno u:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Natrag",

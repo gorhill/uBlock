@@ -559,6 +559,10 @@
     "message":"以下のフィルターによる",
     "description":"English: Because of the following filter"
   },
+  "docblockedFoundIn":{
+    "message":"Found in:",
+    "description":"English: List of filter list names follows"
+  },
   "docblockedBack":{
     "message":"戻る",
     "description":"English: Go back"

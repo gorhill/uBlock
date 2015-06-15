@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ предотврати зареждането на страницата:",
+    "message":"uBlock Origin предотврати зареждането на страницата:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Блокиращ филтър",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Намерен в:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Назад",

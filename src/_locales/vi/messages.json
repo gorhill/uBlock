@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ đã chặn tải trang sau:",
+    "message":"uBloc Origin đã chặn tải trang sau:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Vì bộ lọc sau",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Tìm thấy trong:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Trở lại",

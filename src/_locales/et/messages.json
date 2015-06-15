@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ on keelanud järgneva lehe laadimise:",
+    "message":"uBlock Origin on keelanud järgneva lehe laadimise:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Järgneva filtri tõttu",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Asub filtrites:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Mine tagasi",

@@ -559,6 +559,10 @@
     "message":"Εξαιτίας του ακόλουθου φίλτρου",
     "description":"English: Because of the following filter"
   },
+  "docblockedFoundIn":{
+    "message":"Found in:",
+    "description":"English: List of filter list names follows"
+  },
   "docblockedBack":{
     "message":"Επιστροφή",
     "description":"English: Go back"

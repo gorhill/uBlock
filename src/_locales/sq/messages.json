@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Filtri statik {{filter}} u gjet te:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -558,6 +558,10 @@
   "docblockedPrompt2":{
     "message":"Për shkak të këtij filtri",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Found in:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Kthehem",

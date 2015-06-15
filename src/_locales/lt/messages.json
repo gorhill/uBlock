@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ neleido įkelti šio puslapio:",
+    "message":"uBlock Origin neleido įkelti šio puslapio:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Dėl šio filtro",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Rasta:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Grįžti",

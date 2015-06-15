@@ -88,7 +88,7 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Comută blocarea fonturilor de la distanță pentru acest sait",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Filtru static {{filter}} găsit în:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ a prevenit încărcarea acestei pagini:",
+    "message":"uBlock Origin a prevenit încărcarea acestei pagini:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Din cauza următorului filtru",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Găsit în:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Înapoi",

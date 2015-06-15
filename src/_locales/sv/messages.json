@@ -559,6 +559,10 @@
     "message":"P.g.a. följande filter",
     "description":"English: Because of the following filter"
   },
+  "docblockedFoundIn":{
+    "message":"Hittades i:",
+    "description":"English: List of filter list names follows"
+  },
   "docblockedBack":{
     "message":"Gå tillbaka",
     "description":"English: Go back"

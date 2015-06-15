@@ -559,6 +559,10 @@
     "message":"A causa del seguente filtro",
     "description":"English: Because of the following filter"
   },
+  "docblockedFoundIn":{
+    "message":"Trovato in:",
+    "description":"English: List of filter list names follows"
+  },
   "docblockedBack":{
     "message":"Torna indietro",
     "description":"English: Go back"

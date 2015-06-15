@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ har forhindret lasting av følgende side:",
+    "message":"uBlock Origin har forhindret lasting av følgende side:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"På grunn av følgende filter:",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Funnet i:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Gå tilbake",

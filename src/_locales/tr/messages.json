@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ aşağıdaki sayfanın yüklenmesini engelledi:",
+    "message":"uBlock aşağıdaki sayfanın yüklenmesini engelledi:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Aşağıdaki süzgeçten dolayı",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Bulunduğu liste:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Geri dön",

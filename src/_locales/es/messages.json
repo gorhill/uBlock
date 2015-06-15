@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ impidió la carga de la página:",
+    "message":"uBlock Origin impidió la carga de la página:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Como resultado del siguiente filtro:",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Encontrado en:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Regresar",

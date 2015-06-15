@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}}, или {{percent}}%",
+    "message":"{{count}} или {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ предотвратил загрузку следующей страницы:",
+    "message":"uBlock Origin предотвратил загрузку следующей страницы:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Из-за следующего фильтра",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Найден в:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Вернуться",

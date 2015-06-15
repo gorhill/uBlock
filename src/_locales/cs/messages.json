@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ zabránil následující stránce v načtení:",
+    "message":"uBlock Origin zabránil následující stránce v načtení:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Kvůli následujícímu filtru",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Nalezeno v:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Jít zpět",

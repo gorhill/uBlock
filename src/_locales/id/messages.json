@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ telah mencegah laman berikut dimuat:",
+    "message":"uBlock Origin telah mencegah halaman berikut dimuat:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Disebabkan oleh filter berikut",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"Ditemukan di:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"Kembali",

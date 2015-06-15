@@ -552,12 +552,16 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀이 다음 페이지를 로드하는것을 방지했습니다:",
+    "message":"uBlock Origin이 다음 페이지를 로드하는것을 방지했습니다:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"다음 필터로 인해 방지됨",
     "description":"English: Because of the following filter"
+  },
+  "docblockedFoundIn":{
+    "message":"다음 필터에서 찾음:",
+    "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
     "message":"돌아가기",
