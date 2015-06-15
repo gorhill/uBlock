@@ -2085,13 +2085,7 @@ vAPI.toolbarButton.updateState = function(win, tabId) {
     var icon = this.tabs[tabId];
 
     button.setAttribute('badge', icon && icon.badge || '');
-
-    if ( !icon || !icon.img ) {
-        button.classList.add('off');
-    }
-    else {
-        button.classList.remove('off');
-    }
+    button.classList.toggle('off', !icon || !icon.img);
 };
 
 /******************************************************************************/
