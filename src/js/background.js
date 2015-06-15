@@ -147,7 +147,7 @@ return {
     apiErrorCount: 0,
     contextMenuClientX: -1,
     contextMenuClientY: -1,
-    epickerTarget: '',
+    epickerTarget: null,
     epickerEprom: null,
 
     scriptlets: {

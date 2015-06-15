@@ -331,6 +331,17 @@ const contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
+
+            if (doc.docShell && typeof doc.docShell.getInterface === 'function') {
+                // It is possible, in some cases (#1140) for document-element-inserted to occur *before* nsIWebProgressListener.onLocationChange, so ensure that the URL is correct before continuing
+                let messageManager = doc.docShell.getInterface(Ci.nsIContentFrameMessageManager);
+
+                messageManager.sendSyncMessage(locationChangedMessageName, {
+                    url: loc.href,
+                    noRefresh: true, // If the URL is the same, then don't refresh it so that if this occurs after onLocationChange, no the block count isn't reset
+                });
+            }
+
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if ( doc.querySelector('a[href^="abp:"]') ) {

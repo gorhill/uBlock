@@ -59,6 +59,11 @@ vAPI.app.restart = function() {
 
 /******************************************************************************/
 
+// Set default preferences for user to find in about:config
+vAPI.localStorage.setDefaultBool("forceLegacyToolbarButton", false);
+
+/******************************************************************************/
+
 // List of things that needs to be destroyed when disabling the extension
 // Only functions should be added to it
 
@@ -68,8 +73,8 @@ var cleanupTasks = [];
 
 // Fixed by github.com/AlexVallat:
 //   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
-//   8 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
-var expectedNumberOfCleanups = 7;
+//   several instances of cleanupTasks.push, but some are mutually exclusive. When counting by searching for cleanup.push, take account of "-only" comments indicating when they apply
+var expectedNumberOfCleanups = vAPI.fennec ? 7 : 8;
 
 window.addEventListener('unload', function() {
     if ( typeof vAPI.app.onShutdown === 'function' ) {
@@ -205,7 +210,7 @@ vAPI.browserSettings = {
         for ( var key in this.originalValues ) {
             if ( this.originalValues.hasOwnProperty(key) === false ) {
                 continue;
-            }
+    }
             pos = key.lastIndexOf('.');
             this.clear(key.slice(0, pos), key.slice(pos + 1));
         }
@@ -560,7 +565,7 @@ vAPI.tabs.get = function(tabId, callback) {
         tabId = tabWatcher.tabIdFromTarget(browser);
     } else {
         browser = tabWatcher.browserFromTabId(tabId);
-    }
+        }
 
     // For internal use
     if ( typeof callback !== 'function' ) {
@@ -950,32 +955,47 @@ var tabWatcher = (function() {
             return;
         }
 
-        var tabBrowser = getTabBrowser(this);
+        var attachToTabBrowser = function(window, tabBrowser) {
+            if ( !tabBrowser ) {
+                return;
+            }
+
+            var tabContainer;
+            if ( tabBrowser.deck ) {
+                // Fennec
+                tabContainer = tabBrowser.deck;
+            } else if (tabBrowser.tabContainer) {
+                // desktop Firefox
+                tabContainer = tabBrowser.tabContainer;
+                vAPI.contextMenu.register(window.document);
+                if (vAPI.toolbarButton.attachToNewWindow) {
+                    vAPI.toolbarButton.attachToNewWindow(window);
+                }
+            } else {
+                return;
+            }
+            tabContainer.addEventListener('TabOpen', onOpen);
+            tabContainer.addEventListener('TabShow', onShow);
+            tabContainer.addEventListener('TabClose', onClose);
+            tabContainer.addEventListener('TabSelect', onSelect);
+
+            // when new window is opened TabSelect doesn't run on the selected tab?
+        }
+
+        var win = this;
+        var tabBrowser = getTabBrowser(win);
         if ( !tabBrowser ) {
-            return;
-        }
-
-        var tabContainer;
-        if ( tabBrowser.deck ) {
-            // Fennec
-            tabContainer = tabBrowser.deck;
-        } else if ( tabBrowser.tabContainer ) {
-            // desktop Firefox
-            tabContainer = tabBrowser.tabContainer;
-            vAPI.contextMenu.register(this.document);
+            // On some platforms, the tab browser isn't immediately available, try waiting a bit
+            win.setTimeout(function() {
+                attachToTabBrowser(win, getTabBrowser(win));
+            }, 250);
         } else {
-            return;
+            attachToTabBrowser(win, tabBrowser);
         }
-        tabContainer.addEventListener('TabOpen', onOpen);
-        tabContainer.addEventListener('TabShow', onShow);
-        tabContainer.addEventListener('TabClose', onClose);
-        tabContainer.addEventListener('TabSelect', onSelect);
-
-        // when new window is opened TabSelect doesn't run on the selected tab?
     };
 
     var onWindowUnload = function() {
-        vAPI.contextMenu.unregister(this.document);
+        vAPI.contextMenu.remove();
         this.removeEventListener('DOMContentLoaded', onWindowLoad);
 
         var tabBrowser = getTabBrowser(this);
@@ -1712,6 +1732,12 @@ vAPI.net.registerListeners = function() {
     var locationChangedListener = function(e) {
         var details = e.data;
         var browser = e.target;
+        
+        if (details.noRefresh && details.url === browser.currentURI.asciiSpec) { // If the location changed message specified not to refresh, and the URL is the same, no need to do anything
+            //console.debug("nsIWebProgressListener: ignoring onLocationChange: " + details.url);
+            return;
+        }
+
         var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
@@ -1833,7 +1859,7 @@ vAPI.toolbarButton.init = function() {
             tb.menuItemIds.set(win, id);
         }
 
-        cleanupTasks.push(function() {
+        cleanupTasks.push(function() { // Fennec-only cleanup
             for ( var win of vAPI.tabs.getWindows() ) {
                 var id = tb.menuItemIds.get(win);
                 if ( id ) {
@@ -1846,18 +1872,151 @@ vAPI.toolbarButton.init = function() {
         return;
     }
 
+    vAPI.messaging.globalMessageManager.addMessageListener(
+        location.host + ':closePopup',
+        vAPI.toolbarButton.onPopupCloseRequested
+    );
+
+    cleanupTasks.push(function() { // Desktop-only cleanup
+       vAPI.messaging.globalMessageManager.removeMessageListener(
+            location.host + ':closePopup',
+            vAPI.toolbarButton.onPopupCloseRequested
+        );
+    });
+
     var CustomizableUI;
-    try {
-        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
-    } catch (ex) {
+
+    var forceLegacyToolbarButton = vAPI.localStorage.getBool("forceLegacyToolbarButton");
+    if (!forceLegacyToolbarButton) {
+        try {
+            CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+        } catch (ex) {
+        }
+    }
+
+    if (!CustomizableUI) {
+        // Create a fallback non-customizable UI button
+        var sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+        var styleSheetUri = Services.io.newURI(vAPI.getURL("css/legacy-toolbar-button.css"), null, null);
+        var legacyButtonId = "uBlock-legacy-button"; // NOTE: must match legacy-toolbar-button.css
+        this.id = legacyButtonId;
+        this.viewId = legacyButtonId + "-panel";
+                
+        if (!sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
+            sss.loadAndRegisterSheet(styleSheetUri, sss.AUTHOR_SHEET); // Register global so it works in all windows, including palette
+        }
+
+        var addLegacyToolbarButton = function(window) {
+            var document = window.document;
+            var toolbox = document.getElementById('navigator-toolbox') || document.getElementById('mail-toolbox');
+            
+            if (toolbox) {
+                var palette = toolbox.palette;
+
+                if (!palette) {
+                    // palette might take a little longer to appear on some platforms, give it a small delay and try again
+                    window.setTimeout(function() {
+                        if (toolbox.palette) {
+                            addLegacyToolbarButton(window);
+                        }
+                    }, 250);
+                    return;
+                }
+
+                var toolbarButton = document.createElement('toolbarbutton');
+                toolbarButton.setAttribute('id', legacyButtonId);
+                toolbarButton.setAttribute('type', 'menu'); // type = panel would be more accurate, but doesn't look as good
+                toolbarButton.setAttribute('removable', 'true');
+                toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
+                toolbarButton.setAttribute('label', vAPI.toolbarButton.label);
+
+                var toolbarButtonPanel = document.createElement("panel");
+                // toolbarButtonPanel.setAttribute('level', 'parent'); NOTE: Setting level to parent breaks the popup for PaleMoon under linux (mouse pointer misaligned with content). For some reason.
+                vAPI.toolbarButton.populatePanel(document, toolbarButtonPanel);
+                toolbarButtonPanel.addEventListener('popupshowing', vAPI.toolbarButton.onViewShowing);
+                toolbarButtonPanel.addEventListener('popuphiding', vAPI.toolbarButton.onViewHiding);
+                toolbarButton.appendChild(toolbarButtonPanel);
+                
+                palette.appendChild(toolbarButton);
+
+                vAPI.toolbarButton.closePopup = function() {
+                    toolbarButtonPanel.hidePopup();
+                }
+
+                if (!vAPI.localStorage.getBool('legacyToolbarButtonAdded')) {
+                    // No button yet so give it a default location. If forcing the button, just put in in the palette rather than on any specific toolbar (who knows what toolbars will be available or visible!)
+                    var toolbar = !forceLegacyToolbarButton && document.getElementById('nav-bar');
+                    if (toolbar) {
+                        toolbar.appendChild(toolbarButton);
+                        toolbar.setAttribute('currentset', toolbar.currentSet);
+                        document.persist(toolbar.id, 'currentset');
+                    }
+                    vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
+                } else {
+                    // Find the place to put the button
+                    var toolbars = toolbox.externalToolbars.slice();
+                    for (var child of toolbox.children) {
+                        if (child.localName === 'toolbar') {
+                            toolbars.push(child);
+                        }
+                    }
+
+                    for (var toolbar of toolbars) {
+                        var currentsetString = toolbar.getAttribute('currentset');
+                        if (currentsetString) {
+                            var currentset = currentsetString.split(',');
+                            var index = currentset.indexOf(legacyButtonId);
+                            if (index >= 0) {
+                                // Found our button on this toolbar - but where on it?
+                                var before = null;
+                                for (var i = index + 1; i < currentset.length; i++) {
+                                    before = document.getElementById(currentset[i]);
+                                    if (before) {
+                                        toolbar.insertItem(legacyButtonId, before);
+                                        break;
+                                    }
+                                }
+                                if (!before) {
+                                    toolbar.insertItem(legacyButtonId);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        vAPI.toolbarButton.attachToNewWindow = function(win) {
+            addLegacyToolbarButton(win);
+        }
+
+        cleanupTasks.push(function() {  // Desktop-legacy-only cleanup
+            for ( var win of vAPI.tabs.getWindows() ) {
+                var toolbarButton = win.document.getElementById(legacyButtonId);
+                if (toolbarButton) {
+                    toolbarButton.parentNode.removeChild(toolbarButton);
+                }
+            }
+
+            if (sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
+                sss.unregisterSheet(styleSheetUri, sss.AUTHOR_SHEET);
+            }
+        }.bind(this));
         return;
     }
 
+    this.CustomizableUI = CustomizableUI;
+
     this.defaultArea = CustomizableUI.AREA_NAVBAR;
     this.styleURI = [
-        '#' + this.id + ' {',
+        '#' + this.id + '.off {',
             'list-style-image: url(',
                 vAPI.getURL('img/browsericons/icon16-off.svg'),
+            ');',
+        '}',
+        '#' + this.id + ' {',
+            'list-style-image: url(',
+                vAPI.getURL('img/browsericons/icon16.svg'),
             ');',
         '}',
         '#' + this.viewId + ', #' + this.viewId + ' > iframe {',
@@ -1952,29 +2111,21 @@ vAPI.toolbarButton.init = function() {
         null
     );
 
-    this.closePopup = function({target}) {
+    this.closePopup = function(tabBrowser) {
         CustomizableUI.hidePanelForNode(
-            target.ownerDocument.getElementById(vAPI.toolbarButton.viewId)
+            tabBrowser.ownerDocument.getElementById(vAPI.toolbarButton.viewId)
         );
     };
 
     CustomizableUI.createWidget(this);
-    vAPI.messaging.globalMessageManager.addMessageListener(
-        location.host + ':closePopup',
-        this.closePopup
-    );
 
-    cleanupTasks.push(function() {
+    cleanupTasks.push(function() {  // Desktop-CustomizableUI-only cleanup
         if ( this.CUIEvents ) {
             CustomizableUI.removeListener(this.CUIEvents);
         }
 
         CustomizableUI.destroyWidget(this.id);
-        vAPI.messaging.globalMessageManager.removeMessageListener(
-            location.host + ':closePopup',
-            this.closePopup
-        );
-
+        
         for ( var win of vAPI.tabs.getWindows() ) {
             var panel = win.document.getElementById(this.viewId);
             panel.parentNode.removeChild(panel);
@@ -1989,37 +2140,72 @@ vAPI.toolbarButton.init = function() {
 
 /******************************************************************************/
 
+vAPI.toolbarButton.onPopupCloseRequested = function({target}) {
+    if (vAPI.toolbarButton.closePopup) {
+        vAPI.toolbarButton.closePopup(target);
+    }
+}
+
+/******************************************************************************/
+
 vAPI.toolbarButton.onBeforeCreated = function(doc) {
     var panel = doc.createElement('panelview');
+    
+    vAPI.toolbarButton.populatePanel(doc, panel);
+
+    doc.getElementById('PanelUI-multiView').appendChild(panel);
+
+    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIDOMWindowUtils)
+        .loadSheet(this.styleURI, 1);
+};
+
+vAPI.toolbarButton.populatePanel = function(doc, panel) {
     panel.setAttribute('id', this.viewId);
 
     var iframe = doc.createElement('iframe');
     iframe.setAttribute('type', 'content');
 
-    doc.getElementById('PanelUI-multiView')
-        .appendChild(panel)
-        .appendChild(iframe);
+    panel.appendChild(iframe);
 
     var updateTimer = null;
-    var delayedResize = function() {
+    var delayedResize = function(attempts) {
         if ( updateTimer ) {
             return;
         }
 
-        updateTimer = vAPI.setTimeout(resizePopup, 10);
+        // Sanity check
+        attempts = (attempts || 0) + 1;
+        if (attempts > 1/*000*/) {
+            debugger;
+            console.error('uBlock> delayedResize: giving up after too many attempts');
+            return;
+        }
+
+        updateTimer = vAPI.setTimeout(resizePopup, 10, attempts);
     };
-    var resizePopup = function() {
+    var resizePopup = function(attempts) {
         updateTimer = null;
         var body = iframe.contentDocument.body;
         panel.parentNode.style.maxWidth = 'none';
         // https://github.com/chrisaljoudi/uBlock/issues/730
         // Voodoo programming: this recipe works
-        panel.style.height = iframe.style.height = body.clientHeight.toString() + 'px';
-        panel.style.width = iframe.style.width = body.clientWidth.toString() + 'px';
+        var toPixelString = pixels => pixels.toString() + 'px';
+
+        var clientHeight = body.clientHeight;
+        iframe.style.height = toPixelString(clientHeight);
+        panel.style.height = toPixelString(clientHeight + (panel.boxObject.height - panel.clientHeight));
+
+        var clientWidth = body.clientWidth;
+        iframe.style.width = toPixelString(clientWidth);
+        panel.style.width = toPixelString(clientWidth + (panel.boxObject.width - panel.clientWidth));
+
         if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
-            delayedResize();
+            delayedResize(attempts);
         }
     };
+
+    var CustomizableUI = this.CustomizableUI;
     var onPopupReady = function() {
         var win = this.contentWindow;
 
@@ -2027,16 +2213,17 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        // https://github.com/gorhill/uBlock/issues/83
-        // Add `portrait` class if width is constrained.
-        try {
-            var CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
-            iframe.contentDocument.body.classList.toggle(
-                'portrait',
-                CustomizableUI.getWidget(vAPI.toolbarButton.id).areaType === CustomizableUI.TYPE_MENU_PANEL
-            );
-        } catch (ex) {
-            /* noop */
+        if (CustomizableUI) {
+            // https://github.com/gorhill/uBlock/issues/83
+            // Add `portrait` class if width is constrained.
+            try {
+                iframe.contentDocument.body.classList.toggle(
+                    'portrait',
+                    CustomizableUI.getWidget(vAPI.toolbarButton.id).areaType === CustomizableUI.TYPE_MENU_PANEL
+                );
+            } catch (ex) {
+                /* noop */
+            }
         }
 
         new win.MutationObserver(delayedResize).observe(win.document.body, {
@@ -2049,10 +2236,6 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
     };
 
     iframe.addEventListener('load', onPopupReady, true);
-
-    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
-        .getInterface(Ci.nsIDOMWindowUtils)
-        .loadSheet(this.styleURI, 1);
 };
 
 /******************************************************************************/
@@ -2078,16 +2261,15 @@ vAPI.toolbarButton.updateState = function(win, tabId) {
     }
 
     var icon = this.tabs[tabId];
+
     button.setAttribute('badge', icon && icon.badge || '');
 
     if ( !icon || !icon.img ) {
-        icon = '';
+        button.classList.add('off');
     }
     else {
-        icon = 'url(' + vAPI.getURL('img/browsericons/icon16.svg') + ')';
+        button.classList.remove('off');
     }
-
-    button.style.listStyleImage = icon;
 };
 
 /******************************************************************************/
@@ -2155,6 +2337,15 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 
 /******************************************************************************/
 
+vAPI.contextMenu.createContextMenuItem = function(doc) {
+    var menuitem = doc.createElement('menuitem');
+    menuitem.setAttribute('id', this.menuItemId);
+    menuitem.setAttribute('label', this.menuLabel);
+    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+    menuitem.setAttribute('class', 'menuitem-iconic');
+    return menuitem;
+}
+
 vAPI.contextMenu.register = function(doc) {
     if ( !this.menuItemId ) {
         return;
@@ -2171,15 +2362,18 @@ vAPI.contextMenu.register = function(doc) {
         return;
     }
 
+    if (doc.getElementById(this.menuItemId)) {
+        // Context menu already registered for this window
+        return;
+    }
+
     var contextMenu = doc.getElementById('contentAreaContextMenu');
-    var menuitem = doc.createElement('menuitem');
-    menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
-    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
-    menuitem.setAttribute('class', 'menuitem-iconic');
-    menuitem.addEventListener('command', this.onCommand);
-    contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    if (contextMenu) {
+        var menuitem = this.createContextMenuItem(doc);
+        menuitem.addEventListener('command', this.onCommand);
+        contextMenu.addEventListener('popupshowing', this.displayMenuItem);
+        contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    }
 };
 
 /******************************************************************************/
@@ -2200,6 +2394,54 @@ vAPI.contextMenu.unregister = function(doc) {
     contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
     contextMenu.removeChild(menuitem);
 };
+
+/******************************************************************************/
+
+vAPI.contextMenu.registerForWebInspector = function(eventName, toolbox, panel) {
+    var menuPopup = panel.panelDoc.getElementById("inspector-node-popup");
+    var deleteMenuItem = panel.panelDoc.getElementById("node-menu-delete");
+    var tiltButton = toolbox.toolboxButtons.filter(tool => tool.id === "command-button-tilt")[0];
+    tiltButton = tiltButton && tiltButton.button;
+
+    if (menuPopup && deleteMenuItem) {
+        var menuitem = vAPI.contextMenu.createContextMenuItem(panel.panelDoc);
+        menuitem.addEventListener('command', function() {
+            var selectedNodeFront = panel.selection.nodeFront;
+            while (selectedNodeFront && selectedNodeFront.baseURI !== panel.walker.rootNode.baseURI) {
+                // This is an iFrame, so we can't select it directly. Walk up the parent stack until we do
+                selectedNodeFront = selectedNodeFront.parentNode();
+            }
+            if (selectedNodeFront) {
+                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(tabWatcher.tabIdFromTarget(panel.browser), { type: 'element', value: selector}));
+
+                // Turn off 3D view, if it's turned on.
+                if (tiltButton && tiltButton.checked) {
+                    tiltButton.click();
+                }
+            }
+        });
+
+        menuPopup.insertBefore(menuitem, deleteMenuItem);
+    }
+}
+
+vAPI.contextMenu.registerForNetMonitor = function(eventName, toolbox, panel) {
+    var doc = panel.panelWin.document;
+    var menuPopup = doc.getElementById("network-request-popup");
+    var insertBeforeMenuItem = doc.getElementById("request-menu-context-separator");
+    
+    if (menuPopup && insertBeforeMenuItem) {
+        var menuitem = vAPI.contextMenu.createContextMenuItem(doc);
+        menuitem.addEventListener('command', function() {
+            var selectedRequest = panel.panelWin.NetMonitorView.RequestsMenu.selectedAttachment;
+            if (selectedRequest) {
+                µBlock.elementPickerExec(tabWatcher.tabIdFromTarget(toolbox.target.tab), { type: 'url', value: selectedRequest.url });
+            }
+        });
+
+        menuPopup.insertBefore(menuitem, insertBeforeMenuItem);
+    }
+}
 
 /******************************************************************************/
 
@@ -2245,6 +2487,20 @@ vAPI.contextMenu.create = function(details, callback) {
         });
     };
 
+    // Also add a context menu to the web inspector
+    if (!vAPI.fennec) {
+        try {
+            this.gDevTools = Cu.import('resource:///modules/devtools/gDevTools.jsm', null).gDevTools;
+        } catch (ex) {
+            // console.error(ex);
+        }
+
+        if (this.gDevTools) {
+            this.gDevTools.on("inspector-ready", this.registerForWebInspector);
+            this.gDevTools.on("netmonitor-ready", this.registerForNetMonitor);
+        }
+    }
+
     for ( var win of vAPI.tabs.getWindows() ) {
         this.register(win.document);
     }
@@ -2255,6 +2511,11 @@ vAPI.contextMenu.create = function(details, callback) {
 vAPI.contextMenu.remove = function() {
     for ( var win of vAPI.tabs.getWindows() ) {
         this.unregister(win.document);
+    }
+
+    if (!vAPI.fennec && this.gDevTools) {
+        this.gDevTools.off("inspector-ready", this.registerForWebInspector);
+        this.gDevTools.off("netmonitor-ready", this.registerForNetMonitor);
     }
 
     this.menuItemId = null;

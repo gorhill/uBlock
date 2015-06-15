@@ -40,8 +40,8 @@ var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
 
-vAPI.setTimeout = vAPI.setTimeout || function(callback, delay) {
-    return setTimeout(function() { callback(); }, delay);
+vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, args) {
+    return setTimeout(function(args) { callback(args); }, delay, args);
 };
 
 /******************************************************************************/
@@ -125,9 +125,9 @@ vAPI.closePopup = function() {
 // background page or auxiliary pages.
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
-
+const branchName = 'extensions.' + location.host + '.';
 vAPI.localStorage = {
-    PB: Services.prefs.getBranch('extensions.' + location.host + '.'),
+    PB: Services.prefs.getBranch(branchName),
     str: Components.classes['@mozilla.org/supports-string;1']
         .createInstance(Components.interfaces.nsISupportsString),
     getItem: function(key) {
@@ -147,6 +147,19 @@ vAPI.localStorage = {
             Components.interfaces.nsISupportsString,
             this.str
         );
+    },
+    getBool: function(key) {
+        try {
+            return this.PB.getBoolPref(key);
+        } catch (ex) {
+            return null;
+        }
+    },
+    setBool: function(key, value) {
+        this.PB.setBoolPref(key, value);
+    },
+    setDefaultBool: function(key, defaultValue) {
+        Services.prefs.getDefaultBranch(branchName).setBoolPref(key, defaultValue);
     },
     removeItem: function(key) {
         this.PB.clearUserPref(key);

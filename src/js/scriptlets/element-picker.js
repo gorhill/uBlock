@@ -128,7 +128,8 @@ if ( window.top !== window ) {
 var pickerRoot = document.getElementById(vAPI.sessionId);
 
 if ( pickerRoot ) {
-    return;
+    // If it's already running, stop it and then allow it to restart
+    pickerRoot.onload(); // Calls stopPicker
 }
 
 var localMessager = vAPI.messaging.channel('element-picker.js');
@@ -328,13 +329,18 @@ var netFilterFromElement = function(elem, out) {
             return;
         }
     }
+
+    netFilterFromUrl(src, out);
+}
+
+var netFilterFromUrl = function(url, out) {
     // Remove fragment
-    var pos = src.indexOf('#');
+    var pos = url.indexOf('#');
     if ( pos !== -1 ) {
-        src = src.slice(0, pos);
+        url = url.slice(0, pos);
     }
 
-    var filter = src.replace(/^https?:\/\//, '||');
+    var filter = url.replace(/^https?:\/\//, '||');
 
     // Anchor absolute filter to hostname
     out.push(filter);
@@ -346,7 +352,7 @@ var netFilterFromElement = function(elem, out) {
     }
 
     // Suggest a filter which is a result of combining more than one URL.
-    netFilterFromUnion(src, out);
+    netFilterFromUnion(url, out);
 };
 
 var netFilter1stSources = {
@@ -478,6 +484,14 @@ var filtersFromElement = function(elem) {
 
 /******************************************************************************/
 
+var filtersFromUrl = function(url) {
+    netFilterCandidates.length = 0;
+    cosmeticFilterCandidates.length = 0;
+    netFilterFromUrl(url, netFilterCandidates);
+};
+
+/******************************************************************************/
+
 var elementsFromFilter = function(filter) {
     var out = [];
 
@@ -584,7 +598,11 @@ var userFilterFromCandidate = function() {
 
 var onCandidateChanged = function() {
     var elems = elementsFromFilter(taCandidate.value);
-    dialog.querySelector('#create').disabled = elems.length === 0;
+    // Allow creation of filters that may not match elements (may filter non-visual requests)
+    //dialog.querySelector('#create').disabled = elems.length === 0;
+
+    // TODO: syntax validation of taCandidate.value
+    dialog.querySelector('#create').disabled = taCandidate.value.length === 0;
     highlightElements(elems);
 };
 
@@ -900,61 +918,25 @@ var startPicker = function(details) {
 
     highlightElements([], true);
 
-    var elem;
-
-    // Try using mouse position
-    if ( details.clientX !== -1 ) {
-        elem = elementFromPoint(details.clientX, details.clientY);
-        if ( elem !== null ) {
-            filtersFromElement(elem);
-            showDialog();
-            return;
+    // If a target was provided, use it
+    if (details.target && details.target.value) {
+        if (details.target.type === 'element') {
+            filtersFromElement(document.querySelector(details.target.value));
+        } else if (details.target.type === 'url') {
+            filtersFromUrl(details.target.value);
+        } else {
+            console.error('uBlock> unknown element picker target details type: %s', details.target.type);
+        }
+    } else {
+        // Try using mouse position
+        if (details.clientX !== -1) {
+            filtersFromElement(elementFromPoint(details.clientX, details.clientY));
         }
     }
 
-    // No mouse position available, use suggested target
-    var target = details.target || '';
-    var pos = target.indexOf('\t');
-    if ( pos === -1 ) {
-        return;
+    if (netFilterCandidates.length > 0 || cosmeticFilterCandidates.length > 0) {
+        showDialog();
     }
-    var srcAttrMap = {
-        'a': 'href',
-        'img': 'src',
-        'iframe': 'src',
-        'embed': 'src',
-        'video': 'src',
-        'audio': 'src'
-    };
-    var tagName = target.slice(0, pos);
-    var url = target.slice(pos + 1);
-    var attr = srcAttrMap[tagName];
-    if ( attr === undefined ) {
-        return;
-    }
-    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    var i = elems.length;
-    var src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) {
-            continue;
-        }
-        if ( src !== url ) {
-            continue;
-        }
-        elem.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-        filtersFromElement(elem);
-        showDialog({ modifier: true });
-        return;
-    }
-
-    // A target was specified, but it wasn't found: abort.
-    stopPicker();
 };
 
 /******************************************************************************/

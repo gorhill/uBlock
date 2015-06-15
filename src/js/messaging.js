@@ -130,7 +130,7 @@ var onMessage = function(request, sender, callback) {
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
         µb.contextMenuClientX = µb.contextMenuClientY = -1;
-        µb.elementPickerExec(request.tabId, request.targetURL);
+        µb.elementPickerExec(request.tabId, { type: 'url', value: request.targetURL });
         break;
 
     case 'gotoURL':
@@ -626,13 +626,12 @@ var onMessage = function(request, sender, callback) {
 
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.epickerTarget,
+                    target: µb.epickerTarget,
                 clientX: µb.contextMenuClientX,
                 clientY: µb.contextMenuClientY,
                 eprom: µb.epickerEprom
             });
 
-            µb.epickerTarget = '';
             µb.contextMenuClientX = -1;
             µb.contextMenuClientY = -1;
         };

@@ -288,11 +288,12 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = function(tabId, targetElement) {
+µBlock.elementPickerExec = function(tabId, target) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
     }
-    this.epickerTarget = targetElement || '';
+
+    this.epickerTarget = target;
     vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/element-picker.js' });
     if ( typeof vAPI.tabs.select === 'function' ) {
         vAPI.tabs.select(tabId);
