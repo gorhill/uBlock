@@ -1,0 +1,20 @@
+# uBlock -- To block sites known for delivering adware/crapware.
+#
+# For sites documented to put users at risk of installing adware/crapware etc.
+# The purpose is to at least ensure a user is warned of the risks ahead.
+# 
+# Each entry has to be well enough sourced.
+
+# http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
+# https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
+# http://blog.tedd.no/2014/11/25/sourceforge-malware/
+# Using `other` will cause the whole site to be blocked through strict blocking,
+# yet the site will render properly if a user still decide to go ahead.
+||sourceforge.net^$other
+
+
+# http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
+# http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
+# http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
+# http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
+||softonic.com^$other

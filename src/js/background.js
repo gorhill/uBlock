@@ -127,6 +127,10 @@ return {
         'assets/ublock/unbreak.txt': {
             title: 'uBlock filters – Unbreak',
             group: 'default'
+        },
+        'assets/ublock/badware.txt': {
+            title: 'uBlock filters – Adware/crapware risks',
+            group: 'default'
         }
     },
 
