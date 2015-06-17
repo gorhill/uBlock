@@ -389,7 +389,10 @@ var createHiddenTextNode = function(text) {
 
 var createGap = function(tabId, url) {
     var tr = createRow('1');
-    tr.classList.add('tab', 'canMtx', 'tab_' + tabId, 'maindoc');
+    tr.classList.add('tab');
+    tr.classList.add('canMtx');
+    tr.classList.add('tab_' + tabId);
+    tr.classList.add('maindoc');
     tr.cells[firstVarDataCol].textContent = url;
     tbody.insertBefore(tr, tbody.firstChild);
 };
@@ -497,7 +500,8 @@ var renderLogEntry = function(entry) {
     tr.cells[0].title = time.toLocaleDateString('fullwide', dateOptions);
 
     if ( entry.tab ) {
-        tr.classList.add('tab', classNameFromTabId(entry.tab));
+        tr.classList.add('tab');
+        tr.classList.add(classNameFromTabId(entry.tab));
         if ( entry.tab === noTabId ) {
             tr.cells[1].appendChild(createHiddenTextNode('bts'));
         }
