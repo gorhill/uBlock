@@ -129,7 +129,7 @@ return {
             group: 'default'
         },
         'assets/ublock/badware.txt': {
-            title: 'uBlock filters – Adware/crapware risks',
+            title: 'uBlock filters – Badware risks',
             group: 'default'
         }
     },
