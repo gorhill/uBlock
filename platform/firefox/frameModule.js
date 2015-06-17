@@ -135,6 +135,17 @@ const contentObserver = {
 
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
+        // For whatever reason, sometimes the global scope is completely
+        // uninitialized at this point. Repro steps:
+        // - Launch FF with uBlock enabled
+        // - Disable uBlock
+        // - Enable uBlock
+        // - Services and all other global variables are undefined
+        // Hopefully will eventually understand why this happens.
+        if ( Services === undefined ) {
+            return this.ACCEPT;
+        }
+
         if ( !context ) {
             return this.ACCEPT;
         }
@@ -284,6 +295,17 @@ const contentObserver = {
     },
 
     observe: function(doc) {
+        // For whatever reason, sometimes the global scope is completely
+        // uninitialized at this point. Repro steps:
+        // - Launch FF with uBlock enabled
+        // - Disable uBlock
+        // - Enable uBlock
+        // - Services and all other global variables are undefined
+        // Hopefully will eventually understand why this happens.
+        if ( Services === undefined ) {
+            return;
+        }
+
         let win = doc.defaultView;
 
         if ( !win ) {
