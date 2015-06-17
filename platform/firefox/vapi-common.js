@@ -40,8 +40,8 @@ var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
 
-vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, args) {
-    return setTimeout(function(args) { callback(args); }, delay, args);
+vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, extra) {
+    return setTimeout(function(a) { callback(a); }, delay, extra);
 };
 
 /******************************************************************************/
@@ -125,14 +125,19 @@ vAPI.closePopup = function() {
 // background page or auxiliary pages.
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
-const branchName = 'extensions.' + location.host + '.';
+
 vAPI.localStorage = {
-    PB: Services.prefs.getBranch(branchName),
+    pbName: '',
+    pb: null,
     str: Components.classes['@mozilla.org/supports-string;1']
-        .createInstance(Components.interfaces.nsISupportsString),
+                   .createInstance(Components.interfaces.nsISupportsString),
+    init: function(pbName) {
+        this.pbName = pbName;
+        this.pb = Services.prefs.getBranch(pbName);
+    },
     getItem: function(key) {
         try {
-            return this.PB.getComplexValue(
+            return this.pb.getComplexValue(
                 key,
                 Components.interfaces.nsISupportsString
             ).data;
@@ -142,7 +147,7 @@ vAPI.localStorage = {
     },
     setItem: function(key, value) {
         this.str.data = value;
-        this.PB.setComplexValue(
+        this.pb.setComplexValue(
             key,
             Components.interfaces.nsISupportsString,
             this.str
@@ -150,24 +155,26 @@ vAPI.localStorage = {
     },
     getBool: function(key) {
         try {
-            return this.PB.getBoolPref(key);
+            return this.pb.getBoolPref(key);
         } catch (ex) {
             return null;
         }
     },
     setBool: function(key, value) {
-        this.PB.setBoolPref(key, value);
+        this.pb.setBoolPref(key, value);
     },
     setDefaultBool: function(key, defaultValue) {
-        Services.prefs.getDefaultBranch(branchName).setBoolPref(key, defaultValue);
+        Services.prefs.getDefaultBranch(this.pbName).setBoolPref(key, defaultValue);
     },
     removeItem: function(key) {
-        this.PB.clearUserPref(key);
+        this.pb.clearUserPref(key);
     },
     clear: function() {
-        this.PB.deleteBranch('');
+        this.pb.deleteBranch('');
     }
 };
+
+vAPI.localStorage.init('extensions.' + location.host + '.');
 
 /******************************************************************************/
 

@@ -60,7 +60,7 @@ vAPI.app.restart = function() {
 /******************************************************************************/
 
 // Set default preferences for user to find in about:config
-vAPI.localStorage.setDefaultBool("forceLegacyToolbarButton", false);
+vAPI.localStorage.setDefaultBool('forceLegacyToolbarButton', false);
 
 /******************************************************************************/
 
@@ -70,11 +70,7 @@ vAPI.localStorage.setDefaultBool("forceLegacyToolbarButton", false);
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-
-// Fixed by github.com/AlexVallat:
-//   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
-//   several instances of cleanupTasks.push, but one is unique to fennec, and three to desktop.
-var expectedNumberOfCleanups = vAPI.fennec ? 7 : 9;
+var expectedNumberOfCleanups = 7;
 
 window.addEventListener('unload', function() {
     if ( typeof vAPI.app.onShutdown === 'function' ) {
@@ -484,88 +480,6 @@ vAPI.storage = (function() {
 
 /******************************************************************************/
 
-var windowWatcher = {
-    onReady: function(e) {
-        if ( e ) {
-            this.removeEventListener(e.type, windowWatcher.onReady);
-        }
-
-        var wintype = this.document.documentElement.getAttribute('windowtype');
-
-        if ( wintype !== 'navigator:browser' ) {
-            return;
-        }
-
-        var attachToTabBrowser = function(window, tabBrowser) {
-            if (!tabBrowser) {
-                return;
-            }
-
-            var tabContainer;
-            if ( tabBrowser.deck ) {
-                // Fennec
-                tabContainer = tabBrowser.deck;
-            } else if (tabBrowser.tabContainer) {
-                // desktop Firefox
-                tabContainer = tabBrowser.tabContainer;
-                vAPI.contextMenu.register(window.document);
-                if (vAPI.toolbarButton.attachToNewWindow) {
-                    vAPI.toolbarButton.attachToNewWindow(window);
-                }
-            } else {
-                return;
-            }
-
-            tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
-            tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
-            // when new window is opened TabSelect doesn't run on the selected tab?
-        }
-
-        var win = this;
-        var tabBrowser = getTabBrowser(win);
-        if ( !tabBrowser ) {
-            // On some platforms, the tab browser isn't immediately available, try waiting a bit
-            win.setTimeout(function() {
-                attachToTabBrowser(win, getTabBrowser(win));
-            }, 250);
-        } else {
-            attachToTabBrowser(win, tabBrowser);
-        }
-        
-    },
-
-    observe: function(win, topic) {
-        if ( topic === 'domwindowopened' ) {
-            win.addEventListener('DOMContentLoaded', this.onReady);
-        }
-    }
-};
-
-/******************************************************************************/
-
-var tabWatcher = {
-    onTabClose: function({target}) {
-        // target is tab in Firefox, browser in Fennec
-        var tabId = vAPI.tabs.getTabId(target);
-        vAPI.tabs.onClosed(tabId);
-        delete vAPI.toolbarButton.tabs[tabId];
-    },
-
-    onTabSelect: function({target}) {
-        vAPI.setIcon(vAPI.tabs.getTabId(target), getOwnerWindow(target));
-    },
-};
-
-/******************************************************************************/
-
-vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId.toString() === '-1';
-};
-
-vAPI.noTabId = '-1';
-
-/******************************************************************************/
-
 var getTabBrowser = function(win) {
     return vAPI.fennec && win.BrowserApp || win.gBrowser || null;
 };
@@ -643,12 +557,8 @@ vAPI.tabs.get = function(tabId, callback) {
     var browser;
 
     if ( tabId === null ) {
-        win = Services.wm.getMostRecentWindow('navigator:browser');
-        var tabBrowser = getTabBrowser(win);
-        if (tabBrowser) {
-            tab = tabBrowser.selectedTab;
-            tabId = this.getTabId(tab);
-        }
+        browser = tabWatcher.currentBrowser();
+        tabId = tabWatcher.tabIdFromTarget(browser);
     } else {
         browser = tabWatcher.browserFromTabId(tabId);
     }
@@ -1031,6 +941,35 @@ var tabWatcher = (function() {
         vAPI.setIcon(tabIdFromTarget(target), getOwnerWindow(target));
     };
 
+    var attachToTabBrowser = function(window) {
+        var tabBrowser = getTabBrowser(window);
+        if ( !tabBrowser ) {
+            return false;
+        }
+
+        var tabContainer;
+        if ( tabBrowser.deck ) {                    // Fennec
+            tabContainer = tabBrowser.deck;
+        } else if ( tabBrowser.tabContainer ) {     // Firefox
+            tabContainer = tabBrowser.tabContainer;
+            vAPI.contextMenu.register(window.document);
+        } else {
+            return true;
+        }
+
+        if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
+            vAPI.toolbarButton.attachToNewWindow(window);
+        }
+
+        tabContainer.addEventListener('TabOpen', onOpen);
+        tabContainer.addEventListener('TabShow', onShow);
+        tabContainer.addEventListener('TabClose', onClose);
+        // when new window is opened TabSelect doesn't run on the selected tab?
+        tabContainer.addEventListener('TabSelect', onSelect);
+
+        return true;
+    };
+
     var onWindowLoad = function(ev) {
         if ( ev ) {
             this.removeEventListener(ev.type, onWindowLoad);
@@ -1041,28 +980,12 @@ var tabWatcher = (function() {
             return;
         }
 
-        var tabBrowser = getTabBrowser(this);
-        if ( !tabBrowser ) {
-            return;
+        // On some platforms, the tab browser isn't immediately available,
+        // try waiting a bit if this happens.
+        var win = this;
+        if ( attachToTabBrowser(win) === false ) {
+            vAPI.setTimeout(attachToTabBrowser.bind(null, win), 250);
         }
-
-        var tabContainer;
-        if ( tabBrowser.deck ) {
-            // Fennec
-            tabContainer = tabBrowser.deck;
-        } else if ( tabBrowser.tabContainer ) {
-            // desktop Firefox
-            tabContainer = tabBrowser.tabContainer;
-            vAPI.contextMenu.register(this.document);
-        } else {
-            return;
-        }
-        tabContainer.addEventListener('TabOpen', onOpen);
-        tabContainer.addEventListener('TabShow', onShow);
-        tabContainer.addEventListener('TabClose', onClose);
-        tabContainer.addEventListener('TabSelect', onSelect);
-
-        // when new window is opened TabSelect doesn't run on the selected tab?
     };
 
     var onWindowUnload = function() {
@@ -1854,6 +1777,7 @@ vAPI.net.registerListeners = function() {
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
 vAPI.toolbarButton = {
     id: location.host + '-button',
@@ -1861,240 +1785,462 @@ vAPI.toolbarButton = {
     viewId: location.host + '-panel',
     label: vAPI.app.name,
     tooltiptext: vAPI.app.name,
-    tabs: {/*tabId: {badge: 0, img: boolean}*/}
+    tabs: {/*tabId: {badge: 0, img: boolean}*/},
+    init: null,
+    codePath: ''
 };
 
 /******************************************************************************/
 
-// Toolbar button UI for desktop Firefox
-vAPI.toolbarButton.init = function() {
-    if ( vAPI.fennec ) {
-        // Menu UI for Fennec
-        var tb = {
-            menuItemIds: new WeakMap(),
-            label: vAPI.app.name,
-            tabs: {}
-        };
-        vAPI.toolbarButton = tb;
+// Fennec
 
-        tb.getMenuItemLabel = function(tabId) {
-            var label = this.label;
-            if ( tabId === undefined ) {
-                return label;
-            }
-            var tabDetails = this.tabs[tabId];
-            if ( !tabDetails ) {
-                return label;
-            }
-            if ( !tabDetails.img ) {
-                label += ' (' + vAPI.i18n('fennecMenuItemBlockingOff') + ')';
-            } else if ( tabDetails.badge ) {
-                label += ' (' + tabDetails.badge + ')';
-            }
-            return label;
-        };
-
-        tb.onClick = function() {
-            var win = Services.wm.getMostRecentWindow('navigator:browser');
-            var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
-            vAPI.tabs.open({
-                url: 'popup.html?tabId=' + curTabId,
-                index: -1,
-                select: true
-            });
-        };
-
-        tb.updateState = function(win, tabId) {
-            var id = this.menuItemIds.get(win);
-            if ( !id ) {
-                return;
-            }
-            win.NativeWindow.menu.update(id, {
-                name: this.getMenuItemLabel(tabId)
-            });
-        };
-
-        // Only actually expecting one window under Fennec (note, not tabs, windows)
-        for ( var win of vAPI.tabs.getWindows() ) {
-            var label = tb.getMenuItemLabel();
-            var id = win.NativeWindow.menu.add({
-                name: label,
-                callback: tb.onClick
-            });
-            tb.menuItemIds.set(win, id);
-        }
-
-        cleanupTasks.push(function() {
-            for ( var win of vAPI.tabs.getWindows() ) {
-                var id = tb.menuItemIds.get(win);
-                if ( id ) {
-                    win.NativeWindow.menu.remove(id);
-                    tb.menuItemIds.delete(win);
-                }
-            }
-        });
-
+(function() {
+    if ( !vAPI.fennec ) {
         return;
     }
 
-    vAPI.messaging.globalMessageManager.addMessageListener(
-        location.host + ':closePopup',
-        vAPI.toolbarButton.onPopupCloseRequested
-    );
+    var tbb = vAPI.toolbarButton;
 
-    cleanupTasks.push(function() {
-       vAPI.messaging.globalMessageManager.removeMessageListener(
-            location.host + ':closePopup',
-            vAPI.toolbarButton.onPopupCloseRequested
-        );
-    });
+    tbb.codePath = 'fennec';
 
-    var CustomizableUI;
+    var menuItemIds = new WeakMap();
 
-    var forceLegacyToolbarButton = vAPI.localStorage.getBool("forceLegacyToolbarButton");
-    if (!forceLegacyToolbarButton) {
+    var shutdown = function() {
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var id = menuItemIds.get(win);
+            if ( !id ) {
+                continue;
+            }
+            win.NativeWindow.menu.remove(id);
+            menuItemIds.delete(win);
+        }
+    };
+
+    tbb.getMenuItemLabel = function(tabId) {
+        var label = this.label;
+        if ( tabId === undefined ) {
+            return label;
+        }
+        var tabDetails = this.tabs[tabId];
+        if ( !tabDetails ) {
+            return label;
+        }
+        if ( !tabDetails.img ) {
+            label += ' (' + vAPI.i18n('fennecMenuItemBlockingOff') + ')';
+        } else if ( tabDetails.badge ) {
+            label += ' (' + tabDetails.badge + ')';
+        }
+        return label;
+    };
+
+    tbb.onClick = function() {
+        var win = Services.wm.getMostRecentWindow('navigator:browser');
+        var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
+        vAPI.tabs.open({
+            url: 'popup.html?tabId=' + curTabId,
+            index: -1,
+            select: true
+        });
+    };
+
+    tbb.updateState = function(win, tabId) {
+        var id = menuItemIds.get(win);
+        if ( !id ) {
+            return;
+        }
+        win.NativeWindow.menu.update(id, {
+            name: this.getMenuItemLabel(tabId)
+        });
+    };
+
+    tbb.init = function() {
+        // Only actually expecting one window under Fennec (note, not tabs, windows)
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var label = this.getMenuItemLabel();
+            var id = win.NativeWindow.menu.add({
+                name: label,
+                callback: this.onClick
+            });
+            menuItemIds.set(win, id);
+        }
+
+        cleanupTasks.push(shutdown);
+    };
+})();
+
+/******************************************************************************/
+
+// Non-Fennec: common code paths.
+
+(function() {
+    if ( vAPI.fennec ) {
+        return;
+    }
+
+    var tbb = vAPI.toolbarButton;
+
+    tbb.onViewShowing = function({target}) {
+        target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
+    };
+
+    tbb.onViewHiding = function({target}) {
+        target.parentNode.style.maxWidth = '';
+        target.firstChild.setAttribute('src', 'about:blank');
+    };
+
+    tbb.updateState = function(win, tabId) {
+        var button = win.document.getElementById(this.id);
+
+        if ( !button ) {
+            return;
+        }
+
+        var icon = this.tabs[tabId];
+
+        button.setAttribute('badge', icon && icon.badge || '');
+        button.classList.toggle('off', !icon || !icon.img);
+    };
+
+    tbb.populatePanel = function(doc, panel) {
+        panel.setAttribute('id', this.viewId);
+
+        var iframe = doc.createElement('iframe');
+        iframe.setAttribute('type', 'content');
+
+        panel.appendChild(iframe);
+
+        var resizeTimer = null;
+
+        var resizePopupDelayed = function(attempts) {
+            if ( resizeTimer !== null ) {
+                return;
+            }
+
+            // Sanity check
+            attempts = (attempts || 0) + 1;
+            if ( attempts > 1/*000*/ ) {
+                console.error('uBlock0> resizePopupDelayed: giving up after too many attempts');
+                return;
+            }
+
+            resizeTimer = vAPI.setTimeout(resizePopup, 10, attempts);
+        };
+
+        var resizePopup = function(attempts) {
+            resizeTimer = null;
+            var body = iframe.contentDocument.body;
+            panel.parentNode.style.maxWidth = 'none';
+            // https://github.com/chrisaljoudi/uBlock/issues/730
+            // Voodoo programming: this recipe works
+            var toPixelString = pixels => pixels.toString() + 'px';
+
+            var clientHeight = body.clientHeight;
+            iframe.style.height = toPixelString(clientHeight);
+            panel.style.height = toPixelString(clientHeight + (panel.boxObject.height - panel.clientHeight));
+
+            var clientWidth = body.clientWidth;
+            iframe.style.width = toPixelString(clientWidth);
+            panel.style.width = toPixelString(clientWidth + (panel.boxObject.width - panel.clientWidth));
+
+            if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
+                resizePopupDelayed(attempts);
+            }
+        };
+
+        var onPopupReady = function() {
+            var win = this.contentWindow;
+
+            if ( !win || win.location.host !== location.host ) {
+                return;
+            }
+
+            if ( typeof tbb.onBeforePopupReady === 'function' ) {
+                tbb.onBeforePopupReady.call(this);
+            }
+
+            new win.MutationObserver(resizePopupDelayed).observe(win.document.body, {
+                attributes: true,
+                characterData: true,
+                subtree: true
+            });
+
+            resizePopupDelayed();
+        };
+
+        iframe.addEventListener('load', onPopupReady, true);
+    };
+})();
+
+/******************************************************************************/
+
+// Firefox 28 and less
+
+(function() {
+    var tbb = vAPI.toolbarButton;
+    if ( tbb.init !== null ) {
+        return;
+    }
+    var CustomizableUI = null;
+    var forceLegacyToolbarButton = vAPI.localStorage.getBool('forceLegacyToolbarButton');
+    if ( !forceLegacyToolbarButton ) {
         try {
             CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
         } catch (ex) {
         }
     }
-
-    if (!CustomizableUI) {
-        // Create a fallback non-customizable UI button
-        var sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
-        var styleSheetUri = Services.io.newURI(vAPI.getURL("css/legacy-toolbar-button.css"), null, null);
-        var legacyButtonId = "uBlock-legacy-button"; // NOTE: must match legacy-toolbar-button.css
-        this.id = legacyButtonId;
-        this.viewId = legacyButtonId + "-panel";
-                
-        if (!sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
-            sss.loadAndRegisterSheet(styleSheetUri, sss.AUTHOR_SHEET); // Register global so it works in all windows, including palette
-        }
-
-        var addLegacyToolbarButton = function(window) {
-            var document = window.document;
-            var toolbox = document.getElementById('navigator-toolbox') || document.getElementById('mail-toolbox');
-            
-            if (toolbox) {
-                var palette = toolbox.palette;
-
-                if (!palette) {
-                    // palette might take a little longer to appear on some platforms, give it a small delay and try again
-                    window.setTimeout(function() {
-                        if (toolbox.palette) {
-                            addLegacyToolbarButton(window);
-                        }
-                    }, 250);
-                    return;
-                }
-
-                var toolbarButton = document.createElement('toolbarbutton');
-                toolbarButton.setAttribute('id', legacyButtonId);
-                toolbarButton.setAttribute('type', 'menu'); // type = panel would be more accurate, but doesn't look as good
-                toolbarButton.setAttribute('removable', 'true');
-                toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
-                toolbarButton.setAttribute('label', vAPI.toolbarButton.label);
-
-                var toolbarButtonPanel = document.createElement("panel");
-                // toolbarButtonPanel.setAttribute('level', 'parent'); NOTE: Setting level to parent breaks the popup for PaleMoon under linux (mouse pointer misaligned with content). For some reason.
-                vAPI.toolbarButton.populatePanel(document, toolbarButtonPanel);
-                toolbarButtonPanel.addEventListener('popupshowing', vAPI.toolbarButton.onViewShowing);
-                toolbarButtonPanel.addEventListener('popuphiding', vAPI.toolbarButton.onViewHiding);
-                toolbarButton.appendChild(toolbarButtonPanel);
-                
-                palette.appendChild(toolbarButton);
-
-                vAPI.toolbarButton.closePopup = function() {
-                    toolbarButtonPanel.hidePopup();
-                }
-
-                if (!vAPI.localStorage.getBool('legacyToolbarButtonAdded')) {
-                    // No button yet so give it a default location. If forcing the button, just put in in the palette rather than on any specific toolbar (who knows what toolbars will be available or visible!)
-                    var toolbar = !forceLegacyToolbarButton && document.getElementById('nav-bar');
-                    if (toolbar) {
-                        toolbar.appendChild(toolbarButton);
-                        toolbar.setAttribute('currentset', toolbar.currentSet);
-                        document.persist(toolbar.id, 'currentset');
-                    }
-                    vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
-                } else {
-                    // Find the place to put the button
-                    var toolbars = toolbox.externalToolbars.slice();
-                    for (var child of toolbox.children) {
-                        if (child.localName === 'toolbar') {
-                            toolbars.push(child);
-                        }
-                    }
-
-                    for (var toolbar of toolbars) {
-                        var currentsetString = toolbar.getAttribute('currentset');
-                        if (currentsetString) {
-                            var currentset = currentsetString.split(',');
-                            var index = currentset.indexOf(legacyButtonId);
-                            if (index >= 0) {
-                                // Found our button on this toolbar - but where on it?
-                                var before = null;
-                                for (var i = index + 1; i < currentset.length; i++) {
-                                    before = document.getElementById(currentset[i]);
-                                    if (before) {
-                                        toolbar.insertItem(legacyButtonId, before);
-                                        break;
-                                    }
-                                }
-                                if (!before) {
-                                    toolbar.insertItem(legacyButtonId);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        vAPI.toolbarButton.attachToNewWindow = function(win) {
-            addLegacyToolbarButton(win);
-        }
-
-        cleanupTasks.push(function() {
-            for ( var win of vAPI.tabs.getWindows() ) {
-                var toolbarButton = win.document.getElementById(legacyButtonId);
-                if (toolbarButton) {
-                    toolbarButton.parentNode.removeChild(toolbarButton);
-                }
-            }
-
-            if (sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
-                sss.unregisterSheet(styleSheetUri, sss.AUTHOR_SHEET);
-            }
-        }.bind(this));
+    if ( CustomizableUI !== null ) {
         return;
     }
 
-    this.CustomizableUI = CustomizableUI;
+    tbb.codePath = 'legacy';
+    tbb.id = 'uBlock0-legacy-button';   // NOTE: must match legacy-toolbar-button.css
+    tbb.viewId = tbb.id + '-panel';
 
-    this.defaultArea = CustomizableUI.AREA_NAVBAR;
-    this.styleURI = [
-        '#' + this.id + '.off {',
-            'list-style-image: url(',
-                vAPI.getURL('img/browsericons/icon16-off.svg'),
-            ');',
-        '}',
-        '#' + this.id + ' {',
-            'list-style-image: url(',
-                vAPI.getURL('img/browsericons/icon16.svg'),
-            ');',
-        '}',
-        '#' + this.viewId + ', #' + this.viewId + ' > iframe {',
-            'width: 160px;',
-            'height: 290px;',
-            'overflow: hidden !important;',
-        '}'
-    ];
+    var sss = null;
+    var styleSheetUri = null;
 
-    var platformVersion = Services.appinfo.platformVersion;
+    var addLegacyToolbarButton = function(window) {
+        var document = window.document;
 
-    if ( Services.vc.compare(platformVersion, '36.0') < 0 ) {
-        this.styleURI.push(
+        var toolbox = document.getElementById('navigator-toolbox') || document.getElementById('mail-toolbox');
+        if ( !toolbox ) {
+            return;
+        }
+
+        // palette might take a little longer to appear on some platforms,
+        // give it a small delay and try again.
+        var palette = toolbox.palette;
+        if ( !palette ) {
+            vAPI.setTimeout(function() {
+                if ( toolbox.palette ) {
+                    addLegacyToolbarButton(window);
+                }
+            }, 250);
+            return;
+        }
+
+        var toolbarButton = document.createElement('toolbarbutton');
+        toolbarButton.setAttribute('id', tbb.id);
+        // type = panel would be more accurate, but doesn't look as good
+        toolbarButton.setAttribute('type', 'menu');
+        toolbarButton.setAttribute('removable', 'true');
+        toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
+        toolbarButton.setAttribute('label', tbb.label);
+
+        var toolbarButtonPanel = document.createElement("panel");
+        // NOTE: Setting level to parent breaks the popup for PaleMoon under
+        // linux (mouse pointer misaligned with content). For some reason.
+        // toolbarButtonPanel.setAttribute('level', 'parent');
+        tbb.populatePanel(document, toolbarButtonPanel);
+        toolbarButtonPanel.addEventListener('popupshowing', tbb.onViewShowing);
+        toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
+        toolbarButton.appendChild(toolbarButtonPanel);
+        
+        palette.appendChild(toolbarButton);
+
+        tbb.closePopup = function() {
+            toolbarButtonPanel.hidePopup();
+        };
+
+        // No button yet so give it a default location. If forcing the button,
+        // just put in in the palette rather than on any specific toolbar (who
+        // knows what toolbars will be available or visible!)
+        var toolbar;
+        if ( !vAPI.localStorage.getBool('legacyToolbarButtonAdded') ) {
+            toolbar = document.getElementById('nav-bar');
+            if ( toolbar ) {
+                toolbar.appendChild(toolbarButton);
+                toolbar.setAttribute('currentset', toolbar.currentSet);
+                document.persist(toolbar.id, 'currentset');
+            }
+            vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
+            return;
+        }
+
+        // Find the place to put the button
+        var toolbars = toolbox.externalToolbars.slice();
+        for ( var child of toolbox.children ) {
+            if ( child.localName === 'toolbar' ) {
+                toolbars.push(child);
+            }
+        }
+
+        for ( toolbar of toolbars ) {
+            var currentsetString = toolbar.getAttribute('currentset');
+            if ( !currentsetString ) {
+                continue;
+            }
+            var currentset = currentsetString.split(',');
+            var index = currentset.indexOf(tbb.id);
+            if ( index === -1 ) {
+                continue;
+            }
+            // Found our button on this toolbar - but where on it?
+            var before = null;
+            for ( var i = index + 1; i < currentset.length; i++ ) {
+                before = document.getElementById(currentset[i]);
+                if ( before === null ) {
+                    continue;
+                }
+                toolbar.insertItem(tbb.id, before);
+                break;
+            }
+            if ( before === null ) {
+                toolbar.insertItem(tbb.id);
+            }
+        }
+    };
+
+    var onPopupCloseRequested = function({target}) {
+        if ( typeof tbb.closePopup === 'function' ) {
+            tbb.closePopup(target);
+        }
+    };
+
+    var shutdown = function() {
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var toolbarButton = win.document.getElementById(tbb.id);
+            if ( toolbarButton ) {
+                toolbarButton.parentNode.removeChild(toolbarButton);
+            }
+        }
+        if ( sss === null ) {
+            return;
+        }
+        if ( sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET) ) {
+            sss.unregisterSheet(styleSheetUri, sss.AUTHOR_SHEET);
+        }
+        sss = null;
+        styleSheetUri = null;
+
+        vAPI.messaging.globalMessageManager.removeMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+    };
+
+    tbb.attachToNewWindow = function(win) {
+        addLegacyToolbarButton(win);
+    };
+
+    tbb.init = function() {
+        vAPI.messaging.globalMessageManager.addMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+
+        sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+        styleSheetUri = Services.io.newURI(vAPI.getURL("css/legacy-toolbar-button.css"), null, null);
+
+        // Register global so it works in all windows, including palette
+        if ( !sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET) ) {
+            sss.loadAndRegisterSheet(styleSheetUri, sss.AUTHOR_SHEET);
+        }
+
+        cleanupTasks.push(shutdown);
+    };
+})();
+
+/******************************************************************************/
+
+// Firefox Australis < 36.
+
+(function() {
+    var tbb = vAPI.toolbarButton;
+    if ( tbb.init !== null ) {
+        return;
+    }
+    if ( Services.vc.compare(Services.appinfo.platformVersion, '36.0') >= 0 ) {
+        return null;
+    }
+    if ( vAPI.localStorage.getBool('forceLegacyToolbarButton') ) {
+        return null;
+    }
+    var CustomizableUI = null;
+    try {
+        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+    } catch (ex) {
+    }
+    if ( CustomizableUI === null ) {
+        return;
+    }
+    tbb.codePath = 'australis';
+    tbb.CustomizableUI = CustomizableUI;
+    tbb.defaultArea = CustomizableUI.AREA_NAVBAR;
+
+    var styleURI = null;
+
+    var onPopupCloseRequested = function({target}) {
+        if ( typeof tbb.closePopup === 'function' ) {
+            tbb.closePopup(target);
+        }
+    };
+
+    var shutdown = function() {
+        CustomizableUI.destroyWidget(tbb.id);
+
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var panel = win.document.getElementById(tbb.viewId);
+            panel.parentNode.removeChild(panel);
+            win.QueryInterface(Ci.nsIInterfaceRequestor)
+               .getInterface(Ci.nsIDOMWindowUtils)
+               .removeSheet(styleURI, 1);
+        }
+
+        vAPI.messaging.globalMessageManager.removeMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+    };
+
+    tbb.onBeforeCreated = function(doc) {
+        var panel = doc.createElement('panelview');
+
+        this.populatePanel(doc, panel);
+
+        doc.getElementById('PanelUI-multiView').appendChild(panel);
+
+        doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
+            .getInterface(Ci.nsIDOMWindowUtils)
+            .loadSheet(styleURI, 1);
+    };
+
+    tbb.onBeforePopupReady = function() {
+        // https://github.com/gorhill/uBlock/issues/83
+        // Add `portrait` class if width is constrained.
+        try {
+            this.contentDocument.body.classList.toggle(
+                'portrait',
+                CustomizableUI.getWidget(tbb.id).areaType === CustomizableUI.TYPE_MENU_PANEL
+            );
+        } catch (ex) {
+            /* noop */
+        }
+    };
+
+    tbb.init = function() {
+        vAPI.messaging.globalMessageManager.addMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+
+        var style = [
+            '#' + this.id + '.off {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16-off.svg'),
+                ');',
+            '}',
+            '#' + this.id + ' {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16.svg'),
+                ');',
+            '}',
+            '#' + this.viewId + ',',
+            '#' + this.viewId + ' > iframe {',
+                'width: 160px;',
+                'height: 290px;',
+                'overflow: hidden !important;',
+            '}',
             '#' + this.id + '[badge]:not([badge=""])::after {',
                 'position: absolute;',
                 'margin-left: -16px;',
@@ -2106,235 +2252,228 @@ vAPI.toolbarButton.init = function() {
                 'background: #666;',
                 'content: attr(badge);',
             '}'
+        ];
+
+        styleURI = Services.io.newURI(
+            'data:text/css,' + encodeURIComponent(style.join('')),
+            null,
+            null
         );
-    } else {
-        this.CUIEvents = {};
-        var updateBadge = function() {
-            var wId = vAPI.toolbarButton.id;
-            var buttonInPanel = CustomizableUI.getWidget(wId).areaType === CustomizableUI.TYPE_MENU_PANEL;
 
-            for ( var win of vAPI.tabs.getWindows() ) {
-                var button = win.document.getElementById(wId);
-                if ( button === null ) {
-                    continue;
-                }
-                if ( buttonInPanel ) {
-                    button.classList.remove('badged-button');
-                    continue;
-                }
-                button.classList.add('badged-button');
-            }
-
-            if ( buttonInPanel ) {
-                return;
-            }
-
-            // Anonymous elements need some time to be reachable
-            vAPI.setTimeout(this.updateBadgeStyle, 250);
-        }.bind(this.CUIEvents);
-
-        // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/CustomizableUI.jsm#Listeners
-        this.CUIEvents.onCustomizeEnd = updateBadge;
-        this.CUIEvents.onWidgetAdded = updateBadge;
-        this.CUIEvents.onWidgetUnderflow = updateBadge;
-
-        this.CUIEvents.updateBadgeStyle = function() {
-            var css = [
-                'background: #666',
-                'color: #fff'
-            ].join(';');
-
-            for ( var win of vAPI.tabs.getWindows() ) {
-                var button = win.document.getElementById(vAPI.toolbarButton.id);
-                if ( button === null ) {
-                    continue;
-                }
-                var badge = button.ownerDocument.getAnonymousElementByAttribute(
-                    button,
-                    'class',
-                    'toolbarbutton-badge'
-                );
-                if ( !badge ) {
-                    return;
-                }
-
-                badge.style.cssText = css;
-            }
+        this.closePopup = function(tabBrowser) {
+            CustomizableUI.hidePanelForNode(
+                tabBrowser.ownerDocument.getElementById(this.viewId)
+            );
         };
 
-        this.onCreated = function(button) {
-            button.setAttribute('badge', '');
-            vAPI.setTimeout(updateBadge, 250);
-        };
+        CustomizableUI.createWidget(this);
 
-        CustomizableUI.addListener(this.CUIEvents);
+        cleanupTasks.push(shutdown);
+    };
+})();
+
+/******************************************************************************/
+
+// Firefox Australis >= 36.
+
+(function() {
+    var tbb = vAPI.toolbarButton;
+    if ( tbb.init !== null ) {
+        return;
     }
+    if ( Services.vc.compare(Services.appinfo.platformVersion, '36.0') < 0 ) {
+        return null;
+    }
+    if ( vAPI.localStorage.getBool('forceLegacyToolbarButton') ) {
+        return null;
+    }
+    var CustomizableUI = null;
+    try {
+        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+    } catch (ex) {
+    }
+    if ( CustomizableUI === null ) {
+        return null;
+    }
+    tbb.CustomizableUI = CustomizableUI;
+    tbb.defaultArea = CustomizableUI.AREA_NAVBAR;
 
-    this.styleURI = Services.io.newURI(
-        'data:text/css,' + encodeURIComponent(this.styleURI.join('')),
-        null,
-        null
-    );
+    var CUIEvents = {};
 
-    this.closePopup = function(tabBrowser) {
-        CustomizableUI.hidePanelForNode(
-            tabBrowser.ownerDocument.getElementById(vAPI.toolbarButton.viewId)
-        );
+    var badgeCSSRules = [
+        'background: #666',
+        'color: #fff'
+    ].join(';');
+
+    var updateBadgeStyle = function() {
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var button = win.document.getElementById(tbb.id);
+            if ( button === null ) {
+                continue;
+            }
+            var badge = button.ownerDocument.getAnonymousElementByAttribute(
+                button,
+                'class',
+                'toolbarbutton-badge'
+            );
+            if ( !badge ) {
+                continue;
+            }
+
+            badge.style.cssText = badgeCSSRules;
+        }
     };
 
-    CustomizableUI.createWidget(this);
+    var updateBadge = function() {
+        var wId = tbb.id;
+        var buttonInPanel = CustomizableUI.getWidget(wId).areaType === CustomizableUI.TYPE_MENU_PANEL;
 
-    cleanupTasks.push(function() {
-        if ( this.CUIEvents ) {
-            CustomizableUI.removeListener(this.CUIEvents);
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var button = win.document.getElementById(wId);
+            if ( button === null ) {
+                continue;
+            }
+            if ( buttonInPanel ) {
+                button.classList.remove('badged-button');
+                continue;
+            }
+            button.classList.add('badged-button');
         }
 
-        CustomizableUI.destroyWidget(this.id);
-        
+        if ( buttonInPanel ) {
+            return;
+        }
+
+        // Anonymous elements need some time to be reachable
+        vAPI.setTimeout(updateBadgeStyle, 250);
+    }.bind(CUIEvents);
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/CustomizableUI.jsm#Listeners
+    CUIEvents.onCustomizeEnd = updateBadge;
+    CUIEvents.onWidgetAdded = updateBadge;
+    CUIEvents.onWidgetUnderflow = updateBadge;
+
+    var onPopupCloseRequested = function({target}) {
+        if ( typeof tbb.closePopup === 'function' ) {
+            tbb.closePopup(target);
+        }
+    };
+
+    var shutdown = function() {
+        CustomizableUI.removeListener(CUIEvents);
+        CustomizableUI.destroyWidget(tbb.id);
+
         for ( var win of vAPI.tabs.getWindows() ) {
-            var panel = win.document.getElementById(this.viewId);
+            var panel = win.document.getElementById(tbb.viewId);
             panel.parentNode.removeChild(panel);
             win.QueryInterface(Ci.nsIInterfaceRequestor)
                 .getInterface(Ci.nsIDOMWindowUtils)
-                .removeSheet(this.styleURI, 1);
+                .removeSheet(styleURI, 1);
         }
-    }.bind(this));
 
-    this.init = null;
-};
+
+        vAPI.messaging.globalMessageManager.removeMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+    };
+
+    var styleURI = null;
+
+    tbb.onBeforeCreated = function(doc) {
+        var panel = doc.createElement('panelview');
+
+        this.populatePanel(doc, panel);
+
+        doc.getElementById('PanelUI-multiView').appendChild(panel);
+
+        doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
+            .getInterface(Ci.nsIDOMWindowUtils)
+            .loadSheet(styleURI, 1);
+    };
+
+    tbb.onCreated = function(button) {
+        button.setAttribute('badge', '');
+        vAPI.setTimeout(updateBadge, 250);
+    };
+
+    tbb.onBeforePopupReady = function() {
+        // https://github.com/gorhill/uBlock/issues/83
+        // Add `portrait` class if width is constrained.
+        try {
+            this.contentDocument.body.classList.toggle(
+                'portrait',
+                CustomizableUI.getWidget(tbb.id).areaType === CustomizableUI.TYPE_MENU_PANEL
+            );
+        } catch (ex) {
+            /* noop */
+        }
+    };
+
+    tbb.closePopup = function(tabBrowser) {
+        CustomizableUI.hidePanelForNode(
+            tabBrowser.ownerDocument.getElementById(tbb.viewId)
+        );
+    };
+
+    tbb.init = function() {
+        vAPI.messaging.globalMessageManager.addMessageListener(
+            location.host + ':closePopup',
+            onPopupCloseRequested
+        );
+
+        CustomizableUI.addListener(CUIEvents);
+
+        var style = [
+            '#' + this.id + '.off {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16-off.svg'),
+                ');',
+            '}',
+            '#' + this.id + ' {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16.svg'),
+                ');',
+            '}',
+            '#' + this.viewId + ',',
+            '#' + this.viewId + ' > iframe {',
+                'width: 160px;',
+                'height: 290px;',
+                'overflow: hidden !important;',
+            '}'
+        ];
+
+        styleURI = Services.io.newURI(
+            'data:text/css,' + encodeURIComponent(style.join('')),
+            null,
+            null
+        );
+
+        CustomizableUI.createWidget(this);
+
+        cleanupTasks.push(shutdown);
+    };
+})();
 
 /******************************************************************************/
 
-vAPI.toolbarButton.onPopupCloseRequested = function({target}) {
-    if (vAPI.toolbarButton.closePopup) {
-        vAPI.toolbarButton.closePopup(target);
+// No toolbar button.
+
+(function() {
+    // Just to ensure the number of cleanup tasks is as expected: toolbar
+    // button code is one single cleanup task regardless of platform.
+    if ( vAPI.toolbarButton.init === null ) {
+        cleanupTasks.push(function(){});
     }
+})();
+
+/******************************************************************************/
+
+if ( vAPI.toolbarButton.init !== null ) {
+    vAPI.toolbarButton.init();
 }
 
 /******************************************************************************/
-
-vAPI.toolbarButton.onBeforeCreated = function(doc) {
-    var panel = doc.createElement('panelview');
-    
-    vAPI.toolbarButton.populatePanel(doc, panel);
-
-    doc.getElementById('PanelUI-multiView').appendChild(panel);
-
-    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
-        .getInterface(Ci.nsIDOMWindowUtils)
-        .loadSheet(this.styleURI, 1);
-};
-
-vAPI.toolbarButton.populatePanel = function(doc, panel) {
-    panel.setAttribute('id', this.viewId);
-
-    var iframe = doc.createElement('iframe');
-    iframe.setAttribute('type', 'content');
-
-    panel.appendChild(iframe);
-
-    var updateTimer = null;
-    var delayedResize = function(attempts) {
-        if ( updateTimer ) {
-            return;
-        }
-
-        // Sanity check
-        attempts = (attempts || 0) + 1;
-        if (attempts > 1/*000*/) {
-            debugger;
-            console.error('uBlock> delayedResize: giving up after too many attempts');
-            return;
-        }
-
-        updateTimer = vAPI.setTimeout(resizePopup, 10, attempts);
-    };
-    var resizePopup = function(attempts) {
-        updateTimer = null;
-        var body = iframe.contentDocument.body;
-        panel.parentNode.style.maxWidth = 'none';
-        // https://github.com/chrisaljoudi/uBlock/issues/730
-        // Voodoo programming: this recipe works
-        var toPixelString = pixels => pixels.toString() + 'px';
-
-        var clientHeight = body.clientHeight;
-        iframe.style.height = toPixelString(clientHeight);
-        panel.style.height = toPixelString(clientHeight + (panel.boxObject.height - panel.clientHeight));
-
-        var clientWidth = body.clientWidth;
-        iframe.style.width = toPixelString(clientWidth);
-        panel.style.width = toPixelString(clientWidth + (panel.boxObject.width - panel.clientWidth));
-
-        if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
-            delayedResize(attempts);
-        }
-    };
-
-    var CustomizableUI = this.CustomizableUI;
-    var onPopupReady = function() {
-        var win = this.contentWindow;
-
-        if ( !win || win.location.host !== location.host ) {
-            return;
-        }
-
-        if (CustomizableUI) {
-            // https://github.com/gorhill/uBlock/issues/83
-            // Add `portrait` class if width is constrained.
-            try {
-                iframe.contentDocument.body.classList.toggle(
-                    'portrait',
-                    CustomizableUI.getWidget(vAPI.toolbarButton.id).areaType === CustomizableUI.TYPE_MENU_PANEL
-                );
-            } catch (ex) {
-                /* noop */
-            }
-        }
-
-        new win.MutationObserver(delayedResize).observe(win.document.body, {
-            attributes: true,
-            characterData: true,
-            subtree: true
-        });
-
-        delayedResize();
-    };
-
-    iframe.addEventListener('load', onPopupReady, true);
-};
-
-/******************************************************************************/
-
-vAPI.toolbarButton.onViewShowing = function({target}) {
-    target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
-};
-
-/******************************************************************************/
-
-vAPI.toolbarButton.onViewHiding = function({target}) {
-    target.parentNode.style.maxWidth = '';
-    target.firstChild.setAttribute('src', 'about:blank');
-};
-
-/******************************************************************************/
-
-vAPI.toolbarButton.updateState = function(win, tabId) {
-    var button = win.document.getElementById(this.id);
-
-    if ( !button ) {
-        return;
-    }
-
-    var icon = this.tabs[tabId];
-
-    button.setAttribute('badge', icon && icon.badge || '');
-    button.classList.toggle('off', !icon || !icon.img);
-};
-
-/******************************************************************************/
-
-vAPI.toolbarButton.init();
-
 /******************************************************************************/
 
 vAPI.contextMenu = {
