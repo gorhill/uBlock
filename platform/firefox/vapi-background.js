@@ -2295,6 +2295,7 @@ vAPI.toolbarButton = {
     if ( CustomizableUI === null ) {
         return null;
     }
+    tbb.codePath = 'australis';
     tbb.CustomizableUI = CustomizableUI;
     tbb.defaultArea = CustomizableUI.AREA_NAVBAR;
 
