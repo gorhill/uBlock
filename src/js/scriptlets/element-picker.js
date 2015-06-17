@@ -952,6 +952,9 @@ var startPicker = function(details) {
         showDialog({ modifier: true });
         return;
     }
+
+    // A target was specified, but it wasn't found: abort.
+    stopPicker();
 };
 
 /******************************************************************************/
