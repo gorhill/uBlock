@@ -552,7 +552,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ nem engedte a következő lap betöltését:",
+    "message":"uBlock Origin nem engedte a következő lap betöltését:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -560,7 +560,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Ezekben található:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{

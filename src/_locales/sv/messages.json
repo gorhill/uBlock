@@ -552,7 +552,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock har förhindrat följande sida från att ladda:",
+    "message":"uBlock Origin har förhindrat följande sida från att ladda:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

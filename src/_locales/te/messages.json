@@ -556,11 +556,11 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"ఈది ఈ వడపోత వలన తీసుకోబడిన చర్య",
+    "message":"ఇది ఈ క్రింది వడపోతననుసారించి తీసుకోబడిన చర్య",
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"ఇందులో కలదు:",
+    "message":"ఈ వడపోత వున్న జాబితా పేరు:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
@@ -568,11 +568,11 @@
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"విండోని ముయి",
+    "message":"విండో మూయుము",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"{{hostname}} లొ నిరోధకాన్ని ఖచ్చితంగా అమలు చెయ్యొద్దు",
+    "message":"{{hostname}} తో అనుసంధానాన్ని అనుమతించాలా?",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
