@@ -39,6 +39,8 @@ toolbarpaletteitem #uBlock0-legacy-button[badge]::before {
 }
 
 /* Prevent pale moon from showing the arrow underneath the button */
+/* https://github.com/chrisaljoudi/uBlock/issues/1449#issuecomment-112112761 */
 #uBlock0-legacy-button .toolbarbutton-menu-dropmarker {
+    display: none;
     -moz-box-orient: horizontal;
 }
