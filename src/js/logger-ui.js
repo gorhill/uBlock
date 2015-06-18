@@ -68,6 +68,13 @@ var uglyRequestTypes = {
     'xhr': 'xmlhttprequest'
 };
 
+var staticFilterTypes = {
+    'doc': 'other',
+    'css': 'stylesheet',
+    'frame': 'subdocument',
+    'xhr': 'xmlhttprequest'
+};
+
 var timeOptions = {
     hour: '2-digit',
     minute: '2-digit',
@@ -781,6 +788,9 @@ var netFilteringManager = (function() {
 
     var uglyTypeFromSelector = function(pane) {
         var prettyType = selectValue('select.type.' + pane);
+        if ( pane === 'static' ) {
+            return staticFilterTypes[prettyType] || prettyType;
+        }
         return uglyRequestTypes[prettyType] || prettyType;
     };
 
