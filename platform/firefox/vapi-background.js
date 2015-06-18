@@ -1909,8 +1909,11 @@ vAPI.toolbarButton = {
 
         panel.appendChild(iframe);
 
-        var resizeTimer = null;
+        var toPx = function(pixels) {
+            return pixels.toString() + 'px';
+        };
 
+        var resizeTimer = null;
         var resizePopupDelayed = function(attempts) {
             if ( resizeTimer !== null ) {
                 return;
@@ -1932,15 +1935,14 @@ vAPI.toolbarButton = {
             panel.parentNode.style.maxWidth = 'none';
             // https://github.com/chrisaljoudi/uBlock/issues/730
             // Voodoo programming: this recipe works
-            var toPixelString = pixels => pixels.toString() + 'px';
 
             var clientHeight = body.clientHeight;
-            iframe.style.height = toPixelString(clientHeight);
-            panel.style.height = toPixelString(clientHeight + (panel.boxObject.height - panel.clientHeight));
+            iframe.style.height = toPx(clientHeight);
+            panel.style.height = toPx(clientHeight + panel.boxObject.height - panel.clientHeight);
 
             var clientWidth = body.clientWidth;
-            iframe.style.width = toPixelString(clientWidth);
-            panel.style.width = toPixelString(clientWidth + (panel.boxObject.width - panel.clientWidth));
+            iframe.style.width = toPx(clientWidth);
+            panel.style.width = toPx(clientWidth + panel.boxObject.width - panel.clientWidth);
 
             if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
                 resizePopupDelayed(attempts);
@@ -2027,7 +2029,7 @@ vAPI.toolbarButton = {
         toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
         toolbarButton.setAttribute('label', tbb.label);
 
-        var toolbarButtonPanel = document.createElement("panel");
+        var toolbarButtonPanel = document.createElement('panel');
         // NOTE: Setting level to parent breaks the popup for PaleMoon under
         // linux (mouse pointer misaligned with content). For some reason.
         // toolbarButtonPanel.setAttribute('level', 'parent');
@@ -2035,7 +2037,7 @@ vAPI.toolbarButton = {
         toolbarButtonPanel.addEventListener('popupshowing', tbb.onViewShowing);
         toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
         toolbarButton.appendChild(toolbarButtonPanel);
-        
+
         palette.appendChild(toolbarButton);
 
         tbb.closePopup = function() {
@@ -2047,13 +2049,17 @@ vAPI.toolbarButton = {
         // knows what toolbars will be available or visible!)
         var toolbar;
         if ( !vAPI.localStorage.getBool('legacyToolbarButtonAdded') ) {
-            toolbar = document.getElementById('nav-bar');
-            if ( toolbar ) {
-                toolbar.appendChild(toolbarButton);
-                toolbar.setAttribute('currentset', toolbar.currentSet);
-                document.persist(toolbar.id, 'currentset');
-            }
             vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
+            toolbar = document.getElementById('nav-bar');
+            if ( toolbar === null ) {
+                return;
+            }
+            // https://github.com/gorhill/uBlock/issues/264
+            // Find a child customizable palette, if any.
+            toolbar = toolbar.querySelector('.customization-target') || toolbar;
+            toolbar.appendChild(toolbarButton);
+            toolbar.setAttribute('currentset', toolbar.currentSet);
+            document.persist(toolbar.id, 'currentset');
             return;
         }
 
