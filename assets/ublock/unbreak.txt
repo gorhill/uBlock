@@ -209,3 +209,6 @@ ovh.strim.io#@##tweets
 # http://www.wilderssecurity.com/threads/ublock-origin-and-newegg.377014/
 # Until the fix is in EasyPrivacy
 @@||monetate.net/*$script,domain=www.newegg.com
+
+# https://github.com/gorhill/uBlock/issues/372
+@@||googleads.g.doubleclick.net/ads/preferences/getcookie$popup,domain=myaccount.google.com
