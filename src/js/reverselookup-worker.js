@@ -111,7 +111,7 @@ var fromCosmeticFilter = function(details) {
     } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
         reStr = rescape('c\vhlg0\v' + filter);
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
-        reStr = rescape('c\vhmg0\v') + '\\w+' + rescape('\v' + filter);
+        reStr = rescape('c\vhmg0\v') + '[a-z.-]+' + rescape('\v') + '[a-z]*' + rescape(filter);
     } else {                                    // all else
         reStr = rescape('c\vhhg0\v' + filter);
     }
