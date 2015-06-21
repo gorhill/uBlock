@@ -212,3 +212,6 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/372
 @@||googleads.g.doubleclick.net/ads/preferences/getcookie$popup,domain=myaccount.google.com
+
+# http://www.reddit.com/r/AsianBeauty/comments/3ak15v/til_if_youre_using_ublock_origin_some_of_the/
+@@||img.echosting.cafe24.com/design$image,domain=jolse.com

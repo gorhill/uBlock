@@ -8,6 +8,7 @@
 # http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
 # https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
 # http://blog.tedd.no/2014/11/25/sourceforge-malware/
+# http://www.information-age.com/industry/software/123459675/hotbed-malware-another-blow-sourceforge-google-discovers-588-pages-malicious-software
 # Using `other` will cause the whole site to be blocked through strict blocking,
 # yet the site will render properly if a user still decide to go ahead.
 ||sourceforge.net^$other
