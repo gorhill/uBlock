@@ -1,6 +1,6 @@
 # Submitting issues
 
-Any issue opened **without effort** to provide the required details **for me to reproduce** the problem will be closed as _invalid_.
+Any issue opened without effort to provide the required details for me to reproduce the problem will be closed as _invalid_. If you provide more details thereafter for me to reproduce the issue, I will reopen the it.
 
 ***
 
