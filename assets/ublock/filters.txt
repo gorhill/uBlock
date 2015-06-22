@@ -104,3 +104,12 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # Using `other` will cause the whole site to be blocked through strict blocking,
 # yet the site will render properly if a user still decide to go ahead.
 ||sourceforge.net^$other
+
+# https://www.trustpilot.com/review/www.softonic.com
+# http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
+# http://www.thesafemac.com/installmac-uninstaller-antics/
+||softonic.com^$other
+
+# http://www.lesnumeriques.com/appli-logiciel/telecharger-depuis-01net-nuit-gravement-a-sante-pc-n26763.html
+# http://www.journaldunet.com/solutions/dsi/des-malwares-sur-telecharger-com-01net-1012.shtml
+||www.01net.com^$other
