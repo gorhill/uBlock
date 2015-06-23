@@ -1471,6 +1471,16 @@ exports.restart = function() {
 
 /******************************************************************************/
 
+// Call when disabling uBlock, to ensure it doesn't stick around as a detached
+// window object in Firefox.
+
+exports.shutdown = function() {
+    suspendUpdateDaemon();
+    reset();
+};
+
+/******************************************************************************/
+
 return exports;
 
 })();

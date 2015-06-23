@@ -39,6 +39,7 @@ var µb = µBlock;
 
 vAPI.app.onShutdown = function() {
     µb.staticFilteringReverseLookup.shutdown();
+    µb.assetUpdater.shutdown();
     µb.staticNetFilteringEngine.reset();
     µb.sessionFirewall.reset();
     µb.permanentFirewall.reset();
