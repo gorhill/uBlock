@@ -330,9 +330,46 @@ var windowWatcher = {
         
     },
 
+    onClosed: function(win) {
+        win.removeEventListener('DOMContentLoaded', this.onReady);
+
+        var tabContainer;
+        var tabBrowser = getTabBrowser(win);
+        if ( !tabBrowser ) {
+            return;
+        }
+
+        if ( tabBrowser.deck ) {
+            // Fennec
+            tabContainer = tabBrowser.deck;
+        } else if ( tabBrowser.tabContainer ) {
+            tabContainer = tabBrowser.tabContainer;
+        }
+
+        tabContainer.removeEventListener('TabClose', tabWatcher.onTabClose);
+        tabContainer.removeEventListener('TabSelect', tabWatcher.onTabSelect);
+
+        for ( var tab of tabBrowser.tabs ) {
+            tabWatcher.onTabClose({ target: tab });
+
+            var browser = getBrowserForTab(tab);
+            if ( browser === null ) {
+                continue;
+            }
+
+            // Close extension tabs
+            var URI = browser.currentURI;
+            if ( URI.schemeIs('chrome') && URI.host === location.host ) {
+                vAPI.tabs._remove(tab, getTabBrowser(win));
+            }
+        }
+    },
+
     observe: function(win, topic) {
         if ( topic === 'domwindowopened' ) {
             win.addEventListener('DOMContentLoaded', this.onReady);
+        } else if (topic === 'domwindowclosed') {
+            this.onClosed(win);
         }
     }
 };
@@ -383,6 +420,9 @@ var getTabForBrowser = function(browser) {
         return null;
     }
     var win = browser.ownerGlobal;
+    if ( !win ) {
+        return null;
+    }
     if (vAPI.fennec) {
         return win.BrowserApp && win.BrowserApp.getTabForBrowser(browser);
     } else {
@@ -447,35 +487,7 @@ vAPI.tabs.registerListeners = function() {
         vAPI.contextMenu.remove();
 
         for ( var win of vAPI.tabs.getWindows() ) {
-            win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
-
-            var tabContainer;
-            var tabBrowser = getTabBrowser(win);
-            if ( !tabBrowser ) {
-                continue;
-            }
-
-            if ( tabBrowser.deck ) {
-                // Fennec
-                tabContainer = tabBrowser.deck;
-            } else if ( tabBrowser.tabContainer ) {
-                tabContainer = tabBrowser.tabContainer;
-            }
-
-            tabContainer.removeEventListener('TabClose', tabWatcher.onTabClose);
-            tabContainer.removeEventListener('TabSelect', tabWatcher.onTabSelect);
-
-            // Close extension tabs
-            for ( var tab of tabBrowser.tabs ) {
-                var browser = getBrowserForTab(tab);
-                if ( browser === null ) {
-                    continue;
-                }
-                var URI = browser.currentURI;
-                if ( URI.schemeIs('chrome') && URI.host === location.host ) {
-                    vAPI.tabs._remove(tab, getTabBrowser(win));
-                }
-            }
+            windowWatcher.onClosed(win);
         }
     });
 };
