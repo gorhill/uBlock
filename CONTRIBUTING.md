@@ -8,6 +8,7 @@ Any issue opened without effort to provide the required details for me to reprod
 
 1. Submit **bugs/issues only**.
     - Bugs occur, I will fix them.
+1. The logger is the tool of choice to use to help diagnose issues.
 1. Do **NOT**:
     - Submit design ideas.
     - Submit feature requests.
@@ -32,6 +33,7 @@ To help diagnose and fix the bug/issue, please always, **always**, **ALWAYS** in
 * Symptoms of the issue
   * Describe what you observe and consider broken behavior; this is what we'll be looking for after executing the steps
   * Example: video doesn't start playing, page layout broken
+* Include whatever relevant the logger reports.
 * A screenshot or transcription of **any of uBlock's preferences that differ from the defaults**
   * This includes a whitelisted website, enabled/disabled filter list, anything
   * Please do include everything different from the defaults whether or not it seems relevant to your issue
