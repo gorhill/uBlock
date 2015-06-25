@@ -1529,6 +1529,11 @@ var rowFilterer = (function() {
     uDom('#filterButton').on('click', onFilterButton);
     uDom('#filterInput').on('input', onFilterChangedAsync);
 
+    // https://github.com/gorhill/uBlock/issues/404
+    // Ensure page state is in sync with the state of its various widgets.
+    parseInput();
+    filterAll();
+
     return {
         filterOne: filterOne,
         filterAll: filterAll
@@ -1712,6 +1717,10 @@ uDom.onLoad(function() {
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
     uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
     uDom('#content').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
+
+    // https://github.com/gorhill/uBlock/issues/404
+    // Ensure page state is in sync with the state of its various widgets.
+    pageSelectorChanged();
 });
 
 /******************************************************************************/
