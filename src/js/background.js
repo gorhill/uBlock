@@ -65,7 +65,8 @@ return {
         parseAllABPHideFilters: true,
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
-        showIconBadge: true
+        showIconBadge: true,
+        webrtcIPAddressHidden: false
     },
 
     // https://github.com/chrisaljoudi/uBlock/issues/180

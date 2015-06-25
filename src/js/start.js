@@ -159,7 +159,8 @@ var onUserSettingsReady = function(fetched) {
     µb.contextMenu.toggle(userSettings.contextMenuEnabled);
     vAPI.browserSettings.set({
         'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-        'prefetching': !userSettings.prefetchingDisabled
+        'prefetching': !userSettings.prefetchingDisabled,
+        'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
     });
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);

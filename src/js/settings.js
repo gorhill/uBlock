@@ -204,6 +204,12 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('hyperlinkAuditingDisabled', this.checked);
         });
 
+    uDom('#webrtc-ipaddress-hidden')
+        .prop('checked', details.webrtcIPAddressHidden === true)
+        .on('change', function(){
+            changeUserSettings('webrtcIPAddressHidden', this.checked);
+        });
+
     uDom('#experimental-enabled')
         .prop('checked', details.experimentalEnabled === true)
         .on('change', function(){

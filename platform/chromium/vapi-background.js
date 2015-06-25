@@ -85,6 +85,15 @@ vAPI.browserSettings = {
                 });
                 break;
 
+            case 'webrtcIPAddress':
+                if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled === 'object' ) {
+                    chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
+                        value: !!details[setting],
+                        scope: 'regular'
+                    });
+                }
+                break;
+
             default:
                 break;
             }

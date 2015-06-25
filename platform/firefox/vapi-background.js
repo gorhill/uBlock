@@ -195,6 +195,16 @@ vAPI.browserSettings = {
                 }
                 break;
 
+            case 'webrtcIPAddress':
+                this.rememberOriginalValue('media.peerconnection', 'enabled');
+                value = !!details[setting];
+                if ( value === true ) {
+                    this.clear('media.peerconnection', 'enabled');
+                } else {
+                    this.setBool('media.peerconnection', 'enabled', false);
+                }
+                break;
+
             default:
                 break;
             }
