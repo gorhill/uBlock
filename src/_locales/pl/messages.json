@@ -183,6 +183,10 @@
     "message":"Nie śledź kliknięć odnośników\/beaconów",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Zapobiegaj wyciekom adresu IP poprzez interfejs WebRTC",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informacje<\/a>)",
     "description":"English: Enable experimental features"

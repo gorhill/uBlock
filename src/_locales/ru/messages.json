@@ -183,6 +183,10 @@
     "message":"Отключить проверку гиперссылок",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Предотвратить утечку локального IP-адреса через WebRTC",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Включить экспериментальные возможности  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Подробнее<\/a>)",
     "description":"English: Enable experimental features"

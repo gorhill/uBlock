@@ -76,19 +76,19 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"Укључи или искључи блокирање свих искачућих прозора за овај сајт",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"Укључи\/искључи строго блокирање за овај сајт",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Укључи\/искључи козметичко филтерисање за овај сајт",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Укључи\/искључи блокирање удаљених фонтова за овај сајт",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -120,11 +120,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"повезани домени",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} од {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -156,7 +156,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Сакриј држаче блокираних елемената",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -168,7 +168,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"Мод за далтонисте",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -176,11 +176,15 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Искључи скидање пре клика (спречава сваку везу са блокираним мрежним захтевима)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
     "message":"Disable hyperlink auditing\/beacon",
+    "description":"English: "
+  },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Prevent WebRTC from leaking local IP address",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

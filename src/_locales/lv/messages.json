@@ -183,6 +183,10 @@
     "message":"Atslēgt tīmekļa saišu izsekošanu",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Novērst savas IP adreses noplūdi ar WebRTC",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Iespējot eksperimentālas iespējas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sīkāk šeit<\/a>)",
     "description":"English: Enable experimental features"

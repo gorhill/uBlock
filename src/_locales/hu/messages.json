@@ -183,6 +183,10 @@
     "message":"Hiperlink vizsgálat kikapcsolása",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"WebRTC helyi IP cím szivárogtatásának megakadályozása",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Kísérleti funkciók engedélyezése (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Információk<\/a>)",
     "description":"English: Enable experimental features"

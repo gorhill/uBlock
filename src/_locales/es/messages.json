@@ -183,6 +183,10 @@
     "message":"Deshabilitar auditoría de hipervínculos\/señales (<i>beacon<\/i>)",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Impedir que WebRTC divulgue la dirección IP local",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"

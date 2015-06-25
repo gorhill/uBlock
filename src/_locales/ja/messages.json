@@ -183,6 +183,10 @@
     "message":"ハイパーリンクの監査／指針を無効にする",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Prevent WebRTC from leaking local IP address",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"実験的な機能を有効にする (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"

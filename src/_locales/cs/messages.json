@@ -183,6 +183,10 @@
     "message":"Vypnout auditování hypertextových odkazů",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Předejít úniku lokální IP adresy přes WebRTC",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
     "description":"English: Enable experimental features"

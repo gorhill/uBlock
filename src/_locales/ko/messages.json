@@ -183,6 +183,10 @@
     "message":"하이퍼링크 검사\/비콘 비활성화",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"WebRTC로부터 로컬 IP 주소 유출을 방지",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"

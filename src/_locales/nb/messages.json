@@ -183,6 +183,10 @@
     "message":"Deaktiver lenkesporing\/sporingsbilde",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Hindre WebRTC i å lekke din hjemme-IP-adresse",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"

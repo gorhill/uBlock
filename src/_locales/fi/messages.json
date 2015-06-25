@@ -183,6 +183,10 @@
     "message":"Poista käytöstä hyperlinkkien tarkistus",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Prevent WebRTC from leaking local IP address",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Salli kokeilulliset toiminnot (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Tietoa<\/a>)",
     "description":"English: Enable experimental features"

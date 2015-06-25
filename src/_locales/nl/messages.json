@@ -183,6 +183,10 @@
     "message":"Auditing\/beacon van koppeling uitschakelen",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Het lekken van het lokale IP-adres via WebRTC voorkomen",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Experimentele functies inschakelen (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>)",
     "description":"English: Enable experimental features"

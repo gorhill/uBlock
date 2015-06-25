@@ -183,6 +183,10 @@
     "message":"Stäng av hyperlänksrevidering",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Prevent WebRTC from leaking local IP address",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktivera experimentella funktioner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
     "description":"English: Enable experimental features"

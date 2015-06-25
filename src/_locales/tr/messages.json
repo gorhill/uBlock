@@ -183,6 +183,10 @@
     "message":"Köprü denetimini\/İşaretçiyi devre dışı bırak",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"WebRTC'nin yerel IP adreslerini sızdırmasını engelle",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Deneysel özellikleri etkinleştir (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Hakkında<\/a>)",
     "description":"English: Enable experimental features"

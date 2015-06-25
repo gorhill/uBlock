@@ -183,6 +183,10 @@
     "message":"Nonfungsikan pengauditan\/suar pranala",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Cegah WebRTC membocorkan alamat IP lokal",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Fungsikan fitur eksperimental (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Tentang<\/a>)",
     "description":"English: Enable experimental features"

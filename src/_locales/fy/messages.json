@@ -183,6 +183,10 @@
     "message":"Auditing fan keppelingen útskeakelje",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"It lekken fan it lokale IP-adres fia WebRTC opkeare",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Eksperimentele funksjes ynskeakelje (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Oer<\/a>)",
     "description":"English: Enable experimental features"
@@ -560,7 +564,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Fûn yn:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{

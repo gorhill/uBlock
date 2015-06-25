@@ -183,6 +183,10 @@
     "message":"تعطيل مراجعة الروابط التشعبية",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"منع WebRTC من كشف عنوان الـ IP المحلي",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"تفعيل الخصائص التجريبية (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>حول<\/a>)",
     "description":"English: Enable experimental features"

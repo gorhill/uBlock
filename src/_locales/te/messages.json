@@ -183,6 +183,10 @@
     "message":"చిరునామాల తానిఖిని నిషేధించు",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Prevent WebRTC from leaking local IP address",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"ప్రయోగాత్మక సామర్థ్యాల వాడుకను అనుమతించుము(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>మరిన్ని వివరాలు<\/a>)",
     "description":"English: Enable experimental features"

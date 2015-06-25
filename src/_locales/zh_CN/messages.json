@@ -183,6 +183,10 @@
     "message":"禁用超链接审核",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"避免 WebRTC 泄露本地IP地址",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"启用实验功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>关于<\/a>）",
     "description":"English: Enable experimental features"

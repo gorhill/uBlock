@@ -183,6 +183,10 @@
     "message":"Vô hiệu giám sát siêu liên kết",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Ngặn WebRTC làm lộ địa chỉ IP nội bộ",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Kích hoạt các tính năng thử nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Thông tin<\/a>)",
     "description":"English: Enable experimental features"

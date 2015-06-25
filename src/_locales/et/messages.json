@@ -183,6 +183,10 @@
     "message":"Keela hüperlingi auditeerimine",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Tõkesta WebRTC'l IP-aadressi nägemist",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Luba katselised funktsioonid (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>teave<\/a>)",
     "description":"English: Enable experimental features"

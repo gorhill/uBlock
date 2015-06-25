@@ -183,6 +183,10 @@
     "message":"חסום ניסיונות ל Hyperlink auditing\/beacon",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"מנע מ WebRTC להדליף כתובת ה IP לוקאלית",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
     "description":"English: Enable experimental features"

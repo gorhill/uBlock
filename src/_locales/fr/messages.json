@@ -183,6 +183,10 @@
     "message":"Désactiver l'audit hyperlien",
     "description":"English: "
   },
+  "settingsWebRTCIPAddressHiddenPrompt":{
+    "message":"Empêcher la fuite de l'adresse IP locale via WebRTC",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Activer les fonctionnalités expérimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>En savoir plus<\/a>)",
     "description":"English: Enable experimental features"
