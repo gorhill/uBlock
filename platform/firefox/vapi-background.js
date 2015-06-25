@@ -908,6 +908,12 @@ var tabWatcher = (function() {
 
     var currentBrowser = function() {
         var win = Services.wm.getMostRecentWindow('navigator:browser');
+        // https://github.com/gorhill/uBlock/issues/399
+        // getTabBrowser() can return null at browser launch time.
+        var tabBrowser = getTabBrowser(win);
+        if ( tabBrowser === null ) {
+            return null;
+        }
         return browserFromTarget(getTabBrowser(win).selectedTab);
     };
 
