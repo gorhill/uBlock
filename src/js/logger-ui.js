@@ -133,79 +133,15 @@ var tabIdFromClassName = function(className) {
 
 (function domInspector() {
     // Don't bother if the browser is not modern enough.
-    if ( typeof Map === undefined ) {
+    if ( typeof Map === undefined || typeof WeakMap === undefined ) {
         return;
     }
 
-    var enabled = false;
-    var state = '';
-    var fingerprint = '';
-    var fingerprintTimer = null;
-    var currentTabId = '';
+    var inspectedTabId = '';
     var currentSelector = '';
+    var showdomButton = uDom.nodeFromId('showdom');
     var inspector = uDom.nodeFromId('domInspector');
     var tabSelector = uDom.nodeFromId('pageSelector');
-
-    var inlineElementTags = [
-        'a', 'abbr', 'acronym',
-        'b', 'bdo', 'big', 'br', 'button',
-        'cite', 'code',
-        'del', 'dfn',
-        'em',
-        'font',
-        'i', 'img', 'input', 'ins',
-        'kbd',
-        'label',
-        'map',
-        'object',
-        'q',
-        'samp', 'select', 'small', 'span', 'strong', 'sub', 'sup',
-        'textarea', 'tt',
-        'u',
-        'var'
-    ].reduce(function(p, c) {
-        p[c] = true;
-        return p;
-    }, Object.create(null));
-
-    var startTimer = function() {
-        if ( fingerprintTimer === null ) {
-            fingerprintTimer = vAPI.setTimeout(fetchFingerprint, 2000);
-        }
-    };
-
-    var stopTimer = function() {
-        if ( fingerprintTimer !== null ) {
-            clearTimeout(fingerprintTimer);
-            fingerprintTimer = null;
-        }
-    };
-
-    var injectHighlighter = function(tabId) {
-        if ( tabId === '' ) {
-            return;
-        }
-        messager.send({
-            what: 'scriptlet',
-            tabId: tabId,
-            scriptlet: 'dom-highlight'
-        });
-    };
-
-    var removeHighlighter = function(tabId) {
-        if ( tabId === '' ) {
-            return;
-        }
-        messager.send({
-            what: 'sendMessageTo',
-            tabId: tabId,
-            channelName: 'scriptlets',
-            msg: {
-                what: 'dom-highlight',
-                action: 'shutdown'
-            }
-        });
-    };
 
     var nodeFromDomEntry = function(entry) {
         var node;
@@ -250,29 +186,6 @@ var tabIdFromClassName = function(className) {
         }
     };
 
-    var expandIfBlockElement = function(node) {
-        var ul = node.parentElement;
-        if ( ul === null ) {
-            return;
-        }
-        var li = ul.parentElement;
-        if ( li === null ) {
-            return;
-        }
-        if ( li.classList.contains('show') ) {
-            return;
-        }
-        var tag = node.firstElementChild.textContent;
-        var pos = tag.search(/[^a-z0-9]/);
-        if ( pos !== -1 ) {
-            tag = tag.slice(0, pos);
-        }
-        if ( inlineElementTags[tag] !== undefined ) {
-            return;
-        }
-        li.classList.add('show');
-    };
-
     var renderDOM = function(response) {
         var ul = document.createElement('ul');
         var lvl = 0;
@@ -314,9 +227,6 @@ var tabIdFromClassName = function(className) {
 
         removeAllChildren(inspector);
         inspector.appendChild(ul);
-
-        // Check for change at regular interval.
-        fingerprint = entries.length !== 0 ? entries[0].fp : '';
     };
 
     var selectorFromNode = function(node, nth) {
@@ -344,7 +254,7 @@ var tabIdFromClassName = function(className) {
     var onClick = function(ev) {
         ev.stopPropagation();
 
-        if ( currentTabId === '' ) {
+        if ( inspectedTabId === '' ) {
             return;
         }
 
@@ -366,12 +276,13 @@ var tabIdFromClassName = function(className) {
         if ( target.localName === 'code' ) {
             var original = target.classList.contains('filter') === false;
             messager.send({
-                what: 'sendMessageTo',
-                tabId: currentTabId,
-                channelName: 'scriptlets',
+                what: 'postMessageTo',
+                senderTabId: null,
+                senderChannel: 'logger-ui.js',
+                receiverTabId: inspectedTabId,
+                receiverChannel: 'dom-inspector.js',
                 msg: {
-                    what: 'dom-highlight',
-                    action: 'toggleNodes',
+                    what: 'toggleNodes',
                     original: original,
                     target: original !== target.classList.toggle('off'),
                     selector: selectorFromNode(target, original ? 1 : 2)
@@ -383,12 +294,13 @@ var tabIdFromClassName = function(className) {
         // Highlight and scrollto
         if ( target.localName === 'code' ) {
             messager.send({
-                what: 'sendMessageTo',
-                tabId: currentTabId,
-                channelName: 'scriptlets',
+                what: 'postMessageTo',
+                senderTabId: null,
+                senderChannel: 'logger-ui.js',
+                receiverTabId: inspectedTabId,
+                receiverChannel: 'dom-inspector.js',
                 msg: {
-                    what: 'dom-highlight',
-                    action: 'highlight',
+                    what: 'highlight',
                     selector: selectorFromNode(target),
                     scrollTo: true
                 }
@@ -404,12 +316,13 @@ var tabIdFromClassName = function(className) {
         var timerHandler = function() {
             mouseoverTimer = null;
             messager.send({
-                what: 'sendMessageTo',
-                tabId: currentTabId,
-                channelName: 'scriptlets',
+                what: 'postMessageTo',
+                senderTabId: null,
+                senderChannel: 'logger-ui.js',
+                receiverTabId: inspectedTabId,
+                receiverChannel: 'dom-inspector.js',
                 msg: {
-                    what: 'dom-highlight',
-                    action: 'highlight',
+                    what: 'highlight',
                     selector: selectorFromNode(mouseoverTarget),
                     scrollTo: true
                 }
@@ -417,6 +330,10 @@ var tabIdFromClassName = function(className) {
         };
 
         return function(ev) {
+            if ( inspectedTabId === '' ) {
+                return;
+            }
+
             // Find closest `li`
             var target = ev.target;
             while ( target !== null ) {
@@ -435,115 +352,165 @@ var tabIdFromClassName = function(className) {
         };
     })();
 
-    var onFingerprintFetched = function(response) {
-        if ( state !== 'fetchingFingerprint' ) {
-            return;
+    var pollTimer = null;
+    var fingerprint = null;
+
+    var currentTabId = function() {
+        if ( showdomButton.classList.contains('active') === false ) {
+            return '';
         }
-        state = '';
-        fingerprintTimer = null;
-        if ( !enabled ) {
-            return;
-        }
-        if ( response === fingerprint ) {
-            startTimer();
-            return;
-        }
-        fingerprint = response || '';
-        fetchDOM();
+        var tabId = tabIdFromClassName(tabSelector.value) || '';
+        return tabId !== 'bts' ? tabId : '';
     };
 
-    var fetchFingerprint = function() {
-        messager.send({
-            what: 'scriptlet',
-            tabId: currentTabId,
-            scriptlet: 'dom-fingerprint'
-        }, onFingerprintFetched);
-        state = 'fetchingFingerprint';
+    var cancelPollTimer = function() {
+        if ( pollTimer !== null ) {
+            clearTimeout(pollTimer);
+            pollTimer = null;
+        }
     };
 
     var onDOMFetched = function(response) {
-        if ( state !== 'fetchingDOM' ) {
+        if ( response === undefined || currentTabId() !== inspectedTabId ) {
+            shutdownInspector(inspectedTabId);
+            injectInspectorAsync(250);
             return;
         }
-        state = '';
-        if ( !enabled ) {
+
+        if ( response.layout === 'NOCHANGE' ) {
+            fetchDOMAsync();
             return;
         }
-        if ( Array.isArray(response) && response.length !== 0 ) {
-            renderDOM(response);
-            injectHighlighter(currentTabId);
-        } else {
-            fingerprint = '';
-        }
-        startTimer();
+
+        renderDOM(response.layout);
+        fingerprint = response.fingerprint;
+
+        fetchDOMAsync();
     };
 
     var fetchDOM = function() {
-        if ( currentTabId === '' ) {
-            removeAllChildren(inspector);
-            startTimer();
+        messager.send({
+            what: 'postMessageTo',
+            senderTabId: null,
+            senderChannel: 'logger-ui.js',
+            receiverTabId: inspectedTabId,
+            receiverChannel: 'dom-inspector.js',
+            msg: {
+                what: 'domLayout',
+                fingerprint: fingerprint
+            }
+        });
+        pollTimer = vAPI.setTimeout(function() {
+            pollTimer = null;
+            onDOMFetched();
+        }, 1001);
+    };
+
+    var fetchDOMAsync = function(delay) {
+        if ( pollTimer !== null ) {
             return;
         }
+        pollTimer = vAPI.setTimeout(function() {
+            pollTimer = null;
+            fetchDOM();
+        }, delay || 1001);
+    };
 
+    var injectInspector = function() {
+        var tabId = currentTabId();
+        // No valid tab, go back
+        if ( tabId === '' ) {
+            injectInspectorAsync();
+            return;
+        }
+        inspectedTabId = tabId;
+        fingerprint = null;
         messager.send({
             what: 'scriptlet',
-            tabId: currentTabId,
-            scriptlet: 'dom-layout'
-        }, onDOMFetched);
-        state = 'fetchingDOM';
+            tabId: tabId,
+            scriptlet: 'dom-inspector'
+        });
+        fetchDOMAsync(250);
+    };
+
+    var injectInspectorAsync = function(delay) {
+        if ( pollTimer !== null ) {
+            return;
+        }
+        if ( showdomButton.classList.contains('active') === false ) {
+            return;
+        }
+        pollTimer = vAPI.setTimeout(function() {
+            pollTimer = null;
+            injectInspector();
+        }, delay || 1001);
+    };
+
+    var shutdownInspector = function(tabId) {
+        messager.send({
+            what: 'postMessageTo',
+            senderTabId: null,
+            senderChannel: 'logger-ui.js',
+            receiverTabId: tabId,
+            receiverChannel: 'dom-inspector.js',
+            msg: { what: 'shutdown', }
+        });
+        removeAllChildren(inspector);
+        cancelPollTimer();
+        inspectedTabId = '';
     };
 
     var onTabIdChanged = function() {
-        if ( !enabled ) {
-            return;
+        if ( inspectedTabId !== currentTabId() ) {
+            shutdownInspector();
+            injectInspectorAsync(250);
         }
-        var previousTabId = currentTabId;
-        var tabId = tabIdFromClassName(tabSelector.value) || '';
-        currentTabId = tabId !== 'bts' && tabId !== '' ? tabId : '';
-        if ( currentTabId !== previousTabId ) {
-            removeHighlighter(previousTabId);
+    };
+
+    var onMessage = function(request) {
+        var msg = request.what === 'postMessageTo' ? request.msg : request;
+        switch ( msg.what ) {
+        case 'domLayout':
+            cancelPollTimer();
+            onDOMFetched(msg);
+            break;
+
+        default:
+            break;
         }
-        if ( state === 'fetchingDOM' ) {
-            return;
-        }
-        fetchDOM();
     };
 
     var toggleOn = function() {
-        if ( enabled ) {
-            return;
-        }
-        enabled = true;
         window.addEventListener('beforeunload', toggleOff);
         inspector.addEventListener('click', onClick, true);
         inspector.addEventListener('mouseover', onMouseOver, true);
         tabSelector.addEventListener('change', onTabIdChanged);
-        onTabIdChanged();
         inspector.classList.add('enabled');
+        messager.addListener(onMessage);
+        injectInspector();
     };
 
     var toggleOff = function() {
-        removeHighlighter(currentTabId);
+        messager.removeListener(onMessage);
+        cancelPollTimer();
+        shutdownInspector();
         window.removeEventListener('beforeunload', toggleOff);
         inspector.removeEventListener('click', onClick, true);
         inspector.removeEventListener('mouseover', onMouseOver, true);
         tabSelector.removeEventListener('change', onTabIdChanged);
-        removeAllChildren(inspector);
-        stopTimer();
-        currentTabId = currentSelector = fingerprint = '';
-        enabled = false;
+        currentSelector = inspectedTabId = '';
         inspector.classList.remove('enabled');
     };
 
     var toggle = function() {
-        if ( uDom.nodeFromId('showdom').classList.toggle('active') ) {
+        if ( showdomButton.classList.toggle('active') ) {
             toggleOn();
         } else {
             toggleOff();
         }
     };
 
-    uDom('#showdom').on('click', toggle);
+    showdomButton.addEventListener('click', toggle);
 })();
 
 /******************************************************************************/

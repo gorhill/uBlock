@@ -1239,10 +1239,30 @@ vAPI.messaging.setup = function(defaultHandler) {
 
 /******************************************************************************/
 
-vAPI.messaging.send = function(tabId, channelName, message) {
-    var ffTabId = tabId || '';
+// "Auxiliary process": any process other than main process.
+//
+// Main process to auxiliary processes messaging. The approach is that of
+// smoke-signal messaging, so emitters have to be ready to deal with no
+// response at all (i.e. use timeout where needed).
+//
+// Mandatory:
+// -   receiverTabId: Which tab to send the message.
+//                    No target tab id means sends to all tabs.
+// - receiverChannel: Which channel to send the message.
+//
+// Optional:
+// -     senderTabId: From which tab the message originates.
+// -   senderChannel: From which channel the message originates.
+// These optional fields are useful for the target, and may be used
+// to send back a response to the sender.
+
+vAPI.messaging.post = function(message) {
+    var ffTabId = message.receiverTabId || '';
     var targetId = location.host + ':broadcast';
-    var payload = JSON.stringify({ channelName: channelName, msg: message });
+    var payload = JSON.stringify({
+        channelName: message.receiverChannel,
+        msg: message
+    });
 
     if ( ffTabId === '' ) {
         this.globalMessageManager.broadcastAsyncMessage(targetId, payload);

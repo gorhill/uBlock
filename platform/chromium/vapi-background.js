@@ -603,7 +603,7 @@ vAPI.messaging.onPortMessage = function(request, port) {
         return;
     }
 
-    console.error('µBlock> messaging > unknown request: %o', request);
+    console.error('uBlock> messaging > unknown request: %o', request);
 
     // Unhandled:
     // Need to callback anyways in case caller expected an answer, or
@@ -661,9 +661,26 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.messaging.send = function(tabId, channelName, message) {
+// "Auxiliary process": any process other than main process.
+//
+// Main process to auxiliary processes messaging. The approach is that of
+// smoke-signal messaging, so emitters have to be ready to deal with no
+// response at all (i.e. use timeout where needed).
+//
+// Mandatory:
+// -   receiverTabId: Which tab to send the message.
+//                    No target tab id means sends to all tabs.
+// - receiverChannel: Which channel to send the message.
+//
+// Optional:
+// -     senderTabId: From which tab the message originates.
+// -   senderChannel: From which channel the message originates.
+// These optional fields are useful for the target, and may be used
+// to send back a response to the sender.
+
+vAPI.messaging.post = function(message) {
     var port;
-    var chromiumTabId = toChromiumTabId(tabId);
+    var chromiumTabId = toChromiumTabId(message.receiverTabId);
     for ( var portName in this.ports ) {
         if ( this.ports.hasOwnProperty(portName) === false ) {
             continue;
@@ -673,7 +690,7 @@ vAPI.messaging.send = function(tabId, channelName, message) {
             continue;
         }
         port.postMessage({
-            channelName: channelName,
+            channelName: message.receiverChannel,
             msg: message
         });
         if ( chromiumTabId !== 0 ) {
