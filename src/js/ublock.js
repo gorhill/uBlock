@@ -296,7 +296,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         return;
     }
     this.epickerTarget = targetElement || '';
-    vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/element-picker.js' });
+    this.scriptlets.inject(tabId, 'element-picker');
     if ( typeof vAPI.tabs.select === 'function' ) {
         vAPI.tabs.select(tabId);
     }
@@ -378,10 +378,10 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // Take action if needed
     if ( details.name === 'no-cosmetic-filtering' ) {
-        vAPI.tabs.injectScript(details.tabId, {
-            file: 'js/scriptlets/cosmetic-' + (details.state ? 'off' : 'on') + '.js',
-            allFrames: true
-        });
+        this.scriptlets.injectDeep(
+            details.tabId,
+            details.state ? 'cosmetic-off' : 'cosmetic-on'
+        );
         return;
     }
 
@@ -391,23 +391,12 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.surveyCosmeticFilters = function(tabId, callback) {
-    callback = callback || this.noopFunc;
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-        callback();
-        return;
-    }
-    vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/cosmetic-survey.js' }, callback);
-};
-
-/******************************************************************************/
-
 µBlock.logCosmeticFilters = (function() {
     var tabIdToTimerMap = {};
 
     var injectNow = function(tabId) {
         delete tabIdToTimerMap[tabId];
-        vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/cosmetic-logger.js' });
+        µBlock.scriptlets.inject(tabId, 'cosmetic-logger');
     };
 
     var injectAsync = function(tabId) {
@@ -425,13 +414,67 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.scriptletGotoImageURL = function(details) {
-    if ( vAPI.isBehindTheSceneTabId(details.tabId) ) {
-        return;
-    }
-    this.scriptlets.gotoImageURL = details.url;
-    vAPI.tabs.injectScript(details.tabId, { file: 'js/scriptlets/goto-img.js' });
-};
+µBlock.scriptlets = (function() {
+    var pendingEntries = Object.create(null);
+
+    var Entry = function(tabId, scriptlet, callback) {
+        this.tabId = tabId;
+        this.scriptlet = scriptlet;
+        this.callback = callback;
+        this.timer = vAPI.setTimeout(this.service.bind(this), 1000);
+    };
+
+    Entry.prototype.service = function(response) {
+        if ( this.timer !== null ) {
+            clearTimeout(this.timer);
+        }
+        delete pendingEntries[makeKey(this.tabId, this.scriptlet)];
+        this.callback(response);
+    };
+
+    var makeKey = function(tabId, scriptlet) {
+        return tabId + ' ' + scriptlet;
+    };
+
+    var report = function(tabId, scriptlet, response) {
+        var key = makeKey(tabId, scriptlet);
+        var entry = pendingEntries[key];
+        if ( entry === undefined ) {
+            return;
+        }
+        entry.service(response);
+    };
+
+    var inject = function(tabId, scriptlet, callback) {
+        if ( typeof callback === 'function' ) {
+            if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+                callback();
+                return;
+            }
+            var key = makeKey(tabId, scriptlet);
+            if ( pendingEntries[key] !== undefined ) {
+                callback();
+                return;
+            }
+            pendingEntries[key] = new Entry(tabId, scriptlet, callback);
+        }
+        vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/' + scriptlet + '.js' });
+    };
+
+    // TODO: think about a callback mechanism.
+    var injectDeep = function(tabId, scriptlet) {
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/scriptlets/' + scriptlet + '.js',
+            allFrames: true
+        });
+    };
+
+    return {
+        inject: inject,
+        injectDeep: injectDeep,
+        report: report
+    };
+})();
 
 /******************************************************************************/
 

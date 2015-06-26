@@ -6,37 +6,42 @@
 <link rel="stylesheet" type="text/css" href="css/logger-ui.css">
 <title data-i18n="statsPageName"></title>
 </head>
-<body class="compactView f">
+<body>
 
-<div id="toolbar">
+<div class="permatoolbar">
     <div>
         <select id="pageSelector">
             <option value="" data-i18n="logAll">
             <option value="tab_bts" data-i18n="logBehindTheScene">
-            </select>
-        <span id="refresh" class="button disabled fa">&#xf021;</span>
-        </div>
-    <div>
-        <span id="compactViewToggler" class="button fa"></span>
-        <span id="clean" class="button fa disabled">&#xf00d;</span>
-        <span id="clear" class="button fa disabled">&#xf12d;</span>
-        <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
-        <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+        </select>
+        <span id="refresh" class="button disabled fa needtab">&#xf021;</span>
+        <span id="showdom" class="button fa">&#xf121;</span>
+    </div>
+</div>
+
+<div id="domInspector">
+</div>
+
+<div id="events" class="compactView f">
+    <div class="permatoolbar">
+        <div>
+            <span id="compactViewToggler" class="button fa"></span>
+            <span id="clean" class="button fa disabled">&#xf00d;</span>
+            <span id="clear" class="button fa disabled">&#xf12d;</span>
+            <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
+            <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
         </div>
     </div>
-
-<div id="content">
     <style id="tabFilterer" scoped></style>
     <style id="popupFilterer" scoped></style>
     <table>
         <colgroup><col><col><col><col><col></colgroup>
         <tbody></tbody>
-        </table>
+    </table>
+    <div id="popupContainer">
+        <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
     </div>
-
-<div id="popupContainer">
-    <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
-    </div>
+</div>
 
 <div id="templates" style="display: none;">
     <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
@@ -80,6 +85,9 @@
         </div>
     </div>
     <div id="filterFinderDialog" class="modalDialog">
+        <div class="dialog"></div>
+    </div>
+    <div id="cosmeticFilteringDialog" class="modalDialog">
         <div class="dialog"></div>
     </div>
     <div id="filterFinderDialogSentence1"><span><span></span><code></code><span></span></span></div>

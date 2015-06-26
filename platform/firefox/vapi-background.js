@@ -1026,7 +1026,6 @@ var tabWatcher = (function() {
             tabContainer.removeEventListener('TabSelect', onSelect);
         }
 
-        // Close extension tabs
         var browser, URI, tabId;
         for ( var tab of tabBrowser.tabs ) {
             browser = tabWatcher.browserFromTarget(tab);
@@ -1034,6 +1033,7 @@ var tabWatcher = (function() {
                 continue;
             }
             URI = browser.currentURI;
+            // Close extension tabs
             if ( URI.schemeIs('chrome') && URI.host === location.host ) {
                 vAPI.tabs._remove(tab, getTabBrowser(this));
             }
@@ -1235,6 +1235,35 @@ vAPI.messaging.setup = function(defaultHandler) {
 
         vAPI.messaging.defaultHandler = null;
     });
+};
+
+/******************************************************************************/
+
+vAPI.messaging.send = function(tabId, channelName, message) {
+    var ffTabId = tabId || '';
+    var targetId = location.host + ':broadcast';
+    var payload = JSON.stringify({ channelName: channelName, msg: message });
+
+    if ( ffTabId === '' ) {
+        this.globalMessageManager.broadcastAsyncMessage(targetId, payload);
+        return;
+    }
+
+    var browser = tabWatcher.browserFromTabId(ffTabId);
+    if ( browser === null ) {
+        return;
+    }
+
+    var messageManager = browser.messageManager || null;
+    if ( messageManager === null ) {
+        return;
+    }
+
+    if ( messageManager.sendAsyncMessage ) {
+        messageManager.sendAsyncMessage(targetId, payload);
+    } else {
+        messageManager.broadcastAsyncMessage(targetId, payload);
+    }
 };
 
 /******************************************************************************/

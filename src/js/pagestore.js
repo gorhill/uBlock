@@ -316,11 +316,13 @@ PageStore.prototype.init = function(tabId) {
         'cosmetic-filtering'
     );
     if ( this.skipCosmeticFiltering && µb.logger.isEnabled() ) {
+        // https://github.com/gorhill/uBlock/issues/370
+        // Log using `cosmetic-filtering`, not `elemhide`.
         µb.logger.writeOne(
             tabId,
             'net',
             µb.staticNetFilteringEngine.toResultString(true),
-            'elemhide',
+            'cosmetic-filtering',
             tabContext.rawURL,
             this.tabHostname,
             this.tabHostname

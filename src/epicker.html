@@ -6,11 +6,11 @@
 }
 html, body {
     background: transparent !important;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
     font: 12px sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
 }
 ul, li, div {
     display: block;
@@ -42,9 +42,6 @@ button:not(:disabled):hover {
 }
 #create:not(:disabled) {
     background-color: #ffdca8;
-}
-aside {
-    background-color: #eee;
 }
 section {
     border: 0;
@@ -80,7 +77,7 @@ ul {
     overflow: hidden;
 }
 aside > ul {
-    height: 12em;
+    height: 16em;
     overflow-y: auto;
 }
 aside > ul > li:first-of-type {
@@ -129,16 +126,20 @@ svg > path + path {
     fill: rgba(255,31,31,0.25);
 }
 aside {
+    background-color: #eee;
     bottom: 4px;
+    box-sizing: border-box;
+    visibility: hidden;
+    height: calc(40% - 4px);
     padding: 4px;
-    display: none;
     position: fixed;
     right: 4px;
-    width: 30em;
+    width: calc(40% - 4px);
 }
 body.paused > aside {
-    opacity: 0.2;
-    display: block;
+    opacity: 0.1;
+    visibility: visible;
+    z-index: 100;
 }
 body.paused > aside:hover {
     opacity: 1;

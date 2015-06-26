@@ -62,10 +62,6 @@ var onMessage = function(request, sender, callback) {
         µb.assets.get(request.url, callback);
         return;
 
-    case 'reloadAllFilters':
-        µb.reloadAllFilters(callback);
-        return;
-
     case 'listsFromNetFilter':
         µb.staticFilteringReverseLookup.fromNetFilter(
             request.compiledFilter,
@@ -80,6 +76,14 @@ var onMessage = function(request, sender, callback) {
             request.rawFilter,
             callback
         );
+        return;
+
+    case 'reloadAllFilters':
+        µb.reloadAllFilters(callback);
+        return;
+
+    case 'scriptlet':
+        µb.scriptlets.inject(request.tabId, request.scriptlet, callback);
         return;
 
     default:
@@ -137,10 +141,6 @@ var onMessage = function(request, sender, callback) {
         vAPI.tabs.open(request.details);
         break;
 
-    case 'scriptletGotoImageURL':
-        µb.scriptletGotoImageURL(request);
-        break;
-
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
             vAPI.tabs.reload(request.tabId);
@@ -150,8 +150,16 @@ var onMessage = function(request, sender, callback) {
         }
         break;
 
+    case 'scriptletResponse':
+        µb.scriptlets.report(tabId, request.scriptlet, request.response);
+        break;
+
     case 'selectFilterLists':
         µb.selectFilterLists(request.switches);
+        break;
+
+    case 'sendMessageTo':
+        vAPI.messaging.send(request.tabId, request.channelName, request.msg);
         break;
 
     case 'toggleHostnameSwitch':
@@ -350,7 +358,7 @@ var getPopupDataLazy = function(tabId, callback) {
         return;
     }
 
-    µb.surveyCosmeticFilters(tabId, function() {
+    µb.scriptlets.inject(tabId, 'cosmetic-survey', function() {
         r.hiddenElementCount = pageStore.hiddenElementCount;
         callback(r);
     });
@@ -1373,6 +1381,8 @@ var logCosmeticFilters = function(tabId, details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
+
     // Async
     switch ( request.what ) {
     default:
@@ -1381,13 +1391,8 @@ var onMessage = function(request, sender, callback) {
 
     // Sync
     var response;
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
 
     switch ( request.what ) {
-    case 'gotoImageURL':
-        response = µb.scriptlets.gotoImageURL;
-        break;
-
     case 'liveCosmeticFilteringData':
         var pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore ) {
@@ -1407,6 +1412,42 @@ var onMessage = function(request, sender, callback) {
 };
 
 vAPI.messaging.listen('scriptlets', onMessage);
+
+/******************************************************************************/
+
+})();
+
+
+/******************************************************************************/
+/******************************************************************************/
+
+// devtools
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+    default:
+        break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('devtools', onMessage);
 
 /******************************************************************************/
 

@@ -26,6 +26,8 @@
 
 /******************************************************************************/
 
+const {classes: Cc} = Components;
+
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
@@ -34,7 +36,7 @@ let version;
 const hostName = 'ublock0';
 const restartListener = {
     get messageManager() {
-        return Components.classes['@mozilla.org/parentprocessmessagemanager;1']
+        return Cc['@mozilla.org/parentprocessmessagemanager;1']
             .getService(Components.interfaces.nsIMessageListenerManager);
     },
 
@@ -51,7 +53,7 @@ function startup(data, reason) {
         version = data.version;
     }
 
-    let appShell = Components.classes['@mozilla.org/appshell/appShellService;1']
+    let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Components.interfaces.nsIAppShellService);
 
     let onReady = function(e) {
@@ -96,7 +98,7 @@ function startup(data, reason) {
         return;
     }
 
-    let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
+    let ww = Cc['@mozilla.org/embedcomp/window-watcher;1']
         .getService(Components.interfaces.nsIWindowWatcher);
 
     ww.registerNotification({
@@ -141,7 +143,7 @@ function shutdown(data, reason) {
 
 function install(/*aData, aReason*/) {
     // https://bugzil.la/719376
-    Components.classes['@mozilla.org/intl/stringbundle;1']
+    Cc['@mozilla.org/intl/stringbundle;1']
         .getService(Components.interfaces.nsIStringBundleService)
         .flushBundles();
 }

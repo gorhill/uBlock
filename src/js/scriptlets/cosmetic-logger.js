@@ -31,13 +31,11 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
-    //console.debug('cosmetic-logger.js > not a HTLMDocument');
     return;
 }
 
 // This can happen
 if ( typeof vAPI !== 'object' ) {
-    //console.debug('cosmetic-logger.js > vAPI not found');
     return;
 }
 
@@ -88,6 +86,7 @@ localMessager.send({
     matchedSelectors: matchedSelectors
 }, function() {
     localMessager.close();
+    localMessager = null;
 });
 
 /******************************************************************************/

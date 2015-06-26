@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
+    uBlock Origin - a browser extension to block requests.
     Copyright (C) 2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -31,61 +31,33 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
-    //console.debug('cosmetic-off.js > not a HTLMDocument');
     return;
 }
 
 // This can happen
 if ( typeof vAPI !== 'object' ) {
-    //console.debug('cosmetic-off.js > no vAPI');
     return;
 }
 
 /******************************************************************************/
 
-var styles = vAPI.styles;
+// Some kind of fingerprint for the DOM, without incurring too much overhead.
 
-if ( Array.isArray(styles) === false ) {
-    return;
+var url = window.location.href;
+var pos = url.indexOf('#');
+if ( pos !== -1 ) {
+    url = url.slice(0, pos);
 }
+var fingerprint = url + '{' + document.getElementsByTagName('*').length.toString() + '}';
 
-/******************************************************************************/
-
-// Remove all cosmetic filtering-related styles from the DOM
-
-var selectors = [];
-var reProperties = /\s*\{[^}]+\}\s*/;
-var style, i;
-
-i = styles.length;
-while ( i-- ) {
-    style = styles[i];
-    if ( style.parentElement === null ) {
-        continue;
-    }
-    style.parentElement.removeChild(style);
-    selectors.push(style.textContent.replace(reProperties, ''));
-}
-
-// Remove `display: none !important` attribute
-
-if ( selectors.length === 0 ) {
-    return;
-}
-
-var elems = [];
-try {
-    elems = document.querySelectorAll(selectors.join(','));
-} catch (e) {
-}
-
-i = elems.length;
-while ( i-- ) {
-    style = elems[i].style;
-    if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
-        style.removeProperty('display');
-    }
-}
+var localMessager = vAPI.messaging.channel('scriptlets');
+localMessager.send({
+    what: 'scriptletResponse',
+    scriptlet: 'dom-fingerprint',
+    response: fingerprint
+}, function() {
+    localMessager.close();
+});
 
 /******************************************************************************/
 
