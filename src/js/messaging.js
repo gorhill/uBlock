@@ -141,7 +141,7 @@ var onMessage = function(request, sender, callback) {
         vAPI.tabs.open(request.details);
         break;
 
-    // Passthrough for auxiliary script to auxiliary script messaging
+    // Passthrough for auxiliary process to auxiliary process messaging.
     case 'postMessageTo':
         request.senderTabId = tabId;
         vAPI.messaging.post(request);
