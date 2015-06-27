@@ -144,8 +144,9 @@ var tabIdFromClassName = function(className) {
     var tabSelector = uDom.nodeFromId('pageSelector');
 
     var nodeFromDomEntry = function(entry) {
-        var node;
+        var node, value;
         var li = document.createElement('li');
+        li.setAttribute('id', entry.nid);
         // expander/collapser
         node = document.createElement('span');
         li.appendChild(node);
@@ -154,11 +155,11 @@ var tabIdFromClassName = function(className) {
         node.textContent = entry.sel;
         li.appendChild(node);
         // descendant count
-        if ( entry.cnt !== 0 ) {
-            node = document.createElement('span');
-            node.textContent = entry.cnt.toLocaleString();
-            li.appendChild(node);
-        }
+        value = entry.cnt || 0;
+        node = document.createElement('span');
+        node.textContent = value !== 0 ? value.toLocaleString() : '';
+        node.setAttribute('data-cnt', value);
+        li.appendChild(node);
         // cosmetic filter
         if ( entry.filter !== undefined ) {
             node = document.createElement('code');
@@ -186,10 +187,10 @@ var tabIdFromClassName = function(className) {
         }
     };
 
-    var renderDOM = function(response) {
+    var renderDOMFull = function(response) {
         var ul = document.createElement('ul');
         var lvl = 0;
-        var entries = response;
+        var entries = response.layout;
         var n = entries.length;
         var li, entry;
         for ( var i = 0; i < n; i++ ) {
@@ -227,6 +228,85 @@ var tabIdFromClassName = function(className) {
 
         removeAllChildren(inspector);
         inspector.appendChild(ul);
+    };
+
+    var patchIncremental = function(from, delta) {
+        var span, cnt;
+        var li = from.parentElement.parentElement;
+        var patchCosmeticHide = delta >= 0 &&
+                                from.classList.contains('isCosmeticFilter') &&
+                                li.classList.contains('hasCosmeticFilter') === false;
+        for ( ; li.localName === 'li'; li = li.parentElement.parentElement ) {
+            span = li.children[2];
+            if ( delta !== 0 ) {
+                cnt = parseInt(span.getAttribute('data-cnt'), 10) + delta;
+                span.textContent = cnt !== 0 ? cnt.toLocaleString() : '';
+                span.setAttribute('data-cnt', cnt);
+            }
+            if ( patchCosmeticHide ) {
+                li.classList.add('hasCosmeticFilter');
+            }
+        }
+    };
+
+    var renderDOMIncremental = function(response) {
+        // Process each journal entry:
+        //  1 = node added
+        // -1 = node removed
+        var journal = response.journal;
+        var nodes = response.nodes;
+        var entry, previous, li, ul;
+        for ( var i = 0, n = journal.length; i < n; i++ ) {
+            entry = journal[i];
+            // Remove node
+            if ( entry.what === -1 ) {
+                li = document.getElementById(entry.nid);
+                if ( li === null ) {
+                    continue;
+                }
+                patchIncremental(li, -1);
+                li.parentNode.removeChild(li);
+                continue;
+            }
+            // Modify node
+            if ( entry.what === 0 ) {
+                // TODO: update selector/filter
+                continue;
+            }
+            // Add node as sibling
+            if ( entry.what === 1 && entry.l ) {
+                previous = document.getElementById(entry.l);
+                // This should not happen
+                if ( previous === null ) {
+                    // throw new Error('No left sibling!?');
+                    continue;
+                }
+                ul = previous.parentElement;
+                li = nodeFromDomEntry(nodes[entry.nid]);
+                ul.insertBefore(li, previous.nextElementSibling);
+                patchIncremental(li, 1);
+                continue;
+            }
+            // Add node as child
+            if ( entry.what === 1 && entry.u ) {
+                li = document.getElementById(entry.u);
+                // This should not happen
+                if ( li === null ) {
+                    // throw new Error('No parent!?');
+                    continue;
+                }
+                ul = li.querySelector('ul');
+                if ( ul === null ) {
+                    ul = document.createElement('ul');
+                    li.appendChild(ul);
+                    li.classList.add('branch');
+                }
+                li = nodeFromDomEntry(nodes[entry.nid]);
+                ul.appendChild(li);
+                patchIncremental(li, 1);
+                continue;
+            }
+        }
     };
 
     var selectorFromNode = function(node, nth) {
@@ -377,13 +457,23 @@ var tabIdFromClassName = function(className) {
             return;
         }
 
-        if ( response.layout === 'NOCHANGE' ) {
-            fetchDOMAsync();
-            return;
-        }
+        switch ( response.status ) {
+        case 'full':
+            renderDOMFull(response);
+            fingerprint = response.fingerprint;
+            break;
 
-        renderDOM(response.layout);
-        fingerprint = response.fingerprint;
+        case 'incremental':
+            renderDOMIncremental(response);
+            break;
+
+        case 'nochange':
+        case 'busy':
+            break;
+
+        default:
+            break;
+        }
 
         fetchDOMAsync();
     };

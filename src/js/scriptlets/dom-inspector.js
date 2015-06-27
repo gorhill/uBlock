@@ -139,6 +139,7 @@ var cssEscape = (function(root) {
 
 var localMessager = vAPI.messaging.channel('dom-inspector.js');
 
+// Highlighter-related
 var svgOcean = null;
 var svgIslands = null;
 var svgRoot = null;
@@ -146,6 +147,14 @@ var pickerRoot = null;
 var currentSelector = '';
 
 var toggledNodes = new Map();
+
+/******************************************************************************/
+
+// Some kind of fingerprint for the DOM, without incurring too much overhead.
+
+var domFingerprint = function() {
+    return vAPI.sessionId;
+};
 
 /******************************************************************************/
 
@@ -165,8 +174,20 @@ var domLayout = (function() {
         'object': 'data'
     };
 
+    var idGenerator = 0;
+    var nodeToIdMap = new WeakMap(); // No need to iterate
+
+    // This will be used to uniquely identify nodes across process.
+
+    var newNodeId = function(node) {
+        var nid = 'n' + (idGenerator++).toString(36);
+        nodeToIdMap.set(node, nid);
+        return nid;
+    };
+
     // Collect all nodes which are directly affected by cosmetic filters: these
     // will be reported in the layout data.
+    // TODO: take into account cosmetic filters added after the map is build.
 
     var nodeToCosmeticFilterMap = (function() {
         var out = new WeakMap();
@@ -189,25 +210,18 @@ var domLayout = (function() {
         return out;
     })();
 
-    var DomRoot = function() {
-        this.lvl = 0;
-        this.sel = 'body';
-        var url = window.location.href;
-        var pos = url.indexOf('#');
-        if ( pos !== -1 ) {
-            url = url.slice(0, pos);
+    var matchesSelector = (function() {
+        if ( typeof Element.prototype.matches === 'function' ) {
+            return 'matches';
         }
-        this.src = url;
-        this.top = window === window.top;
-        this.cnt = 0;
-    };
-
-    var DomNode = function(level, selector, filter) {
-        this.lvl = level;
-        this.sel = selector;
-        this.cnt = 0;
-        this.filter = filter;
-    };
+        if ( typeof Element.prototype.mozMatchesSelector === 'function' ) {
+            return 'mozMatchesSelector';
+        }
+        if ( typeof Element.prototype.webkitMatchesSelector === 'function' ) {
+            return 'webkitMatchesSelector';
+        }
+        return '';
+    })();
 
     var hasManyMatches = function(node, selector) {
         var fnName = matchesSelector;
@@ -227,19 +241,6 @@ var domLayout = (function() {
         }
         return false;
     };
-
-    var matchesSelector = (function() {
-        if ( typeof Element.prototype.matches === 'function' ) {
-            return 'matches';
-        }
-        if ( typeof Element.prototype.mozMatchesSelector === 'function' ) {
-            return 'mozMatchesSelector';
-        }
-        if ( typeof Element.prototype.webkitMatchesSelector === 'function' ) {
-            return 'webkitMatchesSelector';
-        }
-        return '';
-    })();
 
     var selectorFromNode = function(node) {
         var str, attr, pos, sw, i;
@@ -290,6 +291,22 @@ var domLayout = (function() {
         return selector;
     };
 
+    var DomRoot = function() {
+        this.nid = newNodeId(document.body);
+        this.lvl = 0;
+        this.sel = 'body';
+        this.cnt = 0;
+        this.filter = nodeToCosmeticFilterMap.get(document.body);
+    };
+
+    var DomNode = function(node, level) {
+        this.nid = newNodeId(node);
+        this.lvl = level;
+        this.sel = selectorFromNode(node);
+        this.cnt = 0;
+        this.filter = nodeToCosmeticFilterMap.get(node);
+    };
+
     var domNodeFactory = function(level, node) {
         var localName = node.localName;
         if ( skipTagNames.hasOwnProperty(localName) ) {
@@ -302,15 +319,13 @@ var domLayout = (function() {
         if ( level === 0 && localName === 'body' ) {
             return new DomRoot();
         }
-        var selector = selectorFromNode(node);
-        var filter = nodeToCosmeticFilterMap.get(node);
-        return new DomNode(level, selector, filter);
+        return new DomNode(node, level);
     };
 
     // Collect layout data.
 
     var getLayoutData = function() {
-        var domLayout = [];
+        var layout = [];
         var stack = [];
         var node = document.body;
         var domNode;
@@ -319,7 +334,7 @@ var domLayout = (function() {
         for (;;) {
             domNode = domNodeFactory(lvl, node);
             if ( domNode !== null ) {
-                domLayout.push(domNode);
+                layout.push(domNode);
             }
             // children
             if ( node.firstElementChild !== null ) {
@@ -339,19 +354,20 @@ var domLayout = (function() {
             }
             node = node.nextElementSibling;
         }
-        return domLayout;
+
+        return layout;
     };
 
     // Descendant count for each node.
 
-    var patchLayoutData = function(domLayout) {
+    var patchLayoutData = function(layout) {
         var stack = [], ptr;
         var lvl = 0;
         var domNode, cnt;
-        var i = domLayout.length;
+        var i = layout.length;
 
         while ( i-- ) {
-            domNode = domLayout[i];
+            domNode = layout[i];
             if ( domNode.lvl === lvl ) {
                 stack[ptr] += 1;
                 continue;
@@ -372,21 +388,208 @@ var domLayout = (function() {
             ptr = lvl - 1;
             stack[ptr] += cnt + 1;
         }
-        return domLayout;
+        return layout;
     };
 
-    return function() {
-        return patchLayoutData(getLayoutData());
+    // Track and report mutations to the DOM
+
+    var journalEntries = [];
+    var journalNodes = Object.create(null);
+
+    var mutationObserver = null;
+    var mutationTimer = null;
+    var addedNodelists = [];
+    var removedNodelist = [];
+
+    var previousElementSiblingId = function(node) {
+        var sibling = node;
+        for (;;) {
+            sibling = sibling.previousElementSibling;
+            if ( sibling === null ) {
+                return null;
+            }
+            if ( skipTagNames.hasOwnProperty(sibling.localName) ) {
+                continue;
+            }
+            return nodeToIdMap.get(sibling);
+        }
+    };
+
+    var journalFromBranch = function(root, added) {
+        var domNode;
+        var node = root.firstElementChild;
+        while ( node !== null ) {
+            domNode = domNodeFactory(undefined, node);
+            if ( domNode !== null ) {
+                journalNodes[domNode.nid] = domNode;
+                added.push(node);
+            }
+            // down
+            if ( node.firstElementChild !== null ) {
+                node = node.firstElementChild;
+                continue;
+            }
+            // right
+            if ( node.nextElementSibling !== null ) {
+                node = node.nextElementSibling;
+                continue;
+            }
+            // up then right
+            for (;;) {
+                if ( node.parentElement === root ) {
+                    return;
+                }
+                node = node.parentElement;
+                if ( node.nextElementSibling !== null ) {
+                    node = node.nextElementSibling;
+                    break;
+                }
+            }
+        }
+    };
+
+    var journalFromMutations = function() {
+        mutationTimer = null;
+        if ( mutationObserver === null ) {
+            addedNodelists = [];
+            removedNodelist = [];
+            return;
+        }
+
+        var i, m, nodelist, j, n, node, domNode, nid;
+
+        // This is used to temporarily hold all added nodes, before resolving
+        // their node id and relative position.
+        var added = [];
+
+        for ( i = 0, m = addedNodelists.length; i < m; i++ ) {
+            nodelist = addedNodelists[i];
+            for ( j = 0, n = nodelist.length; j < n; j++ ) {
+                node = nodelist[j];
+                if ( node.nodeType !== 1 ) {
+                    continue;
+                }
+                // I don't think this can ever happen
+                if ( node.parentElement === null ) {
+                    continue;
+                }
+                domNode = domNodeFactory(undefined, node);
+                if ( domNode !== null ) {
+                    journalNodes[domNode.nid] = domNode;
+                    added.push(node);
+                }
+                journalFromBranch(node, added);
+            }
+        }
+        addedNodelists = [];
+        for ( i = 0, m = removedNodelist.length; i < m; i++ ) {
+            nodelist = removedNodelist[i];
+            for ( j = 0, n = nodelist.length; j < n; j++ ) {
+                node = nodelist[j];
+                if ( node.nodeType !== 1 ) {
+                    continue;
+                }
+                nid = nodeToIdMap.get(node);
+                if ( nid === undefined ) {
+                    continue;
+                }
+                journalEntries.push({
+                    what: -1,
+                    nid: nid
+                });
+            }
+        }
+        removedNodelist = [];
+        for ( i = 0, n = added.length; i < n; i++ ) {
+            node = added[i];
+            journalEntries.push({
+                what: 1,
+                nid: nodeToIdMap.get(node),
+                u: nodeToIdMap.get(node.parentElement),
+                l: previousElementSiblingId(node)
+            });
+        }
+    };
+
+    var onMutationObserved = function(mutationRecords) {
+        var record;
+        for ( var i = 0, n = mutationRecords.length; i < n; i++ ) {
+            record = mutationRecords[i];
+            if ( record.addedNodes.length !== 0 ) {
+                addedNodelists.push(record.addedNodes);
+            }
+            if ( record.removedNodes.length !== 0 ) {
+                removedNodelist.push(record.removedNodes);
+            }
+        }
+        if ( mutationTimer === null ) {
+            mutationTimer = vAPI.setTimeout(journalFromMutations, 1000);
+        }
+    };
+
+    // API
+
+    var getLayout = function(fingerprint) {
+        if ( fingerprint !== domFingerprint() && mutationObserver !== null ) {
+            if ( mutationTimer !== null ) {
+                clearTimeout(mutationTimer);
+                mutationTimer = null;
+            }
+            mutationObserver.disconnect();
+            mutationObserver = null;
+            journalEntries = [];
+            journalNodes = Object.create(null);
+        }
+
+        var response = {
+            what: 'domLayout',
+            fingerprint: domFingerprint()
+        };
+
+        // No mutation observer means we need to send full layout
+        if ( mutationObserver === null ) {
+            mutationObserver = new MutationObserver(onMutationObserved);
+            mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+            response.status = 'full';
+            response.layout = patchLayoutData(getLayoutData());
+            return response;
+        }
+
+        // Incremental layout
+        if ( journalEntries.length !== 0 ) {
+            response.status = 'incremental';
+            response.journal = journalEntries;
+            response.nodes = journalNodes;
+            journalEntries = [];
+            journalNodes = Object.create(null);
+            return response;
+        }
+
+        response.status = 'nochange';
+        return response;
+    };
+
+    var shutdown = function() {
+        if ( mutationTimer !== null ) {
+            clearTimeout(mutationTimer);
+            mutationTimer = null;
+        }
+        if ( mutationObserver !== null ) {
+            mutationObserver.disconnect();
+            mutationObserver = null;
+        }
+        journalEntries = [];
+        journalNodes = Object.create(null);
+    };
+
+    return {
+        get: getLayout,
+        shutdown: shutdown
     };
 })();
-
-/******************************************************************************/
-
-// Some kind of fingerprint for the DOM, without incurring too much overhead.
-
-var domFingerprint = function() {
-    return vAPI.sessionId + '{' + document.getElementsByTagName('*').length + '}';
-};
 
 /******************************************************************************/
 
@@ -555,6 +758,7 @@ var resetToggledNodes = function() {
 
 var shutdown = function() {
     resetToggledNodes();
+    domLayout.shutdown();
     localMessager.removeListener(onMessage);
     localMessager.close();
     localMessager = null;
@@ -572,12 +776,7 @@ var onMessage = function(request) {
 
     switch ( msg.what ) {
     case 'domLayout':
-        var fingerprint = domFingerprint();
-        response = {
-            what: 'domLayout',
-            layout: msg.fingerprint !== fingerprint ? domLayout() : 'NOCHANGE',
-            fingerprint: fingerprint
-        };
+        response = domLayout.get(msg.fingerprint);
         break;
 
     case 'highlight':
