@@ -236,10 +236,14 @@ var tabIdFromClassName = function(className) {
         var patchCosmeticHide = delta >= 0 &&
                                 from.classList.contains('isCosmeticFilter') &&
                                 li.classList.contains('hasCosmeticFilter') === false;
+        // Include descendants count when removing a node
+        if ( delta < 0 ) {
+            delta -= countFromNode(from);
+        }
         for ( ; li.localName === 'li'; li = li.parentElement.parentElement ) {
             span = li.children[2];
             if ( delta !== 0 ) {
-                cnt = parseInt(span.getAttribute('data-cnt'), 10) + delta;
+                cnt = countFromNode(li) + delta;
                 span.textContent = cnt !== 0 ? cnt.toLocaleString() : '';
                 span.setAttribute('data-cnt', cnt);
             }
@@ -307,6 +311,12 @@ var tabIdFromClassName = function(className) {
                 continue;
             }
         }
+    };
+
+    var countFromNode = function(li) {
+        var span = li.children[2];
+        var cnt = parseInt(span.getAttribute('data-cnt'), 10);
+        return isNaN(cnt) ? cnt : 0;
     };
 
     var selectorFromNode = function(node, nth) {
