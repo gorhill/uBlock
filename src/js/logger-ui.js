@@ -30,6 +30,30 @@
 
 /******************************************************************************/
 
+var logger = self.logger = {};
+var messager = logger.messager = vAPI.messaging.channel('logger-ui.js');
+
+/******************************************************************************/
+
+var removeAllChildren = logger.removeAllChildren = function(node) {
+    while ( node.firstChild ) {
+        node.removeChild(node.firstChild);
+    }
+};
+
+/******************************************************************************/
+
+var tabIdFromClassName = logger.tabIdFromClassName = function(className) {
+    var matches = className.match(/(?:^| )tab_([^ ]+)(?: |$)/);
+    if ( matches === null ) {
+        return '';
+    }
+    return matches[1];
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
 // Adjust top padding of content table, to match that of toolbar height.
 
 (function() {
@@ -47,8 +71,6 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('logger-ui.js');
-
 var tbody = document.querySelector('#events tbody');
 var trJunkyard = [];
 var tdJunkyard = [];
@@ -61,7 +83,6 @@ var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 var netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
-var filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
@@ -98,14 +119,6 @@ var dateOptions = {
 
 /******************************************************************************/
 
-var removeAllChildren = function(node) {
-    while ( node.firstChild ) {
-        node.removeChild(node.firstChild);
-    }
-};
-
-/******************************************************************************/
-
 var classNameFromTabId = function(tabId) {
     if ( tabId === noTabId ) {
         return 'tab_bts';
@@ -115,503 +128,6 @@ var classNameFromTabId = function(tabId) {
     }
     return '';
 };
-
-/******************************************************************************/
-
-var tabIdFromClassName = function(className) {
-    var matches = className.match(/(?:^| )tab_([^ ]+)(?: |$)/);
-    if ( matches === null ) {
-        return '';
-    }
-    return matches[1];
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
-// DOM inspector
-
-(function domInspector() {
-    // Don't bother if the browser is not modern enough.
-    if ( typeof Map === undefined || typeof WeakMap === undefined ) {
-        return;
-    }
-
-    var inspectedTabId = '';
-    var currentSelector = '';
-    var showdomButton = uDom.nodeFromId('showdom');
-    var inspector = uDom.nodeFromId('domInspector');
-    var tabSelector = uDom.nodeFromId('pageSelector');
-
-    var nodeFromDomEntry = function(entry) {
-        var node, value;
-        var li = document.createElement('li');
-        li.setAttribute('id', entry.nid);
-        // expander/collapser
-        node = document.createElement('span');
-        li.appendChild(node);
-        // selector
-        node = document.createElement('code');
-        node.textContent = entry.sel;
-        li.appendChild(node);
-        // descendant count
-        value = entry.cnt || 0;
-        node = document.createElement('span');
-        node.textContent = value !== 0 ? value.toLocaleString() : '';
-        node.setAttribute('data-cnt', value);
-        li.appendChild(node);
-        // cosmetic filter
-        if ( entry.filter !== undefined ) {
-            node = document.createElement('code');
-            node.classList.add('filter');
-            node.textContent = entry.filter;
-            li.appendChild(node);
-            li.classList.add('isCosmeticHide');
-        }
-        return li;
-    };
-
-    var appendListItem = function(ul, li) {
-        ul.appendChild(li);
-        // Ancestor nodes of a node which is affected by a cosmetic filter will
-        // be marked as "containing cosmetic filters", for user convenience.
-        if ( li.classList.contains('isCosmeticHide') === false ) {
-            return;
-        }
-        for (;;) {
-            li = li.parentElement.parentElement;
-            if ( li === null ) {
-                break;
-            }
-            li.classList.add('hasCosmeticHide');
-        }
-    };
-
-    var renderDOMFull = function(response) {
-        var ul = document.createElement('ul');
-        var lvl = 0;
-        var entries = response.layout;
-        var n = entries.length;
-        var li, entry;
-        for ( var i = 0; i < n; i++ ) {
-            entry = entries[i];
-            if ( entry.lvl === lvl ) {
-                li = nodeFromDomEntry(entry);
-                appendListItem(ul, li);
-                //expandIfBlockElement(li);
-                continue;
-            }
-            if ( entry.lvl > lvl ) {
-                ul = document.createElement('ul');
-                li.appendChild(ul);
-                li.classList.add('branch');
-                li = nodeFromDomEntry(entry);
-                appendListItem(ul, li);
-                //expandIfBlockElement(li);
-                lvl = entry.lvl;
-                continue;
-            }
-            // entry.lvl < lvl
-            while ( entry.lvl < lvl ) {
-                ul = li.parentNode;
-                li = ul.parentNode;
-                ul = li.parentNode;
-                lvl -= 1;
-            }
-            li = nodeFromDomEntry(entry);
-            ul.appendChild(li);
-        }
-        while ( ul.parentNode !== null ) {
-            ul = ul.parentNode;
-        }
-        ul.firstElementChild.classList.add('show');
-
-        removeAllChildren(inspector);
-        inspector.appendChild(ul);
-    };
-
-    var patchIncremental = function(from, delta) {
-        var span, cnt;
-        var li = from.parentElement.parentElement;
-        var patchCosmeticHide = delta >= 0 &&
-                                from.classList.contains('isCosmeticFilter') &&
-                                li.classList.contains('hasCosmeticFilter') === false;
-        // Include descendants count when removing a node
-        if ( delta < 0 ) {
-            delta -= countFromNode(from);
-        }
-        for ( ; li.localName === 'li'; li = li.parentElement.parentElement ) {
-            span = li.children[2];
-            if ( delta !== 0 ) {
-                cnt = countFromNode(li) + delta;
-                span.textContent = cnt !== 0 ? cnt.toLocaleString() : '';
-                span.setAttribute('data-cnt', cnt);
-            }
-            if ( patchCosmeticHide ) {
-                li.classList.add('hasCosmeticFilter');
-            }
-        }
-    };
-
-    var renderDOMIncremental = function(response) {
-        // Process each journal entry:
-        //  1 = node added
-        // -1 = node removed
-        var journal = response.journal;
-        var nodes = response.nodes;
-        var entry, previous, li, ul;
-        for ( var i = 0, n = journal.length; i < n; i++ ) {
-            entry = journal[i];
-            // Remove node
-            if ( entry.what === -1 ) {
-                li = document.getElementById(entry.nid);
-                if ( li === null ) {
-                    continue;
-                }
-                patchIncremental(li, -1);
-                li.parentNode.removeChild(li);
-                continue;
-            }
-            // Modify node
-            if ( entry.what === 0 ) {
-                // TODO: update selector/filter
-                continue;
-            }
-            // Add node as sibling
-            if ( entry.what === 1 && entry.l ) {
-                previous = document.getElementById(entry.l);
-                // This should not happen
-                if ( previous === null ) {
-                    // throw new Error('No left sibling!?');
-                    continue;
-                }
-                ul = previous.parentElement;
-                li = nodeFromDomEntry(nodes[entry.nid]);
-                ul.insertBefore(li, previous.nextElementSibling);
-                patchIncremental(li, 1);
-                continue;
-            }
-            // Add node as child
-            if ( entry.what === 1 && entry.u ) {
-                li = document.getElementById(entry.u);
-                // This should not happen
-                if ( li === null ) {
-                    // throw new Error('No parent!?');
-                    continue;
-                }
-                ul = li.querySelector('ul');
-                if ( ul === null ) {
-                    ul = document.createElement('ul');
-                    li.appendChild(ul);
-                    li.classList.add('branch');
-                }
-                li = nodeFromDomEntry(nodes[entry.nid]);
-                ul.appendChild(li);
-                patchIncremental(li, 1);
-                continue;
-            }
-        }
-    };
-
-    var countFromNode = function(li) {
-        var span = li.children[2];
-        var cnt = parseInt(span.getAttribute('data-cnt'), 10);
-        return isNaN(cnt) ? cnt : 0;
-    };
-
-    var selectorFromNode = function(node, nth) {
-        var selector = '';
-        var code;
-        if ( nth === undefined ) {
-            nth = 1;
-        }
-        while ( node !== null ) {
-            if ( node.localName === 'li' ) {
-                code = node.querySelector('code:nth-of-type(' + nth + ')');
-                if ( code !== null ) {
-                    selector = code.textContent + ' > ' + selector;
-                    if ( selector.indexOf('#') !== -1 ) {
-                        break;
-                    }
-                    nth = 1;
-                }
-            }
-            node = node.parentElement;
-        }
-        return selector.slice(0, -3);
-    };
-
-    var onClick = function(ev) {
-        ev.stopPropagation();
-
-        if ( inspectedTabId === '' ) {
-            return;
-        }
-
-        var target = ev.target;
-        var parent = target.parentElement;
-
-        // Expand/collapse branch
-        if (
-            target.localName === 'span' &&
-            parent instanceof HTMLLIElement &&
-            parent.classList.contains('branch') &&
-            target === parent.firstElementChild
-        ) {
-            target.parentElement.classList.toggle('show');
-            return;
-        }
-
-        // Toggle selector
-        if ( target.localName === 'code' ) {
-            var original = target.classList.contains('filter') === false;
-            messager.send({
-                what: 'postMessageTo',
-                senderTabId: null,
-                senderChannel: 'logger-ui.js',
-                receiverTabId: inspectedTabId,
-                receiverChannel: 'dom-inspector.js',
-                msg: {
-                    what: 'toggleNodes',
-                    original: original,
-                    target: original !== target.classList.toggle('off'),
-                    selector: selectorFromNode(target, original ? 1 : 2)
-                }
-            });
-            return;
-        }
-
-        // Highlight and scrollto
-        if ( target.localName === 'code' ) {
-            messager.send({
-                what: 'postMessageTo',
-                senderTabId: null,
-                senderChannel: 'logger-ui.js',
-                receiverTabId: inspectedTabId,
-                receiverChannel: 'dom-inspector.js',
-                msg: {
-                    what: 'highlight',
-                    selector: selectorFromNode(target),
-                    scrollTo: true
-                }
-            });
-            return;
-        }
-    };
-
-    var onMouseOver = (function() {
-        var mouseoverTarget = null;
-        var mouseoverTimer = null;
-
-        var timerHandler = function() {
-            mouseoverTimer = null;
-            messager.send({
-                what: 'postMessageTo',
-                senderTabId: null,
-                senderChannel: 'logger-ui.js',
-                receiverTabId: inspectedTabId,
-                receiverChannel: 'dom-inspector.js',
-                msg: {
-                    what: 'highlight',
-                    selector: selectorFromNode(mouseoverTarget),
-                    scrollTo: true
-                }
-            });
-        };
-
-        return function(ev) {
-            if ( inspectedTabId === '' ) {
-                return;
-            }
-
-            // Find closest `li`
-            var target = ev.target;
-            while ( target !== null ) {
-                if ( target.localName === 'li' ) {
-                    break;
-                }
-                target = target.parentElement;
-            }
-            if ( target === mouseoverTarget ) {
-                return;
-            }
-            mouseoverTarget = target;
-            if ( mouseoverTimer === null ) {
-                mouseoverTimer = vAPI.setTimeout(timerHandler, 50);
-            }
-        };
-    })();
-
-    var pollTimer = null;
-    var fingerprint = null;
-
-    var currentTabId = function() {
-        if ( showdomButton.classList.contains('active') === false ) {
-            return '';
-        }
-        var tabId = tabIdFromClassName(tabSelector.value) || '';
-        return tabId !== 'bts' ? tabId : '';
-    };
-
-    var cancelPollTimer = function() {
-        if ( pollTimer !== null ) {
-            clearTimeout(pollTimer);
-            pollTimer = null;
-        }
-    };
-
-    var onDOMFetched = function(response) {
-        if ( response === undefined || currentTabId() !== inspectedTabId ) {
-            shutdownInspector(inspectedTabId);
-            injectInspectorAsync(250);
-            return;
-        }
-
-        switch ( response.status ) {
-        case 'full':
-            renderDOMFull(response);
-            fingerprint = response.fingerprint;
-            break;
-
-        case 'incremental':
-            renderDOMIncremental(response);
-            break;
-
-        case 'nochange':
-        case 'busy':
-            break;
-
-        default:
-            break;
-        }
-
-        fetchDOMAsync();
-    };
-
-    var fetchDOM = function() {
-        messager.send({
-            what: 'postMessageTo',
-            senderTabId: null,
-            senderChannel: 'logger-ui.js',
-            receiverTabId: inspectedTabId,
-            receiverChannel: 'dom-inspector.js',
-            msg: {
-                what: 'domLayout',
-                fingerprint: fingerprint
-            }
-        });
-        pollTimer = vAPI.setTimeout(function() {
-            pollTimer = null;
-            onDOMFetched();
-        }, 1001);
-    };
-
-    var fetchDOMAsync = function(delay) {
-        if ( pollTimer !== null ) {
-            return;
-        }
-        pollTimer = vAPI.setTimeout(function() {
-            pollTimer = null;
-            fetchDOM();
-        }, delay || 1001);
-    };
-
-    var injectInspector = function() {
-        var tabId = currentTabId();
-        // No valid tab, go back
-        if ( tabId === '' ) {
-            injectInspectorAsync();
-            return;
-        }
-        inspectedTabId = tabId;
-        fingerprint = null;
-        messager.send({
-            what: 'scriptlet',
-            tabId: tabId,
-            scriptlet: 'dom-inspector'
-        });
-        fetchDOMAsync(250);
-    };
-
-    var injectInspectorAsync = function(delay) {
-        if ( pollTimer !== null ) {
-            return;
-        }
-        if ( showdomButton.classList.contains('active') === false ) {
-            return;
-        }
-        pollTimer = vAPI.setTimeout(function() {
-            pollTimer = null;
-            injectInspector();
-        }, delay || 1001);
-    };
-
-    var shutdownInspector = function(tabId) {
-        messager.send({
-            what: 'postMessageTo',
-            senderTabId: null,
-            senderChannel: 'logger-ui.js',
-            receiverTabId: tabId,
-            receiverChannel: 'dom-inspector.js',
-            msg: { what: 'shutdown', }
-        });
-        removeAllChildren(inspector);
-        cancelPollTimer();
-        inspectedTabId = '';
-    };
-
-    var onTabIdChanged = function() {
-        if ( inspectedTabId !== currentTabId() ) {
-            shutdownInspector();
-            injectInspectorAsync(250);
-        }
-    };
-
-    var onMessage = function(request) {
-        var msg = request.what === 'postMessageTo' ? request.msg : request;
-        switch ( msg.what ) {
-        case 'domLayout':
-            cancelPollTimer();
-            onDOMFetched(msg);
-            break;
-
-        default:
-            break;
-        }
-    };
-
-    var toggleOn = function() {
-        window.addEventListener('beforeunload', toggleOff);
-        inspector.addEventListener('click', onClick, true);
-        inspector.addEventListener('mouseover', onMouseOver, true);
-        tabSelector.addEventListener('change', onTabIdChanged);
-        inspector.classList.add('enabled');
-        messager.addListener(onMessage);
-        injectInspector();
-    };
-
-    var toggleOff = function() {
-        messager.removeListener(onMessage);
-        cancelPollTimer();
-        shutdownInspector();
-        window.removeEventListener('beforeunload', toggleOff);
-        inspector.removeEventListener('click', onClick, true);
-        inspector.removeEventListener('mouseover', onMouseOver, true);
-        tabSelector.removeEventListener('change', onTabIdChanged);
-        currentSelector = inspectedTabId = '';
-        inspector.classList.remove('enabled');
-    };
-
-    var toggle = function() {
-        if ( showdomButton.classList.toggle('active') ) {
-            toggleOn();
-        } else {
-            toggleOff();
-        }
-    };
-
-    showdomButton.addEventListener('click', toggle);
-})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1776,6 +1292,7 @@ var netFilteringManager = (function() {
 var reverseLookupManager = (function() {
     var reSentence1 = /\{\{filter\}\}/g;
     var sentence1Template = vAPI.i18n('loggerStaticFilteringFinderSentence1');
+    var filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
 
     var removeAllChildren = function(node) {
         while ( node.firstChild ) {

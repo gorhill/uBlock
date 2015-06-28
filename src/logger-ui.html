@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui.css">
+<link rel="stylesheet" type="text/css" href="css/logger-ui-inspector.css">
 <title data-i18n="statsPageName"></title>
 </head>
 <body>
@@ -20,6 +21,14 @@
 </div>
 
 <div id="domInspector">
+    <div class="permatoolbar">
+        <div>
+            <span class="button fa highlightMode">&#xf042;</span>
+            <span class="button fa revert disabled">&#xf12d;</span>
+            <span class="button fa commit disabled">&#xf0c7;</span>
+        </div>
+    </div>
+    <ul id="domTree"></ul>
 </div>
 
 <div id="events" class="compactView f">
@@ -88,7 +97,9 @@
         <div class="dialog"></div>
     </div>
     <div id="cosmeticFilteringDialog" class="modalDialog">
-        <div class="dialog"></div>
+        <div class="dialog">
+            <p><textarea class="cosmeticFilters" value=""></textarea>
+        </div>
     </div>
     <div id="filterFinderDialogSentence1"><span><span></span><code></code><span></span></span></div>
 </div>
@@ -98,6 +109,7 @@
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/logger-ui.js"></script>
+<script src="js/logger-ui-inspector.js"></script>
 
 </body>
 </html>

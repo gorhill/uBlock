@@ -94,6 +94,10 @@ MessagingListeners.prototype.remove = function(callback) {
     this.listeners.splice(this.listeners.indexOf(callback), 1);
 };
 
+MessagingListeners.prototype.removeAll = function() {
+    this.listeners = [];
+};
+
 MessagingListeners.prototype.process = function(msg) {
     var listeners = this.listeners;
     var n = listeners.length;
@@ -197,6 +201,10 @@ MessagingChannel.prototype.removeListener = function(callback) {
         return;
     }
     this.listeners.remove(callback);
+};
+
+MessagingChannel.prototype.removeAllListeners = function() {
+    this.listeners.removeAll();
 };
 
 /******************************************************************************/

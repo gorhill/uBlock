@@ -144,8 +144,9 @@ var svgOcean = null;
 var svgIslands = null;
 var svgRoot = null;
 var pickerRoot = null;
-var currentSelector = '';
+var highlightedElements = [];
 
+var nodeToIdMap = new WeakMap(); // No need to iterate
 var toggledNodes = new Map();
 
 /******************************************************************************/
@@ -175,7 +176,6 @@ var domLayout = (function() {
     };
 
     var idGenerator = 0;
-    var nodeToIdMap = new WeakMap(); // No need to iterate
 
     // This will be used to uniquely identify nodes across process.
 
@@ -209,7 +209,7 @@ var domLayout = (function() {
         }
         return out;
     })();
-
+/*
     var matchesSelector = (function() {
         if ( typeof Element.prototype.matches === 'function' ) {
             return 'matches';
@@ -222,26 +222,7 @@ var domLayout = (function() {
         }
         return '';
     })();
-
-    var hasManyMatches = function(node, selector) {
-        var fnName = matchesSelector;
-        if ( fnName === '' ) {
-            return true;
-        }
-        var child = node.firstElementChild;
-        var match = false;
-        while ( child !== null ) {
-            if ( child[fnName](selector) ) {
-                if ( match ) {
-                    return true;
-                }
-                match = true;
-            }
-            child = child.nextElementSibling;
-        }
-        return false;
-    };
-
+*/
     var selectorFromNode = function(node) {
         var str, attr, pos, sw, i;
         var tag = node.localName;
@@ -275,18 +256,6 @@ var domLayout = (function() {
             if ( str !== '' ) {
                 selector += '[' + attr + sw + '="' + cssEscape(str) + '"]';
             }
-        }
-        // The resulting selector must cause only one element to be selected. If
-        // it's not the case, further narrow using `nth-of-type` pseudo-class.
-        if ( hasManyMatches(node.parentElement, selector) ) {
-            i = 1;
-            while ( node.previousElementSibling ) {
-                node = node.previousElementSibling;
-                if ( node.localName === tag ) {
-                    i += 1;
-                }
-            }
-            selector += ':nth-of-type(' + i + ')';
         }
         return selector;
     };
@@ -543,7 +512,8 @@ var domLayout = (function() {
 
         var response = {
             what: 'domLayout',
-            fingerprint: domFingerprint()
+            fingerprint: domFingerprint(),
+            hostname: window.location.hostname
         };
 
         // No mutation observer means we need to send full layout
@@ -593,7 +563,8 @@ var domLayout = (function() {
 
 /******************************************************************************/
 
-var highlightElements = function(elems, scrollTo) {
+var highlightElements = function(scrollTo) {
+    var elems = highlightedElements;
     var wv = pickerRoot.contentWindow.innerWidth;
     var hv = pickerRoot.contentWindow.innerHeight;
     var ocean = ['M0 0h' + wv + 'v' + hv + 'h-' + wv, 'z'];
@@ -684,15 +655,31 @@ var elementsFromSelector = function(filter) {
 
 /******************************************************************************/
 
-var highlight = function(scrollTo) {
-    var elements = elementsFromSelector(currentSelector);
-    highlightElements(elements, scrollTo);
+var selectNodes = function(selector, nid) {
+    var nodes = elementsFromSelector(selector);
+    if ( nid === '' ) {
+        return nodes;
+    }
+    var i = nodes.length;
+    while ( i-- ) {
+        if ( nodeToIdMap.get(nodes[i]) === nid ) {
+            return [nodes[i]];
+        }
+    }
+    return [];
+};
+
+/******************************************************************************/
+
+var hightlightNodes = function(selector, nid, scrollTo) {
+    highlightedElements = selectNodes(selector, nid);
+    highlightElements(scrollTo);
 };
 
 /******************************************************************************/
 
 var onScrolled = function() {
-    highlight();
+    highlightElements();
 };
 
 /******************************************************************************/
@@ -703,8 +690,7 @@ var onScrolled = function() {
 //   hidden,    any = remove display property, don't remember original state
 //   hidden, hidden = set display to `none`
 
-var toggleNodes = function(selector, originalState, targetState) {
-    var nodes = document.querySelectorAll(selector);
+var toggleNodes = function(nodes, originalState, targetState) {
     var i = nodes.length;
     if ( i === 0 ) {
         return;
@@ -759,13 +745,13 @@ var resetToggledNodes = function() {
 var shutdown = function() {
     resetToggledNodes();
     domLayout.shutdown();
-    localMessager.removeListener(onMessage);
+    localMessager.removeAllListeners();
     localMessager.close();
     localMessager = null;
     window.removeEventListener('scroll', onScrolled, true);
     document.documentElement.removeChild(pickerRoot);
     pickerRoot = svgRoot = svgOcean = svgIslands = null;
-    currentSelector = '';
+    highlightedElements = [];
 };
 
 /******************************************************************************/
@@ -779,15 +765,22 @@ var onMessage = function(request) {
         response = domLayout.get(msg.fingerprint);
         break;
 
-    case 'highlight':
-        currentSelector = msg.selector;
-        highlight(msg.scrollTo);
+    case 'highlightMode':
+        svgRoot.classList.toggle('invert', msg.invert);
+        break;
+
+    case 'highlightOne':
+        hightlightNodes(msg.selector, msg.nid, msg.scrollTo);
+        break;
+
+    case 'resetToggledNodes':
+        resetToggledNodes();
         break;
 
     case 'toggleNodes':
-        toggleNodes(msg.selector, msg.original, msg.target);
-        currentSelector = msg.selector;
-        highlight(true);
+        highlightedElements = selectNodes(msg.selector, msg.nid);
+        toggleNodes(highlightedElements, msg.original, msg.target);
+        highlightElements(true);
         break;
 
     case 'shutdown':
@@ -863,6 +856,13 @@ pickerRoot.onload = function() {
             'stroke: #FFF;',
             'stroke-width: 0.5px;',
         '}',
+        'svg.invert > path:first-child {',
+            'fill: rgba(0,0,255,0.1);',
+        '}',
+        'svg.invert > path + path {',
+            'fill: rgba(0,0,0,0.75);',
+            'stroke: #000;',
+        '}',
         ''
     ].join('\n');
     pickerDoc.body.appendChild(style);
@@ -876,7 +876,7 @@ pickerRoot.onload = function() {
 
     window.addEventListener('scroll', onScrolled, true);
 
-    highlight();
+    highlightElements();
 
     localMessager.addListener(onMessage);
 };

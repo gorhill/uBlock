@@ -16,6 +16,12 @@ body {
 input:focus {
     background-color: #ffe;
     }
+textarea {
+    box-sizing: border-box;
+    direction: ltr;
+    resize: none;
+    width: 100%;
+    }
 .permatoolbar {
     background-color: white;
     border: 0;
@@ -53,85 +59,6 @@ input:focus {
 #pageSelector {
     width: 28em;
     padding: 0.2em 0;
-    }
-
-#domInspector {
-    border-top: 1px solid #ccc;
-    display: none;
-    max-height: 40%;
-    min-height: 40%;
-    overflow: auto;
-    }
-#domInspector.enabled {
-    display: block;
-    }
-#domInspector > ul:first-child {
-    padding-left: 0;
-    }
-#domInspector ul {
-    background-color: #fff;
-    margin: 0;
-    padding-left: 1em;
-    }
-#domInspector li {
-    list-style-type: none;
-    white-space: nowrap;
-    }
-#domInspector li.isCosmeticHide,
-#domInspector li.isCosmeticHide ul,
-#domInspector li.isCosmeticHide li {
-    background-color: #fee;
-    }
-#domInspector li > * {
-    margin-right: 1em;
-    }
-#domInspector li > span:first-child {
-    color: #000;
-    cursor: default;
-    display: inline-block;
-    margin-right: 0;
-    opacity: 0.5;
-    visibility: hidden;
-    width: 1em;
-    }
-#domInspector li > span:first-child:hover {
-    opacity: 1;
-    }
-#domInspector li > *:last-child {
-    margin-right: 0;
-    }
-#domInspector li > span:first-child:before {
-    content: '\a0';
-    }
-#domInspector li.branch > span:first-child:before {
-    content: '\25b8';
-    visibility: visible;
-    }
-#domInspector li.branch.show > span:first-child:before {
-    content: '\25be';
-    visibility: visible;
-    }
-#domInspector li.branch.hasCosmeticHide > span:first-child:before {
-    color: red;
-    }
-#domInspector li > code {
-    cursor: pointer;
-    font: 12px/1.4 monospace;
-    }
-#domInspector li > code.off {
-    text-decoration: line-through;
-    }
-#domInspector li > span {
-    color: #aaa;
-    }
-#domInspector li > code.filter {
-    color: red;
-    }
-#domInspector li > ul {
-    display: none;
-    }
-#domInspector li.show > ul {
-    display: block;
     }
 
 #events {
@@ -623,11 +550,7 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
     margin: 0.75em 0;
     }
 #netFilteringDialog .dialog > div.containers > div.static textarea {
-    box-sizing: border-box;
-    direction: ltr;
     height: 6em;
-    resize: none;
-    width: 100%;
     }
 #netFilteringDialog .dialog > div.containers > div.static > p:nth-of-type(2) {
     text-align: center;
