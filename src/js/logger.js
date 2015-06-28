@@ -101,6 +101,14 @@ LogBuffer.prototype.dispose = function() {
 
 /******************************************************************************/
 
+LogBuffer.prototype.clearBuffer = function(beg, end) {
+    for ( var i = beg; i < end; i++ ) {
+        this.buffer[i] = null;
+    }
+};
+
+/******************************************************************************/
+
 LogBuffer.prototype.writeOne = function(args) {
     // Reusing log entry = less memory churning
     var entry = this.buffer[this.writePtr];
@@ -116,6 +124,13 @@ LogBuffer.prototype.writeOne = function(args) {
     // Grow the buffer between 1.5x-2x the current size
     if ( this.writePtr === this.readPtr ) {
         var toMove = this.buffer.slice(0, this.writePtr);
+        // https://github.com/gorhill/uBlock/issues/391
+        // "The slice() method returns a shallow copy of a portion of an
+        // "array into a new array object."
+        // "shallow" => since we reuse entries, we need to remove the copied
+        // entries to prevent single instance of LogEntry being used in
+        // more than one slot.
+        this.clearBuffer(0, this.writePtr);
         var minSize = Math.ceil(this.size * 1.5);
         this.size += toMove.length;
         if ( this.size < minSize ) {
