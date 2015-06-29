@@ -435,69 +435,56 @@ var currentTabId = function() {
 
 /******************************************************************************/
 
-var cancelPollTimer = function() {
-    if ( pollTimer !== null ) {
-        clearTimeout(pollTimer);
+var fetchDOMAsync = (function() {
+    var onFetched = function(response) {
+        if ( !response || currentTabId() !== inspectedTabId ) {
+            shutdownInspector();
+            injectInspectorAsync(250);
+            return;
+        }
+
+        switch ( response.status ) {
+        case 'full':
+            renderDOMFull(response);
+            fingerprint = response.fingerprint;
+            inspectedHostname = response.hostname;
+            break;
+
+        case 'incremental':
+            renderDOMIncremental(response);
+            break;
+
+        case 'nochange':
+        case 'busy':
+            break;
+
+        default:
+            break;
+        }
+
+        fetchDOMAsync();
+    };
+
+    var onTimeout = function() {
         pollTimer = null;
-    }
-};
+        messager.sendTo(
+            {
+                what: 'domLayout',
+                fingerprint: fingerprint
+            },
+            inspectedTabId,
+            'dom-inspector.js',
+            onFetched
+        );
+    };
 
-/******************************************************************************/
-
-var onDOMFetched = function(response) {
-    if ( !response || currentTabId() !== inspectedTabId ) {
-        shutdownInspector();
-        injectInspectorAsync(250);
-        return;
-    }
-
-    switch ( response.status ) {
-    case 'full':
-        renderDOMFull(response);
-        fingerprint = response.fingerprint;
-        inspectedHostname = response.hostname;
-        break;
-
-    case 'incremental':
-        renderDOMIncremental(response);
-        break;
-
-    case 'nochange':
-    case 'busy':
-        break;
-
-    default:
-        break;
-    }
-
-    fetchDOMAsync();
-};
-
-/******************************************************************************/
-
-var fetchDOM = function() {
-    messager.sendTo(
-        {
-            what: 'domLayout',
-            fingerprint: fingerprint
-        },
-        inspectedTabId,
-        'dom-inspector.js',
-        onDOMFetched
-    );
-};
-
-/******************************************************************************/
-
-var fetchDOMAsync = function(delay) {
-    if ( pollTimer !== null ) {
-        return;
-    }
-    pollTimer = vAPI.setTimeout(function() {
-        pollTimer = null;
-        fetchDOM();
-    }, delay || 2003);
-};
+    // Poll for DOM layout data every ~2 seconds at most
+    return function(delay) {
+        if ( pollTimer === null ) {
+            pollTimer = vAPI.setTimeout(onTimeout, delay || 2003);
+        }
+    };
+})();
 
 /******************************************************************************/
 
@@ -540,7 +527,10 @@ var shutdownInspector = function() {
         messager.sendTo({ what: 'shutdown' }, inspectedTabId, 'dom-inspector.js');
     }
     logger.removeAllChildren(domTree);
-    cancelPollTimer();
+    if ( pollTimer !== null ) {
+        clearTimeout(pollTimer);
+        pollTimer = null;
+    }
     inspectedTabId = '';
 };
 
@@ -581,20 +571,6 @@ var revert = function() {
 
 /******************************************************************************/
 
-var onMessage = function(request) {
-    switch ( request.what ) {
-    case 'domLayout':
-        cancelPollTimer();
-        onDOMFetched(request);
-        break;
-
-    default:
-        break;
-    }
-};
-
-/******************************************************************************/
-
 var toggleOn = function() {
     window.addEventListener('beforeunload', toggleOff);
     tabSelector.addEventListener('change', onTabIdChanged);
@@ -604,7 +580,6 @@ var toggleOn = function() {
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').addEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').addEventListener('click', startDialog);
     inspector.classList.add('enabled');
-    messager.addListener(onMessage);
     injectInspector();
     // Adjust tree view for toolbar height
     domTree.style.setProperty(
@@ -616,8 +591,6 @@ var toggleOn = function() {
 /******************************************************************************/
 
 var toggleOff = function() {
-    messager.removeListener(onMessage);
-    cancelPollTimer();
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
     tabSelector.removeEventListener('change', onTabIdChanged);
