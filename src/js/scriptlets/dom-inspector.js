@@ -561,6 +561,8 @@ var domLayout = (function() {
     };
 })();
 
+// https://www.youtube.com/watch?v=qo8zKhd4Cf0
+
 /******************************************************************************/
 
 var highlightElements = function(scrollTo) {
@@ -724,6 +726,8 @@ var toggleNodes = function(nodes, originalState, targetState) {
     }
 };
 
+// https://www.youtube.com/watch?v=L5jRewnxSBY
+
 /******************************************************************************/
 
 var resetToggledNodes = function() {
@@ -757,20 +761,19 @@ var shutdown = function() {
 /******************************************************************************/
 
 var onMessage = function(request) {
-    var msg = request.what === 'postMessageTo' ? request.msg : request;
     var response;
 
-    switch ( msg.what ) {
+    switch ( request.what ) {
     case 'domLayout':
-        response = domLayout.get(msg.fingerprint);
+        response = domLayout.get(request.fingerprint);
         break;
 
     case 'highlightMode':
-        svgRoot.classList.toggle('invert', msg.invert);
+        svgRoot.classList.toggle('invert', request.invert);
         break;
 
     case 'highlightOne':
-        hightlightNodes(msg.selector, msg.nid, msg.scrollTo);
+        hightlightNodes(request.selector, request.nid, request.scrollTo);
         break;
 
     case 'resetToggledNodes':
@@ -778,8 +781,8 @@ var onMessage = function(request) {
         break;
 
     case 'toggleNodes':
-        highlightedElements = selectNodes(msg.selector, msg.nid);
-        toggleNodes(highlightedElements, msg.original, msg.target);
+        highlightedElements = selectNodes(request.selector, request.nid);
+        toggleNodes(highlightedElements, request.original, request.target);
         highlightElements(true);
         break;
 
@@ -791,16 +794,7 @@ var onMessage = function(request) {
         break;
     }
 
-    if ( response !== undefined && request.what === 'postMessageTo' ) {
-        localMessager.send({
-            what: 'postMessageTo',
-            senderTabId: null,
-            senderChannel: 'dom-inspector.js',
-            receiverTabId: request.senderTabId,
-            receiverChannel: request.senderChannel,
-            msg: response
-        });
-    }
+    return response;
 };
 
 /******************************************************************************/

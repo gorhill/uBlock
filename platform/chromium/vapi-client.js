@@ -73,157 +73,11 @@ vAPI.shutdown = (function() {
 
 /******************************************************************************/
 
-var MessagingListeners = function(callback) {
-    this.listeners = [];
-    if ( typeof callback === 'function' ) {
-        this.listeners.push(callback);
-    }
-};
-
-MessagingListeners.prototype.add = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    if ( this.listeners.indexOf(callback) !== -1 ) {
-        throw new Error('Duplicate listener.');
-    }
-    this.listeners.push(callback);
-};
-
-MessagingListeners.prototype.remove = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    if ( this.listeners.indexOf(callback) === -1 ) {
-        throw new Error('Listener not found.');
-    }
-    this.listeners.splice(this.listeners.indexOf(callback), 1);
-};
-
-MessagingListeners.prototype.removeAll = function() {
-    this.listeners = [];
-};
-
-MessagingListeners.prototype.process = function(msg) {
-    var listeners = this.listeners;
-    var n = listeners.length;
-    for ( var i = 0; i < n; i++ ) {
-        listeners[i](msg);
-    }
-};
-
-/******************************************************************************/
-
-var messagingConnector = function(response) {
-    if ( !response ) {
-        return;
-    }
-
-    var messaging = vAPI.messaging;
-    var channels = messaging.channels;
-    var channel;
-
-    // Sent to all channels
-    if ( response.broadcast === true && !response.channelName ) {
-        for ( channel in channels ) {
-            if ( channels[channel] instanceof MessagingChannel === false ) {
-                continue;
-            }
-            channels[channel].listeners.process(response.msg);
-        }
-        return;
-    }
-
-    // Response to specific message previously sent
-    if ( response.requestId ) {
-        var listener = messaging.pending[response.requestId];
-        delete messaging.pending[response.requestId];
-        delete response.requestId; // TODO: why?
-        if ( listener ) {
-            listener(response.msg);
-            return;
-        }
-    }
-
-    // Sent to a specific channel
-    channel = channels[response.channelName];
-    if ( channel instanceof MessagingChannel ) {
-        channel.listeners.process(response.msg);
-    }
-};
-
-/******************************************************************************/
-
-var MessagingChannel = function(name, callback) {
-    this.channelName = name;
-    this.listeners = new MessagingListeners(callback);
-    this.refCount = 1;
-    if ( typeof callback === 'function' ) {
-        var messaging = vAPI.messaging;
-        if ( messaging.port === null ) {
-            messaging.setup();
-        }
-    }
-};
-
-MessagingChannel.prototype.send = function(message, callback) {
-    var messaging = vAPI.messaging;
-    if ( messaging.port === null ) {
-        messaging.setup();
-    }
-    var requestId;
-    if ( callback ) {
-        requestId = messaging.requestId++;
-        messaging.pending[requestId] = callback;
-    }
-    messaging.port.postMessage({
-        channelName: this.channelName,
-        requestId: requestId,
-        msg: message
-    });
-};
-
-MessagingChannel.prototype.close = function() {
-    this.refCount -= 1;
-    if ( this.refCount !== 0 ) {
-        return;
-    }
-    var messaging = vAPI.messaging;
-    delete messaging.channels[this.channelName];
-    if ( Object.keys(messaging.channels).length === 0 ) {
-        messaging.close();
-    }
-};
-
-MessagingChannel.prototype.addListener = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    this.listeners.add(callback);
-    var messaging = vAPI.messaging;
-    if ( messaging.port === null ) {
-        messaging.setup();
-    }
-};
-
-MessagingChannel.prototype.removeListener = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    this.listeners.remove(callback);
-};
-
-MessagingChannel.prototype.removeAllListeners = function() {
-    this.listeners.removeAll();
-};
-
-/******************************************************************************/
-
 vAPI.messaging = {
     port: null,
     channels: {},
     pending: {},
-    requestId: 1,
+    auxProcessId: 1,
 
     setup: function() {
         this.port = chrome.runtime.connect({name: vAPI.sessionId});
@@ -255,6 +109,148 @@ vAPI.messaging = {
         return channel;
     }
 };
+
+/******************************************************************************/
+
+var messagingConnector = function(details) {
+    if ( !details ) {
+        return;
+    }
+
+    var messaging = vAPI.messaging;
+    var channels = messaging.channels;
+    var channel;
+
+    // Sent to all channels
+    if ( details.broadcast === true && !details.channelName ) {
+        for ( channel in channels ) {
+            if ( channels[channel] instanceof MessagingChannel === false ) {
+                continue;
+            }
+            channels[channel].sendToListeners(details.msg);
+        }
+        return;
+    }
+
+    // Response to specific message previously sent
+    if ( details.auxProcessId ) {
+        var listener = messaging.pending[details.auxProcessId];
+        delete messaging.pending[details.auxProcessId];
+        delete details.auxProcessId; // TODO: why?
+        if ( listener ) {
+            listener(details.msg);
+            return;
+        }
+    }
+
+    // Sent to a specific channel
+    var response;
+    channel = channels[details.channelName];
+    if ( channel instanceof MessagingChannel ) {
+        response = channel.sendToListeners(details.msg);
+    }
+
+    // Respond back if required
+    if ( details.mainProcessId !== undefined ) {
+        messaging.port.postMessage({
+            mainProcessId: details.mainProcessId,
+            msg: response
+        });
+    }
+};
+
+/******************************************************************************/
+
+var MessagingChannel = function(name, callback) {
+    this.channelName = name;
+    this.listeners = typeof callback === 'function' ? [callback] : [];
+    this.refCount = 1;
+    if ( typeof callback === 'function' ) {
+        var messaging = vAPI.messaging;
+        if ( messaging.port === null ) {
+            messaging.setup();
+        }
+    }
+};
+
+MessagingChannel.prototype.send = function(message, callback) {
+    this.sendTo(message, undefined, undefined, callback);
+};
+
+MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
+    var messaging = vAPI.messaging;
+    if ( messaging.port === null ) {
+        messaging.setup();
+    }
+    var auxProcessId;
+    if ( callback ) {
+        auxProcessId = messaging.auxProcessId++;
+        messaging.pending[auxProcessId] = callback;
+    }
+    messaging.port.postMessage({
+        channelName: this.channelName,
+        auxProcessId: auxProcessId,
+        toTabId: toTabId,
+        toChannel: toChannel,
+        msg: message
+    });
+};
+
+MessagingChannel.prototype.close = function() {
+    this.refCount -= 1;
+    if ( this.refCount !== 0 ) {
+        return;
+    }
+    var messaging = vAPI.messaging;
+    delete messaging.channels[this.channelName];
+    if ( Object.keys(messaging.channels).length === 0 ) {
+        messaging.close();
+    }
+};
+
+MessagingChannel.prototype.addListener = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        return;
+    }
+    if ( this.listeners.indexOf(callback) !== -1 ) {
+        throw new Error('Duplicate listener.');
+    }
+    this.listeners.push(callback);
+    var messaging = vAPI.messaging;
+    if ( messaging.port === null ) {
+        messaging.setup();
+    }
+};
+
+MessagingChannel.prototype.removeListener = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        return;
+    }
+    var pos = this.listeners.indexOf(callback);
+    if ( pos === -1 ) {
+        throw new Error('Listener not found.');
+    }
+    this.listeners.splice(pos, 1);
+};
+
+MessagingChannel.prototype.removeAllListeners = function() {
+    this.listeners = [];
+};
+
+MessagingChannel.prototype.sendToListeners = function(msg) {
+    var response;
+    var listeners = this.listeners;
+    for ( var i = 0, n = listeners.length; i < n; i++ ) {
+        response = listeners[i](msg);
+        if ( response !== undefined ) {
+            break;
+        }
+    }
+    return response;
+};
+
+// https://www.youtube.com/watch?v=rT5zCHn0tsg
+// https://www.youtube.com/watch?v=E-jS4e3zacI
 
 /******************************************************************************/
 

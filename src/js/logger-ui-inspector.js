@@ -142,6 +142,8 @@ var renderDOMFull = function(response) {
     inspector.appendChild(domTree);
 };
 
+// https://www.youtube.com/watch?v=IDGNA83mxDo
+
 /******************************************************************************/
 
 var patchIncremental = function(from, delta) {
@@ -228,6 +230,8 @@ var renderDOMIncremental = function(response) {
         }
     }
 };
+
+// https://www.youtube.com/watch?v=6u2KPtJB9h8
 
 /******************************************************************************/
 
@@ -358,20 +362,17 @@ var onClick = function(ev) {
     // Toggle selector
     if ( target.localName === 'code' ) {
         var original = target.classList.contains('filter') === false;
-        messager.send({
-            what: 'postMessageTo',
-            senderTabId: null,
-            senderChannel: 'logger-ui.js',
-            receiverTabId: inspectedTabId,
-            receiverChannel: 'dom-inspector.js',
-            msg: {
+        messager.sendTo(
+            {
                 what: 'toggleNodes',
                 original: original,
                 target: original !== target.classList.toggle('off'),
                 selector: selectorFromNode(target, original ? 1 : 2),
                 nid: original ? nidFromNode(target) : ''
-            }
-        });
+            },
+            inspectedTabId,
+            'dom-inspector.js'
+        );
         var cantCreate = inspector.querySelector('#domTree .off') === null;
         inspector.querySelector('.permatoolbar .revert').classList.toggle('disabled', cantCreate);
         inspector.querySelector('.permatoolbar .commit').classList.toggle('disabled', cantCreate);
@@ -387,19 +388,16 @@ var onMouseOver = (function() {
 
     var timerHandler = function() {
         mouseoverTimer = null;
-        messager.send({
-            what: 'postMessageTo',
-            senderTabId: null,
-            senderChannel: 'logger-ui.js',
-            receiverTabId: inspectedTabId,
-            receiverChannel: 'dom-inspector.js',
-            msg: {
+        messager.sendTo(
+            {
                 what: 'highlightOne',
                 selector: selectorFromNode(mouseoverTarget),
                 nid: nidFromNode(mouseoverTarget),
                 scrollTo: true
-            }
-        });
+            },
+            inspectedTabId,
+            'dom-inspector.js'
+        );
     };
 
     return function(ev) {
@@ -447,8 +445,8 @@ var cancelPollTimer = function() {
 /******************************************************************************/
 
 var onDOMFetched = function(response) {
-    if ( response === undefined || currentTabId() !== inspectedTabId ) {
-        shutdownInspector(inspectedTabId);
+    if ( !response || currentTabId() !== inspectedTabId ) {
+        shutdownInspector();
         injectInspectorAsync(250);
         return;
     }
@@ -478,21 +476,15 @@ var onDOMFetched = function(response) {
 /******************************************************************************/
 
 var fetchDOM = function() {
-    messager.send({
-        what: 'postMessageTo',
-        senderTabId: null,
-        senderChannel: 'logger-ui.js',
-        receiverTabId: inspectedTabId,
-        receiverChannel: 'dom-inspector.js',
-        msg: {
+    messager.sendTo(
+        {
             what: 'domLayout',
             fingerprint: fingerprint
-        }
-    });
-    pollTimer = vAPI.setTimeout(function() {
-        pollTimer = null;
-        onDOMFetched();
-    }, 1001);
+        },
+        inspectedTabId,
+        'dom-inspector.js',
+        onDOMFetched
+    );
 };
 
 /******************************************************************************/
@@ -504,7 +496,7 @@ var fetchDOMAsync = function(delay) {
     pollTimer = vAPI.setTimeout(function() {
         pollTimer = null;
         fetchDOM();
-    }, delay || 1001);
+    }, delay || 2003);
 };
 
 /******************************************************************************/
@@ -543,15 +535,10 @@ var injectInspectorAsync = function(delay) {
 
 /******************************************************************************/
 
-var shutdownInspector = function(tabId) {
-    messager.send({
-        what: 'postMessageTo',
-        senderTabId: null,
-        senderChannel: 'logger-ui.js',
-        receiverTabId: tabId,
-        receiverChannel: 'dom-inspector.js',
-        msg: { what: 'shutdown', }
-    });
+var shutdownInspector = function() {
+    if ( inspectedTabId !== '' ) {
+        messager.sendTo({ what: 'shutdown' }, inspectedTabId, 'dom-inspector.js');
+    }
     logger.removeAllChildren(domTree);
     cancelPollTimer();
     inspectedTabId = '';
@@ -569,31 +556,25 @@ var onTabIdChanged = function() {
 /******************************************************************************/
 
 var toggleHighlightMode = function() {
-    messager.send({
-        what: 'postMessageTo',
-        senderTabId: null,
-        senderChannel: 'logger-ui.js',
-        receiverTabId: inspectedTabId,
-        receiverChannel: 'dom-inspector.js',
-        msg: {
+    messager.sendTo(
+        {
             what: 'highlightMode',
             invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
-        }
-    });
+        },
+        inspectedTabId,
+        'dom-inspector.js'
+    );
 };
 
 /******************************************************************************/
 
 var revert = function() {
     uDom('#domTree .off').removeClass('off');
-    messager.send({
-        what: 'postMessageTo',
-        senderTabId: null,
-        senderChannel: 'logger-ui.js',
-        receiverTabId: inspectedTabId,
-        receiverChannel: 'dom-inspector.js',
-        msg: { what: 'resetToggledNodes' }
-    });
+    messager.sendTo(
+        { what: 'resetToggledNodes' },
+        inspectedTabId,
+        'dom-inspector.js'
+    );
     inspector.querySelector('.permatoolbar .revert').classList.add('disabled');
     inspector.querySelector('.permatoolbar .commit').classList.add('disabled');
 };
@@ -601,11 +582,10 @@ var revert = function() {
 /******************************************************************************/
 
 var onMessage = function(request) {
-    var msg = request.what === 'postMessageTo' ? request.msg : request;
-    switch ( msg.what ) {
+    switch ( request.what ) {
     case 'domLayout':
         cancelPollTimer();
-        onDOMFetched(msg);
+        onDOMFetched(request);
         break;
 
     default:

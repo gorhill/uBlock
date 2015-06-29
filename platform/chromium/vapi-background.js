@@ -519,97 +519,159 @@ vAPI.messaging = {
 
 /******************************************************************************/
 
-// This allows to avoid creating a closure for every single message which
-// expects an answer. Having a closure created each time a message is processed
-// has been always bothering me. Another benefit of the implementation here
-// is to reuse the callback proxy object, so less memory churning.
-//
-// https://developers.google.com/speed/articles/optimizing-javascript
-// "Creating a closure is significantly slower then creating an inner
-//  function without a closure, and much slower than reusing a static
-//  function"
-//
-// http://hacksoflife.blogspot.ca/2015/01/the-four-horsemen-of-performance.html
-// "the dreaded 'uniformly slow code' case where every function takes 1%
-//  of CPU and you have to make one hundred separate performance optimizations
-//  to improve performance at all"
-//
-// http://jsperf.com/closure-no-closure/2
-
-var CallbackWrapper = function(port, request) {
-    // No need to bind every single time
-    this.callback = this.proxy.bind(this);
-    this.messaging = vAPI.messaging;
-    this.init(port, request);
-};
-
-CallbackWrapper.junkyard = [];
-
-CallbackWrapper.factory = function(port, request) {
-    var wrapper = CallbackWrapper.junkyard.pop();
-    if ( wrapper ) {
-        wrapper.init(port, request);
-        return wrapper;
-    }
-    return new CallbackWrapper(port, request);
-};
-
-CallbackWrapper.prototype.init = function(port, request) {
-    this.port = port;
-    this.request = request;
-};
-
-CallbackWrapper.prototype.proxy = function(response) {
-    // https://github.com/chrisaljoudi/uBlock/issues/383
-    if ( this.messaging.ports.hasOwnProperty(this.port.name) ) {
-        this.port.postMessage({
-            requestId: this.request.requestId,
-            channelName: this.request.channelName,
-            msg: response !== undefined ? response : null
-        });
-    }
-    // Mark for reuse
-    this.port = this.request = null;
-    CallbackWrapper.junkyard.push(this);
-};
-
-/******************************************************************************/
-
 vAPI.messaging.listen = function(listenerName, callback) {
     this.listeners[listenerName] = callback;
 };
 
 /******************************************************************************/
 
-vAPI.messaging.onPortMessage = function(request, port) {
-    var callback = vAPI.messaging.NOOPFUNC;
-    if ( request.requestId !== undefined ) {
-        callback = CallbackWrapper.factory(port, request).callback;
-    }
+vAPI.messaging.onPortMessage = (function() {
+    var messaging = vAPI.messaging;
+    var toAuxPending = {};
 
-    // Specific handler
-    var r = vAPI.messaging.UNHANDLED;
-    var listener = vAPI.messaging.listeners[request.channelName];
-    if ( typeof listener === 'function' ) {
-        r = listener(request.msg, port.sender, callback);
-    }
-    if ( r !== vAPI.messaging.UNHANDLED ) {
-        return;
-    }
+    // Use a wrapper to avoid closure and to allow reuse.
+    var CallbackWrapper = function(port, request, timeout) {
+        this.callback = this.proxy.bind(this); // bind once
+        this.init(port, request, timeout);
+    };
 
-    // Default handler
-    r = vAPI.messaging.defaultHandler(request.msg, port.sender, callback);
-    if ( r !== vAPI.messaging.UNHANDLED ) {
-        return;
-    }
+    CallbackWrapper.prototype.init = function(port, request, timeout) {
+        this.port = port;
+        this.request = request;
+        this.timerId = timeout !== undefined ?
+                            vAPI.setTimeout(this.callback, timeout) :
+                            null;
+        return this;
+    };
 
-    console.error('uBlock> messaging > unknown request: %o', request);
+    CallbackWrapper.prototype.proxy = function(response) {
+        if ( this.timerId !== null ) {
+            clearTimeout(this.timerId);
+            delete toAuxPending[this.timerId];
+            this.timerId = null;
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/383
+        if ( messaging.ports.hasOwnProperty(this.port.name) ) {
+            this.port.postMessage({
+                auxProcessId: this.request.auxProcessId,
+                channelName: this.request.channelName,
+                msg: response !== undefined ? response : null
+            });
+        }
+        // Mark for reuse
+        this.port = this.request = null;
+        callbackWrapperJunkyard.push(this);
+    };
 
-    // Unhandled:
-    // Need to callback anyways in case caller expected an answer, or
-    // else there is a memory leak on caller's side
-    callback();
-};
+    var callbackWrapperJunkyard = [];
+
+    var callbackWrapperFactory = function(port, request, timeout) {
+        var wrapper = callbackWrapperJunkyard.pop();
+        if ( wrapper ) {
+            return wrapper.init(port, request, timeout);
+        }
+        return new CallbackWrapper(port, request, timeout);
+    };
+
+    var toAux = function(details, portFrom) {
+        var portTo;
+        var chromiumTabId = toChromiumTabId(details.toTabId);
+
+        // TODO: This could be an issue with a lot of tabs: easy to address
+        //       with a port name to tab id map.
+        for ( var portName in messaging.ports ) {
+            if ( messaging.ports.hasOwnProperty(portName) === false ) {
+                continue;
+            }
+            if ( messaging.ports[portName].sender.tab.id === chromiumTabId ) {
+                portTo = messaging.ports[portName];
+                break;
+            }
+        }
+
+        var wrapper;
+        if ( details.auxProcessId !== undefined ) {
+            wrapper = callbackWrapperFactory(portFrom, details, 1023);
+        }
+
+        // Destination not found: 
+        if ( portTo === undefined ) {
+            if ( wrapper !== undefined ) {
+                wrapper.callback();
+            }
+            return;
+        }
+
+        // As per HTML5, timer id is always an integer, thus suitable to be
+        // used as a key, and which value is safe to use across process
+        // boundaries.
+        if ( wrapper !== undefined ) {
+            toAuxPending[wrapper.timerId] = wrapper;
+        }
+
+        portTo.postMessage({
+            mainProcessId: wrapper && wrapper.timerId,
+            channelName: details.toChannel,
+            msg: details.msg
+        });
+    };
+
+    var toAuxResponse = function(details) {
+        var mainProcessId = details.mainProcessId;
+        if ( mainProcessId === undefined ) {
+            return;
+        }
+        if ( toAuxPending.hasOwnProperty(mainProcessId) === false ) {
+            return;
+        }
+        var wrapper = toAuxPending[mainProcessId];
+        delete toAuxPending[mainProcessId];
+        wrapper.callback(details.msg);
+    };
+
+    return function(request, port) {
+        // Auxiliary process to auxiliary process
+        if ( request.toTabId !== undefined ) {
+            toAux(request, port);
+            return;
+        }
+
+        // Auxiliary process to auxiliary process: response
+        if ( request.mainProcessId !== undefined ) {
+            toAuxResponse(request);
+            return;
+        }
+
+        // Auxiliary process to main process: prepare response
+        var callback = messaging.NOOPFUNC;
+        if ( request.auxProcessId !== undefined ) {
+            callback = callbackWrapperFactory(port, request).callback;
+        }
+
+        // Auxiliary process to main process: specific handler
+        var r = messaging.UNHANDLED;
+        var listener = messaging.listeners[request.channelName];
+        if ( typeof listener === 'function' ) {
+            r = listener(request.msg, port.sender, callback);
+        }
+        if ( r !== messaging.UNHANDLED ) {
+            return;
+        }
+
+        // Auxiliary process to main process: default handler
+        r = messaging.defaultHandler(request.msg, port.sender, callback);
+        if ( r !== messaging.UNHANDLED ) {
+            return;
+        }
+
+        // Auxiliary process to main process: no handler
+        console.error('uBlock> messaging > unknown request: %o', request);
+
+        // Need to callback anyways in case caller expected an answer, or
+        // else there is a memory leak on caller's side
+        callback();
+    };
+})();
 
 /******************************************************************************/
 
@@ -656,46 +718,6 @@ vAPI.messaging.broadcast = function(message) {
             continue;
         }
         this.ports[portName].postMessage(messageWrapper);
-    }
-};
-
-/******************************************************************************/
-
-// "Auxiliary process": any process other than main process.
-//
-// Main process to auxiliary processes messaging. The approach is that of
-// smoke-signal messaging, so emitters have to be ready to deal with no
-// response at all (i.e. use timeout where needed).
-//
-// Mandatory:
-// -   receiverTabId: Which tab to send the message.
-//                    No target tab id means sends to all tabs.
-// - receiverChannel: Which channel to send the message.
-//
-// Optional:
-// -     senderTabId: From which tab the message originates.
-// -   senderChannel: From which channel the message originates.
-// These optional fields are useful for the target, and may be used
-// to send back a response to the sender.
-
-vAPI.messaging.post = function(message) {
-    var port;
-    var chromiumTabId = toChromiumTabId(message.receiverTabId);
-    for ( var portName in this.ports ) {
-        if ( this.ports.hasOwnProperty(portName) === false ) {
-            continue;
-        }
-        port = this.ports[portName];
-        if ( chromiumTabId !== 0 && port.sender.tab.id !== chromiumTabId ) {
-            continue;
-        }
-        port.postMessage({
-            channelName: message.receiverChannel,
-            msg: message
-        });
-        if ( chromiumTabId !== 0 ) {
-            break;
-        }
     }
 };
 

@@ -141,12 +141,6 @@ var onMessage = function(request, sender, callback) {
         vAPI.tabs.open(request.details);
         break;
 
-    // Passthrough for auxiliary process to auxiliary process messaging.
-    case 'postMessageTo':
-        request.senderTabId = tabId;
-        vAPI.messaging.post(request);
-        break;
-
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
             vAPI.tabs.reload(request.tabId);
