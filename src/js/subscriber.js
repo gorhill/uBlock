@@ -41,7 +41,7 @@ if ( document instanceof HTMLDocument === false ) {
 }
 
 // Because in case
-if ( !vAPI ) {
+if ( typeof vAPI !== 'object' ) {
     //console.debug('subscriber.js > vAPI not found');
     return;
 }
@@ -52,7 +52,10 @@ if ( !vAPI ) {
 // The links look like this:
 //   abp:subscribe?location=https://easylist-downloads.adblockplus.org/easyprivacy.txt[...]
 
-if ( document.querySelector('a[href^="abp:"]') === null ) {
+if (
+    document.querySelector('a[href^="abp:"]') === null &&
+    window.location.href !== 'https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web'
+) {
     return;
 }
 
@@ -81,7 +84,10 @@ var onAbpLinkClicked = function(ev) {
     }
     var matches = /^abp:\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
     if ( matches === null ) {
-        return;
+        matches = /^https?:\/\/[^?]+\?location=([^&]+).*title=([^&]+)/.exec(href);
+        if ( matches === null ) {
+            return;
+        }
     }
     var location = decodeURIComponent(matches[1]);
     var title = decodeURIComponent(matches[2]);
