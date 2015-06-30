@@ -41,7 +41,8 @@
             "matches": [
                 "https://*.adblockplus.org/*",
                 "https://*.adblockplus.me/*",
-                "https://www.fanboy.co.nz/*"
+                "https://www.fanboy.co.nz/*",
+                "https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web"
             ],
             "js": ["js/subscriber.js"],
             "run_at": "document_idle"
