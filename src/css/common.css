@@ -18,7 +18,7 @@ body {
     font: 14px/1.3 sans-serif;
     }
 button.important {
-    padding: 5px;
+    padding: 0.6em 1em;
     border: 1px solid transparent;
     border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
     border-radius: 3px;

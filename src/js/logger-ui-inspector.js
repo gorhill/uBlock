@@ -40,6 +40,7 @@ var logger = self.logger;
 var messager = logger.messager;
 
 var inspectedTabId = '';
+var inspectedURL = '';
 var inspectedHostname = '';
 var pollTimer = null;
 var fingerprint = null;
@@ -282,7 +283,48 @@ var nidFromNode = function(node) {
 
 var startDialog = (function() {
     var dialog = uDom.nodeFromId('cosmeticFilteringDialog');
-    var candidateFilters = [];
+    var textarea = dialog.querySelector('textarea');
+    var hideSelectors = [];
+    var unhideSelectors = [];
+    var inputTimer = null;
+
+    var onInputChanged = (function() {
+        var parse = function() {
+            inputTimer = null;
+            hideSelectors = [];
+            unhideSelectors = [];
+
+            var line, matches;
+            var re = /^([^#]*)(#@?#)(.+)$/;
+            var lines = textarea.value.split(/\s*\n\s*/);
+            for ( var i = 0; i < lines.length; i++ ) {
+                line = lines[i].trim();
+                if ( line === '' || line.charAt(0) === '!' ) {
+                    continue;
+                }
+                matches = re.exec(line);
+                if ( matches === null || matches.length !== 4 ) {
+                    continue;
+                }
+                if ( inspectedHostname.lastIndexOf(matches[1]) === -1 ) {
+                    continue;
+                }
+                if ( matches[2] === '##' ) {
+                    hideSelectors.push(matches[3]);
+                } else {
+                    unhideSelectors.push(matches[3]);
+                }
+            }
+
+            showCommitted();
+        };
+
+        return function parseAsync() {
+            if ( inputTimer === null ) {
+                inputTimer = vAPI.setTimeout(parse, 743);
+            }
+        };
+    })();
 
     var onClick = function(ev) {
         var target = ev.target;
@@ -292,45 +334,94 @@ var startDialog = (function() {
             return stop();
         }
         ev.stopPropagation();
+
+        if ( target.id === 'createCosmeticFilters' ) {
+            messager.send({ what: 'createUserFilter', filters: textarea.value });
+            // Force a reload for the new cosmetic filter(s) to take effect
+            messager.send({ what: 'reloadTab', tabId: inspectedTabId });
+            return stop();
+        }
     };
 
-    var stop = function() {
-        dialog.removeEventListener('click', onClick, true);
-        document.body.removeChild(dialog);
+    var onCooked = function(entries) {
+        if ( Array.isArray(entries) === false ) {
+            return;
+        }
+        hideSelectors = entries;
+        var taValue = [], i, node;
+        var d = new Date();
+        taValue.push('! ' + d.toLocaleString() + ' ' + inspectedURL);
+        for ( i = 0; i < entries.length; i++ ) {
+            taValue.push(inspectedHostname + '##' + entries[i]);
+        }
+        var nodes = domTree.querySelectorAll('code.filter.off');
+        for ( i = 0; i < nodes.length; i++ ) {
+            node = nodes[i];
+            unhideSelectors.push(node.textContent);
+            taValue.push(inspectedHostname + '#@#' + node.textContent);
+        }
+        textarea.value = taValue.join('\n');
+        document.body.appendChild(dialog);
+        dialog.addEventListener('click', onClick, true);
+        showCommitted();
+    };
+
+    var showCommitted = function() {
+        messager.sendTo(
+            {
+                what: 'showCommitted',
+                hide: hideSelectors.join(',\n'),
+                unhide: unhideSelectors.join(',\n')
+            },
+            inspectedTabId,
+            'dom-inspector.js'
+        );
+    };
+
+    var showInteractive = function() {
+        messager.sendTo(
+            {
+                what: 'showInteractive',
+                hide: hideSelectors.join(',\n'),
+                unhide: unhideSelectors.join(',\n')
+            },
+            inspectedTabId,
+            'dom-inspector.js'
+        );
     };
 
     var start = function() {
-        // Collect all selectors which are currently toggled
-        var node, filters = [];
+        textarea.addEventListener('input', onInputChanged);
+        var node, entries = [];
         var nodes = domTree.querySelectorAll('code.off');
         for ( var i = 0; i < nodes.length; i++ ) {
             node = nodes[i];
-            if ( node.classList.contains('filter') ) {
-                filters.push({
-                    prefix: '#@#',
-                    nid: '',
-                    selector: node.textContent
-                });
-            } else {
-                filters.push({
-                    prefix: '##',
+            if ( node.classList.contains('filter') === false ) {
+                entries.push({
                     nid: nidFromNode(node),
-                    selector: node.textContent
+                    selector: selectorFromNode(node)
                 });
             }
         }
+        messager.sendTo(
+            { what: 'cookFilters', entries: entries },
+            inspectedTabId,
+            'dom-inspector.js',
+            onCooked
+        );
+    };
 
-        // TODO: Send filters through dom-inspector.js for further processing.
-
-        candidateFilters = filters;
-        var taValue = [], filter;
-        for ( i = 0; i < filters.length; i++ ) {
-            filter = filters[i];
-            taValue.push(inspectedHostname + filter.prefix + filter.selector);
+    var stop = function() {
+        if ( inputTimer !== null ) {
+            clearTimeout(inputTimer);
+            inputTimer = null;
         }
-        dialog.querySelector('textarea').value = taValue.join('\n');
-        document.body.appendChild(dialog);
-        dialog.addEventListener('click', onClick, true);
+        showInteractive();
+        hideSelectors = [];
+        unhideSelectors = [];
+        textarea.removeEventListener('input', onInputChanged);
+        dialog.removeEventListener('click', onClick, true);
+        document.body.removeChild(dialog);
     };
 
     return start;
@@ -404,7 +495,10 @@ var onMouseOver = (function() {
         if ( inspectedTabId === '' ) {
             return;
         }
-
+        // Convenience: skip real-time highlighting if shift key is pressed.
+        if ( ev.shiftKey ) {
+            return;
+        }
         // Find closest `li`
         var target = ev.target;
         while ( target !== null ) {
@@ -447,6 +541,7 @@ var fetchDOMAsync = (function() {
         case 'full':
             renderDOMFull(response);
             fingerprint = response.fingerprint;
+            inspectedURL = response.url;
             inspectedHostname = response.hostname;
             break;
 

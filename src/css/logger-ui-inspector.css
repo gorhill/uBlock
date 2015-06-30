@@ -1,8 +1,8 @@
 #domInspector {
     border-top: 1px solid #ccc;
     display: none;
-    max-height: 40%;
-    min-height: 40%;
+    max-height: 70%;
+    min-height: 70%;
     overflow: auto;
     }
 #domInspector.enabled {
@@ -83,6 +83,11 @@
     display: block;
     }
 
+#cosmeticFilteringDialog .dialog {
+    text-align: center;
+    }
 #cosmeticFilteringDialog .dialog textarea {
     height: 40vh;
-}
+    white-space: pre;
+    word-wrap: normal;
+    }

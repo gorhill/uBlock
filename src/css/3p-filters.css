@@ -75,7 +75,7 @@ li.listEntry > a:nth-of-type(3) {
     }
 /* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
 button.custom {
-    padding: 5px;
+    padding: 0.6em 1em;
     border: 1px solid transparent;
     border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
     border-radius: 3px;
@@ -98,7 +98,6 @@ button.custom:hover {
 #buttonApply {
     display: initial;
     margin: 1em 0;
-    padding: 1em;
     position: fixed;
     right: 1em;
     top: 0;

@@ -140,11 +140,9 @@ var cssEscape = (function(root) {
 var localMessager = vAPI.messaging.channel('dom-inspector.js');
 
 // Highlighter-related
-var svgOcean = null;
-var svgIslands = null;
 var svgRoot = null;
 var pickerRoot = null;
-var highlightedElements = [];
+var highlightedElementLists = [ [], [], [] ];
 
 var nodeToIdMap = new WeakMap(); // No need to iterate
 var toggledNodes = new Map();
@@ -209,20 +207,7 @@ var domLayout = (function() {
         }
         return out;
     })();
-/*
-    var matchesSelector = (function() {
-        if ( typeof Element.prototype.matches === 'function' ) {
-            return 'matches';
-        }
-        if ( typeof Element.prototype.mozMatchesSelector === 'function' ) {
-            return 'mozMatchesSelector';
-        }
-        if ( typeof Element.prototype.webkitMatchesSelector === 'function' ) {
-            return 'webkitMatchesSelector';
-        }
-        return '';
-    })();
-*/
+
     var selectorFromNode = function(node) {
         var str, attr, pos, sw, i;
         var tag = node.localName;
@@ -362,13 +347,12 @@ var domLayout = (function() {
 
     // Track and report mutations to the DOM
 
-    var journalEntries = [];
-    var journalNodes = Object.create(null);
-
     var mutationObserver = null;
     var mutationTimer = null;
     var addedNodelists = [];
     var removedNodelist = [];
+    var journalEntries = [];
+    var journalNodes = Object.create(null);
 
     var previousElementSiblingId = function(node) {
         var sibling = node;
@@ -499,20 +483,14 @@ var domLayout = (function() {
     // API
 
     var getLayout = function(fingerprint) {
-        if ( fingerprint !== domFingerprint() && mutationObserver !== null ) {
-            if ( mutationTimer !== null ) {
-                clearTimeout(mutationTimer);
-                mutationTimer = null;
-            }
-            mutationObserver.disconnect();
-            mutationObserver = null;
-            journalEntries = [];
-            journalNodes = Object.create(null);
+        if ( fingerprint !== domFingerprint() ) {
+            reset();
         }
 
         var response = {
             what: 'domLayout',
             fingerprint: domFingerprint(),
+            url: window.location.href,
             hostname: window.location.hostname
         };
 
@@ -542,6 +520,10 @@ var domLayout = (function() {
         return response;
     };
 
+    var reset = function() {
+        shutdown();
+    };
+
     var shutdown = function() {
         if ( mutationTimer !== null ) {
             clearTimeout(mutationTimer);
@@ -551,12 +533,16 @@ var domLayout = (function() {
             mutationObserver.disconnect();
             mutationObserver = null;
         }
+        addedNodelists = [];
+        removedNodelist = [];
         journalEntries = [];
         journalNodes = Object.create(null);
+        nodeToIdMap = new WeakMap();
     };
 
     return {
         get: getLayout,
+        reset: reset,
         shutdown: shutdown
     };
 })();
@@ -564,54 +550,215 @@ var domLayout = (function() {
 // https://www.youtube.com/watch?v=qo8zKhd4Cf0
 
 /******************************************************************************/
+/******************************************************************************/
+
+// For browsers not supporting `:scope`, it's not the end of the world: the
+// suggested CSS selectors may just end up being more verbose.
+
+var cssScope = ':scope > ';
+try {
+    document.querySelector(':scope *');
+} catch (e) {
+    cssScope = '';
+}
+
+/******************************************************************************/
+
+var cosmeticFilterFromEntries = function(entries) {
+    var out = [];
+    var entry, i = entries.length;
+    while ( i-- ) {
+        entry = entries[i];
+        out.push(cosmeticFilterFromTarget(entry.nid, entry.selector));
+    }
+    return out;
+};
+
+/******************************************************************************/
+
+// Extract the best possible cosmetic filter, i.e. as specific as possible.
+
+var cosmeticFilterFromNode = function(elem) {
+    var tagName = elem.localName;
+    var prefix = '';
+    var suffix = [];
+    var v, i;
+
+    // Id
+    v = typeof elem.id === 'string' && cssEscape(elem.id);
+    if ( v ) {
+        suffix.push('#', v);
+    }
+
+    // Class(es)
+    if ( suffix.length === 0 ) {
+        v = elem.classList;
+        if ( v ) {
+            i = v.length || 0;
+            while ( i-- ) {
+                suffix.push('.' + cssEscape(v.item(i)));
+            }
+        }
+    }
+
+    // Tag name
+    if ( suffix.length === 0 ) {
+        prefix = tagName;
+    }
+
+    // Attributes (depends on tag name)
+    var attributes = [], attr;
+    switch ( tagName ) {
+    case 'a':
+        v = elem.getAttribute('href');
+        if ( v ) {
+            v = v.replace(/\?.*$/, '');
+            if ( v.length ) {
+                attributes.push({ k: 'href', v: v });
+            }
+        }
+        break;
+    case 'img':
+        v = elem.getAttribute('alt');
+        if ( v && v.length !== 0 ) {
+            attributes.push({ k: 'alt', v: v });
+        }
+        break;
+    default:
+        break;
+    }
+    while ( attr = attributes.pop() ) {
+        if ( attr.v.length === 0 ) {
+            continue;
+        }
+        suffix.push('[', attr.k, '="', attr.v, '"]');
+    }
+
+    var selector = prefix + suffix.join('');
+
+    // https://github.com/chrisaljoudi/uBlock/issues/637
+    // If the selector is still ambiguous at this point, further narrow using
+    // `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
+    // `nth-child`, as `nth-of-type` is less volatile.
+    var parent = elem.parentElement;
+    if ( elementsFromSelector(cssScope + selector, parent).length > 1 ) {
+        i = 1;
+        while ( elem.previousElementSibling !== null ) {
+            elem = elem.previousElementSibling;
+            if ( elem.localName !== tagName ) {
+                continue;
+            }
+            i++;
+        }
+        selector += ':nth-of-type(' + i + ')';
+    }
+
+    return selector;
+};
+
+/******************************************************************************/
+
+var cosmeticFilterFromTarget = function(nid, coarseSelector) {
+    var elems = elementsFromSelector(coarseSelector);
+    var target = null;
+    var i = elems.length;
+    while ( i-- ) {
+        if ( nodeToIdMap.get(elems[i]) === nid ) {
+            target = elems[i];
+            break;
+        }
+    }
+    if ( target === null ) {
+        return coarseSelector;
+    }
+    // Find the most concise selector from the target node
+    var segments = [], segment;
+    var node = target;
+    while ( node !== document.body ) {
+        segment = cosmeticFilterFromNode(node);
+        segments.unshift(segment);
+        if ( segment.charAt(0) === '#' ) {
+            break;
+        }
+        node = node.parentElement;
+    }
+    var fineSelector = segments.join(' > ');
+    if ( fineSelector.charAt(0) === '#' ) {
+        return fineSelector;
+    }
+    if ( fineSelector.charAt(0) === '.' && elementsFromSelector(fineSelector).length === 1 ) {
+        return fineSelector;
+    }
+    return 'body > ' + fineSelector;
+};
+
+/******************************************************************************/
+
+var elementsFromSelector = function(selector, context) {
+    if ( !context ) {
+        context = document;
+    }
+    var out = [];
+    try {
+        out = context.querySelectorAll(selector);
+    } catch (ex) {
+    }
+    return out;
+};
+
+/******************************************************************************/
 
 var highlightElements = function(scrollTo) {
-    var elems = highlightedElements;
     var wv = pickerRoot.contentWindow.innerWidth;
     var hv = pickerRoot.contentWindow.innerHeight;
-    var ocean = ['M0 0h' + wv + 'v' + hv + 'h-' + wv, 'z'];
-    var islands = [];
-    var elem, rect, poly;
+    var ocean = ['M0 0h' + wv + 'v' + hv + 'h-' + wv, 'z'], islands;
+    var elems, elem, rect, poly;
     var xl, xr, yt, yb, w, h, ws;
     var xlu = Number.MAX_VALUE, xru = 0, ytu = Number.MAX_VALUE, ybu = 0;
+    var lists = highlightedElementLists;
 
-    for ( var i = 0; i < elems.length; i++ ) {
-        elem = elems[i];
-        if ( elem === pickerRoot ) {
-            continue;
+    for ( var i = 0; i < lists.length; i++ ) {
+        elems = lists[i];
+        islands = [];
+        for ( var j = 0; j < elems.length; j++ ) {
+            elem = elems[j];
+            if ( elem === pickerRoot ) {
+                continue;
+            }
+            if ( typeof elem.getBoundingClientRect !== 'function' ) {
+                continue;
+            }
+
+            rect = elem.getBoundingClientRect();
+            xl = rect.left;
+            xr = rect.right;
+            w = rect.width;
+            yt = rect.top;
+            yb = rect.bottom;
+            h = rect.height;
+
+            ws = w.toFixed(1);
+            poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+                   'h' + ws +
+                   'v' + h.toFixed(1) +
+                   'h-' + ws +
+                   'z';
+            ocean.push(poly);
+            islands.push(poly);
+
+            if ( !scrollTo ) {
+                continue;
+            }
+
+            if ( xl < xlu ) { xlu = xl; }
+            if ( xr > xru ) { xru = xr; }
+            if ( yt < ytu ) { ytu = yt; }
+            if ( yb > ybu ) { ybu = yb; }
         }
-        if ( typeof elem.getBoundingClientRect !== 'function' ) {
-            continue;
-        }
-
-        rect = elem.getBoundingClientRect();
-        xl = rect.left;
-        xr = rect.right;
-        w = rect.width;
-        yt = rect.top;
-        yb = rect.bottom;
-        h = rect.height;
-
-        ws = w.toFixed(1);
-        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
-               'h' + ws +
-               'v' + h.toFixed(1) +
-               'h-' + ws +
-               'z';
-        ocean.push(poly);
-        islands.push(poly);
-
-        if ( !scrollTo ) {
-            continue;
-        }
-
-        if ( xl < xlu ) { xlu = xl; }
-        if ( xr > xru ) { xru = xr; }
-        if ( yt < ytu ) { ytu = yt; }
-        if ( yb > ybu ) { ybu = yb; }
+        svgRoot.children[i+1].setAttribute('d', islands.join('') || 'M0 0');
     }
-    svgOcean.setAttribute('d', ocean.join(''));
-    svgIslands.setAttribute('d', islands.join('') || 'M0 0');
+
+    svgRoot.children[0].setAttribute('d', ocean.join(''));
 
     if ( !scrollTo ) {
         return;
@@ -646,13 +793,30 @@ var highlightElements = function(scrollTo) {
 
 /******************************************************************************/
 
-var elementsFromSelector = function(filter) {
-    var out = [];
-    try {
-        out = document.querySelectorAll(filter);
-    } catch (ex) {
+var onScrolled = function() {
+    highlightElements();
+};
+
+/******************************************************************************/
+
+var resetToggledNodes = function() {
+    var value;
+    // Chromium does not support destructuring as of v43.
+    for ( var node of toggledNodes.keys() ) {
+        value = toggledNodes.get(node);
+        if ( value !== null ) {
+            node.style.removeProperty('display');
+        } else {
+            node.style.setProperty('display', value);
+        }
     }
-    return out;
+    toggledNodes.clear();
+};
+
+/******************************************************************************/
+
+var forgetToggledNodes = function() {
+    toggledNodes.clear();
 };
 
 /******************************************************************************/
@@ -673,15 +837,16 @@ var selectNodes = function(selector, nid) {
 
 /******************************************************************************/
 
-var hightlightNodes = function(selector, nid, scrollTo) {
-    highlightedElements = selectNodes(selector, nid);
-    highlightElements(scrollTo);
-};
-
-/******************************************************************************/
-
-var onScrolled = function() {
-    highlightElements();
+var shutdown = function() {
+    resetToggledNodes();
+    domLayout.shutdown();
+    localMessager.removeAllListeners();
+    localMessager.close();
+    localMessager = null;
+    window.removeEventListener('scroll', onScrolled, true);
+    document.documentElement.removeChild(pickerRoot);
+    pickerRoot = svgRoot = null;
+    highlightedElementLists = [ [], [], [] ];
 };
 
 /******************************************************************************/
@@ -718,8 +883,10 @@ var toggleNodes = function(nodes, originalState, targetState) {
             }
         } else {                                            // hidden, ?
             if ( targetState ) {                            // hidden, any
+                toggledNodes.set(node, 'none');
                 node.style.setProperty('display', 'initial', 'important');
             } else {                                        // hidden, hidden
+                toggledNodes.delete(node);
                 node.style.setProperty('display', 'none', 'important');
             }
         }
@@ -729,41 +896,25 @@ var toggleNodes = function(nodes, originalState, targetState) {
 // https://www.youtube.com/watch?v=L5jRewnxSBY
 
 /******************************************************************************/
-
-var resetToggledNodes = function() {
-    var value;
-    // Chromium does not support destructuring as of v43.
-    for ( var node of toggledNodes.keys() ) {
-        value = toggledNodes.get(node);
-        if ( value !== null ) {
-            node.style.removeProperty('display');
-        } else {
-            node.style.setProperty('display', value);
-        }
-    }
-    toggledNodes.clear();
-};
-
-/******************************************************************************/
-
-var shutdown = function() {
-    resetToggledNodes();
-    domLayout.shutdown();
-    localMessager.removeAllListeners();
-    localMessager.close();
-    localMessager = null;
-    window.removeEventListener('scroll', onScrolled, true);
-    document.documentElement.removeChild(pickerRoot);
-    pickerRoot = svgRoot = svgOcean = svgIslands = null;
-    highlightedElements = [];
-};
-
 /******************************************************************************/
 
 var onMessage = function(request) {
     var response;
 
     switch ( request.what ) {
+    case 'commitFilters':
+        resetToggledNodes();
+        toggleNodes(selectNodes(request.hide, ''), true, false);
+        toggleNodes(selectNodes(request.unhide, ''), false, true);
+        forgetToggledNodes();
+        highlightedElementLists = [ [], [], [] ];
+        highlightElements();
+        break;
+
+    case 'cookFilters':
+        response = cosmeticFilterFromEntries(request.entries);
+        break;
+
     case 'domLayout':
         response = domLayout.get(request.fingerprint);
         break;
@@ -773,16 +924,34 @@ var onMessage = function(request) {
         break;
 
     case 'highlightOne':
-        hightlightNodes(request.selector, request.nid, request.scrollTo);
+        highlightedElementLists[0] = selectNodes(request.selector, request.nid);
+        highlightElements(request.scrollTo);
         break;
 
     case 'resetToggledNodes':
         resetToggledNodes();
         break;
 
+    case 'showCommitted':
+        resetToggledNodes();
+        highlightedElementLists[0] = [];
+        highlightedElementLists[1] = selectNodes(request.hide, '');
+        highlightedElementLists[2] = selectNodes(request.unhide, '');
+        toggleNodes(highlightedElementLists[2], false, true);
+        highlightElements(true);
+        break;
+
+    case 'showInteractive':
+        resetToggledNodes();
+        toggleNodes(selectNodes(request.hide, ''), true, false);
+        toggleNodes(selectNodes(request.unhide, ''), false, true);
+        highlightedElementLists = [ [], [], [] ];
+        highlightElements();
+        break;
+
     case 'toggleNodes':
-        highlightedElements = selectNodes(request.selector, request.nid);
-        toggleNodes(highlightedElements, request.original, request.target);
+        highlightedElementLists[0] = selectNodes(request.selector, request.nid);
+        toggleNodes(highlightedElementLists[0], request.original, request.target);
         highlightElements(true);
         break;
 
@@ -845,27 +1014,28 @@ pickerRoot.onload = function() {
             'fill: rgba(0,0,0,0.75);',
             'fill-rule: evenodd;',
         '}',
-        'svg > path + path {',
+        'svg > path:nth-of-type(2) {',
             'fill: rgba(0,0,255,0.1);',
             'stroke: #FFF;',
             'stroke-width: 0.5px;',
         '}',
-        'svg.invert > path:first-child {',
-            'fill: rgba(0,0,255,0.1);',
+        'svg > path:nth-of-type(3) {',
+            'fill: rgba(255,0,0,0.2);',
+            'stroke: #F00;',
         '}',
-        'svg.invert > path + path {',
-            'fill: rgba(0,0,0,0.75);',
-            'stroke: #000;',
+        'svg > path:nth-of-type(4) {',
+            'fill: rgba(0,255,0,0.2);',
+            'stroke: #0F0;',
         '}',
         ''
     ].join('\n');
     pickerDoc.body.appendChild(style);
 
     svgRoot = pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgOcean = pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path');
-    svgRoot.appendChild(svgOcean);
-    svgIslands = pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path');
-    svgRoot.appendChild(svgIslands);
+    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
     pickerDoc.body.appendChild(svgRoot);
 
     window.addEventListener('scroll', onScrolled, true);
