@@ -705,7 +705,7 @@ vAPI.tabs.open = function(details) {
             win,
             details.url,
             null,
-            'menubar=no,toolbar=no,location=no',
+            'menubar=no,toolbar=no,location=no,resizable=yes',
             null
         );
         return;
