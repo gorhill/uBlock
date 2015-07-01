@@ -1001,7 +1001,7 @@ pickerRoot.onload = function() {
     style.textContent = [
         'body {',
             'background-color: transparent;',
-            'cursor: crosshair;',
+            'cursor: not-allowed;',
         '}',
         'svg {',
             'height: 100%;',

@@ -100,7 +100,8 @@ var appendListItem = function(ul, li) {
 /******************************************************************************/
 
 var renderDOMFull = function(response) {
-    var ul = inspector.removeChild(domTree);
+    var domTreeParent = domTree.parentElement;
+    var ul = domTreeParent.removeChild(domTree);
     logger.removeAllChildren(domTree);
 
     var lvl = 0;
@@ -140,7 +141,7 @@ var renderDOMFull = function(response) {
     }
     ul.firstElementChild.classList.add('show');
 
-    inspector.appendChild(domTree);
+    domTreeParent.appendChild(domTree);
 };
 
 // https://www.youtube.com/watch?v=IDGNA83mxDo
@@ -464,7 +465,7 @@ var onClick = function(ev) {
             inspectedTabId,
             'dom-inspector.js'
         );
-        var cantCreate = inspector.querySelector('#domTree .off') === null;
+        var cantCreate = domTree.querySelector('.off') === null;
         inspector.querySelector('.permatoolbar .revert').classList.toggle('disabled', cantCreate);
         inspector.querySelector('.permatoolbar .commit').classList.toggle('disabled', cantCreate);
         return;
@@ -674,13 +675,7 @@ var toggleOn = function() {
     uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').addEventListener('click', toggleHighlightMode);
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').addEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').addEventListener('click', startDialog);
-    inspector.classList.add('enabled');
     injectInspector();
-    // Adjust tree view for toolbar height
-    domTree.style.setProperty(
-        'margin-top',
-        inspector.querySelector('.permatoolbar').clientHeight + 'px'
-    );
 };
 
 /******************************************************************************/
@@ -695,7 +690,6 @@ var toggleOff = function() {
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').removeEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').removeEventListener('click', startDialog);
     inspectedTabId = '';
-    inspector.classList.remove('enabled');
 };
 
 /******************************************************************************/

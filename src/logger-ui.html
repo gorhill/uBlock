@@ -20,35 +20,41 @@
     </div>
 </div>
 
-<div id="domInspector">
-    <div class="permatoolbar">
-        <div>
-            <span class="button fa highlightMode" style="display: none">&#xf042;</span>
-            <span class="button fa revert disabled">&#xf12d;</span>
-            <span class="button fa commit disabled">&#xf0c7;</span>
+<div id="inspectors">
+    <div id="domInspector" class="inspector">
+        <div class="permatoolbar">
+            <div>
+                <span class="button fa highlightMode" style="display: none">&#xf042;</span>
+                <span class="button fa revert disabled">&#xf12d;</span>
+                <span class="button fa commit disabled">&#xf0c7;</span>
+            </div>
+        </div>
+        <div class="vscrollable">
+            <ul id="domTree"></ul>
         </div>
     </div>
-    <ul id="domTree"></ul>
-</div>
 
-<div id="events" class="compactView f">
-    <div class="permatoolbar">
-        <div>
-            <span id="compactViewToggler" class="button fa"></span>
-            <span id="clean" class="button fa disabled">&#xf00d;</span>
-            <span id="clear" class="button fa disabled">&#xf12d;</span>
-            <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
-            <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+    <div id="netInspector" class="inspector compactView f">
+        <div class="permatoolbar">
+            <div>
+                <span id="compactViewToggler" class="button fa"></span>
+                <span id="clean" class="button fa disabled">&#xf00d;</span>
+                <span id="clear" class="button fa disabled">&#xf12d;</span>
+                <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
+                <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+            </div>
         </div>
-    </div>
-    <style id="tabFilterer" scoped></style>
-    <style id="popupFilterer" scoped></style>
-    <table>
-        <colgroup><col><col><col><col><col></colgroup>
-        <tbody></tbody>
-    </table>
-    <div id="popupContainer">
-        <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
+        <div class="vscrollable">
+            <style id="tabFilterer" scoped></style>
+            <style id="popupFilterer" scoped></style>
+            <table>
+                <colgroup><col><col><col><col><col></colgroup>
+                <tbody></tbody>
+            </table>
+            <div id="popupContainer">
+                <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
+            </div>
+        </div>
     </div>
 </div>
 

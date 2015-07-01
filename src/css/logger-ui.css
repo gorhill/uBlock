@@ -1,17 +1,10 @@
 body {
     background-color: white;
     border: 0;
-    box-sizing: border-box;
     color: black;
-    -moz-box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: flex-start;
     margin: 0;
     overflow: hidden;
     padding: 0;
-    width: 100vw;
     }
 input:focus {
     background-color: #ffe;
@@ -25,9 +18,13 @@ textarea {
 .permatoolbar {
     background-color: white;
     border: 0;
+    box-sizing: border-box;
     font-size: 120%;
+    left: 0;
     margin: 0;
     padding: 0.25em 0.5em;
+    position: absolute;
+    top: 0;
     z-index: 10;
     }
 .permatoolbar .button {
@@ -61,95 +58,112 @@ textarea {
     padding: 0.2em 0;
     }
 
-#events {
-    border-top: 1px solid #ccc;
-    font: 13px sans-serif;
-    min-height: 60%;
-    overflow-x: hidden;
-    overflow-y: auto;
+#inspectors {
+    bottom: 0;
+    position: absolute;
+    top: 0;
     width: 100%;
     }
-#events .permatoolbar {
+.inspector {
+    border-top: 1px solid #ccc;
+    bottom: 0;
     position: absolute;
+    top: 0;
+    width: 100%;
     }
-#events #compactViewToggler.button:before {
+.vscrollable {
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#netInspector {
+    font: 13px sans-serif;
+    }
+#inspectors.dom #netInspector {
+    display: none;
+    }
+#netInspector #compactViewToggler.button:before {
     content: '\f102';
     }
-#events.compactView #compactViewToggler.button:before {
+#netInspector.compactView #compactViewToggler.button:before {
     content: '\f103';
     }
-#events #filterButton {
+#netInspector #filterButton {
     opacity: 0.25;
     }
-#events.f #filterButton {
+#netInspector.f #filterButton {
     opacity: 1;
     }
-#events #filterInput.bad {
+#netInspector #filterInput.bad {
     background-color: #fee;
     }
-#events #maxEntries {
+#netInspector #maxEntries {
     margin: 0 2em;
     }
-#events table {
+#netInspector table {
     border: 0;
     border-collapse: collapse;
     direction: ltr;
     table-layout: fixed;
     width: 100%;
     }
-#events table > colgroup > col:nth-of-type(1) {
+#netInspector table > colgroup > col:nth-of-type(1) {
     width: 5em;
     }
-#events table > colgroup > col:nth-of-type(2) {
+#netInspector table > colgroup > col:nth-of-type(2) {
     width: 2.5em;
     }
-#events table > colgroup > col:nth-of-type(3) {
+#netInspector table > colgroup > col:nth-of-type(3) {
     width: 20%;
     }
-#events table > colgroup > col:nth-of-type(4) {
+#netInspector table > colgroup > col:nth-of-type(4) {
     width: 2.5em;
     }
-#events table > colgroup > col:nth-of-type(5) {
+#netInspector table > colgroup > col:nth-of-type(5) {
     width: 6em;
     }
-#events table > colgroup > col:nth-of-type(6) {
+#netInspector table > colgroup > col:nth-of-type(6) {
     width: calc(100% - 16em - 20%);
     }
-#events.f table tr.f {
+#netInspector.f table tr.f {
     display: none;
     }
 
-#events tr.cat_info {
+#netInspector tr.cat_info {
     color: #00f;
     }
-#events tr.blocked {
+#netInspector tr.blocked {
     background-color: rgba(192, 0, 0, 0.1);
     }
-body.colorBlind #events tr.blocked {
+body.colorBlind #netInspector tr.blocked {
     background-color: rgba(0, 19, 110, 0.1);
     }
-#events tr.nooped {
+#netInspector tr.nooped {
     background-color: rgba(108, 108, 108, 0.1);
     }
-body.colorBlind #events tr.nooped {
+body.colorBlind #netInspector tr.nooped {
     background-color: rgba(96, 96, 96, 0.1);
     }
-#events tr.allowed {
+#netInspector tr.allowed {
     background-color: rgba(0, 160, 0, 0.1);
     }
-body.colorBlind #events tr.allowed {
+body.colorBlind #netInspector tr.allowed {
     background-color: rgba(255, 194, 57, 0.1)
     }
-#events tr.cb {
+#netInspector tr.cb {
     background-color: rgba(255, 255, 0, 0.1);
     }
-#events tr.maindoc {
+#netInspector tr.maindoc {
     background-color: #666;
     color: white;
     text-align: center;
     }
 
-body #events td {
+body #netInspector td {
     border: 1px solid #ccc;
     border-top: none;
     min-width: 0.5em;
@@ -159,87 +173,87 @@ body #events td {
     word-break: break-all;
     word-wrap: break-word;
     }
-#events tr td {
+#netInspector tr td {
     border-top: 1px solid #ccc;
     }
-#events tr td:first-of-type {
+#netInspector tr td:first-of-type {
     border-left: none;
     }
-#events tr td:last-of-type {
+#netInspector tr td:last-of-type {
     border-right: none;
     }
-#events.compactView td {
+#netInspector.compactView td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     }
 
-#events tr td:nth-of-type(1) {
+#netInspector tr td:nth-of-type(1) {
     text-align: right;
     white-space: nowrap;
     }
-#events tr td:nth-of-type(2) {
+#netInspector tr td:nth-of-type(2) {
     text-align: center;
     white-space: nowrap;
     }
-#events tr.tab_bts > td:nth-of-type(2):before {
+#netInspector tr.tab_bts > td:nth-of-type(2):before {
     content: '\f070';
     font: 1em FontAwesome;
     }
-#events tr.tab:not(.canMtx) {
+#netInspector tr.tab:not(.canMtx) {
     opacity: 0.3;
     }
-#events tr.tab:not(.canMtx):hover {
+#netInspector tr.tab:not(.canMtx):hover {
     opacity: 0.7;
     }
-#events tr.tab:not(.canMtx) > td:nth-of-type(2):before {
+#netInspector tr.tab:not(.canMtx) > td:nth-of-type(2):before {
     content: '\f00d';
     font: 1em FontAwesome;
     }
-body:not(.popupOn) #events tr.canMtx td:nth-of-type(2) {
+body:not(.popupOn) #netInspector tr.canMtx td:nth-of-type(2) {
     cursor: zoom-in;
     }
-body:not(.popupOn) #events tr.canMtx td:nth-of-type(2):hover {
+body:not(.popupOn) #netInspector tr.canMtx td:nth-of-type(2):hover {
     background: #ccc;
     }
-#events tr.canLookup td:nth-of-type(3) {
+#netInspector tr.canLookup td:nth-of-type(3) {
     cursor: zoom-in;
     }
-#events tr.cat_net td:nth-of-type(4),
-#events tr.cat_cosmetic td:nth-of-type(4) {
+#netInspector tr.cat_net td:nth-of-type(4),
+#netInspector tr.cat_cosmetic td:nth-of-type(4) {
     font: 12px monospace;
     text-align: center;
     white-space: nowrap;
     }
-#events tr.cat_net td:nth-of-type(4) {
+#netInspector tr.cat_net td:nth-of-type(4) {
     cursor: pointer;
     position: relative;
     }
-#events tr.cat_net td:nth-of-type(4):hover {
+#netInspector tr.cat_net td:nth-of-type(4):hover {
     background: #ccc;
     }
-#events tr.cat_net td:nth-of-type(6) > span > b {
+#netInspector tr.cat_net td:nth-of-type(6) > span > b {
     font-weight: bold;
     }
-#events tr td:nth-of-type(6) b {
+#netInspector tr td:nth-of-type(6) b {
     font-weight: normal;
     }
-#events tr.blocked td:nth-of-type(6) b {
+#netInspector tr.blocked td:nth-of-type(6) b {
     background-color: rgba(192, 0, 0, 0.2);
     }
-body.colorBlind #events tr.blocked td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.blocked td:nth-of-type(6) b {
     background-color: rgba(0, 19, 110, 0.2);
     }
-#events tr.nooped td:nth-of-type(6) b {
+#netInspector tr.nooped td:nth-of-type(6) b {
     background-color: rgba(108, 108, 108, 0.2);
     }
-body.colorBlind #events tr.nooped td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.nooped td:nth-of-type(6) b {
     background-color: rgba(96, 96, 96, 0.2);
     }
-#events tr.allowed td:nth-of-type(6) b {
+#netInspector tr.allowed td:nth-of-type(6) b {
     background-color: rgba(0, 160, 0, 0.2);
     }
-body.colorBlind #events tr.allowed td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.allowed td:nth-of-type(6) b {
     background-color: rgba(255, 194, 57, 0.2);
     }
 
@@ -255,7 +269,7 @@ body.colorBlind #events tr.allowed td:nth-of-type(6) b {
     top: 0;
     z-index: 200;
     }
-#events.popupOn #popupContainer {
+#netInspector.popupOn #popupContainer {
     display: block;
     }
 #popupContainer > div {

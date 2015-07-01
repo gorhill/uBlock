@@ -1,15 +1,8 @@
 #domInspector {
-    border-top: 1px solid #ccc;
     display: none;
-    max-height: 70%;
-    min-height: 70%;
-    overflow: auto;
     }
-#domInspector.enabled {
+#inspectors.dom #domInspector {
     display: block;
-    }
-#domInspector .permatoolbar {
-    position: absolute;
     }
 #domInspector .permatoolbar .highlightMode.invert {
     transform: rotate(180deg);

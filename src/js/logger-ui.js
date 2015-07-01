@@ -57,21 +57,15 @@ var tabIdFromClassName = logger.tabIdFromClassName = function(className) {
 // Adjust top padding of content table, to match that of toolbar height.
 
 (function() {
-    var parent = uDom.nodeFromSelector('body > .permatoolbar');
-    var child = parent.firstElementChild;
-    var size = child.clientHeight + 'px';
-    parent.style.setProperty('min-height', size);
-
-    parent = uDom.nodeFromId('events');
-    parent.querySelector('table').style.setProperty(
-        'margin-top',
-        parent.querySelector('.permatoolbar').clientHeight + 'px'
-    );
+    var toolbar = uDom.nodeFromSelector('body > .permatoolbar');
+    var size = toolbar.clientHeight + 'px';
+    uDom('#inspectors').css('top', size);
+    uDom('.vscrollable').css('padding-top', size);
 })();
 
 /******************************************************************************/
 
-var tbody = document.querySelector('#events tbody');
+var tbody = document.querySelector('#netInspector tbody');
 var trJunkyard = [];
 var tdJunkyard = [];
 var firstVarDataCol = 2;  // currently, column 2 (0-based index)
@@ -581,7 +575,7 @@ var renderLogEntries = function(response) {
     if ( yDelta === 0 ) {
         return;
     }
-    var container = uDom.nodeFromId('events');
+    var container = uDom.nodeFromId('netInspector');
     if ( container.scrollTop !== 0 ) {
         container.scrollTop += yDelta;
     }
@@ -661,7 +655,7 @@ var truncateLog = function(size) {
     if ( size === 0 ) {
         size = 5000;
     }
-    var tbody = document.querySelector('#events tbody');
+    var tbody = document.querySelector('#netInspector tbody');
     size = Math.min(size, 10000);
     var tr;
     while ( tbody.childElementCount > size ) {
@@ -728,7 +722,7 @@ var pageSelectorChanged = function() {
     }
     if ( tabClass !== '' ) {
         sheet.insertRule(
-            '#events table tr:not(.' + tabClass + ') { display: none; }',
+            '#netInspector table tr:not(.' + tabClass + ') { display: none; }',
             0
         );
     }
@@ -1505,10 +1499,10 @@ var rowFilterer = (function() {
     var filterAll = function() {
         // Special case: no filter
         if ( filters.length === 0 ) {
-            uDom('#events tr').removeClass('f');
+            uDom('#netInspector tr').removeClass('f');
             return;
         }
-        var tbody = document.querySelector('#events tbody');
+        var tbody = document.querySelector('#netInspector tbody');
         var rows = tbody.rows;
         var i = rows.length;
         while ( i-- ) {
@@ -1532,7 +1526,7 @@ var rowFilterer = (function() {
     })();
 
     var onFilterButton = function() {
-        uDom.nodeFromId('events').classList.toggle('f');
+        uDom.nodeFromId('netInspector').classList.toggle('f');
     };
 
     uDom('#filterButton').on('click', onFilterButton);
@@ -1563,7 +1557,7 @@ var toJunkyard = function(trs) {
 
 var clearBuffer = function() {
     var tabId = uDom.nodeFromId('pageSelector').value || null;
-    var tbody = document.querySelector('#events tbody');
+    var tbody = document.querySelector('#netInspector tbody');
     var tr = tbody.lastElementChild;
     var trPrevious;
     while ( tr !== null ) {
@@ -1586,7 +1580,7 @@ var clearBuffer = function() {
 /******************************************************************************/
 
 var cleanBuffer = function() {
-    var rows = uDom('#events tr.tab:not(.canMtx)').remove();
+    var rows = uDom('#netInspector tr.tab:not(.canMtx)').remove();
     var i = rows.length;
     while ( i-- ) {
         trJunkyard.push(rows.nodeAt(i));
@@ -1597,7 +1591,13 @@ var cleanBuffer = function() {
 /******************************************************************************/
 
 var toggleCompactView = function() {
-    uDom.nodeFromId('events').classList.toggle('compactView');
+    uDom.nodeFromId('netInspector').classList.toggle('compactView');
+};
+
+/******************************************************************************/
+
+var toggleInspectors = function() {
+    uDom.nodeFromId('inspectors').classList.toggle('dom');
 };
 
 /******************************************************************************/
@@ -1610,7 +1610,7 @@ var popupManager = (function() {
     var popupObserver = null;
     var style = null;
     var styleTemplate = [
-        '#events tr:not(.tab_{{tabId}}) {',
+        '#netInspector tr:not(.tab_{{tabId}}) {',
             'cursor: not-allowed;',
             'opacity: 0.2;',
         '}'
@@ -1665,7 +1665,7 @@ var popupManager = (function() {
         style = uDom.nodeFromId('popupFilterer');
         style.textContent = styleTemplate.replace('{{tabId}}', localTabId);
 
-        var parent = uDom.nodeFromId('events');
+        var parent = uDom.nodeFromId('netInspector');
         var rect = parent.getBoundingClientRect();
         container.style.setProperty('top', rect.top + 'px');
         container.style.setProperty('right', (rect.right - parent.clientWidth) + 'px');
@@ -1673,7 +1673,7 @@ var popupManager = (function() {
     };
 
     var toggleOff = function() {
-        uDom.nodeFromId('events').classList.remove('popupOn');
+        uDom.nodeFromId('netInspector').classList.remove('popupOn');
 
         container.querySelector('div > span:nth-of-type(1)').removeEventListener('click', toggleSize);
         container.querySelector('div > span:nth-of-type(2)').removeEventListener('click', toggleOff);
@@ -1720,13 +1720,15 @@ uDom.onLoad(function() {
 
     uDom('#pageSelector').on('change', pageSelectorChanged);
     uDom('#refresh').on('click', reloadTab);
+    uDom('#showdom').on('click', toggleInspectors);
+
     uDom('#compactViewToggler').on('click', toggleCompactView);
     uDom('#clean').on('click', cleanBuffer);
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
-    uDom('#events table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-    uDom('#events').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
-    uDom('#events').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
+    uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
+    uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
+    uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
 
     // https://github.com/gorhill/uBlock/issues/404
     // Ensure page state is in sync with the state of its various widgets.
