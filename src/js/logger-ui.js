@@ -621,7 +621,6 @@ var synchronizeTabIds = function(newTabIds) {
             continue;
         }
         option = select.options[j];
-        j += 1;
         if ( !option ) {
             option = document.createElement('option');
             select.appendChild(option);
@@ -629,10 +628,12 @@ var synchronizeTabIds = function(newTabIds) {
         option.textContent = newTabIds[tabId];
         option.value = classNameFromTabId(tabId);
         if ( option.value === selectValue ) {
+            select.selectedIndex = j;
             option.setAttribute('selected', '');
         } else {
             option.removeAttribute('selected');
         }
+        j += 1;
     }
     while ( j < select.options.length ) {
         select.removeChild(select.options[j]);
