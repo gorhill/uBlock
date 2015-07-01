@@ -286,7 +286,8 @@ vAPI.tabs.get = function(tabId, callback) {
 //   tabId: 1, // the tab is used if set, instead of creating a new one
 //   index: -1, // undefined: end of the list, -1: following tab, or after index
 //   active: false, // opens the tab in background - true and undefined: foreground
-//   select: true // if a tab is already opened with that url, then select it instead of opening a new one
+//   select: true, // if a tab is already opened with that url, then select it instead of opening a new one
+//   popup: true // open in a new window
 
 vAPI.tabs.open = function(details) {
     var targetURL = details.url;
@@ -337,6 +338,16 @@ vAPI.tabs.open = function(details) {
                 }
             });
         };
+
+        // Open in a standalone window
+        if ( details.popup === true ) {
+            chrome.windows.create({
+                url: details.url,
+                focused: details.active,
+                type: 'popup'
+            });
+            return;
+        }
 
         if ( details.index !== -1 ) {
             subWrapper();

@@ -526,12 +526,15 @@ var gotoURL = function(ev) {
 
     ev.preventDefault();
 
+    var rel = this.getAttribute('rel') || '';
+
     messager.send({
         what: 'gotoURL',
         details: {
             url: this.getAttribute('href'),
             select: true,
-            index: -1
+            index: -1,
+            popup: rel === 'popup'
         }
     });
 

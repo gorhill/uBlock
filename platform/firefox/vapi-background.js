@@ -699,7 +699,19 @@ vAPI.tabs.open = function(details) {
         details.index = tabBrowser.browsers.indexOf(tabBrowser.selectedBrowser) + 1;
     }
 
-    tab = tabBrowser.loadOneTab(details.url, {inBackground: !details.active});
+    // Open in a standalone window
+    if ( details.popup === true ) {
+        win = Services.ww.openWindow(
+            win,
+            details.url,
+            null,
+            'menubar=no,toolbar=no,location=no',
+            null
+        );
+        return;
+    }
+
+    tab = tabBrowser.loadOneTab(details.url, { inBackground: !details.active });
 
     if ( details.index !== undefined ) {
         tabBrowser.moveTabTo(tab, details.index);
@@ -2683,6 +2695,12 @@ vAPI.contextMenu.unregister = function(doc) {
     }
 
     var menuitem = doc.getElementById(this.menuItemId);
+
+    // Not guarantee the menu item was actually registered.
+    if ( menuitem === null ) {
+        return;
+    }
+
     var contextMenu = menuitem.parentNode;
     menuitem.removeEventListener('command', this.onCommand);
     contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
