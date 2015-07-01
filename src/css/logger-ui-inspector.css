@@ -7,6 +7,9 @@
 #domInspector .permatoolbar .highlightMode.invert {
     transform: rotate(180deg);
     }
+#domInspector .vscrollable {
+    overflow-x: auto;
+    }
 #domInspector > ul:first-of-type {
     padding-left: 0.5em;
     }
