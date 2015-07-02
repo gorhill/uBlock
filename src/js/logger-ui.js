@@ -723,7 +723,7 @@ var pageSelectorChanged = function() {
     }
     if ( tabClass !== '' ) {
         sheet.insertRule(
-            '#netInspector table tr:not(.' + tabClass + ') { display: none; }',
+            'table tr:not(.' + tabClass + ') { display: none; }',
             0
         );
     }
@@ -1611,7 +1611,7 @@ var popupManager = (function() {
     var popupObserver = null;
     var style = null;
     var styleTemplate = [
-        '#netInspector tr:not(.tab_{{tabId}}) {',
+        'table tr:not(.tab_{{tabId}}) {',
             'cursor: not-allowed;',
             'opacity: 0.2;',
         '}'
