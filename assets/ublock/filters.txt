@@ -319,3 +319,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/chrisaljoudi/uBlock/issues/1421
 # To counter hpHost, MVPS, Peter Lowe: `woopra.com`
 @@||woopra.com^$~third-party
+
+# To unbreak floatapp.com (broken by EasyPrivacy)
+@@||cloudfront.net/analytics.js$script,domain=floatapp.com
