@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Končno, učinkovita razširitev za blokiranje oglasov z nizko porabo CPEja in pomnilnika.",
+    "message":"Končno, učinkovita, procesorju in pomnilniku prijazna razširitev za blokiranje oglasov.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Nadzorna plošča",
+    "message":"uBlock₀ — Nadzorna plošča",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Filtri tretjih oseb",
+    "message":"Flitri tretjih oseb",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Omrežna dnevniška datoteka zahtev",
+    "message":"uBlock₀ — Dnevnik omrežnih zahtev",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: onemogoči\/omogoči uBlock za to stran.\n\nCtrl+klik: onemogoči uBlock samo na tej strani.",
+    "message":"Klik: onemogoči\/omogoči uBlock₀ za to stran.\n\nCtrl+klik: onemogoči uBlock₀ samo na tej strani.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -68,11 +68,11 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Vklopi način izbire elementov",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Pojdi na dnevnik zahtevkov",
+    "message":"Pojdi na dnevnik omrežnih zahtev",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -88,7 +88,7 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Vklopi\/izklopi blokiranje oddaljenih pisav za to stran",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -104,19 +104,19 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"vrinjene skripte",
+    "message":"vrinjene skripti",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"lastne skripte",
+    "message":"strani lastni skripti",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"tretje-osebne skripte",
+    "message":"skripti tretjih oseb",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"tretje-osebni okvirji",
+    "message":"okvirji tretjih oseb",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -144,7 +144,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Vizualni filtri",
+    "message":"Kozmetični filtri",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -156,7 +156,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Skrij držala blokiranih elementov",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -164,11 +164,11 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Izkoristite kontekstni meni, kjer je to primerno",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"Način prijazen barvno slepim uporabnikom",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -176,15 +176,15 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Onemogoči prednalaganje strani (da se prepreči kakršno koli povezavo za blokirane zahteve omrežja)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"Onemogoči revizijo hiperlinkov (Hyperlink-auditing)",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"Prepreči izpostavitev lokalnega IP naslova preko WebRTC",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -224,11 +224,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Razčleni in uveljavi kozmetične filtre.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
+    "message":"<p>Ta opcija omogoči razčlenjevanje in uveljavljanje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus kompatibilnih filtrov za &ldquo;skrivanje elementov&rdquo;<\/a> Le-ti filtri so v bistvu kozmetični in služijo skrivanju elementov na spletnih straneh, ki jih lahko obravnavamo kot \"vizualna nadloga\", in taki, ki se jih preko filtrov zahtev omrežja ne da blokirati.<\/p>\n<p>Vklop te funkcije poveča spominski odtis uBlock₀.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -236,7 +236,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Uporabi spremembe",
+    "message":"Uveljavi spremembe",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -272,7 +272,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Parse",
+    "message":"Razčleni",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -280,7 +280,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"nova različica je na voljo",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -292,7 +292,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"En filter na vrstico. Filter je lahko navadno ime gostitelja, ali pa Adblock Plus kompatibilen filter. Vrstice z znakom &lsquo;!&rsquo; bodo ignorirane.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -356,11 +356,11 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "message":"Sintaksa pravil: <code>vir destinacija tip akcija<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>polna dokumentacija (v angleščini)<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which uBlock₀ will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Vaš seznam gostiteljskih naslovov, za katere želite, da je uBlock₀ izklopljen. En vnos na vrstico. Neveljavna gostiteljska imena bodo brez opozoril ignorirana.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -372,11 +372,11 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "message":"moj-ublock-seznam-dovoljenih_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Uporabi spremembe",
+    "message":"Uveljavi spremembe",
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{
@@ -400,19 +400,19 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"Za zaveso",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"filtriraj vnose dnevnika",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"Največje število dnevniških vnosov",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Vsebina:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
@@ -428,7 +428,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} zahteve omrežja {{type}} {{br}}katerih URL naslov se ujema z {{url}} {{br}}in izvirajo iz {{origin}},{{br}}{{importance}} obstaja ustrezen filter izjeme.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -440,35 +440,35 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"vrsta {{type}}",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"any type",
+    "message":"vsaka vrsta",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"from “{{origin}}”",
+    "message":"iz “{{origin}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"iz kjerkoli",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"razen če",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"tudi če",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Statičen filter {{filter}} najden v:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
-    "message":"Seznam sprememb",
+    "message":"Dnevnik sprememb",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -480,7 +480,7 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"Razvijalci",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
@@ -488,7 +488,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"moja-ublock-varnostna-kopija_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -500,15 +500,15 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Vse vaše nastavitve bodo prepisane s podatki, ki so bili varnostno shranjeni {{time}}. uBlock₀ se bo ponovno zagnal.\n\nPrepišem vse obstoječe nastavitve z varnostno shranjenimi podatki?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Podatki varnostne kopije niso uspeli biti uspešno prebrani oz. so neveljavni",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Vse vaše spremembe bodo izbrisane, µBlock pa se bo ponovno zagnal.\n\nPonastavim µBlock na tovarniške nastavitve?",
+    "message":"Vse vaše spremembe bodo izbrisane, uBlock₀ pa se bo ponovno zagnal.\n\nPonastavim uBlock₀ na tovarniške nastavitve?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -516,31 +516,31 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Dodam sledeči URL na listo lastnih filtrov?\n\nNaslov: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"a minute ago",
+    "message":"1 minuto nazaj",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"{{value}} minutes ago",
+    "message":"{{value}} minut nazaj",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"an hour ago",
+    "message":"1 uro nazaj",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"{{value}} hours ago",
+    "message":"{{value}} ur nazaj",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"a day ago",
+    "message":"1 dan nazaj",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"{{value}} days ago",
+    "message":"{{value}} dni nazaj",
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
@@ -548,7 +548,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Logger",
+    "message":"Prikaži dnevnik",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -560,11 +560,11 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"Zaradi sledečega filtra",
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Najden v:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{

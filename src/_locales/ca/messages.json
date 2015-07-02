@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalment, un bloquejador efficient, amb poc ús de memòria i processador.",
+    "message":"Finalment, un blocador eficient que utilitza pocs recursos de memòria i processador.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"Evita que el protocol WebRTC divulgui la IP local",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"WebRTCని మీ స్థానిక IP చిరునామాను బహిర్గతపరచనివ్వొద్దు",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

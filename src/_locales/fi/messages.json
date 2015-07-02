@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Painallus: poista käytöstä\/ota käyttöön µBlock tällä sivustolla.\n\nCtrl+painallus: poista µBlock käytöstä vain tällä sivulla.",
+    "message":"Painallus: poista käytöstä\/ota käyttöön uBlock₀ tällä sivustolla.\n\nCtrl+painallus: poista uBlock₀ käytöstä vain tällä sivulla.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"Estä WebRTC:tä vuotamasta paikallista IP-osoitetta",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -428,7 +428,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} verkkopyyntö {{type}} {{br}}jonka URL-osoite vastaa {{url}} {{br}}ja joka on peräisin {{origin}},{{br}}{{importance}} löytyy vastaava poikkeussuodatin.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -516,7 +516,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
+    "message":"uBlock₀: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi?\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -556,7 +556,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock on estänyt seuraavaa sivua lataamasta:",
+    "message":"uBlock Origin on estänyt seuraavaa sivua lataamasta:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

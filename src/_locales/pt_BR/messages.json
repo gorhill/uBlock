@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"Impedir o protocolo WebRTC de vazar meu endereço de IP local",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
