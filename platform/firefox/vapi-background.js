@@ -701,8 +701,8 @@ vAPI.tabs.open = function(details) {
 
     // Open in a standalone window
     if ( details.popup === true ) {
-        win = Services.ww.openWindow(
-            win,
+        Services.ww.openWindow(
+            self,
             details.url,
             null,
             'menubar=no,toolbar=no,location=no,resizable=yes',
