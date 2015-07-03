@@ -264,6 +264,9 @@ const contentObserver = {
         };
 
         sandbox.removeMessageListener = function() {
+            if ( !sandbox._messageListener_ ) {
+                return;
+            }
             try {
                 messager.removeMessageListener(
                     sandbox._sandboxId_,
@@ -278,6 +281,22 @@ const contentObserver = {
             }
 
             sandbox._messageListener_ = null;
+        };
+
+        // The goal is to have content scripts removed from web pages. This
+        // helps remove traces of uBlock from memory when disabling/removing
+        // the addon.
+        // For example, this takes care of:
+        //   https://github.com/gorhill/uBlock/commit/ea4faff383789053f423498c1f1165c403fde7c7#commitcomment-11964137
+        //   > "gets the whole selected tab flashing"
+        sandbox.shutdownSandbox = function() {
+            sandbox.removeMessageListener();
+            sandbox.addMessageListener =
+            sandbox.injectScript =
+            sandbox.removeMessageListener =
+            sandbox.sendAsyncMessage =
+            sandbox.shutdownSandbox = null;
+            messager = null;
         };
 
         return sandbox;

@@ -695,10 +695,6 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
-    if ( details.index === -1 ) {
-        details.index = tabBrowser.browsers.indexOf(tabBrowser.selectedBrowser) + 1;
-    }
-
     // Open in a standalone window
     if ( details.popup === true ) {
         Services.ww.openWindow(
@@ -709,6 +705,10 @@ vAPI.tabs.open = function(details) {
             null
         );
         return;
+    }
+
+    if ( details.index === -1 ) {
+        details.index = tabBrowser.browsers.indexOf(tabBrowser.selectedBrowser) + 1;
     }
 
     tab = tabBrowser.loadOneTab(details.url, { inBackground: !details.active });
@@ -1380,6 +1380,15 @@ vAPI.messaging.setup = function(defaultHandler) {
 
     cleanupTasks.push(function() {
         var gmm = vAPI.messaging.globalMessageManager;
+
+        gmm.broadcastAsyncMessage(
+            location.host + ':broadcast',
+            JSON.stringify({
+                broadcast: true,
+                channelName: 'vAPI',
+                msg: { cmd: 'shutdownSandbox' }
+            })
+        );
 
         gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);
         gmm.removeMessageListener(
