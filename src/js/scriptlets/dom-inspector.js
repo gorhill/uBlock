@@ -55,12 +55,7 @@ if ( document.querySelector('iframe.dom-inspector.' + vAPI.sessionId) !== null )
 // Added serializeAsString parameter.
 
 /*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
-var cssEscape = (function(root) {
-
-    var css = root.CSS || {};
-    if ( css.escape ) {
-        return css.escape;
-    }
+var cssEscape = (function(/*root*/) {
 
     var InvalidCharacterError = function(message) {
         this.message = message;
