@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global addMessageListener, removeMessageListener, sendAsyncMessage, shutdownSandbox */
+/* global addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown */
 
 // For non background pages
 
@@ -78,27 +78,24 @@ vAPI.messaging = {
 
     builtinChannelHandler: function(msg) {
         if ( msg.cmd === 'injectScript' ) {
+            // injectScript is not always present.
+            // - See contentObserver.initContentScripts in frameModule.js
+            if ( typeof self.injectScript !== 'function' )  {
+                return;
+            }
             var details = msg.details;
             if ( !details.allFrames && window !== window.top ) {
                 return;
             }
-            // TODO: investigate why this happens, and if this happens
-            // legitimately (content scripts not injected I suspect, so
-            // that would make this legitimate).
-            // Case: open popup UI from icon in uBlock's logger
-            if ( typeof self.injectScript === 'function' )  {
-                self.injectScript(details.file);
-            }
+            self.injectScript(details.file);
             return;
         }
         if ( msg.cmd === 'shutdownSandbox' ) {
             vAPI.shutdown.exec();
-            vAPI.messaging.close();
-            window.removeEventListener('pagehide', vAPI.messaging.toggleListener, true);
-            window.removeEventListener('pageshow', vAPI.messaging.toggleListener, true);
-            vAPI.messaging = null;
-            vAPI = {};
-            shutdownSandbox();
+            vAPI.messaging.shutdown();
+            if ( typeof self.outerShutdown === 'function' ) {
+                outerShutdown();
+            }
             return;
         }
     },
@@ -107,6 +104,13 @@ vAPI.messaging = {
         this.channels['vAPI'] = new MessagingChannel('vAPI', this.builtinChannelHandler);
         window.addEventListener('pagehide', this.toggleListener, true);
         window.addEventListener('pageshow', this.toggleListener, true);
+    },
+
+    shutdown: function() {
+        this.close();
+        window.removeEventListener('pagehide', this.toggleListener, true);
+        window.removeEventListener('pageshow', this.toggleListener, true);
+        vAPI.messaging = null;
     },
 
     close: function() {
@@ -146,18 +150,24 @@ vAPI.messaging = {
     },
 
     toggleListener: function({type, persisted}) {
-        if ( !vAPI.messaging ) {
+        var me = vAPI.messaging;
+        if ( !me ) {
             return;
         }
 
         if ( type === 'pagehide' ) {
-            vAPI.messaging.disconnect();
+            if ( !persisted ) {
+                vAPI.shutdown.exec();
+                vAPI.messaging.shutdown();
+                if ( typeof self.outerShutdown === 'function' ) {
+                    outerShutdown();
+                }
+            }
+            me.disconnect();
             return;
         }
 
-        if ( persisted ) {
-            vAPI.messaging.connect();
-        }
+        me.connect();
     }
 };
 
