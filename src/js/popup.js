@@ -534,7 +534,7 @@ var gotoURL = function(ev) {
             url: this.getAttribute('href'),
             select: true,
             index: -1,
-            popup: rel === 'popup'
+            popup: rel === 'popup' && ev.shiftKey
         }
     });
 
