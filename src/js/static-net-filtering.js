@@ -193,9 +193,10 @@ var strToRegex = function(s, anchor, flags) {
         return alwaysTruePseudoRegex;
     }
 
+    // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
     var reStr = s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
-                 .replace(/\*/g, '.*');
+                 .replace(/\*/g, '[^ ]*?');
 
     if ( anchor < 0 ) {
         reStr = '^' + reStr;
