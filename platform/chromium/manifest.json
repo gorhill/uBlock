@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "0.9.9.3",
+    "version": "0.9.9.4",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
