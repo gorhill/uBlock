@@ -926,7 +926,7 @@ var tabWatcher = (function() {
         if ( tabBrowser === null ) {
             return null;
         }
-        return browserFromTarget(getTabBrowser(win).selectedTab);
+        return browserFromTarget(tabBrowser.selectedTab);
     };
 
     var removeBrowserEntry = function(tabId, browser) {
