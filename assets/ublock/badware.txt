@@ -3,19 +3,37 @@
 # For sites documented to put users at risk of installing adware/crapware etc.
 # The purpose is to at least ensure a user is warned of the risks ahead.
 # 
-# Each entry has to be well enough sourced.
+# Each entry has to be well enough sourced, see:
+# https://github.com/gorhill/uBlock/wiki/Badware-risks
 
-# http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
-# https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
-# http://blog.tedd.no/2014/11/25/sourceforge-malware/
-# http://www.information-age.com/industry/software/123459675/hotbed-malware-another-blow-sourceforge-google-discovers-588-pages-malicious-software
-# Using `other` will cause the whole site to be blocked through strict blocking,
-# yet the site will render properly if a user still decide to go ahead.
+# Using request of type `other` will cause the whole site to be blocked through
+# strict blocking, yet the site will render properly if a user still decide to
+# go ahead.
+
+# 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
+# 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
+# 2015-01-11: http://www.howtogeek.com/198622/heres-what-happens-when-you-install-the-top-10-download.com-apps/
+# 2012-06-27: http://insecure.org/news/download-com-fiasco.html
+# 2011-12-07: http://www.tomsguide.com/us/CNET-CBS-Malware-Trojan-Nmap,news-13410.html
+# 2011-12-06: http://www.theinquirer.net/inquirer/news/2130382/cnet-accused-bundling-malware-downloads
+# 2011-08-22: http://www.extremetech.com/computing/93504-download-com-wraps-downloads-in-bloatware-lies-about-motivations
+||download.com^$other
+||download.cnet.com^$other
+
+
+# 2015-06-18: http://www.information-age.com/industry/software/123459675/hotbed-malware-another-blow-sourceforge-google-discovers-588-pages-malicious-software
+# 2015-06-02: https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
+# 2015-05-28: http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
+# 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
+# 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
+# 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
+# 2014-11-25: http://blog.tedd.no/2014/11/25/sourceforge-malware/
 ||sourceforge.net^$other
 
 
-# http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
-# http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
-# http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
-# http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
+# 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
+# 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
+# 2013-05-23: http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
+# 2013-04-19: http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
+# 2013-04-17: http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
 ||softonic.com^$other

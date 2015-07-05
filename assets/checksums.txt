@@ -1,7 +1,7 @@
 de13d68154c015353ed1708e65d88e2f assets/ublock/unbreak.txt
 b8fd6f6a836d34e0629dca07424d7bd8 assets/ublock/privacy.txt
 cd44f26c735f58c839d075f80eae1118 assets/ublock/filters.txt
-464a13cce7dee944d0e176604e0d48dc assets/ublock/badware.txt
+da39e8923f3e890d8b29c58a5a860bf2 assets/ublock/badware.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
 343afa7da2abf47c258355815f732ce4 assets/ublock/filter-lists.json
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
