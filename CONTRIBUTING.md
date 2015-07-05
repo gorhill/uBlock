@@ -26,7 +26,7 @@ Any issue opened without effort to provide the required details for me to reprod
 ### What to include
 
 
-To help diagnose and fix the bug/issue, please always, **always**, **ALWAYS** include the following in your report:
+To help diagnose and fix the bug/issue, please always include the following in your report:
 
 * A clear list of steps to reproduce the problem
   * **Always include a URL**, _even_ if "it happens everywhere".
