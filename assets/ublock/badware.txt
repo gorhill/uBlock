@@ -14,8 +14,7 @@
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2015-01-11: http://www.howtogeek.com/198622/heres-what-happens-when-you-install-the-top-10-download.com-apps/
 # 2012-06-27: http://insecure.org/news/download-com-fiasco.html
-# 2011-12-07: http://www.tomsguide.com/us/CNET-CBS-Malware-Trojan-Nmap,news-13410.html
-# 2011-12-06: http://www.theinquirer.net/inquirer/news/2130382/cnet-accused-bundling-malware-downloads
+# 2011-12-05: http://seclists.org/nmap-announce/2011/5
 # 2011-08-22: http://www.extremetech.com/computing/93504-download-com-wraps-downloads-in-bloatware-lies-about-motivations
 ||download.com^$other
 ||download.cnet.com^$other
