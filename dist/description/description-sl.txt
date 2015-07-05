@@ -8,7 +8,7 @@ Uporaba: Velik gumb za vklop/izklop v pojavnem oknu je namenjen trajnemu izklopu
 
 uBlock₀ je fleksibilen - in s tem več kot samo "blokada oglasom": lahko bere in ustvarja filtre iz datotek z gostitelji (HOSTS datoteka).
 
-Out of the box, these lists of filters are loaded and enforced:
+Brez kakršnihkoli dodatnih nastavitev, uBlock₀ uporablja sledeče filtre:
 
 - EasyList
 - Seznam oglaševalskih strežnikov Peter Lowe
@@ -24,13 +24,13 @@ Več filtrskih seznamov na razpolago (če to želite):
 - Spam404
 - In mnogi drugi
 
-Seveda, več filtrov kot je aktivnih, večji je odtis v pomnilniku. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+Seveda, več filtrov kot je aktivnih, večji je odtis v pomnilniku. Pa kljub temu - tudi z nalaganjem dveh dodatnih seznamov filtrov (Fanboy in hpHosts) ima uBlock₀ še vedno nižjo mero obremenitve pomnilnika kot ostali zelo popularni dodatki za blokiranje oglasov.
 
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+Poleg tega bodite pozorni, da vklop določenih dodatnih seznamov filtrov lahko pripelje do višje verjetnosti za nefunkcionalnost spletne strani - predvsem "ogrožajoči" so tisti seznami, ki se jih ponavadi uporablja kot HOSTS datoteko.
 
 ***
 
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+Brez prednastavljenih seznamov filtrov, da dodatek ni nič. Tako da, če res želite kje pomagati ali komu plačati kavo, pomislite na ljudi, ki trdo delajo, da vzdržujejo te sezname filtrov, ki jih uporabljate, in so jih naredili dosegljive zastonj in za vse.
 
 ***
 

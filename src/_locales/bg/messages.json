@@ -516,7 +516,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Добавяне на следния адрес към вашият потребителски списък с филтри?\n\nНаименование: \"{{title}}\"\nURL адрес: {{url}}",
+    "message":"uBlock₀: Добавяне на следния адрес към вашият списък с потребителски филтри?\n\nИме: \"{{title}}\"\nURL адрес: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

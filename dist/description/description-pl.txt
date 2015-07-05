@@ -2,7 +2,7 @@ Skutecznie blokuje reklamy, używa mało pamięci RAM i zasobów procesora, a pr
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sposób użycia: Duży przycisk zasilania w popupie służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
+Sposób użycia: Wyświetlany w panelu duży przycisk oznaczony symbolem zasilania służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
 ***
 
@@ -34,7 +34,7 @@ Bez ustawionej listy filtrów, to rozszerzenie jest bezużyteczne. Pomyśl zatem
 
 ***
 
-Darmowy dodatek.
+To jest darmowe rozszerzenie.
 Kod źródłowy udostępniany na otwartej licencji (GPLv3)
 Dla użytkowników przez użytkowników.
 

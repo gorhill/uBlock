@@ -1,0 +1,51 @@
+Satu penghalang yang berkesan: kurang menggunakan memori dan CPU, tetapi dapat memuat dan menguatkuasakan beribu-ribu lagi penapis daripada penghalang popular yang lain di luar sana.
+
+Kecekapan yang digambarkan:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+(Bahasa English)
+
+Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
+
+***
+
+Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+
+Out of the box, these lists of filters are loaded and enforced:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+More lists are available for you to select if you wish:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- And many others
+
+Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+
+Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+
+***
+
+Penapis yang tiada senarai pratetap, extension ini tiada kegunaannya. Jadi, jika pernah anda benar-benar mahu menyumbang sesuatu, berfikir tentang orang yang bekerja keras untuk mengekalkan senarai penapis anda menggunakan, mereka telah menyediakannya untuk digunakan oleh semua orang secara percuma.
+
+***
+
+Percuma.
+Sumber terbuka dengan lesen awam (GPLv3)
+Bagi pengguna oleh pengguna.
+
+Penyumbang @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Penyumbang @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Ia versi yang agak awal, ingat apabila anda mengulas.
+
+Log perubahan projek:
+https://github.com/gorhill/uBlock/releases

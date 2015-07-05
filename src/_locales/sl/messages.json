@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Flitri tretjih oseb",
+    "message":"Filtri tretjih oseb",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -268,7 +268,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En URL v vsaki vrstici. Vrstice s predpono &lsquo;!&rsquo; in neveljavni URL-ji bodo prezrti.",
+    "message":"En URL na vrstico. Vrstice s predpono &lsquo;!&rsquo; in neveljavni URL-ji bodo prezrti.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{

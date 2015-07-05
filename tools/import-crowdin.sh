@@ -11,6 +11,7 @@ unzip -q ~/Downloads/ublock.zip -d $SRC
 DES=./src/_locales
 cp $SRC/ar/messages.json    $DES/ar/messages.json
 cp $SRC/bg/messages.json    $DES/bg/messages.json
+cp $SRC/bn/messages.json    $DES/bn/messages.json
 cp $SRC/ca/messages.json    $DES/ca/messages.json
 cp $SRC/cs/messages.json    $DES/cs/messages.json
 cp $SRC/da/messages.json    $DES/da/messages.json
@@ -35,6 +36,7 @@ cp $SRC/ko/messages.json    $DES/ko/messages.json
 cp $SRC/lt/messages.json    $DES/lt/messages.json
 cp $SRC/lv/messages.json    $DES/lv/messages.json
 cp $SRC/mr/messages.json    $DES/mr/messages.json
+#cp $SRC/ms/messages.json    $DES/ms/messages.json
 cp $SRC/no/messages.json    $DES/nb/messages.json
 cp $SRC/nl/messages.json    $DES/nl/messages.json
 cp $SRC/pl/messages.json    $DES/pl/messages.json
@@ -59,6 +61,7 @@ cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 DES=./dist/description
 cp $SRC/ar/description.txt    $DES/description-ar.txt
 cp $SRC/bg/description.txt    $DES/description-bg.txt
+cp $SRC/bn/description.txt    $DES/description-bn.txt
 cp $SRC/ca/description.txt    $DES/description-ca.txt
 cp $SRC/cs/description.txt    $DES/description-cs.txt
 cp $SRC/da/description.txt    $DES/description-da.txt
@@ -81,6 +84,7 @@ cp $SRC/ja/description.txt    $DES/description-ja.txt
 cp $SRC/ko/description.txt    $DES/description-ko.txt
 cp $SRC/lt/description.txt    $DES/description-lt.txt
 cp $SRC/lv/description.txt    $DES/description-lv.txt
+cp $SRC/ms/description.txt    $DES/description-ms.txt
 #cp $SRC/mr/description.txt $DES/description-mr.txt
 cp $SRC/no/description.txt    $DES/description-no.txt
 cp $SRC/nl/description.txt    $DES/description-nl.txt
@@ -99,7 +103,7 @@ cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
 cp $SRC/vi/description.txt    $DES/description-vi.txt
 cp $SRC/zh-CN/description.txt $DES/description-zh_CN.txt
-#cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
+cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
 #
 

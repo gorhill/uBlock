@@ -1,54 +1,49 @@
-一款高效率的廣告攔截工具：只使用超低的記憶體和CPU使用量，和其他常見的廣告攔截工具相比，可以載入並執行上千條過濾規則。
+一個高效率的阻擋器：使用不多的記憶體以及 CPU 資源，但卻能比市面上其他熱門的阻擋器，載入並執行數以千計的過濾規則。
 
-效率概述說明： 
-https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+效能比較的概述圖例：https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-用法：點選快顯視窗中的電源按鈕，μBlock將會在目前正在瀏覽的網頁永久停用/啟用廣告攔截功能。 它只適用於目前正在瀏覽的網頁，而不是全域按鈕。
+用法：在彈出式選單中的大電源按鈕，是用來設定是否在目前的網站永久的禁用/啟用 uBlock。 此按鈕僅於目前所在的網站有效，它並非是此擴展套件的總開關按鈕。
 
 ***
 
-這不只是一個廣告攔截工具，它還可以非常有彈性的從hosts檔裡讀取和建立過濾規則。
+彈性化，這並不僅僅是一個 "廣告阻擋器"：它甚至能從 host 檔案中讀取並建立過濾規則。
 
-初始預設載入和執行下列過濾規則：
+下列的過濾規則列表，是預設被載入及啟用的：
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
-這裡還擁有更多的過濾規則供你選擇：
+您可以依照您的意願選擇更多的過濾規則列表：
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- 其他
+- 以及其他更多
 
-啟用越多的過濾規則就會佔用越多的記憶體。 然而，即使在加入 Fanboy 額外的兩個規則和 hpHosts’s Ad and tracking servers，uBlock₀ 的記憶體佔用依然比其他常見的過濾工具要小的多。
+當啟用更多的過濾規則，記憶體資源也理所當然地使用越多。 但哪怕加入了 Fanboy 的 2 個額外的過濾規則列表，hpHosts’s Ad and tracking servers 過濾規則列表，uBlock 仍比市面上其他熱門的阻擋器使用更少的記憶體資源。
 
-另外，請注意選擇的一些額外的清單可能會導致網頁破損可能性增高 — — 尤其是那些通常用來當作hosts檔案的清單。
-
-***
-
-沒有這些過濾規則清單，這個擴充套件就沒有了意義。 所以如果你真的想要做些貢獻，試著想想那些努力維護廣告過濾規則清單的人們，至少他們讓大家可以免費使用這一切。
+另外，請注意，當啟用部份額外的過濾規則列表，將有可能增加網站排版破損的機率 -- 尤其是那些通常被用作 host 檔案的過濾規則列表。
 
 ***
 
-自由、免費。
-開放原始程式碼與公共許可證 (GPLv3)
-一切都是為了使用者。
-
-貢獻者@ Github： 
-https://github.com/gorhill/uBlock/graphs/contributors
-貢獻者 @ Crowdin： 
-https://crowdin.net/project/ublock
+若是沒有這些預置的過濾規則列表，這個過展套件本身並沒有什麼。 所以當您真的想要貢獻些什麼的時候，請想想那些，您正在使用的，被人們努力維護並免費提供給所有人的過濾規則列表。
 
 ***
 
-這還只是一個非常初期的版本，當您留下建議的時候請手下留情。
+免費。
+以公眾授權開放原始程式碼（GPLv3）
+獻給所有人。
+
+貢獻者 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+貢獻者 @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+當您在做評論時，請在您的心中記住一件事，此擴展套件目前僅是一個相當初期的版本。
 
 專案更新日誌：
 https://github.com/gorhill/uBlock/releases
