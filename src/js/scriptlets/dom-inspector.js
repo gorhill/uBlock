@@ -154,6 +154,7 @@ var pickerRoot = null;
 var highlightedElementLists = [ [], [], [] ];
 
 var nodeToIdMap = new WeakMap(); // No need to iterate
+var nodeToCosmeticFilterMap = new WeakMap();
 var toggledNodes = new Map();
 
 /******************************************************************************/
@@ -191,31 +192,6 @@ var domLayout = (function() {
         nodeToIdMap.set(node, nid);
         return nid;
     };
-
-    // Collect all nodes which are directly affected by cosmetic filters: these
-    // will be reported in the layout data.
-    // TODO: take into account cosmetic filters added after the map is build.
-
-    var nodeToCosmeticFilterMap = (function() {
-        var out = new WeakMap();
-        var styleTags = vAPI.styles || [];
-        var i = styleTags.length;
-        var selectors, styleText, j, selector, nodes, k;
-        while ( i-- ) {
-            styleText = styleTags[i].textContent;
-            selectors = styleText.slice(0, styleText.lastIndexOf('\n')).split(/,\n/);
-            j = selectors.length;
-            while ( j-- ) {
-                selector = selectors[j];
-                nodes = document.querySelectorAll(selector);
-                k = nodes.length;
-                while ( k-- ) {
-                    out.set(nodes[k], selector);
-                }
-            }
-        }
-        return out;
-    })();
 
     var selectorFromNode = function(node) {
         var str, attr, pos, sw, i;
@@ -708,6 +684,29 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
 
 /******************************************************************************/
 
+var cosmeticFilterMapFromStyleTag = function(styleTag) {
+    var filterMap = nodeToCosmeticFilterMap;
+    var styleText = styleTag.textContent;
+    var selectors = styleText.slice(0, styleText.lastIndexOf('\n')).split(/,\n/);
+    var i = selectors.length;
+    var selector, nodes, j, node;
+    while ( i-- ) {
+        selector = selectors[i];
+        nodes = document.querySelectorAll(selector);
+        j = nodes.length;
+        while ( j-- ) {
+            node = nodes[j];
+            filterMap.set(node, selector);
+            // Not all target nodes have necessarily been force-hidden,
+            // do it now so that the inspector does not unhide these
+            // nodes.
+            hideNode(node);
+        }
+    }
+};
+
+/******************************************************************************/
+
 var elementsFromSelector = function(selector, context) {
     if ( !context ) {
         context = document;
@@ -772,7 +771,7 @@ var highlightElements = function(scrollTo) {
         svgRoot.children[i+1].setAttribute('d', islands.join('') || 'M0 0');
     }
 
-    svgRoot.children[0].setAttribute('d', ocean.join(''));
+    svgRoot.firstElementChild.setAttribute('d', ocean.join(''));
 
     if ( !scrollTo ) {
         return;
@@ -926,8 +925,8 @@ var showNode = function(node, v1, v2) {
         } else {
             node.style.setProperty('display', v1, v2);
         }
-    } else if ( shadow !== null && shadow.className === sessionId ) {
-        shadow.children[0].select = '';
+    } else if ( shadow !== null && shadow.className === sessionId && shadow.firstElementChild === null ) {
+        shadow.appendChild(document.createElement('content'));
     }
 };
 
@@ -940,26 +939,35 @@ var hideNode = function(node) {
         return;
     }
     if ( shadow !== null && shadow.className === sessionId ) {
-        shadow.children[0].select = '#' + sessionId;
+        if ( shadow.firstElementChild !== null ) {
+            shadow.removeChild(shadow.firstElementChild);
+        }
         return;
     }
-    // not all node can be shadowed
+    // not all nodes can be shadowed
     try {
         shadow = node.createShadowRoot();
     } catch (ex) {
         return;
     }
     shadow.className = sessionId;
-    shadow.appendChild(vAPI.perNodeShadowTemplate.cloneNode(true));
 };
 
 /******************************************************************************/
 
 var toggleStylesVisibility = function(state) {
     var styleTags = vAPI.styles || [];
-    var i = styleTags.length, sheet;
+    var styleTag, sheet;
+    var i = styleTags.length;
     while ( i-- ) {
-        sheet = styleTags[i].sheet;
+        styleTag = styleTags[i];
+        // Collect all nodes which are directly affected by cosmetic filters: these
+        // will be reported in the layout data.
+        // TODO: take into account cosmetic filters added after the map is build.
+        if ( state === false ) {
+            cosmeticFilterMapFromStyleTag(styleTag);
+        }
+        sheet = styleTag.sheet;
         if ( sheet !== null ) {
             sheet.disabled = !state;
         }

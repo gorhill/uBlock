@@ -90,10 +90,9 @@ while ( i-- ) {
         }
         continue;
     }
-    if ( shadow === null || shadow.className !== sessionId ) {
-        continue;
+    if ( shadow !== null && shadow.className === sessionId && shadow.firstElementChild === null ) {
+        shadow.appendChild(document.createElement('content'));
     }
-    shadow.children[0].select = '';
 }
 
 /******************************************************************************/

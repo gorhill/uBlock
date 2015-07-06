@@ -54,14 +54,6 @@ if ( vAPI.contentscriptStartInjected ) {
 }
 vAPI.contentscriptStartInjected = true;
 vAPI.styles = vAPI.styles || [];
-vAPI.perNodeShadowTemplate = (function() {
-    if ( typeof document.documentElement.createShadowRoot !== 'function' ) {
-        return null;
-    }
-    var content = document.createElement('content');
-    content.select = '#' + vAPI.sessionId;
-    return content;
-})();
 
 /******************************************************************************/
 
@@ -172,8 +164,7 @@ var hideElements = function(selectors) {
     }
     // https://github.com/chrisaljoudi/uBlock/issues/158
     // Using CSSStyleDeclaration.setProperty is more reliable
-    var template = vAPI.perNodeShadowTemplate;
-    if ( template === null ) {
+    if ( document.body.shadowRoot === undefined ) {
         while ( i-- ) {
             elems[i].style.setProperty('display', 'none', 'important');
         }
@@ -192,7 +183,6 @@ var hideElements = function(selectors) {
         }
         shadow = elem.createShadowRoot();
         shadow.className = sessionId;
-        shadow.appendChild(template.cloneNode(true));
     }
 };
 

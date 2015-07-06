@@ -453,8 +453,7 @@ var uBlockCollapser = (function() {
         }
         // https://github.com/chrisaljoudi/uBlock/issues/158
         // Using CSSStyleDeclaration.setProperty is more reliable
-        var template = vAPI.perNodeShadowTemplate;
-        if ( template === null ) {
+        if ( document.body.shadowRoot === undefined ) {
             while ( i-- ) {
                 elems[i].style.setProperty('display', 'none', 'important');
             }
@@ -473,7 +472,6 @@ var uBlockCollapser = (function() {
             }
             shadow = elem.createShadowRoot();
             shadow.className = sessionId;
-            shadow.appendChild(template.cloneNode(true));
         }
     };
 
