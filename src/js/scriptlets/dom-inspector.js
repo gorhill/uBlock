@@ -503,6 +503,11 @@ var domLayout = (function() {
             hostname: window.location.hostname
         };
 
+        if ( document.readyState !== 'complete' ) {
+            response.status = 'busy';
+            return response;
+        }
+
         // No mutation observer means we need to send full layout
         if ( mutationObserver === null ) {
             mutationObserver = new MutationObserver(onMutationObserved);
