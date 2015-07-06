@@ -585,7 +585,7 @@ vAPI.messaging.onPortMessage = (function() {
     };
 
     var toAux = function(details, portFrom) {
-        var portTo;
+        var port, portTo;
         var chromiumTabId = toChromiumTabId(details.toTabId);
 
         // TODO: This could be an issue with a lot of tabs: easy to address
@@ -594,8 +594,11 @@ vAPI.messaging.onPortMessage = (function() {
             if ( messaging.ports.hasOwnProperty(portName) === false ) {
                 continue;
             }
-            if ( messaging.ports[portName].sender.tab.id === chromiumTabId ) {
-                portTo = messaging.ports[portName];
+            // When sending to an auxiliary process, the target is always the
+            // port associated with the root frame.
+            port = messaging.ports[portName];
+            if ( port.sender.frameId === 0 && port.sender.tab.id === chromiumTabId ) {
+                portTo = port;
                 break;
             }
         }
