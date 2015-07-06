@@ -49,6 +49,8 @@ if ( Array.isArray(styles) === false ) {
     return;
 }
 
+var sessionId = vAPI.sessionId;
+
 /******************************************************************************/
 
 // Remove all cosmetic filtering-related styles from the DOM
@@ -60,14 +62,11 @@ var style, i;
 i = styles.length;
 while ( i-- ) {
     style = styles[i];
-    if ( style.parentElement === null ) {
-        continue;
-    }
-    style.parentElement.removeChild(style);
     selectors.push(style.textContent.replace(reProperties, ''));
+    if ( style.sheet !== null ) {
+        style.sheet.disabled = true;
+    }
 }
-
-// Remove `display: none !important` attribute
 
 if ( selectors.length === 0 ) {
     return;
@@ -78,13 +77,23 @@ try {
     elems = document.querySelectorAll(selectors.join(','));
 } catch (e) {
 }
-
 i = elems.length;
+
+var elem, shadow;
 while ( i-- ) {
-    style = elems[i].style;
-    if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
-        style.removeProperty('display');
+    elem = elems[i];
+    shadow = elem.shadowRoot;
+    if ( shadow === undefined ) {
+        style = elem.style;
+        if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
+            style.removeProperty('display');
+        }
+        continue;
     }
+    if ( shadow === null || shadow.className !== sessionId ) {
+        continue;
+    }
+    shadow.children[0].select = '';
 }
 
 /******************************************************************************/

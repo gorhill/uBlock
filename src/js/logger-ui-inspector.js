@@ -29,8 +29,11 @@
 
 /******************************************************************************/
 
+var showdomButton = uDom.nodeFromId('showdom');
+
 // Don't bother if the browser is not modern enough.
 if ( typeof Map === undefined || typeof WeakMap === undefined ) {
+    showdomButton.classList.add('disabled');
     return;
 }
 
@@ -44,7 +47,6 @@ var inspectedURL = '';
 var inspectedHostname = '';
 var pollTimer = null;
 var fingerprint = null;
-var showdomButton = uDom.nodeFromId('showdom');
 var inspector = uDom.nodeFromId('domInspector');
 var domTree = uDom.nodeFromId('domTree');
 var tabSelector = uDom.nodeFromId('pageSelector');

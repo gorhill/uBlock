@@ -42,7 +42,9 @@ if ( typeof vAPI !== 'object' ) {
 
 /******************************************************************************/
 
-if ( document.querySelector('iframe.dom-inspector.' + vAPI.sessionId) !== null ) {
+var sessionId = vAPI.sessionId;
+
+if ( document.querySelector('iframe.dom-inspector.' + sessionId) !== null ) {
     return;
 }
 
@@ -159,7 +161,7 @@ var toggledNodes = new Map();
 // Some kind of fingerprint for the DOM, without incurring too much overhead.
 
 var domFingerprint = function() {
-    return vAPI.sessionId;
+    return sessionId;
 };
 
 /******************************************************************************/
@@ -274,7 +276,7 @@ var domLayout = (function() {
             return null;
         }
         // skip uBlock's own nodes
-        if ( node.classList.contains(vAPI.sessionId) ) {
+        if ( node.classList.contains(sessionId) ) {
             return null;
         }
         if ( level === 0 && localName === 'body' ) {
@@ -807,14 +809,14 @@ var onScrolled = function() {
 /******************************************************************************/
 
 var resetToggledNodes = function() {
-    var value;
+    var details;
     // Chromium does not support destructuring as of v43.
     for ( var node of toggledNodes.keys() ) {
-        value = toggledNodes.get(node);
-        if ( value !== null ) {
-            node.style.removeProperty('display');
+        details = toggledNodes.get(node);
+        if ( details.show ) {
+            showNode(node, details.v1, details.v2);
         } else {
-            node.style.setProperty('display', value);
+            hideNode(node);
         }
     }
     toggledNodes.clear();
@@ -845,6 +847,7 @@ var selectNodes = function(selector, nid) {
 /******************************************************************************/
 
 var shutdown = function() {
+    toggleStylesVisibility(true);
     resetToggledNodes();
     domLayout.shutdown();
     localMessager.removeAllListeners();
@@ -869,38 +872,94 @@ var toggleNodes = function(nodes, originalState, targetState) {
     if ( i === 0 ) {
         return;
     }
-    var node, value;
+    var node, details;
     while ( i-- ) {
         node = nodes[i];
-        if ( originalState ) {                              // any, ?
-            if ( targetState ) {                            // any, any
-                value = toggledNodes.get(node);
-                if ( value === undefined ) {
-                    continue;
-                }
-                if ( value !== null ) {
-                    node.style.removeProperty('display');
-                } else {
-                    node.style.setProperty('display', value);
-                }
+        // originally visible node
+        if ( originalState ) {
+            // unhide visible node
+            if ( targetState ) {
+                details = toggledNodes.get(node) || {};
+                showNode(node, details.v1, details.v2);
                 toggledNodes.delete(node);
-            } else {                                        // any, hidden
-                toggledNodes.set(node, node.style.getPropertyValue('display') || null);
-                node.style.setProperty('display', 'none');
             }
-        } else {                                            // hidden, ?
-            if ( targetState ) {                            // hidden, any
-                toggledNodes.set(node, 'none');
-                node.style.setProperty('display', 'initial', 'important');
-            } else {                                        // hidden, hidden
+            // hide visible node
+            else {
+                toggledNodes.set(node, {
+                    show: true,
+                    v1: node.style.getPropertyValue('display') || '',
+                    v2: node.style.getPropertyPriority('display') || ''
+                });
+                hideNode(node);
+            }
+        }
+        // originally hidden node
+        else {
+            // show hidden node
+            if ( targetState ) {
+                toggledNodes.set(node, { show: false });
+                showNode(node, 'initial', 'important');
+            }
+            // hide hidden node
+            else {
+                hideNode(node);
                 toggledNodes.delete(node);
-                node.style.setProperty('display', 'none', 'important');
             }
         }
     }
 };
 
 // https://www.youtube.com/watch?v=L5jRewnxSBY
+
+/******************************************************************************/
+
+var showNode = function(node, v1, v2) {
+    var shadow = node.shadowRoot;
+    if ( shadow === undefined ) {
+        if ( !v1 ) {
+            node.style.removeProperty('display');
+        } else {
+            node.style.setProperty('display', v1, v2);
+        }
+    } else if ( shadow !== null && shadow.className === sessionId ) {
+        shadow.children[0].select = '';
+    }
+};
+
+/******************************************************************************/
+
+var hideNode = function(node) {
+    var shadow = node.shadowRoot;
+    if ( shadow === undefined ) {
+        node.style.setProperty('display', 'none', 'important');
+        return;
+    }
+    if ( shadow !== null && shadow.className === sessionId ) {
+        shadow.children[0].select = '#' + sessionId;
+        return;
+    }
+    // not all node can be shadowed
+    try {
+        shadow = node.createShadowRoot();
+    } catch (ex) {
+        return;
+    }
+    shadow.className = sessionId;
+    shadow.appendChild(vAPI.perNodeShadowTemplate.cloneNode(true));
+};
+
+/******************************************************************************/
+
+var toggleStylesVisibility = function(state) {
+    var styleTags = vAPI.styles || [];
+    var i = styleTags.length, sheet;
+    while ( i-- ) {
+        sheet = styleTags[i].sheet;
+        if ( sheet !== null ) {
+            sheet.disabled = !state;
+        }
+    }
+};
 
 /******************************************************************************/
 /******************************************************************************/
@@ -978,7 +1037,7 @@ var onMessage = function(request) {
 // Install DOM inspector widget
 
 pickerRoot = document.createElement('iframe');
-pickerRoot.classList.add(vAPI.sessionId);
+pickerRoot.classList.add(sessionId);
 pickerRoot.classList.add('dom-inspector');
 pickerRoot.style.cssText = [
     'background: transparent',
@@ -1048,6 +1107,7 @@ pickerRoot.onload = function() {
     window.addEventListener('scroll', onScrolled, true);
 
     highlightElements();
+    toggleStylesVisibility(false);
 
     localMessager.addListener(onMessage);
 };
