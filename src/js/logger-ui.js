@@ -689,7 +689,7 @@ var onLogBufferRead = function(response) {
     if ( rowVoided ) {
         uDom('#clean').toggleClass(
             'disabled',
-            tbody.querySelector('tr.tab:not(.canMtx)') === null
+            tbody.querySelector('#netInspector tr.tab:not(.canMtx)') === null
         );
     }
 
@@ -723,7 +723,7 @@ var pageSelectorChanged = function() {
     }
     if ( tabClass !== '' ) {
         sheet.insertRule(
-            'table tr:not(.' + tabClass + ') { display: none; }',
+            '#netInspector tr:not(.' + tabClass + ') { display: none; }',
             0
         );
     }
@@ -1574,7 +1574,7 @@ var clearBuffer = function() {
     );
     uDom.nodeFromId('clean').classList.toggle(
         'disabled',
-        tbody.querySelector('tr.tab:not(.canMtx)') === null
+        tbody.querySelector('#netInspector tr.tab:not(.canMtx)') === null
     );
 };
 
@@ -1611,7 +1611,7 @@ var popupManager = (function() {
     var popupObserver = null;
     var style = null;
     var styleTemplate = [
-        'table tr:not(.tab_{{tabId}}) {',
+        '#netInspector tr:not(.tab_{{tabId}}) {',
             'cursor: not-allowed;',
             'opacity: 0.2;',
         '}'
