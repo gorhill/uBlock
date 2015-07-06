@@ -134,10 +134,6 @@
         "title": "Malvertising filter list by Disconnect",
         "group": "malware"
         },
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": {
-        "title": "Malware filter list by Disconnect",
-        "group": "malware"
-        },
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": {
         "off": true,
         "title": "Basic tracking list by Disconnect",
