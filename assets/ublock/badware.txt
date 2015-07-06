@@ -16,7 +16,6 @@
 # 2012-06-27: http://insecure.org/news/download-com-fiasco.html
 # 2011-12-05: http://seclists.org/nmap-announce/2011/5
 # 2011-08-22: http://www.extremetech.com/computing/93504-download-com-wraps-downloads-in-bloatware-lies-about-motivations
-||download.com^$other
 ||download.cnet.com^$other
 
 
