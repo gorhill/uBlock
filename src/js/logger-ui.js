@@ -575,7 +575,7 @@ var renderLogEntries = function(response) {
     if ( yDelta === 0 ) {
         return;
     }
-    var container = uDom.nodeFromId('netInspector');
+    var container = uDom.nodeFromSelector('#netInspector .vscrollable');
     if ( container.scrollTop !== 0 ) {
         container.scrollTop += yDelta;
     }
