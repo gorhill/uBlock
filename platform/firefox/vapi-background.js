@@ -1803,11 +1803,14 @@ vAPI.net.registerListeners = function() {
                 var URI = browser.currentURI;
 
                 // Probably isn't the best method to identify the source tab.
+
+                // https://github.com/gorhill/uBlock/issues/450
+                // Skip entry if no valid URI available.
                 // Apparently URI can be undefined under some circumstances: I
                 // believe this may have to do with those very temporary
                 // browser objects created when opening a new tab, i.e. related
                 // to https://github.com/gorhill/uBlock/issues/212
-                if ( URI && URI.spec !== details.openerURL ) {
+                if ( !URI || URI.spec !== details.openerURL ) {
                     continue;
                 }
 
