@@ -170,7 +170,7 @@ var filterDecompiler = (function() {
          3: 'object',
          4: 'script',
          5: 'xmlhttprequest',
-         6: 'sub_frame',
+         6: 'subdocument',
          7: 'font',
          8: 'other',
         13: 'elemhide',
