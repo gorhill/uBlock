@@ -475,6 +475,7 @@ var renderPopup = function() {
 
 var renderPopupLazy = function() {
     var onDataReady = function(data) {
+        if ( !data ) { return; }
         var v = data.hiddenElementCount || '';
         uDom.nodeFromSelector('#no-cosmetic-filtering > span.badge')
             .textContent = typeof v === 'number' ? v.toLocaleString() : v;
