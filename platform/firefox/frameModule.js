@@ -163,7 +163,11 @@ const contentObserver = {
                 context.opener !== context &&
                 this.ignoredPopups.has(context) === false
             ) {
-                openerURL = context.opener.location.href;
+                // https://github.com/gorhill/uBlock/issues/452
+                // Use location of top window, not that of a frame, as this
+                // would cause tab id lookup (necessary for popup blocking) to
+                // always fail.
+                openerURL = context.opener.top && context.opener.top.location.href;
             }
         } else if ( type === this.SUB_FRAME ) {
             context = context.contentWindow;
