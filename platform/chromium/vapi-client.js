@@ -40,7 +40,7 @@ if ( vAPI.vapiClientInjected ) {
 }
 
 vAPI.vapiClientInjected = true;
-vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
+vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
     Math.random().toString(36).slice(2);
 vAPI.chrome = true;
 
@@ -77,22 +77,44 @@ vAPI.messaging = {
     port: null,
     channels: {},
     pending: {},
+    pendingCount: 0,
     auxProcessId: 1,
 
     setup: function() {
-        this.port = chrome.runtime.connect({name: vAPI.sessionId});
+        try {
+            this.port = chrome.runtime.connect({name: vAPI.sessionId});
+        } catch (ex) {
+        }
+        if ( this.port === null ) {
+            console.error("uBlock> Can't patch things up. It's over.");
+            vAPI.shutdown.exec();
+            return false;
+        }
         this.port.onMessage.addListener(messagingConnector);
+        return true;
     },
 
     close: function() {
-        if ( this.port === null ) {
+        var port = this.port;
+        if ( port === null ) {
             return;
         }
-        this.port.disconnect();
-        this.port.onMessage.removeListener(messagingConnector);
         this.port = null;
+        port.disconnect();
+        port.onMessage.removeListener(messagingConnector);
         this.channels = {};
+        // service pending callbacks
+        var pending = this.pending, listener;
         this.pending = {};
+        this.pendingCount = 0;
+        for ( var auxId in pending ) {
+            if ( this.pending.hasOwnProperty(auxId) ) {
+                listener = pending[auxId];
+                if ( typeof listener === 'function' ) {
+                    listener(null);
+                }
+            }
+        }
     },
 
     channel: function(channelName, callback) {
@@ -138,6 +160,7 @@ var messagingConnector = function(details) {
         delete messaging.pending[details.auxProcessId];
         delete details.auxProcessId; // TODO: why?
         if ( listener ) {
+            messaging.pendingCount -= 1;
             listener(details.msg);
             return;
         }
@@ -161,11 +184,11 @@ var messagingConnector = function(details) {
 
 /******************************************************************************/
 
-var MessagingChannel = function(name, callback) {
+var MessagingChannel = function(name, listener) {
     this.channelName = name;
-    this.listeners = typeof callback === 'function' ? [callback] : [];
+    this.listeners = typeof listener === 'function' ? [listener] : [];
     this.refCount = 1;
-    if ( typeof callback === 'function' ) {
+    if ( typeof listener === 'function' ) {
         var messaging = vAPI.messaging;
         if ( messaging.port === null ) {
             messaging.setup();
@@ -179,13 +202,27 @@ MessagingChannel.prototype.send = function(message, callback) {
 
 MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
     var messaging = vAPI.messaging;
+    // Too large a gap between the last request and the last response means
+    // the main process is no longer reachable: memory leaks and bad
+    // performance become a risk -- especially for long-lived, dynamic
+    // pages. Guard against this.
+    if ( messaging.pendingCount > 25 ) {
+        console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
+        messaging.close();
+    }
     if ( messaging.port === null ) {
-        messaging.setup();
+        if ( messaging.setup() === false ) {
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+            return;
+        }
     }
     var auxProcessId;
     if ( callback ) {
         auxProcessId = messaging.auxProcessId++;
         messaging.pending[auxProcessId] = callback;
+        messaging.pendingCount += 1;
     }
     messaging.port.postMessage({
         channelName: this.channelName,

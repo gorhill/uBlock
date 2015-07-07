@@ -70,6 +70,7 @@ vAPI.shutdown = (function() {
 vAPI.messaging = {
     channels: {},
     pending: {},
+    pendingCount: 0,
     auxProcessId: 1,
     connected: false,
     connector: function(msg) {
@@ -114,11 +115,20 @@ vAPI.messaging = {
     },
 
     close: function() {
-        window.removeEventListener('pagehide', this.toggleListener, true);
-        window.removeEventListener('pageshow', this.toggleListener, true);
         this.disconnect();
         this.channels = {};
+        // service pending callbacks
+        var pending = this.pending, listener;
         this.pending = {};
+        this.pendingCount = 0;
+        for ( var auxId in pending ) {
+            if ( this.pending.hasOwnProperty(auxId) ) {
+                listener = pending[auxId];
+                if ( typeof listener === 'function' ) {
+                    listener(null);
+                }
+            }
+        }
     },
 
     channel: function(channelName, callback) {
@@ -205,6 +215,7 @@ var messagingConnector = function(details) {
         delete messaging.pending[details.auxProcessId];
         delete details.auxProcessId; // TODO: why?
         if ( listener ) {
+            messaging.pendingCount -= 1;
             listener(details.msg);
             return;
         }
@@ -243,11 +254,20 @@ MessagingChannel.prototype.send = function(message, callback) {
 
 MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
     var messaging = vAPI.messaging;
+    // Too large a gap between the last request and the last response means
+    // the main process is no longer reachable: memory leaks and bad
+    // performance become a risk -- especially for long-lived, dynamic
+    // pages. Guard against this.
+    if ( messaging.pendingCount > 25 ) {
+        console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
+        messaging.close();
+    }
     messaging.connect();
     var auxProcessId;
     if ( callback ) {
         auxProcessId = messaging.auxProcessId++;
         messaging.pending[auxProcessId] = callback;
+        messaging.pendingCount += 1;
     }
     sendAsyncMessage('ublock0:background', {
         channelName: self._sandboxId_ + '|' + this.channelName,
