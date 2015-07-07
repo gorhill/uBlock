@@ -252,7 +252,7 @@ var renderDOMIncremental = function(response) {
 var countFromNode = function(li) {
     var span = li.children[2];
     var cnt = parseInt(span.getAttribute('data-cnt'), 10);
-    return isNaN(cnt) ? cnt : 0;
+    return isNaN(cnt) ? 0 : cnt;
 };
 
 /******************************************************************************/
