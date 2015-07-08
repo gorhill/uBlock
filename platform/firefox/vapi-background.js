@@ -1166,7 +1166,7 @@ vAPI.messaging.onMessage = (function() {
     var toAuxPending = {};
 
     // Use a wrapper to avoid closure and to allow reuse.
-    var CallbackWrapper = function(messageManager, channelName, listenerId, auxProcessId, timeout) {
+    var CallbackWrapper = function(messageManager, listenerId, channelName, auxProcessId, timeout) {
         this.callback = this.proxy.bind(this); // bind once
         this.init(messageManager, listenerId, channelName, auxProcessId, timeout);
     };
