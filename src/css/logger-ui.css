@@ -335,11 +335,6 @@ body[dir="rtl"] #popupContainer > div {
     }
 
 #netFilteringDialog .dialog select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
     max-width: 75%;
     outline: none;
     padding: 0.2em;
