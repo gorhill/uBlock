@@ -164,8 +164,8 @@ var patchIncremental = function(from, delta) {
     var span, cnt;
     var li = from.parentElement.parentElement;
     var patchCosmeticHide = delta >= 0 &&
-                            from.classList.contains('isCosmeticFilter') &&
-                            li.classList.contains('hasCosmeticFilter') === false;
+                            from.classList.contains('isCosmeticHide') &&
+                            li.classList.contains('hasCosmeticHide') === false;
     // Include descendants count when removing a node
     if ( delta < 0 ) {
         delta -= countFromNode(from);
@@ -178,7 +178,7 @@ var patchIncremental = function(from, delta) {
             span.setAttribute('data-cnt', cnt);
         }
         if ( patchCosmeticHide ) {
-            li.classList.add('hasCosmeticFilter');
+            li.classList.add('hasCosmeticHide');
         }
     }
 };
