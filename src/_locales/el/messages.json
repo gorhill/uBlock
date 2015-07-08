@@ -80,15 +80,15 @@
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"Ενεργοποιήστε αυτηρό μπλοκάρισμα για αυτήν την ιστοσελίδα",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Ενεργοποιήστε κοσμετικό φιλτράρησμα για αυτή την σελίδα",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Ενεργοποιήστε το μπλοκάρισμα απομακρυσμένων γραμματοσειρών για αυτήν την ιστοσελίδα",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -168,7 +168,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"Λειτουργία φιλική πρως χρήστες με αχρωματοψία",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -176,15 +176,15 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Απενεργοποίηστε την πρόωρη φόρτωση (για να αποτραπεί κάθε σύνδεση για μπλοκαρισμένες αιτήσεις δικτύου)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"Απενεργοποιήστε έλενχο υπερσυνδέσμων",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP address",
+    "message":"Αποτρέψτε WebRTC από το να διαρρέει την τοπική διεύθυνση IP",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -396,7 +396,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"All",
+    "message":"Όλα",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -412,59 +412,59 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Περιεχόμενο:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Τύπος:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Φιλτράρισμα δυναμικών συνδέσμων",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Static filtering",
+    "message":"Στατικό φιλτράρισμα",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} το δήκτυο αιτεί {{type}} {{br}} του οποίου η διεύθηνση ταιριάζει {{url}} {{br}} και το οποίο προέρχεται {{origin}},{{br}}{{importance}} υπάρχει ένα ταιριαστό φίλτρο εξαίρεση.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Block",
+    "message":"Μπλοκάρετε",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Allow",
+    "message":"Επιτρέψτε",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"τύπος “{{type}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"any type",
+    "message":"οποιοσδήποτε τύπος",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"from “{{origin}}”",
+    "message":"από “{{origin}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"από οπουδήποτε",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"εκτός αν",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"ακόμη και αν",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Στατικό φίλτρο {{filter}} βρέθηκε σε:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -564,7 +564,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Βρέθηκε σε:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
@@ -576,7 +576,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"Απενεργοποιήστε αυστηρό μπλοκάρισμα για {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
