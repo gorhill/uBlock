@@ -781,7 +781,11 @@ vAPI.tabs.select = function(tab) {
         return;
     }
 
-    var tabBrowser = getTabBrowser(getOwnerWindow(tab));
+    // https://github.com/gorhill/uBlock/issues/470
+    var win = getOwnerWindow(tab);
+    win.focus();
+
+    var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
         tabBrowser.selectTab(tab);
