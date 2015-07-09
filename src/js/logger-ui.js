@@ -229,7 +229,10 @@ var filterDecompiler = (function() {
         case '//h':
             filter += '/' + tfield0 + '/';
             break;
+        // https://github.com/gorhill/uBlock/issues/465
+        // Return at least *something*
         default:
+            filter = compiled.replace(/\s+/g, ' ');
             break;
         }
 
