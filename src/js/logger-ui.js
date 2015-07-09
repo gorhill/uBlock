@@ -230,10 +230,10 @@ var filterDecompiler = (function() {
             filter += '/' + tfield0 + '/';
             break;
         // https://github.com/gorhill/uBlock/issues/465
-        // Return at least *something*
+        // Unexpected: return the raw compiled representation instead of a
+        // blank string.
         default:
-            filter = compiled.replace(/\s+/g, ' ');
-            break;
+            return compiled.replace(/\s+/g, ' ');
         }
 
         // Domain option?
