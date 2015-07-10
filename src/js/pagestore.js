@@ -619,14 +619,14 @@ PageStore.prototype.logRequest = function(context, result) {
         this.contentLastModified = now;
     }
     var c = result.charAt(1);
-    if ( c === '' || c === 'a' ) {
-        this.hostnameToCountMap[requestHostname] += 0x00010000;
-        this.perLoadAllowedRequestCount++;
-        µb.localSettings.allowedRequestCount++;
-    } else /* if ( c === 'b' ) */ {
+    if ( c === 'b' ) {
         this.hostnameToCountMap[requestHostname] += 0x00000001;
         this.perLoadBlockedRequestCount++;
         µb.localSettings.blockedRequestCount++;
+    } else /* if ( c === '' || c === 'a' || c === 'n' ) */ {
+        this.hostnameToCountMap[requestHostname] += 0x00010000;
+        this.perLoadAllowedRequestCount++;
+        µb.localSettings.allowedRequestCount++;
     }
     µb.localSettingsModifyTime = now;
 };
