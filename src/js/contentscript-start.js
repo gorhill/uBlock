@@ -37,7 +37,7 @@
 // https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
     //console.debug('contentscript-start.js > not a HTLMDocument');
-    return false;
+    return;
 }
 
 // This can happen
