@@ -140,7 +140,6 @@ var cssEscape = (function(/*root*/) {
         }
         return result;
     };
-
 }(self));
 
 /******************************************************************************/
@@ -411,6 +410,7 @@ var domLayout = (function() {
                 if ( node.parentElement === null ) {
                     continue;
                 }
+                cosmeticFilterMapper.incremental(node);
                 domNode = domNodeFactory(undefined, node);
                 if ( domNode !== null ) {
                     journalNodes[domNode.nid] = domNode;
@@ -486,6 +486,7 @@ var domLayout = (function() {
 
         // No mutation observer means we need to send full layout
         if ( mutationObserver === null ) {
+            cosmeticFilterMapper.reset();
             mutationObserver = new MutationObserver(onMutationObserved);
             mutationObserver.observe(document.body, {
                 childList: true,
@@ -684,26 +685,73 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
 
 /******************************************************************************/
 
-var cosmeticFilterMapFromStyleTag = function(styleTag) {
-    var filterMap = nodeToCosmeticFilterMap;
-    var styleText = styleTag.textContent;
-    var selectors = styleText.slice(0, styleText.lastIndexOf('\n')).split(/,\n/);
-    var i = selectors.length;
-    var selector, nodes, j, node;
-    while ( i-- ) {
-        selector = selectors[i];
-        nodes = document.querySelectorAll(selector);
-        j = nodes.length;
-        while ( j-- ) {
-            node = nodes[j];
-            filterMap.set(node, selector);
-            // Not all target nodes have necessarily been force-hidden,
-            // do it now so that the inspector does not unhide these
-            // nodes.
-            hideNode(node);
+var cosmeticFilterMapper = (function() {
+
+    // Why the call to hideNode()?
+    //   Not all target nodes have necessarily been force-hidden,
+    //   do it now so that the inspector does not unhide these
+    //   nodes when disabling style tags.
+    var nodesFromStyleTag = function(styleTag, rootNode) {
+        var filterMap = nodeToCosmeticFilterMap;
+        var styleText = styleTag.textContent;
+        var selectors = styleText.slice(0, styleText.lastIndexOf('\n')).split(/,\n/);
+        var i = selectors.length;
+        var selector, nodes, j, node;
+        while ( i-- ) {
+            selector = selectors[i];
+            if ( filterMap.has(rootNode) === false && rootNode.matches(selector) ) {
+                filterMap.set(rootNode, selector);
+                hideNode(node);
+            }
+            nodes = rootNode.querySelectorAll(selector);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if ( filterMap.has(node) === false ) {
+                    filterMap.set(node, selector);
+                    hideNode(node);
+                }
+            }
         }
-    }
-};
+    };
+
+    var incremental = function(rootNode) {
+        var styleTags = vAPI.styles || [];
+        var styleTag;
+        var i = styleTags.length;
+        while ( i-- ) {
+            styleTag = styleTags[i];
+            nodesFromStyleTag(styleTag, rootNode);
+            if ( styleTag.sheet !== null ) {
+                styleTag.sheet.disabled = true;
+            }
+        }
+    };
+
+    var reset = function() {
+        nodeToCosmeticFilterMap = new WeakMap();
+        incremental(document.documentElement);
+    };
+
+    var shutdown = function() {
+        var styleTags = vAPI.styles || [];
+        var styleTag;
+        var i = styleTags.length;
+        while ( i-- ) {
+            styleTag = styleTags[i];
+            if ( styleTag.sheet !== null ) {
+                styleTag.sheet.disabled = false;
+            }
+        }
+        reset();
+    };
+
+    return {
+        incremental: incremental,
+        reset: reset,
+        shutdown: shutdown
+    };
+})();
 
 /******************************************************************************/
 
@@ -813,14 +861,11 @@ var onScrolled = function() {
 /******************************************************************************/
 
 var resetToggledNodes = function() {
-    var details;
-    // Chromium does not support destructuring as of v43.
-    for ( var node of toggledNodes.keys() ) {
-        details = toggledNodes.get(node);
-        if ( details.show ) {
-            showNode(node, details.v1, details.v2);
+    for ( var entry of toggledNodes ) {
+        if ( entry[1].show ) {
+            showNode(entry[0], entry[1].v1, entry[1].v2);
         } else {
-            hideNode(node);
+            hideNode(entry[0]);
         }
     }
     toggledNodes.clear();
@@ -851,7 +896,7 @@ var selectNodes = function(selector, nid) {
 /******************************************************************************/
 
 var shutdown = function() {
-    toggleStylesVisibility(true);
+    cosmeticFilterMapper.shutdown();
     resetToggledNodes();
     domLayout.shutdown();
     localMessager.removeAllListeners();
@@ -951,27 +996,6 @@ var hideNode = function(node) {
         return;
     }
     shadow.className = sessionId;
-};
-
-/******************************************************************************/
-
-var toggleStylesVisibility = function(state) {
-    var styleTags = vAPI.styles || [];
-    var styleTag, sheet;
-    var i = styleTags.length;
-    while ( i-- ) {
-        styleTag = styleTags[i];
-        // Collect all nodes which are directly affected by cosmetic filters: these
-        // will be reported in the layout data.
-        // TODO: take into account cosmetic filters added after the map is build.
-        if ( state === false ) {
-            cosmeticFilterMapFromStyleTag(styleTag);
-        }
-        sheet = styleTag.sheet;
-        if ( sheet !== null ) {
-            sheet.disabled = !state;
-        }
-    }
 };
 
 /******************************************************************************/
@@ -1120,7 +1144,7 @@ pickerRoot.onload = function() {
     window.addEventListener('scroll', onScrolled, true);
 
     highlightElements();
-    toggleStylesVisibility(false);
+    cosmeticFilterMapper.reset();
 
     localMessager.addListener(onMessage);
 };
