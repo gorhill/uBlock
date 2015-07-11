@@ -7,9 +7,12 @@
         <description>{description}</description>
         <homepageURL>{homepage}</homepageURL>
         <creator>{author}</creator>
+        <developer>Deathamns</developer>
+        <developer>Alex Vallat</developer>
         <type>2</type>
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
+        <aboutURL>chrome://ublock0/content/about.html</aboutURL>
         <optionsType>2</optionsType>
 {localized}
 
