@@ -160,7 +160,7 @@ var onBeforeRootFrameRequest = function(details) {
         pageDomain: requestDomain,
         requestURL: requestURL,
         requestHostname: requestHostname,
-        requestType: 'main_frame'
+        requestType: 'other'
     };
 
     var result = '';
@@ -179,20 +179,20 @@ var onBeforeRootFrameRequest = function(details) {
     if ( result === '' ) {
         result = isTemporarilyWhitelisted(result, requestHostname);
         if ( result.charAt(1) === 'a' ) {
-            result = 'ua:no-strict-blocking on(temporary)';
+            result = 'ua:no-strict-blocking true (temporary)';
         }
     }
 
     // Filtering
-    if ( result === '' ) {
-        if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
-            // We always need the long-form result here.
-            result = µb.staticNetFilteringEngine.toResultString(true);
-            // https://github.com/chrisaljoudi/uBlock/issues/1128
-            // Do not block if the match begins after the hostname.
-            if ( result.charAt(1) === 'b' ) {
-                result = toBlockDocResult(requestURL, requestHostname, result);
-            }
+    var snfe = µb.staticNetFilteringEngine;
+    if ( result === '' && snfe.matchString(context) !== undefined ) {
+        // We always need the long-form result here.
+        result = snfe.toResultString(true);
+        // https://github.com/chrisaljoudi/uBlock/issues/1128
+        // Do not block if the match begins after the hostname, except when
+        // the filter is specifically of type `other`.
+        if ( result.charAt(1) === 'b' && (snfe.keyRegister & 0xF0) !== 0x80 ) {
+            result = toBlockDocResult(requestURL, requestHostname, result);
         }
     }
 
@@ -227,7 +227,7 @@ var onBeforeRootFrameRequest = function(details) {
         hn: requestHostname,
         dn: requestDomain,
         fc: compiled,
-        fs: µb.staticNetFilteringEngine.filterStringFromCompiled(compiled)
+        fs: snfe.filterStringFromCompiled(compiled)
     }));
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
