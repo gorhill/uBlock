@@ -259,7 +259,7 @@ MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callba
     // performance become a risk -- especially for long-lived, dynamic
     // pages. Guard against this.
     if ( messaging.pendingCount > 25 ) {
-        console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
+        //console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
         messaging.close();
     }
     messaging.connect();

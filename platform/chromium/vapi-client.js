@@ -86,7 +86,7 @@ vAPI.messaging = {
         } catch (ex) {
         }
         if ( this.port === null ) {
-            console.error("uBlock> Can't patch things up. It's over.");
+            //console.error("uBlock> Can't patch things up. It's over.");
             vAPI.shutdown.exec();
             return false;
         }
@@ -207,7 +207,7 @@ MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callba
     // performance become a risk -- especially for long-lived, dynamic
     // pages. Guard against this.
     if ( messaging.pendingCount > 25 ) {
-        console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
+        //console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
         messaging.close();
     }
     if ( messaging.port === null ) {
