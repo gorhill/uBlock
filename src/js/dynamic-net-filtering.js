@@ -349,7 +349,7 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
         this.z = s;
         v = this.rules[s + ' ' + desHostname];
         if ( v !== undefined ) {
-            v = v >> bitOffset & 3;
+            v = v >>> bitOffset & 3;
             if ( v !== 0 ) {
                 this.r = v;
                 return v;

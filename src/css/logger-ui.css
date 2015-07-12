@@ -443,7 +443,7 @@ body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
     }
 #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar select {
     font: 14px;
-    height: 2em;
+    height: 2.5em;
     }
 #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
     background-color: #ffe;
