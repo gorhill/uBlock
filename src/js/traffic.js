@@ -183,10 +183,16 @@ var onBeforeRootFrameRequest = function(details) {
         }
     }
 
-    // Filtering
+    // Static filtering: We always need the long-form result here.
     var snfe = µb.staticNetFilteringEngine;
+
+    // Check for specific block
+    if ( result === '' && snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined ) {
+        result = snfe.toResultString(true);
+    }
+
+    // Check for generic block
     if ( result === '' && snfe.matchString(context) !== undefined ) {
-        // We always need the long-form result here.
         result = snfe.toResultString(true);
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname, except when

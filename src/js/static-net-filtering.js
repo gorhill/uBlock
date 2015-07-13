@@ -64,6 +64,7 @@ var typeNameToTypeValue = {
          'sub_frame':  6 << 4,
               'font':  7 << 4,
              'other':  8 << 4,
+        'main_frame': 12 << 4,
 'cosmetic-filtering': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
@@ -76,9 +77,10 @@ var typeValueToTypeName = {
      3: 'object',
      4: 'script',
      5: 'xmlhttprequest',
-     6: 'sub_frame',
+     6: 'subdocument',
      7: 'font',
      8: 'other',
+    12: 'document',
     13: 'cosmetic-filtering',
     14: 'inline-script',
     15: 'popup'
@@ -1231,6 +1233,7 @@ FilterParser.prototype.toNormalizedType = {
        'subdocument': 'sub_frame',
               'font': 'font',
              'other': 'other',
+          'document': 'main_frame',
           'elemhide': 'cosmetic-filtering',
      'inline-script': 'inline-script',
              'popup': 'popup'
@@ -1278,7 +1281,7 @@ FilterParser.prototype.parseOptType = function(raw, not) {
         this.types = allNetRequestTypesBitmap;
     }
 
-    this.types &= ~typeBit;
+    this.types &= ~typeBit & allNetRequestTypesBitmap;
 };
 
 /******************************************************************************/
@@ -1334,16 +1337,20 @@ FilterParser.prototype.parseOptions = function(s) {
             this.unsupported = true;
             break;
         }
+        if ( opt === 'document' ) {
+            if ( this.action === BlockAction ) {
+                this.parseOptType('document', not);
+                continue;
+            }
+            this.unsupported = true;
+            break;
+        }
         if ( this.toNormalizedType.hasOwnProperty(opt) ) {
             this.parseOptType(opt, not);
             continue;
         }
         if ( opt.slice(0,7) === 'domain=' ) {
             this.parseOptHostnames(opt.slice(7));
-            continue;
-        }
-        if ( opt === 'popup' ) {
-            this.parseOptType('popup', not);
             continue;
         }
         if ( opt === 'important' ) {
