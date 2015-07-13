@@ -191,7 +191,9 @@ var onBeforeRootFrameRequest = function(details) {
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname, except when
         // the filter is specifically of type `other`.
-        if ( result.charAt(1) === 'b' && (snfe.keyRegister & 0xF0) !== 0x80 ) {
+        // https://github.com/gorhill/uBlock/issues/490
+        // Removing this for the time being, will need a new, dedicated type.
+        if ( result.charAt(1) === 'b' ) {
             result = toBlockDocResult(requestURL, requestHostname, result);
         }
     }
