@@ -136,6 +136,8 @@ You can install the latest version [manually](https://github.com/gorhill/uBlock/
 
 [Firefox Add-ons web site](https://addons.mozilla.org/firefox/addon/ublock-origin/), or install manually by downloading the latest [uBlock0.firefox.xpi](https://github.com/gorhill/uBlock/releases) file, and by dragging the downloaded `xpi` file to your add-on page.
 
+Of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
+
 #### Safari
 
 There is no support for Safari for uBlock Origin.
