@@ -217,7 +217,7 @@ housekeep itself.
 
     // This takes care of orphanized tab contexts. Can't be started for all
     // contexts, as the behind-the-scene context is permanent -- so we do not
-    // want to slush it.
+    // want to flush it.
     TabContext.prototype.autodestroy = function() {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
@@ -443,7 +443,7 @@ vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
 /******************************************************************************/
 
 vAPI.tabs.onClosed = function(tabId) {
-    if ( tabId < 0 ) {
+    if (  vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
     }
     µb.unbindTabFromPageStats(tabId);
