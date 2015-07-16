@@ -55,6 +55,7 @@ uBlock Origin
   * [Firefox](#firefox)
   * [Safari](#safari)
 * [Release History](#release-history)
+* [Privacy policy](https://github.com/gorhill/uBlock/wiki/Privacy-policy)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
 ## Philosophy
