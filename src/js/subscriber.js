@@ -84,7 +84,7 @@ var onAbpLinkClicked = function(ev) {
     }
     var matches = /^abp:\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
     if ( matches === null ) {
-        matches = /^https?:\/\/[^?]+\?location=([^&]+).*title=([^&]+)/.exec(href);
+        matches = /^https?:\/\/.*?[&?]location=([^&]+).*?&title=([^&]+)/.exec(href);
         if ( matches === null ) {
             return;
         }
