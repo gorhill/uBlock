@@ -25,3 +25,8 @@
 
 # To counter EasyList's `@@||trc.taboola.com*http%$script,third-party`
 ||trc.taboola.com*http%$script,third-party,important
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=38703
+# 1st-party "recommendations" should never depends on a 3rd-party doing the job:
+#   this is just disguised tracking
+||taboola.com^$third-party

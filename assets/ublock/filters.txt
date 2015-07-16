@@ -107,3 +107,9 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/720518/
 mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-item-container)
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=38703
+# http://www.christiantoday.com/article/huawei.nexus.release.news.could.be.googles.ticket.back.into.china/58786.htm
+#   `important` must be used as there is one EasyList exception preventing
+#   complete block.
+||username1.link^$important
