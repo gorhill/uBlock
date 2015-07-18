@@ -98,13 +98,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^
 
-# http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
-# https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
-# http://blog.tedd.no/2014/11/25/sourceforge-malware/
-# Using `other` will cause the whole site to be blocked through strict blocking,
-# yet the site will render properly if a user still decide to go ahead.
-||sourceforge.net^$other
-
 # https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/720518/
 mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-item-container)
 
