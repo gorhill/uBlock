@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Mon, 08 Jun 2015 17:35:08 GMT
-# entries:        2419
+# last updated:   Sun, 28 Jun 2015 22:58:21 GMT
+# entries:        2402
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -57,6 +57,7 @@
 127.0.0.1 acsseo.com
 127.0.0.1 actionsplash.com
 127.0.0.1 actualdeals.com
+127.0.0.1 acuityads.com
 127.0.0.1 ad-center.com
 127.0.0.1 ad-flow.com
 127.0.0.1 ad-images.suntimes.com
@@ -86,7 +87,6 @@
 127.0.0.1 ad.amgdgt.com
 127.0.0.1 ad.anuntis.com
 127.0.0.1 ad.auditude.com
-127.0.0.1 ad.bigpoint.net
 127.0.0.1 ad.bizo.com
 127.0.0.1 ad.bnmla.com
 127.0.0.1 ad.bondage.com
@@ -262,6 +262,7 @@
 127.0.0.1 adjuggler.yourdictionary.com
 127.0.0.1 adjustnetwork.com
 127.0.0.1 adk2.com
+127.0.0.1 adk2ads.tictacti.com
 127.0.0.1 adland.ru
 127.0.0.1 adlantic.nl
 127.0.0.1 adlegend.com
@@ -286,7 +287,6 @@
 127.0.0.1 admeld.com
 127.0.0.1 admeta.com
 127.0.0.1 admex.com
-127.0.0.1 adminde.ivwbox.de
 127.0.0.1 adminder.com
 127.0.0.1 adminshop.com
 127.0.0.1 admob.com
@@ -309,7 +309,6 @@
 127.0.0.1 adpepper.dk
 127.0.0.1 adpepper.nl
 127.0.0.1 adperium.com
-127.0.0.1 adpick.switchboard.com
 127.0.0.1 adpost.com
 127.0.0.1 adprofile.net
 127.0.0.1 adprojekt.pl
@@ -407,6 +406,7 @@
 127.0.0.1 ads.cybersales.cz
 127.0.0.1 ads.dada.it
 127.0.0.1 ads.datinggold.com
+127.0.0.1 ads.datingyes.com
 127.0.0.1 ads.dazoot.ro
 127.0.0.1 ads.deltha.hu
 127.0.0.1 ads.dennisnet.co.uk
@@ -434,7 +434,6 @@
 127.0.0.1 ads.esmas.com
 127.0.0.1 ads.eu.msn.com
 127.0.0.1 ads.exactdrive.com
-127.0.0.1 ads.exhedra.com
 127.0.0.1 ads.expat-blog.biz
 127.0.0.1 ads.expedia.com
 127.0.0.1 ads.ezboard.com
@@ -612,7 +611,6 @@
 127.0.0.1 ads.shopstyle.com
 127.0.0.1 ads.sift.co.uk
 127.0.0.1 ads.silverdisc.co.uk
-127.0.0.1 ads.skins.be
 127.0.0.1 ads.slim.com
 127.0.0.1 ads.smartclick.com
 127.0.0.1 ads.smartshopping.co.uk
@@ -625,7 +623,6 @@
 127.0.0.1 ads.struq.com
 127.0.0.1 ads.sun.com
 127.0.0.1 ads.supplyframe.com
-127.0.0.1 ads.switchboard.com
 127.0.0.1 ads.t-online.de
 127.0.0.1 ads.tahono.com
 127.0.0.1 ads.techtv.com
@@ -661,7 +658,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -699,8 +695,6 @@
 127.0.0.1 ads2.brazzers.com
 127.0.0.1 ads2.clearchannel.com
 127.0.0.1 ads2.collegclub.com
-127.0.0.1 ads2.collegeclub.com
-127.0.0.1 ads2.exhedra.com
 127.0.0.1 ads2.gamecity.net
 127.0.0.1 ads2.jubii.dk
 127.0.0.1 ads2.net-communities.co.uk
@@ -766,7 +760,6 @@
 127.0.0.1 adserver.html.it
 127.0.0.1 adserver.ig.com.br
 127.0.0.1 adserver.irishwebmasterforum.com
-127.0.0.1 adserver.itsfogo.com
 127.0.0.1 adserver.janes.com
 127.0.0.1 adserver.kyoceramita-europe.com
 127.0.0.1 adserver.libero.it
@@ -880,7 +873,6 @@
 127.0.0.1 advertpro.sitepoint.com
 127.0.0.1 advertpro.ya.com
 127.0.0.1 adverts.carltononline.com
-127.0.0.1 adverts.digitalspy.co.uk
 127.0.0.1 advertserve.com
 127.0.0.1 advertstream.com
 127.0.0.1 advertwizard.com
@@ -958,7 +950,6 @@
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 annonser.dagbladet.no
-127.0.0.1 apdsrv.com
 127.0.0.1 apex-ad.com
 127.0.0.1 api.intensifier.de
 127.0.0.1 apture.com
@@ -1125,7 +1116,6 @@
 127.0.0.1 blogtoplist.se
 127.0.0.1 blogtopsites.com
 127.0.0.1 blueadvertise.com
-127.0.0.1 bluehornet.com
 127.0.0.1 bluekai.com
 127.0.0.1 bluelithium.com
 127.0.0.1 bluewhaleweb.com
@@ -1358,7 +1348,6 @@
 127.0.0.1 e-n-t-e-r-n-e-x.com
 127.0.0.1 e-planning.net
 127.0.0.1 e.kde.cz
-127.0.0.1 eadexchange.com
 127.0.0.1 easyhits4u.com
 127.0.0.1 ebocornac.com
 127.0.0.1 ebuzzing.com
@@ -1572,7 +1561,6 @@
 127.0.0.1 img.prohardver.hu
 127.0.0.1 imgpromo.easyrencontre.com
 127.0.0.1 imonitor.nethost.cz
-127.0.0.1 impact.as
 127.0.0.1 imprese.cz
 127.0.0.1 impressionmedia.cz
 127.0.0.1 impressionz.co.uk
@@ -1682,7 +1670,6 @@
 127.0.0.1 mads.cnet.com
 127.0.0.1 mads.gamespot.com
 127.0.0.1 madvertise.de
-127.0.0.1 mailusnow123.com
 127.0.0.1 malware-scan.com
 127.0.0.1 marchex.com
 127.0.0.1 marketing.888.com
@@ -1704,7 +1691,6 @@
 127.0.0.1 media-servers.net
 127.0.0.1 media.ftv-publicite.fr
 127.0.0.1 media.funpic.de
-127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
 127.0.0.1 mediacharger.com
@@ -1875,7 +1861,6 @@
 127.0.0.1 partners.priceline.com
 127.0.0.1 passion-4.net
 127.0.0.1 pay-ads.com
-127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com
 127.0.0.1 paypopup.com
 127.0.0.1 payserve.com
@@ -2004,7 +1989,6 @@
 127.0.0.1 reduxmediagroup.com
 127.0.0.1 reedbusiness.com
 127.0.0.1 reefaquarium.biz
-127.0.0.1 referralware.com
 127.0.0.1 regnow.com
 127.0.0.1 reinvigorate.net
 127.0.0.1 reklam.rfsl.se
@@ -2166,6 +2150,7 @@
 127.0.0.1 swordfishdc.com
 127.0.0.1 t.pusk.ru
 127.0.0.1 tacoda.net
+127.0.0.1 tagular.com
 127.0.0.1 tailsweep.co.uk
 127.0.0.1 tailsweep.com
 127.0.0.1 tailsweep.se
@@ -2173,7 +2158,6 @@
 127.0.0.1 tangerinenet.biz
 127.0.0.1 tapad.com
 127.0.0.1 targad.de
-127.0.0.1 targetingnow.com
 127.0.0.1 targetnet.com
 127.0.0.1 targetpoint.com
 127.0.0.1 tatsumi-sys.jp
@@ -2181,7 +2165,6 @@
 127.0.0.1 tdsearchware.com
 127.0.0.1 techclicks.net
 127.0.0.1 teenrevenue.com
-127.0.0.1 teknosurf3.com
 127.0.0.1 teliad.de
 127.0.0.1 test.com
 127.0.0.1 text-link-ads.com
