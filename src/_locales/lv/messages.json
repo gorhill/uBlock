@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Vēlams izlasīt<\/a>)",
+    "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Vēlams izlasīt<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

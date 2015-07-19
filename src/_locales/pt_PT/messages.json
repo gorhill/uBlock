@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Eu sou um utilizador avançado (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Leitura obrigatória<\/a>)",
+    "message":"Eu sou um utilizador avançado (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Leitura obrigatória<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

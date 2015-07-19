@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Haladó felhasználó vagyok (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>További tudnivalók<\/a>)",
+    "message":"Haladó felhasználó vagyok (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>További tudnivalók<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
