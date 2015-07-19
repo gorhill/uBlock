@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Lees dit eerst<\/a>)",
+    "message":"Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Lees dit eerst<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Bacaan wajib<\/a>)",
+    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Bacaan wajib<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

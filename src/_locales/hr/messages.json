@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Obavezna literatura<\/a>)",
+    "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Obavezna literatura<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

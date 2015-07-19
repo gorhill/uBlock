@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Som pokročilý používateľ (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Povinne prečítať<\/a>)",
+    "message":"Som pokročilý používateľ (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Povinne prečítať<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

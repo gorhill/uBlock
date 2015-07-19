@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Olen kogenud kasutaja (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>Vajalik lugemus<\/a>)",
+    "message":"Olen kogenud kasutaja (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-Mode'>Vajalik lugemus<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
