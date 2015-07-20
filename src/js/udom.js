@@ -517,8 +517,14 @@ DOMList.prototype.css = function(prop, value) {
     if ( value === undefined ) {
         return i ? this.nodes[0].style[prop] : undefined;
     }
+    if ( value !== '' ) {
+        while ( i-- ) {
+            this.nodes[i].style.setProperty(prop, value);
+        }
+        return this;
+    }
     while ( i-- ) {
-        this.nodes[i].style[prop] = value;
+        this.nodes[i].style.removeProperty(prop);
     }
     return this;
 };
