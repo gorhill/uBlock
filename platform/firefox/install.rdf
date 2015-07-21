@@ -12,7 +12,6 @@
         <type>2</type>
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
-        <aboutURL>chrome://ublock0/content/about.html</aboutURL>
         <optionsType>2</optionsType>
 {localized}
 
