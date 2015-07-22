@@ -34,9 +34,9 @@ uBlock Origin
       <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18">
       <sup>
             English,
-            <a href="https://github.com/fang5566/uBlock/blob/master/README.md#-µblock">Chinese (中文)</a>,
-            <a href="https://github.com/delightbot/uBlock/blob/master/README.md#ublock">Korean (한국어)</a>,
-            <a href="https://github.com/ialexsilva/uBlock/blob/master/README.md#ublock">Português (Brasil)</a>
+            <a href="https://github.com/fang5566/uBlock/blob/master/README.md#ublock-origin">Chinese (中文)</a>,
+            <a href="https://github.com/delightbot/uBlock/blob/master/README.md#ublock-origin">Korean (한국어)</a>,
+            <a href="https://github.com/ialexsilva/uBlock/blob/master/README.md#ublock-origin">Português (Brasil)</a>
       </sup>
 </sup>
 </p>
