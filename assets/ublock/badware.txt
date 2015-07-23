@@ -10,6 +10,12 @@
 # strict blocking, yet the site will render properly if a user still decide to
 # go ahead.
 
+# 2015-02-02: http://veiadigital.com.br/como-baixar-e-instalar-programas-do-baixaki-sem-o-baidu/
+# 2013-10-22: http://mcaf.ee/w92g5
+# 2013-10-22: http://www.linhadefensiva.org/2013/03/alerta-da-linha-instalador-baixaki-e-outros-sites-de-download/
+||baixaki.com.br^$other
+
+
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2015-01-11: http://www.howtogeek.com/198622/heres-what-happens-when-you-install-the-top-10-download.com-apps/
