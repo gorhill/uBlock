@@ -12,7 +12,7 @@
 
 # 2015-02-02: http://veiadigital.com.br/como-baixar-e-instalar-programas-do-baixaki-sem-o-baidu/
 # 2013-10-22: http://mcaf.ee/w92g5
-# 2013-10-22: http://www.linhadefensiva.org/2013/03/alerta-da-linha-instalador-baixaki-e-outros-sites-de-download/
+# 2013-03-25: http://www.linhadefensiva.org/2013/03/alerta-da-linha-instalador-baixaki-e-outros-sites-de-download/
 ||baixaki.com.br^$other
 
 
