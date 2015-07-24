@@ -46,7 +46,8 @@ var supportedDynamicTypes = {
 'inline-script': true,
     '1p-script': true,
     '3p-script': true,
-     '3p-frame': true
+     '3p-frame': true,
+   '3p-passive': true
 };
 
 var typeBitOffsets = {
@@ -56,7 +57,8 @@ var typeBitOffsets = {
     '3p-script':  6,
      '3p-frame':  8,
         'image': 10,
-           '3p': 12
+           '3p': 12,
+   '3p-passive': 14
 };
 
 var actionToNameMap = {
@@ -386,7 +388,9 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     // Specific party
     if ( thirdParty ) {
         // 3rd-party, specific type
-        if ( type === 'script' ) {
+        if ( type === 'image' || type === 'stylesheet' ) {
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-passive') !== 0 ) { return this; }
+        } else if ( type === 'script' ) {
             if ( this.evaluateCellZ(srcHostname, '*', '3p-script') !== 0 ) { return this; }
         } else if ( type === 'sub_frame' ) {
             if ( this.evaluateCellZ(srcHostname, '*', '3p-frame') !== 0 ) { return this; }
@@ -583,51 +587,6 @@ Matrix.prototype.fromString = function(text, append) {
         }
 
         this.setCell(srcHostname, desHostname, type, action);
-    }
-};
-
-/******************************************************************************/
-
-Matrix.prototype.fromObsoleteSelfie = function(selfie) {
-    if ( selfie === '' ) {
-        return '';
-    }
-    var bin = {};
-    try {
-        bin = JSON.parse(selfie);
-    } catch(e) {
-    }
-    var filters = bin.filters;
-    var bits, val;
-    for ( var hostname in filters ) {
-        if ( filters.hasOwnProperty(hostname) === false ) {
-            continue;
-        }
-        bits = filters[hostname];
-        val = bits & 3;
-        if ( val === 1 ) {
-            this.setCell(hostname, '*', 'inline-script', 1);
-        } else if ( val === 2 ) {
-            this.setCell(hostname, '*', 'inline-script', 3);
-        }
-        val = (bits >> 2) & 3;
-        if ( val === 1 ) {
-            this.setCell(hostname, '*', '1p-script', 1);
-        } else if ( val === 2 ) {
-            this.setCell(hostname, '*', '1p-script', 3);
-        }
-        val = (bits >> 4) & 3;
-        if ( val === 1 ) {
-            this.setCell(hostname, '*', '3p-script', 1);
-        } else if ( val === 2 ) {
-            this.setCell(hostname, '*', '3p-script', 3);
-        }
-        val = (bits >> 8) & 3;
-        if ( val === 1 ) {
-            this.setCell(hostname, '*', '3p-frame', 1);
-        } else if ( val === 2 ) {
-            this.setCell(hostname, '*', '3p-frame', 3);
-        }
     }
 };
 
