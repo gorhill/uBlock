@@ -41,5 +41,14 @@
                 <maxVersion>2.37</maxVersion>
             </r:Description>
         </targetApplication>
+
+        <!-- Pale Moon -->
+        <targetApplication>
+            <r:Description>
+                <id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</id>
+                <minVersion>25.0</minVersion>
+                <maxVersion>25.*</maxVersion>
+            </r:Description>
+        </targetApplication>
     </r:Description>
 </r:RDF>
