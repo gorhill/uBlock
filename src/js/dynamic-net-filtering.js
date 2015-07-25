@@ -444,10 +444,7 @@ Matrix.prototype.mustAbort = function() {
 /******************************************************************************/
 
 Matrix.prototype.toFilterString = function() {
-    if ( this.r === 0 ) {
-        return '';
-    }
-    if ( this.type === '' ) {
+    if ( this.r === 0  || this.type === '' ) {
         return '';
     }
     var body = this.z + ' ' + this.y + ' ' + this.type;
