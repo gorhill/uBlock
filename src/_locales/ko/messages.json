@@ -103,6 +103,10 @@
     "message":"보조 필터",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"보조 CSS\/이미지",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"인라인 스크립트",
     "description":""

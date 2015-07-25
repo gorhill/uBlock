@@ -103,6 +103,10 @@
     "message":"domeny zewnętrzne",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"zewnętrzne css\/obrazki",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"zagnieżdżone skrypty",
     "description":""

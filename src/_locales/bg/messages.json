@@ -103,6 +103,10 @@
     "message":"3-ти лица",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"CSS\/изображения от 3-ти лица",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"Вградени скриптове",
     "description":""

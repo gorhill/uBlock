@@ -100,7 +100,11 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"terceiros",
+    "description":""
+  },
+  "popup3pPassiveRulePrompt":{
+    "message":"imagens\/css de terceiros",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -108,15 +112,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"scripts de primeiros",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"scripts de terceiros",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"frames de terceiros",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -576,7 +580,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Desativar bloqueio estrito para {{hostname}}",
+    "message":"Desativar o bloqueio estrito para {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

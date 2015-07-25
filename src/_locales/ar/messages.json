@@ -103,6 +103,10 @@
     "message":"جهة خارجية",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"جهة خارجية ستايل\/صور",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"نصوص برمجة بين السطور",
     "description":""

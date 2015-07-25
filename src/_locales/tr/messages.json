@@ -103,6 +103,10 @@
     "message":"3. taraf",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"3. parti css\/resim",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"satır içi betikleri",
     "description":""

@@ -103,6 +103,10 @@
     "message":"Tredjepart",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"tredjeparts-css & -bilder",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"inline skript",
     "description":""

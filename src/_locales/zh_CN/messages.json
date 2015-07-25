@@ -103,6 +103,10 @@
     "message":"第三方",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"第三方CSS\/图像",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"内联脚本",
     "description":""

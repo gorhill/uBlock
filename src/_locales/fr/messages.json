@@ -103,6 +103,10 @@
     "message":"Tierce-partie",
     "description":""
   },
+  "popup3pPassiveRulePrompt":{
+    "message":"Tierce partie css\/images",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"Scripts embarqués",
     "description":""
