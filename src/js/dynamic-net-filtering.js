@@ -46,8 +46,7 @@ var supportedDynamicTypes = {
 'inline-script': true,
     '1p-script': true,
     '3p-script': true,
-     '3p-frame': true,
-   '3p-passive': true
+     '3p-frame': true
 };
 
 var typeBitOffsets = {
@@ -57,8 +56,7 @@ var typeBitOffsets = {
     '3p-script':  6,
      '3p-frame':  8,
         'image': 10,
-           '3p': 12,
-   '3p-passive': 14
+           '3p': 12
 };
 
 var actionToNameMap = {
@@ -388,9 +386,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     // Specific party
     if ( thirdParty ) {
         // 3rd-party, specific type
-        if ( type === 'image' || type === 'stylesheet' ) {
-            if ( this.evaluateCellZ(srcHostname, '*', '3p-passive') !== 0 ) { return this; }
-        } else if ( type === 'script' ) {
+        if ( type === 'script' ) {
             if ( this.evaluateCellZ(srcHostname, '*', '3p-script') !== 0 ) { return this; }
         } else if ( type === 'sub_frame' ) {
             if ( this.evaluateCellZ(srcHostname, '*', '3p-frame') !== 0 ) { return this; }

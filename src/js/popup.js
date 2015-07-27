@@ -321,7 +321,7 @@ var buildAllFirewallRows = function() {
 
     // Remove and reuse all rows: the order may have changed, we can't just
     // reuse them in-place.
-    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(8) ~ div').detach();
+    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
 
     var n = allHostnameRows.length;
     for ( var i = 0; i < n; i++ ) {
