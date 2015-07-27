@@ -78,15 +78,20 @@ var initWorker = function(callback) {
 
     var onListLoaded = function(details) {
         var entry = entries[details.path];
+
+        // https://github.com/gorhill/uBlock/issues/536
+        // Use path string when there is no filter list title.
+
         worker.postMessage({
             what: 'setList',
             details: {
                 path: details.path,
-                title: entry.title || '',
+                title: entry.title || details.path,
                 supportURL: entry.supportURL,
                 content: details.content
             }
         });
+
         countdown -= 1;
         if ( countdown === 0 ) {
             callback();
