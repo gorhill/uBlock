@@ -240,6 +240,9 @@ var fromFetch = function(to, fetched) {
 /******************************************************************************/
 
 return function() {
+    // https://github.com/gorhill/uBlock/issues/531
+    µb.restoreAdminSettings();
+
     // Forbid remote fetching of assets
     µb.assets.remoteFetchBarrier += 1;
 

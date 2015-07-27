@@ -719,6 +719,80 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/531
+// Overwrite user settings with admin settings if present.
+//
+// Admin settings match layout of a uBlock backup. Not all data is
+// necessarily present, i.e. administrators may removed entries which
+// values are left to the user's choice.
+
+µBlock.restoreAdminSettings = function() {
+    var data = null;
+    var json = vAPI.localStorage.getItem('adminSettings');
+    if ( typeof json === 'string' && json !== '' ) {
+        try {
+            data = JSON.parse(json);
+        } catch (ex) {
+            console.error(ex);
+        }
+    }
+
+    if ( typeof data !== 'object' || data === null ) {
+        return;
+    }
+
+    var bin = {};
+    var binNotEmpty = false;
+
+    if ( typeof data.userSettings === 'object' ) {
+        for ( var name in this.userSettings ) {
+            if ( this.userSettings.hasOwnProperty(name) === false ) {
+                continue;
+            }
+            if ( data.userSettings.hasOwnProperty(name) === false ) {
+                continue;
+            }
+            bin[name] = data.userSettings[name];
+            binNotEmpty = true;
+        }
+    }
+
+    if ( typeof data.filterLists === 'object' ) {
+        bin.remoteBlacklists = data.filterLists;
+        binNotEmpty = true;
+    }
+
+    if ( typeof data.netWhitelist === 'string' ) {
+        bin.netWhitelist = data.netWhitelist;
+        binNotEmpty = true;
+    }
+
+    if ( typeof data.dynamicFilteringString === 'string' ) {
+        bin.dynamicFilteringString = data.dynamicFilteringString;
+        binNotEmpty = true;
+    }
+
+    if ( typeof data.urlFilteringString === 'string' ) {
+        bin.urlFilteringString = data.urlFilteringString;
+        binNotEmpty = true;
+    }
+
+    if ( typeof data.hostnameSwitchesString === 'string' ) {
+        bin.hostnameSwitchesString = data.hostnameSwitchesString;
+        binNotEmpty = true;
+    }
+
+    if ( binNotEmpty ) {
+        vAPI.storage.set(bin);
+    }
+
+    if ( typeof data.userFilters === 'string' ) {
+        this.assets.put('assets/user/filters.txt', data.userFilters);
+    }
+};
+
+/******************************************************************************/
+
 µBlock.updateStartHandler = function(callback) {
     var µb = this;
     var onListsReady = function(lists) {
