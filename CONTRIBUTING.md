@@ -2,6 +2,8 @@
 
 Any issue opened without effort to provide the required details for me to reproduce the problem will be closed as _invalid_. If you provide more details thereafter for me to reproduce the issue, I will reopen the it.
 
+**Important:** I simply do not have the time to take care of filter-related issues, you will have to find help elsewhere for this.
+
 ***
 
 ### Before you submit
