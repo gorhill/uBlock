@@ -88,7 +88,7 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Comută blocarea fonturilor de la distanță pentru acest sait",
+    "message":"Comută blocarea fonturilor externe pentru acest sait",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"css\/imagini terțe",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -144,7 +144,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Filtre net",
+    "message":"Filtre de rețea",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -184,11 +184,11 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Dezactivează auditarea\/semnalizatorul legăturilor",
+    "message":"Dezactivează auditarea legăturilor\/trimiterea semnalizatoarelor",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Previne dezvăluirea adreselor IP prin intermediul protocolului WebRTC",
+    "message":"Previne dezvăluirea adreselor IP locale prin intermediul protocolului WebRTC",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

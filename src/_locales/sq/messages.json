@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"css\/figurat nga palët e treta",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"Nuk lejoj WebRTC-në që të zbulojë adresat IP lokale",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

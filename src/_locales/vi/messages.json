@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"css\/hình ảnh bên thứ ba",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Ngăn WebRTC làm lộ địa chỉ IP nội bộ",
+    "message":"Ngăn WebRTC làm lộ địa chỉ IP cục bộ",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

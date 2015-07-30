@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"obrázky\/css třetích stran",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Předejít úniku lokální IP adresy přes WebRTC",
+    "message":"Předejít úniku lokálních IP adres přes WebRTC",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

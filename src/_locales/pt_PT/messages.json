@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"css\/imagens de terceiros",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Impedir que o WebRTC divulgue o endereço IP local",
+    "message":"Impedir que o WebRTC divulgue os endereços de IP locais",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
