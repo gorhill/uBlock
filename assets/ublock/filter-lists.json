@@ -144,11 +144,12 @@
         "title": "Basic tracking list by Disconnect",
         "group": "privacy"
         },
-    "http://www.certyficate.it/adblock/adblock.txt": {
+    "https://www.certyficate.it/adblock/adblock.txt": {
         "off": true,
         "title": "POL: Adblock polskie reguly",
         "group": "regions",
         "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
+        "supportURL": "http://www.certyficate.it"
         },
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
         "off": true,
