@@ -686,6 +686,15 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
 /******************************************************************************/
 
 var cosmeticFilterMapper = (function() {
+    // https://github.com/gorhill/uBlock/issues/546
+    var matchesFnName;
+    if ( typeof document.body.matches === 'function' ) {
+        matchesFnName = 'matches';
+    } else if ( typeof document.body.mozMatchesSelector === 'function' ) {
+        matchesFnName = 'mozMatchesSelector';
+    } else if ( typeof document.body.webkitMatchesSelector === 'function' ) {
+        matchesFnName = 'webkitMatchesSelector';
+    }
 
     // Why the call to hideNode()?
     //   Not all target nodes have necessarily been force-hidden,
@@ -699,7 +708,7 @@ var cosmeticFilterMapper = (function() {
         var selector, nodes, j, node;
         while ( i-- ) {
             selector = selectors[i];
-            if ( filterMap.has(rootNode) === false && rootNode.matches(selector) ) {
+            if ( filterMap.has(rootNode) === false && rootNode[matchesFnName](selector) ) {
                 filterMap.set(rootNode, selector);
                 hideNode(node);
             }
