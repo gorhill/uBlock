@@ -30,7 +30,7 @@ Também, esteja ciente de que selecionar algumas dessas listas extras pode levar
 
 ***
 
-Sem as listas predefinidas de filtros, esta extensão não é nada. Então, se você realmente quiser contribuir com alguma coisa, pense sobre as pessoas que trabalham duro para manter as listas de filtro que você está usando, que estão disponíveis de graça para todos.
+Sem as listas predefinidas de filtros, esta extensão não é nada. Por isso, se você nunca contribuiu com alguma coisa, pense nas pessoas que trabalham duro para manter as listas de filtro que você está usando, que foram disponibilizadas para usar tudo de graça.
 
 ***
 
