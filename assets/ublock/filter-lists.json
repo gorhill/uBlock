@@ -148,7 +148,7 @@
         "off": true,
         "title": "POL: Adblock polskie reguly",
         "group": "regions",
-        "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
+        "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt",
         "supportURL": "http://www.certyficate.it"
         },
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
