@@ -837,29 +837,31 @@ var onHideTooltip = function() {
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
-// If there's no tab id specified in the query string,
-// it will default to current tab.
-var tabId = null;
+(function() {
+    // If there's no tab id specified in the query string,
+    // it will default to current tab.
+    var tabId = null;
 
-// Extract the tab id of the page this popup is for
-var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
-if ( matches && matches.length === 2 ) {
-    tabId = matches[1];
-}
-getPopupData(tabId);
+    // Extract the tab id of the page this popup is for
+    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    if ( matches && matches.length === 2 ) {
+        tabId = matches[1];
+    }
+    getPopupData(tabId);
 
-uDom('#switch').on('click', toggleNetFilteringSwitch);
-uDom('#gotoPick').on('click', gotoPick);
-uDom('a[href]').on('click', gotoURL);
-uDom('h2').on('click', toggleFirewallPane);
-uDom('#refresh').on('click', reloadTab);
-uDom('.hnSwitch').on('click', toggleHostnameSwitch);
-uDom('#saveRules').on('click', saveFirewallRules);
-uDom('#revertRules').on('click', revertFirewallRules);
-uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
+    uDom('#switch').on('click', toggleNetFilteringSwitch);
+    uDom('#gotoPick').on('click', gotoPick);
+    uDom('a[href]').on('click', gotoURL);
+    uDom('h2').on('click', toggleFirewallPane);
+    uDom('#refresh').on('click', reloadTab);
+    uDom('.hnSwitch').on('click', toggleHostnameSwitch);
+    uDom('#saveRules').on('click', saveFirewallRules);
+    uDom('#revertRules').on('click', revertFirewallRules);
+    uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 
-uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-            .on('mouseleave', '[data-tip]', onHideTooltip);
+    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+                .on('mouseleave', '[data-tip]', onHideTooltip);
+})();
 
 /******************************************************************************/
 
