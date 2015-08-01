@@ -688,6 +688,10 @@ var onLogBufferRead = function(response) {
         allTabIdsToken = response.tabIdsToken;
     }
 
+    // https://github.com/gorhill/uBlock/issues/507
+    // Ensure tab selector is in sync with URL hash
+    pageSelectorFromURLHash();
+
     renderLogEntries(response);
 
     if ( rowVoided ) {
@@ -719,23 +723,52 @@ var readLogBuffer = function() {
 /******************************************************************************/
 
 var pageSelectorChanged = function() {
-    var style = uDom.nodeFromId('tabFilterer');
-    var tabClass = uDom.nodeFromId('pageSelector').value;
-    var sheet = style.sheet;
-    while ( sheet.cssRules.length !== 0 )  {
-        sheet.deleteRule(0);
-    }
-    if ( tabClass !== '' ) {
-        sheet.insertRule(
-            '#netInspector tr:not(.' + tabClass + ') { display: none; }',
-            0
-        );
-    }
-    uDom('.needtab').toggleClass(
-        'disabled',
-        tabClass === '' || tabClass === 'tab_bts'
-    );
+    window.location.replace('#' + uDom.nodeFromId('pageSelector').value);
+    pageSelectorFromURLHash();
 };
+
+/******************************************************************************/
+
+var pageSelectorFromURLHash = (function() {
+    var lastHash = '';
+
+    return function() {
+        var hash = window.location.hash;
+        if ( hash === lastHash ) {
+            return;
+        }
+
+        var tabClass = hash.slice(1);
+        var select = uDom.nodeFromId('pageSelector');
+        var option = select.querySelector('option[value="' + tabClass + '"]');
+        if ( option === null ) {
+            hash = window.location.hash = '';
+            tabClass = '';
+            option = select.options[0];
+        }
+
+        lastHash = hash;
+
+        select.selectedIndex = option.index;
+        select.value = option.value;
+
+        var style = uDom.nodeFromId('tabFilterer');
+        var sheet = style.sheet;
+        while ( sheet.cssRules.length !== 0 )  {
+            sheet.deleteRule(0);
+        }
+        if ( tabClass !== '' ) {
+            sheet.insertRule(
+                '#netInspector tr:not(.' + tabClass + ') { display: none; }',
+                0
+            );
+        }
+        uDom('.needtab').toggleClass(
+            'disabled',
+            tabClass === '' || tabClass === 'tab_bts'
+        );
+    };
+})();
 
 /******************************************************************************/
 
@@ -1720,25 +1753,21 @@ var popupManager = (function() {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
-    readLogBuffer();
+readLogBuffer();
 
-    uDom('#pageSelector').on('change', pageSelectorChanged);
-    uDom('#refresh').on('click', reloadTab);
-    uDom('#showdom').on('click', toggleInspectors);
+uDom('#pageSelector').on('change', pageSelectorChanged);
+uDom('#refresh').on('click', reloadTab);
+uDom('#showdom').on('click', toggleInspectors);
 
-    uDom('#compactViewToggler').on('click', toggleCompactView);
-    uDom('#clean').on('click', cleanBuffer);
-    uDom('#clear').on('click', clearBuffer);
-    uDom('#maxEntries').on('change', onMaxEntriesChanged);
-    uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-    uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
-    uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
+uDom('#compactViewToggler').on('click', toggleCompactView);
+uDom('#clean').on('click', cleanBuffer);
+uDom('#clear').on('click', clearBuffer);
+uDom('#maxEntries').on('change', onMaxEntriesChanged);
+uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
+uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
+uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
 
-    // https://github.com/gorhill/uBlock/issues/404
-    // Ensure page state is in sync with the state of its various widgets.
-    pageSelectorChanged();
-});
+window.addEventListener('hashchange', pageSelectorFromURLHash);
 
 /******************************************************************************/
 

@@ -294,6 +294,7 @@ vAPI.tabs.open = function(details) {
     if ( typeof targetURL !== 'string' || targetURL === '' ) {
         return null;
     }
+
     // extension pages
     if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
         targetURL = vAPI.getURL(targetURL);
@@ -370,15 +371,33 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
-    chrome.tabs.query({ url: targetURL }, function(tabs) {
+    // https://developer.chrome.com/extensions/tabs#method-query
+    // "Note that fragment identifiers are not matched."
+    // It's a lie, fragment identifiers ARE matched. So we need to remove the
+    // fragment.
+    var targetURLWithoutHash = targetURL;
+    var pos = targetURL.indexOf('#');
+    if ( pos !== -1 ) {
+        targetURLWithoutHash = targetURL.slice(0, pos);
+    }
+
+    chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         var tab = tabs[0];
-        if ( tab ) {
-            chrome.tabs.update(tab.id, { active: true }, function(tab) {
-                chrome.windows.update(tab.windowId, { focused: true });
-            });
-        } else {
+        if ( !tab ) {
             wrapper();
+            return;
         }
+
+        var _details = {
+            active: true,
+            url: undefined
+        };
+        if ( targetURL !== tab.url ) {
+            _details.url = targetURL;
+        }
+        chrome.tabs.update(tab.id, _details, function(tab) {
+            chrome.windows.update(tab.windowId, { focused: true });
+        });
     });
 };
 

@@ -669,7 +669,17 @@ vAPI.tabs.open = function(details) {
                 continue;
             }
 
+            // Or simply .equals if we care about the fragment
+            if ( URI.equalsExceptRef(browser.currentURI) === false ) {
+                continue;
+            }
+
             this.select(tab);
+
+            // Update URL if fragment is different
+            if ( URI.equals(browser.currentURI) === false ) {
+                browser.loadURI(URI.asciiSpec);
+            }
             return;
         }
     }

@@ -433,6 +433,15 @@ var renderPopup = function() {
     }
     uDom.nodeFromId('total-blocked').textContent = text;
 
+    // https://github.com/gorhill/uBlock/issues/507
+    // Convenience: open the logger with current tab automatically selected
+    if ( popupData.tabId ) {
+        uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
+            'href',
+            'logger-ui.html#tab_' + popupData.tabId
+        );
+    }
+
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
@@ -825,33 +834,32 @@ var onHideTooltip = function() {
 
 /******************************************************************************/
 
-// Make menu only when popup html is fully loaded
+// Popup DOM is assumed to be loaded at this point -- because this script
+// is loaded after everything else..
 
-uDom.onLoad(function () {
-    // If there's no tab id specified in the query string,
-    // it will default to current tab.
-    var tabId = null;
+// If there's no tab id specified in the query string,
+// it will default to current tab.
+var tabId = null;
 
-    // Extract the tab id of the page this popup is for
-    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
-    if ( matches && matches.length === 2 ) {
-        tabId = matches[1];
-    }
-    getPopupData(tabId);
+// Extract the tab id of the page this popup is for
+var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+if ( matches && matches.length === 2 ) {
+    tabId = matches[1];
+}
+getPopupData(tabId);
 
-    uDom('#switch').on('click', toggleNetFilteringSwitch);
-    uDom('#gotoPick').on('click', gotoPick);
-    uDom('a[href]').on('click', gotoURL);
-    uDom('h2').on('click', toggleFirewallPane);
-    uDom('#refresh').on('click', reloadTab);
-    uDom('.hnSwitch').on('click', toggleHostnameSwitch);
-    uDom('#saveRules').on('click', saveFirewallRules);
-    uDom('#revertRules').on('click', revertFirewallRules);
-    uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
+uDom('#switch').on('click', toggleNetFilteringSwitch);
+uDom('#gotoPick').on('click', gotoPick);
+uDom('a[href]').on('click', gotoURL);
+uDom('h2').on('click', toggleFirewallPane);
+uDom('#refresh').on('click', reloadTab);
+uDom('.hnSwitch').on('click', toggleHostnameSwitch);
+uDom('#saveRules').on('click', saveFirewallRules);
+uDom('#revertRules').on('click', revertFirewallRules);
+uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 
-    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-                .on('mouseleave', '[data-tip]', onHideTooltip);
-});
+uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+            .on('mouseleave', '[data-tip]', onHideTooltip);
 
 /******************************************************************************/
 
