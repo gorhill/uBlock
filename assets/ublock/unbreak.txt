@@ -20,10 +20,6 @@
 # To counter `tags.tiqcdn.com` in  MVPS
 @@||tags.tiqcdn.com/utag/*.js$script,domain=cnet.com|weather.com
 
-# https://github.com/chrisaljoudi/uBlock/issues/17#issuecomment-51625306
-# To counter `extras.mnginteractive.com` in hpHosts
-@@||extras.mnginteractive.com^$domain=mercurynews.com|denverpost.com|twincities.com
-
 # http://forums.lanik.us/viewtopic.php?f=64&t=17842&sid=46bd7065193153fe46efe816b7cd32c9&start=30#p59663
 # To counter `statcounter.com` in Peter Lowe's, MVPS, Dan Pollock's and hpHosts
 @@||statcounter.com^$~third-party
