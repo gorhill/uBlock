@@ -470,13 +470,14 @@ var uBlockCollapser = (function() {
             if ( shadow !== null && shadow.className === sessionId ) {
                 continue;
             }
+            // https://github.com/w3c/webcomponents/issues/102
             // not all nodes can be shadowed
             try {
                 shadow = elem.createShadowRoot();
+                shadow.className = sessionId;
             } catch (ex) {
-                continue;
+                elem.style.setProperty('display', 'none', 'important');
             }
-            shadow.className = sessionId;
         }
     };
 
