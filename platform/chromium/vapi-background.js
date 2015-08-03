@@ -375,11 +375,8 @@ vAPI.tabs.open = function(details) {
     // "Note that fragment identifiers are not matched."
     // It's a lie, fragment identifiers ARE matched. So we need to remove the
     // fragment.
-    var targetURLWithoutHash = targetURL;
     var pos = targetURL.indexOf('#');
-    if ( pos !== -1 ) {
-        targetURLWithoutHash = targetURL.slice(0, pos);
-    }
+    var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         var tab = tabs[0];

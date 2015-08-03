@@ -470,8 +470,9 @@ var uBlockCollapser = (function() {
             if ( shadow !== null && shadow.className === sessionId ) {
                 continue;
             }
-            // https://github.com/w3c/webcomponents/issues/102
-            // not all nodes can be shadowed
+            // https://github.com/gorhill/uBlock/pull/555
+            // Not all nodes can be shadowed:
+            //   https://github.com/w3c/webcomponents/issues/102
             try {
                 shadow = elem.createShadowRoot();
                 shadow.className = sessionId;
