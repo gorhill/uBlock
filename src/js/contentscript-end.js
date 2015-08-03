@@ -470,7 +470,12 @@ var uBlockCollapser = (function() {
             if ( shadow !== null && shadow.className === sessionId ) {
                 continue;
             }
-            shadow = elem.createShadowRoot();
+            // not all nodes can be shadowed
+            try {
+                shadow = elem.createShadowRoot();
+            } catch (ex) {
+                continue;
+            }
             shadow.className = sessionId;
         }
     };
