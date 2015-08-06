@@ -1039,7 +1039,7 @@ var tabWatcher = (function() {
             return;
         }
 
-        var tabContainer = null;
+        var tabContainer;
         if ( tabBrowser.deck ) {                    // Fennec
             tabContainer = tabBrowser.deck;
         } else if ( tabBrowser.tabContainer ) {     // Firefox
@@ -1052,8 +1052,20 @@ var tabWatcher = (function() {
             tabContainer.removeEventListener('TabSelect', onSelect);
         }
 
+        // https://github.com/gorhill/uBlock/issues/574
+        // To keep in mind: not all windows are tab containers,
+        // sometimes the window IS the tab.
+        var tabs;
+        if ( tabBrowser.tabs ) {
+            tabs = tabBrowser.tabs;
+        } else if ( tabBrowser.localName === 'browser' ) {
+            tabs = [tabBrowser];
+        } else {
+            tabs = [];
+        }
+
         var browser, URI, tabId;
-        for ( var tab of tabBrowser.tabs ) {
+        for ( var tab of tabs ) {
             browser = tabWatcher.browserFromTarget(tab);
             if ( browser === null ) {
                 continue;
