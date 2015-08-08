@@ -9,7 +9,7 @@ New benchmark: [Blocking mode](https://github.com/gorhill/uBlock/wiki/Blocking-m
 
 There is an idea floating around that uBlock Origin is a _lesser_ branch relative to [uBlock](https://github.com/chrisaljoudi/uBlock)<sup>[1]</sup>.
 
-The current reality is that there are *two branches*, not an official one and a lesser one. I keep developing my branch the same way and in the same spirit I have since [the beginning of uBlock in June 23, 2014](http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/), so in substance uBlock Origin _is_ the original uBlock.
+The current reality is that there are *two branches*, not an official one and a lesser one. I [keep developing my branch](https://github.com/gorhill/uBlock/wiki/uBlock-vs.-uBlock-Origin:-Facts#ublock-is-the-main-branch-ublock-origin-is-just-bug-fixes) the same way and in the same spirit I have since [the beginning of uBlock in June 23, 2014](http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/), so in substance uBlock Origin _is_ the original uBlock.
 
 **uBlock Origin is _completely_ unrelated to the web site `ublock.org`:** the donations sought by `ublock.org` are _not_ benefiting any of those who contributed most to create uBlock ([developers](https://github.com/gorhill/uBlock/graphs/contributors)<sup>[2]</sup>, [translators](https://crowdin.com/project/ublock), and all those who put efforts in opening detailed issues). For the differences in features between uBlock Origin and uBlock, you are more likely than anywhere else to find an unbiased explanation in this [Wikipedia article](http://en.wikipedia.org/wiki/UBlock).
 
