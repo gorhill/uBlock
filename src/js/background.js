@@ -66,6 +66,7 @@ return {
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
         showIconBadge: true,
+        cloudStorageEnabled: false,
         webrtcIPAddressHidden: false
     },
 
@@ -131,7 +132,9 @@ return {
         },
         'assets/ublock/badware.txt': {
             title: 'uBlock filters – Badware risks',
-            group: 'default'
+            group: 'default',
+            supportURL: 'https://github.com/gorhill/uBlock/wiki/Badware-risks',
+            instructionURL: 'https://github.com/gorhill/uBlock/wiki/Badware-risks'
         }
     },
 
