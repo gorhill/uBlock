@@ -983,19 +983,8 @@ vAPI.cloud = (function() {
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES;
 
     var options = {
-        deviceName: ''
-    };
-
-    var getDeviceName = function() {
-        // Assign a permanent user-friendly id to this uBlock instance if one does
-        // not exist. This will allow to have some sort of identifier for a user
-        // to possibly identify the source of cloud data.
-        var name = window.localStorage.getItem('deviceName') || '';
-        if ( name !== '' ) {
-            return name;
-        }
-
-        return window.navigator.platform;
+        defaultDeviceName: window.navigator.platform,
+        deviceName: window.localStorage.getItem('deviceName') || ''
     };
 
     // This is used to find out a rough count of how many chunks exists:
@@ -1004,6 +993,7 @@ vAPI.cloud = (function() {
     // This allows reading a single item with only 2 sync operations -- a
     // good thing given chrome.storage.syncMAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.syncMAX_WRITE_OPERATIONS_PER_HOUR.
+
     var getCoarseChunkCount = function(dataKey, callback) {
         var bin = {};
         for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
@@ -1016,9 +1006,6 @@ vAPI.cloud = (function() {
                 return;
             }
 
-            // Could loop backward... let's assume for now
-            // maxChunkCountPerItem could be something else than a
-            // multiple of 16.
             var chunkCount = 0;
             for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
                 if ( bin[dataKey + i.toString()] === '' ) {
@@ -1052,7 +1039,7 @@ vAPI.cloud = (function() {
 
     var push = function(dataKey, data, callback) {
         var item = JSON.stringify({
-            'source': getDeviceName(),
+            'source': options.deviceName || options.defaultDeviceName,
             'tstamp': Date.now(),
             'data': data
         });
@@ -1129,7 +1116,6 @@ vAPI.cloud = (function() {
         if ( typeof callback !== 'function' ) {
             return;
         }
-
         callback(options);
     };
 
@@ -1140,11 +1126,10 @@ vAPI.cloud = (function() {
 
         if ( typeof details.deviceName === 'string' ) {
             window.localStorage.setItem('deviceName', details.deviceName);
+            options.deviceName = details.deviceName;
         }
 
-        if ( typeof callback === 'function' ) {
-            callback(options);
-        }
+        getOptions(callback);
     };
 
     return {

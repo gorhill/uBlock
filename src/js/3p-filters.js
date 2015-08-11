@@ -116,7 +116,7 @@ var renderFilterLists = function() {
             elem.css('display', '');
         }
 
-        elem = li.descendants('span:nth-of-type(1)');
+        elem = li.descendants('span.counts');
         var text = listStatsTemplate
             .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
@@ -486,10 +486,8 @@ var renderExternalLists = function() {
 /******************************************************************************/
 
 var externalListsChangeHandler = function() {
-    uDom('#externalListsApply').prop(
-        'disabled',
-        this.value.trim() === externalLists
-    );
+    uDom.nodeFromId('externalListsApply').disabled =
+        uDom.nodeFromId('externalLists').value.trim() === externalLists;
 };
 
 /******************************************************************************/

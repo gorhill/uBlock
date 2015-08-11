@@ -2905,35 +2905,28 @@ vAPI.cloud = (function() {
     var cloudBranchPath = extensionBranchPath + '.cloudStorage';
 
     var options = {
+        defaultDeviceName: '',
         deviceName: ''
     };
 
-    var getDeviceName = function() {
+    // User-supplied device name.
+    try {
+        options.deviceName = Services.prefs
+                                     .getBranch(extensionBranchPath + '.')
+                                     .getCharPref('deviceName');
+    } catch(ex) {
+    }
+
+    var getDefaultDeviceName = function() {
         var name = '';
-
-        // User-supplied device name.
-        var branch = Services.prefs.getBranch(extensionBranchPath + '.');
         try {
-            name = branch.getCharPref('deviceName');
+            name = Services.prefs
+                           .getBranch('services.sync.client.')
+                           .getCharPref('name');
         } catch(ex) {
         }
-        options.deviceName = name;
-        if ( name !== '' ) {
-            return name;
-        }
 
-        // No name: try to use device name specified by user in Preferences.
-        branch = Services.prefs.getBranch('services.sync.client.');
-        try {
-            name = branch.getCharPref('name');
-        } catch(ex) {
-        }
-        if ( name !== '' ) {
-            return name;
-        }
-
-        // No name: use os/cpu.
-        return window.navigator.platform || window.navigator.oscpu;
+        return name || window.navigator.platform || window.navigator.oscpu;
     };
 
     var start = function(dataKeys) {
@@ -2954,7 +2947,7 @@ vAPI.cloud = (function() {
     var push = function(datakey, data, callback) {
         var branch = Services.prefs.getBranch(cloudBranchPath + '.');
         var bin = {
-            'source': getDeviceName(),
+            'source': options.deviceName || getDefaultDeviceName(),
             'tstamp': Date.now(),
             'data': data
         };
@@ -2981,7 +2974,7 @@ vAPI.cloud = (function() {
         if ( typeof callback !== 'function' ) {
             return;
         }
-
+        options.defaultDeviceName = getDefaultDeviceName();
         callback(options);
     };
 
@@ -2994,11 +2987,10 @@ vAPI.cloud = (function() {
 
         if ( typeof details.deviceName === 'string' ) {
             branch.setCharPref('deviceName', details.deviceName);
+            options.deviceName = details.deviceName;
         }
 
-        if ( typeof callback === 'function' ) {
-            callback(options);
-        }
+        getOptions(callback);
     };
 
     return {
