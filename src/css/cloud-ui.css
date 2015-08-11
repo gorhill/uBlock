@@ -15,8 +15,8 @@
 #cloudPull[disabled] {
     visibility: hidden;
     }
-body[dir="ltr"] #cloudPush:after ,
-body[dir="ltr"] #cloudPull:before {
+#cloudPush:after ,
+#cloudPull:before {
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
@@ -55,8 +55,13 @@ body[dir="rtl"] #cloudPull:before {
     opacity: 0.5;
     padding: 4px;
     position: absolute;
-    right: 0;
     top: 0;
+    }
+body[dir="ltr"] #cloudWidget > #cloudCog {
+    right: 0;
+    }
+body[dir="rtl"] #cloudWidget > #cloudCog {
+    left: 0;
     }
 #cloudWidget > #cloudCog:hover {
     opacity: 1;
