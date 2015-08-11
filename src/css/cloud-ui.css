@@ -1,0 +1,87 @@
+#cloudWidget {
+    background: url("../img/cloud.png") hsl(216, 100%, 93%);
+    border-radius: 3px;
+    margin: 0.5em 0;
+    padding: 1em;
+    position: relative;
+    }
+#cloudWidget.hide {
+    display: none;
+    }
+#cloudWidget > button {
+    font-size: 160%;
+    padding: 0.1em 0.2em;
+    }
+#cloudPull[disabled] {
+    visibility: hidden;
+    }
+body[dir="ltr"] #cloudPush:after ,
+body[dir="ltr"] #cloudPull:before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    }
+body[dir="ltr"] #cloudPush:after {
+    content: '\f0ee';
+    }
+body[dir="rtl"] #cloudPush:after {
+    content: '\f0ee';
+    }
+body[dir="ltr"] #cloudPull:before {
+    content: '\f0ed';
+    }
+body[dir="rtl"] #cloudPull:before {
+    content: '\f0ed';
+    }
+#cloudWidget > span {
+    color: gray;
+    display: inline-block;
+    font-size: 90%;
+    margin: 0 1em;
+    padding: 0;
+    vertical-align: bottom;
+    white-space: pre;
+    }
+#cloudWidget > .nodata {
+    }
+#cloudWidget > #cloudCog {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 110%;
+    margin: 0;
+    opacity: 0.5;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+#cloudWidget > #cloudCog:hover {
+    opacity: 1;
+    }
+#cloudWidget > #cloudOptions {
+    align-items: center;
+    -webkit-align-items: center;
+    background-color: rgba(0, 0, 0, 0.75);
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    -webkit-justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2000;
+    }
+#cloudWidget > #cloudOptions.show {
+    display: flex;
+    display: -webkit-flex;
+    }
+#cloudWidget > #cloudOptions > div {
+    background-color: white;
+    border-radius: 3px;
+    padding: 1em;
+    text-align: center;
+    }
