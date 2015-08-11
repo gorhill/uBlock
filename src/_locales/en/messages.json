@@ -597,11 +597,11 @@
   },
   "cloudPush": {
     "message": "Export to cloud storage",
-    "description": ""
+    "description": "tooltip"
   },
   "cloudPull": {
     "message": "Import from cloud storage",
-    "description": ""
+    "description": "tooltip"
   },
   "cloudNoData": {
     "message": "...\n...",
@@ -609,11 +609,11 @@
   },
   "cloudDeviceNamePrompt": {
     "message": "This device name:",
-    "description": ""
+    "description": "used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit": {
     "message": "Submit",
-    "description": ""
+    "description": "for generic 'submit' buttons"
   },
   "dummy":{
     "message":"This entry must be the last one",
