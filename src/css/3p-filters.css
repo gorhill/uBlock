@@ -97,10 +97,8 @@ button.custom:hover {
     }
 #buttonApply {
     display: initial;
-    margin: 1em 0;
     position: fixed;
     right: 1em;
-    top: 0;
     z-index: 10;
     }
 body[dir=rtl] #buttonApply {

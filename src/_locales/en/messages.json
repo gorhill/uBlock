@@ -175,6 +175,10 @@
     "message":"Color-blind friendly",
     "description":"English: Color-blind friendly"
   },
+  "settingsCloudStorageEnabledPrompt":{
+    "message":"Enable cloud storage support",
+    "description": ""
+  },
   "settingsAdvancedUserPrompt":{
     "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
     "description":"English: "
@@ -590,6 +594,26 @@
   "docblockedDisablePermanent": {
     "message": "Permanently",
     "description": "English: Permanently"
+  },
+  "cloudPush": {
+    "message": "Export to cloud storage",
+    "description": ""
+  },
+  "cloudPull": {
+    "message": "Import from cloud storage",
+    "description": ""
+  },
+  "cloudNoData": {
+    "message": "...\n...",
+    "description": ""
+  },
+  "cloudDeviceNamePrompt": {
+    "message": "This device name:",
+    "description": ""
+  },
+  "genericSubmit": {
+    "message": "Submit",
+    "description": ""
   },
   "dummy":{
     "message":"This entry must be the last one",

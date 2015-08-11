@@ -5,10 +5,13 @@
 <title>uBlock — Your filters</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/1p-filters.css">
 </head>
 
 <body>
+
+<div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
 
 <p data-i18n="1pFormatHint"></p>
 <p><button id="userFiltersApply" class="important" type="button" disabled="true" data-i18n="1pApplyChanges"></button></p>
@@ -22,6 +25,7 @@
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/dashboard-common.js"></script>
+<script src="js/cloud-ui.js"></script>
 <script src="js/1p-filters.js"></script>
 
 </body>

@@ -41,7 +41,7 @@ var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"$'()<>{}|\\^\[\]`~]/;
 /******************************************************************************/
 
 var whitelistChanged = function() {
-    var s = uDom('#whitelist').val().trim();
+    var s = uDom.nodeFromId('whitelist').value.trim();
     var bad = reUnwantedChars.test(s);
     uDom('#whitelistApply').prop(
         'disabled',
@@ -55,7 +55,7 @@ var whitelistChanged = function() {
 var renderWhitelist = function() {
     var onRead = function(whitelist) {
         cachedWhitelist = whitelist;
-        uDom('#whitelist').val(cachedWhitelist);
+        uDom.nodeFromId('whitelist').value = whitelist;
     };
     messager.send({ what: 'getWhitelist' }, onRead);
     whitelistChanged();
@@ -122,15 +122,30 @@ var whitelistApplyHandler = function() {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
-    uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
-    uDom('#importFilePicker').on('change', handleImportFilePicker);
-    uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
-    uDom('#whitelist').on('input', whitelistChanged);
-    uDom('#whitelistApply').on('click', whitelistApplyHandler);
+var getCloudData = function() {
+    return uDom.nodeFromId('whitelist').value;
+};
 
-    renderWhitelist();
-});
+var setCloudData = function(data) {
+    if ( typeof data !== 'string' ) {
+        return;
+    }
+    uDom.nodeFromId('whitelist').value = data;
+    whitelistChanged();
+};
+
+self.cloud.onPush = getCloudData;
+self.cloud.onPull = setCloudData;
+
+/******************************************************************************/
+
+uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
+uDom('#importFilePicker').on('change', handleImportFilePicker);
+uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
+uDom('#whitelist').on('input', whitelistChanged);
+uDom('#whitelistApply').on('click', whitelistApplyHandler);
+
+renderWhitelist();
 
 /******************************************************************************/
 

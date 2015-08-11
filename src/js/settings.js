@@ -186,6 +186,12 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('colorBlindFriendly', this.checked);
         });
 
+    uDom('#cloud-storage-enabled')
+        .prop('checked', details.cloudStorageEnabled === true)
+        .on('change', function(){
+            changeUserSettings('cloudStorageEnabled', this.checked);
+        });
+
     uDom('#advanced-user-enabled')
         .prop('checked', details.advancedUserEnabled === true)
         .on('change', function(){

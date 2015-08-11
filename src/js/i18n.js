@@ -33,28 +33,31 @@
 /******************************************************************************/
 
 // Helper to deal with the i18n'ing of HTML files.
+vAPI.i18n.render = function(context) {
+    uDom('[data-i18n]', context).forEach(function(elem) {
+        elem.html(vAPI.i18n(elem.attr('data-i18n')));
+    });
 
-uDom('[data-i18n]').forEach(function(elem) {
-    elem.html(vAPI.i18n(elem.attr('data-i18n')));
-});
+    uDom('[title]', context).forEach(function(elem) {
+        var title = vAPI.i18n(elem.attr('title'));
+        if ( title ) {
+            elem.attr('title', title);
+        }
+    });
 
-uDom('[title]').forEach(function(elem) {
-    var title = vAPI.i18n(elem.attr('title'));
-    if ( title ) {
-        elem.attr('title', title);
-    }
-});
+    uDom('[placeholder]', context).forEach(function(elem) {
+        elem.attr('placeholder', vAPI.i18n(elem.attr('placeholder')));
+    });
 
-uDom('[placeholder]').forEach(function(elem) {
-    elem.attr('placeholder', vAPI.i18n(elem.attr('placeholder')));
-});
+    uDom('[data-i18n-tip]', context).forEach(function(elem) {
+        elem.attr(
+            'data-tip',
+            vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
+        );
+    });
+};
 
-uDom('[data-i18n-tip]').forEach(function(elem) {
-    elem.attr(
-        'data-tip',
-        vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
-    );
-});
+vAPI.i18n.render();
 
 /******************************************************************************/
 

@@ -495,7 +495,7 @@ var externalListsChangeHandler = function() {
 /******************************************************************************/
 
 var externalListsApplyHandler = function() {
-    externalLists = uDom('#externalLists').val();
+    externalLists = uDom.nodeFromId('externalLists').value;
     messager.send({
         what: 'userSettings',
         name: 'externalLists',
@@ -520,21 +520,69 @@ var groupEntryClickHandler = function() {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
-    uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
-    uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
-    uDom('#buttonApply').on('click', buttonApplyHandler);
-    uDom('#buttonUpdate').on('click', buttonUpdateHandler);
-    uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
-    uDom('#lists').on('change', '.listEntry > input', onListCheckboxChanged);
-    uDom('#lists').on('click', 'span.purge', onPurgeClicked);
-    uDom('#externalLists').on('input', externalListsChangeHandler);
-    uDom('#externalListsApply').on('click', externalListsApplyHandler);
-    uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
+var getCloudData = function() {
+    var bin = {
+        parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
+        selectedLists: [],
+        externalLists: externalLists
+    };
 
-    renderFilterLists();
-    renderExternalLists();
-});
+    var lis = uDom('#lists .listEntry'), li;
+    var i = lis.length;
+    while ( i-- ) {
+        li = lis.at(i);
+        if ( li.descendants('input').prop('checked') ) {
+            bin.selectedLists.push(li.descendants('a').attr('data-listkey'));
+        }
+    }
+
+    return bin;
+};
+
+var setCloudData = function(data) {
+    if ( typeof data !== 'object' || data === null ) {
+        return;
+    }
+
+    var checked = data.parseCosmeticFilters === true;
+    uDom.nodeFromId('parseCosmeticFilters').checked = checked;
+    listDetails.cosmetic = checked;
+
+    var lis = uDom('#lists .listEntry'), li, input, listKey;
+    var i = lis.length;
+    while ( i-- ) {
+        li = lis.at(i);
+        input = li.descendants('input');
+        listKey = li.descendants('a').attr('data-listkey');
+        checked = data.selectedLists.indexOf(listKey) !== -1;
+        input.prop('checked', checked);
+        listDetails.available[listKey].off = !checked;
+    }
+
+    uDom.nodeFromId('externalLists').value = data.externalLists || '';
+
+    renderWidgets();
+    externalListsChangeHandler();
+};
+
+self.cloud.onPush = getCloudData;
+self.cloud.onPull = setCloudData;
+
+/******************************************************************************/
+
+uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
+uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
+uDom('#buttonApply').on('click', buttonApplyHandler);
+uDom('#buttonUpdate').on('click', buttonUpdateHandler);
+uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
+uDom('#lists').on('change', '.listEntry > input', onListCheckboxChanged);
+uDom('#lists').on('click', 'span.purge', onPurgeClicked);
+uDom('#externalLists').on('input', externalListsChangeHandler);
+uDom('#externalListsApply').on('click', externalListsApplyHandler);
+uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
+
+renderFilterLists();
+renderExternalLists();
 
 /******************************************************************************/
 

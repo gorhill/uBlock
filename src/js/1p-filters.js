@@ -40,10 +40,8 @@ var messager = vAPI.messaging.channel('1p-filters.js');
 // This is to give a visual hint that the content of user blacklist has changed.
 
 function userFiltersChanged() {
-    uDom('#userFiltersApply').prop(
-        'disabled',
-        uDom('#userFilters').val().trim() === cachedUserFilters
-    );
+    uDom.nodeFromId('userFiltersApply').disabled = 
+        uDom('#userFilters').val().trim() === cachedUserFilters;
 }
 
 /******************************************************************************/
@@ -54,7 +52,7 @@ function renderUserFilters() {
             return;
         }
         cachedUserFilters = details.content.trim();
-        uDom('#userFilters').val(details.content);
+        uDom.nodeFromId('userFilters').value = details.content;
     };
     messager.send({ what: 'readUserFilters' }, onRead);
 }
@@ -160,16 +158,31 @@ var userFiltersApplyHandler = function() {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
-    // Handle user interaction
-    uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
-    uDom('#importFilePicker').on('change', handleImportFilePicker);
-    uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
-    uDom('#userFilters').on('input', userFiltersChanged);
-    uDom('#userFiltersApply').on('click', userFiltersApplyHandler);
+var getCloudData = function() {
+    return uDom.nodeFromId('userFilters').value;
+};
 
-    renderUserFilters();
-});
+var setCloudData = function(data) {
+    if ( typeof data !== 'string' ) {
+        return;
+    }
+    uDom.nodeFromId('userFilters').value = data;
+    userFiltersChanged();
+};
+
+self.cloud.onPush = getCloudData;
+self.cloud.onPull = setCloudData;
+
+/******************************************************************************/
+
+// Handle user interaction
+uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
+uDom('#importFilePicker').on('change', handleImportFilePicker);
+uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
+uDom('#userFilters').on('input', userFiltersChanged);
+uDom('#userFiltersApply').on('click', userFiltersApplyHandler);
+
+renderUserFilters();
 
 /******************************************************************************/
 

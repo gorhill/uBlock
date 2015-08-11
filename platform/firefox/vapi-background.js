@@ -2808,6 +2808,7 @@ vAPI.contextMenu.remove = function() {
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
 var optionsObserver = {
     addonId: 'uBlock0@raymondhill.net',
@@ -2850,6 +2851,7 @@ var optionsObserver = {
 optionsObserver.register();
 
 /******************************************************************************/
+/******************************************************************************/
 
 vAPI.lastError = function() {
     return null;
@@ -2876,6 +2878,7 @@ vAPI.onLoadAllCompleted = function() {
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
 // Likelihood is that we do not have to punycode: given punycode overhead,
 // it's faster to check and skip than do it unconditionally all the time.
@@ -2894,6 +2897,120 @@ vAPI.punycodeURL = function(url) {
     return url;
 };
 
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.cloud = (function() {
+    var extensionBranchPath = 'extensions.' + location.host;
+    var cloudBranchPath = extensionBranchPath + '.cloudStorage';
+
+    var options = {
+        deviceName: ''
+    };
+
+    var getDeviceName = function() {
+        var name = '';
+
+        // User-supplied device name.
+        var branch = Services.prefs.getBranch(extensionBranchPath + '.');
+        try {
+            name = branch.getCharPref('deviceName');
+        } catch(ex) {
+        }
+        options.deviceName = name;
+        if ( name !== '' ) {
+            return name;
+        }
+
+        // No name: try to use device name specified by user in Preferences.
+        branch = Services.prefs.getBranch('services.sync.client.');
+        try {
+            name = branch.getCharPref('name');
+        } catch(ex) {
+        }
+        if ( name !== '' ) {
+            return name;
+        }
+
+        // No name: use os/cpu.
+        return window.navigator.platform || window.navigator.oscpu;
+    };
+
+    var start = function(dataKeys) {
+        var extensionBranch = Services.prefs.getBranch(extensionBranchPath + '.');
+        var syncBranch = Services.prefs.getBranch('services.sync.prefs.sync.');
+
+        // Mark config entries as syncable
+        var dataKey;
+        for ( var i = 0; i < dataKeys.length; i++ ) {
+            dataKey = dataKeys[i];
+            if ( extensionBranch.prefHasUserValue('cloudStorage.' + dataKey) === false ) {
+                extensionBranch.setCharPref('cloudStorage.' + dataKey, '');
+            }
+            syncBranch.setBoolPref(cloudBranchPath + '.' + dataKey, true);
+        }
+    };
+
+    var push = function(datakey, data, callback) {
+        var branch = Services.prefs.getBranch(cloudBranchPath + '.');
+        var bin = {
+            'source': getDeviceName(),
+            'tstamp': Date.now(),
+            'data': data
+        };
+        branch.setCharPref(datakey, JSON.stringify(bin));
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+
+    var pull = function(datakey, callback) {
+        var result = null;
+        var branch = Services.prefs.getBranch(cloudBranchPath + '.');
+        try {
+            var json = branch.getCharPref(datakey);
+            if ( typeof json === 'string' ) {
+                result = JSON.parse(json);
+            }
+        } catch(ex) {
+        }
+        callback(result);
+    };
+
+    var getOptions = function(callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
+        }
+
+        callback(options);
+    };
+
+    var setOptions = function(details, callback) {
+        if ( typeof details !== 'object' || details === null ) {
+            return;
+        }
+
+        var branch = Services.prefs.getBranch(extensionBranchPath + '.');
+
+        if ( typeof details.deviceName === 'string' ) {
+            branch.setCharPref('deviceName', details.deviceName);
+        }
+
+        if ( typeof callback === 'function' ) {
+            callback(options);
+        }
+    };
+
+    return {
+        start: start,
+        push: push,
+        pull: pull,
+        getOptions: getOptions,
+        setOptions: setOptions
+    };
+})();
+
+/******************************************************************************/
 /******************************************************************************/
 
 })();

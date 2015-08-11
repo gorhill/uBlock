@@ -671,6 +671,68 @@ vAPI.messaging.listen('element-picker.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
+// cloud-ui.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+    case 'cloudGetOptions':
+        vAPI.cloud.getOptions(function(options) {
+            options.enabled = µb.userSettings.cloudStorageEnabled === true;
+            callback(options);
+        });
+        return;
+
+    case 'cloudSetOptions':
+        vAPI.cloud.setOptions(request.options, callback);
+        return;
+
+    case 'cloudPull':
+        return vAPI.cloud.pull(request.datakey, callback);
+
+    case 'cloudPush':
+        return vAPI.cloud.push(request.datakey, request.data, callback);
+
+    default:
+        break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+    // For when cloud storage is disabled.
+    case 'cloudPull':
+        // fallthrough
+    case 'cloudPush':
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('cloud-ui.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 // 3p-filters.js
 
 (function() {

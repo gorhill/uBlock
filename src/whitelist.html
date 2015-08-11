@@ -5,10 +5,13 @@
 <title>uBlock — Whitelist</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/whitelist.css">
 </head>
 
 <body>
+
+<div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
 
 <p data-i18n="whitelistPrompt"></p>
 <p><button id="whitelistApply" class="important" type="button" disabled="true" data-i18n="whitelistApply"></button></p>
@@ -23,6 +26,7 @@
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/dashboard-common.js"></script>
+<script src="js/cloud-ui.js"></script>
 <script src="js/whitelist.js"></script>
 
 </body>

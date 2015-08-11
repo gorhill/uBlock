@@ -96,10 +96,7 @@
 /******************************************************************************/
 
 µBlock.saveWhitelist = function() {
-    var bin = {
-        'netWhitelist': this.stringFromWhitelist(this.netWhitelist)
-    };
-    vAPI.storage.set(bin);
+    this.keyvalSetOne('netWhitelist', this.stringFromWhitelist(this.netWhitelist));
     this.netWhitelistModifyTime = Date.now();
 };
 
@@ -156,7 +153,7 @@
 /******************************************************************************/
 
 µBlock.saveUserFilters = function(content, callback) {
-    return this.assets.put(this.userFiltersPath, content, callback);
+    this.assets.put(this.userFiltersPath, content, callback);
 };
 
 /******************************************************************************/
