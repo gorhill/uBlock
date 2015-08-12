@@ -615,6 +615,10 @@
     "message":"Submit",
     "description":"for generic 'submit' buttons"
   },
+  "genericRevert":{
+    "message":"మార్పులను తిరస్కరించు",
+    "description":"for generic 'revert' buttons"
+  },
   "dummy":{
     "message":"ఇది అంతిమంగా వుండాల్సిన నమోదు",
     "description":"so we dont need to deal with comma for last entry"

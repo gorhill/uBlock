@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Aktivizēt mākoņdatu glabāšanas atbalstu",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Eksports uz mākoņdatu glabātuvi",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Imports no mākoņdatu glabātuves",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,12 +608,16 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Šīs ierīces nosaukums:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Iesniegt",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"Atgriezt",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"Šim ierakstam ir jābūt pēdējam",

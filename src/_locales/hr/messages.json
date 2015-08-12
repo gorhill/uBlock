@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Omogući podršku za pohranu u oblaku",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Izvezi u pohranu u oblaku",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Uvezi iz pohrane u oblaku",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,12 +608,16 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Naziv ovog uređaja:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Pošalji",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"Vratiti",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"Ova stavka mora biti posljednja",

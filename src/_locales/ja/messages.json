@@ -615,6 +615,10 @@
     "message":"Submit",
     "description":"for generic 'submit' buttons"
   },
+  "genericRevert":{
+    "message":"元に戻す",
+    "description":"for generic 'revert' buttons"
+  },
   "dummy":{
     "message":"これは最後のエントリである必要があります",
     "description":"so we dont need to deal with comma for last entry"

@@ -615,6 +615,10 @@
     "message":"Submit",
     "description":"for generic 'submit' buttons"
   },
+  "genericRevert":{
+    "message":"Επαναφορά",
+    "description":"for generic 'revert' buttons"
+  },
   "dummy":{
     "message":"Αυτή η καταχώρηση θα πρέπει να είναι τελευταία",
     "description":"so we dont need to deal with comma for last entry"

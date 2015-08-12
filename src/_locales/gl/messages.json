@@ -615,6 +615,10 @@
     "message":"Submit",
     "description":"for generic 'submit' buttons"
   },
+  "genericRevert":{
+    "message":"Reverter",
+    "description":"for generic 'revert' buttons"
+  },
   "dummy":{
     "message":"Esta ten que ser a derradeira entrada",
     "description":"so we dont need to deal with comma for last entry"

@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"启用云端储存",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,24 +596,28 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"导出到云端储存",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"从云端储存导入",
     "description":"tooltip"
   },
   "cloudNoData":{
-    "message":"...\n...",
+    "message":"…\n…",
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"此设备名称：",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"提交",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"还原",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

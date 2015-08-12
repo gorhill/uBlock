@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"تفعيل دعم سحابة التخزين",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"التصدير إلى سحابة التخزين",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"إستيراد من سحابة التخزين",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,12 +608,16 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"إسم هذا الجهاز:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"تطبيق",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"إلغاء",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",

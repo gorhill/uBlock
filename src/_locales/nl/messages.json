@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Cloud opslag support inschakelen",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,24 +596,28 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Exporteer naar cloudopslag",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Importeer van cloudopslag",
     "description":"tooltip"
   },
   "cloudNoData":{
-    "message":"...\n...",
+    "message":"... \n...",
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Apparaatnaam:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Verzenden",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"Terugzetten",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"This entry must be the last one",

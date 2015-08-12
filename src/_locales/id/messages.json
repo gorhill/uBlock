@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Fungsikan dukungan penyimpanan awan",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Ekspor ke penyimpanan awan",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Impor dari penyimpanan awan",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,12 +608,16 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Nama perangkat ini:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Kirim",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"Urungkan",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"Entri ini harus menjadi yang terakhir",

@@ -615,6 +615,10 @@
     "message":"Submit",
     "description":"for generic 'submit' buttons"
   },
+  "genericRevert":{
+    "message":"Gendan",
+    "description":"for generic 'revert' buttons"
+  },
   "dummy":{
     "message":"Denne indskrivning må være den sidste",
     "description":"so we dont need to deal with comma for last entry"

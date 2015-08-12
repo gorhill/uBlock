@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Exportovať do cloudu",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Importovať z cloudu",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -614,6 +614,10 @@
   "genericSubmit":{
     "message":"Submit",
     "description":"for generic 'submit' buttons"
+  },
+  "genericRevert":{
+    "message":"Vrátiť",
+    "description":"for generic 'revert' buttons"
   },
   "dummy":{
     "message":"This entry must be the last one",
