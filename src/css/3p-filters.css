@@ -73,28 +73,6 @@ li.listEntry > a:nth-of-type(3) {
 .dim {
     opacity: 0.5;
     }
-/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button.custom {
-    padding: 0.6em 1em;
-    border: 1px solid transparent;
-    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
-    border-radius: 3px;
-    background-color: hsl(216, 100%, 75%);
-    background-image: linear-gradient(#a8cbff, #80b3ff);
-    background-repeat: repeat-x;
-    color: #222;
-    opacity: 0.8;
-    }
-button.custom.disabled {
-    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
-    background-color: hsl(36, 0%, 72%);
-    background-image: linear-gradient(#f2f2f2, #dddddd);
-    color: #aaa;
-    pointer-events: none;
-    }
-button.custom:hover {
-    opacity: 1.0;
-    }
 #buttonApply {
     display: initial;
     position: fixed;

@@ -14,11 +14,16 @@
 <div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
 
 <p data-i18n="1pFormatHint"></p>
-<p><button id="userFiltersApply" class="important" type="button" disabled="true" data-i18n="1pApplyChanges"></button></p>
-<textarea class="userFilters" id="userFilters" dir="auto" spellcheck="false"></textarea>
-<p><button id="importUserFiltersFromFile" data-i18n="1pImport"></button> &emsp;
-   <button id="exportUserFiltersToFile" data-i18n="1pExport"></button>
-   <input id="importFilePicker" type="file" accept="text/plain" class="hiddenFileInput"></p>
+<p>
+    <button id="userFiltersApply" class="custom important" type="button" disabled="true" data-i18n="1pApplyChanges"></button>&ensp;
+    <button id="userFiltersRevert" class="custom" type="button" disabled="true" data-i18n="genericRevert"></button>
+</p>
+<p><textarea class="userFilters" id="userFilters" dir="auto" spellcheck="false"></textarea></p>
+<p>
+    <button id="importUserFiltersFromFile" class="custom" data-i18n="1pImport"></button>&ensp;
+    <button id="exportUserFiltersToFile" class="custom" data-i18n="1pExport"></button>
+    <input id="importFilePicker" type="file" accept="text/plain" class="hiddenFileInput">
+</p>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

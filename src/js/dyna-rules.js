@@ -158,7 +158,7 @@ function exportUserRulesToFile() {
         .replace('{{datetime}}', now.toLocaleString())
         .replace(/ +/g, '_');
     vAPI.download({
-        'url': 'data:text/plain,' + encodeURIComponent(rulesFromHTML('#diff .left li')),
+        'url': 'data:text/plain,' + encodeURIComponent(rulesFromHTML('#diff .left li') + '\n'),
         'filename': filename,
         'saveAs': true
     });
@@ -238,9 +238,12 @@ var getCloudData = function() {
     return rulesFromHTML('#diff .left li');
 };
 
-var setCloudData = function(data) {
+var setCloudData = function(data, append) {
     if ( typeof data !== 'string' ) {
         return;
+    }
+    if ( append ) {
+        data = rulesFromHTML('#diff .right li') + '\n' + data;
     }
     var request = {
         'what': 'setSessionRules',

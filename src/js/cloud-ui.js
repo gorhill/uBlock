@@ -110,9 +110,9 @@ var pushData = function() {
 
 /******************************************************************************/
 
-var pullData = function() {
+var pullData = function(ev) {
     if ( typeof self.cloud.onPull === 'function' ) {
-        self.cloud.onPull(self.cloud.data);
+        self.cloud.onPull(self.cloud.data, ev.shiftKey);
     }
 };
 
@@ -195,5 +195,7 @@ var onInitialize = function(options) {
 messager.send({ what: 'cloudGetOptions' }, onInitialize);
 
 /******************************************************************************/
+
+// https://www.youtube.com/watch?v=aQFp67VoiDA
 
 })();
