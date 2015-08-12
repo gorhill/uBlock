@@ -72,13 +72,6 @@ function startup(data, reason) {
             return;
         }
 
-        // https://github.com/gorhill/uBlock/issues/262
-        // To remove whatever suffix AMO adds to the version number.
-        var matches = version.match(/(?:\d+\.)+\d+/);
-        if ( matches !== null ) {
-            version = matches[0];
-        }
-
         bgProcess = hiddenDoc.documentElement.appendChild(
             hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );

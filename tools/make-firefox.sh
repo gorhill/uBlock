@@ -28,7 +28,7 @@ cp platform/firefox/*.xul $DES/
 cp LICENSE.txt $DES/
 
 echo "*** uBlock0.firefox: Generating meta..."
-python tools/make-firefox-meta.py $DES/
+python tools/make-firefox-meta.py $DES/ "$2"
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.firefox: Creating package..."
