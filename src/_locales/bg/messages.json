@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Включване на поддръжка за съхранение в облак",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Изнасяне в облачно хранилище",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Внасяне от облачно хранилище",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,11 +608,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Име на това устройство:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Изпращане",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
