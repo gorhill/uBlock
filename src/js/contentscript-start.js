@@ -178,7 +178,12 @@ var hideElements = function(selectors) {
     while ( i-- ) {
         elem = elems[i];
         shadow = elem.shadowRoot;
-        if ( shadow !== null && shadow.className === sessionId ) {
+        // https://www.chromestatus.com/features/4668884095336448
+        // "Multiple shadow roots is being deprecated."
+        if ( shadow !== null ) {
+            if ( shadow.className !== sessionId ) {
+                elem.style.setProperty('display', 'none', 'important');
+            }
             continue;
         }
         // https://github.com/gorhill/uBlock/pull/555
