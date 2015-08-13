@@ -66,6 +66,13 @@ vAPI.storage = chrome.storage.local;
 // https://github.com/gorhill/uMatrix/issues/234
 // https://developer.chrome.com/extensions/privacy#property-network
 
+// 2015-08-12: Wrapped Chrome API in try-catch statements. I had a fluke
+// event in which it appeared the Chrome 46 decided to restart uBlock (for
+// unknown reasons) and again for unknown reasons the browser acted as if
+// uBlock did not declare the `privacy` permission in its manifest, putting
+// uBlock in a bad, non-fonctional state -- because call to `chrome.privacy`
+// API threw an exception.
+
 vAPI.browserSettings = {
     set: function(details) {
         for ( var setting in details ) {
@@ -74,25 +81,37 @@ vAPI.browserSettings = {
             }
             switch ( setting ) {
             case 'prefetching':
-                chrome.privacy.network.networkPredictionEnabled.set({
-                    value: !!details[setting],
-                    scope: 'regular'
-                });
+                try {
+                    chrome.privacy.network.networkPredictionEnabled.set({
+                        value: !!details[setting],
+                        scope: 'regular'
+                    });
+                } catch(ex) {
+                    console.error(ex);
+                }
                 break;
 
             case 'hyperlinkAuditing':
-                chrome.privacy.websites.hyperlinkAuditingEnabled.set({
-                    value: !!details[setting],
-                    scope: 'regular'
-                });
+                try {
+                    chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                        value: !!details[setting],
+                        scope: 'regular'
+                    });
+                } catch(ex) {
+                    console.error(ex);
+                }
                 break;
 
             case 'webrtcIPAddress':
                 if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled === 'object' ) {
-                    chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    });
+                    try {
+                        chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
+                            value: !!details[setting],
+                            scope: 'regular'
+                        });
+                    } catch(ex) {
+                        console.error(ex);
+                    }
                 }
                 break;
 
