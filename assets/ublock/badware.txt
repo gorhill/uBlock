@@ -18,6 +18,10 @@
 # 2011-08-22: http://www.extremetech.com/computing/93504-download-com-wraps-downloads-in-bloatware-lies-about-motivations
 ||download.cnet.com^$other
 
+# 2015-08-12: https://isc.sans.edu/diary/.COM.COM+Used+For+Malicious+Typo+Squatting/20019
+#     via https://twitter.com/SwiftOnSecurity/status/631972601460494336
+# 2013-12-10: https://blog.whitehatsec.com/why-com-com-should-scare-you/
+||com.com$document
 
 # 2015-06-18: http://www.information-age.com/industry/software/123459675/hotbed-malware-another-blow-sourceforge-google-discovers-588-pages-malicious-software
 # 2015-06-02: https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
