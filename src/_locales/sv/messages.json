@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Tillåt stöd för molnförvaring",
+    "message":"Aktivera stöd för molnlagring",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportera till molnförvaring",
+    "message":"Exportera till molnlagring",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importera från molnförvaring",
+    "message":"Importera från molnlagring",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,7 +608,7 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"Denna enhet kallas:",
+    "message":"Enhetens namn:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{

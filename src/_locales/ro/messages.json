@@ -600,7 +600,7 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Preia din stocarea în cloud",
+    "message":"Importă din stocarea în cloud",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,7 +612,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submite",
+    "message":"Trimite",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{

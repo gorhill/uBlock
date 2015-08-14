@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Povoliť podporu cloudového úložiska",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportovať do cloudu",
+    "message":"Exportovať do cloudového úložiska",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importovať z cloudu",
+    "message":"Importovať z cloudového úložiska",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -608,11 +608,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Názov tohto zariadenia:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Poslať",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{

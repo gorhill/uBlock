@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Ativar suporte de armazenamento cloud",
+    "message":"Ativar suporte à 'cloud'",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportar para armazenamento cloud",
+    "message":"Exportar para a 'cloud'",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importar do armazenamento cloud",
+    "message":"Importar da 'cloud'",
     "description":"tooltip"
   },
   "cloudNoData":{

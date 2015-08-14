@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Włącz obsługę pamięci masowej w chmurze",
+    "message":"Włącz obsługę dysków w chmurze",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Eksport do chmury",
+    "message":"Eksport do dysku w chmurze",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import z chmury",
+    "message":"Import z dysku w chmurze",
     "description":"tooltip"
   },
   "cloudNoData":{

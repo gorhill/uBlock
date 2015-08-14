@@ -172,11 +172,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Kleurenblind-vriendelijk",
+    "message":"Vriendelijk voor kleurenblinden",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Cloud opslag support inschakelen",
+    "message":"Ondersteuning voor cloud-opslag inschakelen",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -552,11 +552,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Toon Dashboard",
+    "message":"Dashboard tonen",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Netwerkverzoeken-logboek tonen",
+    "message":"Logboek tonen",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -564,7 +564,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock Origin heeft het laden van de volgende pagina voorkomen:",
+    "message":"uBlock₀ heeft het laden van de volgende pagina voorkomen:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -584,7 +584,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Strikte blokkering uitschakelen voor {{hostname}}",
+    "message":"Strikte blokkering voor {{hostname}} uitschakelen",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exporteer naar cloudopslag",
+    "message":"Naar cloudopslag exporteren",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importeer van cloudopslag",
+    "message":"Van cloudopslag importeren",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -616,7 +616,7 @@
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
-    "message":"Terugzetten",
+    "message":"Ongedaan maken",
     "description":"for generic 'revert' buttons"
   },
   "dummy":{
