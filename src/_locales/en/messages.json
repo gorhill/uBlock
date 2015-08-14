@@ -292,8 +292,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"outdated",
-    "description":"English: outdated"
+    "message":"out of date",
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Last update: {{ago}}",
