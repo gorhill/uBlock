@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: eY9JCwk5mqy9FF6/pF0Wnw
-! Version: 201506010032
+! Checksum: 4lJZU/n+WX2FmD9BKzLnYg
+! Version: 201508150323
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 01 Jun 2015 00:32 UTC
+! Last modified: 15 Aug 2015 03:23 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -92,6 +92,7 @@ _advertentieleaderboardhome.
 ||logolinks.reedbusiness.nl^$third-party
 ||lustcash.nl^$third-party
 ||maakmedia.nl^$third-party
+||marketing.teasemedia.nl^$third-party
 ||mbs.midhold.nl^$third-party
 ||mbuyu.nl^$third-party,domain=~m4n.nl
 ||netdirect.nl^$third-party
@@ -334,6 +335,7 @@ _advertentieleaderboardhome.
 ||bouwmachineforum.nl/banner/
 ||brandweerspotters.nl/modules/banners/bannerimages/
 ||buienalarm.nl/banner_
+||buienalarm.nl^*300x250.
 ||buienradar.nl/bannerdetails.aspx?
 ||cameranu.nl/images/banner_zoom.gif
 ||camping-frankrijk.nl/Graphics/yelloh2011.swf
@@ -708,6 +710,7 @@ _advertentieleaderboardhome.
 @@||imageceu1.247realmedia.com/0/Player/Player_NL_Home/342x204_mensuel_NLnew.jpg
 @@||images.marktnet.eu/adimg/
 @@||imasdk.googleapis.com/flash/core/*/adsapi.swf$object-subrequest,domain=538.nl|slamfm.nl
+@@||imasdk.googleapis.com/js/core/bridge*.html$subdocument,domain=nos.nl
 @@||imasdk.googleapis.com/js/core/bridge3.*.html#goog_$subdocument,domain=2be.be|syndication.vmma.be|vitaya.be|vtm.be|vtmkzoom.be
 @@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=2be.be|syndication.vmma.be|vitaya.be|vtmkzoom.be
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
@@ -747,6 +750,7 @@ _advertentieleaderboardhome.
 @@||2dehandskleertjes.nl/uploads/advertenties/
 @@||fotoapparatuur.nl/advertenties/
 @@||koopplein.nl^*/advertenties/upload
+@@||sexjobs.nl/advertentie/
 @@||showmodeluitverkoop.nl/upload/advertentie/
 @@||slimmerkopen.nl/timthumb/timthumb.php?src=/uploads/advertenties/
 @@||sogeti.nl/advertenties/
@@ -1083,8 +1087,10 @@ rijnmond.nl##.half_banner
 zoover.nl##.header-banner
 flexnieuws.nl##.header__banner
 onemorething.nl##.headertakeover
+spele.nl##.highlighted
 pathe.nl##.homepageBanner
 voetbalzone.nl##.info-col > .block
+iphoned.nl##.injection1
 rtl.nl##.inlineRectangle
 wtf.nl##.item-banner
 psx-sense.nl##.laatstenieuws + * + .scheiding2 + * + * + .postbox
@@ -1109,6 +1115,7 @@ moviemeter.nl,musicmeter.nl##.price_compare
 moviemeter.nl##.price_compare_large
 openingsurengids.be##.promSidebar
 dumpert.nl,omroep.nl##.promo
+synoniemen.net##.promoblok
 vastgoedjournaal.nl##.randomcontent
 kijkshop.nl##.rechterkolom-banner
 9292ov.nl,rtvnh.nl,valuta.nl##.rectangle
@@ -1149,6 +1156,7 @@ uitburo.nl##.uitmail_banner_block
 voetbalzone.nl##.uniClick
 incestsexverhaaltjes.nl##.viagra
 hbvl.be##.w-doubleclick
+rtvnoord.nl##.widget > .half.last > div[style="padding-bottom:8px; background-color:#ffffff;"]
 blog.nl##.widget[id^="text-"]
 medianed.com##.widget_text[id^="text-"]
 dichtbij.nl##.widgetbanner
@@ -1195,6 +1203,7 @@ rijnmond.nl##a[onclick^="HitCountAjax('/Banners/"]
 dutchattraction.nl##a[onclick^="countAdClick("]
 opwindend.net##a[rel="nofollow"][target="_blank"]
 leukstespel.nl##a[target="_blank"] > img
+woneninrotterdam.nl##a[target="_blank"] > img[src*="Banner"]
 duurzaam-actueel.nl##a[target="_blank"][href^="http"] > img:not([alt^="duurzaam-actueel"])
 hln.be##a[title="Powered by Autozone.be"]
 moviemeter.nl##div[class^="banner"]
@@ -1250,7 +1259,7 @@ koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal1
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal1_no_border
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2_no_border
-drenthemobiel.nl,flevolandmobiel.nl,gelderlandmobiel.nl,gratisaftehalen.org,gratisoptehalen.org,gratistehalen.nl,groningenmobiel.nl,limburgmobiel.nl,marktplaza.nl,moorslede.be,nederlandmobiel.nl,noord-brabantmobiel.nl,noord-hollandmobiel.nl,overijsselmobiel.nl,paginamarkt.nl,utrechtmobiel.nl,zeelandmobiel.nl,zuid-hollandmobiel.nl#@#.advertentie
+drenthemobiel.nl,flevolandmobiel.nl,gelderlandmobiel.nl,gratisaftehalen.org,gratisoptehalen.org,gratistehalen.nl,groningenmobiel.nl,limburgmobiel.nl,marktplaza.nl,moorslede.be,nederlandmobiel.nl,noord-brabantmobiel.nl,noord-hollandmobiel.nl,overijsselmobiel.nl,paginamarkt.nl,sexjobs.nl,utrechtmobiel.nl,zeelandmobiel.nl,zuid-hollandmobiel.nl#@#.advertentie
 haven.nl,zeelandnet.nl#@#.advertenties
 blikopnieuws.nl,computeridee.nl#@#.reclame
 ! Uitzonderingen voor EasyList

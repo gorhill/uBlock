@@ -1,7 +1,7 @@
- [Adblock Plus 2.0]
+[Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 06/05/2015
+! Last change: 05/07/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -83,6 +83,8 @@ exashare.com###player_img
 ||blbosti.cz/sites/www.blbosti.cz/files/banner/
 ||blisty.cz/ad/
 ||centrum.cz/design/akt3/o/ads/
+||cn130.com/wp-content/uploads/an-temp/
+||count.flashx.tv:81/
 ||cviceni-doma.cz/images/*banner*
 ||cztorrent.net/images/bannery/
 ||d.lookit.cz/vv.js
@@ -126,6 +128,9 @@ exashare.com###player_img
 ||img.blesk.cz/static/data/blesk/*bg.jpg
 ||img.mimiaukce.cz/h/ac/b/
 ||img14.imageshack.us/img14/7953/lineage2a.gif$domain=warforum.cz
+||in-pocasi.cz/img/left*.jpg
+||in-pocasi.cz/img/right*.jpg
+||in-pocasi.cz/img/zahlavi*.jpg
 ||itnetwork.cz/images/banners/
 ||itnetwork.cz/script/abc/
 ||jpg.assets-finance-media.cz/newsimg/brand/
@@ -133,7 +138,9 @@ exashare.com###player_img
 ||kurzy.cz/e/adv?
 ||lamer.cz/images/bg*.jpg
 ||kurzy.sfinance.cz/img/front/sfinance/*banner*
+||letemsvetemapplem.eu/rklm/
 ||libise.eu/r/
+||linkbucks.com/visitScript/
 ||liveagent.mobilbonus.cz
 ||logobox.cz/images/banners/
 ||lphard.cz/images/banners/
@@ -196,6 +203,7 @@ exashare.com###player_img
 ||videacesky.cz/img/*.swf
 ||videacesky.server.zcom.cz/redirector/redir.php
 ||videoad.cz^
+||view.flashx.tv:81$script
 ||war-city.eu/bannery/
 ||war-net.cz/300x200.gif
 ||war-net.cz/aukcent.gif
@@ -276,11 +284,13 @@ exashare.com###player_img
 ||priznaj.sk/images/*_banner.png
 ||pricemania.sk/pictures/banners/
 ||pricemania.sk/pictures/campaigns/
+||recycle-static.zoznam.sk/*/*branding*.jpg
 ||spartak.sk/pics-new2/reklamy/
 ||sport.aktuality.sk/css/skins/
 ||static.itnews.sk/branding/
 ||tailormysuit.sk/wp-content/uploads/banner*.jpg
 ||techbox.sk/*colorbox
+||topserialy.sk/img/dreamair.swf
 ||img.teevee.sk/img/comm/
 ||totalpozicky.sk/images/banners/
 ||tu-ke.com/certovskezlavy.jpg
@@ -392,6 +402,8 @@ exashare.com###player_img
 !
 !---------- Czech Whitelist ------------!
 !
+@@||adserver.adtech.de/?advideo/3.0/
+@@/advertisements/*$domain=automotofans.cz
 @@/banners/banner$domain=hafici.cz|svatba.cz
 @@||activesolutions.cz/ad/www/delivery/ajs.php?zoneid=19&$script,domain=autoroad.cz
 @@||ads2.czc.cz/www/
@@ -418,7 +430,6 @@ exashare.com###player_img
 @@||*.nova.cz/static/shared/app/videojs/plugins/adblock/
 @@||*.nova.cz/static/shared/app/videojs/plugins/ads/
 @@||ocko.tv/content/adv/flash/
-@@||openload.io/assets/js/advertisement.js
 @@|http://pagead2.googlesyndication.com/pagead/show_ads.js$domain=pismenkuje.cz|pise.cz|blbne.cz|bonzuje.cz|sdeluje.cz|svetu.cz|vzpomina.cz
 @@||reklama-*.cz
 @@||smartmania.cz/advertisment.js
@@ -442,11 +453,20 @@ zive.cz#@#.box-adsense
 @@||img.aaaauto.eu/thumb/
 @@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
 @@/moje-konto/inzeraty/
+mojevideo.sk#@##video_ad
+@@||openload.io/assets/js/advertisement.js
+@@||openload.io/assets/js/pop.js
+@@||openload.io/assets/js/popad.js
 @@||openload.io/deliverad/2
+@@||openload.io^$xmlhttprequest
+@@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=mojevideo.sk
 @@||pcforum.sk$elemhide
 @@||pcforum.sk/styles/*/advertisement.js
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
-@@||spusti.net/data/advertisement.js$domain=spusti.net
+@@||spusti.net/data/advertisement.js
+@@||spusti.net/advertisement.js
+@@||topserialy.sk/js/ads.js
+@@||topserialy.sk/js/advert.js
 @@||tpd.sk/ads/rotator/
 ulozisko.sk#@##reklama_big
 @@||yukata.cz/banners/banner_88_31.png$domain=anime-kool.webnode.sk
@@ -470,6 +490,7 @@ ulozisko.sk#@##reklama_big
 ###hp_ab
 ###inclickDock
 ###iPark-banner
+###komercnisdeleni
 ###nike-banner-hokej
 ###P_reklama_120x600
 ###pf-wrapper
@@ -484,6 +505,7 @@ ulozisko.sk#@##reklama_big
 ###slevomat_ad
 ###super_ad_note
 ###super_banner_default
+###topbanner
 ###zivefirmy
 ##.ad_font
 ##.advert-square
@@ -724,6 +746,7 @@ kurzy.cz##.box9
 kurzy.cz##.textovka
 kurzy.cz##DIV[style="border: 1px silver solid; float: left;"]
 lamer.cz##.square
+letemsvetemapplem.eu###headervelka
 letemsvetemapplem.eu###pravy_uzky
 libise.eu###aa1
 lidovky.cz###reality-idnes
@@ -820,9 +843,20 @@ sauto.cz###pvMid
 search.seznam.cz###sklik-right
 search.seznam.cz##.sklik-right
 search.seznam.cz##.skliktop
-serialycz.cz##CENTER
+serialycz.cz##A[href^="http://aclick.adhoc1.net/"]
 serialycz.cz##IFRAME[src^="http://vk.com/"]
-serialycz.cz##P[style="text-align: center;"]
+serialycz.cz###text-11
+serialycz.cz###text-20
+serialycz.cz###text-21
+serialycz.cz###text-29
+serialycz.cz###text-32
+serialycz.cz###text-36
+serialycz.cz###text-37
+serialycz.cz###text-39
+serialycz.cz###text-40
+serialycz.cz###text-41
+serialycz.cz###text-42
+serialycz.cz###text-43
 securityworld.cz##.banner
 serialkeys.svetu.cz###menu_rozdel_mene
 serialzone.cz###hpbglink-watch
@@ -991,7 +1025,7 @@ topky.sk##.nastip
 topky.sk##.takeoverKlik
 topky.sk###top-offers-slider
 topnovinky.sk###rekl_left_banner
-topserialy.sk##BODY > div:last-child
+topserialy.sk##.dreamair
 tv-program.sk##.stn.stns > a[target="_blank"]
 tv-program.sk##.stn.stnu > a[target="_blank"]
 tv-program.sk##.dragobj > div:nth-of-type(2)

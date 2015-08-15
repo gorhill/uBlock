@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! [Icelandic ABP List]
 ! Adblock Plus listi fyrir íslenskar vefsíður / Adblock Plus list for icelandic websites
-! Síðast uppfærður / Last updated 17 Apríl/April 2015
+! Síðast uppfærður / Last updated 3 Júlí/July 2015
 ! Listinn er í þróun, láttu vita ef þú finnur villur eða vefi sem vantar í listann / The list is under development, please let me know if you find any errors or webs missing from the list
 ! adblock@gardar.net
 ! http://adblock.gardar.net
@@ -66,7 +66,6 @@ bland.is##.box.classifedSmas
 bland.is##.box.isotopeItem.spaceAugl
 bland.is###footer-netgiro
 bland.is##.netgiroInsuranceSection
-apache.hvitahusid.is###Stage_btn_transparent
 pressan.is###ctl00_RandomBanner2_divBanner
 pressan.is###skyscrapper
 pressan.is###ctl00_cphMain_Wrapper1_ctl06_divBanner
@@ -96,7 +95,6 @@ mbl.is##.augl
 mbl.is/a/vedur/icelandair_vedur.gif
 ||kynning.olis.is/
 pressan.is##.randombanner-upperright
-apache.hvitahusid.is###augl
 dv.is###cboxOverlay
 hun.is###snppopup-welcome
 infront.is###like
@@ -107,7 +105,6 @@ pressan.is##.bp4
 pressan.is##.bp26
 pressan.is###13_3623
 pressan.is###spoton
-pressan.is##.fb_ltr
 bleikt.pressan.is##.fb_ltr
 ||openad.visir.is/
 clients.ennemm.is###nm_container
@@ -152,3 +149,18 @@ frettatiminn.is##.ad2
 s.greenqloud.com/other/
 oc-adserver.s3.amazonaws.com/
 static.boringnerd.com/
+static.bordar.is/
+apache.hvitahusid.is/
+vefbordar.vert.is/
+hringbraut.is##.strevda
+spyr.is##.ad_310.add_marg_20_b
+spyr.is##.head_ad_360x100
+spyr.is##.ad_310.add_marg_20_b
+spyr.is##.add_top_border.left_floater
+spyr.is##.left_floater.add_top_border
+spyr.is##.top_customer_banner
+spyr.is##IMG[src="/thumb/550x200/53d278ef882dd.jpg"]
+frettanetid.is##.widgetizedArea
+frettanetid.is##.widget
+frettanetid.is###wp_editor_widget-18
+sumarferdir.is##.col-item

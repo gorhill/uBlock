@@ -56,13 +56,13 @@ info##DIV[class="banda-sticky-mini"]
 	
 !Whitelist
 @@||homebank.ro^$document
+@@||olx.ro/i2/ajax/ad/getcontact/*
 @@||profitshare.emag.ro/get_ads.php?*
 @@||profitshare.ro/get_ads.php?*
 @@||rezitests.ro/advertisement.js
 @@AC_RunActiveContent.js
 @@media.bestauto.ro
-@@||olx.ro/i2/ajax/ad/getcontact/*
-promozone.ro,emag.ro#@#[href*="/promo"] 
+promozone.ro,emag.ro#@#[href*="/promo"]
 
 !porcarii
 ||24fun.ro/widget/?
@@ -166,3 +166,4 @@ wall-street.ro##DIV#qra_popup_wrapper *
 web3.protv.ro##BODY[style="margin: 0px;"]
 webtv.realitatea.net##DIV#mainChannelContent
 webtv.realitatea.net##DIV#ve_logo
+trafictube.ro#@#.widget-adv

@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: WS+RskmX1pr2OpgZCV5/HQ
+! Checksum: HbvFzVcKropzTB7CjJ/+Ow
 ! Title: Fanboy's Swedish
-! Updated: 22 Feb 2015
+! Updated: 20 Jun 2015
 ! This list expires after 4 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -78,6 +78,7 @@ existenz.se###slidebox
 ||adtooxcloud.com^$third-party
 ||atemda.com^$third-party
 ||banner.mrgreen.com^$third-party
+||bettersales.se^$subdocument,third-party
 ||careerbuilder.se^$third-party
 ||casinotoplists.com^$third-party
 ||de17a.com^$third-party

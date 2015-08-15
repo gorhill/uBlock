@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: XrJkgljV3/WaxFlvmAYN0A
+! Checksum: MLenkhQUfwUWh44mrXzXJA
 ! Title: EasyList Hebrew
-! Last modified: 25/05/15 23:59
+! Last modified: 12/08/15 18:18
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -14,8 +14,6 @@
 !
 !---------------------------Generic Blocking Rules----------------------------!
 !
-.co.il/adv/$~object-subrequest
-/pirsum/*$script,object
 ||campaign.*.co.il^$popup,third-party
 ||dcampaigns.*.co.il^$popup,third-party
 !
@@ -83,6 +81,7 @@
 ||onclickads.net^$popup,third-party
 ||onlineproxyfree.com^$popup,third-party
 ||osef.co.il^$popup,third-party
+||osef.co.il^$third-party
 ||pera.co.il^$popup,third-party
 ||pigment-adv.co.il^$popup,third-party
 ||pisrael.com/Campaign$popup,third-party
@@ -117,6 +116,8 @@
 ||fus.walla.co.il/report/
 ||fus.walla.co.il/vast/
 ||live.sekindo.com/uploads/users/$domain=walla.co.il
+||waab.walla.co.il^$object-subrequest
+||wrtm.walla.co.il^
 ||xwbe.wcdn.co.il/$image
 ||xwne.wcdn.co.il^$domain=walla.co.il
 !-ynet-!
@@ -124,10 +125,10 @@
 /CdaMarketTextlinks_
 ||akamai.net/7/1948/5064/v0001/prdupl02.ynet.co.il/MediaSvrFiles/$domain=ynet.co.il
 ||alljobs.co.il/Partners/Ynet/Engine.aspx
+||article.yedioth.co.il/assets/Banners
 ||go.ynet.co.il/short/content/2010/Career/banner/
+||go.ynet.co.il/short/content/2013/Career/SideJobs/
 ||go.ynet.co.il/short/Demos/*/Ads/
-||images1.ynet.co.il/PicServer3/2013/10/17/4920698/150_200.jpg
-||images1.ynet.co.il/PicServer4/2014/09/15/5587311/
 ||mediadownload.ynet.co.il/static/FXG_V14_FULL/images/vertical_header.png
 ||ynet.co.il/images/headline_video_header_samsung.png
 ||ynet.co.il/images/video/wobi/wobi_
@@ -195,11 +196,33 @@
 ||fortest.info^$domain=fxp.co.il
 ||fxp.co.il/skinfxp/*.php$script,image
 ||games-il.info^$domain=fxp.co.il
-||games-il.org.uk^$domain=fxp.co.il
+||new-shekel-50.xyz^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
-||salamtak.org.uk^$domain=fxp.co.il
+||org.uk$domain=fxp.co.il
 ||shaoli-the-king.xyz^$domain=fxp.co.il
 ||why-love-fifa.me.uk^$domain=fxp.co.il
+!
+!--------------------------SPAM SITES blocking rules--------------------------!
+!
+||dealsclubspecial.pw^
+||facebook.net^$domain=iastrology.net
+||uply.co.il^$domain=myvod.me
+||hagdolim.info^
+||iastrology.net^
+||jpg.co.il$domain=hagdolim.info|lools.info|madlik.info|metador.info|sirtoonim.info|stomi.info|trolim.info
+||lools.info^
+||madlik.info^
+||metador.info^
+||myvod.me^
+||sirtoonim.info^
+||siz.co.il$domain=hagdolim.info|lools.info|madlik.info|metador.info|sirtoonim.info|stomi.info|trolim.info
+||sratim.co.il$domain=myvod.me
+||stomi.info^
+||trolim.info^
+||view-movies.co.il^
+||vodmovies.co.il^
+||vodx.co.il^
+
 !
 !--------------------------1st party blocking rules---------------------------!
 !
@@ -250,9 +273,10 @@
 ||leadim4u.com/accounts/default1/banners/
 ||lev.co.il/download/HomeBackground/$image
 ||local.co.il/banners/
+||magazin.org.il/cut/baner
+||magazin.org.il/show_banner
 ||moreshet.co.il/banners/
 ||my.yad2.co.il/Banner/
-||myvod.me^
 ||nanafiles.co.il//Upload/92011/File/File_*swf
 ||news-israel.net/images/topAd
 ||onlife.co.il/dbcads/
@@ -273,12 +297,8 @@
 ||sport5.co.il/banners2/
 ||static.vgames.co.il/cdn/css/global.bg_comm.css?v=
 ||tgspot.co.il/wp-content/cache/minify/000000/yygpKbDS18_JzMtMzs_VS87Xy8wB8bKL9ZPz88pSi0riTS31sooB.js
-||uply.co.il^$domain=myvod.me
-||view-movies.co.il^
-||viewz.us^
-||vodmovies.co.il^
-||vodx.co.il^
 ||wcdn.co.il/banners/
+||yad2.co.il/js-new/blockPirsum.js
 !
 !----------------------------------Whitelists---------------------------------!
 !
@@ -286,6 +306,8 @@
 @@||ads.doctors.co.il/banners/$~third-party,image
 @@||dclk.themarker.com/js.ng/$script
 @@||forbes.co.il/download/banners/
+@@||haaretz.co.il/st/inter/Global/Banners/paywall9/madora_835/barin_pop.jpg
+@@||haaretz.co.il/st/inter/Global/Banners/paywall9/madora_835/darkBrain.jpg
 @@||hamidrasha.co.il/ads
 @@||i.total-media.net/yc/dc.$script,domain=winwin.co.il
 @@||info.a7.org/info/$script
@@ -303,7 +325,7 @@
 !
 @@||10tv.nana10.co.il/Video/advert.png
 @@||adline.co.il^$~third-party
-@@||adnxs.com^$object-subrequest,domain=mako.co.il
+@@||adnxs.com^$object-subrequest,domain=mako.co.il|reshet.tv
 @@||ads.one.co.il/images/ads/2014/01/21/1400/home.png
 @@||ads.one.co.il/images/Ads/2014/05/22/1500/51x20.gif
 @@||ads.one.co.il/images/ads/2014/06/02/1415/
@@ -318,26 +340,31 @@
 @@||amazonaws.com/static.madlan.co.il/
 @@||banners.e-dologic.co.il^$domain=bamba.co.il
 @@||banners.hosting-il.com^$domain=cinema-city.co.il
+@@||bhol.co.il/Flash/vaad
 @@||bhol.co.il/imagebank/400x250
 @@||bipbip.co.il/Images/Ads/$~third-party
-@@||blogspot.com$image,domain=goalim4you.net
+@@||blogspot.com$image,domain=goalim4you.com
 @@||bs.serving-sys.com/BurstingPipe/adServer.bs?cn=is&c=*VAST$object-subrequest
 @@||bs.serving-sys.com/crossdomain.xml$object-subrequest
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
+@@||cdnwiz.com/adserver/uploads/bhol2.mp4
+@@||clalit.co.il/AdImages
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
 @@||easy.co.il/adsense.js
-@@||goalim4you.net^$elemhide
-@@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
+@@||eco99fm.maariv.co.il/Servicesrotator
+@@||goalim4you.com^$elemhide
 @@||googleapis.com/flash$object-subrequest,domain=globes.co.il
-@@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
-@@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
 @@||gplanet.co.il/js/adx.js
 @@||ifat.com/VideoControl/makoinformation$object-subrequest,domain=mako.co.il,media
 @@||ilgde.adocean.pl/$object-subrequest,domain=mako.co.il
+@@||isramedia.net^$elemhide
+@@||isramedia.net/images/header/header2_01.jpg
+@@||images*.ynet.co.il/PicServer*/201*/*TIZER.$image
 @@||kamaze.co.il/Advertisement/Image/callme/$~third-party,image
 @@||kamaze.co.il/Advertisement/Logos/$~third-party,image
 @@||kikar.co.il/js/ads.js
+@@||leava.co.il^$elemhide
 @@||lips.co.il/ads/$image,~third-party
 @@||mako.checkm8.com/adam/em/$object-subrequest
 @@||mako.checkm8.com/adam/inline?*=HEAVY_PIC_$object-subrequest
@@ -347,6 +374,7 @@
 @@||mako.checkm8.com/adam/inline?cat=mako.*=OVERLAY$object-subrequest
 @@||mako.checkm8.com/adam/inline?cat=mako.*=SAGIR_$object-subrequest
 @@||mako.checkm8.com/crossdomain.xml$object-subrequest
+@@||matrix.ynet.co.il/JS/GA/ads_controller.js
 @@||mouse.co.il/images/ad_mouse_cafe.jpg
 @@||nrg.co.il/online/*_468.htm$~third-party,xmlhttprequest
 @@||one.co.il/ads/*.mp4$object-subrequest
@@ -355,7 +383,7 @@
 @@||one.co.il/images/ads/2014/06/02/1415/MNDL2.swf
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ad$domain=m.ynet.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=ynet.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -363,6 +391,7 @@
 @@||sfx-images.mozilla.org^$image
 @@||srugim.co.il/*670x100&front=true
 @@||streambb.one.co.il/ads/$media
+@@||taimeod.co.il^$document
 @@||upf.co.il/advertisment.js
 @@||xads.zedo.com^$popup,domain=one.co.il
 @@||yad2.co.il/ajax/click_stat.php?BannerID=$xmlhttprequest
@@ -384,6 +413,7 @@ kikar.co.il#@#.adunit
 kml.co.il#@#div[id^="div-gpt-ad-"]
 lavender.co.il#@##topAds
 one.co.il#@#a[href^="http://xads.zedo.com/"]
+pitria.com#@#.header-ad
 !
 !---------------------------------Mobile Ads----------------------------------!
 !
@@ -400,10 +430,14 @@ one.co.il#@#a[href^="http://xads.zedo.com/"]
 !
 !---------------------------------Mobile element hiding rules-----------------!
 !
+m.calcalist.co.il##.maavaron
 m.sport5.co.il##.ad
 !
 !---------------------------------Mobile Whitelist----------------------------!
 !
+@@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
+@@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
+@@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
 @@||g.doubleclick.net/gampad/$domain=m.ynet.co.il
 !
 !------------------------General element hiding rules-------------------------!
@@ -433,7 +467,7 @@ bhol-forums.co.il,bhol.co.il##.centered.padt10 > .clear
 globes.co.il,nrg.co.il##.sekindo
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##.side
 haaretz.co.il,themarker.com##.topBanners
-haaretz.co.il,themarker.com##.topSectionBanners
+themarker.com##.topSectionBanners
 atmag.co.il,timeout.co.il##.to_ad
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
@@ -533,6 +567,8 @@ dinovich.com##.overlay
 doctors.co.il###big_banner
 doctors.co.il##div[id^="dgBan"]
 dossinet.me###bg_banner_header_top
+efinder.co.il###stp-bg
+efinder.co.il###stp-main
 fbssl.walla.co.il##.container_footer
 flix.mako.co.il###topBannerTable
 flix.tapuz.co.il##.headerMiddle
@@ -542,16 +578,14 @@ foodsdictionary.co.il###main-header-ad
 forbes.co.il##EMBED[src^="/download/banners/"]
 forbes.co.il##TABLE[style="background-color:#e8e8e8"]
 frogi.co.il##.adbox
+frogi.co.il##.article_item_adbox
+frogi.co.il##.topbanner
 fxp.co.il###adfxp
 fxp.co.il###vc_widget
 fxp.co.il###web_3_tool
 fxp.co.il##.captain
 fxp.co.il##.condition
 fxp.co.il##.hungry
-fxp.co.il##A[href*="ofofof.info"]
-fxp.co.il##A[href*="salamtak.org.uk"]
-fxp.co.il##A[href^="http://fcdn.co.il"]
-fxp.co.il##A[href^="http://video.shaoli-the-king.xyz"]
 fxp.co.il##[src="http://tpc.googlesyndication.com/safeframe/1-0-0/html/container.html"] + *
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 286.5px;"]
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 9.5px;"]
@@ -581,6 +615,7 @@ globes.co.il##div[style="border:0px solid #cacaca; padding:0px 25px; direction:r
 google.co.il###mbEnd
 google.co.il###tads
 haaretz.co.il###comments_banner_wrapper
+haaretz.co.il##.bg-ad
 haaretz.co.il##.t-sec-head-ad
 haaretz.co.il##DIV[style="font-size:19px; font-weight:bold;margin-bottom:10px;"]
 haaretz.co.il##div[style="background: url(/htz/images/bg/Ad_bg.gif) repeat; padding:10px 0; text-align:center;"]
@@ -598,12 +633,15 @@ hwzone.co.il###cubicbigarticlesbannertable
 hwzone.co.il##.box2.alljobBox
 hwzone.co.il##.wideBanner
 i.start.co.il###boxes
+ice.co.il##.kubia_banner
 ice.co.il##.top_pirsomet
 ilimudim.co.il##.mp-hd-banner
 infomed.co.il##.ad_01
 infomed.co.il##.google_adDiv
 infomed.co.il##.squere_ad
 infomed.co.il##OL[anc="adclass"]
+infomed.co.il###overlayBanner
+inn.co.il###div160Down.div160Info
 inn.co.il###div160Info
 inn.co.il###div180Info
 inn.co.il###div300
@@ -611,6 +649,8 @@ inn.co.il###div300ILPict
 inn.co.il###divContentRightInf
 inn.co.il###MadLargeInf
 inn.co.il##.Merlin
+inn.co.il##.MessageToolbar > .InfoLink
+inn.co.il##P[style="margin-bottom: 0.1em; text-align: left;"]
 inn.co.il##[class^="divMAD"]
 inn.co.il##[id^="divBottomAd"]
 inn.co.il##[id^="divHr"]
@@ -630,6 +670,7 @@ junkyard.co.il##DIV[id^="banner"]
 kafe.co.il###adv
 kikar.co.il##.logo
 kikar.co.il##[id^="takeover"]
+kipa.co.il###preItem
 kipa.co.il##.PirsumList
 kipa.co.il##.bannerJambo
 kipa.co.il##.homeCol3.PirsumList.col
@@ -778,7 +819,7 @@ reshet.tv##div[id^="CM8ShowAd"]
 reshet.tv###Ctrl_nPromotionBanner
 reshet.tv###DivContent[rel="5498"]
 reshet.tv###prArea
-reshet.tv##.AsideBannerWrp.withAdvLabel
+reshet.tv##.AsideBannerWrp
 reshet.tv##.comercialarea
 reshet.tv##.top-banner
 rest.co.il###divLeftBanner
@@ -787,12 +828,14 @@ rest.co.il##.ad_box_1
 rest.co.il##.ad_box_3
 rest.co.il##.left_box_1
 rotter.net##BR + * > P
+rotter.net##TD[style="border:0px solid red; width:160px; table-layout:fixed;"]
 rotter.net##TD[style="width:120px;border:0px solid red;"]
 s-maof.com###backgroundPopup
 s-maof.com###popupContact
 s-maof.com##DIV[style="position: absolute; left: 40px; top: 200px; z-index: 0;"]
 s-maof.com##DIV[style="position: absolute; right: 40px; top: 200px; z-index: 0; width:154px;"]
 saloona.co.il###footer_banner
+saloona.co.il##.popup_order_overlay
 seret.co.il###divMaavaronBanner
 seret.co.il##.RightColWhiteBox312x262
 seret.co.il##.cbthfds
@@ -802,6 +845,7 @@ seretil.me###ads516516as
 shironet.mako.co.il###playerAdArea
 simania.co.il##[style="clear:both;width:936px;text-align:center;padding:10px;margin:auto;margin-top:10px;margin-bottom:10px;background-color: rgb(244, 243, 238);text-align:center;"]
 solitaire.co.il##.viv
+sponser.co.il###BannerHeader
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_3
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_4
 sport5.co.il##.article-holder > .alt
@@ -824,6 +868,7 @@ start.co.il##.banner_105x79
 start.co.il##.banner_container
 start.co.il##section[zone="117"]
 start.co.il##section[zone="119"]
+stips.co.il##.adsenseAd
 subscenter.cinemast.com###advert
 subscenter.cinemast.com###bgLeft
 subscenter.cinemast.com##CENTER
@@ -832,6 +877,8 @@ tahazit.co.il###ad-preload-gray-bg
 tapuz.co.il###AsyncMlinkBanner
 tapuz.co.il###BannerRightBotDiv
 tapuz.co.il###BannerRightDiv
+tapuz.co.il###divMaavaron
+tapuz.co.il###divMaavaronBG
 tapuz.co.il###divTopBanner1
 tapuz.co.il###divTopBanner2
 tapuz.co.il###divTopBanner3
@@ -903,6 +950,7 @@ wisebuy.co.il##.LboxGrey[style="height:337px;text-align:center;"]
 wisebuy.co.il##table[width="100%"][align="center"]
 xnet.ynet.co.il###XnetAdSenceThinkAdAD-300
 xnet.ynet.co.il###ads\.250x250\.top
+​xnet.ynet.co.il###ads\.blog\.250x250
 xnet.ynet.co.il###ads\.top\.1
 xnet.ynet.co.il##.CAATVcompAdvertiseTv
 xnet.ynet.co.il##.ContentLink.banner.High

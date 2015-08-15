@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Fri, 29 May 2015 07:55:34 GMT
-# entries:        2422
+# last updated:   Thu, 06 Aug 2015 00:22:10 GMT
+# entries:        2398
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -51,12 +51,14 @@
 127.0.0.1 aaddzz.com
 127.0.0.1 abacho.net
 127.0.0.1 abc-ads.com
+127.0.0.1 absoluteclickscom.com
 127.0.0.1 abz.com
 127.0.0.1 ac.rnm.ca
 127.0.0.1 accounts.pkr.com
 127.0.0.1 acsseo.com
 127.0.0.1 actionsplash.com
 127.0.0.1 actualdeals.com
+127.0.0.1 acuityads.com
 127.0.0.1 ad-center.com
 127.0.0.1 ad-flow.com
 127.0.0.1 ad-images.suntimes.com
@@ -71,7 +73,6 @@
 127.0.0.1 ad-up.com
 127.0.0.1 ad.100.tbn.ru
 127.0.0.1 ad.103092804.com
-127.0.0.1 ad.37.com
 127.0.0.1 ad.71i.de
 127.0.0.1 ad.980x.com
 127.0.0.1 ad.a8.net
@@ -86,7 +87,6 @@
 127.0.0.1 ad.amgdgt.com
 127.0.0.1 ad.anuntis.com
 127.0.0.1 ad.auditude.com
-127.0.0.1 ad.bigpoint.net
 127.0.0.1 ad.bizo.com
 127.0.0.1 ad.bnmla.com
 127.0.0.1 ad.bondage.com
@@ -131,7 +131,6 @@
 127.0.0.1 ad.mgd.de
 127.0.0.1 ad.musicmatch.com
 127.0.0.1 ad.nachtagenten.de
-127.0.0.1 ad.netdialogs.de
 127.0.0.1 ad.nozonedata.com
 127.0.0.1 ad.nttnavi.co.jp
 127.0.0.1 ad.nwt.cz
@@ -174,7 +173,6 @@
 127.0.0.1 ad1.kde.cz
 127.0.0.1 ad1.pamedia.com.au
 127.0.0.1 ad2.bb.ru
-127.0.0.1 ad2.doublepimp.com
 127.0.0.1 ad2.iinfo.cz
 127.0.0.1 ad2.ip.ro
 127.0.0.1 ad2.linxcz.cz
@@ -199,7 +197,6 @@
 127.0.0.1 adbrite.com
 127.0.0.1 adbroker.de
 127.0.0.1 adbunker.com
-127.0.0.1 adbureau.net
 127.0.0.1 adbutler.com
 127.0.0.1 adbutler.de
 127.0.0.1 adbuyer.com
@@ -232,7 +229,6 @@
 127.0.0.1 adf.ly
 127.0.0.1 adfarm.mediaplex.com
 127.0.0.1 adflight.com
-127.0.0.1 adfly.com
 127.0.0.1 adforce.com
 127.0.0.1 adform.com
 127.0.0.1 adgardener.com
@@ -266,6 +262,7 @@
 127.0.0.1 adjuggler.yourdictionary.com
 127.0.0.1 adjustnetwork.com
 127.0.0.1 adk2.com
+127.0.0.1 adk2ads.tictacti.com
 127.0.0.1 adland.ru
 127.0.0.1 adlantic.nl
 127.0.0.1 adlegend.com
@@ -290,7 +287,6 @@
 127.0.0.1 admeld.com
 127.0.0.1 admeta.com
 127.0.0.1 admex.com
-127.0.0.1 adminde.ivwbox.de
 127.0.0.1 adminder.com
 127.0.0.1 adminshop.com
 127.0.0.1 admob.com
@@ -304,6 +300,7 @@
 127.0.0.1 adnet.worldreviewer.com
 127.0.0.1 adnetinteractive.com
 127.0.0.1 adnetwork.net
+127.0.0.1 adnetworkperformance.com
 127.0.0.1 adnews.maddog2000.de
 127.0.0.1 adnxs.com
 127.0.0.1 adocean.pl
@@ -313,7 +310,6 @@
 127.0.0.1 adpepper.dk
 127.0.0.1 adpepper.nl
 127.0.0.1 adperium.com
-127.0.0.1 adpick.switchboard.com
 127.0.0.1 adpost.com
 127.0.0.1 adprofile.net
 127.0.0.1 adprojekt.pl
@@ -344,7 +340,6 @@
 127.0.0.1 ads.advance.net
 127.0.0.1 ads.adverline.com
 127.0.0.1 ads.affiliates.match.com
-127.0.0.1 ads.ak.facebook.com
 127.0.0.1 ads.ak.facebook.com.edgesuite.net
 127.0.0.1 ads.allvatar.com
 127.0.0.1 ads.alt.com
@@ -388,7 +383,6 @@
 127.0.0.1 ads.businessweek.com
 127.0.0.1 ads.canalblog.com
 127.0.0.1 ads.canoe.ca
-127.0.0.1 ads.carocean.co.uk
 127.0.0.1 ads.casinocity.com
 127.0.0.1 ads.cbc.ca
 127.0.0.1 ads.cc
@@ -399,20 +393,18 @@
 127.0.0.1 ads.channel4.com
 127.0.0.1 ads.cimedia.com
 127.0.0.1 ads.clearchannel.com
-127.0.0.1 ads.cnn.com
 127.0.0.1 ads.co.com
 127.0.0.1 ads.collegclub.com
 127.0.0.1 ads.com.com
-127.0.0.1 ads.comicbookresources.com
 127.0.0.1 ads.contactmusic.com
 127.0.0.1 ads.crakmedia.com
 127.0.0.1 ads.creative-serving.com
 127.0.0.1 ads.creativematch.com
 127.0.0.1 ads.cricbuzz.com
-127.0.0.1 ads.cyberfight.ru
 127.0.0.1 ads.cybersales.cz
 127.0.0.1 ads.dada.it
 127.0.0.1 ads.datinggold.com
+127.0.0.1 ads.datingyes.com
 127.0.0.1 ads.dazoot.ro
 127.0.0.1 ads.deltha.hu
 127.0.0.1 ads.dennisnet.co.uk
@@ -440,7 +432,6 @@
 127.0.0.1 ads.esmas.com
 127.0.0.1 ads.eu.msn.com
 127.0.0.1 ads.exactdrive.com
-127.0.0.1 ads.exhedra.com
 127.0.0.1 ads.expat-blog.biz
 127.0.0.1 ads.expedia.com
 127.0.0.1 ads.ezboard.com
@@ -618,21 +609,18 @@
 127.0.0.1 ads.shopstyle.com
 127.0.0.1 ads.sift.co.uk
 127.0.0.1 ads.silverdisc.co.uk
-127.0.0.1 ads.skins.be
 127.0.0.1 ads.slim.com
 127.0.0.1 ads.smartclick.com
 127.0.0.1 ads.smartshopping.co.uk
 127.0.0.1 ads.soft32.com
 127.0.0.1 ads.space.com
 127.0.0.1 ads.spoonfeduk.com
-127.0.0.1 ads.sprotiv.org
 127.0.0.1 ads.sptimes.com
 127.0.0.1 ads.stackoverflow.com
 127.0.0.1 ads.stationplay.com
 127.0.0.1 ads.struq.com
 127.0.0.1 ads.sun.com
 127.0.0.1 ads.supplyframe.com
-127.0.0.1 ads.switchboard.com
 127.0.0.1 ads.t-online.de
 127.0.0.1 ads.tahono.com
 127.0.0.1 ads.techtv.com
@@ -706,8 +694,6 @@
 127.0.0.1 ads2.brazzers.com
 127.0.0.1 ads2.clearchannel.com
 127.0.0.1 ads2.collegclub.com
-127.0.0.1 ads2.collegeclub.com
-127.0.0.1 ads2.exhedra.com
 127.0.0.1 ads2.gamecity.net
 127.0.0.1 ads2.jubii.dk
 127.0.0.1 ads2.net-communities.co.uk
@@ -771,9 +757,7 @@
 127.0.0.1 adserver.hardsextube.com
 127.0.0.1 adserver.hardwareanalysis.com
 127.0.0.1 adserver.html.it
-127.0.0.1 adserver.ig.com.br
 127.0.0.1 adserver.irishwebmasterforum.com
-127.0.0.1 adserver.itsfogo.com
 127.0.0.1 adserver.janes.com
 127.0.0.1 adserver.kyoceramita-europe.com
 127.0.0.1 adserver.libero.it
@@ -871,7 +855,6 @@
 127.0.0.1 adventory.com
 127.0.0.1 advert.bayarea.com
 127.0.0.1 advert.dyna.ultraweb.hu
-127.0.0.1 advertarium.com.ua
 127.0.0.1 adverticum.com
 127.0.0.1 adverticum.net
 127.0.0.1 adverticus.de
@@ -887,7 +870,6 @@
 127.0.0.1 advertpro.sitepoint.com
 127.0.0.1 advertpro.ya.com
 127.0.0.1 adverts.carltononline.com
-127.0.0.1 adverts.digitalspy.co.uk
 127.0.0.1 advertserve.com
 127.0.0.1 advertstream.com
 127.0.0.1 advertwizard.com
@@ -965,13 +947,13 @@
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 annonser.dagbladet.no
-127.0.0.1 apdsrv.com
 127.0.0.1 apex-ad.com
 127.0.0.1 api.intensifier.de
 127.0.0.1 apture.com
 127.0.0.1 arc1.msn.com
 127.0.0.1 arcadebanners.com
 127.0.0.1 ard.xxxblackbook.com
+127.0.0.1 are-ter.com
 127.0.0.1 as.webmd.com
 127.0.0.1 as1.advfn.com
 127.0.0.1 as2.advfn.com
@@ -1049,6 +1031,7 @@
 127.0.0.1 bannerconnect.com
 127.0.0.1 bannerconnect.net
 127.0.0.1 bannerexchange.cjb.net
+127.0.0.1 bannerflow.com
 127.0.0.1 bannergrabber.internet.gr
 127.0.0.1 bannerhost.com
 127.0.0.1 bannerimage.com
@@ -1130,7 +1113,6 @@
 127.0.0.1 blogtoplist.se
 127.0.0.1 blogtopsites.com
 127.0.0.1 blueadvertise.com
-127.0.0.1 bluehornet.com
 127.0.0.1 bluekai.com
 127.0.0.1 bluelithium.com
 127.0.0.1 bluewhaleweb.com
@@ -1248,7 +1230,6 @@
 127.0.0.1 clkrev.com
 127.0.0.1 cluster.adultworld.com
 127.0.0.1 clustrmaps.com
-127.0.0.1 cmpstar.com
 127.0.0.1 cnomy.com
 127.0.0.1 cnt.one.ru
 127.0.0.1 cnt.spbland.ru
@@ -1263,6 +1244,7 @@
 127.0.0.1 connextra.com
 127.0.0.1 contaxe.de
 127.0.0.1 content.ad
+127.0.0.1 contentabc.com
 127.0.0.1 contextweb.com
 127.0.0.1 conversionruler.com
 127.0.0.1 cookies.cmpnet.com
@@ -1341,6 +1323,7 @@
 127.0.0.1 discountclick.com
 127.0.0.1 displayadsmedia.com
 127.0.0.1 displaypagerank.com
+127.0.0.1 dist.belnk.com
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
@@ -1352,16 +1335,19 @@
 127.0.0.1 doubleclick.com
 127.0.0.1 doubleclick.de
 127.0.0.1 doubleclick.net
+127.0.0.1 doublepimp.com
 127.0.0.1 drumcash.com
 127.0.0.1 dynamic.fmpub.net
 127.0.0.1 e-adimages.scrippsnetworks.com
 127.0.0.1 e-bannerx.com
 127.0.0.1 e-debtconsolidation.com
 127.0.0.1 e-m.fr
+127.0.0.1 e-n-t-e-r-n-e-x.com
 127.0.0.1 e-planning.net
 127.0.0.1 e.kde.cz
 127.0.0.1 eadexchange.com
 127.0.0.1 easyhits4u.com
+127.0.0.1 ebocornac.com
 127.0.0.1 ebuzzing.com
 127.0.0.1 ecircle-ag.com
 127.0.0.1 ecoupons.com
@@ -1385,6 +1371,7 @@
 127.0.0.1 ero-advertising.com
 127.0.0.1 esellerate.net
 127.0.0.1 estat.com
+127.0.0.1 etahub.com
 127.0.0.1 etargetnet.com
 127.0.0.1 ethicalads.net
 127.0.0.1 etracker.de
@@ -1477,7 +1464,6 @@
 127.0.0.1 geovisite.com
 127.0.0.1 german-linkindex.de
 127.0.0.1 getclicky.com
-127.0.0.1 getfreecounter.com
 127.0.0.1 globalismedia.com
 127.0.0.1 globaltakeoff.net
 127.0.0.1 globaltrack.com
@@ -1573,7 +1559,6 @@
 127.0.0.1 img.prohardver.hu
 127.0.0.1 imgpromo.easyrencontre.com
 127.0.0.1 imonitor.nethost.cz
-127.0.0.1 impact.as
 127.0.0.1 imprese.cz
 127.0.0.1 impressionmedia.cz
 127.0.0.1 impressionz.co.uk
@@ -1653,7 +1638,6 @@
 127.0.0.1 link-booster.de
 127.0.0.1 link4ads.com
 127.0.0.1 linkadd.de
-127.0.0.1 linkbucks.net
 127.0.0.1 linkbuddies.com
 127.0.0.1 linkexchange.com
 127.0.0.1 linkexchange.ru
@@ -1684,7 +1668,6 @@
 127.0.0.1 mads.cnet.com
 127.0.0.1 mads.gamespot.com
 127.0.0.1 madvertise.de
-127.0.0.1 mailusnow123.com
 127.0.0.1 malware-scan.com
 127.0.0.1 marchex.com
 127.0.0.1 marketing.888.com
@@ -1706,7 +1689,6 @@
 127.0.0.1 media-servers.net
 127.0.0.1 media.ftv-publicite.fr
 127.0.0.1 media.funpic.de
-127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
 127.0.0.1 mediacharger.com
@@ -1877,7 +1859,6 @@
 127.0.0.1 partners.priceline.com
 127.0.0.1 passion-4.net
 127.0.0.1 pay-ads.com
-127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com
 127.0.0.1 paypopup.com
 127.0.0.1 payserve.com
@@ -1908,7 +1889,6 @@
 127.0.0.1 pointroll.com
 127.0.0.1 pokerstrategy.com
 127.0.0.1 pop-under.ru
-127.0.0.1 pops.freeze.com
 127.0.0.1 popub.com
 127.0.0.1 popunder.ru
 127.0.0.1 popup.msn.com
@@ -2015,7 +1995,6 @@
 127.0.0.1 reklamcsere.hu
 127.0.0.1 reklame.unwired-i.net
 127.0.0.1 reklamer.com.ua
-127.0.0.1 relevanz10.de
 127.0.0.1 relmaxtop.com
 127.0.0.1 remotead.cnet.com
 127.0.0.1 republika.onet.pl
@@ -2045,7 +2024,6 @@
 127.0.0.1 roxr.net
 127.0.0.1 rtbpop.com
 127.0.0.1 rtbpopd.com
-127.0.0.1 rts.doublepimp.com
 127.0.0.1 ru-traffic.com
 127.0.0.1 ru4.com
 127.0.0.1 rubiconproject.com
@@ -2064,7 +2042,7 @@
 127.0.0.1 secure.webconnect.net
 127.0.0.1 sedoparking.com
 127.0.0.1 sedotracker.com
-127.0.0.1 seeq.com
+127.0.0.1 seeq.com.invalid
 127.0.0.1 sensismediasmart.com.au
 127.0.0.1 seo4india.com
 127.0.0.1 serv0.com
@@ -2169,6 +2147,7 @@
 127.0.0.1 swordfishdc.com
 127.0.0.1 t.pusk.ru
 127.0.0.1 tacoda.net
+127.0.0.1 tagular.com
 127.0.0.1 tailsweep.co.uk
 127.0.0.1 tailsweep.com
 127.0.0.1 tailsweep.se
@@ -2184,7 +2163,6 @@
 127.0.0.1 tdsearchware.com
 127.0.0.1 techclicks.net
 127.0.0.1 teenrevenue.com
-127.0.0.1 teknosurf3.com
 127.0.0.1 teliad.de
 127.0.0.1 test.com
 127.0.0.1 text-link-ads.com
@@ -2194,7 +2172,6 @@
 127.0.0.1 textlinks.com
 127.0.0.1 tfag.de
 127.0.0.1 theadhost.com
-127.0.0.1 theanswerto.com
 127.0.0.1 thebugs.ws
 127.0.0.1 thecounter.com
 127.0.0.1 thefreesitez.com
@@ -2262,7 +2239,6 @@
 127.0.0.1 trafficholder.com
 127.0.0.1 trafficjunky.net
 127.0.0.1 trafficleader.com
-127.0.0.1 trafficmasterz.net
 127.0.0.1 trafficmaxx.de
 127.0.0.1 trafficsecrets.com
 127.0.0.1 trafficspaces.net

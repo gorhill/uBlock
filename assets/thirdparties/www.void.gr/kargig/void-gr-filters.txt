@@ -1,6 +1,6 @@
 [Adblock Plus 1.1]
 ! Title: Greek AdBlock Filter
-! Version: 2014010700
+! Version: 2015062900
 ! Expires: 2 days
 ! Homepage: https://www.void.gr/kargig/blog/greek-adblock-plus-filter/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
@@ -400,6 +400,24 @@ ad.gr.doubleclick.net
 ||stokokkino.gr/photos/gsk.jpg
 ||techgear.gr/wp-content/themes/tg3/images/dressme/techgear_energizer_skin*
 ||mignatiou.com/wp-content/uploads/2014/09/300x250_piraeus_stametrasou_final.jpg
+||www.triakilakodika.gr/images/teamworkpm650.png
+||contra.gr/multimedia/article3508528.ece/BINARY/original/stoiximan.png
+||contra.gr/multimedia/article3498428.ece/binary/original/contra-articlepng.png 
+||enikos.gr/dyn/ice.js
+||smart-ads.gr/adtextlinks
+||luben.tv/wp-content/uploads/2015/07/CORONA-SUNSETS_A-1.jpg
+||contra.gr/multimedia/article3498429.ece/BINARY/original/sport24HP-left.png
+||images.watchit.gr/?w=475&h=72&src=http://www.newsit.gr/flash/banners/2015/06/CareMarket_banner_newsit_29_6.jpg
+||newsit.gr/flash/banners/2015/06/CareMarket_banner300x250_29_6.gif
+||188.138.57.163/fly/front_gui/live_banners/newsit/imgs/newsit-deal-1.png
+||secnews.gr/wp-content/uploads/2015/05/cyberkid1.jpg
+||secnews.gr/wp-content/uploads/2014/11/isoqar.png
+||secnews.gr/wp-content/uploads/2014/11/DigitalBrains.png
+||secnews.gr/wp-content/uploads/2015/05/papei1.png
+||secnews.gr/wp-content/uploads/2015/05/host1plusbanner2.jpg
+||unboxholics.com/images/skins/COOLERMASTER_skin.jpg
+||unboxholics.com/images/banners/inSpot/INSPOT_BANNER.jpg
+||unboxholics.com/images/banners/eGalaxy/e-galaxyNew.jpg
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
@@ -747,6 +765,10 @@ in.gr###RightBanner6
 in.gr###RightBanner8
 gazzetta.gr###block-wblocks-wblocks_companies
 techgear.gr###fasa
+skai.gr##.skin.news[href="https://www.facebook.com/NAIstinEllada\a "]
+tlife.gr###sma-top-box > .boxHead_TopBar
+voria.gr###financial_widget > .financial_widget_top_line.financial_widget_line > .financial_widget_top_line_medium.financial_widget_line_medium > .peiraios_link[href="http://www.piraeusbankgroup.com/"]
+www.skroutz.gr###featurette
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/
@@ -758,7 +780,6 @@ techgear.gr###fasa
 @@sport-fm.gr/resrc/images/layout/campaigns/mb2010/bg-bck-block.jpg
 @@sport-fm.gr/resrc/images/layout/campaigns/mb2010/bg-fp-block__v3.jpg
 @@||megatv.com/*/XML/jw/adverts.asp?*
-@@||ads.patris.gr/_banners/onpaper.gif
 @@|http://adman.in.gr/gbanner/?*|1195/300x250
 @@||contra.gr/XML/sponsors/pokergr/ilika/
 @@||athinorama.gr/adv/lmnts/stegi/*.swf
@@ -768,6 +789,7 @@ techgear.gr###fasa
 @@||skaihd-f.akamaihd.net/z/advert/*
 @@||xe.gr/property/recent_ads?*
 @@||focuswebtv.gr/banners/ekpompes.swf?*
+@@||ads.patris.gr/_banners/1421748421.gif
 ! Exceptions to element hiding
 ~agelioforos.gr##.side-ad
 ~athensmagazine.gr##.ad_wrapper

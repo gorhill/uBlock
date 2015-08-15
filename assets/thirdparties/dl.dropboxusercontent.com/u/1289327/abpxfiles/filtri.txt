@@ -1,14 +1,16 @@
 [Adblock Plus 2.0]
-! Version: 201505110913
+! Version: 201508070857
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 11-05-2015
+! Last modified: 07-08-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
 ! Blog: http://gioxx.org/tag/x-files
 !
 ! [Gruppo di filtri per permettere elementi]/whitelist
+@@||betrad.com/geo/h1.js$domain=corriere.it|gazzetta.it
+@@||betrad.com/pub/c/*.js$domain=corriere.it|gazzetta.it
 @@||mozillaitalia.net^$document
 @@||mozillaitalia.it^$document
 @@||mozillaitalia.org^$document
@@ -25,6 +27,7 @@ http://ad*.adpdx.com/
 ||lp.ilivid.com^$popup,image,~image
 ||nuggad.net^$third-party,domain=~serviziopubblico.it
 http://adbanner.advertstream.com/banners/
+http://advhd.banzaiadv.it/skin/*.jpg
 |http:$subdocument,third-party,domain=2ad.in|adf.ly|adfoc.us|adv.li|allmyvideos.net|j.gs|linkbucksmedia.com|q.gs|shr77.com|tigerleech.com|u.bb|vidspot.net
 ||nexac.com^$third-party
 ||adnxs.com^$third-party
@@ -1724,7 +1727,7 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://katproxy.com/kata/adx.php
 ||firstmediahub.com^$popup
 ||fmdwbsfxf0.com^$popup
-about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it
+about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it|extratorrent.cc
 |http://*.tomshw.it/kelkoo
 |http://lucca.fantasymagazine.it/img/lucca/banner_lucca2014.jpg
 |http://*.cn24tv.it/public/pubblicita/
@@ -1763,7 +1766,18 @@ about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it
 |http://*.33universal.com/data/flash/*_ad_*
 |http://*.techtimes.com/iframe_video/ad.php
 ||ad6media.fr^$popup
+|https://static.adzerk.net/reddit/ads.html
+||ilmeteo.it^$popup
+|http://*.aumentarevisite.it/*/banner
+||techcloudtrk.com^$popup
+||thetimingsystem.net^$popup
 ! [Gruppo di filtri per nascondere elementi]/elemhide
+everyeye.it##.banner_destra
+ansa.it##.edSponsor
+ansa.it##.hidden-phone
+unvideoalgiorno.it##[class^="ed_Related_Sponsor_"]
+unvideoalgiorno.it##[href^="http://edintorni.net/related/service/sponsor/"]
+androidworld.it##.advstrip
 firedrive.com##DIV[id="fdpc_cont"]
 colorburned.com##DIV[class^="singleAd"]
 howtogeek.com##IFRAME[id^="google_ads_iframe"]
@@ -1838,7 +1852,9 @@ movshare.ag##.sidebarCloseAd
 deviantart.com##.da-custom-ad-box
 deviantart.com##.dp-ad-chrome
 pornhub.com###pb_block
+androidworld.it##.adv_esterno
 optimaitalia.com##.adsbygoogle
+foursquare.com##.adsbygoogle
 ilgiornale.it##[id^="google_ads_iframe"]
 ilgiornale.it##.block.block-ilg-adsense
 simply-hentai.com###divExoLayerWrapper
@@ -2107,7 +2123,6 @@ gazzetta.it##.rightcol_div_openx2
 gazzetta.it##.sponsored
 gioxx.org##DIV[class="boxliquida"]
 google.com##.g3rtn-ad-site
-google.it##.rhs_block
 hostingtalk.it###BannerTop
 hostingtalk.it###CornerAd
 hostingtalk.it##.Banner.Size300x250
@@ -2568,7 +2583,6 @@ windowsitpro.com###ad300_1
 windowsitpro.com###ad300_2
 h-online.com###bannerzone
 consumatore.tgcom24.it###box300x190
-google.com###rhs_block
 macitynet.it###google_ads_iframe_\/9726537\/TopBanner_0
 macitynet.it###div-gpt-ad-1326279875545-12
 macitynet.it###google_ads_iframe_\/9726537\/Skyscraper2_0
@@ -3550,6 +3564,56 @@ searchdisasterrecovery.techtarget.com##.ad.ad-hp
 searchdisasterrecovery.techtarget.com###inlineRegistration
 searchdisasterrecovery.techtarget.com##.ad-wrapper
 chimerarevo.com##.adv-top-container
+efrennolasco.com##.adsbygoogle
+efrennolasco.com##.remove_ads
+m.ilgiornale.it##.banner
+immobiliare.it##[id^="google_ads_iframe"]
+immobiliare.it##[id^="div-gpt-ad-"]
+idealista.it##[id^="banners_"]
+mp3tag.de###skyscraper
+mp3tag.de###adblock
+viamichelin.it###idHeaderGDH
+commentimemorabili.it##.adsbygoogle
+publiweb.com##IFRAME[src^="http://www.publiweb.it/adv/"]
+forums.macrumors.com##.ad
+telegramstickers.altervista.org##[class^=" banner_altervista"]
+subito.it###banner_leaderboard
+subito.it##[class^="sponsor_"]
+commandwindows.com##.ezoic-ad
+commandwindows.com##[id^="taboola-"]
+it.blastingnews.com##.row.dfp-leaderbord
+ilfattoquotidiano.it##.wp_bannerize
+tv.ilfattoquotidiano.it##IFRAME[src^="http://l.casa.it/cobrand/"]
+newsrimini.it##[id^="google_ads_iframe"]
+multiplayer.it##.sidebar_ads
+multiplayer.it##[id^="vsn-"][src^="http://video.netaddiction.it/"]
+mobileworld.it##.adsbygoogle
+ilfattoquotidiano.it###meetic_quad
+lacnews24.it##[onclick^="window.open('http://lacnews24.it/"]
+lacnews24.it##[class^="ban_"]
+lacnews24.it##[class^="banner_"]
+lacnews24.it##[id^="af"][src^="http://pubbliemme-adv.net/"]
+affaritaliani.it##[id^="ADV_"]
+egotastic.com##.m-advertisement
+losai.eu##.adsbygoogle
+gurustop.net##.lqm_ad
+extratorrent.cc##A[href^="http://affiliate.trust.zone/"]
+netforbeginners.about.com##.gpt.billboard
+getintopc.com##.adsbygoogle
+apkmirror.com##.adsbygoogle
+apkmirror.com##.gooWidget.google-ad-leaderboard
+apkmirror.com##[id^="rcjsload_"]
+motori.fanpage.it##[id^="div-banner-"]
+overpress.it##.wes_div
+overpress.it##.wes_img
+overpress.it##.adsbygoogle
+androidworld.it##[id^="infinite-adslot"]
+engadget.com##[id^="ad_"]
+engadget.com##[class^="ad header"]
+ilpost.it##.widget.adv
+amazon.it###DAr4
+alternativeto.net##[id^="div-gpt-ad-"]
+wired.com##[data-js="leaderboard"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3568,7 +3632,6 @@ macitynet.it###leader-wrapper
 macitynet.it##[id^="div-gpt-ad"]
 macitynet.it##[class^="banner-"]
 google.it##.ads-ad
-google.it###rhs_block
 google.it###\5f Ltg
 google.it###\5f Ktg
 macitynet.it##.adsbygoogle
