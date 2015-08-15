@@ -31,7 +31,7 @@ self.uBlockDashboard = self.uBlockDashboard || {};
 // Helper for client panes:
 //   Remove literal duplicate lines from a set based on another set.
 
-self.uBlock.mergeNewLines = function(text, newText) {
+self.uBlockDashboard.mergeNewLines = function(text, newText) {
     var lineBeg, textEnd, lineEnd;
     var line, hash, bucket;
 
@@ -103,14 +103,12 @@ self.uBlock.mergeNewLines = function(text, newText) {
 
 /******************************************************************************/
 
-(function() {
-    // Open links in the proper window
-    uDom('a').attr('target', '_blank');
-    uDom('a[href*="dashboard.html"]').attr('target', '_parent');
-    uDom('.whatisthis').on('click', function() {
-        uDom(this)
-            .parent()
-            .descendants('.whatisthis-expandable')
-            .toggleClass('whatisthis-expanded');
-    });
-})();
+// Open links in the proper window
+uDom('a').attr('target', '_blank');
+uDom('a[href*="dashboard.html"]').attr('target', '_parent');
+uDom('.whatisthis').on('click', function() {
+    uDom(this)
+        .parent()
+        .descendants('.whatisthis-expandable')
+        .toggleClass('whatisthis-expanded');
+});
