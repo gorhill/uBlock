@@ -103,61 +103,107 @@ window.addEventListener('unload', function() {
 vAPI.browserSettings = {
     originalValues: {},
 
-    rememberOriginalValue: function(branch, setting) {
-        var key = branch + '.' + setting;
+    rememberOriginalValue: function(path, setting) {
+        var key = path + '.' + setting;
         if ( this.originalValues.hasOwnProperty(key) ) {
             return;
         }
-        var hasUserValue = false;
+        var hasUserValue;
+        var branch = Services.prefs.getBranch(path + '.');
         try {
-            hasUserValue = Services.prefs.getBranch(branch + '.').prefHasUserValue(setting);
+            hasUserValue = branch.prefHasUserValue(setting);
         } catch (ex) {
         }
-        this.originalValues[key] = hasUserValue ? this.getBool(branch, setting) : undefined;
+        if ( hasUserValue !== undefined ) {
+            this.originalValues[key] = hasUserValue ? this.getValue(path, setting) : undefined;
+        }
     },
 
-    clear: function(branch, setting) {
-        var key = branch + '.' + setting;
+    clear: function(path, setting) {
+        var key = path + '.' + setting;
+
         // Value was not overriden -- nothing to restore
         if ( this.originalValues.hasOwnProperty(key) === false ) {
             return;
         }
+
         var value = this.originalValues[key];
         // https://github.com/gorhill/uBlock/issues/292#issuecomment-109621979
         // Forget the value immediately, it may change outside of
         // uBlock control.
         delete this.originalValues[key];
+
         // Original value was a default one
         if ( value === undefined ) {
             try {
-                Services.prefs.getBranch(branch + '.').clearUserPref(setting);
+                Services.prefs.getBranch(path + '.').clearUserPref(setting);
             } catch (ex) {
             }
             return;
         }
+
         // Current value is same as original
-        if ( this.getBool(branch, setting) === value ) {
+        if ( this.getValue(path, setting) === value ) {
             return;
         }
+
         // Reset to original value
         try {
-            Services.prefs.getBranch(branch + '.').setBoolPref(setting, value);
+            this.setValue(path, setting, value);
         } catch (ex) {
         }
     },
 
-    getBool: function(branch, setting) {
-        try {
-            return Services.prefs.getBranch(branch + '.').getBoolPref(setting);
-        } catch (ex) {
+    getValue: function(path, setting) {
+        var branch = Services.prefs.getBranch(path + '.');
+
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefBranch#getPrefType%28%29
+        var getMethod;
+        switch ( branch.getPrefType(setting) ) {
+        // PREF_INT
+        case 64:
+            getMethod = 'getIntPref';
+            break;
+        // PREF_BOOL
+        case 128:
+            getMethod = 'getBoolPref';
+            break;
+        default:
+            break;
         }
+
+        if ( getMethod !== undefined ) {
+            try {
+                return branch[getMethod](setting);
+            } catch (ex) {
+            }
+        }
+
         return undefined;
     },
 
-    setBool: function(branch, setting, value) {
-        try {
-            Services.prefs.getBranch(branch + '.').setBoolPref(setting, value);
-        } catch (ex) {
+    setValue: function(path, setting, value) {
+        var branch = Services.prefs.getBranch(path + '.');
+
+        var setMethod;
+        switch ( typeof value ) {
+        // PREF_INT
+        case 'number':
+            setMethod = 'setIntPref';
+            break;
+        // PREF_BOOL
+        case 'boolean':
+            setMethod = 'setBoolPref';
+            break;
+        default:
+            break;
+        }
+
+        if ( setMethod !== undefined ) {
+            try {
+                branch[setMethod](setting, value);
+            } catch (ex) {
+            }
         }
     },
 
@@ -170,13 +216,19 @@ vAPI.browserSettings = {
             switch ( setting ) {
             case 'prefetching':
                 this.rememberOriginalValue('network', 'prefetch-next');
+                // http://betanews.com/2015/08/15/firefox-stealthily-loads-webpages-when-you-hover-over-links-heres-how-to-stop-it/
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=814169
+                // Sigh.
+                this.rememberOriginalValue('network.http', 'speculative-parallel-limit');
                 value = !!details[setting];
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
                 if ( value === true ) {
                     this.clear('network', 'prefetch-next');
+                    this.clear('network.http', 'speculative-parallel-limit');
                 } else {
-                    this.setBool('network', 'prefetch-next', false);
+                    this.setValue('network', 'prefetch-next', false);
+                    this.setValue('network.http', 'speculative-parallel-limit', 0);
                 }
                 break;
 
@@ -190,8 +242,8 @@ vAPI.browserSettings = {
                     this.clear('browser', 'send_pings');
                     this.clear('beacon', 'enabled');
                 } else {
-                    this.setBool('browser', 'send_pings', false);
-                    this.setBool('beacon', 'enabled', false);
+                    this.setValue('browser', 'send_pings', false);
+                    this.setValue('beacon', 'enabled', false);
                 }
                 break;
 
@@ -201,7 +253,7 @@ vAPI.browserSettings = {
                 if ( value === true ) {
                     this.clear('media.peerconnection', 'enabled');
                 } else {
-                    this.setBool('media.peerconnection', 'enabled', false);
+                    this.setValue('media.peerconnection', 'enabled', false);
                 }
                 break;
 
@@ -2949,8 +3001,10 @@ vAPI.cloud = (function() {
         var bin = {
             'source': options.deviceName || getDefaultDeviceName(),
             'tstamp': Date.now(),
-            'data': data
+            'data': data,
+            'size': 0
         };
+        bin.size = JSON.stringify(bin).length;
         branch.setCharPref(datakey, JSON.stringify(bin));
         if ( typeof callback === 'function' ) {
             callback();
