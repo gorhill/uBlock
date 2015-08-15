@@ -226,7 +226,10 @@ const contentObserver = {
                 win.document.title.slice(0, 100)
             ].join(' | ');
 
+            // https://github.com/gorhill/uMatrix/issues/325
+            // "Pass sameZoneAs to sandbox constructor to make GCs cheaper"
             sandbox = Cu.Sandbox([win], {
+                sameZoneAs: win.top,
                 sandboxName: sandboxId + '[' + sandboxName + ']',
                 sandboxPrototype: win,
                 wantComponents: false,
