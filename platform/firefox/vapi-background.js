@@ -156,54 +156,42 @@ vAPI.browserSettings = {
 
     getValue: function(path, setting) {
         var branch = Services.prefs.getBranch(path + '.');
+        var getMethod;
 
         // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefBranch#getPrefType%28%29
-        var getMethod;
         switch ( branch.getPrefType(setting) ) {
-        // PREF_INT
-        case 64:
+        case  64: // PREF_INT
             getMethod = 'getIntPref';
             break;
-        // PREF_BOOL
-        case 128:
+        case 128: // PREF_BOOL
             getMethod = 'getBoolPref';
             break;
-        default:
-            break;
+        default:  // not supported
+            return;
         }
 
-        if ( getMethod !== undefined ) {
-            try {
-                return branch[getMethod](setting);
-            } catch (ex) {
-            }
+        try {
+            return branch[getMethod](setting);
+        } catch (ex) {
         }
-
-        return undefined;
     },
 
     setValue: function(path, setting, value) {
-        var branch = Services.prefs.getBranch(path + '.');
-
         var setMethod;
         switch ( typeof value ) {
-        // PREF_INT
-        case 'number':
+        case  'number':
             setMethod = 'setIntPref';
             break;
-        // PREF_BOOL
         case 'boolean':
             setMethod = 'setBoolPref';
             break;
-        default:
-            break;
+        default:  // not supported
+            return;
         }
 
-        if ( setMethod !== undefined ) {
-            try {
-                branch[setMethod](setting, value);
-            } catch (ex) {
-            }
+        try {
+            Services.prefs.getBranch(path + '.')[setMethod](setting, value);
+        } catch (ex) {
         }
     },
 
