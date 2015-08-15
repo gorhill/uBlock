@@ -239,7 +239,7 @@
         }
         document.addEventListener(vAPI.sessionId, function(e) {
             if(shouldBlockDetailedRequest(e.detail)) {
-                e.detail.url = false;
+                document.body.setAttribute("blocked", "true");
             }
         }, true);
         var tmpJS = document.createElement("script");
@@ -251,8 +251,9 @@ var block = function(u, t) {" +
 e.initCustomEvent('" + vAPI.sessionId + "', false, false, {url: u, type: t});"
 : "var e = new CustomEvent('" + vAPI.sessionId + "', {bubbles: false, detail: {url: u, type: t}});"
 ) +
-"document.dispatchEvent(e);\
-return e.detail.url === false;\
+"document.body.setAttribute('blocked', '');\
+document.dispatchEvent(e);\
+return !!document.body.getAttribute('blocked');\
 },\
 wo = open,\
 xo = XMLHttpRequest.prototype.open,\
