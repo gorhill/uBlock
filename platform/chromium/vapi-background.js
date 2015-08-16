@@ -67,10 +67,10 @@ vAPI.storage = chrome.storage.local;
 // https://developer.chrome.com/extensions/privacy#property-network
 
 // 2015-08-12: Wrapped Chrome API in try-catch statements. I had a fluke
-// event in which it appeared the Chrome 46 decided to restart uBlock (for
+// event in which it appeared Chrome 46 decided to restart uBlock (for
 // unknown reasons) and again for unknown reasons the browser acted as if
 // uBlock did not declare the `privacy` permission in its manifest, putting
-// uBlock in a bad, non-fonctional state -- because call to `chrome.privacy`
+// uBlock in a bad, non-functional state -- because call to `chrome.privacy`
 // API threw an exception.
 
 vAPI.browserSettings = {
@@ -1057,18 +1057,21 @@ vAPI.cloud = (function() {
     };
 
     var push = function(dataKey, data, callback) {
-        var item = JSON.stringify({
+        var bin = {
             'source': options.deviceName || options.defaultDeviceName,
             'tstamp': Date.now(),
-            'data': data
-        });
+            'data': data,
+            'size': 0
+        };
+        bin.size = JSON.stringify(bin).length;
+        var item = JSON.stringify(bin);
 
         // Chunkify taking into account  QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value
         //   "plus its key length."
-        var bin = {};
+        bin = {};
         var chunkCount = Math.ceil(item.length / maxChunkSize);
         for ( var i = 0; i < chunkCount; i++ ) {
             bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
