@@ -142,16 +142,8 @@ vAPI.browserSettings = {
             return;
         }
 
-        // Current value is same as original
-        if ( this.getValue(path, setting) === value ) {
-            return;
-        }
-
         // Reset to original value
-        try {
-            this.setValue(path, setting, value);
-        } catch (ex) {
-        }
+        this.setValue(path, setting, value);
     },
 
     getValue: function(path, setting) {
