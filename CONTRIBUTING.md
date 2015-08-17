@@ -10,6 +10,7 @@ Any issue opened without effort to provide the required details for me (or anybo
 > 1. observe this.
 > 1. click this.
 > 1. observe such and such issue
+> 1. screenshot of issue
 
 **Important:** I simply do not have the time to take care of filter-related issues, you will have to find help elsewhere for this. The mere need to have to respond to filter-related issues can quickly become a burden. Consider that writing code/doc occupies all my free time. Surely there are other people out there ready to help with filter-related issues, it does not have to be me.
 
