@@ -29,7 +29,8 @@ Any issue opened without effort to provide the required details for me (or anybo
     - Any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
-1. Verify that the issue is not related to a 3rd-party filter lists.
+1. **Verify that the issue is not related to a 3rd-party filter lists.**
+    - Issues with 3rd-party filter lists are the responsibility of their respective maintainers.
 1. Verify that the issue is not caused by another extension.
 
 ***
