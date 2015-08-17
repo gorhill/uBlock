@@ -1,6 +1,6 @@
 # Submitting issues
 
-Any issue opened without effort to provide the required details for me (or anybody else) to reproduce the problem will be closed as _invalid_. If you provide more details thereafter for me to reproduce the issue, I will reopen it if I can confirm there is indeed an issue with uBlock Origin. Example of detailed steps:
+**Any issue opened without effort to provide the required details for me (or anybody else) to reproduce the problem will be closed as _invalid_.** If you provide more details thereafter for me to reproduce the issue, I will reopen it if I can confirm there is indeed an issue with uBlock Origin. Example of detailed steps:
 
 > 1. browser version/ublock version
 > 1. these settings, these filter lists, these custom filters.
