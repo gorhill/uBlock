@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Sun, 28 Jun 2015 22:58:21 GMT
-# entries:        2402
+# last updated:   Thu, 06 Aug 2015 00:22:10 GMT
+# entries:        2398
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -51,6 +51,7 @@
 127.0.0.1 aaddzz.com
 127.0.0.1 abacho.net
 127.0.0.1 abc-ads.com
+127.0.0.1 absoluteclickscom.com
 127.0.0.1 abz.com
 127.0.0.1 ac.rnm.ca
 127.0.0.1 accounts.pkr.com
@@ -72,7 +73,6 @@
 127.0.0.1 ad-up.com
 127.0.0.1 ad.100.tbn.ru
 127.0.0.1 ad.103092804.com
-127.0.0.1 ad.37.com
 127.0.0.1 ad.71i.de
 127.0.0.1 ad.980x.com
 127.0.0.1 ad.a8.net
@@ -300,6 +300,7 @@
 127.0.0.1 adnet.worldreviewer.com
 127.0.0.1 adnetinteractive.com
 127.0.0.1 adnetwork.net
+127.0.0.1 adnetworkperformance.com
 127.0.0.1 adnews.maddog2000.de
 127.0.0.1 adnxs.com
 127.0.0.1 adocean.pl
@@ -339,7 +340,6 @@
 127.0.0.1 ads.advance.net
 127.0.0.1 ads.adverline.com
 127.0.0.1 ads.affiliates.match.com
-127.0.0.1 ads.ak.facebook.com
 127.0.0.1 ads.ak.facebook.com.edgesuite.net
 127.0.0.1 ads.allvatar.com
 127.0.0.1 ads.alt.com
@@ -383,7 +383,6 @@
 127.0.0.1 ads.businessweek.com
 127.0.0.1 ads.canalblog.com
 127.0.0.1 ads.canoe.ca
-127.0.0.1 ads.carocean.co.uk
 127.0.0.1 ads.casinocity.com
 127.0.0.1 ads.cbc.ca
 127.0.0.1 ads.cc
@@ -397,7 +396,6 @@
 127.0.0.1 ads.co.com
 127.0.0.1 ads.collegclub.com
 127.0.0.1 ads.com.com
-127.0.0.1 ads.comicbookresources.com
 127.0.0.1 ads.contactmusic.com
 127.0.0.1 ads.crakmedia.com
 127.0.0.1 ads.creative-serving.com
@@ -658,6 +656,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -758,7 +757,6 @@
 127.0.0.1 adserver.hardsextube.com
 127.0.0.1 adserver.hardwareanalysis.com
 127.0.0.1 adserver.html.it
-127.0.0.1 adserver.ig.com.br
 127.0.0.1 adserver.irishwebmasterforum.com
 127.0.0.1 adserver.janes.com
 127.0.0.1 adserver.kyoceramita-europe.com
@@ -857,7 +855,6 @@
 127.0.0.1 adventory.com
 127.0.0.1 advert.bayarea.com
 127.0.0.1 advert.dyna.ultraweb.hu
-127.0.0.1 advertarium.com.ua
 127.0.0.1 adverticum.com
 127.0.0.1 adverticum.net
 127.0.0.1 adverticus.de
@@ -1348,6 +1345,7 @@
 127.0.0.1 e-n-t-e-r-n-e-x.com
 127.0.0.1 e-planning.net
 127.0.0.1 e.kde.cz
+127.0.0.1 eadexchange.com
 127.0.0.1 easyhits4u.com
 127.0.0.1 ebocornac.com
 127.0.0.1 ebuzzing.com
@@ -1891,7 +1889,6 @@
 127.0.0.1 pointroll.com
 127.0.0.1 pokerstrategy.com
 127.0.0.1 pop-under.ru
-127.0.0.1 pops.freeze.com
 127.0.0.1 popub.com
 127.0.0.1 popunder.ru
 127.0.0.1 popup.msn.com
@@ -1989,6 +1986,7 @@
 127.0.0.1 reduxmediagroup.com
 127.0.0.1 reedbusiness.com
 127.0.0.1 reefaquarium.biz
+127.0.0.1 referralware.com
 127.0.0.1 regnow.com
 127.0.0.1 reinvigorate.net
 127.0.0.1 reklam.rfsl.se
@@ -1997,7 +1995,6 @@
 127.0.0.1 reklamcsere.hu
 127.0.0.1 reklame.unwired-i.net
 127.0.0.1 reklamer.com.ua
-127.0.0.1 relevanz10.de
 127.0.0.1 relmaxtop.com
 127.0.0.1 remotead.cnet.com
 127.0.0.1 republika.onet.pl
@@ -2158,6 +2155,7 @@
 127.0.0.1 tangerinenet.biz
 127.0.0.1 tapad.com
 127.0.0.1 targad.de
+127.0.0.1 targetingnow.com
 127.0.0.1 targetnet.com
 127.0.0.1 targetpoint.com
 127.0.0.1 tatsumi-sys.jp
@@ -2174,7 +2172,6 @@
 127.0.0.1 textlinks.com
 127.0.0.1 tfag.de
 127.0.0.1 theadhost.com
-127.0.0.1 theanswerto.com
 127.0.0.1 thebugs.ws
 127.0.0.1 thecounter.com
 127.0.0.1 thefreesitez.com
@@ -2242,7 +2239,6 @@
 127.0.0.1 trafficholder.com
 127.0.0.1 trafficjunky.net
 127.0.0.1 trafficleader.com
-127.0.0.1 trafficmasterz.net
 127.0.0.1 trafficmaxx.de
 127.0.0.1 trafficsecrets.com
 127.0.0.1 trafficspaces.net

@@ -117,12 +117,6 @@
         "homeURL": "http://hosts-file.net/.%5Cad_servers.txt",
         "supportURL": "http://hosts-file.net/"
         },
-    "http://abp.mozilla-hispano.org/nauscopio/filtros.txt": {
-        "off": true,
-        "title": "ESP: Filtros Nauscopicos",
-        "group": "regions",
-        "oldLocation": "abp.mozilla-hispano.org/nauscopio/filtros.txt"
-        },
     "http://adblock.ee/list.php": {
         "off": true,
         "title": "EST: Eesti saitidele kohandatud filter",
@@ -337,10 +331,5 @@
         "title": "GRC: Greek AdBlock Filter",
         "group": "regions",
         "homeURL": "https://www.void.gr/kargig/void-gr-filters.txt"
-        },
-    "www.zoso.ro/pages/rolist.txt": {
-        "off": true,
-        "title": "ROU: RO-LIST (modified)",
-        "group": "regions"
         }
 }
