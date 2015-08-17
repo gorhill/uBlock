@@ -239,7 +239,7 @@
         }
         document.addEventListener(vAPI.sessionId, function(e) {
             if(shouldBlockDetailedRequest(e.detail)) {
-                document.body.setAttribute("blocked", "true");
+                document.documentElement.setAttribute("data-ublock-blocked", "true");
             }
         }, true);
         var tmpJS = document.createElement("script");
@@ -251,9 +251,9 @@ var block = function(u, t) {" +
 e.initCustomEvent('" + vAPI.sessionId + "', false, false, {url: u, type: t});"
 : "var e = new CustomEvent('" + vAPI.sessionId + "', {bubbles: false, detail: {url: u, type: t}});"
 ) +
-"document.body.setAttribute('blocked', '');\
+"document.documentElement.setAttribute('data-ublock-blocked', '');\
 document.dispatchEvent(e);\
-return !!document.body.getAttribute('blocked');\
+return !!document.documentElement.getAttribute('data-ublock-blocked');\
 },\
 wo = open,\
 xo = XMLHttpRequest.prototype.open,\
