@@ -5,7 +5,7 @@ Any issue opened without effort to provide the required details for me (or anybo
 > 1. browser version/ublock version
 > 1. these settings, these filter lists, these custom filters.
 > 1. do this.
-> 1. do this.
+> 1. open this exact URL.
 > 1. do this.
 > 1. observe this.
 > 1. click this.
