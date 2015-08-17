@@ -496,8 +496,8 @@ vAPI.tabs.onPopup = function(details) {
         requestType: 'popup'
     };
 
+    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
     var result = '';
-    var loggerEnabled = µb.logger.isEnabled();
 
     // Check user switch first
     if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
@@ -506,22 +506,19 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/323
     // https://github.com/chrisaljoudi/uBlock/issues/1142
-    // Don't block if uBlock is turned off in popup's context
-    if (
-        result === '' &&
-        µb.getNetFilteringSwitch(targetURL) &&
-        µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined
-    ) {
-        result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
+    //   Don't block if uBlock is turned off in popup's context
+    // https://github.com/gorhill/uBlock/issues/581
+    //   Take into account dynamic filtering.
+    if ( result === '' && pageStore && µb.getNetFilteringSwitch(targetURL) ) {
+        result = pageStore.filterRequestNoCache(context);
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/91
-    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
 
-    if ( loggerEnabled ) {
+    if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             details.openerTabId,
             'net',
