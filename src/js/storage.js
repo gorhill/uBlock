@@ -959,14 +959,13 @@
                 continue;
             }
             newListKey = µb.oldListToNewListMap[oldListKey];
-            // Remove cached and compiled list
             if ( newListKey === '' ) {
                 continue;
             }
-            // Rename cached and compiled list (important: compiled list first)
-            µb.assets.rename(µb.getCompiledFilterListPath(oldListKey),
-                             µb.getCompiledFilterListPath(newListKey));
+            // Rename cached asset to preserve content -- so it does not
+            // need to be fetched from remote server.
             µb.assets.rename(oldListKey, newListKey);
+            µb.assets.purge(µb.getCompiledFilterListPath(oldListKey));
         }
         µb.patchFilterLists(stockLists);
 
