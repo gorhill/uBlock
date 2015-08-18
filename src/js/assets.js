@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -392,8 +392,14 @@ var getRepoMetadata = function(callback) {
                 continue;
             }
             entry = entries[path];
-            // If repo checksums could not be fetched, assume no change
-            if ( repoChecksums === '' ) {
+            // If repo checksums could not be fetched, assume no change.
+            // https://github.com/gorhill/uBlock/issues/602
+            //   Added: if repo checksum is that of the empty string,
+            //   assume no change
+            if (
+                repoChecksums === '' ||
+                entry.repoChecksum === 'd41d8cd98f00b204e9800998ecf8427e'
+            ) {
                 entry.repoChecksum = entry.localChecksum;
             }
             if ( entry.repoChecksum !== '' || entry.localChecksum === '' ) {
@@ -1038,6 +1044,33 @@ exports.put = function(path, content, callback) {
 
 exports.rmrf = function() {
     cachedAssetsManager.rmrf();
+};
+
+/******************************************************************************/
+
+exports.rename = function(from, to, callback) {
+    var done = function() {
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+
+    var fromLoaded = function(details) {
+        cachedAssetsManager.remove(from);
+        cachedAssetsManager.save(to, details.content, callback);
+        done();
+    };
+
+    var toLoaded = function(details) {
+        // `to` already exists: do nothing
+        if ( details.content !== '' ) {
+            return done();
+        }
+        cachedAssetsManager.load(from, fromLoaded);
+    };
+
+    // If `to` content already exists, do nothing.
+    cachedAssetsManager.load(to, toLoaded);
 };
 
 /******************************************************************************/

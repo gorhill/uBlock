@@ -393,7 +393,6 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
         }
         // 3rd-party, any type
         if ( this.evaluateCellZ(srcHostname, '*', '3p') !== 0 ) { return this; }
-
     } else if ( type === 'script' ) {
         // 1st party, specific type
         if ( this.evaluateCellZ(srcHostname, '*', '1p-script') !== 0 ) { return this; }

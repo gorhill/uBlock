@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 /* global vAPI */
 /* exported µBlock */
 
+'use strict';
+
 /******************************************************************************/
 
 var µBlock = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -94,7 +94,7 @@ return {
     // read-only
     systemSettings: {
         compiledMagic: 'msgmqxreevdy',
-        selfieMagic: 'spqmeuaftfra'
+        selfieMagic: 'mnigwksyvgkv'
     },
 
     restoreBackupSettings: {
@@ -139,7 +139,45 @@ return {
     },
 
     // current lists
-    remoteBlacklists: {
+    remoteBlacklists: {},
+    oldListToNewListMap: {
+        "assets/thirdparties/adblock.gardar.net/is.abp.txt": "http://adblock.gardar.net/is.abp.txt",
+        "assets/thirdparties/adblock.schack.dk/block.txt": "https://adblock.schack.dk/block.txt",
+        "assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/advblock.txt": "https://easylist-downloads.adblockplus.org/advblock.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/bitblock.txt": "https://easylist-downloads.adblockplus.org/bitblock.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/easylist_noelemhide.txt": "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/easylistchina.txt": "https://easylist-downloads.adblockplus.org/easylistchina.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/easylistdutch.txt": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/easylistgermany.txt": "https://easylist-downloads.adblockplus.org/easylistgermany.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/easylistitaly.txt": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/fanboy-annoyance.txt": "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/fanboy-social.txt": "https://easylist-downloads.adblockplus.org/fanboy-social.txt",
+        "assets/thirdparties/easylist-downloads.adblockplus.org/liste_fr.txt": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
+        "assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
+        "assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt": "http://home.fredfiber.no/langsholt/adblock.txt",
+        "assets/thirdparties/hosts-file.net/ad-servers": "http://hosts-file.net/.%5Cad_servers.txt",
+        "assets/thirdparties/http://www.certyficate.it/adblock/adblock.txt": "https://www.certyficate.it/adblock/adblock.txt",
+        "assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt",
+        "assets/thirdparties/margevicius.lt/easylistlithuania.txt": "http://margevicius.lt/easylistlithuania.txt",
+        "assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt",
+        "assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": "https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt",
+        "assets/thirdparties/raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
+        "assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt",
+        "assets/thirdparties/raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt",
+        "assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
+        "assets/thirdparties/someonewhocares.org/hosts/hosts": "http://someonewhocares.org/hosts/hosts",
+        "assets/thirdparties/spam404bl.com/spam404scamlist.txt": "https://spam404bl.com/spam404scamlist.txt",
+        "assets/thirdparties/stanev.org/abp/adblock_bg.txt": "http://stanev.org/abp/adblock_bg.txt",
+        "assets/thirdparties/winhelp2002.mvps.org/hosts.txt": "http://winhelp2002.mvps.org/hosts.txt",
+        "assets/thirdparties/www.fanboy.co.nz/enhancedstats.txt": "https://www.fanboy.co.nz/enhancedstats.txt",
+        "assets/thirdparties/www.fanboy.co.nz/fanboy-antifacebook.txt": "https://www.fanboy.co.nz/fanboy-antifacebook.txt",
+        "assets/thirdparties/www.fanboy.co.nz/fanboy-korean.txt": "https://www.fanboy.co.nz/fanboy-korean.txt",
+        "assets/thirdparties/www.fanboy.co.nz/fanboy-swedish.txt": "https://www.fanboy.co.nz/fanboy-swedish.txt",
+        "assets/thirdparties/www.fanboy.co.nz/fanboy-ultimate.txt": "https://www.fanboy.co.nz/r/fanboy-ultimate.txt",
+        "assets/thirdparties/www.fanboy.co.nz/fanboy-vietnam.txt": "https://www.fanboy.co.nz/fanboy-vietnam.txt",
+        "assets/thirdparties/www.void.gr/kargig/void-gr-filters.txt": "https://www.void.gr/kargig/void-gr-filters.txt",
+        "assets/thirdparties/www.zoso.ro/pages/rolist.txt": ""
     },
 
     selfieAfter: 23 * oneMinute,
