@@ -351,7 +351,7 @@ vAPI.storage = (function() {
 
                 var row;
 
-                while ( row = rows.getNextRow() ) {
+                while ( (row = rows.getNextRow()) ) {
                     // we assume that there will be two columns, since we're
                     // using it only for preferences
                     result[row.getResultByIndex(0)] = row.getResultByIndex(1);
@@ -2936,6 +2936,13 @@ vAPI.cloud = (function() {
     var extensionBranchPath = 'extensions.' + location.host;
     var cloudBranchPath = extensionBranchPath + '.cloudStorage';
 
+    // https://github.com/gorhill/uBlock/issues/80#issuecomment-132081658
+    //   We must use get/setComplexValue in order to properly handle strings
+    //   with unicode characters.
+    var iss = Ci.nsISupportsString;
+    var argstr = Components.classes['@mozilla.org/supports-string;1']
+                           .createInstance(iss);
+
     var options = {
         defaultDeviceName: '',
         deviceName: ''
@@ -2945,7 +2952,8 @@ vAPI.cloud = (function() {
     try {
         options.deviceName = Services.prefs
                                      .getBranch(extensionBranchPath + '.')
-                                     .getCharPref('deviceName');
+                                     .getComplexValue('deviceName', iss)
+                                     .data;
     } catch(ex) {
     }
 
@@ -2954,7 +2962,8 @@ vAPI.cloud = (function() {
         try {
             name = Services.prefs
                            .getBranch('services.sync.client.')
-                           .getCharPref('name');
+                           .getComplexValue('name', iss)
+                           .data;
         } catch(ex) {
         }
 
@@ -2966,11 +2975,12 @@ vAPI.cloud = (function() {
         var syncBranch = Services.prefs.getBranch('services.sync.prefs.sync.');
 
         // Mark config entries as syncable
+        argstr.data = '';
         var dataKey;
         for ( var i = 0; i < dataKeys.length; i++ ) {
             dataKey = dataKeys[i];
             if ( extensionBranch.prefHasUserValue('cloudStorage.' + dataKey) === false ) {
-                extensionBranch.setCharPref('cloudStorage.' + dataKey, '');
+                extensionBranch.setComplexValue('cloudStorage.' + dataKey, iss, argstr);
             }
             syncBranch.setBoolPref(cloudBranchPath + '.' + dataKey, true);
         }
@@ -2985,7 +2995,8 @@ vAPI.cloud = (function() {
             'size': 0
         };
         bin.size = JSON.stringify(bin).length;
-        branch.setCharPref(datakey, JSON.stringify(bin));
+        argstr.data = JSON.stringify(bin);
+        branch.setComplexValue(datakey, iss, argstr);
         if ( typeof callback === 'function' ) {
             callback();
         }
@@ -2995,7 +3006,7 @@ vAPI.cloud = (function() {
         var result = null;
         var branch = Services.prefs.getBranch(cloudBranchPath + '.');
         try {
-            var json = branch.getCharPref(datakey);
+            var json = branch.getComplexValue(datakey, iss).data;
             if ( typeof json === 'string' ) {
                 result = JSON.parse(json);
             }
@@ -3020,7 +3031,8 @@ vAPI.cloud = (function() {
         var branch = Services.prefs.getBranch(extensionBranchPath + '.');
 
         if ( typeof details.deviceName === 'string' ) {
-            branch.setCharPref('deviceName', details.deviceName);
+            argstr.data = details.deviceName;
+            branch.setComplexValue('deviceName', iss, argstr);
             options.deviceName = details.deviceName;
         }
 
