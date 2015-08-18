@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global addMessageListener, removeMessageListener, docShell */
+
 /******************************************************************************/
 
 var locationChangeListener; // Keep alive while frameScript is alive

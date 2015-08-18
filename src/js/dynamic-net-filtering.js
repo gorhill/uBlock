@@ -206,11 +206,11 @@ Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
 
     // Specific types
     ruleKey = '* *';
-    if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+    if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
         return false;
     }
     ruleKey = srcHostname + ' *';
-    if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+    if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
         return false;
     }
 
@@ -220,11 +220,11 @@ Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
             continue;
         }
         ruleKey = '* ' + desHostname;
-        if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+        if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
             return false;
         }
         ruleKey = srcHostname + ' ' + desHostname ;
-        if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+        if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
             return false;
         }
     }

@@ -40,10 +40,15 @@ var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'tr
 // dictate the height of the popup. The right pane dictates the height
 // of the popup, and the left pane will have a scrollbar if ever its
 // height is more than what is available.
-document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
-    'height',
-    document.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
-);
+(function() {
+    var rpane = document.querySelector('#panes > div:nth-of-type(1)');
+    if ( typeof rpane.offsetHeight === 'number' ) {
+        document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
+            'height',
+            rpane.offsetHeight + 'px'
+        );
+    }
+})();
 
 // The padlock/eraser must be manually positioned:
 // - Its vertical position depends on the height of the popup title bar

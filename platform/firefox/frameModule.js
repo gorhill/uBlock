@@ -159,7 +159,8 @@ const contentObserver = {
         if ( type === this.MAIN_FRAME ) {
             context = context.contentWindow || context;
             if (
-                context.opener &&
+                typeof context.opener === 'object' &&
+                context.opener !== null &&
                 context.opener !== context &&
                 this.ignoredPopups.has(context) === false
             ) {
@@ -334,9 +335,8 @@ const contentObserver = {
             return;
         }
 
-        let win = doc.defaultView;
-
-        if ( !win ) {
+        let win = doc.defaultView || null;
+        if ( win === null ) {
             return;
         }
 

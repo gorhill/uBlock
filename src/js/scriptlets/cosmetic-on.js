@@ -78,7 +78,7 @@ try {
 } catch (e) {
 }
 
-var elem, shadow, selector = '#' + sessionId;
+var elem, shadow;
 i = elems.length;
 while ( i-- ) {
     elem = elems[i];

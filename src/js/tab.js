@@ -597,7 +597,7 @@ vAPI.tabs.registerListeners();
     if ( !pageStore ) {
         this.updateTitle(tabId);
         this.pageStoresToken = Date.now();
-        return this.pageStores[tabId] = this.PageStore.factory(tabId);
+        return (this.pageStores[tabId] = this.PageStore.factory(tabId));
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/516

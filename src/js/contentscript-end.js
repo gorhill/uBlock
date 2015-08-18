@@ -81,7 +81,7 @@ vAPI.shutdown.add(function() {
 
 (function() {
     // Were there specific cosmetic filters?
-    if ( vAPI.specificHideStyle instanceof HTMLStyleElement === false ) {
+    if ( typeof vAPI.specificHideStyle !== 'object' ) {
         return;
     }
     // Is our style tag still in the DOM? (the guess is whatever parent there
@@ -171,7 +171,7 @@ var uBlockCollapser = (function() {
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
-            if ( value = target.getAttribute(entry.attr) ) {
+            if ( (value = target.getAttribute(entry.attr)) ) {
                 selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
             }
         }
@@ -534,7 +534,7 @@ var uBlockCollapser = (function() {
         var attrs = ['title', 'alt'];
         var attr, attrValue, nodeList, iNode, node;
         var selector;
-        while ( attr = attrs.pop() ) {
+        while ( (attr = attrs.pop()) ) {
             nodeList = selectNodes('[' + attr + ']');
             iNode = nodeList.length;
             while ( iNode-- ) {
@@ -738,7 +738,7 @@ var uBlockCollapser = (function() {
 
     var treeMutationObservedHandler = function() {
         var nodeList, iNode, node;
-        while ( nodeList = addedNodeLists.pop() ) {
+        while ( (nodeList = addedNodeLists.pop()) ) {
             iNode = nodeList.length;
             while ( iNode-- ) {
                 node = nodeList[iNode];

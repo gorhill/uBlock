@@ -618,7 +618,7 @@ var cosmeticFilterFromNode = function(elem) {
     default:
         break;
     }
-    while ( attr = attributes.pop() ) {
+    while ( (attr = attributes.pop()) ) {
         if ( attr.v.length === 0 ) {
             continue;
         }

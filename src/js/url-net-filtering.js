@@ -252,7 +252,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     for (;;) {
         this.context = context;
         keyShard = context + ' ' + urlKey;
-        if ( urls = this.rules[keyShard + ' ' + type] ) {
+        if ( (urls = this.rules[keyShard + ' ' + type]) ) {
             i = indexOfMatch(urls, target);
             if ( i !== -1 ) {
                 entry = urls[i];
@@ -262,7 +262,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 return this;
             }
         }
-        if ( urls = this.rules[keyShard + ' *'] ) {
+        if ( (urls = this.rules[keyShard + ' *']) ) {
             i = indexOfMatch(urls, target);
             if ( i !== -1 ) {
                 entry = urls[i];

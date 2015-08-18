@@ -298,7 +298,7 @@ var pruneToSize = function(toSize) {
         delete h2cMap[hash];
         toRemove.push(storageKeyFromHash(hash));
         exports.bytesInUse -= ctEntry.dataURL.length;
-        while ( urlKey = prEntry.urlKeys.pop() ) {
+        while ( (urlKey = prEntry.urlKeys.pop()) ) {
             delete k2hMap[urlKey];
         }
         if ( exports.bytesInUse < toSize ) {

@@ -225,7 +225,7 @@
         var location, availableEntry, storedEntry;
         var off;
 
-        while ( location = locations.pop() ) {
+        while ( (location = locations.pop()) ) {
             storedEntry = lists[location];
             off = storedEntry.off === true;
             // New location?
@@ -242,7 +242,9 @@
                 continue;
             }
             availableEntry.off = off;
-            µb.assets.setHomeURL(location, availableEntry.homeURL);
+            if ( typeof availableEntry.homeURL === 'string' ) {
+                µb.assets.setHomeURL(location, availableEntry.homeURL);
+            }
             if ( storedEntry.entryCount !== undefined ) {
                 availableEntry.entryCount = storedEntry.entryCount;
             }

@@ -54,7 +54,7 @@ vAPI.shutdown = (function() {
     var exec = function() {
         //console.debug('Shutting down...');
         var job;
-        while ( job = jobs.pop() ) {
+        while ( (job = jobs.pop()) ) {
             job();
         }
     };
@@ -199,7 +199,7 @@ var messagingConnector = function(details) {
     var channel;
 
     // Sent to all channels
-    if ( details.broadcast === true && !details.channelName ) {
+    if ( details.broadcast && !details.channelName ) {
         for ( channel in channels ) {
             if ( channels[channel] instanceof MessagingChannel === false ) {
                 continue;

@@ -419,7 +419,7 @@ var cosmeticFilterFromElement = function(elem, out) {
     default:
         break;
     }
-    while ( attr = attributes.pop() ) {
+    while ( (attr = attributes.pop()) ) {
         if ( attr.v.length === 0 ) {
             continue;
         }
@@ -890,8 +890,8 @@ var startPicker = function(details) {
     pickerRoot.contentWindow.focus();
 
     // Restore net filter union data if it originate from the same URL.
-    var eprom = details.eprom || {};
-    if ( eprom.lastNetFilterSession === lastNetFilterSession ) {
+    var eprom = details.eprom || null;
+    if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
         lastNetFilterHostname = eprom.lastNetFilterHostname || '';
         lastNetFilterUnion = eprom.lastNetFilterUnion || '';
     }

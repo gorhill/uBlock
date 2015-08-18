@@ -2707,14 +2707,22 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
     var ctxMap = vAPI.contextMenu.contextMap;
 
     for ( var context of ctx ) {
-        if ( context === 'page' && !gContextMenu.onLink && !gContextMenu.onImage
-            && !gContextMenu.onEditableArea && !gContextMenu.inFrame
-            && !gContextMenu.onVideo && !gContextMenu.onAudio ) {
+        if (
+            context === 'page' &&
+            !gContextMenu.onLink &&
+            !gContextMenu.onImage &&
+            !gContextMenu.onEditableArea &&
+            !gContextMenu.inFrame &&
+            !gContextMenu.onVideo &&
+            !gContextMenu.onAudio
+        ) {
             menuitem.hidden = false;
             return;
         }
-
-        if ( gContextMenu[ctxMap[context]] ) {
+        if (
+            ctxMap.hasOwnProperty(context) &&
+            gContextMenu[ctxMap[context]]
+        ) {
             menuitem.hidden = false;
             return;
         }

@@ -448,14 +448,14 @@ var getRepoMetadata = function(callback) {
     };
 
     var onLocalChecksumsLoaded = function(details) {
-        if ( localChecksums = validateChecksums(details) ) {
+        if ( (localChecksums = validateChecksums(details)) ) {
             parseChecksums(localChecksums, 'local');
         }
         checksumsReceived();
     };
 
     var onRepoChecksumsLoaded = function(details) {
-        if ( repoChecksums = validateChecksums(details) ) {
+        if ( (repoChecksums = validateChecksums(details)) ) {
             parseChecksums(repoChecksums, 'repo');
         }
         checksumsReceived();

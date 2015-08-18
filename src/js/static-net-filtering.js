@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false, esnext: true, boss: true */
+/* jshint bitwise: false, esnext: true */
 /* global punycode, µBlock */
 
 /******************************************************************************/
@@ -1198,7 +1198,7 @@ var trimChar = function(s, c) {
         pos += 1;
     }
     s = s.slice(pos);
-    if ( pos = s.length ) {
+    if ( (pos = s.length) ) {
         while ( s.charAt(pos-1) === c ) {
             pos -= 1;
         }
@@ -1497,7 +1497,7 @@ var badTokens = {
 var findFirstGoodToken = function(s) {
     reGoodToken.lastIndex = 0;
     var matches;
-    while ( matches = reGoodToken.exec(s) ) {
+    while ( (matches = reGoodToken.exec(s)) ) {
         if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
             continue;
         }
@@ -1508,7 +1508,7 @@ var findFirstGoodToken = function(s) {
     }
     // No good token found, try again without minding "bad" tokens
     reGoodToken.lastIndex = 0;
-    while ( matches = reGoodToken.exec(s) ) {
+    while ( (matches = reGoodToken.exec(s)) ) {
         if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
             continue;
         }
@@ -2154,7 +2154,7 @@ FilterContainer.prototype.tokenize = function(url) {
     var matches, tokenEntry;
     re.lastIndex = 0;
     var i = 0;
-    while ( matches = re.exec(url) ) {
+    while ( (matches = re.exec(url)) ) {
         tokenEntry = tokens[i];
         if ( tokenEntry === undefined ) {
             tokenEntry = tokens[i] = new TokenEntry();
@@ -2251,14 +2251,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
     key = BlockAnyParty | Important | type;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
@@ -2267,14 +2267,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against block filters
     key = BlockAnyParty | type;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAction | type | party;
-        if ( bucket = categories[toHex(key)] ) {
+        if ( (bucket = categories[toHex(key)]) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
@@ -2288,14 +2288,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against allow filters
     key = AllowAnyParty | type;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAction | type | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
@@ -2363,28 +2363,28 @@ FilterContainer.prototype.matchString = function(context) {
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
     key = BlockAnyTypeAnyParty | Important;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAnyType | Important | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAnyParty | Important | type;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
@@ -2393,28 +2393,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against block filters
     key = BlockAnyTypeAnyParty;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAnyType | party;
-        if ( bucket = categories[toHex(key)] ) {
+        if ( (bucket = categories[toHex(key)]) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
         }
         if ( this.fRegister === null ) {
             key = BlockAnyParty | type;
-            if ( bucket = categories[toHex(key)] ) {
+            if ( (bucket = categories[toHex(key)]) ) {
                 if ( this.matchTokens(bucket, url) ) {
                     this.keyRegister = key;
                 }
             }
             if ( this.fRegister === null ) {
                 key = BlockAction | type | party;
-                if ( bucket = categories[toHex(key)] ) {
+                if ( (bucket = categories[toHex(key)]) ) {
                     if ( this.matchTokens(bucket, url) ) {
                         this.keyRegister = key;
                     }
@@ -2430,28 +2430,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against allow filters
     key = AllowAnyTypeAnyParty;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAnyType | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAnyParty | type;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAction | type | party;
-    if ( bucket = categories[toHex(key)] ) {
+    if ( (bucket = categories[toHex(key)]) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;

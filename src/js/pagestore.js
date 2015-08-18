@@ -212,7 +212,7 @@ NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.lookup = function(context) {
-    return this.urls[context.requestType + ' ' + context.requestURL];
+    return this.urls[context.requestType + ' ' + context.requestURL] || undefined;
 };
 
 /******************************************************************************/
@@ -445,10 +445,7 @@ PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
 
 PageStore.prototype.getNetFilteringSwitch = function() {
     var tabContext = µb.tabContextManager.lookup(this.tabId);
-    if (
-        this.netFilteringReadTime > µb.netWhitelistModifyTime &&
-        this.netFilteringReadTime > tabContext.modifyTime
-    ) {
+    if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
         return this.netFiltering;
     }
 
