@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"आपकी फिल्टर",
+    "message":"मेरे फिल्टर",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"इंस्टॉल से अब तक",
     "description":"English: since install"
   },
   "popupOr":{
@@ -316,19 +316,19 @@
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"परिवर्तन लागू करें",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"स्थायी नियम",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"अस्थायी नियम",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"पलटदे",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{

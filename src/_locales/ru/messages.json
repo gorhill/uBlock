@@ -608,7 +608,7 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"Название этого устройства:",
+    "message":"Имя этого устройства:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
