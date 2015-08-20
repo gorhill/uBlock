@@ -215,3 +215,6 @@ ovh.strim.io#@##tweets
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=23859
 @@||imasdk.googleapis.com/js/core$subdocument,domain=globalnews.ca
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=24764
+@@/b/ss/*&aqe=$image,domain=aeroplan.com
