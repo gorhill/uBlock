@@ -59,6 +59,9 @@ google.*###sqh
 # For when javascript is disabled
 google.*###center_col > #tads
 
+# https://github.com/gorhill/uBlock/issues/621
+search.yahoo.com###main > div > style + ol
+
 # http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-25#post-2461804
 # Specific cosmetic filters for Youtube home page
 www.youtube.com##.masthead-ad-control

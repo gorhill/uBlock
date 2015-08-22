@@ -46,7 +46,6 @@ var µb = µBlock;
 
 var BlockAction = 0 << 0;
 var AllowAction = 1 << 0;
-var ToggleAction = BlockAction ^ AllowAction;
 
 var Important = 1 << 1;
 
@@ -214,6 +213,14 @@ var toHex = function(n) {
     return n.toString(16);
 };
 
+var hostnameHit = function(hostname) {
+    return pageHostnameRegister.slice(0 - hostname.length) === hostname;
+};
+
+var hostnameMiss = function(hostname) {
+    return pageHostnameRegister.slice(1 - hostname.length) !== hostname.slice(1);
+};
+
 /*******************************************************************************
 
 Filters family tree:
@@ -277,10 +284,11 @@ var FilterPlainHostname = function(s, tokenBeg, hostname) {
     this.s = s;
     this.tokenBeg = tokenBeg;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainHostname.prototype.match = function(url, tokenBeg) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
@@ -334,10 +342,11 @@ FilterPlainPrefix0.fromSelfie = function(s) {
 var FilterPlainPrefix0Hostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            url.substr(tokenBeg, this.s.length) === this.s;
 };
 
@@ -391,10 +400,11 @@ FilterPlainPrefix1.fromSelfie = function(s) {
 var FilterPlainPrefix1Hostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
@@ -448,10 +458,11 @@ FilterPlainLeftAnchored.fromSelfie = function(s) {
 var FilterPlainLeftAnchoredHostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            url.slice(0, this.s.length) === this.s;
 };
 
@@ -505,10 +516,11 @@ FilterPlainRightAnchored.fromSelfie = function(s) {
 var FilterPlainRightAnchoredHostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainRightAnchoredHostname.prototype.match = function(url) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            url.slice(-this.s.length) === this.s;
 };
 
@@ -575,10 +587,11 @@ FilterPlainHnAnchored.fromSelfie = function(s) {
 var FilterPlainHnAnchoredHostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterPlainHnAnchoredHostname.prototype.match = function(url, tokenBeg) {
-    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+    if ( this.hostnameTest(this.hostname) === false ) {
         return false;
     }
     if ( url.substr(tokenBeg, this.s.length) !== this.s ) {
@@ -650,12 +663,13 @@ FilterGeneric.fromSelfie = function(s) {
 var FilterGenericHostname = function(s, anchor, hostname) {
     FilterGeneric.call(this, s, anchor);
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 FilterGenericHostname.prototype = Object.create(FilterGeneric.prototype);
 FilterGenericHostname.prototype.constructor = FilterGenericHostname;
 
 FilterGenericHostname.prototype.match = function(url) {
-    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+    if ( this.hostnameTest(this.hostname) === false ) {
         return false;
     }
     return FilterGeneric.prototype.match.call(this, url);
@@ -728,12 +742,13 @@ FilterGenericHnAnchored.fromSelfie = function(s) {
 var FilterGenericHnAnchoredHostname = function(s, hostname) {
     FilterGenericHnAnchored.call(this, s);
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 FilterGenericHnAnchoredHostname.prototype = Object.create(FilterGenericHnAnchored.prototype);
 FilterGenericHnAnchoredHostname.prototype.constructor = FilterGenericHnAnchoredHostname;
 
 FilterGenericHnAnchoredHostname.prototype.match = function(url) {
-    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+    if ( this.hostnameTest(this.hostname) === false ) {
         return false;
     }
     return FilterGenericHnAnchored.prototype.match.call(this, url);
@@ -791,11 +806,12 @@ FilterRegex.fromSelfie = function(s) {
 var FilterRegexHostname = function(s, hostname) {
     this.re = new RegExp(s);
     this.hostname = hostname;
+    this.hostnameTest = hostname.charAt(0) !== '~' ? hostnameHit : hostnameMiss;
 };
 
 FilterRegexHostname.prototype.match = function(url) {
     // test hostname first, it's cheaper than evaluating a regex
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
+    return this.hostnameTest(this.hostname) &&
            this.re.test(url);
 };
 
@@ -1217,7 +1233,6 @@ var FilterParser = function() {
     this.reIsolateHostname = /^([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.hostnames = [];
-    this.notHostnames = [];
     this.reset();
 };
 
@@ -1251,7 +1266,6 @@ FilterParser.prototype.reset = function() {
     this.hostnameAnchored = false;
     this.hostnamePure = false;
     this.hostnames.length = 0;
-    this.notHostnames.length = 0;
     this.isRegex = false;
     this.thirdParty = false;
     this.token = '';
@@ -1301,14 +1315,8 @@ FilterParser.prototype.parseOptParty = function(firstParty, not) {
 
 FilterParser.prototype.parseOptHostnames = function(raw) {
     var hostnames = raw.split('|');
-    var hostname;
     for ( var i = 0; i < hostnames.length; i++ ) {
-        hostname = hostnames[i];
-        if ( hostname.charAt(0) === '~' ) {
-            this.notHostnames.push(hostname.slice(1));
-        } else {
-            this.hostnames.push(hostname);
-        }
+        this.hostnames.push(hostnames[i]);
     }
 };
 
@@ -1793,7 +1801,7 @@ FilterContainer.prototype.compile = function(raw, out) {
 
 FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     // Can't fit the filter in a pure hostname dictionary.
-    if ( parsed.hostnames.length !== 0 || parsed.notHostnames.length !== 0 ) {
+    if ( parsed.hostnames.length !== 0 ) {
         return;
     }
 
@@ -1846,10 +1854,9 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
 
     var filterClass;
     var i = parsed.hostnames.length;
-    var j = parsed.notHostnames.length;
 
-    // Applies to all domains without exceptions
-    if ( i === 0 && j === 0 ) {
+    // Applies everywhere
+    if ( i === 0 ) {
         filterClass = getFilterClass(parsed);
         if ( filterClass === null ) {
             return false;
@@ -1859,55 +1866,14 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
     }
 
     // Applies to specific domains
-    if ( i !== 0 ) {
-        while ( i-- ) {
-            filterClass = getHostnameBasedFilterClass(parsed);
-            if ( filterClass === null ) {
-                return false;
-            }
-            this.compileToAtomicFilter(filterClass, parsed, party, out, parsed.hostnames[i]);
-        }
-    }
-    // No exceptions
-    if ( j === 0 ) {
-        return true;
-    }
-
-    // Case:
-    // - applies everywhere except to specific domains
-    // Example:
-    // - ||adm.fwmrm.net/p/msnbc_live/$object-subrequest,third-party,domain=~msnbc.msn.com|~www.nbcnews.com
-    if ( i === 0 ) {
-        filterClass = getFilterClass(parsed);
-        if ( filterClass === null ) {
-            return false;
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/251
-        // Apply third-party option if it is present
-        this.compileToAtomicFilter(filterClass, parsed, party, out);
-    }
-
-    // Cases:
-    // - applies everywhere except to specific domains
-    // - applies to specific domains except other specific domains
-    // Example:
-    // - /^https?\:\/\/(?!(...)\/)/$script,third-party,xmlhttprequest,domain=photobucket.com|~secure.photobucket.com
-
-    // Reverse purpose of filter
-    parsed.action ^= ToggleAction;
-    while ( j-- ) {
+    while ( i-- ) {
         filterClass = getHostnameBasedFilterClass(parsed);
         if ( filterClass === null ) {
             return false;
         }
-        // https://github.com/chrisaljoudi/uBlock/issues/191#issuecomment-53654024
-        // If it is a block filter, we need to reverse the order of
-        // evaluation.
-        if ( parsed.action === BlockAction ) {
-            parsed.important = Important;
-        }
-        this.compileToAtomicFilter(filterClass, parsed, party, out, parsed.notHostnames[j]);
+        this.compileToAtomicFilter(filterClass, parsed, party, out, parsed.hostnames[i]);
     }
+
     return true;
 };
 
