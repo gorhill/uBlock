@@ -213,7 +213,7 @@
         "off": true,
         "title": "FIN: Wiltteri",
         "group": "regions",
-        "homeURL": "http://raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
+        "homeURL": "https://raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
         },
     "someonewhocares.org/hosts/hosts": {
         "off": true,
@@ -225,7 +225,7 @@
         "off": true,
         "title": "Spam404",
         "group": "malware",
-        "homeURL": "http://spam404bl.com/spam404scamlist.txt"
+        "homeURL": "https://spam404bl.com/spam404scamlist.txt"
         },
     "stanev.org/abp/adblock_bg.txt": {
         "off": true,
