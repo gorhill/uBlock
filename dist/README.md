@@ -22,15 +22,10 @@ Remember that you have to update manually also. For some users, updating manuall
 
 #### Firefox
 
-Although uBlock Origin is a restartless addon, I found that **installing** a newer version over an older one often will glitch the installation. These steps always worked fine:
-
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
-- Uninstall current uBlock Origin if already installed
-- Quit Firefox completely
-- Launch Firefox
 - Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
 
-uBlock<sub>0</sub> settings are kept intact even after you uninstall the addon.
+Your uBlock Origin settings are kept intact even after you uninstall the addon.
 
 On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
 
