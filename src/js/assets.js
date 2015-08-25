@@ -432,7 +432,26 @@ var getRepoMetadata = function(callback) {
         if ( /^(?:[0-9a-f]{32}\s+\S+(?:\s+|$))+/.test(details.content) === false ) {
             return '';
         }
-        return details.content;
+        // https://github.com/gorhill/uBlock/issues/602
+        // Need to convert old asset entries to new asset entries.
+        // TODO: remove this code once v1.1.0.0 is everywhere.
+        var out = [];
+        var listMap = µBlock.oldListToNewListMap;
+        var lines = details.content.split(/\s*\n\s*/);
+        var line, matches;
+        for ( var i = 0; i < lines.length; i++ ) {
+            line = lines[i];
+            matches = line.match(/^([0-9a-f]+) (.+)$/);
+            if ( matches === null ) {
+                continue;
+            }
+            if ( listMap.hasOwnProperty(matches[2]) ) {
+                out.push(matches[1] + ' ' + listMap[matches[2]]);
+            } else {
+                out.push(line);
+            }
+        }
+        return out.join('\n');
     };
 
     var parseChecksums = function(text, which) {
@@ -1082,13 +1101,17 @@ exports.metadata = function(callback) {
     // We need to check cache obsolescence when both cache and repo meta data
     // has been gathered.
     var checkCacheObsolescence = function() {
-        var entry;
+        var entry, homeURL;
         for ( var path in out ) {
             if ( out.hasOwnProperty(path) === false ) {
                 continue;
             }
             entry = out[path];
-            entry.cacheObsolete = stringIsNotEmpty(homeURLs[path]) &&
+            // https://github.com/gorhill/uBlock/issues/528
+            // Not having a homeURL property does not mean the filter list
+            // is not external.
+            homeURL = reIsExternalPath.test(path) ? path : homeURLs[path];
+            entry.cacheObsolete = stringIsNotEmpty(homeURL) &&
                                   cacheIsObsolete(entry.lastModified);
         }
         callback(out);
