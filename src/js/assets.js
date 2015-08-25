@@ -441,12 +441,9 @@ var getRepoMetadata = function(callback) {
         var line, matches;
         for ( var i = 0; i < lines.length; i++ ) {
             line = lines[i];
-            matches = line.match(/^([0-9a-f]+) (.+)$/);
-            if ( matches === null ) {
-                continue;
-            }
-            if ( listMap.hasOwnProperty(matches[2]) ) {
-                continue;
+            matches = line.match(/^[0-9a-f]+ (.+)$/);
+            if ( matches === null || listMap.hasOwnProperty(matches[1]) ) {
+               continue;
             }
             out.push(line);
         }
