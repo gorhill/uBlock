@@ -433,7 +433,7 @@ var getRepoMetadata = function(callback) {
             return '';
         }
         // https://github.com/gorhill/uBlock/issues/602
-        // Need to convert old asset entries to new asset entries.
+        // External filter lists are not meant to appear in checksums.txt.
         // TODO: remove this code once v1.1.0.0 is everywhere.
         var out = [];
         var listMap = µBlock.oldListToNewListMap;
@@ -446,10 +446,9 @@ var getRepoMetadata = function(callback) {
                 continue;
             }
             if ( listMap.hasOwnProperty(matches[2]) ) {
-                out.push(matches[1] + ' ' + listMap[matches[2]]);
-            } else {
-                out.push(line);
+                continue;
             }
+            out.push(line);
         }
         return out.join('\n');
     };
