@@ -109,3 +109,7 @@ mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-it
 #   `important` must be used as there is one EasyList exception preventing
 #   complete block.
 ||username1.link^$important
+
+# https://github.com/gorhill/uBlock/issues/641
+||c.speedtest.net/javascript/speedtest-main.js$important,inline-script,script,image,domain=c.speedtest.net
+speedtest.net###swiffycontainer canvas
