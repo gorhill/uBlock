@@ -7,7 +7,8 @@
     "adblock.schack.dk/block.txt": {
         "off": true,
         "title": "DNK: Schacks Adblock Plus liste",
-        "group": "regions"
+        "group": "regions",
+        "homeURL": "https://adblock.schack.dk/block.txt"
         },
     "dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": {
         "off": true,
