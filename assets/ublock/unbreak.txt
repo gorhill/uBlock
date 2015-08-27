@@ -212,9 +212,11 @@ ovh.strim.io#@##tweets
 # http://www.reddit.com/r/AsianBeauty/comments/3ak15v/til_if_youre_using_ublock_origin_some_of_the/
 @@||img.echosting.cafe24.com/design$image,domain=jolse.com
 
-
 # https://forums.lanik.us/viewtopic.php?f=64&t=23859
 @@||imasdk.googleapis.com/js/core$subdocument,domain=globalnews.ca
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=24764
 @@/b/ss/*&aqe=$image,domain=aeroplan.com
+
+https://github.com/gorhill/uBlock/pull/646
+@@||www.etracker.de/lnkcnt.php?et=*&url=https://service.simplytel.de$domain=www.etracker.de
