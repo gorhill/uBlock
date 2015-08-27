@@ -8,25 +8,25 @@ DES=dist/build/uBlock0.firefox
 rm -rf $DES
 mkdir -p $DES
 
-cp -R assets $DES/
-./tools/fix-3p-assets.sh $DES
-rm $DES/assets/*.sh
-cp -R src/css $DES/
-cp -R src/img $DES/
-cp -R src/js $DES/
-cp -R src/lib $DES/
-cp -R src/_locales $DES/
-cp src/*.html $DES/
-mv $DES/img/icon_128.png $DES/icon.png
-cp platform/firefox/css/* $DES/css/
-cp platform/firefox/vapi-*.js $DES/js/
-cp platform/firefox/bootstrap.js $DES/
-cp platform/firefox/frame*.js $DES/
-cp -R platform/firefox/img $DES/
-cp platform/firefox/chrome.manifest $DES/
-cp platform/firefox/install.rdf $DES/
-cp platform/firefox/*.xul $DES/
-cp LICENSE.txt $DES/
+cp -R assets                            $DES/
+./tools/fix-3p-assets.sh                $DES
+rm    $DES/assets/*.sh
+cp -R src/css                           $DES/
+cp -R src/img                           $DES/
+cp -R src/js                            $DES/
+cp -R src/lib                           $DES/
+cp -R src/_locales                      $DES/
+cp    src/*.html                        $DES/
+mv    $DES/img/icon_128.png             $DES/icon.png
+cp    platform/firefox/css/*            $DES/css/
+cp    platform/firefox/vapi-*.js        $DES/js/
+cp    platform/firefox/bootstrap.js     $DES/
+cp    platform/firefox/frame*.js        $DES/
+cp -R platform/firefox/img              $DES/
+cp    platform/firefox/chrome.manifest  $DES/
+cp    platform/firefox/install.rdf      $DES/
+cp    platform/firefox/*.xul            $DES/
+cp    LICENSE.txt                       $DES/
 
 echo "*** uBlock0.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
