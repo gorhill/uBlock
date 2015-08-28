@@ -113,3 +113,6 @@ mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-it
 # https://github.com/gorhill/uBlock/issues/641
 ||c.speedtest.net/javascript/speedtest-main.js$important,inline-script,script,image,domain=c.speedtest.net
 speedtest.net###swiffycontainer canvas
+
+# https://github.com/gorhill/uBlock/issues/651
+ink361.com##.getridofAdsBlock[href^="javascript:"]
