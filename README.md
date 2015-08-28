@@ -3,7 +3,7 @@
 
 ***
 
-**Important:** uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker".
+**Important:** uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites (through _EasyList_, _EasyPrivacy_, _Peter Lowe’s Ad server_ and various lists of malware sites).
 
 ***
 
