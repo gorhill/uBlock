@@ -3,7 +3,7 @@
 
 ***
 
-New benchmark: [Blocking mode](https://github.com/gorhill/uBlock/wiki/Blocking-mode)
+**Important:** uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker".
 
 ***
 
