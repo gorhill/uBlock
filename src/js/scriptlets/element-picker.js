@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global self, vAPI, CSS */
+/* global self, vAPI, CSS, HTMLDocument, XMLDocument */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -117,6 +117,20 @@
 (function() {
 
 'use strict';
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/464
+if ( document instanceof HTMLDocument === false ) {
+    // https://github.com/chrisaljoudi/uBlock/issues/1528
+    // A XMLDocument can be a valid HTML document.
+    if (
+        document instanceof XMLDocument === false ||
+        document.createElement('div') instanceof HTMLDivElement === false
+    ) {
+        return;
+    }
+}
 
 /******************************************************************************/
 
