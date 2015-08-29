@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Наконец-то, эффективный блокировщик для браузеров, не нагружающий ЦП и оперативную память.",
+    "message":"Наконец-то, быстрый и эффективный блокировщик для браузеров.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Сторонние фильтры",
+    "message":"cторонние фильтры",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ для этой страницы.",
+    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ только на этой странице.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"со времени установки",
+    "message":"с момента установки",
     "description":"English: since install"
   },
   "popupOr":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Нажмите, чтобы открыть панель",
+    "message":"Нажмите, чтобы открыть панель управления",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,23 +72,23 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Перейти к списку запросов",
+    "message":"Перейти к журналу запросов",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Включить блокировку всех всплывающих окон на этом сайте",
+    "message":"Вкл\/Выкл блокировку всех всплывающих окон на этом сайте",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Переключить строгую блокировку для этого сайта",
+    "message":"Вкл\/Выкл строгую блокировку для этого сайта",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Переключить косметические фильтры на этом сайте",
+    "message":"Вкл\/Выкл косметические фильтры на этом сайте",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Включить блокировку сторонних шрифтов на этом сайте",
+    "message":"Вкл\/Выкл блокировку сторонних шрифтов на этом сайте",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -100,11 +100,11 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"от третьих лиц",
+    "message":"сторонние ресурсы",
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"сторонние таблицы стилей\/изображения",
+    "message":"сторонние css\/изображения",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -112,19 +112,19 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Собственные скрипты",
+    "message":"собственные скрипты",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Сторонние скрипты",
+    "message":"сторонние скрипты",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Сторонние фреймы",
+    "message":"сторонние фреймы",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"доменов затронуто",
+    "message":"доменов подключено",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -164,11 +164,11 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Показать количество заблокированных запросов на иконке",
+    "message":"Показывать количество заблокированных запросов на иконке",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Использовать контекстное меню, где оно уместно",
+    "message":"Использовать контекстное меню, где возможно",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Используется {{value}} байт",
+    "message":"Места использовано: {{value}} байт",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -232,7 +232,7 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Разбор и применение Adblock+ фильтров скрытия элементов.",
+    "message":"Парсить и применять косметические фильтры.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -240,7 +240,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Список блокируемых хостов",
+    "message":"Список заблокированных хостов",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -252,7 +252,7 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Конфиденциальность",
+    "message":"Приватность",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
@@ -276,7 +276,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Один URL-адрес на строку. Строки с префиксом &lsquo;!&rsquo; будут игнорироваться. Недопустимые адреса также будут игнорироваться молча.",
+    "message":"Один URL на строку. Строки, начинающиеся с символа &lsquo;!&rsquo;, будут игнорироваться. Неверные ссылки будут игнорироваться без предупреждения.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -292,7 +292,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"может быть устаревшей",
+    "message":"устарел",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -300,7 +300,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Линии, начинающиеся с &lsquo;!&rsquo;, будут пропущены.",
+    "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Строки, начинающиеся с &lsquo;!&rsquo;, будут игнорироваться.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -344,7 +344,7 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Отклонить",
+    "message":"Сбросить",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
@@ -360,7 +360,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Список динамических правил фильтрации.",
+    "message":"Список ваших правил динамической фильтрации.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -368,7 +368,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ваш список адресов сайтов, для которых uBlock₀ будет неактивен. Одна запись на строку. Некорректные адреса будут проигнорированы без уведомлений.",
+    "message":"Ваш список имен сайтов, для которых uBlock₀ будет отключен. Одна запись на строку. Неверные имена сайтов будут игнорироваться без предупреждений.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -380,7 +380,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -408,7 +408,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"За кулисами",
+    "message":"Скрытые запросы",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -416,7 +416,7 @@
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Максимальное количество записей в журнале",
+    "message":"Максимальное число записей логгера",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
@@ -428,7 +428,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Динамическая фильтрация URL-адресов",
+    "message":"Динамическая фильтрация URL",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
@@ -436,7 +436,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}} {{br}} и которые происходят {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
+    "message":"{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}} {{br}} и которые происходят из {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -596,11 +596,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Экспортировать в облачное хранилище",
+    "message":"Экспорт в облачное хранилище",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Импортировать из облачного хранилища",
+    "message":"Импорт из облачного хранилища",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,11 +612,11 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Отправить",
+    "message":"Утвердить",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
-    "message":"Отменить",
+    "message":"Вернуть",
     "description":"for generic 'revert' buttons"
   },
   "dummy":{
