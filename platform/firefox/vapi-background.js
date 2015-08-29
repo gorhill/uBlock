@@ -1752,10 +1752,10 @@ var httpObserver = {
         //console.log('http-on-opening-request:', URI.spec);
 
         var pendingRequest = this.lookupPendingRequest(URI.spec);
+        var rawtype = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
 
         // Behind-the-scene request
         if ( pendingRequest === null ) {
-            var rawtype = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
             if ( this.handleRequest(channel, URI, { tabId: vAPI.noTabId, rawtype: rawtype }) ) {
                 return;
             }
@@ -1766,6 +1766,13 @@ var httpObserver = {
             }
 
             return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/654
+        // Use the request type from the HTTP observer point of view, it's most
+        // likely the most accurate.
+        if ( rawtype !== 1 ) {
+            pendingRequest.rawtype = rawtype;
         }
 
         if ( this.handleRequest(channel, URI, pendingRequest) ) {
