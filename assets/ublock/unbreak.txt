@@ -218,3 +218,7 @@ ovh.strim.io#@##tweets
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=24764
 @@/b/ss/*&aqe=$image,domain=aeroplan.com
+
+# https://github.com/gorhill/uBlock/issues/372#issuecomment-113776974
+# For those, who have enabled Japanese filters list in uBlock Origin
+@@||www.gamersyde.com^$popup,first-party
