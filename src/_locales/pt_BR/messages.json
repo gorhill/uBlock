@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Entrar no modo de selecionar elemento",
+    "message":"Entrar no modo de seleção de elemento",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -104,15 +104,15 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"imagens\/css de terceiros",
+    "message":"css de terceiros\/imagens",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"scripts embutido",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"scripts de primeiros",
+    "message":"scripts do domínio",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -180,7 +180,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
+    "message":"Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar hyperlink auditing\/beacon",
+    "message":"Desativar auditoria de hyperlink\/beacon",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
