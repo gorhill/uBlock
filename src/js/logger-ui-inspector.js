@@ -146,7 +146,7 @@ var renderDOMFull = function(response) {
             lvl -= 1;
         }
         li = nodeFromDomEntry(entry);
-        ul.appendChild(li);
+        appendListItem(ul, li);
     }
     while ( ul.parentNode !== null ) {
         ul = ul.parentNode;
