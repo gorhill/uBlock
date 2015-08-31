@@ -927,7 +927,11 @@
             }
         }
         newListKey = this.oldListToNewListMap[oldListKey];
-        if ( newListKey !== '' ) {
+        // https://github.com/gorhill/uBlock/issues/668
+        // https://github.com/gorhill/uBlock/issues/669
+        // Beware: an entry for the new list key may already exists. If it is
+        // the case, leave it as is.
+        if ( newListKey !== '' && filterLists.hasOwnProperty(newListKey) === false ) {
             listEntry = filterLists[listKey];
             listEntry.homeURL = undefined;
             filterLists[newListKey] = listEntry;
