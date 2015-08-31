@@ -108,7 +108,7 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"встроенные скрипты",
+    "message":"inline-скрипты",
     "description":""
   },
   "popup1pScriptRulePrompt":{
