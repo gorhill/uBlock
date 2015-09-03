@@ -190,7 +190,7 @@ vAPI.tabs.registerListeners = function() {
         if ( popup !== undefined ) {
             return;
         }
-        return popupCandidates[details.tabId] = new PopupCandidate(details);
+        return (popupCandidates[details.tabId] = new PopupCandidate(details));
     };
 
     var popupCandidateTest = function(details) {
@@ -838,20 +838,6 @@ vAPI.net.registerListeners = function() {
         normalizeRequestDetails(details);
         return onBeforeRequestClient(details);
     };
-    chrome.webRequest.onBeforeRequest.addListener(
-        onBeforeRequest,
-        //function(details) {
-        //    quickProfiler.start('onBeforeRequest');
-        //    var r = onBeforeRequest(details);
-        //    quickProfiler.stop();
-        //    return r;
-        //},
-        {
-            'urls': this.onBeforeRequest.urls || ['<all_urls>'],
-            'types': this.onBeforeRequest.types || undefined
-        },
-        this.onBeforeRequest.extra
-    );
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback;
     var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
@@ -890,14 +876,47 @@ vAPI.net.registerListeners = function() {
         }
         return onHeadersReceivedClient(details);
     };
-    chrome.webRequest.onHeadersReceived.addListener(
-        onHeadersReceived,
-        {
-            'urls': this.onHeadersReceived.urls || ['<all_urls>'],
-            'types': onHeadersReceivedTypes
-        },
-        this.onHeadersReceived.extra
-    );
+
+    var installListeners = (function() {
+        var listener;
+        var crapi = chrome.webRequest;
+
+        listener = onBeforeRequest;
+        //listener = function(details) {
+        //    quickProfiler.start('onBeforeRequest');
+        //    var r = onBeforeRequest(details);
+        //    quickProfiler.stop();
+        //    return r;
+        //};
+        if ( crapi.onBeforeRequest.hasListener(listener) === false ) {
+            crapi.onBeforeRequest.addListener(
+                listener,
+                {
+                    'urls': this.onBeforeRequest.urls || ['<all_urls>'],
+                    'types': this.onBeforeRequest.types || undefined
+                },
+                this.onBeforeRequest.extra
+            );
+        }
+
+        listener = onHeadersReceived;
+        if ( crapi.onHeadersReceived.hasListener(listener) === false ) {
+            crapi.onHeadersReceived.addListener(
+                listener,
+                {
+                    'urls': this.onHeadersReceived.urls || ['<all_urls>'],
+                    'types': onHeadersReceivedTypes
+                },
+                this.onHeadersReceived.extra
+            );
+        }
+
+        // https://github.com/gorhill/uBlock/issues/675
+        // Experimental: keep polling to be sure our listeners are still installed.
+        //setTimeout(installListeners, 20000);
+    }).bind(this);
+
+    installListeners();
 };
 
 /******************************************************************************/
