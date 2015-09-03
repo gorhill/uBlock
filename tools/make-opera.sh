@@ -27,7 +27,6 @@ cp LICENSE.txt $DES/
 
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/mr
-rm -r $DES/_locales/sl
 rm -r $DES/_locales/sr
 rm -r $DES/_locales/ta
 

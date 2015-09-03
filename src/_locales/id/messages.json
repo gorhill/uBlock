@@ -180,7 +180,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Bacaan wajib<\/a>)",
+    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Wajib dibaca<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{

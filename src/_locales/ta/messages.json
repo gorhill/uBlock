@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"இறுதியாக ஒரு திறமையான‌ விளம்பர தடுப்பான். கனினியின் மையச் செயற்பகுதி மற்றும் நினைவகத்துடன் எளிதாக செயல்புரியும். \n",
+    "message":"கடைசியாக, ஒரு திறமையான விளம்பரத் தடுப்பான். கணினியின் மையச் செயற்பகுதியின் மேலும் நினைவகத்தின் மேலும் இலகுவானது.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"உறுப்பு தெரிவு முறைமையை உள்ளிடவும்",
+    "message":"உறுப்புத் தெரிவு முறைமைக்குச் செல்லவும்",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -124,7 +124,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"ஆள்களங்கள் இணைக்கப்பட்டுள்ளது",
+    "message":"இணைக்கப்பட்டுள்ள ஆள்களங்கள்",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -144,7 +144,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"நிகர வடிகட்டிகள்",
+    "message":"இணைய வடிகட்டிகள்",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -164,15 +164,15 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"தடுக்கப்பட்ட கோரிக்கைகளின் எண்ணிக்கையைப் பாவையில் காட்டவும்",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"தக்க இடங்களில் சூழல் மெனுவைக் காட்டு",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"அறியமுடியா வண்ண நட்புடன்",
+    "message":"நிறம்-அறியாதோர்க்கு ஏதுவாக",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -180,7 +180,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"நான் ஒரு மேம்பட்ட பயனர் (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>அவசியம் படிக்க வேண்டியவை<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -196,7 +196,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"சோதனைமுறை அம்சங்களை செயல்படுத்து (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>இவை குறித்து<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -236,7 +236,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
+    "message":"<p>இந்தத் தேர்வு <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-க்கு ஏற்ற &ldquo;உறுப்பு மறைக்கும்&rdquo; வடிகட்டிகளைப்<\/a> படிப்பதையும் பயன்படுத்துவத்தையும் செயல்படுத்தும். இந்த வடிகட்டிகள் அடிப்படையில் மேலோட்டமானவை. இணையப் பக்கத்தின் தோற்றத்தில் தொந்தரவாகக் கருதப்பட்டு, ஆனால் இணையக்கோரிக்கைகளை வடிகட்டும் எஞ்சினின் மூலம் தடுக்கப்பட முடியாத பக்க-உறுப்புகளை, பார்வையிலிருந்து மட்டும் மறைக்கும்<\/p><p>இந்தத் தேர்வு uBlock₀-இன் நினைவக உபயோகத்தை அதிகரிக்கும்.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
