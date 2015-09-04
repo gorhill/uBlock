@@ -44,7 +44,13 @@ if ( !matches || matches.length !== 2 ) {
     return;
 }
 
-messager.send({ what : 'getAssetContent', url: matches[1] }, onAssetContentReceived);
+messager.send(
+    {
+        what : 'getAssetContent',
+        url: decodeURIComponent(matches[1])
+    },
+    onAssetContentReceived
+);
 
 /******************************************************************************/
 
