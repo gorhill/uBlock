@@ -679,31 +679,47 @@ var uBlockCollapser = (function() {
     // Extract all classes: these will be passed to the cosmetic filtering
     // engine, and in return we will obtain only the relevant CSS selectors.
 
+    // https://github.com/gorhill/uBlock/issues/672
+    // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
+    // http://jsperf.com/enumerate-classes/6
+
     var classesFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
             return;
         }
+
         var qq = queriedSelectors;
         var ll = lowGenericSelectors;
-        var node, v, vv, j;
+        var v, vv, len, c, beg, end;
         var i = nodes.length;
+
         while ( i-- ) {
-            node = nodes[i];
-            // http://jsperf.com/enumerate-classes
-            // Chromium: classList a bit faster than manually enumerating
-            // class names.
-            // Firefox: classList quite slower than manually enumerating
-            // class names.
-            vv = node.classList;
-            if ( typeof vv !== 'object' ) { continue; }
-            j = vv.length || 0;
-            while ( j-- ) {
-                v = vv[j];
-                if ( typeof v !== 'string' ) { continue; }
-                v = '.' + v;
-                if ( qq.hasOwnProperty(v) ) { continue; }
-                ll.push(v);
-                qq[v] = true;
+            vv = nodes[i].className;
+            if ( typeof vv !== 'string' ) { continue; }
+            len = vv.length;
+            beg = 0;
+            for (;;) {
+                // Skip whitespaces
+                while ( beg !== len ) {
+                    c = vv.charCodeAt(beg);
+                    if ( c !== 0x20 && (c > 0x0D || c < 0x09) ) { break; }
+                    beg++;
+                }
+                if ( beg === len ) { break; }
+                end = beg + 1;
+                // Skip non-whitespaces
+                while ( end !== len ) {
+                    c = vv.charCodeAt(end);
+                    if ( c === 0x20 || (c <= 0x0D && c >= 0x09) ) { break; }
+                    end++;
+                }
+                v = '.' + vv.slice(beg, end);
+                if ( qq.hasOwnProperty(v) === false ) {
+                    ll.push(v);
+                    qq[v] = true;
+                }
+                if ( end === len ) { break; }
+                beg = end + 1;
             }
         }
     };
