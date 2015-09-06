@@ -2,18 +2,21 @@
     "adblock.gardar.net/is.abp.txt": {
         "off": true,
         "title": "ISL: Icelandic ABP List",
-        "group": "regions"
+        "group": "regions",
+        "supportURL": "http://adblock.gardar.net/"
         },
     "adblock.schack.dk/block.txt": {
         "off": true,
         "title": "DNK: Schacks Adblock Plus liste",
-        "group": "regions"
+        "group": "regions",
+        "supportURL": "https://henrik.schack.dk/adblock/"
         },
     "dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": {
         "off": true,
         "title": "ITA: ABP X Files",
         "group": "regions",
-        "homeURL": "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt"
+        "homeURL": "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt",
+        "supportURL": "http://noads.it/"
         },
     "easylist-downloads.adblockplus.org/advblock.txt": {
         "off": true,
@@ -140,9 +143,9 @@
         },
     "http://www.certyficate.it/adblock/adblock.txt": {
         "off": true,
-        "title": "POL: Adblock polskie reguly",
+        "title": "POL: polskie filtry do Adblocka i uBlocka",
         "group": "regions",
-        "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
+        "supportURL": "http://www.certyficate.it/adblock-ublock-polish-filters/"
         },
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
         "off": true,
@@ -154,11 +157,11 @@
         "off": true,
         "title": "FIN: Finnish Addition to Easylist",
         "group": "regions",
-        "oldLocation": "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
+        "supportURL": "http://www.juvander.fi/AdblockFinland"
         },
     "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": {
         "off": true,
-        "title": "KOR: adblock-korea-contrib",
+        "title": "KOR: Korean Adblock List",
         "group": "regions",
         "supportURL": "https://github.com/gfmaster/adblock-korea-contrib"
         },
@@ -166,14 +169,12 @@
         "off": true,
         "title": "IDN: ABPindo",
         "group": "regions",
-        "oldLocation": "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt",
         "supportURL": "https://github.com/heradhis/indonesianadblockrules"
         },
     "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": {
         "off": true,
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
-        "oldLocation": "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt",
         "supportURL": "https://github.com/k2jp/abp-japanese-filters"
         },
     "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": {
@@ -193,7 +194,8 @@
         "off": true,
         "title": "LTU: Adblock Plus Lithuania",
         "group": "regions",
-        "homeURL": "http://margevicius.lt/easylistlithuania.txt"
+        "homeURL": "http://margevicius.lt/easylistlithuania.txt",
+        "supportURL": "http://margevicius.lt/easylist_lithuania/"
         },
     "mirror1.malwaredomains.com/files/immortal_domains.txt": {
         "off": true,
@@ -226,7 +228,6 @@
         "title": "CHN: China: cjxlist (main focus on Chinese sites)",
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
-        "oldLocation": "cjxlist1.googlecode.com/svn/cjxlist.txt",
         "supportURL": "https://github.com/cjx82630/cjxlist"
         },
     "raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
@@ -330,6 +331,7 @@
         "off": true,
         "title": "GRC: Greek AdBlock Filter",
         "group": "regions",
-        "homeURL": "https://www.void.gr/kargig/void-gr-filters.txt"
+        "homeURL": "https://www.void.gr/kargig/void-gr-filters.txt",
+        "supportURL": "https://github.com/kargig/greek-adblockplus-filter"
         }
 }
