@@ -564,26 +564,28 @@ FilterContainer.prototype.reset = function() {
 // https://github.com/chrisaljoudi/uBlock/issues/1004
 // Detect and report invalid CSS selectors.
 
-FilterContainer.prototype.div = document.createElement('div');
+FilterContainer.prototype.isValidSelector = (function() {
+    var div = document.createElement('div');
 
-// Not all browsers support `Element.matches`:
-// http://caniuse.com/#feat=matchesselector
+    // Not all browsers support `Element.matches`:
+    // http://caniuse.com/#feat=matchesselector
+    if ( typeof div.matches !== 'function' ) {
+        return function() {
+            return true;
+        };
+    }
 
-if ( typeof FilterContainer.prototype.div.matches === 'function' ) {
-    FilterContainer.prototype.isValidSelector = function(s) {
+    return function(s) {
         try {
-            this.div.matches(s);
+            // https://github.com/gorhill/uBlock/issues/693
+            div.matches(s + ',\n#foo');
         } catch (e) {
             console.error('uBlock> invalid cosmetic filter:', s);
             return false;
         }
         return true;
     };
-} else {
-    FilterContainer.prototype.isValidSelector = function() {
-        return true;
-    };
-}
+})();
 
 /******************************************************************************/
 
