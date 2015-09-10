@@ -191,8 +191,9 @@ return {
     noopFunc: function(){},
 
     apiErrorCount: 0,
-    contextMenuClientX: -1,
-    contextMenuClientY: -1,
+    mouseX: -1,
+    mouseY: -1,
+    mouseURL: '',
     epickerTarget: '',
     epickerEprom: null,
 

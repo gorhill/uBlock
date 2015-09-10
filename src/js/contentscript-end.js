@@ -897,19 +897,20 @@ var uBlockCollapser = (function() {
     if ( window !== window.top ) {
         return;
     }
-    var onContextMenu = function(ev) {
+    var onMouseClick = function(ev) {
         messager.send({
-            what: 'contextMenuEvent',
-            clientX: ev.clientX,
-            clientY: ev.clientY
+            what: 'mouseClick',
+            x: ev.clientX,
+            y: ev.clientY,
+            url: ev.target && ev.target.localName === 'a' ? ev.target.href : ''
         });
     };
 
-    window.addEventListener('contextmenu', onContextMenu, true);
+    window.addEventListener('contextmenu', onMouseClick, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
     vAPI.shutdown.add(function() {
-        document.removeEventListener('contextmenu', onContextMenu, true);
+        document.removeEventListener('contextmenu', onMouseClick, true);
     });
 })();
 

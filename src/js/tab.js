@@ -500,7 +500,10 @@ vAPI.tabs.onPopup = function(details) {
     var loggerEnabled = µb.logger.isEnabled();
 
     // Check user switch first
-    if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
+    if (
+        targetURL !== µb.mouseURL &&
+        µb.hnSwitches.evaluateZ('no-popups', openerHostname)
+    ) {
         result = 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
     }
 

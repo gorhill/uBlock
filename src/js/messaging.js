@@ -96,9 +96,10 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'contextMenuEvent':
-        µb.contextMenuClientX = request.clientX;
-        µb.contextMenuClientY = request.clientY;
+    case 'mouseClick':
+        µb.mouseX = request.x;
+        µb.mouseY = request.y;
+        µb.mouseURL = request.url;
         break;
 
     case 'cosmeticFiltersInjected':
@@ -133,7 +134,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
-        µb.contextMenuClientX = µb.contextMenuClientY = -1;
+        µb.mouseX = µb.mouseY = -1;
         µb.elementPickerExec(request.tabId, request.targetURL);
         break;
 
@@ -633,14 +634,14 @@ var onMessage = function(request, sender, callback) {
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
                 target: µb.epickerTarget,
-                clientX: µb.contextMenuClientX,
-                clientY: µb.contextMenuClientY,
+                clientX: µb.mouseX,
+                clientY: µb.mouseY,
                 eprom: µb.epickerEprom
             });
 
             µb.epickerTarget = '';
-            µb.contextMenuClientX = -1;
-            µb.contextMenuClientY = -1;
+            µb.mouseX = -1;
+            µb.mouseY = -1;
         };
         xhr.send();
         return;
