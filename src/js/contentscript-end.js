@@ -906,11 +906,11 @@ var uBlockCollapser = (function() {
         });
     };
 
-    window.addEventListener('contextmenu', onMouseClick, true);
+    window.addEventListener('mousedown', onMouseClick, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
     vAPI.shutdown.add(function() {
-        document.removeEventListener('contextmenu', onMouseClick, true);
+        document.removeEventListener('mousedown', onMouseClick, true);
     });
 })();
 
