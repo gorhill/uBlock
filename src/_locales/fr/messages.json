@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Activer le support de stockage dans la nuage",
+    "message":"Activer le support de stockage dans le nuage",
     "description":""
   },
   "settingsAdvancedUserPrompt":{

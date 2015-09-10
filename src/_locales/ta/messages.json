@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"கடைசியாக, ஒரு திறமையான விளம்பரத் தடுப்பான். கணினியின் மையச் செயற்பகுதியின் மேலும் நினைவகத்தின் மேலும் இலகுவானது.",
+    "message":"இறுதியாக, ஒரு திறமையான விளம்பரத் தடுப்பான். கணினியின் மையச் செயற்பகுதியின் மேலும் நினைவகத்தின் மேலும் இலகுவானது.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3 ஆம் தரப்பு வடிகட்டிகள்",
+    "message":"மூன்றாம் தரப்பு வடிகட்டிகள்",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,11 +40,11 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"சொடுக்கு: இந்த தளத்திற்கான ‍‍‍uBlock₀ ஐ முடக்கு\/இயக்கு. \n\nCtrl+click: என்ற குறுக்குவிசையின் மூலம் uBlock₀ ஐ இத்தளத்திற்கு மட்டும் முடக்கு.",
+    "message":"சொடுக்கு: இந்த தளத்தில் ‍‍‍uBlock₀ ஐ முடக்க\/இயக்க. \n\nCtrl+click: uBlock₀ ஐ இந்தப் பக்கத்தில் மட்டும் முடக்கு.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"கோரிக்கைகள் தடுக்கப்பட்டுள்ளது",
+    "message":"தடுக்கப்பட்ட கோரிக்கைகள்",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -72,11 +72,11 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"பிணைய கோரிக்கை பதிவிற்கு செல்",
+    "message":"பிணையக் கோரிக்கைப் பதிவிற்குச் செல்",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"இத்தளத்திற்கான அனைத்து மேல்விரிகளை தடுப்பதை மாற்றவும்",
+    "message":"இத்தளத்தில் அனைத்து மேல்விரிகளையும் தடுப்பதை மாற்றவும்",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
@@ -96,7 +96,7 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"படிமங்கள்",
+    "message":"படங்கள்",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -172,7 +172,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"நிறம்-அறியாதோர்க்கு ஏதுவாக",
+    "message":"நிறம்-அறியாதோருக்கு ஏதுவாக",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"ஒரு வரிக்கு ஒரு இணைய முகவரி. &lsquo;!&rsquo; எனும் எழுத்தில் தொடங்கும் வரிகள் புறக்கணிக்கப்படும். தவறான முகவரிகளும் அமைதியாகப் புறக்கணிக்கப்படும்.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -300,7 +300,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"ஒரு வரிக்கு ஒரு வடிகட்டி. வடிகட்டி என்பது வெறும் வழங்கித்தளப் பெயராக இருக்கலாம், அல்லது Adblock Plus-க்குப் பொருந்தும் வடிகட்டியாக இருக்கலாம். &lsquo;!&rsquo; எனும் எழுத்தில் தொடங்கும் வரிகள் புறக்கணிக்கப்படும்.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -448,15 +448,15 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"\"{{type}}\" வகை",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"எந்த வகையான",
+    "message":"எந்த வகையும்",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"இருந்து “{{origin}}”",
+    "message":"“{{origin}}”-இல் இருந்து",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{

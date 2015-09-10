@@ -328,7 +328,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Отменить",
+    "message":"Вернуть",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -612,7 +612,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Утвердить",
+    "message":"Принять",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
