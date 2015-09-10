@@ -436,11 +436,11 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{origin}} தொடங்கும், {{br}}{{url}}-குப் பொருந்தும் முகவரி கொண்ட{{br}}{{type}} பிணையக் கோரிக்கைகளை {{action}},{{br}}பொருந்தும் விதிவிலக்கு வடிகட்டி {{importance}}.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"முடக்கு",
+    "message":"தடு",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
@@ -464,11 +464,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"தவிர மற்ற நேரங்களில்",
+    "message":"இல்லாவிட்டால் மட்டும்",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"என்றாலும் கூட‌",
+    "message":"இருந்தாலும் கூட‌",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
