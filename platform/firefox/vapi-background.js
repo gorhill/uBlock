@@ -1769,8 +1769,7 @@ var httpObserver = {
         }
 
         // https://github.com/gorhill/uBlock/issues/654
-        // Use the request type from the HTTP observer point of view, it's most
-        // likely the most accurate.
+        // Use the request type from the HTTP observer point of view.
         if ( rawtype !== 1 ) {
             pendingRequest.rawtype = rawtype;
         }
