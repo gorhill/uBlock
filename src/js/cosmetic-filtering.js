@@ -769,7 +769,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
 
     var lineEnd;
     var textEnd = text.length;
-    var line, fields, filter, bucket;
+    var line, fields, filter, key, bucket;
 
     while ( lineBeg < textEnd ) {
         if ( text.charAt(lineBeg) !== 'c' ) {
@@ -841,10 +841,14 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         }
 
         if ( fields[0] === 'hmg0' ) {
-            if ( Array.isArray(this.highMediumGenericHide[fields[1]]) ) {
-                this.highMediumGenericHide[fields[1]].push(fields[2]);
+            key = fields[1];
+            bucket = this.highMediumGenericHide[key];
+            if ( bucket === undefined ) {
+                this.highMediumGenericHide[key] = fields[2];
+            } else if ( Array.isArray(bucket) ) {
+                bucket.push(fields[2]);
             } else {
-                this.highMediumGenericHide[fields[1]] = [fields[2]];
+                this.highMediumGenericHide[key] = [bucket, fields[2]];
             }
             this.highMediumGenericHideCount += 1;
             continue;

@@ -577,19 +577,39 @@ var uBlockCollapser = (function() {
         var nodeList = selectNodes('a[href^="http"]');
         var iNode = nodeList.length;
         var node, href, pos, hash, selectors, selector, iSelector;
+
         while ( iNode-- ) {
             node = nodeList[iNode];
             href = node.getAttribute('href');
             if ( !href ) { continue; }
+
             pos = href.indexOf('://');
             if ( pos === -1 ) { continue; }
+
             hash = href.slice(pos + 3, pos + 11);
             selectors = generics[hash];
             if ( selectors === undefined ) { continue; }
+
+            // A string.
+            if ( typeof selectors === 'string' ) {
+                if (
+                    href.lastIndexOf(selectors.slice(8, -2), 0) === 0 &&
+                    injectedSelectors.hasOwnProperty(selectors) === false
+                ) {
+                    injectedSelectors[selectors] = true;
+                    out.push(selectors);
+                }
+                continue;
+            }
+
+            // An array of strings.
             iSelector = selectors.length;
             while ( iSelector-- ) {
                 selector = selectors[iSelector];
-                if ( injectedSelectors.hasOwnProperty(selector) === false ) {
+                if (
+                    href.lastIndexOf(selector.slice(8, -2), 0) === 0 &&
+                    injectedSelectors.hasOwnProperty(selector) === false
+                ) {
                     injectedSelectors[selector] = true;
                     out.push(selector);
                 }
