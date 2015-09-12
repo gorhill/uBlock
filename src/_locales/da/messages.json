@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Denne indstilling gør det muligt at parse og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Ablock Plus kompatible &ldquo;element skjulnings&rdquo; filtre<\/a>. Disse filtre har hovedsageligt et kosmetisk formål, da de skjuler irriterende visualle elementer på diverse web-sider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Liste over blokerede værter",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"kan være forældet",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Sidste opdatering: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"På grund af det følgende filter",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Found in:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Gendan",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Denne indskrivning må være den sidste",

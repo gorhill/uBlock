@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Tuỳ chọn này kích hoạt phân tích và áp dụng <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">các bộ lọc &ldquo;ẩn phần tử&rdquo; tương thích với Adblock Plus<\/a>. Những bộ lọc này dùng để ẩn phần tử trong một trang web được xem là gây phiền hà đến thị giác và không thể chặn bởi bộ lọc dựa địa chỉ trang web.<\/p><p>Kích hoạt tính năng này sẽ tăng mức sử dụng bộ nhớ của uBlock₀.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Danh sách những máy chủ bị chặn",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"có thể là lỗi thời",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Cập nhật trước: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Vì bộ lọc sau",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Tìm thấy trong:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Phục hồi",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Đây là mục cuối",

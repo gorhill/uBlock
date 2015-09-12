@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öğe gizleme&rdquo; süzgeçlerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu süzgeçler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı süzme motoru tarafından engellenemeyecek olan öğelerin gizlenmesine yarar.<\/p><p>Bu özelliği etkinleştirmek  uBlock₀'in bellek kullanımını artırır.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Engellenmiş alan adlarının listesi",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"eski",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Son güncelleme: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Aşağıdaki süzgeçten dolayı",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Bulunduğu liste:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Geri al",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Bu girdi en sonda olmalıdır",

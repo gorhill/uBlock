@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>এই অপশনটি <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">অ্যাডব্লক-প্লাসের সামঞ্জস্যপূর্ণ &ldquo;উপাদান আড়াল করার&rdquo; ফিল্টারকে<\/a> সক্রিয় করবে। এই ফিল্টারগুলি মূলত প্রসাধনী, তাদের একটি ওয়েব পাতায় উপাদান আড়াল করতে প্রয়োজন হয় যাকে চাক্ষুষ উত্পাত বলিয়া গণ্য করা হয়, এবং যাদের নেট অনুরোধ ভিত্তিক ফিল্টারিং ইঞ্জিন দ্বারা অবরুদ্ধ করা যায় না।<\/p><p>এই বৈশিষ্ট্য সক্রিয় করলে uBlock₀-এর মেমরির পদচিহ্ন বৃদ্ধি পাবে।<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"অবরুদ্ধ হোস্টের তালিকা",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"পুরোনো",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"সর্বশেষ হালনাগাদ: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"নিম্নলিখিত ফিল্টারের কারণে",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"যা এতে পাওয়া গেছে:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"প্রত্যাবর্তন",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"This entry must be the last one",

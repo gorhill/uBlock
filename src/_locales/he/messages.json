@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus<\/a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.<\/p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>uBlock₀<\/i><\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"רשימה של דומיינים חסומים",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"עדכון זמין",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"עדכון אחרון: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"בגלל המסנן הבא",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"נמצא ב:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"החזר למצב הקודם",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"ערך זה חייב להיות האחרון",

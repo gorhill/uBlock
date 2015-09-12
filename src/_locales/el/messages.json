@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Τα φίλτρα αυτά είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήματα δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Λίστες αποκλεισμένων hosts",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"ξεπερασμένη",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Τελευταία ενημέρωση: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Εξαιτίας του ακόλουθου φίλτρου",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Βρέθηκε σε:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Επαναφορά",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Αυτή η καταχώρηση θα πρέπει να είναι τελευταία",

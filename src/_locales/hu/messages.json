@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy webhely azon elemeit, amelyek vizuálisan zavaróak, de a hálózati lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>uBlock₀<\/i> memóriahasználatát.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Blokkolt hostokat tartalmazó listák",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"elavult",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Utolsó frissítés: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"A következő szűrő miatt",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Ezekben található:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Visszaállítás",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",

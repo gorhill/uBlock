@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>此选项将启用<a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">与 Adblock Plus 兼容的&ldquo;元素隐藏&rdquo;规则的解析和应用<\/a>。这些过滤规则本质上只是装饰美化，它们用来隐藏一个网页上被认为碍眼且不能被网络请求过滤引擎所屏蔽的视觉元素。<\/p><p>启用这项功能将增加 <i>uBlock₀<\/i> 的内存使用量。<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"被屏蔽站点列表",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"过时的版本",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"上次更新：{{ago}}",
@@ -571,6 +571,10 @@
     "message":"因为下列过滤规则",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"被包含于：",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"还原",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"此条目必须是最后一个",

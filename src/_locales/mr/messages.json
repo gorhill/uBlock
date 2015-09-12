@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>हा पर्याय <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">अद्ब्लोक प्लस सुसंगत &ldquo;घटक लपवणारे&rdquo; फिल्टर<\/a>चे विश्लेषण आणि अंमलबजावणी सक्षम करतो. हे फिल्टर मूलत: उटणे आहेत, ते वेब पृष्ठावर घटक लपवतात जें व्हिज्युअल उपद्रव असल्याचे मानण्यात येतात आणि जे निव्वळ विनंती-आधारित फिल्टरिंग इंजिनद्वारे अवरोधित करणे शक्य नाही.<\/p><p>हे वैशिष्ट्य सक्षम केले तर<i>म्यूब्लॉकचे<\/i> मेमरी पावलाचा ठसा वाढतो.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"उअवरोधित होस्ट यांची सूची",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"कालबाह्य",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Last update: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Because of the following filter",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Found in:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Revert",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"This entry must be the last one",

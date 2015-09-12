@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Tímto povolíte zpracovávání a používání <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus<\/a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.<\/p><p>Povolení této funkce zvětšuje stopy uBlocku₀ v paměti.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Seznamy blokovaných hostitelů",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"zastaralé",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Poslední aktualizace: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Kvůli následujícímu filtru",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Nalezeno v:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Vrátit",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"This entry must be the last one",

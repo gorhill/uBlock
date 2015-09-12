@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Włączenie tej funkcji skutkuje przetwarzaniem i używaniem <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrów kompatybilnych z dodatkiem Adblock Plus służących do ukrywania elementów<\/a>. Są to filtry kosmetyczne i służą do ukrycia elementów uważanych za wizualnie uciążliwe, których nie można zablokować przez filtry sieciowe.<\/p><p>Włączenie tej funkcji powoduje zwiększenie użycia pamięci przez uBlock₀.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Listy zablokowanych hostów",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"nieaktualna",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Ostatnio zaktualizowano: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Powodem zablokowania jest filtr",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Filtr znajduje się na liście:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Przywróć",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Ten wpis musi być ostatni",

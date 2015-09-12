@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de uBlock₀ va crește.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lista adreselor blocate",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"învechit",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Ultima actualizare: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Din cauza următorului filtru",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Găsit în:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Înlătură",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"Aceasta intrare trebuie sa fie ultima",

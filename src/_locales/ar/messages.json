@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"هذا الخيار يفعل تحليل وتطبيق فلاتر <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> هذي الفلاتر مخصصه للتجميل الصفحه. هذي الفلاتر تخفي بعض صناديق او اعلانات المزعجه التي لا يمنعها محرك الفلاتر تفعيل هذي الخاصيه سوف يجعل الاضافه تستعمل الذاكره اكثر",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"لستة مواقع المحضوره",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"قد يكون قديم ولا يعمل ",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"آخر تحديث: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"بسبب الفلتر التالي",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"موجود في:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"إلغاء",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",

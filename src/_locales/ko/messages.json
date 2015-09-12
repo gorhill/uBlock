@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">애드블록 플러스-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock₀<\/i>의 메모리 사용량이 증가합니다.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"차단된 호스트 목록",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"구버전",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"마지막 업데이트: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"다음 필터로 인해 방지됨",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"다음 필터에서 찾음:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"되돌리기",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"This entry must be the last one",

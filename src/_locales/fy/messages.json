@@ -237,7 +237,7 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Dizze opsje skeakelt it ynlêzen en tapassen fan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibele &ldquo;element hiding&rdquo; filters<\/a> yn. Dizze filters binne suver kosmetysk: se ferstopje eleminten yn de webside dy't fisueel steurend wêze kinne en kinne dus net blokkearre wurde troch de op netfersiken basearre filterengine.<\/p><p>It ynskeakeljen fan dizze funksje ferheget it ûnthâldgebrûk fan uBlock₀.<\/p>",
-    "description":"English: see English messages.json"
+    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"List fan blokkearree hosts",
@@ -293,7 +293,7 @@
   },
   "3pExternalListObsolete":{
     "message":"ferâldere",
-    "description":"English: outdated"
+    "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
     "message":"Lêste fernijing: {{ago}}",
@@ -571,6 +571,10 @@
     "message":"Fanwege it folgjende filter",
     "description":"English: Because of the following filter"
   },
+  "docblockedNoParamsPrompt":{
+    "message":"without parameters",
+    "description":"label to be used for the parameter-less URL"
+  },
   "docblockedFoundIn":{
     "message":"Fûn yn:",
     "description":"English: List of filter list names follows"
@@ -618,6 +622,10 @@
   "genericRevert":{
     "message":"Tebeksette",
     "description":"for generic 'revert' buttons"
+  },
+  "genericBytes":{
+    "message":"bytes",
+    "description":""
   },
   "dummy":{
     "message":"This entry must be the last one",
