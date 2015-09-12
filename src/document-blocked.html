@@ -67,8 +67,13 @@ select {
     opacity: 0.5;
     padding: 0.2em;
     position: absolute;
-    right: 0;
     transform: translate(0, -50%);
+    }
+body[dir="ltr"] #theURL > p > span {
+    right: 0;
+    }
+body[dir="rtl"] #theURL > p > span {
+    left: 0;
     }
 #theURL > p:hover > span {
     opacity: 1;
@@ -86,7 +91,7 @@ select {
     color: gray;
     font-size: small;
     overflow-x: hidden;
-    padding: 0 4px 4px 4px;
+    padding: 4px;
     text-align: initial;
     text-overflow: ellipsis; 
     }
@@ -101,9 +106,6 @@ select {
     }
 #parsed span {
     display: inline-block;
-    }
-#parsed a {
-    font-weight: bold;
     }
 #parsed span:first-of-type {
     font-weight: bold;

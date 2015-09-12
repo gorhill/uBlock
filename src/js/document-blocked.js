@@ -195,8 +195,16 @@ uDom.nodeFromId('why').textContent = details.fs;
         if ( url === null || url.search.length === 0 ) {
             return false;
         }
+
+        var pos = rawURL.indexOf('?');
+        var li = liFromParam(
+            vAPI.i18n('docblockedNoParamsPrompt'),
+            rawURL.slice(0, pos)
+        );
+        parentNode.appendChild(li);
+
         var params = url.search.slice(1).split('&');
-        var param, pos, name, value, li, ul;
+        var param, name, value, ul;
         for ( var i = 0; i < params.length; i++ ) {
             param = params[i];
             pos = param.indexOf('=');
@@ -225,8 +233,18 @@ uDom.nodeFromId('why').textContent = details.fs;
     uDom('#theURL > p').append(toggler);
 
     uDom(toggler).on('click', function() {
-        uDom.nodeFromId('theURL').classList.toggle('collapsed');
+        var cl = uDom.nodeFromId('theURL').classList;
+        cl.toggle('collapsed');
+        vAPI.localStorage.setItem(
+            'document-blocked-expand-url',
+            (cl.contains('collapsed') === false).toString()
+        );
     });
+
+    uDom.nodeFromId('theURL').classList.toggle(
+        'collapsed',
+        vAPI.localStorage.getItem('document-blocked-expand-url') !== 'true'
+    );
 })();
 
 /******************************************************************************/
