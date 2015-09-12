@@ -19,6 +19,7 @@ cp $SRC/de/messages.json    $DES/de/messages.json
 cp $SRC/el/messages.json    $DES/el/messages.json
 cp $SRC/es-ES/messages.json $DES/es/messages.json
 cp $SRC/et/messages.json    $DES/et/messages.json
+cp $SRC/eu/messages.json    $DES/eu/messages.json
 cp $SRC/fa/messages.json    $DES/fa/messages.json
 cp $SRC/fi/messages.json    $DES/fi/messages.json
 cp $SRC/fil/messages.json   $DES/fil/messages.json
@@ -70,6 +71,7 @@ cp $SRC/de/description.txt    $DES/description-de.txt
 cp $SRC/el/description.txt    $DES/description-el.txt
 cp $SRC/es-ES/description.txt $DES/description-es.txt
 cp $SRC/et/description.txt    $DES/description-et.txt
+cp $SRC/eu/description.txt    $DES/description-eu.txt
 cp $SRC/fa/description.txt    $DES/description-fa.txt
 cp $SRC/fi/description.txt    $DES/description-fi.txt
 cp $SRC/fil/description.txt   $DES/description-fil.txt

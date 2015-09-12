@@ -1,0 +1,49 @@
+Blokeatzaile eraginkor bat: Memoria eta PUZ erabileran arina da, eta hala ere beste blokeatzaile ezagun batzuk baino milaka iragazki gehiago kargatu eta ezarri ditzake.
+
+Bere eraginkortasunaren adibide grafikoa: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Erabilera: Laster-leihoko pizte botoi handia uBlock uneko gunean behin betiko gaitu edo desgaitzeko da. Uneko guneari dagokio soilik, ez da botoi orokor bat.
+
+***
+
+Malgua, iragarki blokeatzaile bat baino gehiago da, ostalarietako iragazkiak sortu eta irakurri ditzake ere.
+
+Lehenetsita, honako iragazki zerrendak kargatu eta ezartzen ditu:
+
+- EasyList
+- Peter Loweren iragarki zerbitzarien zerrenda
+- EasyPrivacy
+- Malware domeinuak
+
+Zerrenda gehiago dituzu eskura hautatzeko hala nahiez gero:
+
+- Fanboyren hobetutako jarraipen zerrenda
+- Dan Pollocken ostalari zerrenda
+- hpHostsen iragarki eta jarraipen zerbitzariak
+- MVPS Ostalariak
+- Spam404
+- Eta beste hainbat gehiago
+
+Jakina, iragazki gehiago kargatuta memoria erabilera handiagoa da. Hala ere, Fanboyren bi zerrenda gehigarriak eta hpHostsen iragarki eta jarraipen zerbitzariak kargatuta, uBlockek beste blokeatzaile ezagun batzuk baino memoria gutxiago erabiltzen du.
+
+Bestalde, kontuan izan zerrenda gehigarri hauetako batzuk gaitzeak guneren bat hausteko aukerak handitzen dituela, batez ere ostalari fitxategi gisa erabili ohi diren zerrendak.
+
+***
+
+Lehenetsitako iragazki zerrendarik gabe gehigarri honek ez du ezer egiten. Beraz ezertan lagundu nahi baduzu pentsa ezazu erabiltzen dituzun iragazki zerrendak egunean mantentzeko tinko lanean dabiltzan horietan, guztiek erabiltzeko moduan doan eskuragarri jarri dituztenak.
+
+***
+
+Doan.
+Lizentzia libreduna (GPLv3)
+Erabiltzaileek erabiltzaileentzat sortua.
+
+Parte-hartzaileak @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Parte-hartzaileak @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Nahiko berria da bertsio hau, kontua izan honi buruz idaztean.
+
+Proiektuaren aldaketa egunkaria:
+https://github.com/gorhill/uBlock/releases
