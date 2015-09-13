@@ -88,7 +88,7 @@ var FilterPlain = function() {
 };
 
 FilterPlain.prototype.retrieve = function(s, out) {
-    out.push(this.s);
+    out.push(s);
 };
 
 FilterPlain.prototype.fid = '#';
