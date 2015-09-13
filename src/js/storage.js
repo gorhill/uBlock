@@ -959,6 +959,8 @@
             if ( stockLists.hasOwnProperty(oldListKey) === false ) {
                 continue;
             }
+            // https://github.com/gorhill/uBlock/issues/708
+            // Support migrating external stock filter lists as well.
             if ( reExternalURL.test(oldListKey) === false ) {
                 oldListKey = 'assets/thirdparties/' + oldListKey;
             }
