@@ -84,25 +84,23 @@ var histogram = function(label, buckets) {
 //   #A9AdsMiddleBoxTop
 //   .AD-POST
 
-var FilterPlain = function(s) {
-    this.s = s;
+var FilterPlain = function() {
 };
 
 FilterPlain.prototype.retrieve = function(s, out) {
-    if ( s === this.s ) {
-        out.push(this.s);
-    }
+    out.push(this.s);
 };
 
 FilterPlain.prototype.fid = '#';
 
 FilterPlain.prototype.toSelfie = function() {
-    return this.s;
 };
 
-FilterPlain.fromSelfie = function(s) {
-    return new FilterPlain(s);
+FilterPlain.fromSelfie = function() {
+    return filterPlain;
 };
+
+var filterPlain = new FilterPlain();
 
 /******************************************************************************/
 
@@ -506,7 +504,6 @@ var makeHash = function(unhide, token, mask) {
 
 var FilterContainer = function() {
     this.domainHashMask = (1 << 10) - 1; // 10 bits
-    this.genericHashMask = (1 << 15) - 1; // 15 bits
     this.type0NoDomainHash = 'type0NoDomain';
     this.type1NoDomainHash = 'type1NoDomain';
     this.parser = new FilterParser();
@@ -666,8 +663,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         if ( matches[1] === selector ) {
             out.push(
                 'c\vlg\v' +
-                makeHash(0, matches[1], this.genericHashMask) + '\v' +
-                selector
+                 matches[1]
             );
             return;
         }
@@ -675,7 +671,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         if ( this.isValidSelector(selector) ) {
             out.push(
                 'c\vlg+\v' +
-                makeHash(0, matches[1], this.genericHashMask) + '\v' +
+                 matches[1] + '\v' +
                 selector
             );
         }
@@ -810,7 +806,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         // lg+	2jx	.Mpopup + #Mad > #MadZone
         if ( fields[0] === 'lg' || fields[0] === 'lg+' ) {
             filter = fields[0] === 'lg' ?
-                        new FilterPlain(fields[2]) :
+                        filterPlain :
                         new FilterPlainMore(fields[2]);
             bucket = this.lowGenericHide[fields[1]];
             if ( bucket === undefined ) {
@@ -1135,19 +1131,15 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         r.donthide = this.genericDonthide;
     }
 
-    var hash, bucket;
-    var hashMask = this.genericHashMask;
     var hideSelectors = r.hide;
+    var selector, bucket;
     var selectors = request.selectors;
     var i = selectors.length;
-    var selector;
     while ( i-- ) {
-        selector = selectors[i];
-        if ( !selector ) {
-            continue;
-        }
-        hash = makeHash(0, selector, hashMask);
-        if ( (bucket = this.lowGenericHide[hash]) ) {
+        if (
+            (selector = selectors[i]) &&
+            (bucket = this.lowGenericHide[selector])
+        ) {
             bucket.retrieve(selector, hideSelectors);
         }
     }
