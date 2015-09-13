@@ -953,12 +953,15 @@
         }
 
         // Migrate assets affected by the change to their new name.
+        var reExternalURL = /^https?:\/\//;
         var newListKey;
         for ( var oldListKey in stockLists ) {
             if ( stockLists.hasOwnProperty(oldListKey) === false ) {
                 continue;
             }
-            oldListKey = 'assets/thirdparties/' + oldListKey;
+            if ( reExternalURL.test(oldListKey) === false ) {
+                oldListKey = 'assets/thirdparties/' + oldListKey;
+            }
             if ( µb.oldListToNewListMap.hasOwnProperty(oldListKey) === false ) {
                 continue;
             }

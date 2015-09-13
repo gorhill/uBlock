@@ -142,7 +142,8 @@ return {
     remoteBlacklists: {},
     oldListToNewListMap: {
         "assets/thirdparties/adblock.gardar.net/is.abp.txt": "http://adblock.gardar.net/is.abp.txt",
-        "assets/thirdparties/adblock.schack.dk/block.txt": "https://adblock.schack.dk/block.txt",
+        "assets/thirdparties/adblock.schack.dk/block.txt": "https://adblock.dk/block.csv",
+        "https://adblock.schack.dk/block.txt": "https://adblock.dk/block.csv",
         "assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt",
         "assets/thirdparties/easylist-downloads.adblockplus.org/advblock.txt": "https://easylist-downloads.adblockplus.org/advblock.txt",
         "assets/thirdparties/easylist-downloads.adblockplus.org/bitblock.txt": "https://easylist-downloads.adblockplus.org/bitblock.txt",
