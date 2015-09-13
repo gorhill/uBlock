@@ -103,11 +103,10 @@ var fromCosmeticFilter = function(details) {
     var matches = rePlainSelector.exec(filter);
     if ( matches ) {
         if ( matches[0] === filter ) {          // simple CSS selector
-            reStr = rescape('c\vlg\v');
+            reStr = rescape('c\vlg\v' + filter);
         } else {                                // complex CSS selector
-            reStr = rescape('c\vlg+\v');
+            reStr = rescape('c\vlg+\v' + matches[0] + '\v' + filter);
         }
-        reStr += '\\w+' + rescape('\v' + filter);
     } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
         reStr = rescape('c\vhlg0\v' + filter);
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
