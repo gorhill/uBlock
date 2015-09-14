@@ -169,11 +169,17 @@ uDom.nodeFromId('why').textContent = details.fs;
     var reURL = /^https?:\/\//;
 
     var liFromParam = function(name, value) {
+        if ( value === '' ) {
+            value = name;
+            name = '';
+        }
         var li = document.createElement('li');
         var span = document.createElement('span');
         span.textContent = name;
         li.appendChild(span);
-        li.appendChild(document.createTextNode(' = '));
+        if ( name !== '' && value !== '' ) {
+            li.appendChild(document.createTextNode(' = '));
+        }
         span = document.createElement('span');
         if ( reURL.test(value) ) {
             var a = document.createElement('a');
