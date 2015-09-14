@@ -1481,37 +1481,3 @@ vAPI.messaging.listen('scriptlets', onMessage);
 
 /******************************************************************************/
 /******************************************************************************/
-
-// devtools
-
-(function() {
-
-'use strict';
-
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-    // Async
-    switch ( request.what ) {
-    default:
-        break;
-    }
-
-    // Sync
-    var response;
-
-    switch ( request.what ) {
-    default:
-        return vAPI.messaging.UNHANDLED;
-    }
-
-    callback(response);
-};
-
-vAPI.messaging.listen('devtools', onMessage);
-
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
