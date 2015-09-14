@@ -1035,7 +1035,11 @@ var tabWatcher = (function() {
             vAPI.toolbarButton.attachToNewWindow(window);
         }
 
-        tabContainer.addEventListener('TabOpen', onOpen);
+        // https://github.com/gorhill/uBlock/issues/697
+        // Ignore `TabShow` events: unfortunately the `pending` attribute is
+        // not set when a tab is opened as a result of session restore -- it is
+        // set *after* the event is fired in such case.
+        //tabContainer.addEventListener('TabOpen', onOpen);
         tabContainer.addEventListener('TabShow', onShow);
         tabContainer.addEventListener('TabClose', onClose);
         // when new window is opened TabSelect doesn't run on the selected tab?
@@ -1912,16 +1916,22 @@ vAPI.net.registerListeners = function() {
 
     var locationChangedListenerMessageName = location.host + ':locationChanged';
     var locationChangedListener = function(e) {
-        var details = e.data;
         var browser = e.target;
+
+        // https://github.com/gorhill/uBlock/issues/697
+        // Dismiss event if the associated tab is pending.
+        var tab = tabWatcher.tabFromBrowser(browser);
+        if ( !tab || tab.hasAttribute('pending') ) {
+            return;
+        }
+
+        var details = e.data;
         var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
         if ( details.url.lastIndexOf(vAPI.getURL('popup.html'), 0) === 0 ) {
             return;
         }
-
-        //console.debug("nsIWebProgressListener: onLocationChange: " + details.url + " (" + details.flags + ")");        
 
         // LOCATION_CHANGE_SAME_DOCUMENT = "did not load a new document"
         if ( details.flags & Ci.nsIWebProgressListener.LOCATION_CHANGE_SAME_DOCUMENT ) {

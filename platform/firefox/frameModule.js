@@ -432,7 +432,7 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
     }
     this.messageManager.sendAsyncMessage(locationChangedMessageName, {
         url: location.asciiSpec,
-        flags: flags,
+        flags: flags
     });
 };
 
