@@ -6919,7 +6919,7 @@ web.za
 *.zw
 
 
-// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2015-08-08T00:32:21Z
+// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2015-08-26T23:57:22Z
 
 // aaa : 2015-02-26 American Automobile Association, Inc.
 aaa
@@ -7125,6 +7125,9 @@ audible
 // audio : 2014-03-20 Uniregistry, Corp.
 audio
 
+// auspost : 2015-08-13 Australian Postal Corporation
+auspost
+
 // author : 2014-12-18 Amazon EU S.à r.l.
 author
 
@@ -7181,6 +7184,9 @@ barefoot
 
 // bargains : 2013-11-14 Half Hallow, LLC
 bargains
+
+// basketball : 2015-08-20 Fédération Internationale de Basketball (FIBA)
+basketball
 
 // bauhaus : 2014-04-17 Werkhaus GmbH
 bauhaus
@@ -8517,6 +8523,9 @@ koeln
 // komatsu : 2015-01-08 Komatsu Ltd.
 komatsu
 
+// kosher : 2015-08-20 Kosher Marketing Assets LLC
+kosher
+
 // kpmg : 2015-04-23 KPMG International Cooperative (KPMG International Genossenschaft)
 kpmg
 
@@ -8904,6 +8913,9 @@ mutuelle
 // mzansimagic : 2015-03-05 Electronic Media Network (Pty) Ltd
 mzansimagic
 
+// nab : 2015-08-20 National Australia Bank Limited
+nab
+
 // nadex : 2014-12-11 IG Group Holdings PLC
 nadex
 
@@ -9194,6 +9206,9 @@ pohl
 
 // poker : 2014-07-03 Afilias Domains No. 5 Limited
 poker
+
+// politie : 2015-08-20 Politie Nederland
+politie
 
 // porn : 2014-10-16 ICM Registry PN LLC
 porn
@@ -9503,6 +9518,9 @@ sex
 
 // sexy : 2013-09-11 Uniregistry, Corp.
 sexy
+
+// sfr : 2015-08-13 Societe Francaise du Radiotelephone - SFR
+sfr
 
 // sharp : 2014-05-01 Sharp Corporation
 sharp
@@ -9882,6 +9900,9 @@ tushu
 // tvs : 2015-02-19 T V SUNDRAM IYENGAR  & SONS LIMITED
 tvs
 
+// ubank : 2015-08-20 National Australia Bank Limited
+ubank
+
 // ubs : 2014-12-11 UBS AG
 ubs
 
@@ -9911,6 +9932,9 @@ vegas
 
 // ventures : 2013-08-27 Binky Lake, LLC
 ventures
+
+// verisign : 2015-08-13 VeriSign, Inc.
+verisign
 
 // versicherung : 2014-03-20 dotversicherung-registry GmbH
 versicherung
@@ -11019,6 +11043,7 @@ googleapis.com
 googlecode.com
 pagespeedmobilizer.com
 withgoogle.com
+withyoutube.com
 
 // Heroku : https://www.heroku.com/
 // Submitted by Tom Maher <tmaher@heroku.com> 2013-05-02

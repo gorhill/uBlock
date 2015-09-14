@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Thu, 06 Aug 2015 00:22:10 GMT
-# entries:        2398
+# last updated:   Thu, 10 Sep 2015 11:06:32 GMT
+# entries:        2393
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -39,6 +39,7 @@
 127.0.0.1 a-ads.com
 127.0.0.1 a-counter.kiev.ua
 127.0.0.1 a.0day.kiev.ua
+127.0.0.1 a.aproductmsg.com
 127.0.0.1 a.collective-media.net
 127.0.0.1 a.consumer.net
 127.0.0.1 a.mktw.net
@@ -54,7 +55,7 @@
 127.0.0.1 absoluteclickscom.com
 127.0.0.1 abz.com
 127.0.0.1 ac.rnm.ca
-127.0.0.1 accounts.pkr.com
+127.0.0.1 accounts.pkr.com.invalid
 127.0.0.1 acsseo.com
 127.0.0.1 actionsplash.com
 127.0.0.1 actualdeals.com
@@ -143,7 +144,6 @@
 127.0.0.1 ad.prv.pl
 127.0.0.1 ad.rambler.ru
 127.0.0.1 ad.reunion.com
-127.0.0.1 ad.scanmedios.com
 127.0.0.1 ad.sensismediasmart.com.au
 127.0.0.1 ad.seznam.cz
 127.0.0.1 ad.simgames.net
@@ -184,7 +184,6 @@
 127.0.0.1 ad4game.com
 127.0.0.1 adaction.de
 127.0.0.1 adadvisor.net
-127.0.0.1 adaos-ads.net
 127.0.0.1 adap.tv
 127.0.0.1 adapt.tv
 127.0.0.1 adbanner.ro
@@ -310,6 +309,7 @@
 127.0.0.1 adpepper.dk
 127.0.0.1 adpepper.nl
 127.0.0.1 adperium.com
+127.0.0.1 adpia.vn
 127.0.0.1 adpost.com
 127.0.0.1 adprofile.net
 127.0.0.1 adprojekt.pl
@@ -590,7 +590,6 @@
 127.0.0.1 ads.quaylemedia.com
 127.0.0.1 ads.quoka.de
 127.0.0.1 ads.rcs.it
-127.0.0.1 ads.realmedia.de
 127.0.0.1 ads.recoletos.es
 127.0.0.1 ads.rediff.com
 127.0.0.1 ads.redlightcenter.com
@@ -633,7 +632,6 @@
 127.0.0.1 ads.timeout.com
 127.0.0.1 ads.tjwi.info
 127.0.0.1 ads.tmcs.net
-127.0.0.1 ads.top500.org
 127.0.0.1 ads.totallyfreestuff.com
 127.0.0.1 ads.townhall.com
 127.0.0.1 ads.trinitymirror.co.uk
@@ -656,7 +654,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -673,6 +670,7 @@
 127.0.0.1 ads.wineenthusiast.com
 127.0.0.1 ads.wunderground.com
 127.0.0.1 ads.wwe.biz
+127.0.0.1 ads.xedo.com
 127.0.0.1 ads.xhamster.com
 127.0.0.1 ads.xtra.co.nz
 127.0.0.1 ads.y-0.net
@@ -796,7 +794,6 @@
 127.0.0.1 adserver2.popdata.de
 127.0.0.1 adserverplus.com
 127.0.0.1 adserversolutions.com
-127.0.0.1 adserveuk.com
 127.0.0.1 adservinginternational.com
 127.0.0.1 adsfac.eu
 127.0.0.1 adsfac.net
@@ -824,6 +821,7 @@
 127.0.0.1 adsstat.com
 127.0.0.1 adstat.4u.pl
 127.0.0.1 adstest.weather.com
+127.0.0.1 adsupply.com
 127.0.0.1 adsymptotic.com
 127.0.0.1 adsynergy.com
 127.0.0.1 adsys.townnews.com
@@ -1018,7 +1016,6 @@
 127.0.0.1 banner.prestigecasino.com
 127.0.0.1 banner.rbc.ru
 127.0.0.1 banner.relcom.ru
-127.0.0.1 banner.supereva.it
 127.0.0.1 banner.tanto.de
 127.0.0.1 banner.titan-dsl.de
 127.0.0.1 banner.vadian.net
@@ -1230,6 +1227,7 @@
 127.0.0.1 clkrev.com
 127.0.0.1 cluster.adultworld.com
 127.0.0.1 clustrmaps.com
+127.0.0.1 cmpstar.com
 127.0.0.1 cnomy.com
 127.0.0.1 cnt.one.ru
 127.0.0.1 cnt.spbland.ru
@@ -1243,6 +1241,7 @@
 127.0.0.1 comprabanner.it
 127.0.0.1 connextra.com
 127.0.0.1 contaxe.de
+127.0.0.1 content.acc-hd.de
 127.0.0.1 content.ad
 127.0.0.1 contentabc.com
 127.0.0.1 contextweb.com
@@ -1350,6 +1349,7 @@
 127.0.0.1 ebocornac.com
 127.0.0.1 ebuzzing.com
 127.0.0.1 ecircle-ag.com
+127.0.0.1 eclick.vn
 127.0.0.1 ecoupons.com
 127.0.0.1 edgeio.com
 127.0.0.1 effectivemeasure.net
@@ -1382,8 +1382,6 @@
 127.0.0.1 euro-linkindex.de
 127.0.0.1 euroclick.com
 127.0.0.1 european-toplist.de
-127.0.0.1 europeanbanners.com
-127.0.0.1 europebanner.net
 127.0.0.1 euroranking.de
 127.0.0.1 euros4click.de
 127.0.0.1 eusta.de
@@ -1694,7 +1692,6 @@
 127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
-127.0.0.1 mediamayhemcorp.com
 127.0.0.1 mediamgr.ugo.com
 127.0.0.1 mediaplazza.com
 127.0.0.1 mediaplex.com
@@ -1733,7 +1730,6 @@
 127.0.0.1 mr-rank.de
 127.0.0.1 mrskincash.com
 127.0.0.1 mtree.com
-127.0.0.1 muk.247realmedia.com
 127.0.0.1 musiccounter.ru
 127.0.0.1 muwmedia.com
 127.0.0.1 myaffiliateprogram.com
@@ -1975,7 +1971,6 @@
 127.0.0.1 rb1.design.ru
 127.0.0.1 reachjunction.com
 127.0.0.1 readserver.net
-127.0.0.1 realads.realmedia.com
 127.0.0.1 realcastmedia.com
 127.0.0.1 realclix.com
 127.0.0.1 realmedia-a800.d4p.net
@@ -1995,14 +1990,13 @@
 127.0.0.1 reklamcsere.hu
 127.0.0.1 reklame.unwired-i.net
 127.0.0.1 reklamer.com.ua
+127.0.0.1 relevanz10.de
 127.0.0.1 relmaxtop.com
 127.0.0.1 remotead.cnet.com
 127.0.0.1 republika.onet.pl
-127.0.0.1 retaildirect.realmedia.com
 127.0.0.1 retargeter.com
 127.0.0.1 revenue.net
 127.0.0.1 revenuedirect.com
-127.0.0.1 revenuepilot.com
 127.0.0.1 revsci.net
 127.0.0.1 revstats.com
 127.0.0.1 rewardster.com
@@ -2074,6 +2068,7 @@
 127.0.0.1 sitemeter.com
 127.0.0.1 sitestat.com
 127.0.0.1 sixsigmatraffic.com
+127.0.0.1 skylink.vn
 127.0.0.1 slickaffiliate.com
 127.0.0.1 sm.aport.ru
 127.0.0.1 sma.punto.net
