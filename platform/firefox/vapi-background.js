@@ -1921,7 +1921,7 @@ vAPI.net.registerListeners = function() {
         // https://github.com/gorhill/uBlock/issues/697
         // Dismiss event if the associated tab is pending.
         var tab = tabWatcher.tabFromBrowser(browser);
-        if ( !tab || tab.hasAttribute('pending') ) {
+        if ( !vAPI.fennec && tab && tab.hasAttribute('pending') ) {
             return;
         }
 
