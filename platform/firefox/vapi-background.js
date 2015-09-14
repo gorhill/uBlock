@@ -1082,7 +1082,7 @@ var tabWatcher = (function() {
             tabContainer = tabBrowser.tabContainer;
         }
         if ( tabContainer ) {
-            tabContainer.removeEventListener('TabOpen', onOpen);
+            //tabContainer.removeEventListener('TabOpen', onOpen);
             tabContainer.removeEventListener('TabShow', onShow);
             tabContainer.removeEventListener('TabClose', onClose);
             tabContainer.removeEventListener('TabSelect', onSelect);
