@@ -121,3 +121,7 @@ ink361.com##.getridofAdsBlock[href^="javascript:"]
 ||js.washingtonpost.com/wpost2/js/combo$script,first-party
 www.washingtonpost.com###drawbridge-signup-overlay
 www.washingtonpost.com##.jqmOverlay
+
+# https://www.reddit.com/r/techsupport/comments/3kyd0m/sponsored_content_ads_that_only_show_up_with/
+explosm.net##.inner-wrap > .row > .columns.large-4.medium-12.small-12
+explosm.net##.inner-wrap > .row > .columns.large-8.medium-12 > hr + div
