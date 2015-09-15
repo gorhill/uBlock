@@ -443,55 +443,58 @@ var uBlockCollapser = (function() {
         //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
-    var hideElements = function(selectors) {
-        // https://github.com/chrisaljoudi/uBlock/issues/207
-        // Do not call querySelectorAll() using invalid CSS selectors
-        if ( selectors.length === 0 ) {
-            return;
-        }
+    var hideElements = (function() {
         if ( document.body === null ) {
-            return;
+            return function() {};
         }
-        var elems = document.querySelectorAll(selectors);
-        var i = elems.length;
-        if ( i === 0 ) {
-            return;
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/158
-        // Using CSSStyleDeclaration.setProperty is more reliable
         if ( document.body.shadowRoot === undefined ) {
-            while ( i-- ) {
-                elems[i].style.setProperty('display', 'none', 'important');
-            }
-            return;
+            return function(selectors) {
+                // https://github.com/chrisaljoudi/uBlock/issues/207
+                // Do not call querySelectorAll() using invalid CSS selectors
+                if ( selectors.length === 0 ) { return; }
+                var elems = document.querySelectorAll(selectors);
+                var i = elems.length;
+                if ( i === 0 ) { return; }
+                // https://github.com/chrisaljoudi/uBlock/issues/158
+                // Using CSSStyleDeclaration.setProperty is more reliable
+                while ( i-- ) {
+                    elems[i].style.setProperty('display', 'none', 'important');
+                }
+            };
         }
-        // https://github.com/gorhill/uBlock/issues/435
-        // Using shadow content so that we do not have to modify style
-        // attribute.
-        var sessionId = vAPI.sessionId;
-        var elem, shadow;
-        while ( i-- ) {
-            elem = elems[i];
-            shadow = elem.shadowRoot;
-            // https://www.chromestatus.com/features/4668884095336448
-            // "Multiple shadow roots is being deprecated."
-            if ( shadow !== null ) {
-                if ( shadow.className !== sessionId ) {
+        return function(selectors) {
+            if ( selectors.length === 0 ) { return; }
+            var elems = document.querySelectorAll(selectors);
+            var i = elems.length;
+            if ( i === 0 ) { return; }
+            // https://github.com/gorhill/uBlock/issues/435
+            // Using shadow content so that we do not have to modify style
+            // attribute.
+            var sessionId = vAPI.sessionId;
+            var elem, shadow;
+            while ( i-- ) {
+                elem = elems[i];
+                shadow = elem.shadowRoot;
+                // https://www.chromestatus.com/features/4668884095336448
+                // "Multiple shadow roots is being deprecated."
+                if ( shadow !== null ) {
+                    if ( shadow.className !== sessionId ) {
+                        elem.style.setProperty('display', 'none', 'important');
+                    }
+                    continue;
+                }
+                // https://github.com/gorhill/uBlock/pull/555
+                // Not all nodes can be shadowed:
+                //   https://github.com/w3c/webcomponents/issues/102
+                try {
+                    shadow = elem.createShadowRoot();
+                    shadow.className = sessionId;
+                } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
                 }
-                continue;
             }
-            // https://github.com/gorhill/uBlock/pull/555
-            // Not all nodes can be shadowed:
-            //   https://github.com/w3c/webcomponents/issues/102
-            try {
-                shadow = elem.createShadowRoot();
-                shadow.className = sessionId;
-            } catch (ex) {
-                elem.style.setProperty('display', 'none', 'important');
-            }
-        }
-    };
+        };
+    })();
 
     // Extract and return the staged nodes which (may) match the selectors.
 
