@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Bulut depolama desteğini etkinleştir",
+    "message":"Bulut depo desteğini etkinleştir",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Bulut deposuna gönder",
+    "message":"Bulut depoya aktar",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Bulut deposundan getir",
+    "message":"Bulut depodan al",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"byte",
     "description":""
   },
   "dummy":{
