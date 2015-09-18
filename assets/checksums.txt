@@ -1,6 +1,6 @@
 6f506c670bd425f4743c3056d5a51d83 assets/ublock/unbreak.txt
 75448208315e80706632ec8a6df0e6d3 assets/ublock/privacy.txt
-71693bd9912182540d8febab84d93bee assets/ublock/filters.txt
+10b247aa43c9bd968d900e5c3c6fce99 assets/ublock/filters.txt
 d2c1dc3f8c4528e6d6a9083afc30b938 assets/ublock/badware.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
 d6649cbd5533bb5ea3ccd8de060d21fe assets/ublock/filter-lists.json
