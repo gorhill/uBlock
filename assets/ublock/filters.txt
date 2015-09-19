@@ -118,7 +118,7 @@ speedtest.net###swiffycontainer canvas
 ink361.com##.getridofAdsBlock[href^="javascript:"]
 
 # washingtonpost.com
-||js.washingtonpost.com/wpost2/js/combo$script,first-party
+||js.washingtonpost.com/wpost*/js/combo$script,first-party
 www.washingtonpost.com###drawbridge-signup-overlay
 www.washingtonpost.com##.jqmOverlay
 
