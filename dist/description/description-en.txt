@@ -39,7 +39,7 @@ If ever you really do want to contribute something, think about the people worki
 ***
 
 Documentation:
-https://github.com/gorhill/uBlock/wiki
+https://github.com/gorhill/uBlock#ublock-origin
 
 Project change log:
 https://github.com/gorhill/uBlock/releases
