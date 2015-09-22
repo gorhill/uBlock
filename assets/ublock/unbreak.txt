@@ -114,8 +114,9 @@ ovh.strim.io#@##tweets
 
 # From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
 # https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
+# https://github.com/chrisaljoudi/uBlock/issues/1546
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$domain=reddit.com|www.vd.nl
+@@||google-analytics.com/analytics.js$domain=reddit.com|trello.com|www.vd.nl
 
 # https://github.com/chrisaljoudi/uBlock/issues/570
 # To counter `yui.yahooapis.com` in hpHosts
