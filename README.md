@@ -91,7 +91,7 @@ Once you install uBlock₀, you may easily un-select any of the pre-selected fil
 <div align="center">
 On average, uBlock₀ <b>really</b> does make your browser run leaner. <sup>[1]</sup><br><br>
 
-Chromium <sup>[2]</sup><br>
+Chromium<br>
 <img src="https://cloud.githubusercontent.com/assets/585534/10074141/15f04128-629c-11e5-9155-177fd4909083.png" /><br><br>
 
 Firefox<br>
