@@ -86,7 +86,7 @@ function startup(data, reason) {
         );
     };
 
-    if ( reason !== APP_STARTUP ) {
+    if ( reason !== APP_STARTUP && reason !== ADDON_INSTALL) {
         onReady();
         return;
     }
