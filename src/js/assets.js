@@ -61,6 +61,7 @@ var lastRepoMetaTimestamp = 0;
 var lastRepoMetaIsRemote = false;
 var refreshRepoMetaPeriod = 5 * oneHour;
 var errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
+var xhrTimeout = vAPI.localStorage.getItem('xhrTimeout') || 30000;
 
 var exports = {
     autoUpdate: true,
@@ -318,7 +319,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     try {
         xhr.open('get', url, true);
-        xhr.timeout = 30000;
+        xhr.timeout = xhrTimeout;
         xhr.onload = onResponseReceived;
         xhr.onerror = onErrorReceived;
         xhr.ontimeout = onErrorReceived;
