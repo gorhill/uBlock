@@ -2131,9 +2131,12 @@ vAPI.toolbarButton = {
             resizeTimer = null;
             var body = iframe.contentDocument.body;
             panel.parentNode.style.maxWidth = 'none';
+
+            // https://github.com/gorhill/uMatrix/issues/362
+            panel.parentNode.style.opacity = '1';
+
             // https://github.com/chrisaljoudi/uBlock/issues/730
             // Voodoo programming: this recipe works
-
             var clientHeight = body.clientHeight;
             iframe.style.height = toPx(clientHeight);
             panel.style.height = toPx(clientHeight + panel.boxObject.height - panel.clientHeight);
