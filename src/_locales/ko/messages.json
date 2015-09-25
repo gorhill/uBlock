@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"매개 변수 없이",
+    "message":"제외 매개 변수",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
