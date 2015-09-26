@@ -74,6 +74,7 @@ var localMessager = vAPI.messaging.channel('contentscript-start.js');
 var cosmeticFilters = function(details) {
     var donthideCosmeticFilters = {};
     var hideCosmeticFilters = {};
+    var scriptTagFilters = [];
     var donthide = details.cosmeticDonthide;
     var hide = details.cosmeticHide;
     var i;
@@ -91,9 +92,14 @@ var cosmeticFilters = function(details) {
             selector = hide[i];
             if ( donthideCosmeticFilters[selector] ) {
                 hide.splice(i, 1);
-            } else {
-                hideCosmeticFilters[selector] = true;
+                continue;
             }
+            if ( selector.lastIndexOf('script//:', 0) === 0 ) {
+                scriptTagFilters.push(selector.slice(9));
+                hide.splice(i, 1);
+                continue;
+            }
+            hideCosmeticFilters[selector] = true;
         }
     }
     if ( hide.length !== 0 ) {
@@ -111,6 +117,11 @@ var cosmeticFilters = function(details) {
     }
     vAPI.donthideCosmeticFilters = donthideCosmeticFilters;
     vAPI.hideCosmeticFilters = hideCosmeticFilters;
+
+    if ( scriptTagFilters.length !== 0 ) {
+        vAPI.reScriptTagFilters = new RegExp(scriptTagFilters.join('|'));
+        document.addEventListener('beforescriptexecute', onBeforeScriptExecuteHandler);
+    }
 };
 
 var netFilters = function(details) {
@@ -126,6 +137,13 @@ var netFilters = function(details) {
     style.appendChild(document.createTextNode(text + css));
     parent.appendChild(style);
     //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
+};
+
+var onBeforeScriptExecuteHandler = function(ev) {
+    if ( vAPI.reScriptTagFilters.test(ev.target.textContent) ) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
 };
 
 var filteringHandler = function(details) {

@@ -283,6 +283,20 @@ FilterParser.prototype.parse = function(s) {
         this.suffix = this.suffix.slice(1);
     }
 
+    // Script tag filters: pre-process them so that can be used with minimal
+    // overhead in the content script.
+    if (
+        this.suffix.lastIndexOf('script:contains(/', 0) === 0 &&
+        this.suffix.slice(-2) === '/)'
+    ) {
+        // Currently supported only as non-generic selector.
+        if ( this.prefix.length === 0 ) {
+            this.invalid = true;
+            return this;
+        }
+        this.suffix = 'script//:' + this.suffix.slice(17, -2).replace(/\\/g, '\\');
+    }
+
     this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
     if ( this.prefix !== '' ) {
         this.hostnames = this.prefix.split(/\s*,\s*/);
@@ -576,11 +590,14 @@ FilterContainer.prototype.isValidSelector = (function() {
         try {
             // https://github.com/gorhill/uBlock/issues/693
             div.matches(s + ',\n#foo');
+            return true;
         } catch (e) {
-            console.error('uBlock> invalid cosmetic filter:', s);
-            return false;
         }
-        return true;
+        if ( s.lastIndexOf('script//:', 0) === 0 ) {
+            return true;
+        }
+        console.error('uBlock> invalid cosmetic filter:', s);
+        return false;
     };
 })();
 
