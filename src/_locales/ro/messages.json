@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Filtre externe",
+    "message":"Filtre terțe",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"fără parametrii",
+    "message":"fără parametri",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"octeți",
     "description":""
   },
   "dummy":{
