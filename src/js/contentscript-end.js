@@ -474,13 +474,12 @@ var uBlockCollapser = (function() {
             var elem, shadow;
             while ( i-- ) {
                 elem = elems[i];
-                shadow = elem.shadowRoot;
+                // https://github.com/gorhill/uBlock/issues/762
+                // Always hide using inline style.
+                elem.style.setProperty('display', 'none', 'important');
                 // https://www.chromestatus.com/features/4668884095336448
                 // "Multiple shadow roots is being deprecated."
-                if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {
-                        elem.style.setProperty('display', 'none', 'important');
-                    }
+                if ( elem.shadowRoot !== null ) {
                     continue;
                 }
                 // https://github.com/gorhill/uBlock/pull/555
@@ -490,7 +489,6 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                 } catch (ex) {
-                    elem.style.setProperty('display', 'none', 'important');
                 }
             }
         };
