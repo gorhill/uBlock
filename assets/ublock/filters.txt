@@ -138,3 +138,8 @@ explosm.net##.inner-wrap > .row > .columns.large-8.medium-12 > hr + div:not(.row
 # https://github.com/gorhill/uBlock/issues/275
 jeu.info###page [class^="banniere-"]
 ||jeu.info^$inline-script
+
+# https://github.com/gorhill/uBlock/issues/759
+# Until fixed in EasyPrivacy
+@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/quant.js$script,first-party
+@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/vquant.js$script,first-party
