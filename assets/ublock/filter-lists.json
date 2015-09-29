@@ -141,7 +141,7 @@
         "title": "Basic tracking list by Disconnect",
         "group": "privacy"
         },
-    "http://www.certyficate.it/adblock/adblock.txt": {
+    "https://www.certyficate.it/adblock/adblock.txt": {
         "off": true,
         "title": "POL: polskie filtry do Adblocka i uBlocka",
         "group": "regions",
