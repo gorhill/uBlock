@@ -31,8 +31,8 @@
 
 /******************************************************************************/
 
-// Not all sandbox are given an rpc function, so assign a dummy one it is
-// missing -- this avoids the need for constantly testing before use.
+// Not all sandboxes are given an rpc function, so assign a dummy one if it is
+// missing -- this avoids the need for testing before use.
 
 self.rpc = self.rpc || function(){};
 
