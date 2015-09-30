@@ -192,7 +192,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"ローカルIPアドレスの漏洩をもたらすWebRTCを防止する",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -436,7 +436,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"ネットワークリクエストが {{type}} である場合に、{{br}}URLアドレスが {{url}} と一致し、{{br}}{{origin}} を発信源としている場合は {{action}} をします。{{br}}{{importance}} が存在する場合は例外フィルターと一致させます。",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -452,7 +452,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"any type",
+    "message":"任意の種類",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
@@ -460,19 +460,19 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"全体",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"例外",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"非例外",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"静的フィルター {{filter}} が見つかりました:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -572,11 +572,11 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"パラメーター未指定",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"次のフィルターで見つかりました:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"バイト",
     "description":""
   },
   "dummy":{
