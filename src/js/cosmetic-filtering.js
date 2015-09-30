@@ -267,6 +267,7 @@ FilterParser.prototype.parse = function(s) {
     // Remember original string
     this.prefix = matches[1];
     this.suffix = matches[3];
+    this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
 
     // 2014-05-23:
     // https://github.com/gorhill/httpswitchboard/issues/260
@@ -288,8 +289,9 @@ FilterParser.prototype.parse = function(s) {
     // overhead in the content script.
     // Example: focus.de##script:contains(/uabInject/)
     if ( this.suffix.charAt(0) === 's' && this.reScriptContains.test(this.suffix) ) {
-        // Currently supported only as non-generic selector.
-        if ( this.prefix.length === 0 ) {
+        // Currently supported only as non-generic selector. Also, exception
+        // script tag filter makes no sense, ignore.
+        if ( this.prefix.length === 0 || this.unhide === 1 ) {
             this.invalid = true;
             return this;
         }
@@ -302,7 +304,6 @@ FilterParser.prototype.parse = function(s) {
         }
     }
 
-    this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
     if ( this.prefix !== '' ) {
         this.hostnames = this.prefix.split(/\s*,\s*/);
     }
