@@ -31,6 +31,13 @@
 
 /******************************************************************************/
 
+// Not all sandbox are given an rpc function, so assign a dummy one it is
+// missing -- this avoids the need for constantly testing before use.
+
+self.rpc = self.rpc || function(){};
+
+/******************************************************************************/
+
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
@@ -63,6 +70,30 @@ vAPI.shutdown = (function() {
         add: add,
         exec: exec
     };
+})();
+
+/******************************************************************************/
+
+(function() {
+    var hostname = location.hostname;
+    if ( !hostname ) {
+        return;
+    }
+    var filters = self.rpc({
+        fnName: 'getScriptTagFilters',
+        url: location.href,
+        hostname: hostname
+    });
+    if ( typeof filters !== 'string' || filters === '' ) {
+        return;
+    }
+    var reFilters = new RegExp(filters);
+    document.addEventListener('beforescriptexecute', function(ev) {
+        if ( reFilters.test(ev.target.textContent) ) {
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+    });
 })();
 
 /******************************************************************************/
@@ -254,6 +285,12 @@ MessagingChannel.prototype.send = function(message, callback) {
 
 MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
     var messaging = vAPI.messaging;
+    if ( !messaging ) {
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+        return;
+    }
     // Too large a gap between the last request and the last response means
     // the main process is no longer reachable: memory leaks and bad
     // performance become a risk -- especially for long-lived, dynamic

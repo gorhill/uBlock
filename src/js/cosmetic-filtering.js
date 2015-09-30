@@ -237,7 +237,7 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
-    this.reScriptSelectorParser = /^script:contains\(\/.+?\/\)$/;
+    this.reScriptContains = /^script:contains\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -286,16 +286,20 @@ FilterParser.prototype.parse = function(s) {
 
     // Script tag filters: pre-process them so that can be used with minimal
     // overhead in the content script.
-    if (
-        this.suffix.charAt(0) === 's' &&
-        this.reScriptSelectorParser.test(this.suffix)
-    ) {
+    // Example: focus.de##script:contains(/uabInject/)
+    if ( this.suffix.charAt(0) === 's' && this.reScriptContains.test(this.suffix) ) {
         // Currently supported only as non-generic selector.
         if ( this.prefix.length === 0 ) {
             this.invalid = true;
             return this;
         }
-        this.suffix = 'script//:' + this.suffix.slice(17, -2).replace(/\\/g, '\\');
+        var suffix = this.suffix;
+        this.suffix = 'script//:';
+        if ( suffix.charAt(16) !== '/' || suffix.slice(-2) !== '/)' ) {
+            this.suffix += suffix.slice(16, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        } else {
+            this.suffix += suffix.slice(17, -2).replace(/\\/g, '\\');
+        }
     }
 
     this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
@@ -1257,7 +1261,6 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
         cosmeticHide: [],
         cosmeticDonthide: [],
         netHide: [],
-        scriptTagRegex: this.retrieveScriptTagRegex(domain, hostname),
         netCollapse: µb.userSettings.collapseBlocked
     };
 

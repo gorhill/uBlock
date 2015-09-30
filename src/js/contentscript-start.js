@@ -128,15 +128,7 @@ var netFilters = function(details) {
     //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
 };
 
-var onBeforeScriptExecuteHandler = function(ev) {
-    if ( vAPI.reScriptTagRegex.test(ev.target.textContent) ) {
-        ev.preventDefault();
-        ev.stopPropagation();
-    }
-};
-
 var filteringHandler = function(details) {
-    var value;
     var styleTagCount = vAPI.styles.length;
 
     vAPI.skipCosmeticFiltering = !details || details.skipCosmeticFiltering;
@@ -146,11 +138,6 @@ var filteringHandler = function(details) {
         }
         if ( details.netHide.length !== 0 ) {
             netFilters(details);
-        }
-        value = details.scriptTagRegex;
-        if ( typeof value === 'string' && value.length !== 0 ) {
-            vAPI.reScriptTagRegex = new RegExp(value);
-            document.addEventListener('beforescriptexecute', onBeforeScriptExecuteHandler);
         }
         // The port will never be used again at this point, disconnecting allows
         // the browser to flush this script from memory.

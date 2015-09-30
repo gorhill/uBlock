@@ -30,6 +30,7 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
 
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
+const rpcEmitterName = hostName + ':child-process-message';
 
 //Cu.import('resource://gre/modules/devtools/Console.jsm');
 
@@ -239,9 +240,25 @@ const contentObserver = {
                 wantXHRConstructor: false
             });
 
+            if ( Services.cpmm ) {
+                sandbox.rpc = function(details) {
+                    var svc = Services;
+                    if ( svc === undefined ) { return; }
+                    var cpmm = svc.cpmm;
+                    if ( !cpmm ) { return; }
+                    var r = cpmm.sendSyncMessage(rpcEmitterName, details);
+                    if ( Array.isArray(r) ) {
+                        return r[0];
+                    }
+                };
+            } else {
+                sandbox.rpc = function() {};
+            }
+
             sandbox.injectScript = function(script) {
-                if ( Services !== undefined ) {
-                    Services.scriptloader.loadSubScript(script, sandbox);
+                var svc = Services;
+                if ( svc !== undefined ) {
+                    svc.scriptloader.loadSubScript(script, sandbox);
                 } else {
                     // Sandbox appears void.
                     // I've seen this happens, need to investigate why.
@@ -258,9 +275,10 @@ const contentObserver = {
                 sandbox.removeMessageListener();
                 sandbox.addMessageListener =
                 sandbox.injectScript =
+                sandbox.outerShutdown =
                 sandbox.removeMessageListener =
-                sandbox.sendAsyncMessage =
-                sandbox.outerShutdown = function(){};
+                sandbox.rpc =
+                sandbox.sendAsyncMessage = function(){};
                 sandbox.vAPI = {};
                 messager = null;
             };
@@ -412,13 +430,19 @@ const LocationChangeListener = function(docShell) {
 
     var requestor = docShell.QueryInterface(Ci.nsIInterfaceRequestor);
     var ds = requestor.getInterface(Ci.nsIWebProgress);
-    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
-
-    if ( ds && mm && typeof mm.sendAsyncMessage === 'function' ) {
-        this.docShell = ds;
-        this.messageManager = mm;
-        ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
+    if ( !ds ) {
+        return;
     }
+    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
+    if ( !mm ) {
+        return;
+    }
+    if ( typeof mm.sendAsyncMessage !== 'function' ) {
+        return;
+    }
+    this.docShell = ds;
+    this.messageManager = mm;
+    ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
 };
 
 LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI([

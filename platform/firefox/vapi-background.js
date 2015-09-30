@@ -70,7 +70,7 @@ vAPI.localStorage.setDefaultBool('forceLegacyToolbarButton', false);
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = 7;
+var expectedNumberOfCleanups = 8;
 
 window.addEventListener('unload', function() {
     if ( typeof vAPI.app.onShutdown === 'function' ) {
@@ -90,10 +90,11 @@ window.addEventListener('unload', function() {
     }
 
     // frameModule needs to be cleared too
+    var frameModuleURL = vAPI.getURL('frameModule.js');
     var frameModule = {};
-    Cu.import(vAPI.getURL('frameModule.js'), frameModule);
+    Cu.import(frameModuleURL, frameModule);
     frameModule.contentObserver.unregister();
-    Cu.unload(vAPI.getURL('frameModule.js'));
+    Cu.unload(frameModuleURL);
 });
 
 /******************************************************************************/
@@ -987,15 +988,15 @@ var tabWatcher = (function() {
     };
 
     // https://developer.mozilla.org/en-US/docs/Web/Events/TabOpen
-    var onOpen = function({target}) {
-        var tabId = tabIdFromTarget(target);
-        var browser = browserFromTabId(tabId);
-        vAPI.tabs.onNavigation({
-            frameId: 0,
-            tabId: tabId,
-            url: browser.currentURI.asciiSpec,
-        });
-    };
+    //var onOpen = function({target}) {
+    //    var tabId = tabIdFromTarget(target);
+    //    var browser = browserFromTabId(tabId);
+    //    vAPI.tabs.onNavigation({
+    //        frameId: 0,
+    //        tabId: tabId,
+    //        url: browser.currentURI.asciiSpec,
+    //    });
+    //};
 
     // https://developer.mozilla.org/en-US/docs/Web/Events/TabShow
     var onShow = function({target}) {
@@ -1208,7 +1209,7 @@ vAPI.messaging = {
         return Cc['@mozilla.org/globalmessagemanager;1']
                 .getService(Ci.nsIMessageListenerManager);
     },
-    frameScript: vAPI.getURL('frameScript.js'),
+    frameScriptURL: vAPI.getURL('frameScript.js'),
     listeners: {},
     defaultHandler: null,
     NOOPFUNC: function(){},
@@ -1438,7 +1439,7 @@ vAPI.messaging.setup = function(defaultHandler) {
         this.onMessage
     );
 
-    this.globalMessageManager.loadFrameScript(this.frameScript, true);
+    this.globalMessageManager.loadFrameScript(this.frameScriptURL, true);
 
     cleanupTasks.push(function() {
         var gmm = vAPI.messaging.globalMessageManager;
@@ -1452,7 +1453,7 @@ vAPI.messaging.setup = function(defaultHandler) {
             })
         );
 
-        gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);
+        gmm.removeDelayedFrameScript(vAPI.messaging.frameScriptURL);
         gmm.removeMessageListener(
             location.host + ':background',
             vAPI.messaging.onMessage
@@ -1471,6 +1472,60 @@ vAPI.messaging.broadcast = function(message) {
     );
 };
 
+/******************************************************************************/
+/******************************************************************************/
+
+// Synchronous messaging: Firefox allows this. Chromium does not allow this.
+
+// Sometimes there is no way around synchronous messaging, as long as:
+// - the code at the other end execute fast and return quickly.
+// - it's not abused.
+// Original rationale is <https://github.com/gorhill/uBlock/issues/756>.
+// Synchronous messaging is a good solution for this case because:
+// - It's done only *once* per page load. (Keep in mind there is already a
+//   sync message sent for each single network request on a page and it's not
+//   an issue, because the code executed is trivial, which is the key -- see
+//   shouldLoadListener below).
+// - The code at the other end is fast.
+// Though vAPI.rpcReceiver was brought forth because of this one case, I
+// generalized the concept for whatever future need for synchronous messaging
+// which might arise.
+
+// https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Message_Manager/Message_manager_overview#Content_frame_message_manager
+
+vAPI.rpcReceiver = (function() {
+    var calls = Object.create(null);
+    var childProcessMessageName = location.host + ':child-process-message';
+
+    var onChildProcessMessage = function(ev) {
+        var msg = ev.data;
+        if ( !msg ) { return; }
+        var fn = calls[msg.fnName];
+        if ( typeof fn === 'function' ) {
+            return fn(msg);
+        }
+    };
+
+    if ( Services.ppmm ) {
+        Services.ppmm.addMessageListener(
+            childProcessMessageName,
+            onChildProcessMessage
+        );
+    }
+
+    cleanupTasks.push(function() {
+        if ( Services.ppmm ) {
+            Services.ppmm.removeMessageListener(
+                childProcessMessageName,
+                onChildProcessMessage
+            );
+        }
+    });
+
+    return calls;
+})();
+
+/******************************************************************************/
 /******************************************************************************/
 
 var httpObserver = {
@@ -1865,7 +1920,11 @@ vAPI.net.registerListeners = function() {
         var tabId = tabWatcher.tabIdFromTarget(e.target);
         var sourceTabId = null;
 
-        // Popup candidate
+        // Popup candidate: this code path is taken only for when a new top
+        // document loads, i.e. only once per document load. TODO: evaluate for
+        // popup filtering in an asynchrous manner -- it's not really required
+        // to evaluate on the spot. Still, there is currently no harm given
+        // this code path is typically taken only once per page load.
         if ( details.openerURL ) {
             for ( var browser of tabWatcher.browsers() ) {
                 var URI = browser.currentURI;
@@ -1899,8 +1958,9 @@ vAPI.net.registerListeners = function() {
             }
         }
 
-        //console.log('shouldLoadListener:', details.url);
-
+        // We are being called synchronously from the content process, so we
+        // must return ASAP. The code below merely record the details of the
+        // request into a ring buffer for later retrieval by the HTTP observer.
         var pendingReq = httpObserver.createPendingRequest(details.url);
         pendingReq.frameId = details.frameId;
         pendingReq.parentFrameId = details.parentFrameId;
