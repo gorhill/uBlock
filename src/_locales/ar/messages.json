@@ -236,7 +236,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"هذا الخيار يفعل تحليل وتطبيق فلاتر <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> هذي الفلاتر مخصصه للتجميل الصفحه. هذي الفلاتر تخفي بعض صناديق او اعلانات المزعجه التي لا يمنعها محرك الفلاتر تفعيل هذي الخاصيه سوف يجعل الاضافه تستعمل الذاكره اكثر",
+    "message":"<p>هذا الخيار يمكّن من تحليل و تفعيل <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> فلاتر متطابقة مع فلاتر &rdquo;إخفاء العناصر&ldquo; لتطبيق Adblock Plus<\/a>. هذه الفلاتر جماليّة بالأساس، تهدف إلى إخفاء عناصر في صفحة واب، تعتبر إزعاجا بصريّا، قد لا يتمكّن محرّك فلاتر الرّوابط من كشفها و صدّها.<\/p><p>تفعيل هذا الخيار من شأنه زيادة أثر uBlock₀ على الذّاكرة.<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"دون معلمات",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"بايت",
     "description":""
   },
   "dummy":{
