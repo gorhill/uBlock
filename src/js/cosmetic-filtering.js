@@ -287,7 +287,9 @@ FilterParser.prototype.parse = function(s) {
 
     // Script tag filters: pre-process them so that can be used with minimal
     // overhead in the content script.
-    // Example: focus.de##script:contains(/uabInject/)
+    // Examples:
+    //   focus.de##script:contains(/uabInject/)
+    //   focus.de##script:contains(uabInject)
     if ( this.suffix.charAt(0) === 's' && this.reScriptContains.test(this.suffix) ) {
         // Currently supported only as non-generic selector. Also, exception
         // script tag filter makes no sense, ignore.
