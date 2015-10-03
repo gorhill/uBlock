@@ -1017,7 +1017,7 @@ vAPI.cloud = (function() {
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
     var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75);
 
-    // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
+    // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES;
 
     var options = {
@@ -1029,8 +1029,8 @@ vAPI.cloud = (function() {
     // We "poll" at specific index in order to get a rough idea of how
     // large is the stored string.
     // This allows reading a single item with only 2 sync operations -- a
-    // good thing given chrome.storage.syncMAX_WRITE_OPERATIONS_PER_MINUTE
-    // and chrome.storage.syncMAX_WRITE_OPERATIONS_PER_HOUR.
+    // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
+    // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
     var getCoarseChunkCount = function(dataKey, callback) {
         var bin = {};
@@ -1085,7 +1085,7 @@ vAPI.cloud = (function() {
         bin.size = JSON.stringify(bin).length;
         var item = JSON.stringify(bin);
 
-        // Chunkify taking into account  QUOTA_BYTES_PER_ITEM:
+        // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value
