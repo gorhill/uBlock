@@ -13,7 +13,7 @@
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
         <optionsType>2</optionsType>
-{localized}
+	{localized}
 
         <!-- Firefox -->
         <targetApplication>
@@ -51,13 +51,13 @@
             </r:Description>
         </targetApplication>
 
-	<!-- Conkeror -->
-	<targetApplication>
-	  <Description>
-	      <id>{a79fe89b-6662-4ff4-8e88-09950ad4dfde}</id>
-	      <minVersion>0.1</minVersion>
-	      <maxVersion>9.9</maxVersion>
-	  </Description>
-	</targetApplication>
+        <!-- Conkeror -->
+        <targetApplication>
+            <r:Description>
+		<id>{a79fe89b-6662-4ff4-8e88-09950ad4dfde}</id>
+		<minVersion>0.1</minVersion>
+		<maxVersion>9.9</maxVersion>
+            </r:Description>
+        </targetApplication>
     </r:Description>
 </r:RDF>
