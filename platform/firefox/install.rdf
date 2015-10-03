@@ -54,7 +54,7 @@
         <!-- Conkeror -->
         <targetApplication>
             <r:Description>
-		<id>{a79fe89b-6662-4ff4-8e88-09950ad4dfde}</id>
+		<id>{{a79fe89b-6662-4ff4-8e88-09950ad4dfde}}</id>
 		<minVersion>0.1</minVersion>
 		<maxVersion>9.9</maxVersion>
             </r:Description>
