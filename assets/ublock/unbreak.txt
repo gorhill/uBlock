@@ -219,3 +219,8 @@ ovh.strim.io#@##tweets
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=24764
 @@/b/ss/*&aqe=$image,domain=aeroplan.com
+
+# https://github.com/gorhill/uBlock/issues/780
+@@||www.google-analytics.com/plugins/ua/linkid.js$script,domain=support.amd.com
+@@||www.google-analytics.com/analytics.js$script,domain=support.amd.com
+@@||www.googletagmanager.com/gtm.js$script,domain=support.amd.com
