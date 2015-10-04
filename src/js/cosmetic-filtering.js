@@ -230,21 +230,19 @@ FilterEntity.fromSelfie = function(s) {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.prefix = '';
-    this.suffix = '';
+    this.prefix =  this.suffix = this.style = '';
     this.unhide = 0;
     this.hostnames = [];
     this.invalid = false;
     this.cosmetic = true;
-    this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
+    this.reParser = /^([^#]*?)(##|#@#)(.+)$/;
     this.reScriptContains = /^script:contains\(.+?\)$/;
 };
 
 /******************************************************************************/
 
 FilterParser.prototype.reset = function() {
-    this.prefix = '';
-    this.suffix = '';
+    this.prefix = this.suffix = this.style = '';
     this.unhide = 0;
     this.hostnames.length = 0;
     this.invalid = false;
@@ -263,11 +261,20 @@ FilterParser.prototype.parse = function(s) {
         this.cosmetic = false;
         return this;
     }
-
-    // Remember original string
-    this.prefix = matches[1];
-    this.suffix = matches[3];
+    this.prefix = matches[1].trim();
     this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
+    this.suffix = matches[3].trim();
+
+    // Cosmetic filters with explicit style properties can apply only:
+    // - to specific cosmetic filters (those which apply to a specific site)
+    // - to block cosmetic filters (not exception cosmetic filters)
+    if ( this.suffix.slice(-1) === '}' ) {
+        // Not supported for now: this code will ensure some backward
+        // compatibility for when cosmetic filters with explicit style
+        // properties start to be in use.
+        this.invalid = true;
+        return this;
+    }
 
     // 2014-05-23:
     // https://github.com/gorhill/httpswitchboard/issues/260
@@ -285,6 +292,10 @@ FilterParser.prototype.parse = function(s) {
         this.suffix = this.suffix.slice(1);
     }
 
+    if ( this.prefix !== '' ) {
+        this.hostnames = this.prefix.split(/\s*,\s*/);
+    }
+
     // Script tag filters: pre-process them so that can be used with minimal
     // overhead in the content script.
     // Examples:
@@ -293,7 +304,7 @@ FilterParser.prototype.parse = function(s) {
     if ( this.suffix.charAt(0) === 's' && this.reScriptContains.test(this.suffix) ) {
         // Currently supported only as non-generic selector. Also, exception
         // script tag filter makes no sense, ignore.
-        if ( this.prefix.length === 0 || this.unhide === 1 ) {
+        if ( this.hostnames.length === 0 || this.unhide === 1 ) {
             this.invalid = true;
             return this;
         }
@@ -306,9 +317,6 @@ FilterParser.prototype.parse = function(s) {
         }
     }
 
-    if ( this.prefix !== '' ) {
-        this.hostnames = this.prefix.split(/\s*,\s*/);
-    }
     return this;
 };
 
