@@ -164,7 +164,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
+    "message":"Zeige die Zahl der blockierten Anfragen auf dem Symbol",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -196,7 +196,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktiviere experimentelle Features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Aktiviere experimentelle Funktionen (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -296,7 +296,7 @@
     "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
-    "message":"Letztes Update: {{ago}}",
+    "message":"Letzte Aktualisierung: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -348,7 +348,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Aus Datei importieren...",
+    "message":"Aus Datei importieren …",
     "description":""
   },
   "rulesExport":{
@@ -380,7 +380,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "message":"meine-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -492,7 +492,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup in eine Datei...",
+    "message":"Backup in eine Datei",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -500,11 +500,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Aus einer Datei wiederherstellen...",
+    "message":"Aus einer Datei wiederherstellen ...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Fange von ganz vorne an...",
+    "message":"Auf Vorgaben zurücksetzen …",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

@@ -516,7 +516,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Verranno cancellate tutte le impostazioni, e uBlock sarà riavviato.\n\nResettare uBlock alle impostazioni di fabbrica?",
+    "message":"Verranno cancellate tutte le impostazioni, e uBlock₀ sarà riavviato.\n\nResettare uBlock alle impostazioni di fabbrica?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -564,7 +564,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock ha impedito alla seguente pagina di caricarsi:",
+    "message":"uBlock₀ ha impedito alla seguente pagina di caricarsi:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

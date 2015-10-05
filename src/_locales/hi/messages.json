@@ -620,11 +620,11 @@
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
-    "message":"Revert",
+    "message":"पलटदे",
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"बाइट्स",
     "description":""
   },
   "dummy":{
