@@ -1455,7 +1455,7 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         // https://issues.adblockplus.org/ticket/616
-        // `genericblock` concept already supported, just a matter of
+        // `generichide` concept already supported, just a matter of
         // adding support for the new keyword.
         if ( opt === 'elemhide' || opt === 'generichide' ) {
             if ( this.action === AllowAction ) {
