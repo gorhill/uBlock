@@ -143,3 +143,6 @@ jeu.info###page [class^="banniere-"]
 # Until fixed in EasyPrivacy
 @@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/quant.js$script,first-party
 @@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/vquant.js$script,first-party
+
+# http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
+arstechnica.com###lg-pushdown
