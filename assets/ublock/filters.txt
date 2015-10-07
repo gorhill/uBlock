@@ -152,5 +152,5 @@ arstechnica.com###lg-pushdown
 arstechnica.com##script:contains(ars.READY.push)
 dayt.se##script:contains(adBlockDetected)
 explosm.net##script:contains(/^__durl=/)
-focus.de.de##script:contains(uabInject)
+focus.de##script:contains(uabInject)
 rp-online.de##script:contains(uabInject)
