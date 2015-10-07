@@ -146,3 +146,11 @@ jeu.info###page [class^="banniere-"]
 
 # http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
 arstechnica.com###lg-pushdown
+
+# Useful inline script tag filters until filter list maintainers start to use
+# it in their respective filter lists
+arstechnica.com##script:contains(ars.READY.push)
+dayt.se##script:contains(adBlockDetected)
+explosm.net##script:contains(/^__durl=/)
+focus.de.de##script:contains(uabInject)
+rp-online.de##script:contains(uabInject)
