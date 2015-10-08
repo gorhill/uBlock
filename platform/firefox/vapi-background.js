@@ -524,12 +524,23 @@ vAPI.storage = (function() {
 
 /******************************************************************************/
 
-var getTabBrowser = function(win) {
-    return vAPI.fennec && win.BrowserApp ||
-           vAPI.thunderbird && win.document.getElementById('tabmail') ||
-           win.gBrowser ||
-           null;
-};
+var getTabBrowser = (function() {
+    if ( vAPI.fennec ) {
+        return function(win) {
+            return win.BrowserApp || null;
+        };
+    }
+
+    if ( vAPI.thunderbird ) {
+        return function(win) {
+            win.document.getElementById('tabmail');
+        };
+    }
+
+    return function(win) {
+        return win.gBrowser || null;
+    };
+})();
 
 /******************************************************************************/
 
@@ -561,6 +572,16 @@ vAPI.noTabId = '-1';
 /******************************************************************************/
 
 vAPI.tabs = {};
+
+
+/******************************************************************************/
+
+vAPI.tabs.mostRecentWindowId = (function() {
+    if ( vAPI.thunderbird ) {
+        return 'mail:3pane';
+    }
+    return 'navigator:browser';
+})();
 
 /******************************************************************************/
 
@@ -661,7 +682,7 @@ vAPI.tabs.getAll = function(window) {
 /******************************************************************************/
 
 vAPI.tabs.getWindows = function() {
-    var winumerator = Services.wm.getEnumerator('navigator:browser');
+    var winumerator = Services.wm.getEnumerator(this.mostRecentWindowId);
     var windows = [];
 
     while ( winumerator.hasMoreElements() ) {
@@ -733,11 +754,13 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    var win = Services.wm.getMostRecentWindow(vAPI.thunderbird && 'mail:3pane' || 'navigator:browser');
+    var win = Services.wm.getMostRecentWindow(this.mostRecentWindowId);
     var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
-        tabBrowser.addTab(details.url, {selected: details.active !== false});
+        tabBrowser.addTab(details.url, {
+            selected: details.active !== false
+        });
         // Note that it's impossible to move tabs on Fennec, so don't bother
         return;
     }
@@ -755,7 +778,10 @@ vAPI.tabs.open = function(details) {
     }
 
     if ( vAPI.thunderbird ) {
-        tabBrowser.openTab('contentTab', { contentPage: details.url, background: !details.active });
+        tabBrowser.openTab('contentTab', {
+            contentPage: details.url,
+            background: !details.active
+        });
         // TODO: Should be possible to move tabs on Thunderbird
         return;
     }
@@ -791,13 +817,16 @@ vAPI.tabs.replace = function(tabId, url) {
 
 /******************************************************************************/
 
-vAPI.tabs._remove = function(tab, tabBrowser) {
+vAPI.tabs._remove = (function() {
     if ( vAPI.fennec ) {
-        tabBrowser.closeTab(tab);
-        return;
+        return function(tab, tabBrowser) {
+            tabBrowser.closeTab(tab);
+        };
     }
-    tabBrowser.removeTab(tab);
-};
+    return function(tab, tabBrowser) {
+        tabBrowser.removeTab(tab);
+    };
+})();
 
 /******************************************************************************/
 
@@ -886,9 +915,10 @@ var tabWatcher = (function() {
     var tabIdGenerator = 1;
 
     var indexFromBrowser = function(browser) {
-        if (vAPI.thunderbird) // TODO: Add support for this
+        // TODO: Add support for this
+        if ( vAPI.thunderbird ) {
             return -1;
-
+        }
         var win = getOwnerWindow(browser);
         if ( !win ) {
             return -1;
@@ -979,17 +1009,19 @@ var tabWatcher = (function() {
     };
 
     var currentBrowser = function() {
-        var win = Services.wm.getMostRecentWindow(vAPI.thunderbird && 'mail:3pane' || 'navigator:browser');
+        var win = Services.wm.getMostRecentWindow(vAPI.tabs.mostRecentWindowId);
         // https://github.com/gorhill/uBlock/issues/399
         // getTabBrowser() can return null at browser launch time.
         var tabBrowser = getTabBrowser(win);
         if ( tabBrowser === null ) {
             return null;
         }
-        if (vAPI.thunderbird) {
+        if ( vAPI.thunderbird ) {
             // Directly at startup the first tab may not be initialized
-            if (tabBrowser.tabInfo.length == 0) return null;
-            return tabBrowser.getBrowserForSelectedTab();
+            if ( tabBrowser.tabInfo.length === 0 ) {
+                return null;
+            }
+            return tabBrowser.getBrowserForSelectedTab() || null;
         }
         return browserFromTarget(tabBrowser.selectedTab);
     };
@@ -1204,7 +1236,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var win = badge === undefined
         ? iconStatus
-        : vAPI.thunderbird && Services.wm.getMostRecentWindow('mail:3pane') || Services.wm.getMostRecentWindow('navigator:browser');
+        : Services.wm.getMostRecentWindow(vAPI.tabs.mostRecentWindowId);
     var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
     var tb = vAPI.toolbarButton;
 
