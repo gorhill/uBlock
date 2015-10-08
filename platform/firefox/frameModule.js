@@ -23,6 +23,7 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/800
 this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
 
 const {interfaces: Ci, utils: Cu} = Components;
@@ -62,7 +63,7 @@ const getMessageManager = function(win) {
 
 /******************************************************************************/
 
-const contentObserver = {
+var contentObserver = {
     classDescription: 'content-policy for ' + hostName,
     classID: Components.ID('{7afbd130-cbaf-46c2-b944-f5d24305f484}'),
     contractID: '@' + hostName + '/content-policy;1',
@@ -423,7 +424,7 @@ const contentObserver = {
 
 const locationChangedMessageName = hostName + ':locationChanged';
 
-const LocationChangeListener = function(docShell) {
+var LocationChangeListener = function(docShell) {
     if ( !docShell ) {
         return;
     }
