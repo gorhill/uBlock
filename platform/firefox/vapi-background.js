@@ -40,6 +40,7 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
+vAPI.thunderbird = Services.appinfo.ID === '{3550f703-e582-4d05-9a08-453d09bdfdc6}';
 
 /******************************************************************************/
 
@@ -524,7 +525,10 @@ vAPI.storage = (function() {
 /******************************************************************************/
 
 var getTabBrowser = function(win) {
-    return vAPI.fennec && win.BrowserApp || win.gBrowser || null;
+    return vAPI.fennec && win.BrowserApp ||
+           vAPI.thunderbird && win.document.getElementById('tabmail') ||
+           win.gBrowser ||
+           null;
 };
 
 /******************************************************************************/
@@ -729,7 +733,7 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    var win = Services.wm.getMostRecentWindow('navigator:browser');
+    var win = Services.wm.getMostRecentWindow(vAPI.thunderbird && 'mail:3pane' || 'navigator:browser');
     var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
@@ -747,6 +751,12 @@ vAPI.tabs.open = function(details) {
             'location=1,menubar=1,personalbar=1,resizable=1,toolbar=1',
             null
         );
+        return;
+    }
+
+    if ( vAPI.thunderbird ) {
+        tabBrowser.openTab('contentTab', { contentPage: details.url, background: !details.active });
+        // TODO: Should be possible to move tabs on Thunderbird
         return;
     }
 
@@ -876,6 +886,9 @@ var tabWatcher = (function() {
     var tabIdGenerator = 1;
 
     var indexFromBrowser = function(browser) {
+        if (vAPI.thunderbird) // TODO: Add support for this
+            return -1;
+
         var win = getOwnerWindow(browser);
         if ( !win ) {
             return -1;
@@ -966,12 +979,17 @@ var tabWatcher = (function() {
     };
 
     var currentBrowser = function() {
-        var win = Services.wm.getMostRecentWindow('navigator:browser');
+        var win = Services.wm.getMostRecentWindow(vAPI.thunderbird && 'mail:3pane' || 'navigator:browser');
         // https://github.com/gorhill/uBlock/issues/399
         // getTabBrowser() can return null at browser launch time.
         var tabBrowser = getTabBrowser(win);
         if ( tabBrowser === null ) {
             return null;
+        }
+        if (vAPI.thunderbird) {
+            // Directly at startup the first tab may not be initialized
+            if (tabBrowser.tabInfo.length == 0) return null;
+            return tabBrowser.getBrowserForSelectedTab();
         }
         return browserFromTarget(tabBrowser.selectedTab);
     };
@@ -1186,7 +1204,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var win = badge === undefined
         ? iconStatus
-        : Services.wm.getMostRecentWindow('navigator:browser');
+        : vAPI.thunderbird && Services.wm.getMostRecentWindow('mail:3pane') || Services.wm.getMostRecentWindow('navigator:browser');
     var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
     var tb = vAPI.toolbarButton;
 
