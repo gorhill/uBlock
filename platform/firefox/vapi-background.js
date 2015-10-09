@@ -533,7 +533,7 @@ var getTabBrowser = (function() {
 
     if ( vAPI.thunderbird ) {
         return function(win) {
-            win.document.getElementById('tabmail');
+            return win.document.getElementById('tabmail') || null;
         };
     }
 
