@@ -1188,14 +1188,19 @@ var tabWatcher = (function() {
 
     // Initialize map with existing active tabs
     var start = function() {
-        var tabBrowser, tab;
+        var tabBrowser, tabs, tab;
         for ( var win of vAPI.tabs.getWindows() ) {
             onWindowLoad.call(win);
             tabBrowser = getTabBrowser(win);
             if ( tabBrowser === null ) {
                 continue;
             }
-            for ( tab of tabBrowser.tabs ) {
+            // `tabBrowser.tabs` may not exist (Thunderbird).
+            tabs = tabBrowser.tabs;
+            if ( !tabs ) {
+                continue;
+            }
+            for ( tab of tabs ) {
                 if ( vAPI.fennec || !tab.hasAttribute('pending') ) {
                     tabIdFromTarget(tab);
                 }
@@ -2879,6 +2884,12 @@ vAPI.contextMenu.register = function(doc) {
     }
 
     var contextMenu = doc.getElementById('contentAreaContextMenu');
+
+    // This can happen (Thunderbird).
+    if ( contextMenu === null ) {
+        return;
+    }
+
     var menuitem = doc.createElement('menuitem');
     menuitem.setAttribute('id', this.menuItemId);
     menuitem.setAttribute('label', this.menuLabel);
