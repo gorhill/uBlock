@@ -818,7 +818,7 @@ vAPI.tabs.replace = function(tabId, url) {
 /******************************************************************************/
 
 vAPI.tabs._remove = (function() {
-    if ( vAPI.fennec ) {
+    if ( vAPI.fennec || vAPI.thunderbird ) {
         return function(tab, tabBrowser) {
             tabBrowser.closeTab(tab);
         };
@@ -971,6 +971,13 @@ var tabWatcher = (function() {
         if ( vAPI.fennec ) {
             if ( target.browser ) {         // target is a tab
                 target = target.browser;
+            }
+        } else if ( vAPI.thunderbird ) {
+            if ( target.mode ) {            // target is object with tab info
+                var browserFunc = target.mode.getBrowser || target.mode.tabType.getBrowser;
+                if (browserFunc) {
+                    return browserFunc.call(target.mode.tabType, target);
+                }
             }
         } else if ( target.linkedPanel ) {  // target is a tab
             target = target.linkedBrowser;
@@ -1143,7 +1150,9 @@ var tabWatcher = (function() {
         // To keep in mind: not all windows are tab containers,
         // sometimes the window IS the tab.
         var tabs;
-        if ( tabBrowser.tabs ) {
+        if ( vAPI.thunderbird ) {
+            tabs = tabBrowser.tabInfo;
+        } else if ( tabBrowser.tabs ) {
             tabs = tabBrowser.tabs;
         } else if ( tabBrowser.localName === 'browser' ) {
             tabs = [tabBrowser];
@@ -1152,7 +1161,8 @@ var tabWatcher = (function() {
         }
 
         var browser, URI, tabId;
-        for ( var tab of tabs ) {
+        for ( var tabindex = tabs.length - 1; tabindex >= 0; tabindex-- ) {
+            var tab = tabs[tabindex];
             browser = tabWatcher.browserFromTarget(tab);
             if ( browser === null ) {
                 continue;
