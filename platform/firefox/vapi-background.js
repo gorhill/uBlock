@@ -964,29 +964,36 @@ var tabWatcher = (function() {
         return tabbrowser.tabs[i];
     };
 
-    var browserFromTarget = function(target) {
-        if ( !target ) {
-            return null;
-        }
+    var browserFromTarget = (function() {
         if ( vAPI.fennec ) {
-            if ( target.browser ) {         // target is a tab
-                target = target.browser;
-            }
-        } else if ( vAPI.thunderbird ) {
-            if ( target.mode ) {            // target is object with tab info
-                var browserFunc = target.mode.getBrowser || target.mode.tabType.getBrowser;
-                if (browserFunc) {
-                    return browserFunc.call(target.mode.tabType, target);
+            return function(target) {
+                if ( !target ) { return null; }
+                if ( target.browser ) {     // target is a tab
+                    target = target.browser;
                 }
+                return target.localName === 'browser' ? target : null;
+            };
+        }
+        if ( vAPI.thunderbird ) {
+            return function(target) {
+                if ( !target ) { return null; }
+                if ( target.mode ) {        // target is object with tab info
+                    var browserFunc = target.mode.getBrowser || target.mode.tabType.getBrowser;
+                    if ( browserFunc ) {
+                        return browserFunc.call(target.mode.tabType, target);
+                    }
+                }
+                return target.localName === 'browser' ? target : null;
+            };
+        }
+        return function(target) {
+            if ( !target ) { return null; }
+            if ( target.linkedPanel ) {     // target is a tab
+                target = target.linkedBrowser;
             }
-        } else if ( target.linkedPanel ) {  // target is a tab
-            target = target.linkedBrowser;
-        }
-        if ( target.localName !== 'browser' ) {
-            return null;
-        }
-        return target;
-    };
+            return target.localName === 'browser' ? target : null;
+        };
+    })();
 
     var tabIdFromTarget = function(target) {
         var browser = browserFromTarget(target);
@@ -1161,9 +1168,10 @@ var tabWatcher = (function() {
         }
 
         var browser, URI, tabId;
-        for ( var tabindex = tabs.length - 1; tabindex >= 0; tabindex-- ) {
-            var tab = tabs[tabindex];
-            browser = tabWatcher.browserFromTarget(tab);
+        var tabindex = tabs.length, tab;
+        while ( tabindex-- ) {
+            tab = tabs[tabindex];
+            browser = browserFromTarget(tab);
             if ( browser === null ) {
                 continue;
             }
@@ -1172,7 +1180,6 @@ var tabWatcher = (function() {
             if ( URI.schemeIs('chrome') && URI.host === location.host ) {
                 vAPI.tabs._remove(tab, getTabBrowser(this));
             }
-            browser = browserFromTarget(tab);
             tabId = browserToTabIdMap.get(browser);
             if ( tabId !== undefined ) {
                 removeBrowserEntry(tabId, browser);
