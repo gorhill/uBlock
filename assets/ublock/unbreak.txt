@@ -228,3 +228,7 @@ ovh.strim.io#@##tweets
 # https://www.reddit.com/r/uBlockOrigin/comments/3oca9w/how_to_keep_ublock_from_interfering_with_button/
 @@||partner.googleadservices.com/gpt/$script,domain=www.merriam-webster.com
 @@||www.atpworldtour.com/assets/js/util/googleAnalytics.js$script,first-party
+
+# https://twitter.com/bociusz/status/653693746626871296
+# To counter Peter Lowe's `pagefair.com`, but only when on `pagefair.com`
+@@||pagefair.com^$first-party

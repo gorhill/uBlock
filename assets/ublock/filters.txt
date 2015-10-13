@@ -148,7 +148,7 @@ arstechnica.com###lg-pushdown
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
 arstechnica.com##script:contains(ars.READY.push)
-dayt.se##script:contains(adBlockDetected)
+dayt.se##script:contains(adblock.php)
 www.dpstream.net##script:contains(/^var\s+uniqueParam\s*=/)
 explosm.net##script:contains(/^__durl=/)
 extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,spankwire.com,thumbzilla.com,tube8.*,xtube.com,youporn.com,youporngay.com##script:contains(FastPopSessionRequestNumber)
