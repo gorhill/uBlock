@@ -1051,6 +1051,10 @@ var tabWatcher = (function() {
         }
     };
 
+    var removeTarget = function(target) {
+        onClose({ target: target });
+    };
+
     // https://developer.mozilla.org/en-US/docs/Web/Events/TabOpen
     //var onOpen = function({target}) {
     //    var tabId = tabIdFromTarget(target);
@@ -1246,6 +1250,7 @@ var tabWatcher = (function() {
         browserFromTarget: browserFromTarget,
         currentBrowser: currentBrowser,
         indexFromTarget: indexFromTarget,
+        removeTarget: removeTarget,
         start: start,
         tabFromBrowser: tabFromBrowser,
         tabIdFromTarget: tabIdFromTarget
@@ -2050,10 +2055,22 @@ vAPI.net.registerListeners = function() {
     var locationChangedListener = function(e) {
         var browser = e.target;
 
+        // I have seen this happens (at startup time)
+        if ( !browser.currentURI ) {
+            return;
+        }
+
         // https://github.com/gorhill/uBlock/issues/697
         // Dismiss event if the associated tab is pending.
         var tab = tabWatcher.tabFromBrowser(browser);
         if ( !vAPI.fennec && tab && tab.hasAttribute('pending') ) {
+            // https://github.com/gorhill/uBlock/issues/820
+            // Firefox quirk: it happens the `pending` attribute was not
+            // present for certain tabs at startup -- and this can cause
+            // unwanted [browser <--> tab id] associations internally.
+            // Dispose of these if it is found the `pending` attribute is
+            // set.
+            tabWatcher.removeTarget(tab);
             return;
         }
 
