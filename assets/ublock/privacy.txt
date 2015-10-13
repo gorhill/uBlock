@@ -30,3 +30,9 @@
 # 1st-party "recommendations" should never depends on a 3rd-party doing the job:
 #   this is just disguised tracking
 ||taboola.com^$third-party
+
+# See https://brightinfo.com
+# third-party tracker, encountered on SC Magazine website at
+# http://www.scmagazine.com/nist-seeks-to-secure-raise-trustworthiness-of-email/article/443423/
+# also does fly-over advertising covering content
+||brightinfo.com^$third-party
