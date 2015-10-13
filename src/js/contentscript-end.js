@@ -919,11 +919,15 @@ var uBlockCollapser = (function() {
         return;
     }
     var onMouseClick = function(ev) {
+        var elem = ev.target;
+        while ( elem !== null && elem.localName !== 'a' ) {
+            elem = elem.parentElement;
+        }
         messager.send({
             what: 'mouseClick',
             x: ev.clientX,
             y: ev.clientY,
-            url: ev.target && ev.target.localName === 'a' ? ev.target.href : ''
+            url: elem !== null ? elem.href : ''
         });
     };
 
