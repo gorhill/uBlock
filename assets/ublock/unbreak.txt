@@ -232,3 +232,6 @@ ovh.strim.io#@##tweets
 # https://twitter.com/bociusz/status/653693746626871296
 # To counter Peter Lowe's `pagefair.com`, but only when on `pagefair.com`
 @@||pagefair.com^$first-party
+
+# Chrome store: "Some of the useful content on website such as pictures and maps on redfin get blocked"
+@@||ssl.cdn-redfin.com/*/redfin/common/analytics/PixelTracking.js$script,domain=redfin.com
