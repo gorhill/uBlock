@@ -276,7 +276,13 @@ var cachedAssetsManager = (function() {
         exports.remove(/./);
     };
 
+    exports.exists = function(path) {
+        return entries !== null && entries.hasOwnProperty(path);
+    };
+
     exports.onRemovedListener = null;
+
+    getEntries(function(){});
 
     return exports;
 })();
@@ -285,6 +291,10 @@ var cachedAssetsManager = (function() {
 
 var getTextFileFromURL = function(url, onLoad, onError) {
     // console.log('µBlock.assets/getTextFileFromURL("%s"):', url);
+
+    if ( typeof onError !== 'function' ) {
+        onError = onLoad;
+    }
 
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
@@ -377,11 +387,16 @@ var getRepoMetadata = function(callback) {
     lastRepoMetaTimestamp = Date.now();
     lastRepoMetaIsRemote = exports.remoteFetchBarrier === 0;
 
+    var defaultChecksums;
     var localChecksums;
     var repoChecksums;
 
     var checksumsReceived = function() {
-        if ( localChecksums === undefined || repoChecksums === undefined ) {
+        if (
+            defaultChecksums === undefined ||
+            localChecksums === undefined ||
+            repoChecksums === undefined
+        ) {
             return;
         }
         // Remove from cache assets which no longer exist in the repo
@@ -393,6 +408,15 @@ var getRepoMetadata = function(callback) {
                 continue;
             }
             entry = entries[path];
+            // https://github.com/gorhill/uBlock/issues/760
+            // If the resource does not have a cached instance, we must reset
+            // the checksum to its value at install time.
+            if (
+                cachedAssetsManager.exists(path) === false &&
+                stringIsNotEmpty(defaultChecksums[path])
+            ) {
+                entry.localChecksum = defaultChecksums[path];
+            }
             // If repo checksums could not be fetched, assume no change.
             // https://github.com/gorhill/uBlock/issues/602
             //   Added: if repo checksum is that of the empty string,
@@ -451,41 +475,64 @@ var getRepoMetadata = function(callback) {
         return out.join('\n');
     };
 
-    var parseChecksums = function(text, which) {
-        var entries = repoMetadata.entries;
+    var parseChecksums = function(text, eachFn) {
         var lines = text.split(/\n+/);
         var i = lines.length;
-        var fields, assetPath;
+        var fields;
         while ( i-- ) {
             fields = lines[i].trim().split(/\s+/);
             if ( fields.length !== 2 ) {
                 continue;
             }
-            assetPath = fields[1];
-            if ( entries[assetPath] === undefined ) {
-                entries[assetPath] = new AssetEntry();
-            }
-            entries[assetPath][which + 'Checksum'] = fields[0];
+            eachFn(fields[1], fields[0]);
         }
     };
 
     var onLocalChecksumsLoaded = function(details) {
+        var entries = repoMetadata.entries;
+        var processChecksum = function(path, checksum) {
+            if ( entries.hasOwnProperty(path) === false ) {
+                entries[path] = new AssetEntry();
+            }
+            entries[path].localChecksum = checksum;
+        };
         if ( (localChecksums = validateChecksums(details)) ) {
-            parseChecksums(localChecksums, 'local');
+            parseChecksums(localChecksums, processChecksum);
         }
         checksumsReceived();
     };
 
     var onRepoChecksumsLoaded = function(details) {
+        var entries = repoMetadata.entries;
+        var processChecksum = function(path, checksum) {
+            if ( entries.hasOwnProperty(path) === false ) {
+                entries[path] = new AssetEntry();
+            }
+            entries[path].repoChecksum = checksum;
+        };
         if ( (repoChecksums = validateChecksums(details)) ) {
-            parseChecksums(repoChecksums, 'repo');
+            parseChecksums(repoChecksums, processChecksum);
         }
+        checksumsReceived();
+    };
+
+    // https://github.com/gorhill/uBlock/issues/760
+    // We need the checksum values at install time, because some resources
+    // may have been purged, in which case the checksum must be reset to the
+    // value at install time.
+    var onDefaultChecksumsLoaded = function() {
+        defaultChecksums = Object.create(null);
+        var processChecksum = function(path, checksum) {
+            defaultChecksums[path] = checksum;
+        };
+        parseChecksums(this.responseText || '', processChecksum);
         checksumsReceived();
     };
 
     repoMetadata = new RepoMetadata();
     repoMetadata.waiting.push(callback);
     readRepoFile('assets/checksums.txt', onRepoChecksumsLoaded);
+    getTextFileFromURL(vAPI.getURL('assets/checksums.txt'), onDefaultChecksumsLoaded);
     readLocalFile('assets/checksums.txt', onLocalChecksumsLoaded);
 };
 
@@ -1164,10 +1211,16 @@ exports.metadata = function(callback) {
 /******************************************************************************/
 
 exports.purge = function(pattern, before) {
+    // Purging means we should mark resources current metadata as obsolete.
+    lastRepoMetaTimestamp = 0;
+
     cachedAssetsManager.remove(pattern, before);
 };
 
 exports.purgeAll = function(callback) {
+    // Purging means we should mark resources current metadata as obsolete.
+    lastRepoMetaTimestamp = 0;
+
     cachedAssetsManager.removeAll(callback);
 };
 
