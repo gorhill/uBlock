@@ -183,21 +183,27 @@ var hideElements = function(selectors) {
     var elem, shadow;
     while ( i-- ) {
         elem = elems[i];
-        // https://github.com/gorhill/uBlock/issues/762
-        // Always hide using inline style.
-        elem.style.setProperty('display', 'none', 'important');
+        shadow = elem.shadowRoot;
         // https://www.chromestatus.com/features/4668884095336448
         // "Multiple shadow roots is being deprecated."
-        if ( elem.shadowRoot !== null ) {
+        if ( shadow !== null ) {
+            if ( shadow.className !== sessionId ) {
+                elem.style.setProperty('display', 'none', 'important');
+            }
             continue;
         }
         // https://github.com/gorhill/uBlock/pull/555
         // Not all nodes can be shadowed:
         //   https://github.com/w3c/webcomponents/issues/102
+        // https://github.com/gorhill/uBlock/issues/762
+        // Remove display style that might get in the way of the shadow
+        // node doing its magic.
         try {
             shadow = elem.createShadowRoot();
             shadow.className = sessionId;
+            elem.style.removeProperty('display');
         } catch (ex) {
+            elem.style.setProperty('display', 'none', 'important');
         }
     }
 };
