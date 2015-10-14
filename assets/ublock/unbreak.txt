@@ -235,3 +235,6 @@ ovh.strim.io#@##tweets
 
 # Chrome store: "Some of the useful content on website such as pictures and maps on redfin get blocked"
 @@||ssl.cdn-redfin.com/*/redfin/common/analytics/PixelTracking.js$script,domain=redfin.com
+
+# Chrome store: "uBlock Origin seems to think Southwest.com's background and header image are ads"
+@@||www.southwest.com/*/mbox.js$script,first-party
