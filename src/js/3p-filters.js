@@ -371,8 +371,22 @@ var onPurgeClicked = function() {
     if ( !href ) {
         return;
     }
+
     messager.send({ what: 'purgeCache', path: href });
     button.remove();
+
+    // If the cached version is purged, the installed version must be assumed
+    // to be obsolete.
+    var entry = listDetails.current && listDetails.current[href];
+    if ( entry && entry.off !== true ) {
+        if ( typeof entry.homeURL !== 'string' || entry.homeURL === '' ) {
+            li.descendants('span.status.new').css('display', '');
+        } else {
+            li.descendants('span.status.obsolete').css('display', '');
+        }
+        needUpdate = true;
+    }
+
     if ( li.descendants('input').first().prop('checked') ) {
         cacheWasPurged = true;
         renderWidgets();

@@ -412,10 +412,12 @@ var getRepoMetadata = function(callback) {
             // If the resource does not have a cached instance, we must reset
             // the checksum to its value at install time.
             if (
-                cachedAssetsManager.exists(path) === false &&
-                stringIsNotEmpty(defaultChecksums[path])
+                stringIsNotEmpty(defaultChecksums[path]) &&
+                entry.localChecksum !== defaultChecksums[path] &&
+                cachedAssetsManager.exists(path) === false
             ) {
                 entry.localChecksum = defaultChecksums[path];
+                checksumsChanged = true;
             }
             // If repo checksums could not be fetched, assume no change.
             // https://github.com/gorhill/uBlock/issues/602
@@ -1211,17 +1213,17 @@ exports.metadata = function(callback) {
 /******************************************************************************/
 
 exports.purge = function(pattern, before) {
-    // Purging means we should mark resources current metadata as obsolete.
-    lastRepoMetaTimestamp = 0;
-
     cachedAssetsManager.remove(pattern, before);
 };
 
-exports.purgeAll = function(callback) {
-    // Purging means we should mark resources current metadata as obsolete.
+exports.purgeCacheableAsset = function(pattern, before) {
+    cachedAssetsManager.remove(pattern, before);
     lastRepoMetaTimestamp = 0;
+};
 
+exports.purgeAll = function(callback) {
     cachedAssetsManager.removeAll(callback);
+    lastRepoMetaTimestamp = 0;
 };
 
 /******************************************************************************/
