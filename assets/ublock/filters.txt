@@ -9,8 +9,10 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-# Last updated: 2015-01-27
+# Last updated: 2015-10-15
 google.*###center_col > #\5f Emc
+google.*###center_col > #main > .dfrd > .mnr-c > .c._oc._zs
+google.*###center_col > #res > #topstuff + #search > div > #ires > #rso > #flun
 google.*###center_col > #resultStats + #tads
 google.*###center_col > #resultStats + #tads + #res + #tads
 google.*###center_col > #resultStats + div + #res + #tads
@@ -18,14 +20,19 @@ google.*###center_col > #resultStats + div[style="border:1px solid #dedede;margi
 google.*###center_col > #taw > #tvcap > .rscontainer
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
 google.*###cnt #center_col > #res > #topstuff > .ts
+google.*###cnt #center_col > #taw > #tvcap > .c._oc._Lp
 google.*###main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"]
 google.*###mbEnd[cellspacing="0"][cellpadding="0"]
 google.*###mclip_container:last-child
 google.*###mn #center_col > div > h2.spon:first-child
 google.*###mn #center_col > div > h2.spon:first-child + ol:last-child
+google.*###mn div[style="position:relative"] > #center_col > ._Ak
+google.*###mn div[style="position:relative"] > #center_col > div > ._dPg
 google.*###resultspanel > #topads
 google.*###rhs_block > #mbEnd
 google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
+google.*###rhs_block > ol > .rhsvw > .kp-blk > .xpdopen > ._OKe > ol > ._DJe > .luhb-div
+google.*###rhs_block > script + .c._oc._Ve.rhsvw
 google.*###rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"]
 google.*###ssmiwdiv[jsdisplay]
 google.*###tads + div + .c
@@ -43,6 +50,7 @@ google.*##.GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB
 google.*##.ch[onclick="ga(this,event)"]
 google.*##.commercial-unit-desktop-rhs
 google.*##.commercial-unit-desktop-top
+google.*##.commercial-unit-mobile-top
 google.*##.lads[width="100%"][style="background:#FFF8DD"]
 google.*##.mod > ._jH + .rscontainer
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
