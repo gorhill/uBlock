@@ -1090,29 +1090,29 @@ var tabWatcher = (function() {
             return false;
         }
 
+        if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
+            vAPI.toolbarButton.attachToNewWindow(window);
+        }
+
         var tabContainer;
         if ( tabBrowser.deck ) {                    // Fennec
             tabContainer = tabBrowser.deck;
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
             vAPI.contextMenu.register(window.document);
-        } else {
-            return true;
-        }
-
-        if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
-            vAPI.toolbarButton.attachToNewWindow(window);
         }
 
         // https://github.com/gorhill/uBlock/issues/697
         // Ignore `TabShow` events: unfortunately the `pending` attribute is
         // not set when a tab is opened as a result of session restore -- it is
         // set *after* the event is fired in such case.
-        //tabContainer.addEventListener('TabOpen', onOpen);
-        tabContainer.addEventListener('TabShow', onShow);
-        tabContainer.addEventListener('TabClose', onClose);
-        // when new window is opened TabSelect doesn't run on the selected tab?
-        tabContainer.addEventListener('TabSelect', onSelect);
+        if ( tabContainer ) {
+            //tabContainer.addEventListener('TabOpen', onOpen);
+            tabContainer.addEventListener('TabShow', onShow);
+            tabContainer.addEventListener('TabClose', onClose);
+            // when new window is opened TabSelect doesn't run on the selected tab?
+            tabContainer.addEventListener('TabSelect', onSelect);
+        }
 
         return true;
     };
@@ -2354,7 +2354,8 @@ vAPI.toolbarButton = {
     var addLegacyToolbarButton = function(window) {
         var document = window.document;
 
-        var toolbox = document.getElementById('navigator-toolbox') || document.getElementById('mail-toolbox');
+        var toolbox = document.getElementById('navigator-toolbox') ||
+                      document.getElementById('mail-toolbox');
         if ( !toolbox ) {
             return;
         }
