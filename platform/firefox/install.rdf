@@ -9,6 +9,7 @@
         <creator>{author}</creator>
         <developer>Deathamns</developer>
         <developer>Alex Vallat</developer>
+        <developer>Manuel Reimer</developer>
         <type>2</type>
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
