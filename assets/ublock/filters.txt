@@ -156,10 +156,11 @@ arstechnica.com###lg-pushdown
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
 arstechnica.com##script:contains(ars.READY.push)
+auto-motor-und-sport.de,boerse-online.de,echo-online.de,fem.com,finanzen.net,focus.de,gamestar.de,kabeleins.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rp-online.de,sat1.de,sat1gold.de,sixx.de,the-voice-of-germany.de,tvspielfilm.de,wetter.com,wetteronline.de##script:contains(uabInject)
 bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
 dayt.se##script:contains(adblock.php)
 dpstream.net,jeux-porno.net##script:contains(/^\s*?var\s+?uniqueParam\s*?=/)
 explosm.net##script:contains(/^__durl=/)
 extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,spankwire.com,thumbzilla.com,tube8.*,xtube.com,youporn.com,youporngay.com##script:contains(FastPopSessionRequestNumber)
-auto-motor-und-sport.de,boerse-online.de,echo-online.de,fem.com,finanzen.net,focus.de,gamestar.de,kabeleins.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rp-online.de,sat1.de,sat1gold.de,sixx.de,the-voice-of-germany.de,tvspielfilm.de,wetter.com,wetteronline.de##script:contains(uabInject)
+opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
