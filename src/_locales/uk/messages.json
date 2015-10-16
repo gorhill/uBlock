@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Увімкнути підтримку хмаринкового сховища",
+    "message":"Увімкнути підтримку хмарного сховища",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Експортувати до хмаринкового сховища",
+    "message":"Експортувати до хмарного сховища",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Імпортувати із хмаринкового сховища",
+    "message":"Імпортувати із хмарного сховища",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"байти",
+    "message":"байтів",
     "description":""
   },
   "dummy":{
