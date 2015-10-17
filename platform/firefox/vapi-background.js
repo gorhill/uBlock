@@ -1084,10 +1084,27 @@ var tabWatcher = (function() {
         vAPI.setIcon(tabIdFromTarget(target), getOwnerWindow(target));
     };
 
-    var attachToTabBrowser = function(window) {
-        var tabBrowser = getTabBrowser(window);
-        if ( !tabBrowser ) {
+    var attachToTabBrowserLater = function(details) {
+        details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
+        if ( details.tryCount > 5 ) {
             return false;
+        }
+        vAPI.setTimeout(function(details) {
+                attachToTabBrowser(details.window, details.tryCount);
+            },
+            200,
+            details
+        );
+        return true;
+    };
+
+    var attachToTabBrowser = function(window, tryCount) {
+        // On some platforms, the tab browser isn't immediately available,
+        // try waiting a bit if this happens.
+        var tabBrowser = getTabBrowser(window);
+        if ( tabBrowser === null ) {
+            attachToTabBrowserLater({ window: window, tryCount: tryCount });
+            return;
         }
 
         if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
@@ -1113,8 +1130,6 @@ var tabWatcher = (function() {
             // when new window is opened TabSelect doesn't run on the selected tab?
             tabContainer.addEventListener('TabSelect', onSelect);
         }
-
-        return true;
     };
 
     var onWindowLoad = function(ev) {
@@ -1127,12 +1142,7 @@ var tabWatcher = (function() {
             return;
         }
 
-        // On some platforms, the tab browser isn't immediately available,
-        // try waiting a bit if this happens.
-        var win = this;
-        if ( attachToTabBrowser(win) === false ) {
-            vAPI.setTimeout(attachToTabBrowser.bind(null, win), 250);
-        }
+        attachToTabBrowser(this);
     };
 
     var onWindowUnload = function() {
@@ -2352,12 +2362,12 @@ vAPI.toolbarButton = {
     var styleSheetUri = null;
 
     var addLegacyToolbarButtonLater = function(details) {
-        var tryCount = details.tryCount ? details.tryCount + 1 : 1;
-        if ( tryCount > 5 ) {
+        details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
+        if ( details.tryCount > 5 ) {
             return false;
         }
         vAPI.setTimeout(function(details) {
-                addLegacyToolbarButton(details.window, tryCount);
+                addLegacyToolbarButton(details.window, details.tryCount);
             },
             200,
             details
