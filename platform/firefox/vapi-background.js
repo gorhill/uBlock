@@ -2351,24 +2351,47 @@ vAPI.toolbarButton = {
     var sss = null;
     var styleSheetUri = null;
 
-    var addLegacyToolbarButton = function(window) {
+    var addLegacyToolbarButtonLater = function(details) {
+        var tryCount = details.tryCount ? details.tryCount + 1 : 1;
+        if ( tryCount > 5 ) {
+            return false;
+        }
+        vAPI.setTimeout(function(details) {
+                addLegacyToolbarButton(details.window, tryCount);
+            },
+            200,
+            details
+        );
+        return true;
+    };
+
+    var addLegacyToolbarButton = function(window, tryCount) {
         var document = window.document;
 
         var toolbox = document.getElementById('navigator-toolbox') ||
                       document.getElementById('mail-toolbox');
-        if ( !toolbox ) {
+        if (
+            toolbox === null &&
+            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
+        ) {
             return;
         }
 
         // palette might take a little longer to appear on some platforms,
         // give it a small delay and try again.
         var palette = toolbox.palette;
-        if ( !palette ) {
-            vAPI.setTimeout(function() {
-                if ( toolbox.palette ) {
-                    addLegacyToolbarButton(window);
-                }
-            }, 250);
+        if (
+            palette === null &&
+            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
+        ) {
+            return;
+        }
+
+        var navbar = document.getElementById('nav-bar');
+        if (
+            navbar === null &&
+            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
+        ) {
             return;
         }
 
@@ -2390,32 +2413,16 @@ vAPI.toolbarButton = {
         toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
         toolbarButton.appendChild(toolbarButtonPanel);
 
-        palette.appendChild(toolbarButton);
+        if ( palette !== null ) {
+            palette.appendChild(toolbarButton);
+        }
 
         tbb.closePopup = function() {
             toolbarButtonPanel.hidePopup();
         };
 
-        // No button yet so give it a default location. If forcing the button,
-        // just put in in the palette rather than on any specific toolbar (who
-        // knows what toolbars will be available or visible!)
-        var toolbar;
-        if ( !vAPI.localStorage.getBool('legacyToolbarButtonAdded') ) {
-            vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
-            toolbar = document.getElementById('nav-bar');
-            if ( toolbar === null ) {
-                return;
-            }
-            // https://github.com/gorhill/uBlock/issues/264
-            // Find a child customizable palette, if any.
-            toolbar = toolbar.querySelector('.customization-target') || toolbar;
-            toolbar.appendChild(toolbarButton);
-            toolbar.setAttribute('currentset', toolbar.currentSet);
-            document.persist(toolbar.id, 'currentset');
-            return;
-        }
-
         // Find the place to put the button
+        var toolbar;
         var toolbars = toolbox.externalToolbars.slice();
         for ( var child of toolbox.children ) {
             if ( child.localName === 'toolbar' ) {
@@ -2440,12 +2447,26 @@ vAPI.toolbarButton = {
                 if ( before === null ) {
                     continue;
                 }
-                toolbar.insertItem(tbb.id, before);
                 break;
             }
-            if ( before === null ) {
-                toolbar.insertItem(tbb.id);
-            }
+            toolbar.insertItem(tbb.id, before);
+        }
+
+        if ( document.getElementById(tbb.id) !== null ) {
+            return;
+        }
+
+        // No button yet so give it a default location. If forcing the button,
+        // just put in in the palette rather than on any specific toolbar (who
+        // knows what toolbars will be available or visible!)
+        if ( navbar !== null && !vAPI.localStorage.getBool('legacyToolbarButtonAdded') ) {
+            // https://github.com/gorhill/uBlock/issues/264
+            // Find a child customizable palette, if any.
+            navbar = navbar.querySelector('.customization-target') || navbar;
+            navbar.appendChild(toolbarButton);
+            navbar.setAttribute('currentset', navbar.currentSet);
+            document.persist(navbar.id, 'currentset');
+            vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
         }
     };
 
