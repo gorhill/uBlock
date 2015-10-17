@@ -1086,7 +1086,7 @@ var tabWatcher = (function() {
 
     var attachToTabBrowserLater = function(details) {
         details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
-        if ( details.tryCount > 5 ) {
+        if ( details.tryCount > 8 ) {
             return false;
         }
         vAPI.setTimeout(function(details) {
@@ -1099,6 +1099,17 @@ var tabWatcher = (function() {
     };
 
     var attachToTabBrowser = function(window, tryCount) {
+        // Let's just be extra-paranoiac regarding whether all is right before
+        // trying to attach outself to the browser window.
+        var document = window && window.document;
+        var docElement = document && document.documentElement;
+        var wintype = docElement && docElement.getAttribute('windowtype');
+
+        if ( wintype !== 'navigator:browser' ) {
+            attachToTabBrowserLater({ window: window, tryCount: tryCount });
+            return;
+        }
+
         // On some platforms, the tab browser isn't immediately available,
         // try waiting a bit if this happens.
         var tabBrowser = getTabBrowser(window);
@@ -1116,7 +1127,7 @@ var tabWatcher = (function() {
             tabContainer = tabBrowser.deck;
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
-            vAPI.contextMenu.register(window.document);
+            vAPI.contextMenu.register(document);
         }
 
         // https://github.com/gorhill/uBlock/issues/697
@@ -1132,22 +1143,12 @@ var tabWatcher = (function() {
         }
     };
 
-    var onWindowLoad = function(ev) {
-        if ( ev ) {
-            this.removeEventListener(ev.type, onWindowLoad);
-        }
-
-        var wintype = this.document.documentElement.getAttribute('windowtype');
-        if ( wintype !== 'navigator:browser' ) {
-            return;
-        }
-
+    var onWindowLoad = function() {
         attachToTabBrowser(this);
     };
 
     var onWindowUnload = function() {
         vAPI.contextMenu.unregister(this.document);
-        this.removeEventListener('DOMContentLoaded', onWindowLoad);
 
         var tabBrowser = getTabBrowser(this);
         if ( !tabBrowser ) {
@@ -1207,7 +1208,7 @@ var tabWatcher = (function() {
     var windowWatcher = {
         observe: function(win, topic) {
             if ( topic === 'domwindowopened' ) {
-                win.addEventListener('DOMContentLoaded', onWindowLoad);
+                onWindowLoad.call(win);
                 return;
             }
             if ( topic === 'domwindowclosed' ) {
@@ -2363,7 +2364,7 @@ vAPI.toolbarButton = {
 
     var addLegacyToolbarButtonLater = function(details) {
         details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
-        if ( details.tryCount > 5 ) {
+        if ( details.tryCount > 8 ) {
             return false;
         }
         vAPI.setTimeout(function(details) {
