@@ -2433,7 +2433,6 @@ vAPI.toolbarButton = {
         };
 
         // Find the place to put the button
-        var toolbar;
         var toolbars = toolbox.externalToolbars.slice();
         for ( var child of toolbox.children ) {
             if ( child.localName === 'toolbar' ) {
@@ -2441,7 +2440,7 @@ vAPI.toolbarButton = {
             }
         }
 
-        for ( toolbar of toolbars ) {
+        for ( var toolbar of toolbars ) {
             var currentsetString = toolbar.getAttribute('currentset');
             if ( !currentsetString ) {
                 continue;
@@ -2455,10 +2454,9 @@ vAPI.toolbarButton = {
             var before = null;
             for ( var i = index + 1; i < currentset.length; i++ ) {
                 before = document.getElementById(currentset[i]);
-                if ( before === null ) {
-                    continue;
+                if ( before !== null ) {
+                    break;
                 }
-                break;
             }
             toolbar.insertItem(tbb.id, before);
         }
