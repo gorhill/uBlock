@@ -2445,7 +2445,7 @@ vAPI.toolbarButton = {
             if ( !currentsetString ) {
                 continue;
             }
-            var currentset = currentsetString.split(',');
+            var currentset = currentsetString.split(/\s*,\s*/);
             var index = currentset.indexOf(tbb.id);
             if ( index === -1 ) {
                 continue;
@@ -2459,6 +2459,7 @@ vAPI.toolbarButton = {
                 }
             }
             toolbar.insertItem(tbb.id, before);
+            break;
         }
 
         if ( document.getElementById(tbb.id) !== null ) {
