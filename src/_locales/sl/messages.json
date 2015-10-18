@@ -600,7 +600,7 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Izvozi iz shrambe oblaka",
+    "message":"Izvozi v shrambe oblaka",
     "description":"tooltip"
   },
   "cloudPull":{
