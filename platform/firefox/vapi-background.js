@@ -2424,7 +2424,7 @@ vAPI.toolbarButton = {
         toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
         toolbarButton.appendChild(toolbarButtonPanel);
 
-        if ( palette !== null ) {
+        if ( palette !== null && palette.querySelector('#' + tbb.id) === null ) {
             palette.appendChild(toolbarButton);
         }
 
@@ -2453,7 +2453,7 @@ vAPI.toolbarButton = {
             // Found our button on this toolbar - but where on it?
             var before = null;
             for ( var i = index + 1; i < currentset.length; i++ ) {
-                before = document.getElementById(currentset[i]);
+                before = toolbar.querySelector('[id="' + currentset[i] + '"]');
                 if ( before !== null ) {
                     break;
                 }
