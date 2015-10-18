@@ -1112,14 +1112,23 @@ var tabWatcher = (function() {
 
         // On some platforms, the tab browser isn't immediately available,
         // try waiting a bit if this happens.
+        // https://github.com/gorhill/uBlock/issues/763
+        // Not getting a tab browser should not prevent from attaching ourself
+        // to the window.
         var tabBrowser = getTabBrowser(window);
-        if ( tabBrowser === null ) {
-            attachToTabBrowserLater({ window: window, tryCount: tryCount });
+        if (
+            tabBrowser === null &&
+            attachToTabBrowserLater({ window: window, tryCount: tryCount })
+        ) {
             return;
         }
 
         if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
             vAPI.toolbarButton.attachToNewWindow(window);
+        }
+
+        if ( tabBrowser === null ) {
+            return;
         }
 
         var tabContainer;
@@ -1206,7 +1215,15 @@ var tabWatcher = (function() {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
     var windowWatcher = {
-        observe: function(win, topic) {
+        observe: function(subject, topic) {
+            var win;
+            try {
+                win = subject.QueryInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            if ( !win ) {
+                return;
+            }
             if ( topic === 'domwindowopened' ) {
                 onWindowLoad.call(win);
                 return;
