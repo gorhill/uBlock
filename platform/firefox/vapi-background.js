@@ -1218,7 +1218,8 @@ var tabWatcher = (function() {
         observe: function(subject, topic) {
             var win;
             try {
-                win = subject.QueryInterface(Ci.nsIDOMWindow);
+                win = subject.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
             } catch (ex) {
             }
             if ( !win ) {
