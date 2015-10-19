@@ -86,7 +86,7 @@ vAPI.insertHTML = (function() {
             html,
             parser.SanitizerAllowStyle,
             false,
-            Services.io.newURI('about:blank'/*document.baseURI*/, null, null),
+            Services.io.newURI('about:blank', null, null),
             document.documentElement
         ));
     };
