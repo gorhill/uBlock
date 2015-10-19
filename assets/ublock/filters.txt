@@ -127,7 +127,7 @@ ink361.com##.getridofAdsBlock[href^="javascript:"]
 
 # https://www.reddit.com/r/techsupport/comments/3kyd0m/sponsored_content_ads_that_only_show_up_with/
 explosm.net##.inner-wrap > .row > .columns.large-4.medium-12.small-12
-explosm.net##.inner-wrap > .row > .columns.large-8.medium-12 > hr + div:not(.row)
+explosm.net##.fram + div[class]
 
 # http://www.extremetech.com/mobile/214358-ad-blocking-for-the-masses-part-two-adblock-browser
 # "anyone else trying it on ET find that one ziffdavis.com ad bypasses ublock0 even though it's in the default lists for block"
