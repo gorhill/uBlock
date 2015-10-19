@@ -576,7 +576,7 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
-vAPI.tabs.mostRecentWindowId = (function() {
+vAPI.tabs.chromeWindowType = (function() {
     if ( vAPI.thunderbird ) {
         return 'mail:3pane';
     }
@@ -682,7 +682,7 @@ vAPI.tabs.getAll = function(window) {
 /******************************************************************************/
 
 vAPI.tabs.getWindows = function() {
-    var winumerator = Services.wm.getEnumerator(this.mostRecentWindowId);
+    var winumerator = Services.wm.getEnumerator(this.chromeWindowType);
     var windows = [];
 
     while ( winumerator.hasMoreElements() ) {
@@ -754,7 +754,7 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    var win = Services.wm.getMostRecentWindow(this.mostRecentWindowId);
+    var win = Services.wm.getMostRecentWindow(this.chromeWindowType);
     var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
@@ -1023,7 +1023,7 @@ var tabWatcher = (function() {
     };
 
     var currentBrowser = function() {
-        var win = Services.wm.getMostRecentWindow(vAPI.tabs.mostRecentWindowId);
+        var win = Services.wm.getMostRecentWindow(vAPI.tabs.chromeWindowType);
         // https://github.com/gorhill/uBlock/issues/399
         // getTabBrowser() can return null at browser launch time.
         var tabBrowser = getTabBrowser(win);
@@ -1291,7 +1291,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var win = badge === undefined
         ? iconStatus
-        : Services.wm.getMostRecentWindow(vAPI.tabs.mostRecentWindowId);
+        : Services.wm.getMostRecentWindow(vAPI.tabs.chromeWindowType);
     var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
     var tb = vAPI.toolbarButton;
 
