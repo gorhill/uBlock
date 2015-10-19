@@ -153,6 +153,9 @@ arstechnica.com###lg-pushdown
 # This prevents spurious redirection, but breaks comments
 ||js.washingtonpost.com/wpost/js/combo?*/util/util.identity-management-1.1.0.js$script,first-party
 
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
+||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
+
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
 arstechnica.com##script:contains(ars.READY.push)
@@ -161,6 +164,6 @@ bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
 dayt.se##script:contains(adblock.php)
 dpstream.net,jeux-porno.net##script:contains(/^\s*?var\s+?uniqueParam\s*?=/)
-explosm.net##script:contains(/^__durl=/)
+explosm.net,valuewalk.com##script:contains(/^\s*?__durl=/)
 extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,spankwire.com,thumbzilla.com,tube8.*,xtube.com,youporn.com,youporngay.com##script:contains(FastPopSessionRequestNumber)
 opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
