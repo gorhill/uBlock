@@ -1152,14 +1152,14 @@ var tabWatcher = (function() {
         }
     };
 
-    var onWindowLoad = function() {
-        attachToTabBrowser(this);
+    var onWindowLoad = function(win) {
+        attachToTabBrowser(win);
     };
 
-    var onWindowUnload = function() {
-        vAPI.contextMenu.unregister(this.document);
+    var onWindowUnload = function(win) {
+        vAPI.contextMenu.unregister(win.document);
 
-        var tabBrowser = getTabBrowser(this);
+        var tabBrowser = getTabBrowser(win);
         if ( !tabBrowser ) {
             return;
         }
@@ -1202,7 +1202,7 @@ var tabWatcher = (function() {
             URI = browser.currentURI;
             // Close extension tabs
             if ( URI.schemeIs('chrome') && URI.host === location.host ) {
-                vAPI.tabs._remove(tab, getTabBrowser(this));
+                vAPI.tabs._remove(tab, getTabBrowser(win));
             }
             tabId = browserToTabIdMap.get(browser);
             if ( tabId !== undefined ) {
@@ -1215,22 +1215,26 @@ var tabWatcher = (function() {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
     var windowWatcher = {
-        observe: function(subject, topic) {
+        observe: function(aSubject, topic) {
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
+            //   "aSubject - the window being opened or closed, sent as an
+            //   "nsISupports which can be ... QueryInterfaced to an
+            //   "nsIDOMWindow."
             var win;
             try {
-                win = subject.QueryInterface(Ci.nsIInterfaceRequestor)
-                             .getInterface(Ci.nsIDOMWindow);
+                win = aSubject.QueryInterface(Ci.nsIInterfaceRequestor)
+                              .getInterface(Ci.nsIDOMWindow);
             } catch (ex) {
             }
             if ( !win ) {
                 return;
             }
             if ( topic === 'domwindowopened' ) {
-                onWindowLoad.call(win);
+                onWindowLoad(win);
                 return;
             }
             if ( topic === 'domwindowclosed' ) {
-                onWindowUnload.call(win);
+                onWindowUnload(win);
                 return;
             }
         }
@@ -1240,7 +1244,7 @@ var tabWatcher = (function() {
     var start = function() {
         var tabBrowser, tabs, tab;
         for ( var win of vAPI.tabs.getWindows() ) {
-            onWindowLoad.call(win);
+            onWindowLoad(win);
             tabBrowser = getTabBrowser(win);
             if ( tabBrowser === null ) {
                 continue;
@@ -1264,7 +1268,7 @@ var tabWatcher = (function() {
         Services.ww.unregisterNotification(windowWatcher);
 
         for ( var win of vAPI.tabs.getWindows() ) {
-            onWindowUnload.call(win);
+            onWindowUnload(win);
         }
 
         browserToTabIdMap.clear();
@@ -2447,7 +2451,12 @@ vAPI.toolbarButton = {
         }
 
         tbb.closePopup = function() {
-            toolbarButtonPanel.hidePopup();
+            // `hidePopup` reported as not existing while testing legacy button
+            //  on FF 41.0.2.
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=1151796
+            if ( typeof toolbarButtonPanel.hidePopup === 'function' ) {
+                toolbarButtonPanel.hidePopup();
+            }
         };
 
         // Find the place to put the button
