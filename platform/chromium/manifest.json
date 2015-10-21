@@ -66,5 +66,8 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock₀"
+    "short_name": "uBlock₀",
+    "storage": {
+        "managed_schema": "managed_storage.json"
+    }
 }

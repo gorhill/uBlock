@@ -22,7 +22,7 @@ cp src/*.html $DES/
 cp platform/chromium/*.js $DES/js/
 cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
-cp platform/chromium/manifest.json $DES/
+cp platform/chromium/*.json $DES/
 cp LICENSE.txt $DES/
 
 if [ "$1" = all ]; then

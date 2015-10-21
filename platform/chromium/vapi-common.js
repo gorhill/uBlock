@@ -98,6 +98,19 @@ try {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/531
+// Storage area dedicated to admin settings. Read-only.
+
+vAPI.adminStorage = {
+    getItem: function(key, callback) {
+        chrome.storage.managed.get(key, function(store) {
+            callback(store[key] || undefined);
+        });
+    }
+};
+
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/
