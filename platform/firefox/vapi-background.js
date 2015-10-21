@@ -3179,6 +3179,21 @@ vAPI.punycodeURL = function(url) {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/531
+// Storage area dedicated to admin settings. Read-only.
+
+vAPI.adminStorage = {
+    getItem: function(key, callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
+        }
+        callback(vAPI.localStorage.getItem(key));
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
 vAPI.cloud = (function() {
     var extensionBranchPath = 'extensions.' + location.host;
     var cloudBranchPath = extensionBranchPath + '.cloudStorage';

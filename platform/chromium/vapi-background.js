@@ -1008,6 +1008,20 @@ vAPI.punycodeURL = function(url) {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/531
+// Storage area dedicated to admin settings. Read-only.
+
+vAPI.adminStorage = {
+    getItem: function(key, callback) {
+        chrome.storage.managed.get(key, function(store) {
+            callback(store[key] || undefined);
+        });
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
 vAPI.cloud = (function() {
     var chunkCountPerFetch = 16; // Must be a power of 2
 
