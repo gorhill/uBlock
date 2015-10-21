@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"啟用雲端儲存支援",
+    "message":"啟用雲端儲存空間的支援",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"匯出至雲端儲存",
+    "message":"匯出至雲端儲存空間",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"從雲端儲存匯入",
+    "message":"從雲端儲存空間匯入",
     "description":"tooltip"
   },
   "cloudNoData":{
