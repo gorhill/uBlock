@@ -1241,6 +1241,33 @@ var tabWatcher = (function() {
         }
     };
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
+    var windowWatcher = {
+        observe: function(aSubject, topic) {
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
+            //   "aSubject - the window being opened or closed, sent as an
+            //   "nsISupports which can be ... QueryInterfaced to an
+            //   "nsIDOMWindow."
+            var win;
+            try {
+                win = aSubject.QueryInterface(Ci.nsIInterfaceRequestor)
+                              .getInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            if ( !win ) {
+                return;
+            }
+            if ( topic === 'domwindowopened' ) {
+                onWindowLoad(win);
+                return;
+            }
+            if ( topic === 'domwindowclosed' ) {
+                onWindowUnload(win);
+                return;
+            }
+        }
+    };
+
     // Initialize map with existing active tabs
     var start = function() {
         var tabBrowser, tabs, tab;
@@ -1263,10 +1290,12 @@ var tabWatcher = (function() {
         }
 
         Services.wm.addListener(windowListener);
+        Services.ww.registerNotification(windowWatcher);
     };
 
     var stop = function() {
         Services.wm.removeListener(windowListener);
+        Services.ww.unregisterNotification(windowWatcher);
 
         for ( var win of vAPI.tabs.getWindows() ) {
             onWindowUnload(win);
@@ -2401,6 +2430,12 @@ vAPI.toolbarButton = {
 
     var addLegacyToolbarButton = function(window, tryCount) {
         var document = window.document;
+
+        // https://github.com/gorhill/uMatrix/issues/357
+        // Already installed?
+        if ( document.getElementById(tbb.id) !== null ) {
+            return;
+        }
 
         var toolbox = document.getElementById('navigator-toolbox') ||
                       document.getElementById('mail-toolbox');
