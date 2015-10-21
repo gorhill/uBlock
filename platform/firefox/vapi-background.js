@@ -1213,29 +1213,30 @@ var tabWatcher = (function() {
         }
     };
 
-    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
-    var windowWatcher = {
-        observe: function(aSubject, topic) {
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
-            //   "aSubject - the window being opened or closed, sent as an
-            //   "nsISupports which can be ... QueryInterfaced to an
-            //   "nsIDOMWindow."
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowMediator
+    // https://github.com/gorhill/uMatrix/issues/357
+    // Use nsIWindowMediator for being notified of opened/closed windows.
+    var windowListener = {
+        onOpenWindow: function(aWindow) {
             var win;
             try {
-                win = aSubject.QueryInterface(Ci.nsIInterfaceRequestor)
-                              .getInterface(Ci.nsIDOMWindow);
+                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
             } catch (ex) {
             }
-            if ( !win ) {
-                return;
-            }
-            if ( topic === 'domwindowopened' ) {
+            if ( win ) {
                 onWindowLoad(win);
-                return;
             }
-            if ( topic === 'domwindowclosed' ) {
+        },
+        onCloseWindow: function(aWindow) {
+            var win;
+            try {
+                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            if ( win ) {
                 onWindowUnload(win);
-                return;
             }
         }
     };
@@ -1261,11 +1262,11 @@ var tabWatcher = (function() {
             }
         }
 
-        Services.ww.registerNotification(windowWatcher);
+        Services.wm.addListener(windowListener);
     };
 
     var stop = function() {
-        Services.ww.unregisterNotification(windowWatcher);
+        Services.wm.removeListener(windowListener);
 
         for ( var win of vAPI.tabs.getWindows() ) {
             onWindowUnload(win);
@@ -2973,6 +2974,11 @@ vAPI.contextMenu.register = function(doc) {
             nativeWindow.contextmenus.linkOpenableContext,
             this.onCommand
         );*/
+        return;
+    }
+
+    // Already installed?
+    if ( doc.getElementById(this.menuItemId) !== null ) {
         return;
     }
 
