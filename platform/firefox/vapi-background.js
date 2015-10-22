@@ -580,6 +580,7 @@ var winWatcher = (function() {
             }
             addWindow(win);
         },
+
         onCloseWindow: function(aWindow) {
             var win;
             try {
@@ -589,6 +590,7 @@ var winWatcher = (function() {
             }
             removeWindow(win);
         },
+
         observe: function(aSubject, topic) {
             // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
             //   "aSubject - the window being opened or closed, sent as an
@@ -613,10 +615,10 @@ var winWatcher = (function() {
     };
 
     (function() {
-        var win, winumerator, docElement;
+        var winumerator, win;
 
         // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowMediator#getEnumerator%28%29
-        winumerator = Services.wm.getEnumerator(chromeWindowType);
+        winumerator = Services.wm.getEnumerator(null);
         while ( winumerator.hasMoreElements() ) {
             win = winumerator.getNext();
             if ( !win.closed ) {
@@ -630,14 +632,7 @@ var winWatcher = (function() {
             win = winumerator.getNext()
                              .QueryInterface(Ci.nsIInterfaceRequestor)
                              .getInterface(Ci.nsIDOMWindow);
-            if ( win.closed ) {
-                continue;
-            }
-            docElement = win.document && win.document.documentElement;
-            if ( !docElement ) {
-                continue;
-            }
-            if ( docElement.getAttribute('windowtype') === chromeWindowType ) {
+            if ( !win.closed ) {
                 windowToIdMap.set(win, windowIdGenerator++);
             }
         }
