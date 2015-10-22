@@ -2831,7 +2831,7 @@ vAPI.toolbarButton = {
         var wId = tbb.id;
         var buttonInPanel = CustomizableUI.getWidget(wId).areaType === CustomizableUI.TYPE_MENU_PANEL;
 
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var button = win.document.getElementById(wId);
             if ( button === null ) {
                 continue;
