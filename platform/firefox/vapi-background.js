@@ -71,7 +71,7 @@ vAPI.localStorage.setDefaultBool('forceLegacyToolbarButton', false);
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = 8;
+var expectedNumberOfCleanups = 9;
 
 window.addEventListener('unload', function() {
     if ( typeof vAPI.app.onShutdown === 'function' ) {
@@ -524,6 +524,139 @@ vAPI.storage = (function() {
 
 /******************************************************************************/
 
+// This must be executed/setup early.
+
+var winWatcher = (function() {
+    var chromeWindowType = vAPI.thunderbird ? 'mail:3pane' : 'navigator:browser';
+    var windowToIdMap = new Map();
+    var windowIdGenerator = 1;
+    var api = {
+        onOpenWindow: null,
+        onCloseWindow: null
+    };
+
+    api.getWindows = function() {
+        return windowToIdMap.keys();
+    };
+
+    api.idFromWindow = function(win) {
+        return windowToIdMap.get(win) || 0;
+    };
+
+    api.getCurrentWindow = function() {
+        return Services.wm.getMostRecentWindow(chromeWindowType) || null;
+    };
+
+    var addWindow = function(win) {
+        if ( !win || windowToIdMap.has(win) ) {
+            return;
+        }
+        windowToIdMap.set(win, windowIdGenerator++);
+        if ( typeof api.onOpenWindow === 'function' ) {
+            api.onOpenWindow(win);
+        }
+    };
+
+    var removeWindow = function(win) {
+        if ( !win || windowToIdMap.delete(win) !== true ) {
+            return;
+        }
+        if ( typeof api.onCloseWindow === 'function' ) {
+            api.onCloseWindow(win);
+        }
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowMediator
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
+    // https://github.com/gorhill/uMatrix/issues/357
+    // Use nsIWindowMediator for being notified of opened/closed windows.
+    var listeners = {
+        onOpenWindow: function(aWindow) {
+            var win;
+            try {
+                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            addWindow(win);
+        },
+        onCloseWindow: function(aWindow) {
+            var win;
+            try {
+                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            removeWindow(win);
+        },
+        observe: function(aSubject, topic) {
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
+            //   "aSubject - the window being opened or closed, sent as an
+            //   "nsISupports which can be ... QueryInterfaced to an
+            //   "nsIDOMWindow."
+            var win;
+            try {
+                win = aSubject.QueryInterface(Ci.nsIInterfaceRequestor)
+                              .getInterface(Ci.nsIDOMWindow);
+            } catch (ex) {
+            }
+            if ( !win ) { return; }
+            if ( topic === 'domwindowopened' ) {
+                addWindow(win);
+                return;
+            }
+            if ( topic === 'domwindowclosed' ) {
+                removeWindow(win);
+                return;
+            }
+        }
+    };
+
+    (function() {
+        var win, winumerator, docElement;
+
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowMediator#getEnumerator%28%29
+        winumerator = Services.wm.getEnumerator(chromeWindowType);
+        while ( winumerator.hasMoreElements() ) {
+            win = winumerator.getNext();
+            if ( !win.closed ) {
+                windowToIdMap.set(win, windowIdGenerator++);
+            }
+        }
+
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#getWindowEnumerator%28%29
+        winumerator = Services.ww.getWindowEnumerator();
+        while ( winumerator.hasMoreElements() ) {
+            win = winumerator.getNext()
+                             .QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIDOMWindow);
+            if ( win.closed ) {
+                continue;
+            }
+            docElement = win.document && win.document.documentElement;
+            if ( !docElement ) {
+                continue;
+            }
+            if ( docElement.getAttribute('windowtype') === chromeWindowType ) {
+                windowToIdMap.set(win, windowIdGenerator++);
+            }
+        }
+
+        Services.wm.addListener(listeners);
+        Services.ww.registerNotification(listeners);
+    })();
+
+    cleanupTasks.push(function() {
+        Services.wm.removeListener(listeners);
+        Services.ww.unregisterNotification(listeners);
+        windowToIdMap.clear();
+    });
+
+    return api;
+})();
+
+/******************************************************************************/
+
 var getTabBrowser = (function() {
     if ( vAPI.fennec ) {
         return function(win) {
@@ -550,7 +683,7 @@ var getOwnerWindow = function(target) {
     }
 
     // Fennec
-    for ( var win of vAPI.tabs.getWindows() ) {
+    for ( var win of winWatcher.getWindows() ) {
         for ( var tab of win.BrowserApp.tabs) {
             if ( tab === target || tab.window === target ) {
                 return win;
@@ -573,15 +706,6 @@ vAPI.noTabId = '-1';
 
 vAPI.tabs = {};
 
-
-/******************************************************************************/
-
-vAPI.tabs.chromeWindowType = (function() {
-    if ( vAPI.thunderbird ) {
-        return 'mail:3pane';
-    }
-    return 'navigator:browser';
-})();
 
 /******************************************************************************/
 
@@ -643,12 +767,11 @@ vAPI.tabs.get = function(tabId, callback) {
 
     var win = getOwnerWindow(browser);
     var tabBrowser = getTabBrowser(win);
-    var windows = this.getWindows();
 
     callback({
         id: tabId,
         index: tabWatcher.indexFromTarget(browser),
-        windowId: windows.indexOf(win),
+        windowId: winWatcher.idFromWindow(win),
         active: browser === tabBrowser.selectedBrowser,
         url: browser.currentURI.asciiSpec,
         title: browser.contentTitle
@@ -661,7 +784,7 @@ vAPI.tabs.getAll = function(window) {
     var win, tab;
     var tabs = [];
 
-    for ( win of this.getWindows() ) {
+    for ( win of winWatcher.getWindows() ) {
         if ( window && window !== win ) {
             continue;
         }
@@ -677,23 +800,6 @@ vAPI.tabs.getAll = function(window) {
     }
 
     return tabs;
-};
-
-/******************************************************************************/
-
-vAPI.tabs.getWindows = function() {
-    var winumerator = Services.wm.getEnumerator(this.chromeWindowType);
-    var windows = [];
-
-    while ( winumerator.hasMoreElements() ) {
-        var win = winumerator.getNext();
-
-        if ( !win.closed ) {
-            windows.push(win);
-        }
-    }
-
-    return windows;
 };
 
 /******************************************************************************/
@@ -754,7 +860,7 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    var win = Services.wm.getMostRecentWindow(this.chromeWindowType);
+    var win = winWatcher.getCurrentWindow();
     var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
@@ -1023,7 +1129,7 @@ var tabWatcher = (function() {
     };
 
     var currentBrowser = function() {
-        var win = Services.wm.getMostRecentWindow(vAPI.tabs.chromeWindowType);
+        var win = winWatcher.getCurrentWindow();
         // https://github.com/gorhill/uBlock/issues/399
         // getTabBrowser() can return null at browser launch time.
         var tabBrowser = getTabBrowser(win);
@@ -1213,65 +1319,10 @@ var tabWatcher = (function() {
         }
     };
 
-    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowMediator
-    // https://github.com/gorhill/uMatrix/issues/357
-    // Use nsIWindowMediator for being notified of opened/closed windows.
-    var windowListener = {
-        onOpenWindow: function(aWindow) {
-            var win;
-            try {
-                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
-                             .getInterface(Ci.nsIDOMWindow);
-            } catch (ex) {
-            }
-            if ( win ) {
-                onWindowLoad(win);
-            }
-        },
-        onCloseWindow: function(aWindow) {
-            var win;
-            try {
-                win = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
-                             .getInterface(Ci.nsIDOMWindow);
-            } catch (ex) {
-            }
-            if ( win ) {
-                onWindowUnload(win);
-            }
-        }
-    };
-
-    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
-    var windowWatcher = {
-        observe: function(aSubject, topic) {
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher#registerNotification%28%29
-            //   "aSubject - the window being opened or closed, sent as an
-            //   "nsISupports which can be ... QueryInterfaced to an
-            //   "nsIDOMWindow."
-            var win;
-            try {
-                win = aSubject.QueryInterface(Ci.nsIInterfaceRequestor)
-                              .getInterface(Ci.nsIDOMWindow);
-            } catch (ex) {
-            }
-            if ( !win ) {
-                return;
-            }
-            if ( topic === 'domwindowopened' ) {
-                onWindowLoad(win);
-                return;
-            }
-            if ( topic === 'domwindowclosed' ) {
-                onWindowUnload(win);
-                return;
-            }
-        }
-    };
-
     // Initialize map with existing active tabs
     var start = function() {
         var tabBrowser, tabs, tab;
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             onWindowLoad(win);
             tabBrowser = getTabBrowser(win);
             if ( tabBrowser === null ) {
@@ -1289,18 +1340,17 @@ var tabWatcher = (function() {
             }
         }
 
-        Services.wm.addListener(windowListener);
-        Services.ww.registerNotification(windowWatcher);
+        winWatcher.onOpenWindow = onWindowLoad;
+        winWatcher.onCloseWindow = onWindowUnload;
     };
 
     var stop = function() {
-        Services.wm.removeListener(windowListener);
-        Services.ww.unregisterNotification(windowWatcher);
+        winWatcher.onOpenWindow = null;
+        winWatcher.onCloseWindow = null;
 
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             onWindowUnload(win);
         }
-
         browserToTabIdMap.clear();
         tabIdToBrowserMap.clear();
     };
@@ -1326,7 +1376,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var win = badge === undefined
         ? iconStatus
-        : Services.wm.getMostRecentWindow(vAPI.tabs.chromeWindowType);
+        : winWatcher.getCurrentWindow();
     var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
     var tb = vAPI.toolbarButton;
 
@@ -2216,7 +2266,7 @@ vAPI.toolbarButton = {
     var menuItemIds = new WeakMap();
 
     var shutdown = function() {
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var id = menuItemIds.get(win);
             if ( !id ) {
                 continue;
@@ -2244,7 +2294,7 @@ vAPI.toolbarButton = {
     };
 
     tbb.onClick = function() {
-        var win = Services.wm.getMostRecentWindow('navigator:browser');
+        var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
             url: 'popup.html?tabId=' + curTabId,
@@ -2265,7 +2315,7 @@ vAPI.toolbarButton = {
 
     tbb.init = function() {
         // Only actually expecting one window under Fennec (note, not tabs, windows)
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var label = this.getMenuItemLabel();
             var id = win.NativeWindow.menu.add({
                 name: label,
@@ -2550,7 +2600,7 @@ vAPI.toolbarButton = {
     };
 
     var shutdown = function() {
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var toolbarButton = win.document.getElementById(tbb.id);
             if ( toolbarButton ) {
                 toolbarButton.parentNode.removeChild(toolbarButton);
@@ -2631,7 +2681,7 @@ vAPI.toolbarButton = {
     var shutdown = function() {
         CustomizableUI.destroyWidget(tbb.id);
 
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var panel = win.document.getElementById(tbb.viewId);
             panel.parentNode.removeChild(panel);
             win.QueryInterface(Ci.nsIInterfaceRequestor)
@@ -2759,7 +2809,7 @@ vAPI.toolbarButton = {
     ].join(';');
 
     var updateBadgeStyle = function() {
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var button = win.document.getElementById(tbb.id);
             if ( button === null ) {
                 continue;
@@ -2816,7 +2866,7 @@ vAPI.toolbarButton = {
         CustomizableUI.removeListener(CUIEvents);
         CustomizableUI.destroyWidget(tbb.id);
 
-        for ( var win of vAPI.tabs.getWindows() ) {
+        for ( var win of winWatcher.getWindows() ) {
             var panel = win.document.getElementById(tbb.viewId);
             panel.parentNode.removeChild(panel);
             win.QueryInterface(Ci.nsIInterfaceRequestor)
@@ -3103,7 +3153,7 @@ vAPI.contextMenu.create = function(details, callback) {
         });
     };
 
-    for ( var win of vAPI.tabs.getWindows() ) {
+    for ( var win of winWatcher.getWindows() ) {
         this.register(win.document);
     }
 };
@@ -3111,7 +3161,7 @@ vAPI.contextMenu.create = function(details, callback) {
 /******************************************************************************/
 
 vAPI.contextMenu.remove = function() {
-    for ( var win of vAPI.tabs.getWindows() ) {
+    for ( var win of winWatcher.getWindows() ) {
         this.unregister(win.document);
     }
 
