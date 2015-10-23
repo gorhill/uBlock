@@ -524,7 +524,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Aggiungere il seguente URL alla tua lista dei filtri personalizzata?\n\nTitolo: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Aggiungere il seguente URL alla tua lista dei filtri personalizzata?\n\nTitolo: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
