@@ -789,6 +789,11 @@ vAPI.tabs.getAll = function(window) {
             continue;
         }
 
+        // This can happens if a tab-less window is currently opened.
+        if ( !tabBrowser.tabs ) {
+            continue;
+        }
+
         for ( tab of tabBrowser.tabs ) {
             tabs.push(tab);
         }
