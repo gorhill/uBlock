@@ -151,7 +151,7 @@ jeu.info###page [class^="banniere-"]
 arstechnica.com###lg-pushdown
 
 # This prevents spurious redirection, but breaks comments
-||js.washingtonpost.com/wpost/js/combo?*/util/util.identity-management-1.1.0.js$script,first-party
+||www.washingtonpost.com/*/twp-global.js$script,first-party
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
 ||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
