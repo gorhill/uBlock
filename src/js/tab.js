@@ -301,7 +301,7 @@ housekeep itself.
         // https://github.com/chrisaljoudi/uBlock/issues/1078
         // Use both the raw and normalized URLs.
         this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
-        if ( this.netFiltering && this.rawURL !== this.normalURL ) {
+        if ( this.netFiltering && this.rawURL !== this.normalURL && this.rawURL !== '' ) {
             this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
         }
         this.netFilteringReadTime = Date.now();
