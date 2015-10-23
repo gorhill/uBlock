@@ -790,6 +790,8 @@ vAPI.tabs.getAll = function(window) {
         }
 
         // This can happens if a tab-less window is currently opened.
+        // Example of a tab-less window: one opened from clicking
+        //   "View Page Source".
         if ( !tabBrowser.tabs ) {
             continue;
         }
