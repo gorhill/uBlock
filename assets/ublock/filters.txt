@@ -169,3 +169,4 @@ extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,s
 foot01.com,metronews.fr##script:contains(ligatus)
 layer13.net##script:contains(adBlockDetected)
 opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
+vg.no##script:contains(/^\s*?window\.__AB__/)
