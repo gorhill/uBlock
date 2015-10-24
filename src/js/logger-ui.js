@@ -628,7 +628,8 @@ var synchronizeTabIds = function(newTabIds) {
             option = document.createElement('option');
             select.appendChild(option);
         }
-        option.textContent = newTabIds[tabId];
+        // Truncate too long labels.
+        option.textContent = newTabIds[tabId].slice(0, 80);
         option.value = classNameFromTabId(tabId);
         if ( option.value === selectValue ) {
             select.selectedIndex = j;
