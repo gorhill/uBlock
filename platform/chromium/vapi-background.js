@@ -1014,9 +1014,10 @@ vAPI.punycodeURL = function(url) {
 
 // https://github.com/gorhill/uBlock/commit/43a5ed735b95a575a9339b6e71a1fcb27a99663b#commitcomment-13965030
 // Not all Chromium-based browsers support managed storage. Merely testing or
-// exception handling in this case does NOT work: I don't why. The extension
-// on Opera ends up in a non-sensical state, whereas vAPI become undefined out
-// of nowhere. So only solution left is to test explicitly for Opera.
+// exception handling in this case does NOT work: I don't know why. The
+// extension on Opera ends up in a non-sensical state, whereas vAPI become
+// undefined out of nowhere. So only solution left is to test explicitly for
+// Opera.
 
 vAPI.adminStorage = {
     getItem: (function() {
