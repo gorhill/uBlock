@@ -236,7 +236,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の &ldquo;要素遮蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にすると<i>µBlock<\/i>の使用メモリーを増やします。<\/p>",
+    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の &ldquo;要素遮蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -564,7 +564,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀は、以下のページのローディングを防いでいます:",
+    "message":"uBlock Originは、以下のページの読み込みを防いでいます:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
