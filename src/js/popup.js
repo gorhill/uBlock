@@ -126,10 +126,12 @@ var cachePopupData = function(data) {
             continue;
         }
         domain = hostnameDict[hostname].domain;
+        prefix = hostname.slice(0, 0 - domain.length);
+        // Prefix with space char for 1st-party hostnames: this ensure these
+        // will come first in list.
         if ( domain === popupData.pageDomain ) {
             domain = '\u0020';
         }
-        prefix = hostname.slice(0, 0 - domain.length);
         hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
     }
     return popupData;

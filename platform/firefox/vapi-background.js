@@ -78,8 +78,10 @@ window.addEventListener('unload', function() {
         vAPI.app.onShutdown();
     }
 
-    for ( var cleanup of cleanupTasks ) {
-        cleanup();
+    // IMPORTANT: cleanup tasks must be executed using LIFO order.
+    var i = cleanupTasks.length;
+    while ( i-- ) {
+        cleanupTasks[i]();
     }
 
     if ( cleanupTasks.length < expectedNumberOfCleanups ) {
@@ -2865,17 +2867,18 @@ vAPI.toolbarButton = {
     };
 
     var shutdown = function() {
-        CustomizableUI.removeListener(CUIEvents);
-        CustomizableUI.destroyWidget(tbb.id);
-
         for ( var win of winWatcher.getWindows() ) {
             var panel = win.document.getElementById(tbb.viewId);
-            panel.parentNode.removeChild(panel);
+            if ( panel !== null && panel.parentNode !== null ) {
+                panel.parentNode.removeChild(panel);
+            }
             win.QueryInterface(Ci.nsIInterfaceRequestor)
                 .getInterface(Ci.nsIDOMWindowUtils)
                 .removeSheet(styleURI, 1);
         }
 
+        CustomizableUI.removeListener(CUIEvents);
+        CustomizableUI.destroyWidget(tbb.id);
 
         vAPI.messaging.globalMessageManager.removeMessageListener(
             location.host + ':closePopup',
