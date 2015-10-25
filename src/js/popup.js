@@ -181,11 +181,16 @@ var formatNumber = function(count) {
 var rulekeyCompare = function(a, b) {
     var ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
-        ha = hostnameToSortableTokenMap[ha] || '';
+        ha = hostnameToSortableTokenMap[ha] || ' ';
     }
     var hb = b.slice(2, b.indexOf(' ', 2));
     if ( !reIP.test(hb) ) {
-        hb = hostnameToSortableTokenMap[hb] || '';
+        hb = hostnameToSortableTokenMap[hb] || ' ';
+    }
+    var ca = ha.charCodeAt(0),
+        cb = hb.charCodeAt(0);
+    if ( ca !== cb ) {
+        return ca - cb;
     }
     return ha.localeCompare(hb);
 };
