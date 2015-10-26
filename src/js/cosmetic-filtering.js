@@ -39,6 +39,16 @@ var µb = µBlock;
 var encode = JSON.stringify;
 var decode = JSON.parse;
 
+var isBadRegex = function(s) {
+    try {
+        void new RegExp(s);
+    } catch (ex) {
+        isBadRegex.message = ex.toString();
+        return true;
+    }
+    return false;
+};
+
 /******************************************************************************/
 /*
 var histogram = function(label, buckets) {
@@ -252,11 +262,11 @@ FilterParser.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterParser.prototype.parse = function(s) {
+FilterParser.prototype.parse = function(raw) {
     // important!
     this.reset();
 
-    var matches = this.reParser.exec(s);
+    var matches = this.reParser.exec(raw);
     if ( matches === null || matches.length !== 4 ) {
         this.cosmetic = false;
         return this;
@@ -301,20 +311,43 @@ FilterParser.prototype.parse = function(s) {
     // Examples:
     //   focus.de##script:contains(/uabInject/)
     //   focus.de##script:contains(uabInject)
-    if ( this.suffix.charAt(0) === 's' && this.reScriptContains.test(this.suffix) ) {
-        // Currently supported only as non-generic selector. Also, exception
-        // script tag filter makes no sense, ignore.
-        if ( this.hostnames.length === 0 || this.unhide === 1 ) {
-            this.invalid = true;
-            return this;
-        }
-        var suffix = this.suffix;
-        this.suffix = 'script//:';
-        if ( suffix.charAt(16) !== '/' || suffix.slice(-2) !== '/)' ) {
-            this.suffix += suffix.slice(16, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        } else {
-            this.suffix += suffix.slice(17, -2).replace(/\\/g, '\\');
-        }
+
+    // Inline script tag filter?
+    if (
+        this.suffix.charAt(0) !== 's' ||
+        this.reScriptContains.test(this.suffix) === false )
+    {
+        return this;
+    }
+
+    // Currently supported only as non-generic selector. Also, exception
+    // script tag filter makes no sense, ignore.
+    if ( this.hostnames.length === 0 || this.unhide === 1 ) {
+        this.invalid = true;
+        return this;
+    }
+
+    var suffix = this.suffix;
+    this.suffix = 'script//:';
+
+    // Plain string-based?
+    if ( suffix.charAt(16) !== '/' || suffix.slice(-2) !== '/)' ) {
+        this.suffix += suffix.slice(16, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return this;
+    }
+
+    // Regex-based
+    this.suffix += suffix.slice(17, -2).replace(/\\/g, '\\');
+
+    // Valid regex?
+    if ( isBadRegex(this.suffix) ) {
+        console.error(
+            "uBlock Origin> discarding bad regular expression-based cosmetic filter '%s': '%s'",
+            raw,
+            isBadRegex.message
+        );
+        this.invalid = true;
+        return this;
     }
 
     return this;

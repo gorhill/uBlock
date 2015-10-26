@@ -176,6 +176,16 @@ var isFirstParty = function(firstPartyDomain, hostname) {
     return c === '.' || c === '';
 };
 
+var isBadRegex = function(s) {
+    try {
+        void new RegExp(s);
+    } catch (ex) {
+        isBadRegex.message = ex.toString();
+        return true;
+    }
+    return false;
+};
+
 var alwaysTruePseudoRegex = {
     match: { '0': '', index: 0 },
     exec: function(s) {
@@ -1539,6 +1549,14 @@ FilterParser.prototype.parse = function(raw) {
     if ( s.charAt(0) === '/' && s.slice(-1) === '/' && s.length > 2 ) {
         this.isRegex = true;
         this.f = s.slice(1, -1);
+        if ( isBadRegex(this.f) ) {
+            console.error(
+                "uBlock Origin> discarding bad regular expression-based network filter '%s': '%s'",
+                raw,
+                isBadRegex.message
+            );
+            this.unsupported = true;
+        }
         return this;
     }
 
