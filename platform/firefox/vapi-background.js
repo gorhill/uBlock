@@ -2104,6 +2104,55 @@ vAPI.net.registerListeners = function() {
         new Set(this.onBeforeRequest.types) :
         null;
 
+    var shouldBlockPopup = function(details) {
+        var sourceTabId = null;
+        var uri;
+
+        for ( var browser of tabWatcher.browsers() ) {
+            uri = browser.currentURI;
+
+            // Probably isn't the best method to identify the source tab.
+
+            // https://github.com/gorhill/uBlock/issues/450
+            // Skip entry if no valid URI available.
+            // Apparently URI can be undefined under some circumstances: I
+            // believe this may have to do with those very temporary
+            // browser objects created when opening a new tab, i.e. related
+            // to https://github.com/gorhill/uBlock/issues/212
+            if ( !uri || uri.spec !== details.openerURL ) {
+                continue;
+            }
+
+            sourceTabId = tabWatcher.tabIdFromTarget(browser);
+            if ( sourceTabId === details.tabId ) {
+                sourceTabId = null;
+                continue;
+            }
+
+            uri = Services.io.newURI(details.url, null, null);
+
+            httpObserver.handlePopup(uri, details.tabId, sourceTabId);
+            break;
+        }
+
+        return sourceTabId;
+    };
+
+    var shouldLoadMedia = function(details) {
+        var uri = Services.io.newURI(details.url, null, null);
+
+        var r = vAPI.net.onBeforeRequest.callback({
+            frameId: details.frameId,
+            hostname: uri.asciiHost,
+            parentFrameId: details.parentFrameId,
+            tabId: details.tabId,
+            type: 'media',
+            url: uri.asciiSpec
+        });
+
+        return typeof r !== 'object' || r === null;
+    };
+
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
         // Non blocking: it is assumed that the http observer is fired after
@@ -2111,8 +2160,10 @@ vAPI.net.registerListeners = function() {
         // a request would end up being categorized as a behind-the-scene
         // requests.
         var details = e.data;
-        var tabId = tabWatcher.tabIdFromTarget(e.target);
         var sourceTabId = null;
+        var mustLoad;
+
+        details.tabId = tabWatcher.tabIdFromTarget(e.target);
 
         // Popup candidate: this code path is taken only for when a new top
         // document loads, i.e. only once per document load. TODO: evaluate for
@@ -2120,36 +2171,14 @@ vAPI.net.registerListeners = function() {
         // to evaluate on the spot. Still, there is currently no harm given
         // this code path is typically taken only once per page load.
         if ( details.openerURL ) {
-            for ( var browser of tabWatcher.browsers() ) {
-                var URI = browser.currentURI;
+            sourceTabId = shouldBlockPopup(details);
+        }
 
-                // Probably isn't the best method to identify the source tab.
-
-                // https://github.com/gorhill/uBlock/issues/450
-                // Skip entry if no valid URI available.
-                // Apparently URI can be undefined under some circumstances: I
-                // believe this may have to do with those very temporary
-                // browser objects created when opening a new tab, i.e. related
-                // to https://github.com/gorhill/uBlock/issues/212
-                if ( !URI || URI.spec !== details.openerURL ) {
-                    continue;
-                }
-
-                sourceTabId = tabWatcher.tabIdFromTarget(browser);
-
-                if ( sourceTabId === tabId ) {
-                    sourceTabId = null;
-                    continue;
-                }
-
-                URI = Services.io.newURI(details.url, null, null);
-
-                if ( httpObserver.handlePopup(URI, tabId, sourceTabId) ) {
-                    return;
-                }
-
-                break;
-            }
+        // https://github.com/gorhill/uBlock/issues/868
+        // Firefox quirk: for some reasons, there are instances of resources
+        // for `video` tag not being reported to HTTP observers.
+        if ( details.rawtype === 15 ) {
+            mustLoad = shouldLoadMedia(details);
         }
 
         // We are being called synchronously from the content process, so we
@@ -2160,7 +2189,9 @@ vAPI.net.registerListeners = function() {
         pendingReq.parentFrameId = details.parentFrameId;
         pendingReq.rawtype = details.rawtype;
         pendingReq.sourceTabId = sourceTabId;
-        pendingReq.tabId = tabId;
+        pendingReq.tabId = details.tabId;
+
+        return mustLoad;
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
