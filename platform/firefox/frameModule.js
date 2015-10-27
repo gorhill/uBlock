@@ -205,7 +205,7 @@ var contentObserver = {
             openerURL: openerURL,
             parentFrameId: parentFrameId,
             rawtype: type,
-            tabId: -1,
+            tabId: '',
             url: location.spec
         };
 
