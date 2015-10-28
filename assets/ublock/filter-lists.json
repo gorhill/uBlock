@@ -107,12 +107,6 @@
         "homeURL": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
         "supportURL": "https://notabug.org/latvian-list/adblock-latvian"
         },
-    "home.fredfiber.no/langsholt/adblock.txt": {
-        "off": true,
-        "title": "NOR: Norsk adblockliste",
-        "group": "regions",
-        "homeURL": "http://home.fredfiber.no/langsholt/adblock.txt"
-        },
     "hosts-file.net/ad-servers": {
         "off": true,
         "title": "hpHosts’ Ad and tracking servers",
@@ -201,13 +195,13 @@
         "off": true,
         "title": "Malware domains (long-lived)",
         "group": "malware",
-        "homeURL": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt",
+        "homeURL": "https://malwaredomains.lehigh.edu/files/immortal_domains.txt",
         "supportURL": "http://www.malwaredomains.com/"
         },
     "mirror1.malwaredomains.com/files/justdomains": {
         "title": "Malware domains",
         "group": "malware",
-        "homeURL": "http://malwaredomains.lehigh.edu/files/justdomains",
+        "homeURL": "https://malwaredomains.lehigh.edu/files/justdomains",
         "supportURL": "http://www.malwaredomains.com/"
         },
     "pgl.yoyo.org/as/serverlist": {
