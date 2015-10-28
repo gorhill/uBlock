@@ -116,10 +116,20 @@ vAPI.messaging = {
                 return;
             }
             var details = msg.details;
-            if ( !details.allFrames && window !== window.top ) {
+            if ( details.allFrames !== true && window !== window.top ) {
                 return;
             }
-            self.injectScript(details.file);
+            // https://github.com/gorhill/uBlock/issues/876
+            // Enforce `details.runAt`. Default to `document_end`.
+            if ( details.runAt === 'document_start' || document.readyState !== 'loading' ) {
+                self.injectScript(details.file);
+                return;
+            }
+            var injectScriptDelayed = function() {
+                document.removeEventListener('DOMContentLoaded', injectScriptDelayed);
+                self.injectScript(details.file);
+            };
+            document.addEventListener('DOMContentLoaded', injectScriptDelayed);
             return;
         }
         if ( msg.cmd === 'shutdownSandbox' ) {

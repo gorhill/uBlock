@@ -258,12 +258,12 @@ var contentObserver = {
 
             sandbox.injectScript = function(script) {
                 var svc = Services;
-                if ( svc !== undefined ) {
-                    svc.scriptloader.loadSubScript(script, sandbox);
-                } else {
-                    // Sandbox appears void.
-                    // I've seen this happens, need to investigate why.
+                // Sandbox appears void.
+                // I've seen this happens, need to investigate why.
+                if ( svc === undefined ) {
+                    return;
                 }
+                svc.scriptloader.loadSubScript(script, sandbox);
             };
 
             // The goal is to have content scripts removed from web pages. This
