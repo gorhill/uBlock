@@ -68,6 +68,7 @@ var contentObserver = {
     classID: Components.ID('{7afbd130-cbaf-46c2-b944-f5d24305f484}'),
     contractID: '@' + hostName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
+    REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     SUB_FRAME: Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
@@ -204,17 +205,23 @@ var contentObserver = {
             openerURL: openerURL,
             parentFrameId: parentFrameId,
             rawtype: type,
+            tabId: '',
             url: location.spec
         };
 
         //console.log('shouldLoad: type=' + type' ' + 'url=' + location.spec);
-
+        var r;
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.cpMessageName, details);
+            r = messageManager.sendRpcMessage(this.cpMessageName, details);
         } else {
             // Compatibility for older versions
-            messageManager.sendSyncMessage(this.cpMessageName, details);
+            r = messageManager.sendSyncMessage(this.cpMessageName, details);
+        }
+
+        // Important: hard test against `false`.
+        if ( Array.isArray(r) && r.length !== 0 && r[0] === false ) {
+            return this.REJECT;
         }
 
         return this.ACCEPT;
