@@ -76,6 +76,12 @@ vAPI.storage = chrome.storage.local;
 
 vAPI.browserSettings = {
     set: function(details) {
+        // https://github.com/gorhill/uBlock/issues/875
+        // Must not leave `lastError` unchecked.
+        var callback = function() {
+            void chrome.runtime.lastError;
+        };
+
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
                 continue;
@@ -86,7 +92,7 @@ vAPI.browserSettings = {
                     chrome.privacy.network.networkPredictionEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    });
+                    }, callback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -97,7 +103,7 @@ vAPI.browserSettings = {
                     chrome.privacy.websites.hyperlinkAuditingEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    });
+                    }, callback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -109,7 +115,7 @@ vAPI.browserSettings = {
                         chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
                             value: !!details[setting],
                             scope: 'regular'
-                        });
+                        }, callback);
                     } catch(ex) {
                         console.error(ex);
                     }
