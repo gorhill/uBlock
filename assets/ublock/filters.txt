@@ -170,3 +170,5 @@ foot01.com,metronews.fr##script:contains(ligatus)
 layer13.net##script:contains(adBlockDetected)
 opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 vg.no##script:contains(/^\s*?window\.__AB__/)
+voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
+
