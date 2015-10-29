@@ -238,3 +238,8 @@ ovh.strim.io#@##tweets
 
 # Chrome store: "uBlock Origin seems to think Southwest.com's background and header image are ads"
 @@||www.southwest.com/*/mbox.js$script,first-party
+
+# https://www.reddit.com/r/ublock/comments/3qo6yj/marketwatchcom_blocks_ublock/
+marketwatch.com#@##ad_DisplayAd1
+marketwatch.com#@##ad_DisplayAd2
+marketwatch.com#@#.advertisement
