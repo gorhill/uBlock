@@ -81,30 +81,6 @@ vAPI.shutdown.add(function() {
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/chrisaljoudi/uBlock/issues/789
-// Be sure that specific cosmetic filters are still applied.
-// Executed once, then flushed from memory.
-
-(function() {
-    // Were there specific cosmetic filters?
-    if ( typeof vAPI.specificHideStyle !== 'object' ) {
-        return;
-    }
-    // Is our style tag still in the DOM? (the guess is whatever parent there
-    // is, it is in the DOM)
-    if ( vAPI.specificHideStyle.parentNode !== null ) {
-        return;
-    }
-    // Put it back
-    var parent = document.head || document.documentElement;
-    if ( parent ) {
-        parent.appendChild(vAPI.specificHideStyle);
-    }
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
 // https://github.com/chrisaljoudi/uBlock/issues/7
 
 var uBlockCollapser = (function() {
@@ -310,10 +286,33 @@ var uBlockCollapser = (function() {
         return;
     }
 
-    //console.debug('Starts cosmetic filtering');
+    //console.debug('Start cosmetic filtering');
 
     //var timer = window.performance || Date;
     //var tStart = timer.now();
+
+    // https://github.com/chrisaljoudi/uBlock/issues/789
+    // https://github.com/gorhill/uBlock/issues/873
+    // Be sure that our style tags used for cosmetic filtering are still applied.
+    var checkStyleTags = function() {
+        var doc = document,
+            html = doc.documentElement,
+            head = doc.head,
+            newParent = html || head;
+        if ( newParent === null ) {
+            return;
+        }
+        var styles = vAPI.styles || [],
+            style, oldParent;
+        for ( var i = 0; i < styles.length; i++ ) {
+            style = styles[i];
+            oldParent = style.parentNode;
+            if ( oldParent !== head && oldParent !== html ) {
+                newParent.appendChild(style);
+            }
+        }
+    };
+    checkStyleTags();
 
     var queriedSelectors = {};
     var injectedSelectors = {};
@@ -428,7 +427,7 @@ var uBlockCollapser = (function() {
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
-        var parent = document.body || document.documentElement;
+        var parent = document.head || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
             vAPI.styles.push(style);
@@ -639,15 +638,12 @@ var uBlockCollapser = (function() {
         if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) {
             return;
         }
-        //var tStart = timer.now();
+        // When there are too many misses for these highly generic CSS rules,
+        // we will just give up on looking whether they need to be injected.
         if ( document.querySelector(highGenerics.hideHigh) === null ) {
-            //console.debug('%f: high-high generic test time', timer.now() - tStart);
             processHighHighGenericsMisses -= 1;
-            // Too many misses for these nagging highly generic CSS rules,
-            // so we will just skip them from now on.
             if ( processHighHighGenericsMisses === 0 ) {
                 injectedSelectors['{{highHighGenerics}}'] = true;
-                //console.debug('high-high generic: apparently not needed...');
             }
             return;
         }
@@ -783,9 +779,15 @@ var uBlockCollapser = (function() {
     // Added node lists will be cumulated here before being processed
     var addedNodeLists = [];
     var addedNodeListsTimer = null;
+    var removedNodeListsTimer = null;
     var collapser = uBlockCollapser;
 
-    var treeMutationObservedHandler = function() {
+    // The `cosmeticFiltersActivated` message is required: a new element could
+    // be matching an already injected but otherwise inactive cosmetic filter.
+    // This means the already injected cosmetic filter become active (has an
+    // effect on the document), and thus must be logged if needed.
+    var addedNodesHandler = function() {
+        addedNodeListsTimer = null;
         var nodeList, iNode, node;
         while ( (nodeList = addedNodeLists.pop()) ) {
             iNode = nodeList.length;
@@ -801,51 +803,60 @@ var uBlockCollapser = (function() {
                 collapser.iframesFromNode(node);
             }
         }
-        addedNodeListsTimer = null;
         if ( contextNodes.length !== 0 ) {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
             retrieveGenericSelectors();
-
-            // This is required: a new element could be matching an already
-            // injected but otherwise inactive cosmetic filter. This means
-            // the already injected cosmetic filter become active (has an
-            // effect on the document), and thus must be logged if needed.
             messager.send({ what: 'cosmeticFiltersActivated' });
         }
     };
 
+    // https://github.com/gorhill/uBlock/issues/873
+    // This will ensure our style elements will stay in the DOM.
+    var removedNodesHandler = function() {
+        removedNodeListsTimer = null;
+        checkStyleTags();
+    };
+
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
-    var treeMutationObservedHandlerAsync = function(mutations) {
+    // I arbitrarily chose 100 ms for now: I have to compromise between the
+    // overhead of processing too few nodes too often and the delay of many
+    // nodes less often.
+    var domLayoutChanged = function(mutations) {
+        var removedNodeLists = false;
         var iMutation = mutations.length;
-        var nodeList;
+        var nodeList, mutation;
         while ( iMutation-- ) {
-            nodeList = mutations[iMutation].addedNodes;
+            mutation = mutations[iMutation];
+            nodeList = mutation.addedNodes;
             if ( nodeList.length !== 0 ) {
                 addedNodeLists.push(nodeList);
             }
+            if ( mutation.removedNodes.length !== 0 ) {
+                removedNodeLists = true;
+            }
         }
-        if ( addedNodeListsTimer === null ) {
-            // I arbitrarily chose 100 ms for now:
-            // I have to compromise between the overhead of processing too few
-            // nodes too often and the delay of many nodes less often.
-            addedNodeListsTimer = vAPI.setTimeout(treeMutationObservedHandler, 100);
+        if ( addedNodeLists.length !== 0 && addedNodeListsTimer === null ) {
+            addedNodeListsTimer = vAPI.setTimeout(addedNodesHandler, 100);
+        }
+        if ( removedNodeLists && removedNodeListsTimer === null ) {
+            removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, 100);
         }
     };
 
     //console.debug('Starts cosmetic filtering\'s mutations observer');
 
     // https://github.com/gorhill/httpswitchboard/issues/176
-    var treeObserver = new MutationObserver(treeMutationObservedHandlerAsync);
-    treeObserver.observe(document.body, {
+    var domLayoutObserver = new MutationObserver(domLayoutChanged);
+    domLayoutObserver.observe(document.body, {
         childList: true,
         subtree: true
     });
 
     // https://github.com/gorhill/uMatrix/issues/144
     vAPI.shutdown.add(function() {
-        treeObserver.disconnect();
+        domLayoutObserver.disconnect();
         if ( addedNodeListsTimer !== null ) {
             clearTimeout(addedNodeListsTimer);
         }
