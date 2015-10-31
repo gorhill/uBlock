@@ -23,7 +23,7 @@ The most important part when opening an issue: **detailed steps**.
 
 1. Submit **bugs/issues only**.
     - Bugs occur, I will fix them.
-1. _One specific_ issue per entry.
+1. _One specific_ issue per submission.
 1. The logger is the tool of choice to use to help diagnose issues.
 1. Do **NOT**:
     - Submit design ideas.
