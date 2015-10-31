@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
+    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKlikoj+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -152,7 +152,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klikoj, Ctrl-klikim",
+    "message":"Klikoj, Klikoj me Ctrl",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -568,7 +568,7 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Për shkak të këtij filtri",
+    "message":"Për shkak të filtrit",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
