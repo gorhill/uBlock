@@ -195,13 +195,13 @@
         "off": true,
         "title": "Malware domains (long-lived)",
         "group": "malware",
-        "homeURL": "https://malwaredomains.lehigh.edu/files/immortal_domains.txt",
+        "homeURL": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt",
         "supportURL": "http://www.malwaredomains.com/"
         },
     "mirror1.malwaredomains.com/files/justdomains": {
         "title": "Malware domains",
         "group": "malware",
-        "homeURL": "https://malwaredomains.lehigh.edu/files/justdomains",
+        "homeURL": "http://malwaredomains.lehigh.edu/files/justdomains",
         "supportURL": "http://www.malwaredomains.com/"
         },
     "pgl.yoyo.org/as/serverlist": {
