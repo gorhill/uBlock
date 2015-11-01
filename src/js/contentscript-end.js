@@ -259,7 +259,7 @@ var uBlockCollapser = (function() {
         if ( node.localName === 'iframe' ) {
             addIFrame(node);
         }
-        var iframes = node.querySelectorAll('iframe');
+        var iframes = node.getElementsByTagName('iframe');
         var i = iframes.length;
         while ( i-- ) {
             addIFrame(iframes[i]);
@@ -580,38 +580,47 @@ var uBlockCollapser = (function() {
     // - [href^="http"]
 
     var processHighMediumGenerics = function(generics, out) {
-        var nodeList = selectNodes('a[href^="http"]');
-        var iNode = nodeList.length;
-        var node, href, pos, hash, selectors, selector, iSelector;
+        var doc = document;
+        var i = contextNodes.length;
+        var aa = [ null ];
+        var node, nodes;
+        while ( i-- ) {
+            node = contextNodes[i];
+            if ( node.localName === 'a' ) {
+                aa[0] = node;
+                processHighMediumGenericsForNodes(aa, generics, out);
+            }
+            nodes = node.getElementsByTagName('a');
+            if ( nodes.length === 0 ) { continue; }
+            processHighMediumGenericsForNodes(nodes, generics, out);
+            if ( node === doc ) {
+                break;
+            }
+        }
+    };
 
-        while ( iNode-- ) {
-            node = nodeList[iNode];
+    var processHighMediumGenericsForNodes = function(nodes, generics, out) {
+        var i = nodes.length;
+        var node, href, pos, hash, selectors, j, selector;
+        var aa = [ '' ];
+        while ( i-- ) {
+            node = nodes[i];
             href = node.getAttribute('href');
             if ( !href ) { continue; }
-
             pos = href.indexOf('://');
             if ( pos === -1 ) { continue; }
-
             hash = href.slice(pos + 3, pos + 11);
             selectors = generics[hash];
             if ( selectors === undefined ) { continue; }
-
             // A string.
             if ( typeof selectors === 'string' ) {
-                if (
-                    href.lastIndexOf(selectors.slice(8, -2), 0) === 0 &&
-                    injectedSelectors.hasOwnProperty(selectors) === false
-                ) {
-                    injectedSelectors[selectors] = true;
-                    out.push(selectors);
-                }
-                continue;
+                aa[0] = selectors;
+                selectors = aa;
             }
-
             // An array of strings.
-            iSelector = selectors.length;
-            while ( iSelector-- ) {
-                selector = selectors[iSelector];
+            j = selectors.length;
+            while ( j-- ) {
+                selector = selectors[j];
                 if (
                     href.lastIndexOf(selector.slice(8, -2), 0) === 0 &&
                     injectedSelectors.hasOwnProperty(selector) === false
@@ -687,8 +696,7 @@ var uBlockCollapser = (function() {
         while ( i-- ) {
             node = nodes[i];
             if ( node.nodeType !== 1 ) { continue; }
-            // id
-            v = nodes[i].id;
+            v = node.id;
             if ( typeof v !== 'string' ) { continue; }
             v = v.trim();
             if ( v === '' ) { continue; }
@@ -891,20 +899,27 @@ var uBlockCollapser = (function() {
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
-
-// Executed only once
+// Executed only once.
+// Preferring getElementsByTagName over querySelectorAll:
+//   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
 
 (function() {
     var collapser = uBlockCollapser;
     var elems, i, elem;
 
-    elems = document.querySelectorAll('embed, object');
+    elems = document.getElementsByTagName('embed');
     i = elems.length;
     while ( i-- ) {
         collapser.add(elems[i]);
     }
 
-    elems = document.querySelectorAll('img');
+    elems = document.getElementsByTagName('object');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.add(elems[i]);
+    }
+
+    elems = document.getElementsByTagName('img');
     i = elems.length;
     while ( i-- ) {
         elem = elems[i];
@@ -913,11 +928,12 @@ var uBlockCollapser = (function() {
         }
     }
 
-    elems = document.querySelectorAll('iframe');
+    elems = document.getElementsByTagName('iframe');
     i = elems.length;
     while ( i-- ) {
         collapser.addIFrame(elems[i]);
     }
+
     collapser.process(0);
 })();
 
