@@ -161,7 +161,7 @@ return {
         "assets/thirdparties/http://www.certyficate.it/adblock/adblock.txt": "https://www.certyficate.it/adblock/adblock.txt",
         "assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt",
         "assets/thirdparties/margevicius.lt/easylistlithuania.txt": "http://margevicius.lt/easylistlithuania.txt",
-        "assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt": "https://malwaredomains.lehigh.edu/files/immortal_domains.txt",
+        "assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt",
         "assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": "https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt",
         "assets/thirdparties/raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
         "assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt",
