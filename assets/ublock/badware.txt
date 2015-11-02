@@ -10,6 +10,14 @@
 # strict blocking, yet the site will render properly if a user still decide to
 # go ahead.
 
+# 2014-10-22: http://assiste.com/01Net.html
+# 2013-03-25: http://www.malekal.com/2011/07/09/pctutotuto4pc-association-avec-01net/
+# 2012-10-31: http://www.journaldunet.com/solutions/dsi/des-malwares-sur-telecharger-com-01net-1012.shtml
+# 2012-10-30: http://www.lesnumeriques.com/appli-logiciel/telecharger-depuis-01net-nuit-gravement-a-sante-pc-n26763.html
+# 2012-06-17: http://www.malekal.com/2012/06/17/01net-pc-optimizer-pour-ne-pas-optimiser-son-pc/
+||www.01net.com/telecharger/$document
+
+
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2015-01-11: http://www.howtogeek.com/198622/heres-what-happens-when-you-install-the-top-10-download.com-apps/
@@ -23,6 +31,14 @@
 # 2013-12-10: https://blog.whitehatsec.com/why-com-com-should-scare-you/
 ||com.com$document
 
+# 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
+# 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
+# 2013-05-23: http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
+# 2013-04-19: http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
+# 2013-04-17: http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
+||softonic.com^$other
+
+
 # 2015-06-18: http://www.information-age.com/industry/software/123459675/hotbed-malware-another-blow-sourceforge-google-discovers-588-pages-malicious-software
 # 2015-06-02: https://blog.l0cal.com/2015/06/02/what-happened-to-sourceforge/
 # 2015-05-28: http://libregraphicsworld.org/blog/entry/anatomy-of-sourceforge-gimp-controversy
@@ -31,11 +47,3 @@
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2014-11-25: http://blog.tedd.no/2014/11/25/sourceforge-malware/
 ||sourceforge.net^$other
-
-
-# 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
-# 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
-# 2013-05-23: http://www.intego.com/mac-security-blog/another-problematic-softonic-installer-brings-adware/
-# 2013-04-19: http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
-# 2013-04-17: http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
-||softonic.com^$other
