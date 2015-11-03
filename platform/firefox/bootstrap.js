@@ -62,7 +62,7 @@ function startup(data/*, reason*/) {
         .getService(Ci.nsIAppShellService);
 
     let isReady = function() {
-        var hiddenDoc = null;
+        var hiddenDoc;
 
         try {
             hiddenDoc = appShell.hiddenDOMWindow &&
@@ -70,7 +70,10 @@ function startup(data/*, reason*/) {
         } catch (ex) {
         }
 
-        if ( hiddenDoc === null || hiddenDoc.readyState === 'loading' ) {
+        // Do not test against `loading`: it does appear `readyState` could be
+        // undefined if looked up too early.
+        if ( !hiddenDoc ||
+             hiddenDoc.readyState !== 'interactive' && hiddenDoc.readyState !== 'complete' ) {
             return false;
         }
 
@@ -82,6 +85,9 @@ function startup(data/*, reason*/) {
             'chrome://' + hostName + '/content/background.html#' + version
         );
 
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
+        // "If the same listener registers twice for the same message, the
+        // "second registration is ignored."
         restartListener.messageManager.addMessageListener(
             hostName + '-restart',
             restartListener
@@ -96,17 +102,24 @@ function startup(data/*, reason*/) {
 
     // https://github.com/gorhill/uBlock/issues/749
     // Poll until the proper environment is set up -- or give up eventually.
+    // We poll frequently early on but relax poll delay as time pass.
 
-    let tryCount = 300;
+    let tryDelay = 5;
+    let trySum = 0;
+    let tryMax = 30000;
     let timer = Cc['@mozilla.org/timer;1']
         .createInstance(Ci.nsITimer);
 
     let checkLater = function() {
-        tryCount -= 1;
-        if ( tryCount > 0 ) {
-            timer.init(timerObserver, 100, timer.TYPE_ONE_SHOT);
-        } else {
+        trySum += tryDelay;
+        if ( trySum >= tryMax ) {
             timer = null;
+            return;
+        }
+        timer.init(timerObserver, tryDelay, timer.TYPE_ONE_SHOT);
+        tryDelay *= 2;
+        if ( tryDelay > 500 ) {
+            tryDelay = 500;
         }
     };
 
