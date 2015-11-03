@@ -37,7 +37,6 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
-vAPI.opera = /\bOPR\/[\d.]+\b/.test(self.navigator.appVersion);
 
 var noopFunc = function(){};
 
@@ -1028,31 +1027,24 @@ vAPI.punycodeURL = function(url) {
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
 vAPI.adminStorage = {
-    getItem: (function() {
-        if ( vAPI.opera ) {
-            return function(key, callback) {
-                callback();
-            };
-        }
-        return function(key, callback) {
-            var onRead = function(store) {
-                var data;
-                if (
-                    !chrome.runtime.lastError &&
-                    typeof store === 'object' &&
-                    store !== null
-                ) {
-                    data = store[key];
-                }
-                callback(data);
-            };
-            try {
-                chrome.storage.managed.get(key, onRead);
-            } catch (ex) {
-                callback();
+    getItem: function(key, callback) {
+        var onRead = function(store) {
+            var data;
+            if (
+                !chrome.runtime.lastError &&
+                typeof store === 'object' &&
+                store !== null
+            ) {
+                data = store[key];
             }
+            callback(data);
         };
-    })()
+        try {
+            chrome.storage.managed.get(key, onRead);
+        } catch (ex) {
+            callback();
+        }
+    }
 };
 
 /******************************************************************************/
