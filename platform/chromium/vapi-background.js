@@ -1024,6 +1024,8 @@ vAPI.punycodeURL = function(url) {
 // extension on Opera ends up in a non-sensical state, whereas vAPI become
 // undefined out of nowhere. So only solution left is to test explicitly for
 // Opera.
+// https://github.com/gorhill/uBlock/issues/900
+// Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
 vAPI.adminStorage = {
     getItem: (function() {
@@ -1033,10 +1035,19 @@ vAPI.adminStorage = {
             };
         }
         return function(key, callback) {
+            var onRead = function(store) {
+                var data;
+                if (
+                    !chrome.runtime.lastError &&
+                    typeof store === 'object' &&
+                    store !== null
+                ) {
+                    data = store[key];
+                }
+                callback(data);
+            };
             try {
-                chrome.storage.managed.get(key, function(store) {
-                    callback(store[key] || undefined);
-                });
+                chrome.storage.managed.get(key, onRead);
             } catch (ex) {
                 callback();
             }
