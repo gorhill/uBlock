@@ -39,3 +39,14 @@
 # 2013-04-19: http://www.esecurityplanet.com/malware/softonic-delivers-adware.html
 # 2013-04-17: http://www.intego.com/mac-security-blog/softonic-download-site-briefly-delivers-trojan-adware-installer/
 ||softonic.com^$other
+
+# 2014-10-22: http://assiste.com/01Net.html
+# 2013-03-25: http://www.malekal.com/2011/07/09/pctutotuto4pc-association-avec-01net/
+# 2012-10-31: http://www.journaldunet.com/solutions/dsi/des-malwares-sur-telecharger-com-01net-1012.shtml
+# 2012-10-30: http://www.lesnumeriques.com/appli-logiciel/telecharger-depuis-01net-nuit-gravement-a-sante-pc-n26763.html
+# 2012-06-17: http://www.malekal.com/2012/06/17/01net-pc-optimizer-pour-ne-pas-optimiser-son-pc/
+||www.01net.com/telecharger/$document
+
+# 2015-11-02: https://blog.malwarebytes.org/news/2015/11/has-macupdate-fallen-to-the-adware-plague/
+# 2014-02-12: http://www.tripwire.com/state-of-security/latest-security-news/download-com-macupdate-com-served-bitcoin-stealing-malware/
+||macupdate.com^$other
