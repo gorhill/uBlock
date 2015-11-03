@@ -31,7 +31,7 @@ const {classes: Cc, interfaces: Ci} = Components;
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
-let bgProcess;
+let bgProcess = null;
 let version;
 const hostName = 'ublock0';
 const restartListener = {
@@ -53,23 +53,25 @@ function startup(data/*, reason*/) {
         version = data.version;
     }
 
+    // Already started?
+    if ( bgProcess !== null ) {
+        return;
+    }
+
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
 
-    let onReady = function(e) {
-        if ( e ) {
-            this.removeEventListener(e.type, onReady);
+    let isReady = function() {
+        var hiddenDoc = null;
+
+        try {
+            hiddenDoc = appShell.hiddenDOMWindow &&
+                        appShell.hiddenDOMWindow.document;
+        } catch (ex) {
         }
 
-        let hiddenDoc = appShell.hiddenDOMWindow.document;
-
-        // https://github.com/gorhill/uBlock/issues/10
-        // Fixed by github.com/AlexVallat:
-        //   https://github.com/chrisaljoudi/uBlock/issues/1149
-        //   https://github.com/AlexVallat/uBlock/commit/e762a29d308caa46578cdc34a9be92c4ad5ecdd0
-        if ( hiddenDoc.readyState === 'loading' ) {
-            hiddenDoc.addEventListener('DOMContentLoaded', onReady);
-            return;
+        if ( hiddenDoc === null || hiddenDoc.readyState === 'loading' ) {
+            return false;
         }
 
         bgProcess = hiddenDoc.documentElement.appendChild(
@@ -84,38 +86,42 @@ function startup(data/*, reason*/) {
             hostName + '-restart',
             restartListener
         );
+
+        return true;
     };
 
-    var ready = false;
-    try {
-        ready = appShell.hiddenDOMWindow &&
-                appShell.hiddenDOMWindow.document;
-    } catch (ex) {
-    }
-    if ( ready ) {
-        onReady();
+    if ( isReady() ) {
         return;
     }
 
-    let ww = Cc['@mozilla.org/embedcomp/window-watcher;1']
-        .getService(Ci.nsIWindowWatcher);
+    // https://github.com/gorhill/uBlock/issues/749
+    // Poll until the proper environment is set up -- or give up eventually.
 
-    ww.registerNotification({
-        observe: function(win, topic) {
-            if ( topic !== 'domwindowopened' ) {
-                return;
-            }
+    let tryCount = 300;
+    let timer = Cc['@mozilla.org/timer;1']
+        .createInstance(Ci.nsITimer);
 
-            try {
-                void appShell.hiddenDOMWindow;
-            } catch (ex) {
-                return;
-            }
-
-            ww.unregisterNotification(this);
-            win.addEventListener('DOMContentLoaded', onReady);
+    let checkLater = function() {
+        tryCount -= 1;
+        if ( tryCount > 0 ) {
+            timer.init(timerObserver, 100, timer.TYPE_ONE_SHOT);
+        } else {
+            timer = null;
         }
-    });
+    };
+
+    var timerObserver = {
+        observe: function() {
+            timer.cancel();
+            if ( isReady() ) {
+                timer = null;
+            } else {
+                checkLater();
+            }
+        }
+    };
+
+    checkLater();
 }
 
 /******************************************************************************/
@@ -125,7 +131,10 @@ function shutdown(data, reason) {
         return;
     }
 
-    bgProcess.parentNode.removeChild(bgProcess);
+    if ( bgProcess !== null ) {
+        bgProcess.parentNode.removeChild(bgProcess);
+        bgProcess = null;
+    }
 
     if ( data === undefined ) {
         return;
