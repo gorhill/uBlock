@@ -31,6 +31,13 @@
 
 /******************************************************************************/
 
+// Not all sandboxes are given an rpc function, so assign a dummy one if it is
+// missing -- this avoids the need for testing before use.
+
+self.rpc = self.rpc || function(){};
+
+/******************************************************************************/
+
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
@@ -67,6 +74,30 @@ vAPI.shutdown = (function() {
 
 /******************************************************************************/
 
+(function() {
+    var hostname = location.hostname;
+    if ( !hostname ) {
+        return;
+    }
+    var filters = self.rpc({
+        fnName: 'getScriptTagFilters',
+        url: location.href,
+        hostname: hostname
+    });
+    if ( typeof filters !== 'string' || filters === '' ) {
+        return;
+    }
+    var reFilters = new RegExp(filters);
+    document.addEventListener('beforescriptexecute', function(ev) {
+        if ( reFilters.test(ev.target.textContent) ) {
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+    });
+})();
+
+/******************************************************************************/
+
 vAPI.messaging = {
     channels: {},
     pending: {},
@@ -85,10 +116,20 @@ vAPI.messaging = {
                 return;
             }
             var details = msg.details;
-            if ( !details.allFrames && window !== window.top ) {
+            if ( details.allFrames !== true && window !== window.top ) {
                 return;
             }
-            self.injectScript(details.file);
+            // https://github.com/gorhill/uBlock/issues/876
+            // Enforce `details.runAt`. Default to `document_end`.
+            if ( details.runAt === 'document_start' || document.readyState !== 'loading' ) {
+                self.injectScript(details.file);
+                return;
+            }
+            var injectScriptDelayed = function() {
+                document.removeEventListener('DOMContentLoaded', injectScriptDelayed);
+                self.injectScript(details.file);
+            };
+            document.addEventListener('DOMContentLoaded', injectScriptDelayed);
             return;
         }
         if ( msg.cmd === 'shutdownSandbox' ) {
@@ -254,6 +295,12 @@ MessagingChannel.prototype.send = function(message, callback) {
 
 MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
     var messaging = vAPI.messaging;
+    if ( !messaging ) {
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+        return;
+    }
     // Too large a gap between the last request and the last response means
     // the main process is no longer reachable: memory leaks and bad
     // performance become a risk -- especially for long-lived, dynamic

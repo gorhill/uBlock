@@ -114,8 +114,9 @@ ovh.strim.io#@##tweets
 
 # From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
 # https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
+# https://github.com/chrisaljoudi/uBlock/issues/1546
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$domain=reddit.com|www.vd.nl
+@@||google-analytics.com/analytics.js$domain=reddit.com|trello.com|www.vd.nl
 
 # https://github.com/chrisaljoudi/uBlock/issues/570
 # To counter `yui.yahooapis.com` in hpHosts
@@ -218,3 +219,27 @@ ovh.strim.io#@##tweets
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=24764
 @@/b/ss/*&aqe=$image,domain=aeroplan.com
+
+# https://github.com/gorhill/uBlock/issues/780
+@@||www.google-analytics.com/plugins/ua/linkid.js$script,domain=support.amd.com
+@@||www.google-analytics.com/analytics.js$script,domain=support.amd.com
+@@||www.googletagmanager.com/gtm.js$script,domain=support.amd.com
+
+# https://www.reddit.com/r/uBlockOrigin/comments/3oca9w/how_to_keep_ublock_from_interfering_with_button/
+@@||partner.googleadservices.com/gpt/$script,domain=www.merriam-webster.com
+@@||www.atpworldtour.com/assets/js/util/googleAnalytics.js$script,first-party
+
+# https://twitter.com/bociusz/status/653693746626871296
+# To counter Peter Lowe's `pagefair.com`, but only when on `pagefair.com`
+@@||pagefair.com^$first-party
+
+# Chrome store: "Some of the useful content on website such as pictures and maps on redfin get blocked"
+@@||ssl.cdn-redfin.com/*/redfin/common/analytics/PixelTracking.js$script,domain=redfin.com
+
+# Chrome store: "uBlock Origin seems to think Southwest.com's background and header image are ads"
+@@||www.southwest.com/*/mbox.js$script,first-party
+
+# https://www.reddit.com/r/ublock/comments/3qo6yj/marketwatchcom_blocks_ublock/
+marketwatch.com#@##ad_DisplayAd1
+marketwatch.com#@##ad_DisplayAd2
+marketwatch.com#@#.advertisement

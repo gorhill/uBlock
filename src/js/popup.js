@@ -126,10 +126,12 @@ var cachePopupData = function(data) {
             continue;
         }
         domain = hostnameDict[hostname].domain;
+        prefix = hostname.slice(0, 0 - domain.length);
+        // Prefix with space char for 1st-party hostnames: this ensure these
+        // will come first in list.
         if ( domain === popupData.pageDomain ) {
             domain = '\u0020';
         }
-        prefix = hostname.slice(0, 0 - domain.length);
         hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
     }
     return popupData;
@@ -179,11 +181,16 @@ var formatNumber = function(count) {
 var rulekeyCompare = function(a, b) {
     var ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
-        ha = hostnameToSortableTokenMap[ha] || '';
+        ha = hostnameToSortableTokenMap[ha] || ' ';
     }
     var hb = b.slice(2, b.indexOf(' ', 2));
     if ( !reIP.test(hb) ) {
-        hb = hostnameToSortableTokenMap[hb] || '';
+        hb = hostnameToSortableTokenMap[hb] || ' ';
+    }
+    var ca = ha.charCodeAt(0),
+        cb = hb.charCodeAt(0);
+    if ( ca !== cb ) {
+        return ca - cb;
     }
     return ha.localeCompare(hb);
 };

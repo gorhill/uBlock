@@ -9,8 +9,10 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-# Last updated: 2015-01-27
+# Last updated: 2015-10-15
 google.*###center_col > #\5f Emc
+google.*###center_col > #main > .dfrd > .mnr-c > .c._oc._zs
+google.*###center_col > #res > #topstuff + #search > div > #ires > #rso > #flun
 google.*###center_col > #resultStats + #tads
 google.*###center_col > #resultStats + #tads + #res + #tads
 google.*###center_col > #resultStats + div + #res + #tads
@@ -18,14 +20,19 @@ google.*###center_col > #resultStats + div[style="border:1px solid #dedede;margi
 google.*###center_col > #taw > #tvcap > .rscontainer
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
 google.*###cnt #center_col > #res > #topstuff > .ts
+google.*###cnt #center_col > #taw > #tvcap > .c._oc._Lp
 google.*###main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"]
 google.*###mbEnd[cellspacing="0"][cellpadding="0"]
 google.*###mclip_container:last-child
 google.*###mn #center_col > div > h2.spon:first-child
 google.*###mn #center_col > div > h2.spon:first-child + ol:last-child
+google.*###mn div[style="position:relative"] > #center_col > ._Ak
+google.*###mn div[style="position:relative"] > #center_col > div > ._dPg
 google.*###resultspanel > #topads
 google.*###rhs_block > #mbEnd
 google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
+google.*###rhs_block > ol > .rhsvw > .kp-blk > .xpdopen > ._OKe > ol > ._DJe > .luhb-div
+google.*###rhs_block > script + .c._oc._Ve.rhsvw
 google.*###rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"]
 google.*###ssmiwdiv[jsdisplay]
 google.*###tads + div + .c
@@ -43,6 +50,7 @@ google.*##.GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB
 google.*##.ch[onclick="ga(this,event)"]
 google.*##.commercial-unit-desktop-rhs
 google.*##.commercial-unit-desktop-top
+google.*##.commercial-unit-mobile-top
 google.*##.lads[width="100%"][style="background:#FFF8DD"]
 google.*##.mod > ._jH + .rscontainer
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
@@ -117,14 +125,9 @@ speedtest.net###swiffycontainer canvas
 # https://github.com/gorhill/uBlock/issues/651
 ink361.com##.getridofAdsBlock[href^="javascript:"]
 
-# washingtonpost.com
-||js.washingtonpost.com/wpost*/js/combo$script,first-party
-www.washingtonpost.com###drawbridge-signup-overlay
-www.washingtonpost.com##.jqmOverlay
-
 # https://www.reddit.com/r/techsupport/comments/3kyd0m/sponsored_content_ads_that_only_show_up_with/
 explosm.net##.inner-wrap > .row > .columns.large-4.medium-12.small-12
-explosm.net##.inner-wrap > .row > .columns.large-8.medium-12 > hr + div:not(.row)
+explosm.net##.fram + div[class]
 
 # http://www.extremetech.com/mobile/214358-ad-blocking-for-the-masses-part-two-adblock-browser
 # "anyone else trying it on ET find that one ziffdavis.com ad bypasses ublock0 even though it's in the default lists for block"
@@ -134,3 +137,38 @@ explosm.net##.inner-wrap > .row > .columns.large-8.medium-12 > hr + div:not(.row
 # https://www.reddit.com/r/facebook/comments/3ld5gn/ive_discovered_that_i_cant_access_facebook/
 # Until all users have latest EasyList
 @@RPNcr3s-aD2.js$script,domain=facebook.com
+
+# https://github.com/gorhill/uBlock/issues/275
+jeu.info###page [class^="banniere-"]
+||jeu.info^$inline-script
+
+# https://github.com/gorhill/uBlock/issues/759
+# Until fixed in EasyPrivacy
+@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/quant.js$script,first-party
+@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/vquant.js$script,first-party
+
+# http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
+arstechnica.com###lg-pushdown
+
+# This prevents spurious redirection, but breaks comments
+||www.washingtonpost.com/*/twp-global.js$script,first-party
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
+||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
+
+# Useful inline script tag filters until filter list maintainers start to use
+# it in their respective filter lists
+arstechnica.com##script:contains(ars.READY.push)
+arcor.de,auto-motor-und-sport.de,boerse-online.de,echo-online.de,fem.com,finanzen.net,focus.de,gamestar.de,kabeleins.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rp-online.de,sat1.de,sat1gold.de,sixx.de,the-voice-of-germany.de,tvspielfilm.de,wetter.com,wetteronline.de##script:contains(uabInject)
+bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
+bild.de##script:contains(Javascript)
+dayt.se##script:contains(adblock.php)
+dpstream.net,jeux-porno.net##script:contains(/^\s*?var\s+?uniqueParam\s*?=/)
+activistpost.com,explosm.net,valuewalk.com##script:contains(/^\s*?__durl=/)
+extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,spankwire.com,thumbzilla.com,tube8.*,xtube.com,youporn.com,youporngay.com##script:contains(FastPopSessionRequestNumber)
+foot01.com,metronews.fr##script:contains(ligatus)
+layer13.net##script:contains(adBlockDetected)
+opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
+vg.no##script:contains(/^\s*?window\.__AB__/)
+voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
+

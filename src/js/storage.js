@@ -725,69 +725,76 @@
 // necessarily present, i.e. administrators may removed entries which
 // values are left to the user's choice.
 
-µBlock.restoreAdminSettings = function() {
-    var data = null;
-    var json = vAPI.localStorage.getItem('adminSettings');
-    if ( typeof json === 'string' && json !== '' ) {
-        try {
-            data = JSON.parse(json);
-        } catch (ex) {
-            console.error(ex);
+µBlock.restoreAdminSettings = function(callback) {
+    var onRead = function(json) {
+        var µb = µBlock;
+        var data;
+        if ( typeof json === 'string' && json !== '' ) {
+            try {
+                data = JSON.parse(json);
+            } catch (ex) {
+                console.error(ex);
+            }
         }
-    }
 
-    if ( typeof data !== 'object' || data === null ) {
-        return;
-    }
+        if ( typeof data !== 'object' || data === null ) {
+            callback();
+            return;
+        }
 
-    var bin = {};
-    var binNotEmpty = false;
+        var bin = {};
+        var binNotEmpty = false;
 
-    if ( typeof data.userSettings === 'object' ) {
-        for ( var name in this.userSettings ) {
-            if ( this.userSettings.hasOwnProperty(name) === false ) {
-                continue;
+        if ( typeof data.userSettings === 'object' ) {
+            for ( var name in µb.userSettings ) {
+                if ( µb.userSettings.hasOwnProperty(name) === false ) {
+                    continue;
+                }
+                if ( data.userSettings.hasOwnProperty(name) === false ) {
+                    continue;
+                }
+                bin[name] = data.userSettings[name];
+                binNotEmpty = true;
             }
-            if ( data.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            bin[name] = data.userSettings[name];
+        }
+
+        if ( typeof data.filterLists === 'object' ) {
+            bin.remoteBlacklists = data.filterLists;
             binNotEmpty = true;
         }
-    }
 
-    if ( typeof data.filterLists === 'object' ) {
-        bin.remoteBlacklists = data.filterLists;
-        binNotEmpty = true;
-    }
+        if ( typeof data.netWhitelist === 'string' ) {
+            bin.netWhitelist = data.netWhitelist;
+            binNotEmpty = true;
+        }
 
-    if ( typeof data.netWhitelist === 'string' ) {
-        bin.netWhitelist = data.netWhitelist;
-        binNotEmpty = true;
-    }
+        if ( typeof data.dynamicFilteringString === 'string' ) {
+            bin.dynamicFilteringString = data.dynamicFilteringString;
+            binNotEmpty = true;
+        }
 
-    if ( typeof data.dynamicFilteringString === 'string' ) {
-        bin.dynamicFilteringString = data.dynamicFilteringString;
-        binNotEmpty = true;
-    }
+        if ( typeof data.urlFilteringString === 'string' ) {
+            bin.urlFilteringString = data.urlFilteringString;
+            binNotEmpty = true;
+        }
 
-    if ( typeof data.urlFilteringString === 'string' ) {
-        bin.urlFilteringString = data.urlFilteringString;
-        binNotEmpty = true;
-    }
+        if ( typeof data.hostnameSwitchesString === 'string' ) {
+            bin.hostnameSwitchesString = data.hostnameSwitchesString;
+            binNotEmpty = true;
+        }
 
-    if ( typeof data.hostnameSwitchesString === 'string' ) {
-        bin.hostnameSwitchesString = data.hostnameSwitchesString;
-        binNotEmpty = true;
-    }
+        if ( binNotEmpty ) {
+            vAPI.storage.set(bin);
+        }
 
-    if ( binNotEmpty ) {
-        vAPI.storage.set(bin);
-    }
+        if ( typeof data.userFilters === 'string' ) {
+            µb.assets.put('assets/user/filters.txt', data.userFilters);
+        }
 
-    if ( typeof data.userFilters === 'string' ) {
-        this.assets.put('assets/user/filters.txt', data.userFilters);
-    }
+        callback();
+    };
+
+    vAPI.adminStorage.getItem('adminSettings', onRead);
 };
 
 /******************************************************************************/

@@ -24,13 +24,13 @@ Po të doni, ka edhe shumë lista të tjera të gatshme:
 - Spam404
 - Dhe shumë të tjera
 
-Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memorja. Edhe me shtimin e dy listave shtesë të Fanboy, hpHosts’s Ad and tracking servers, uBlock përsëri ka impakt më të ulët në memorje sesa bllokuesit e tjerë shumë të njohur.
+Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memorja. Edhe sikur të shtoni dy listat e tjera të Fanboy, hpHosts’s Ad and tracking servers, uBlock përsëri ka impakt më të ulët te memorja sesa bllokuesit e tjerë shumë të njohur.
 
 Por, kujdes, sepse duke përzgjedhur disa prej këtyre listave, gjasat që faqet të shfaqin probleme do të jenë më të mëdha -- sidomos listat që normalisht përdoren si skeda "hosts".
 
 ***
 
-Pa listat e programuara, ky program nuk vlen për asgjë. Prandaj, po të doni të kontribuoni diçka, mendoni pak për njerëzit që punojnë fort për mirëmbajtjen e listave me filtra që po përdorni, të cilat na ofrohen të gjithëve pa pagesë.
+Pa listat e programuara, ky program nuk ka asnjë vlerë. Prandaj, po të doni të kontribuoni diçka, mendoni pak për njerëzit që punojnë fort për mirëmbajtjen e listave me filtra që po përdorni, të cilat na ofrohen të gjithëve pa pagesë.
 
 ***
 
@@ -43,7 +43,7 @@ Kontributorët @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Kur të bëni vlerësimin e programit, mos harroni se ky është një version paraprak.
+Kur bëni vlerësimin e programit, mos harroni se ky është një version paraprak.
 
 Ditari i projektit:
 https://github.com/gorhill/uBlock/releases

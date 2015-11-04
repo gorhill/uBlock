@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"没有参数",
+    "message":"无参数",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{

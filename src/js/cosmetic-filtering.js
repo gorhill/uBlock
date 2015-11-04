@@ -39,6 +39,16 @@ var µb = µBlock;
 var encode = JSON.stringify;
 var decode = JSON.parse;
 
+var isBadRegex = function(s) {
+    try {
+        void new RegExp(s);
+    } catch (ex) {
+        isBadRegex.message = ex.toString();
+        return true;
+    }
+    return false;
+};
+
 /******************************************************************************/
 /*
 var histogram = function(label, buckets) {
@@ -230,20 +240,19 @@ FilterEntity.fromSelfie = function(s) {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.prefix = '';
-    this.suffix = '';
+    this.prefix =  this.suffix = this.style = '';
     this.unhide = 0;
     this.hostnames = [];
     this.invalid = false;
     this.cosmetic = true;
-    this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
+    this.reParser = /^([^#]*?)(##|#@#)(.+)$/;
+    this.reScriptContains = /^script:contains\(.+?\)$/;
 };
 
 /******************************************************************************/
 
 FilterParser.prototype.reset = function() {
-    this.prefix = '';
-    this.suffix = '';
+    this.prefix = this.suffix = this.style = '';
     this.unhide = 0;
     this.hostnames.length = 0;
     this.invalid = false;
@@ -253,19 +262,29 @@ FilterParser.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterParser.prototype.parse = function(s) {
+FilterParser.prototype.parse = function(raw) {
     // important!
     this.reset();
 
-    var matches = this.reParser.exec(s);
+    var matches = this.reParser.exec(raw);
     if ( matches === null || matches.length !== 4 ) {
         this.cosmetic = false;
         return this;
     }
+    this.prefix = matches[1].trim();
+    this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
+    this.suffix = matches[3].trim();
 
-    // Remember original string
-    this.prefix = matches[1];
-    this.suffix = matches[3];
+    // Cosmetic filters with explicit style properties can apply only:
+    // - to specific cosmetic filters (those which apply to a specific site)
+    // - to block cosmetic filters (not exception cosmetic filters)
+    if ( this.suffix.slice(-1) === '}' ) {
+        // Not supported for now: this code will ensure some backward
+        // compatibility for when cosmetic filters with explicit style
+        // properties start to be in use.
+        this.invalid = true;
+        return this;
+    }
 
     // 2014-05-23:
     // https://github.com/gorhill/httpswitchboard/issues/260
@@ -283,10 +302,54 @@ FilterParser.prototype.parse = function(s) {
         this.suffix = this.suffix.slice(1);
     }
 
-    this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
     if ( this.prefix !== '' ) {
         this.hostnames = this.prefix.split(/\s*,\s*/);
     }
+
+    // Script tag filters: pre-process them so that can be used with minimal
+    // overhead in the content script.
+    // Examples:
+    //   focus.de##script:contains(/uabInject/)
+    //   focus.de##script:contains(uabInject)
+
+    // Inline script tag filter?
+    if (
+        this.suffix.charAt(0) !== 's' ||
+        this.reScriptContains.test(this.suffix) === false )
+    {
+        return this;
+    }
+
+    // Currently supported only as non-generic selector. Also, exception
+    // script tag filter makes no sense, ignore.
+    if ( this.hostnames.length === 0 || this.unhide === 1 ) {
+        this.invalid = true;
+        return this;
+    }
+
+    var suffix = this.suffix;
+    this.suffix = 'script//:';
+
+    // Plain string-based?
+    if ( suffix.charAt(16) !== '/' || suffix.slice(-2) !== '/)' ) {
+        this.suffix += suffix.slice(16, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return this;
+    }
+
+    // Regex-based
+    this.suffix += suffix.slice(17, -2).replace(/\\/g, '\\');
+
+    // Valid regex?
+    if ( isBadRegex(this.suffix) ) {
+        console.error(
+            "uBlock Origin> discarding bad regular expression-based cosmetic filter '%s': '%s'",
+            raw,
+            isBadRegex.message
+        );
+        this.invalid = true;
+        return this;
+    }
+
     return this;
 };
 
@@ -554,6 +617,8 @@ FilterContainer.prototype.reset = function() {
     // hostname, entity-based filters
     this.hostnameFilters = {};
     this.entityFilters = {};
+    this.scriptTagFilters = {};
+    this.scriptTagFilterCount = 0;
 };
 
 /******************************************************************************/
@@ -576,11 +641,14 @@ FilterContainer.prototype.isValidSelector = (function() {
         try {
             // https://github.com/gorhill/uBlock/issues/693
             div.matches(s + ',\n#foo');
+            return true;
         } catch (e) {
-            console.error('uBlock> invalid cosmetic filter:', s);
-            return false;
         }
-        return true;
+        if ( s.lastIndexOf('script//:', 0) === 0 ) {
+            return true;
+        }
+        console.error('uBlock> invalid cosmetic filter:', s);
+        return false;
     };
 })();
 
@@ -790,6 +858,11 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
 
         // h	ir	twitter.com	.promoted-tweet
         if ( fields[0] === 'h' ) {
+            // Special filter: script tags. Not a real CSS selector.
+            if ( fields[3].lastIndexOf('script//:', 0) === 0 ) {
+                this.createScriptTagFilter(fields[2], fields[3].slice(9));
+                continue;
+            }
             filter = new FilterHostname(fields[3], fields[2]);
             bucket = this.hostnameFilters[fields[1]];
             if ( bucket === undefined ) {
@@ -821,6 +894,11 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
 
         // entity	selector
         if ( fields[0] === 'e' ) {
+            // Special filter: script tags. Not a real CSS selector.
+            if ( fields[2].lastIndexOf('script//:', 0) === 0 ) {
+                this.createScriptTagFilter(fields[1], fields[2].slice(9));
+                continue;
+            }
             bucket = this.entityFilters[fields[1]];
             if ( bucket === undefined ) {
                 this.entityFilters[fields[1]] = [fields[2]];
@@ -886,6 +964,49 @@ FilterContainer.prototype.skipCompiledContent = function(text, lineBeg) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.createScriptTagFilter = function(hostname, s) {
+    if ( this.scriptTagFilters.hasOwnProperty(hostname) ) {
+        this.scriptTagFilters[hostname] += '|' + s;
+    } else {
+        this.scriptTagFilters[hostname] = s;
+    }
+    this.scriptTagFilterCount += 1;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
+    if ( this.scriptTagFilterCount === 0 ) {
+        return;
+    }
+    var out = [], hn = hostname, pos;
+    for (;;) {
+        if ( this.scriptTagFilters.hasOwnProperty(hn) ) {
+            out.push(this.scriptTagFilters[hn]);
+        }
+        if ( hn === domain ) {
+            break;
+        }
+        pos = hn.indexOf('.');
+        if ( pos === -1 ) {
+            break;
+        }
+        hn = hn.slice(pos + 1);
+    }
+    pos = domain.indexOf('.');
+    if ( pos !== -1 ) {
+        hn = domain.slice(0, pos);
+        if ( this.scriptTagFilters.hasOwnProperty(hn) ) {
+            out.push(this.scriptTagFilters[hn]);
+        }
+    }
+    if ( out.length !== 0 ) {
+        return out.join('|');
+    }
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.freeze = function() {
     this.duplicateBuster = {};
 
@@ -939,7 +1060,9 @@ FilterContainer.prototype.toSelfie = function() {
         highMediumGenericHideCount: this.highMediumGenericHideCount,
         highHighGenericHide: this.highHighGenericHide,
         highHighGenericHideCount: this.highHighGenericHideCount,
-        genericDonthide: this.genericDonthide
+        genericDonthide: this.genericDonthide,
+        scriptTagFilters: this.scriptTagFilters,
+        scriptTagFilterCount: this.scriptTagFilterCount
     };
 };
 
@@ -1000,6 +1123,8 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highHighGenericHide = selfie.highHighGenericHide;
     this.highHighGenericHideCount = selfie.highHighGenericHideCount;
     this.genericDonthide = selfie.genericDonthide;
+    this.scriptTagFilters = selfie.scriptTagFilters;
+    this.scriptTagFilterCount = selfie.scriptTagFilterCount;
     this.frozen = true;
 };
 

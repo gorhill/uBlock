@@ -23,6 +23,7 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/800
 this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
 
 const {interfaces: Ci, utils: Cu} = Components;
@@ -30,6 +31,7 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
 
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
+const rpcEmitterName = hostName + ':child-process-message';
 
 //Cu.import('resource://gre/modules/devtools/Console.jsm');
 
@@ -61,11 +63,12 @@ const getMessageManager = function(win) {
 
 /******************************************************************************/
 
-const contentObserver = {
+var contentObserver = {
     classDescription: 'content-policy for ' + hostName,
     classID: Components.ID('{7afbd130-cbaf-46c2-b944-f5d24305f484}'),
     contractID: '@' + hostName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
+    REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     SUB_FRAME: Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
@@ -202,17 +205,23 @@ const contentObserver = {
             openerURL: openerURL,
             parentFrameId: parentFrameId,
             rawtype: type,
+            tabId: '',
             url: location.spec
         };
 
         //console.log('shouldLoad: type=' + type' ' + 'url=' + location.spec);
-
+        var r;
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.cpMessageName, details);
+            r = messageManager.sendRpcMessage(this.cpMessageName, details);
         } else {
             // Compatibility for older versions
-            messageManager.sendSyncMessage(this.cpMessageName, details);
+            r = messageManager.sendSyncMessage(this.cpMessageName, details);
+        }
+
+        // Important: hard test against `false`.
+        if ( Array.isArray(r) && r.length !== 0 && r[0] === false ) {
+            return this.REJECT;
         }
 
         return this.ACCEPT;
@@ -239,13 +248,29 @@ const contentObserver = {
                 wantXHRConstructor: false
             });
 
+            if ( Services.cpmm ) {
+                sandbox.rpc = function(details) {
+                    var svc = Services;
+                    if ( svc === undefined ) { return; }
+                    var cpmm = svc.cpmm;
+                    if ( !cpmm ) { return; }
+                    var r = cpmm.sendSyncMessage(rpcEmitterName, details);
+                    if ( Array.isArray(r) ) {
+                        return r[0];
+                    }
+                };
+            } else {
+                sandbox.rpc = function() {};
+            }
+
             sandbox.injectScript = function(script) {
-                if ( Services !== undefined ) {
-                    Services.scriptloader.loadSubScript(script, sandbox);
-                } else {
-                    // Sandbox appears void.
-                    // I've seen this happens, need to investigate why.
+                var svc = Services;
+                // Sandbox appears void.
+                // I've seen this happens, need to investigate why.
+                if ( svc === undefined ) {
+                    return;
                 }
+                svc.scriptloader.loadSubScript(script, sandbox);
             };
 
             // The goal is to have content scripts removed from web pages. This
@@ -258,9 +283,10 @@ const contentObserver = {
                 sandbox.removeMessageListener();
                 sandbox.addMessageListener =
                 sandbox.injectScript =
+                sandbox.outerShutdown =
                 sandbox.removeMessageListener =
-                sandbox.sendAsyncMessage =
-                sandbox.outerShutdown = function(){};
+                sandbox.rpc =
+                sandbox.sendAsyncMessage = function(){};
                 sandbox.vAPI = {};
                 messager = null;
             };
@@ -405,20 +431,26 @@ const contentObserver = {
 
 const locationChangedMessageName = hostName + ':locationChanged';
 
-const LocationChangeListener = function(docShell) {
+var LocationChangeListener = function(docShell) {
     if ( !docShell ) {
         return;
     }
 
     var requestor = docShell.QueryInterface(Ci.nsIInterfaceRequestor);
     var ds = requestor.getInterface(Ci.nsIWebProgress);
-    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
-
-    if ( ds && mm && typeof mm.sendAsyncMessage === 'function' ) {
-        this.docShell = ds;
-        this.messageManager = mm;
-        ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
+    if ( !ds ) {
+        return;
     }
+    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
+    if ( !mm ) {
+        return;
+    }
+    if ( typeof mm.sendAsyncMessage !== 'function' ) {
+        return;
+    }
+    this.docShell = ds;
+    this.messageManager = mm;
+    ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
 };
 
 LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI([

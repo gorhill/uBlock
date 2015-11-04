@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"css\/images de tercers",
+    "message":"css\/imatges de tercers",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"sense paràmetres",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{

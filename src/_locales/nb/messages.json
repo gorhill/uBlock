@@ -292,7 +292,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"utdatert",
+    "message":"utgått på dato",
     "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"uten parametere",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{

@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"bez parametara",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"bajtovi",
     "description":""
   },
   "dummy":{

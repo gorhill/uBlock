@@ -98,7 +98,7 @@ var cosmeticFilters = function(details) {
     }
     if ( hide.length !== 0 ) {
         var text = hide.join(',\n');
-        var style = vAPI.specificHideStyle = document.createElement('style');
+        var style = document.createElement('style');
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
@@ -195,9 +195,13 @@ var hideElements = function(selectors) {
         // https://github.com/gorhill/uBlock/pull/555
         // Not all nodes can be shadowed:
         //   https://github.com/w3c/webcomponents/issues/102
+        // https://github.com/gorhill/uBlock/issues/762
+        // Remove display style that might get in the way of the shadow
+        // node doing its magic.
         try {
             shadow = elem.createShadowRoot();
             shadow.className = sessionId;
+            elem.style.removeProperty('display');
         } catch (ex) {
             elem.style.setProperty('display', 'none', 'important');
         }

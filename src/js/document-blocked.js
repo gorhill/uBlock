@@ -193,12 +193,9 @@ uDom.nodeFromId('why').textContent = details.fs;
     };
 
     var renderParams = function(parentNode, rawURL) {
-        var url = null;
-        try {
-            url = new URL(rawURL);
-        } catch(ex) {
-        }
-        if ( url === null || url.search.length === 0 ) {
+        var a = document.createElement('a');
+        a.href = rawURL;
+        if ( a.search.length === 0 ) {
             return false;
         }
 
@@ -209,7 +206,7 @@ uDom.nodeFromId('why').textContent = details.fs;
         );
         parentNode.appendChild(li);
 
-        var params = url.search.slice(1).split('&');
+        var params = a.search.slice(1).split('&');
         var param, name, value, ul;
         for ( var i = 0; i < params.length; i++ ) {
             param = params[i];

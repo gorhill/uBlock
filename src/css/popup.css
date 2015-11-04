@@ -3,6 +3,7 @@ body {
     border: 0;
     float: left;
     margin: 0;
+    opacity: 1;
     overflow: hidden;
     padding: 0;
     white-space: nowrap;

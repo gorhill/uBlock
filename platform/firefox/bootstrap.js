@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global ADDON_UNINSTALL, APP_SHUTDOWN, APP_STARTUP */
+/* global ADDON_UNINSTALL, APP_SHUTDOWN */
 /* exported startup, shutdown, install, uninstall */
 
 'use strict';
@@ -31,7 +31,7 @@ const {classes: Cc, interfaces: Ci} = Components;
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
-let bgProcess;
+let bgProcess = null;
 let version;
 const hostName = 'ublock0';
 const restartListener = {
@@ -48,28 +48,33 @@ const restartListener = {
 
 /******************************************************************************/
 
-function startup(data, reason) {
+function startup(data/*, reason*/) {
     if ( data !== undefined ) {
         version = data.version;
+    }
+
+    // Already started?
+    if ( bgProcess !== null ) {
+        return;
     }
 
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
 
-    let onReady = function(e) {
-        if ( e ) {
-            this.removeEventListener(e.type, onReady);
+    let isReady = function() {
+        var hiddenDoc;
+
+        try {
+            hiddenDoc = appShell.hiddenDOMWindow &&
+                        appShell.hiddenDOMWindow.document;
+        } catch (ex) {
         }
 
-        let hiddenDoc = appShell.hiddenDOMWindow.document;
-
-        // https://github.com/gorhill/uBlock/issues/10
-        // Fixed by github.com/AlexVallat:
-        //   https://github.com/chrisaljoudi/uBlock/issues/1149
-        //   https://github.com/AlexVallat/uBlock/commit/e762a29d308caa46578cdc34a9be92c4ad5ecdd0
-        if ( hiddenDoc.readyState === 'loading' ) {
-            hiddenDoc.addEventListener('DOMContentLoaded', onReady);
-            return;
+        // Do not test against `loading`: it does appear `readyState` could be
+        // undefined if looked up too early.
+        if ( !hiddenDoc ||
+             hiddenDoc.readyState !== 'interactive' && hiddenDoc.readyState !== 'complete' ) {
+            return false;
         }
 
         bgProcess = hiddenDoc.documentElement.appendChild(
@@ -80,36 +85,56 @@ function startup(data, reason) {
             'chrome://' + hostName + '/content/background.html#' + version
         );
 
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
+        // "If the same listener registers twice for the same message, the
+        // "second registration is ignored."
         restartListener.messageManager.addMessageListener(
             hostName + '-restart',
             restartListener
         );
+
+        return true;
     };
 
-    if ( reason !== APP_STARTUP ) {
-        onReady();
+    if ( isReady() ) {
         return;
     }
 
-    let ww = Cc['@mozilla.org/embedcomp/window-watcher;1']
-        .getService(Ci.nsIWindowWatcher);
+    // https://github.com/gorhill/uBlock/issues/749
+    // Poll until the proper environment is set up -- or give up eventually.
+    // We poll frequently early on but relax poll delay as time pass.
 
-    ww.registerNotification({
-        observe: function(win, topic) {
-            if ( topic !== 'domwindowopened' ) {
-                return;
-            }
+    let tryDelay = 5;
+    let trySum = 0;
+    let tryMax = 30000;
+    let timer = Cc['@mozilla.org/timer;1']
+        .createInstance(Ci.nsITimer);
 
-            try {
-                void appShell.hiddenDOMWindow;
-            } catch (ex) {
-                return;
-            }
-
-            ww.unregisterNotification(this);
-            win.addEventListener('DOMContentLoaded', onReady);
+    let checkLater = function() {
+        trySum += tryDelay;
+        if ( trySum >= tryMax ) {
+            timer = null;
+            return;
         }
-    });
+        timer.init(timerObserver, tryDelay, timer.TYPE_ONE_SHOT);
+        tryDelay *= 2;
+        if ( tryDelay > 500 ) {
+            tryDelay = 500;
+        }
+    };
+
+    var timerObserver = {
+        observe: function() {
+            timer.cancel();
+            if ( isReady() ) {
+                timer = null;
+            } else {
+                checkLater();
+            }
+        }
+    };
+
+    checkLater();
 }
 
 /******************************************************************************/
@@ -119,7 +144,10 @@ function shutdown(data, reason) {
         return;
     }
 
-    bgProcess.parentNode.removeChild(bgProcess);
+    if ( bgProcess !== null ) {
+        bgProcess.parentNode.removeChild(bgProcess);
+        bgProcess = null;
+    }
 
     if ( data === undefined ) {
         return;

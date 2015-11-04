@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"Css\/Εικόνες τρίτου μέρους",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Ενεργοποίηση υποστήριξης cloud storage",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"χωρίς παραμέτρους",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Εξαγωγή στο cloud storage",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Εισαγωγή από cloud storage",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,11 +612,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Το όνομα της συσκευής:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Υποβολή",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{

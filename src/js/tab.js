@@ -155,6 +155,8 @@ housekeep itself.
         this.rootDomain = '';
         this.commitTimer = null;
         this.gcTimer = null;
+        this.netFiltering = true;
+        this.netFilteringReadTime = 0;
 
         tabContexts[tabId] = this;
     };
@@ -228,6 +230,7 @@ housekeep itself.
     // Update just force all properties to be updated to match the most recent
     // root URL.
     TabContext.prototype.update = function() {
+        this.netFilteringReadTime = 0;
         if ( this.stack.length === 0 ) {
             this.rawURL = this.normalURL = this.rootHostname = this.rootDomain = '';
             return;
@@ -289,6 +292,20 @@ housekeep itself.
         }
         this.stack = [new StackEntry(url, true)];
         this.update();
+    };
+
+    TabContext.prototype.getNetFilteringSwitch = function() {
+        if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
+            return this.netFiltering;
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/1078
+        // Use both the raw and normalized URLs.
+        this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
+        if ( this.netFiltering && this.rawURL !== this.normalURL && this.rawURL !== '' ) {
+            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
+        }
+        this.netFilteringReadTime = Date.now();
+        return this.netFiltering;
     };
 
     // These are to be used for the API of the tab context manager.

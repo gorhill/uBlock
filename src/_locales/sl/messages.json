@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"css\/slike tretje osebe",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Omogoči podporo za shrambo v oblako",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -572,7 +572,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"brez parametrov",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Izvozi v shrambe oblaka",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Uvozi iz shrambe oblaka",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,11 +612,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Ime te naprave:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Predloži",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"biti",
     "description":""
   },
   "dummy":{

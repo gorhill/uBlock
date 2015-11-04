@@ -19,13 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global addMessageListener, removeMessageListener, docShell */
-
 /******************************************************************************/
 
-var locationChangeListener; // Keep alive while frameScript is alive
+// https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Frame_script_environment
 
-(function() {
+(function(context) {
 
 'use strict';
 
@@ -52,25 +50,36 @@ let injectContentScripts = function(win) {
 };
 
 let onLoadCompleted = function() {
-    removeMessageListener('ublock0-load-completed', onLoadCompleted);
-    injectContentScripts(content);
+    context.removeMessageListener('ublock0-load-completed', onLoadCompleted);
+    injectContentScripts(context.content);
 };
+context.addMessageListener('ublock0-load-completed', onLoadCompleted);
 
-addMessageListener('ublock0-load-completed', onLoadCompleted);
+let shutdown = function(ev) {
+    if ( ev.target !== context ) {
+        return;
+    }
+    context.removeMessageListener('ublock0-load-completed', onLoadCompleted);
+    context.removeEventListener('unload', shutdown);
+    context.locationChangeListener = null;
+    LocationChangeListener = null;
+    contentObserver = null;
+};
+context.addEventListener('unload', shutdown);
 
-if ( docShell ) {
+if ( context.docShell ) {
     let Ci = Components.interfaces;
-    let wp = docShell.QueryInterface(Ci.nsIInterfaceRequestor)
-                     .getInterface(Ci.nsIWebProgress);
+    let wp = context.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
+                             .getInterface(Ci.nsIWebProgress);
     let dw = wp.DOMWindow;
 
     if ( dw === dw.top ) {
-        locationChangeListener = new LocationChangeListener(docShell);
+        context.locationChangeListener = new LocationChangeListener(context.docShell);
     }
 }
 
 /******************************************************************************/
 
-})();
+})(this);
 
 /******************************************************************************/

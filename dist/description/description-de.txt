@@ -35,7 +35,7 @@ Ohne die vorgegebenen Filterlisten ist diese Erweiterung nichts. Wenn du also et
 ***
 
 Kostenlos.
-Open source mit Public License (GPLv3)
+Open-Source-Software unter der General Public License (GPLv3)
 Für Benutzer von Benutzern.
 
 Mitwirkende @ Github: https://github.com/gorhill/uBlock/graphs/contributors
@@ -45,5 +45,5 @@ Mitwirkende @ Crowdin: https://crowdin.net/project/ublock
 
 Dies ist eine ziemlich frühe Version - bitte denke daran, wenn du sie bewertest.
 
-Change log des Projekts:
+Änderungsprotokoll:
 https://github.com/gorhill/uBlock/releases

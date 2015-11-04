@@ -75,6 +75,12 @@ vAPI.storage = chrome.storage.local;
 
 vAPI.browserSettings = {
     set: function(details) {
+        // https://github.com/gorhill/uBlock/issues/875
+        // Must not leave `lastError` unchecked.
+        var callback = function() {
+            void chrome.runtime.lastError;
+        };
+
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
                 continue;
@@ -85,7 +91,7 @@ vAPI.browserSettings = {
                     chrome.privacy.network.networkPredictionEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    });
+                    }, callback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -96,7 +102,7 @@ vAPI.browserSettings = {
                     chrome.privacy.websites.hyperlinkAuditingEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    });
+                    }, callback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -111,7 +117,7 @@ vAPI.browserSettings = {
                         chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
                             value: !!details[setting],
                             scope: 'regular'
-                        });
+                        }, callback);
                     } catch(ex) {
                         console.error(ex);
                     }
@@ -1011,6 +1017,42 @@ vAPI.punycodeURL = function(url) {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/531
+// Storage area dedicated to admin settings. Read-only.
+
+// https://github.com/gorhill/uBlock/commit/43a5ed735b95a575a9339b6e71a1fcb27a99663b#commitcomment-13965030
+// Not all Chromium-based browsers support managed storage. Merely testing or
+// exception handling in this case does NOT work: I don't know why. The
+// extension on Opera ends up in a non-sensical state, whereas vAPI become
+// undefined out of nowhere. So only solution left is to test explicitly for
+// Opera.
+// https://github.com/gorhill/uBlock/issues/900
+// Also, UC Browser: http://www.upsieutoc.com/image/WXuH
+
+vAPI.adminStorage = {
+    getItem: function(key, callback) {
+        var onRead = function(store) {
+            var data;
+            if (
+                !chrome.runtime.lastError &&
+                typeof store === 'object' &&
+                store !== null
+            ) {
+                data = store[key];
+            }
+            callback(data);
+        };
+        try {
+            chrome.storage.managed.get(key, onRead);
+        } catch (ex) {
+            callback();
+        }
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
 vAPI.cloud = (function() {
     var chunkCountPerFetch = 16; // Must be a power of 2
 
@@ -1020,7 +1062,7 @@ vAPI.cloud = (function() {
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
     var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75);
 
-    // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
+    // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES;
 
     var options = {
@@ -1032,8 +1074,8 @@ vAPI.cloud = (function() {
     // We "poll" at specific index in order to get a rough idea of how
     // large is the stored string.
     // This allows reading a single item with only 2 sync operations -- a
-    // good thing given chrome.storage.syncMAX_WRITE_OPERATIONS_PER_MINUTE
-    // and chrome.storage.syncMAX_WRITE_OPERATIONS_PER_HOUR.
+    // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
+    // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
     var getCoarseChunkCount = function(dataKey, callback) {
         var bin = {};
@@ -1088,7 +1130,7 @@ vAPI.cloud = (function() {
         bin.size = JSON.stringify(bin).length;
         var item = JSON.stringify(bin);
 
-        // Chunkify taking into account  QUOTA_BYTES_PER_ITEM:
+        // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value

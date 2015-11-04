@@ -104,7 +104,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"Tredjeparts css\/billeder",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Aktiver støtte for sky-lagring",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -192,7 +192,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"Forhindre WebRTC i at lække lokale IP-adresser",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -436,7 +436,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} netværksanmodninger af {{type}} {{br}}som matcher følgende URL {{url}} {{br}}som stammer fra {{origin}},{{br}}{{importance}} der er et matchende undtagelses-filter.",
+    "message":"{{action}} netværksanmodninger af {{type}} {{br}}som matcher følgende URL {{url}} {{br}}og som stammer fra {{origin}},{{br}}{{importance}} der er et matchende undtagelses-filter.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -572,11 +572,11 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"uden parametre",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Fundet i:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Eksporter til skylagring",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Importer fra skylagring",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,11 +612,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Denne enheds navn:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Indsend",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{

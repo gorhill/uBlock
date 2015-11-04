@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikoj: uBlock bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: uBlock bëhet joaktiv vetëm te kjo faqja.",
+    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKlikoj+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -76,7 +76,7 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Bllokoj të gjitha dritaret që hap kjo faqja",
+    "message":"Bllokoj të gjitha dritaret automatike që hap kjo faqja",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
@@ -152,7 +152,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klikoj, Ctrl-klikim",
+    "message":"Klikoj, Klikoj me Ctrl",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -160,7 +160,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Fsheh simbolin e elementeve të bllokuara",
+    "message":"Fsheh treguesin e elementeve të bllokuara",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -172,11 +172,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Ngjyra të qarta për daltonikët",
+    "message":"Ndryshoj ngjyrat për daltonikët",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"Aktivizoj renë informatike",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Çaktivizoj hapjen e parakohshme të faqeve (parandalon lidhjen për kërkesat e bllokuara nga rrjeti)",
+    "message":"Çaktivizoj hapjen e parakohshme të faqeve (duke parandaluar lidhjen me kërkesat e bllokuara)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -252,7 +252,7 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Sfera private",
+    "message":"Privatësia",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
@@ -276,7 +276,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Një URL për rresht. Rreshtat që kanë si parashtesë &lsquo;!&rsquo; nuk do të merren parasysh, sikundër adresat pa kuptim.",
+    "message":"Një URL për rresht. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;, sikundër adresat pa kuptim.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -348,11 +348,11 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importoj nga një skedë...",
+    "message":"Importoj nga një skedar...",
     "description":""
   },
   "rulesExport":{
-    "message":"Ruaj në skedë",
+    "message":"Ruaj në skedar",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -368,7 +368,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista juaj me emrat e hosteve për të cilat uBlock do të jetë joaktiv. Një element për rresht. Emrat e pasaktë nuk do të merren parasysh.",
+    "message":"Lista e hosteve për të cilat uBlock₀ do të jetë joaktiv. Një element për rresht. Nuk do të merren parasysh emrat e pasaktë.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -436,7 +436,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} kërkesat nga rrjeti të {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe kanë si origjinë {{origin}},{{br}}{{importance}} ka një filtër përjashtues të ngjashëm.",
+    "message":"{{action}} kërkesat e {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe që kanë si origjinë {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -464,7 +464,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"përveç kur",
+    "message":"përveçse kur",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
@@ -492,7 +492,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Kopjoj në skedë",
+    "message":"Kopjoj në skedar",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -500,7 +500,7 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Rindërtoj sipas skedës...",
+    "message":"Rindërtoj sipas skedarit...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
@@ -508,7 +508,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock do të rifillojë.\n\nDo i mbishkruani parametrat aktualë?",
+    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nDo i mbishkruani parametrat aktualë?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -516,7 +516,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Të gjithë parametrat do të fshihen dhe uBlock do të rifillojë.\n\nDo ktheni parametrat origjinalë?",
+    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDo ktheni parametrat origjinalë?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -524,7 +524,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -564,15 +564,15 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock e pengoi hapjen e faqes:",
+    "message":"uBlock Origin e pengoi hapjen e faqes:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Për shkak të këtij filtri",
+    "message":"Për shkak të filtrit",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"pa parametra",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
@@ -600,11 +600,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"Eksportoj në renë informatike",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"Importoj nga reja informatike",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -612,11 +612,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"Emri i aparatit:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"Parashtroj",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
@@ -624,7 +624,7 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"bajt",
     "description":""
   },
   "dummy":{

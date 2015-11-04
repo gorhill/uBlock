@@ -11,12 +11,6 @@ ul#userSettings,
 ul#userSettings ul {
     list-style-type: none;
     }
-ul#userSettings a.info {
-    color: #ccc;
-    }
-ul#userSettings a.info:hover {
-    color: #444;
-    }
 ul#userSettings .subgroup {
     margin-top: 1em;
     }

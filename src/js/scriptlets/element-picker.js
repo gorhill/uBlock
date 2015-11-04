@@ -880,6 +880,10 @@ var startPicker = function(details) {
         'text/html'
     );
 
+    // Provide an id users can use as anchor to personalize uBO's element
+    // picker style properties.
+    parsedDom.documentElement.id = 'ublock0-epicker';
+
     frameDoc.replaceChild(
         frameDoc.adoptNode(parsedDom.documentElement),
         frameDoc.documentElement
