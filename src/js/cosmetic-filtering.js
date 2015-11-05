@@ -773,7 +773,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     }
 };
 
-FilterContainer.prototype.reClassOrIdSelector = /^([#.][\w-]+)$/;
+FilterContainer.prototype.reClassOrIdSelector = /^[#.][\w-]+$/;
 FilterContainer.prototype.rePlainSelector = /^[#.][\w-]+/;
 FilterContainer.prototype.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
 FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
