@@ -2161,7 +2161,6 @@ vAPI.net.registerListeners = function() {
         // requests.
         var details = e.data;
         var sourceTabId = null;
-        var mustLoad;
 
         details.tabId = tabWatcher.tabIdFromTarget(e.target);
 
@@ -2177,8 +2176,10 @@ vAPI.net.registerListeners = function() {
         // https://github.com/gorhill/uBlock/issues/868
         // Firefox quirk: for some reasons, there are instances of resources
         // for `video` tag not being reported to HTTP observers.
-        if ( details.rawtype === 15 ) {
-            mustLoad = shouldLoadMedia(details);
+        // If blocking, do not bother creating a pending request entry, it
+        // won't be used anyway.
+        if ( details.rawtype === 15 && shouldLoadMedia(details) === false ) {
+            return false;
         }
 
         // We are being called synchronously from the content process, so we
@@ -2190,8 +2191,6 @@ vAPI.net.registerListeners = function() {
         pendingReq.rawtype = details.rawtype;
         pendingReq.sourceTabId = sourceTabId;
         pendingReq.tabId = details.tabId;
-
-        return mustLoad;
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(

@@ -220,7 +220,7 @@ var contentObserver = {
         }
 
         // Important: hard test against `false`.
-        if ( Array.isArray(r) && r.length !== 0 && r[0] === false ) {
+        if ( Array.isArray(r) && r[0] === false ) {
             return this.REJECT;
         }
 
