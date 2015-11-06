@@ -192,7 +192,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"避免 WebRTC 泄露本地IP地址",
+    "message":"防止 WebRTC 泄露本地IP地址",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
