@@ -1539,10 +1539,15 @@ FilterParser.prototype.parse = function(raw) {
     }
 
     // options
-    pos = s.indexOf('$');
-    if ( pos !== -1 ) {
-        this.parseOptions(s.slice(pos + 1));
-        s = s.slice(0, pos);
+    // https://github.com/gorhill/uBlock/issues/842
+    // - ensure sure we are not dealing with a regex-based filter.
+    // - lookup the last occurrence of `$`.
+    if ( s.charAt(0) !== '/' || s.slice(-1) !== '/' ) {
+        pos = s.lastIndexOf('$');
+        if ( pos !== -1 ) {
+            this.parseOptions(s.slice(pos + 1));
+            s = s.slice(0, pos);
+        }
     }
 
     // regex?
