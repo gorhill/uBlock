@@ -209,7 +209,7 @@ var contentObserver = {
             url: location.spec
         };
 
-        //console.log('shouldLoad: type=' + type' ' + 'url=' + location.spec);
+        //console.log('shouldLoad: type=' + type + ' url=' + location.spec);
         var r;
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216

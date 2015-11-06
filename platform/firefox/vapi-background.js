@@ -1867,6 +1867,18 @@ var httpObserver = {
         }
     },
 
+    // Pending request ring buffer:
+    // +-------+-------+-------+-------+-------+-------+-------
+    // |0      |1      |2      |3      |4      |5      |...      
+    // +-------+-------+-------+-------+-------+-------+-------
+    //
+    // URL to ring buffer index map:
+    // { k = URL, v = ring buffer index }
+    //
+    // v can an integer or an Array of integer (for when the same URL is
+    // received multiple times by shouldLoadListener() before the existing one
+    // is serviced by the network request observer.
+
     createPendingRequest: function(url) {
         var bucket;
         var i = this.pendingWritePointer;
@@ -1876,14 +1888,12 @@ var httpObserver = {
         if ( preq._key !== '' ) {
             bucket = this.pendingURLToIndex.get(preq._key);
             if ( Array.isArray(bucket) ) {
-                // Assuming i in array
                 var pos = bucket.indexOf(i);
                 bucket.splice(pos, 1);
                 if ( bucket.length === 1 ) {
                     this.pendingURLToIndex.set(preq._key, bucket[0]);
                 }
             } else if ( typeof bucket === 'number' ) {
-                // Assuming bucket === i
                 this.pendingURLToIndex.delete(preq._key);
             }
         }
@@ -3051,7 +3061,6 @@ vAPI.contextMenu = {
 vAPI.contextMenu.displayMenuItem = function({target}) {
     var doc = target.ownerDocument;
     var gContextMenu = doc.defaultView.gContextMenu;
-
     if ( !gContextMenu.browser ) {
         return;
     }
@@ -3062,14 +3071,14 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
     // https://github.com/chrisaljoudi/uBlock/issues/105
     // TODO: Should the element picker works on any kind of pages?
     if ( !currentURI.schemeIs('http') && !currentURI.schemeIs('https') ) {
-        menuitem.hidden = true;
+        menuitem.setAttribute('hidden', true);
         return;
     }
 
     var ctx = vAPI.contextMenu.contexts;
 
     if ( !ctx ) {
-        menuitem.hidden = false;
+        menuitem.setAttribute('hidden', false);
         return;
     }
 
@@ -3085,19 +3094,19 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
             !gContextMenu.onVideo &&
             !gContextMenu.onAudio
         ) {
-            menuitem.hidden = false;
+            menuitem.setAttribute('hidden', false);
             return;
         }
         if (
             ctxMap.hasOwnProperty(context) &&
             gContextMenu[ctxMap[context]]
         ) {
-            menuitem.hidden = false;
+            menuitem.setAttribute('hidden', false);
             return;
         }
     }
 
-    menuitem.hidden = true;
+    menuitem.setAttribute('hidden', true);
 };
 
 /******************************************************************************/
