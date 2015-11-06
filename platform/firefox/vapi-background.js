@@ -1226,7 +1226,6 @@ var tabWatcher = (function() {
             document.readyState !== 'interactive' &&
             document.readyState !== 'complete'
         ) {
-            console.log('document not ready');
             attachToTabBrowserLater({ window: window, tryCount: tryCount });
             return;
         }
