@@ -1220,6 +1220,17 @@ var tabWatcher = (function() {
             return;
         }
 
+        // https://github.com/gorhill/uBlock/issues/906
+        // This might have been the cause. Will see.
+        if (
+            document.readyState !== 'interactive' &&
+            document.readyState !== 'complete'
+        ) {
+            console.log('document not ready');
+            attachToTabBrowserLater({ window: window, tryCount: tryCount });
+            return;
+        }
+
         // On some platforms, the tab browser isn't immediately available,
         // try waiting a bit if this happens.
         // https://github.com/gorhill/uBlock/issues/763
