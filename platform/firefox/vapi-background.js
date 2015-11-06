@@ -192,11 +192,13 @@ vAPI.browserSettings = {
     },
 
     set: function(details) {
-        var value;
+        var settingVal;
+        var prefName, prefVal;
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
                 continue;
             }
+            settingVal = !!details[setting];
             switch ( setting ) {
             case 'prefetching':
                 this.rememberOriginalValue('network', 'prefetch-next');
@@ -204,10 +206,9 @@ vAPI.browserSettings = {
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=814169
                 // Sigh.
                 this.rememberOriginalValue('network.http', 'speculative-parallel-limit');
-                value = !!details[setting];
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
-                if ( value === true ) {
+                if ( settingVal ) {
                     this.clear('network', 'prefetch-next');
                     this.clear('network.http', 'speculative-parallel-limit');
                 } else {
@@ -219,10 +220,9 @@ vAPI.browserSettings = {
             case 'hyperlinkAuditing':
                 this.rememberOriginalValue('browser', 'send_pings');
                 this.rememberOriginalValue('beacon', 'enabled');
-                value = !!details[setting];
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
-                if ( value === true ) {
+                if ( settingVal ) {
                     this.clear('browser', 'send_pings');
                     this.clear('beacon', 'enabled');
                 } else {
@@ -231,13 +231,24 @@ vAPI.browserSettings = {
                 }
                 break;
 
+            // https://github.com/gorhill/uBlock/issues/894
+            // Do not disable completely WebRTC if it can be avoided. FF42+
+            // has a `media.peerconnection.ice.default_address_only` pref which
+            // purpose is to prevent local IP address leakage.
             case 'webrtcIPAddress':
-                this.rememberOriginalValue('media.peerconnection', 'enabled');
-                value = !!details[setting];
-                if ( value === true ) {
-                    this.clear('media.peerconnection', 'enabled');
+                if ( this.getValue('media.peerconnection', 'ice.default_address_only') !== undefined ) {
+                    prefName = 'ice.default_address_only';
+                    prefVal = true;
                 } else {
-                    this.setValue('media.peerconnection', 'enabled', false);
+                    prefName = 'enabled';
+                    prefVal = false;
+                }
+
+                this.rememberOriginalValue('media.peerconnection', prefName);
+                if ( settingVal ) {
+                    this.clear('media.peerconnection', prefName);
+                } else {
+                    this.setValue('media.peerconnection', prefName, prefVal);
                 }
                 break;
 
