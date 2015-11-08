@@ -3147,6 +3147,10 @@ vAPI.contextMenu.register = (function() {
         contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
     };
 
+    // https://github.com/gorhill/uBlock/issues/906
+    // Be sure document.readyState is 'complete': it could happen at launch
+    // time that we are called by vAPI.contextMenu.create() directly before
+    // the environment is properly initialized.
     var registerSafely = function(doc) {
         if ( doc.readyState !== 'complete' ) {
             vAPI.setTimeout(registerSafely.bind(this, doc), 200);
