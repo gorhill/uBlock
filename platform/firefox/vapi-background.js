@@ -1870,56 +1870,46 @@ var httpObserver = {
     // +-------+-------+-------+-------+-------+-------+-------
     //
     // URL to ring buffer index map:
-    // { k = URL, v = ring buffer index }
+    // { k = URL, s = ring buffer indices }
     //
-    // v can an integer or an Array of integer (for when the same URL is
-    // received multiple times by shouldLoadListener() before the existing one
-    // is serviced by the network request observer.
+    // s is a string which character codes map to ring buffer indices -- for
+    // when the same URL is received multiple times by shouldLoadListener()
+    // before the existing one is serviced by the network request observer.
+    // I believe the use of a string in lieu of an array reduces memory
+    // churning.
 
     createPendingRequest: function(url) {
         var bucket;
         var i = this.pendingWritePointer;
         this.pendingWritePointer = i + 1 & 31;
         var preq = this.pendingRingBuffer[i];
+        var si = String.fromCharCode(i);
         // Cleanup unserviced pending request
         if ( preq._key !== '' ) {
             bucket = this.pendingURLToIndex.get(preq._key);
-            if ( Array.isArray(bucket) ) {
-                var pos = bucket.indexOf(i);
-                bucket.splice(pos, 1);
-                if ( bucket.length === 1 ) {
-                    this.pendingURLToIndex.set(preq._key, bucket[0]);
-                }
-            } else if ( typeof bucket === 'number' ) {
+            if ( bucket.length === 1 ) {
                 this.pendingURLToIndex.delete(preq._key);
+            } else {
+                var pos = bucket.indexOf(si);
+                this.pendingURLToIndex.set(preq._key, bucket.slice(0, pos) + bucket.slice(pos + 1));
             }
         }
-        // Would be much simpler if a url could not appear more than once.
         bucket = this.pendingURLToIndex.get(url);
-        if ( bucket === undefined ) {
-            this.pendingURLToIndex.set(url, i);
-        } else if ( Array.isArray(bucket) ) {
-            bucket = bucket.push(i);
-        } else {
-            bucket = [bucket, i];
-        }
+        this.pendingURLToIndex.set(url, bucket === undefined ? si : bucket + si);
         preq._key = url;
         return preq;
     },
 
     lookupPendingRequest: function(url) {
-        var i = this.pendingURLToIndex.get(url);
-        if ( i === undefined ) {
+        var bucket = this.pendingURLToIndex.get(url);
+        if ( bucket === undefined ) {
             return null;
         }
-        if ( Array.isArray(i) ) {
-            var bucket = i;
-            i = bucket.shift();
-            if ( bucket.length === 1 ) {
-                this.pendingURLToIndex.set(url, bucket[0]);
-            }
-        } else {
+        var i = bucket.charCodeAt(0);
+        if ( bucket.length === 1 ) {
             this.pendingURLToIndex.delete(url);
+        } else {
+            this.pendingURLToIndex.set(url, bucket.slice(1));
         }
         var preq = this.pendingRingBuffer[i];
         preq._key = ''; // mark as "serviced"
@@ -3151,11 +3141,17 @@ vAPI.contextMenu.register = (function() {
     // Be sure document.readyState is 'complete': it could happen at launch
     // time that we are called by vAPI.contextMenu.create() directly before
     // the environment is properly initialized.
-    var registerSafely = function(doc) {
-        if ( doc.readyState !== 'complete' ) {
-            vAPI.setTimeout(registerSafely.bind(this, doc), 200);
-        } else {
+    var registerSafely = function(doc, tryCount) {
+        if ( doc.readyState === 'complete' ) {
             register.call(this, doc);
+            return;
+        }
+        if ( typeof tryCount !== 'number' ) {
+            tryCount = 0;
+        }
+        tryCount += 1;
+        if ( tryCount < 8 ) {
+            vAPI.setTimeout(registerSafely.bind(this, doc, tryCount), 200);
         }
     };
 
