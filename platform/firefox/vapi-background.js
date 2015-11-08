@@ -1233,10 +1233,7 @@ var tabWatcher = (function() {
 
         // https://github.com/gorhill/uBlock/issues/906
         // This might have been the cause. Will see.
-        if (
-            document.readyState !== 'interactive' &&
-            document.readyState !== 'complete'
-        ) {
+        if ( document.readyState !== 'complete' ) {
             attachToTabBrowserLater({ window: window, tryCount: tryCount });
             return;
         }
@@ -3111,43 +3108,55 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 
 /******************************************************************************/
 
-vAPI.contextMenu.register = function(doc) {
-    if ( !this.menuItemId ) {
-        return;
-    }
+vAPI.contextMenu.register = (function() {
+    var register = function(doc) {
+        if ( !this.menuItemId ) {
+            return;
+        }
 
-    if ( vAPI.fennec ) {
-        // TODO https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/NativeWindow/contextmenus/add
-        /*var nativeWindow = doc.defaultView.NativeWindow;
-        contextId = nativeWindow.contextmenus.add(
-            this.menuLabel,
-            nativeWindow.contextmenus.linkOpenableContext,
-            this.onCommand
-        );*/
-        return;
-    }
+        if ( vAPI.fennec ) {
+            // TODO https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/NativeWindow/contextmenus/add
+            /*var nativeWindow = doc.defaultView.NativeWindow;
+            contextId = nativeWindow.contextmenus.add(
+                this.menuLabel,
+                nativeWindow.contextmenus.linkOpenableContext,
+                this.onCommand
+            );*/
+            return;
+        }
 
-    // Already installed?
-    if ( doc.getElementById(this.menuItemId) !== null ) {
-        return;
-    }
+        // Already installed?
+        if ( doc.getElementById(this.menuItemId) !== null ) {
+            return;
+        }
 
-    var contextMenu = doc.getElementById('contentAreaContextMenu');
+        var contextMenu = doc.getElementById('contentAreaContextMenu');
 
-    // This can happen (Thunderbird).
-    if ( contextMenu === null ) {
-        return;
-    }
+        // This can happen (Thunderbird).
+        if ( contextMenu === null ) {
+            return;
+        }
 
-    var menuitem = doc.createElement('menuitem');
-    menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
-    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
-    menuitem.setAttribute('class', 'menuitem-iconic');
-    menuitem.addEventListener('command', this.onCommand);
-    contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
-};
+        var menuitem = doc.createElement('menuitem');
+        menuitem.setAttribute('id', this.menuItemId);
+        menuitem.setAttribute('label', this.menuLabel);
+        menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+        menuitem.setAttribute('class', 'menuitem-iconic');
+        menuitem.addEventListener('command', this.onCommand);
+        contextMenu.addEventListener('popupshowing', this.displayMenuItem);
+        contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    };
+
+    var registerSafely = function(doc) {
+        if ( doc.readyState !== 'complete' ) {
+            vAPI.setTimeout(registerSafely.bind(this, doc), 200);
+        } else {
+            register.call(this, doc);
+        }
+    };
+
+    return registerSafely;
+})();
 
 /******************************************************************************/
 
