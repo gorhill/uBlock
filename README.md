@@ -48,7 +48,7 @@ uBlock Origin
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
-  * [Chromium](#chromium)c
+  * [Chromium](#chromium)
   * [Firefox](#firefox--firefox-for-android)
 * [Release History](#release-history)
 * [Privacy policy](https://github.com/gorhill/uBlock/wiki/Privacy-policy)
