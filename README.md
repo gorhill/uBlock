@@ -48,9 +48,8 @@ uBlock Origin
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
-  * [Chromium](#chromium)
+  * [Chromium](#chromium)c
   * [Firefox](#firefox--firefox-for-android)
-  * [Safari](#safari)
 * [Release History](#release-history)
 * [Privacy policy](https://github.com/gorhill/uBlock/wiki/Privacy-policy)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
@@ -132,12 +131,6 @@ You can install the latest version [manually](https://github.com/gorhill/uBlock/
 The Firefox version of uBlock Origin has [an extra feature](https://github.com/gorhill/uBlock/wiki/Inline-script-tag-filtering) currently not yet available on Chromium-based browsers -- which feature is of great help to foil attempts by many web sites to circumvent blockers.
 
 Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
-
-#### Safari
-
-There is no support for Safari for uBlock Origin.
-
-Best is that you install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock), which has official support for Safari.
 
 #### Note for all browsers
 
