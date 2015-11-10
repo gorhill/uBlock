@@ -340,6 +340,70 @@ var onHeadersReceived = function(details) {
     if ( requestType === 'sub_frame' ) {
         return onFrameHeadersReceived(details);
     }
+
+    // https://github.com/gorhill/uBlock/issues/924
+    // Evaluate resources requested through non-javascript request type, but
+    // returned as javascript.
+
+    if ( requestType === 'script' ) {
+        return;
+    }
+
+    var i = headerIndexFromName('content-type', details.responseHeaders);
+    if ( i === -1 ) {
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/924
+    // If we reach this point, this means a javascript resource was returned
+    // in response for a non-explicit javascript request.
+
+    var value = details.responseHeaders[i].value;
+    if ( value.indexOf('/javascript') === -1 ) {
+        return;
+    }
+
+    console.log('"%s" requested, "javascript" returned: %s', requestType, details.url);
+
+    var µb = µBlock;
+
+    µb.tabContextManager.push(tabId, details.url);
+
+    // Lookup the page store associated with this tab id.
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+    }
+    // I can't think of how pageStore could be null at this point.
+
+    var context = pageStore.createContextFromFrameId(details.parentFrameId);
+    context.requestURL = details.url;
+    context.requestHostname = details.hostname;
+    context.requestType = 'script';
+
+    var result = pageStore.filterRequestNoCache(context);
+
+    pageStore.logRequest(context, result);
+
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            'script',
+            details.url,
+            context.rootHostname,
+            context.pageHostname
+        );
+    }
+
+    if ( µb.isAllowResult(result) ) {
+        return;
+    }
+
+    µb.updateBadgeAsync(tabId);
+
+    return { 'cancel': true };
 };
 
 /******************************************************************************/
@@ -355,7 +419,7 @@ var onRootFrameHeadersReceived = function(details) {
     if ( !pageStore ) {
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
-    // I can't think of how pageStore could be null at this point.
+    // pageStore will never be null at this point.
 
     var context = pageStore.createContextFromPage();
     context.requestURL = details.url;
@@ -554,7 +618,8 @@ vAPI.net.onHeadersReceived = {
     ],
     types: [
         "main_frame",
-        "sub_frame"
+        "sub_frame",
+        "xmlhttprequest"
     ],
     extra: [ 'blocking', 'responseHeaders' ],
     callback: onHeadersReceived

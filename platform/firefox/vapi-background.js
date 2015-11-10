@@ -1978,9 +1978,13 @@ var httpObserver = {
         }
 
         // 'Content-Security-Policy' MUST come last in the array. Need to
-        // revised this eventually.
+        // revise this eventually.
         var responseHeaders = [];
-        var value = this.getResponseHeader(channel, 'Content-Security-Policy');
+        var value = this.getResponseHeader(channel, 'Content-Type');
+        if ( value !== undefined ) {
+            responseHeaders.push({ name: 'Content-Type', value: value });
+        }
+        value = this.getResponseHeader(channel, 'Content-Security-Policy');
         if ( value !== undefined ) {
             responseHeaders.push({ name: 'Content-Security-Policy', value: value });
         }
