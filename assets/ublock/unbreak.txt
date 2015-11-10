@@ -245,4 +245,4 @@ marketwatch.com#@##ad_DisplayAd2
 marketwatch.com#@#.advertisement
 
 # https://twitter.com/Jadenfire/status/663837423160451072
-||d2kkl4buashh8c.cloudfront.net/ads/ads.js$script,domain=thesimsresource.com
+@@||d2kkl4buashh8c.cloudfront.net/ads/ads.js$script,domain=thesimsresource.com
