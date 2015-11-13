@@ -2042,7 +2042,18 @@ var httpObserver = {
         // http-on-opening-request
 
         var pendingRequest = this.lookupPendingRequest(URI.spec);
-        var rawtype = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
+
+        // https://github.com/gorhill/uMatrix/issues/390#issuecomment-155759004
+        var rawtype = 1;
+        var loadInfo = channel.loadInfo;
+        if ( loadInfo ) {
+            rawtype = loadInfo.externalContentPolicyType !== undefined ?
+                loadInfo.externalContentPolicyType :
+                loadInfo.contentPolicyType;
+            if ( !rawtype ) {
+                rawtype = 1;
+            }
+        }
 
         // Behind-the-scene request
         if ( pendingRequest === null ) {
@@ -2186,21 +2197,6 @@ vAPI.net.registerListeners = function() {
         return sourceTabId;
     };
 
-    var shouldLoadMedia = function(details) {
-        var uri = Services.io.newURI(details.url, null, null);
-
-        var r = vAPI.net.onBeforeRequest.callback({
-            frameId: details.frameId,
-            hostname: uri.asciiHost,
-            parentFrameId: details.parentFrameId,
-            tabId: details.tabId,
-            type: 'media',
-            url: uri.asciiSpec
-        });
-
-        return typeof r !== 'object' || r === null;
-    };
-
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
         // Non blocking: it is assumed that the http observer is fired after
@@ -2219,15 +2215,6 @@ vAPI.net.registerListeners = function() {
         // this code path is typically taken only once per page load.
         if ( details.openerURL ) {
             sourceTabId = shouldBlockPopup(details);
-        }
-
-        // https://github.com/gorhill/uBlock/issues/868
-        // Firefox quirk: for some reasons, there are instances of resources
-        // for `video` tag not being reported to HTTP observers.
-        // If blocking, do not bother creating a pending request entry, it
-        // won't be used anyway.
-        if ( details.rawtype === 15 && shouldLoadMedia(details) === false ) {
-            return false;
         }
 
         // We are being called synchronously from the content process, so we

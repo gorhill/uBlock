@@ -210,18 +210,12 @@ var contentObserver = {
         };
 
         //console.log('shouldLoad: type=' + type + ' url=' + location.spec);
-        var r;
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            r = messageManager.sendRpcMessage(this.cpMessageName, details);
+            messageManager.sendRpcMessage(this.cpMessageName, details);
         } else {
             // Compatibility for older versions
-            r = messageManager.sendSyncMessage(this.cpMessageName, details);
-        }
-
-        // Important: hard test against `false`.
-        if ( Array.isArray(r) && r[0] === false ) {
-            return this.REJECT;
+            messageManager.sendSyncMessage(this.cpMessageName, details);
         }
 
         return this.ACCEPT;
