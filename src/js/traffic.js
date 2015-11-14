@@ -331,28 +331,33 @@ var onHeadersReceived = function(details) {
         return;
     }
 
-    // Special handling for root document.
-    if ( details.type === 'main_frame' ) {
+    var requestType = details.type;
+
+    if ( requestType === 'main_frame' ) {
         return onRootFrameHeadersReceived(details);
     }
 
-    // Just in case...
-    if ( details.type !== 'sub_frame' ) {
-        return;
+    if ( requestType === 'sub_frame' ) {
+        return onFrameHeadersReceived(details);
     }
+};
 
-    // If we reach this point, we are dealing with a sub_frame
+/******************************************************************************/
+
+var onRootFrameHeadersReceived = function(details) {
+    var µb = µBlock;
+    var tabId = details.tabId;
+
+    µb.tabContextManager.push(tabId, details.url);
 
     // Lookup the page store associated with this tab id.
-    var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        return;
+        pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
+    // I can't think of how pageStore could be null at this point.
 
-    // Frame id of frame request is their own id, while the request is made
-    // in the context of the parent.
-    var context = pageStore.createContextFromFrameId(details.parentFrameId);
+    var context = pageStore.createContextFromPage();
     context.requestURL = details.url;
     context.requestHostname = details.hostname;
     context.requestType = 'inline-script';
@@ -385,20 +390,19 @@ var onHeadersReceived = function(details) {
 
 /******************************************************************************/
 
-var onRootFrameHeadersReceived = function(details) {
-    var tabId = details.tabId;
+var onFrameHeadersReceived = function(details) {
     var µb = µBlock;
-
-    µb.tabContextManager.push(tabId, details.url);
+    var tabId = details.tabId;
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+        return;
     }
-    // I can't think of how pageStore could be null at this point.
 
-    var context = pageStore.createContextFromPage();
+    // Frame id of frame request is their own id, while the request is made
+    // in the context of the parent.
+    var context = pageStore.createContextFromFrameId(details.parentFrameId);
     context.requestURL = details.url;
     context.requestHostname = details.hostname;
     context.requestType = 'inline-script';

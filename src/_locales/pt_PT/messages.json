@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficiente. Leve no CPU e memória.",
+    "message":"Finalmente, um bloqueador eficiente. Leve na CPU e memória.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

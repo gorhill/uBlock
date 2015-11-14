@@ -1,19 +1,33 @@
 # Needed to unbreak web sites, mostly because of hosts file-based filters:
 #   Dan Pollock's, MVPS, Peter Lowe's
 
+# https://twitter.com/JarkkoRytkonen/status/540052376015888385
+# https://github.com/chrisaljoudi/uBlock/issues/119
+# https://github.com/chrisaljoudi/uBlock/issues/822
+# https://github.com/chrisaljoudi/uBlock/issues/940
+# To counter `google-analytics.com` in Peter Lowe's list
+@@||google-analytics.com^$domain=avianca.com|jackbox.tv|musixmatch.com|bikstok.sonymusicshop.dk
+
+# From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
+# https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
+# https://github.com/chrisaljoudi/uBlock/issues/1546
+# To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||google-analytics.com/analytics.js$script,domain=reddit.com|trello.com|www.vd.nl
+
 # https://github.com/chrisaljoudi/uBlock/issues/20
+# https://github.com/chrisaljoudi/uBlock/issues/650
+# https://github.com/chrisaljoudi/uBlock/issues/821
 # => blocking counterpart in Peter Lowe's Ad Server
-@@||www.google-analytics.com/ga.js^$domain=xda-developers.com
+@@||google-analytics.com/ga.js^$script,domain=onlinetv.ru|xda-developers.com|zie.nl
+
+# https://github.com/gorhill/uBlock/issues/939
+@@||google-analytics.com/urchin.js$script,domain=live.euroleague.net
 
 # https://github.com/chrisaljoudi/uBlock/issues/63
 @@||adf.ly^$~third-party
 
 # https://github.com/chrisaljoudi/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
-
-# https://github.com/chrisaljoudi/uBlock/issues/119
-# To counter `google-analytics.com` in Peter Lowe's list
-@@||google-analytics.com^$domain=avianca.com
 
 # https://github.com/chrisaljoudi/uBlock/issues/141
 # Videos broken on weather.com
@@ -82,10 +96,6 @@
 # To counter `2mdn.net` in Peter Lowe's, `s0.2mdn.net` in hpHosts
 @@||s0.2mdn.net/instream/*$object,script,domain=wsmv.com
 
-# https://twitter.com/JarkkoRytkonen/status/540052376015888385
-# To counter `google-analytics.com` in Peter Lowe's
-@@||google-analytics.com^$domain=jackbox.tv
-
 # Videos broken on weather.com
 # To counter `www.googletagservices.com` in MVPS, hpHosts, Dan Pollock's
 @@||www.googletagservices.com/tag/js/gpt.js^$script,domain=weather.com
@@ -111,12 +121,6 @@ ovh.strim.io#@##tweets
 # https://adblockplus.org/forum/viewtopic.php?f=10&t=24896&start=15#p114675
 # Until fixed in EasyList
 @@||cdn.turner.com/ads/nba/adfuel.js$domain=www.nba.com
-
-# From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
-# https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
-# https://github.com/chrisaljoudi/uBlock/issues/1546
-# To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$domain=reddit.com|trello.com|www.vd.nl
 
 # https://github.com/chrisaljoudi/uBlock/issues/570
 # To counter `yui.yahooapis.com` in hpHosts
@@ -145,11 +149,6 @@ ovh.strim.io#@##tweets
 @@||mc.yandex.ru^$domain=market.yandex.ru
 @@||yastatic.net/market-export/*/advert.js$domain=market.yandex.ru
 
-# https://github.com/chrisaljoudi/uBlock/issues/650
-# https://github.com/chrisaljoudi/uBlock/issues/821
-# To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||www.google-analytics.com/ga.js$domain=onlinetv.ru|zie.nl
-
 # https://github.com/chrisaljoudi/uBlock/issues/774
 # To counter `carbonads.net` in Peter Lowe's
 @@||carbonads.net^$~third-party
@@ -160,11 +159,6 @@ ovh.strim.io#@##tweets
 # Chrome store feedback: "totaljobs.com [...] with μBlock enabled, I can't click any links"
 # To counter `2o7.net` in Peter Lowe's
 @@||2o7.net^$domain=totaljobs.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/822
-# https://github.com/chrisaljoudi/uBlock/issues/940
-# To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com^$domain=musixmatch.com|bikstok.sonymusicshop.dk
 
 # https://github.com/chrisaljoudi/uBlock/issues/841
 # To counter `quantcast.com` in hpHosts, Peter Lowe's
@@ -243,3 +237,6 @@ ovh.strim.io#@##tweets
 marketwatch.com#@##ad_DisplayAd1
 marketwatch.com#@##ad_DisplayAd2
 marketwatch.com#@#.advertisement
+
+# https://twitter.com/Jadenfire/status/663837423160451072
+@@||d2kkl4buashh8c.cloudfront.net/ads/ads.js$script,domain=thesimsresource.com

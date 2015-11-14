@@ -72,8 +72,7 @@ function startup(data/*, reason*/) {
 
         // Do not test against `loading`: it does appear `readyState` could be
         // undefined if looked up too early.
-        if ( !hiddenDoc ||
-             hiddenDoc.readyState !== 'interactive' && hiddenDoc.readyState !== 'complete' ) {
+        if ( !hiddenDoc || hiddenDoc.readyState !== 'complete' ) {
             return false;
         }
 

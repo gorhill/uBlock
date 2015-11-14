@@ -728,10 +728,10 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         // Single-CSS rule: no need to test for whether the selector
         // is valid, the regex took care of this. Most generic selector falls
         // into that category.
-        if ( matches[1] === selector ) {
+        if ( matches[0] === selector ) {
             out.push(
                 'c\vlg\v' +
-                 matches[1]
+                 matches[0]
             );
             return;
         }
@@ -739,7 +739,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         if ( this.isValidSelector(selector) ) {
             out.push(
                 'c\vlg+\v' +
-                 matches[1] + '\v' +
+                 matches[0] + '\v' +
                 selector
             );
         }
@@ -773,8 +773,8 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     }
 };
 
-FilterContainer.prototype.reClassOrIdSelector = /^([#.][\w-]+)$/;
-FilterContainer.prototype.rePlainSelector = /^([#.][\w-]+)/;
+FilterContainer.prototype.reClassOrIdSelector = /^[#.][\w-]+$/;
+FilterContainer.prototype.rePlainSelector = /^[#.][\w-]+/;
 FilterContainer.prototype.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
 FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 

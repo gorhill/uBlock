@@ -15,9 +15,8 @@
 # 2012-10-31: http://www.journaldunet.com/solutions/dsi/des-malwares-sur-telecharger-com-01net-1012.shtml
 # 2012-10-30: http://www.lesnumeriques.com/appli-logiciel/telecharger-depuis-01net-nuit-gravement-a-sante-pc-n26763.html
 # 2012-06-17: http://www.malekal.com/2012/06/17/01net-pc-optimizer-pour-ne-pas-optimiser-son-pc/
-# 2012-06-17: http://www.malekal.com/2012/06/17/01net-pc-optimizer-pour-ne-pas-optimiser-son-pc/
 # 2012-02-17: http://neosting.net/logiciels/01net-et-softonic-ajoutent-aussi-un-installeur-publicitaire.html
-||01net.com/telecharger^$document
+||01net.com/telecharger/$document
 
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
@@ -40,7 +39,6 @@
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2014-11-25: http://blog.tedd.no/2014/11/25/sourceforge-malware/
 ||sourceforge.net^$document
-
 
 # 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
