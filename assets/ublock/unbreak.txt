@@ -12,7 +12,7 @@
 # https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
 # https://github.com/chrisaljoudi/uBlock/issues/1546
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$domain=reddit.com|trello.com|www.vd.nl
+@@||google-analytics.com/analytics.js$script,domain=reddit.com|trello.com|www.vd.nl
 
 # https://github.com/chrisaljoudi/uBlock/issues/20
 # https://github.com/chrisaljoudi/uBlock/issues/650
