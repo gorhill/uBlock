@@ -240,3 +240,6 @@ marketwatch.com#@#.advertisement
 
 # https://twitter.com/Jadenfire/status/663837423160451072
 @@||d2kkl4buashh8c.cloudfront.net/ads/ads.js$script,domain=thesimsresource.com
+
+# As reported in AMO feedback section
+@@||nationalreview.com/sites/all/themes/*/assets/js/chartbeat.js$script
