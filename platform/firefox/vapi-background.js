@@ -714,7 +714,6 @@ vAPI.noTabId = '-1';
 
 vAPI.tabs = {};
 
-
 /******************************************************************************/
 
 vAPI.tabs.registerListeners = function() {
@@ -842,11 +841,6 @@ vAPI.tabs.open = function(details) {
 
         for ( tab of this.getAll() ) {
             var browser = tabWatcher.browserFromTarget(tab);
-
-            // Or simply .equals if we care about the fragment
-            if ( URI.equalsExceptRef(browser.currentURI) === false ) {
-                continue;
-            }
 
             // Or simply .equals if we care about the fragment
             if ( URI.equalsExceptRef(browser.currentURI) === false ) {

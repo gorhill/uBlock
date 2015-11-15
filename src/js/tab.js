@@ -253,7 +253,7 @@ housekeep itself.
         }
         this.stack.push(new StackEntry(url));
         this.update();
-        if ( this.commitTimer === null ) {
+        if ( this.commitTimer !== null ) {
             clearTimeout(this.commitTimer);
         }
         this.commitTimer = vAPI.setTimeout(this.onCommit.bind(this), 1000);
