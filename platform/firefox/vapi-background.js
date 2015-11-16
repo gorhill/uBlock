@@ -1712,16 +1712,24 @@ vAPI.rpcReceiver = (function() {
         }
     };
 
-    if ( Services.ppmm ) {
-        Services.ppmm.addMessageListener(
+    var ppmm = Services.ppmm;
+    if ( !ppmm ) {
+        ppmm = Cc['@mozilla.org/parentprocessmessagemanager;1'];
+        if ( ppmm ) {
+            ppmm = ppmm.getService(Ci.nsIMessageListenerManager);
+        }
+    }
+
+    if ( ppmm ) {
+        ppmm.addMessageListener(
             childProcessMessageName,
             onChildProcessMessage
         );
     }
 
     cleanupTasks.push(function() {
-        if ( Services.ppmm ) {
-            Services.ppmm.removeMessageListener(
+        if ( ppmm ) {
+            ppmm.removeMessageListener(
                 childProcessMessageName,
                 onChildProcessMessage
             );
