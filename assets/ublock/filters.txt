@@ -157,7 +157,7 @@ arstechnica.com###lg-pushdown
 ||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
 
 # https://github.com/gorhill/uBlock/issues/923#issuecomment-154903084
-investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space):not(#Header):not(#Content):not(#Footer)
+investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space):not(#Header):not(#Content):not(#Footer):not(.region-content)
 
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
