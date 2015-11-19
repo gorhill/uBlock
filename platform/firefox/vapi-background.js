@@ -2240,7 +2240,10 @@ vAPI.net.registerListeners = function() {
         var browser = e.target;
 
         // I have seen this happens (at startup time)
-        if ( !browser.currentURI ) {
+        // https://github.com/gorhill/uBlock/issues/948
+        //   On older version of Firefox, `browser.webNavigation` can be null,
+        //   which would cause currentURI to fail.
+        if ( !browser.webNavigation || !browser.currentURI ) {
             return;
         }
 

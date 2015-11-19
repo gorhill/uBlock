@@ -738,7 +738,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         if ( this.isValidSelector(selector) ) {
             out.push(
                 'c\vlg+\v' +
-                 matches[0] + '\v' +
+                matches[0] + '\v' +
                 selector
             );
         }
@@ -773,7 +773,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     if ( matches && matches.length === 2 ) {
         out.push(
             'c\vlg+\v' +
-             matches[1] + '\v' +
+            matches[1] + '\v' +
             selector
         );
         return;
