@@ -119,15 +119,14 @@ var filterPlain = new FilterPlain();
 //   #center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] ...
 //   #adframe:not(frameset)
 //   .l-container > #fishtank
+//   body #sliding-popup
 
 var FilterPlainMore = function(s) {
     this.s = s;
 };
 
 FilterPlainMore.prototype.retrieve = function(s, out) {
-    if ( this.s.lastIndexOf(s, 0) === 0 ) {
-        out.push(this.s);
-    }
+    out.push(this.s);
 };
 
 FilterPlainMore.prototype.fid = '#+';
@@ -746,35 +745,47 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         return;
     }
 
+    if ( this.isValidSelector(selector) !== true ) {
+        return;
+    }
+
     // ["title"] and ["alt"] will go in high-low generic bin.
     if ( this.reHighLow.test(selector) ) {
-        if ( this.isValidSelector(selector) ) {
-            out.push('c\vhlg0\v' + selector);
-        }
+        out.push('c\vhlg0\v' + selector);
         return;
     }
 
     // [href^="..."] will go in high-medium generic bin.
     matches = this.reHighMedium.exec(selector);
     if ( matches && matches.length === 2 ) {
-        if ( this.isValidSelector(selector) ) {
-            out.push(
-                'c\vhmg0\v' +
-                matches[1] + '\v' +
-                selector
-            );
-        }
+        out.push(
+            'c\vhmg0\v' +
+            matches[1] + '\v' +
+            selector
+        );
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/909
+    // Anything which contains a plain id/class selector can be classified
+    // as a low generic cosmetic filter.
+    matches = this.rePlainSelectorEx.exec(selector);
+    if ( matches && matches.length === 2 ) {
+        out.push(
+            'c\vlg+\v' +
+             matches[1] + '\v' +
+            selector
+        );
         return;
     }
 
     // All else
-    if ( this.isValidSelector(selector) ) {
-        out.push('c\vhhg0\v' + selector);
-    }
+    out.push('c\vhhg0\v' + selector);
 };
 
 FilterContainer.prototype.reClassOrIdSelector = /^[#.][\w-]+$/;
 FilterContainer.prototype.rePlainSelector = /^[#.][\w-]+/;
+FilterContainer.prototype.rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)/;
 FilterContainer.prototype.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
 FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
