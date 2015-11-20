@@ -3278,7 +3278,19 @@ var optionsObserver = {
         cleanupTasks.push(this.unregister.bind(this));
 
         var browser = tabWatcher.currentBrowser();
-        if ( browser && browser.currentURI && browser.currentURI.spec === 'about:addons' ) {
+        if ( !browser ) {
+            return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/948
+        // Older versions of Firefox can throw here when looking up `currentURI`.
+        var currentURI;
+        try {
+            currentURI = browser.currentURI;
+        } catch (ex) {
+        }
+
+        if ( currentURI && currentURI.spec === 'about:addons' ) {
             this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
         }
     },
