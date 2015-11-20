@@ -2240,10 +2240,7 @@ vAPI.net.registerListeners = function() {
         var browser = e.target;
 
         // I have seen this happens (at startup time)
-        // https://github.com/gorhill/uBlock/issues/948
-        //   On older version of Firefox, `browser.webNavigation` can be null,
-        //   which would cause currentURI to fail.
-        if ( !browser.webNavigation || !browser.currentURI ) {
+        if ( !browser.currentURI ) {
             return;
         }
 
@@ -3278,7 +3275,19 @@ var optionsObserver = {
         cleanupTasks.push(this.unregister.bind(this));
 
         var browser = tabWatcher.currentBrowser();
-        if ( browser && browser.currentURI && browser.currentURI.spec === 'about:addons' ) {
+        if ( !browser ) {
+            return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/948
+        // Older versions of Firefox can throw here when looking up `currentURI`.
+        var currentURI;
+        try {
+            currentURI = browser.currentURI;
+        } catch (ex) {
+        }
+
+        if ( currentURI && currentURI.spec === 'about:addons' ) {
             this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
         }
     },
