@@ -34,7 +34,7 @@ Zonder de standaard filterlijst doet deze extensie niets. Dus als je ooit echt e
 
 ***
 
-Gratis.
+Vrij.
 Open source met publieke licentie (GPLv3)
 Voor gebruikers, door gebruikers.
 

@@ -34,7 +34,7 @@ Ohne die vorgegebenen Filterlisten ist diese Erweiterung nichts. Wenn du also et
 
 ***
 
-Kostenlos.
+Frei.
 Open-Source-Software unter der General Public License (GPLv3)
 Für Benutzer von Benutzern.
 
