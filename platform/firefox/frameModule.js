@@ -421,10 +421,10 @@ var contentObserver = {
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if (
-                doc.querySelector('a[href^="abp:"]') ||
+                doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ||
                 loc.href === 'https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web'
             ) {
-                lss(this.contentBaseURI + 'subscriber.js', sandbox);
+                lss(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
             }
         };
 

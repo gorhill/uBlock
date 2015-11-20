@@ -48,12 +48,10 @@ if ( typeof vAPI !== 'object' ) {
 
 /******************************************************************************/
 
-// Only if at least one relevant link exists on the page
-// The links look like this:
-//   abp:subscribe?location=https://easylist-downloads.adblockplus.org/easyprivacy.txt[...]
+// Only if at least one subscribe link exists on the page.
 
 if (
-    document.querySelector('a[href^="abp:"]') === null &&
+    document.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') === null &&
     window.location.href !== 'https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web'
 ) {
     return;
@@ -117,17 +115,17 @@ var onAbpLinkClicked = function(ev) {
         // List already subscribed to?
         // https://github.com/chrisaljoudi/uBlock/issues/1033
         // Split on line separators, not whitespaces.
-        var externalLists = details.externalLists.trim().split(/\s*[\n\r]+\s*/);
-        if ( externalLists.indexOf(location) !== -1 ) {
+        var text = details.externalLists.trim();
+        var lines = text !== '' ? text.split(/\s*[\n\r]+\s*/) : [];
+        if ( lines.indexOf(location) !== -1 ) {
             return;
         }
-
-        externalLists.push(location);
+        lines.push(location, '');
 
         messager.send({
             what: 'userSettings',
             name: 'externalLists',
-            value: externalLists.join('\n')
+            value: lines.join('\n')
         }, onExternalListsSaved);
     };
 

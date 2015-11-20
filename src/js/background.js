@@ -40,12 +40,8 @@ var oneHour = 60 * oneMinute;
 var defaultExternalLists = [
     '! Examples:',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt',
-    '! https://easylist-downloads.adblockplus.org/fb_annoyances_sidebar.txt',
-    '! https://easylist-downloads.adblockplus.org/fb_annoyances_newsfeed.txt',
     '! https://easylist-downloads.adblockplus.org/yt_annoyances_full.txt',
-    '! https://easylist-downloads.adblockplus.org/yt_annoyances_comments.txt',
-    '! https://easylist-downloads.adblockplus.org/yt_annoyances_suggestions.txt',
-    '! https://easylist-downloads.adblockplus.org/yt_annoyances_other.txt'
+    ''
 ].join('\n');
 
 /******************************************************************************/
