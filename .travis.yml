@@ -1,3 +1,5 @@
+language: ruby
+rvm: 2.0.0
 sudo: false
 env:
   matrix:
