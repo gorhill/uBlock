@@ -2384,15 +2384,34 @@ vAPI.toolbarButton = {
         });
     };
 
+    // https://github.com/gorhill/uBlock/issues/955
+    // Defer until `NativeWindow` is available.
+    tbb.initOne = function(win, tryCount) {
+        if ( !win.NativeWindow ) {
+            if ( typeof tryCount !== 'number' ) {
+                tryCount = 0;
+            }
+            tryCount += 1;
+            if ( tryCount < 10 ) {
+                vAPI.setTimeout(
+                    this.initOne.bind(this, win, tryCount),
+                    200
+                );
+            }
+            return;
+        }
+        var label = this.getMenuItemLabel();
+        var id = win.NativeWindow.menu.add({
+            name: label,
+            callback: this.onClick
+        });
+        menuItemIds.set(win, id);
+    };
+
     tbb.init = function() {
         // Only actually expecting one window under Fennec (note, not tabs, windows)
         for ( var win of winWatcher.getWindows() ) {
-            var label = this.getMenuItemLabel();
-            var id = win.NativeWindow.menu.add({
-                name: label,
-                callback: this.onClick
-            });
-            menuItemIds.set(win, id);
+            this.initOne(win);
         }
 
         cleanupTasks.push(shutdown);
