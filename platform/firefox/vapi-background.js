@@ -2387,10 +2387,10 @@ vAPI.toolbarButton = {
     // https://github.com/gorhill/uBlock/issues/955
     // Defer until `NativeWindow` is available.
     tbb.initOne = function(win, tryCount) {
-        if ( typeof tryCount !== 'number' ) {
-            tryCount = 0;
-        }
         if ( !win.NativeWindow ) {
+            if ( typeof tryCount !== 'number' ) {
+                tryCount = 0;
+            }
             tryCount += 1;
             if ( tryCount < 10 ) {
                 vAPI.setTimeout(
