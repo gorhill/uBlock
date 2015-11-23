@@ -429,10 +429,7 @@ var getRepoMetadata = function(callback) {
             ) {
                 entry.repoChecksum = entry.localChecksum;
             }
-            // New entry in remote repo.
             if ( entry.repoChecksum !== '' || entry.localChecksum === '' ) {
-                entry.localChecksum = 'd41d8cd98f00b204e9800998ecf8427e';
-                checksumsChanged = true;
                 continue;
             }
             checksumsChanged = true;
