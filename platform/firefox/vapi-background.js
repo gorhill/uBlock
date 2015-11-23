@@ -1919,6 +1919,68 @@ var httpObserver = {
         return preq;
     },
 
+    // https://github.com/gorhill/uMatrix/issues/165
+    // https://developer.mozilla.org/en-US/Firefox/Releases/3.5/Updating_extensions#Getting_a_load_context_from_a_request
+    // Not sure `umatrix:shouldLoad` is still needed, uMatrix does not
+    //   care about embedded frames topography.
+    // Also:
+    //   https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Limitations_of_chrome_scripts
+    tabIdFromChannel: function(channel) {
+        var aWindow;
+        if ( channel.notificationCallbacks ) {
+            try {
+                var loadContext = channel
+                        .notificationCallbacks
+                        .getInterface(Ci.nsILoadContext);
+                if ( loadContext.topFrameElement ) {
+                    return tabWatcher.tabIdFromTarget(loadContext.topFrameElement);
+                }
+                aWindow = loadContext.associatedWindow;
+            } catch (ex) {
+                //console.error(ex);
+            }
+        }
+        try {
+            if ( !aWindow && channel.loadGroup && channel.loadGroup.notificationCallbacks ) {
+                aWindow = channel
+                    .loadGroup
+                    .notificationCallbacks
+                    .getInterface(Ci.nsILoadContext)
+                    .associatedWindow;
+            }
+            if ( aWindow ) {
+                return tabWatcher.tabIdFromTarget(
+                    aWindow
+                    .getInterface(Ci.nsIWebNavigation)
+                    .QueryInterface(Ci.nsIDocShell)
+                    .rootTreeItem
+                    .QueryInterface(Ci.nsIInterfaceRequestor)
+                    .getInterface(Ci.nsIDOMWindow)
+                    .gBrowser
+                    .getBrowserForContentWindow(aWindow)
+                );
+            }
+        } catch (ex) {
+            //console.error(ex);
+        }
+        return vAPI.noTabId;
+    },
+
+    // https://github.com/gorhill/uBlock/issues/959
+    //   Try to synthesize a pending request from a behind-the-scene request.
+    synthesizePendingRequest: function(channel, rawtype) {
+        var tabId = this.tabIdFromChannel(channel);
+        if ( tabId === vAPI.noTabId ) {
+            return null;
+        }
+        return {
+            frameId: 0,
+            parentFrameId: -1,
+            tabId: tabId,
+            rawtype: rawtype
+        };
+    },
+
     handlePopup: function(URI, tabId, sourceTabId) {
         if ( !sourceTabId ) {
             return false;
@@ -1958,6 +2020,12 @@ var httpObserver = {
 
         if ( result.cancel === true ) {
             channel.cancel(this.ABORT);
+            return true;
+        }
+
+        if ( result.redirectUrl ) {
+            channel.redirectionLimit = 1;
+            channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
             return true;
         }
 
@@ -2057,7 +2125,12 @@ var httpObserver = {
             }
         }
 
-        // Behind-the-scene request
+        // Behind-the-scene request... Really?
+        if ( pendingRequest === null ) {
+            pendingRequest = this.synthesizePendingRequest(channel, rawtype);
+        }
+
+        // Behind-the-scene request... Yes, really.
         if ( pendingRequest === null ) {
             if ( this.handleRequest(channel, URI, { tabId: vAPI.noTabId, rawtype: rawtype }) ) {
                 return;
