@@ -131,9 +131,12 @@ var onBeforeRequest = function(details) {
         µb.updateBadgeAsync(tabId);
     }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/18
-    // Do not use redirection, we need to block outright to be sure the request
-    // will not be made. There can be no such guarantee with redirection.
+    // https://github.com/gorhill/uBlock/issues/949
+    // Redirect blocked request?
+    var url = µb.redirectEngine.lookup(requestContext);
+    if ( url !== undefined ) {
+        return { redirectUrl: url };
+    }
 
     return { cancel: true };
 };

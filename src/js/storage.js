@@ -646,6 +646,26 @@
 
 /******************************************************************************/
 
+// TODO: toSelfie/fromSelfie.
+
+µBlock.loadRedirectRules = function(callback) {
+    var µb = this;
+
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
+    var onRulesLoaded = function(details) {
+        if ( details.content !== '' ) {
+            µb.redirectEngine.fromString(details.content);
+        }
+        callback();
+    };
+
+    this.assets.get('assets/ublock/redirect-rules.txt', onRulesLoaded);
+};
+
+/******************************************************************************/
+
 µBlock.loadPublicSuffixList = function(callback) {
     var µb = this;
     var path = µb.pslPath;
