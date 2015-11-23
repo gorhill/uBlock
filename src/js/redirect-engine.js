@@ -30,14 +30,11 @@
 /******************************************************************************/
 
 var toBroaderHostname = function(hostname) {
-    if ( hostname === '*' ) {
-        return '';
-    }
     var pos = hostname.indexOf('.');
-    if ( pos === -1 ) {
-        return '*';
+    if ( pos !== -1 ) {
+        return hostname.slice(pos + 1);
     }
-    return hostname.slice(pos + 1);
+    return hostname !== '*' && hostname !== '' ? '*' : '';
 };
 
 /******************************************************************************/
@@ -79,10 +76,10 @@ RedirectEngine.prototype.lookup = function(context) {
                         }
                     }
                 }
-            }
-            src = toBroaderHostname(src);
-            if ( src === '' ) {
-                break;
+                src = toBroaderHostname(src);
+                if ( src === '' ) {
+                    break;
+                }
             }
         }
         des = toBroaderHostname(des);

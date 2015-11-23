@@ -86,17 +86,14 @@ var isIPAddress = function(hostname) {
 /******************************************************************************/
 
 var toBroaderHostname = function(hostname) {
-    if ( hostname === '*' ) {
-        return '';
-    }
     if ( isIPAddress(hostname) ) {
         return '*';
     }
     var pos = hostname.indexOf('.');
-    if ( pos === -1 ) {
-        return '*';
+    if ( pos !== -1 ) {
+        return hostname.slice(pos + 1);
     }
-    return hostname.slice(pos + 1);
+    return hostname !== '*' && hostname !== '' ? '*' : '';
 };
 
 HnSwitches.toBroaderHostname = toBroaderHostname;
