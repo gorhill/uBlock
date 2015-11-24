@@ -126,6 +126,10 @@ return {
             title: 'uBlock filters – Unbreak',
             group: 'default'
         },
+        'assets/ublock/redirect.txt': {
+            title: 'uBlock filters – Block-then-redirect',
+            group: 'default'
+        },
         'assets/ublock/badware.txt': {
             title: 'uBlock filters – Badware risks',
             group: 'default',

@@ -40,14 +40,19 @@ var toBroaderHostname = function(hostname) {
 /******************************************************************************/
 
 var RedirectEngine = function() {
+    this.redirects = Object.create(null);
     this.reset();
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.reset = function() {
-    this.redirects = Object.create(null);
     this.rules = Object.create(null);
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.freeze = function() {
 };
 
 /******************************************************************************/
@@ -93,13 +98,117 @@ RedirectEngine.prototype.lookup = function(context) {
 
 // TODO: combine same key-redirect pairs into a single regex.
 
-RedirectEngine.prototype.fromString = function(text) {
+RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
+    var typeEntry = this.rules[type];
+    if ( typeEntry === undefined ) {
+        typeEntry = this.rules[type] = Object.create(null);
+    }
+    var desEntry = typeEntry[des];
+    if ( desEntry === undefined ) {
+        desEntry = typeEntry[des] = Object.create(null);
+    }
+    var ruleEntries = desEntry[src];
+    if ( ruleEntries === undefined ) {
+        ruleEntries = desEntry[src] = [];
+    }
+    ruleEntries.push({
+        c: new RegExp(pattern),
+        r: redirect
+    });
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.fromCompiledRule = function(line) {
+    var fields = line.split('\t');
+    if ( fields.length !== 5 ) {
+        return;
+    }
+    this.addRule(fields[0], fields[1], fields[2], fields[3], fields[4]);
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
+    var matches = this.reFilterParser.exec(line);
+    if ( matches === null || matches.length !== 4 ) {
+        return '';
+    }
+
+    var pattern = (matches[1] + matches[2]).replace(/[.+?{}()|[\]\\]/g, '\\$&')
+                                           .replace(/\^/g, '[^\\w\\d%-]')
+                                           .replace(/\*/g, '.*?');
+
+    var des = matches[1];
+    var types = [];
+    var redirect = '';
+    var srcs = [];
+    var options = matches[3].split(','), option;
+    while ( (option = options.pop()) ) {
+        if ( option.lastIndexOf('redirect=', 0) === 0 ) {
+            redirect = option.slice(9);
+            continue;
+        }
+        if ( option.lastIndexOf('domain=', 0) === 0 ) {
+            srcs = option.slice(7).split('|');
+            continue;
+        }
+        if ( option in this.supportedTypes ) {
+            types.push(option);
+            continue;
+        }
+    }
+
+    if ( redirect === '' || types.length === 0 ) {
+        return '';
+    }
+
+    if ( des === '' ) {
+        des = '*';
+    }
+
+    if ( srcs.length === 0 ) {
+        srcs.push('*');
+    }
+
+    var out = [];
+    var i = srcs.length, j;
+    while ( i-- ) {
+        j = types.length;
+        while ( j-- ) {
+            out.push(srcs[i] + '\t' + des + '\t' + types[j] + '\t' + pattern + '\t' + redirect);
+        }
+    }
+
+    return out;
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.reFilterParser = /^\|\|([^\/\?#]+)([^$]+)\$([^$]+)$/;
+
+RedirectEngine.prototype.supportedTypes = (function() {
+    var types = Object.create(null);
+    types.stylesheet = 'stylesheet';
+    types.image = 'image';
+    types.object = 'object';
+    types.script = 'script';
+    types.xmlhttprequest = 'xmlhttprequest';
+    types.subdocument = 'sub_frame';
+    types.font = 'font';
+    return types;
+})();
+
+/******************************************************************************/
+
+// TODO: combine same key-redirect pairs into a single regex.
+
+RedirectEngine.prototype.redirectDataFromString = function(text) {
     var textEnd = text.length;
     var lineBeg = 0, lineEnd;
     var mode, modeData, line, fields, encoded, data;
-    var reSource, typeEntry, desEntry, ruleEntries;
 
-    this.reset();
+    this.redirects = Object.create(null);
 
     while ( lineBeg < textEnd ) {
         lineEnd = text.indexOf('\n', lineBeg);
@@ -145,36 +254,6 @@ RedirectEngine.prototype.fromString = function(text) {
                 ',' +
                 (encoded ? data : btoa(data));
             mode = 'redirects';
-            continue;
-        }
-
-        if ( mode === 'rules' ) {
-            fields = line.split(/\s+/);
-            if ( fields.length !== 5 ) {
-                continue;
-            }
-            reSource = fields[3];
-            if ( reSource.charAt(0) !== '/' || reSource.slice(-1) !== '/' ) {
-                reSource = reSource.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            } else {
-                reSource = reSource.slice(1, -1);
-            }
-            typeEntry = this.rules[fields[2]];
-            if ( typeEntry === undefined ) {
-                typeEntry = this.rules[fields[2]] = Object.create(null);
-            }
-            desEntry = typeEntry[fields[1]];
-            if ( desEntry === undefined ) {
-                desEntry = typeEntry[fields[1]] = Object.create(null);
-            }
-            ruleEntries = desEntry[fields[0]];
-            if ( ruleEntries === undefined ) {
-                ruleEntries = desEntry[fields[0]] = [];
-            }
-            ruleEntries.push({
-                c: new RegExp(reSource),
-                r: fields[4]
-            });
             continue;
         }
     }

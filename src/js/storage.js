@@ -362,6 +362,7 @@
 
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
+        µb.redirectEngine.freeze();
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
 
         //quickProfiler.stop(0);
@@ -396,6 +397,7 @@
     var onFilterListsReady = function(lists) {
         µb.remoteBlacklists = lists;
 
+        µb.redirectEngine.reset();
         µb.cosmeticFilteringEngine.reset();
         µb.staticNetFilteringEngine.reset();
         µb.destroySelfie();
@@ -656,7 +658,7 @@
     }
     var onRulesLoaded = function(details) {
         if ( details.content !== '' ) {
-            µb.redirectEngine.fromString(details.content);
+            µb.redirectEngine.redirectDataFromString(details.content);
         }
         callback();
     };
