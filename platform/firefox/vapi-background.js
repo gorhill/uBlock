@@ -2005,9 +2005,15 @@ var httpObserver = {
             return false;
         }
 
+        // https://github.com/gorhill/uBlock/issues/966
+        var hostname = URI.asciiHost;
+        if ( hostname.endsWith('.') ) {
+            hostname = hostname.slice(0, -1);
+        }
+
         var result = this.onBeforeRequest({
             frameId: details.frameId,
-            hostname: URI.asciiHost,
+            hostname: hostname,
             parentFrameId: details.parentFrameId,
             tabId: details.tabId,
             type: type,
@@ -2055,8 +2061,14 @@ var httpObserver = {
             responseHeaders.push({ name: 'Content-Security-Policy', value: value });
         }
 
+        // https://github.com/gorhill/uBlock/issues/966
+        var hostname = URI.asciiHost;
+        if ( hostname.endsWith('.') ) {
+            hostname = hostname.slice(0, -1);
+        }
+
         var result = this.onHeadersReceived({
-            hostname: URI.asciiHost,
+            hostname: hostname,
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[3],
