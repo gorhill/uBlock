@@ -178,7 +178,8 @@ return {
         "assets/thirdparties/www.fanboy.co.nz/fanboy-ultimate.txt": "https://www.fanboy.co.nz/r/fanboy-ultimate.txt",
         "assets/thirdparties/www.fanboy.co.nz/fanboy-vietnam.txt": "https://www.fanboy.co.nz/fanboy-vietnam.txt",
         "assets/thirdparties/www.void.gr/kargig/void-gr-filters.txt": "https://www.void.gr/kargig/void-gr-filters.txt",
-        "assets/thirdparties/www.zoso.ro/pages/rolist.txt": ""
+        "assets/thirdparties/www.zoso.ro/pages/rolist.txt": "",
+        "https://iadb.azurewebsites.net/Finland_adb.txt": "http://adb.juvander.net/Finland_adb.txt"
     },
 
     selfieAfter: 23 * oneMinute,
