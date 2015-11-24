@@ -580,9 +580,16 @@ var userFilterFromCandidate = function() {
         return false;
     }
 
+    // https://github.com/gorhill/uBlock/issues/738
+    // Trim dots.
+    var hostname = window.location.hostname;
+    if ( hostname.slice(-1) === '.' ) {
+        hostname = hostname.slice(0, -1);
+    }
+
     // Cosmetic filter?
     if ( v.lastIndexOf('##', 0) === 0 ) {
-        return window.location.hostname + v;
+        return hostname + v;
     }
 
     // If domain included in filter, no need for domain option
@@ -591,7 +598,7 @@ var userFilterFromCandidate = function() {
     }
 
     // Assume net filter
-    return v + '$domain=' + window.location.hostname;
+    return v + '$domain=' + hostname;
 };
 
 /******************************************************************************/
