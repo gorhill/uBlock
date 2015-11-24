@@ -1,4 +1,12 @@
-redirects:
+# Resources to be used as redirect destinations.
+#
+# - Each distinct resource entry is separated by an empty line.
+# - The first line in a resource entry is: token mime-type[;encoding]
+# - All following lines are the data. An empty line signals the end of the
+#   data.
+#
+# If the encoding is absent, the data will be converted to base64, and the
+# encoding will be set to `;base64`.
 
 hd-main.js application/javascript
 var L = (function(){
@@ -11,3 +19,6 @@ var L = (function(){
   return l;
 })();
 
+# http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever
+handtinytrans.gif image/gif;base64
+R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==

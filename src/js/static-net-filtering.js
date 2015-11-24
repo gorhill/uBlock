@@ -1503,9 +1503,15 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         if ( opt.lastIndexOf('redirect=', 0) === 0 ) {
-            this.redirect = true;
-            continue;
+            if ( this.action === BlockAction ) {
+                this.redirect = true;
+                continue;
+            }
+            this.unsupported = true;
+            break;
         }
+
+        // Unrecognized filter option: ignore whole filter.
         this.unsupported = true;
         break;
     }

@@ -650,20 +650,21 @@
 
 // TODO: toSelfie/fromSelfie.
 
-µBlock.loadRedirectRules = function(callback) {
+µBlock.loadRedirectResources = function(callback) {
     var µb = this;
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
-    var onRulesLoaded = function(details) {
+
+    var onResourcesLoaded = function(details) {
         if ( details.content !== '' ) {
-            µb.redirectEngine.redirectDataFromString(details.content);
+            µb.redirectEngine.resourcesFromString(details.content);
         }
         callback();
     };
 
-    this.assets.get('assets/ublock/redirect-rules.txt', onRulesLoaded);
+    this.assets.get('assets/ublock/redirect-resources.txt', onResourcesLoaded);
 };
 
 /******************************************************************************/

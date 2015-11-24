@@ -40,7 +40,7 @@ var toBroaderHostname = function(hostname) {
 /******************************************************************************/
 
 var RedirectEngine = function() {
-    this.redirects = Object.create(null);
+    this.resources = Object.create(null);
     this.reset();
 };
 
@@ -77,7 +77,7 @@ RedirectEngine.prototype.lookup = function(context) {
                     while ( i-- ) {
                         entry = entries[i];
                         if ( entry.c.test(reqURL) ) {
-                            return this.redirects[entry.r];
+                            return this.resources[entry.r];
                         }
                     }
                 }
@@ -95,8 +95,6 @@ RedirectEngine.prototype.lookup = function(context) {
 };
 
 /******************************************************************************/
-
-// TODO: combine same key-redirect pairs into a single regex.
 
 RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     var typeEntry = this.rules[type];
@@ -159,7 +157,13 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         }
     }
 
-    if ( redirect === '' || types.length === 0 ) {
+    // Need a resource token.
+    if ( redirect === '' ) {
+        return '';
+    }
+
+    // Need one single type (not negated).
+    if ( types.length !== 1 || types[0].charAt(0) === '~' ) {
         return '';
     }
 
@@ -172,12 +176,13 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     }
 
     var out = [];
-    var i = srcs.length, j;
+    var i = srcs.length, src;
     while ( i-- ) {
-        j = types.length;
-        while ( j-- ) {
-            out.push(srcs[i] + '\t' + des + '\t' + types[j] + '\t' + pattern + '\t' + redirect);
+        src = srcs[i];
+        if ( src.charAt(0) === '~' ) {
+            continue;
         }
+        out.push(srcs[i] + '\t' + des + '\t' + types[0] + '\t' + pattern + '\t' + redirect);
     }
 
     return out;
@@ -203,12 +208,12 @@ RedirectEngine.prototype.supportedTypes = (function() {
 
 // TODO: combine same key-redirect pairs into a single regex.
 
-RedirectEngine.prototype.redirectDataFromString = function(text) {
+RedirectEngine.prototype.resourcesFromString = function(text) {
     var textEnd = text.length;
     var lineBeg = 0, lineEnd;
-    var mode, modeData, line, fields, encoded, data;
+    var line, fields, resource, encoded, data;
 
-    this.redirects = Object.create(null);
+    this.resources = Object.create(null);
 
     while ( lineBeg < textEnd ) {
         lineEnd = text.indexOf('\n', lineBeg);
@@ -225,37 +230,31 @@ RedirectEngine.prototype.redirectDataFromString = function(text) {
             continue;
         }
 
-        if ( line.slice(-1) === ':' ) {
-            mode = line.slice(0, -1);
-            continue;
-        }
-
-        if ( mode === 'redirects' ) {
+        if ( resource === undefined ) {
             fields = line.split(/\s+/);
             if ( fields.length !== 2 ) {
                 continue;
             }
-            mode = 'redirects/redirect';
-            modeData = fields;
+            resource = fields;
             continue;
         }
 
-        if ( mode === 'redirects/redirect' ) {
-            if ( line !== '' ) {
-                modeData.push(line);
-                continue;
-            }
-            encoded = modeData[1].indexOf(';') !== -1;
-            data = modeData.slice(2).join(encoded ? '' : '\n');
-            this.redirects[modeData[0]] =
-                'data:' +
-                modeData[1] + 
-                (encoded ? '' : ';base64') +
-                ',' +
-                (encoded ? data : btoa(data));
-            mode = 'redirects';
+        if ( line !== '' ) {
+            resource.push(line);
             continue;
         }
+
+        // No more data, store the resource.
+        encoded = resource[1].indexOf(';') !== -1;
+        data = resource.slice(2).join(encoded ? '' : '\n');
+        this.resources[resource[0]] =
+            'data:' +
+            resource[1] + 
+            (encoded ? '' : ';base64') +
+            ',' +
+            (encoded ? data : btoa(data));
+
+        resource = undefined;
     }
 };
 

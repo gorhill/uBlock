@@ -211,7 +211,7 @@ var onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
-    µb.loadRedirectRules();
+    µb.loadRedirectResources();
 
     // If we have a selfie, skip loading PSL, filters
     if ( onSelfieReady(fetched.selfie) ) {
