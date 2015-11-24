@@ -211,7 +211,18 @@ RedirectEngine.prototype.supportedTypes = (function() {
 RedirectEngine.prototype.resourcesFromString = function(text) {
     var textEnd = text.length;
     var lineBeg = 0, lineEnd;
-    var line, fields, resource, encoded, data;
+    var line, fields;
+
+    var resourceFromFields = function(fields) {
+        var encoded = fields[1].indexOf(';') !== -1;
+        var data = fields.slice(2).join(encoded ? '' : '\n');
+        this.resources[fields[0]] =
+            'data:' +
+            fields[1] + 
+            (encoded ? '' : ';base64') +
+            ',' +
+            (encoded ? data : btoa(data));
+    }.bind(this);
 
     this.resources = Object.create(null);
 
@@ -230,31 +241,28 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             continue;
         }
 
-        if ( resource === undefined ) {
+        if ( fields === undefined ) {
             fields = line.split(/\s+/);
             if ( fields.length !== 2 ) {
-                continue;
+                fields = undefined;
             }
-            resource = fields;
             continue;
         }
 
         if ( line !== '' ) {
-            resource.push(line);
+            fields.push(line);
             continue;
         }
 
-        // No more data, store the resource.
-        encoded = resource[1].indexOf(';') !== -1;
-        data = resource.slice(2).join(encoded ? '' : '\n');
-        this.resources[resource[0]] =
-            'data:' +
-            resource[1] + 
-            (encoded ? '' : ';base64') +
-            ',' +
-            (encoded ? data : btoa(data));
+        // No more data, add the resource.
+        resourceFromFields(fields);
 
-        resource = undefined;
+        fields = undefined;
+    }
+
+    // Process pending resource data.
+    if ( fields !== undefined ) {
+        resourceFromFields(fields);
     }
 };
 
