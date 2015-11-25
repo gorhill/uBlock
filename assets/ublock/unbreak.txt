@@ -13,11 +13,9 @@
 @@||google-analytics.com/analytics.js$script,domain=www.vd.nl
 @@||google-analytics.com/plugins/ua/ec.js$script,domain=www.vd.nl
 
-# https://github.com/chrisaljoudi/uBlock/issues/20
-# https://github.com/chrisaljoudi/uBlock/issues/650
 # https://github.com/chrisaljoudi/uBlock/issues/821
 # => blocking counterpart in Peter Lowe's Ad Server
-@@||google-analytics.com/ga.js^$script,domain=onlinetv.ru|xda-developers.com|zie.nl
+@@||google-analytics.com/ga.js^$script,domain=zie.nl
 
 # https://github.com/gorhill/uBlock/issues/939
 @@||google-analytics.com/urchin.js$script,domain=live.euroleague.net
