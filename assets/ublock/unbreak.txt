@@ -9,10 +9,9 @@
 @@||google-analytics.com^$domain=avianca.com|jackbox.tv|musixmatch.com|bikstok.sonymusicshop.dk
 
 # From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
-# https://github.com/gorhill/uBlock/issues/349 : "conflicting with reddit's gold popup box"
-# https://github.com/chrisaljoudi/uBlock/issues/1546
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$script,domain=reddit.com|trello.com|www.vd.nl
+@@||google-analytics.com/analytics.js$script,domain=www.vd.nl
+@@||google-analytics.com/plugins/ua/ec.js$script,domain=www.vd.nl
 
 # https://github.com/chrisaljoudi/uBlock/issues/20
 # https://github.com/chrisaljoudi/uBlock/issues/650
