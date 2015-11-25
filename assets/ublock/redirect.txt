@@ -1,4 +1,7 @@
-# uBlock Origin -- To redirect blocked resources to friendlier contents.
+# uBlock Origin -- To redirect blocked resources to neutered contents.
+#
+# The redirect tokens reference an entry in the resource library:
+# https://github.com/gorhill/uBlock/blob/master/assets/ublock/redirect-resources.txt
 
 ||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js

@@ -2053,6 +2053,9 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
     }
 
     var redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
+    if ( Array.isArray(redirects) === false ) {
+        return;
+    }
     var i = redirects.length;
     while ( i-- ) {
         out.push('n\v\v\v=>\v' + redirects[i]);

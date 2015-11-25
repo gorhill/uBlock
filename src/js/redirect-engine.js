@@ -130,7 +130,7 @@ RedirectEngine.prototype.fromCompiledRule = function(line) {
 RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     var matches = this.reFilterParser.exec(line);
     if ( matches === null || matches.length !== 4 ) {
-        return '';
+        return;
     }
 
     var pattern = (matches[1] + matches[2]).replace(/[.+?{}()|[\]\\]/g, '\\$&')
@@ -138,7 +138,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
                                            .replace(/\*/g, '.*?');
 
     var des = matches[1];
-    var types = [];
+    var type;
     var redirect = '';
     var srcs = [];
     var options = matches[3].split(','), option;
@@ -151,20 +151,24 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             srcs = option.slice(7).split('|');
             continue;
         }
+        // One and only one type must be specified.
         if ( option in this.supportedTypes ) {
-            types.push(option);
+            if ( type !== undefined ) {
+                return;
+            }
+            type = option;
             continue;
         }
     }
 
     // Need a resource token.
     if ( redirect === '' ) {
-        return '';
+        return;
     }
 
-    // Need one single type (not negated).
-    if ( types.length !== 1 || types[0].charAt(0) === '~' ) {
-        return '';
+    // Need one single type -- not negated.
+    if ( type === undefined || type.charAt(0) === '~' ) {
+        return;
     }
 
     if ( des === '' ) {
@@ -179,10 +183,17 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     var i = srcs.length, src;
     while ( i-- ) {
         src = srcs[i];
+        if ( src === '' ) {
+            continue;
+        }
         if ( src.charAt(0) === '~' ) {
             continue;
         }
-        out.push(srcs[i] + '\t' + des + '\t' + types[0] + '\t' + pattern + '\t' + redirect);
+        // Need at least one specific src or des.
+        if ( src === '*' && des === '*' ) {
+            continue;
+        }
+        out.push(src + '\t' + des + '\t' + type + '\t' + pattern + '\t' + redirect);
     }
 
     return out;
