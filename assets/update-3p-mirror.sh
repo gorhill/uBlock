@@ -8,8 +8,6 @@ echo "*** uBlock: updating remote assets..."
 
 declare -A assets
 assets=(
-    ['thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt']='http://mirror1.malwaredomains.com/files/immortal_domains.txt'
-    ['thirdparties/mirror1.malwaredomains.com/files/justdomains']='http://mirror1.malwaredomains.com/files/justdomains'
     ['thirdparties/publicsuffix.org/list/effective_tld_names.dat']='https://publicsuffix.org/list/effective_tld_names.dat'
 )
 

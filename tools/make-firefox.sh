@@ -9,7 +9,6 @@ rm -rf $DES
 mkdir -p $DES
 
 cp -R assets                            $DES/
-./tools/fix-3p-assets.sh                $DES
 rm    $DES/assets/*.sh
 cp -R src/css                           $DES/
 cp -R src/img                           $DES/
