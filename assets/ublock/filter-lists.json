@@ -295,5 +295,11 @@
         "title": "GRC: Greek AdBlock Filter",
         "group": "regions",
         "supportURL": "https://github.com/kargig/greek-adblockplus-filter"
+        },
+    "http://www.zoso.ro/pages/rolist.txt": {
+        "off": true,
+        "title": "ROU: Rolist adblock filter",
+        "group": "regions",
+        "supportURL": "http://www.zoso.ro/rolist/"
         }
 }
