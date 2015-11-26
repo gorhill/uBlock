@@ -133,7 +133,7 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
-    var url = µb.redirectEngine.lookup(requestContext);
+    var url = µb.redirectEngine.toURL(requestContext);
     if ( url !== undefined ) {
         return { redirectUrl: url };
     }

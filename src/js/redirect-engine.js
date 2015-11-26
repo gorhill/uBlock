@@ -38,6 +38,44 @@ var toBroaderHostname = function(hostname) {
 };
 
 /******************************************************************************/
+/******************************************************************************/
+
+var RedirectEntry = function(mime, lines) {
+    this.mime = mime;
+    this.encoded = mime.indexOf(';') !== -1;
+    var data = lines.join(this.encoded ? '' : '\n');
+    // check for placeholders.
+    this.ph = this.encoded === false && this.rePlaceHolders.test(data);
+    if ( this.ph ) {
+        this.data = data;
+    } else {
+        this.data = 
+            'data:' +
+            mime +
+            (this.encoded ? '' : ';base64') +
+            ',' +
+            (this.encoded ? data : btoa(data));
+    }
+};
+
+/******************************************************************************/
+
+RedirectEntry.prototype.rePlaceHolders = /\{\{.+?\}\}/;
+RedirectEntry.prototype.reRequestURL = /\{\{requestURL\}\}/g;
+
+/******************************************************************************/
+
+RedirectEntry.prototype.toURL = function(requestURL) {
+    if ( this.ph === false ) {
+        return this.data;
+    }
+    return 'data:' +
+           this.mime + ';base64,' +
+           btoa(this.data.replace(this.reRequestURL, requestURL));
+};
+
+/******************************************************************************/
+/******************************************************************************/
 
 var RedirectEngine = function() {
     this.resources = Object.create(null);
@@ -77,7 +115,7 @@ RedirectEngine.prototype.lookup = function(context) {
                     while ( i-- ) {
                         entry = entries[i];
                         if ( entry.c.test(reqURL) ) {
-                            return this.resources[entry.r];
+                            return entry.r;
                         }
                     }
                 }
@@ -92,6 +130,26 @@ RedirectEngine.prototype.lookup = function(context) {
             break;
         }
     }
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.toURL = function(context) {
+    var token = this.lookup(context);
+    if ( token === undefined ) {
+        return;
+    }
+    var entry = this.resources[token];
+    if ( entry !== undefined ) {
+        return entry.toURL(context.requestURL);
+    }
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.matches = function(context) {
+    var token = this.lookup(context);
+    return token !== undefined && this.resources[token] !== undefined;
 };
 
 /******************************************************************************/
@@ -225,16 +283,6 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     var line, fields, encoded;
     var reNonEmptyLine = /\S/;
 
-    var resourceFromFields = function(fields, encoded) {
-        var data = fields.slice(2).join(encoded ? '' : '\n');
-        this.resources[fields[0]] =
-            'data:' +
-            fields[1] +
-            (encoded ? '' : ';base64') +
-            ',' +
-            (encoded ? data : btoa(data));
-    }.bind(this);
-
     this.resources = Object.create(null);
 
     while ( lineBeg < textEnd ) {
@@ -268,17 +316,18 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         // No more data, add the resource.
-        resourceFromFields(fields, encoded);
+        this.resources[fields[0]] = new RedirectEntry(fields[1], fields.slice(2));
 
         fields = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        resourceFromFields(fields, encoded);
+        this.resources[fields[0]] = new RedirectEntry(fields[1], fields.slice(2));
     }
 };
 
+/******************************************************************************/
 /******************************************************************************/
 
 return new RedirectEngine();

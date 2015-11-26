@@ -5,3 +5,13 @@
 
 ||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
+
+# Proof of concept: no need to open ourselves to more 3rd-party scripts/frames in
+# order to prevent blocker bypass. The `important` filter option is used here
+# to override EasyList exception filters for this case: ideally exception filters
+# should be avoided as much as possible.
+||ads.ad-center.com/smart_ad/display?ref=*&smart_ad_id=$subdocument,domain=dayt.se,redirect=noopframe,important
+||ads.ad-center.com^$subdocument,domain=dayt.se,redirect=noopframe,important
+||aflrm.com^$subdocument,domain=dayt.se,redirect=noopframe,important
+||dayt.se^*fuckadblock.js$script,redirect=fuckadblock.js-3.2.0,important
+||imads.integral-marketing.com^$domain=dayt.se,important
