@@ -222,14 +222,14 @@ RedirectEngine.prototype.supportedTypes = (function() {
 RedirectEngine.prototype.resourcesFromString = function(text) {
     var textEnd = text.length;
     var lineBeg = 0, lineEnd;
-    var line, fields;
+    var line, fields, encoded;
+    var reNonEmptyLine = /\S/;
 
-    var resourceFromFields = function(fields) {
-        var encoded = fields[1].indexOf(';') !== -1;
+    var resourceFromFields = function(fields, encoded) {
         var data = fields.slice(2).join(encoded ? '' : '\n');
         this.resources[fields[0]] =
             'data:' +
-            fields[1] + 
+            fields[1] +
             (encoded ? '' : ';base64') +
             ',' +
             (encoded ? data : btoa(data));
@@ -245,7 +245,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
                 lineEnd = textEnd;
             }
         }
-        line = text.slice(lineBeg, lineEnd).trim();
+        line = text.slice(lineBeg, lineEnd);
         lineBeg = lineEnd + 1;
 
         if ( line.charAt(0) === '#' ) {
@@ -253,27 +253,29 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         if ( fields === undefined ) {
-            fields = line.split(/\s+/);
-            if ( fields.length !== 2 ) {
+            fields = line.trim().split(/\s+/);
+            if ( fields.length === 2 ) {
+                encoded = fields[1].indexOf(';') !== -1;
+            } else {
                 fields = undefined;
             }
             continue;
         }
 
-        if ( line !== '' ) {
-            fields.push(line);
+        if ( reNonEmptyLine.test(line) ) {
+            fields.push(encoded ? line.trim() : line);
             continue;
         }
 
         // No more data, add the resource.
-        resourceFromFields(fields);
+        resourceFromFields(fields, encoded);
 
         fields = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        resourceFromFields(fields);
+        resourceFromFields(fields, encoded);
     }
 };
 

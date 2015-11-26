@@ -3,19 +3,14 @@
 
 # https://twitter.com/JarkkoRytkonen/status/540052376015888385
 # https://github.com/chrisaljoudi/uBlock/issues/119
-# https://github.com/chrisaljoudi/uBlock/issues/822
 # https://github.com/chrisaljoudi/uBlock/issues/940
 # To counter `google-analytics.com` in Peter Lowe's list
-@@||google-analytics.com^$domain=avianca.com|jackbox.tv|musixmatch.com|bikstok.sonymusicshop.dk
+@@||google-analytics.com^$domain=avianca.com|jackbox.tv|bikstok.sonymusicshop.dk
 
 # From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
 @@||google-analytics.com/analytics.js$script,domain=www.vd.nl
 @@||google-analytics.com/plugins/ua/ec.js$script,domain=www.vd.nl
-
-# https://github.com/chrisaljoudi/uBlock/issues/821
-# => blocking counterpart in Peter Lowe's Ad Server
-@@||google-analytics.com/ga.js^$script,domain=zie.nl
 
 # https://github.com/gorhill/uBlock/issues/939
 @@||google-analytics.com/urchin.js$script,domain=live.euroleague.net
@@ -92,10 +87,6 @@
 # https://github.com/chrisaljoudi/uBlock/issues/374
 # To counter `2mdn.net` in Peter Lowe's, `s0.2mdn.net` in hpHosts
 @@||s0.2mdn.net/instream/*$object,script,domain=wsmv.com
-
-# Videos broken on weather.com
-# To counter `www.googletagservices.com` in MVPS, hpHosts, Dan Pollock's
-@@||www.googletagservices.com/tag/js/gpt.js^$script,domain=weather.com
 
 # https://github.com/chrisaljoudi/uBlock/issues/409
 @@||c.speedtest.net^$~third-party
