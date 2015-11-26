@@ -156,7 +156,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             if ( type !== undefined ) {
                 return;
             }
-            type = option;
+            type = this.supportedTypes[option];
             continue;
         }
     }
@@ -201,7 +201,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^\|\|([^\/\?#]+)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^\|\|([^\/?#^*]+)([^$]+)\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = (function() {
     var types = Object.create(null);
