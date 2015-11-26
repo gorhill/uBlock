@@ -533,6 +533,12 @@ var filterRequests = function(pageStore, details) {
         request = requests[i];
         context.requestURL = vAPI.punycodeURL(request.url);
         context.requestHostname = µburi.hostnameFromURI(request.url);
+        // https://github.com/gorhill/uBlock/issues/978
+        // Ignore invalid URLs: these would not occur on the HTTP
+        // observer side.
+        if ( context.requestHostname === '' ) {
+            continue;
+        }
         context.requestType = tagNameToRequestTypeMap[request.tagName];
         if ( isBlockResult(pageStore.filterRequest(context)) ) {
             request.collapse = true;
