@@ -523,6 +523,7 @@ var filterRequests = function(pageStore, details) {
 
     var hostnameFromURI = µb.URI.hostnameFromURI;
     var redirectEngine = µb.redirectEngine;
+    var punycodeURL = vAPI.punycodeURL;
 
     // Create evaluation context
     var context = pageStore.createContextFromFrameHostname(details.pageHostname);
@@ -531,7 +532,7 @@ var filterRequests = function(pageStore, details) {
     var i = requests.length;
     while ( i-- ) {
         request = requests[i];
-        context.requestURL = vAPI.punycodeURL(request.url);
+        context.requestURL = punycodeURL(request.url);
         // https://github.com/gorhill/uBlock/issues/978
         // Ignore invalid URLs: these would not occur on the HTTP
         // observer side.
