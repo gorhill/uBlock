@@ -2639,55 +2639,37 @@ vAPI.toolbarButton = {
     var sss = null;
     var styleSheetUri = null;
 
-    var addLegacyToolbarButtonLater = function(details) {
-        details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
-        if ( details.tryCount > 8 ) {
-            return false;
-        }
-        vAPI.setTimeout(function(details) {
-                addLegacyToolbarButton(details.window, details.tryCount);
-            },
-            200,
-            details
-        );
-        return true;
-    };
-
-    var addLegacyToolbarButton = function(window, tryCount) {
-        var document = window.document;
-
-        // https://github.com/gorhill/uMatrix/issues/357
-        // Already installed?
-        if ( document.getElementById(tbb.id) !== null ) {
+    var onReadyStateComplete = function(window, callback, tryCount) {
+        tryCount = tryCount ? tryCount + 1 : 1;
+        if ( tryCount > 8 ) {
             return;
         }
 
+        var document = window.document;
         var toolbox = document.getElementById('navigator-toolbox') ||
                       document.getElementById('mail-toolbox');
-        if (
-            toolbox === null &&
-            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
-        ) {
+        if ( toolbox === null ) {
+            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
             return;
         }
 
         // palette might take a little longer to appear on some platforms,
         // give it a small delay and try again.
-        var palette = toolbox.palette;
-        if (
-            palette === null &&
-            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
-        ) {
+        if ( toolbox.palette === null ) {
+            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
             return;
         }
 
-        var navbar = document.getElementById('nav-bar');
-        if (
-            navbar === null &&
-            addLegacyToolbarButtonLater({ window: window, tryCount: tryCount })
-        ) {
+        if ( document.getElementById('nav-bar') === null ) {
+            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
             return;
         }
+
+        callback(window);
+    };
+
+    var createToolbarButton = function(window) {
+        var document = window.document;
 
         var toolbarButton = document.createElement('toolbarbutton');
         toolbarButton.setAttribute('id', tbb.id);
@@ -2707,18 +2689,27 @@ vAPI.toolbarButton = {
         toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
         toolbarButton.appendChild(toolbarButtonPanel);
 
+        return toolbarButton;
+    };
+
+    var addLegacyToolbarButton = function(window) {
+        var document = window.document;
+
+        // https://github.com/gorhill/uMatrix/issues/357
+        // Already installed?
+        if ( document.getElementById(tbb.id) !== null ) {
+            return;
+        }
+
+        var toolbox = document.getElementById('navigator-toolbox') ||
+                      document.getElementById('mail-toolbox');
+        var palette = toolbox.palette;
+        var navbar = document.getElementById('nav-bar');
+        var toolbarButton = createToolbarButton(window);
+
         if ( palette !== null && palette.querySelector('#' + tbb.id) === null ) {
             palette.appendChild(toolbarButton);
         }
-
-        tbb.closePopup = function() {
-            // `hidePopup` reported as not existing while testing legacy button
-            //  on FF 41.0.2.
-            // https://bugzilla.mozilla.org/show_bug.cgi?id=1151796
-            if ( typeof toolbarButtonPanel.hidePopup === 'function' ) {
-                toolbarButtonPanel.hidePopup();
-            }
-        };
 
         // Find the place to put the button
         var toolbars = toolbox.externalToolbars.slice();
@@ -2769,8 +2760,19 @@ vAPI.toolbarButton = {
     };
 
     var onPopupCloseRequested = function({target}) {
-        if ( typeof tbb.closePopup === 'function' ) {
-            tbb.closePopup(target);
+        var document = target.ownerDocument;
+        if ( !document ) {
+            return;
+        }
+        var toolbarButtonPanel = document.getElementById(tbb.viewId);
+        if ( toolbarButtonPanel === null ) {
+            return;
+        }
+        // `hidePopup` reported as not existing while testing legacy button
+        //  on FF 41.0.2.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1151796
+        if ( typeof toolbarButtonPanel.hidePopup === 'function' ) {
+            toolbarButtonPanel.hidePopup();
         }
     };
 
@@ -2797,7 +2799,7 @@ vAPI.toolbarButton = {
     };
 
     tbb.attachToNewWindow = function(win) {
-        addLegacyToolbarButton(win);
+        onReadyStateComplete(win, addLegacyToolbarButton);
     };
 
     tbb.init = function() {
