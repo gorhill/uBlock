@@ -185,6 +185,7 @@
         entry.entryUsedCount += deltaEntryUsedCount;
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
         µb.staticNetFilteringEngine.freeze();
+        µb.redirectEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
     };
 
@@ -708,6 +709,7 @@
         publicSuffixList: publicSuffixList.toSelfie(),
         filterLists: this.remoteBlacklists,
         staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
+        redirectEngine: this.redirectEngine.toSelfie(),
         cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
     };
     vAPI.storage.set({ selfie: selfie });
@@ -836,7 +838,7 @@
             assets[location] = true;
         }
         assets[µb.pslPath] = true;
-        assets['assets/ublock/mirror-candidates.txt'] = true;
+        assets['assets/ublock/redirect-resources.txt'] = true;
         callback(assets);
     };
 
@@ -885,16 +887,16 @@
         }
     };
 
-    if ( details.hasOwnProperty('assets/ublock/mirror-candidates.txt') ) {
-        /* TODO */
-    }
-
     if ( details.hasOwnProperty(this.pslPath) ) {
         //console.debug('storage.js > µBlock.updateCompleteHandler: reloading PSL');
         this.loadPublicSuffixList(onPSLReady);
         updatedCount -= 1;
     } else {
         onPSLReady();
+    }
+
+    if ( details.hasOwnProperty('assets/ublock/redirect-resources.txt') ) {
+        µb.loadRedirectResources();
     }
 };
 

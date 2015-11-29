@@ -40,28 +40,17 @@ var toBroaderHostname = function(hostname) {
 /******************************************************************************/
 /******************************************************************************/
 
-var RedirectEntry = function(mime, lines) {
-    this.mime = mime;
-    this.encoded = mime.indexOf(';') !== -1;
-    var data = lines.join(this.encoded ? '' : '\n');
-    // check for placeholders.
-    this.ph = this.encoded === false && this.rePlaceHolders.test(data);
-    if ( this.ph ) {
-        this.data = data;
-    } else {
-        this.data = 
-            'data:' +
-            mime +
-            (this.encoded ? '' : ';base64') +
-            ',' +
-            (this.encoded ? data : btoa(data));
-    }
+var RedirectEntry = function() {
+    this.mime = '';
+    this.encoded = false;
+    this.ph = false;
+    this.data = '';
 };
 
 /******************************************************************************/
 
-RedirectEntry.prototype.rePlaceHolders = /\{\{.+?\}\}/;
-RedirectEntry.prototype.reRequestURL = /\{\{requestURL\}\}/g;
+RedirectEntry.rePlaceHolders = /\{\{.+?\}\}/;
+RedirectEntry.reRequestURL = /\{\{requestURL\}\}/g;
 
 /******************************************************************************/
 
@@ -71,7 +60,44 @@ RedirectEntry.prototype.toURL = function(requestURL) {
     }
     return 'data:' +
            this.mime + ';base64,' +
-           btoa(this.data.replace(this.reRequestURL, requestURL));
+           btoa(this.data.replace(RedirectEntry.reRequestURL, requestURL));
+};
+
+/******************************************************************************/
+
+RedirectEntry.fromFields = function(mime, lines) {
+    var r = new RedirectEntry();
+
+    r.mime = mime;
+    r.encoded = mime.indexOf(';') !== -1;
+    var data = lines.join(r.encoded ? '' : '\n');
+    // check for placeholders.
+    r.ph = r.encoded === false && RedirectEntry.rePlaceHolders.test(data);
+    if ( r.ph ) {
+        r.data = data;
+    } else {
+        r.data = 
+            'data:' +
+            mime +
+            (r.encoded ? '' : ';base64') +
+            ',' +
+            (r.encoded ? data : btoa(data));
+    }
+
+    return r;
+};
+
+/******************************************************************************/
+
+RedirectEntry.fromSelfie = function(selfie) {
+    var r = new RedirectEntry();
+
+    r.mime = selfie.mime;
+    r.encoded = selfie.encoded;
+    r.ph = selfie.ph;
+    r.data = selfie.data;
+
+    return r;
 };
 
 /******************************************************************************/
@@ -275,6 +301,53 @@ RedirectEngine.prototype.supportedTypes = (function() {
 
 /******************************************************************************/
 
+RedirectEngine.prototype.toSelfie = function() {
+    return {
+        resources: this.resources,
+        rules: this.rules
+    };
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.fromSelfie = function(selfie) {
+    // Resources.
+    var resources = selfie.resources;
+    for ( var token in resources ) {
+        if ( resources.hasOwnProperty(token) === false ) {
+            continue;
+        }
+        this.resources[token] = RedirectEntry.fromSelfie(resources[token]);
+    }
+
+    // Rules.
+    var typeEntry, desEntry, srcEntry;
+    var rules = selfie.rules;
+    for ( var type in rules ) {
+        if ( rules.hasOwnProperty(type) === false ) {
+            continue;
+        }
+        typeEntry = rules[type];
+        for ( var des in typeEntry ) {
+            if ( typeEntry.hasOwnProperty(des) === false ) {
+                continue;
+            }
+            desEntry = typeEntry[des];
+            for ( var src in desEntry ) {
+                if ( desEntry.hasOwnProperty(des) === false ) {
+                    continue;
+                }
+                srcEntry = desEntry[src];
+                this.addRule(src, des, type, srcEntry.c, srcEntry.r);
+            }
+        }
+    }
+
+    return true;
+};
+
+/******************************************************************************/
+
 // TODO: combine same key-redirect pairs into a single regex.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
@@ -316,14 +389,14 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         // No more data, add the resource.
-        this.resources[fields[0]] = new RedirectEntry(fields[1], fields.slice(2));
+        this.resources[fields[0]] = RedirectEntry.fromFields(fields[1], fields.slice(2));
 
         fields = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        this.resources[fields[0]] = new RedirectEntry(fields[1], fields.slice(2));
+        this.resources[fields[0]] = RedirectEntry.fromFields(fields[1], fields.slice(2));
     }
 };
 

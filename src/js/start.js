@@ -128,6 +128,7 @@ var onSelfieReady = function(selfie) {
     //console.log('start.js/onSelfieReady: selfie looks good');
     µb.remoteBlacklists = selfie.filterLists;
     µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
+    µb.redirectEngine.fromSelfie(selfie.redirectEngine);
     µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
     return true;
 };
@@ -211,7 +212,6 @@ var onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
-    µb.loadRedirectResources();
 
     // If we have a selfie, skip loading PSL, filters
     if ( onSelfieReady(fetched.selfie) ) {
@@ -219,6 +219,7 @@ var onFirstFetchReady = function(fetched) {
         return;
     }
 
+    µb.loadRedirectResources();
     µb.loadPublicSuffixList(onPSLReady);
 };
 
