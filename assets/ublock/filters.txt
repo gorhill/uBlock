@@ -155,6 +155,7 @@ arstechnica.com###lg-pushdown
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
 ||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
+www.valuewalk.com##.widgetad
 
 # https://github.com/gorhill/uBlock/issues/923#issuecomment-154903084
 investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space):not(#Header):not(#Content):not(#Footer):not(.region-content)
