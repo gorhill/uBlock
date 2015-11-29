@@ -125,7 +125,10 @@ var onSelfieReady = function(selfie) {
     if ( publicSuffixList.fromSelfie(selfie.publicSuffixList) !== true ) {
         return false;
     }
-    //console.log('start.js/onSelfieReady: selfie looks good');
+    if ( selfie.redirectEngine === undefined ) {
+        return false;
+    }
+
     µb.remoteBlacklists = selfie.filterLists;
     µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
     µb.redirectEngine.fromSelfie(selfie.redirectEngine);
@@ -197,7 +200,7 @@ var onSystemSettingsReady = function(fetched) {
     }
     if ( mustSaveSystemSettings ) {
         fetched.selfie = null;
-        µb.destroySelfie();
+        µb.selfieManager.destroy();
         vAPI.storage.set(µb.systemSettings, µb.noopFunc);
     }
 };

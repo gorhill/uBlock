@@ -670,6 +670,41 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
+// Update visual of extension icon.
+
+µb.updateBadgeAsync = (function() {
+    var tabIdToTimer = Object.create(null);
+
+    var updateBadge = function(tabId) {
+        delete tabIdToTimer[tabId];
+
+        var state = false;
+        var badge = '';
+
+        var pageStore = this.pageStoreFromTabId(tabId);
+        if ( pageStore !== null ) {
+            state = pageStore.getNetFilteringSwitch();
+            if ( state && this.userSettings.showIconBadge && pageStore.perLoadBlockedRequestCount ) {
+                badge = this.utils.formatCount(pageStore.perLoadBlockedRequestCount);
+            }
+        }
+
+        vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
+    };
+
+    return function(tabId) {
+        if ( tabIdToTimer[tabId] ) {
+            return;
+        }
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+            return;
+        }
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 500);
+    };
+})();
+
+/******************************************************************************/
+
 µb.updateTitle = (function() {
     var tabIdToTimer = Object.create(null);
     var tabIdToTryCount = Object.create(null);

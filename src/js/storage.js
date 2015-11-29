@@ -46,28 +46,26 @@
 
 /******************************************************************************/
 
-µBlock.saveLocalSettings = function(force) {
-    if ( force ) {
-        this.localSettingsModifyTime = Date.now();
-    }
-    if ( this.localSettingsModifyTime <= this.localSettingsSaveTime ) {
-        return;
-    }
-    this.localSettingsSaveTime = Date.now();
-    vAPI.storage.set(this.localSettings);
-};
+µBlock.saveLocalSettings = (function() {
+    var saveAfter = 4 * 60 * 1000;
 
-/******************************************************************************/
+    var save = function() {
+        this.localSettingsSaveTime = Date.now();
+        vAPI.storage.set(this.localSettings);
+    }.bind(µBlock);
 
-// Save local settings regularly. Not critical.
+    var onTimeout = function() {
+        var µb = µBlock;
+        if ( µb.localSettingsModifyTime > µb.localSettingsSaveTime ) {
+            save();
+        }
+        vAPI.setTimeout(onTimeout, saveAfter);
+    };
 
-µBlock.asyncJobs.add(
-    'autoSaveLocalSettings',
-    null,
-    µBlock.saveLocalSettings.bind(µBlock),
-    4 * 60 * 1000,
-    true
-);
+    vAPI.setTimeout(onTimeout, saveAfter);
+
+    return save;
+})();
 
 /******************************************************************************/
 
@@ -187,6 +185,7 @@
         µb.staticNetFilteringEngine.freeze();
         µb.redirectEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
+        µb.selfieManager.create();
     };
 
     var onLoaded = function(details) {
@@ -371,7 +370,7 @@
         vAPI.messaging.broadcast({ what: 'allFilterListsReloaded' });
         callback();
 
-        µb.toSelfieAsync();
+        µb.selfieManager.create();
     };
 
     var applyCompiledFilters = function(path, compiled) {
@@ -401,7 +400,7 @@
         µb.redirectEngine.reset();
         µb.cosmeticFilteringEngine.reset();
         µb.staticNetFilteringEngine.reset();
-        µb.destroySelfie();
+        µb.selfieManager.destroy();
         µb.staticFilteringReverseLookup.resetLists();
 
         // We need to build a complete list of assets to pull first: this is
@@ -649,8 +648,6 @@
 
 /******************************************************************************/
 
-// TODO: toSelfie/fromSelfie.
-
 µBlock.loadRedirectResources = function(callback) {
     var µb = this;
 
@@ -703,43 +700,55 @@
 
 /******************************************************************************/
 
-µBlock.toSelfie = function() {
-    var selfie = {
-        magic: this.systemSettings.selfieMagic,
-        publicSuffixList: publicSuffixList.toSelfie(),
-        filterLists: this.remoteBlacklists,
-        staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
-        redirectEngine: this.redirectEngine.toSelfie(),
-        cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
-    };
-    vAPI.storage.set({ selfie: selfie });
-    //console.debug('storage.js > µBlock.toSelfie()');
-};
-
 // This is to be sure the selfie is generated in a sane manner: the selfie will
 // be generated if the user doesn't change his filter lists selection for
 // some set time.
 
-µBlock.toSelfieAsync = function(after) {
-    if ( typeof after !== 'number' ) {
-        after = this.selfieAfter;
-    }
-    this.asyncJobs.add(
-        'toSelfie',
-        null,
-        this.toSelfie.bind(this),
-        after,
-        false
-    );
-};
+µBlock.selfieManager = (function() {
+    var µb = µBlock;
+    var timer = null;
 
-/******************************************************************************/
+    var create = function() {
+        timer = null;
 
-µBlock.destroySelfie = function() {
-    vAPI.storage.remove('selfie');
-    this.asyncJobs.remove('toSelfie');
-    //console.debug('µBlock.destroySelfie()');
-};
+        var selfie = {
+            magic: µb.systemSettings.selfieMagic,
+            publicSuffixList: publicSuffixList.toSelfie(),
+            filterLists: µb.remoteBlacklists,
+            staticNetFilteringEngine: µb.staticNetFilteringEngine.toSelfie(),
+            redirectEngine: µb.redirectEngine.toSelfie(),
+            cosmeticFilteringEngine: µb.cosmeticFilteringEngine.toSelfie()
+        };
+
+        vAPI.storage.set({ selfie: selfie });
+    };
+
+    var createAsync = function(after) {
+        if ( typeof after !== 'number' ) {
+            after = µb.selfieAfter;
+        }
+
+        if ( timer !== null ) {
+            clearTimeout(timer);
+        }
+
+        timer = vAPI.setTimeout(create, after);
+    };
+
+    var destroy = function() {
+        if ( timer !== null ) {
+            clearTimeout(timer);
+            timer = null;
+        }
+
+        vAPI.storage.remove('selfie');
+    };
+
+    return {
+        create: createAsync,
+        destroy: destroy
+    };
+})();
 
 /******************************************************************************/
 
@@ -874,6 +883,10 @@
     // remote servers.
     µb.assets.remoteFetchBarrier += 1;
 
+    if ( details.hasOwnProperty('assets/ublock/redirect-resources.txt') ) {
+        µb.loadRedirectResources();
+    }
+
     var onFiltersReady = function() {
         µb.assets.remoteFetchBarrier -= 1;
     };
@@ -893,10 +906,6 @@
         updatedCount -= 1;
     } else {
         onPSLReady();
-    }
-
-    if ( details.hasOwnProperty('assets/ublock/redirect-resources.txt') ) {
-        µb.loadRedirectResources();
     }
 };
 
@@ -925,7 +934,7 @@
                 continue;
             }
         }
-        this.destroySelfie();
+        this.selfieManager.destroy();
         barrier = false;
     };
 

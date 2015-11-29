@@ -302,10 +302,33 @@ RedirectEngine.prototype.supportedTypes = (function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.toSelfie = function() {
-    return {
+    var r = {
         resources: this.resources,
-        rules: this.rules
+        rules: []
     };
+
+    var typeEntry, desEntry, entries, entry;
+    for ( var type in this.rules ) {
+        typeEntry = this.rules[type];
+        for ( var des in typeEntry ) {
+            desEntry = typeEntry[des];
+            for ( var src in desEntry ) {
+                entries = desEntry[src];
+                for ( var i = 0; i < entries.length; i++ ) {
+                    entry = entries[i];
+                    r.rules.push(
+                        src + '\t' +
+                        des + '\t' +
+                        type + '\t' +
+                        entry.c.source + '\t' +
+                        entry.r
+                    );
+                }
+            }
+        }
+    }
+
+    return r;
 };
 
 /******************************************************************************/
@@ -321,26 +344,10 @@ RedirectEngine.prototype.fromSelfie = function(selfie) {
     }
 
     // Rules.
-    var typeEntry, desEntry, srcEntry;
     var rules = selfie.rules;
-    for ( var type in rules ) {
-        if ( rules.hasOwnProperty(type) === false ) {
-            continue;
-        }
-        typeEntry = rules[type];
-        for ( var des in typeEntry ) {
-            if ( typeEntry.hasOwnProperty(des) === false ) {
-                continue;
-            }
-            desEntry = typeEntry[des];
-            for ( var src in desEntry ) {
-                if ( desEntry.hasOwnProperty(des) === false ) {
-                    continue;
-                }
-                srcEntry = desEntry[src];
-                this.addRule(src, des, type, srcEntry.c, srcEntry.r);
-            }
-        }
+    var i = rules.length;
+    while ( i-- ) {
+        this.fromCompiledRule(rules[i]);
     }
 
     return true;
