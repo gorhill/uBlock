@@ -52,12 +52,12 @@
     var save = function() {
         this.localSettingsSaveTime = Date.now();
         vAPI.storage.set(this.localSettings);
-    }.bind(µBlock);
+    };
 
     var onTimeout = function() {
         var µb = µBlock;
         if ( µb.localSettingsModifyTime > µb.localSettingsSaveTime ) {
-            save();
+            save.call(µb);
         }
         vAPI.setTimeout(onTimeout, saveAfter);
     };
