@@ -468,131 +468,168 @@ vAPI.tabs.onClosed = function(tabId) {
 
 /******************************************************************************/
 
-// https://github.com/chrisaljoudi/uBlock/issues/297
+// https://github.com/gorhill/uBlock/issues/99
+// https://github.com/gorhill/uBlock/issues/991
+// 
+// popup:
+//   Test/close target URL
+// popunder:
+//   Test/close opener URL
+//
+// popup filter match:
+//   0 = false
+//   1 = true
+//
+// opener:      0     0     1     1
+// target:      0     1     0     1
+//           ----  ----  ----  ----
+// result:      a     b     c     d
+//
+// a: do nothing
+// b: close target
+// c: close opener
+// d: close target
 
-vAPI.tabs.onPopup = function(details) {
+vAPI.tabs.onPopup = (function() {
     //console.debug('vAPI.tabs.onPopup: details = %o', details);
 
-    var tabContext = µb.tabContextManager.lookup(details.openerTabId);
-    var openerURL = '';
-    if ( tabContext.tabId === details.openerTabId ) {
-        openerURL = tabContext.normalURL;
-    }
-    if ( openerURL === '' ) {
-        return;
-    }
+    // The same context object will be reused everytime. This also allows to
+    // remember whether a popup or popunder was matched.
+    var context = {};
 
-    var µburi = µb.URI;
+    var popupMatch = function(openerURL, targetURL, clickedURL) {
+        var openerHostname = µb.URI.hostnameFromURI(openerURL);
+        var openerDomain = µb.URI.domainFromHostname(openerHostname);
 
-    // https://github.com/gorhill/uBlock/issues/341
-    // Allow popups if uBlock is turned off in opener's context.
-    if ( µb.getNetFilteringSwitch(openerURL) === false ) {
-        return;
-    }
+        context.pageHostname = openerHostname;
+        context.pageDomain = openerDomain;
+        context.rootURL = openerURL;
+        context.rootHostname = openerHostname;
+        context.rootDomain = openerDomain;
+        context.requestURL = targetURL;
+        context.requestHostname = µb.URI.hostnameFromURI(targetURL);
+        context.requestType = 'popup';
 
-    var targetURL = details.targetURL;
+        // Dynamic filtering makes sense only when we have a valid hostname.
+        if ( openerHostname !== '' ) {
+            // Check user switch first
+            if (
+                targetURL !== clickedURL &&
+                µb.hnSwitches.evaluateZ('no-popups', openerHostname)
+            ) {
+                return 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
+            }
 
-    // If the page URL is that of our "blocked page" URL, extract the URL of
-    // the page which was blocked.
-    if ( targetURL.lastIndexOf(vAPI.getURL('document-blocked.html'), 0) === 0 ) {
-        var matches = /details=([^&]+)/.exec(targetURL);
-        if ( matches !== null ) {
-            targetURL = JSON.parse(atob(matches[1])).url;
+            // https://github.com/gorhill/uBlock/issues/581
+            //   Take into account popup-specific rules in dynamic URL filtering, OR
+            //   generic allow rules.
+            µb.sessionURLFiltering.evaluateZ(openerHostname, targetURL, 'popup');
+            if (
+                µb.sessionURLFiltering.r === 1 && µb.sessionURLFiltering.type === 'popup' ||
+                µb.sessionURLFiltering.r === 2
+            ) {
+                return µb.sessionURLFiltering.toFilterString();
+            }
+
+            // https://github.com/gorhill/uBlock/issues/581
+            //   Take into account `allow` rules in dynamic filtering: `block` rules
+            //   are ignored, as block rules are not meant to block specific types
+            //   like `popup` (just like with static filters).
+            µb.sessionFirewall.evaluateCellZY(openerHostname, context.requestHostname, 'popup');
+            if ( µb.sessionFirewall.r === 2 ) {
+                return µb.sessionFirewall.toFilterString();
+            }
         }
-    }
 
-    var openerHostname = µburi.hostnameFromURI(openerURL);
-    var openerDomain = µburi.domainFromHostname(openerHostname);
-    var context = {
-        pageHostname: openerHostname,
-        pageDomain: openerDomain,
-        rootHostname: openerHostname,
-        rootDomain: openerDomain,
-        requestURL: targetURL,
-        requestHostname: µb.URI.hostnameFromURI(targetURL),
-        requestType: 'popup'
+        // https://github.com/chrisaljoudi/uBlock/issues/323
+        // https://github.com/chrisaljoudi/uBlock/issues/1142
+        //   Don't block if uBlock is turned off in popup's context
+        if (
+            µb.getNetFilteringSwitch(targetURL) &&
+            µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined
+        ) {
+            return µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+        }
+
+        return '';
     };
 
-    var result = '';
-    var loggerEnabled = µb.logger.isEnabled();
-
-    // Check user switch first
-    if (
-        targetURL !== µb.mouseURL &&
-        µb.hnSwitches.evaluateZ('no-popups', openerHostname)
-    ) {
-        result = 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
-    }
-
-    // https://github.com/gorhill/uBlock/issues/581
-    //   Take into account popup-specific rules in dynamic URL filtering, OR
-    //   generic allow rules.
-    if ( result === '' ) {
-        µb.sessionURLFiltering.evaluateZ(openerHostname, targetURL, 'popup');
-        if (
-            µb.sessionURLFiltering.r === 1 && µb.sessionURLFiltering.type === 'popup' ||
-            µb.sessionURLFiltering.r === 2
-        ) {
-            result = µb.sessionURLFiltering.toFilterString();
+    return function(details) {
+        var tabContext = µb.tabContextManager.lookup(details.openerTabId);
+        var openerURL = '';
+        if ( tabContext.tabId === details.openerTabId ) {
+            openerURL = tabContext.normalURL;
         }
-    }
-
-    // https://github.com/gorhill/uBlock/issues/581
-    //   Take into account `allow` rules in dynamic filtering: `block` rules
-    //   are ignored, as block rules are not meant to block specific types
-    //   like `popup` (just like with static filters).
-    if ( result === '' ) {
-        µb.sessionFirewall.evaluateCellZY(openerHostname, context.requestHostname, 'popup');
-        if ( µb.sessionFirewall.r === 2 ) {
-            result = µb.sessionFirewall.toFilterString();
+        if ( openerURL === '' ) {
+            return;
         }
-    }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/323
-    // https://github.com/chrisaljoudi/uBlock/issues/1142
-    //   Don't block if uBlock is turned off in popup's context
-    if (
-        result === '' &&
-        µb.getNetFilteringSwitch(targetURL) &&
-        µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined
-    ) {
-        result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
-    }
+        // https://github.com/gorhill/uBlock/issues/341
+        // Allow popups if uBlock is turned off in opener's context.
+        if ( µb.getNetFilteringSwitch(openerURL) === false ) {
+            return;
+        }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/91
-    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
-    if ( pageStore ) {
-        pageStore.logRequest(context, result);
-    }
+        var targetURL = details.targetURL;
 
-    if ( loggerEnabled ) {
-        µb.logger.writeOne(
-            details.openerTabId,
-            'net',
-            result,
-            'popup',
-            targetURL,
-            openerHostname,
-            openerHostname
-        );
-    }
+        // If the page URL is that of our "blocked page" URL, extract the URL of
+        // the page which was blocked.
+        if ( targetURL.lastIndexOf(vAPI.getURL('document-blocked.html'), 0) === 0 ) {
+            var matches = /details=([^&]+)/.exec(targetURL);
+            if ( matches !== null ) {
+                targetURL = JSON.parse(atob(matches[1])).url;
+            }
+        }
 
-    // Not blocked
-    if ( µb.isAllowResult(result) ) {
-        return;
-    }
+        // Popup test.
+        var openerTabId = details.openerTabId;
+        var targetTabId = details.targetTabId;
+        var result = popupMatch(openerURL, targetURL, µb.mouseURL);
 
-    // Blocked
-    if ( µb.userSettings.showIconBadge ) {
-        µb.updateBadgeAsync(details.openerTabId);
-    }
+        // Popunder test.
+        if ( result === '' ) {
+            openerTabId = details.targetTabId;
+            targetTabId = details.openerTabId;
+            result = popupMatch(targetURL, openerURL, µb.mouseURL);
+        }
 
-    // It is a popup, block and remove the tab.
-    µb.unbindTabFromPageStats(details.targetTabId);
-    vAPI.tabs.remove(details.targetTabId);
+        // Log only for when there was a hit against an actual filter (allow or block).
+        if ( result !== '' && µb.logger.isEnabled() ) {
+            µb.logger.writeOne(
+                openerTabId,
+                'net',
+                result,
+                'popup',
+                context.requestURL,
+                µb.URI.hostnameFromURI(context.rootURL),
+                µb.URI.hostnameFromURI(context.rootURL)
+            );
+        }
 
-    return true;
-};
+        // Not blocked
+        if ( µb.isAllowResult(result) ) {
+            return;
+        }
+
+        // Only if a popup was blocked do we report it in the dynamic
+        // filtering pane.
+        var pageStore = µb.pageStoreFromTabId(openerTabId);
+        if ( pageStore ) {
+            pageStore.logRequest(context, result);
+        }
+
+        // Blocked
+        if ( µb.userSettings.showIconBadge ) {
+            µb.updateBadgeAsync(openerTabId);
+        }
+
+        // It is a popup, block and remove the tab.
+        µb.unbindTabFromPageStats(targetTabId);
+        vAPI.tabs.remove(targetTabId);
+
+        return true;
+    };
+})();
 
 vAPI.tabs.registerListeners();
 
