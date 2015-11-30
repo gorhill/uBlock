@@ -184,3 +184,9 @@ voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
 @@||allgemeine-zeitung.de*/ad_bomb/*$image,first-party
 20min.ch#@#.wingadblock
 spiegel.de#@#.wrapad
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=26700
+segmentnext.com###sidebar > div[class] > div[class] > div[class]
+segmentnext.com###sidebar > div[class] > div[class] > span[class]
+segmentnext.com###content > div > div[class] > div[class] > span[class]
+segmentnext.com###content > div > div[class] > div[class] > div[class]
