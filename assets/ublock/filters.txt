@@ -181,5 +181,6 @@ vg.no##script:contains(/^\s*?window\.__AB__/)
 voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
 
 # uabInject-related ads
+@@||allgemeine-zeitung.de*/ad_bomb/*$image,first-party
 20min.ch#@#.wingadblock
 spiegel.de#@#.wrapad
