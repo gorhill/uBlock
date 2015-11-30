@@ -318,11 +318,13 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span:nth-of-type(4) {
     border-left: 1px solid white;
     color: #444;
+    font-family: monospace;
     font-size: 11.5px;
     text-align: center;
     }
 body.portrait #firewallContainer > div > span:nth-of-type(3),
 body.portrait #firewallContainer > div > span:nth-of-type(4) {
+    font-family: monospace;
     font-size: 9px;
     }
 #firewallContainer > div > span:nth-of-type(4) {
