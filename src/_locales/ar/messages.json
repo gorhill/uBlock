@@ -236,7 +236,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>هذا الخيار يمكّن من تحليل و تفعيل <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> فلاتر متطابقة مع فلاتر &rdquo;إخفاء العناصر&ldquo; لتطبيق Adblock Plus<\/a>. هذه الفلاتر جماليّة بالأساس، تهدف إلى إخفاء عناصر في صفحة واب، تعتبر إزعاجا بصريّا، قد لا يتمكّن محرّك فلاتر الرّوابط من كشفها و صدّها.<\/p><p>تفعيل هذا الخيار من شأنه زيادة أثر uBlock₀ على الذّاكرة.<\/p>",
+    "message":"<p>هذا الخيار يمكّن من تحليل و تطبيق <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">فلاتر متطابقة مع فلاتر &rdquo;إخفاء العناصر&ldquo; لتطبيق آدبلوك بلس<\/a>. هذه الفلاتر جماليّة بالأساس، تهدف إلى إخفاء عناصر في صفحة الواب، و اللتي تعتبر إزعاجا بصريّا، قد لا يتمكّن محرّك فلاتر الرّوابط من كشفها و صدّها.<\/p><p>تفعيل هذا الخيار من شأنه زيادة أثر الذّاكرة uBlock₀<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -332,7 +332,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"إضافة",
+    "message":"تطبق",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

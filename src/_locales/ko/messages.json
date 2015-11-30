@@ -592,11 +592,11 @@
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"일시적 차단",
+    "message":"이번만",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"영구적 차단",
+    "message":"항상",
     "description":"English: Permanently"
   },
   "cloudPush":{

@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — నెట్వర్క్ అభ్యర్ధనల చిట్టా",
+    "message":"uBlock₀ — నెట్వర్కు అభ్యర్ధనల చిట్టా",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -124,7 +124,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"అనుసంధానించబడిన డొమైన్స్",
+    "message":"అనుసంధానించబడిన డొమైన్లు",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{

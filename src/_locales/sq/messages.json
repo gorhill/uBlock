@@ -184,7 +184,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Çaktivizoj hapjen e parakohshme të faqeve (duke parandaluar lidhjen me kërkesat e bllokuara)",
+    "message":"Çaktivizoj hapjen e parakohshme të faqeve (për të parandaluar lidhjet me kërkesat e bllokuara)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Një URL për rresht. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;, sikundër adresat pa kuptim.",
+    "message":"Një URL për rresht. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;, sikundër adresat e pasakta.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -348,7 +348,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importoj nga një skedar...",
+    "message":"Importoj nga skedari...",
     "description":""
   },
   "rulesExport":{
@@ -436,7 +436,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} kërkesat e {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe që kanë si origjinë {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
+    "message":"{{action}} kërkesat e {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe që e kanë origjinën {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -472,7 +472,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Filtri statik {{filter}} u gjet te:",
+    "message":"Filtri statik {{filter}} gjendet në:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -576,7 +576,7 @@
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
-    "message":"Gjendet te:",
+    "message":"Gjendet në:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
