@@ -9,7 +9,7 @@
 
 # From Chrome store: "Go to site http://www.vd.nl/ ... links from dropdown top menu do not work"
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$script,domain=www.vd.nl
+@@||google-analytics.com/analytics.js$script,domain=promotions.newegg.com|www.vd.nl
 @@||google-analytics.com/plugins/ua/ec.js$script,domain=www.vd.nl
 
 # https://github.com/gorhill/uBlock/issues/939
