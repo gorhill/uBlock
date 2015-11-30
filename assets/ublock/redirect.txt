@@ -18,3 +18,6 @@
 
 # googletagservices.com not blocked by EasyPrivacy (I don't know why).
 ||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js
+
+# uabInject-related ads
+||allgemeine-zeitung.de*/ad_bomb/*$image,domain=allgemeine-zeitung.de,redirect=2x2-transparent.png

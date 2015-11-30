@@ -28,6 +28,10 @@ handtinytrans.gif image/gif;base64
 R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 
 
+2x2-transparent.png image/png;base64
+iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAC0lEQVQI12NgQAcAABIAAe+JVKQAAAAASUVORK5CYII=
+
+
 fuckadblock.js-3.2.0 application/javascript
 (function() {
     var noopfn = function() {

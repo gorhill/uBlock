@@ -179,3 +179,7 @@ opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 sueddeutsche.de##script:contains(BlockAdBlock)
 vg.no##script:contains(/^\s*?window\.__AB__/)
 voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
+
+# uabInject-related ads
+20min.ch#@#.wingadblock
+spiegel.de#@#.wrapad
