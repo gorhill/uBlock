@@ -1557,6 +1557,12 @@ FilterParser.prototype.parse = function(raw) {
     if ( s.charAt(0) !== '/' || s.slice(-1) !== '/' ) {
         pos = s.lastIndexOf('$');
         if ( pos !== -1 ) {
+            // https://github.com/gorhill/uBlock/issues/952
+            // Discard Adguard-specific `$$` filters.
+            if ( s.indexOf('$$') !== -1 ) {
+                this.unsupported = true;
+                return this;
+            }
             this.parseOptions(s.slice(pos + 1));
             s = s.slice(0, pos);
         }
@@ -1917,12 +1923,6 @@ FilterContainer.prototype.compile = function(raw, out) {
         return false;
     }
 
-    // Ignore comments
-    var c = s.charAt(0);
-    if ( c === '[' || c === '!' ) {
-        return false;
-    }
-
     var parsed = this.filterParser.parse(s);
 
     // Ignore element-hiding filters
@@ -2070,7 +2070,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
     var line, fields, bucket, entry, factory, filter;
 
     while ( lineBeg < textEnd ) {
-        if ( text.charAt(lineBeg) !== 'n' ) {
+        if ( text.charCodeAt(lineBeg) !== 0x6E /* 'n' */ ) {
             return lineBeg;
         }
         lineEnd = text.indexOf('\n', lineBeg);
