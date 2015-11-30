@@ -369,6 +369,10 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
 
     // Specific-destination, any party, any type
     var d = desHostname;
+    if ( d === '' ) {
+        this.r = 0;
+        return this;
+    }
     while ( d !== '*' ) {
         this.y = d;
         if ( this.evaluateCellZ(srcHostname, d, '*') !== 0 ) { return this; }
