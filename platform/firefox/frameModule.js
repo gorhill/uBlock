@@ -90,6 +90,7 @@ var contentObserver = {
     SUB_FRAME: Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
+    popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
 
@@ -153,6 +154,38 @@ var contentObserver = {
             .outerWindowID;
     },
 
+    handlePopup: function(location, context) {
+        let openeeContext = context.contentWindow || context;
+        if (
+            typeof openeeContext.opener !== 'object' ||
+            openeeContext.opener === null ||
+            openeeContext.opener === context ||
+            this.ignoredPopups.has(openeeContext)
+        ) {
+            return;
+        }
+        // https://github.com/gorhill/uBlock/issues/452
+        // Use location of top window, not that of a frame, as this
+        // would cause tab id lookup (necessary for popup blocking) to
+        // always fail.
+        let openerURL = openeeContext.opener.top &&
+                        openeeContext.opener.top.location.href;
+        if ( openerURL === null ) {
+            return;
+        }
+        let messageManager = getMessageManager(openeeContext);
+        if ( messageManager === null ) {
+            return;
+        }
+        if ( typeof messageManager.sendRpcMessage === 'function' ) {
+            // https://bugzil.la/1092216
+            messageManager.sendRpcMessage(this.popupMessageName, openerURL);
+        } else {
+            // Compatibility for older versions
+            messageManager.sendSyncMessage(this.popupMessageName, openerURL);
+        }
+    },
+
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
         // For whatever reason, sometimes the global scope is completely
@@ -170,26 +203,16 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
+        if ( type === this.MAIN_FRAME ) {
+            this.handlePopup(location, context);
+        }
+
         if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
             return this.ACCEPT;
         }
 
-        let openerURL = null;
-
         if ( type === this.MAIN_FRAME ) {
             context = context.contentWindow || context;
-            if (
-                typeof context.opener === 'object' &&
-                context.opener !== null &&
-                context.opener !== context &&
-                this.ignoredPopups.has(context) === false
-            ) {
-                // https://github.com/gorhill/uBlock/issues/452
-                // Use location of top window, not that of a frame, as this
-                // would cause tab id lookup (necessary for popup blocking) to
-                // always fail.
-                openerURL = context.opener.top && context.opener.top.location.href;
-            }
         } else if ( type === this.SUB_FRAME ) {
             context = context.contentWindow;
         } else {
@@ -219,7 +242,6 @@ var contentObserver = {
 
         let details = {
             frameId: isTopLevel ? 0 : this.getFrameId(context),
-            openerURL: openerURL,
             parentFrameId: parentFrameId,
             rawtype: type,
             tabId: '',

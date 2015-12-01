@@ -945,17 +945,24 @@ vAPI.tabs._remove = (function() {
 
 /******************************************************************************/
 
-vAPI.tabs.remove = function(tabId) {
-    var browser = tabWatcher.browserFromTabId(tabId);
-    if ( !browser ) {
-        return;
-    }
-    var tab = tabWatcher.tabFromBrowser(browser);
-    if ( !tab ) {
-        return;
-    }
-    this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
-};
+vAPI.tabs.remove = (function() {
+    var remove = function(tabId) {
+        var browser = tabWatcher.browserFromTabId(tabId);
+        if ( !browser ) {
+            return;
+        }
+        var tab = tabWatcher.tabFromBrowser(browser);
+        if ( !tab ) {
+            return;
+        }
+        this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
+    };
+
+    // Do this asynchronously
+    return function(tabId) {
+        vAPI.setTimeout(remove.bind(this, tabId), 10);
+    };
+})();
 
 /******************************************************************************/
 
@@ -1170,17 +1177,6 @@ var tabWatcher = (function() {
         onClose({ target: target });
     };
 
-    // https://developer.mozilla.org/en-US/docs/Web/Events/TabOpen
-    //var onOpen = function({target}) {
-    //    var tabId = tabIdFromTarget(target);
-    //    var browser = browserFromTabId(tabId);
-    //    vAPI.tabs.onNavigation({
-    //        frameId: 0,
-    //        tabId: tabId,
-    //        url: browser.currentURI.asciiSpec,
-    //    });
-    //};
-
     // https://developer.mozilla.org/en-US/docs/Web/Events/TabShow
     var onShow = function({target}) {
         tabIdFromTarget(target);
@@ -1266,7 +1262,6 @@ var tabWatcher = (function() {
         // not set when a tab is opened as a result of session restore -- it is
         // set *after* the event is fired in such case.
         if ( tabContainer ) {
-            //tabContainer.addEventListener('TabOpen', onOpen);
             tabContainer.addEventListener('TabShow', onShow);
             tabContainer.addEventListener('TabClose', onClose);
             // when new window is opened TabSelect doesn't run on the selected tab?
@@ -1293,7 +1288,6 @@ var tabWatcher = (function() {
             tabContainer = tabBrowser.tabContainer;
         }
         if ( tabContainer ) {
-            //tabContainer.removeEventListener('TabOpen', onOpen);
             tabContainer.removeEventListener('TabShow', onShow);
             tabContainer.removeEventListener('TabClose', onClose);
             tabContainer.removeEventListener('TabSelect', onSelect);
@@ -1847,7 +1841,6 @@ var httpObserver = {
         this.frameId = 0;
         this.parentFrameId = 0;
         this.rawtype = 0;
-        this.sourceTabId = null;
         this.tabId = 0;
         this._key = ''; // key is url, from URI.spec
     },
@@ -1937,9 +1930,10 @@ var httpObserver = {
                 }
                 aWindow = loadContext.associatedWindow;
             } catch (ex) {
-                //console.error(ex);
+                //console.error(ex.toString());
             }
         }
+        var gBrowser;
         try {
             if ( !aWindow && channel.loadGroup && channel.loadGroup.notificationCallbacks ) {
                 aWindow = channel
@@ -1949,21 +1943,23 @@ var httpObserver = {
                     .associatedWindow;
             }
             if ( aWindow ) {
-                return tabWatcher.tabIdFromTarget(
-                    aWindow
+                gBrowser = aWindow
                     .getInterface(Ci.nsIWebNavigation)
                     .QueryInterface(Ci.nsIDocShell)
                     .rootTreeItem
                     .QueryInterface(Ci.nsIInterfaceRequestor)
                     .getInterface(Ci.nsIDOMWindow)
-                    .gBrowser
-                    .getBrowserForContentWindow(aWindow)
-                );
+                    .gBrowser;
             }
         } catch (ex) {
-            //console.error(ex);
+            //console.error(ex.toString());
         }
-        return vAPI.noTabId;
+        if ( !gBrowser || !gBrowser._getTabForContentWindow ) {
+            return vAPI.noTabId;
+        }
+        // Using `_getTabForContentWindow` ensure older versions of Firefox
+        // work well.
+        return tabWatcher.tabIdFromTarget(gBrowser._getTabForContentWindow(aWindow));
     },
 
     // https://github.com/gorhill/uBlock/issues/959
@@ -1979,24 +1975,6 @@ var httpObserver = {
             tabId: tabId,
             rawtype: rawtype
         };
-    },
-
-    handlePopup: function(URI, tabId, sourceTabId) {
-        if ( !sourceTabId ) {
-            return false;
-        }
-
-        if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
-            return false;
-        }
-
-        var result = vAPI.tabs.onPopup({
-            targetTabId: tabId,
-            openerTabId: sourceTabId,
-            targetURL: URI.asciiSpec
-        });
-
-        return result === true;
     },
 
     handleRequest: function(channel, URI, details) {
@@ -2048,7 +2026,7 @@ var httpObserver = {
     },
 
     handleResponseHeaders: function(channel, URI, channelData) {
-        var type = this.typeMap[channelData[4]] || 'other';
+        var type = this.typeMap[channelData[3]] || 'other';
         if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(type) === false ) {
             return;
         }
@@ -2071,8 +2049,8 @@ var httpObserver = {
             hostname: hostname,
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
-            tabId: channelData[3],
-            type: this.typeMap[channelData[4]] || 'other',
+            tabId: channelData[2],
+            type: this.typeMap[channelData[3]] || 'other',
             url: URI.asciiSpec
         });
 
@@ -2137,6 +2115,19 @@ var httpObserver = {
             }
         }
 
+        // IMPORTANT:
+        // If this is a main frame, ensure that the proper tab id is being
+        // used: it can happen that the wrong tab id was looked up at
+        // `shouldLoadListener` time. Without this, the popup blocker may
+        // not work properly, and also a tab opened from a link may end up
+        // being wrongly reported as an embedded element.
+        if ( pendingRequest !== null && pendingRequest.rawtype === 6 ) {
+            var tabId = this.tabIdFromChannel(channel);
+            if ( tabId !== vAPI.noTabId ) {
+                pendingRequest.tabId = tabId;
+            }
+        }
+
         // Behind-the-scene request... Really?
         if ( pendingRequest === null ) {
             pendingRequest = this.synthesizePendingRequest(channel, rawtype);
@@ -2171,7 +2162,6 @@ var httpObserver = {
             channel.setProperty(this.REQDATAKEY, [
                 pendingRequest.frameId,
                 pendingRequest.parentFrameId,
-                pendingRequest.sourceTabId,
                 pendingRequest.tabId,
                 pendingRequest.rawtype
             ]);
@@ -2196,16 +2186,11 @@ var httpObserver = {
 
             var channelData = oldChannel.getProperty(this.REQDATAKEY);
 
-            if ( this.handlePopup(URI, channelData[3], channelData[2]) ) {
-                result = this.ABORT;
-                return;
-            }
-
             var details = {
                 frameId: channelData[0],
                 parentFrameId: channelData[1],
-                tabId: channelData[3],
-                rawtype: channelData[4]
+                tabId: channelData[2],
+                rawtype: channelData[3]
             };
 
             if ( this.handleRequest(newChannel, URI, details) ) {
@@ -2250,9 +2235,15 @@ vAPI.net.registerListeners = function() {
             null;
     }
 
-    var shouldBlockPopup = function(details) {
-        var sourceTabId = null;
-        var uri;
+    var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
+    var shouldLoadPopupListener = function(e) {
+        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
+            return;
+        }
+
+        var openerURL = e.data;
+        var popupTabId = tabWatcher.tabIdFromTarget(e.target);
+        var uri, openerTabId;
 
         for ( var browser of tabWatcher.browsers() ) {
             uri = browser.currentURI;
@@ -2265,24 +2256,22 @@ vAPI.net.registerListeners = function() {
             // believe this may have to do with those very temporary
             // browser objects created when opening a new tab, i.e. related
             // to https://github.com/gorhill/uBlock/issues/212
-            if ( !uri || uri.spec !== details.openerURL ) {
+            if ( !uri || uri.spec !== openerURL ) {
                 continue;
             }
 
-            sourceTabId = tabWatcher.tabIdFromTarget(browser);
-            if ( sourceTabId === details.tabId ) {
-                sourceTabId = null;
-                continue;
+            openerTabId = tabWatcher.tabIdFromTarget(browser);
+            if ( openerTabId !== popupTabId ) {
+                vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
+                break;
             }
-
-            uri = Services.io.newURI(details.url, null, null);
-
-            httpObserver.handlePopup(uri, details.tabId, sourceTabId);
-            break;
         }
-
-        return sourceTabId;
     };
+
+    vAPI.messaging.globalMessageManager.addMessageListener(
+        shouldLoadPopupListenerMessageName,
+        shouldLoadPopupListener
+    );
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
@@ -2291,18 +2280,6 @@ vAPI.net.registerListeners = function() {
         // a request would end up being categorized as a behind-the-scene
         // requests.
         var details = e.data;
-        var sourceTabId = null;
-
-        details.tabId = tabWatcher.tabIdFromTarget(e.target);
-
-        // Popup candidate: this code path is taken only for when a new top
-        // document loads, i.e. only once per document load. TODO: evaluate for
-        // popup filtering in an asynchrous manner -- it's not really required
-        // to evaluate on the spot. Still, there is currently no harm given
-        // this code path is typically taken only once per page load.
-        if ( details.openerURL ) {
-            sourceTabId = shouldBlockPopup(details);
-        }
 
         // We are being called synchronously from the content process, so we
         // must return ASAP. The code below merely record the details of the
@@ -2311,8 +2288,7 @@ vAPI.net.registerListeners = function() {
         pendingReq.frameId = details.frameId;
         pendingReq.parentFrameId = details.parentFrameId;
         pendingReq.rawtype = details.rawtype;
-        pendingReq.sourceTabId = sourceTabId;
-        pendingReq.tabId = details.tabId;
+        pendingReq.tabId = tabWatcher.tabIdFromTarget(e.target);
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
@@ -2378,6 +2354,11 @@ vAPI.net.registerListeners = function() {
     httpObserver.register();
 
     cleanupTasks.push(function() {
+        vAPI.messaging.globalMessageManager.removeMessageListener(
+            shouldLoadPopupListenerMessageName,
+            shouldLoadPopupListener
+        );
+
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadListenerMessageName,
             shouldLoadListener
@@ -2655,7 +2636,7 @@ vAPI.toolbarButton = {
 
         // palette might take a little longer to appear on some platforms,
         // give it a small delay and try again.
-        if ( toolbox.palette === null ) {
+        if ( !toolbox.palette ) {
             vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
             return;
         }
@@ -2707,7 +2688,7 @@ vAPI.toolbarButton = {
         var navbar = document.getElementById('nav-bar');
         var toolbarButton = createToolbarButton(window);
 
-        if ( palette !== null && palette.querySelector('#' + tbb.id) === null ) {
+        if ( palette && palette.querySelector('#' + tbb.id) === null ) {
             palette.appendChild(toolbarButton);
         }
 

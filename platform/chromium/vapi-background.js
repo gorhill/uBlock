@@ -157,7 +157,6 @@ var toChromiumTabId = function(tabId) {
 
 vAPI.tabs.registerListeners = function() {
     var onNavigationClient = this.onNavigation || noopFunc;
-    var onPopupClient = this.onPopup || noopFunc;
     var onUpdatedClient = this.onUpdated || noopFunc;
 
     // https://developer.chrome.com/extensions/webNavigation
@@ -166,58 +165,6 @@ vAPI.tabs.registerListeners = function() {
     //  onCommitted ->
     //  onDOMContentLoaded ->
     //  onCompleted
-
-    var popupCandidates = Object.create(null);
-
-    var PopupCandidate = function(details) {
-        this.targetTabId = details.tabId.toString();
-        this.openerTabId = details.sourceTabId.toString();
-        this.targetURL = details.url;
-        this.selfDestructionTimer = null;
-    };
-
-    PopupCandidate.prototype.selfDestruct = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
-        }
-        delete popupCandidates[this.targetTabId];
-    };
-
-    PopupCandidate.prototype.launchSelfDestruction = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
-        }
-        this.selfDestructionTimer = setTimeout(this.selfDestruct.bind(this), 10000);
-    };
-
-    var popupCandidateCreate = function(details) {
-        var popup = popupCandidates[details.tabId];
-        // This really should not happen...
-        if ( popup !== undefined ) {
-            return;
-        }
-        return (popupCandidates[details.tabId] = new PopupCandidate(details));
-    };
-
-    var popupCandidateTest = function(details) {
-        var popup = popupCandidates[details.tabId];
-        if ( popup === undefined ) {
-            return;
-        }
-        popup.targetURL = details.url;
-        if ( onPopupClient(popup) !== true ) {
-            return;
-        }
-        popup.selfDestruct();
-        return true;
-    };
-
-    var popupCandidateDestroy = function(details) {
-        var popup = popupCandidates[details.tabId];
-        if ( popup instanceof PopupCandidate ) {
-            popup.launchSelfDestruction();
-        }
-    };
 
     // The chrome.webRequest.onBeforeRequest() won't be called for everything
     // else than `http`/`https`. Thus, in such case, we will bind the tab as
@@ -233,22 +180,18 @@ vAPI.tabs.registerListeners = function() {
             details.frameId = 0;
             onNavigationClient(details);
         }
-        popupCandidateCreate(details);
-        popupCandidateTest(details);
+        if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
+            vAPI.tabs.onPopupCreated(details.tabId.toString(), details.sourceTabId.toString());
+        }
     };
 
     var onBeforeNavigate = function(details) {
         if ( details.frameId !== 0 ) {
             return;
         }
-        //console.debug('onBeforeNavigate: popup candidate tab id %d = "%s"', details.tabId, details.url);
-        popupCandidateTest(details);
     };
 
     var onUpdated = function(tabId, changeInfo, tab) {
-        if ( changeInfo.url && popupCandidateTest({ tabId: tabId, url: changeInfo.url }) ) {
-            return;
-        }
         onUpdatedClient(tabId, changeInfo, tab);
     };
 
@@ -257,11 +200,6 @@ vAPI.tabs.registerListeners = function() {
             return;
         }
         onNavigationClient(details);
-        //console.debug('onCommitted: popup candidate tab id %d = "%s"', details.tabId, details.url);
-        if ( popupCandidateTest(details) === true ) {
-            return;
-        }
-        popupCandidateDestroy(details);
     };
 
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
