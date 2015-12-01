@@ -938,15 +938,19 @@ vAPI.tabs._remove = (function() {
             tabBrowser.closeTab(tab);
         };
     }
-    return function(tab, tabBrowser) {
-        tabBrowser.removeTab(tab);
+    return function(tab, tabBrowser, nuke) {
+        if ( tabBrowser.tabs.length === 1 && nuke ) {
+            getOwnerWindow(tab).close();
+        } else {
+            tabBrowser.removeTab(tab);
+        }
     };
 })();
 
 /******************************************************************************/
 
 vAPI.tabs.remove = (function() {
-    var remove = function(tabId) {
+    var remove = function(tabId, nuke) {
         var browser = tabWatcher.browserFromTabId(tabId);
         if ( !browser ) {
             return;
@@ -955,12 +959,12 @@ vAPI.tabs.remove = (function() {
         if ( !tab ) {
             return;
         }
-        this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
+        this._remove(tab, getTabBrowser(getOwnerWindow(browser)), nuke);
     };
 
     // Do this asynchronously
-    return function(tabId) {
-        vAPI.setTimeout(remove.bind(this, tabId), 10);
+    return function(tabId, nuke) {
+        vAPI.setTimeout(remove.bind(this, tabId, nuke), 1);
     };
 })();
 
