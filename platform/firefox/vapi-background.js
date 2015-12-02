@@ -1936,7 +1936,10 @@ var httpObserver = {
         if ( lc.topFrameElement ) {
             return tabWatcher.tabIdFromTarget(lc.topFrameElement);
         }
-        var win = lc.associatedWindow;
+        var win;
+        try {
+            win = lc.associatedWindow;
+        } catch (ex) { }
         if ( !win ) { return vAPI.noTabId; }
         if ( win.top ) {
             win = win.top;
