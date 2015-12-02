@@ -276,7 +276,7 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var popupDataFromTabId = function(tabId, tabTitle) {
-    var tabContext = µb.tabContextManager.lookup(tabId);
+    var tabContext = µb.tabContextManager.mustLookup(tabId);
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,

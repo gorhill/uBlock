@@ -346,15 +346,15 @@ housekeep itself.
         return entry;
     };
 
+    // Find a tab context for a specific tab.
+    var lookup = function(tabId) {
+        return tabContexts[tabId] || null;
+    };
+
     // Find a tab context for a specific tab. If none is found, attempt to
     // fix this. When all fail, the behind-the-scene context is returned.
-    var lookup = function(tabId, url) {
-        var entry;
-        if ( url !== undefined ) {
-            entry = push(tabId, url);
-        } else {
-            entry = tabContexts[tabId];
-        }
+    var mustLookup = function(tabId) {
+        var entry = tabContexts[tabId];
         if ( entry !== undefined ) {
             return entry;
         }
@@ -426,6 +426,7 @@ housekeep itself.
         push: push,
         commit: commit,
         lookup: lookup,
+        mustLookup: mustLookup,
         exists: exists,
         createContext: createContext
     };
@@ -576,23 +577,15 @@ vAPI.tabs.onPopupUpdated = (function() {
     return function(targetTabId, openerTabId) {
         // Opener details.
         var tabContext = µb.tabContextManager.lookup(openerTabId);
-        var openerURL = '';
-        if ( tabContext.tabId === openerTabId ) {
-            openerURL = tabContext.rawURL;
-            if ( openerURL === '' ) {
-                return;
-            }
-        }
+        if ( tabContext === null ) { return; }
+        var openerURL = tabContext.rawURL;
+        if ( openerURL === '' ) { return; }
 
         // Popup details.
         tabContext = µb.tabContextManager.lookup(targetTabId);
-        var targetURL = '';
-        if ( tabContext.tabId === targetTabId ) {
-            targetURL = tabContext.rawURL;
-            if ( targetURL === '' ) {
-                return;
-            }
-        }
+        if ( tabContext === null ) { return; }
+        var targetURL = tabContext.rawURL;
+        if ( targetURL === '' ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/341
         // Allow popups if uBlock is turned off in opener's context.

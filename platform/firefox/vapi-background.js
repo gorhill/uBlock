@@ -1923,47 +1923,41 @@ var httpObserver = {
     // Also:
     //   https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Limitations_of_chrome_scripts
     tabIdFromChannel: function(channel) {
-        var aWindow;
-        if ( channel.notificationCallbacks ) {
-            try {
-                var loadContext = channel
-                        .notificationCallbacks
-                        .getInterface(Ci.nsILoadContext);
-                if ( loadContext.topFrameElement ) {
-                    return tabWatcher.tabIdFromTarget(loadContext.topFrameElement);
-                }
-                aWindow = loadContext.associatedWindow;
-            } catch (ex) {
-                //console.error(ex.toString());
-            }
+        var ncbs = channel.notificationCallbacks;
+        if ( !ncbs && channel.loadGroup ) {
+            ncbs = channel.loadGroup.notificationCallbacks;
         }
-        var gBrowser;
+        if ( !ncbs ) { return vAPI.noTabId; }
+        var lc;
         try {
-            if ( !aWindow && channel.loadGroup && channel.loadGroup.notificationCallbacks ) {
-                aWindow = channel
-                    .loadGroup
-                    .notificationCallbacks
-                    .getInterface(Ci.nsILoadContext)
-                    .associatedWindow;
-            }
-            if ( aWindow ) {
-                gBrowser = aWindow
-                    .getInterface(Ci.nsIWebNavigation)
-                    .QueryInterface(Ci.nsIDocShell)
-                    .rootTreeItem
-                    .QueryInterface(Ci.nsIInterfaceRequestor)
-                    .getInterface(Ci.nsIDOMWindow)
-                    .gBrowser;
-            }
-        } catch (ex) {
-            //console.error(ex.toString());
+            lc = ncbs.getInterface(Ci.nsILoadContext);
+        } catch (ex) { }
+        if ( !lc ) { return vAPI.noTabId; }
+        if ( lc.topFrameElement ) {
+            return tabWatcher.tabIdFromTarget(lc.topFrameElement);
         }
-        if ( !gBrowser || !gBrowser._getTabForContentWindow ) {
-            return vAPI.noTabId;
+        var win = lc.associatedWindow;
+        if ( !win ) { return vAPI.noTabId; }
+        if ( win.top ) {
+            win = win.top;
         }
-        // Using `_getTabForContentWindow` ensure older versions of Firefox
-        // work well.
-        return tabWatcher.tabIdFromTarget(gBrowser._getTabForContentWindow(aWindow));
+        var tabBrowser;
+        try {
+            tabBrowser = getTabBrowser(
+                win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIWebNavigation)
+                   .QueryInterface(Ci.nsIDocShell).rootTreeItem
+                   .QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow)
+            );
+        } catch (ex) { }
+        if ( !tabBrowser ) { return vAPI.noTabId; }
+        if ( tabBrowser.getBrowserForContentWindow ) {
+            return tabWatcher.tabIdFromTarget(tabBrowser.getBrowserForContentWindow(win));
+        }
+        // Falling back onto _getTabForContentWindow to ensure older versions
+        // of Firefox work well.
+        return tabBrowser._getTabForContentWindow ?
+               tabWatcher.tabIdFromTarget(tabBrowser._getTabForContentWindow(win)) :
+               vAPI.noTabId;
     },
 
     // https://github.com/gorhill/uBlock/issues/959
