@@ -42,4 +42,4 @@
 # - web site ID (allows to uniquely identify a web site)
 # - Whether a blocker is used
 # - Screen size/browser viewport size
-||adblockanalytics.com^
+||adblockanalytics.com^$third-party
