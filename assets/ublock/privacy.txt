@@ -34,3 +34,11 @@
 # Spotted on <http://venturebeat.com/>: no www site, and no resource returned.
 # Belong to Amazon.com. The GET request is full of tracker-looking data.
 ||silkenthreadiness.info^
+
+# https://news.ycombinator.com/item?id=10662793
+# Each client site has a specific id: this means the following information
+# becomes available to adblockanalytics.com:
+# - IP address (user)
+# - web site ID (allows to uniquely identify a web site)
+# - Whether a blocker is used
+||adblockanalytics.com^
