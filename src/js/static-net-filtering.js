@@ -212,7 +212,7 @@ var strToRegex = function(s, anchor, flags) {
     if ( anchor < 0 ) {
         reStr = '^' + reStr;
     } else if ( anchor > 0 ) {
-        reStr += reStr + '$';
+        reStr += '$';
     }
 
     //console.debug('µBlock.staticNetFilteringEngine: created RegExp("%s")', reStr);
@@ -1666,8 +1666,14 @@ var badTokens = {
 
 var findFirstGoodToken = function(s) {
     reGoodToken.lastIndex = 0;
-    var matches;
+    var matches, lpos;
     while ( (matches = reGoodToken.exec(s)) ) {
+        // https://github.com/gorhill/uBlock/issues/997
+        // Ignore token if preceded by wildcard.
+        lpos = matches.index;
+        if ( lpos !== 0 && s.charAt(lpos - 1) === '*' ) {
+            continue;
+        }
         if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
             continue;
         }
@@ -1679,6 +1685,12 @@ var findFirstGoodToken = function(s) {
     // No good token found, try again without minding "bad" tokens
     reGoodToken.lastIndex = 0;
     while ( (matches = reGoodToken.exec(s)) ) {
+        // https://github.com/gorhill/uBlock/issues/997
+        // Ignore token if preceded by wildcard.
+        lpos = matches.index;
+        if ( lpos !== 0 && s.charAt(lpos - 1) === '*' ) {
+            continue;
+        }
         if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
             continue;
         }
