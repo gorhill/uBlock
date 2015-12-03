@@ -54,11 +54,7 @@ var deferUntil = function(testFn, mainFn, details) {
     var until = details.until || 2000;
 
     var check = function() {
-        if ( testFn() === true ) {
-            mainFn();
-            return;
-        }
-        if ( now >= until ) {
+        if ( testFn() === true || now >= until ) {
             mainFn();
             return;
         }
