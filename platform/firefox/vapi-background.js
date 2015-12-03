@@ -44,6 +44,37 @@ vAPI.thunderbird = Services.appinfo.ID === '{3550f703-e582-4d05-9a08-453d09bdfdc
 
 /******************************************************************************/
 
+var deferUntil = function(testFn, mainFn, details) {
+    if ( typeof details !== 'object' ) {
+        details = {};
+    }
+
+    var now = 0;
+    var next = details.next || 200;
+    var until = details.until || 2000;
+
+    var check = function() {
+        if ( testFn() === true ) {
+            mainFn();
+            return;
+        }
+        if ( now >= until ) {
+            mainFn();
+            return;
+        }
+        now += next;
+        vAPI.setTimeout(check, next);
+    };
+
+    if ( details.async === false ) {
+        check();
+    } else {
+        vAPI.setTimeout(check, 1);
+    }
+};
+
+/******************************************************************************/
+
 vAPI.app = {
     name: 'uBlock Origin',
     version: location.hash.slice(1)
@@ -1199,56 +1230,12 @@ var tabWatcher = (function() {
         vAPI.setIcon(tabIdFromTarget(target), getOwnerWindow(target));
     };
 
-    var attachToTabBrowserLater = function(details) {
-        details.tryCount = details.tryCount ? details.tryCount + 1 : 1;
-        if ( details.tryCount > 8 ) {
-            return false;
-        }
-        vAPI.setTimeout(function(details) {
-                attachToTabBrowser(details.window, details.tryCount);
-            },
-            200,
-            details
-        );
-        return true;
-    };
-
-    var attachToTabBrowser = function(window, tryCount) {
-        // Let's just be extra-paranoiac regarding whether all is right before
-        // trying to attach outself to the browser window.
-        var document = window && window.document;
-        var docElement = document && document.documentElement;
-        var wintype = docElement && docElement.getAttribute('windowtype');
-
-        if ( wintype !== 'navigator:browser' ) {
-            attachToTabBrowserLater({ window: window, tryCount: tryCount });
-            return;
-        }
-
-        // https://github.com/gorhill/uBlock/issues/906
-        // This might have been the cause. Will see.
-        if ( document.readyState !== 'complete' ) {
-            attachToTabBrowserLater({ window: window, tryCount: tryCount });
-            return;
-        }
-
-        // On some platforms, the tab browser isn't immediately available,
-        // try waiting a bit if this happens.
-        // https://github.com/gorhill/uBlock/issues/763
-        // Not getting a tab browser should not prevent from attaching ourself
-        // to the window.
-        var tabBrowser = getTabBrowser(window);
-        if (
-            tabBrowser === null &&
-            attachToTabBrowserLater({ window: window, tryCount: tryCount })
-        ) {
-            return;
-        }
-
+    var attachToTabBrowser = function(window) {
         if ( typeof vAPI.toolbarButton.attachToNewWindow === 'function' ) {
             vAPI.toolbarButton.attachToNewWindow(window);
         }
 
+        var tabBrowser = getTabBrowser(window);
         if ( tabBrowser === null ) {
             return;
         }
@@ -1258,7 +1245,7 @@ var tabWatcher = (function() {
             tabContainer = tabBrowser.deck;
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
-            vAPI.contextMenu.register(document);
+            vAPI.contextMenu.register(window);
         }
 
         // https://github.com/gorhill/uBlock/issues/697
@@ -1273,12 +1260,37 @@ var tabWatcher = (function() {
         }
     };
 
+    // https://github.com/gorhill/uBlock/issues/906
+    // Ensure the environment is ready before trying to attaching.
+    var canAttachToTabBrowser = function(window) {
+        var document = window && window.document;
+        if ( !document || document.readyState !== 'complete' ) {
+            return false;
+        }
+
+        // On some platforms, the tab browser isn't immediately available,
+        // try waiting a bit if this happens.
+        // https://github.com/gorhill/uBlock/issues/763
+        // Not getting a tab browser should not prevent from attaching ourself
+        // to the window.
+        var tabBrowser = getTabBrowser(window);
+        if ( tabBrowser === null ) {
+            return false;
+        }
+
+        var docElement = document.documentElement;
+        return docElement && docElement.getAttribute('windowtype') === 'navigator:browser';
+    };
+
     var onWindowLoad = function(win) {
-        attachToTabBrowser(win);
+        deferUntil(
+            canAttachToTabBrowser.bind(null, win),
+            attachToTabBrowser.bind(null, win)
+        );
     };
 
     var onWindowUnload = function(win) {
-        vAPI.contextMenu.unregister(win.document);
+        vAPI.contextMenu.unregister(win);
 
         var tabBrowser = getTabBrowser(win);
         if ( !tabBrowser ) {
@@ -2453,18 +2465,8 @@ vAPI.toolbarButton = {
 
     // https://github.com/gorhill/uBlock/issues/955
     // Defer until `NativeWindow` is available.
-    tbb.initOne = function(win, tryCount) {
+    tbb.initOne = function(win) {
         if ( !win.NativeWindow ) {
-            if ( typeof tryCount !== 'number' ) {
-                tryCount = 0;
-            }
-            tryCount += 1;
-            if ( tryCount < 10 ) {
-                vAPI.setTimeout(
-                    this.initOne.bind(this, win, tryCount),
-                    200
-                );
-            }
             return;
         }
         var label = this.getMenuItemLabel();
@@ -2475,10 +2477,17 @@ vAPI.toolbarButton = {
         menuItemIds.set(win, id);
     };
 
+    tbb.canInit = function(win) {
+        return !!win.NativeWindow;
+    };
+
     tbb.init = function() {
         // Only actually expecting one window under Fennec (note, not tabs, windows)
         for ( var win of winWatcher.getWindows() ) {
-            this.initOne(win);
+            deferUntil(
+                this.canInit.bind(this, win),
+                this.initOne.bind(this, win)
+            );
         }
 
         cleanupTasks.push(shutdown);
@@ -2621,35 +2630,6 @@ vAPI.toolbarButton = {
     var sss = null;
     var styleSheetUri = null;
 
-    var onReadyStateComplete = function(window, callback, tryCount) {
-        tryCount = tryCount ? tryCount + 1 : 1;
-        if ( tryCount > 8 ) {
-            return;
-        }
-
-        var document = window.document;
-        var toolbox = document.getElementById('navigator-toolbox') ||
-                      document.getElementById('mail-toolbox');
-        if ( toolbox === null ) {
-            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
-            return;
-        }
-
-        // palette might take a little longer to appear on some platforms,
-        // give it a small delay and try again.
-        if ( !toolbox.palette ) {
-            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
-            return;
-        }
-
-        if ( document.getElementById('nav-bar') === null ) {
-            vAPI.setTimeout(onReadyStateComplete.bind(null, window, callback, tryCount), 200);
-            return;
-        }
-
-        callback(window);
-    };
-
     var createToolbarButton = function(window) {
         var document = window.document;
 
@@ -2685,6 +2665,10 @@ vAPI.toolbarButton = {
 
         var toolbox = document.getElementById('navigator-toolbox') ||
                       document.getElementById('mail-toolbox');
+        if ( toolbox === null ) {
+            return;
+        }
+
         var palette = toolbox.palette;
         var navbar = document.getElementById('nav-bar');
         var toolbarButton = createToolbarButton(window);
@@ -2741,6 +2725,13 @@ vAPI.toolbarButton = {
         }
     };
 
+    var canAddLegacyToolbarButton = function(window) {
+        var document = window.document;
+        var toolbox = document.getElementById('navigator-toolbox') ||
+                      document.getElementById('mail-toolbox');
+        return toolbox !== null && !!toolbox.palette && document.getElementById('nav-bar') !== null;
+    };
+
     var onPopupCloseRequested = function({target}) {
         var document = target.ownerDocument;
         if ( !document ) {
@@ -2781,7 +2772,10 @@ vAPI.toolbarButton = {
     };
 
     tbb.attachToNewWindow = function(win) {
-        onReadyStateComplete(win, addLegacyToolbarButton);
+        deferUntil(
+            canAddLegacyToolbarButton.bind(null, win),
+            addLegacyToolbarButton.bind(null, win)
+        );
     };
 
     tbb.init = function() {
@@ -3206,7 +3200,11 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 /******************************************************************************/
 
 vAPI.contextMenu.register = (function() {
-    var register = function(doc) {
+    var register = function(window) {
+        if ( canRegister(window) !== true ) {
+            return;
+        }
+
         if ( !this.menuItemId ) {
             return;
         }
@@ -3223,6 +3221,7 @@ vAPI.contextMenu.register = (function() {
         }
 
         // Already installed?
+        var doc = window.document;
         if ( doc.getElementById(this.menuItemId) !== null ) {
             return;
         }
@@ -3248,26 +3247,21 @@ vAPI.contextMenu.register = (function() {
     // Be sure document.readyState is 'complete': it could happen at launch
     // time that we are called by vAPI.contextMenu.create() directly before
     // the environment is properly initialized.
-    var registerSafely = function(doc, tryCount) {
-        if ( doc.readyState === 'complete' ) {
-            register.call(this, doc);
-            return;
-        }
-        if ( typeof tryCount !== 'number' ) {
-            tryCount = 0;
-        }
-        tryCount += 1;
-        if ( tryCount < 8 ) {
-            vAPI.setTimeout(registerSafely.bind(this, doc, tryCount), 200);
-        }
+    var canRegister = function(win) {
+        return win && win.document.readyState === 'complete';
     };
 
-    return registerSafely;
+    return function(win) {
+        deferUntil(
+            canRegister.bind(null, win),
+            register.bind(this, win)
+        );
+    };
 })();
 
 /******************************************************************************/
 
-vAPI.contextMenu.unregister = function(doc) {
+vAPI.contextMenu.unregister = function(win) {
     if ( !this.menuItemId ) {
         return;
     }
@@ -3277,6 +3271,7 @@ vAPI.contextMenu.unregister = function(doc) {
         return;
     }
 
+    var doc = win.document;
     var menuitem = doc.getElementById(this.menuItemId);
 
     // Not guarantee the menu item was actually registered.
@@ -3335,7 +3330,7 @@ vAPI.contextMenu.create = function(details, callback) {
     };
 
     for ( var win of winWatcher.getWindows() ) {
-        this.register(win.document);
+        this.register(win);
     }
 };
 
@@ -3343,7 +3338,7 @@ vAPI.contextMenu.create = function(details, callback) {
 
 vAPI.contextMenu.remove = function() {
     for ( var win of winWatcher.getWindows() ) {
-        this.unregister(win.document);
+        this.unregister(win);
     }
 
     this.menuItemId = null;

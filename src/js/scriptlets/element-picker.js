@@ -756,6 +756,9 @@ var showDialog = function(options) {
 /******************************************************************************/
 
 var elementFromPoint = function(x, y) {
+    if ( !pickerRoot ) {
+        return null;
+    }
     pickerRoot.style.pointerEvents = 'none';
     var elem = document.elementFromPoint(x, y);
     if ( elem === document.body || elem === document.documentElement ) {
