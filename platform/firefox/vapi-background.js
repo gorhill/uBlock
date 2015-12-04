@@ -706,7 +706,7 @@ var getTabBrowser = (function() {
     }
 
     return function(win) {
-        return win.gBrowser || null;
+        return win && win.gBrowser || null;
     };
 })();
 
@@ -966,6 +966,9 @@ vAPI.tabs._remove = (function() {
         };
     }
     return function(tab, tabBrowser, nuke) {
+        if ( !tabBrowser ) {
+            return;
+        }
         if ( tabBrowser.tabs.length === 1 && nuke ) {
             getOwnerWindow(tab).close();
         } else {
@@ -1016,11 +1019,14 @@ vAPI.tabs.select = function(tab) {
         return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/470
     var win = getOwnerWindow(tab);
-    win.focus();
-
     var tabBrowser = getTabBrowser(win);
+    if ( tabBrowser === null ) {
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/470
+    win.focus();
 
     if ( vAPI.fennec ) {
         tabBrowser.selectTab(tab);
@@ -1077,7 +1083,7 @@ var tabWatcher = (function() {
             return -1;
         }
         var tabbrowser = getTabBrowser(win);
-        if ( !tabbrowser ) {
+        if ( tabbrowser === null ) {
             return -1;
         }
         // This can happen, for example, the `view-source:` window, there is
@@ -1108,7 +1114,7 @@ var tabWatcher = (function() {
             return null;
         }
         var tabbrowser = getTabBrowser(win);
-        if ( !tabbrowser ) {
+        if ( tabbrowser === null ) {
             return null;
         }
         if ( !tabbrowser.tabs || i >= tabbrowser.tabs.length ) {
@@ -1289,7 +1295,7 @@ var tabWatcher = (function() {
         vAPI.contextMenu.unregister(win);
 
         var tabBrowser = getTabBrowser(win);
-        if ( !tabBrowser ) {
+        if ( tabBrowser === null ) {
             return;
         }
 
