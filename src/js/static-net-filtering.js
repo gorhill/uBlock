@@ -1407,9 +1407,8 @@ FilterParser.prototype.reset = function() {
     this.raw = '';
     this.redirect = false;
     this.thirdParty = false;
-    this.token = '';
+    this.token = '*';
     this.tokenBeg = 0;
-    this.tokenEnd = 0;
     this.types = 0;
     this.important = 0;
     this.unsupported = false;
@@ -1648,6 +1647,7 @@ FilterParser.prototype.parse = function(raw) {
 // performance.
 // These "bad tokens" are collated manually.
 
+// Hostname-anchored with no wildcard always have a token index of 0.
 var reHostnameToken = /^[0-9a-z]+/g;
 var reGoodToken = /[%0-9a-z]{2,}/g;
 
@@ -1667,6 +1667,7 @@ var badTokens = {
 var findFirstGoodToken = function(s) {
     reGoodToken.lastIndex = 0;
     var matches, lpos;
+    var badTokenMatch = null;
     while ( (matches = reGoodToken.exec(s)) ) {
         // https://github.com/gorhill/uBlock/issues/997
         // Ignore token if preceded by wildcard.
@@ -1678,25 +1679,14 @@ var findFirstGoodToken = function(s) {
             continue;
         }
         if ( badTokens.hasOwnProperty(matches[0]) ) {
+            if ( badTokenMatch === null ) {
+                badTokenMatch = matches;
+            }
             continue;
         }
         return matches;
     }
-    // No good token found, try again without minding "bad" tokens
-    reGoodToken.lastIndex = 0;
-    while ( (matches = reGoodToken.exec(s)) ) {
-        // https://github.com/gorhill/uBlock/issues/997
-        // Ignore token if preceded by wildcard.
-        lpos = matches.index;
-        if ( lpos !== 0 && s.charAt(lpos - 1) === '*' ) {
-            continue;
-        }
-        if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
-            continue;
-        }
-        return matches;
-    }
-    return null;
+    return badTokenMatch;
 };
 
 var findHostnameToken = function(s) {
@@ -1707,42 +1697,20 @@ var findHostnameToken = function(s) {
 /******************************************************************************/
 
 FilterParser.prototype.makeToken = function() {
-    if ( this.isRegex ) {
-        this.token = '*';
-        return;
-    }
-
-    var s = this.f;
-
     // https://github.com/chrisaljoudi/uBlock/issues/1038
-    // Match any URL.
-    if ( s === '*' ) {
-        this.token = '*';
+    // Single asterisk will match any URL.
+    if ( this.isRegex || this.f === '*' ) {
         return;
     }
 
-    var matches;
+    var matches = this.hostnameAnchored && this.f.indexOf('*') === -1 ?
+        findHostnameToken(this.f) :
+        findFirstGoodToken(this.f);
 
-    // Hostname-anchored with no wildcard always have a token index of 0.
-    if ( this.hostnameAnchored && s.indexOf('*') === -1 ) {
-        matches = findHostnameToken(s);
-        if ( !matches || matches[0].length === 0 ) {
-            return;
-        }
+    if ( matches !== null && matches[0].length !== 0 ) {
+        this.token = matches[0];
         this.tokenBeg = matches.index;
-        this.tokenEnd = reHostnameToken.lastIndex;
-        this.token = s.slice(this.tokenBeg, this.tokenEnd);
-        return;
     }
-
-    matches = findFirstGoodToken(s);
-    if ( matches === null || matches[0].length === 0 ) {
-        this.token = '*';
-        return;
-    }
-    this.tokenBeg = matches.index;
-    this.tokenEnd = reGoodToken.lastIndex;
-    this.token = s.slice(this.tokenBeg, this.tokenEnd);
 };
 
 /******************************************************************************/
@@ -2010,8 +1978,8 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
 
 FilterContainer.prototype.compileFilter = function(parsed, out) {
     parsed.makeToken();
-    if ( parsed.token === '' ) {
-        console.error('static-net-filtering.js > FilterContainer.addFilter("%s"): can\'t tokenize', parsed.f);
+    if ( parsed.token === '*' && parsed.hostnameAnchored ) {
+        console.error('FilterContainer.compileFilter("%s"): invalid filter', parsed.f);
         return false;
     }
 
