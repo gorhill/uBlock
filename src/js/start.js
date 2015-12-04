@@ -259,7 +259,7 @@ return function() {
 
         var fetchableProps = {
             'compiledMagic': '',
-            'dynamicFilteringString': '',
+            'dynamicFilteringString': 'behind-the-scene * 3p noop\nbehind-the-scene * 3p-frame noop',
             'urlFilteringString': '',
             'hostnameSwitchesString': '',
             'lastRestoreFile': '',
