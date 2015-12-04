@@ -516,7 +516,7 @@ vAPI.tabs.onPopupUpdated = (function() {
     // remember whether a popup or popunder was matched.
     var context = {};
 
-    var popupMatch = function(openerURL, targetURL, clickedURL, popunder) {
+    var popupMatch = function(openerURL, targetURL, clickedURL, popupType) {
         var openerHostname = µb.URI.hostnameFromURI(openerURL);
         var openerDomain = µb.URI.domainFromHostname(openerHostname);
 
@@ -533,7 +533,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( openerHostname !== '' ) {
             // Check user switch first
             if (
-                popunder !== true &&
+                popupType !== 'popunder' &&
                 targetURL !== clickedURL &&
                 µb.hnSwitches.evaluateZ('no-popups', openerHostname)
             ) {
@@ -543,9 +543,9 @@ vAPI.tabs.onPopupUpdated = (function() {
             // https://github.com/gorhill/uBlock/issues/581
             //   Take into account popup-specific rules in dynamic URL filtering, OR
             //   generic allow rules.
-            µb.sessionURLFiltering.evaluateZ(openerHostname, targetURL, 'popup');
+            µb.sessionURLFiltering.evaluateZ(openerHostname, targetURL, popupType);
             if (
-                µb.sessionURLFiltering.r === 1 && µb.sessionURLFiltering.type === 'popup' ||
+                µb.sessionURLFiltering.r === 1 && µb.sessionURLFiltering.type === popupType ||
                 µb.sessionURLFiltering.r === 2
             ) {
                 return µb.sessionURLFiltering.toFilterString();
@@ -555,7 +555,7 @@ vAPI.tabs.onPopupUpdated = (function() {
             //   Take into account `allow` rules in dynamic filtering: `block` rules
             //   are ignored, as block rules are not meant to block specific types
             //   like `popup` (just like with static filters).
-            µb.sessionFirewall.evaluateCellZY(openerHostname, context.requestHostname, 'popup');
+            µb.sessionFirewall.evaluateCellZY(openerHostname, context.requestHostname, popupType);
             if ( µb.sessionFirewall.r === 2 ) {
                 return µb.sessionFirewall.toFilterString();
             }
@@ -566,7 +566,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         //   Don't block if uBlock is turned off in popup's context
         if (
             µb.getNetFilteringSwitch(targetURL) &&
-            µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined
+            µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, popupType) !== undefined
         ) {
             return µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
         }
@@ -603,12 +603,15 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
 
         // Popup test.
-        var result = popupMatch(openerURL, targetURL, µb.mouseURL);
+        var popupType = 'popup';
+        var result = popupMatch(openerURL, targetURL, µb.mouseURL, popupType);
 
         // Popunder test.
         if ( result === '' ) {
             var tmp = openerTabId; openerTabId = targetTabId; targetTabId = tmp;
-            result = popupMatch(targetURL, openerURL, µb.mouseURL, true);
+            popupType = 'popunder';
+            result = popupMatch(targetURL, openerURL, µb.mouseURL, popupType);
+            console.log('vAPI.tabs.onPopupUpdated: %s => %s (%s)', targetURL, openerURL, popupType);
         }
 
         // Log only for when there was a hit against an actual filter (allow or block).
@@ -617,7 +620,7 @@ vAPI.tabs.onPopupUpdated = (function() {
                 openerTabId,
                 'net',
                 result,
-                'popup',
+                popupType,
                 context.requestURL,
                 µb.URI.hostnameFromURI(context.rootURL),
                 µb.URI.hostnameFromURI(context.rootURL)

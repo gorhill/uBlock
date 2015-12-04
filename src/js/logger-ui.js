@@ -172,6 +172,7 @@ var filterDecompiler = (function() {
          6: 'subdocument',
          7: 'font',
          8: 'other',
+        11: 'popunder',
         12: 'document',
         13: 'elemhide',
         14: 'inline-script',
