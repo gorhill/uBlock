@@ -122,9 +122,16 @@ window.addEventListener('unload', function() {
     // frameModule needs to be cleared too
     var frameModuleURL = vAPI.getURL('frameModule.js');
     var frameModule = {};
-    Cu.import(frameModuleURL, frameModule);
-    frameModule.contentObserver.unregister();
-    Cu.unload(frameModuleURL);
+
+    // https://github.com/gorhill/uBlock/issues/1004
+    // For whatever reason, `Cu.import` can throw -- at least this was
+    // reported as happening for Pale Moon 25.8.
+    try {
+        Cu.import(frameModuleURL, frameModule);
+        frameModule.contentObserver.unregister();
+        Cu.unload(frameModuleURL);
+    } catch (ex) {
+    }
 });
 
 /******************************************************************************/
