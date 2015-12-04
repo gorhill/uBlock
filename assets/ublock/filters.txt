@@ -194,7 +194,7 @@ segmentnext.com###content > div > div[class] > div[class] > span[class]
 segmentnext.com###content > div > div[class] > div[class] > div[class]
 
 # http://forum.palemoon.org/viewtopic.php?f=46&t=10271#p71697
-||cdn.windows7themes.net/wp-content/advert.js$script,first-party
+@@||cdn.windows7themes.net/wp-content/advert.js$script,first-party
 
 # https://github.com/gorhill/uBlock/issues/991
 # New `popunder` filter option to explicitly block popunders.
