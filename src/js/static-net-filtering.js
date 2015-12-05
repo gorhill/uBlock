@@ -1622,8 +1622,10 @@ FilterParser.prototype.parse = function(raw) {
     // TODO: transforming `^` into `*` is not a strict interpretation of
     // ABP syntax.
     if ( this.reHasWildcard.test(s) ) {
+        s = s.replace(/^\*+([^%0-9a-z])/, '$1')  // remove pointless leading *
+             .replace(/([^%0-9a-z])\*+$/, '$1'); // remove pointless trailing *
+        s = trimChar(s, '^');
         s = s.replace(/\^/g, '*').replace(/\*\*+/g, '*');
-        s = trimChar(s, '*');
     }
 
     // nothing left?
