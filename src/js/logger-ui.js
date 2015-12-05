@@ -283,8 +283,9 @@ var filterDecompiler = (function() {
         return filter;
     };
 
-    var reEscape = /[.+?^${}()|[\]\\]/g;
+    var reEscape = /[.+?${}()|[\]\\]/g;
     var reWildcards = /\*+/g;
+    var reSeparator = /\^/g;
 
     var toRegex = function(compiled) {
         var vfields = compiled.split('\v');
@@ -302,6 +303,10 @@ var filterDecompiler = (function() {
         case '0ah':
         case '1a':
         case '1ah':
+        case '|a':
+        case '|ah':
+        case 'a|':
+        case 'a|h':
         case '_':
         case '_h':
         case '||a':
@@ -309,20 +314,9 @@ var filterDecompiler = (function() {
         case '||_':
         case '||_h':
             reStr = tfields[0]
-                        .replace(reEscape, '\\$&')
-                        .replace(reWildcards, '.*');
-            break;
-        case '|a':
-        case '|ah':
-            reStr = '^' + tfields[0].
-                        replace(reEscape, '\\$&')
-                        .replace(reWildcards, '.*');
-            break;
-        case 'a|':
-        case 'a|h':
-            reStr = tfields[0]
-                        .replace(reEscape, '\\$&')
-                        .replace(reWildcards, '.*') + '$';
+                    .replace(reEscape, '\\$&')
+                    .replace(reWildcards, '.*')
+                    .replace(reSeparator, '[^%.0-9a-z_-]');
             break;
         case '//':
         case '//h':
@@ -330,6 +324,14 @@ var filterDecompiler = (function() {
             break;
         default:
             break;
+        }
+
+        // Anchored?
+        var s = fid.slice(0, 2);
+        if ( s === '|a' ) {
+            reStr = '^' + reStr;
+        } else if ( s === 'a|' ) {
+            reStr += '$';
         }
 
         if ( reStr === undefined) {

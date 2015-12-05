@@ -208,7 +208,8 @@ var strToRegex = function(s, anchor, flags) {
 
     // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
-    var reStr = s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+    var reStr = s.replace(/[.+?${}()|[\]\\]/g, '\\$&')
+                 .replace(/\^/g, '[^%.0-9a-z_-]')
                  .replace(/\*/g, '[^ ]*?');
 
     if ( anchor < 0 ) {
@@ -1279,71 +1280,6 @@ FilterBucket.fromSelfie = function() {
 
 /******************************************************************************/
 
-var getFilterClass = function(details) {
-    if ( details.domainOpt.length !== 0 ) {
-        return getHostnameBasedFilterClass(details);
-    }
-    if ( details.isRegex ) {
-        return FilterRegex;
-    }
-    var s = details.f;
-    if ( s.indexOf('*') !== -1 || details.token === '*' ) {
-        if ( details.hostnameAnchored ) {
-            return FilterGenericHnAnchored;
-        }
-        return FilterGeneric;
-    }
-    if ( details.anchor < 0 ) {
-        return FilterPlainLeftAnchored;
-    }
-    if ( details.anchor > 0 ) {
-        return FilterPlainRightAnchored;
-    }
-    if ( details.hostnameAnchored ) {
-        return FilterPlainHnAnchored;
-    }
-    if ( details.tokenBeg === 0 ) {
-        return FilterPlainPrefix0;
-    }
-    if ( details.tokenBeg === 1 ) {
-        return FilterPlainPrefix1;
-    }
-    return FilterPlain;
-};
-
-/******************************************************************************/
-
-var getHostnameBasedFilterClass = function(details) {
-    if ( details.isRegex ) {
-        return FilterRegexHostname;
-    }
-    var s = details.f;
-    if ( s.indexOf('*') !== -1 || details.token === '*' ) {
-        if ( details.hostnameAnchored ) {
-            return FilterGenericHnAnchoredHostname;
-        }
-        return FilterGenericHostname;
-    }
-    if ( details.anchor < 0 ) {
-        return FilterPlainLeftAnchoredHostname;
-    }
-    if ( details.anchor > 0 ) {
-        return FilterPlainRightAnchoredHostname;
-    }
-    if ( details.hostnameAnchored ) {
-        return FilterPlainHnAnchoredHostname;
-    }
-    if ( details.tokenBeg === 0 ) {
-        return FilterPlainPrefix0Hostname;
-    }
-    if ( details.tokenBeg === 1 ) {
-        return FilterPlainPrefix1Hostname;
-    }
-    return FilterPlainHostname;
-};
-
-/******************************************************************************/
-
 // Trim leading/trailing char "c"
 
 var trimChar = function(s, c) {
@@ -1622,10 +1558,15 @@ FilterParser.prototype.parse = function(raw) {
     // TODO: transforming `^` into `*` is not a strict interpretation of
     // ABP syntax.
     if ( this.reHasWildcard.test(s) ) {
-        s = s.replace(/^\*+([^%0-9a-z])/, '$1')  // remove pointless leading *
-             .replace(/([^%0-9a-z])\*+$/, '$1'); // remove pointless trailing *
+        // remove pointless leading *
+        if ( s.charAt(0) === '*' ) {
+            s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+        }
+        // remove pointless trailing *
+        if ( s.slice(-1) === '*' ) {
+            s = s.replace(/([^%0-9a-z])\*+$/, '$1');
+        }
         s = trimChar(s, '^');
-        s = s.replace(/\^/g, '*').replace(/\*\*+/g, '*');
     }
 
     // nothing left?
@@ -1731,6 +1672,7 @@ var TokenEntry = function() {
 
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
+    this.reIsGeneric = /[\^\*]/;
     this.tokens = [];
     this.filterParser = new FilterParser();
     this.reset();
@@ -1899,6 +1841,66 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.getFilterClass = function(details) {
+    var s = details.f;
+
+    if ( details.domainOpt.length !== 0 ) {
+        if ( details.isRegex ) {
+            return FilterRegexHostname;
+        }
+        if ( this.reIsGeneric.test(s) ) {
+            if ( details.hostnameAnchored ) {
+                return FilterGenericHnAnchoredHostname;
+            }
+            return FilterGenericHostname;
+        }
+        if ( details.anchor < 0 ) {
+            return FilterPlainLeftAnchoredHostname;
+        }
+        if ( details.anchor > 0 ) {
+            return FilterPlainRightAnchoredHostname;
+        }
+        if ( details.hostnameAnchored ) {
+            return FilterPlainHnAnchoredHostname;
+        }
+        if ( details.tokenBeg === 0 ) {
+            return FilterPlainPrefix0Hostname;
+        }
+        if ( details.tokenBeg === 1 ) {
+            return FilterPlainPrefix1Hostname;
+        }
+        return FilterPlainHostname;
+    }
+
+    if ( details.isRegex ) {
+        return FilterRegex;
+    }
+    if ( this.reIsGeneric.test(s) ) {
+        if ( details.hostnameAnchored ) {
+            return FilterGenericHnAnchored;
+        }
+        return FilterGeneric;
+    }
+    if ( details.anchor < 0 ) {
+        return FilterPlainLeftAnchored;
+    }
+    if ( details.anchor > 0 ) {
+        return FilterPlainRightAnchored;
+    }
+    if ( details.hostnameAnchored ) {
+        return FilterPlainHnAnchored;
+    }
+    if ( details.tokenBeg === 0 ) {
+        return FilterPlainPrefix0;
+    }
+    if ( details.tokenBeg === 1 ) {
+        return FilterPlainPrefix1;
+    }
+    return FilterPlain;
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.compile = function(raw, out) {
     // ORDER OF TESTS IS IMPORTANT!
 
@@ -1993,7 +1995,7 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
         party = parsed.firstParty ? FirstParty : ThirdParty;
     }
 
-    var filterClass = getFilterClass(parsed);
+    var filterClass = this.getFilterClass(parsed);
     if ( filterClass === null ) {
         return false;
     }
