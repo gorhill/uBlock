@@ -204,11 +204,11 @@
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Последње враћање:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Последња резерва:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Сам освежи листе филтера.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -256,15 +256,15 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Малвер домени",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Друштвено",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Вишенаменски",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -296,7 +296,7 @@
     "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"Последње освежавање: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -320,11 +320,11 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Стална правила",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Привремена правила",
     "description":"header"
   },
   "rulesRevert":{
@@ -412,11 +412,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"филтрирај уносе дневника",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"Највише уноса дневника",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
@@ -460,23 +460,23 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"било одакле",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"осим кад",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"чак иако",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Статички филтер {{filter}} нађен у:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
-    "message":"Change log",
+    "message":"Дневник измена",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -492,7 +492,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
+    "message":"Резерва у фајл",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -500,11 +500,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Поврати из фајла...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Reset to default settings...",
+    "message":"Ресетуј на подразумеване поставке...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -528,7 +528,7 @@
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"a minute ago",
+    "message":"пре минут",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -560,7 +560,7 @@
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"off",
+    "message":"искључен",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
@@ -572,23 +572,23 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"без параметара",
     "description":"label to be used for the parameter-less URL"
   },
   "docblockedFoundIn":{
-    "message":"Found in:",
+    "message":"Нађен у:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"Иди назад",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"Затвори овај прозор",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"Искључи стриктно блокирање за {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -620,7 +620,7 @@
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
-    "message":"Revert",
+    "message":"Врати",
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
