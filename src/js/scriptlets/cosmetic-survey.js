@@ -74,8 +74,7 @@ var localMessager = vAPI.messaging.channel('scriptlets');
 localMessager.send({
     what: 'liveCosmeticFilteringData',
     pageURL: window.location.href,
-    filteredElementCount: filteredElementCount,
-    injectedSelectors: injectedSelectors
+    filteredElementCount: filteredElementCount
 }, function() {
     localMessager.close();
 });

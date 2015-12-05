@@ -693,6 +693,9 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
 /******************************************************************************/
 
 var cosmeticFilterMapper = (function() {
+    // https://github.com/gorhill/uBlock/issues/1015
+    var reSpecificityBooster = /^:root\s+/;
+
     // https://github.com/gorhill/uBlock/issues/546
     var matchesFnName;
     if ( typeof document.body.matches === 'function' ) {
@@ -714,7 +717,7 @@ var cosmeticFilterMapper = (function() {
         var i = selectors.length;
         var selector, nodes, j, node;
         while ( i-- ) {
-            selector = selectors[i];
+            selector = selectors[i].replace(reSpecificityBooster, '');
             if ( filterMap.has(rootNode) === false && rootNode[matchesFnName](selector) ) {
                 filterMap.set(rootNode, selector);
                 hideNode(node);

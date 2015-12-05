@@ -423,16 +423,18 @@ var uBlockCollapser = (function() {
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        var selectorStr = selectors.join(',\n');
+        // https://github.com/gorhill/uBlock/issues/1015
+        // Boost specificity of our CSS rules.
+        var styleText = ':root ' + selectors.join(',\n:root ');
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
-        style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
+        style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
         var parent = document.head || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
             vAPI.styles.push(style);
         }
-        hideElements(selectorStr);
+        hideElements(styleText);
         messager.send({
             what: 'cosmeticFiltersInjected',
             type: 'cosmetic',
