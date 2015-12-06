@@ -15,6 +15,3 @@
 ||aflrm.com^$subdocument,domain=dayt.se,redirect=noopframe,important
 ||dayt.se^*fuckadblock.js$script,redirect=fuckadblock.js-3.2.0,important
 ||imads.integral-marketing.com^$domain=dayt.se,important
-
-# googletagservices.com not blocked by EasyPrivacy (I don't know why).
-||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js
