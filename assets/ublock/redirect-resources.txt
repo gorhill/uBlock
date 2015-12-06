@@ -84,10 +84,18 @@ www.google-analytics.com/ga.js application/javascript
         ;
     };
     //
-    var gaq = function() {
+    var Gaq = function() {
         ;
     };
-    gaq.push = function(a) {
+    Gaq.prototype.Na = noopfn;
+    Gaq.prototype.O = noopfn;
+    Gaq.prototype.Sa = noopfn;
+    Gaq.prototype.Ta = noopfn;
+    Gaq.prototype.Va = noopfn;
+    Gaq.prototype._createAsyncTracker = noopfn;
+    Gaq.prototype._getAsyncTracker = noopfn;
+    Gaq.prototype._getPlugin = noopfn;
+    Gaq.prototype.push = function(a) {
         if ( typeof a === 'function' ) {
             a();
         }
@@ -100,6 +108,7 @@ www.google-analytics.com/ga.js application/javascript
     gat._getTrackerByName = function() { return tracker; };
     window._gat = gat;
     //
+    var gaq = new Gaq();
     (function() {
         var aa = window._gaq || [];
         if ( Array.isArray(aa) ) {
