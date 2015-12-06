@@ -2689,10 +2689,10 @@ vAPI.toolbarButton = {
             return;
         }
 
-        var palette = toolbox.palette;
-        var navbar = document.getElementById('nav-bar');
         var toolbarButton = createToolbarButton(window);
 
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/toolbarpalette
+        var palette = toolbox.palette;
         if ( palette && palette.querySelector('#' + tbb.id) === null ) {
             palette.appendChild(toolbarButton);
         }
@@ -2723,6 +2723,7 @@ vAPI.toolbarButton = {
                     break;
                 }
             }
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/Method/insertItem
             toolbar.insertItem(tbb.id, before);
             break;
         }
@@ -2734,6 +2735,7 @@ vAPI.toolbarButton = {
         // No button yet so give it a default location. If forcing the button,
         // just put in in the palette rather than on any specific toolbar (who
         // knows what toolbars will be available or visible!)
+        var navbar = document.getElementById('nav-bar');
         if ( navbar !== null && !vAPI.localStorage.getBool('legacyToolbarButtonAdded') ) {
             // https://github.com/gorhill/uBlock/issues/264
             // Find a child customizable palette, if any.
