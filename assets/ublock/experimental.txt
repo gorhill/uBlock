@@ -1,0 +1,18 @@
+# uBlock Origin -- Experimental filters.
+#
+# These filters are experimental and may cause breakage. They are being
+# evaluated/fine-tuned for inclusion in the default set of filters.
+#
+# The `important` filter option is often used here in order to ensure the
+# experimental filters are used, i.e. they will override existing exception
+# filters which might exist to unbreak known web page breakage.
+
+# googletagservices.com not blocked by EasyPrivacy (I don't know why).
+# This is a redirection-based filter being developed in order to be able
+# to safely block `googletagservices.com` everywhere by default.
+||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js,important
+
+
+# Replacement for `www.google-analytics.com/ga.js`: the goal is to be able to
+# block `www.google-analytics.com` while preventing web page breakage.
+||www.google-analytics.com/ga.js$script,redirect=www.google-analytics.com/ga.js,important

@@ -102,10 +102,30 @@ www.google-analytics.com/ga.js application/javascript
     };
     //
     var tracker = function() {};
-    tracker._getLinkerUrl = function(a) { return a; };
+    tracker._getLinkerUrl = function(a) {
+        return a;
+    };
     //
-    var gat = function() {};
-    gat._getTrackerByName = function() { return tracker; };
+    var Gat = function() {
+        ;
+    };
+    Gat.prototype._anonymizeIP = noopfn;
+    Gat.prototype._createTracker = noopfn;
+    Gat.prototype._forceSSL = noopfn;
+    Gat.prototype._getPlugin = noopfn;
+    Gat.prototype._getTracker = noopfn;
+    Gat.prototype._getTrackerByName = function() {
+        return tracker;
+    };
+    Gat.prototype._getTrackers = noopfn;
+    Gat.prototype.aa = noopfn;
+    Gat.prototype.ab = noopfn;
+    Gat.prototype.hb = noopfn;
+    Gat.prototype.la = noopfn;
+    Gat.prototype.oa = noopfn;
+    Gat.prototype.pa = noopfn;
+    Gat.prototype.u = noopfn;
+    var gat = new Gat();
     window._gat = gat;
     //
     var gaq = new Gaq();
@@ -117,7 +137,7 @@ www.google-analytics.com/ga.js application/javascript
             }
         }
     })();
-    window._gaq = gaq;
+    window._gaq = gaq.qf = gaq;
 })();
 
 
