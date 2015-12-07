@@ -64,10 +64,6 @@ if ( injectedSelectors.length === 0 ) {
     return;
 }
 
-// https://github.com/gorhill/uBlock/issues/1015
-// Remove runtime prefix used to augment the specificity of our CSS rules.
-var reSpecificityBooster = /^:root\s+/;
-
 var matchedSelectors = [];
 var selector;
 
@@ -81,7 +77,9 @@ while ( i-- ) {
         continue;
     }
     loggedSelectors[selector] = true;
-    matchedSelectors.push(selector.replace(reSpecificityBooster, ''));
+    // https://github.com/gorhill/uBlock/issues/1015
+    // Discard `:root ` prefix.
+    matchedSelectors.push(selector.slice(6));
 }
 
 vAPI.loggedSelectors = loggedSelectors;
