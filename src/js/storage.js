@@ -151,6 +151,12 @@
 /******************************************************************************/
 
 µBlock.saveUserFilters = function(content, callback) {
+    // https://github.com/gorhill/uBlock/issues/1022
+    // Be sure to end with an empty line.
+    content = content.trim();
+    if ( content !== '' ) {
+        content += '\n';
+    }
     this.assets.put(this.userFiltersPath, content, callback);
 };
 

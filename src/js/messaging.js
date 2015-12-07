@@ -862,10 +862,10 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'readUserFilters':
-        return µb.assets.get(µb.userFiltersPath, callback);
+        return µb.loadUserFilters(callback);
 
     case 'writeUserFilters':
-        return µb.assets.put(µb.userFiltersPath, request.content, callback);
+        return µb.saveUserFilters(request.content, callback);
 
     default:
         break;

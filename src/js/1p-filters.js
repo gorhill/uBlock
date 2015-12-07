@@ -143,17 +143,22 @@ var exportUserFiltersToFile = function() {
 /******************************************************************************/
 
 var applyChanges = function() {
+    var textarea = uDom.nodeFromId('userFilters');
+
     var onWritten = function(details) {
         if ( details.error ) {
             return;
         }
+        textarea.value = details.content;
         cachedUserFilters = details.content.trim();
         userFiltersChanged();
         allFiltersApplyHandler();
+        textarea.focus();
     };
+
     var request = {
         what: 'writeUserFilters',
-        content: uDom('#userFilters').val()
+        content: textarea.value
     };
     messager.send(request, onWritten);
 };
