@@ -190,34 +190,33 @@ var safeQuerySelectorAll = function(node, selector) {
 /******************************************************************************/
 
 var getElementBoundingClientRect = function(elem) {
-    var prect = typeof elem.getBoundingClientRect === 'function' ?
+    var rect = typeof elem.getBoundingClientRect === 'function' ?
         elem.getBoundingClientRect() :
         { height: 0, left: 0, top: 0, width: 0 };
 
     // https://github.com/gorhill/uBlock/issues/1024
     // Try not returning an empty bounding rect.
-    if ( prect.width !== 0 && prect.height !== 0 ) {
-        return prect;
+    if ( rect.width !== 0 && rect.height !== 0 ) {
+        return rect;
     }
 
-    var left = prect.left,
-        right = prect.right,
-        top = prect.top,
-        bottom = prect.bottom,
-        crect;
+    var left = rect.left,
+        right = rect.right,
+        top = rect.top,
+        bottom = rect.bottom;
 
     var children = elem.children,
         i = children.length;
 
     while ( i-- ) {
-        crect = getElementBoundingClientRect(children[i]);
-        if ( crect.width === 0 || crect.height === 0 ) {
+        rect = getElementBoundingClientRect(children[i]);
+        if ( rect.width === 0 || rect.height === 0 ) {
             continue;
         }
-        if ( crect.left < left ) { left = crect.left; }
-        if ( crect.right > right ) { right = crect.right; }
-        if ( crect.top < top ) { top = crect.top; }
-        if ( crect.bottom > bottom ) { bottom = crect.bottom; }
+        if ( rect.left < left ) { left = rect.left; }
+        if ( rect.right > right ) { right = rect.right; }
+        if ( rect.top < top ) { top = rect.top; }
+        if ( rect.bottom > bottom ) { bottom = rect.bottom; }
     }
 
     return {
