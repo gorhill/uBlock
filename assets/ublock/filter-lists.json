@@ -164,6 +164,12 @@
         "group": "regions",
         "supportURL": "https://github.com/liamja/Prebake"
         },
+    "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": {
+        "off": true,
+        "title": "KOR: YousList",
+        "group": "regions",
+        "supportURL": "https://github.com/yous/YousList"
+        },
     "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
         "off": true,
         "title": "ara: Liste AR",
