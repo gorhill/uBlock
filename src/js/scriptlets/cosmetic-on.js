@@ -71,6 +71,7 @@ while ( i-- ) {
     selectors.push(style.textContent.replace(reProperties, ''));
     if ( style.sheet !== null ) {
         style.sheet.disabled = false;
+        style[vAPI.sessionId] = undefined;
     }
 }
 

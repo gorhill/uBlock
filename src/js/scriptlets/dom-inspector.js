@@ -742,6 +742,7 @@ var cosmeticFilterMapper = (function() {
             nodesFromStyleTag(styleTag, rootNode);
             if ( styleTag.sheet !== null ) {
                 styleTag.sheet.disabled = true;
+                styleTag[vAPI.sessionId] = true;
             }
         }
     };
@@ -759,9 +760,9 @@ var cosmeticFilterMapper = (function() {
             styleTag = styleTags[i];
             if ( styleTag.sheet !== null ) {
                 styleTag.sheet.disabled = false;
+                styleTag[vAPI.sessionId] = undefined;
             }
         }
-        reset();
     };
 
     return {

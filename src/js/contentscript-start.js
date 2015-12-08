@@ -101,6 +101,7 @@ var cosmeticFilters = function(details) {
         // Boost specificity of our CSS rules.
         var styleText = ':root ' + hide.join(',\n:root ');
         var style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
