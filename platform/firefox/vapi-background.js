@@ -712,8 +712,24 @@ var getTabBrowser = (function() {
         };
     }
 
+    // https://github.com/gorhill/uBlock/issues/1004
+    //   Merely READING the `gBrowser` property causes the issue -- no
+    //   need to even use its returned value... This really should be fixed
+    //   in the browser.
+    //   Meanwhile, the workaround is to check whether the document is
+    //   ready. This is hacky, as the code below has to make assumption
+    //   about the browser's inner working -- specifically that the `gBrowser`
+    //   property should NOT be accessed before the document of the window is
+    //   in its ready state.
+
     return function(win) {
-        return win && win.gBrowser || null;
+        if ( win ) {
+            var doc = win.document;
+            if ( doc && doc.readyState === 'complete' ) {
+                return win.gBrowser || null;
+            }
+        }
+        return null;
     };
 })();
 
