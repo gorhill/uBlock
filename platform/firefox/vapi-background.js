@@ -3372,55 +3372,89 @@ vAPI.contextMenu.remove = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var optionsObserver = {
-    addonId: 'uBlock0@raymondhill.net',
+var optionsObserver = (function() {
+    var addonId = 'uBlock0@raymondhill.net';
 
-    register: function() {
-        Services.obs.addObserver(this, 'addon-options-displayed', false);
-        cleanupTasks.push(this.unregister.bind(this));
-
-        var browser = tabWatcher.currentBrowser();
-        if ( !browser ) {
-            return;
+    var commandHandler = function() {
+        switch ( this.id ) {
+        case 'showDashboardButton':
+            vAPI.tabs.open({ url: 'dashboard.html', index: -1 });
+            break;
+        case 'showNetworkLogButton':
+            vAPI.tabs.open({ url: 'logger-ui.html', index: -1 });
+            break;
+        default:
+            break;
         }
+    };
 
-        // https://github.com/gorhill/uBlock/issues/948
-        // Older versions of Firefox can throw here when looking up `currentURI`.
-        var currentURI;
-        try {
-            currentURI = browser.currentURI;
-        } catch (ex) {
-        }
-
-        if ( currentURI && currentURI.spec === 'about:addons' ) {
-            this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
-        }
-    },
-
-    unregister: function() {
-        Services.obs.removeObserver(this, 'addon-options-displayed');
-    },
-
-    setupOptionsButton: function(doc, id, page) {
+    var setupOptionsButton = function(doc, id) {
         var button = doc.getElementById(id);
         if ( button === null ) {
             return;
         }
-        button.addEventListener('command', function() {
-            vAPI.tabs.open({ url: page, index: -1 });
-        });
+        button.addEventListener('command', commandHandler);
         button.label = vAPI.i18n(id);
-    },
+    };
 
-    observe: function(doc, topic, addonId) {
-        if ( addonId !== this.addonId ) {
-            return;
+    var setupOptionsButtons = function(doc) {
+        setupOptionsButton(doc, 'showDashboardButton');
+        setupOptionsButton(doc, 'showNetworkLogButton');
+    };
+
+    var observer = {
+        observe: function(doc, topic, id) {
+            if ( id !== addonId ) {
+                return;
+            }
+
+            setupOptionsButtons(doc);
         }
+    };
 
-        this.setupOptionsButton(doc, 'showDashboardButton', 'dashboard.html');
-        this.setupOptionsButton(doc, 'showNetworkLogButton', 'logger-ui.html');
-    }
-};
+    // https://github.com/gorhill/uBlock/issues/948
+    // Older versions of Firefox can throw here when looking up `currentURI`.
+
+    var canInit = function() {
+        var ok;
+        try {
+            var tabBrowser = tabWatcher.currentBrowser();
+            ok = tabBrowser &&
+                 tabBrowser.currentURI &&
+                 tabBrowser.contentDocument &&
+                 tabBrowser.contentDocument.readyState === 'complete';
+        } catch (ex) {
+        }
+        return ok;
+    };
+
+    // Manually add the buttons if the `about:addons` page is already
+    // opened.
+
+    var init = function() {
+        if ( canInit() ) {
+            var tabBrowser = tabWatcher.currentBrowser();
+            if ( tabBrowser.currentURI.spec === 'about:addons' ) {
+                setupOptionsButtons(tabBrowser.contentDocument);
+            }
+        }
+    };
+
+    var unregister = function() {
+        Services.obs.removeObserver(observer, 'addon-options-displayed');
+    };
+
+    var register = function() {
+        Services.obs.addObserver(observer, 'addon-options-displayed', false);
+        cleanupTasks.push(unregister);
+        deferUntil(canInit, init);
+    };
+
+    return {
+        register: register,
+        unregister: unregister
+    };
+})();
 
 optionsObserver.register();
 
