@@ -611,7 +611,6 @@ vAPI.tabs.onPopupUpdated = (function() {
             var tmp = openerTabId; openerTabId = targetTabId; targetTabId = tmp;
             popupType = 'popunder';
             result = popupMatch(targetURL, openerURL, µb.mouseURL, popupType);
-            console.log('vAPI.tabs.onPopupUpdated: %s => %s (%s)', targetURL, openerURL, popupType);
         }
 
         // Log only for when there was a hit against an actual filter (allow or block).
