@@ -167,7 +167,7 @@ investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space)
 arstechnica.com##script:contains(ars.READY.push)
 1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,auto-motor-und-sport.de,autoextrem.de,boerse-online.de,buerstaedter-zeitung.de,computerbild.de,comunio.de,echo-online.de,fem.com,finanzen.net,focus.de,gamestar.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,motorradonline.de,notebookcheck.net,oberhessische-zeitung.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,rp-online.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,spiegel.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,usinger-anzeiger.de,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,wn.de,wormser-zeitung.de##script:contains(uabInject)
 activistpost.com,alfonzorachel.com,breathecast.com,bulletsfirst.net,clashdaily.com,comicallyincorrect.com,conservativebyte.com,cowboybyte.com,dailysurge.com,dccrimestories.com,drhotze.com,explosm.net,genfringe.com,girlsjustwannahaveguns.com,joeforamerica.com,latinpost.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,segmentnext.com,shark-tank.com,theblacksphere.net,thegatewaypundit,themattwalshblog.com,thepoke.co.uk,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com##script:contains(/^.{0,16}__durl=/)
-aussenwirtschaftslupe.de,autozeitung.de,brieffreunde.de,donnerwetter.de,formel1.de,fremdwort.de,helles-koepfchen.de,inside-handy.de,motorsport-total.com,moviejones.de,rechtslupe.de,wintotal.de##script:contains(window.tisoomi)
+aussenwirtschaftslupe.de,autozeitung.de,brieffreunde.de,donnerwetter.de,formel1.de,fremdwort.de,helles-koepfchen.de,inside-handy.de,motorsport-total.com,moviejones.de,news.de,rechtslupe.de,wintotal.de##script:contains(window.tisoomi)
 bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
 dayt.se##script:contains(adblock.php)
@@ -188,6 +188,10 @@ voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
 @@||allgemeine-zeitung.de*/ad_bomb/*$image,first-party
 20min.ch#@#.wingadblock
 spiegel.de#@#.wrapad
+
+# https://github.com/gorhill/uBlock/issues/1044#issuecomment-163725136
+||www.tisoomitech.com/*/ad-image.png$image,redirect=2x2-transparent.png
+||adswithsalt.com/*/ad-loading.pic$image,redirect=2x2-transparent.png
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700
 segmentnext.com###sidebar > div[class] > div[class] > div[class]
