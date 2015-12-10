@@ -190,9 +190,10 @@ voetbalzone.nl##script:contains(/^\s*?var\s+?init_ads/)
 spiegel.de#@#.wrapad
 
 # https://github.com/gorhill/uBlock/issues/1044#issuecomment-163725136
-||www.tisoomitech.com/*/ad-image.png$image,redirect=2x2-transparent.png
 ||adswithsalt.com/*/ad-loading.pic$image,redirect=2x2-transparent.png
 ||adternal.com/*/ad-loading.*$image,redirect=2x2-transparent.png
+||de/*/ad_bomb/*$image,redirect=2x2-transparent.png
+||tisoomitech.com/*/ad-image.png$image,redirect=2x2-transparent.png
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700
 segmentnext.com###sidebar > div[class] > div[class] > div[class]
