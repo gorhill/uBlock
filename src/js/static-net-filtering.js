@@ -1574,6 +1574,12 @@ FilterParser.prototype.parse = function(raw) {
         s = '*';
     }
 
+    // https://github.com/gorhill/uBlock/issues/1047
+    // Hostname-anchored makes no sense if matching all requests.
+    if ( s === '*' ) {
+        this.hostnameAnchored = false;
+    }
+
     // plain hostname?
     this.hostnamePure = this.hostnameAnchored && reHostnameRule.test(s);
 
