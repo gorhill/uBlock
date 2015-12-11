@@ -209,3 +209,8 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 # Older version of uBO will discard this unknown filter option -- so it's safe
 # to add it here now.
 |http://$popunder,third-party,domain=xhamster.com
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=27003
+www.opensubtitles.org##div[itemscope] > fieldset
+www.opensubtitles.org##.content > a[class]:not(id)
+www.opensubtitles.org##fieldset.intro:not([style])
