@@ -212,5 +212,5 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=27003
 www.opensubtitles.org##div[itemscope] > fieldset
-www.opensubtitles.org##.content > a[class]:not(id)
+www.opensubtitles.org##.content > a[class]:not([id])
 www.opensubtitles.org##fieldset.intro:not([style])
