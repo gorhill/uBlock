@@ -958,10 +958,12 @@ var uBlockCollapser = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-// To send mouse coordinates to context menu handler, as the chrome API fails
+// To send mouse coordinates to main process, as the chrome API fails
 // to provide the mouse position to context menu listeners.
-// This could be inserted in its own content script, but it's so simple that
-// I feel it's not worth the overhead.
+
+// https://github.com/chrisaljoudi/uBlock/issues/1143
+// Also, find a link under the mouse, to try to avoid confusing new tabs
+// as nuisance popups.
 
 // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
