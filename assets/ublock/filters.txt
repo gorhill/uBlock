@@ -213,3 +213,8 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 www.opensubtitles.org##div[itemscope] > fieldset
 www.opensubtitles.org##.content > a[class]:not([id])
 www.opensubtitles.org##fieldset.intro:not([style])
+
+# https://skystreaming.net/canali/sky/guarda-sky-sport-1-in-streaming-live
+skystreaming.net##script:contains(abisuq)
+@@||skystreaming.net^$generichide
+skystreaming.net###fanback + style + div[id]
