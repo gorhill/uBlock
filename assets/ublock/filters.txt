@@ -218,3 +218,6 @@ www.opensubtitles.org##fieldset.intro:not([style])
 skystreaming.net##script:contains(abisuq)
 @@||skystreaming.net^$generichide
 skystreaming.net###fanback + style + div[id]
+
+# https://github.com/gorhill/uBlock/issues/1049
+||d1zatounuylvwg.cloudfront.net/abw.js$script,third-party
