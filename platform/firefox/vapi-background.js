@@ -3432,27 +3432,22 @@ var optionsObserver = (function() {
     // Older versions of Firefox can throw here when looking up `currentURI`.
 
     var canInit = function() {
-        var ok;
         try {
             var tabBrowser = tabWatcher.currentBrowser();
-            ok = tabBrowser &&
-                 tabBrowser.currentURI &&
-                 tabBrowser.contentDocument &&
-                 tabBrowser.contentDocument.readyState === 'complete';
+            return tabBrowser &&
+                   tabBrowser.currentURI &&
+                   tabBrowser.currentURI.spec === 'about:addons' &&
+                   tabBrowser.contentDocument &&
+                   tabBrowser.contentDocument.readyState === 'complete';
         } catch (ex) {
         }
-        return ok;
     };
 
-    // Manually add the buttons if the `about:addons` page is already
-    // opened.
+    // Manually add the buttons if the `about:addons` page is already opened.
 
     var init = function() {
         if ( canInit() ) {
-            var tabBrowser = tabWatcher.currentBrowser();
-            if ( tabBrowser.currentURI.spec === 'about:addons' ) {
-                setupOptionsButtons(tabBrowser.contentDocument);
-            }
+            setupOptionsButtons(tabWatcher.currentBrowser().contentDocument);
         }
     };
 
@@ -3463,7 +3458,7 @@ var optionsObserver = (function() {
     var register = function() {
         Services.obs.addObserver(observer, 'addon-options-displayed', false);
         cleanupTasks.push(unregister);
-        deferUntil(canInit, init);
+        deferUntil(canInit, init, { next: 463 });
     };
 
     return {
