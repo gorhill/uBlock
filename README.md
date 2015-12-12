@@ -129,7 +129,7 @@ You can install the latest version [manually](https://github.com/gorhill/uBlock/
 
 [Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/). There is also a development version if you want to test uBlock Origin with the latest changes: see [_uBlock Origin Version History_](https://addons.mozilla.org/addon/ublock-origin/versions/beta)
 
-uBlock Origin is compatible with SeaMonkey, Pale Moon and possibly other browsers based on Firefox.
+uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/) and possibly other browsers based on Firefox.
 
 The Firefox version of uBlock Origin has [an extra feature](https://github.com/gorhill/uBlock/wiki/Inline-script-tag-filtering) currently not yet available on Chromium-based browsers -- which feature is of great help to foil attempts by many web sites to circumvent blockers.
 
