@@ -606,8 +606,10 @@ vAPI.tabs.onPopupUpdated = (function() {
         var popupType = 'popup';
         var result = popupMatch(openerURL, targetURL, µb.mouseURL, popupType);
 
-        // Popunder test.
-        if ( result === '' ) {
+        // Popunder test. Ignore if the target URL was opened by clicking on
+        // a link, or else this could prevent opening a legitimate site for
+        // which there is a very broad popunder filter.
+        if ( result === '' && targetURL !== µb.mouseURL ) {
             var tmp = openerTabId; openerTabId = targetTabId; targetTabId = tmp;
             popupType = 'popunder';
             result = popupMatch(targetURL, openerURL, µb.mouseURL, popupType);
