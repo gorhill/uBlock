@@ -1303,7 +1303,8 @@ var trimChar = function(s, c) {
 
 var FilterParser = function() {
     this.reHasWildcard = /[\^\*]/;
-    this.reCanTrimCarets = /^([^*]*|[^^]+\^[^^]+)$/;
+    this.reCanTrimCarets1 = /^[^*]*$/;
+    this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
     this.reHasUppercase = /[A-Z]/;
     this.reCleanupHostname = /^\|\|[.*]*/;
     this.reIsolateHostname = /^([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
@@ -1568,7 +1569,7 @@ FilterParser.prototype.parse = function(raw) {
             s = s.replace(/([^%0-9a-z])\*+$/, '$1');
         }
         // https://github.com/gorhill/uBlock/issues/1056
-        if ( this.reCanTrimCarets.test(s) ) {
+        if ( this.reCanTrimCarets1.test(s) && this.reCanTrimCarets2.test(s) ) {
             s = trimChar(s, '^');
         }
     }
