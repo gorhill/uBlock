@@ -167,6 +167,10 @@
     "message":"نمایش تعداد درخواست های بلاک شده بر روی آیکون",
     "description":"English: Show the number of blocked requests on the icon"
   },
+  "settingsTooltipsPrompt":{
+    "message":"Disable tooltips",
+    "description":"A checkbox in the Settings pane"
+  },
   "settingsContextMenuPrompt":{
     "message":"استفاده از منوی متنی در زمانهای لازم",
     "description":"English: Make use of context menu where appropriate"
@@ -573,7 +577,7 @@
   },
   "docblockedNoParamsPrompt":{
     "message":"without parameters",
-    "description":"label to be used for the parameter-less URL"
+    "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
     "message":"Found in:",

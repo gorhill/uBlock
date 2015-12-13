@@ -167,6 +167,10 @@
     "message":"Hiển thị số lượng yêu cầu bị chặn trên biểu tượng",
     "description":"English: Show the number of blocked requests on the icon"
   },
+  "settingsTooltipsPrompt":{
+    "message":"Vô hiệu mách nước",
+    "description":"A checkbox in the Settings pane"
+  },
   "settingsContextMenuPrompt":{
     "message":"Dùng menu ngữ cảnh nơi thích hợp",
     "description":"English: Make use of context menu where appropriate"
@@ -573,7 +577,7 @@
   },
   "docblockedNoParamsPrompt":{
     "message":"không có thông số",
-    "description":"label to be used for the parameter-less URL"
+    "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
     "message":"Tìm thấy trong:",

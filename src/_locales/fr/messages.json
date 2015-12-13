@@ -167,6 +167,10 @@
     "message":"Afficher le nombre de requêtes bloquées sur l'icône",
     "description":"English: Show the number of blocked requests on the icon"
   },
+  "settingsTooltipsPrompt":{
+    "message":"Désactiver les infobulles",
+    "description":"A checkbox in the Settings pane"
+  },
   "settingsContextMenuPrompt":{
     "message":"Utiliser le menu contextuel si possible",
     "description":"English: Make use of context menu where appropriate"
@@ -573,7 +577,7 @@
   },
   "docblockedNoParamsPrompt":{
     "message":"sans paramètres",
-    "description":"label to be used for the parameter-less URL"
+    "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
     "message":"Trouvé dans :",
