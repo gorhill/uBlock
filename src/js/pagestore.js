@@ -447,10 +447,6 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 /******************************************************************************/
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
-    if ( this.getNetFilteringSwitch() === false ) {
-        return false;
-    }
-
     var tabContext = µb.tabContextManager.mustLookup(this.tabId);
 
     if ( µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname) ) {

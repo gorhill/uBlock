@@ -134,9 +134,11 @@ var netFilters = function(details) {
 var filteringHandler = function(details) {
     var styleTagCount = vAPI.styles.length;
 
-    vAPI.skipCosmeticFiltering = !details || details.skipCosmeticFiltering;
     if ( details ) {
-        if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
+        if (
+            (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
+            (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
+        ) {
             cosmeticFilters(details);
         }
         if ( details.netHide.length !== 0 ) {

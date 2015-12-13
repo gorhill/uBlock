@@ -295,7 +295,8 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         tabId: tabId,
-        tabTitle: tabTitle
+        tabTitle: tabTitle,
+        tooltipsDisabled: µb.userSettings.tooltipsDisabled
     };
 
     var pageStore = µb.pageStoreFromTabId(tabId);
@@ -469,8 +470,11 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
     case 'retrieveDomainCosmeticSelectors':
-        if ( pageStore && pageStore.getSpecificCosmeticFilteringSwitch() ) {
+        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+            if ( response && response.skipCosmeticFiltering !== true ) {
+                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
+            }
         }
         break;
 
