@@ -223,4 +223,7 @@ skystreaming.net###fanback + style + div[id]
 ||d1zatounuylvwg.cloudfront.net/abw.js$script,third-party
 
 # https://github.com/gorhill/uBlock/issues/1053
-||zinturax.com^$popunder,script,document
+||zinturax.com^$document,popunder,script
+
+# https://github.com/gorhill/uBlock/issues/995
+||trafficstars.com^$document,popunder
