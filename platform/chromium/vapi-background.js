@@ -109,7 +109,10 @@ vAPI.browserSettings = {
                 break;
 
             case 'webrtcIPAddress':
-                if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled === 'object' ) {
+                if (
+			typeof chrome.privacy.network.webRTCMultipleRoutesEnabled === 'object' &&
+			! window.navigator.platform.match(/OpenBSD/)
+		) {
                     try {
                         chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
                             value: !!details[setting],
