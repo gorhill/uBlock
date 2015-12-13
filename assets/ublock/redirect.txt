@@ -3,7 +3,7 @@
 # The redirect tokens reference an entry in the resource library:
 # https://github.com/gorhill/uBlock/blob/master/assets/ublock/redirect-resources.txt
 
-||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=cdnapi.kaltura.com|spiegel.de,redirect=hd-main.js
+||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=cdnapi.kaltura.com|spiegel.de|stern.de,redirect=hd-main.js
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
 
 # Proof of concept: no need to open ourselves to more 3rd-party scripts/frames in
