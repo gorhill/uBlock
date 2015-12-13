@@ -170,9 +170,15 @@
         "group": "regions",
         "supportURL": "https://github.com/yous/YousList"
         },
-    "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
+    "https://easylist-downloads.adblockplus.org/Liste_AR.txt": {
         "off": true,
         "title": "ara: Liste AR",
+        "group": "regions",
+        "supportURL": "https://forums.lanik.us/viewforum.php?f=98"
+        },
+    "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
+        "off": true,
+        "title": "ara: Liste AR (obsolete, will be removed soon)",
         "group": "regions",
         "supportURL": "https://code.google.com/p/liste-ar-adblock/"
         },
