@@ -814,30 +814,39 @@ var getPopupData = function(tabId) {
 /******************************************************************************/
 
 var onShowTooltip = function() {
-    if ( popupData.advancedUserEnabled ) {
+    if ( popupData.tooltipsDisabled ) {
         return;
     }
 
-    var tip = document.getElementById('tooltip');
     var target = this;
 
+    // Tooltip container
+    var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
+              document.body;
+    var ttcRect = ttc.getBoundingClientRect();
+
+    // Tooltip itself
+    var tip = uDom.nodeFromId('tooltip');
     tip.textContent = target.getAttribute('data-tip');
     tip.style.removeProperty('top');
     tip.style.removeProperty('bottom');
+    ttc.appendChild(tip);
+
+    // Target rect
+    var targetRect = target.getBoundingClientRect();
 
     // Default is "over"
     var pos;
     var over = target.getAttribute('data-tip-position') !== 'under';
     if ( over ) {
-        pos = document.body.getBoundingClientRect().height -
-              target.getBoundingClientRect().top;
+        pos = ttcRect.height - targetRect.top + ttcRect.top;
         tip.style.setProperty('bottom', pos + 'px');
     } else {
-        pos = target.getBoundingClientRect().bottom;
+        pos = targetRect.bottom - ttcRect.top;
         tip.style.setProperty('top', pos + 'px');
     }
 
-    uDom(tip).addClass('show');
+    tip.classList.add('show');
 };
 
 var onHideTooltip = function() {

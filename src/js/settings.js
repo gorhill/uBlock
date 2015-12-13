@@ -162,65 +162,16 @@ var changeUserSettings = function(name, value) {
 // TODO: use data-* to declare simple settings
 
 var onUserSettingsReceived = function(details) {
-    uDom('#collapse-blocked')
-        .prop('checked', details.collapseBlocked === true)
-        .on('change', function(){
-            changeUserSettings('collapseBlocked', this.checked);
-        });
-
-    uDom('#icon-badge')
-        .prop('checked', details.showIconBadge === true)
-        .on('change', function(){
-            changeUserSettings('showIconBadge', this.checked);
-        });
-
-    uDom('#context-menu-enabled')
-        .prop('checked', details.contextMenuEnabled === true)
-        .on('change', function(){
-            changeUserSettings('contextMenuEnabled', this.checked);
-        });
-
-    uDom('#color-blind-friendly')
-        .prop('checked', details.colorBlindFriendly === true)
-        .on('change', function(){
-            changeUserSettings('colorBlindFriendly', this.checked);
-        });
-
-    uDom('#cloud-storage-enabled')
-        .prop('checked', details.cloudStorageEnabled === true)
-        .on('change', function(){
-            changeUserSettings('cloudStorageEnabled', this.checked);
-        });
-
-    uDom('#advanced-user-enabled')
-        .prop('checked', details.advancedUserEnabled === true)
-        .on('change', function(){
-            changeUserSettings('advancedUserEnabled', this.checked);
-        });
-
-    uDom('#prefetching-disabled')
-        .prop('checked', details.prefetchingDisabled === true)
-        .on('change', function(){
-            changeUserSettings('prefetchingDisabled', this.checked);
-        });
-
-    uDom('#hyperlink-auditing-disabled')
-        .prop('checked', details.hyperlinkAuditingDisabled === true)
-        .on('change', function(){
-            changeUserSettings('hyperlinkAuditingDisabled', this.checked);
-        });
-
-    uDom('#webrtc-ipaddress-hidden')
-        .prop('checked', details.webrtcIPAddressHidden === true)
-        .on('change', function(){
-            changeUserSettings('webrtcIPAddressHidden', this.checked);
-        });
-
-    uDom('#experimental-enabled')
-        .prop('checked', details.experimentalEnabled === true)
-        .on('change', function(){
-            changeUserSettings('experimentalEnabled', this.checked);
-        });
+    uDom('[data-setting-type="bool"]').forEach(function(uNode) {
+        var input = uNode.nodeAt(0);
+        uNode.prop('checked', details[input.getAttribute('data-setting-name')] === true)
+             .on('change', function() {
+                changeUserSettings(
+                    this.getAttribute('data-setting-name'),
+                    this.checked
+                );
+            });
+    });
 
     uDom('#export').on('click', exportToFile);
     uDom('#import').on('click', startImportFilePicker);

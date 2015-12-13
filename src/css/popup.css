@@ -211,11 +211,10 @@ body.advancedUser #panes.dfEnabled h2:before {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
-    bottom: 0.7em;
     color: #888;
     cursor: pointer;
     display: none;
-    font-size: 42px;
+    font-size: 3.5em;
     left: 4px;
     line-height: 1;
     padding: 4px 8px;
@@ -245,7 +244,7 @@ body.dirty #refresh:hover {
     opacity: 0;
     padding: 4px 6px;
     pointer-events: none;
-    position: fixed;
+    position: absolute;
     text-align: center;
     visibility: hidden;
     white-space: pre-line;
