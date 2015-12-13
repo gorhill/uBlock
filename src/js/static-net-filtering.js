@@ -101,7 +101,6 @@ var AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 var AllowAnyType = AllowAction | AnyType;
 var AllowAnyParty = AllowAction | AnyParty;
 
-var reHostnameRule = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
 var reURLPostHostnameAnchors = /[\/?#]/;
 
 // ABP filters: https://adblockplus.org/en/filters
@@ -1279,35 +1278,17 @@ FilterBucket.fromSelfie = function() {
 };
 
 /******************************************************************************/
-
-// Trim leading/trailing char "c"
-
-var trimChar = function(s, c) {
-    // Remove leading and trailing wildcards
-    var pos = 0;
-    while ( s.charAt(pos) === c ) {
-        pos += 1;
-    }
-    s = s.slice(pos);
-    if ( (pos = s.length) ) {
-        while ( s.charAt(pos-1) === c ) {
-            pos -= 1;
-        }
-        s = s.slice(0, pos);
-    }
-    return s;
-};
-
-/******************************************************************************/
 /******************************************************************************/
 
 var FilterParser = function() {
+    this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
+    this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/;
+    this.reCleanupHostnameRule2 = /^\**|\^$/g;
     this.reHasWildcard = /[\^\*]/;
     this.reCanTrimCarets1 = /^[^*]*$/;
     this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
     this.reHasUppercase = /[A-Z]/;
-    this.reCleanupHostname = /^\|\|[.*]*/;
-    this.reIsolateHostname = /^([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
+    this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.domainOpt = '';
     this.reset();
@@ -1465,8 +1446,8 @@ FilterParser.prototype.parse = function(raw) {
 
     var s = this.raw = raw;
 
-    // plain hostname?
-    if ( reHostnameRule.test(s) ) {
+    // plain hostname? (from HOSTS file)
+    if ( this.reHostnameRule1.test(s) ) {
         this.f = s;
         this.hostnamePure = this.hostnameAnchored = true;
         return this;
@@ -1526,13 +1507,13 @@ FilterParser.prototype.parse = function(raw) {
     // hostname-anchored
     if ( s.lastIndexOf('||', 0) === 0 ) {
         this.hostnameAnchored = true;
-        // cleanup: `||example.com`, `||*.example.com^`, `||.example.com/*`
-        s = s.replace(this.reCleanupHostname, '');
+        s = s.slice(2);
+
         // convert hostname to punycode if needed
         if ( this.reHasUnicode.test(s) ) {
             var matches = this.reIsolateHostname.exec(s);
-            if ( matches && matches.length === 3 ) {
-                s = punycode.toASCII(matches[1]) + matches[2];
+            if ( matches ) {
+                s = matches[1] + punycode.toASCII(matches[2]) + matches[3];
                 //console.debug('µBlock.staticNetFilteringEngine/FilterParser.parse():', raw, '=', s);
             }
         }
@@ -1540,6 +1521,13 @@ FilterParser.prototype.parse = function(raw) {
         // https://github.com/chrisaljoudi/uBlock/issues/1096
         if ( s.charAt(0) === '^' ) {
             this.unsupported = true;
+            return this;
+        }
+
+        // plain hostname? (from ABP filter list)
+        if ( this.reHostnameRule2.test(s) ) {
+            this.f = s.replace(this.reCleanupHostnameRule2, '');
+            this.hostnamePure = true;
             return this;
         }
     }
@@ -1557,8 +1545,6 @@ FilterParser.prototype.parse = function(raw) {
     }
 
     // normalize placeholders
-    // TODO: transforming `^` into `*` is not a strict interpretation of
-    // ABP syntax.
     if ( this.reHasWildcard.test(s) ) {
         // remove pointless leading *
         if ( s.charAt(0) === '*' ) {
@@ -1567,10 +1553,6 @@ FilterParser.prototype.parse = function(raw) {
         // remove pointless trailing *
         if ( s.slice(-1) === '*' ) {
             s = s.replace(/([^%0-9a-z])\*+$/, '$1');
-        }
-        // https://github.com/gorhill/uBlock/issues/1056
-        if ( this.reCanTrimCarets1.test(s) && this.reCanTrimCarets2.test(s) ) {
-            s = trimChar(s, '^');
         }
     }
 
@@ -1584,9 +1566,6 @@ FilterParser.prototype.parse = function(raw) {
     if ( s === '*' ) {
         this.hostnameAnchored = false;
     }
-
-    // plain hostname?
-    this.hostnamePure = this.hostnameAnchored && reHostnameRule.test(s);
 
     // This might look weird but we gain memory footprint by not going through
     // toLowerCase(), at least on Chromium. Because copy-on-write?
