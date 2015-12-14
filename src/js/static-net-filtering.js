@@ -208,7 +208,7 @@ var strToRegex = function(s, anchor, flags) {
     // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
     var reStr = s.replace(/[.+?${}()|[\]\\]/g, '\\$&')
-                 .replace(/\^/g, '[^%.0-9a-z_-]')
+                 .replace(/\^/g, '(?:[^%.0-9a-z_-]|$)')
                  .replace(/\*/g, '[^ ]*?');
 
     if ( anchor < 0 ) {

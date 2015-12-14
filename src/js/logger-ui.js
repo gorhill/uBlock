@@ -283,6 +283,7 @@ var filterDecompiler = (function() {
         return filter;
     };
 
+    var reEscapeHostname = /[.[\]]/g;
     var reEscape = /[.+?${}()|[\]\\]/g;
     var reWildcards = /\*+/g;
     var reSeparator = /\^/g;
@@ -295,7 +296,8 @@ var filterDecompiler = (function() {
 
         switch ( fid ) {
         case '.':
-            reStr = vfields[2].replace(reEscape, '\\$&');
+            reStr = vfields[2].replace(reEscapeHostname, '\\$&') +
+                    '(?:[^%.0-9a-z_-]|$)';
             break;
         case 'a':
         case 'ah':
@@ -316,7 +318,7 @@ var filterDecompiler = (function() {
             reStr = tfields[0]
                     .replace(reEscape, '\\$&')
                     .replace(reWildcards, '.*')
-                    .replace(reSeparator, '[^%.0-9a-z_-]');
+                    .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
             break;
         case '//':
         case '//h':
