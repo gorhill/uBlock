@@ -300,13 +300,13 @@ var hostnameMissTest = function(owner) {
     return pageHostnameRegister.slice(1 - hostname.length) !== hostname.slice(1);
 };
 
-var hostnameHitSetTest = function(owner) {
+var hostnameSetTest = function(owner, setValue, defaultValue) {
     var dict = owner._hostnameDict;
     var needle = pageHostnameRegister;
     var pos;
     for (;;) {
         if ( dict[needle] ) {
-            return true;
+            return setValue;
         }
         pos = needle.indexOf('.');
         if ( pos === -1 ) {
@@ -314,25 +314,15 @@ var hostnameHitSetTest = function(owner) {
         }
         needle = needle.slice(pos + 1);
     }
-    return false;
+    return defaultValue;
+};
+
+var hostnameHitSetTest = function(owner) {
+    return hostnameSetTest(owner, true, false);
 };
 
 var hostnameMissSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var pos;
-    for (;;) {
-        if ( dict[needle] ) {
-            return false;
-        }
-        pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
-        needle = needle.slice(pos + 1);
-    }
-
-    return true;
+    return hostnameSetTest(owner, false, true);
 };
 
 var hostnameMixedSetTest = function(owner) {
