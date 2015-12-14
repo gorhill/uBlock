@@ -53,9 +53,12 @@ fuckadblock.js-3.2.0 application/javascript
     Fab.prototype.on = function(a, b) {
         if ( !a ) { b(); }
     };
-    Fab.prototype.onDetected = noopfn;
+    Fab.prototype.onDetected = function() {
+        return this;
+    };
     Fab.prototype.onNotDetected = function(a) {
         a();
+        return this;
     };
     Fab.prototype.setOption = noopfn;
     window.FuckAdBlock = Fab;
