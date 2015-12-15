@@ -304,7 +304,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i ngjasojë atyre që përdor Adblock Plus. Rreshtat që kanë si parashtesë &lsquo;!&rsquo; nuk do të merren parasysh.",
+    "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i ngjasojë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDo ktheni parametrat origjinalë?",
+    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDo i ktheni parametrat origjinalë?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

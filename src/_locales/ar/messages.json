@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock₀",
+    "message":"يو بلوك أوريجين",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -168,7 +168,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Disable tooltips",
+    "message":"تعطيل التلميحات",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -244,7 +244,7 @@
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"لستة مواقع المحضوره",
+    "message":"قائمة المواقع المحجوبة",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{

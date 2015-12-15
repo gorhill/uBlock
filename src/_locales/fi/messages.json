@@ -168,7 +168,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Disable tooltips",
+    "message":"Poista käytöstä työkaluvinkit",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -176,11 +176,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Värisokea ystävällinen",
+    "message":"Värisokeaystävällinen",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Käytä pilvitallennusta",
+    "message":"Ota käyttöön tuki pilvitallennukselle",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -188,7 +188,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Poista käytöstä esihaku (estää yhteydet estettyihin verkkopyyntöihin)",
+    "message":"Poista käytöstä esihaku (estääksesi yhteydet estettyihin verkkopyyntöihin)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Muistia käytetty: {{value}} tavua",
+    "message":"Tilaa käytetty: {{value}} tavua",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -216,7 +216,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} verkkosuodattimet＋ {{cosmeticFilterCount}} ehostetut suodattimet:",
+    "message":"{{netFilterCount}} verkkosuodatinta＋ {{cosmeticFilterCount}} ehostettua suodatinta kohteesta:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -240,7 +240,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Tämä asetus kytkee päälle <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-yhteensopivat &ldquo;elementtejä piilottavat&rdquo; suodattimet<\/a>. Nämä suodattimet ovat pääasiassa ehosteita. Ne piilottavat verkkosivuilta elementtejä, jotka ovat visuaalisesti häiritseviä eikä niitä voi estää verkkopyyntöihin pohjautuvalla suodatinmoottorilla. <\/p><p>Tämä ominaisuus nostaa <i>uBlock<\/i>in muistinkäyttöä.<\/p>",
+    "message":"<p>Tämä asetus ottaa käyttöön <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-yhteensopivat &ldquo;elementtejä piilottavat&rdquo; suodattimet<\/a>. Nämä suodattimet ovat pääasiassa ehosteita. Ne piilottavat verkkosivuilta elementtejä, jotka ovat visuaalisesti häiritseviä eikä niitä voi estää verkkopyyntöihin pohjautuvalla suodatinmoottorilla. <\/p><p>Tämä ominaisuus nostaa <i>uBlock<\/i>in muistinkäyttöä.<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -440,7 +440,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} verkkopyyntö {{type}} {{br}}jonka URL-osoite vastaa {{url}} {{br}}ja joka on peräisin {{origin}},{{br}}{{importance}} löytyy vastaava poikkeussuodatin.",
+    "message":"{{action}} verkkopyyntö {{type}}, {{br}}jonka URL-osoite vastaa {{url}} {{br}}ja joka on peräisin {{origin}},{{br}}{{importance}} löytyy vastaava poikkeussuodatin.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"{{origin}} -sta",
+    "message":"kohteesta \"{{origin}}\"",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Kaikki asetuksesi korvataan käyttäen tietoja, jotka on varmuuskopioitu {{time}} ja µBlock käynnistyy uudelleen.\nPäällekirjoitetaanko kaikki nykyiset asetukset käyttäen varmuuskopioituja tietoja?",
+    "message":"Kaikki asetuksesi korvataan käyttäen tietoja, jotka on varmuuskopioitu {{time}} ja uBlock₀ käynnistyy uudelleen.\nPäällekirjoitetaanko kaikki nykyiset asetukset käyttäen varmuuskopioituja tietoja?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Kaikki tallennetut asetuksesi poistetaan ja µBlock käynnistyy uudelleen. \n\nPalauta oletusasetukset?",
+    "message":"Kaikki asetuksesi poistetaan ja uBlock₀ käynnistyy uudelleen. \n\nPalautetaanko uBlock₀ oletusasetuksiin?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi?\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
+    "message":"uBlock₀: Lisää seuraava URL-osoite mukautettujen suodattimien luetteloihisi?\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -616,7 +616,7 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"Laitteen nimi:",
+    "message":"Tämän laitteen nimi:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{

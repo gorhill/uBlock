@@ -168,7 +168,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Desabilitar dicas",
+    "message":"Desativar dicas",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{

@@ -43,7 +43,7 @@ Bijdragers @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Onthoud dat dit een hele vroege verse is wanneer je een review maakt.
+Onthoud dat dit een hele vroege versie is wanneer je een review maakt.
 
 Projectwijzigingenlogboek:
 https://github.com/gorhill/uBlock/releases
