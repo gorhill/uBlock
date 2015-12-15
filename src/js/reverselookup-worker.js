@@ -99,7 +99,7 @@ var fromNetFilter = function(details) {
 
 var fromCosmeticFilter = function(details) {
     var filter = details.rawFilter;
-    var exception = filter.lastIndexOf('#@#', 0) === 0;
+    var exception = filter.startsWith('#@#');
 
     filter = exception ? filter.slice(3) : filter.slice(2);
 

@@ -824,7 +824,7 @@ vAPI.net.registerListeners = function() {
         // something else. Test case for "unfriendly" font URLs:
         //   https://www.google.com/fonts
         if ( details.type === 'object' ) {
-            if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('font/', 0) === 0 ) {
+            if ( headerValue(details.responseHeaders, 'content-type').startsWith('font/') ) {
                 details.type = 'font';
                 var r = onBeforeRequestClient(details);
                 if ( typeof r === 'object' && r.cancel === true ) {

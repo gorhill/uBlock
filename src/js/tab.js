@@ -453,7 +453,7 @@ vAPI.tabs.onNavigation = function(details) {
     // TODO: Eventually, we will have to use an API to check whether a scheme
     //       is supported as I suspect we are going to start to see `ws`, `wss`
     //       as well soon.
-    if ( pageStore && tabContext.rawURL.lastIndexOf('http', 0) === 0 ) {
+    if ( pageStore && tabContext.rawURL.startsWith('http') ) {
         pageStore.hostnameToCountMap[tabContext.rootHostname] = 0;
     }
 };
@@ -618,7 +618,7 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // If the page URL is that of our "blocked page" URL, extract the URL of
         // the page which was blocked.
-        if ( targetURL.lastIndexOf(vAPI.getURL('document-blocked.html'), 0) === 0 ) {
+        if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
             var matches = /details=([^&]+)/.exec(targetURL);
             if ( matches !== null ) {
                 targetURL = JSON.parse(atob(matches[1])).url;

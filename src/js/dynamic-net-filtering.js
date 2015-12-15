@@ -89,7 +89,7 @@ var isIPAddress = function(hostname) {
     if ( reIPv4VeryCoarse.test(hostname) ) {
         return true;
     }
-    return hostname.charAt(0) === '[';
+    return hostname.startsWith('[');
 };
 
 /******************************************************************************/
@@ -325,7 +325,7 @@ var is3rdParty = function(srcHostname, desHostname) {
     // etc.
     var srcDomain = domainFromHostname(srcHostname) || srcHostname;
 
-    if ( desHostname.slice(0 - srcDomain.length) !== srcDomain ) {
+    if ( desHostname.endsWith(srcDomain) === false ) {
         return true;
     }
     // Do not confuse 'example.com' with 'anotherexample.com'
@@ -548,7 +548,7 @@ Matrix.prototype.fromString = function(text, append) {
 
         // Ignore special rules:
         //   hostname-based switch rules
-        if ( fields[0].slice(-1) === ':' ) {
+        if ( fields[0].endsWith(':') ) {
             continue;
         }
 

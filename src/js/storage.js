@@ -125,7 +125,7 @@
             // https://github.com/gorhill/uBlock/issues/277
             // uBlock's filter lists are always enabled by default, so we
             // have to include in backup only those which are turned off.
-            if ( path.lastIndexOf('assets/ublock/', 0) === 0 ) {
+            if ( path.startsWith('assets/ublock/') ) {
                 if ( entry.off !== true ) {
                     delete result[path];
                 }

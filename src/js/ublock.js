@@ -47,7 +47,9 @@ var isHandcraftedWhitelistDirective = function(directive) {
 var matchWhitelistDirective = function(url, hostname, directive) {
     // Directive is a plain hostname
     if ( directive.indexOf('/') === -1 ) {
-        return hostname.slice(-directive.length) === directive;
+        return hostname.endsWith(directive) &&
+              (hostname.length === directive.length ||
+               hostname.charAt(hostname.length - directive.length - 1) === '.');
     }
     // Match URL exactly
     if ( directive.indexOf('*') === -1 ) {
@@ -187,7 +189,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         }
 
         // Don't throw out commented out lines: user might want to fix them
-        if ( line.charAt(0) === '#' ) {
+        if ( line.startsWith('#') ) {
             key = '#';
             directive = line;
         }

@@ -179,7 +179,7 @@ URI.set = function(uri) {
     }
     this.hostname = matches[1] !== undefined ? matches[1] : '';
     // http://en.wikipedia.org/wiki/FQDN
-    if ( this.hostname.slice(-1) === '.' ) {
+    if ( this.hostname.endsWith('.') ) {
         this.hostname = this.hostname.slice(0, -1);
     }
     this.port = matches[2] !== undefined ? matches[2].slice(1) : '';
@@ -271,7 +271,7 @@ URI.hostnameFromURI = function(uri) {
     }
     // http://en.wikipedia.org/wiki/FQDN
     var hostname = matches[1];
-    if ( hostname.slice(-1) === '.' ) {
+    if ( hostname.endsWith('.') ) {
         hostname = hostname.slice(0, -1);
     }
     return hostname.toLowerCase();

@@ -191,7 +191,7 @@ var FilterHostname = function(s, hostname) {
 };
 
 FilterHostname.prototype.retrieve = function(hostname, out) {
-    if ( hostname.slice(-this.hostname.length) === this.hostname ) {
+    if ( hostname.endsWith(this.hostname) ) {
         out.push(this.s);
     }
 };
@@ -219,7 +219,7 @@ var FilterEntity = function(s, entity) {
 };
 
 FilterEntity.prototype.retrieve = function(entity, out) {
-    if ( entity.slice(-this.entity.length) === this.entity ) {
+    if ( entity.endsWith(this.entity) ) {
         out.push(this.s);
     }
 };
@@ -244,7 +244,6 @@ var FilterParser = function() {
     this.hostnames = [];
     this.invalid = false;
     this.cosmetic = true;
-    this.reScriptContains = /^script:contains\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -321,7 +320,7 @@ FilterParser.prototype.parse = function(raw) {
     // Cosmetic filters with explicit style properties can apply only:
     // - to specific cosmetic filters (those which apply to a specific site)
     // - to block cosmetic filters (not exception cosmetic filters)
-    if ( this.suffix.slice(-1) === '}' ) {
+    if ( this.suffix.endsWith('}') ) {
         // Not supported for now: this code will ensure some backward
         // compatibility for when cosmetic filters with explicit style
         // properties start to be in use.
@@ -341,7 +340,7 @@ FilterParser.prototype.parse = function(raw) {
     // Normalize high-medium selectors: `href` is assumed to imply `a` tag. We
     // need to do this here in order to correctly avoid duplicates. The test
     // is designed to minimize overhead -- this is a low occurrence filter.
-    if ( this.suffix.charAt(1) === '[' && this.suffix.slice(2, 9) === 'href^="' ) {
+    if ( this.suffix.startsWith('[href^="', 1) ) {
         this.suffix = this.suffix.slice(1);
     }
 
@@ -357,9 +356,9 @@ FilterParser.prototype.parse = function(raw) {
 
     // Inline script tag filter?
     if (
-        this.suffix.charAt(0) !== 's' ||
-        this.reScriptContains.test(this.suffix) === false )
-    {
+        this.suffix.startsWith('script:contains(') === false ||
+        this.suffix.endsWith(')') === false
+    ) {
         return this;
     }
 
@@ -370,17 +369,17 @@ FilterParser.prototype.parse = function(raw) {
         return this;
     }
 
-    var suffix = this.suffix;
+    var suffix = this.suffix.slice(16, -1);
     this.suffix = 'script//:';
 
     // Plain string-based?
-    if ( suffix.charAt(16) !== '/' || suffix.slice(-2) !== '/)' ) {
-        this.suffix += suffix.slice(16, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if ( suffix.startsWith('/') === false || suffix.endsWith('/') === false ) {
+        this.suffix += suffix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         return this;
     }
 
     // Regex-based
-    this.suffix += suffix.slice(17, -2).replace(/\\/g, '\\');
+    this.suffix += suffix.slice(1, -1);
 
     // Valid regex?
     if ( isBadRegex(this.suffix) ) {
@@ -687,7 +686,7 @@ FilterContainer.prototype.isValidSelector = (function() {
             return true;
         } catch (e) {
         }
-        if ( s.lastIndexOf('script//:', 0) === 0 ) {
+        if ( s.startsWith('script//:') ) {
             return true;
         }
         console.error('uBlock> invalid cosmetic filter:', s);
@@ -730,10 +729,10 @@ FilterContainer.prototype.compile = function(s, out) {
     var hostname;
     while ( i-- ) {
         hostname = hostnames[i];
-        if ( hostname.charAt(0) !== '~' ) {
+        if ( hostname.startsWith('~') === false ) {
             applyGlobally = false;
         }
-        if ( hostname.slice(-2) === '.*' ) {
+        if ( hostname.endsWith('.*') ) {
             this.compileEntitySelector(hostname, parsed, out);
         } else {
             this.compileHostnameSelector(hostname, parsed, out);
@@ -839,7 +838,7 @@ FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\
 FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, out) {
     // https://github.com/chrisaljoudi/uBlock/issues/145
     var unhide = parsed.unhide;
-    if ( hostname.charAt(0) === '~' ) {
+    if ( hostname.startsWith('~') ) {
         hostname = hostname.slice(1);
         unhide ^= 1;
     }
@@ -915,7 +914,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         // h	ir	twitter.com	.promoted-tweet
         if ( fields[0] === 'h' ) {
             // Special filter: script tags. Not a real CSS selector.
-            if ( fields[3].lastIndexOf('script//:', 0) === 0 ) {
+            if ( fields[3].startsWith('script//:') ) {
                 this.createScriptTagFilter(fields[2], fields[3].slice(9));
                 continue;
             }
@@ -951,7 +950,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         // entity	selector
         if ( fields[0] === 'e' ) {
             // Special filter: script tags. Not a real CSS selector.
-            if ( fields[2].lastIndexOf('script//:', 0) === 0 ) {
+            if ( fields[2].startsWith('script//:') ) {
                 this.createScriptTagFilter(fields[1], fields[2].slice(9));
                 continue;
             }
@@ -1224,16 +1223,17 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
 /******************************************************************************/
 
 FilterContainer.prototype.removeFromSelectorCache = function(targetHostname, type) {
+    var targetHostnameLength = targetHostname.length;
     for ( var hostname in this.selectorCache ) {
         if ( this.selectorCache.hasOwnProperty(hostname) === false ) {
             continue;
         }
         if ( targetHostname !== '*' ) {
-            if ( hostname.slice(0 - targetHostname.length) !== targetHostname ) {
+            if ( hostname.endsWith(targetHostname) === false ) {
                 continue;
             }
-            if ( hostname.length !== targetHostname.length &&
-                 hostname.charAt(0 - targetHostname.length - 1) !== '.' ) {
+            if ( hostname.length !== targetHostnameLength &&
+                 hostname.charAt(hostname.length - targetHostnameLength - 1) !== '.' ) {
                 continue;
             }
         }

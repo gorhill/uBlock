@@ -92,7 +92,7 @@ var indexOfMatch = function(urls, url) {
         if ( entry.url.length > urlLen ) {
             continue;
         }
-        if ( url.lastIndexOf(entry.url, 0) === 0 ) {
+        if ( url.startsWith(entry.url) ) {
             return i;
         }
     }

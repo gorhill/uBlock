@@ -80,7 +80,7 @@ var isIPAddress = function(hostname) {
     if ( reIPv4VeryCoarse.test(hostname) ) {
         return true;
     }
-    return hostname.charAt(0) === '[';
+    return hostname.startsWith('[');
 };
 
 /******************************************************************************/
@@ -177,7 +177,7 @@ HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newSta
         if ( hostname.length <= targetLen ) {
             continue;
         }
-        if ( hostname.slice(-targetLen) !== targetHostname ) {
+        if ( hostname.endsWith(targetHostname) === false ) {
             continue;
         }
         if ( hostname.charAt(hostname.length - targetLen - 1) !== '.' ) {

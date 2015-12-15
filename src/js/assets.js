@@ -312,7 +312,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
         // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
         var text = this.responseText.trim();
-        if ( text.charAt(0) === '<' && text.slice(-1) === '>' ) {
+        if ( text.startsWith('<') && text.endsWith('>') ) {
             return onError.call(this);
         }
         return onLoad.call(this);
