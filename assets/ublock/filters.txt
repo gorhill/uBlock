@@ -227,3 +227,9 @@ skystreaming.net###fanback + style + div[id]
 
 # https://github.com/gorhill/uBlock/issues/995
 ||trafficstars.com^$document,popunder
+
+# https://github.com/gorhill/uBlock/issues/1079
+# These are just used by obnoxious click-bait ads with obfuscated links -- they
+# appear as 1st-party links but redirect to 3rd-party sites.
+||c8factor.com^
+||k5zoom.com^
