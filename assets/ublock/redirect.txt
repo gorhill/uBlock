@@ -17,4 +17,4 @@
 ||imads.integral-marketing.com^$domain=dayt.se,important
 
 # https://github.com/gorhill/uBlock/issues/1078
-||eurotransport.de/*/antiAdBlock.js$script,first-party,redirect=AntiAdBlock.js
+||eurotransport.de/*/antiAdBlock.js$script,first-party,redirect=antiAdBlock.js

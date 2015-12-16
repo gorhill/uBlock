@@ -67,7 +67,7 @@ fuckadblock.js-3.2.0 application/javascript
 })();
 
 
-AntiAdBlock.js application/javascript
+antiAdBlock.js application/javascript
 (function() {
     window.antiAdBlock = {
         onDetected: function() {
