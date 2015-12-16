@@ -67,6 +67,19 @@ fuckadblock.js-3.2.0 application/javascript
 })();
 
 
+AntiAdBlock.js application/javascript
+(function() {
+    window.antiAdBlock = {
+        onDetected: function() {
+            ;
+        },
+        onNotDetected: function(a) {
+            a();
+        }
+    };
+})();
+
+
 noopframe text/html
 <!DOCTYPE html>
 <html>

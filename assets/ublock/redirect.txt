@@ -15,3 +15,6 @@
 ||aflrm.com^$subdocument,domain=dayt.se,redirect=noopframe,important
 ||dayt.se^*fuckadblock.js$script,redirect=fuckadblock.js-3.2.0,important
 ||imads.integral-marketing.com^$domain=dayt.se,important
+
+# https://github.com/gorhill/uBlock/issues/1078
+||eurotransport.de/*/antiAdBlock.js$script,first-party,redirect=AntiAdBlock.js
