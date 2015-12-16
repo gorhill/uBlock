@@ -2380,7 +2380,7 @@ vAPI.net.registerListeners = function() {
         vAPI.tabs.onNavigation({
             frameId: 0,
             tabId: tabId,
-            url: details.url,
+            url: details.url
         });
     };
 
