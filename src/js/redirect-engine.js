@@ -235,6 +235,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             srcs = option.slice(7).split('|');
             continue;
         }
+        if ( option === 'first-party' ) {
+            srcs.push(des);
+            continue;
+        }
         // One and only one type must be specified.
         if ( option in this.supportedTypes ) {
             if ( type !== undefined ) {

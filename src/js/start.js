@@ -222,7 +222,6 @@ var onFirstFetchReady = function(fetched) {
         return;
     }
 
-    µb.loadRedirectResources();
     µb.loadPublicSuffixList(onPSLReady);
 };
 

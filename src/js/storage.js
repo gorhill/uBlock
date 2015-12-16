@@ -436,6 +436,7 @@
     };
 
     this.getAvailableLists(onFilterListsReady);
+    this.loadRedirectResources();
 };
 
 /******************************************************************************/
@@ -888,10 +889,6 @@
     // Assets are supposed to have been all updated, prevent fetching from
     // remote servers.
     µb.assets.remoteFetchBarrier += 1;
-
-    if ( details.hasOwnProperty('assets/ublock/redirect-resources.txt') ) {
-        µb.loadRedirectResources();
-    }
 
     var onFiltersReady = function() {
         µb.assets.remoteFetchBarrier -= 1;
