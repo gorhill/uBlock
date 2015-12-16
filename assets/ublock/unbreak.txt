@@ -234,7 +234,3 @@ marketwatch.com#@#.advertisement
 
 # As reported in AMO feedback section
 @@||nationalreview.com/sites/all/themes/*/assets/js/chartbeat.js$script
-
-# https://github.com/gorhill/uBlock/issues/1016
-@@||sales.liveperson.net^
-@@||adminlogin.liveperson.net^
