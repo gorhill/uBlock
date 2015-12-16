@@ -27,7 +27,7 @@ noopcss text/css
 
 
 noopjs application/javascript
-function() {
+(function() {
     ;
 })();
 
