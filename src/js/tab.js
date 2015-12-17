@@ -444,7 +444,7 @@ vAPI.tabs.onNavigation = function(details) {
     }
 
     var tabContext = µb.tabContextManager.commit(details.tabId, details.url);
-    var pageStore = µb.bindTabToPageStats(details.tabId, 'afterNavigate');
+    var pageStore = µb.bindTabToPageStats(details.tabId, 'tabChanged');
 
     // https://github.com/chrisaljoudi/uBlock/issues/630
     // The hostname of the bound document must always be present in the
@@ -453,8 +453,12 @@ vAPI.tabs.onNavigation = function(details) {
     // TODO: Eventually, we will have to use an API to check whether a scheme
     //       is supported as I suspect we are going to start to see `ws`, `wss`
     //       as well soon.
-    if ( pageStore && tabContext.rawURL.startsWith('http') ) {
-        pageStore.hostnameToCountMap[tabContext.rootHostname] = 0;
+    if (
+        pageStore &&
+        tabContext.rawURL.startsWith('http') &&
+        pageStore.hostnameToCountMap.hasOwnProperty(tabContext.rootHostname) === false
+    ) {
+        pageStore.hostnameToCountMap[tabContext.rootHostname] = 0x00010000;
     }
 };
 
