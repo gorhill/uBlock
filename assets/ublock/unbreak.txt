@@ -237,3 +237,6 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1016#issuecomment-165153899
 @@||liveperson.net^$first-party
+
+# https://github.com/gorhill/uBlock/issues/1082
+@@||widgets.outbrain.com/outbrain.js$script,domain=www.themarker.com
