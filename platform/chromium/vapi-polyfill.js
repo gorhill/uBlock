@@ -122,7 +122,7 @@ if ( typeof self.Map !== 'function' ) {
         return this._map[k];
     };
 
-    self.Set.prototype.has = function(k) {
+    self.Map.prototype.has = function(k) {
         return this._map[k] !== undefined;
     };
 
