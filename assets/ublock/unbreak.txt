@@ -240,3 +240,6 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1082
 @@||widgets.outbrain.com/outbrain.js$script,domain=www.themarker.com
+
+# https://github.com/gorhill/uBlock/issues/1081
+@@||google-analytics.com/ga.js$domain=one.co.il
