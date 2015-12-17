@@ -237,6 +237,7 @@ body.dirty #refresh:hover {
     box-sizing: border-box;
     color: black;
     cursor: pointer;
+    direction: ltr;
     font: 12px sans-serif;
     left: 5%;
     line-height: 130%;
@@ -251,13 +252,15 @@ body.dirty #refresh:hover {
     width: 90%;
     z-index: 100;
     }
+body[dir="rtl"] #tooltip {
+    direction: rtl;
+    }
 #tooltip.show {
-    transition: opacity 0.2s 0.7s;
-    -webkit-transition: opacity 0.2s 0.7s;
+    transition: opacity 0.15s 0.5s;
+    -webkit-transition: opacity 0.15s 0.5s;
     visibility: visible;
     opacity: 1;
     }
-
 
 #firewallContainer {
     border: 0;

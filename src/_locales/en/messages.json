@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Network request log",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Logger",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"About",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
-    "description":"English: Go to request log"
+    "message":"Open the logger",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Toggle the blocking of all popups for this site",
@@ -90,6 +90,14 @@
   "popupTipNoRemoteFonts":{
     "message":"Toggle the blocking of remote fonts for this site",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Global rules: this column is for rules which apply to all sites.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupAnyRulePrompt":{
     "message":"all",
