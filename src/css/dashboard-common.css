@@ -16,10 +16,14 @@ a {
     text-decoration: none;
     }
 a.info {
-    color: #ccc;
+    color: black;
+    opacity: 0.3;
     }
 a.info:hover {
-    color: #444;
+    opacity: 0.9
+    }
+a.info.important {
+    color: orangered;
     }
 button {
     padding: 0.33em;
