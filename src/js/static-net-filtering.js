@@ -1429,7 +1429,10 @@ FilterParser.prototype.parseOptions = function(s) {
             this.unsupported = true;
             break;
         }
-
+        // Used by Adguard, purpose is unclear -- just ignore for now.
+        if ( opt === 'empty' ) {
+            continue;
+        }
         // Unrecognized filter option: ignore whole filter.
         this.unsupported = true;
         break;
