@@ -814,8 +814,10 @@ var uBlockCollapser = (function() {
     // effect on the document), and thus must be logged if needed.
     var addedNodesHandler = function() {
         addedNodeListsTimer = null;
-        var nodeList, iNode, node;
-        while ( (nodeList = addedNodeLists.pop()) ) {
+        var iNodeList = addedNodeLists.length,
+            nodeList, iNode, node;
+        while ( iNodeList-- ) {
+            nodeList = addedNodeLists[iNodeList];
             iNode = nodeList.length;
             while ( iNode-- ) {
                 node = nodeList[iNode];
@@ -829,6 +831,7 @@ var uBlockCollapser = (function() {
                 collapser.iframesFromNode(node);
             }
         }
+        addedNodeLists.length = 0;
         if ( contextNodes.length !== 0 ) {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
