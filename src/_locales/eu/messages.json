@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Sare eskarien egunkaria",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Egunkaria",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Honi buruz",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Joan eskarien egunkarira",
-    "description":"English: Go to request log"
+    "message":"Ireki egunkarira",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Txandakatu laster-leihoen blokeoa gune honetan",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Txandakatu urruneko letra tipoen blokeoa gune honetan",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Arau orokorrak: Zutabe hau gune guztietan aplikatzen diren arauentzat da.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da. Tokiko arauek arau orokorrak gainidazten dituzte.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Sakatu aldaketak gordetzeko.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Sakatu aldaketak desegiteko.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"guztiak",

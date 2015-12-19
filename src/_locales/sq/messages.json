@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Kërkesat e rrjetit",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Info",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Hap ditarin e kërkesave",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Bllokoj të gjitha dritaret automatike që hap kjo faqja",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Bllokoj sistemet e shkronjave në distancë",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Rregullat globale: rregullat në këtë shtyllë zbatohen te të gjitha faqet.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Rregullat lokale: rregullat në këtë shtyllë zbatohen vetëm te kjo faqja.\nRregullat lokale kanë më përparësi se rregullat globale.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klikoni që t'i bëni ndryshimet të përhershme.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klikoni që t'i zhbëni ndryshimet.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"të gjitha",

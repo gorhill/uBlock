@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Logg för nätverksbegäranden",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Om",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Gå till logg",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Växla blockering av popup-fönster för denna sida",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Växla blockering för hämtning av typsnitt på sidan",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globala regler: denna kolumn avser regler som gäller alla sidor.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Regionala regler: denna kolumn avser regler som endast gäller den sidan.\nRegionala regler överskrider globala regler.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Tryck för att göra ändringarna beständiga.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Tryck för att ångra ändringar.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"alla",

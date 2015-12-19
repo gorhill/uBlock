@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock Origin",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -32,15 +32,15 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock Origin — Journal des requêtes réseau",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Journal des requêtes réseau",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"À propos",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic : Désactiver\/activer uBlock Origin pour ce site.\n\nCtrl+clic : Désactiver uBlock Origin uniquement sur cette page.",
+    "message":"Clic : Désactiver\/Activer uBlock Origin pour ce site.\n\nCtrl+clic : Désactiver uBlock Origin uniquement sur cette page.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Consulter le journal des requêtes",
-    "description":"English: Go to request log"
+    "message":"Ouvrir le journal des requêtes",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Activer\/Désactiver le blocage des fenêtres pop-ups pour ce site",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Basculer le blocage de polices distantes pour ce site",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Règles globales : Cette colonne concerne des règles qui s'appliquent partout.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Règles locales : Cette colonne concerne des règles qui ne s'appliquent que sur le site actuellement visité.\nLes règles locales supplantent les règles globales.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Cliquez pour rendre les changements opérés permanents.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Cliquez pour annuler les changements opérés.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"Tout",
@@ -528,7 +544,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock Origin : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",
+    "message":"uBlock₀ : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

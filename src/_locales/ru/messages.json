@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Журнал сетевых запросов",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"О расширении",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Перейти к журналу запросов",
-    "description":"English: Go to request log"
+    "message":"Открыть журнал сетевых запросов",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Вкл\/Выкл блокировку всех всплывающих окон на этом сайте",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Вкл\/Выкл блокировку сторонних шрифтов на этом сайте",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Глобальные правила: эта колонка предназначена для правил, применяемых ко всем сайтам.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Локальные правила: эта колонка предназначена для правил, применяемых только к текущему сайту.\nЛокальные правила замещают глобальные.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Нажмите, чтобы сохранить изменения.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Нажмите, чтобы отменить изменения.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"все",

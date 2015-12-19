@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Catatan Permintaan Jaringan",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Pencatat Log",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Tentang",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Kunjungi catatan permintaan",
-    "description":"English: Go to request log"
+    "message":"Buka pencatat log",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Alihkan pemblokiran semua popup untuk situs ini",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Jungkit pemblokiran fon pihak ketiga untuk situs ini",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Aturan global: kolom ini untuk aturan yang diterapkan ke semua situs.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Aturan lokal: kolom ini untuk aturan yang diterapkan ke situs yang sedang dikunjungi saja.\nAturan lokal menimpa aturan global.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klik untuk membuat ubahan Anda permanen.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klik untuk membatalkan ubahan Anda.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"semua",

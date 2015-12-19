@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — מתעד בקשות רשת",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — מתעד הבקשות",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"אודות",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"עבור למתעד הבקשות",
-    "description":"English: Go to request log"
+    "message":"פתח את מתעד הבקשות",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"הפעל\/כבה את החסימה של חלונות קופצים באתר זה",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"הפעל\/כבה את החסימה של פונטים חיצוניים באתר זה",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"חוקים גלובליים: עמודה זו היא עבור חוקים אשר תקפים לכל האתרים.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"חוקים לוקאליים: עמודה זו היא עבור חוקים אשר תקפים לאתר הנוכחי בלבד.\nחוקים לוקאליים דורסים את החוקים גלובליים.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"לחץ על מנת להפוך את השינויים שלך לקבועים.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"לחץ על מנת לבטל את השינויים שלך.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"הכל",

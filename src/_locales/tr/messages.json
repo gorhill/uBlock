@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Ağ istek günlüğü",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Günlükçü",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Hakkında",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"İstek günlüğüne git",
-    "description":"English: Go to request log"
+    "message":"Günlükçüyü açar",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Bu site için açılır pencere engellemeyi aç\/kapa",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Bu site için uzak yazıtiplerini engellemeyi aç\/kapa",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Genel kurallar: bu sütun tüm sitelere uygulanan kurallar içindir.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Yerel kurallar: bu sütun yalnızca geçerli siteye uygulanan kurallar içindir.\nYerel kurallar genel kuralları geçersiz kılar.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Değişikliklerinizi kalıcı kılmak için tıklayın.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Değişikliklerinizi geri almak için tıklayın.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"tümü",
@@ -560,7 +576,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Günlüğü Göster",
+    "message":"Günlükçüyü Göster",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Дневник на мрежовите заявки",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Относно",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Преглед на дневника със заявки",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Превключване блокирането на всички изскачащи прозорци за този сайт",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Превключване блокирането на странични шрифтове за този сайт",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Глобални правила: тази колона е за правила, прилагани за всички сайтове.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Локални правила: тази колона е за правила, прилагани само за текущия сайт. Локалните правила са с приоритет пред глобалните.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Щракнете, за да направите промените постоянни.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Щракнете, за да отмените вашите промени.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"Всички",

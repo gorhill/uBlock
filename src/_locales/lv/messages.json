@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Tīkla pieprasījumu žurnāls",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Par",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Doties uz pieprasījumu žurnālu",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Ieslēgt\/Izslēgt uznirstošos logus šajā vietnē",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Pārslēgt ārējo fontu bloķēšanu šai vietnei",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globālie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies uz visām mājaslapām.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Vietējie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies tikai uz konkrēto mājaslapu.\nVietējie ierobežojumi pārraksta globālos ierobežojumus.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Nokliķšķināt šeit, lai saglabātu izmaiņas.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Noklikšķināt šeit, lai atceltu izmaiņas.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"Visi",

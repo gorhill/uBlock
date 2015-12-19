@@ -32,15 +32,15 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Registo de pedidos de rede",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Registo de pedidos",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Sobre",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o uBlock₀ para este sítio web.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
+    "message":"Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -72,24 +72,40 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir para o registo de pedidos",
-    "description":"English: Go to request log"
+    "message":"Abrir o registo de pedidos",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Alternar o bloqueio de todos os popups para este sítio web",
+    "message":"Alternar o bloqueio de todos os popups para este site",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Alternar o bloqueio estrito para este sítio web",
+    "message":"Alternar o bloqueio estrito para este site",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Alternar a filtragem cosmética para este sítio web",
+    "message":"Alternar a filtragem cosmética para este site",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Alternar o bloqueio de fontes remotas para este sítio",
+    "message":"Alternar o bloqueio de fontes remotas para este site",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Regras globais: esta coluna especifica as regras para todos os sites.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Regras locais: esta coluna especifica as regras para este site.\nAs regras locais sobrepõem-se às regras globais.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Clique para tornar as alterações permanentes.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Clique para reverter as alterações.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"tudo",
@@ -464,7 +480,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"de qualquer sítio",
+    "message":"de qualquer lugar",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{

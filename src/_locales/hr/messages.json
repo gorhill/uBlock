@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Zapisnik mrežnih zahtjeva",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"O programu",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Odlazak na zapisnik zahtjeva",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Uključi\/isključi skočne prozore na ovoj stranici",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Uključi\/isključi blokiranje udaljenih fontova za ovu stranicu",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globalna pravila: ovaj stupac je za pravila koja vrijede za sve stranice.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokalna pravila: ovaj stupac je za pravila koja vrijede samo za trenutnu stranicu.\nLokalna pravila nadjačavaju globalna pravila.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Click to make your changes permanent.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Click to revert your changes.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"sve",

@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Netwerkverzoeken-logboek",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Logboek",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Over",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Naar verzoekenlogboek gaan",
-    "description":"English: Go to request log"
+    "message":"Naar logboek gaan",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Alle pop-ups voor deze website in-\/uitschakelen",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Blokkeren van externe lettertypen voor deze site in-\/uitschakelen",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globale regels: deze kolom is voor regels die op alle sites van toepassing zijn.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokale regels: deze kolom is voor regels die alleen op de huidige site van toepassing zijn.\nLokale regels hebben voorrang op globale regels.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klik om je veranderingen permanent te maken.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klik om je veranderingen terug te draaien.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"alles",

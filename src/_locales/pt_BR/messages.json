@@ -32,15 +32,15 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Registro de pedidos de rede",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Registro de Eventos",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Sobre",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
+    "message":"Clique: desativar\/ativar o uBlock₀para este site.\n\nCtrl+clique: desativar o uBlock₀apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir para o registro de pedidos",
-    "description":"English: Go to request log"
+    "message":"Abrir Registro de Eventos",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Alternar o bloqueio de todos popups para este site",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Alternar o bloqueio de fontes remotas para este site",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Regras globais: esta coluna é para as regras que se aplicam a todos os sites.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Regras locais: esta coluna é para as regras que se aplicam somente ao site atual.\nRegras locais substituem regras globais.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Clique para fazer suas mudanças permanentes.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Clique para reverter suas mudanças.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"tudo",

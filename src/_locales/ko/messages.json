@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — 네트워크 요청 로그",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — 로그",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"정보",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"네트워크 요청 로그로 이동",
-    "description":"English: Go to request log"
+    "message":"로그로 이동",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"이 사이트에서 팝업 차단 토글",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"이 사이트에서 글꼴조정 차단 토글",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"공용 규칙: 이 열은 모든 사이트에 적용되는 규칙 열 입니다.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"로컬 규칙: 이 열은 현재 사이트만 적용되는 규칙 열 입니다.\n로컬 규칙은 공용 규칙보다 우선권을 가지고 있습니다.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"클릭하여 영구적으로 변경사항을 저장합니다.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"클릭하여 변경사항 적용을 되돌립니다.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"전체",

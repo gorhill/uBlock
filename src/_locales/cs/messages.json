@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Záznamy síťových požadavků",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Logger",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"O rozšíření",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Log požadavků",
-    "description":"English: Go to request log"
+    "message":"Otevřít logger",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Přepnout blokování  všech vyskakovacích oken pro tento web",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Přepnout blokování vzdálených fontů pro tento web",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globální pravidla: tento sloupec slouží pro pravidla, která platí pro všechny weby.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokální pravidla: tento sloupec slouží pro pravidla, která platí pouze pro aktuální web.\nLokální pravidla přepisují globální pravidla.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Kliknutím použijete změny.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Kliknutím vrátíte změny.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"vše",

@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Hálózati lekérések naplója",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Névjegy",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Naplózott lekérések megtekintése",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Oldal összes felugró ablakának blokkolása\/engedélyezése",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Távoli betűkészletek blokkolásának ki\/bekapcsolása ezen az oldalon",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globális szabályok: ebben az oszlopban azok a szabályok vannak, amelyek minden weboldalra vonatkoznak.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokális szabályok: ebben az oszlopban azok a szabályok vannak, amelyek csak a jelenlegi weboldalra vonatkoznak.\nA lokális szabályok felülírják a globális szabályokat.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Kattintson a módosítások véglegesítéséhez.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Kattintson ide a módosítások visszavonásához.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"minden",

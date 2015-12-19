@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ – Dziennik żądań sieciowych",
-    "description":"Title for the network request log window"
+    "message":"uBlock — Dziennik żądań sieciowych",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Informacje",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Przejdź do dziennika żądań",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Włącz\/wyłącz blokowanie wyskakujących okien na tej witrynie",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Włącz\/wyłącz blokowanie zdalnych czcionek na tej stronie",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Reguły lokalne. W tej kolumnie znajdują się reguły stosowane tylko na bieżącej witrynie.\nReguły lokalne zastępują reguły globalne.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Kliknij, aby zastosować zmiany na stałe.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Kliknij, aby przywrócić zmiany.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"wszystko",

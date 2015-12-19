@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — নেটওয়ার্ক অনুরোধ লগ",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"সম্পর্কে",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"অনুরোধ লগে যান",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"এই সাইটের জন্য সব পপআপ অবরোধ টগল করুন",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"এই সাইটের রিমোট ফন্টের অবরোধ টগল করুন",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"বৈশ্বিক নিয়ম: এই কলামটি নিয়মের জন্য যা সকল সাইটে প্রয়োগ করা হবে।",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"স্থানীয় নিয়ম: এই কলামটি নিয়মের জন্য যা শুধু বর্তমান সাইটে প্রয়োগ করা হবে।\nস্থানীয় নিয়ম বৈশ্বিক নিয়মকে অগ্রাহ্য করবে।",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"আপনার পরিবর্তনগুলি স্থায়ী করতে ক্লিক করুন।",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"আপনার পরিবর্তনগুলি ফেরত নিতে ক্লিক করুন।",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"সব",

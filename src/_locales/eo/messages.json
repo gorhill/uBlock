@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Protokolo de retaj petoj",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Protokolo",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Pri",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Iri al protokolo de petoj",
-    "description":"English: Go to request log"
+    "message":"Malfermi protokolon",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Baskuligi la blokadon de ŝprucfenestroj por ĉi tiu retejo",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Baskuligi la blokadon de foraj tiparoj por ĉi tiu retejo",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Ĝeneralaj reguloj: ĉi tiu kolumno estas por reguloj, kiuj aplikas al ĉiuj retejoj.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokaj reguloj: ĉi tiu kolumno estas por reguloj, kiuj aplikas nur al la nuna retejo.\nLokaj reguloj transpasas ĝeneralajn regulojn.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klaku por fari viajn ŝanĝojn konstante.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klaku por malfari viajn ŝanĝojn.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"ĉio",

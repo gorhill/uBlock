@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — 網路請求日誌",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"關於",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"查看連線請求日誌",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"切換是否阻擋此網站的所有彈出型視窗",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"切換封鎖此網站的遠端字體",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"全域規則：在所有網站啟用",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"區域規則：在目前網站啟用",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"點擊此處讓變更永久生效。",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"點擊此處還原變更。",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"全部",

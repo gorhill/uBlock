@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ 网络请求日志",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — 网络请求日志",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"关于",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"查看请求日志",
-    "description":"English: Go to request log"
+    "message":"查看网络请求日志",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"禁止此网站弹出任何窗口",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"阻止此网站的第三方字体",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"全局规则：此列的规则作用于所有网站。",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"本地规则：此列的规则仅作用于当前网站。\n本地规则优先于全局规则。",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"使更改永久生效。",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"还原更改。",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"全部",

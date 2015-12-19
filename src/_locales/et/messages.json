@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Võrgutaotluste logi",
-    "description":"Title for the network request log window"
+    "message":"uBlock — Võrgutaotluste logi",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Teave",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Mine taotluste logisse",
-    "description":"English: Go to request log"
+    "message":"Avage logija",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Keela hüpikaknad sellel saidil",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Luba väliste fontide blokeerimine sellel saidil",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Üldised reeglid: selle veeru reeglid kehtivad kõikidele saitidele.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Kohalikud reeglid: selle veeru reeglid kehtivad ainult praegusele saidile.\nKohalikud reeglid kirjutavad üldised reeglid üle.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Vajuta, et teha oma muudatused püsivaks.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Vajuta, et võtta muudatused tagasi.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"kõik",

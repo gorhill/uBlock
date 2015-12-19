@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Protokoll der Netzwerk-Anforderungen",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Über",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gehe zu den protokollierten Anfragen",
-    "description":"English: Go to request log"
+    "message":"Protokoll der Netzwerkanfragen öffnen",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Blockieren von Popups für diese Seite an-\/ausschalten",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Remote-Schriftarten für diese Seite an-\/ausschalten",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globale Regeln: Diese Spalte ist für Regeln, die bei allen Seiten angewendet werden.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokale Regeln: Diese Spalte ist für Regeln, die nur bei dieser Seite angewendet werden.\nLokale Regeln überschreiben globale Regeln.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klick, um deine Änderungen permanent zu übernehmen.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klick, um deine Änderungen rückgängig zu machen.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"Alle Ressourcen",

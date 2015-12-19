@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Nhật ký các yêu cầu",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Giới thiệu",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Mở nhật kí yêu cầu",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Bật\/tắt chặn popup của trang này",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Bật tắt chặn kiểu chữ từ xa trên trang này",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Quy tắc chung: cột này dành cho quy tắc áp dụng cho mọi trang.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Quy tắc nội bộ: cột này dành cho quy tắc chỉ áp dụng cho trang hiện tại.\nQuy tắc nội bộ sẽ thay thế quy tắc chung.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Bấm để thay đổi vĩnh viễn.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Bấm để hoàn tác thay đổi.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"tất cả",

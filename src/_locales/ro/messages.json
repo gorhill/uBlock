@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Jurnalul cererilor de rețea",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Despre",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Deschide jurnalul cererilor",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Comută blocarea tuturor popup-urilor pentru acest sait",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Comută blocarea fonturilor externe pentru acest sait",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Reguli globale: această coloană este pentru regulile care se aplică tuturor site-urilor.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Reguli locale: această coloană este pentru regulile care se aplică doar site-ului curent.\nRegulile locale suprascriu pe cele globale.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Apasă pentru a face modificările permanente.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Apasă pentru a renunța la modificări.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"tot",

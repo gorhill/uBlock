@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"\"uBlock₀\" — سجل الإتصال بالشبكة",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"معلومات عني",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"الذهاب الى سجل الطلبات",
-    "description":"English: Go to request log"
+    "message":"إفتح سجل طلبات الشبكة",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"لا نوافذ منبثقة لهذا الموقع",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"تبديل حجب الخطوط البعيدة لهذا الموقع",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"القواعد العامة: هذا العمود يتعلق بالقواعد التي تنطبق على جميع الموقع.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"القواعد الموضعية: هذا العمود يتعلق بالقواعد التي تنطبق فقط على الموقع المزار حاليا.\nالقواعد الموضعية تحل محل القواعد العامة.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"إضغط لحفظ التغييرات بشكل دائم.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"إضغط لتعيد التغييرات للوضع السابِق.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"كل",

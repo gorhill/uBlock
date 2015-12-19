@@ -33,7 +33,7 @@
   },
   "statsPageName":{
     "message":"uBlock₀ — Журнал мережевих запитів",
-    "description":"Title for the network request log window"
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Про програму",
@@ -73,7 +73,7 @@
   },
   "popupTipLog":{
     "message":"Перейти до журналу запитів",
-    "description":"English: Go to request log"
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Увімкнути блокування всіх виринаючих вікон цього сайту",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Перемкнути блокування віддалених шрифтів для цього сайту",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Глобальні правила: цей стовпчик для правил, що застосовуються для всіх сайтів.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Локальні правила: цей стовпчик для правил, що застосовуються лише для цього сайту.\nЛокальні правила замінюють глобальні.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Натисніть, щоб зробити ваші зміни постійними.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Натисніть, щоб відкинути ваші зміни.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"всі",

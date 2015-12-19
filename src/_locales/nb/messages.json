@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Nettverkforespørselslogg",
-    "description":"Title for the network request log window"
+    "message":"uBlock₀ — Logg",
+    "description":"Title for the logger window"
   },
   "aboutPageName":{
     "message":"Om",
@@ -72,8 +72,8 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til forespørselslogg",
-    "description":"English: Go to request log"
+    "message":"Åpne loggeren",
+    "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Slå av\/på blokkering av alle oppspretts-vinduer for dette nettstedet",
@@ -90,6 +90,22 @@
   "popupTipNoRemoteFonts":{
     "message":"Slå av\/på blokkering av eksterne skrifttyper for dette nettstedet",
     "description":"English: Toggle the blocking of remote fonts for this site"
+  },
+  "popupTipGlobalRules":{
+    "message":"Globale regler: Denne kolonnen er for regler som gjelder alle nettsteder.",
+    "description":"Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules":{
+    "message":"Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.\nLokale regler har prioritet foran globale regler.",
+    "description":"Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules":{
+    "message":"Klikk for å gjøre endringer permanente.",
+    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules":{
+    "message":"Klikk for å tilbakestille endringer.",
+    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
     "message":"alle",
