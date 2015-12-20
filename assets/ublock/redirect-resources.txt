@@ -186,3 +186,10 @@ googletagservices.com/gpt.js application/javascript
     //
     window.googletag = gpt;
 })();
+
+
+# https://forums.lanik.us/viewtopic.php?f=91&t=27188
+i.ligatus.com/*/angular-tag.js application/javascript
+(function() {
+    self.adProtect = true;
+})();

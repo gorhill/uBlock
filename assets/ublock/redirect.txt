@@ -18,3 +18,6 @@
 
 # https://github.com/gorhill/uBlock/issues/1078
 ||eurotransport.de/*/antiAdBlock.js$script,first-party,redirect=antiAdBlock.js
+
+# https://forums.lanik.us/viewtopic.php?f=91&t=27188
+||i.ligatus.com/angular_front/tags/$script,redirect=i.ligatus.com/*/angular-tag.js
