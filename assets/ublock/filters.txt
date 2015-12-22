@@ -236,9 +236,9 @@ skystreaming.net###fanback + style + div[id]
 
 # Yavli ads
 activistpost.com,alfonzorachel.com,aplus.com,breathecast.com,bulletsfirst.net,clashdaily.com,comicallyincorrect.com,conservativebyte.com,cowboybyte.com,dailysurge.com,dccrimestories.com,drhotze.com,explosm.net,genfringe.com,girlsjustwannahaveguns.com,joeforamerica.com,latinpost.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,segmentnext.com,shark-tank.com,theblacksphere.net,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com##script:contains(/^.{0,16}__durl=/)
-||ziccardia.com/adBlockDetector/$script,redirect=yavli-defuser.js,domain=oddee.com
-||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect=yavli-defuser.js,domain=naturalblaze.com
-||partner.googleadservices.com/gpt/pubads_impl_78.js$script,redirect=yavli-defuser.js,domain=activistpost.com|naturalblaze.com
-||edge.quantserve.com/quant.js$script,redirect=yavli-defuser.js,domain=alfonzorachel.com|aplus.com|breathecast.com|bulletsfirst.net|clashdaily.com|comicallyincorrect.com|conservativebyte.com|cowboybyte.com|dailysurge.com|dccrimestories.com|drhotze.com|explosm.net|genfringe.com|girlsjustwannahaveguns.com|joeforamerica.com|latinpost.com|minutemennews.com|mobilelikez.com|muscleandfitness.com|naturalblaze.com|patriotoutdoornews.com|pitgrit.com|redmaryland.com|shark-tank.com|theblacksphere.net|thegatewaypundit.com|themattwalshblog.com|unilad.co.uk|vcpost.com|victoriajackson.com|viralnova.com
 ||a.postrelease.com/serve/load.js$script,redirect=yavli-defuser.js,domain=mensfitness.com|okmagazine.com|radaronline.com
+||ads.intergi.com^$script,redirect=yavli-defuser.js,domain=segmentnext.com
+||pagead2.googlesyndication.com^$script,redirect=yavli-defuser.js,domain=activistpost.com|naturalblaze.com|thefreethoughtproject.com
+||edge.quantserve.com/quant.js$script,redirect=yavli-defuser.js,domain=alfonzorachel.com|aplus.com|breathecast.com|bulletsfirst.net|clashdaily.com|comicallyincorrect.com|conservativebyte.com|cowboybyte.com|dailysurge.com|dccrimestories.com|drhotze.com|explosm.net|genfringe.com|girlsjustwannahaveguns.com|joeforamerica.com|latinpost.com|minutemennews.com|mobilelikez.com|muscleandfitness.com|naturalblaze.com|patriotoutdoornews.com|pitgrit.com|redmaryland.com|shark-tank.com|theblacksphere.net|thegatewaypundit.com|themattwalshblog.com|unilad.co.uk|vcpost.com|victoriajackson.com|viralnova.com
 ||native.sharethrough.com/assets/tag.js$script,redirect=yavli-defuser.js,domain=thepoke.co.uk
+||ziccardia.com/adBlockDetector/$script,redirect=yavli-defuser.js,domain=oddee.com
