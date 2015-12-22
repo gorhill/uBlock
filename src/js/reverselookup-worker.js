@@ -109,22 +109,22 @@ var fromCosmeticFilter = function(details) {
     // First step: assuming the filter is generic, find out its compiled
     // representation.
     // Reference: FilterContainer.compileGenericSelector().
-    var reStr = '';
+    var reStr = [];
     var matches = rePlainSelector.exec(filter);
     if ( matches ) {
         if ( matches[0] === filter ) {          // simple CSS selector
-            reStr = reEscape('c\vlg\v' + filter);
+            reStr.push('c', 'lg', reEscape(filter));
         } else {                                // complex CSS selector
-            reStr = reEscape('c\vlg+\v' + matches[0] + '\v' + filter);
+            reStr.push('c', reEscape('lg+'), reEscape(matches[0]), reEscape(filter));
         }
     } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
-        reStr = reEscape('c\vhlg0\v' + filter);
+        reStr.push('c', 'hlg0', reEscape(filter));
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
-        reStr = reEscape('c\vhmg0\v') + '[a-z.-]+' + reEscape('\v') + '[a-z]*' + reEscape(filter);
+        reStr.push('c', 'hmg0', '[^"]{8}', '[a-z]*' + reEscape(filter));
     } else {                                    // all else
-        reStr = reEscape('c\vhhg0\v' + filter);
+        reStr.push('c', 'hhg0', reEscape(filter));
     }
-    candidates[details.rawFilter] = new RegExp(reStr + '(?:\\n|$)');
+    candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
 
     // Second step: find hostname-based versions.
     // Reference: FilterContainer.compileHostnameSelector().
@@ -135,9 +135,7 @@ var fromCosmeticFilter = function(details) {
     if ( hostname !== '' ) {
         for ( ;; ) {
             candidates[hostname + '##' + filter] = new RegExp(
-                reEscape('c\vh\v') +
-                '\\w+' +
-                reEscape('\v' + hostname + '\v' + filter) +
+                ['c', 'h', '\\w+', reEscape(hostname), reEscape(filter)].join('\\v') +
                 '(?:\\n|$)'
             );
             // If there is no valid domain, there won't be any other
@@ -162,7 +160,7 @@ var fromCosmeticFilter = function(details) {
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos);
         candidates[entity + '.*##' + filter] = new RegExp(
-            reEscape('c\ve\v' + entity + '\v' + filter) +
+            ['c', 'e', reEscape(entity), reEscape(filter)].join('\\v') +
             '(?:\\n|$)'
         );
     }
