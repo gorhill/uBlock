@@ -116,6 +116,8 @@ var cosmeticFilters = function(details) {
     vAPI.hideCosmeticFilters = hideCosmeticFilters;
 };
 
+/******************************************************************************/
+
 var netFilters = function(details) {
     var parent = document.head || document.documentElement;
     if ( !parent ) {
@@ -131,6 +133,29 @@ var netFilters = function(details) {
     //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
 };
 
+/******************************************************************************/
+
+// Create script tags and assign data URIs looked up from our library of
+// redirection resources: Sometimes it is useful to use these resources as
+// standalone scriptlets.
+// Library of redirection resources:
+// https://github.com/gorhill/uBlock/blob/master/assets/ublock/redirect-resources.txt
+
+var injectScripts = function(dataURIs) {
+    var parent = document.head || document.documentElement;
+    if ( !parent ) {
+        return;
+    }
+    var i = dataURIs.length, scriptTag;
+    while ( i-- ) {
+        scriptTag = document.createElement('script');
+        scriptTag.src = dataURIs[i];
+        parent.appendChild(scriptTag);
+    }
+};
+
+/******************************************************************************/
+
 var filteringHandler = function(details) {
     var styleTagCount = vAPI.styles.length;
 
@@ -143,6 +168,9 @@ var filteringHandler = function(details) {
         }
         if ( details.netHide.length !== 0 ) {
             netFilters(details);
+        }
+        if ( details.scripts !== 0 ) {
+            injectScripts(details.scripts);
         }
         // The port will never be used again at this point, disconnecting allows
         // the browser to flush this script from memory.
@@ -163,6 +191,8 @@ var filteringHandler = function(details) {
     // Cleanup before leaving
     localMessager.close();
 };
+
+/******************************************************************************/
 
 var hideElements = function(selectors) {
     if ( document.body === null ) {
@@ -212,6 +242,8 @@ var hideElements = function(selectors) {
         }
     }
 };
+
+/******************************************************************************/
 
 var url = window.location.href;
 localMessager.send(

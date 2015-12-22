@@ -359,6 +359,15 @@ RedirectEngine.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
+RedirectEngine.prototype.resourceFromName = function(name, mime) {
+    var entry = this.resources[name];
+    if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
+        return entry.toURL();
+    }
+};
+
+/******************************************************************************/
+
 // TODO: combine same key-redirect pairs into a single regex.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {

@@ -228,3 +228,10 @@ yavli-defuser.js application/javascript
     } catch (ex) {
     }
 })();
+
+
+# Addefend defuser
+uabinject-defuser.js application/javascript
+(function() {
+    window.uabpdl = window.uabInject = window.uabDetect = true;
+})();
