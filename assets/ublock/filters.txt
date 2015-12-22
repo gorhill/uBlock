@@ -166,7 +166,6 @@ investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space)
 # it in their respective filter lists
 arstechnica.com##script:contains(ars.READY.push)
 1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,auto-motor-und-sport.de,autoextrem.de,boerse-online.de,buerstaedter-zeitung.de,computerbild.de,comunio.de,echo-online.de,fanfiktion.de,fem.com,finanzen.net,focus.de,gamestar.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,motorradonline.de,notebookcheck.net,oberhessische-zeitung.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,rp-online.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,spiegel.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,usinger-anzeiger.de,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,wn.de,wormser-zeitung.de##script:contains(uabInject)
-activistpost.com,alfonzorachel.com,aplus.com,breathecast.com,bulletsfirst.net,clashdaily.com,comicallyincorrect.com,conservativebyte.com,cowboybyte.com,dailysurge.com,dccrimestories.com,drhotze.com,explosm.net,genfringe.com,girlsjustwannahaveguns.com,joeforamerica.com,latinpost.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,segmentnext.com,shark-tank.com,theblacksphere.net,thegatewaypundit,themattwalshblog.com,thepoke.co.uk,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com##script:contains(/^.{0,16}__durl=/)
 aussenwirtschaftslupe.de,autozeitung.de,brieffreunde.de,donnerwetter.de,formel1.de,fremdwort.de,helles-koepfchen.de,inside-handy.de,motorsport-total.com,moviejones.de,news.de,rechtslupe.de,wintotal.de##script:contains(window.tisoomi)
 bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
@@ -234,3 +233,12 @@ skystreaming.net###fanback + style + div[id]
 # appear as 1st-party links but redirect to 3rd-party sites.
 ||c8factor.com^
 ||k5zoom.com^
+
+# Yavli ads
+activistpost.com,alfonzorachel.com,aplus.com,breathecast.com,bulletsfirst.net,clashdaily.com,comicallyincorrect.com,conservativebyte.com,cowboybyte.com,dailysurge.com,dccrimestories.com,drhotze.com,explosm.net,genfringe.com,girlsjustwannahaveguns.com,joeforamerica.com,latinpost.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,segmentnext.com,shark-tank.com,theblacksphere.net,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com##script:contains(/^.{0,16}__durl=/)
+||ziccardia.com/adBlockDetector/$script,redirect=yavli-defuser.js,domain=oddee.com
+||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect=yavli-defuser.js,domain=naturalblaze.com
+||partner.googleadservices.com/gpt/pubads_impl_78.js$script,redirect=yavli-defuser.js,domain=activistpost.com|naturalblaze.com
+||edge.quantserve.com/quant.js$script,redirect=yavli-defuser.js,domain=alfonzorachel.com|aplus.com|breathecast.com|bulletsfirst.net|clashdaily.com|comicallyincorrect.com|conservativebyte.com|cowboybyte.com|dailysurge.com|dccrimestories.com|drhotze.com|explosm.net|genfringe.com|girlsjustwannahaveguns.com|joeforamerica.com|latinpost.com|minutemennews.com|mobilelikez.com|muscleandfitness.com|naturalblaze.com|patriotoutdoornews.com|pitgrit.com|redmaryland.com|shark-tank.com|theblacksphere.net|thegatewaypundit.com|themattwalshblog.com|unilad.co.uk|vcpost.com|victoriajackson.com|viralnova.com
+||a.postrelease.com/serve/load.js$script,redirect=yavli-defuser.js,domain=mensfitness.com|okmagazine.com|radaronline.com
+||native.sharethrough.com/assets/tag.js$script,redirect=yavli-defuser.js,domain=thepoke.co.uk

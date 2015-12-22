@@ -193,3 +193,38 @@ i.ligatus.com/*/angular-tag.js application/javascript
 (function() {
     self.adProtect = true;
 })();
+
+
+# Yavli ads. These are blocked using an inline script tag filter, but this
+# works only on Firefox. So we side-load the following script using whatever
+# script is normally blocked on the site.
+yavli-defuser.js application/javascript
+(function() {
+    try {
+        Object.defineProperty(window, '__durl', {
+            set: function() {
+                ;
+            },
+            get: function() {
+                return '';
+            }
+        });
+        Object.defineProperty(window, '__lsurl', {
+            set: function() {
+                ;
+            },
+            get: function() {
+                return '';
+            }
+        });
+        Object.defineProperty(window, '__lturl', {
+            set: function() {
+                ;
+            },
+            get: function() {
+                return '';
+            }
+        });
+    } catch (ex) {
+    }
+})();
