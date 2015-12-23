@@ -222,3 +222,23 @@ uabinject-defuser.js application/javascript
 (function() {
     window.uabpdl = window.uabInject = window.uabDetect = true;
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/1094
+pornhub-popup-defuser.js application/javascript
+(function() {
+    var w = window;
+    var count = Math.ceil(8+Math.random()*4);
+    var tomorrow = new Date(Date.now() + 86400);
+    var expire = tomorrow.toString();
+    document.cookie = 'FastPopSessionRequestNumber=' + count + '; expires=' + expire;
+    var db;
+    if ( (db = w.localStorage) ) {
+        db.setItem('InfNumFastPops', count);
+        db.setItem('InfNumFastPopsExpire', expire);
+    }
+    if ( (db = w.sessionStorage) ) {
+        db.setItem('InfNumFastPops', count);
+        db.setItem('InfNumFastPopsExpire', expire);
+    }
+})();
