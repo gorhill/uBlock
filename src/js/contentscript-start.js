@@ -139,7 +139,7 @@ var netFilters = function(details) {
 // redirection resources: Sometimes it is useful to use these resources as
 // standalone scriptlets.
 // Library of redirection resources:
-// https://github.com/gorhill/uBlock/blob/master/assets/ublock/redirect-resources.txt
+// https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
 
 var injectScripts = function(dataURIs) {
     var parent = document.head || document.documentElement;
