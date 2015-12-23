@@ -207,11 +207,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         return;
     }
 
-    var pattern = (matches[1] + matches[2]).replace(/[.+?{}()|[\]\\]/g, '\\$&')
-                                           .replace(/\^/g, '[^\\w\\d%-]')
-                                           .replace(/\*/g, '.*?');
-
-    var des = matches[1];
+    var des = matches[1] || '';
+    var pattern = (des + matches[2]).replace(/[.+?{}()|[\]\\]/g, '\\$&')
+                                    .replace(/\^/g, '[^\\w\\d%-]')
+                                    .replace(/\*/g, '.*?');
     var type;
     var redirect = '';
     var srcs = [];
@@ -267,10 +266,6 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         if ( src.startsWith('~') ) {
             continue;
         }
-        // Need at least one specific src or des.
-        if ( src === '*' && des === '*' ) {
-            continue;
-        }
         out.push(src + '\t' + des + '\t' + type + '\t' + pattern + '\t' + redirect);
     }
 
@@ -279,7 +274,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^\|\|([^\/?#^*]+)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/?#^*]+)|\*)([^$]+)\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = (function() {
     var types = Object.create(null);
