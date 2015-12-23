@@ -54,6 +54,7 @@ var L = (function(){
 })();
 
 
+# fuckadblock defuser
 fuckadblock.js-3.2.0 application/javascript
 (function() {
     var noopfn = function() {
@@ -66,6 +67,7 @@ fuckadblock.js-3.2.0 application/javascript
     Fab.prototype.emitEvent = noopfn;
     Fab.prototype.on = function(a, b) {
         if ( !a ) { b(); }
+        return this;
     };
     Fab.prototype.onDetected = function() {
         return this;
