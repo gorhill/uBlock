@@ -1103,13 +1103,13 @@ FilterContainer.prototype.retrieveScriptTags = function(domain, hostname) {
         return;
     }
     var out = [],
-        hn = hostname, pos, rnames, i, dataURI;
+        hn = hostname, pos, rnames, i, content;
     for (;;) {
         rnames = this.scriptTags[hn];
         i = rnames && rnames.length || 0;
         while ( i-- ) {
-            if ( (dataURI = reng.resourceFromName(rnames[i], 'application/javascript')) ) {
-                out.push(dataURI);
+            if ( (content = reng.resourceContentFromName(rnames[i], 'application/javascript')) ) {
+                out.push(content);
             }
         }
         if ( hn === domain ) {
@@ -1123,12 +1123,11 @@ FilterContainer.prototype.retrieveScriptTags = function(domain, hostname) {
     }
     pos = domain.indexOf('.');
     if ( pos !== -1 ) {
-        hn = domain.slice(0, pos);
-        rnames = this.scriptTags[hn];
+        rnames = this.scriptTags[domain.slice(0, pos)];
         i = rnames && rnames.length || 0;
         while ( i-- ) {
-            if ( (dataURI = reng.resourceFromName(rnames[i], 'application/javascript')) ) {
-                out.push(dataURI);
+            if ( (content = reng.resourceContentFromName(rnames[i], 'application/javascript')) ) {
+                out.push(content);
             }
         }
     }

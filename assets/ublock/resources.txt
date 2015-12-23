@@ -200,31 +200,18 @@ i.ligatus.com/*/angular-tag.js application/javascript
 # script is normally blocked on the site.
 yavli-defuser.js application/javascript
 (function() {
+    var descriptor = {
+        set: function() {
+            ;
+        },
+        get: function() {
+            return '';
+        }
+    };
     try {
-        Object.defineProperty(window, '__durl', {
-            set: function() {
-                ;
-            },
-            get: function() {
-                return '';
-            }
-        });
-        Object.defineProperty(window, '__lsurl', {
-            set: function() {
-                ;
-            },
-            get: function() {
-                return '';
-            }
-        });
-        Object.defineProperty(window, '__lturl', {
-            set: function() {
-                ;
-            },
-            get: function() {
-                return '';
-            }
-        });
+        Object.defineProperty(window, '__durl', descriptor);
+        Object.defineProperty(window, '__lsurl', descriptor);
+        Object.defineProperty(window, '__lturl', descriptor);
     } catch (ex) {
     }
 })();

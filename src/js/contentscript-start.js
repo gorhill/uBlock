@@ -141,15 +141,15 @@ var netFilters = function(details) {
 // Library of redirection resources:
 // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
 
-var injectScripts = function(dataURIs) {
+var injectScripts = function(scripts) {
     var parent = document.head || document.documentElement;
     if ( !parent ) {
         return;
     }
-    var i = dataURIs.length, scriptTag;
+    var i = scripts.length, scriptTag;
     while ( i-- ) {
         scriptTag = document.createElement('script');
-        scriptTag.src = dataURIs[i];
+        scriptTag.appendChild(document.createTextNode(scripts[i]));
         parent.appendChild(scriptTag);
     }
 };
@@ -169,7 +169,7 @@ var filteringHandler = function(details) {
         if ( details.netHide.length !== 0 ) {
             netFilters(details);
         }
-        if ( details.scripts !== 0 ) {
+        if ( Array.isArray(details.scripts) ) {
             injectScripts(details.scripts);
         }
         // The port will never be used again at this point, disconnecting allows

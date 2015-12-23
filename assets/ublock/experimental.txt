@@ -16,8 +16,3 @@
 # Replacement for `www.google-analytics.com/ga.js`: the goal is to be able to
 # block `www.google-analytics.com` while preventing web page breakage.
 ||www.google-analytics.com/ga.js$script,redirect=www.google-analytics.com/ga.js,important
-
-
-# https://github.com/gorhill/uBlock/issues/1100
-# This will be moved to mainstream filter list once 1.5.0 lands.
-1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,auto-motor-und-sport.de,autoextrem.de,boerse-online.de,buerstaedter-zeitung.de,computerbild.de,comunio.de,echo-online.de,fanfiktion.de,fem.com,finanzen.net,focus.de,gamestar.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,motorradonline.de,notebookcheck.net,oberhessische-zeitung.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,rp-online.de,runnersworld.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,spiegel.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,usinger-anzeiger.de,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,wn.de,wormser-zeitung.de##script:inject(uabinject-defuser.js)

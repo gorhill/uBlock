@@ -42,48 +42,42 @@ var toBroaderHostname = function(hostname) {
 
 var RedirectEntry = function() {
     this.mime = '';
-    this.encoded = false;
-    this.ph = false;
     this.data = '';
 };
 
 /******************************************************************************/
 
-RedirectEntry.rePlaceHolders = /\{\{.+?\}\}/;
-RedirectEntry.reRequestURL = /\{\{requestURL\}\}/g;
+RedirectEntry.prototype.toURL = function() {
+    if ( this.data.startsWith('data:') === false ) {
+        if ( this.mime.indexOf(';') === -1 ) {
+            this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
+        } else {
+            this.data = 'data:' + this.mime + ',' + this.data;
+        }
+    }
+    return this.data;
+};
 
 /******************************************************************************/
 
-RedirectEntry.prototype.toURL = function(requestURL) {
-    if ( this.ph === false ) {
-        return this.data;
+RedirectEntry.prototype.toContent = function() {
+    if ( this.data.startsWith('data:') ) {
+        var pos = this.data.indexOf(',');
+        var base64 = this.data.endsWith(';base64', pos);
+        this.data = this.data.slice(pos + 1);
+        if ( base64 ) {
+            this.data = atob(this.data);
+        }
     }
-    return 'data:' +
-           this.mime + ';base64,' +
-           btoa(this.data.replace(RedirectEntry.reRequestURL, requestURL));
+    return this.data;
 };
 
 /******************************************************************************/
 
 RedirectEntry.fromFields = function(mime, lines) {
     var r = new RedirectEntry();
-
     r.mime = mime;
-    r.encoded = mime.indexOf(';') !== -1;
-    var data = lines.join(r.encoded ? '' : '\n');
-    // check for placeholders.
-    r.ph = r.encoded === false && RedirectEntry.rePlaceHolders.test(data);
-    if ( r.ph ) {
-        r.data = data;
-    } else {
-        r.data = 
-            'data:' +
-            mime +
-            (r.encoded ? '' : ';base64') +
-            ',' +
-            (r.encoded ? data : btoa(data));
-    }
-
+    r.data = lines.join(mime.indexOf(';') !== -1 ? '' : '\n');
     return r;
 };
 
@@ -91,12 +85,8 @@ RedirectEntry.fromFields = function(mime, lines) {
 
 RedirectEntry.fromSelfie = function(selfie) {
     var r = new RedirectEntry();
-
     r.mime = selfie.mime;
-    r.encoded = selfie.encoded;
-    r.ph = selfie.ph;
     r.data = selfie.data;
-
     return r;
 };
 
@@ -167,7 +157,7 @@ RedirectEngine.prototype.toURL = function(context) {
     }
     var entry = this.resources[token];
     if ( entry !== undefined ) {
-        return entry.toURL(context.requestURL);
+        return entry.toURL();
     }
 };
 
@@ -359,10 +349,19 @@ RedirectEngine.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.resourceFromName = function(name, mime) {
+RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
     var entry = this.resources[name];
     if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
         return entry.toURL();
+    }
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
+    var entry = this.resources[name];
+    if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
+        return entry.toContent();
     }
 };
 
