@@ -245,6 +245,7 @@ extremetube.com,pornhub.com,redtube.com,spankwire.com,tube8.*,youporn.com,youpor
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=43192
 # Users should not have to punch holes in their blockers if it can be avoided.
 */fuckadblock-$script,redirect=fuckadblock.js-3.2.0
+*/fuckadblock.$script,redirect=fuckadblock.js-3.2.0
 
 # The following filters will be removed once 1.5.0 is widespread
 # AdDefend
