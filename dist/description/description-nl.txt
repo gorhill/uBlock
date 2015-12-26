@@ -15,7 +15,7 @@ Standaard worden de volgende filterlijsten geladen en toegepast:
 - EasyPrivacy
 - Malware domains
 
-Er zijn meer lijsten beschikbaar die je als je wilt kan inschakelen:
+Er zijn meer lijsten beschikbaar die u als u wilt kunt inschakelen:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
