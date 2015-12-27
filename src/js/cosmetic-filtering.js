@@ -959,7 +959,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         // entity	selector
         if ( fields[0] === 'e' ) {
             // Special filter: script tags. Not a real CSS selector.
-            if ( fields[2].startsWith('script?') ) {
+            if ( fields[2].startsWith('script') ) {
                 this.createScriptFilter(fields[1], fields[2].slice(6));
                 continue;
             }
