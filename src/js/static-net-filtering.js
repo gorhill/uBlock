@@ -233,7 +233,11 @@ var hostnameTestPicker = function(owner) {
 
     // Only one hostname
     if ( domainOpt.indexOf('|') === -1 ) {
-        return domainOpt.startsWith('~') ? hostnameMissTest : hostnameHitTest;
+        if ( domainOpt.startsWith('~') ) {
+            owner._notHostname = domainOpt.slice(1);
+            return hostnameMissTest;
+        }
+        return hostnameHitTest;
     }
 
     // Multiple hostnames: use a dictionary.
@@ -295,7 +299,7 @@ var hostnameHitTest = function(owner) {
 
 var hostnameMissTest = function(owner) {
     var current = pageHostnameRegister;
-    var target = owner.domainOpt;
+    var target = owner._notHostname;
     return current.endsWith(target) === false ||
           (current.length !== target.length &&
            current.charAt(current.length - target.length - 1) !== '.');
