@@ -173,11 +173,14 @@ www.google-analytics.com/ga.js application/javascript
 
 www.google-analytics.com/analytics.js application/javascript
 (function() {
-    var ga = function(a, b, c, d, e, f) {
-        if ( typeof f !== 'object' || typeof f.hitCallback !== 'function' ) {
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/
+    var ga = function() {
+        var len = arguments.length;
+        if ( len === 0 ) {
             return;
         }
-        if ( d === 'click' ) {
+        var f = arguments[len-1];
+        if ( typeof f === 'object' && typeof f.hitCallback === 'function' ) {
             f.hitCallback();
         }
     };
