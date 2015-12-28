@@ -20,6 +20,8 @@
 
 # https://github.com/chrisaljoudi/uBlock/issues/63
 @@||adf.ly^$~third-party
+# https://github.com/gorhill/uBlock/issues/1131
+@@||adf.ly^$domain=j.gs
 
 # https://github.com/chrisaljoudi/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
