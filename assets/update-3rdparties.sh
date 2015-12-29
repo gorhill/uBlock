@@ -13,7 +13,7 @@ assets=(
     ['thirdparties/mirror1.malwaredomains.com/files/justdomains']='http://mirror1.malwaredomains.com/files/justdomains'
     ['thirdparties/pgl.yoyo.org/as/serverlist']='http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&startdate%5Bday%5D=&startdate%5Bmonth%5D=&startdate%5Byear%5D=&mimetype=plaintext'
     ['thirdparties/publicsuffix.org/list/effective_tld_names.dat']='https://publicsuffix.org/list/effective_tld_names.dat'
-    ['thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt']='http://www.malwaredomainlist.com/hostslist/hosts.txt'
+    ['thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt']='https://www.malwaredomainlist.com/hostslist/hosts.txt'
 )
 
 for i in "${!assets[@]}"; do
