@@ -26,6 +26,7 @@ The most important part when opening an issue: **detailed steps**.
 1. _One specific_ issue per submission.
 1. The logger is the tool of choice to use to help diagnose issues.
 1. Do **NOT**:
+    - Submit pull requests.
     - Submit design ideas.
     - Submit feature requests.
     - Submit "revolutionary ideas".
@@ -41,7 +42,6 @@ The most important part when opening an issue: **detailed steps**.
 ***
 
 ### What to include
-
 
 To help diagnose and fix the bug/issue, please always include the following in your report:
 
