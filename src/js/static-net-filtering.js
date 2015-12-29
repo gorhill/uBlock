@@ -19,8 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false, esnext: true */
-/* global punycode, µBlock */
+/* jshint bitwise: false */
+/* global punycode */
 
 /******************************************************************************/
 
@@ -1657,19 +1657,10 @@ FilterParser.prototype.makeToken = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var TokenEntry = function() {
-    this.beg = 0;
-    this.token = '';
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
 var FilterContainer = function() {
-    this.reAnyToken = /[%0-9a-z]+/g;
     this.reIsGeneric = /[\^\*]/;
-    this.tokens = [];
     this.filterParser = new FilterParser();
+    this.urlTokenizer = µb.urlTokenizer;
     this.reset();
 };
 
@@ -2254,42 +2245,6 @@ FilterContainer.prototype.filterRegexFromCompiled = function(compiled, flags) {
 
 /******************************************************************************/
 
-// Since the addition of the `important` evaluation, this means it is now
-// likely that the url will have to be scanned more than once. So this is
-// to ensure we do it once only, and reuse results.
-
-FilterContainer.prototype.tokenize = function(url) {
-    var tokens = this.tokens;
-    var re = this.reAnyToken;
-    var matches, tokenEntry;
-    re.lastIndex = 0;
-    var i = 0;
-    while ( (matches = re.exec(url)) ) {
-        tokenEntry = tokens[i];
-        if ( tokenEntry === undefined ) {
-            tokenEntry = tokens[i] = new TokenEntry();
-        }
-        tokenEntry.beg = matches.index;
-        tokenEntry.token = matches[0];
-        i += 1;
-
-        // https://github.com/chrisaljoudi/uBlock/issues/1118
-        // Crazy case... but I guess we have to expect the worst...
-        if ( i === 2048 ) {
-            break;
-        }
-    }
-
-    // Sentinel
-    tokenEntry = tokens[i];
-    if ( tokenEntry === undefined ) {
-        tokenEntry = tokens[i] = new TokenEntry();
-    }
-    tokenEntry.token = '';
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.matchTokens = function(bucket, url) {
     // Hostname-only filters
     var f = bucket['.'];
@@ -2299,7 +2254,7 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
         return true;
     }
 
-    var tokens = this.tokens;
+    var tokens = this.urlTokenizer.getTokens();
     var tokenEntry, token;
     var i = 0;
     for (;;) {
@@ -2336,22 +2291,20 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 // not the generic handling.
 
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
-    var url = requestURL.toLowerCase();
-
-    // These registers will be used by various filters
-    pageHostnameRegister = context.pageHostname || '';
-    requestHostnameRegister = µb.URI.hostnameFromURI(requestURL);
-
-    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty;
-
     // Be prepared to support unknown types
     var type = typeNameToTypeValue[requestType] || 0;
     if ( type === 0 ) {
         return undefined;
     }
 
-    // Tokenize only once
-    this.tokenize(url);
+    // Prime tokenizer: we get a normalized URL in return.
+    var url = this.urlTokenizer.setURL(requestURL);
+
+    // These registers will be used by various filters
+    pageHostnameRegister = context.pageHostname || '';
+    requestHostnameRegister = µb.URI.hostnameFromURI(url);
+
+    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty;
 
     this.fRegister = null;
 
@@ -2426,12 +2379,6 @@ FilterContainer.prototype.matchString = function(context) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 
-    // https://github.com/gorhill/httpswitchboard/issues/239
-    // Convert url to lower case:
-    //     `match-case` option not supported, but then, I saw only one
-    //     occurrence of it in all the supported lists (bulgaria list).
-    var url = context.requestURL.toLowerCase();
-
     // The logic here is simple:
     //
     // block = !whitelisted &&  blacklisted
@@ -2453,13 +2400,12 @@ FilterContainer.prototype.matchString = function(context) {
     // filters are tested *only* if there is a (unlikely) hit on a block
     // filter.
 
+    // Prime tokenizer: we get a normalized URL in return.
+    var url = this.urlTokenizer.setURL(context.requestURL);
 
     // These registers will be used by various filters
     pageHostnameRegister = context.pageHostname || '';
     requestHostnameRegister = context.requestHostname;
-
-    // Tokenize only once
-    this.tokenize(url);
 
     this.fRegister = null;
 

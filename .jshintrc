@@ -1,21 +1,24 @@
 {
 	"browser": true,
 	"devel": true,
+	"eqeqeq": true,
 	"esnext": true,
-	"globalstrict": true,
-	"undef": true,
-	"unused": true,
-	"nonew": false,
-	"sub": true,
-	"laxbreak": true,
-	"validthis": true,
-	"newcap": false,
-	"-W058": true, // suppress "Missing '()' invoking a constructor" message
 	"globals": {
+		"chrome": false,
+		"Components": false, // global variable in Firefox
+		"safari": false,
 		"self": false,
 		"vAPI": false,
-		"chrome": false,
-		"safari": false,
-		"Components": false // global variable in Firefox
-	}
+		"µBlock": false
+	},
+	"globalstrict": true,
+	"laxbreak": true,
+	"newcap": false,
+	"nonew": false,
+	"strict": "global",
+	"sub": true,
+	"undef": true,
+	"unused": true,
+	"validthis": true,
+	"-W058": true // suppress "Missing '()' invoking a constructor" message
 }

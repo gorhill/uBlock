@@ -769,7 +769,7 @@ vAPI.tabs.registerListeners();
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch();
             if ( state && this.userSettings.showIconBadge && pageStore.perLoadBlockedRequestCount ) {
-                badge = this.utils.formatCount(pageStore.perLoadBlockedRequestCount);
+                badge = this.formatCount(pageStore.perLoadBlockedRequestCount);
             }
         }
 
