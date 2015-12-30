@@ -291,6 +291,12 @@
 		"group": "multipurpose",
 		"supportURL": "https://forums.lanik.us/"
 	},
+	"https://adguard.com/filter-rules.html?id=13": {
+		"off": true,
+		"title": "TUR: Adguard Turkish Filter",
+		"group": "regions",
+		"supportURL": "http://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+	},
 	"https://www.fanboy.co.nz/fanboy-vietnam.txt": {
 		"off": true,
 		"title": "VIE: Fanboy's Vietnamese",
