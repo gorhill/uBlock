@@ -250,18 +250,3 @@ extremetube.com,pornhub.com,redtube.com,spankwire.com,tube8.com,tube8.fr,tube8.e
 
 # https://github.com/gorhill/uBlock/issues/1136
 ||dailymotion.com/ac/video/$image,first-party,redirect=2x2-transparent.png
-
-
-# The following filters will be removed once 1.5.0 is widespread
-# AdDefend
-1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,auto-motor-und-sport.de,autoextrem.de,boerse-online.de,buerstaedter-zeitung.de,computerbild.de,comunio.de,echo-online.de,fanfiktion.de,fem.com,finanzen.net,focus.de,gamestar.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,motorradonline.de,notebookcheck.net,oberhessische-zeitung.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,rp-online.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,spiegel.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,usinger-anzeiger.de,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,wn.de,wormser-zeitung.de##script:contains(uabInject)
-# Yavli
-activistpost.com,alfonzorachel.com,aplus.com,breathecast.com,bulletsfirst.net,clashdaily.com,comicallyincorrect.com,conservativebyte.com,cowboybyte.com,dailysurge.com,dccrimestories.com,drhotze.com,explosm.net,genfringe.com,girlsjustwannahaveguns.com,joeforamerica.com,latinpost.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,segmentnext.com,shark-tank.com,theblacksphere.net,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com##script:contains(/^.{0,16}__durl=/)
-||a.postrelease.com/serve/load.js$script,redirect=yavli-defuser.js,domain=mensfitness.com|okmagazine.com|radaronline.com
-||ads.intergi.com^$script,redirect=yavli-defuser.js,domain=segmentnext.com
-||pagead2.googlesyndication.com^$script,important,redirect=yavli-defuser.js,domain=activistpost.com|naturalblaze.com|thefreethoughtproject.com
-||edge.quantserve.com/quant.js$script,redirect=yavli-defuser.js,domain=alfonzorachel.com|aplus.com|breathecast.com|bulletsfirst.net|clashdaily.com|comicallyincorrect.com|conservativebyte.com|cowboybyte.com|dailysurge.com|dccrimestories.com|drhotze.com|explosm.net|genfringe.com|girlsjustwannahaveguns.com|joeforamerica.com|latinpost.com|minutemennews.com|mobilelikez.com|muscleandfitness.com|naturalblaze.com|patriotoutdoornews.com|pitgrit.com|redmaryland.com|shark-tank.com|theblacksphere.net|thegatewaypundit.com|themattwalshblog.com|unilad.co.uk|vcpost.com|victoriajackson.com|viralnova.com
-||native.sharethrough.com/assets/tag.js$script,redirect=yavli-defuser.js,domain=thepoke.co.uk
-||ziccardia.com/adBlockDetector/$script,redirect=yavli-defuser.js,domain=oddee.com
-# Pornhub et al.
-extremetube.com,gaytube.com,keezmovies.com,mofosex.com,pornhub.com,redtube.com,spankwire.com,thumbzilla.com,tube8.*,xtube.com,youporn.com,youporngay.com##script:contains(FastPopSessionRequestNumber)
