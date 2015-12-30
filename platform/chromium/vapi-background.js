@@ -112,19 +112,19 @@ vAPI.browserSettings = {
                 // https://github.com/gorhill/uBlock/issues/533#issuecomment-164292868
                 // If WebRTC is supported, there won't be an exception if we
                 // try to instanciate a peer connection object.
-                var pc = null;
-                try {
-                    var PC = self.RTCPeerConnection || self.webkitRTCPeerConnection;
-                    if ( PC ) {
-                        pc = new PC(null);
-                    }
-                } catch (ex) {
-                    console.error(ex);
-                }
-                if ( pc === null ) {
-                    break;
-                }
-                pc.close();
+                //var pc = null;
+                //try {
+                //    var PC = self.RTCPeerConnection || self.webkitRTCPeerConnection;
+                //    if ( PC ) {
+                //        pc = new PC(null);
+                //    }
+                //} catch (ex) {
+                //    console.error(ex);
+                //}
+                //if ( pc === null ) {
+                //    break;
+                //}
+                //pc.close();
 
                 // https://github.com/gorhill/uBlock/issues/533
                 // If we reach this point, the property
