@@ -134,7 +134,7 @@
 		"group": "ads",
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"https://iadb.azurewebsites.net/Finland_adb.txt": {
+	"http://adb.juvander.net/Finland_adb.txt": {
 		"off": true,
 		"title": "FIN: Finnish Addition to Easylist",
 		"group": "regions",
@@ -306,7 +306,7 @@
 	"www.malwaredomainlist.com/hostslist/hosts.txt": {
 		"title": "Malware Domain List",
 		"group": "malware",
-		"homeURL": "http://www.malwaredomainlist.com/hostslist/hosts.txt"
+		"homeURL": "https://www.malwaredomainlist.com/hostslist/hosts.txt"
 	},
 	"https://www.void.gr/kargig/void-gr-filters.txt": {
 		"off": true,
