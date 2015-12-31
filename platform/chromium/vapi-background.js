@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global self, µBlock */
-
 // For background page
 
 /******************************************************************************/
@@ -74,6 +72,71 @@ vAPI.storage = chrome.storage.local;
 // API threw an exception.
 
 vAPI.browserSettings = {
+    webRTCSupported: undefined,
+
+    // https://github.com/gorhill/uBlock/issues/533
+    // We must first check wether this Chromium-based browser was compiled
+    // with WebRTC support. To do this, we use an iframe, this way the
+    // empty RTCPeerConnection object we create to test for support will
+    // be properly garbage collected. This prevents issues such as
+    // a computer unable to enter into sleep mode, as reported in the
+    // Chrome store:
+    // https://github.com/gorhill/uBlock/issues/533#issuecomment-167931681
+    setWebrtcIPAddress: function(setting) {
+        // We don't know yet whether this browser supports WebRTC: find out.
+        if ( this.webRTCSupported === undefined ) {
+            this.webRTCSupported = { setting: setting };
+            var iframe = document.createElement('iframe');
+            var me = this;
+            var messageHandler = function(ev) {
+                if ( ev.origin !== self.location.origin ) {
+                    return;
+                }
+                window.removeEventListener('message', messageHandler);
+                var setting = me.webRTCSupported.setting;
+                me.webRTCSupported = ev.data === 'webRTCSupported';
+                me.setWebrtcIPAddress(setting);
+                iframe.parentNode.removeChild(iframe);
+                iframe = null;
+            };
+            window.addEventListener('message', messageHandler);
+            iframe.src = 'is-webrtc-supported.html';
+            document.body.appendChild(iframe);
+            return;
+        }
+
+        // We are waiting for a response from our iframe. This makes the code
+        // safe to re-entrancy.
+        if ( typeof this.webRTCSupported === 'object' ) {
+            this.webRTCSupported.setting = setting;
+            return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/533
+        // WebRTC not supported: `webRTCMultipleRoutesEnabled` can NOT be
+        // safely accessed. Accessing the property will cause full browser
+        // crash.
+        if ( this.webRTCSupported !== true ) {
+            return;
+        }
+
+        // Older version of Chromium do not support this setting.
+        if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled !== 'object' ) {
+            return;
+        }
+
+        try {
+            chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
+                value: !!setting,
+                scope: 'regular'
+            }, function() {
+                void chrome.runtime.lastError;
+            });
+        } catch(ex) {
+            console.error(ex);
+        }
+    },
+
     set: function(details) {
         // https://github.com/gorhill/uBlock/issues/875
         // Must not leave `lastError` unchecked.
@@ -109,36 +172,7 @@ vAPI.browserSettings = {
                 break;
 
             case 'webrtcIPAddress':
-                // https://github.com/gorhill/uBlock/issues/533#issuecomment-164292868
-                // If WebRTC is supported, there won't be an exception if we
-                // try to instanciate a peer connection object.
-                //var pc = null;
-                //try {
-                //    var PC = self.RTCPeerConnection || self.webkitRTCPeerConnection;
-                //    if ( PC ) {
-                //        pc = new PC(null);
-                //    }
-                //} catch (ex) {
-                //    console.error(ex);
-                //}
-                //if ( pc === null ) {
-                //    break;
-                //}
-                //pc.close();
-
-                // https://github.com/gorhill/uBlock/issues/533
-                // If we reach this point, the property
-                // `webRTCMultipleRoutesEnabled` can be safely accessed.
-                if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled === 'object' ) {
-                    try {
-                        chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
-                            value: !!details[setting],
-                            scope: 'regular'
-                        }, callback);
-                    } catch(ex) {
-                        console.error(ex);
-                    }
-                }
+                this.setWebrtcIPAddress(details[setting]);
                 break;
 
             default:
