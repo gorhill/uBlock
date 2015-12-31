@@ -100,7 +100,7 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"클릭하여 영구적으로 변경사항을 저장합니다.",
+    "message":"클릭하여 변경사항을 저장합니다.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{

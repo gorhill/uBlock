@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"माझे नियम",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Logger",
+    "message":"uBlock₀ — लॉगर",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -76,15 +76,15 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"या साइटसाठी सर्व पॉपअप अवरोधित करणे टॉगल करा",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"या साइटसाठी टॉगल कठोर अवरोधित करणे",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"या साइटसाठी कॉस्मेटिक फिल्टरिंग टॉगल करा",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
@@ -108,11 +108,11 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"सर्व",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"चित्रे",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -144,7 +144,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} पैकी {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -224,7 +224,7 @@
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"अखेरचे पुनर्संचयित:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
@@ -340,11 +340,11 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"स्थायी नियम",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"अस्थायी नियम",
     "description":"header"
   },
   "rulesRevert":{
@@ -356,7 +356,7 @@
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"संपादित करा",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{

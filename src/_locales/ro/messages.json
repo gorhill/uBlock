@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Jurnalul cererilor de rețea",
+    "message":"uBlock₀ — Jurnal",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Deschide jurnalul cererilor",
+    "message":"Deschide jurnalul",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -184,7 +184,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Dezactivează ponturile",
+    "message":"Dezactivează indiciile",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
