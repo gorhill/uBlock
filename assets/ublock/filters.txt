@@ -250,3 +250,6 @@ extremetube.com,pornhub.com,primewire.*,redtube.com,spankwire.com,tube8.com,tube
 
 # https://github.com/gorhill/uBlock/issues/1136
 ||dailymotion.com/ac/video/$image,first-party,redirect=2x2-transparent.png
+
+# https://news.ycombinator.com/item?id=10814913
+forbes.com##script:inject(forbes-defuser.js)
