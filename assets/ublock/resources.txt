@@ -214,6 +214,7 @@ googletagservices.com/gpt.js application/javascript
         clearTargeting: noopfn,
         defineSizeMapping: noopthisfn,
         setCategoryExclusion: noopfn,
+        setCollapseEmptyDiv: noopfn,
         setTargeting: noopthisfn
     };
     var slotfn = function() { return slot; };
