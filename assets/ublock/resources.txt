@@ -205,11 +205,14 @@ googletagservices.com/gpt.js application/javascript
     var noopfn = function() {
         ;
     };
+    var noopthisfn = function() {
+        return this;
+    };
     //
     var slot = {
-        addService: noopfn,
+        addService: noopthisfn,
         setCategoryExclusion: noopfn,
-        setTargeting: noopfn
+        setTargeting: noopthisfn
     };
     var slotfn = function() {
         return slot;
@@ -226,9 +229,7 @@ googletagservices.com/gpt.js application/javascript
     };
     //
     var smb = {
-        addSize: function() {
-            return this;
-        },
+        addSize: noopthisfn,
         build: noopfn
     };
     //
