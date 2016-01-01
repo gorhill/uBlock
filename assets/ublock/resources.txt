@@ -221,11 +221,13 @@ googletagservices.com/gpt.js application/javascript
     var pas = {
         addEventListener: noopfn,
         clear: noopfn,
+        definePassback: noopthisfn,
+        display: noopfn,
         enableSyncRendering: noopfn,
         refresh: noopfn,
         set: noopfn,
         setCategoryExclusion: noopfn,
-        setTargeting: noopfn
+        setTargeting: noopthisfn
     };
     //
     var smb = {
@@ -311,9 +313,18 @@ pornhub-popup-defuser.js application/javascript
 # https://news.ycombinator.com/item?id=10814913
 forbes-defuser.js application/javascript
 (function() {
-    var then = new Date(Date.now() + 60000);
-    var expire = '; expires=' + then.toString();
-    document.cookie = 'dailyWelcomeCookie=true' + expire;
-    document.cookie = 'forbes_ab=false' + expire;
-    document.cookie = 'global_ad_params={}' + expire;
+    if ( typeof window.fbs_settings === 'object' ) {
+        window.fbs_settings.classes = 'W10=';
+        window.fbs_settings.mobile = 'true';
+        return;
+    }
+    Object.defineProperty(window, 'fbs_settings', {
+        value: {
+            classes: 'W10=',
+            data: {
+                title: ''
+            },
+            mobile: 'true'
+        }
+    });
 })();
