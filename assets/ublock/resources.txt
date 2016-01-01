@@ -204,7 +204,7 @@ googletagservices.com/gpt.js application/javascript
     // https://developers.google.com/doubleclick-gpt/reference
     var noopfn = function() {
         ;
-    }
+    };
     //
     var slot = {
         addService: noopfn,
