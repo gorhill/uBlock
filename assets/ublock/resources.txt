@@ -204,7 +204,7 @@ googletagservices.com/gpt.js application/javascript
     // https://developers.google.com/doubleclick-gpt/reference
     var noopfn = function() {
         ;
-    };
+    }
     //
     var slot = {
         addService: noopfn,
@@ -215,13 +215,21 @@ googletagservices.com/gpt.js application/javascript
         return slot;
     };
     //
-    var pubAdsService = {
+    var pas = {
         addEventListener: noopfn,
         clear: noopfn,
         enableSyncRendering: noopfn,
         refresh: noopfn,
         set: noopfn,
-        setCategoryExclusion: noopfn
+        setCategoryExclusion: noopfn,
+        setTargeting: noopfn
+    };
+    //
+    var smb = {
+        addSize: function() {
+            return this;
+        },
+        build: noopfn
     };
     //
     var gpt = window.googletag || {};
@@ -233,7 +241,10 @@ googletagservices.com/gpt.js application/javascript
     gpt.enableServices = noopfn;
     gpt.getVersion = gpt.getVersion || noopfn;
     gpt.pubads =  function() {
-        return pubAdsService;
+        return pas;
+    };
+    gpt.sizeMapping = function() {
+        return smb;
     };
     //
     window.googletag = gpt;
@@ -300,8 +311,8 @@ pornhub-popup-defuser.js application/javascript
 forbes-defuser.js application/javascript
 (function() {
     var then = new Date(Date.now() + 60000);
-    var expire = then.toString();
-    document.cookie = 'dailyWelcomeCookie=true; expires=' + expire;
-    document.cookie = 'forbes_ab=false; expires=' + expire;
-    document.cookie = 'global_ad_params={}; expires=' + expire;
+    var expire = '; expires=' + then.toString();
+    document.cookie = 'dailyWelcomeCookie=true' + expire;
+    document.cookie = 'forbes_ab=false' + expire;
+    document.cookie = 'global_ad_params={}' + expire;
 })();
