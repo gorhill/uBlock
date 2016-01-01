@@ -211,19 +211,23 @@ googletagservices.com/gpt.js application/javascript
     //
     var slot = {
         addService: noopthisfn,
+        clearTargeting: noopfn,
+        defineSizeMapping: noopthisfn,
         setCategoryExclusion: noopfn,
         setTargeting: noopthisfn
     };
-    var slotfn = function() {
-        return slot;
-    };
+    var slotfn = function() { return slot; };
     //
     var pas = {
         addEventListener: noopfn,
         clear: noopfn,
+        collapseEmptyDivs: noopfn,
         definePassback: noopthisfn,
+        disableInitialLoad: noopfn,
         display: noopfn,
+        enableSingleRequest: noopfn,
         enableSyncRendering: noopfn,
+        getSlots: function() { return []; },
         refresh: noopfn,
         set: noopfn,
         setCategoryExclusion: noopfn,
@@ -237,17 +241,27 @@ googletagservices.com/gpt.js application/javascript
     //
     var gpt = window.googletag || {};
     gpt._vars_ = gpt._vars_ || {};
-    gpt.cmd = gpt.cmd || [];
     gpt.display = noopfn;
     gpt.defineSlot = slotfn;
     gpt.defineOutOfPageSlot = slotfn;
     gpt.enableServices = noopfn;
     gpt.getVersion = gpt.getVersion || noopfn;
-    gpt.pubads =  function() {
-        return pas;
-    };
-    gpt.sizeMapping = function() {
-        return smb;
+    gpt.pubads =  function() { return pas; };
+    gpt.sizeMapping = function() { return smb; };
+    //
+    if ( Array.isArray(gpt.cmd) ) {
+        gpt.cmd.forEach(function(a) {
+            if ( typeof a === 'function' ) {
+                a();
+            }
+        });
+    }
+    gpt.cmd = {
+        push: function(a) {
+            if ( typeof a === 'function' ) {
+                a();
+            }
+        }
     };
     //
     window.googletag = gpt;
