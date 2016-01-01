@@ -306,7 +306,7 @@
 	"www.malwaredomainlist.com/hostslist/hosts.txt": {
 		"title": "Malware Domain List",
 		"group": "malware",
-		"homeURL": "https://www.malwaredomainlist.com/hostslist/hosts.txt"
+		"homeURL": "http://www.malwaredomainlist.com/hostslist/hosts.txt"
 	},
 	"https://www.void.gr/kargig/void-gr-filters.txt": {
 		"off": true,
