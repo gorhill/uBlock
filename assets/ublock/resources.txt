@@ -313,6 +313,9 @@ pornhub-popup-defuser.js application/javascript
 # https://news.ycombinator.com/item?id=10814913
 forbes-defuser.js application/javascript
 (function() {
+    if ( !window.location.pathname.startsWith('/forbes/welcome/') ) {
+        return;
+    }
     if ( typeof window.fbs_settings === 'object' ) {
         window.fbs_settings.classes = 'W10=';
         window.fbs_settings.mobile = 'true';
