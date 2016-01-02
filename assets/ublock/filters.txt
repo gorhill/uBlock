@@ -253,3 +253,6 @@ extremetube.com,pornhub.com,primewire.*,redtube.com,spankwire.com,tube8.com,tube
 
 # https://news.ycombinator.com/item?id=10814913
 forbes.com##script:inject(forbes-defuser.js)
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=25212&start=15
+||branchroughlend.info^$document,popunder,popup
