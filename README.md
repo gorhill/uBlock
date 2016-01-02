@@ -115,6 +115,7 @@ Being lean and efficient doesn't mean blocking less<br>
 - [Index](http://raymondhill.net/ublock/tests.html)
 - [Web page components](http://raymondhill.net/ublock/tiles1.html)
 - [Popups](http://raymondhill.net/ublock/popup.html)
+- [Page load speed](http://www.raymondhill.net/ublock/pageloadspeed.html)
 - [ABP Test Pages](https://testpages.adblockplus.org/)
 
 ## Installation
