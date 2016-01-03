@@ -258,4 +258,4 @@ forbes.com##script:inject(forbes-defuser.js)
 ||branchroughlend.info^$popunder,popup
 ||market-buster.com^$popunder,popup
 ||clkfeed.com^$popunder,popup
-animeuploads.com##script:inject(impspcabe-defuser.js)
+animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
