@@ -47,6 +47,8 @@ var defaultExternalLists = [
 /******************************************************************************/
 
 return {
+    firstInstall: false,
+
     userSettings: {
         advancedUserEnabled: false,
         autoUpdate: true,
