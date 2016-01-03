@@ -46,11 +46,25 @@ a {
     line-height: 12px;
     margin: 0;
     padding: 3px 0;
+    position: relative;
     text-align: center;
     }
 #version {
     font-size: 10px;
     font-weight: normal;
+    }
+#gotoPrefs > span:nth-of-type(3) {
+    opacity: 0.35;
+    position: absolute;
+    }
+body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
+    left: 3px;
+    }
+body[dir="rtl"] #gotoPrefs > span:nth-of-type(3) {
+    right: 3px;
+    }
+#gotoPrefs:hover > span:nth-of-type(3) {
+    opacity: 0.65;
     }
 body[dir="ltr"] #panes {
     direction: rtl;
