@@ -29,6 +29,15 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1124
+// Looks like `contentType` is on track to be standardized:
+//   https://dom.spec.whatwg.org/#concept-document-content-type
+if ( (document.contentType || '').startsWith('image/') ) {
+    return; 
+}
+
+/******************************************************************************/
+
 var vAPI = self.vAPI = self.vAPI || {};
 var chrome = self.chrome;
 
@@ -60,7 +69,7 @@ vAPI.shutdown = (function() {
     var exec = function() {
         //console.debug('Shutting down...');
         var job;
-        while ( job = jobs.pop() ) {
+        while ( (job = jobs.pop()) ) {
             job();
         }
     };
