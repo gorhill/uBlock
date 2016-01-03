@@ -182,6 +182,22 @@ www.google-analytics.com/ga.js application/javascript
 www.google-analytics.com/analytics.js application/javascript
 (function() {
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/
+    var noopfn = function() {
+        ;
+    };
+    var noopnullfn = function() {
+        return null;
+    };
+    //
+    var Tracker = function() {
+        ;
+    };
+    var p = Tracker.prototype;
+    p.get = noopfn;
+    p.set = noopfn;
+    p.send = noopfn;
+    //
+    var gaName = window.GoogleAnalyticsObject || 'ga';
     var ga = function() {
         var len = arguments.length;
         if ( len === 0 ) {
@@ -192,7 +208,15 @@ www.google-analytics.com/analytics.js application/javascript
             f.hitCallback();
         }
     };
-    window.ga = ga;
+    ga.create = function() {
+        return new Tracker();
+    };
+    ga.getByName = noopnullfn;
+    ga.getAll = function() {
+        return [];
+    };
+    ga.remove = noopfn;
+    window[gaName] = ga;
 })();
 
 
@@ -402,4 +426,10 @@ forbes-defuser.js application/javascript
             mobile: 'true'
         }
     });
+})();
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=25212
+impspcabe-defuser.js application/javascript
+(function(){
+    window._impspcabe = false;
 })();

@@ -255,4 +255,7 @@ extremetube.com,pornhub.com,primewire.*,redtube.com,spankwire.com,tube8.com,tube
 forbes.com##script:inject(forbes-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=25212&start=15
-||branchroughlend.info^$document,popunder,popup
+||branchroughlend.info^$popunder,popup
+||market-buster.com^$popunder,popup
+||clkfeed.com^$popunder,popup
+animeuploads.com##script:inject(impspcabe-defuser.js)
