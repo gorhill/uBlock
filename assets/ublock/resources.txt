@@ -110,7 +110,7 @@ antiAdBlock.js application/javascript
 # Test cases (need way more):
 # - https://github.com/chrisaljoudi/uBlock/issues/119
 
-www.google-analytics.com/ga.js application/javascript
+google-analytics.com/ga.js application/javascript
 (function() {
     var noopfn = function() {
         ;
@@ -179,7 +179,7 @@ www.google-analytics.com/ga.js application/javascript
     window._gaq = gaq.qf = gaq;
 })();
 
-www.google-analytics.com/analytics.js application/javascript
+google-analytics.com/analytics.js application/javascript
 (function() {
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/
     var noopfn = function() {

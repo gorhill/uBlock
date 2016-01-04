@@ -16,7 +16,7 @@
 # The goal is to be able to block `www.google-analytics.com` while preventing
 # web page breakage.
 # Replacement for `www.google-analytics.com/ga.js`
-||www.google-analytics.com/ga.js$script,redirect=www.google-analytics.com/ga.js,important
+||google-analytics.com/ga.js$script,redirect=google-analytics.com/ga.js,important
 
 # Replacement for `www.google-analytics.com/analytics.js`
-||www.google-analytics.com/analytics.js$script,redirect=www.google-analytics.com/analytics.js,important
+||google-analytics.com/analytics.js$script,redirect=google-analytics.com/analytics.js,important

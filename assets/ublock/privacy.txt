@@ -43,3 +43,6 @@
 # - Whether a blocker is used
 # - Screen size/browser viewport size
 ||adblockanalytics.com^$third-party
+
+# Redirect to neutered Google Analytics 
+||google-analytics.com/analytics.js$script,redirect=google-analytics.com/analytics.js
