@@ -463,6 +463,11 @@ var renderPopup = function() {
     uDom.nodeFromId('no-cosmetic-filtering').classList.toggle('on', popupData.noCosmeticFiltering === true);
     uDom.nodeFromId('no-remote-fonts').classList.toggle('on', popupData.noRemoteFonts === true);
 
+    // Report blocked popup count on badge
+    total = popupData.popupBlockedCount;
+    uDom.nodeFromSelector('#no-popups > span.badge')
+        .textContent = total ? total.toLocaleString() : '';
+
     // Report remote font count on badge
     total = popupData.remoteFontCount;
     uDom.nodeFromSelector('#no-remote-fonts > span.badge')

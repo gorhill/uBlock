@@ -294,6 +294,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         pageDomain: tabContext.rootDomain,
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
+        popupBlockedCount: 0,
         tabId: tabId,
         tabTitle: tabTitle,
         tooltipsDisabled: µb.userSettings.tooltipsDisabled
@@ -313,6 +314,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname);
         r.noRemoteFonts = µb.hnSwitches.evaluateZ('no-remote-fonts', tabContext.rootHostname);
         r.remoteFontCount = pageStore.remoteFontCount;
+        r.popupBlockedCount = pageStore.popupBlockedCount;
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();

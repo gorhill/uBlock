@@ -304,6 +304,7 @@ PageStore.prototype.init = function(tabId) {
     this.perLoadAllowedRequestCount = 0;
     this.hiddenElementCount = ''; // Empty string means "unknown"
     this.remoteFontCount = 0;
+    this.popupBlockedCount = 0;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
     // Support `elemhide` filter option. Called at this point so the required

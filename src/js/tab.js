@@ -663,6 +663,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         var pageStore = µb.pageStoreFromTabId(openerTabId);
         if ( pageStore ) {
             pageStore.logRequest(context, result);
+            pageStore.popupBlockedCount += 1;
         }
 
         // Blocked
