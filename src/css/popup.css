@@ -54,7 +54,7 @@ a {
     font-weight: normal;
     }
 #gotoPrefs > span:nth-of-type(3) {
-    opacity: 0.35;
+    opacity: 0.2;
     position: absolute;
     }
 body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
