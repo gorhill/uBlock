@@ -204,7 +204,7 @@ google-analytics.com/analytics.js application/javascript
             return;
         }
         var f = arguments[len-1];
-        if ( typeof f === 'object' && typeof f.hitCallback === 'function' ) {
+        if ( typeof f === 'object' && f !== null && typeof f.hitCallback === 'function' ) {
             f.hitCallback();
         }
     };
