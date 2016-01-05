@@ -81,8 +81,9 @@ vAPI.shutdown = (function() {
     }
     var filters = self.rpc({
         fnName: 'getScriptTagFilters',
-        url: location.href,
-        hostname: hostname
+        rootURL: self.top.location.href,
+        frameURL: self.location.href,
+        frameHostname: hostname
     });
     if ( typeof filters !== 'string' || filters === '' ) {
         return;
