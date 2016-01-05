@@ -203,9 +203,12 @@ google-analytics.com/analytics.js application/javascript
         if ( len === 0 ) {
             return;
         }
-        var f = arguments[len-1];
-        if ( typeof f === 'object' && f !== null && typeof f.hitCallback === 'function' ) {
-            f.hitCallback();
+        try {
+            var f = arguments[len-1];
+            if ( typeof f === 'object' && f !== null && typeof f.hitCallback === 'function' ) {
+                f.hitCallback();
+            }
+        } catch (ex) {
         }
     };
     ga.create = function() {
