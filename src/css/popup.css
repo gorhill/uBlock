@@ -189,10 +189,10 @@ body.off #switch .fa {
     position: absolute;
     }
 body[dir="ltr"] #extraTools > span > span.badge {
-    left: 90%;
+    left: 100%;
     }
 body[dir="rtl"] #extraTools > span > span.badge {
-    right: 90%;
+    right: 100%;
     }
 #extraTools > span.on > span:last-of-type {
     color: #e00;
