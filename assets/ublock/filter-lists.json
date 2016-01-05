@@ -171,7 +171,7 @@
 		"title": "JPN: ABP Japanese filters (日本用フィルタ)",
 		"group": "regions",
 		"lang": "ja",
-		"supportURL": "https://github.com/k2jp/abp-japanese-filters"
+		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
 	},
 	"https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": {
 		"off": true,
