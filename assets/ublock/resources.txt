@@ -203,11 +203,12 @@ google-analytics.com/analytics.js application/javascript
         if ( len === 0 ) {
             return;
         }
+        var f = arguments[len-1];
+        if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+            return;
+        }
         try {
-            var f = arguments[len-1];
-            if ( typeof f === 'object' && f !== null && typeof f.hitCallback === 'function' ) {
-                f.hitCallback();
-            }
+            f.hitCallback();
         } catch (ex) {
         }
     };
@@ -361,8 +362,8 @@ i.ligatus.com/*/angular-tag.js application/javascript
 
 
 # Yavli ads. These are blocked using an inline script tag filter, but this
-# works only on Firefox. So we side-load the following script using whatever
-# script is normally blocked on the site.
+# works only on Firefox. So we side-load the following script for sites
+# suffering Yavli's click-bait ads.
 yavli-defuser.js application/javascript
 (function() {
     var descriptor = {
@@ -430,6 +431,7 @@ forbes-defuser.js application/javascript
         }
     });
 })();
+
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=25212
 impspcabe-defuser.js application/javascript
