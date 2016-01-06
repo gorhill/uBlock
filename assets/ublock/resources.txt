@@ -140,6 +140,7 @@ google-analytics.com/ga.js application/javascript
     //
     var tracker = {
         _initData: noopfn,
+        _trackEvent: noopfn,
         _trackPageview: noopfn
     };
     //

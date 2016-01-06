@@ -18,7 +18,7 @@
 @@||google-analytics.com/plugins/$script
 
 # https://github.com/gorhill/uBlock/issues/1020
-@@||www.google-analytics.com/ga.js$script,domain=www.tv2.no
+@@||www.google-analytics.com/ga.js$script,domain=santander.com.mx|tv2.no
 
 # https://github.com/gorhill/uBlock/issues/939
 @@||google-analytics.com/urchin.js$script,domain=live.euroleague.net
