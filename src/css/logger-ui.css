@@ -154,7 +154,7 @@ body.colorBlind #netInspector tr.nooped {
 body.colorBlind #netInspector tr.allowed {
     background-color: rgba(255, 194, 57, 0.1)
     }
-#netInspector tr.cb {
+#netInspector tr.cb, #netInspector tr.rr {
     background-color: rgba(255, 255, 0, 0.1);
     }
 #netInspector tr.maindoc {
@@ -218,6 +218,9 @@ body:not(.popupOn) #netInspector tr.canMtx td:nth-of-type(2):hover {
     }
 #netInspector tr.canLookup td:nth-of-type(3) {
     cursor: zoom-in;
+    }
+#netInspector tr.cat_redirect td:nth-of-type(3):before {
+    content: '\21d2   ';
     }
 #netInspector tr.cat_net td:nth-of-type(4),
 #netInspector tr.cat_cosmetic td:nth-of-type(4) {

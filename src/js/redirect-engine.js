@@ -96,6 +96,7 @@ RedirectEntry.fromSelfie = function(selfie) {
 var RedirectEngine = function() {
     this.resources = Object.create(null);
     this.reset();
+    this.resourceNameRegister = '';
 };
 
 /******************************************************************************/
@@ -131,7 +132,7 @@ RedirectEngine.prototype.lookup = function(context) {
                     while ( i-- ) {
                         entry = entries[i];
                         if ( entry.c.test(reqURL) ) {
-                            return entry.r;
+                            return (this.resourceNameRegister = entry.r);
                         }
                     }
                 }

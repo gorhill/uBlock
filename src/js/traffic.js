@@ -135,6 +135,17 @@ var onBeforeRequest = function(details) {
     // Redirect blocked request?
     var url = µb.redirectEngine.toURL(requestContext);
     if ( url !== undefined ) {
+        if ( µb.logger.isEnabled() ) {
+            µb.logger.writeOne(
+                tabId,
+                'redirect',
+                'rr:' + µb.redirectEngine.resourceNameRegister,
+                'redirect',
+                requestURL,
+                requestContext.rootHostname,
+                requestContext.pageHostname
+            );
+        }
         return { redirectUrl: url };
     }
 

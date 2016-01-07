@@ -517,6 +517,7 @@ var renderLogEntry = function(entry) {
 
     case 'cosmetic':
     case 'net':
+    case 'redirect':
         tr = createRow('1111');
         renderNetLogEntry(tr, entry);
         break;
