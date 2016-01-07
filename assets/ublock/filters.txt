@@ -150,9 +150,6 @@ jeu.info###page [class^="banniere-"]
 # http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
 arstechnica.com###lg-pushdown
 
-# This prevents spurious redirection, but breaks comments
-||www.washingtonpost.com/*/twp-global.js$script,first-party
-
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
 ||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
 www.valuewalk.com##.widgetad
