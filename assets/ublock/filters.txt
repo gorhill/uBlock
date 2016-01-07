@@ -219,6 +219,10 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 ||branchroughlend.info^$popunder,popup
 ||market-buster.com^$popunder,popup
 ||clkfeed.com^$popunder,popup
+# https://github.com/gorhill/uBlock/issues/1177
+||clicksvenue.com^$popunder
+||globaltraffico.com^$popunder,popup
+
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=27003
 www.opensubtitles.org##div[itemscope] > fieldset
