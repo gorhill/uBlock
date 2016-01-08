@@ -627,6 +627,10 @@
     "message": "Import from cloud storage",
     "description": "tooltip"
   },
+  "cloudPullAndMerge": {
+    "message": "Import from cloud storage and merge with current settings",
+    "description": "tooltip"
+  },
   "cloudNoData": {
     "message": "...\n...",
     "description": ""

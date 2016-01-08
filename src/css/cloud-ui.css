@@ -9,32 +9,32 @@
     display: none;
     }
 #cloudWidget > button {
-    font-size: 160%;
-    padding: 0.1em 0.2em;
-    }
-#cloudPull[disabled] {
-    visibility: hidden;
-    }
-#cloudPush:after ,
-#cloudPull:before {
+    display: inline-block;
     font-family: FontAwesome;
+    font-size: 160%;
     font-style: normal;
     font-weight: normal;
     line-height: 1;
+    padding: 0.2em 0.25em 0.1em 0.25em;
+    position: relative;
     vertical-align: baseline;
-    display: inline-block;
     }
-body[dir="ltr"] #cloudPush:after {
+#cloudWidget > button[disabled] {
+    visibility: hidden;
+    }
+#cloudPush:after {
     content: '\f0ee';
     }
-body[dir="rtl"] #cloudPush:after {
-    content: '\f0ee';
-    }
-body[dir="ltr"] #cloudPull:before {
+#cloudPull:before,
+#cloudPullAndMerge:before {
     content: '\f0ed';
-    }
-body[dir="rtl"] #cloudPull:before {
-    content: '\f0ed';
+}
+#cloudPullAndMerge:after {
+    content: '\f067';
+    font-size: 50%;
+    position: absolute;
+    right: 0;
+    top: 10%;
     }
 #cloudWidget > span {
     color: gray;

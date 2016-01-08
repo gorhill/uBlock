@@ -501,7 +501,7 @@ var renderExternalLists = function() {
 
 var externalListsChangeHandler = function() {
     uDom.nodeFromId('externalListsApply').disabled =
-        uDom.nodeFromId('externalLists').value.trim() === externalLists;
+        uDom.nodeFromId('externalLists').value.trim() === externalLists.trim();
 };
 
 /******************************************************************************/
@@ -551,27 +551,35 @@ var getCloudData = function() {
     return bin;
 };
 
-var setCloudData = function(data) {
+var setCloudData = function(data, append) {
     if ( typeof data !== 'object' || data === null ) {
         return;
     }
 
-    var checked = data.parseCosmeticFilters === true;
-    uDom.nodeFromId('parseCosmeticFilters').checked = checked;
-    listDetails.cosmetic = checked;
+    var elem, checked;
 
-    var lis = uDom('#lists .listEntry'), li, input, listKey;
+    elem = uDom.nodeFromId('parseCosmeticFilters');
+    checked = data.parseCosmeticFilters === true ||
+              append && elem.checked;
+    elem.checked = listDetails.cosmetic = checked;
+
+    var lis = uDom('#lists .listEntry'), li, listKey;
     var i = lis.length;
     while ( i-- ) {
         li = lis.at(i);
-        input = li.descendants('input');
+        elem = li.descendants('input');
         listKey = li.descendants('a').attr('data-listkey');
-        checked = data.selectedLists.indexOf(listKey) !== -1;
-        input.prop('checked', checked);
+        checked = data.selectedLists.indexOf(listKey) !== -1 ||
+                  append && elem.prop('checked');
+        elem.prop('checked', checked);
         listDetails.available[listKey].off = !checked;
     }
 
-    uDom.nodeFromId('externalLists').value = data.externalLists || '';
+    elem = uDom.nodeFromId('externalLists');
+    if ( !append ) {
+        elem.value = '';
+    }
+    elem.value += data.externalLists || '';
 
     renderWidgets();
     externalListsChangeHandler();

@@ -62,6 +62,7 @@ var onCloudDataReceived = function(entry) {
     self.cloud.data = entry.data;
 
     uDom.nodeFromId('cloudPull').removeAttribute('disabled');
+    uDom.nodeFromId('cloudPullAndMerge').removeAttribute('disabled');
 
     var timeOptions = {
         weekday: 'short',
@@ -110,9 +111,17 @@ var pushData = function() {
 
 /******************************************************************************/
 
-var pullData = function(ev) {
+var pullData = function() {
     if ( typeof self.cloud.onPull === 'function' ) {
-        self.cloud.onPull(self.cloud.data, ev.shiftKey);
+        self.cloud.onPull(self.cloud.data, false);
+    }
+};
+
+/******************************************************************************/
+
+var pullAndMergeData = function() {
+    if ( typeof self.cloud.onPull === 'function' ) {
+        self.cloud.onPull(self.cloud.data, true);
     }
 };
 
@@ -171,7 +180,8 @@ var onInitialize = function(options) {
     var html = [
         '<button id="cloudPush" type="button" title="cloudPush"></button>',
         '<span data-i18n="cloudNoData"></span>',
-        '<button id="cloudPull" type="button" title="cloudPull" disabled></button>',
+        '<button id="cloudPull" type="button" title="cloudPull" disabled></button>&nbsp;',
+        '<button id="cloudPullAndMerge" type="button" title="cloudPullAndMerge" disabled></button>',
         '<span id="cloudCog" class="fa">&#xf013;</span>',
         '<div id="cloudOptions">',
         '    <div>',
@@ -187,6 +197,7 @@ var onInitialize = function(options) {
 
     uDom('#cloudPush').on('click', pushData);
     uDom('#cloudPull').on('click', pullData);
+    uDom('#cloudPullAndMerge').on('click', pullAndMergeData);
     uDom('#cloudCog').on('click', openOptions);
     uDom('#cloudOptions').on('click', closeOptions);
     uDom('#cloudOptionsSubmit').on('click', submitOptions);
