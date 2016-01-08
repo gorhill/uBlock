@@ -446,7 +446,5 @@ wpredirect-defuser.js application/javascript
 (function() {
     var twp = window.TWP = window.TWP || {};
     twp.Identity = twp.Identity || {};
-    Object.defineProperty(twp.Identity, 'initComplete', {
-        get: function() { return true; }
-    });
+    twp.Identity.initComplete = true;
 })();
