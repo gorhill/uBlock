@@ -150,7 +150,7 @@ jeu.info###page [class^="banniere-"]
 # http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
 arstechnica.com###lg-pushdown
 
-# This prevents spurious redirection, but breaks comments
+# This prevents spurious redirections
 washingtonpost.com##script:inject(wpredirect-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
