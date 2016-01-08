@@ -439,3 +439,14 @@ impspcabe-defuser.js application/javascript
 (function(){
     window._impspcabe = false;
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/733
+wpredirect-defuser.js application/javascript
+(function() {
+    var twp = window.TWP = window.TWP || {};
+    twp.Identity = twp.Identity || {};
+    Object.defineProperty(twp.Identity, 'initComplete', {
+        get: function() { return true; }
+    });
+})();
