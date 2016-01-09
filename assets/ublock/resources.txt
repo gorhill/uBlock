@@ -448,3 +448,13 @@ wpredirect-defuser.js application/javascript
     twp.Identity = twp.Identity || {};
     twp.Identity.initComplete = true;
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/1194
+openload-defuser.js application/javascript
+(function() {
+    Object.defineProperty(window, 'preserve', {
+        get: function() { return true; },
+        set: function() {}
+    });
+})();

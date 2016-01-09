@@ -287,3 +287,6 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=91&t=27188
 ||i.ligatus.com/*/angular-tag.js$script,redirect=i.ligatus.com/*/angular-tag.js
+
+# https://github.com/gorhill/uBlock/issues/1194
+openload.co##script:inject(openload-defuser.js)
