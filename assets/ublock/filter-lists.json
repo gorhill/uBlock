@@ -301,6 +301,13 @@
 		"group": "regions",
 		"supportURL": "https://forums.lanik.us/"
 	},
+	"https://easylist-downloads.adblockplus.org/easylistspanish.txt": {
+		"off": true,
+		"title": "spa: EasyList Spanish",
+		"group": "regions",
+		"lang": "es",
+		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
+	},
 	"https://www.fanboy.co.nz/fanboy-swedish.txt": {
 		"off": true,
 		"title": "SWE: Fanboy's Swedish",
