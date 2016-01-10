@@ -29,78 +29,78 @@ noopcss text/css
 
 noopjs application/javascript
 (function() {
-    ;
+	;
 })();
 
 
 noopframe text/html
 <!DOCTYPE html>
 <html>
-    <head><title></title></head>
-    <body></body>
+	<head><title></title></head>
+	<body></body>
 </html>
 
 
 hd-main.js application/javascript
 var L = (function(){
-    var l = {};
-    var noopfn = function() {
-        ;
-    };
-    var props = [
-        "pf", "ed", "Qe", "fd", "xh", "Uc", "ef", "zd", "Ad", "Qc", "Ri", "Wc",
-        "Vc", "Xc", "Wg", "rd", "qd", "sd", "Pe", "Id", "Hd", "Jd", "fg", "Fd",
-        "Ed", "Gd", "ek", "Cd", "Bd", "Dd", "Nj", "Sc", "Rc", "Tc", "wg", "xd",
-        "wd", "yd", "fh", "ld", "md", "nd", "Re", "cd", "Pc", "ke", "Yc", "Xg",
-        "jd", "kd", "oh", "ad", "bd", "mi", "gd", "hd", "ae", "dd", "fk", "ij",
-        "ud", "td", "vd", "ig", "od", "pd", "Yd", "$j", "Oc", "bf"
-    ];
-    for (var i = 0; i < props.length; i++) {
-        l[props[i]] = noopfn;
-    }
-    return l;
+	var l = {};
+	var noopfn = function() {
+		;
+	};
+	var props = [
+		"pf", "ed", "Qe", "fd", "xh", "Uc", "ef", "zd", "Ad", "Qc", "Ri", "Wc",
+		"Vc", "Xc", "Wg", "rd", "qd", "sd", "Pe", "Id", "Hd", "Jd", "fg", "Fd",
+		"Ed", "Gd", "ek", "Cd", "Bd", "Dd", "Nj", "Sc", "Rc", "Tc", "wg", "xd",
+		"wd", "yd", "fh", "ld", "md", "nd", "Re", "cd", "Pc", "ke", "Yc", "Xg",
+		"jd", "kd", "oh", "ad", "bd", "mi", "gd", "hd", "ae", "dd", "fk", "ij",
+		"ud", "td", "vd", "ig", "od", "pd", "Yd", "$j", "Oc", "bf"
+	];
+	for (var i = 0; i < props.length; i++) {
+		l[props[i]] = noopfn;
+	}
+	return l;
 })();
 
 
 # fuckadblock defuser
 fuckadblock.js-3.2.0 application/javascript
 (function() {
-    var noopfn = function() {
-        ;
-    };
-    //
-    var Fab = function() {};
-    Fab.prototype.check = noopfn;
-    Fab.prototype.clearEvent = noopfn;
-    Fab.prototype.emitEvent = noopfn;
-    Fab.prototype.on = function(a, b) {
-        if ( !a ) { b(); }
-        return this;
-    };
-    Fab.prototype.onDetected = function() {
-        return this;
-    };
-    Fab.prototype.onNotDetected = function(a) {
-        a();
-        return this;
-    };
-    Fab.prototype.setOption = noopfn;
-    window.FuckAdBlock = Fab;
-    //
-    window.fuckAdBlock = new Fab();
+	var noopfn = function() {
+		;
+	};
+	//
+	var Fab = function() {};
+	Fab.prototype.check = noopfn;
+	Fab.prototype.clearEvent = noopfn;
+	Fab.prototype.emitEvent = noopfn;
+	Fab.prototype.on = function(a, b) {
+		if ( !a ) { b(); }
+		return this;
+	};
+	Fab.prototype.onDetected = function() {
+		return this;
+	};
+	Fab.prototype.onNotDetected = function(a) {
+		a();
+		return this;
+	};
+	Fab.prototype.setOption = noopfn;
+	window.FuckAdBlock = Fab;
+	//
+	window.fuckAdBlock = new Fab();
 })();
 
 
 antiAdBlock.js application/javascript
 (function() {
-    window.antiAdBlock = {
-        onDetected: function() {
-            ;
-        },
-        onNotDetected: function(a) {
-            a();
-        }
-    };
+	window.antiAdBlock = {
+		onDetected: function() {
+			;
+		},
+		onNotDetected: function(a) {
+			a();
+		}
+	};
 })();
 
 
@@ -112,116 +112,116 @@ antiAdBlock.js application/javascript
 
 google-analytics.com/ga.js application/javascript
 (function() {
-    var noopfn = function() {
-        ;
-    };
-    //
-    var Gaq = function() {
-        ;
-    };
-    Gaq.prototype.Na = noopfn;
-    Gaq.prototype.O = noopfn;
-    Gaq.prototype.Sa = noopfn;
-    Gaq.prototype.Ta = noopfn;
-    Gaq.prototype.Va = noopfn;
-    Gaq.prototype._createAsyncTracker = noopfn;
-    Gaq.prototype._getAsyncTracker = noopfn;
-    Gaq.prototype._getPlugin = noopfn;
-    Gaq.prototype.push = function(a) {
-        if ( typeof a === 'function' ) {
-            a();
-        }
-    };
-    //
-    var tracker = function() {};
-    tracker._getLinkerUrl = function(a) {
-        return a;
-    };
-    //
-    var tracker = {
-        _initData: noopfn,
-        _trackEvent: noopfn,
-        _trackPageview: noopfn
-    };
-    //
-    var Gat = function() {
-        ;
-    };
-    Gat.prototype._anonymizeIP = noopfn;
-    Gat.prototype._createTracker = noopfn;
-    Gat.prototype._forceSSL = noopfn;
-    Gat.prototype._getPlugin = noopfn;
-    Gat.prototype._getTracker = function() {
-        return tracker;
-    };
-    Gat.prototype._getTrackerByName = function() {
-        return tracker;
-    };
-    Gat.prototype._getTrackers = noopfn;
-    Gat.prototype.aa = noopfn;
-    Gat.prototype.ab = noopfn;
-    Gat.prototype.hb = noopfn;
-    Gat.prototype.la = noopfn;
-    Gat.prototype.oa = noopfn;
-    Gat.prototype.pa = noopfn;
-    Gat.prototype.u = noopfn;
-    var gat = new Gat();
-    window._gat = gat;
-    //
-    var gaq = new Gaq();
-    (function() {
-        var aa = window._gaq || [];
-        if ( Array.isArray(aa) ) {
-            while ( aa[0] ) {
-                gaq.push(aa.shift());
-            }
-        }
-    })();
-    window._gaq = gaq.qf = gaq;
+	var noopfn = function() {
+		;
+	};
+	//
+	var Gaq = function() {
+		;
+	};
+	Gaq.prototype.Na = noopfn;
+	Gaq.prototype.O = noopfn;
+	Gaq.prototype.Sa = noopfn;
+	Gaq.prototype.Ta = noopfn;
+	Gaq.prototype.Va = noopfn;
+	Gaq.prototype._createAsyncTracker = noopfn;
+	Gaq.prototype._getAsyncTracker = noopfn;
+	Gaq.prototype._getPlugin = noopfn;
+	Gaq.prototype.push = function(a) {
+		if ( typeof a === 'function' ) {
+			a();
+		}
+	};
+	//
+	var tracker = function() {};
+	tracker._getLinkerUrl = function(a) {
+		return a;
+	};
+	//
+	var tracker = {
+		_initData: noopfn,
+		_trackEvent: noopfn,
+		_trackPageview: noopfn
+	};
+	//
+	var Gat = function() {
+		;
+	};
+	Gat.prototype._anonymizeIP = noopfn;
+	Gat.prototype._createTracker = noopfn;
+	Gat.prototype._forceSSL = noopfn;
+	Gat.prototype._getPlugin = noopfn;
+	Gat.prototype._getTracker = function() {
+		return tracker;
+	};
+	Gat.prototype._getTrackerByName = function() {
+		return tracker;
+	};
+	Gat.prototype._getTrackers = noopfn;
+	Gat.prototype.aa = noopfn;
+	Gat.prototype.ab = noopfn;
+	Gat.prototype.hb = noopfn;
+	Gat.prototype.la = noopfn;
+	Gat.prototype.oa = noopfn;
+	Gat.prototype.pa = noopfn;
+	Gat.prototype.u = noopfn;
+	var gat = new Gat();
+	window._gat = gat;
+	//
+	var gaq = new Gaq();
+	(function() {
+		var aa = window._gaq || [];
+		if ( Array.isArray(aa) ) {
+			while ( aa[0] ) {
+				gaq.push(aa.shift());
+			}
+		}
+	})();
+	window._gaq = gaq.qf = gaq;
 })();
 
 google-analytics.com/analytics.js application/javascript
 (function() {
-    // https://developers.google.com/analytics/devguides/collection/analyticsjs/
-    var noopfn = function() {
-        ;
-    };
-    var noopnullfn = function() {
-        return null;
-    };
-    //
-    var Tracker = function() {
-        ;
-    };
-    var p = Tracker.prototype;
-    p.get = noopfn;
-    p.set = noopfn;
-    p.send = noopfn;
-    //
-    var gaName = window.GoogleAnalyticsObject || 'ga';
-    var ga = function() {
-        var len = arguments.length;
-        if ( len === 0 ) {
-            return;
-        }
-        var f = arguments[len-1];
-        if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
-            return;
-        }
-        try {
-            f.hitCallback();
-        } catch (ex) {
-        }
-    };
-    ga.create = function() {
-        return new Tracker();
-    };
-    ga.getByName = noopnullfn;
-    ga.getAll = function() {
-        return [];
-    };
-    ga.remove = noopfn;
-    window[gaName] = ga;
+	// https://developers.google.com/analytics/devguides/collection/analyticsjs/
+	var noopfn = function() {
+		;
+	};
+	var noopnullfn = function() {
+		return null;
+	};
+	//
+	var Tracker = function() {
+		;
+	};
+	var p = Tracker.prototype;
+	p.get = noopfn;
+	p.set = noopfn;
+	p.send = noopfn;
+	//
+	var gaName = window.GoogleAnalyticsObject || 'ga';
+	var ga = function() {
+		var len = arguments.length;
+		if ( len === 0 ) {
+			return;
+		}
+		var f = arguments[len-1];
+		if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+			return;
+		}
+		try {
+			f.hitCallback();
+		} catch (ex) {
+		}
+	};
+	ga.create = function() {
+		return new Tracker();
+	};
+	ga.getByName = noopnullfn;
+	ga.getAll = function() {
+		return [];
+	};
+	ga.remove = noopfn;
+	window[gaName] = ga;
 })();
 
 
@@ -230,135 +230,135 @@ google-analytics.com/analytics.js application/javascript
 # "visitor behavior"
 googletagservices.com/gpt.js application/javascript
 (function() {
-    var p;
-    // https://developers.google.com/doubleclick-gpt/reference
-    var noopfn = function() {
-        ;
-    };
-    var noopthisfn = function() {
-        return this;
-    };
-    var noopnullfn = function() {
-        return null;
-    };
-    var nooparrayfn = function() {
-        return [];
-    };
-    var noopstrfn = function() {
-        return '';
-    };
-    //
-    var companionAdsService = {
-        addEventListener: noopthisfn,
-        enableSyncLoading: noopfn,
-        setRefreshUnfilledSlots: noopfn
-    };
-    var contentService = {
-        addEventListener: noopthisfn,
-        setContent: noopfn
-    };
-    var PassbackSlot = function() {
-        ;
-    };
-    p = PassbackSlot.prototype;
-    p.display = noopfn;
-    p.get = noopnullfn;
-    p.set = noopthisfn;
-    p.setClickUrl = noopthisfn;
-    p.setTagForChildDirectedTreatment = noopthisfn;
-    p.setTargeting = noopthisfn;
-    p.updateTargetingFromMap = noopthisfn;
-    var pubAdsService = {
-        addEventListener: noopthisfn,
-        clear: noopfn,
-        clearCategoryExclusions: noopthisfn,
-        clearTagForChildDirectedTreatment: noopthisfn,
-        clearTargeting: noopthisfn,
-        collapseEmptyDivs: noopfn,
-        defineOutOfPagePassback: function() { return new PassbackSlot(); },
-        definePassback: function() { return new PassbackSlot(); },
-        disableInitialLoad: noopfn,
-        display: noopfn,
-        enableAsyncRendering: noopfn,
-        enableSingleRequest: noopfn,
-        enableSyncRendering: noopfn,
-        enableVideoAds: noopfn,
-        get: noopnullfn,
-        getAttributeKeys: nooparrayfn,
-        refresh: noopfn,
-        set: noopthisfn,
-        setCategoryExclusion: noopthisfn,
-        setCentering: noopfn,
-        setCookieOptions: noopthisfn,
-        setLocation: noopthisfn,
-        setPublisherProvidedId: noopthisfn,
-        setTagForChildDirectedTreatment: noopthisfn,
-        setTargeting: noopthisfn,
-        setVideoContent: noopthisfn,
-        updateCorrelator: noopfn
-    };
-    var SizeMappingBuilder = function() {
-        ;
-    };
-    p = SizeMappingBuilder.prototype;
-    p.addSize = noopthisfn;
-    p.build = noopnullfn;
-    var Slot = function() {
-        ;
-    };
-    p = Slot.prototype;
-    p.addService = noopthisfn;
-    p.clearCategoryExclusions = noopthisfn;
-    p.clearTargeting = noopthisfn;
-    p.defineSizeMapping = noopthisfn;
-    p.get = noopnullfn;
-    p.getAdUnitPath = nooparrayfn;
-    p.getAttributeKeys = nooparrayfn;
-    p.getCategoryExclusions = nooparrayfn;
-    p.getDomId = noopstrfn;
-    p.getSlotElementId = noopstrfn;
-    p.getSlotId = noopthisfn;
-    p.getTargeting = nooparrayfn;
-    p.getTargetingKeys = nooparrayfn;
-    p.set = noopthisfn;
-    p.setCategoryExclusion = noopthisfn;
-    p.setClickUrl = noopthisfn;
-    p.setCollapseEmptyDiv = noopthisfn;
-    p.setTargeting = noopthisfn;
-    //
-    var gpt = window.googletag || {};
-    var cmd = gpt.cmd || [];
-    gpt.apiReady = true;
-    gpt.cmd = [];
-    gpt.cmd.push = function(a) {
-        try {
-            a();
-        } catch (ex) {
-        }
-        return 1;
-    };
-    gpt.companionAds = function() { return companionAdsService; };
-    gpt.content = function() { return contentService; };
-    gpt.defineOutOfPageSlot = function() { return new Slot(); };
-    gpt.defineSlot = function() { return new Slot(); };
-    gpt.disablePublisherConsole = noopfn;
-    gpt.display = noopfn;
-    gpt.enableServices = noopfn;
-    gpt.getVersion = noopstrfn;
-    gpt.pubads = function() { return pubAdsService; };
-    gpt.pubadsReady = true;
-    gpt.sizeMapping = function() { return new SizeMappingBuilder(); };
-    window.googletag = gpt;
-    while ( cmd.length !== 0 ) {
-        gpt.cmd.push(cmd.shift());
-    }
+	var p;
+	// https://developers.google.com/doubleclick-gpt/reference
+	var noopfn = function() {
+		;
+	};
+	var noopthisfn = function() {
+		return this;
+	};
+	var noopnullfn = function() {
+		return null;
+	};
+	var nooparrayfn = function() {
+		return [];
+	};
+	var noopstrfn = function() {
+		return '';
+	};
+	//
+	var companionAdsService = {
+		addEventListener: noopthisfn,
+		enableSyncLoading: noopfn,
+		setRefreshUnfilledSlots: noopfn
+	};
+	var contentService = {
+		addEventListener: noopthisfn,
+		setContent: noopfn
+	};
+	var PassbackSlot = function() {
+		;
+	};
+	p = PassbackSlot.prototype;
+	p.display = noopfn;
+	p.get = noopnullfn;
+	p.set = noopthisfn;
+	p.setClickUrl = noopthisfn;
+	p.setTagForChildDirectedTreatment = noopthisfn;
+	p.setTargeting = noopthisfn;
+	p.updateTargetingFromMap = noopthisfn;
+	var pubAdsService = {
+		addEventListener: noopthisfn,
+		clear: noopfn,
+		clearCategoryExclusions: noopthisfn,
+		clearTagForChildDirectedTreatment: noopthisfn,
+		clearTargeting: noopthisfn,
+		collapseEmptyDivs: noopfn,
+		defineOutOfPagePassback: function() { return new PassbackSlot(); },
+		definePassback: function() { return new PassbackSlot(); },
+		disableInitialLoad: noopfn,
+		display: noopfn,
+		enableAsyncRendering: noopfn,
+		enableSingleRequest: noopfn,
+		enableSyncRendering: noopfn,
+		enableVideoAds: noopfn,
+		get: noopnullfn,
+		getAttributeKeys: nooparrayfn,
+		refresh: noopfn,
+		set: noopthisfn,
+		setCategoryExclusion: noopthisfn,
+		setCentering: noopfn,
+		setCookieOptions: noopthisfn,
+		setLocation: noopthisfn,
+		setPublisherProvidedId: noopthisfn,
+		setTagForChildDirectedTreatment: noopthisfn,
+		setTargeting: noopthisfn,
+		setVideoContent: noopthisfn,
+		updateCorrelator: noopfn
+	};
+	var SizeMappingBuilder = function() {
+		;
+	};
+	p = SizeMappingBuilder.prototype;
+	p.addSize = noopthisfn;
+	p.build = noopnullfn;
+	var Slot = function() {
+		;
+	};
+	p = Slot.prototype;
+	p.addService = noopthisfn;
+	p.clearCategoryExclusions = noopthisfn;
+	p.clearTargeting = noopthisfn;
+	p.defineSizeMapping = noopthisfn;
+	p.get = noopnullfn;
+	p.getAdUnitPath = nooparrayfn;
+	p.getAttributeKeys = nooparrayfn;
+	p.getCategoryExclusions = nooparrayfn;
+	p.getDomId = noopstrfn;
+	p.getSlotElementId = noopstrfn;
+	p.getSlotId = noopthisfn;
+	p.getTargeting = nooparrayfn;
+	p.getTargetingKeys = nooparrayfn;
+	p.set = noopthisfn;
+	p.setCategoryExclusion = noopthisfn;
+	p.setClickUrl = noopthisfn;
+	p.setCollapseEmptyDiv = noopthisfn;
+	p.setTargeting = noopthisfn;
+	//
+	var gpt = window.googletag || {};
+	var cmd = gpt.cmd || [];
+	gpt.apiReady = true;
+	gpt.cmd = [];
+	gpt.cmd.push = function(a) {
+		try {
+			a();
+		} catch (ex) {
+		}
+		return 1;
+	};
+	gpt.companionAds = function() { return companionAdsService; };
+	gpt.content = function() { return contentService; };
+	gpt.defineOutOfPageSlot = function() { return new Slot(); };
+	gpt.defineSlot = function() { return new Slot(); };
+	gpt.disablePublisherConsole = noopfn;
+	gpt.display = noopfn;
+	gpt.enableServices = noopfn;
+	gpt.getVersion = noopstrfn;
+	gpt.pubads = function() { return pubAdsService; };
+	gpt.pubadsReady = true;
+	gpt.sizeMapping = function() { return new SizeMappingBuilder(); };
+	window.googletag = gpt;
+	while ( cmd.length !== 0 ) {
+		gpt.cmd.push(cmd.shift());
+	}
 })();
 
 
 # https://forums.lanik.us/viewtopic.php?f=91&t=27188
 i.ligatus.com/*/angular-tag.js application/javascript
 (function() {
-    self.adProtect = true;
+	self.adProtect = true;
 })();
 
 
@@ -367,94 +367,124 @@ i.ligatus.com/*/angular-tag.js application/javascript
 # suffering Yavli's click-bait ads.
 yavli-defuser.js application/javascript
 (function() {
-    var descriptor = {
-        set: function() {
-            ;
-        },
-        get: function() {
-            return '';
-        }
-    };
-    try {
-        Object.defineProperty(window, '__durl', descriptor);
-        Object.defineProperty(window, '__lsurl', descriptor);
-        Object.defineProperty(window, '__lturl', descriptor);
-    } catch (ex) {
-    }
+	var descriptor = {
+		set: function() {
+			;
+		},
+		get: function() {
+			return '';
+		}
+	};
+	try {
+		Object.defineProperty(window, '__durl', descriptor);
+		Object.defineProperty(window, '__lsurl', descriptor);
+		Object.defineProperty(window, '__lturl', descriptor);
+	} catch (ex) {
+	}
 })();
 
 
 # Addefend defuser
 uabinject-defuser.js application/javascript
 (function() {
-    window.uabpdl = window.uabInject = window.uabDetect = true;
+	window.uabpdl = window.uabInject = window.uabDetect = true;
 })();
 
 
 # https://github.com/gorhill/uBlock/issues/1094
 pornhub-popup-defuser.js application/javascript
 (function() {
-    var w = window;
-    var count = Math.ceil(8+Math.random()*4);
-    var tomorrow = new Date(Date.now() + 86400);
-    var expire = tomorrow.toString();
-    document.cookie = 'FastPopSessionRequestNumber=' + count + '; expires=' + expire;
-    var db;
-    if ( (db = w.localStorage) ) {
-        db.setItem('InfNumFastPops', count);
-        db.setItem('InfNumFastPopsExpire', expire);
-    }
-    if ( (db = w.sessionStorage) ) {
-        db.setItem('InfNumFastPops', count);
-        db.setItem('InfNumFastPopsExpire', expire);
-    }
+	var w = window;
+	var count = Math.ceil(8+Math.random()*4);
+	var tomorrow = new Date(Date.now() + 86400);
+	var expire = tomorrow.toString();
+	document.cookie = 'FastPopSessionRequestNumber=' + count + '; expires=' + expire;
+	var db;
+	if ( (db = w.localStorage) ) {
+		db.setItem('InfNumFastPops', count);
+		db.setItem('InfNumFastPopsExpire', expire);
+	}
+	if ( (db = w.sessionStorage) ) {
+		db.setItem('InfNumFastPops', count);
+		db.setItem('InfNumFastPopsExpire', expire);
+	}
 })();
 
 
 # https://news.ycombinator.com/item?id=10814913
 forbes-defuser.js application/javascript
 (function() {
-    if ( !window.location.pathname.startsWith('/forbes/welcome/') ) {
-        return;
-    }
-    if ( typeof window.fbs_settings === 'object' ) {
-        window.fbs_settings.classes = 'W10=';
-        window.fbs_settings.mobile = 'true';
-        return;
-    }
-    Object.defineProperty(window, 'fbs_settings', {
-        value: {
-            classes: 'W10=',
-            data: {
-                title: ''
-            },
-            mobile: 'true'
-        }
-    });
+	if ( !window.location.pathname.startsWith('/forbes/welcome/') ) {
+		return;
+	}
+	if ( typeof window.fbs_settings === 'object' ) {
+		window.fbs_settings.classes = 'W10=';
+		window.fbs_settings.mobile = 'true';
+		return;
+	}
+	Object.defineProperty(window, 'fbs_settings', {
+		value: {
+			classes: 'W10=',
+			data: {
+				title: ''
+			},
+			mobile: 'true'
+		}
+	});
 })();
 
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=25212
 impspcabe-defuser.js application/javascript
 (function(){
-    window._impspcabe = false;
+	window._impspcabe = false;
 })();
 
 
 # https://github.com/gorhill/uBlock/issues/733
 wpredirect-defuser.js application/javascript
 (function() {
-    var twp = window.TWP = window.TWP || {};
-    twp.Identity = twp.Identity || {};
-    twp.Identity.initComplete = true;
+	var twp = window.TWP = window.TWP || {};
+	twp.Identity = twp.Identity || {};
+	twp.Identity.initComplete = true;
 })();
 
 
 # https://github.com/gorhill/uBlock/issues/1194
 openload-defuser.js application/javascript
 (function() {
-    Object.defineProperty(window, 'preserve', {
-        get: function() { return true; },
-        set: function() {}
-    });
+	Object.defineProperty(window, 'preserve', {
+		get: function() { return true; },
+		set: function() {}
+	});
+})();
+
+
+# https://github.com/gorhill/uBlock/issues/1136
+1136#issuecomment-170371863.js application/javascript
+(function() {
+	var wjdmp;
+	var noopfn = function() {
+		;
+	};
+	var makefn = function(a) {
+		return function(r, o) {
+			if ( r.length === 1 && r[0] === 4 ) {
+				for ( var k in o ) {
+					if ( o.hasOwnProperty(k) && typeof o[k] === 'function' ) {
+						o[k] = noopfn;
+					}
+				}
+			}
+			a(r, o);
+		};
+	};
+	Object.defineProperty(window, 'webpackJsonpdmp', {
+		get: function() {
+			return wjdmp;
+		},
+		set: function(a) {
+			wjdmp = makefn(a);
+		}
+	});
 })();
