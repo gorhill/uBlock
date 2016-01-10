@@ -290,3 +290,5 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/1194
 openload.co##script:inject(openload-defuser.js)
+# https://github.com/gorhill/uBlock/issues/1201
+openload.*##script:contains(/^\s*window\.popAdsLoaded=/)
