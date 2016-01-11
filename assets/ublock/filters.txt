@@ -165,7 +165,7 @@ investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space)
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
 arstechnica.com##script:contains(ars.READY.push)
-aussenwirtschaftslupe.de,autozeitung.de,brieffreunde.de,donnerwetter.de,formel1.de,fremdwort.de,helles-koepfchen.de,inside-handy.de,motorsport-total.com,moviejones.de,news.de,rechtslupe.de,wintotal.de##script:contains(window.tisoomi)
+aussenwirtschaftslupe.de,autozeitung.de,brieffreunde.de,donnerwetter.de,fanfiktion.de,formel1.de,fremdwort.de,helles-koepfchen.de,inside-handy.de,motorsport-total.com,moviejones.de,news.de,rechtslupe.de,wintotal.de##script:contains(window.tisoomi)
 bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
 commentcamarche.net,foot01.com,metronews.fr##script:contains(/[Ll]igatus/)
