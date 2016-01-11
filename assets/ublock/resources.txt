@@ -488,3 +488,15 @@ openload-defuser.js application/javascript
 		}
 	});
 })();
+
+
+bab-defuser.js application/javascript
+(function() {
+	var sto = window.setTimeout,
+		re = /\.bab_elementid.$/;
+	window.setTimeout = function(a, b) {
+		if ( typeof a !== 'string' || !re.test(a) ) {
+			sto(a, b);
+		}
+	};
+})();
