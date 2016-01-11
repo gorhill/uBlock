@@ -1455,8 +1455,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     }
 
     // entity filter buckets are always plain js array
-    if ( (bucket = this.entityFilters[r.entity]) ) {
-        r.cosmeticHide = r.cosmeticHide.concat(bucket);
+    if ( this.entityFilters.hasOwnProperty(r.entity) ) {
+        r.cosmeticHide = r.cosmeticHide.concat(this.entityFilters[r.entity]);
     }
     // No entity exceptions as of now
 
