@@ -222,7 +222,9 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 # https://github.com/gorhill/uBlock/issues/1177
 ||clicksvenue.com^$popunder
 ||globaltraffico.com^$popunder,popup
-
+# https://github.com/gorhill/uBlock/issues/1208
+||hilltopads.net^$popunder,popup
+||initialcontroledge.info^$document,popunder,popup
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=27003
 www.opensubtitles.org##div[itemscope] > fieldset
