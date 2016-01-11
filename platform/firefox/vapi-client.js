@@ -81,7 +81,7 @@ vAPI.shutdown = (function() {
     }
     var filters = self.rpc({
         fnName: 'getScriptTagFilters',
-        rootURL: self.top.location.href,
+        rootURL: self.location.href,
         frameURL: self.location.href,
         frameHostname: hostname
     });
