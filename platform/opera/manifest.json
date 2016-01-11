@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.5.6",
+    "version": "1.5.7",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -38,7 +38,7 @@
             "all_frames": true
         },
         {
-             "matches": ["http://*/*", "https://*/*"],
+            "matches": ["http://*/*", "https://*/*"],
             "js": ["js/scriptlets/subscriber.js"],
             "run_at": "document_idle",
             "all_frames": false
