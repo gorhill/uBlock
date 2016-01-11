@@ -417,18 +417,35 @@ forbes-defuser.js application/javascript
 	if ( !window.location.pathname.startsWith('/forbes/welcome/') ) {
 		return;
 	}
-	if ( typeof window.fbs_settings === 'object' ) {
-		window.fbs_settings.classes = 'W10=';
-		window.fbs_settings.mobile = 'true';
-		return;
-	}
-	Object.defineProperty(window, 'fbs_settings', {
-		value: {
-			classes: 'W10=',
-			data: {
-				title: ''
-			},
-			mobile: 'true'
+	var noopfn = function() {
+		;
+	};
+	var odp = Object.defineProperty;
+	var wad, wadm, abc = function() {};
+	var abcp = abc.prototype;
+	abcp.addCheck =  abcp.check = abcp.initialize =
+	abcp.removeCheck = abcp.triggerAdBlockState = noopfn;
+	abcp.getAdBlockState = function() {
+		return false;
+	};
+	odp(window, 'WelcomeAd', {
+		get: function() { return wad; },
+		set: function(a) {
+			wad = a;
+			odp(a, 'Modules', {
+				get: function() { return wadm; },
+				set: function(a) {
+					wadm = a;
+					if ( a.AdBlockChecker ) {
+						a.AdBlockChecker = abc;
+					} else {
+						odp(a, 'AdBlockChecker', {
+							get: function() { return abc; },
+							set: function() {}
+						});
+					}
+				}
+			});
 		}
 	});
 })();
