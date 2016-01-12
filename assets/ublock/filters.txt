@@ -263,7 +263,7 @@ extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.
 # https://github.com/gorhill/uBlock/issues/1136
 ||dailymotion.com/ac/video/$image,first-party,redirect=2x2-transparent.png
 # https://github.com/gorhill/uBlock/issues/1136#issuecomment-170371863
-dailymotion.com##script:inject(1136#issuecomment-170371863.js)
+dailymotion.com##script:inject(1136.js)
 
 # https://news.ycombinator.com/item?id=10814913
 forbes.com##script:inject(forbes-defuser.js)
@@ -274,6 +274,8 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 # https://github.com/gorhill/uBlock/issues/949
 ||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=cdnapi.kaltura.com|spiegel.de|stern.de|t-online.de,redirect=hd-main.js
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
+# https://github.com/gorhill/uBlock/issues/1216
+chip.de##script:inject(1216.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=40985
 # Proof of concept: no need to open ourselves to more 3rd-party scripts/frames in

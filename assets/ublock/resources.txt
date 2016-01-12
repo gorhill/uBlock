@@ -62,6 +62,19 @@ var L = (function(){
 })();
 
 
+1216.js application/javascript
+(function() {
+    delete window.noHomad;
+    try {
+        Object.defineProperty(window, 'noHomad', {
+            get: function() { return true; },
+            set: function() { }
+        });
+    } catch(ex) {
+    }
+})()
+
+
 # fuckadblock defuser
 fuckadblock.js-3.2.0 application/javascript
 (function() {
@@ -478,7 +491,7 @@ openload-defuser.js application/javascript
 
 
 # https://github.com/gorhill/uBlock/issues/1136
-1136#issuecomment-170371863.js application/javascript
+1136.js application/javascript
 (function() {
 	var wjdmp;
 	var noopfn = function() {
