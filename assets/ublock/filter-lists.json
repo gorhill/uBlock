@@ -353,5 +353,12 @@
 		"group": "regions",
 		"lang": "sl",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
+	},
+	"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters.txt": {
+		"off": true,
+		"title": "ROU: Romanian Ad (ROad) Block List",
+		"group": "regions",
+		"lang": "ro",
+		"supportURL": "https://github.com/tcptomato/ROad-Block"
 	}
 }
