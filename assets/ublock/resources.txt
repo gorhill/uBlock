@@ -530,3 +530,12 @@ bab-defuser.js application/javascript
 		}
 	};
 })();
+
+
+kissanime-defuser.js application/javascript
+(function() {
+	Object.defineProperty(window, 'isBlockAds2', {
+		get: function() { return false; },
+		set: function(a) {}
+	});
+})();

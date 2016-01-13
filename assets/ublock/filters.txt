@@ -298,3 +298,6 @@ chip.de##script:inject(1216.js)
 openload.co##script:inject(openload-defuser.js)
 # https://github.com/gorhill/uBlock/issues/1201
 openload.*##script:contains(/^\s*window\.popAdsLoaded=/)
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=27505
+kissanime.to##script:inject(kissanime-defuser.js)
