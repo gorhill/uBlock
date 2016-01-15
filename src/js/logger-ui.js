@@ -489,7 +489,7 @@ var renderNetLogEntry = function(tr, entry) {
         td.textContent = '**';
     } else if ( filteringOp === 'r' ) {
         trcl.add('redirected');
-        td.textContent = '>>';
+        td.textContent = '<<';
     } else {
         td.textContent = '';
     }
