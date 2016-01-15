@@ -250,3 +250,7 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1081
 @@||google-analytics.com/ga.js$domain=one.co.il
+
+# To counter impending widespread breakage on Youtube until s.ytimg.com
+# removed from http://www.malwaredomains.com/
+@@||s.ytimg.com^
