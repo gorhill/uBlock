@@ -34,27 +34,50 @@
 
 // Helper to deal with the i18n'ing of HTML files.
 vAPI.i18n.render = function(context) {
-    uDom('[data-i18n]', context).forEach(function(elem) {
-        elem.html(vAPI.i18n(elem.attr('data-i18n')));
-    });
+    var docu = document;
+    var root = context || docu;
+    var elems, n, i, elem, text;
 
-    uDom('[title]', context).forEach(function(elem) {
-        var title = vAPI.i18n(elem.attr('title'));
-        if ( title ) {
-            elem.attr('title', title);
+    elems = root.querySelectorAll('[data-i18n]');
+    n = elems.length;
+    for ( i = 0; i < n; i++ ) {
+        elem = elems[i];
+        text = vAPI.i18n(elem.getAttribute('data-i18n'));
+        if ( !text ) {
+            continue;
         }
-    });
+        if ( text.indexOf('{') !== -1 ) {
+            text = text.replace(/\{\{input:([^}]+)\}\}/g, '<input type="$1">');
+        }
+        uDom(elem).html(text);
+    }
 
-    uDom('[placeholder]', context).forEach(function(elem) {
-        elem.attr('placeholder', vAPI.i18n(elem.attr('placeholder')));
-    });
+    elems = root.querySelectorAll('[title]');
+    n = elems.length;
+    for ( i = 0; i < n; i++ ) {
+        elem = elems[i];
+        text = vAPI.i18n(elem.getAttribute('title'));
+        if ( text ) {
+            elem.setAttribute('title', text);
+        }
+    }
 
-    uDom('[data-i18n-tip]', context).forEach(function(elem) {
-        elem.attr(
+    elems = root.querySelectorAll('[placeholder]');
+    n = elems.length;
+    for ( i = 0; i < n; i++ ) {
+        elem = elems[i];
+        elem.setAttribute('placeholder', vAPI.i18n(elem.getAttribute('placeholder')));
+    }
+
+    elems = root.querySelectorAll('[data-i18n-tip]');
+    n = elems.length;
+    for ( i = 0; i < n; i++ ) {
+        elem = elems[i];
+        elem.setAttribute(
             'data-tip',
-            vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
+            vAPI.i18n(elem.getAttribute('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
         );
-    });
+    }
 };
 
 vAPI.i18n.render();
