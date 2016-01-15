@@ -380,18 +380,28 @@ i.ligatus.com/*/angular-tag.js application/javascript
 # suffering Yavli's click-bait ads.
 yavli-defuser.js application/javascript
 (function() {
-	var descriptor = {
-		set: function() {
-			;
-		},
+	var noopfn = function() {
+        ;
+    };
+	var nourl = {
+		set: noopfn,
 		get: function() {
 			return '';
 		}
 	};
+    var noy = {
+        start: noopfn
+    };
 	try {
-		Object.defineProperty(window, '__durl', descriptor);
-		Object.defineProperty(window, '__lsurl', descriptor);
-		Object.defineProperty(window, '__lturl', descriptor);
+		Object.defineProperty(window, '__durl', nourl);
+		Object.defineProperty(window, '__lsurl', nourl);
+		Object.defineProperty(window, '__lturl', nourl);
+		Object.defineProperty(window, '_y', {
+            set: noopfn,
+            get: function() {
+                return noy;
+            }
+        });
 	} catch (ex) {
 	}
 })();
