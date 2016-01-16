@@ -19,11 +19,17 @@
 		"group": "regions",
 		"supportURL": "http://noads.it/"
 	},
+	"https://adguard.com/en/filter-rules.html?id=1": {
+		"off": true,
+		"title": "RUS: Adguard Russian Filter",
+		"group": "regions",
+		"lang": "ru",
+		"supportURL": "http://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+	},
 	"https://easylist-downloads.adblockplus.org/advblock.txt": {
 		"off": true,
 		"title": "RUS: RU AdList (Дополнительная региональная подписка)",
 		"group": "regions",
-		"lang": "ru",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102"
 	},
 	"https://easylist-downloads.adblockplus.org/bitblock.txt": {

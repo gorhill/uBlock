@@ -64,14 +64,14 @@ var L = (function(){
 
 1216.js application/javascript
 (function() {
-    delete window.noHomad;
-    try {
-        Object.defineProperty(window, 'noHomad', {
-            get: function() { return true; },
-            set: function() { }
-        });
-    } catch(ex) {
-    }
+	delete window.noHomad;
+	try {
+		Object.defineProperty(window, 'noHomad', {
+			get: function() { return true; },
+			set: function() { }
+		});
+	} catch(ex) {
+	}
 })()
 
 
@@ -381,27 +381,27 @@ i.ligatus.com/*/angular-tag.js application/javascript
 yavli-defuser.js application/javascript
 (function() {
 	var noopfn = function() {
-        ;
-    };
+		;
+	};
 	var nourl = {
 		set: noopfn,
 		get: function() {
 			return '';
 		}
 	};
-    var noy = {
-        start: noopfn
-    };
+	var noy = {
+		start: noopfn
+	};
 	try {
 		Object.defineProperty(window, '__durl', nourl);
 		Object.defineProperty(window, '__lsurl', nourl);
 		Object.defineProperty(window, '__lturl', nourl);
 		Object.defineProperty(window, '_y', {
-            set: noopfn,
-            get: function() {
-                return noy;
-            }
-        });
+			set: noopfn,
+			get: function() {
+				return noy;
+			}
+		});
 	} catch (ex) {
 	}
 })();
