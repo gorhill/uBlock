@@ -76,7 +76,7 @@ var onAllReady = function() {
     //quickProfiler.stop(0);
 
     vAPI.onLoadAllCompleted();
-
+    µb.contextMenu.update(null);
     µb.firstInstall = false;
 };
 
@@ -169,7 +169,6 @@ var onUserSettingsReady = function(fetched) {
     // Disabling local mirroring for the time being
     userSettings.experimentalEnabled = false;
 
-    µb.contextMenu.toggle(userSettings.contextMenuEnabled);
     vAPI.browserSettings.set({
         'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
         'prefetching': !userSettings.prefetchingDisabled,

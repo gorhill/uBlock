@@ -140,7 +140,7 @@ var onBeforeRequest = function(details) {
                 tabId,
                 'redirect',
                 'rr:' + µb.redirectEngine.resourceNameRegister,
-                'redirect',
+                requestType,
                 requestURL,
                 requestContext.rootHostname,
                 requestContext.pageHostname
@@ -336,7 +336,9 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 /******************************************************************************/
 
-// To handle `inline-script`.
+// To handle:
+// - inline script tags
+// - media elements larger than n kB
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
@@ -353,6 +355,10 @@ var onHeadersReceived = function(details) {
 
     if ( requestType === 'sub_frame' ) {
         return onFrameHeadersReceived(details);
+    }
+
+    if ( requestType === 'image' || requestType === 'media' ) {
+        return foilLargeMediaElement(details);
     }
 };
 
@@ -445,6 +451,58 @@ var onFrameHeadersReceived = function(details) {
     µb.updateBadgeAsync(tabId);
 
     return { 'responseHeaders': foilInlineScripts(details.responseHeaders) };
+};
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/1163
+// "Block elements by size"
+
+var foilLargeMediaElement = function(details) {
+    var µb = µBlock;
+    var tabId = details.tabId;
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null ) {
+        return;
+    }
+    if ( pageStore.getNetFilteringSwitch() !== true ) {
+        return;
+    }
+    if ( Date.now() < pageStore.allowLargeMediaElementsUntil ) {
+        return;
+    }
+    if ( µb.hnSwitches.evaluateZ('no-large-media', pageStore.tabHostname) !== true ) {
+        return;
+    }
+    // Not all servers provide the Content-Length header: when this happens,
+    // assume the worse.
+    var contentLength = 1000000,
+        i = headerIndexFromName('content-length', details.responseHeaders);
+    if ( i !== -1 ) {
+        contentLength = parseInt(details.responseHeaders[i].value, 10);
+        if ( isNaN(contentLength) ) {
+            contentLength = 1000000;
+        }
+    }
+    if ( (contentLength >>> 10) < µb.userSettings.largeMediaSize ) {
+        return;
+    }
+
+    pageStore.logLargeMedia();
+
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            µb.hnSwitches.toResultString(),
+            details.type,
+            details.url,
+            pageStore.tabHostname,
+            pageStore.tabHostname
+        );
+    }
+
+    return { cancel: true };
 };
 
 /******************************************************************************/
@@ -567,8 +625,10 @@ vAPI.net.onHeadersReceived = {
         'https://*/*'
     ],
     types: [
-        "main_frame",
-        "sub_frame"
+        'main_frame',
+        'sub_frame',
+        'image',
+        'media'
     ],
     extra: [ 'blocking', 'responseHeaders' ],
     callback: onHeadersReceived

@@ -19,7 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown */
+/* global HTMLDocument, XMLDocument,
+   addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown
+ */
 
 // For non background pages
 
@@ -28,6 +30,18 @@
 (function(self) {
 
 'use strict';
+
+// https://github.com/chrisaljoudi/uBlock/issues/464
+if ( document instanceof HTMLDocument === false ) {
+    // https://github.com/chrisaljoudi/uBlock/issues/1528
+    // A XMLDocument can be a valid HTML document.
+    if (
+        document instanceof XMLDocument === false ||
+        document.createElement('div') instanceof HTMLDivElement === false
+    ) {
+        return;
+    }
+}
 
 /******************************************************************************/
 

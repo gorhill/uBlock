@@ -245,10 +245,6 @@ vAPI.tabs.registerListeners = function() {
         }
     };
 
-    var onUpdated = function(tabId, changeInfo, tab) {
-        onUpdatedClient(tabId, changeInfo, tab);
-    };
-
     var onCommitted = function(details) {
         if ( details.frameId !== 0 ) {
             return;
@@ -256,9 +252,18 @@ vAPI.tabs.registerListeners = function() {
         onNavigationClient(details);
     };
 
-    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    var onActivated = function(details) {
+        vAPI.contextMenu.onMustUpdate(details.tabId);
+    };
+
+    var onUpdated = function(tabId, changeInfo, tab) {
+        onUpdatedClient(tabId, changeInfo, tab);
+    };
+
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
+    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    chrome.tabs.onActivated.addListener(onActivated);
     chrome.tabs.onUpdated.addListener(onUpdated);
 
     if ( typeof this.onClosed === 'function' ) {
@@ -291,9 +296,7 @@ vAPI.tabs.get = function(tabId, callback) {
 
     var onTabReceived = function(tabs) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
+        void chrome.runtime.lastError;
         callback(tabs[0]);
     };
     chrome.tabs.query({ active: true, currentWindow: true }, onTabReceived);
@@ -553,6 +556,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
 
     chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
+    vAPI.contextMenu.onMustUpdate(tabId);
 };
 
 /******************************************************************************/
@@ -784,6 +788,51 @@ vAPI.net.registerListeners = function() {
     var µb = µBlock;
     var µburi = µb.URI;
 
+    // Chromium-based browsers understand only these network request types.
+    var validTypes = {
+        'main_frame': true,
+        'sub_frame': true,
+        'stylesheet': true,
+        'script': true,
+        'image': true,
+        'object': true,
+        'xmlhttprequest': true,
+        'other': true
+    };
+
+    var denormalizeTypes = function(aa) {
+        if ( aa.length === 0 ) {
+            return Object.keys(validTypes);
+        }
+        var out = [];
+        var i = aa.length,
+            type,
+            needOther = true;
+        while ( i-- ) {
+            type = aa[i];
+            if ( validTypes.hasOwnProperty(type) ) {
+                out.push(type);
+            }
+            if ( type === 'other' ) {
+                needOther = false;
+            }
+        }
+        if ( needOther ) {
+            out.push('other');
+        }
+        return out;
+    };
+
+    var headerValue = function(headers, name) {
+        var i = headers.length;
+        while ( i-- ) {
+            if ( headers[i].name.toLowerCase() === name ) {
+                return headers[i].value.trim();
+            }
+        }
+        return '';
+    };
+
     var normalizeRequestDetails = function(details) {
         µburi.set(details.url);
 
@@ -801,34 +850,45 @@ vAPI.net.registerListeners = function() {
         // https://github.com/chrisaljoudi/uBlock/issues/862
         // If no transposition possible, transpose to `object` as per
         // Chromium bug 410382 (see below)
-        if ( pos === -1 ) {
-            details.type = 'object';
-            return;
-        }
+        if ( pos !== -1 ) {
+            var ext = tail.slice(pos) + '.';
+            if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
+                details.type = 'font';
+                return;
+            }
 
-        var ext = tail.slice(pos) + '.';
-        if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
-            details.type = 'font';
-            return;
-        }
-        // Still need this because often behind-the-scene requests are wrongly
-        // categorized as 'other'
-        if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1 ) {
-            details.type = 'image';
-            return;
-        }
-        // https://code.google.com/p/chromium/issues/detail?id=410382
-        details.type = 'object';
-    };
+            if ( '.mp3.mp4.webm.'.indexOf(ext) !== -1 ) {
+                details.type = 'media';
+                return;
+            }
 
-    var headerValue = function(headers, name) {
-        var i = headers.length;
-        while ( i-- ) {
-            if ( headers[i].name.toLowerCase() === name ) {
-                return headers[i].value.trim();
+            // Still need this because often behind-the-scene requests are wrongly
+            // categorized as 'other'
+            if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1 ) {
+                details.type = 'image';
+                return;
             }
         }
-        return '';
+
+        // Try to extract type from response headers if present.
+        if ( details.responseHeaders ) {
+            var contentType = headerValue(details.responseHeaders, 'content-type');
+            if ( contentType.startsWith('font/') ) {
+                details.type = 'font';
+                return;
+            }
+            if ( contentType.startsWith('image/') ) {
+                details.type = 'image';
+                return;
+            }
+            if ( contentType.startsWith('audio/') || contentType.startsWith('video/') ) {
+                details.type = 'media';
+                return;
+            }
+        }
+
+        // https://code.google.com/p/chromium/issues/detail?id=410382
+        details.type = 'object';
     };
 
     var onBeforeRequestClient = this.onBeforeRequest.callback;
@@ -839,13 +899,7 @@ vAPI.net.registerListeners = function() {
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback;
     var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
-    var onHeadersReceivedTypes = onHeadersReceivedClientTypes.slice(0);
-    if (
-        onHeadersReceivedTypes.length !== 0 &&
-        onHeadersReceivedTypes.indexOf('other') === -1
-    ) {
-        onHeadersReceivedTypes.push('other');
-    }
+    var onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         // Hack to work around Chromium API limitations, where requests of
@@ -857,20 +911,17 @@ vAPI.net.registerListeners = function() {
         // `other` always becomes `object` when it can't be normalized into
         // something else. Test case for "unfriendly" font URLs:
         //   https://www.google.com/fonts
-        if ( details.type === 'object' ) {
-            if ( headerValue(details.responseHeaders, 'content-type').startsWith('font/') ) {
-                details.type = 'font';
-                var r = onBeforeRequestClient(details);
-                if ( typeof r === 'object' && r.cancel === true ) {
-                    return { cancel: true };
-                }
+        if ( details.type === 'font' ) {
+            var r = onBeforeRequestClient(details);
+            if ( typeof r === 'object' && r.cancel === true ) {
+                return { cancel: true };
             }
-            if (
-                onHeadersReceivedClientTypes.length !== 0 &&
-                onHeadersReceivedClientTypes.indexOf(details.type) === -1
-            ) {
-                return;
-            }
+        }
+        if (
+            onHeadersReceivedClientTypes.length !== 0 &&
+            onHeadersReceivedClientTypes.indexOf(details.type) === -1
+        ) {
+            return;
         }
         return onHeadersReceivedClient(details);
     };
@@ -921,15 +972,46 @@ vAPI.net.registerListeners = function() {
 /******************************************************************************/
 
 vAPI.contextMenu = {
-    create: function(details, callback) {
-        this.menuId = details.id;
-        this.callback = callback;
-        chrome.contextMenus.create(details);
-        chrome.contextMenus.onClicked.addListener(this.callback);
+    _callback: null,
+    _entries: [],
+    _createEntry: function(entry) {
+        chrome.contextMenus.create(JSON.parse(JSON.stringify(entry)), function() {
+            void chrome.runtime.lastError;
+        });
     },
-    remove: function() {
-        chrome.contextMenus.onClicked.removeListener(this.callback);
-        chrome.contextMenus.remove(this.menuId);
+    onMustUpdate: function() {},
+    setEntries: function(entries, callback) {
+        entries = entries || [];
+        var n = Math.max(this._entries.length, entries.length),
+            oldEntryId, newEntry;
+        for ( var i = 0; i < n; i++ ) {
+            oldEntryId = this._entries[i];
+            newEntry = entries[i];
+            if ( oldEntryId && newEntry ) {
+                if ( newEntry.id !== oldEntryId ) {
+                    chrome.contextMenus.remove(oldEntryId);
+                    this._createEntry(newEntry);
+                    this._entries[i] = newEntry.id;
+                }
+            } else if ( oldEntryId && !newEntry ) {
+                chrome.contextMenus.remove(oldEntryId);
+            } else if ( !oldEntryId && newEntry ) {
+                this._createEntry(newEntry);
+                this._entries[i] = newEntry.id;
+            }
+        }
+        n = this._entries.length = entries.length;
+        callback = callback || null;
+        if ( callback === this._callback ) {
+            return;
+        }
+        if ( n !== 0 && callback !== null ) {
+            chrome.contextMenus.onClicked.addListener(callback);
+            this._callback = callback;
+        } else if ( n === 0 && this._callback !== null ) {
+            chrome.contextMenus.onClicked.removeListener(this._callback);
+            this._callback = null;
+        }
     }
 };
 

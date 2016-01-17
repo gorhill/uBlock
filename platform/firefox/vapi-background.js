@@ -1440,6 +1440,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
 
     if ( tabId === curTabId ) {
         tb.updateState(win, tabId);
+        vAPI.contextMenu.onMustUpdate(tabId);
     }
 };
 
@@ -2064,17 +2065,23 @@ var httpObserver = {
     },
 
     handleResponseHeaders: function(channel, URI, channelData) {
-        var type = this.typeMap[channelData[3]] || 'other';
-        if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(type) === false ) {
+        var requestType = this.typeMap[channelData[3]] || 'other';
+        if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(requestType) === false ) {
             return;
         }
 
         // 'Content-Security-Policy' MUST come last in the array. Need to
         // revised this eventually.
         var responseHeaders = [];
-        var value = this.getResponseHeader(channel, 'Content-Security-Policy');
-        if ( value !== undefined ) {
-            responseHeaders.push({ name: 'Content-Security-Policy', value: value });
+        var value = channel.contentLength;
+        if ( value !== -1 ) {
+            responseHeaders.push({ name: 'Content-Length', value: value });
+        }
+        if ( requestType.endsWith('_frame') ) {
+            value = this.getResponseHeader(channel, 'Content-Security-Policy');
+            if ( value !== undefined ) {
+                responseHeaders.push({ name: 'Content-Security-Policy', value: value });
+            }
         }
 
         // https://github.com/gorhill/uBlock/issues/966
@@ -2088,7 +2095,7 @@ var httpObserver = {
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[2],
-            type: this.typeMap[channelData[3]] || 'other',
+            type: requestType,
             url: URI.asciiSpec
         });
 
@@ -2179,7 +2186,7 @@ var httpObserver = {
 
             // Carry data for behind-the-scene redirects
             if ( channel instanceof Ci.nsIWritablePropertyBag ) {
-                channel.setProperty( this.REQDATAKEY, [0, -1, null, vAPI.noTabId, rawtype]);
+                channel.setProperty(this.REQDATAKEY, [0, -1, vAPI.noTabId, rawtype]);
             }
 
             return;
@@ -3171,173 +3178,20 @@ if ( vAPI.toolbarButton.init !== null ) {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.contextMenu = {
-    contextMap: {
+vAPI.contextMenu = (function() {
+    var clientCallback = null;
+    var clientEntries = [];
+
+    var contextMap = {
         frame: 'inFrame',
         link: 'onLink',
         image: 'onImage',
         audio: 'onAudio',
         video: 'onVideo',
         editable: 'onEditableArea'
-    }
-};
-
-/******************************************************************************/
-
-vAPI.contextMenu.displayMenuItem = function({target}) {
-    var doc = target.ownerDocument;
-    var gContextMenu = doc.defaultView.gContextMenu;
-    if ( !gContextMenu.browser ) {
-        return;
-    }
-
-    var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
-    var currentURI = gContextMenu.browser.currentURI;
-
-    // https://github.com/chrisaljoudi/uBlock/issues/105
-    // TODO: Should the element picker works on any kind of pages?
-    if ( !currentURI.schemeIs('http') && !currentURI.schemeIs('https') ) {
-        menuitem.setAttribute('hidden', true);
-        return;
-    }
-
-    var ctx = vAPI.contextMenu.contexts;
-
-    if ( !ctx ) {
-        menuitem.setAttribute('hidden', false);
-        return;
-    }
-
-    var ctxMap = vAPI.contextMenu.contextMap;
-
-    for ( var context of ctx ) {
-        if (
-            context === 'page' &&
-            !gContextMenu.onLink &&
-            !gContextMenu.onImage &&
-            !gContextMenu.onEditableArea &&
-            !gContextMenu.inFrame &&
-            !gContextMenu.onVideo &&
-            !gContextMenu.onAudio
-        ) {
-            menuitem.setAttribute('hidden', false);
-            return;
-        }
-        if (
-            ctxMap.hasOwnProperty(context) &&
-            gContextMenu[ctxMap[context]]
-        ) {
-            menuitem.setAttribute('hidden', false);
-            return;
-        }
-    }
-
-    menuitem.setAttribute('hidden', true);
-};
-
-/******************************************************************************/
-
-vAPI.contextMenu.register = (function() {
-    var register = function(window) {
-        if ( canRegister(window) !== true ) {
-            return;
-        }
-
-        if ( !this.menuItemId ) {
-            return;
-        }
-
-        if ( vAPI.fennec ) {
-            // TODO https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/NativeWindow/contextmenus/add
-            /*var nativeWindow = doc.defaultView.NativeWindow;
-            contextId = nativeWindow.contextmenus.add(
-                this.menuLabel,
-                nativeWindow.contextmenus.linkOpenableContext,
-                this.onCommand
-            );*/
-            return;
-        }
-
-        // Already installed?
-        var doc = window.document;
-        if ( doc.getElementById(this.menuItemId) !== null ) {
-            return;
-        }
-
-        var contextMenu = doc.getElementById('contentAreaContextMenu');
-
-        // This can happen (Thunderbird).
-        if ( contextMenu === null ) {
-            return;
-        }
-
-        var menuitem = doc.createElement('menuitem');
-        menuitem.setAttribute('id', this.menuItemId);
-        menuitem.setAttribute('label', this.menuLabel);
-        menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
-        menuitem.setAttribute('class', 'menuitem-iconic');
-        menuitem.addEventListener('command', this.onCommand);
-        contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-        contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
     };
 
-    // https://github.com/gorhill/uBlock/issues/906
-    // Be sure document.readyState is 'complete': it could happen at launch
-    // time that we are called by vAPI.contextMenu.create() directly before
-    // the environment is properly initialized.
-    var canRegister = function(win) {
-        return win && win.document.readyState === 'complete';
-    };
-
-    return function(win) {
-        deferUntil(
-            canRegister.bind(null, win),
-            register.bind(this, win)
-        );
-    };
-})();
-
-/******************************************************************************/
-
-vAPI.contextMenu.unregister = function(win) {
-    if ( !this.menuItemId ) {
-        return;
-    }
-
-    if ( vAPI.fennec ) {
-        // TODO
-        return;
-    }
-
-    var doc = win.document;
-    var menuitem = doc.getElementById(this.menuItemId);
-
-    // Not guarantee the menu item was actually registered.
-    if ( menuitem === null ) {
-        return;
-    }
-
-    var contextMenu = menuitem.parentNode;
-    menuitem.removeEventListener('command', this.onCommand);
-    contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.removeChild(menuitem);
-};
-
-/******************************************************************************/
-
-vAPI.contextMenu.create = function(details, callback) {
-    this.menuItemId = details.id;
-    this.menuLabel = details.title;
-    this.contexts = details.contexts;
-
-    if ( Array.isArray(this.contexts) && this.contexts.length ) {
-        this.contexts = this.contexts.indexOf('all') === -1 ? this.contexts : null;
-    } else {
-        // default in Chrome
-        this.contexts = ['page'];
-    }
-
-    this.onCommand = function() {
+    var onCommand = function() {
         var gContextMenu = getOwnerWindow(this).gContextMenu;
         var details = {
             menuItemId: this.id
@@ -3361,29 +3215,185 @@ vAPI.contextMenu.create = function(details, callback) {
             details.linkUrl = gContextMenu.linkURL;
         }
 
-        callback(details, {
+        clientCallback(details, {
             id: tabWatcher.tabIdFromTarget(gContextMenu.browser),
             url: gContextMenu.browser.currentURI.asciiSpec
         });
     };
 
-    for ( var win of winWatcher.getWindows() ) {
-        this.register(win);
-    }
-};
+    var menuItemMatchesContext = function(contextMenu, clientEntry) {
+        if ( !clientEntry.contexts ) {
+            return false;
+        }
+        for ( var context of clientEntry.contexts ) {
+            if ( context === 'all' ) {
+                return true;
+            }
+            if (
+                contextMap.hasOwnProperty(context) &&
+                contextMenu[contextMap[context]]
+            ) {
+                return true;
+            }
+        }
+        return false;
+    };
 
-/******************************************************************************/
+    var onMenuShowing = function({target}) {
+        var doc = target.ownerDocument;
+        var gContextMenu = doc.defaultView.gContextMenu;
+        if ( !gContextMenu.browser ) {
+            return;
+        }
 
-vAPI.contextMenu.remove = function() {
-    for ( var win of winWatcher.getWindows() ) {
-        this.unregister(win);
-    }
+        // https://github.com/chrisaljoudi/uBlock/issues/105
+        // TODO: Should the element picker works on any kind of pages?
+        var currentURI = gContextMenu.browser.currentURI,
+            isHTTP = currentURI.schemeIs('http') || currentURI.schemeIs('https'),
+            layoutChanged = false,
+            contextMenu = doc.getElementById('contentAreaContextMenu'),
+            newEntries = clientEntries,
+            oldMenuitems = contextMenu.querySelectorAll('[data-uBlock0="menuitem"]'),
+            newMenuitems = [],
+            n = Math.max(clientEntries.length, oldMenuitems.length),
+            menuitem, newEntry;
+        for ( var i = 0; i < n; i++ ) {
+            menuitem = oldMenuitems[i];
+            newEntry = newEntries[i];
+            if ( menuitem && !newEntry ) {
+                menuitem.parentNode.removeChild(menuitem);
+                menuitem.removeEventListener('command', onCommand);
+                menuitem = null;
+                layoutChanged = true;
+            } else if ( !menuitem && newEntry ) {
+                menuitem = doc.createElement('menuitem');
+                menuitem.setAttribute('data-uBlock0', 'menuitem');
+                menuitem.addEventListener('command', onCommand);
+            }
+            if ( !menuitem ) {
+                continue;
+            }
+            if ( menuitem.id !== newEntry.id ) {
+                menuitem.setAttribute('id', newEntry.id);
+                menuitem.setAttribute('label', newEntry.title);
+                layoutChanged = true;
+            }
+            menuitem.setAttribute('hidden', !isHTTP || !menuItemMatchesContext(gContextMenu, newEntry));
+            newMenuitems.push(menuitem);
+        }
+        // No changes?
+        if ( layoutChanged === false ) {
+            return;
+        }
+        // No entry: remove submenu if present.
+        var menu = contextMenu.querySelector('[data-uBlock0="menu"]');
+        if ( newMenuitems.length === 0 ) {
+            if ( menu !== null ) {
+                menu.parentNode.removeChild(menuitem);
+            }
+            return;
+        }
+        // Only one entry: no need for a submenu.
+        if ( newMenuitems.length === 1 ) {
+            if ( menu !== null ) {
+                menu.parentNode.removeChild(menu);
+            }
+            menuitem = newMenuitems[0];
+            menuitem.setAttribute('class', 'menuitem-iconic');
+            menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+            contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+            return;
+        }
+        // More than one entry: we need a submenu.
+        if ( menu === null ) {
+            menu = doc.createElement('menu');
+            menu.setAttribute('label', vAPI.app.name);
+            menu.setAttribute('data-uBlock0', 'menu');
+            menu.setAttribute('class', 'menu-iconic');
+            menu.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+            contextMenu.insertBefore(menu, doc.getElementById('inspect-separator'));
+        }
+        var menupopup = contextMenu.querySelector('[data-uBlock0="menupopup"]');
+        if ( menupopup === null ) {
+            menupopup = doc.createElement('menupopup');
+            menupopup.setAttribute('data-uBlock0', 'menupopup');
+            menu.appendChild(menupopup);
+        }
+        for ( i = 0; i < newMenuitems.length; i++ ) {
+            menuitem = newMenuitems[i];
+            menuitem.setAttribute('class', 'menuitem-non-iconic');
+            menuitem.removeAttribute('image');
+            menupopup.appendChild(menuitem);
+        }
+    };
 
-    this.menuItemId = null;
-    this.menuLabel = null;
-    this.contexts = null;
-    this.onCommand = null;
-};
+    // https://github.com/gorhill/uBlock/issues/906
+    // Be sure document.readyState is 'complete': it could happen at launch
+    // time that we are called by vAPI.contextMenu.create() directly before
+    // the environment is properly initialized.
+    var canRegister = function(win) {
+        return win && win.document.readyState === 'complete';
+    };
+
+    var register = function(window) {
+        if ( canRegister(window) !== true ) {
+            return;
+        }
+
+        var contextMenu = window.document.getElementById('contentAreaContextMenu');
+        if ( contextMenu === null ) {
+            return;
+        }
+        contextMenu.addEventListener('popupshowing', onMenuShowing);
+    };
+
+    var registerAsync = function(win) {
+        // TODO https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/NativeWindow/contextmenus/add
+        // var nativeWindow = doc.defaultView.NativeWindow;
+        // contextId = nativeWindow.contextmenus.add(
+        //    this.menuLabel,
+        //    nativeWindow.contextmenus.linkOpenableContext,
+        //    this.onCommand
+        // );
+        if ( vAPI.fennec ) {
+            return;
+        }
+        deferUntil(
+            canRegister.bind(null, win),
+            register.bind(null, win)
+        );
+    };
+
+    var unregister = function(win) {
+        // TODO
+        if ( vAPI.fennec ) {
+            return;
+        }
+        var contextMenu = win.document.getElementById('contentAreaContextMenu');
+        if ( contextMenu !== null ) {
+            contextMenu.removeEventListener('popupshowing', onMenuShowing);
+        }
+        var menuitems = win.document.querySelectorAll('[data-uBlock0]'),
+            menuitem;
+        for ( var i = 0; i < menuitems.length; i++ ) {
+            menuitem = menuitems[i];
+            menuitem.parentNode.removeChild(menuitem);
+            menuitem.removeEventListener('command', onCommand);
+        }
+    };
+
+    var setEntries = function(entries, callback) {
+        clientEntries = entries || [];
+        clientCallback  = callback || null;
+    };
+
+    return {
+        onMustUpdate: function() {},
+        register: registerAsync,
+        unregister: unregister,
+        setEntries: setEntries
+    };
+})();
 
 /******************************************************************************/
 /******************************************************************************/

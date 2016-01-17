@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, HTMLDocument, XMLDocument */
-
 /******************************************************************************/
 
 // Injected into content pages
@@ -30,18 +28,6 @@
 'use strict';
 
 /******************************************************************************/
-
-// https://github.com/chrisaljoudi/uBlock/issues/464
-if ( document instanceof HTMLDocument === false ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/1528
-    // A XMLDocument can be a valid HTML document.
-    if (
-        document instanceof XMLDocument === false ||
-        document.createElement('div') instanceof HTMLDivElement === false
-    ) {
-        return;
-    }
-}
 
 // I've seen this happens on Firefox
 if ( window.location === null ) {

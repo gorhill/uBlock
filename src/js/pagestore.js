@@ -294,6 +294,16 @@ PageStore.factory = function(tabId) {
 PageStore.prototype.init = function(tabId) {
     var tabContext = µb.tabContextManager.mustLookup(tabId);
     this.tabId = tabId;
+
+    // If we are navigating from-to same site, remember whether large
+    // media elements were temporarily allowed.
+    if (
+        typeof this.allowLargeMediaElementsUntil !== 'number' ||
+        tabContext.rootHostname !== this.tabHostname
+    ) {
+        this.allowLargeMediaElementsUntil = 0;
+    }
+
     this.tabHostname = tabContext.rootHostname;
     this.title = tabContext.rawURL;
     this.rawURL = tabContext.rawURL;
@@ -305,6 +315,8 @@ PageStore.prototype.init = function(tabId) {
     this.hiddenElementCount = ''; // Empty string means "unknown"
     this.remoteFontCount = 0;
     this.popupBlockedCount = 0;
+    this.largeMediaCount = 0;
+    this.largeMediaTimer = null;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
     // Support `elemhide` filter option. Called at this point so the required
@@ -354,6 +366,10 @@ PageStore.prototype.reuse = function(context) {
     }
 
     // A new page is completely reloaded from scratch, reset all.
+    if ( this.largeMediaTimer !== null ) {
+        clearTimeout(this.largeMediaTimer);
+        this.largeMediaTimer = null;
+    }
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     this.init(this.tabId);
@@ -373,6 +389,11 @@ PageStore.prototype.dispose = function() {
     this.title = '';
     this.rawURL = '';
     this.hostnameToCountMap = null;
+    this.allowLargeMediaElementsUntil = 0;
+    if ( this.largeMediaTimer !== null ) {
+        clearTimeout(this.largeMediaTimer);
+        this.largeMediaTimer = null;
+    }
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
@@ -465,6 +486,32 @@ PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
 PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
     µb.toggleNetFilteringSwitch(url, scope, state);
     this.netFilteringCache.empty();
+};
+
+/******************************************************************************/
+
+PageStore.prototype.logLargeMedia = (function() {
+    var injectScript = function() {
+        this.largeMediaTimer = null;
+        µb.scriptlets.injectDeep(
+            this.tabId,
+            'load-large-media-interactive'
+        );
+        µb.contextMenu.update(this.tabId);
+    };
+    return function() {
+        this.largeMediaCount += 1;
+        if ( this.largeMediaTimer === null ) {
+            this.largeMediaTimer = vAPI.setTimeout(injectScript.bind(this), 500);
+        }
+    };
+})();
+
+PageStore.prototype.temporarilyAllowLargeMediaElements = function() {
+    this.largeMediaCount = 0;
+    µb.contextMenu.update(this.tabId);
+    this.allowLargeMediaElementsUntil = Date.now() + 86400000;
+    µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
 };
 
 /******************************************************************************/

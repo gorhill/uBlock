@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, HTMLDocument, XMLDocument */
-
 /******************************************************************************/
 /******************************************************************************/
 
@@ -30,19 +28,6 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/464
-if ( document instanceof HTMLDocument === false ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/1528
-    // A XMLDocument can be a valid HTML document.
-    if (
-        document instanceof XMLDocument === false ||
-        document.createElement('div') instanceof HTMLDivElement === false
-    ) {
-        return;
-    }
-}
-
-// This can happen
 if ( typeof vAPI !== 'object' ) {
     return;
 }

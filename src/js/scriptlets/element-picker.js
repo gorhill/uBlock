@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global self, vAPI, CSS, HTMLDocument, XMLDocument */
+/* global CSS */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -66,16 +66,16 @@
                 if (
                     // If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
                     // U+007F, […]
-                    (codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit == 0x007F ||
+                    (codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit === 0x007F ||
                     // If the character is the first character and is in the range [0-9]
                     // (U+0030 to U+0039), […]
                     (index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
                     // If the character is the second character and is in the range [0-9]
                     // (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
                     (
-                        index == 1 &&
+                        index === 1 &&
                         codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
-                        firstCodeUnit == 0x002D
+                        firstCodeUnit === 0x002D
                     )
                 ) {
                     // http://dev.w3.org/csswg/cssom/#escape-a-character-as-code-point
@@ -89,8 +89,8 @@
                 // U+005A), or [a-z] (U+0061 to U+007A), […]
                 if (
                     codeUnit >= 0x0080 ||
-                    codeUnit == 0x002D ||
-                    codeUnit == 0x005F ||
+                    codeUnit === 0x002D ||
+                    codeUnit === 0x005F ||
                     codeUnit >= 0x0030 && codeUnit <= 0x0039 ||
                     codeUnit >= 0x0041 && codeUnit <= 0x005A ||
                     codeUnit >= 0x0061 && codeUnit <= 0x007A
@@ -120,19 +120,9 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/464
-if ( document instanceof HTMLDocument === false ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/1528
-    // A XMLDocument can be a valid HTML document.
-    if (
-        document instanceof XMLDocument === false ||
-        document.createElement('div') instanceof HTMLDivElement === false
-    ) {
-        return;
-    }
+if ( typeof vAPI !== 'object' ) {
+    return;
 }
-
-/******************************************************************************/
 
 // don't run in frames
 if ( window.top !== window ) {

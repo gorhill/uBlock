@@ -159,18 +159,41 @@ var changeUserSettings = function(name, value) {
 
 /******************************************************************************/
 
+var onInputChanged = function(ev) {
+    var input = ev.target;
+    var name = this.getAttribute('data-setting-name');
+    var value = input.value;
+    if ( name === 'largeMediaSize' ) {
+        value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
+    }
+    if ( value !== input.value ) {
+        input.value = value;
+    }
+    changeUserSettings(name, value);
+};
+
+/******************************************************************************/
+
 // TODO: use data-* to declare simple settings
 
 var onUserSettingsReceived = function(details) {
     uDom('[data-setting-type="bool"]').forEach(function(uNode) {
-        var input = uNode.nodeAt(0);
-        uNode.prop('checked', details[input.getAttribute('data-setting-name')] === true)
+        uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
              .on('change', function() {
-                changeUserSettings(
-                    this.getAttribute('data-setting-name'),
-                    this.checked
-                );
-            });
+                    changeUserSettings(
+                        this.getAttribute('data-setting-name'),
+                        this.checked
+                    );
+                });
+    });
+
+    uDom('[data-setting-name="noLargeMedia"] ~ label:first-of-type > input[type="number"]')
+        .attr('data-setting-name', 'largeMediaSize')
+        .attr('data-setting-type', 'input');
+
+    uDom('[data-setting-type="input"]').forEach(function(uNode) {
+        uNode.val(details[uNode.attr('data-setting-name')])
+             .on('change', onInputChanged);
     });
 
     uDom('#export').on('click', exportToFile);

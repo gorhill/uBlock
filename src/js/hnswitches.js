@@ -40,7 +40,8 @@ var switchBitOffsets = {
        'no-strict-blocking': 0,
                 'no-popups': 2,
     'no-cosmetic-filtering': 4,
-          'no-remote-fonts': 6
+          'no-remote-fonts': 6,
+           'no-large-media': 8
 };
 
 var fromLegacySwitchNames = {

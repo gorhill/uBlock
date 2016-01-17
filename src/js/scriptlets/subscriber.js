@@ -52,14 +52,14 @@ if ( typeof vAPI !== 'object' ) {
 
 if (
     document.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') === null &&
-    window.location.href.startsWith('https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web') === false
+    window.location.href.lastIndexOf('https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web', 0) !== 0
 ) {
     return;
 }
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('subscriber.js');
+var messager = vAPI.messaging.channel('scriptlets');
 
 /******************************************************************************/
 

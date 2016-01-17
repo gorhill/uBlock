@@ -34,9 +34,16 @@ div > p:first-child {
 div > p:last-child {
     margin-bottom: 0;
     }
+input[type="number"] {
+    width: 5em;
+    }
 
 .para {
     width: 40em;
+    }
+.synopsis {
+    font-size: small;
+    opacity: 0.8;
     }
 .whatisthis {
     margin: 0 0 0 8px;

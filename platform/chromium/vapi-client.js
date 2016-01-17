@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global HTMLDocument, XMLDocument */
+
 // For non background pages
 
 /******************************************************************************/
@@ -28,6 +30,18 @@
 'use strict';
 
 /******************************************************************************/
+
+// https://github.com/chrisaljoudi/uBlock/issues/464
+if ( document instanceof HTMLDocument === false ) {
+    // https://github.com/chrisaljoudi/uBlock/issues/1528
+    // A XMLDocument can be a valid HTML document.
+    if (
+        document instanceof XMLDocument === false ||
+        document.createElement('div') instanceof HTMLDivElement === false
+    ) {
+        return;
+    }
+}
 
 // https://github.com/gorhill/uBlock/issues/1124
 // Looks like `contentType` is on track to be standardized:
@@ -43,14 +57,12 @@ var chrome = self.chrome;
 
 // https://github.com/chrisaljoudi/uBlock/issues/456
 // Already injected?
-if ( vAPI.vapiClientInjected ) {
-    //console.debug('vapi-client.js already injected: skipping.');
+if ( vAPI.sessionId ) {
     return;
 }
 
-vAPI.vapiClientInjected = true;
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
-    Math.random().toString(36).slice(2);
+                 Math.random().toString(36).slice(2);
 vAPI.chrome = true;
 
 /******************************************************************************/
@@ -67,7 +79,6 @@ vAPI.shutdown = (function() {
     };
 
     var exec = function() {
-        //console.debug('Shutting down...');
         var job;
         while ( (job = jobs.pop()) ) {
             job();
@@ -89,28 +100,34 @@ vAPI.messaging = {
     pendingCount: 0,
     auxProcessId: 1,
 
+    onDisconnect: function() {
+        this.port = null;
+        this.close();
+        vAPI.shutdown.exec();
+    },
+
     setup: function() {
         try {
-            this.port = chrome.runtime.connect({name: vAPI.sessionId});
+            this.port = chrome.runtime.connect({name: vAPI.sessionId}) || null;
         } catch (ex) {
         }
         if ( this.port === null ) {
-            //console.error("uBlock> Can't patch things up. It's over.");
             vAPI.shutdown.exec();
             return false;
         }
         this.port.onMessage.addListener(messagingConnector);
+        this.port.onDisconnect.addListener(this.onDisconnect.bind(this));
         return true;
     },
 
     close: function() {
         var port = this.port;
-        if ( port === null ) {
-            return;
+        if ( port !== null ) {
+            port.disconnect();
+            port.onMessage.removeListener(messagingConnector);
+            port.onDisconnect.removeListener(this.onDisconnect);
+            this.port = null;
         }
-        this.port = null;
-        port.disconnect();
-        port.onMessage.removeListener(messagingConnector);
         this.channels = {};
         // service pending callbacks
         var pending = this.pending, listener;

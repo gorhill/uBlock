@@ -61,6 +61,7 @@ return {
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
         hyperlinkAuditingDisabled: true,
+        largeMediaSize: 50,
         parseAllABPHideFilters: true,
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,

@@ -784,7 +784,7 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 500);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 666);
     };
 })();
 

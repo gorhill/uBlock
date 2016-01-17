@@ -234,34 +234,44 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-// Return all settings if none specified.
-
 µBlock.changeUserSettings = function(name, value) {
+    var us = this.userSettings;
+
+    // Return all settings if none specified.
     if ( name === undefined ) {
-        return this.userSettings;
+        us = JSON.parse(JSON.stringify(us));
+        us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
+        us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;
+        us.noRemoteFonts = this.hnSwitches.evaluate('no-remote-fonts', '*') === 1;
+        return us;
     }
 
     if ( typeof name !== 'string' || name === '' ) {
         return;
     }
 
-    // Do not allow an unknown user setting to be created
-    if ( this.userSettings[name] === undefined ) {
-        return;
-    }
-
     if ( value === undefined ) {
-        return this.userSettings[name];
+        return us[name];
     }
 
     // Pre-change
     switch ( name ) {
+    case 'largeMediaSize':
+        if ( typeof value !== 'number' ) {
+            value = parseInt(value, 10) || 0;
+        }
+        value = Math.ceil(Math.max(value, 0));
+        break;
     default:
         break;
     }
 
-    // Change
-    this.userSettings[name] = value;
+    // Change -- but only if the user setting actually exists.
+    var mustSave = us.hasOwnProperty(name) &&
+                   value !== us[name];
+    if ( mustSave ) {
+        us[name] = value;
+    }
 
     // Post-change
     switch ( name ) {
@@ -271,12 +281,27 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         }
         break;
     case 'contextMenuEnabled':
-        this.contextMenu.toggle(value);
+        this.contextMenu.update(null);
         break;
     case 'experimentalEnabled':
         break;
     case 'hyperlinkAuditingDisabled':
         vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        break;
+    case 'noCosmeticFiltering':
+        if ( this.hnSwitches.toggle('no-cosmetic-filtering', '*', value ? 1 : 0) ) {
+            this.saveHostnameSwitches();
+        }
+        break;
+    case 'noLargeMedia':
+        if ( this.hnSwitches.toggle('no-large-media', '*', value ? 1 : 0) ) {
+            this.saveHostnameSwitches();
+        }
+        break;
+    case 'noRemoteFonts':
+        if ( this.hnSwitches.toggle('no-remote-fonts', '*', value ? 1 : 0) ) {
+            this.saveHostnameSwitches();
+        }
         break;
     case 'prefetchingDisabled':
         vAPI.browserSettings.set({ 'prefetching': !value });
@@ -288,7 +313,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         break;
     }
 
-    this.saveUserSettings();
+    if ( mustSave ) {
+        this.saveUserSettings();
+    }
 };
 
 /******************************************************************************/
@@ -379,16 +406,22 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     }
 
     // Take action if needed
-    if ( details.name === 'no-cosmetic-filtering' ) {
+    switch ( details.name ) {
+    case 'no-cosmetic-filtering':
         this.scriptlets.injectDeep(
             details.tabId,
             details.state ? 'cosmetic-off' : 'cosmetic-on'
         );
-        return;
+        break;
+    case 'no-large-media':
+        if ( details.state === false ) {
+            var pageStore = this.pageStoreFromTabId(details.tabId);
+            if ( pageStore !== null ) {
+                pageStore.temporarilyAllowLargeMediaElements();
+            }
+        }
+        break;
     }
-
-    // Whatever else
-    // ...
 };
 
 /******************************************************************************/

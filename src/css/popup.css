@@ -176,7 +176,7 @@ body.off #switch .fa {
 #extraTools > span {
     cursor: pointer;
     font-size: 18px;
-    margin: 0 0.4em;
+    margin: 0 0.5em;
     position: relative;
     }
 #extraTools > span > span.badge {

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,26 +19,19 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, µBlock */
+/******************************************************************************/
+
+µBlock.contextMenu = (function() {
+
 'use strict';
 
 /******************************************************************************/
 
-// New namespace
-
-µBlock.contextMenu = (function() {
-
-/******************************************************************************/
-
 var µb = µBlock;
-var enabled = false;
 
 /******************************************************************************/
 
-var onContextMenuClicked = function(details, tab) {
-    if ( details.menuItemId !== 'blockElement' ) {
-        return;
-    }
+var onBlockElement = function(details, tab) {
     if ( tab === undefined ) {
         return;
     }
@@ -69,29 +62,90 @@ var onContextMenuClicked = function(details, tab) {
 
 /******************************************************************************/
 
-var toggleMenu = function(on) {
-    // This needs to be local scope: we can't reuse it for more than one
-    // menu creation call.
-    var menuCreateDetails = {
-        id: 'blockElement',
-        title: vAPI.i18n('pickerContextMenuEntry'),
-        contexts: ['page', 'editable', 'frame', 'link', 'image', 'video'],
-        documentUrlPatterns: ['https://*/*', 'http://*/*']
-    };
+var onTemporarilyAllowLargeMediaElements = function(details, tab) {
+    if ( tab === undefined ) {
+        return;
+    }
+    var pageStore = µb.pageStoreFromTabId(tab.id);
+    if ( pageStore === null ) {
+        return;
+    }
+    pageStore.temporarilyAllowLargeMediaElements();
+};
 
-    if ( on === true && enabled === false ) {
-        vAPI.contextMenu.create(menuCreateDetails, onContextMenuClicked);
-        enabled = true;
-    } else if ( on !== true && enabled === true ) {
-        vAPI.contextMenu.remove();
-        enabled = false;
+/******************************************************************************/
+
+var onEntryClicked = function(details, tab) {
+    if ( details.menuItemId === 'uBlock0-blockElement' ) {
+        return onBlockElement(details, tab);
+    }
+    if ( details.menuItemId === 'uBlock0-temporarilyAllowLargeMediaElements' ) {
+        return onTemporarilyAllowLargeMediaElements(details, tab);
     }
 };
 
 /******************************************************************************/
 
+var menuEntries = [
+    {
+        id: 'uBlock0-blockElement',
+        title: vAPI.i18n('pickerContextMenuEntry'),
+        contexts: ['all'],
+        documentUrlPatterns: ['https://*/*', 'http://*/*']
+    },
+    {
+        id: 'uBlock0-temporarilyAllowLargeMediaElements',
+        title: vAPI.i18n('contextMenuTemporarilyAllowLargeMediaElements'),
+        contexts: ['all'],
+        documentUrlPatterns: ['https://*/*', 'http://*/*']
+    }
+];
+
+/******************************************************************************/
+
+var update = function(tabId) {
+    var newBits = 0;
+    if ( µb.userSettings.contextMenuEnabled && tabId !== null ) {
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore ) {
+            newBits |= 0x01;
+            if ( pageStore.largeMediaCount !== 0 ) {
+                newBits |= 0x02;
+            }
+        }
+    }
+    if ( newBits === currentBits ) {
+        return;
+    }
+    currentBits = newBits;
+    var usedEntries = [];
+    if ( newBits & 0x01 ) {
+        usedEntries.push(menuEntries[0]);
+    }
+    if ( newBits & 0x02 ) {
+        usedEntries.push(menuEntries[1]);
+    }
+    vAPI.contextMenu.setEntries(usedEntries, onEntryClicked);
+};
+
+var currentBits = 0;
+
+vAPI.contextMenu.onMustUpdate = update;
+
+/******************************************************************************/
+
 return {
-    toggle: toggleMenu
+    update: function(tabId) {
+        if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
+            vAPI.tabs.get(null, function(tab) {
+                if ( tab ) {
+                    update(tab.id);
+                }
+            });
+            return;
+        }
+        update(tabId);
+    }
 };
 
 /******************************************************************************/

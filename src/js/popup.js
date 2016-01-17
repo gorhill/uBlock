@@ -160,6 +160,7 @@ var hashFromPopupData = function(reset) {
     }
     hasher.sort();
     hasher.push(uDom('body').hasClass('off'));
+    hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
     hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
     hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
 
@@ -459,13 +460,18 @@ var renderPopup = function() {
 
     // Extra tools
     uDom.nodeFromId('no-popups').classList.toggle('on', popupData.noPopups === true);
-    uDom.nodeFromId('no-strict-blocking').classList.toggle('on', popupData.noStrictBlocking === true);
+    uDom.nodeFromId('no-large-media').classList.toggle('on', popupData.noLargeMedia === true);
     uDom.nodeFromId('no-cosmetic-filtering').classList.toggle('on', popupData.noCosmeticFiltering === true);
     uDom.nodeFromId('no-remote-fonts').classList.toggle('on', popupData.noRemoteFonts === true);
 
     // Report blocked popup count on badge
     total = popupData.popupBlockedCount;
     uDom.nodeFromSelector('#no-popups > span.badge')
+        .textContent = total ? total.toLocaleString() : '';
+
+    // Report large media count on badge
+    total = popupData.largeMediaCount;
+    uDom.nodeFromSelector('#no-large-media > span.badge')
         .textContent = total ? total.toLocaleString() : '';
 
     // Report remote font count on badge
@@ -733,18 +739,18 @@ var revertFirewallRules = function() {
 
 /******************************************************************************/
 
-var toggleHostnameSwitch = function() {
-    var elem = uDom(this);
-    var switchName = elem.attr('id');
+var toggleHostnameSwitch = function(ev) {
+    var target = ev.currentTarget;
+    var switchName = target.getAttribute('id');
     if ( !switchName ) {
         return;
     }
-    elem.toggleClass('on');
+    target.classList.toggle('on');
     messager.send({
         what: 'toggleHostnameSwitch',
         name: switchName,
         hostname: popupData.pageHostname,
-        state: elem.hasClass('on'),
+        state: target.classList.contains('on'),
         tabId: popupData.tabId
     });
     hashFromPopupData();
