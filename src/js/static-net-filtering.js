@@ -175,14 +175,14 @@ var isFirstParty = function(domain, hostname) {
            hostname.charAt(hostname.length - domain.length - 1) === '.');
 };
 
-var isBadRegex = function(s) {
+var normalizeRegexSource = function(s) {
     try {
-        void new RegExp(s);
+        var re = new RegExp(s);
+        return re.source;
     } catch (ex) {
-        isBadRegex.message = ex.toString();
-        return true;
+        normalizeRegexSource.message = ex.toString();
     }
-    return false;
+    return '';
 };
 
 var alwaysTruePseudoRegex = {
@@ -1498,11 +1498,15 @@ FilterParser.prototype.parse = function(raw) {
     if ( s.startsWith('/') && s.endsWith('/') && s.length > 2 ) {
         this.isRegex = true;
         this.f = s.slice(1, -1);
-        if ( isBadRegex(this.f) ) {
+        // https://github.com/gorhill/uBlock/issues/1246
+        // If the filter is valid, use the corrected version of the source
+        // string -- this ensure reverse-lookup will work fine.
+        this.f = normalizeRegexSource(this.f);
+        if ( this.f === '' ) {
             console.error(
                 "uBlock Origin> discarding bad regular expression-based network filter '%s': '%s'",
                 raw,
-                isBadRegex.message
+                normalizeRegexSource.message
             );
             this.unsupported = true;
         }
