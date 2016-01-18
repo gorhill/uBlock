@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"이 사이트에서 팝업 차단 토글",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"이 사이트에서 엄격 차단기능 토글",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"이 사이트에서만 적용되는 대형 미디어 구성요소 차단 기능을 켜고 끕니다.",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"이 사이트에서 시각적 필터링 토글",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"이 사이트에서 글꼴조정 차단 토글",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"공용 규칙: 이 열은 모든 사이트에 적용되는 규칙 열 입니다.",
@@ -215,9 +215,25 @@
     "message":"WebRTC로부터 로컬 IP 주소 유출을 방지",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"기본 동작",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"이러한 기본 동작들은 사이트 별로 재정의 할 수 있습니다.",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"시각적 필터 비활성화",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"{{input:number}} KB 보다 큰 미디어 구성요소 차단",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"글꼴 조종 차단",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"스토리지 사용량: {{value}} 바이트",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 시각적 필터:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{total}}개 중 {{used}}개 사용 중",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"필터 목록 자동 업데이트",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"지금 업데이트",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"모든 캐시 제거",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"시각적 필터 분석 및 적용",
@@ -627,6 +643,10 @@
     "message":"클라우드 저장소로부터 가져오기",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"클라우드 저장소의 설정 불러오기 및 현재 설정과 통합",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"바이트",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"이번만 대형 미디어 구성요소 허용",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"This entry must be the last one",

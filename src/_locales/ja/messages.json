@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"このサイトのすべてのポップアップのブロックを切り替えます",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"このサイトの厳格なブロックを切り替えます",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"このサイトの大部分のメディア要素のブロックを切り替えます",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"このサイトのコスメティックフィルターを切り替えます",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"このサイトでリモートのフォントをブロックするか切り替える",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "message":"このサイトでリモートのフォントをブロックするか切り替えます",
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"グローバルルール: この列にあるルールは、すべてのサイトに適応されます。",
@@ -215,9 +215,25 @@
     "message":"ローカルIPアドレスの漏洩をもたらすWebRTCを防止する",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"実験的な機能を有効にする (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"デフォルトの動作",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"これらのデフォルトの動作は、サイトごとに上書きできます",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"要素隠蔽フィルタを無効にする",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"{{input:number}} kB より大きいメディア要素をブロックする",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"リモートフォントをブロックする",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"使用中のストレージ:  {{value}} bytes",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}}ネットワークフィルタ＋{{cosmeticFilterCount}}コスメチックフィルタ：",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{total}}個中{{used}}使用",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"フィルターリストを自動更新する",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"今すぐ更新",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"全キャッシュを削除",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"要素隠蔽フィルタを解析、施行する。",
@@ -340,7 +356,7 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"恒久的ルール",
+    "message":"恒久的なルール",
     "description":"header"
   },
   "rulesTemporaryHeader":{
@@ -627,6 +643,10 @@
     "message":"クラウドストレージからインポート",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"クラウドストレージからインポートし、現在の設定と合併させます",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"バイト",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"一時的に大部分のメディア要素を許可",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"これは最後のエントリである必要があります",

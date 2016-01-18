@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"Activer\/Désactiver le blocage des fenêtres pop-ups pour ce site",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"Activer\/Désactiver le blocage strict pour ce site",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Activer\/Désactiver le blocage d'éléments médias à grande taille de ce site",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"Activer\/Désactiver le filtrage esthétique pour ce site",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Basculer le blocage de polices distantes pour ce site",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "message":"Activer\/Désactiver le blocage de polices d'écriture distantes pour ce site",
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Règles globales : Cette colonne concerne des règles qui s'appliquent partout.",
@@ -215,9 +215,25 @@
     "message":"Empêcher la fuite des adresses IP locales via WebRTC",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"Activer les fonctionnalités expérimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>En savoir plus<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Comportement par défaut",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"Ces comportements par défaut peuvent être remplacés au cas par cas",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Désactiver le filtrage esthétique",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Bloquer les éléments médias d'une taille supérieure à {input:number} Ko",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Bloquer les polices d'écriture distantes",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Espace de stockage utilisé : {{value}} octet(s)",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtre(s) réseau et {{cosmeticFilterCount}} filtre(s) esthétique(s) sont actuellement en vigueur :",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} utilisé(s) sur un total de {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"Mettre à jour les listes de filtres sélectionnées automatiquement",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"Mettre à jour maintenant",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"Vider tous les caches",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Utiliser en plus les règles esthétiques",
@@ -627,6 +643,10 @@
     "message":"Importer depuis le stockage dans le nuage",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Importer depuis le stockage dans le nuage et fusionner avec les réglages actuels",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"octets",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Autoriser temporairement les éléments médias à grande taille",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"This entry must be the last one",

@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"禁止此网站弹出任何窗口",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"对此网站进行严格屏蔽",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"开关是否在此网站上屏蔽较大的媒体元素",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"不对此网站应用修饰规则",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"阻止此网站的第三方字体",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"全局规则：此列的规则作用于所有网站。",
@@ -215,9 +215,25 @@
     "message":"防止 WebRTC 泄露本地IP地址",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"启用实验功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>关于<\/a>）",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"默认行为",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"这些默认行为可以在各网站上覆盖",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"禁用元素过滤规则",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"屏蔽大于 {{input:number}} kB 的媒体元素",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"屏蔽远程字体",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"已用空间：{{value}} 字节",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"当前使用了 {{netFilterCount}} 个 URL 过滤规则和 {{cosmeticFilterCount}} 个元素过滤规则：",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"已使用 {{used}} \/ {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"自动更新规则列表。",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"立即更新",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"清除所有缓存",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"解析并应用元素过滤规则。",
@@ -627,6 +643,10 @@
     "message":"从云端储存导入",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"从云存储导入并与当前设置合并",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"…\n…",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"字节",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"临时允许较大媒体元素",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

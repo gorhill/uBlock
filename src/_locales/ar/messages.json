@@ -36,7 +36,7 @@
     "description":"Title for the logger window"
   },
   "aboutPageName":{
-    "message":"معلومات عني",
+    "message":"حول البرنامج",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"لا نوافذ منبثقة لهذا الموقع",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"لا حجب صارم لهذا الموقع",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"تفعيل أو تعطيل حجب عناصر الوسائط الكبيرة لهذا الموقع",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"تفعيل أو تعطيل التصفية الجمالية لهذا الموقع",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"تبديل حجب الخطوط البعيدة لهذا الموقع",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"القواعد العامة: هذا العمود يتعلق بالقواعد التي تنطبق على جميع الموقع.",
@@ -215,9 +215,25 @@
     "message":"منع WebRTC من كشف عنوان الـ IP المحلي",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"تفعيل الخصائص التجريبية (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>حول<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"السلوك الإفتراضي",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"هذه السلوكيات الإفتراضية يمكن إستبدالها في كل حالة",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"تعطيل الفلترة التجميلية",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"حجب عناصر الوسائط ذات الحجم أكبر من {{input:number}} كيلو بايت",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"منع الخطوط البعيدة",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"المساحة المستخدمة: {{value}} بايت",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}}  من فلاتر الشبكه ＋ {{cosmeticFilterCount}} فلاتر تجميليه:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} تم استعماله من {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"تحديث تلقائي للستات  الفلاتر",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"حدث الان",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"نظف جميع المخابئ",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"تحليل وتطبيق فلاتر التجميليه",
@@ -627,6 +643,10 @@
     "message":"إستيراد من سحابة التخزين",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"إستيراد التخزين من السحابية و دمجه مع الإعدادات الحالية",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"بايت",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"السماح مؤقتا لعناصر الوسائط كبيرة",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",

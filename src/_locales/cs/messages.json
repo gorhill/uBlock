@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"Přepnout blokování  všech vyskakovacích oken pro tento web",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"Přepnout striktní blokování pro tento web",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Přepnout blokování velkých multimediálních prvků na tomto webu",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"Přepnout kosmetické filtrování pro tento web",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"Přepnout blokování vzdálených fontů pro tento web",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Globální pravidla: tento sloupec slouží pro pravidla, která platí pro všechny weby.",
@@ -215,9 +215,25 @@
     "message":"Předejít úniku lokálních IP adres přes WebRTC",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Výchozí chování",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"Tato výchozí chování mohou být přepsána u jednotlivých webů",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Zakázat kosmetické filtrování",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Blokovat multimediální prvky větší než {{input:number}} kB",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Blokovat externí fonty",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Prostoru využito: {{value}} bajtů",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} použito z celkových {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"Automaticky aktualizovat seznamy filtrů.",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"Aktualizovat nyní",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"Vyčistit celou mezipaměť",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Zpracovat a použít kosmetické filtry.",
@@ -627,6 +643,10 @@
     "message":"Importovat z cloudového úložiště",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Importovat z cloudového úložiště a sloučit se současným nastavením",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"bajtů",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Dočasně povolit velké multimediální prvky",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"This entry must be the last one",

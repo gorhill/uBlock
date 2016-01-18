@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"Växla blockering av popup-fönster för denna sida",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"Växla strikt blockering för den här sidan",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Ändra blockering av stora medieelement för denna sida",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"Växla kosmetiska filter för denna sida",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"Växla blockering för hämtning av typsnitt på sidan",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Globala regler: denna kolumn avser regler som gäller alla sidor.",
@@ -215,9 +215,25 @@
     "message":"Förhindra WebRTC från att läcka lokala IP-adresser",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"Aktivera experimentella funktioner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Förvalt beteende",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"Dessa förinställda beteenden kan överskridas för var sida",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Stäng av kosmetisk filtrering",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Blockera medieelement större än {{input:number}} kB",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Blockera avlägsna typsnitt",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Använt utrymme: {{value}} bytes",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} använda av {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"Uppdatera filterlistor automatiskt.",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"Uppdatera nu",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"Rensa all cache",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Tolka och applicera kosmetiska filter.",
@@ -627,6 +643,10 @@
     "message":"Importera från molnlagring",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Importera inställningar från molnlagring",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"byte",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Tillåt tillfälligt stora medieelement",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"This entry must be the last one",

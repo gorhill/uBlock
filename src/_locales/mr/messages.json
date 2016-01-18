@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"या साइटसाठी सर्व पॉपअप अवरोधित करणे टॉगल करा",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"या साइटसाठी टॉगल कठोर अवरोधित करणे",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Toggle the blocking of large media elements for this site",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"या साइटसाठी कॉस्मेटिक फिल्टरिंग टॉगल करा",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"Toggle the blocking of remote fonts for this site",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Global rules: this column is for rules which apply to all sites.",
@@ -215,9 +215,25 @@
     "message":"Prevent WebRTC from leaking local IP addresses",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"प्रायोगिक वैशिष्ट्ये सक्षम करा",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Default behavior",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"These default behaviors can be overriden on a per-site basis",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Disable cosmetic filtering",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Block media elements larger than {{input:number}} kB",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Block remote fonts",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Storage used: {{value}} bytes",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} नेटवर्क फिल्टर ＋ {{cosmeticFilterCount}} उटणे फिल्टर :",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} वापरले {{total}} पैकी",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"स्वयं-अद्यतन फिल्टर यादी.",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"आता अद्यतनित करा",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"सर्व कॅशे साफ करा",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"उटणे फिल्टरना विश्लेषित करा आणि त्यांची अंमलबजावणी करा.",
@@ -627,6 +643,10 @@
     "message":"Import from cloud storage",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Import from cloud storage and merge with current settings",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"bytes",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Temporarily allow large media elements",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"This entry must be the last one",

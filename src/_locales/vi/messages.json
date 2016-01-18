@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"kể từ khi cài đặt",
+    "message":"từ lúc cài đặt",
     "description":"English: since install"
   },
   "popupOr":{
@@ -72,24 +72,24 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Mở nhật kí yêu cầu",
+    "message":"Mở nhật ký",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
     "message":"Bật\/tắt chặn popup của trang này",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"Bật\/tắt chặn nghiêm ngặt trang này",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Toggle the blocking of large media elements for this site",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"Bật\/tắt bộ lọc phần tử trên trang này",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"Bật tắt chặn kiểu chữ từ xa trên trang này",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Quy tắc chung: cột này dành cho quy tắc áp dụng cho mọi trang.",
@@ -148,11 +148,11 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Tạo bộ lọc",
+    "message":"Tạo",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Chọn phần tử",
+    "message":"Chọn",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Các bộ lọc internet",
+    "message":"Các bộ lọc mạng",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -215,9 +215,25 @@
     "message":"Ngặn WebRTC làm lộ địa chỉ IP nội bộ",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"Kích hoạt các tính năng thử nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Thông tin<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Default behavior",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"These default behaviors can be overriden on a per-site basis",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Disable cosmetic filtering",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Block media elements larger than {{input:number}} kB",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Block remote fonts",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Bộ nhớ đã dùng: {{value}} byte",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} bộ lọc mạng ＋ {{cosmeticFilterCount}} bộ lọc phần tử ẩn từ:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} được dùng trên tổng {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "message":"Đã dùng {{used}} trên {{total}}",
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"Các danh sách bộ lọc tự cập nhật.",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
-    "message":"Cập nhật bây giờ",
-    "description":"English: Update now"
+    "message":"Cập nhật ngay",
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
-    "message":"Dọn sạch tất cả lưu trữ",
-    "description":"English: Purge all caches"
+    "message":"Dọn tất cả bộ nhớ đệm",
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Phân tích và thi hành bộ lọc phần tử ẩn.",
@@ -272,11 +288,11 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Bảo mật",
+    "message":"Riêng tư",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Các tên miền độc hại",
+    "message":"Các tên miền nguy hiểm",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -300,19 +316,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Áp dụng",
+    "message":"Phân tích",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Xóa bộ nhớ đệm",
+    "message":"dọn bộ nhớ đệm",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Phiên bản mới đã sẵn sàng",
+    "message":"có phiên bản mới",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"có thể là lỗi thời",
+    "message":"đã cũ",
     "description":"a filter list is 'out of date' (possibly needs to be updated)"
   },
   "3pLastUpdate":{
@@ -416,7 +432,7 @@
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"Đường dẫn",
+    "message":"URL",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
@@ -540,7 +556,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Không thể kết nối tới {{url}}",
+    "message":"Không thể kết nối đến {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
@@ -627,6 +643,10 @@
     "message":"Nhập từ lưu trữ trực tuyến",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Nhập từ bộ lưu trữ trực tuyến và ghép với các thiết lập hiện tại",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"byte",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Temporarily allow large media elements",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"Đây là mục cuối",

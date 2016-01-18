@@ -77,19 +77,19 @@
   },
   "popupTipNoPopups":{
     "message":"Włącz\/wyłącz blokowanie wyskakujących okien na tej witrynie",
-    "description":"English: Toggle the blocking of all popups for this site"
+    "description":"Tooltip for the no-popups per-site switch"
   },
-  "popupTipNoStrictBlocking":{
-    "message":"Włącz\/wyłącz skrupulatne blokowanie na tej witrynie",
-    "description":"English: Toggle strict blocking for this site"
+  "popupTipNoLargeMedia":{
+    "message":"Włącz\/wyłącz blokowanie elementów multimedialnych",
+    "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
     "message":"Włącz\/wyłącz kosmetyczne filtrowanie na tej witrynie",
-    "description":"English: Toggle cosmetic filtering for this site"
+    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
     "message":"Włącz\/wyłącz blokowanie zdalnych czcionek na tej stronie",
-    "description":"English: Toggle the blocking of remote fonts for this site"
+    "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
@@ -215,9 +215,25 @@
     "message":"Zapobiegaj wyciekom adresu IP poprzez interfejs WebRTC",
     "description":"English: "
   },
-  "settingsExperimentalPrompt":{
-    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informacje<\/a>)",
-    "description":"English: Enable experimental features"
+  "settingPerSiteSwitchGroup":{
+    "message":"Działanie domyślne",
+    "description":""
+  },
+  "settingPerSiteSwitchGroupSynopsis":{
+    "message":"Te ustawienia mogą być zastąpione przez ustawienia danej witryny",
+    "description":""
+  },
+  "settingsNoCosmeticFilteringPrompt":{
+    "message":"Wyłącz filtrowanie kosmetyczne",
+    "description":""
+  },
+  "settingsNoLargeMediaPrompt":{
+    "message":"Blokuj elementy multimedialne większe niż {{input:number}} kB",
+    "description":""
+  },
+  "settingsNoRemoteFontsPrompt":{
+    "message":"Blokuj zdalne czcionki",
+    "description":""
   },
   "settingsStorageUsed":{
     "message":"Użycie pamięci masowej: {{value}} bajtów",
@@ -233,23 +249,23 @@
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"Filtry sieciowe: {{netFilterCount}} ÷ Filtry kosmetyczne: {{cosmeticFilterCount}} z:",
-    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+    "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"użytych {{used}} z {{total}}",
-    "description":"English: {{used}} used out of {{total}}"
+    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
     "message":"Automatycznie aktualizuj listy filtrów",
-    "description":"English: Auto-update filter lists."
+    "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
     "message":"Aktualizuj teraz",
-    "description":"English: Update now"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
     "message":"Wyczyść całą pamięć podręczną",
-    "description":"English: Purge all caches"
+    "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Przetwarzaj i stosuj filtry kosmetyczne",
@@ -627,6 +643,10 @@
     "message":"Import z dysku w chmurze",
     "description":"tooltip"
   },
+  "cloudPullAndMerge":{
+    "message":"Importuj z chmury i połącz z aktualnymi ustawieniami",
+    "description":"tooltip"
+  },
   "cloudNoData":{
     "message":"...\n...",
     "description":""
@@ -646,6 +666,10 @@
   "genericBytes":{
     "message":"bajty",
     "description":""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements":{
+    "message":"Tymczasowo zezwalaj na wyświetlanie dużych elementów multimedialnych",
+    "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
     "message":"Ten wpis musi być ostatni",
