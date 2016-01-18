@@ -40,6 +40,8 @@ The most important part when opening an issue: **detailed steps**.
 1. **Verify that the issue is not related to a 3rd-party filter lists.**
     - Issues with 3rd-party filter lists are the responsibility of their respective maintainers.
 1. Verify that the issue is not caused by another extension.
+1. Do not submit issues which can be reproduced **only** on Chrome Canary or Firefox Nightly: these are not stable browser versions and in all likelihood, whatever issue is not within uBO.
+    - Report **only** if you can reproduce in an official stable release, or a beta release.
 
 ***
 
