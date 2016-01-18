@@ -474,16 +474,11 @@ var foilLargeMediaElement = function(details) {
     if ( µb.hnSwitches.evaluateZ('no-large-media', pageStore.tabHostname) !== true ) {
         return;
     }
-    // Not all servers provide the Content-Length header: when this happens,
-    // assume the worse.
-    var contentLength = 1000000,
-        i = headerIndexFromName('content-length', details.responseHeaders);
-    if ( i !== -1 ) {
-        contentLength = parseInt(details.responseHeaders[i].value, 10);
-        if ( isNaN(contentLength) ) {
-            contentLength = 1000000;
-        }
+    var i = headerIndexFromName('content-length', details.responseHeaders);
+    if ( i === -1 ) {
+        return;
     }
+    var contentLength = parseInt(details.responseHeaders[i].value, 10) || 0;
     if ( (contentLength >>> 10) < µb.userSettings.largeMediaSize ) {
         return;
     }
