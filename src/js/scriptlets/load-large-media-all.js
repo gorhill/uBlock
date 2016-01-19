@@ -50,13 +50,14 @@ elems = document.querySelectorAll('img');
 i = elems.length;
 while ( i-- ) {
     elem = elems[i];
-    if (
-        typeof elem.naturalWidth !== 'number' ||
-        elem.naturalWidth === 0 ||
-        typeof elem.naturalHeight !== 'number' ||
-        elem.naturalHeight === 0
-    ) {
-        src = elem.getAttribute('src') || '';
+    if ( elem.naturalWidth !== 0 && elem.naturalHeight !== 0 ) {
+        continue;
+    }
+    if ( window.getComputedStyle(elem).getPropertyValue('display') === 'none' ) {
+        continue;
+    }
+    src = elem.getAttribute('src');
+    if ( src ) {
         elem.removeAttribute('src');
         elem.setAttribute('src', src);
     }

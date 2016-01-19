@@ -52,8 +52,11 @@ var mediaNotLoaded = function(elem) {
     case 'video':
         return elem.error !== null;
     case 'img':
-        return elem.offsetWidth !== 0 && elem.offsetHeight !== 0 &&
-              (elem.naturalWidth === 0 || elem.naturalHeight === 0);
+        if ( elem.naturalWidth === 0 && elem.naturalHeight === 0 ) {
+            return window.getComputedStyle(elem)
+                         .getPropertyValue('display') !== 'none';
+        }
+        break;
     default:
         break;
     }
