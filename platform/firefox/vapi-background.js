@@ -2751,7 +2751,10 @@ vAPI.toolbarButton = {
             break;
         }
 
-        if ( document.getElementById(tbb.id) !== null ) {
+        // https://github.com/gorhill/uBlock/issues/763
+        // We are done if our toolbar button is already installed in one of the
+        // toolbar.
+        if ( palette !== null && toolbarButton.parentElement !== palette ) {
             return;
         }
 
