@@ -138,6 +138,11 @@ The Firefox version of uBlock Origin has [an extra feature](https://github.com/g
 
 Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
 
+##### Debian/Ubuntu
+
+Users of Debian 9 or later or Ubuntu 16.04 or later may simply
+`apt-get install xul-ext-ublock-origin`.
+
 #### Note for all browsers
 
 To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
