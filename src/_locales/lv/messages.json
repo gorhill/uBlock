@@ -76,19 +76,19 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Ieslēgt\/Izslēgt uznirstošos logus šajā vietnē",
+    "message":"Pārslēgt uznirstošo logu bloķēšanu šajā vietnē",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"Pārslēgt lielu multivides elementu bloķēšanu šajā vietnē",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Ieslēgt\/Izslēgt kosmētikas filtrus šai vietnei",
+    "message":"Pārslēgt kosmētisko filtrēšanu šajā vietnē",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Pārslēgt ārējo fontu bloķēšanu šai vietnei",
+    "message":"Pārslēgt ārējo fontu bloķēšanu šajā vietnē",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -216,23 +216,23 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"Noklusējuma darbība",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overriden on a per-site basis",
+    "message":"Šos uzstādījumus var mainīt katrai vietnei atsevišķi",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"Atslēgt kosmētiskos filtrus",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"Bloķēt multivides elementus kas lielāki par {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"Bloķēt ārējos fontus",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"Importēt no mākoņdatu glabātuves un apvienot ar pašreizējiem iestatījumiem",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"Īslaicīgi atļaut lielos multivides elementus",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

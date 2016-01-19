@@ -220,7 +220,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overriden on a per-site basis",
+    "message":"These default behaviors can be overridden on a per-site basis",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
