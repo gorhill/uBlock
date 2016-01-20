@@ -23,3 +23,6 @@
 
 # https://github.com/gorhill/uBlock/issues/1248
 ||google-analytics.com/plugins/ga/inpage_linkid.js$script,redirect=google-analytics.com/inpage_linkid.js,important
+
+# https://github.com/gorhill/uBlock/issues/1265
+||scorecardresearch.com/beacon.js$script,redirect=scorecardresearch.com/beacon.js,important

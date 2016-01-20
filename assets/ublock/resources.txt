@@ -558,3 +558,16 @@ kissanime-defuser.js application/javascript
 		set: function(a) {}
 	});
 })();
+
+
+scorecardresearch.com/beacon.js application/javascript
+(function() {
+	window.COMSCORE = {
+		purge: function() {
+			_comscore = [];
+		},
+		beacon: function() {
+			;
+		}
+	};
+})();
