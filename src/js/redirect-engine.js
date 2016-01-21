@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock */
-
 /******************************************************************************/
 
 µBlock.redirectEngine = (function(){
@@ -120,19 +118,21 @@ RedirectEngine.prototype.lookup = function(context) {
     var src, des = context.requestHostname,
         srcHostname = context.pageHostname,
         reqURL = context.requestURL,
-        desEntry, entries, i, entry;
+        desEntry, rules, rule, pattern;
     for (;;) {
         desEntry = typeEntry[des];
         if ( desEntry !== undefined ) {
             src = srcHostname;
             for (;;) {
-                entries = desEntry[src];
-                if ( entries !== undefined ) {
-                    i = entries.length;
-                    while ( i-- ) {
-                        entry = entries[i];
-                        if ( entry.c.test(reqURL) ) {
-                            return (this.resourceNameRegister = entry.r);
+                rules = desEntry[src];
+                if ( rules !== undefined ) {
+                    for ( rule in rules ) {
+                        pattern = rules[rule];
+                        if ( pattern instanceof RegExp === false ) {
+                            pattern = rules[rule] = new RegExp(pattern);
+                        }
+                        if ( pattern.test(reqURL) ) {
+                            return (this.resourceNameRegister = rule);
                         }
                     }
                 }
@@ -180,14 +180,29 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     if ( desEntry === undefined ) {
         desEntry = typeEntry[des] = Object.create(null);
     }
-    var ruleEntries = desEntry[src];
-    if ( ruleEntries === undefined ) {
-        ruleEntries = desEntry[src] = [];
+    var rules = desEntry[src];
+    if ( rules === undefined ) {
+        rules = desEntry[src] = Object.create(null);
     }
-    ruleEntries.push({
-        c: new RegExp(pattern),
-        r: redirect
-    });
+    var p = rules[redirect];
+    if ( p === undefined ) {
+        rules[redirect] = pattern;
+        return;
+    }
+    if ( p instanceof RegExp ) {
+        p = p.source;
+    }
+    // Duplicate?
+    var pos = p.indexOf(pattern);
+    if ( pos !== -1 ) {
+        if ( pos === 0 || p.charAt(pos - 1) === '|' ) {
+            pos += pattern.length;
+            if ( pos === p.length || p.charAt(pos) === '|' ) {
+                return;
+            }
+        }
+    }
+    rules[redirect] = p + '|' + pattern;
 };
 
 /******************************************************************************/
@@ -209,7 +224,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     }
 
     var des = matches[1] || '';
-    var pattern = (des + matches[2]).replace(/[.+?{}()|[\]\\]/g, '\\$&')
+    var pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
                                     .replace(/\^/g, '[^\\w\\d%-]')
                                     .replace(/\*/g, '.*?');
     var type;
@@ -297,21 +312,24 @@ RedirectEngine.prototype.toSelfie = function() {
         rules: []
     };
 
-    var typeEntry, desEntry, entries, entry;
+    var typeEntry, desEntry, rules, pattern;
     for ( var type in this.rules ) {
         typeEntry = this.rules[type];
         for ( var des in typeEntry ) {
             desEntry = typeEntry[des];
             for ( var src in desEntry ) {
-                entries = desEntry[src];
-                for ( var i = 0; i < entries.length; i++ ) {
-                    entry = entries[i];
+                rules = desEntry[src];
+                for ( var rule in rules ) {
+                    pattern = rules[rule];
+                    if ( pattern instanceof RegExp ) {
+                        pattern = pattern.source;
+                    }
                     r.rules.push(
                         src + '\t' +
                         des + '\t' +
                         type + '\t' +
-                        entry.c.source + '\t' +
-                        entry.r
+                        pattern + '\t' +
+                        rule
                     );
                 }
             }
