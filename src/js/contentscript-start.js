@@ -133,12 +133,9 @@ var injectScripts = function(scripts) {
     if ( !parent ) {
         return;
     }
-    var i = scripts.length, scriptTag;
-    while ( i-- ) {
-        scriptTag = document.createElement('script');
-        scriptTag.appendChild(document.createTextNode(scripts[i]));
-        parent.appendChild(scriptTag);
-    }
+    var scriptTag = document.createElement('script');
+    scriptTag.appendChild(document.createTextNode(scripts));
+    parent.appendChild(scriptTag);
 };
 
 /******************************************************************************/
@@ -156,7 +153,7 @@ var filteringHandler = function(details) {
         if ( details.netHide.length !== 0 ) {
             netFilters(details);
         }
-        if ( Array.isArray(details.scripts) ) {
+        if ( details.scripts ) {
             injectScripts(details.scripts);
         }
         // The port will never be used again at this point, disconnecting allows

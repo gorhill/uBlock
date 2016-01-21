@@ -1131,7 +1131,7 @@ FilterContainer.prototype.retrieveScriptTags = function(domain, hostname) {
             }
         }
     }
-    return out;
+    return out.join('\n');
 };
 
 /******************************************************************************/
