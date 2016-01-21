@@ -306,3 +306,6 @@ kissanime.to##script:inject(kissanime-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=27908
 ip-address.org##script:inject(bab-defuser.js)
+
+# https://github.com/gorhill/uBlock/issues/1271
+||static-v.com/*/blockadblock.js$script,redirect=fuckadblock.js-3.2.0,domain=vtele.ca
