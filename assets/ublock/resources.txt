@@ -446,7 +446,7 @@ pornhub-popup-defuser.js application/javascript
 # https://news.ycombinator.com/item?id=10814913
 forbes-defuser.js application/javascript
 (function() {
-	if ( !window.location.pathname.startsWith('/forbes/welcome/') ) {
+	if ( window.location.pathname.lastIndexOf('/forbes/welcome/', 0) !== 0 ) {
 		return;
 	}
 	var noopfn = function() {
