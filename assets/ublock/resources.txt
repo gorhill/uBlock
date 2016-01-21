@@ -64,15 +64,20 @@ var L = (function(){
 
 1216.js application/javascript
 (function() {
-	delete window.noHomad;
-	try {
-		Object.defineProperty(window, 'noHomad', {
-			get: function() { return true; },
-			set: function() { }
-		});
-	} catch(ex) {
-	}
-})()
+	//
+	var sto = window.setTimeout;
+	var mysto = function(a, b) {
+		if ( b === 15000 && a.toString().lastIndexOf('function a()', 0) === 0 ) {
+			return;
+		}
+		return sto(a, b);
+	};
+	Object.defineProperty(window, 'setTimeout', {
+		get: function() {
+			return mysto;
+		}
+	});
+})();
 
 
 # fuckadblock defuser
@@ -98,9 +103,9 @@ fuckadblock.js-3.2.0 application/javascript
 		return this;
 	};
 	Fab.prototype.setOption = noopfn;
-	window.FuckAdBlock = Fab;
+	window.FuckAdBlock = window.BlockAdBlock = Fab;
 	//
-	window.fuckAdBlock = new Fab();
+	window.fuckAdBlock = window.blockAdBlock = new Fab();
 })();
 
 
