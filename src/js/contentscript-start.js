@@ -136,6 +136,7 @@ var injectScripts = function(scripts) {
     var scriptTag = document.createElement('script');
     scriptTag.appendChild(document.createTextNode(scripts));
     parent.appendChild(scriptTag);
+    vAPI.injectedScripts = scripts;
 };
 
 /******************************************************************************/
