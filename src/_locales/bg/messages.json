@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Щракнете за да отворите таблото",
+    "message":"Щракнете, за да отворите таблото",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Блокиране на големи медийни елементи за този сайт",
+    "message":"Превключване блокирането на големи мултимедийни елементи за този сайт",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -96,7 +96,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Локални правила: тази колона е за правила, прилагани само за текущия сайт. Локалните правила са с приоритет пред глобалните.",
+    "message":"Локални правила: тази колона е за правила, прилагани само за текущият сайт. Локалните правила заместват глобалните.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -224,15 +224,15 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Забраняване на козметичните филтри",
+    "message":"Изключване на козметичното филтриране",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Блокиране на медийни елементи, по-големи от {input:number} kB",
+    "message":"Блокиране на мултимедийни елементи, по-големи от {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Блокиране на отдалечени шрифтове",
+    "message":"Блокиране на странични шрифтове",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Импортиране от облачно хранилище и сливане с текущите настройки",
+    "message":"Внасяне на настройки от облачно хранилище и обединяване с текущите",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Временно разрешаване на големи медийни елементи",
+    "message":"Временно разрешаване на големи мултимедийни елементи",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

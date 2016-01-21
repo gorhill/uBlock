@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficaz. Com baixo consumo de CPU e memória.",
+    "message":"Finalmente, um bloqueador eficiente. Com baixo uso de memória e CPU.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o uBlock₀para este site.\n\nCtrl+clique: desativar o uBlock₀apenas nesta página.",
+    "message":"Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -108,7 +108,7 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"tudo",
+    "message":"todos",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -124,7 +124,7 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"scripts embutido",
+    "message":"scripts internos",
     "description":""
   },
   "popup1pScriptRulePrompt":{
@@ -200,7 +200,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
+    "message":"Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura obrigatória<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -276,7 +276,7 @@
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listas de hosts bloqueados",
+    "message":"Listas de servidores bloqueados",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -308,7 +308,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Lista personalizada",
+    "message":"Personalizado",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -336,7 +336,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
+    "message":"Adicione um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -404,7 +404,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Sua lista de exceções de nomes de host para qual o uBlock₀ será desativado. Uma entrada por linha. hostnames inválidos serão silenciosamente ignorados.",
+    "message":"Sua lista de exceções de servidores para qual o uBlock₀ será desativado. Uma entrada por linha. Servidores inválidos serão silenciosamente ignorados.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -516,11 +516,11 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"Documentação",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Código-fonte (GPLv3)",
+    "message":"Código fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -540,7 +540,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Restaurar para as configurações padrão...",
+    "message":"Restaurar configurações padrão...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -552,7 +552,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Todas as suas configurações serão apagadas, e o uBlock₀ será reiniciado. \n\nDeseja restaurar as configurações de fábrica do uBlock₀?",
+    "message":"Todas as suas configurações serão apagadas, e o uBlock₀ será reiniciado. \n\nDeseja restaurar as configurações originais do uBlock₀?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Permitir temporariamente elementos de mídia grandes",
+    "message":"Permitir temporariamente grandes elementos de mídia",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

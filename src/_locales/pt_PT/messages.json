@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importar do armazenamento cloud e juntar às definições atuais",
+    "message":"Importar do armazenamento 'cloud' e juntar às definições atuais",
     "description":"tooltip"
   },
   "cloudNoData":{

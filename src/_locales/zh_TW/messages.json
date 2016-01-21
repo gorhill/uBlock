@@ -656,7 +656,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"提交",
+    "message":"送出",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
