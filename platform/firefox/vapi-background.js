@@ -2022,15 +2022,8 @@ var httpObserver = {
             return false;
         }
 
-        // https://github.com/gorhill/uBlock/issues/966
-        var hostname = URI.asciiHost;
-        if ( hostname.endsWith('.') ) {
-            hostname = hostname.slice(0, -1);
-        }
-
         var result = this.onBeforeRequest({
             frameId: details.frameId,
-            hostname: hostname,
             parentFrameId: details.parentFrameId,
             tabId: details.tabId,
             type: type,
@@ -2084,14 +2077,7 @@ var httpObserver = {
             }
         }
 
-        // https://github.com/gorhill/uBlock/issues/966
-        var hostname = URI.asciiHost;
-        if ( hostname.endsWith('.') ) {
-            hostname = hostname.slice(0, -1);
-        }
-
         var result = this.onHeadersReceived({
-            hostname: hostname,
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[2],

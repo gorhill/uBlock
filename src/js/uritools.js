@@ -50,6 +50,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
 var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
@@ -300,6 +301,13 @@ URI.domain = function() {
 // It is expected that there is higher-scoped `publicSuffixList` lingering
 // somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
 var psl = publicSuffixList;
+
+/******************************************************************************/
+
+URI.pathFromURI = function(uri) {
+    var matches = rePathFromURI.exec(uri);
+    return matches !== null ? matches[1] : '';
+};
 
 /******************************************************************************/
 

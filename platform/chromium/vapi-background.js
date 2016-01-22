@@ -834,37 +834,34 @@ vAPI.net.registerListeners = function() {
     };
 
     var normalizeRequestDetails = function(details) {
-        µburi.set(details.url);
-
         details.tabId = details.tabId.toString();
-        details.hostname = µburi.hostnameFromURI(details.url);
 
         // The rest of the function code is to normalize type
         if ( details.type !== 'other' ) {
             return;
         }
 
-        var tail = µburi.path.slice(-6);
-        var pos = tail.lastIndexOf('.');
+        var path = µburi.pathFromURI(details.url);
+        var pos = path.indexOf('.', path.length - 6);
 
         // https://github.com/chrisaljoudi/uBlock/issues/862
         // If no transposition possible, transpose to `object` as per
         // Chromium bug 410382 (see below)
         if ( pos !== -1 ) {
-            var ext = tail.slice(pos) + '.';
-            if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
+            var needle = path.slice(pos) + '.';
+            if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(needle) !== -1 ) {
                 details.type = 'font';
                 return;
             }
 
-            if ( '.mp3.mp4.webm.'.indexOf(ext) !== -1 ) {
+            if ( '.mp3.mp4.webm.'.indexOf(needle) !== -1 ) {
                 details.type = 'media';
                 return;
             }
 
             // Still need this because often behind-the-scene requests are wrongly
             // categorized as 'other'
-            if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1 ) {
+            if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(needle) !== -1 ) {
                 details.type = 'image';
                 return;
             }
