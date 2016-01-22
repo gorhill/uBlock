@@ -26,3 +26,6 @@
 
 # https://github.com/gorhill/uBlock/issues/1265
 ||scorecardresearch.com/beacon.js$script,redirect=scorecardresearch.com/beacon.js,important
+
+# https://github.com/gorhill/uBlock/issues/1250#issuecomment-173533894
+||widgets.outbrain.com/outbrain.js$script,redirect=widgets.outbrain.com/outbrain.js

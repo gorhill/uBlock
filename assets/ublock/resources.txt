@@ -576,3 +576,52 @@ scorecardresearch.com/beacon.js application/javascript
 		}
 	};
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/1250#issuecomment-173533894
+widgets.outbrain.com/outbrain.js application/javascript
+(function() {
+	var noopfn = function() {
+		;
+	};
+	var obr = {};
+	obr.extern = {
+		callClick: noopfn,
+		callLoadMore: noopfn,
+		callRecs: noopfn,
+		callUserZapping: noopfn,
+		callWhatIs: noopfn,
+		cancelRecommendation: noopfn,
+		cancelRecs: noopfn,
+		closeCard: noopfn,
+		closeModal: noopfn,
+		closeTbx: noopfn,
+		errorInjectionHandler: noopfn,
+		getCountOfRecs: noopfn,
+		getStat: noopfn,
+		imageError: noopfn,
+		manualVideoClicked: noopfn,
+		onOdbReturn: noopfn,
+		onVideoClick: noopfn,
+		pagerLoad: noopfn,
+		recClicked: noopfn,
+		refreshSpecificWidget: noopfn,
+		refreshWidget: noopfn,
+		reloadWidget: noopfn,
+		researchWidget: noopfn,
+		returnedError: noopfn,
+		returnedHtmlData: noopfn,
+		returnedIrdData: noopfn,
+		returnedJsonData: noopfn,
+		scrollLoad: noopfn,
+		showDescription: noopfn,
+		showRecInIframe: noopfn,
+		userZappingMessage: noopfn,
+		video: {
+			getVideoRecs: noopfn,
+			videoClicked: noopfn
+		},
+		zappingFormAction: noopfn
+	};
+	window.OBR = window.OBR || obr;
+})();
