@@ -403,20 +403,26 @@ yavli-defuser.js application/javascript
 			return '';
 		}
 	};
-	var noy = {
-		start: noopfn
-	};
 	try {
 		Object.defineProperty(window, '__durl', nourl);
 		Object.defineProperty(window, '__lsurl', nourl);
 		Object.defineProperty(window, '__lturl', nourl);
-		Object.defineProperty(window, '_y', {
-			set: noopfn,
-			get: function() {
-				return noy;
-			}
-		});
 	} catch (ex) {
+	}
+	var aa = ['_x','_y'];
+	var no = {
+		set: noopfn,
+		get: function() {
+			return {
+				start: noopfn
+			};
+		}
+	};
+	while ( aa.length ) {
+		try {
+			Object.defineProperty(window, aa.pop(), no);
+		} catch (e) {
+		}
 	}
 })();
 
