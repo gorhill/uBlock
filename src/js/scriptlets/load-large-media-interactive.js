@@ -52,11 +52,14 @@ var mediaNotLoaded = function(elem) {
     case 'video':
         return elem.error !== null;
     case 'img':
-        if ( elem.naturalWidth === 0 && elem.naturalHeight === 0 ) {
-            return window.getComputedStyle(elem)
-                         .getPropertyValue('display') !== 'none';
+        if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) {
+            break;
         }
-        break;
+        var style = window.getComputedStyle(elem);
+        // For some reason, style can be null with Pale Moon.
+        return style !== null ?
+            style.getPropertyValue('display') !== 'none' :
+            elem.offsetHeight !== 0 && elem.offsetWidth !== 0;
     default:
         break;
     }
