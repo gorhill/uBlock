@@ -631,3 +631,8 @@ widgets.outbrain.com/outbrain.js application/javascript
 	};
 	window.OBR = window.OBR || obr;
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/1228
+window.name-defuser application/javascript
+window.name = null;
