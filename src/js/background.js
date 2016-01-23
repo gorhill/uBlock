@@ -165,7 +165,7 @@ return {
         "assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
         "assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt": "http://home.fredfiber.no/langsholt/adblock.txt",
         "assets/thirdparties/hosts-file.net/ad-servers": "http://hosts-file.net/.%5Cad_servers.txt",
-        "assets/thirdparties/http://www.certyficate.it/adblock/adblock.txt": "https://www.certyficate.it/adblock/adblock.txt",
+        "assets/thirdparties/http://www.certyficate.it/adblock/adblock.txt": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
         "assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": "https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt",
         "assets/thirdparties/margevicius.lt/easylistlithuania.txt": "http://margevicius.lt/easylistlithuania.txt",
         "assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt",
@@ -186,7 +186,8 @@ return {
         "assets/thirdparties/www.fanboy.co.nz/fanboy-vietnam.txt": "https://www.fanboy.co.nz/fanboy-vietnam.txt",
         "assets/thirdparties/www.void.gr/kargig/void-gr-filters.txt": "https://www.void.gr/kargig/void-gr-filters.txt",
         "assets/thirdparties/www.zoso.ro/pages/rolist.txt": "",
-        "https://iadb.azurewebsites.net/Finland_adb.txt": "http://adb.juvander.net/Finland_adb.txt"
+        "https://iadb.azurewebsites.net/Finland_adb.txt": "http://adb.juvander.net/Finland_adb.txt",
+        "https://www.certyficate.it/adblock/adblock.txt": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt"
     },
 
     selfieAfter: 23 * oneMinute,
