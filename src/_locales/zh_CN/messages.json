@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"开关是否在此网站上屏蔽较大的媒体元素",
+    "message":"是否屏蔽在此网站上较大的媒体元素",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
