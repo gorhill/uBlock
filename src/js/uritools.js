@@ -377,7 +377,7 @@ var domainCachePrune = function() {
     while ( i-- ) {
         hostname = hostnames[i];
         domainCache[hostname].dispose();
-        delete domainCache[hostname]; 
+        delete domainCache[hostname];
     }
 };
 
