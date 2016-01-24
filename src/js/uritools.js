@@ -282,8 +282,8 @@ URI.hostnameFromURI = function(uri) {
 
 URI.domainFromHostname = function(hostname) {
     // Try to skip looking up the PSL database
-    if ( domainCache.hasOwnProperty(hostname) ) {
-        var entry = domainCache[hostname];
+    var entry = domainCache[hostname];
+    if ( entry !== undefined ) {
         entry.tstamp = Date.now();
         return entry.domain;
     }
@@ -316,6 +316,12 @@ URI.pathFromURI = function(uri) {
 // specific set of hostnames within a narrow time span -- in other words, I
 // believe probability of cache hit are high in uBlock.
 
+var domainCache = Object.create(null);
+var domainCacheCount = 0;
+var domainCacheCountLowWaterMark = 35;
+var domainCacheCountHighWaterMark = 50;
+var domainCacheEntryJunkyardMax = domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
+
 var DomainCacheEntry = function(domain) {
     this.init(domain);
 };
@@ -328,7 +334,7 @@ DomainCacheEntry.prototype.init = function(domain) {
 
 DomainCacheEntry.prototype.dispose = function() {
     this.domain = '';
-    if ( domainCacheEntryJunkyard.length < 25 ) {
+    if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
         domainCacheEntryJunkyard.push(this);
     }
 };
@@ -344,8 +350,9 @@ var domainCacheEntryFactory = function(domain) {
 var domainCacheEntryJunkyard = [];
 
 var domainCacheAdd = function(hostname, domain) {
-    if ( domainCache.hasOwnProperty(hostname) ) {
-        domainCache[hostname].tstamp = Date.now();
+    var entry = domainCache[hostname];
+    if ( entry !== undefined ) {
+        entry.tstamp = Date.now();
     } else {
         domainCache[hostname] = domainCacheEntryFactory(domain);
         domainCacheCount += 1;
@@ -357,7 +364,7 @@ var domainCacheAdd = function(hostname, domain) {
 };
 
 var domainCacheEntrySort = function(a, b) {
-    return b.tstamp - a.tstamp;
+    return domainCache[b].tstamp - domainCache[a].tstamp;
 };
 
 var domainCachePrune = function() {
@@ -370,19 +377,14 @@ var domainCachePrune = function() {
     while ( i-- ) {
         hostname = hostnames[i];
         domainCache[hostname].dispose();
-        delete domainCache[hostname];
+        delete domainCache[hostname]; 
     }
 };
 
 var domainCacheReset = function() {
-    domainCache = {};
+    domainCache = Object.create(null);
     domainCacheCount = 0;
 };
-
-var domainCache = {};
-var domainCacheCount = 0;
-var domainCacheCountLowWaterMark = 75;
-var domainCacheCountHighWaterMark = 100;
 
 psl.onChanged.addListener(domainCacheReset);
 
