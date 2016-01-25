@@ -258,6 +258,7 @@ activistpost.com,alfonzorachel.com,aplus.com,breathecast.com,bulletsfirst.net,cl
 extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.com,youporngay.com##script:inject(pornhub-popup-defuser.js)
 # Using important will prevent the site from leveraging random exception filters
 ||trafficjunky.net^$third-party,important
+||xxxmyself.com^$important
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=43192
 # Users should not have to punch holes in their blockers if it can be avoided.
