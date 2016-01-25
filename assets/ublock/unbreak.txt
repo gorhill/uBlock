@@ -250,3 +250,6 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1081
 @@||google-analytics.com/ga.js$domain=one.co.il
+
+# https://github.com/gorhill/uBlock/issues/1297
+@@||taboola.com^$first-party
