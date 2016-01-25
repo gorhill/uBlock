@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"חסום אלמנטי מדיה הגדולים מ {input:number} kB",
+    "message":"חסום אלמנטי מדיה הגדולים מ {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{

@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Bloquer les éléments médias d'une taille supérieure à {input:number} Ko",
+    "message":"Bloquer les éléments médias d'une taille supérieure à {{input:number}} Ko",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{

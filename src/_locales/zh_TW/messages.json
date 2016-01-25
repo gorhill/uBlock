@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"封鎖超過 {input:number} kB 的媒體元素",
+    "message":"封鎖超過 {{input:number}} kB 的媒體元素",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
