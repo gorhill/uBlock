@@ -14,6 +14,7 @@ cp $SRC/bg/messages.json    $DES/bg/messages.json
 cp $SRC/bn/messages.json    $DES/bn/messages.json
 cp $SRC/ca/messages.json    $DES/ca/messages.json
 cp $SRC/cs/messages.json    $DES/cs/messages.json
+cp $SRC/cv/messages.json    $DES/cv/messages.json
 cp $SRC/da/messages.json    $DES/da/messages.json
 cp $SRC/de/messages.json    $DES/de/messages.json
 cp $SRC/el/messages.json    $DES/el/messages.json
@@ -67,6 +68,7 @@ cp $SRC/bg/description.txt    $DES/description-bg.txt
 cp $SRC/bn/description.txt    $DES/description-bn.txt
 cp $SRC/ca/description.txt    $DES/description-ca.txt
 cp $SRC/cs/description.txt    $DES/description-cs.txt
+cp $SRC/cv/description.txt    $DES/description-cv.txt
 cp $SRC/da/description.txt    $DES/description-da.txt
 cp $SRC/de/description.txt    $DES/description-de.txt
 cp $SRC/el/description.txt    $DES/description-el.txt
