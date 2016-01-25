@@ -107,6 +107,7 @@ styleTag.textContent = [
         'min-height: 1em !important;',
         'min-width: 1em !important;',
         'opacity: 1 !important;',
+        'outline: none !important;',
     '}'
 ].join('\n');
 document.head.appendChild(styleTag);
