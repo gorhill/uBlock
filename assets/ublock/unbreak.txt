@@ -253,3 +253,6 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1297
 @@||taboola.com^$first-party
+
+# https://github.com/gorhill/uBlock/issues/1296
+@@||odb.outbrain.com/crossdomain.xml$object,other,domain=mako.co.il
