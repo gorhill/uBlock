@@ -2,6 +2,8 @@
 
 **The issue tracker is for provable issues only:** You will have to make the case that the issue is really with uBlock Origin and not something else on your side. To make a case means to provide detailed steps so that anybody can reproduce the issue. Be sure to rule out that the issue is not caused by something specific on your side.
 
+For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746).
+
 **Any issue opened without effort to provide the required details for me (or anybody else) to reproduce the problem will be closed as _invalid_.** If you provide more details thereafter for me to reproduce the issue, I will reopen it if I can confirm there is indeed an issue with uBlock Origin. Example of detailed steps:
 
 > 1. browser version/ublock version
@@ -33,7 +35,7 @@ The most important part when opening an issue: **detailed steps**.
     - Submit feature requests.
     - Submit "revolutionary ideas".
     - Post comments like "+1" or "me too!" without providing new relevant info on the issue.
-    - Use issues as replacement for threads on a bulletin board. [You can use Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746) for general discussion among users.
+    - Use issues as replacement for threads on a bulletin board.
     - Any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
