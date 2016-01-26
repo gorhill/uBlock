@@ -33,7 +33,7 @@ The most important part when opening an issue: **detailed steps**.
     - Submit feature requests.
     - Submit "revolutionary ideas".
     - Post comments like "+1" or "me too!" without providing new relevant info on the issue.
-    - Use issues as replacement for threads on a bulletin board. [You can use Reddit](https://www.reddit.com/r/ublock+ublockorigin) for general discussion among users.
+    - Use issues as replacement for threads on a bulletin board. [You can use Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746) for general discussion among users.
     - Any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
