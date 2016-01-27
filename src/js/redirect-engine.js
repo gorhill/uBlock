@@ -129,7 +129,7 @@ RedirectEngine.prototype.lookup = function(context) {
                     for ( rule in rules ) {
                         pattern = rules[rule];
                         if ( pattern instanceof RegExp === false ) {
-                            pattern = rules[rule] = new RegExp(pattern);
+                            pattern = rules[rule] = new RegExp(pattern, 'i');
                         }
                         if ( pattern.test(reqURL) ) {
                             return (this.resourceNameRegister = rule);
