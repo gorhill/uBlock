@@ -256,3 +256,6 @@ marketwatch.com#@#.advertisement
 
 # https://github.com/gorhill/uBlock/issues/1296
 @@||odb.outbrain.com/crossdomain.xml$object-subrequest
+
+# https://twitter.com/SeanHood/status/692387495993024512
+@@||ticketmaster.122.2o7.net$image,domain=ticketweb.co.uk
