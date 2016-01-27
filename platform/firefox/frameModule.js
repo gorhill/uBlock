@@ -168,10 +168,11 @@ var contentObserver = {
         // Use location of top window, not that of a frame, as this
         // would cause tab id lookup (necessary for popup blocking) to
         // always fail.
-        // Opener could be a dead object, using it would cause a throw.
-        // Repro case:
-        // - Open http://delishows.to/show/chicago-med/season/1/episode/6
-        // - Click anywhere in the background
+        // https://github.com/gorhill/uBlock/issues/1305
+        //   Opener could be a dead object, using it would cause a throw.
+        //   Repro case:
+        //   - Open http://delishows.to/show/chicago-med/season/1/episode/6
+        //   - Click anywhere in the background
         let openerURL = null;
         try {
             let opener = openeeContext.opener.top || openeeContext.opener;
