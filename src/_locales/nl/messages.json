@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Eindelijk, een efficiënte adblocker. Gebruikt weinig processorkracht of geheugen.",
+    "message":"Eindelijk een efficiënte adblocker. Gebruikt weinig processorkracht en weinig geheugen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"geblokkeerde verzoeken",
+    "message":"geblokkeerde aanvragen",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Naar logboek gaan",
+    "message":"Logboek openen",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -144,7 +144,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} van de {{total}}",
+    "message":"{{count}} van {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -156,7 +156,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Sluiten",
+    "message":"Afsluiten",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -180,7 +180,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Het aantal geblokkeerde aanvragen op het icoon tonen",
+    "message":"Het aantal geblokkeerde aanvragen op het pictogram tonen",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -188,7 +188,7 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"Waar mogelijk van het contextmenu gebruik maken",
+    "message":"Waar mogelijk gebruikmaken van het contextmenu",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
@@ -196,7 +196,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Ondersteuning voor cloud-opslag inschakelen",
+    "message":"Ondersteuning voor cloudopslag inschakelen",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Pre-fetching uitschakelen (om elke verbinding voor geblokkeerde netwerkverzoeken te voorkomen)",
+    "message":"Vooraf ophalen uitschakelen (om verbindingen voor geblokkeerde netwerkaanvragen te voorkomen)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Het lekken van het lokale IP-adres via WebRTC voorkomen",
+    "message":"Het lekken van lokale IP-adressen via WebRTC voorkomen",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -220,7 +220,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Deze standaardgedragingen kunnen per website worden overschreven",
+    "message":"Van deze standaardgedragingen kan per website worden afgeweken",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -252,7 +252,7 @@
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} gebruik van {{total}}",
+    "message":"{{used}} van {{total}} gebruikt",
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
@@ -272,7 +272,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch: ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.<\/p>",
+    "message":"<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &lsquo;elementverbergende&rsquo; filters<\/a> in. Deze filters zijn puur cosmetisch; ze verbergen elementen in de webpagina die visueel storend kunnen zijn en niet door de op netwerkaanvragen gebaseerde filterengine kunnen worden geblokkeerd.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibele filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
+    "message":"Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibel filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -384,11 +384,11 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Uit bestand importeren...",
+    "message":"Importeren uit bestand...",
     "description":""
   },
   "rulesExport":{
-    "message":"Naar bestand exporteren",
+    "message":"Exporteren naar bestand",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -400,7 +400,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Regelsyntax: <code>bron bestemming type actie<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>volledige documentatie<\/a>).",
+    "message":"Regelsyntaxis: <code>bron bestemming type actie<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>volledige documentatie<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -448,11 +448,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"logboekitems filteren",
+    "message":"logboekvermeldingen filteren",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximale aantal logboekitems",
+    "message":"Maximale aantal logboekvermeldingen",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
@@ -472,7 +472,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} netwerkverzoeken van {{type}} {{br}}waarvan de URL gelijk is aan {{url}} {{br}}en die komen van {{origin}},{{br}}{{importance}} er is een overeenkomstig uitzonderingsfilter.",
+    "message":"Netwerkaanvragen van {{type}} {{action}}{{br}}waarvan de URL overeenkomt met {{url}} {{br}}en die {{origin}} afkomstig zijn,{{br}}{{importance}} er een overeenkomstig uitzonderingsfilter bestaat.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -484,7 +484,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"type ‘{{type}}’",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
@@ -492,7 +492,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"van “{{origin}}”",
+    "message":"van ‘{{origin}}’",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
@@ -504,7 +504,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"zelfs wanneer",
+    "message":"zelfs als",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
@@ -524,11 +524,11 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Bijdragers",
+    "message":"Medewerkers",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Naar bestand back-uppen",
+    "message":"Back-up maken naar bestand",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -536,11 +536,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Uit bestand herstellen...",
+    "message":"Terugzetten uit bestand...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Naar de standaardinstellingen herstellen...",
+    "message":"Naar de standaardinstellingen terugzetten...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -552,7 +552,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Al je instellingen zullen worden verwijderd, waarna uBlock₀ zich herstart.\n\nInstellingen toch herstellen naar de standaardwaarden?",
+    "message":"Al je instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardwaarden van uBlock₀ terugzetten?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -560,11 +560,11 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: De volgende URL aan je aangepaste filterlijsten toevoegen?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: de volgende URL aan je lijsten met aangepaste filters toevoegen?\n\nTitel: ‘{{title}}’\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"één minuut geleden",
+    "message":"een minuut geleden",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -572,7 +572,7 @@
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"één uur geleden",
+    "message":"een uur geleden",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
@@ -580,7 +580,7 @@
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"één dag geleden",
+    "message":"een dag geleden",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
@@ -620,7 +620,7 @@
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Venster sluiten",
+    "message":"Dit venster sluiten",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
@@ -636,15 +636,15 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Naar cloudopslag exporteren",
+    "message":"Exporteren naar cloudopslag",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Uit cloudopslag importeren",
+    "message":"Importeren van cloudopslag",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Uit cloudopslag importeren en met huidige instellingen samenvoegen",
+    "message":"Importeren uit cloudopslag en samenvoegen met huidige instellingen",
     "description":"tooltip"
   },
   "cloudNoData":{

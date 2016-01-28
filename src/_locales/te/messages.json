@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"ఈ సైట్లో వున్న పెద్దవైన దృశ్య\/శ్రవణ అంశాలను నిరోధినా స్థితిని మార్చు",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -92,19 +92,19 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Global rules: this column is for rules which apply to all sites.",
+    "message":"సామాన్య నియమాలు: ఈ నిలువరుసలో వున్న నియమాలు అన్ని సైట్లకు వర్తిస్తాయి.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message":"స్థానిక నియమాలు: ఈ నిలువరుసలో వున్న నియమాలు కేవలం ప్రస్తుత సైట్ కే వర్తిస్తాయి.\nసామాన్య నియమాలపై స్థానిక నియమాలు అతిక్రమిస్తాయి.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Click to make your changes permanent.",
+    "message":"మీ మార్పులను శాశ్వతపరచడానికి క్లిక్ చేయండి.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Click to revert your changes.",
+    "message":"మీ మార్పులను తిరిగరాయుటకు క్లిక్ చేయండి.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -216,23 +216,23 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"సామాన్య ప్రవర్తన",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"ఈ సామాన్య ప్రవర్తనను ఒక్కో సైట్లో ప్రత్యేకంగా మార్చుకోవోచ్చు",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"కాస్మెటిక్ వడపోతను నిర్వీర్యపరచు",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"{{input:number}} కేబికన్నా పెద్దవైన అంశాలను నిరోధించు",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"బయటి ఖతులను నిరోధించు",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"అంతర్జాలంలో భద్రపరచిన ఎంపికలను దిగుమతి చేసి ప్రస్తుత ఎంపికలకు జోడించు",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"తాత్కాలికంగా పెద్ద అంశాలను సైతం అనుమతించు",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
