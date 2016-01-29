@@ -527,8 +527,11 @@ openload-defuser.js application/javascript
 	var noopfn = function() {
 		;
 	};
-	var makefn = function(a) {
-		return function(r, o) {
+	var wjdmpGet = function() {
+		return wjdmp;
+	};
+	var wjdmpSet = function(a) {
+		wjdmp = function(r, o) {
 			if ( r.length === 1 && r[0] === 4 ) {
 				for ( var k in o ) {
 					if ( o.hasOwnProperty(k) && typeof o[k] === 'function' ) {
@@ -541,12 +544,8 @@ openload-defuser.js application/javascript
 	};
 	try {
 		Object.defineProperty(window, 'webpackJsonpdmp', {
-			get: function() {
-				return wjdmp;
-			},
-			set: function(a) {
-				wjdmp = makefn(a);
-			}
+			get: wjdmpGet,
+			set: wjdmpSet
 		});
 	} catch(ex) {
 	}
