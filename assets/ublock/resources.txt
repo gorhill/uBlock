@@ -539,14 +539,17 @@ openload-defuser.js application/javascript
 			a(r, o);
 		};
 	};
-	Object.defineProperty(window, 'webpackJsonpdmp', {
-		get: function() {
-			return wjdmp;
-		},
-		set: function(a) {
-			wjdmp = makefn(a);
-		}
-	});
+	try {
+		Object.defineProperty(window, 'webpackJsonpdmp', {
+			get: function() {
+				return wjdmp;
+			},
+			set: function(a) {
+				wjdmp = makefn(a);
+			}
+		});
+	} catch(ex) {
+	}
 })();
 
 

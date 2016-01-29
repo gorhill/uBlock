@@ -2637,10 +2637,11 @@ vAPI.toolbarButton = {
         } catch (ex) {
         }
     }
-    if ( CustomizableUI !== null ) {
-        if ( Services.vc.compare(Services.appinfo.platformVersion, '36.0') >= 0 ) {
-            return;
-        }
+    if (
+        CustomizableUI !== null &&
+        Services.vc.compare(Services.appinfo.platformVersion, '36.0') >= 0
+    ) {
+        return;
     }
 
     tbb.codePath = 'legacy';
