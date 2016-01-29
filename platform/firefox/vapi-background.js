@@ -2622,7 +2622,7 @@ vAPI.toolbarButton = {
 
 /******************************************************************************/
 
-// Firefox 28 and less
+// Firefox 35 and less: use legacy toolbar button.
 
 (function() {
     var tbb = vAPI.toolbarButton;
@@ -2638,7 +2638,9 @@ vAPI.toolbarButton = {
         }
     }
     if ( CustomizableUI !== null ) {
-        return;
+        if ( Services.vc.compare(Services.appinfo.platformVersion, '36.0') >= 0 ) {
+            return;
+        }
     }
 
     tbb.codePath = 'legacy';
@@ -2825,137 +2827,6 @@ vAPI.toolbarButton = {
             location.host + ':closePopup',
             onPopupCloseRequested
         );
-
-        cleanupTasks.push(shutdown);
-    };
-})();
-
-/******************************************************************************/
-
-// Firefox Australis < 36.
-
-(function() {
-    var tbb = vAPI.toolbarButton;
-    if ( tbb.init !== null ) {
-        return;
-    }
-    if ( Services.vc.compare(Services.appinfo.platformVersion, '36.0') >= 0 ) {
-        return null;
-    }
-    if ( vAPI.localStorage.getBool('forceLegacyToolbarButton') ) {
-        return null;
-    }
-    var CustomizableUI = null;
-    try {
-        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
-    } catch (ex) {
-    }
-    if ( CustomizableUI === null ) {
-        return;
-    }
-    tbb.codePath = 'australis';
-    tbb.CustomizableUI = CustomizableUI;
-    tbb.defaultArea = CustomizableUI.AREA_NAVBAR;
-
-    var styleURI = null;
-
-    var onPopupCloseRequested = function({target}) {
-        if ( typeof tbb.closePopup === 'function' ) {
-            tbb.closePopup(target);
-        }
-    };
-
-    var shutdown = function() {
-        CustomizableUI.destroyWidget(tbb.id);
-
-        for ( var win of winWatcher.getWindows() ) {
-            var panel = win.document.getElementById(tbb.viewId);
-            panel.parentNode.removeChild(panel);
-            win.QueryInterface(Ci.nsIInterfaceRequestor)
-               .getInterface(Ci.nsIDOMWindowUtils)
-               .removeSheet(styleURI, 1);
-        }
-
-        vAPI.messaging.globalMessageManager.removeMessageListener(
-            location.host + ':closePopup',
-            onPopupCloseRequested
-        );
-    };
-
-    tbb.onBeforeCreated = function(doc) {
-        var panel = doc.createElement('panelview');
-
-        this.populatePanel(doc, panel);
-
-        doc.getElementById('PanelUI-multiView').appendChild(panel);
-
-        doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsIDOMWindowUtils)
-            .loadSheet(styleURI, 1);
-    };
-
-    tbb.onBeforePopupReady = function() {
-        // https://github.com/gorhill/uBlock/issues/83
-        // Add `portrait` class if width is constrained.
-        try {
-            this.contentDocument.body.classList.toggle(
-                'portrait',
-                CustomizableUI.getWidget(tbb.id).areaType === CustomizableUI.TYPE_MENU_PANEL
-            );
-        } catch (ex) {
-            /* noop */
-        }
-    };
-
-    tbb.init = function() {
-        vAPI.messaging.globalMessageManager.addMessageListener(
-            location.host + ':closePopup',
-            onPopupCloseRequested
-        );
-
-        var style = [
-            '#' + this.id + '.off {',
-                'list-style-image: url(',
-                    vAPI.getURL('img/browsericons/icon16-off.svg'),
-                ');',
-            '}',
-            '#' + this.id + ' {',
-                'list-style-image: url(',
-                    vAPI.getURL('img/browsericons/icon16.svg'),
-                ');',
-            '}',
-            '#' + this.viewId + ',',
-            '#' + this.viewId + ' > iframe {',
-                'width: 160px;',
-                'height: 290px;',
-                'overflow: hidden !important;',
-            '}',
-            '#' + this.id + '[badge]:not([badge=""])::after {',
-                'position: absolute;',
-                'margin-left: -16px;',
-                'margin-top: 3px;',
-                'padding: 1px 2px;',
-                'font-size: 9px;',
-                'font-weight: bold;',
-                'color: #fff;',
-                'background: #666;',
-                'content: attr(badge);',
-            '}'
-        ];
-
-        styleURI = Services.io.newURI(
-            'data:text/css,' + encodeURIComponent(style.join('')),
-            null,
-            null
-        );
-
-        this.closePopup = function(tabBrowser) {
-            CustomizableUI.hidePanelForNode(
-                tabBrowser.ownerDocument.getElementById(this.viewId)
-            );
-        };
-
-        CustomizableUI.createWidget(this);
 
         cleanupTasks.push(shutdown);
     };
