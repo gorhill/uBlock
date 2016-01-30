@@ -208,7 +208,6 @@ segmentnext.com###content > div > div[class] > div[class] > div[class]
 # New `popunder` filter option to explicitly block popunders.
 # Older version of uBO will discard this unknown filter option -- so it's safe
 # to add it here now.
-|http://$popunder,third-party,domain=xhamster.com
 # https://github.com/gorhill/uBlock/issues/1094
 ||slopeaota.com^$document,popunder,popup
 # https://github.com/gorhill/uBlock/issues/1173
