@@ -40,11 +40,11 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"சொடுக்கு: இந்த தளத்திற்கான ‍‍‍uBlock₀ ஐ முடக்கு\/இயக்கு. \n\nCtrl+click: என்ற குறுக்குவிசையின் மூலம் uBlock₀ ஐ இத்தளத்திற்கு மட்டும் முடக்கு.",
+    "message":"சொடுக்கு: இந்த தளத்தில் ‍‍‍uBlock₀ ஐ முடக்க\/இயக்க. \n\nCtrl+click: uBlock₀ ஐ இந்தப் பக்கத்தில் மட்டும் முடக்கு.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"கோரிக்கைகள் தடுக்கப்பட்டுள்ளது",
+    "message":"தடுக்கப்பட்ட கோரிக்கைகள்",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"உறுப்பு தெரிவு முறைமையை உள்ளிடவும்",
+    "message":"உறுப்புத் தெரிவு முறைமைக்குச் செல்லவும்",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -76,7 +76,7 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"இத்தளத்திற்கான அனைத்து மேல்விரிகளை தடுப்பதை மாற்றவும்",
+    "message":"இத்தளத்தில் அனைத்து மேல்விரிகளையும் தடுப்பதை மாற்றவும்",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{

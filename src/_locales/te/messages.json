@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"ఈ సైట్లో వున్న పెద్దవైన దృశ్య\/శ్రవణ అంశాలను నిరోధినా స్థితిని మార్చు",
+    "message":"ఈ సైట్లో వున్న పెద్దవైన దృశ్య\/శ్రవణ అంశాల నిరోధనా స్థితిని మార్చు",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"{{input:number}} కేబికన్నా పెద్దవైన అంశాలను నిరోధించు",
+    "message":"{{input:number}} కేబీల కన్నా పెద్దవైన అంశాలను నిరోధించు",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
