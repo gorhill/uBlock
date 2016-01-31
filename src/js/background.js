@@ -81,6 +81,7 @@ return {
         'chrome-scheme',
         'loopconversation.about-scheme',
         'opera-scheme',
+        'localhost',
         ''
     ].join('\n').trim(),
 
