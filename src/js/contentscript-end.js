@@ -305,6 +305,7 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
+                    console.log("HIT-NoShadow: ",elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
                 }
             };
@@ -325,7 +326,8 @@ var uBlockCollapser = (function() {
                 // https://www.chromestatus.com/features/4668884095336448
                 // "Multiple shadow roots is being deprecated."
                 if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {	
+                    if ( shadow.className !== sessionId ) {
+                        console.log("HIT-shadow: ",elem);
                         elem.style.setProperty('display', 'none', 'important');
                     }
                     continue;
@@ -340,8 +342,10 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
+                    console.log("HIT: ",elem);
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
+                    console.log("HIT/CATCH: ",elem);
                 }
             }
         };

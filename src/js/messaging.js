@@ -469,17 +469,23 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-    case 'retrieveDomainCosmeticSelectors':
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-            if ( response && response.skipCosmeticFiltering !== true ) {
-                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
-            }
-        }
+
+      case 'adDetection':
+        console.log('adDetection', pageStore);
+        response = 'ok';
         break;
 
-    default:
-        return vAPI.messaging.UNHANDLED;
+      case 'retrieveDomainCosmeticSelectors':
+          if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+              response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+              if ( response && response.skipCosmeticFiltering !== true ) {
+                  response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
+              }
+          }
+          break;
+
+      default:
+          return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -492,6 +498,83 @@ vAPI.messaging.listen('contentscript-start.js', onMessage);
 })();
 
 /******************************************************************************/
+// adnauseam.js
+
+(function() {
+
+'use strict';
+
+var µb = µBlock;
+
+/******************************************************************************/
+var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTitle) {
+
+  this.id = adId;
+  this.domain = domain;
+  this.title = 'Pending';
+  this.attempts = 0;
+  this.visitedTs = 0;
+  this.foundTs = +new Date();
+  this.contentData = contentData;
+  this.contentType = adTitle ? 'text' : 'img';
+  this.targetUrl = targetUrl;
+  this.pageTitle = pageTitle;
+  this.pageUrl = pageUrl;
+  this.resolvedTargetUrl;
+  this.errors = [];
+  this.path = []; // redirects?
+
+  if (this.contentType === 'text') {
+
+    this.title = adTitle;
+    this.contentType = 'text';
+  }
+  else if (!/^http/.test(this.contentData.imgSrc)) {
+    console.log("Relative image!");
+  }
+};
+
+/******************************************************************************/
+
+var IDGEN = 0;
+
+var onMessage = function(request, sender, callback) {
+
+    // Async
+    switch ( request.what ) {
+      default:
+          break;
+    }
+
+    // Sync
+    var response, pageStore;
+    if ( sender && sender.tab ) {
+        pageStore = µb.pageStoreFromTabId(sender.tab.id);
+    }
+
+    switch ( request.what ) {
+
+      case 'adDetection':
+        console.log('pageStore',pageStore);
+        var theAd = new Ad(++IDGEN, pageStore.tabHostname, pageStore.title,
+          pageStore.rawURL, request.targetUrl, request.contentData);
+        console.log('AdDetection', theAd);
+        response = theAd;
+        break;
+
+      default:
+          return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('adnauseam.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
 /******************************************************************************/
 
 // contentscript-end.js

@@ -650,7 +650,7 @@ vAPI.messaging.onPortMessage = (function() {
             wrapper = callbackWrapperFactory(portFrom, details, 1023);
         }
 
-        // Destination not found: 
+        // Destination not found:
         if ( portTo === undefined ) {
             if ( wrapper !== undefined ) {
                 wrapper.callback();
@@ -1040,6 +1040,11 @@ vAPI.onLoadAllCompleted = function() {
         }
         vAPI.tabs.injectScript(tabId, {
             file: 'js/contentscript-end.js',
+            allFrames: true,
+            runAt: 'document_idle'
+        }, scriptDone);
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/scriptlets/adnauseam.js',
             allFrames: true,
             runAt: 'document_idle'
         }, scriptDone);

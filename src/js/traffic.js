@@ -108,7 +108,7 @@ var onBeforeRequest = function(details) {
     if ( µb.isAllowResult(newResult) ) {
       if (!µb.isAllowResult(result))
 
-        console.log('UNBLOCK()', result, requestContext);
+        //console.log('UNBLOCK()', result, requestContext);
 
         // https://github.com/chrisaljoudi/uBlock/issues/114
         frameId = details.frameId;

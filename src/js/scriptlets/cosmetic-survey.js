@@ -47,6 +47,7 @@ while ( i-- ) {
     injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
 }
 
+console.log("Survey: found "+injectedSelectors.length+" selectors ");
 if ( injectedSelectors.length !== 0 ) {
     filteredElementCount = document.querySelectorAll(injectedSelectors.join(',')).length;
 }
