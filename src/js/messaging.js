@@ -530,7 +530,11 @@ var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTi
     this.contentType = 'text';
   }
   else if (!/^http/.test(this.contentData.imgSrc)) {
-    console.log("Relative image!");
+
+    // TODO: parse path to page from pageUrl
+    this.contentData.src = 'http://' + domain + '/' + contentData.src;
+    console.log("Relative image: "+this.contentData.src);
+
   }
 };
 
@@ -555,7 +559,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
 
       case 'adDetection':
-        console.log('pageStore',pageStore);
+        //console.log('request/pageStore',request, pageStore);
         var theAd = new Ad(++IDGEN, pageStore.tabHostname, pageStore.title,
           pageStore.rawURL, request.targetUrl, request.contentData);
         console.log('AdDetection', theAd);

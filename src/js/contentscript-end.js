@@ -342,7 +342,7 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
-                    console.log("HIT: ",elem);
+                    console.log("HIT: ",typeof Ad);
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
                     console.log("HIT/CATCH: ",elem);

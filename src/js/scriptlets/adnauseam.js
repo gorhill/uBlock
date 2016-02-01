@@ -84,27 +84,48 @@ var doit = function() {
       //console.log("Found "+imgs.length+" imgs");
 
       var imgs = adNodes[i].querySelectorAll('IMG');
-      console.log("Found " + imgs.length + " imgs");
+      if (imgs.length > 0) {
+        console.log("Found " + imgs.length + " imgs");
+        for (var i = 0; i < imgs.length; i++) {
 
-      for (var i = 0; i < imgs.length; i++) {
-        //var anchors = $(imgs2[i]).closest('a');
-        var imgSrc = imgs[i].getAttribute("src");
-        var targetUrl, target = imgSrc && checkParentClickable(imgs[i]);
-        if (target.hasAttribute && target.hasAttribute("href"))
-          targetUrl = target.getAttribute("href");
-
-        if (targetUrl) {
-          //console.log("AD:  img="+imgSrc+" target="+target);
-          localMessager.send({
-            what: 'adDetection',
-            contentData: { src: imgSrc },
-            targetUrl: targetUrl,
-            node: adNodes[i]
-          }, adDetectionHandler);
+          //var anchors = $(imgs2[i]).closest('a');
+          var imgSrc = imgs[i].getAttribute("src");
+          if (!imgSrc) {
+            console.log("No ImgSrc(#"+i+")!", imgs[i]);
+            continue;
+          }
+          var target = checkParentClickable(imgs[i]);
+          if (target) {
+            if (target.tagName === 'A') {
+              var targetUrl = target.getAttribute("href");
+              if (targetUrl) {
+                localMessager.send({
+                  what: 'adDetection',
+                  contentData: { src: imgSrc },
+                  targetUrl: targetUrl,
+                  node: adNodes[i]
+                }, adDetectionHandler);
+              }
+              else {
+                // Need to check for div.onclick etc.
+                console.warn("AD / no targetURL! imgSrc: "+imgSrc);
+              }
+            }
+            else {
+              console.log("NON-ANCHOR found: "+target.tagName);
+            }
+          }
+          else {
+            console.log("No ClickableParent: "+imgSrc);
+          }
         }
-        else {
-          // Need to check for div.onclick etc.
-          console.warn("AD / no target! imgSrc: "+imgSrc);
+      }
+      else {
+        var iframes = adNodes[i].querySelectorAll('IFRAME');
+        if (iframes.length > 0) {
+          console.log("Found " + iframes.length + " iframes");
+        } else {
+          console.log("Found no imgs/iframes");
         }
       }
     }
