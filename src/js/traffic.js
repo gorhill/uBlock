@@ -44,7 +44,7 @@ var onBeforeRequest = function(details) {
     // behind-the-scene
     var requestType = details.type;
     if ( requestType === 'main_frame' ) {
-        return onBeforeRootFrameRequest(details);
+      return onBeforeRootFrameRequest(details);
     }
 
     // Special treatment: behind-the-scene requests
@@ -59,7 +59,7 @@ var onBeforeRequest = function(details) {
     if ( !pageStore ) {
         var tabContext = µb.tabContextManager.mustLookup(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
-            return onBeforeBehindTheSceneRequest(details);
+          return onBeforeBehindTheSceneRequest(details);
         }
         vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: tabContext.rawURL });
         pageStore = µb.pageStoreFromTabId(tabId);
@@ -88,13 +88,15 @@ var onBeforeRequest = function(details) {
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
-    pageStore.logRequest(requestContext, result);
+    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
+
+    pageStore.logRequest(requestContext, newResult);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            newResult,
             requestType,
             requestURL,
             requestContext.rootHostname,
@@ -103,7 +105,11 @@ var onBeforeRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( µb.isAllowResult(newResult) ) {
+      if (!µb.isAllowResult(result))
+
+        console.log('UNBLOCK()', result, requestContext);
+
         // https://github.com/chrisaljoudi/uBlock/issues/114
         frameId = details.frameId;
         if ( frameId > 0 ) {
@@ -116,6 +122,8 @@ var onBeforeRequest = function(details) {
 
         return;
     }
+
+    console.error('BLOCKED !!!!!!!! ', result, requestContext);
 
     // Blocked
 
@@ -213,17 +221,19 @@ var onBeforeRootFrameRequest = function(details) {
         }
     }
 
+    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
+
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
-        pageStore.logRequest(context, result);
+        pageStore.logRequest(context, newResult);
     }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            newResult,
             'main_frame',
             requestURL,
             requestHostname,
@@ -232,9 +242,13 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( µb.isAllowResult(newResult) ) {
+        if (!µb.isAllowResult(result))
+          console.log('UNBLOCK(MAIN_FRAME)', result, requestContext);
         return;
     }
+
+    console.log("BLOCKED(MAIN_FRAME) !!!!!!!!!!!",result);
 
     var compiled = result.slice(3);
 
@@ -302,13 +316,16 @@ var onBeforeBehindTheSceneRequest = function(details) {
         result = pageStore.filterRequestNoCache(context);
     }
 
-    pageStore.logRequest(context, result);
+    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
+
+
+    pageStore.logRequest(context, newResult);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             vAPI.noTabId,
             'net',
-            result,
+            newResult,
             details.type,
             requestURL,
             context.rootHostname,
@@ -317,9 +334,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( µb.isAllowResult(newResult) ) {
+      if (!µb.isAllowResult(result))
+        console.log('UNBLOCK(BTS)', result, requestContext);
         return;
     }
+
+    console.log('BLOCKED(BTS) !!!!', result, requestContext);
 
     // Blocked
     return { 'cancel': true };
