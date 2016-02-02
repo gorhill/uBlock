@@ -1043,11 +1043,6 @@ vAPI.onLoadAllCompleted = function() {
             allFrames: true,
             runAt: 'document_idle'
         }, scriptDone);
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/scriptlets/adnauseam.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, scriptDone);
     };
     var scriptStart = function(tabId) {
         vAPI.tabs.injectScript(tabId, {

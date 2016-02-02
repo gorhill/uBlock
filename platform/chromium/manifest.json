@@ -33,7 +33,7 @@
         },
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": [ "js/scriptlets/adnauseam.js", "js/contentscript-end.js"],
+            "js": [ "js/contentscript-end.js"],
             "run_at": "document_end",
             "all_frames": true
         },

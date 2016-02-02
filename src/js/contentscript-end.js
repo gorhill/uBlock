@@ -65,6 +65,106 @@ vAPI.shutdown.add(function() {
 });
 
 /******************************************************************************/
+
+var adDetector = (function() {
+
+  var clickableParent = function(node) {
+
+    var checkParent = function(adNode) {
+
+      var hasParent = adNode.parentNode &&
+        (adNode.parentNode.tagName == 'A' ||
+          adNode.parentNode.tagName == 'OBJECT' ||
+          adNode.parentNode.tagName == 'IFRAME' ||
+          (adNode.hasAttribute && adNode.hasAttribute('onclick')));
+
+      //console.log("check",adNode.tagName,adNode.parentNode);
+
+      return hasParent;
+    };
+
+    var adNode = node;
+
+    while (checkParent(adNode))
+      adNode = adNode.parentNode;
+
+    // returns adnode if found, or null
+    return adNode === node ? null : adNode;
+  };
+
+  var notifyAddon = function(node, imgSrc, targetUrl) {
+    messager.send({
+      what: 'adDetection',
+      contentData: { src: imgSrc },
+      targetUrl: targetUrl,
+      node: node
+    }, function(obj) {
+      console.log("AdDetect-callback: ", obj);
+    });
+  }
+
+  var findAds = function(adNodes) {
+
+    console.log("findAds("+adNodes.length+")");
+
+    for (var i = 0; i < adNodes.length; i++) {
+
+      console.log(i, adNodes[i].tagName, adNodes[i]);
+      //var img = checkChildrenFor(adNodes[i], 'IMG');
+      //var imgs = $(adNodes[i]).find('img');
+      //console.log("Found "+imgs.length+" imgs");
+
+      var imgs = adNodes[i].querySelectorAll('img');
+
+      console.log("Found " + imgs.length + " img(s)");
+
+      if (imgs.length > 0) {
+
+        for (var i = 0; i < imgs.length; i++) {
+
+          //var anchors = $(imgs2[i]).closest('a');
+          var imgSrc = imgs[i].getAttribute("src");
+          if (!imgSrc) {
+            console.log("No ImgSrc(#"+i+")!", imgs[i]);
+            continue;
+          }
+
+          console.log('imgSrc: '+imgSrc);
+
+          var target = clickableParent(imgs[i]);
+          if (target) {
+
+            if (target.tagName === 'A') {
+
+              var targetUrl = target.getAttribute("href");
+              if (targetUrl)
+                notifyAddon(adNodes[i], imgSrc, targetUrl);
+
+              // Need to check for div.onclick etc.
+              else console.warn("Bail: AD / no targetURL! imgSrc: "+imgSrc);
+            }
+            else console.log("Bail: NON-ANCHOR found: "+target.tagName);
+          }
+          else console.log("Bail: No ClickableParent: "+imgSrc);
+        }
+      }
+      else {
+        var iframes = adNodes[i].querySelectorAll('iframe');
+        if (iframes.length > 0) {
+          console.log("Found " + iframes.length + " iframes");
+        } else {
+          console.log("Found no imgs/iframes");
+        }
+      }
+    }
+  }
+
+  return {
+    findAds: findAds,
+    clickableParent: clickableParent
+  }
+})();
+
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
@@ -342,10 +442,12 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
-                    console.log("HIT: ",typeof Ad);
+                    console.log("CS-End.HIT: "+elem);
+                    adDetector.findAds([ elem ]);
+
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
-                    console.log("HIT/CATCH: ",elem);
+                    console.log("CS-End.HIT/CATCH: ",elem);
                 }
             }
         };
@@ -999,6 +1101,38 @@ var uBlockCollapser = (function() {
 })();
 
 /******************************************************************************/
+
+// run our ADN checks
+(function() {
+
+  var doit = function() {
+
+    console.log('Loading adn-content-script on '+window.location);
+
+    var injectedSelectors = [];
+    var reProperties = /\s*\{[^}]+\}\s*/;
+    var styles = vAPI.styles || [];
+    var i = styles.length;
+
+    while (i--) {
+      injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace
+        (reProperties, '').split(/\s*,\n\s*/));
+    }
+
+    if (injectedSelectors.length !== 0) {
+
+      var adNodes = document.querySelectorAll(injectedSelectors.join(','));
+
+      console.log("Found " + adNodes.length + " matched selectors");
+
+      if (adNodes.length > 0) adDetector.findAds(adNodes);
+    }
+
+  }
+  setTimeout(doit, 100);
+
+})();
+
 /******************************************************************************/
 
 })();
