@@ -96,7 +96,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Rregullat lokale: rregullat në këtë shtyllë zbatohen vetëm te kjo faqja.\nRregullat lokale kanë më përparësi se rregullat globale.",
+    "message":"Rregullat lokale: rregullat në këtë shtyllë zbatohen vetëm te kjo faqja.\nKëto rregulla kanë më përparësi sesa rregullat globale.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{

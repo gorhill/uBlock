@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Eindelijk een efficiënte adblocker. Gebruikt weinig processorkracht en weinig geheugen.",
+    "message":"Eindelijk, een efficiënte adblocker. Gebruikt weinig processorkracht en geheugen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

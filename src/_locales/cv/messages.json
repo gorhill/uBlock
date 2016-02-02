@@ -108,7 +108,7 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"Пурте",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -324,7 +324,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"çĕнĕ верси пур",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -420,11 +420,11 @@
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Улшӑнӑва ҫирӗплет",
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Тĕсĕ",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
@@ -440,7 +440,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"All",
+    "message":"Пурте",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -460,7 +460,7 @@
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Тĕсĕ:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
@@ -484,7 +484,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"тĕсĕ “{{type}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
