@@ -176,12 +176,12 @@ body.off #switch .fa {
 #extraTools > span {
     cursor: pointer;
     font-size: 18px;
-    margin: 0 0.5em;
+    margin: 0 0.45em;
     position: relative;
     }
 #extraTools > span > span.badge {
     color: #222;
-    bottom: 0;
+    bottom: -1px;
     font: 10.5px sans-serif;
     position: absolute;
     }
