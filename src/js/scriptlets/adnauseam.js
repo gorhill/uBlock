@@ -66,9 +66,9 @@ var doit = function() {
 
   console.log("\nFound " + injectedSelectors.length + " total selectors");
 
-  var url = (window.location != window.parent.location)
-          ? document.referrer
-          : document.location;
+  // var url = (window.location != window.parent.location)
+  //         ? document.referrer
+  //         : document.location;
 
   if (injectedSelectors.length !== 0) {
 

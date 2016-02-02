@@ -532,7 +532,8 @@ var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTi
   else if (!/^http/.test(this.contentData.imgSrc)) {
 
     // TODO: parse path to page from pageUrl
-    this.contentData.src = 'http://' + domain + '/' + contentData.src;
+    this.contentData.src = pageUrl.substring
+      (0, pageUrl.lastIndexOf('/')) + '/' + contentData.src;
     console.log("Relative image: "+this.contentData.src);
 
   }
@@ -559,7 +560,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
 
       case 'adDetection':
-        //console.log('request/pageStore',request, pageStore);
+        console.log('request/pageStore',request, pageStore);
         var theAd = new Ad(++IDGEN, pageStore.tabHostname, pageStore.title,
           pageStore.rawURL, request.targetUrl, request.contentData);
         console.log('AdDetection', theAd);
