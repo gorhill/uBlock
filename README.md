@@ -10,7 +10,7 @@ The donations sought by the [individual](https://github.com/chrisaljoudi/) behin
 
 ***
 
-uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_](https://easylist.adblockplus.org/en/policy#easylist), [_EasyPrivacy_](https://easylist.adblockplus.org/en/policy#easyprivacy), [_Peter Lowe’s ad/tracking/malware servers_](http://pgl.yoyo.org/adservers/policy.php), various lists of [malware](http://www.malwaredomainlist.com/) [sites](http://www.malwaredomains.com/), and uBlock Origin's [own filter lists](https://github.com/gorhill/uBlock/tree/master/assets/ublock).
+uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_](https://easylist.adblockplus.org/en/policy#easylist), [_EasyPrivacy_](https://easylist.adblockplus.org/en/policy#easyprivacy), [_Peter Lowe’s ad/tracking/malware servers_](https://pgl.yoyo.org/adservers/policy.php), various lists of [malware](http://www.malwaredomainlist.com/) [sites](http://www.malwaredomains.com/), and uBlock Origin's [own filter lists](https://github.com/gorhill/uBlock/tree/master/assets/ublock).
 
 *** 
 
