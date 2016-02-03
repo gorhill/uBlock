@@ -527,6 +527,7 @@ openload-defuser.js application/javascript
 	var noopfn = function() {
 		;
 	};
+	var excludes = ['177'];
 	var wjdmpGet = function() {
 		return wjdmp;
 	};
@@ -535,8 +536,12 @@ openload-defuser.js application/javascript
 			if ( r.length === 1 && r[0] === 4 ) {
 				for ( var k in o ) {
 					if ( o.hasOwnProperty(k) && typeof o[k] === 'function' ) {
-						o[k] = noopfn;
+						continue;
 					}
+					if ( excludes.indexOf(k) !== -1 ) {
+						continue;
+					}
+					o[k] = noopfn;
 				}
 			}
 			a(r, o);
@@ -593,44 +598,25 @@ widgets.outbrain.com/outbrain.js application/javascript
 		;
 	};
 	var obr = {};
+	var methods = [
+		'callClick', 'callLoadMore', 'callRecs', 'callUserZapping',
+		'callWhatIs', 'cancelRecommendation', 'cancelRecs', 'closeCard',
+		'closeModal', 'closeTbx', 'errorInjectionHandler', 'getCountOfRecs',
+		'getStat', 'imageError', 'manualVideoClicked', 'onOdbReturn',
+		'onVideoClick', 'pagerLoad', 'recClicked', 'refreshSpecificWidget',
+		'refreshWidget', 'reloadWidget', 'researchWidget', 'returnedError',
+		'returnedHtmlData', 'returnedIrdData', 'returnedJsonData', 'scrollLoad',
+		'showDescription', 'showRecInIframe', 'userZappingMessage', 'zappingFormAction'
+	];
 	obr.extern = {
-		callClick: noopfn,
-		callLoadMore: noopfn,
-		callRecs: noopfn,
-		callUserZapping: noopfn,
-		callWhatIs: noopfn,
-		cancelRecommendation: noopfn,
-		cancelRecs: noopfn,
-		closeCard: noopfn,
-		closeModal: noopfn,
-		closeTbx: noopfn,
-		errorInjectionHandler: noopfn,
-		getCountOfRecs: noopfn,
-		getStat: noopfn,
-		imageError: noopfn,
-		manualVideoClicked: noopfn,
-		onOdbReturn: noopfn,
-		onVideoClick: noopfn,
-		pagerLoad: noopfn,
-		recClicked: noopfn,
-		refreshSpecificWidget: noopfn,
-		refreshWidget: noopfn,
-		reloadWidget: noopfn,
-		researchWidget: noopfn,
-		returnedError: noopfn,
-		returnedHtmlData: noopfn,
-		returnedIrdData: noopfn,
-		returnedJsonData: noopfn,
-		scrollLoad: noopfn,
-		showDescription: noopfn,
-		showRecInIframe: noopfn,
-		userZappingMessage: noopfn,
 		video: {
 			getVideoRecs: noopfn,
 			videoClicked: noopfn
-		},
-		zappingFormAction: noopfn
+		}
 	};
+	methods.forEach(function(a) {
+		obr.extern[a] = noopfn;
+	});
 	window.OBR = window.OBR || obr;
 })();
 
