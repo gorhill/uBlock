@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Protokolo",
+    "message":"uBlock₀ — Protokolilo",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Malfermi protokolon",
+    "message":"Malfermi la protokolilon",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -636,11 +636,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Eksporti al nelokdependa konservado",
+    "message":"Eksporti al nuba konservado",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importi el nelokdependa konservado",
+    "message":"Importi el nuba konservado",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
