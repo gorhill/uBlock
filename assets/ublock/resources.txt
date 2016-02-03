@@ -527,7 +527,7 @@ openload-defuser.js application/javascript
 	var noopfn = function() {
 		;
 	};
-	var excludes = ['177'];
+	var excludes = ['163'];
 	var wjdmpGet = function() {
 		return wjdmp;
 	};
@@ -535,7 +535,7 @@ openload-defuser.js application/javascript
 		wjdmp = function(r, o) {
 			if ( r.length === 1 && r[0] === 4 ) {
 				for ( var k in o ) {
-					if ( o.hasOwnProperty(k) && typeof o[k] === 'function' ) {
+					if ( !o.hasOwnProperty(k) || typeof o[k] !== 'function' ) {
 						continue;
 					}
 					if ( excludes.indexOf(k) !== -1 ) {
