@@ -73,10 +73,11 @@ var uBlockCollapser = (function() {
     var timer = null;
     var requestId = 1;
     var newRequests = [];
-    var pendingRequests = Object.create(null);
+    var pendingRequests = {};
     var pendingRequestCount = 0;
     var src1stProps = {
         'embed': 'src',
+        'iframe': 'src',
         'img': 'src',
         'object': 'data'
     };
@@ -118,10 +119,10 @@ var uBlockCollapser = (function() {
         var request, entry, target, value;
         while ( i-- ) {
             request = requests[i];
-            entry = pendingRequests[request.id];
-            if ( entry === undefined ) {
+            if ( pendingRequests.hasOwnProperty(request.id) === false ) {
                 continue;
             }
+            entry = pendingRequests[request.id];
             delete pendingRequests[request.id];
             pendingRequestCount -= 1;
 
@@ -153,7 +154,7 @@ var uBlockCollapser = (function() {
         // Renew map: I believe that even if all properties are deleted, an
         // object will still use more memory than a brand new one.
         if ( pendingRequestCount === 0 ) {
-            pendingRequests = Object.create(null);
+            pendingRequests = {};
         }
     };
 
@@ -209,13 +210,6 @@ var uBlockCollapser = (function() {
         newRequests.push(new BouncingRequest(req.id, tagName, src));
     };
 
-    var addMany = function(targets) {
-        var i = targets.length;
-        while ( i-- ) {
-            add(targets[i]);
-        }
-    };
-
     var iframeSourceModified = function(mutations) {
         var i = mutations.length;
         while ( i-- ) {
@@ -260,26 +254,21 @@ var uBlockCollapser = (function() {
         newRequests.push(new BouncingRequest(req.id, 'iframe', src));
     };
 
-    var addIFrames = function(iframes) {
-        var i = iframes.length;
-        while ( i-- ) {
-            addIFrame(iframes[i]);
-        }
-    };
-
     var iframesFromNode = function(node) {
         if ( node.localName === 'iframe' ) {
             addIFrame(node);
         }
-        addIFrames(node.getElementsByTagName('iframe'));
+        var iframes = node.getElementsByTagName('iframe');
+        var i = iframes.length;
+        while ( i-- ) {
+            addIFrame(iframes[i]);
+        }
         process();
     };
 
     return {
         add: add,
-        addMany: addMany,
         addIFrame: addIFrame,
-        addIFrames: addIFrames,
         iframesFromNode: iframesFromNode,
         process: process
     };
@@ -936,17 +925,35 @@ var uBlockCollapser = (function() {
 
 (function() {
     var collapser = uBlockCollapser;
-    var elems = document.getElementsByTagName('img'),
-        i = elems.length, elem;
+    var elems, i, elem;
+
+    elems = document.getElementsByTagName('embed');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.add(elems[i]);
+    }
+
+    elems = document.getElementsByTagName('object');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.add(elems[i]);
+    }
+
+    elems = document.getElementsByTagName('img');
+    i = elems.length;
     while ( i-- ) {
         elem = elems[i];
         if ( elem.complete ) {
             collapser.add(elem);
         }
     }
-    collapser.addMany(document.getElementsByTagName('embed'));
-    collapser.addMany(document.getElementsByTagName('object'));
-    collapser.addIFrames(document.getElementsByTagName('iframe'));
+
+    elems = document.getElementsByTagName('iframe');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.addIFrame(elems[i]);
+    }
+
     collapser.process(0);
 })();
 
