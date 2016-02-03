@@ -1003,7 +1003,10 @@ gw
 gy
 co.gy
 com.gy
+edu.gy
+gov.gy
 net.gy
+org.gy
 
 // hk : https://www.hkdnr.hk
 // Submitted by registry <hk.tech@hkirc.hk> 2008-06-11
@@ -4416,17 +4419,18 @@ info.nf
 other.nf
 store.nf
 
-// ng : http://psg.com/dns/ng/
+// ng : http://www.nira.org.ng/index.php/join-us/register-ng-domain/189-nira-slds
 ng
 com.ng
 edu.ng
+gov.ng
+i.ng
+mil.ng
+mobi.ng
 name.ng
 net.ng
 org.ng
 sch.ng
-gov.ng
-mil.ng
-mobi.ng
 
 // ni : http://www.nic.ni/
 com.ni
@@ -5638,32 +5642,32 @@ sch.qa
 
 // re : http://www.afnic.re/obtenir/chartes/nommage-re/annexe-descriptifs
 re
-com.re
 asso.re
+com.re
 nom.re
 
 // ro : http://www.rotld.ro/
 ro
-com.ro
-org.ro
-tm.ro
-nt.ro
-nom.ro
-info.ro
-rec.ro
 arts.ro
+com.ro
 firm.ro
+info.ro
+nom.ro
+nt.ro
+org.ro
+rec.ro
 store.ro
+tm.ro
 www.ro
 
-// rs : http://en.wikipedia.org/wiki/.rs
+// rs : https://www.rnids.rs/en/domains/national-domains
 rs
-co.rs
-org.rs
-edu.rs
 ac.rs
+co.rs
+edu.rs
 gov.rs
 in.rs
+org.rs
 
 // ru : http://www.cctld.ru/ru/docs/aktiv_8.php
 // Industry domains
@@ -6136,10 +6140,6 @@ org.to
 edu.to
 mil.to
 
-// tp : No registrations at this time.
-// Submitted by Ryan Sleevi <ryan.sleevi@gmail.com> 2014-01-03
-tp
-
 // subTLDs: https://www.nic.tr/forms/eng/policies.pdf
 //     and: https://www.nic.tr/forms/politikalar.pdf
 // Submitted by <mehmetgurevin@gmail.com> 2014-07-19
@@ -6575,8 +6575,8 @@ lib.wi.us
 // lib.wv.us  Bug 941670 - Removed at request of Larry W Arnold <arnold@wvlc.lib.wv.us>
 lib.wy.us
 // k12.ma.us contains school districts in Massachusetts. The 4LDs are
-//  managed indepedently except for private (PVT), charter (CHTR) and
-//  parochial (PAROCH) schools.  Those are delegated dorectly to the
+//  managed independently except for private (PVT), charter (CHTR) and
+//  parochial (PAROCH) schools.  Those are delegated directly to the
 //  5LD operators.   <k12-ma-hostmaster _ at _ rsuc.gweep.net>
 pvt.k12.ma.us
 chtr.k12.ma.us
@@ -6827,7 +6827,7 @@ yt
 فلسطين
 
 // xn--90a3ac ("srb", Cyrillic) : RS
-// http://www.rnids.rs/en/the-.срб-domain
+// https://www.rnids.rs/en/domains/national-domains
 срб
 пр.срб
 орг.срб
@@ -6906,7 +6906,7 @@ xxx
 
 // za : http://www.zadna.org.za/content/page/domain-information
 ac.za
-agrica.za
+agric.za
 alt.za
 co.za
 edu.za
@@ -6930,7 +6930,7 @@ web.za
 *.zw
 
 
-// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2015-11-12T22:43:48Z
+// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2016-01-04T22:39:54Z
 
 // aaa : 2015-02-26 American Automobile Association, Inc.
 aaa
@@ -7103,6 +7103,9 @@ apple
 // aquarelle : 2014-07-24 Aquarelle.com
 aquarelle
 
+// arab : 2015-11-12 League of Arab States
+arab
+
 // aramco : 2014-11-20 Aramco Services Company
 aramco
 
@@ -7229,6 +7232,9 @@ bcn
 // beats : 2015-05-14 Beats Electronics, LLC
 beats
 
+// beauty : 2015-12-03 L'Oréal
+beauty
+
 // beer : 2014-01-09 Top Level Domain Holdings Limited
 beer
 
@@ -7334,11 +7340,17 @@ bosch
 // bostik : 2015-05-28 Bostik SA
 bostik
 
+// boston : 2015-12-10 Boston Globe Media Partners, LLC
+boston
+
 // bot : 2014-12-18 Amazon EU S.à r.l.
 bot
 
 // boutique : 2013-11-14 Over Galley, LLC
 boutique
+
+// box : 2015-11-12 NS1 Limited
+box
 
 // bradesco : 2014-12-18 Banco Bradesco S.A.
 bradesco
@@ -7669,6 +7681,9 @@ crown
 
 // crs : 2014-04-03 Federated Co-operatives Limited
 crs
+
+// cruise : 2015-12-10 Viking River Cruises (Bermuda) Ltd.
+cruise
 
 // cruises : 2013-12-05 Spring Way, LLC
 cruises
@@ -8066,6 +8081,9 @@ foundation
 // fox : 2015-09-11 FOX Registry, LLC
 fox
 
+// free : 2015-12-10 Amazon EU S.à r.l.
+free
+
 // fresenius : 2015-07-30 Fresenius Immobilien-Verwaltungs-GmbH
 fresenius
 
@@ -8255,6 +8273,9 @@ guitars
 // guru : 2013-08-27 Pioneer Cypress, LLC
 guru
 
+// hair : 2015-12-03 L'Oréal
+hair
+
 // hamburg : 2014-02-20 Hamburg Top-Level-Domain GmbH
 hamburg
 
@@ -8303,7 +8324,7 @@ hisamitsu
 // hitachi : 2014-10-31 Hitachi, Ltd.
 hitachi
 
-// hiv : 2014-03-13 dotHIV gemeinnuetziger e.V.
+// hiv : 2014-03-13
 hiv
 
 // hkt : 2015-05-14 PCCW-HKT DataCom Services Limited
@@ -9308,7 +9329,7 @@ prof
 // progressive : 2015-07-23 Progressive Casualty Insurance Company
 progressive
 
-// promo : 2014-12-18 Play.PROMO Oy
+// promo : 2014-12-18
 promo
 
 // properties : 2013-12-05 Big Pass, LLC
@@ -9442,6 +9463,9 @@ rio
 
 // rip : 2014-07-10 United TLD Holdco Ltd.
 rip
+
+// rmit : 2015-11-19 Royal Melbourne Institute of Technology
+rmit
 
 // rocher : 2014-12-18 Ferrero Trading Lux S.A.
 rocher
@@ -10085,6 +10109,9 @@ vodka
 // volkswagen : 2015-05-14 Volkswagen Group of America Inc.
 volkswagen
 
+// volvo : 2015-11-12 Volvo Holding Sverige Aktiebolag
+volvo
+
 // vote : 2013-11-21 Monolith Registry LLC
 vote
 
@@ -10430,6 +10457,9 @@ xin
 // xn--ngbe9e0a : 2014-12-04 Kuwait Finance House
 بيتك
 
+// xn--ngbrx : 2015-11-12 League of Arab States
+عرب
+
 // xn--nqv7f : 2013-11-14 Public Interest Registry
 机构
 
@@ -10676,6 +10706,10 @@ cloudcontrolapp.com
 // co.ca : http://registry.co.ca/
 co.ca
 
+// i-registry s.r.o. : http://www.i-registry.cz/
+// Submitted by Martin Semrad <semrad@i-registry.cz>
+co.cz
+
 // CDN77.com : http://www.cdn77.com
 // Submitted by Jan Krpes <jan.krpes@cdn77.com> 2015-07-13
 c.cdn77.org
@@ -10699,6 +10733,10 @@ cupcake.is
 // DreamHost : http://www.dreamhost.com/
 // Submitted by Andrew Farmer <andrew.farmer@dreamhost.com> 2012-10-02
 dreamhosters.com
+
+// Drobo : http://www.drobo.com/
+// Submitted by Ricardo Padilha <rpadilha@drobo.com> 2015-12-17
+mydrobo.com
 
 // DuckDNS : http://www.duckdns.org/
 // Submitted by Richard Harper <richard@duckdns.org> 2015-05-17
@@ -11151,6 +11189,7 @@ blogspot.td
 blogspot.tw
 blogspot.ug
 blogspot.vn
+cloudfunctions.net
 codespot.com
 googleapis.com
 googlecode.com
@@ -11159,7 +11198,6 @@ withgoogle.com
 withyoutube.com
 
 // Hashbang : https://hashbang.sh
-// Hashbang is a non-profit that provides shells and various other services.
 hashbang.sh
 
 // Heroku : https://www.heroku.com/
@@ -11233,6 +11271,10 @@ zakopane.pl
 pantheon.io
 gotpantheon.com
 
+// prgmr.com : https://prgmr.com/
+// Changed by Sarah Newman <owner@prgmr.com>
+xen.prgmr.com
+
 // priv.at : http://www.nic.priv.at/
 // Submitted by registry <lendl@nic.at> 2008-06-09
 priv.at
@@ -11268,10 +11310,7 @@ vipsinaapp.com
 
 // Synology, Inc. : https://www.synology.com/
 // Submitted by Rony Weng <ronyweng@synology.com> 2015-12-02
-synology.me
 diskstation.me
-i234.me
-myds.me
 dscloud.biz
 dscloud.me
 dscloud.mobi
@@ -11281,6 +11320,9 @@ dsmynas.org
 familyds.com
 familyds.net
 familyds.org
+i234.me
+myds.me
+synology.me
 
 // TASK geographical domains (www.task.gda.pl/uslugi/dns)
 gda.pl
