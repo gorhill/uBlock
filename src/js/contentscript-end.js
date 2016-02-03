@@ -40,6 +40,13 @@ if ( typeof vAPI !== 'object' ) {
     return;
 }
 
+// This can happen
+if ( typeof $ !== 'function' ) {
+    console.debug('contentscript-end.js > jQuery not found');
+    return;
+}
+
+
 // https://github.com/chrisaljoudi/uBlock/issues/587
 // Pointless to execute without the start script having done its job.
 if ( !vAPI.contentscriptStartInjected ) {
@@ -103,18 +110,104 @@ var adDetector = (function() {
     });
   }
 
+  var createTextAd = function (network, title, text, site, target) {
+
+    console.log({
+        network: network,
+        pageUrl: document.URL,
+        title: title,
+        text: text,
+        site: site,
+        targetUrl: target
+    });
+  }
+
+  var is = function(elem, selector) { // jquery equiv
+
+    if (selector.nodeType) {
+        return elem === selector;
+    }
+
+    var qa = (typeof(selector) === 'string' ? document.querySelectorAll(selector) : selector),
+        length = qa.length,
+        returnArr = [];
+
+    while(length--){
+        if(qa[length] === elem){
+            return true;
+        }
+    }
+
+    return false;
+  };
+
+  var callWaitFor = function() {
+
+    var data = admatchers[1], domain = document.domain,
+      waitSel = data.selector + ' ' + data.waitfor;
+
+    var parentFrame = (window.self !== window.top) ? window : undefined;
+
+    if (checkDomain(data.domain, domain, data.name)) {
+
+      console.log('ELEMHIDE-FIRE: ' + data.name);
+
+      if ($(elem).is(data.selector)) {
+
+          console.log('ELEMHIDE-HIT: ' + data.selector + ' waiting-for -> ' +
+            waitSel + ' (iframe: ' + (typeof parentFrame != 'undefined') +
+            ', domain: '+domain+') ' + (parentFrame ? $(parentFrame).prop("tagName") : 'null'));
+
+          try {
+              waitForKeyElements($, waitSel, data.handler, true, parentFrame);
+          }
+          catch (e) {
+
+            console.warn('failed processing text-ad', data);
+            throw e;
+          }
+      }
+    }
+  }
+
+  var filters = [
+    {
+      //tagName: 'li',
+      selector: 'li.ads-ad',
+      handler: googleText,
+      name: 'adsense-1',
+      domain: googleRegex
+    }
+  ];
+
+  var checkFilters = function(elem) {
+
+    var result;
+    for (var i = 0; i < filters.length; i++) {
+
+      var data = filters[i], $elem = $(elem);
+
+      if ($elem.is(data.selector)) {
+        result = data.handler($elem);
+        if (ad) break;
+      }
+    }
+    return result;
+  }
+
   var findAds = function(adNodes) {
 
     console.log("findAds("+adNodes.length+")");
 
     for (var i = 0; i < adNodes.length; i++) {
 
-      console.log(i, adNodes[i].tagName, adNodes[i]);
-      //var img = checkChildrenFor(adNodes[i], 'IMG');
-      //var imgs = $(adNodes[i]).find('img');
+      var elem = adNodes[i];
+      console.log(i, elem.tagName, elem);
+      //var img = checkChildrenFor(elem, 'IMG');
+      //var imgs = $(elem).find('img');
       //console.log("Found "+imgs.length+" imgs");
 
-      var imgs = adNodes[i].querySelectorAll('img');
+      var imgs = elem.querySelectorAll('img');
 
       console.log("Found " + imgs.length + " img(s)");
 
@@ -138,7 +231,8 @@ var adDetector = (function() {
 
               var targetUrl = target.getAttribute("href");
               if (targetUrl)
-                notifyAddon(adNodes[i], imgSrc, targetUrl);
+                //notifyAddon(elem, imgSrc, targetUrl);
+                notifyAddon(createImgAd(document.domain, imgSrc, targetUrl));
 
               // Need to check for div.onclick etc.
               else console.warn("Bail: AD / no targetURL! imgSrc: "+imgSrc);
@@ -148,21 +242,69 @@ var adDetector = (function() {
           else console.log("Bail: No ClickableParent: "+imgSrc);
         }
       }
-      else {
-        var iframes = adNodes[i].querySelectorAll('iframe');
-        if (iframes.length > 0) {
-          console.log("Found " + iframes.length + " iframes");
-        } else {
-          console.log("Found no imgs/iframes");
-        }
+      else { // search for text-ad
+
+        console.log("CHECKING TEXT: ",elem);
+        var ad = checkFilters(elem);
+        ad && notifyAddon(ad);
       }
     }
+  }
+
+  var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+
+  function googleText(li) {
+
+      //console.log('googleText()',li);
+
+      var ad, title = li.find('h3 a'),
+        text = li.find('.ads-creative'),
+        site = li.find('.ads-visurl cite');
+
+      if (text.length && site.length && title.length) {
+
+          ad = createTextAd('google', title.text(),
+              text.text(), site.text(), title.attr('href'));
+
+          //self.port && self.port.emit('parsed-text-ad', ad);
+          console.log("googleText.hit", ad);
+
+      } else {
+
+          console.warn('googleText.fail: ', text, site);
+      }
+
+      return ad;
+  }
+
+  function createImgAd(network, img, target) {
+
+      return {
+          network: network,
+          pageUrl: document.URL,
+          pageTitle: document.title,
+          targetUrl: target,
+          imgUrl: img
+      };
+  }
+
+  function createTextAd(network, title, text, site, target) {
+
+      return {
+          network: network,
+          pageUrl: document.URL,
+          title: title,
+          text: text,
+          site: site,
+          targetUrl: target
+      };
   }
 
   return {
     findAds: findAds,
     clickableParent: clickableParent
   }
+
 })();
 
 /******************************************************************************/

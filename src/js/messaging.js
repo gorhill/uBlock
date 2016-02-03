@@ -470,11 +470,6 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
 
-      case 'adDetection':
-        console.log('adDetection', pageStore);
-        response = 'ok';
-        break;
-
       case 'retrieveDomainCosmeticSelectors':
           if ( pageStore && pageStore.getNetFilteringSwitch() ) {
               response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
@@ -616,7 +611,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
 
     case 'adDetection':
-      console.log('request/pageStore',request, pageStore);
+      //console.log('request/pageStore',request, pageStore);
       var theAd = new Ad(++IDGEN, pageStore.tabHostname, pageStore.title,
         pageStore.rawURL, request.targetUrl, request.contentData);
       console.log('AdDetection', theAd);
