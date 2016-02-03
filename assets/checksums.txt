@@ -6,7 +6,7 @@ a1bbb634b15518cb2916bfdc78fd4344 assets/ublock/unbreak.txt
 5baa90e2da7cd6a73edff2010557ee57 assets/ublock/redirect.txt
 a2c0edc2da6a2ba591d83f9a105a8401 assets/ublock/experimental.txt
 5dff8336dcc5de9b6651f7deca3d5b39 assets/ublock/resources.txt
-b27de2300e02598f6a6ec4065d1d5a53 assets/ublock/filter-lists.json
+fd3bf1065012191e032f81468de43e09 assets/ublock/filter-lists.json
 50573388b525ede1a920cd4b4ee7fbf0 assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
 61cc16cf02e034370f0f47bc17c46551 assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
@@ -15,4 +15,4 @@ a7bef2f19a410953791ecfdb539e99cb assets/thirdparties/publicsuffix.org/list/effec
 042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
 28babde5108007fc3202950ee0d4905f assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 a905143e2b0dd0a69bd575bfde58fe0a assets/thirdparties/pgl.yoyo.org/as/serverlist
-5b8e13b618c68293430913029118781a assets/thirdparties/pgl.yoyo.org/as/README.md
+157540fac9034c6504bcea966d57044f assets/thirdparties/pgl.yoyo.org/as/README.md
