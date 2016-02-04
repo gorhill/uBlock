@@ -140,7 +140,6 @@ explosm.net##.fram + div[class]
 
 # https://github.com/gorhill/uBlock/issues/275
 jeu.info###page [class^="banniere-"]
-||jeu.info^$inline-script
 
 # https://github.com/gorhill/uBlock/issues/759
 # Until fixed in EasyPrivacy
