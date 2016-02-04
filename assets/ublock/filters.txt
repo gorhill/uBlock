@@ -140,6 +140,7 @@ explosm.net##.fram + div[class]
 
 # https://github.com/gorhill/uBlock/issues/275
 jeu.info###page [class^="banniere-"]
+filmvf.net,hentaifr.net,jeu.info,tuxboard.com,xstory-fr.com##script:inject(goyavelab-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/759
 # Until fixed in EasyPrivacy
