@@ -192,6 +192,14 @@ uDom.nodeFromId('why').textContent = details.fs;
         return li;
     };
 
+    var safeDecodeURIComponent = function(s) {
+        try {
+            s = decodeURIComponent(s);
+        } catch (ex) {
+        }
+        return s;
+    };
+
     var renderParams = function(parentNode, rawURL) {
         var a = document.createElement('a');
         a.href = rawURL;
@@ -214,8 +222,8 @@ uDom.nodeFromId('why').textContent = details.fs;
             if ( pos === -1 ) {
                 pos = param.length;
             }
-            name = decodeURIComponent(param.slice(0, pos));
-            value = decodeURIComponent(param.slice(pos + 1));
+            name = safeDecodeURIComponent(param.slice(0, pos));
+            value = safeDecodeURIComponent(param.slice(pos + 1));
             li = liFromParam(name, value);
             if ( reURL.test(value) ) {
                 ul = document.createElement('ul');
