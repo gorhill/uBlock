@@ -214,15 +214,19 @@ uDom.nodeFromId('why').textContent = details.fs;
             if ( pos === -1 ) {
                 pos = param.length;
             }
-            name = decodeURIComponent(param.slice(0, pos));
-            value = decodeURIComponent(param.slice(pos + 1));
-            li = liFromParam(name, value);
-            if ( reURL.test(value) ) {
-                ul = document.createElement('ul');
-                renderParams(ul, value);
-                li.appendChild(ul);
+            try {
+                name = decodeURIComponent(param.slice(0, pos));
+                value = decodeURIComponent(param.slice(pos + 1));
+                li = liFromParam(name, value);
+                if ( reURL.test(value) ) {
+                    ul = document.createElement('ul');
+                    renderParams(ul, value);
+                    li.appendChild(ul);
+                }
+                parentNode.appendChild(li);   
+            } catch(e) {
+                // do something
             }
-            parentNode.appendChild(li);
         }
         return true;
     };
