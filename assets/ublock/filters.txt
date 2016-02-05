@@ -314,4 +314,4 @@ kissanime.to##script:inject(kissanime-defuser.js)
 ip-address.org##script:inject(bab-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
-hentaihaven.org##script:inject(phenv-defuser.js)
+filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
