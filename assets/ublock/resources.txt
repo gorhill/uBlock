@@ -590,6 +590,40 @@ kissanime-defuser.js application/javascript
 })();
 
 
+phenv-defuser.js application/javascript
+(function() {
+	var phenv = window.PHENV;
+	var noopfn = function() {
+		;
+	};
+	var trapOnDetection = function() {
+		if ( phenv.onDetection === undefined ) {
+			Object.defineProperty(phenv, 'onDetection', {
+				get: function() {
+					return noopfn;
+				},
+				set: noopfn
+			});
+			return;
+		}
+		phenv.onDetection = noopfn;
+	};
+	if ( phenv === undefined ) {
+		Object.defineProperty(window, 'PHENV', {
+			get: function() {
+				return phenv;
+			},
+			set: function(a) {
+				phenv = a;
+				trapOnDetection();
+			}
+		});
+		return;
+	}
+	trapOnDetection();
+})();
+
+
 scorecardresearch.com/beacon.js application/javascript
 (function() {
 	window.COMSCORE = {
