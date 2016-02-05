@@ -456,9 +456,9 @@ pornhub-popup-defuser.js application/javascript
 
 goyavelab-defuser.js application/javascript
 (function() {
-    var noopfn = function() {
-        ;
-    };
+	var noopfn = function() {
+		;
+	};
 	Object.defineProperty(window, '_$14', {
 		get: function() { return noopfn; },
 		set: noopfn
