@@ -41,6 +41,12 @@ var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'tr
 // of the popup, and the left pane will have a scrollbar if ever its
 // height is more than what is available.
 (function() {
+    // No restriction on vertical size?
+    if ( /[\?&]fullsize=1/.test(window.location.search) ) {
+        document.body.classList.add('fullsize');
+        return;
+    }
+
     var rpane = document.querySelector('#panes > div:nth-of-type(1)');
     if ( typeof rpane.offsetHeight === 'number' ) {
         document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
@@ -697,7 +703,23 @@ var reloadTab = function() {
 
 /******************************************************************************/
 
-var toggleMinimize = function() {
+var toggleMinimize = function(ev) {
+    // Special display mode: in its own tab/window, with no vertical restraint.
+    // Useful to take snapshots of the whole list of domains -- example:
+    //   https://github.com/gorhill/uBlock/issues/736#issuecomment-178879944
+    if ( ev.shiftKey && ev.ctrlKey ) {
+        messager.send({
+            what: 'gotoURL',
+            details: {
+                url: 'popup.html?tabId=' + popupData.tabId + '&fullsize=1',
+                select: true,
+                index: -1
+            }
+        });
+        vAPI.closePopup();
+        return;
+    }
+
     popupData.firewallPaneMinimized = uDom.nodeFromId('firewallContainer')
                                           .classList
                                           .toggle('minimized');

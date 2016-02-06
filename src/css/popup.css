@@ -8,6 +8,9 @@ body {
     padding: 0;
     white-space: nowrap;
     }
+body.fullsize {
+    overflow: auto;
+    }
 /**
  https://github.com/gorhill/uBlock/issues/83
  .portrait = portrait mode = width is constrained = optimize layout accordingly.
