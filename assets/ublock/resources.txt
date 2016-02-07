@@ -669,4 +669,11 @@ widgets.outbrain.com/outbrain.js application/javascript
 
 # https://github.com/gorhill/uBlock/issues/1228
 window.name-defuser application/javascript
-window.name = null;
+if ( window === window.top ) {
+    window.name = null;
+}
+
+
+# https://github.com/gorhill/uBlock/issues/897#issuecomment-180871042
+doubleclick.net/instream/ad_status.js application/javascript
+window.google_ad_status = 1;

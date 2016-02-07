@@ -29,3 +29,6 @@
 
 # https://github.com/gorhill/uBlock/issues/1250#issuecomment-173533894
 ||widgets.outbrain.com/outbrain.js$script,redirect=widgets.outbrain.com/outbrain.js
+
+# https://github.com/gorhill/uBlock/issues/897#issuecomment-180871042
+||doubleclick.net/instream/ad_status.js$script,redirect=doubleclick.net/instream/ad_status.js,important
