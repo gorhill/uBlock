@@ -313,7 +313,8 @@ openload.*##script:contains(/^\s*window\.popAdsLoaded=/)
 kissanime.to##script:inject(kissanime-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=27908
-ip-address.org##script:inject(bab-defuser.js)
+# https://github.com/gorhill/uBlock/issues/1354
+dasolo.org,ip-address.org##script:inject(bab-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
 filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
