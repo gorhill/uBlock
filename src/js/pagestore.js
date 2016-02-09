@@ -309,7 +309,7 @@ PageStore.prototype.init = function(tabId) {
     this.rawURL = tabContext.rawURL;
     this.hostnameToCountMap = {};
     this.contentLastModified = 0;
-    this.frames = {};
+    this.frames = Object.create(null);
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.hiddenElementCount = ''; // Empty string means "unknown"
@@ -407,11 +407,9 @@ PageStore.prototype.dispose = function() {
 PageStore.prototype.disposeFrameStores = function() {
     var frames = this.frames;
     for ( var k in frames ) {
-        if ( frames.hasOwnProperty(k) ) {
-            frames[k].dispose();
-        }
+        frames[k].dispose();
     }
-    this.frames = {};
+    this.frames = Object.create(null);
 };
 
 /******************************************************************************/
@@ -424,7 +422,7 @@ PageStore.prototype.getFrame = function(frameId) {
 
 PageStore.prototype.setFrame = function(frameId, frameURL) {
     var frameStore = this.frames[frameId];
-    if ( frameStore instanceof FrameStore ) {
+    if ( frameStore ) {
         frameStore.init(this.rootHostname, frameURL);
     } else {
         this.frames[frameId] = FrameStore.factory(this.rootHostname, frameURL);
@@ -442,8 +440,8 @@ PageStore.prototype.createContextFromPage = function() {
 
 PageStore.prototype.createContextFromFrameId = function(frameId) {
     var context = new µb.tabContextManager.createContext(this.tabId);
-    if ( this.frames.hasOwnProperty(frameId) ) {
-        var frameStore = this.frames[frameId];
+    var frameStore = this.frames[frameId];
+    if ( frameStore ) {
         context.pageHostname = frameStore.pageHostname;
         context.pageDomain = frameStore.pageDomain;
     } else {

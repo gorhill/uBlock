@@ -106,14 +106,9 @@ var onBeforeRequest = function(details) {
     if ( µb.isAllowResult(result) ) {
         // https://github.com/chrisaljoudi/uBlock/issues/114
         frameId = details.frameId;
-        if ( frameId > 0 ) {
-            if ( isFrame  ) {
-                pageStore.setFrame(frameId, requestURL);
-            } else if ( pageStore.getFrame(frameId) === null ) {
-                pageStore.setFrame(frameId, requestURL);
-            }
+        if ( frameId > 0 && isFrame ) {
+            pageStore.setFrame(frameId, requestURL);
         }
-
         return;
     }
 
