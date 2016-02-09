@@ -260,6 +260,7 @@ extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.
 # Using important will prevent the site from leveraging random exception filters
 ||trafficjunky.net^$third-party,important
 ||xxxmyself.com^$important
+||xxxnavy.com^$important
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=43192
 # Users should not have to punch holes in their blockers if it can be avoided.
