@@ -600,7 +600,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock Origin e pengoi hapjen e faqes:",
+    "message":"uBlock Origin po pengon hapjen e faqes:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
