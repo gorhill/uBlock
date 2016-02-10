@@ -1428,7 +1428,11 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     var win = badge === undefined
         ? iconStatus
         : winWatcher.getCurrentWindow();
-    var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
+    var curTabId;
+    var tabBrowser = getTabBrowser(win);
+    if ( tabBrowser ) {
+        curTabId = tabWatcher.tabIdFromTarget(tabBrowser.selectedTab);
+    }
     var tb = vAPI.toolbarButton;
 
     // from 'TabSelect' event
@@ -1438,7 +1442,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         tb.tabs[tabId] = { badge: badge, img: iconStatus === 'on' };
     }
 
-    if ( tabId === curTabId ) {
+    if ( curTabId && tabId === curTabId ) {
         tb.updateState(win, tabId);
         vAPI.contextMenu.onMustUpdate(tabId);
     }
@@ -2709,11 +2713,17 @@ vAPI.toolbarButton = {
             palette.appendChild(toolbarButton);
         }
 
-        // Find the place to put the button
-        var toolbars = toolbox.externalToolbars.slice();
-        for ( var child of toolbox.children ) {
-            if ( child.localName === 'toolbar' ) {
-                toolbars.push(child);
+        // Find the place to put the button.
+        // Pale Moon: `toolbox.externalToolbars` can be undefined. Seen while
+        //   testing popup test number 3:
+        //   http://raymondhill.net/ublock/popup.html
+        var toolbars = [];
+        if ( toolbox.externalToolbars ) {
+            toolbars = toolbox.externalToolbars.slice();
+            for ( var child of toolbox.children ) {
+                if ( child.localName === 'toolbar' ) {
+                    toolbars.push(child);
+                }
             }
         }
 
