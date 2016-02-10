@@ -2717,13 +2717,10 @@ vAPI.toolbarButton = {
         // Pale Moon: `toolbox.externalToolbars` can be undefined. Seen while
         //   testing popup test number 3:
         //   http://raymondhill.net/ublock/popup.html
-        var toolbars = [];
-        if ( toolbox.externalToolbars ) {
-            toolbars = toolbox.externalToolbars.slice();
-            for ( var child of toolbox.children ) {
-                if ( child.localName === 'toolbar' ) {
-                    toolbars.push(child);
-                }
+        var toolbars = toolbox.externalToolbars ? toolbox.externalToolbars.slice() : [];
+        for ( var child of toolbox.children ) {
+            if ( child.localName === 'toolbar' ) {
+                toolbars.push(child);
             }
         }
 
@@ -2735,6 +2732,11 @@ vAPI.toolbarButton = {
             var currentset = currentsetString.split(/\s*,\s*/);
             var index = currentset.indexOf(tbb.id);
             if ( index === -1 ) {
+                continue;
+            }
+            // This can occur with Pale Moon:
+            //   "TypeError: toolbar.insertItem is not a function"
+            if ( typeof toolbar.insertItem !== 'function' ) {
                 continue;
             }
             // Found our button on this toolbar - but where on it?
