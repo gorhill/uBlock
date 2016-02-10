@@ -539,7 +539,7 @@ openload-defuser.js application/javascript
 	var noopfn = function() {
 		;
 	};
-	var excludes = ['163'];
+	var excludes = ['157','161','175'];
 	var wjdmpGet = function() {
 		return wjdmp;
 	};
@@ -550,7 +550,7 @@ openload-defuser.js application/javascript
 					if ( !o.hasOwnProperty(k) || typeof o[k] !== 'function' ) {
 						continue;
 					}
-					if ( excludes.indexOf(k) !== -1 ) {
+					if ( excludes.indexOf(k.toString()) !== -1 ) {
 						continue;
 					}
 					o[k] = noopfn;
