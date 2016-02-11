@@ -409,7 +409,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['_x','_y','_z','xz','zp','zx'];
+	var aa = ['_x','_y','_z','pz','xz','zp','zx'];
 	var no = {
 		set: noopfn,
 		get: function() {
