@@ -37,6 +37,7 @@ The most important part when opening an issue: **detailed steps**.
     - Post comments like "+1" or "me too!" without providing new relevant info on the issue.
     - Use issues as replacement for threads on a bulletin board.
     - Any such issue will be closed without comment.
+    - Ask me to publish the extension on AMO/Chrome store: In all likelihood it is already published, but pending review, something which is out of my control.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
 1. **Verify that the issue is not related to a 3rd-party filter lists.**
