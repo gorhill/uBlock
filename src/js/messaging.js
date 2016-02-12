@@ -558,45 +558,6 @@ var filterRequests = function(pageStore, details) {
 };
 
 /******************************************************************************/
-var IDGEN = 0; // move Ad object to content-script? I think so..
-
-var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, contentType) {
-
-  // if (typeof Ad.ID == 'undefined') {
-  //   countMyself.counter = 0;
-  // }
-
-  this.id = adId;
-  this.domain = domain;
-  this.title = 'Pending';
-  this.attempts = 0;
-  this.visitedTs = 0;
-  this.foundTs = +new Date();
-  this.contentData = contentData;
-  this.contentType = contentType;
-  this.targetUrl = targetUrl;
-  this.pageTitle = pageTitle;
-  this.pageUrl = pageUrl;
-  this.resolvedTargetUrl;
-  this.errors = [];
-  this.path = []; // redirects?
-
-  //console.log("Creating "+this.contentType+" ad");
-
-  if (contentType === 'text') {
-    if (contentData.title.length)
-      this.title = contentData.title;
-  }
-  else {
-    if (!/^http/.test(this.contentData.src)) { // relative image url
-      //console.log("Found Relative image: "+this.contentData.src);
-      this.contentData.src = pageUrl.substring
-      (0, pageUrl.lastIndexOf('/')) + '/' + contentData.src;
-    }
-  }
-};
-
-/******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
 
@@ -618,21 +579,8 @@ var onMessage = function(request, sender, callback) {
 
     case 'adDetection':
 
-      //console.log('request/pageStore',request, pageStore);
-      //console.log(pageStore.tabId, JSON.stringify(pageStore));
-
-      /*if (request.pageTitle !== pageStore.title) {
-        console.warn("[WARN] PageTitle mismatch: request=" +
-          request.pageTitle+" pageStore="+pageStore.title);
-      }*/
-
-      var theAd = new Ad(++IDGEN, pageStore.tabHostname, request.pageTitle,
-        pageStore.rawURL, request.targetUrl, request.contentData, request.contentType);
-
-      console.log('AdDetection('+theAd.contentType+')#'+theAd.id, theAd);
-
-      response = theAd;
-
+      response = request.ad;
+      console.log('AdDetection('+response.contentType+')#'+theAd.id, response);
       break;
 
     case 'retrieveGenericCosmeticSelectors':

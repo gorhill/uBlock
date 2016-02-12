@@ -101,19 +101,39 @@ var adDetector = (function() {
     return adNode === node ? null : adNode;
   };
 
+  /******************************************************************************/
+  function Ad(network, pageTitle, pageUrl, targetUrl, contentType) {
+
+    if (typeof Ad.ID === 'undefined') Ad.ID = 0;
+
+    this.id = ++Ad.ID;
+    this.title = 'Pending';
+    this.attempts = 0;
+    this.visitedTs = 0;
+    this.foundTs = +new Date();
+    this.contentType = contentType;
+    this.targetUrl = targetUrl;
+    this.pageTitle = pageTitle;
+    this.pageUrl = pageUrl;
+    this.resolvedTargetUrl;
+    this.errors = [];
+    this.path = []; // redirects?
+  };
+
   var notifyAddon = function(node, ad) {
 
     var toSend = {
         what: 'adDetection',
-        pageUrl: ad.pageUrl,
-        pageTitle: ad.pageTitle,
-        targetUrl: ad.targetUrl,
-        node: node
+        ad: ad
+        // pageUrl: ad.pageUrl,
+        // pageTitle: ad.pageTitle,
+        // targetUrl: ad.targetUrl,
+        // node: node
     };
 
-    toSend.contentType = ad.imgUrl ? 'img' : 'text';
-    toSend.contentData = toSend.contentType === 'img' ?
-      { src: ad.imgUrl } : { title: ad.title, site: ad.site, text: ad.text };
+    // toSend.contentType = ad.imgUrl ? 'img' : 'text';
+    // toSend.contentData = toSend.contentType === 'img' ?
+    //   { src: ad.imgUrl } : { title: ad.title, site: ad.site, text: ad.text };
 
     messager.send(toSend, function(obj) {
       console.log("AdDetect-callback: ", obj);
@@ -271,28 +291,45 @@ var adDetector = (function() {
     return ad;
   }
 
-  function createAd(network, target, type) {
-    return {
-      type: type,
-      network: network,
-      pageUrl: document.URL,
-      pageTitle: document.title,
-      targetUrl: target,
-    };
-  }
+  //function createAd(network, target, type) {
+
+    // return {
+    //   type: type,
+    //   network: network,
+    //   pageUrl: document.URL,
+    //   pageTitle: document.title,
+    //   targetUrl: target,
+    // };
+  //}
 
   function createImgAd(network, target, img) {
-    var ad = createAd(network, target, 'img');
-    ad.imgUrl = img;
+
+    var ad = new Ad(network, document.title, document.URL, target, 'img');
+
+    if (!/^http/.test(img)) { // relative image url
+
+      //console.log("Found Relative image: "+this.contentData.src);
+      img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+    }
+
+    ad.contentData = { src: img };
+
     return ad;
   }
 
   function createTextAd(network, target, title, text, site) {
+
     //console.log("createTextAd: ",network, title, text, site, target);
-    var ad = createAd(network, target, 'text');
-    ad.title = title;
-    ad.text = text;
-    ad.site = site;
+    var ad = new Ad(network, document.title, document.URL, target, 'text');
+
+    if (title.length) ad.title = title;
+
+    ad.contentData = {
+      title: title,
+      text: text,
+      site: site
+    }
+
     return ad;
   }
 
