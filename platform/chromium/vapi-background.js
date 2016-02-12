@@ -1038,14 +1038,6 @@ vAPI.onLoadAllCompleted = function() {
         if ( vAPI.lastError() ) {
             return;
         }
-
-        // adn
-        vAPI.tabs.injectScript(tabId, {
-            file: 'lib/jquery-2.2.0.min.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, scriptDone);
-
         vAPI.tabs.injectScript(tabId, {
             file: 'js/contentscript-end.js',
             allFrames: true,

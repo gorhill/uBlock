@@ -558,9 +558,13 @@ var filterRequests = function(pageStore, details) {
 };
 
 /******************************************************************************/
-var IDGEN = 0;
+var IDGEN = 0; // move Ad object to content-script? I think so..
 
-var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTitle) {
+var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, contentType) {
+
+  // if (typeof Ad.ID == 'undefined') {
+  //   countMyself.counter = 0;
+  // }
 
   this.id = adId;
   this.domain = domain;
@@ -569,7 +573,7 @@ var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTi
   this.visitedTs = 0;
   this.foundTs = +new Date();
   this.contentData = contentData;
-  this.contentType = adTitle ? 'text' : 'img';
+  this.contentType = contentType;
   this.targetUrl = targetUrl;
   this.pageTitle = pageTitle;
   this.pageUrl = pageUrl;
@@ -577,23 +581,25 @@ var Ad = function(adId, domain, pageTitle, pageUrl, targetUrl, contentData, adTi
   this.errors = [];
   this.path = []; // redirects?
 
-  if (this.contentType === 'text') {
+  //console.log("Creating "+this.contentType+" ad");
 
-    this.title = adTitle;
-    this.contentType = 'text';
+  if (contentType === 'text') {
+    if (contentData.title.length)
+      this.title = contentData.title;
   }
-  else if (!/^http/.test(this.contentData.src)) {
-
-    //console.log("Found Relative image: "+this.contentData.src);
-    this.contentData.src = pageUrl.substring
+  else {
+    if (!/^http/.test(this.contentData.src)) { // relative image url
+      //console.log("Found Relative image: "+this.contentData.src);
+      this.contentData.src = pageUrl.substring
       (0, pageUrl.lastIndexOf('/')) + '/' + contentData.src;
-
+    }
   }
 };
 
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+
     // Async
     switch ( request.what ) {
     default:
@@ -611,11 +617,22 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
 
     case 'adDetection':
+
       //console.log('request/pageStore',request, pageStore);
-      var theAd = new Ad(++IDGEN, pageStore.tabHostname, pageStore.title,
-        pageStore.rawURL, request.targetUrl, request.contentData);
-      console.log('AdDetection', theAd);
+      //console.log(pageStore.tabId, JSON.stringify(pageStore));
+
+      /*if (request.pageTitle !== pageStore.title) {
+        console.warn("[WARN] PageTitle mismatch: request=" +
+          request.pageTitle+" pageStore="+pageStore.title);
+      }*/
+
+      var theAd = new Ad(++IDGEN, pageStore.tabHostname, request.pageTitle,
+        pageStore.rawURL, request.targetUrl, request.contentData, request.contentType);
+
+      console.log('AdDetection('+theAd.contentType+')#'+theAd.id, theAd);
+
       response = theAd;
+
       break;
 
     case 'retrieveGenericCosmeticSelectors':

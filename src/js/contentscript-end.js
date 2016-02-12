@@ -22,6 +22,8 @@
 /******************************************************************************/
 
 // Injected into content pages
+//
+// jQuery functions: is, find
 
 (function() {
 
@@ -40,12 +42,12 @@ if ( typeof vAPI !== 'object' ) {
     return;
 }
 
-// This can happen
-if ( typeof $ !== 'function' ) {
+var USE_JQUERY = false;
+
+if ( USE_JQUERY && typeof $ !== 'function' ) {
     console.debug('contentscript-end.js > jQuery not found');
     return;
 }
-
 
 // https://github.com/chrisaljoudi/uBlock/issues/587
 // Pointless to execute without the start script having done its job.
@@ -99,75 +101,23 @@ var adDetector = (function() {
     return adNode === node ? null : adNode;
   };
 
-  var notifyAddon = function(node, imgSrc, targetUrl) {
-    messager.send({
-      what: 'adDetection',
-      contentData: { src: imgSrc },
-      targetUrl: targetUrl,
-      node: node
-    }, function(obj) {
+  var notifyAddon = function(node, ad) {
+
+    var toSend = {
+        what: 'adDetection',
+        pageUrl: ad.pageUrl,
+        pageTitle: ad.pageTitle,
+        targetUrl: ad.targetUrl,
+        node: node
+    };
+
+    toSend.contentType = ad.imgUrl ? 'img' : 'text';
+    toSend.contentData = toSend.contentType === 'img' ?
+      { src: ad.imgUrl } : { title: ad.title, site: ad.site, text: ad.text };
+
+    messager.send(toSend, function(obj) {
       console.log("AdDetect-callback: ", obj);
     });
-  }
-
-  var createTextAd = function (network, title, text, site, target) {
-
-    console.log({
-        network: network,
-        pageUrl: document.URL,
-        title: title,
-        text: text,
-        site: site,
-        targetUrl: target
-    });
-  }
-
-  var is = function(elem, selector) { // jquery equiv
-
-    if (selector.nodeType) {
-        return elem === selector;
-    }
-
-    var qa = (typeof(selector) === 'string' ? document.querySelectorAll(selector) : selector),
-        length = qa.length,
-        returnArr = [];
-
-    while(length--){
-        if(qa[length] === elem){
-            return true;
-        }
-    }
-
-    return false;
-  };
-
-  var callWaitFor = function() {
-
-    var data = admatchers[1], domain = document.domain,
-      waitSel = data.selector + ' ' + data.waitfor;
-
-    var parentFrame = (window.self !== window.top) ? window : undefined;
-
-    if (checkDomain(data.domain, domain, data.name)) {
-
-      console.log('ELEMHIDE-FIRE: ' + data.name);
-
-      if ($(elem).is(data.selector)) {
-
-          console.log('ELEMHIDE-HIT: ' + data.selector + ' waiting-for -> ' +
-            waitSel + ' (iframe: ' + (typeof parentFrame != 'undefined') +
-            ', domain: '+domain+') ' + (parentFrame ? $(parentFrame).prop("tagName") : 'null'));
-
-          try {
-              waitForKeyElements($, waitSel, data.handler, true, parentFrame);
-          }
-          catch (e) {
-
-            console.warn('failed processing text-ad', data);
-            throw e;
-          }
-      }
-    }
   }
 
   var filters = [
@@ -175,41 +125,84 @@ var adDetector = (function() {
       //tagName: 'li',
       selector: 'li.ads-ad',
       handler: googleText,
-      name: 'adsense-1',
-      domain: googleRegex
+      name: 'adsense-1'
+      //domain: googleRegex
     }
   ];
 
-  var checkFilters = function(elem) {
+  var $is = function (elem, selector) {
 
-    var result;
-    for (var i = 0; i < filters.length; i++) {
+    if (USE_JQUERY) return $(elem).is(selector);
 
-      var data = filters[i], $elem = $(elem);
+    if (selector.nodeType) {
+      return elem === selector;
+    }
 
-      if ($elem.is(data.selector)) {
-        result = data.handler($elem);
-        if (ad) break;
+    var qa = (typeof (selector) === 'string' ?
+      document.querySelectorAll(selector) : selector),
+      length = qa.length,
+      returnArr = [];
+
+    while (length--) {
+      if (qa[length] === elem) {
+        return true;
       }
     }
-    return result;
-  }
+
+    return false;
+  };
+
+  var $attr = function(ele, attr) {
+
+    return USE_JQUERY ? $(ele).attr(attr) :
+      (ele.length ? ele[0] : ele).getAttribute(attr);
+  };
+
+  var $text = function(ele) {
+
+    if (USE_JQUERY) return $(ele).text();
+
+    if (typeof ele.length === 'undefined')
+      return ele.innerText || ele.textContent;
+
+    var text = '';
+    for (var i = 0; i < ele.length; i++) {
+      text += ele[i].innerText || ele[i].textContent;
+    }
+
+    return text;
+  };
+
+  var $find = function(ele, selector) {
+
+    return USE_JQUERY ? $(ele).find(selector) : ele.querySelectorAll(selector);
+  };
+
+  var checkFilters = function(elem) {
+
+    for (var i = 0; i < filters.length; i++) {
+      if ($is(elem, filters[i].selector)) {
+        var result = filters[i].handler(elem);
+        if (result) return result;
+      }
+    }
+  };
 
   var findAds = function(adNodes) {
 
-    console.log("findAds("+adNodes.length+")");
+    //console.log("findAds("+adNodes.length+")");
 
     for (var i = 0; i < adNodes.length; i++) {
 
       var elem = adNodes[i];
-      console.log(i, elem.tagName, elem);
+      //console.log(i, elem.tagName, elem);
       //var img = checkChildrenFor(elem, 'IMG');
       //var imgs = $(elem).find('img');
       //console.log("Found "+imgs.length+" imgs");
 
       var imgs = elem.querySelectorAll('img');
 
-      console.log("Found " + imgs.length + " img(s)");
+      //console.log("Found " + imgs.length + " img(s)");
 
       if (imgs.length > 0) {
 
@@ -222,7 +215,7 @@ var adDetector = (function() {
             continue;
           }
 
-          console.log('imgSrc: '+imgSrc);
+          //console.log('imgSrc: '+imgSrc);
 
           var target = clickableParent(imgs[i]);
           if (target) {
@@ -230,74 +223,77 @@ var adDetector = (function() {
             if (target.tagName === 'A') {
 
               var targetUrl = target.getAttribute("href");
-              if (targetUrl)
-                //notifyAddon(elem, imgSrc, targetUrl);
-                notifyAddon(createImgAd(document.domain, imgSrc, targetUrl));
-
+              if (targetUrl) {
+                var ad = createImgAd(document.domain, targetUrl, imgSrc);
+                //console.log("IMG-AD", ad);
+                notifyAddon(elem, ad);
+              }
               // Need to check for div.onclick etc.
-              else console.warn("Bail: AD / no targetURL! imgSrc: "+imgSrc);
+              else console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
             }
-            else console.log("Bail: NON-ANCHOR found: "+target.tagName);
+            else console.log("Bail: Non-anchor found: "+target.tagName);
           }
           else console.log("Bail: No ClickableParent: "+imgSrc);
         }
       }
       else { // search for text-ad
 
-        console.log("CHECKING TEXT: ",elem);
+        //console.log("PARSING TEXT: ", elem);
         var ad = checkFilters(elem);
-        ad && notifyAddon(ad);
+        if (ad) notifyAddon(elem, ad);
       }
     }
   }
 
-  var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+  var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
 
   function googleText(li) {
 
-      //console.log('googleText()',li);
+    //console.log('googleText('+USE_JQUERY+')',li);
 
-      var ad, title = li.find('h3 a'),
-        text = li.find('.ads-creative'),
-        site = li.find('.ads-visurl cite');
+    var ad, title = $find(li, 'h3 a'),
+      text = $find(li, '.ads-creative'),
+      site = $find(li, '.ads-visurl cite');
 
-      if (text.length && site.length && title.length) {
+    if (text.length && site.length && title.length) {
 
-          ad = createTextAd('google', title.text(),
-              text.text(), site.text(), title.attr('href'));
+      ad = createTextAd('google', $attr(title, 'href'),
+        $text(title), $text(text), $text(site) );
 
-          //self.port && self.port.emit('parsed-text-ad', ad);
-          console.log("googleText.hit", ad);
+      //self.port && self.port.emit('parsed-text-ad', ad);
+      console.log("TEXT: googleText", ad);
 
-      } else {
+    } else {
 
-          console.warn('googleText.fail: ', text, site);
-      }
+      console.warn('TEXT: googleText.fail: ', text, site);
+    }
 
-      return ad;
+    return ad;
   }
 
-  function createImgAd(network, img, target) {
-
-      return {
-          network: network,
-          pageUrl: document.URL,
-          pageTitle: document.title,
-          targetUrl: target,
-          imgUrl: img
-      };
+  function createAd(network, target, type) {
+    return {
+      type: type,
+      network: network,
+      pageUrl: document.URL,
+      pageTitle: document.title,
+      targetUrl: target,
+    };
   }
 
-  function createTextAd(network, title, text, site, target) {
+  function createImgAd(network, target, img) {
+    var ad = createAd(network, target, 'img');
+    ad.imgUrl = img;
+    return ad;
+  }
 
-      return {
-          network: network,
-          pageUrl: document.URL,
-          title: title,
-          text: text,
-          site: site,
-          targetUrl: target
-      };
+  function createTextAd(network, target, title, text, site) {
+    //console.log("createTextAd: ",network, title, text, site, target);
+    var ad = createAd(network, target, 'text');
+    ad.title = title;
+    ad.text = text;
+    ad.site = site;
+    return ad;
   }
 
   return {
@@ -584,7 +580,7 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
-                    console.log("CS-End.HIT: "+elem);
+                    //console.log("CS-End.HIT: "+elem);
                     adDetector.findAds([ elem ]);
 
                 } catch (ex) {
@@ -1247,9 +1243,9 @@ var uBlockCollapser = (function() {
 // run our ADN checks
 (function() {
 
-  var doit = function() {
+  var detectAds = function() {
 
-    console.log('Loading adn-content-script on '+window.location);
+    //console.log('Loading adn-content-script on '+window.location);
 
     var injectedSelectors = [];
     var reProperties = /\s*\{[^}]+\}\s*/;
@@ -1264,14 +1260,12 @@ var uBlockCollapser = (function() {
     if (injectedSelectors.length !== 0) {
 
       var adNodes = document.querySelectorAll(injectedSelectors.join(','));
-
-      console.log("Found " + adNodes.length + " matched selectors");
-
+      //console.log("Found " + adNodes.length + " matched selectors");
       if (adNodes.length > 0) adDetector.findAds(adNodes);
     }
-
   }
-  setTimeout(doit, 100);
+
+  setTimeout(detectAds, 100);
 
 })();
 
