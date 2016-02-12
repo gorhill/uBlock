@@ -579,6 +579,11 @@ var onMessage = function(request, sender, callback) {
 
     case 'adDetection':
 
+      // NEXT:
+      //    create ADN object (attcahed to uBlock?) with IDGEN and list of unique Ads
+      //    move below code to ADN object
+      //    show detected ads with simple ui-button
+      
       response = request.ad;
       console.log('AdDetection('+response.contentType+')#'+theAd.id, response);
       break;
