@@ -581,13 +581,14 @@ var onMessage = function(request, sender, callback) {
 
       // NEXT:
       //    HOPE XI ?
-      //    pull ublock
       //    create ADN object (attcahed to uBlock?) with IDGEN and list of unique Ads
       //    move below code to ADN object
       //    show detected ads with simple ui-button
 
+      µBlock.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
+      console.log('AdDetection('+request.ad.contentType+')#'+request.ad.id, request.ad);
       response = request.ad;
-      console.log('AdDetection('+response.contentType+')#'+response.id, response);
+
       break;
 
     case 'retrieveGenericCosmeticSelectors':
