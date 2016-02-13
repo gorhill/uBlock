@@ -577,6 +577,10 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
 
+    case 'loadAdsForPage':
+      console.log('message::loadAdsForPage -> '+request.tabId);
+      break;
+
     case 'adDetection':
 
       // NEXT:

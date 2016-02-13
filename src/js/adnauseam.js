@@ -66,30 +66,6 @@ var initialize = function() {
   //initd = true;
 };
 
-var checkExists = function(ad, pageUrl) {
-
-  var ads = admap[pageUrl];
-
-  for (var i = 0; i < ads.length; i++) {
-
-    if (ad.contentType !== ads[i].contentType) continue;
-
-    if (ad.contentType === 'img' && ad.contentData.src === ads[i].contentData.src) {
-      return true;
-    }
-    else  // text
-    {
-      if (ad.contentData.text  === ads[i].contentData.text &&
-          ad.contentData.title === ads[i].contentData.title &&
-          ad.contentData.site  === ads[i].contentData.site)
-      {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 var computeHash = function(ad) {
 
   var hash = '';
@@ -108,10 +84,14 @@ var registerAd = function(ad, pageUrl, pageDomain) {
   ad.pageUrl = pageUrl;
 
   var adsOnPage = admap[pageUrl];
+
   if (!adsOnPage) {
     adsOnPage = {};
     admap[pageUrl] = adsOnPage;
   }
+
+  // var existing = adsOnPage[computeHash(ad)];
+  // if (existing) console.log("overwritting: "+existing.id);
 
   // this will overwrite an older ad with the same key
   adsOnPage[computeHash(ad)] = ad;
