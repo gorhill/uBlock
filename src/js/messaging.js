@@ -469,17 +469,18 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-    case 'retrieveDomainCosmeticSelectors':
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-            if ( response && response.skipCosmeticFiltering !== true ) {
-                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
-            }
-        }
-        break;
 
-    default:
-        return vAPI.messaging.UNHANDLED;
+      case 'retrieveDomainCosmeticSelectors':
+          if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+              response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+              if ( response && response.skipCosmeticFiltering !== true ) {
+                  response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
+              }
+          }
+          break;
+
+      default:
+          return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -491,7 +492,6 @@ vAPI.messaging.listen('contentscript-start.js', onMessage);
 
 })();
 
-/******************************************************************************/
 /******************************************************************************/
 
 // contentscript-end.js
@@ -560,6 +560,7 @@ var filterRequests = function(pageStore, details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+
     // Async
     switch ( request.what ) {
     default:
@@ -575,6 +576,20 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
+
+    case 'adDetection':
+
+      // NEXT:
+      //    HOPE XI ? 
+      //    pull ublock
+      //    create ADN object (attcahed to uBlock?) with IDGEN and list of unique Ads
+      //    move below code to ADN object
+      //    show detected ads with simple ui-button
+
+      response = request.ad;
+      console.log('AdDetection('+response.contentType+')#'+theAd.id, response);
+      break;
+
     case 'retrieveGenericCosmeticSelectors':
         response = {
             shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),

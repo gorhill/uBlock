@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
 
-    "name": "uBlock Origin",
-    "version": "1.6.0",
+    "name": "AdNauseam",
+    "version": "1.6.1",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -33,7 +33,7 @@
         },
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/contentscript-end.js"],
+            "js": [ "js/contentscript-end.js" ],
             "run_at": "document_end",
             "all_frames": true
         },

@@ -66,6 +66,7 @@ return {
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
         showIconBadge: true,
+        noBlockingNonTrackers: true,
         tooltipsDisabled: false,
         webrtcIPAddressHidden: false
     },
@@ -220,4 +221,3 @@ return {
 })();
 
 /******************************************************************************/
-

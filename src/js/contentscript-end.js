@@ -22,6 +22,8 @@
 /******************************************************************************/
 
 // Injected into content pages
+//
+// jQuery functions: is, find
 
 (function() {
 
@@ -37,6 +39,13 @@ if ( window.location === null ) {
 // This can happen
 if ( typeof vAPI !== 'object' ) {
     //console.debug('contentscript-end.js > vAPI not found');
+    return;
+}
+
+var USE_JQUERY = false;
+
+if ( USE_JQUERY && typeof $ !== 'function' ) {
+    console.debug('contentscript-end.js > jQuery not found');
     return;
 }
 
@@ -65,6 +74,272 @@ vAPI.shutdown.add(function() {
 });
 
 /******************************************************************************/
+
+var adDetector = (function() {
+
+  var clickableParent = function(node) {
+
+    var checkParent = function(adNode) {
+
+      var hasParent = adNode.parentNode &&
+        (adNode.parentNode.tagName == 'A' ||
+          adNode.parentNode.tagName == 'OBJECT' ||
+          adNode.parentNode.tagName == 'IFRAME' ||
+          (adNode.hasAttribute && adNode.hasAttribute('onclick')));
+
+      //console.log("check",adNode.tagName,adNode.parentNode);
+
+      return hasParent;
+    };
+
+    var adNode = node;
+
+    while (checkParent(adNode))
+      adNode = adNode.parentNode;
+
+    // returns adnode if found, or null
+    return adNode === node ? null : adNode;
+  };
+
+  /******************************************************************************/
+  function Ad(network, pageTitle, pageUrl, targetUrl, contentType) {
+
+    if (typeof Ad.ID === 'undefined') Ad.ID = 0;
+
+    this.id = ++Ad.ID;
+    this.title = 'Pending';
+    this.attempts = 0;
+    this.visitedTs = 0;
+    this.foundTs = +new Date();
+    this.contentType = contentType;
+    this.targetUrl = targetUrl;
+    this.pageTitle = pageTitle;
+    this.pageUrl = pageUrl;
+    this.resolvedTargetUrl;
+    this.errors = [];
+    this.path = []; // redirects?
+  };
+
+  var notifyAddon = function(node, ad) {
+
+    var toSend = {
+        what: 'adDetection',
+        ad: ad
+        // pageUrl: ad.pageUrl,
+        // pageTitle: ad.pageTitle,
+        // targetUrl: ad.targetUrl,
+        // node: node
+    };
+
+    // toSend.contentType = ad.imgUrl ? 'img' : 'text';
+    // toSend.contentData = toSend.contentType === 'img' ?
+    //   { src: ad.imgUrl } : { title: ad.title, site: ad.site, text: ad.text };
+
+    messager.send(toSend, function(obj) {
+      console.log("AdDetect-callback: ", obj);
+    });
+  }
+
+  var filters = [
+    {
+      //tagName: 'li',
+      selector: 'li.ads-ad',
+      handler: googleText,
+      name: 'adsense-1'
+      //domain: googleRegex
+    }
+  ];
+
+  var $is = function (elem, selector) {
+
+    if (USE_JQUERY) return $(elem).is(selector);
+
+    if (selector.nodeType) {
+      return elem === selector;
+    }
+
+    var qa = (typeof (selector) === 'string' ?
+      document.querySelectorAll(selector) : selector),
+      length = qa.length,
+      returnArr = [];
+
+    while (length--) {
+      if (qa[length] === elem) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  var $attr = function(ele, attr) {
+
+    return USE_JQUERY ? $(ele).attr(attr) :
+      (ele.length ? ele[0] : ele).getAttribute(attr);
+  };
+
+  var $text = function(ele) {
+
+    if (USE_JQUERY) return $(ele).text();
+
+    if (typeof ele.length === 'undefined')
+      return ele.innerText || ele.textContent;
+
+    var text = '';
+    for (var i = 0; i < ele.length; i++) {
+      text += ele[i].innerText || ele[i].textContent;
+    }
+
+    return text;
+  };
+
+  var $find = function(ele, selector) {
+
+    return USE_JQUERY ? $(ele).find(selector) : ele.querySelectorAll(selector);
+  };
+
+  var checkFilters = function(elem) {
+
+    for (var i = 0; i < filters.length; i++) {
+      if ($is(elem, filters[i].selector)) {
+        var result = filters[i].handler(elem);
+        if (result) return result;
+      }
+    }
+  };
+
+  var findAds = function(adNodes) {
+
+    //console.log("findAds("+adNodes.length+")");
+
+    for (var i = 0; i < adNodes.length; i++) {
+
+      var elem = adNodes[i];
+      //console.log(i, elem.tagName, elem);
+      //var img = checkChildrenFor(elem, 'IMG');
+      //var imgs = $(elem).find('img');
+      //console.log("Found "+imgs.length+" imgs");
+
+      var imgs = elem.querySelectorAll('img');
+
+      //console.log("Found " + imgs.length + " img(s)");
+
+      if (imgs.length > 0) {
+
+        for (var i = 0; i < imgs.length; i++) {
+
+          //var anchors = $(imgs2[i]).closest('a');
+          var imgSrc = imgs[i].getAttribute("src");
+          if (!imgSrc) {
+            console.log("No ImgSrc(#"+i+")!", imgs[i]);
+            continue;
+          }
+
+          //console.log('imgSrc: '+imgSrc);
+
+          var target = clickableParent(imgs[i]);
+          if (target) {
+
+            if (target.tagName === 'A') {
+
+              var targetUrl = target.getAttribute("href");
+              if (targetUrl) {
+                var ad = createImgAd(document.domain, targetUrl, imgSrc);
+                //console.log("IMG-AD", ad);
+                notifyAddon(elem, ad);
+              }
+              // Need to check for div.onclick etc.
+              else console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
+            }
+            else console.log("Bail: Non-anchor found: "+target.tagName);
+          }
+          else console.log("Bail: No ClickableParent: "+imgSrc);
+        }
+      }
+      else { // search for text-ad
+
+        //console.log("PARSING TEXT: ", elem);
+        var ad = checkFilters(elem);
+        if (ad) notifyAddon(elem, ad);
+      }
+    }
+  }
+
+  var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
+
+  function googleText(li) {
+
+    //console.log('googleText('+USE_JQUERY+')',li);
+
+    var ad, title = $find(li, 'h3 a'),
+      text = $find(li, '.ads-creative'),
+      site = $find(li, '.ads-visurl cite');
+
+    if (text.length && site.length && title.length) {
+
+      ad = createTextAd('google', $attr(title, 'href'),
+        $text(title), $text(text), $text(site) );
+
+      //self.port && self.port.emit('parsed-text-ad', ad);
+      console.log("TEXT: googleText", ad);
+
+    } else {
+
+      console.warn('TEXT: googleText.fail: ', text, site);
+    }
+
+    return ad;
+  }
+
+  //function createAd(network, target, type) {
+
+    // return {
+    //   type: type,
+    //   network: network,
+    //   pageUrl: document.URL,
+    //   pageTitle: document.title,
+    //   targetUrl: target,
+    // };
+  //}
+
+  function createImgAd(network, target, img) {
+
+    var ad = new Ad(network, document.title, document.URL, target, 'img');
+
+    if (!/^http/.test(img)) { // relative image url
+
+      //console.log("Found Relative image: "+this.contentData.src);
+      img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+    }
+
+    ad.contentData = { src: img };
+
+    return ad;
+  }
+
+  function createTextAd(network, target, title, text, site) {
+
+    //console.log("createTextAd: ",network, title, text, site, target);
+    var ad = new Ad(network, document.title, document.URL, target, 'text');
+
+    if (title.length) ad.title = title;
+
+    ad.contentData = {
+      title: title,
+      text: text,
+      site: site
+    }
+
+    return ad;
+  }
+
+  return {
+    findAds: findAds,
+    clickableParent: clickableParent
+  }
+
+})();
+
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
@@ -316,6 +591,7 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
+                    console.log("HIT-NoShadow: ",elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
                 }
             };
@@ -336,7 +612,8 @@ var uBlockCollapser = (function() {
                 // https://www.chromestatus.com/features/4668884095336448
                 // "Multiple shadow roots is being deprecated."
                 if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {	
+                    if ( shadow.className !== sessionId ) {
+                        console.log("HIT-shadow: ",elem);
                         elem.style.setProperty('display', 'none', 'important');
                     }
                     continue;
@@ -351,8 +628,12 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
+                    //console.log("CS-End.HIT: "+elem);
+                    adDetector.findAds([ elem ]);
+
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
+                    console.log("CS-End.HIT/CATCH: ",elem);
                 }
             }
         };
@@ -988,6 +1269,36 @@ var uBlockCollapser = (function() {
 })();
 
 /******************************************************************************/
+
+// run our ADN checks
+(function() {
+
+  var detectAds = function() {
+
+    //console.log('Loading adn-content-script on '+window.location);
+
+    var injectedSelectors = [];
+    var reProperties = /\s*\{[^}]+\}\s*/;
+    var styles = vAPI.styles || [];
+    var i = styles.length;
+
+    while (i--) {
+      injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace
+        (reProperties, '').split(/\s*,\n\s*/));
+    }
+
+    if (injectedSelectors.length !== 0) {
+
+      var adNodes = document.querySelectorAll(injectedSelectors.join(','));
+      //console.log("Found " + adNodes.length + " matched selectors");
+      if (adNodes.length > 0) adDetector.findAds(adNodes);
+    }
+  }
+
+  setTimeout(detectAds, 100);
+
+})();
+
 /******************************************************************************/
 
 })();
