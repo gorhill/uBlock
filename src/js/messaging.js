@@ -20,6 +20,82 @@
 */
 
 /* global µBlock, vAPI */
+/******************************************************************************/
+/******************************************************************************/
+
+// adnauseam messaging channel
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+
+    // Async
+    switch (request.what) {
+    default:
+      break;
+    }
+
+    // Sync
+    var response, pageStore;
+
+    if (sender && sender.tab) {
+      pageStore = µb.pageStoreFromTabId(sender.tab.id);
+    }
+
+    switch ( request.what ) {
+
+      case 'adsForVault':
+
+        console.log('adnMessage::adsForVault('+request.tabId+')');
+        break;
+
+      case 'adsForMenu':
+
+        console.log('adnMessage::adsForMenu('+request.tabId+')');
+
+        // chrome.tabs.getCurrent(function(tab){
+        //   console.log("tab:",tab && tab.id);
+        // });
+        pageStore = µb.pageStoreFromTabId(request.tabId);
+
+        if (pageStore === null) {
+          console.log("[ERROR] no pageStore!");
+        }
+
+        response = µb.adnauseam.adsForPage(pageStore.rawURL);
+        break;
+
+      case 'adDetected':
+
+        console.log('adnMessage::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
+
+        µb.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
+
+        response = request.ad;
+
+        break;
+
+      default:
+
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('adnauseam', onMessage);
+
+/******************************************************************************/
+
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -577,23 +653,33 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
 
-    case 'loadAdsForPage':
-      console.log('message::loadAdsForPage -> '+request.tabId);
+    /*case 'adsForVault':
+
+      console.log('message::adsForVault()');
       break;
 
-    case 'adDetection':
+    case 'adsForPage':
 
-      // NEXT:
-      //    HOPE XI ?
-      //    create ADN object (attcahed to uBlock?) with IDGEN and list of unique Ads
-      //    move below code to ADN object
-      //    show detected ads with simple ui-button
+      console.log('message::adsForPage()');
 
-      µBlock.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
-      console.log('AdDetection('+request.ad.contentType+')#'+request.ad.id, request.ad);
+      pageStore = µb.pageStoreFromTabId(request.tabId);
+
+      if (pageStore === null) {
+        console.log("[ERROR] no pageStore!");
+      }
+
+      response = µb.adnauseam.adsForPage(pageStore.rawURL);
+      break;
+
+    case 'adDetected':
+
+      console.log('message::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
+
+      µb.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
+
       response = request.ad;
 
-      break;
+      break;*/
 
     case 'retrieveGenericCosmeticSelectors':
         response = {

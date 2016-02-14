@@ -62,7 +62,7 @@ var initialize = function() {
       return ad.id;
     }))));
 
-  console.log("adnauseam.initialize: "+count);
+  console.log("adnauseam.initialized: "+count);
   //initd = true;
 };
 
@@ -73,8 +73,21 @@ var computeHash = function(ad) {
     hash += ad.contentData[key] + '::';
   }
   hash += ad.title;
-  console.log(hash);
+  //console.log(hash);
   return hash;
+}
+
+var adsForPage = function(pageUrl) {
+
+  var ads = [];
+  var mapEntry = admap[pageUrl];
+  if (mapEntry) {
+    var keys = Object.keys(mapEntry);
+    for (var i = 0; i < keys.length; i++) {
+      ads.push(mapEntry[keys[i]]);
+    }
+  }
+  return ads;
 }
 
 var registerAd = function(ad, pageUrl, pageDomain) {
@@ -91,10 +104,10 @@ var registerAd = function(ad, pageUrl, pageDomain) {
   }
 
   // var existing = adsOnPage[computeHash(ad)];
-  // if (existing) console.log("overwritting: "+existing.id);
+  // if (existing) console.log("overwriting: "+existing.id);
 
   // this will overwrite an older ad with the same key
-  adsOnPage[computeHash(ad)] = ad;
+  adsOnPage[ computeHash(ad) ] = ad;
 
   console.log('adnauseam.registerAd: #'+ad.id+'/'+Object.keys(adsOnPage).length);
 };
@@ -104,7 +117,8 @@ initialize();
 /******************************************************************************/
 
 return {
-  registerAd: registerAd
+  registerAd: registerAd,
+  adsForPage: adsForPage
 };
 
 /******************************************************************************/

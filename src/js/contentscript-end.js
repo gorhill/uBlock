@@ -77,6 +77,8 @@ vAPI.shutdown.add(function() {
 
 var adDetector = (function() {
 
+  var adMessager = vAPI.messaging.channel('adnauseam');
+
   var clickableParent = function(node) {
 
     var checkParent = function(adNode) {
@@ -122,21 +124,11 @@ var adDetector = (function() {
 
   var notifyAddon = function(node, ad) {
 
-    var toSend = {
-        what: 'adDetection',
+    adMessager.send({
+        what: 'adDetected',
         ad: ad
-        // pageUrl: ad.pageUrl,
-        // pageTitle: ad.pageTitle,
-        // targetUrl: ad.targetUrl,
-        // node: node
-    };
-
-    // toSend.contentType = ad.imgUrl ? 'img' : 'text';
-    // toSend.contentData = toSend.contentType === 'img' ?
-    //   { src: ad.imgUrl } : { title: ad.title, site: ad.site, text: ad.text };
-
-    messager.send(toSend, function(obj) {
-      console.log("AdDetect-callback: ", obj);
+      }, function(obj) {
+        console.log("AdDetected-callback: ", obj);
     });
   }
 
@@ -150,7 +142,7 @@ var adDetector = (function() {
     }
   ];
 
-  var $is = function (elem, selector) {
+  var $is = function (elem, selector) { // jquery shim
 
     if (USE_JQUERY) return $(elem).is(selector);
 
@@ -172,13 +164,13 @@ var adDetector = (function() {
     return false;
   };
 
-  var $attr = function(ele, attr) {
+  var $attr = function(ele, attr) {    // jquery shim
 
     return USE_JQUERY ? $(ele).attr(attr) :
       (ele.length ? ele[0] : ele).getAttribute(attr);
   };
 
-  var $text = function(ele) {
+  var $text = function(ele) {         // jquery shim
 
     if (USE_JQUERY) return $(ele).text();
 
@@ -193,7 +185,7 @@ var adDetector = (function() {
     return text;
   };
 
-  var $find = function(ele, selector) {
+  var $find = function(ele, selector) { // jquery shim
 
     return USE_JQUERY ? $(ele).find(selector) : ele.querySelectorAll(selector);
   };
