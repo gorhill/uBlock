@@ -524,6 +524,11 @@ vAPI.tabs.onPopupUpdated = (function() {
     // See if two URLs are different, disregarding scheme -- because the scheme
     // can be unilaterally changed by the browser.
     var areDifferentURLs = function(a, b) {
+        // https://github.com/gorhill/uBlock/issues/1378
+        // Maybe no link element was clicked.
+        if ( b === '' ) {
+            return true;
+        }
         var pos = a.indexOf('://');
         if ( pos === -1 ) {
             return false;
@@ -561,7 +566,6 @@ vAPI.tabs.onPopupUpdated = (function() {
             // Check user switch first
             if (
                 popupType !== 'popunder' &&
-                clickedURL !== '' &&
                 areDifferentURLs(targetURL, clickedURL) &&
                 µb.hnSwitches.evaluateZ('no-popups', openerHostname)
             ) {
