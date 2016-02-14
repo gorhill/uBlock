@@ -13,8 +13,8 @@
 
     "browser_action": {
         "default_icon": {
-            "19": "img/adn/browsericons/icon19.png",
-            "38": "img/adn/browsericons/icon38.png"
+            "19": "img/browsericons/adn/icon19.png",
+            "38": "img/browsericons/adn/icon38.png"
         },
         "default_title": "AdNauseam",
         "default_popup": "adn-menu.html"
