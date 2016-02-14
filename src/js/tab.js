@@ -561,6 +561,7 @@ vAPI.tabs.onPopupUpdated = (function() {
             // Check user switch first
             if (
                 popupType !== 'popunder' &&
+                clickedURL !== '' &&
                 areDifferentURLs(targetURL, clickedURL) &&
                 µb.hnSwitches.evaluateZ('no-popups', openerHostname)
             ) {
