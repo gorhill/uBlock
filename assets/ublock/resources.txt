@@ -677,3 +677,17 @@ if ( window === window.top ) {
 # https://github.com/gorhill/uBlock/issues/897#issuecomment-180871042
 doubleclick.net/instream/ad_status.js application/javascript
 window.google_ad_status = 1;
+
+
+# https://github.com/gorhill/uBlock/issues/1384
+addthis.com/addthis_widget.js application/javascript
+(function() {
+    var noopfn = function() {
+        ;
+    };
+    window.addthis = {
+        addEventListener: noopfn,
+        layers: noopfn,
+        update: noopfn
+    };
+})();
