@@ -20,10 +20,24 @@ added files inside ublock/src:
   src/js/adn/vault.js
 
   src/img/adn/..
+    adn_active.png
+    adn_alert.png
+    adn_disabled.png
+    adn_firstrun.png
+    gray_grid.png
+    icon-32.png
+    icon_128.png (needs to be remade)
+    icon_16.png
 
   src/css/adn/menu.css
   src/css/adn/vault.css
   src/css/adn/font/..
+    bebasneue_regular-webfont.eot
+    bebasneue_regular-webfont.svg
+    bebasneue_regular-webfont.ttf
+    bebasneue_regular-webfont.woff
+    bebasneue_regular-webfont.woff2
+    stylesheet.css
 
 changed files inside platform/chromium:
   platform/chromium/manifest.json
