@@ -23,7 +23,7 @@
 
 // Injected into content pages
 //
-// jQuery functions: is, find
+// jQuery functions: is, find, attr, text
 
 (function() {
 

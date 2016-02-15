@@ -552,8 +552,8 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     };
 
     var iconPaths = iconStatus === 'on' ?
-        { '19': 'img/adn/browsericons/icon19.png',     '38': 'img/adn/browsericons/icon38.png' } :
-        { '19': 'img/adn/browsericons/icon19-off.png', '38': 'img/adn/browsericons/icon38-off.png' };
+        { '19': 'img/browsericons/adn/icon19.png',     '38': 'img/browsericons/adn/icon38.png' } :
+        { '19': 'img/browsericons/adn/icon19-off.png', '38': 'img/browsericons/adn/icon38-off.png' };
 
     chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
     vAPI.contextMenu.onMustUpdate(tabId);

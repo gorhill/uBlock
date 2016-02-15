@@ -29,7 +29,7 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var count;// initd;
+var admap = {}, count;
 
 // ignore adchoices
 var imageIgnores = [ 'http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png' ];
@@ -61,8 +61,7 @@ var initialize = function() {
       return ad.id;
     }))));
 
-  console.log("adnauseam.initialized: "+count);
-  //initd = true;
+  console.log('adnauseam.initialized('+count+')');
 };
 
 var computeHash = function(ad) {

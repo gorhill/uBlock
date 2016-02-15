@@ -33,6 +33,12 @@
 
 var µb = µBlock;
 
+// This can happen
+if ( typeof µb.adnauseam !== 'object' ) {
+    console.error('messaging.js > adnauseam not found!');
+    return;
+}
+
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
