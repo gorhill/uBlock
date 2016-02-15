@@ -2528,7 +2528,6 @@ vAPI.toolbarButton = {
     var tbb = vAPI.toolbarButton;
 
     tbb.onViewShowing = function({target}) {
-        console.debug("Loading Menu");
         target.firstChild.setAttribute('src', vAPI.getURL('adn-menu.html')); // adn
     };
 
