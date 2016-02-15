@@ -687,7 +687,9 @@ addthis.com/addthis_widget.js application/javascript
     };
     window.addthis = {
         addEventListener: noopfn,
+        init: noopfn,
         layers: noopfn,
+        toolbox: noopfn,
         update: noopfn
     };
 })();
