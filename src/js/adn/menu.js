@@ -1,5 +1,4 @@
 /* global vAPI, uDom, $ */
-
 /******************************************************************************/
 
 (function() {
@@ -258,6 +257,39 @@ var hashFromPopupData = function(reset) {
     }
     uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
 };
+
+    $('#log-button').click(function() {
+
+        window.open("./adn-log.html");
+    });
+    
+    $('#vault-button').click(function() {
+
+        window.open("./adn-vault.html");
+    });
+    
+    $('#pause-button').click(function() {
+        
+        
+    });
+    
+    $('#settings-open').click(function() {
+
+        $('.page').toggleClass('hide');
+        $('.settings').toggleClass('hide');
+    });
+
+    $('#settings-close').click(function () {
+
+        $('.page').toggleClass('hide');
+        $('.settings').toggleClass('hide');
+    });
+
+    const AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
+    $('#about-button').click(function () {
+
+        window.open(AboutURL);
+    });
 
 (function() {
 /*

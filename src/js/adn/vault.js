@@ -2,6 +2,15 @@
 
 /******************************************************************************/
 
+$(function(){
+
+    $('#x-close-button').click(function() {
+
+        window.close();
+    });
+    
+});
+
 (function() {
 
 'use strict';
