@@ -1908,7 +1908,7 @@ var httpObserver = {
 
     // Pending request ring buffer:
     // +-------+-------+-------+-------+-------+-------+-------
-    // |0      |1      |2      |3      |4      |5      |...      
+    // |0      |1      |2      |3      |4      |5      |...
     // +-------+-------+-------+-------+-------+-------+-------
     //
     // URL to ring buffer index map:
@@ -2469,7 +2469,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'popup.html?tabId=' + curTabId,
+            url: 'menu.html?tabId=' + curTabId, // adn
             index: -1,
             select: true
         });
@@ -2528,7 +2528,8 @@ vAPI.toolbarButton = {
     var tbb = vAPI.toolbarButton;
 
     tbb.onViewShowing = function({target}) {
-        target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
+        console.debug("Loading Menu");
+        target.firstChild.setAttribute('src', vAPI.getURL('adn-menu.html')); // adn
     };
 
     tbb.onViewHiding = function({target}) {

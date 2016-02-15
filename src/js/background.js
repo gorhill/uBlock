@@ -212,6 +212,8 @@ return {
     scriptlets: {
     },
 
+    admap: {},
+
     // so that I don't have to care for last comma
     dummy: 0
 };

@@ -17,7 +17,7 @@
             "38": "img/browsericons/icon19.png"
         },
         "default_title": "uBlock Origin",
-        "default_popup": "popup.html"
+        "default_popup": "menu.html"
     },
 
     "author": "All uBlock Origin contributors",

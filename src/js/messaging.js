@@ -52,6 +52,10 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
 
+      // TODO:
+      // move this code into core.js
+      // build/test firefox build
+
       case 'adsForVault':
 
         console.log('adnMessage::adsForVault('+request.tabId+')');
@@ -61,9 +65,6 @@ var onMessage = function(request, sender, callback) {
 
         console.log('adnMessage::adsForMenu('+request.tabId+')');
 
-        // chrome.tabs.getCurrent(function(tab){
-        //   console.log("tab:",tab && tab.id);
-        // });
         pageStore = µb.pageStoreFromTabId(request.tabId);
 
         if (pageStore === null) {

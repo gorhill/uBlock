@@ -29,7 +29,7 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var admap, count;// initd;
+var count;// initd;
 
 // ignore adchoices
 var imageIgnores = [ 'http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png' ];
@@ -54,7 +54,6 @@ var flatten = function(map) {
 
 var initialize = function() {
 
-  admap = []; // load from prefs
   var adlist = flatten(admap);
 
   count = Math.max(0, 1 + (Math.max.apply(Math,

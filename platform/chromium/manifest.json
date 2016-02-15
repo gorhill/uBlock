@@ -62,7 +62,7 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock₀",
+    "short_name": "AdNauseam",
     "storage": {
         "managed_schema": "managed_storage.json"
     }

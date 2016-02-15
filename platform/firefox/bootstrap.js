@@ -49,6 +49,7 @@ const restartListener = {
 /******************************************************************************/
 
 function startup(data/*, reason*/) {
+
     if ( data !== undefined ) {
         version = data.version;
     }
