@@ -11,14 +11,57 @@
 
 <body class="active">
 
-  <!-- content goes here -->
+    <!-- content goes here -->
 
-  <script src="js/vapi-common.js"></script>
-  <script src="js/vapi-client.js"></script>
-  <script src="js/udom.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="lib/jquery.js"></script>
-  <script src="js/adn/vault.js"></script>
+    <script src="js/vapi-common.js"></script>
+    <script src="js/vapi-client.js"></script>
+    <script src="js/udom.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="js/adn/vault.js"></script>
+
+    <div id="loading-img">
+        <img src="img/adn/preloader.gif" />
+    </div>
+
+    <div id="stage" class="stage">
+
+        <div class="zoom">
+            <a href="" id="z-in">&#43;</a>
+            <a href="" id="z-out">&#8211;</a>
+        </div>
+
+
+        <div id="stats" class="session-sum">
+            <span data-l10n-id="adn.vault.since">Since</span>
+            <span class="since" data-l10n-id="adn.vault.defaultDate">Jan 1 1970 0:00am</span>,
+            <span id="clicked" class="clicked">0</span> <span class="clicked" data-l10n-id="adn.vault.adsClicked">ads clicked</span>            <span data-l10n-id="adn.vault.ofThe">of the</span>
+            <span id="detected" class="detected">0</span> <span class="detected" data-l10n-id="adn.vault.detected">found</span>
+        </div>
+
+        <div id="alert" class="hide">
+            <img src="img/adn/adn_alert.png" alt="alert">
+            <p>Alert goes here</p>
+        </div>
+
+        <div style="position: relative; height: 5519.67px;" id="container" class="z-100" >
+            <div id="overlay"></div>
+        </div>
+
+        <div id="svgcon" class="svg-container"></div>
+
+    </div>
+
+    <a href="#" id="x-close-button">&#10006;</a>
+    <div id="logo">
+        <a href="http://dhowe.github.io/AdNauseam/" target="_blank"></a>
+    </div>
+
+    <div id='ratio'>100%</div>
+
+    <ul class='custom-menu'>
+        <li data-action="delete" data-l10n-id="adn.vault.deleteThisAd">delete this ad</li>
+        <!--li data-action="delete-all">delete similar ads</li-->
+    </ul>
 </body>
-
 </html>

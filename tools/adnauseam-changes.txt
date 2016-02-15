@@ -15,9 +15,11 @@ added files inside ublock/src:
 
   adn-menu.html
   adn-vault.html
+  adn-log.html
   src/js/adn/menu.js
   src/js/adn/core.js
   src/js/adn/vault.js
+  src/js/adn/log.js
 
   src/img/adn/..
     adn_active.png
@@ -31,6 +33,7 @@ added files inside ublock/src:
 
   src/css/adn/menu.css
   src/css/adn/vault.css
+  src/css/adn/log.css
   src/css/adn/font/..
     bebasneue_regular-webfont.eot
     bebasneue_regular-webfont.svg
