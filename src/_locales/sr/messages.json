@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Остали филтери",
+    "message":"Додатни филтери",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -32,11 +32,11 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Евиденција мрежних захтева",
+    "message":"uBlock₀ — Евиденција",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
-    "message":"Основни подаци",
+    "message":"О програму",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Евиденција захтева",
+    "message":"Отвори евиденцију",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Укључи\/искључи блокирање удаљених фонтова за овај сајт",
+    "message":"Укључи\/искључи блокирање спољних фонтова за овај сајт",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
