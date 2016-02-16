@@ -4,7 +4,7 @@
 
 echo "*** uBlock0.firefox: Copying files"
 
-DES=dist/build/uBlock0.firefox
+DES=dist/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES
 
@@ -28,19 +28,19 @@ cp    platform/firefox/frame*.js        $DES/
 cp -R platform/firefox/img              $DES/
 cp    platform/firefox/chrome.manifest  $DES/
 
-#cp    platform/firefox/install.rdf      $DES/
-cp    tools/adn/firefox/install.rdf      $DES/ #adn
+cp    platform/firefox/install.rdf      $DES/
+#cp    tools/adn/firefox/install.rdf    $DES/ #adn
 
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
 echo "*** uBlock0.firefox: Generating meta..."
-python tools/make-firefox-meta.py $DES/ "$2"
+python tools/make-firefox-meta-adn.py $DES/ "$2"  #adn
 
 if [ "$1" = all ]; then
-    echo "*** uBlock0.firefox: Creating package..."
+    echo "*** adnauseam.firefox: Creating package..."
     pushd $DES/
-    zip ../uBlock0.firefox.xpi -qr *
+    zip ../adnauseam.firefox.xpi -qr *
     popd
 fi
 
