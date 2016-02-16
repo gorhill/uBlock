@@ -6,6 +6,7 @@ echo "*** adnauseam.opera: Creating web store package"
 echo "*** adnauseam.opera: Copying files"
 
 DES=dist/build/adnauseam.opera
+
 rm -r $DES
 mkdir -p $DES
 
@@ -23,7 +24,8 @@ cp platform/chromium/*.js   $DES/js/
 cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
 
-cp tools/adn/opera/manifest.json $DES/ #adn
+cp tools/adn/opera/manifest.json $DES/ #adn#
+
 cp LICENSE.txt $DES/
 
 rm -r $DES/_locales/hi

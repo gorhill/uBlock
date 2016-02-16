@@ -78,7 +78,7 @@ with open(chromium_manifest, encoding='utf-8') as m:
 if sys.argv[2]:
     manifest['version'] += sys.argv[2]
 
-manifest['homepage'] = 'https://github.com/dhowe/adnauseam'
+manifest['homepage'] = 'https://github.com/dhowe/adnauseam' #adn
 manifest['description'] = descriptions['en']
 del descriptions['en']
 manifest['localized'] = []
