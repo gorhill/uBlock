@@ -2,10 +2,10 @@
 #
 # This script assumes a linux environment
 
-echo "*** Adnauseam.chromium: Creating web store package"
-echo "*** Adnauseam.chromium: Copying files"
+echo "*** adnauseam.chromium: Creating web store package"
+echo "*** adnauseam.chromium: Copying files"
 
-DES=dist/build/Adnauseam.chromium
+DES=dist/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 
@@ -23,15 +23,15 @@ cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 
-cp tools/adn/chromium/manifest.json $DES/ #adn#
+cp tools/adn/chromium/manifest.json $DES/       #adn#
 
 cp LICENSE.txt $DES/
 
 if [ "$1" = all ]; then
-    echo "*** Adnauseam.chromium: Creating package..."
+    echo "*** adnauseam.chromium: Creating package..."
     pushd $(dirname $DES/)
-    zip Adnauseam.chromium.zip -qr $(basename $DES/)/*
+    zip adnauseam.chromium.zip -qr $(basename $DES/)/*
     popd
 fi
 
-echo "*** Adnauseam.chromium: Package done."
+echo "*** adnauseam.chromium: Package done."

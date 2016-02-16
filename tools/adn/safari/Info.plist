@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Author</key>
+    <string>Daniel C. Howe</string>
+    <key>Builder Version</key>
+    <string>534.57.2</string>
+    <key>CFBundleDisplayName</key>
+    <string>{name}</string>
+    <key>CFBundleIdentifier</key>
+    <string>org.rednoise.adnauseam</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>{version}</string>
+    <key>CFBundleVersion</key>
+    <string>{buildNumber}</string>
+    <key>Chrome</key>
+    <dict>
+        <key>Database Quota</key>
+        <real>104857600</real>
+        <key>Global Page</key>
+        <string>background.html</string>
+        <key>Popovers</key>
+        <array>
+            <dict>
+                <key>Filename</key>
+                <string>menu.html</string>
+                <key>Identifier</key>
+                <string>popover</string>
+            </dict>
+        </array>
+        <key>Toolbar Items</key>
+        <array>
+            <dict>
+                <key>Identifier</key>
+                <string>toolbarItem</string>
+                <key>Image</key>
+                <string>img/browsericons/adn/safari-icon16.png</string>
+                <key>Label</key>
+                <string>{name}</string>
+                <key>Palette Label</key>
+                <string>{name}</string>
+                <key>Popover</key>
+                <string>popover</string>
+                <key>Tool Tip</key>
+                <string>{name} {version}</string>
+            </dict>
+        </array>
+    </dict>
+    <key>Content</key>
+    <dict>
+        <key>Scripts</key>
+        <dict>
+            <key>End</key>
+            <array>
+                <string>js/contentscript-end.js</string>
+            </array>
+            <key>Start</key>
+            <array>
+                <string>js/vapi-client.js</string>
+                <string>js/contentscript-start.js</string>
+            </array>
+        </dict>
+        <key>Whitelist</key>
+        <array>
+            <string>http://*/*</string>
+            <string>https://*/*</string>
+        </array>
+    </dict>
+    <key>Description</key>
+    <string>{description}</string>
+    <key>ExtensionInfoDictionaryVersion</key>
+    <string>1.0</string>
+    <key>Permissions</key>
+    <dict>
+        <key>Website Access</key>
+        <dict>
+            <key>Include Secure Pages</key>
+            <true/>
+            <key>Level</key>
+            <string>All</string>
+        </dict>
+    </dict>
+    <key>Update Manifest URL</key>
+    <string>https://rednoise.org/adnauseam/Update.plist</string>
+    <key>Website</key>
+    <string>https://rednoise.org/adnauseam</string>
+</dict>
+</plist>

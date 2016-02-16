@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>Extension Updates</key>
+		<array>
+			<dict>
+				<key>CFBundleIdentifier</key>
+				<string>org.rednoise.adnauseam</string>
+				<key>Developer Identifier</key>
+				<string>123456789</string>
+				<key>CFBundleShortVersionString</key>
+				<string>{version}</string>
+				<key>CFBundleVersion</key>
+				<string>{buildNumber}</string>
+				<key>URL</key>
+				<string>https://rednoise.org/adnauseam/adnauseam.latest.safariextz</string>
+			</dict>
+		</array>
+	</dict>
+</plist>
