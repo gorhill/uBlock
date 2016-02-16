@@ -43,7 +43,7 @@ var fromNetFilter = function(details) {
     var lists = [];
 
     var compiledFilter = details.compiledFilter;
-    var entry, content, pos, c;
+    var entry, content, pos, c
     for ( var path in listEntries ) {
         entry = listEntries[path];
         if ( entry === undefined ) {
@@ -54,8 +54,12 @@ var fromNetFilter = function(details) {
         if ( pos === -1 ) {
             continue;
         }
-        // https://github.com/gorhill/uBlock/issues/835
         // We need an exact match.
+        // https://github.com/gorhill/uBlock/issues/1392
+        if ( pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false ) {
+            continue;
+        }
+        // https://github.com/gorhill/uBlock/issues/835
         c = content.charAt(pos + compiledFilter.length);
         if ( c !== '' && reSpecialChars.test(c) === false ) {
             continue;
