@@ -2,7 +2,7 @@
 #
 # This script assumes a linux environment
 
-echo "*** uBlock0.firefox: Copying files"
+echo "*** adnauseam.firefox: Copying files"
 
 DES=dist/build/adnauseam.firefox
 rm -rf $DES
@@ -34,7 +34,7 @@ cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
-echo "*** uBlock0.firefox: Generating meta..."
+echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta-adn.py $DES/ "$2"  #adn
 
 if [ "$1" = all ]; then
@@ -44,4 +44,4 @@ if [ "$1" = all ]; then
     popd
 fi
 
-echo "*** uBlock0.firefox: Package done."
+echo "*** adnauseam.firefox: Package done."
