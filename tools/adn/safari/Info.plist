@@ -25,10 +25,12 @@
         <key>Popovers</key>
         <array>
             <dict>
-                <key>Filename</key>
-                <string>menu.html</string>
-                <key>Identifier</key>
-                <string>popover</string>
+				<key>Filename</key>
+				<string>adn-menu.html</string>
+				<key>Height</key>
+				<integer>500</integer>
+				<key>Identifier</key>
+				<string>popover</string>
             </dict>
         </array>
         <key>Toolbar Items</key>
