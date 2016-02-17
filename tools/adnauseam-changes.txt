@@ -54,4 +54,5 @@ changed files inside platform/firefox:
 changed files inside platform/opera:
 
 changed files inside platform/safari:
-  
+  platform/safari/vapi-background.js 
+    (icons, line 547)

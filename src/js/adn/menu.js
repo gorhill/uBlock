@@ -285,7 +285,8 @@ var hashFromPopupData = function(reset) {
         $('.settings').toggleClass('hide');
     });
 
-    const AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
+    var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
+    // cannot declare as const on Safari platform in strict mode
     $('#about-button').click(function () {
 
         window.open(AboutURL);
