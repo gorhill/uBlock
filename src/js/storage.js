@@ -628,7 +628,7 @@
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1395
-//   Added `firstparty` argument: to avoid discarding cosmetic filtering when
+//   Added `firstparty` argument: to avoid discarding cosmetic filters when
 //   applying 1st-party filters.
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {

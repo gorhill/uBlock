@@ -43,7 +43,7 @@ var fromNetFilter = function(details) {
     var lists = [];
 
     var compiledFilter = details.compiledFilter;
-    var entry, content, pos, c
+    var entry, content, pos, c;
     for ( var path in listEntries ) {
         entry = listEntries[path];
         if ( entry === undefined ) {
