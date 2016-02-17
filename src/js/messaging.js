@@ -1123,7 +1123,7 @@ var backupUserData = function(callback) {
         µb.extractSelectedFilterLists(onSelectedListsReady);
     };
 
-    µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
+    µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
 };
 
 /******************************************************************************/
@@ -1153,7 +1153,7 @@ var restoreUserData = function(request) {
 
         µb.keyvalSetOne('urlFilteringString', userData.urlFilteringString || '', onCountdown);
         µb.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
-        µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
+        µb.assets.put(µb.userFiltersPath, userData.userFilters, onCountdown);
         vAPI.storage.set({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
