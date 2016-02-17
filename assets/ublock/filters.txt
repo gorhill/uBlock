@@ -319,3 +319,6 @@ crazymeds.us,dasolo.org,ip-address.org,uploadshub.com##script:inject(bab-defuser
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
 filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
+
+# https://github.com/gorhill/uBlock/issues/1397
+||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js,domain=focus.de
