@@ -23,90 +23,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-// adnauseam messaging channel
-
-(function() {
-
-'use strict';
-
-/******************************************************************************/
-
-var µb = µBlock;
-
-// This can happen
-if ( typeof µb.adnauseam !== 'object' ) {
-    console.error('messaging.js > adnauseam not found!');
-    return;
-}
-
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-
-    // Async
-    switch (request.what) {
-    default:
-      break;
-    }
-
-    // Sync
-    var response, pageStore;
-
-    if (sender && sender.tab) {
-      pageStore = µb.pageStoreFromTabId(sender.tab.id);
-    }
-
-    switch ( request.what ) {
-
-      // TODO:
-      // move this code into core.js
-      // build/test firefox build
-
-      case 'adsForVault':
-
-        console.log('adnMessage::adsForVault('+request.tabId+')');
-        break;
-
-      case 'adsForMenu':
-
-        console.log('adnMessage::adsForMenu('+request.tabId+')');
-
-        pageStore = µb.pageStoreFromTabId(request.tabId);
-
-        if (pageStore === null) {
-          console.log("[ERROR] no pageStore!");
-        }
-
-        response = µb.adnauseam.adsForMenu(pageStore.rawURL);
-        break;
-
-      case 'adDetected':
-
-        console.log('adnMessage::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
-
-        µb.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
-
-        response = request.ad;
-
-        break;
-
-      default:
-
-        return vAPI.messaging.UNHANDLED;
-    }
-
-    callback(response);
-};
-
-vAPI.messaging.listen('adnauseam', onMessage);
-
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
 // Default handler
 
 (function() {
@@ -1550,6 +1466,73 @@ vAPI.messaging.listen('scriptlets', onMessage);
 
 })();
 
+
+/******************************************************************************/
+/******************************************************************************/
+
+// adnauseam messaging
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+if ( typeof µb.adnauseam !== 'object' ) {
+    console.error('messaging.js > adnauseam not found!');
+    return;
+}
+
+var onMessage = function(request, sender, callback) {
+
+    // Async
+    switch (request.what) {
+    default:
+      break;
+    }
+
+    // Sync
+    var response, pageStore;
+
+    if (sender && sender.tab) {
+      pageStore = µb.pageStoreFromTabId(sender.tab.id);
+    }
+
+    switch ( request.what ) {
+
+      case 'adsForVault':
+
+        console.log('adnMessage::adsForVault('+request.tabId+')');
+        response = µb.adnauseam.adsForVault(µb.pageStoreFromTabId(request.tabId));
+        break;
+
+      case 'adsForMenu':
+
+        console.log('adnMessage::adsForMenu('+request.tabId+')');
+        response = µb.adnauseam.adsForMenu(µb.pageStoreFromTabId(request.tabId));
+        break;
+
+      case 'adDetected':
+
+        console.log('adnMessage::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
+        response = µb.adnauseam.registerAd(pageStore, request.ad);
+        break;
+
+      default:
+
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('adnauseam', onMessage);
+
+/******************************************************************************/
+
+})();
 
 /******************************************************************************/
 /******************************************************************************/

@@ -1,0 +1,20 @@
+# EditorConfig: http://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Rules for JavaScript files:
+
+[*.js]
+# 4 space indentation
+indent_style = space
+indent_size = 4
+
+# No trailing spaces
+trim_trailing_whitespace = true
+
+# Unix-style newlines
+end_of_line = lf
+
+# Newline ending every file
+insert_final_newline = true
