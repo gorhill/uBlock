@@ -693,3 +693,16 @@ addthis.com/addthis_widget.js application/javascript
         update: noopfn
     };
 })();
+
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=43914#p147866
+wired-defuser.js application/javascript
+(function() {
+	var sto = window.setTimeout,
+		re = /^function n\(\)/;
+	window.setTimeout = function(a, b) {
+		if ( b !== 50 || !re.test(a.toString()) ) {
+			sto(a, b);
+		}
+	};
+})();
