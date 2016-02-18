@@ -216,7 +216,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"Privzeto ravnanje",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
@@ -224,15 +224,15 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"Onemogoči kosmetično filtriranje",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"Blokiraj medijske elemente večje kot {input:number} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"Blokiraj oddaljene pisave",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"Uvozi iz oblaka in spoji s trenutnimi nastavitvami",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"Začasno dovoli velike medijske elemente",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

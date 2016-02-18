@@ -409,7 +409,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['_x','_y','_z','pz','xz','zp','zx'];
+	var aa = ['_x','_y','_z','pz','xz','zp','zx','zy'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -677,3 +677,19 @@ if ( window === window.top ) {
 # https://github.com/gorhill/uBlock/issues/897#issuecomment-180871042
 doubleclick.net/instream/ad_status.js application/javascript
 window.google_ad_status = 1;
+
+
+# https://github.com/gorhill/uBlock/issues/1384
+addthis.com/addthis_widget.js application/javascript
+(function() {
+    var noopfn = function() {
+        ;
+    };
+    window.addthis = {
+        addEventListener: noopfn,
+        init: noopfn,
+        layers: noopfn,
+        toolbox: noopfn,
+        update: noopfn
+    };
+})();

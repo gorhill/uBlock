@@ -9,6 +9,8 @@
 
 # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
 ||addthis.com^$third-party,important
+# https://github.com/gorhill/uBlock/issues/1384
+||addthis.com/*/addthis_widget.js$script,redirect=addthis.com/addthis_widget.js
 ##.addthis_toolbox
 
 # I think web sites can live without this
