@@ -1,7 +1,7 @@
 ### Describe the issue
 
 
-### A specific URL where the issue occurs
+### One or more specific URLs where the issue occurs
 
 
 ### Screenshot in which the issue can be seen
@@ -24,4 +24,4 @@
 ##### Your filter lists
 
 
-##### Your custom filter (if any)
+##### Your custom filters (if any)
