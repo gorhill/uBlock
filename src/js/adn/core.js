@@ -47,17 +47,15 @@ var flatten = function(map) {
     ads = map[pages[i]];
     for (var j = 0; j < ads.length; j++)
       result.push(ads[j]);
-      // result.push.apply(result, ads); // TODO
   }
   return result;
 }
 
 var initialize = function() {
 
-  var adlist = flatten(admap);
-
-  count = Math.max(0, 1 + (Math.max.apply(Math,
-    adlist.map(function(ad) {
+  // compute the highest id in our admap
+  count = Math.max(0, (Math.max.apply(Math,
+    flatten(admap).map(function(ad) {
       return ad.id;
     }))));
 
@@ -71,14 +69,87 @@ var computeHash = function(ad) {
     hash += ad.contentData[key] + '::';
   }
   hash += ad.title;
-  //console.log(hash);
   return hash;
 }
 
-var adsForPage = function(pageUrl) {
+var stringNotEmpty = function(s) {
+    return typeof s === 'string' && s !== '';
+};
 
-  var ads = [];
-  var mapEntry = admap[pageUrl];
+var visitURL = function(url, onLoad, onError) {
+
+    console.log('adnauseam.visitURL("%s"):', url);
+
+    if ( typeof onError !== 'function' ) {
+        onError = onLoad;
+    }
+
+    var onResponseReceived = function() {
+
+        this.onload = this.onerror = this.ontimeout = null;
+
+        // xhr for local files gives status 0, but actually succeeds
+        var status = this.status || 200;
+        if ( status < 200 || status >= 300 ) {
+            return onError.call(this);
+        }
+
+        // consider an empty result to be an error
+        if (stringNotEmpty(this.responseText) === false) {
+            return onError.call(this);
+        }
+
+        return onLoad.call(this);
+    };
+
+    var onErrorReceived = function() {
+        this.onload = this.onerror = this.ontimeout = null;
+        onError.call(this);
+    };
+
+    var xhr = new XMLHttpRequest();
+    try {
+        xhr.open('get', url, true);
+        xhr.timeout = xhrTimeout;
+        xhr.onload = onResponseReceived;
+        xhr.onerror = onErrorReceived;
+        xhr.ontimeout = onErrorReceived;
+        xhr.responseType = 'text';
+        xhr.send();
+    }
+    catch (e) {
+        onErrorReceived.call(xhr);
+    }
+};
+
+var onVisitSuccess = function() {
+    if (!stringNotEmpty(this.responseText)) {
+        console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+        return;
+    }
+    // update ad
+    // update global stats
+    // send message to menu/vault (if open)
+};
+
+var onVisitError = function() {
+    console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
+    // update ad
+    // if 3rd failure, give-up and update global stats
+};
+
+/******************************* API ***************************************/
+
+var visitAd = function(url, onLoad, onError) {
+}
+
+var adsForVault = function(pageUrl) {
+}
+
+var adsForMenu = function(pageUrl) {
+
+  var ads = [], mapEntry = admap[pageUrl];
   if (mapEntry) {
     var keys = Object.keys(mapEntry);
     for (var i = 0; i < keys.length; i++) {
@@ -101,9 +172,6 @@ var registerAd = function(ad, pageUrl, pageDomain) {
     admap[pageUrl] = adsOnPage;
   }
 
-  // var existing = adsOnPage[computeHash(ad)];
-  // if (existing) console.log("overwriting: "+existing.id);
-
   // this will overwrite an older ad with the same key
   adsOnPage[ computeHash(ad) ] = ad;
 
@@ -115,8 +183,10 @@ initialize();
 /******************************************************************************/
 
 return {
+  visitAd: visitAd,
   registerAd: registerAd,
-  adsForPage: adsForPage
+  adsForMenu: adsForMenu,
+  adsForVault: adsForVault
 };
 
 /******************************************************************************/

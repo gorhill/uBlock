@@ -77,7 +77,7 @@ var onMessage = function(request, sender, callback) {
           console.log("[ERROR] no pageStore!");
         }
 
-        response = µb.adnauseam.adsForPage(pageStore.rawURL);
+        response = µb.adnauseam.adsForMenu(pageStore.rawURL);
         break;
 
       case 'adDetected':
@@ -659,34 +659,6 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-
-    /*case 'adsForVault':
-
-      console.log('message::adsForVault()');
-      break;
-
-    case 'adsForPage':
-
-      console.log('message::adsForPage()');
-
-      pageStore = µb.pageStoreFromTabId(request.tabId);
-
-      if (pageStore === null) {
-        console.log("[ERROR] no pageStore!");
-      }
-
-      response = µb.adnauseam.adsForPage(pageStore.rawURL);
-      break;
-
-    case 'adDetected':
-
-      console.log('message::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
-
-      µb.adnauseam.registerAd(request.ad, pageStore.rawURL, pageStore.tabHostname);
-
-      response = request.ad;
-
-      break;*/
 
     case 'retrieveGenericCosmeticSelectors':
         response = {
