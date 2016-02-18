@@ -15,11 +15,8 @@
 
 ### Your settings
 
-##### Browser/version
-
-
-##### uBlock Origin version
-
+- Browser/version: 
+- uBlock Origin version: 
 
 ##### Your filter lists
 
