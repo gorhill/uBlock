@@ -670,7 +670,7 @@ widgets.outbrain.com/outbrain.js application/javascript
 # https://github.com/gorhill/uBlock/issues/1228
 window.name-defuser application/javascript
 if ( window === window.top ) {
-    window.name = null;
+	window.name = null;
 }
 
 
@@ -682,16 +682,16 @@ window.google_ad_status = 1;
 # https://github.com/gorhill/uBlock/issues/1384
 addthis.com/addthis_widget.js application/javascript
 (function() {
-    var noopfn = function() {
-        ;
-    };
-    window.addthis = {
-        addEventListener: noopfn,
-        init: noopfn,
-        layers: noopfn,
-        toolbox: noopfn,
-        update: noopfn
-    };
+	var noopfn = function() {
+		;
+	};
+	window.addthis = {
+		addEventListener: noopfn,
+		init: noopfn,
+		layers: noopfn,
+		toolbox: noopfn,
+		update: noopfn
+	};
 })();
 
 
@@ -705,4 +705,23 @@ wired-defuser.js application/javascript
 			sto(a, b);
 		}
 	};
+})();
+
+
+# https://github.com/gorhill/uBlock/issues/1059#issuecomment-185434177
+# Works for stern.de, will see if reusable.
+bcplayer-defuser.js application/javascript
+(function() {
+	var bcPlayer;
+	Object.defineProperty(window, 'bcPlayer', {
+		get: function() {
+			return bcPlayer;
+		},
+		set: function(a) {
+			bcPlayer = a;
+			a.ads = function(a) {
+				;
+			};
+		}
+	});
 })();
