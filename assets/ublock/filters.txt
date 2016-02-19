@@ -118,16 +118,8 @@ mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-it
 #   complete block.
 ||username1.link^$important
 
-# https://github.com/gorhill/uBlock/issues/641
-||c.speedtest.net/javascript/speedtest-main.js$important,inline-script,script,image,domain=c.speedtest.net
-speedtest.net###swiffycontainer canvas
-
 # https://github.com/gorhill/uBlock/issues/651
 ink361.com##.getridofAdsBlock[href^="javascript:"]
-
-# https://www.reddit.com/r/techsupport/comments/3kyd0m/sponsored_content_ads_that_only_show_up_with/
-explosm.net##.inner-wrap > .row > .columns.large-4.medium-12.small-12
-explosm.net##.fram + div[class]
 
 # http://www.extremetech.com/mobile/214358-ad-blocking-for-the-masses-part-two-adblock-browser
 # "anyone else trying it on ET find that one ziffdavis.com ad bypasses ublock0 even though it's in the default lists for block"
@@ -147,17 +139,11 @@ filmvf.net,hentaifr.net,jeu.info,tuxboard.com,xstory-fr.com##script:inject(goyav
 @@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/quant.js$script,first-party
 @@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/vquant.js$script,first-party
 
-# http://arstechnica.com/civis/viewtopic.php?f=3&t=1296357
-arstechnica.com###lg-pushdown
-
 # This prevents spurious redirections
 washingtonpost.com##script:inject(wpredirect-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
-||www.valuewalk.com/wp-content/plugins/adblade-publisher-tools$script,first-party
-www.valuewalk.com##.widgetad
-www.valuewalk.com###sidebar > div[class]:not([id])
-www.valuewalk.com##article > div > headr
+www.valuewalk.com##.entry-footer
 
 # https://github.com/gorhill/uBlock/issues/923#issuecomment-154903084
 investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space):not(#Header):not(#Content):not(#Footer):not(.region-content)
@@ -192,12 +178,6 @@ spiegel.de#@#.wrapad
 ||adternal.com/*/ad-loading.*$image,redirect=2x2-transparent.png
 ||de/*/ad_bomb/*$image,redirect=2x2-transparent.png
 ||tisoomitech.com/*/ad-image.png$image,redirect=2x2-transparent.png
-
-# https://adblockplus.org/forum/viewtopic.php?f=2&t=26700
-segmentnext.com###sidebar > div[class] > div[class] > div[class]
-segmentnext.com###sidebar > div[class] > div[class] > span[class]
-segmentnext.com###content > div > div[class] > div[class] > span[class]
-segmentnext.com###content > div > div[class] > div[class] > div[class]
 
 # http://forum.palemoon.org/viewtopic.php?f=46&t=10271#p71697
 @@||cdn.windows7themes.net/wp-content/advert.js$script,first-party
@@ -287,7 +267,7 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
 # https://github.com/gorhill/uBlock/issues/1216
 chip.de##script:inject(1216.js)
-stern.de##script:inject(bcplayer.js)
+stern.de##script:inject(bcplayer-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=40985
 # Proof of concept: no need to open ourselves to more 3rd-party scripts/frames in
