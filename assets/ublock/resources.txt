@@ -409,7 +409,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['_x','_y','_z','pz','xz','zp','zx','zy'];
+	var aa = ['_x','_y','_z','pz','xz','yz','zp','zx','zy'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -724,4 +724,24 @@ bcplayer-defuser.js application/javascript
 			};
 		}
 	});
+})();
+
+
+# Foil attempts at javascript-based redirects
+redirect-defuser.js application/javascript
+(function() {
+    var noopfn = function() {
+        ;
+    };
+    window.location.assign = window.location.replace = noopfn;
+    var href = window.location.href;
+    try {
+        Object.defineProperty(window.location, 'href', {
+            get: function() {
+                return href;
+            },
+            set: noopfn
+        });
+    } catch(ex) {
+    }
 })();

@@ -1,12 +1,12 @@
 538211a2228745b51b615b1b245cf99e assets/ublock/unbreak.txt
 62111a29f0a5cb361ba8dbae92054adb assets/ublock/redirect-resources.txt
 67590d6837f8cbd72a57e660da196e2e assets/ublock/privacy.txt
-e33bcf90f9ff0f56ebe0d6f22c6583d9 assets/ublock/filters.txt
+dfb7ad1b4767e1d1b578ee01f2c3449e assets/ublock/filters.txt
 146704ad1c0393e342afdb416762c183 assets/ublock/badware.txt
 5baa90e2da7cd6a73edff2010557ee57 assets/ublock/redirect.txt
 12b0660eebed61255fc67ad185dfd4e8 assets/ublock/experimental.txt
-5f38a79aa8063d98f7e5316068fa05f0 assets/ublock/resources.txt
-fd3bf1065012191e032f81468de43e09 assets/ublock/filter-lists.json
+4fdcea3a4c1de893519b8d9d617d73b1 assets/ublock/resources.txt
+da933e11b965eba2f3928ea6d5d979ce assets/ublock/filter-lists.json
 3605c73f21abca428c7eb69a8bc32dfe assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
 a91af77c47c302c0741c7445b0fada1a assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
