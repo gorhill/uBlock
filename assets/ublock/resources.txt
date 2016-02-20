@@ -725,23 +725,3 @@ bcplayer-defuser.js application/javascript
 		}
 	});
 })();
-
-
-# Foil attempts at javascript-based redirects
-redirect-defuser.js application/javascript
-(function() {
-    var noopfn = function() {
-        ;
-    };
-    window.location.assign = window.location.replace = noopfn;
-    var href = window.location.href;
-    try {
-        Object.defineProperty(window.location, 'href', {
-            get: function() {
-                return href;
-            },
-            set: noopfn
-        });
-    } catch(ex) {
-    }
-})();

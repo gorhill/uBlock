@@ -306,3 +306,6 @@ filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,h
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=43914#p147866
 wired.com##script:inject(wired-defuser.js)
+
+# https://github.com/gorhill/uBlock/issues/1401
+armorgames.com##a[href^="http://www.mmo123.co/"]
