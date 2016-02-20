@@ -30,7 +30,7 @@
   /******************************************************************************/
 
   var lastActivity, count, initialized, admap = {},
-    pollQueueInterval = 5000;
+    pollQueueInterval = 5000, pollingDisabled = true;
 
   // ignore adchoices
   var imageIgnores = ['http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png'];
@@ -51,7 +51,7 @@
 
     initialized = +new Date();
 
-    pollQueue();
+    if (!pollingDisabled) pollQueue();
 
     console.log('adnauseam.initialized(' + count + ')');
   };
@@ -93,6 +93,7 @@
     }
 
     var elapsed = +new Date() - lastActivity;
+
     setTimeout(pollQueue, Math.max(1, interval - elapsed)); // next poll
   }
 
@@ -240,14 +241,24 @@
 
   /******************************* API ***************************************/
 
-  var adsForVault = function (pageStore) {
+  var openVault = function(pageStore) {
+      console.log('adn.openVault()');
+      //var url = vAPI.getURL('adn-vault.html');
+      //vAPI.tabs.open('adn-vault.html');
+  }
+
+  var openLog = function(pageStore) {
+      console.log('adn.openVault()');
+  }
+
+  var adsForVault = function(pageStore) {
 
     var ads = [],
       mapEntry = admap[pageStore.rawURL];
     return ads;
   }
 
-  var adsForMenu = function (pageStore) {
+  var adsForMenu = function(pageStore) {
 
     var ads = [],
       mapEntry = admap[pageStore.rawURL];
@@ -260,7 +271,7 @@
     return ads;
   }
 
-  var registerAd = function (pageStore, ad) {
+  var registerAd = function(pageStore, ad) {
 
     var pageUrl = pageStore.rawURL,
       pageDomain = pageStore.tabHostname;
@@ -290,6 +301,8 @@
   /******************************************************************************/
 
   return {
+    openLog: openLog,
+    openVault: openVault,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
     adsForVault: adsForVault

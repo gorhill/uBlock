@@ -2,22 +2,20 @@
 
 /******************************************************************************/
 
-$(function(){
-
-    $('#x-close-button').click(function() {
-
-        window.close();
-    });
-    
-});
-
 (function() {
 
 'use strict';
 
+var messager = vAPI.messaging.channel('adnauseam');
+
+$('#x-close-button').click(function() {
+
+    window.open(location, '_self').close();
+});
+
 /******************************************************************************/
 
-var renderPage = function(ads) {
+var renderAds = function(ads) {
 
 };
 
@@ -41,7 +39,7 @@ var tabId;
         what: 'adsForVault',
         tabId: tabId
 
-    }, renderPage);
+    }, renderAds);
 
 })();
 

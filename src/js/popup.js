@@ -457,12 +457,9 @@ var renderPopup = function() {
     // https://github.com/gorhill/uBlock/issues/507
     // Convenience: open the logger with current tab automatically selected
     if ( popupData.tabId ) {
-        // uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
-        //     'href',
-        //     'logger-ui.html#tab_' + popupData.tabId
-        // );
-        uDom.nodeFromSelector('.statName > a[href^="adn-menu.html"]').setAttribute(
-            'href', 'adn-menu.html#tab_' + popupData.tabId
+        uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
+             'href',
+             'logger-ui.html#tab_' + popupData.tabId
         );
     }
 
