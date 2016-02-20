@@ -1,25 +1,8 @@
-/*******************************************************************************
+/* global vAPI, uDom */
 
-    uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see {http://www.gnu.org/licenses/}.
-
-    Home: https://github.com/gorhill/uBlock
+/* TODO
+  Store admap/pagemap in storage somewhere
 */
-
-/******************************************************************************/
 
 µBlock.adnauseam = (function () {
 
@@ -29,32 +12,51 @@
 
   /******************************************************************************/
 
-  var lastActivity, count, initialized, admap = {},
-    pollQueueInterval = 5000, pollingDisabled = true;
+  var admap, count = 0,
+    visitmap = {},
+    initialized = 0,
+    lastActivity = 0,
+    pollingDisabled = 0,
+    maxAttemptsPerAd = 3,
+    pollQueueInterval = 5000,
+    repeatVisitInterval = 60000;
 
   // ignore adchoices
-  var imageIgnores = ['http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png'];
+  var imageIgnores = [ 'http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png' ];
 
   // block scripts from these page domains (either regex or string)
-  var blockablePageDomains = []; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
+  var blockablePageDomains = [ ]; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
 
   // always block scripts from these domains (either regex or string)
   var blockableScriptDomains = ['partner.googleadservices.com'];
 
   var initialize = function () {
 
-    // compute the highest id in our admap
-    count = Math.max(0, (Math.max.apply(Math,
-      adlist().map(function (ad) {
-        return ad.id;
-      }))));
+    vAPI.storage.get(µb.adnSettings, function(result) {
 
-    initialized = +new Date();
+        admap = result.admap;
+        console.log('3', admap);
 
-    if (!pollingDisabled) pollQueue();
+        // compute the highest id in our admap
+        count = Math.max(0, (Math.max.apply(Math,
+          adlist().map(function (ad) {
+            return ad.id;
+          }))));
 
-    console.log('adnauseam.initialized(' + count + ')');
-  };
+        // modify XMLHttpRequest to store original request
+        var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+          this.requestUrl = url;
+          return XMLHttpRequest_open.apply(this, arguments);
+        };
+
+        initialized = +new Date();
+
+        if (!pollingDisabled) pollQueue();
+
+        console.log('adnauseam.initialized(' + count + ')');
+    });
+  }
 
   function byField(prop) {
 
@@ -81,10 +83,11 @@
     // 2. check for non-visited ads
     // 3.
 
-    var pending = pendingAds();
+    var elapsed = lastActivity - initialized,
+      pending = pendingAds();
 
-    console.log('pollQueue(' + (lastActivity - initialized) + ') :: ' +
-      adlist().length + ' / ' + pending.length);
+    console.log('pollQueue(' + elapsed + ') :: ' +
+      pending.length + ' / ' + adlist().length);
 
     if (pending.length) {
 
@@ -92,48 +95,22 @@
       visitAd(mostRecentAd);
     }
 
-    var elapsed = +new Date() - lastActivity;
+    var elapsed = millis() - lastActivity;
 
-    setTimeout(pollQueue, Math.max(1, interval - elapsed)); // next poll
-  }
-
-  var visitAd = function (next) {
-
-    if (/^http/.test(next.targetUrl)) {
-
-      console.log("TRYING(#" + next.id + "): " + next.targetUrl);
-
-      // tell menu/vault we have a new 'current'
-      //UIManager.updateOnAdAttempt(next);
-
-      visitUrl(next.targetUrl);
-
-    } else {
-
-      // Here we try to extract an obfuscated URL, see issue #394
-      console.warn("Visitor(MALFORMED-URL): " + next.targetUrl, next);
-
-      var idx = next.targetUrl.indexOf('http');
-      if (idx != -1) {
-
-        next.targetUrl = decodeURIComponent(next.targetUrl.substring(idx));
-        console.log("Visitor(PARSED): " + next.targetUrl);
-      }
-      else {
-        console.log("Visitor(PARSED-FAIL): " + next.targetUrl);
-      }
-    }
+    if (!pollingDisabled)
+      setTimeout(pollQueue, Math.max(1, interval - elapsed)); // next poll
   }
 
   var markActivity = function () {
 
-    return (lastActivity = +new Date());
+    return (lastActivity = millis());
   }
 
   var pendingAds = function () {
 
     return adlist().filter(function (a) {
-      return a.visitedTs === 0;
+      return a.visitedTs === 0 ||
+        (a.visitedTs < 0 && a.attempts < maxAttemptsPerAd);
     });
   }
 
@@ -169,96 +146,143 @@
     return typeof s === 'string' && s !== '';
   };
 
-  var visitUrl = function (url) {
+  var onVisitResponse = function () {
 
-    // WORKING HERE
+    //console.log('onVisitResponse', this);
 
-    console.log('adnauseam.visitUrl("%s"):', url);
+    //pollingDisabled = 1;
+
+    this.onload = this.onerror = this.ontimeout = null;
+
+    var relatedAd = visitmap[this.requestUrl];
+
+    if (!relatedAd) {
+      console.error('Request received without Ad: ' + this.responseUrl);
+      return;
+    }
+
+    // xhr for local files gives status 0, but actually succeeds
+    var status = this.status || 200,
+      html = this.responseText;
+    if (status < 200 || status >= 300 || !stringNotEmpty(html)) {
+      return onVisitError.call(this, relatedAd);
+    }
+
+    var title = html.match(/<title[^>]*>([^<]+)<\/title>/)[1];
+    if (title)
+      relatedAd.title = title;
+    else {
+      console.warn('unable to parse title from: ' + html);
+    }
+
+    relatedAd.visitedTs = millis(); // successful visit time
+
+    relatedAd.resolvedTargetUrl = this.responseURL; // URL after redirects
+
+    delete visitmap[this.requestUrl]; // remove from current visit map
+
+    console.log('VISITED: ' + relatedAd.contentType + 'Ad#' + relatedAd.id, relatedAd, this);
+
+    storeUserData();
+  };
+
+  var onVisitError = function (ad, e) {
+
+    console.error('onVisitError()', ad, this);
+    this.onload = this.onerror = this.ontimeout = null;
+
+    if (ad) {
+
+      ad.visitedTs = -1 * millis();
+      if (!ad.errors) ad.errors = [];
+      ad.errors.push(this.status + ' (' + this.statusText + ')' + (e ? ' ' + e : ''));
+    }
+  };
+
+  var visitAd = function (ad) {
+
+    var url = ad.targetUrl;
+
+    if (ad.attempts == maxAttemptsPerAd) // double-check
+      return false;
+
+    //console.log('visitAd("%s"):', url);
+
+    // tell menu/vault we have a new 'current'
+    //UIManager.updateOnAdAttempt(next);
+
+
+    // TODO: check visitmap to see ad is not already in process of being visited (or has timed-out)
 
     markActivity();
-
-    var onResponseReceived = function () {
-
-      console.log('adnauseam.onResponseReceived()');
-
-      this.onload = this.onerror = this.ontimeout = null;
-
-      // xhr for local files gives status 0, but actually succeeds
-      var status = this.status || 200;
-      if (status < 200 || status >= 300) {
-        return onErrorReceived.call(this);
-      }
-
-      // consider an empty result to be an error
-      if (stringNotEmpty(this.responseText) === false) {
-        return onErrorReceived.call(this);
-      }
-    };
-
-    var onErrorReceived = function () {
-
-      console.log('adnauseam.onErrorReceived()');
-      this.onload = this.onerror = this.ontimeout = null;
-    };
 
     var xhr = new XMLHttpRequest();
+
+    ad.attempts++;
+    visitmap[url] = ad; // add to current visits
+
     try {
+
       xhr.open('get', url, true);
-      xhr.timeout = xhrTimeout;
-      xhr.onload = onResponseReceived;
-      xhr.onerror = onErrorReceived;
-      xhr.ontimeout = onErrorReceived;
-      xhr.responseType = 'text';
+      xhr.timeout = 5000;
+      xhr.onload = onVisitResponse;
+      xhr.onerror = onVisitError;
+      xhr.ontimeout = onVisitError;
+      xhr.responseType = ''; // 'document'?;
       xhr.send();
+
     } catch (e) {
-      onErrorReceived.call(xhr);
+
+      onErrorReceived.call(xhr, ad);
     }
   };
 
-  var onVisitSuccess = function () {
+  var storeUserData = function(immediate) {
 
-    markActivity();
+      // TODO: defer if we've recently written and !immediate
+      µb.adnSettings.admap = admap;
+      vAPI.storage.set(µb.adnSettings);
+  }
 
-    if (!stringNotEmpty(this.responseText)) {
-      console.log('onVisitSuccess -> ' + responseText.length);
-      // console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
-      // cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
-      // return;
-    } else {
-      console.log('onVisitSuccess FAIL: ' + this.responseText);
+  var validateTargetUrl = function(next) {
+
+    if (!/^http/.test(next.targetUrl)) {
+
+      // Here we try to extract an obfuscated URL
+      //console.log("Ad.targetUrl(malformed): " + next.targetUrl);
+
+      var idx = next.targetUrl.indexOf('http');
+      if (idx != -1) {
+        next.targetUrl = decodeURIComponent(next.targetUrl.substring(idx));
+        //console.log("Ad.targetUrl Updated: " + next.targetUrl);
+
+      } else {
+
+        console.warn("Ad.targetUrl(PARSE-FAIL!!!): " + next.targetUrl);
+      }
     }
-    // update ad
-    // update global stats
-    // send message to menu/vault (if open)
-  };
-
-  var onVisitError = function () {
-    markActivity();
-    console.error(errorCantConnectTo.replace('{{url}}', this.url));
-    // update ad
-    // if 3rd failure, give-up and update global stats
-  };
+  }
 
   /******************************* API ***************************************/
 
-  var openVault = function(pageStore) {
-      console.log('adn.openVault()');
-      //var url = vAPI.getURL('adn-vault.html');
-      //vAPI.tabs.open('adn-vault.html');
+  var openVault = function (pageStore) {
+    console.log('adn.openVault()');
+    //var url = vAPI.getURL('adn-vault.html');
+    //vAPI.tabs.open('adn-vault.html');
   }
 
-  var openLog = function(pageStore) {
-      console.log('adn.openVault()');
+  var openLog = function (pageStore) {
+    console.log('adn.openVault()');
   }
 
-  var adsForVault = function(pageStore) {
+  var adsForVault = function (pageStore) {
 
     var ads = [],
       mapEntry = admap[pageStore.rawURL];
     return ads;
   }
 
-  var adsForMenu = function(pageStore) {
+  var adsForMenu = function (pageStore) {
 
     var ads = [],
       mapEntry = admap[pageStore.rawURL];
@@ -271,27 +295,52 @@
     return ads;
   }
 
-  var registerAd = function(pageStore, ad) {
+  var millis = function () {
+    return +new Date();
+  }
+
+  var registerAd = function (pageStore, ad) {
 
     var pageUrl = pageStore.rawURL,
       pageDomain = pageStore.tabHostname;
+
+    validateTargetUrl(ad);
+
+    var adsOnPage = admap[pageUrl];
+
+    if (!adsOnPage)
+      admap[pageUrl] = (adsOnPage = {});
+
+    var adhash = computeHash(ad);
+
+    if (adsOnPage[adhash]) { // this is a duplicate
+
+      var orig = adsOnPage[adhash],
+        msSinceFound = millis() - orig.foundTs;
+
+      if (msSinceFound < repeatVisitInterval) {
+        console.log('DUPLICATE: ' + orig.contentType +
+            'Ad#' + orig.id + ' found '+msSinceFound+' ms ago');
+        return;
+      }
+    }
 
     ad.id = ++count;
     ad.domain = pageDomain;
     ad.pageUrl = pageUrl;
 
-    var adsOnPage = admap[pageUrl];
-
-    if (!adsOnPage) {
-      adsOnPage = {};
-      admap[pageUrl] = adsOnPage;
-    }
-
     // this will overwrite an older ad with the same key
-    adsOnPage[computeHash(ad)] = ad;
-    //admap[pageUrl] = adsOnPage;
+    adsOnPage[adhash] = ad;
 
-    console.log('adnauseam.registerAd: #' + ad.id + '/' + adlist().length);
+    console.log('DETECTED: ' + ad.contentType + 'Ad#' + ad.id, ad);
+
+    storeUserData();
+    /*vAPI.storage.set(µb.adnSettings, function() {
+        vAPI.storage.get(µb.adnSettings, function(result){
+            console.log('Settings', result);
+            //console output = myVariableKeyName {myTestVar:'my test var'}
+        });
+    });*/
 
     return ad;
   };

@@ -1522,7 +1522,7 @@ var onMessage = function(request, sender, callback) {
 
       case 'adDetected':
 
-        console.log('adnMessage::adDetected('+request.ad.contentType+')#'+request.ad.id, request.ad);
+        //console.log('adnMessage::adDetected()';
         response = µb.adnauseam.registerAd(pageStore, request.ad);
         break;
 

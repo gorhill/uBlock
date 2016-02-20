@@ -88,7 +88,7 @@ var onBeforeRequest = function(details) {
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
-    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
+    var newResult = µb.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
 
     pageStore.logRequest(requestContext, newResult);
 

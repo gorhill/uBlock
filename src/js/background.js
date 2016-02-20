@@ -49,6 +49,11 @@ var defaultExternalLists = [
 return {
     firstInstall: false,
 
+    adnSettings: {
+      noBlockingNonTrackers: true,
+      admap: {}
+    },
+
     userSettings: {
         advancedUserEnabled: false,
         autoUpdate: true,
@@ -66,7 +71,6 @@ return {
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
         showIconBadge: true,
-        noBlockingNonTrackers: true,
         tooltipsDisabled: false,
         webrtcIPAddressHidden: false
     },
@@ -211,8 +215,6 @@ return {
 
     scriptlets: {
     },
-
-    admap: {},
 
     // so that I don't have to care for last comma
     dummy: 0

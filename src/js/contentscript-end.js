@@ -104,22 +104,20 @@ var adDetector = (function() {
   };
 
   /******************************************************************************/
-  function Ad(network, pageTitle, pageUrl, targetUrl, contentType) {
+  var Ad = function(network, pageTitle, pageUrl, targetUrl, contentType) {
 
-    if (typeof Ad.ID === 'undefined') Ad.ID = 0;
-
-    this.id = ++Ad.ID;
+    this.id = null;
     this.title = 'Pending';
     this.attempts = 0;
-    this.visitedTs = 0;
     this.foundTs = +new Date();
+    this.visitedTs = 0; // 0=unvisited, -timestamp=error, timestamp=ok
+    this.attemptedTs = 0;
     this.contentType = contentType;
     this.targetUrl = targetUrl;
     this.pageTitle = pageTitle;
     this.pageUrl = pageUrl;
-    this.resolvedTargetUrl;
-    this.errors = [];
-    this.path = []; // redirects?
+    this.resolvedTargetUrl = null;
+    this.errors = null;
   };
 
   var notifyAddon = function(node, ad) {
