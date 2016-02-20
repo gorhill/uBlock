@@ -263,3 +263,6 @@ marketwatch.com#@#.advertisement
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=28590
 phoronix.com#@#div[style^="text-align: center;"]
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=28701
+@@||files.explosm.net/files/$image,first-party

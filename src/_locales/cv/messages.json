@@ -108,11 +108,11 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"Пурте",
+    "message":"пурте",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"Ӳкерчӗксем",
+    "message":"ӳкерчӗксем",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -288,7 +288,7 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Вӑрттӑнлӑх",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{

@@ -57,6 +57,18 @@
 		"lang": "zh",
 		"supportURL": "http://abpchina.org/forum/forum.php"
 	},
+	"https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": {
+		"off": true,
+		"title": "CHN: CJX's EasyList Lite (main focus on Chinese sites)",
+		"group": "regions",
+		"supportURL": "https://github.com/cjx82630/cjxlist"
+	},
+	"https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt": {
+		"off": true,
+		"title": "CHN: CJX's Annoyance List",
+		"group": "regions",
+		"supportURL": "https://github.com/cjx82630/cjxlist"
+	},
 	"https://easylist-downloads.adblockplus.org/easylistdutch.txt": {
 		"off": true,
 		"title": "NLD: EasyList Dutch",
@@ -236,12 +248,6 @@
 		"group": "regions",
 		"lang": "he",
 		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
-	},
-	"https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": {
-		"off": true,
-		"title": "CHN: China: cjxlist (main focus on Chinese sites)",
-		"group": "regions",
-		"supportURL": "https://github.com/cjx82630/cjxlist"
 	},
 	"https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
 		"off": true,

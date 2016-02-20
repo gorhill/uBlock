@@ -409,7 +409,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['_x','_y','_z','pz','xz','zp','zx','zy'];
+	var aa = ['_x','_y','_z','pz','xz','yz','zp','zx','zy'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -670,7 +670,7 @@ widgets.outbrain.com/outbrain.js application/javascript
 # https://github.com/gorhill/uBlock/issues/1228
 window.name-defuser application/javascript
 if ( window === window.top ) {
-    window.name = null;
+	window.name = null;
 }
 
 
@@ -682,14 +682,66 @@ window.google_ad_status = 1;
 # https://github.com/gorhill/uBlock/issues/1384
 addthis.com/addthis_widget.js application/javascript
 (function() {
+	var noopfn = function() {
+		;
+	};
+	window.addthis = {
+		addEventListener: noopfn,
+		init: noopfn,
+		layers: noopfn,
+		toolbox: noopfn,
+		update: noopfn
+	};
+})();
+
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=43914#p147866
+wired-defuser.js application/javascript
+(function() {
+	var sto = window.setTimeout,
+		re = /^function n\(\)/;
+	window.setTimeout = function(a, b) {
+		if ( b !== 50 || !re.test(a.toString()) ) {
+			sto(a, b);
+		}
+	};
+})();
+
+
+# https://github.com/gorhill/uBlock/issues/1059#issuecomment-185434177
+# Works for stern.de, will see if reusable.
+bcplayer-defuser.js application/javascript
+(function() {
+	var bcPlayer;
+	Object.defineProperty(window, 'bcPlayer', {
+		get: function() {
+			return bcPlayer;
+		},
+		set: function(a) {
+			bcPlayer = a;
+			a.ads = function(a) {
+				;
+			};
+		}
+	});
+})();
+
+
+# Foil attempts at javascript-based redirects
+redirect-defuser.js application/javascript
+(function() {
     var noopfn = function() {
         ;
     };
-    window.addthis = {
-        addEventListener: noopfn,
-        init: noopfn,
-        layers: noopfn,
-        toolbox: noopfn,
-        update: noopfn
-    };
+    window.location.assign = window.location.replace = noopfn;
+    var href = window.location.href;
+    try {
+        Object.defineProperty(window.location, 'href', {
+            get: function() {
+                return href;
+            },
+            set: noopfn
+        });
+    } catch(ex) {
+    }
 })();
