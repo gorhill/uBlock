@@ -4,7 +4,7 @@ html {
 
 body {
 	height: 100%;
-	background: #000 url(img/gray_grid.png);
+	background: #000 url(../../img/adn/gray_grid.png);
 	color: #4C4D4C;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0;
@@ -297,7 +297,7 @@ div.tooltip {
 #logo a {
 	width: 75px;
 	height: 75px;
-	background: url(img/adn_black.png);
+	background: url(../../img/adn/adn_black.png);
 	background-size: 100%;
 	opacity: 0.8;
 	display: block;
