@@ -7,8 +7,8 @@
 
   /******************************************************************************/
 
-  var adsonpage = self.adsonpage = {};
-  var adnmessager = adsonpage.messager = vAPI.messaging.channel('adnauseam');
+  //var adsonpage = self.adsonpage = {};
+  //var adnmessager = adsonpage.messager = vAPI.messaging.channel('adnauseam');
 
   var renderPage = function (ads) {
 
@@ -186,16 +186,21 @@
       //hashFromPopupData(true);
       //pollForContentChange();
       console.log("tabId: ", popupData.tabId);
+
       adnmessager.send({
         what: 'adsForMenu',
         tabId: popupData.tabId
       }, renderPage);
+
     };
+
     messager.send({
       what: 'getPopupData',
       tabId: tabId
     }, onDataReceived);
   };
+
+  var adnmessager = vAPI.messaging.channel('adnauseam');
   var messager = vAPI.messaging.channel('popup.js');
 
   /******************************************************************************/
@@ -299,7 +304,6 @@
 
   var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
 
-  // cannot declare as const on Safari platform in strict mode
   $('#about-button').click(function () {
 
     window.open(AboutURL);

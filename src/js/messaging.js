@@ -1504,19 +1504,14 @@ var onMessage = function(request, sender, callback) {
 
       case 'adsForVault':
 
-        console.log('adnMessage::adsForVault('+request.tabId+')');
-        response = µb.adnauseam.adsForVault(µb.pageStoreFromTabId(request.tabId));
+        //console.log('adnMessage::adsForVault()');
+        response = µb.adnauseam.adsForVault(pageStore);
+        console.log('response: ',response);
         break;
-
-      /*case 'openVault':
-
-        console.log('adnMessage::openVault()', request);
-        response = µb.adnauseam.openVault(pageStore);
-        break;*/
 
       case 'adsForMenu':
 
-        console.log('adnMessage::adsForMenu('+request.tabId+')');
+        //console.log('adnMessage::adsForMenu()');
         response = µb.adnauseam.adsForMenu(µb.pageStoreFromTabId(request.tabId));
         break;
 

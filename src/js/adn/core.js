@@ -1,7 +1,7 @@
 /* global vAPI, uDom */
 
 /* TODO
-  Store admap/pagemap in storage somewhere
+
 */
 
 µBlock.adnauseam = (function () {
@@ -12,7 +12,8 @@
 
   /******************************************************************************/
 
-  var admap, count = 0,
+  var admap, current,
+    count = 0,
     visitmap = {},
     initialized = 0,
     lastActivity = 0,
@@ -30,47 +31,28 @@
   // always block scripts from these domains (either regex or string)
   var blockableScriptDomains = ['partner.googleadservices.com'];
 
-  var initialize = function () {
+  var initialize = function (settings) {
 
-    vAPI.storage.get(µb.adnSettings, function(result) {
+    admap = settings.admap;
 
-        admap = result.admap;
-        console.log('3', admap);
+    // compute the highest id in our admap
+    count = Math.max(0, (Math.max.apply(Math,
+      adlist().map(function (ad) {
+        return ad.id;
+      }))));
 
-        // compute the highest id in our admap
-        count = Math.max(0, (Math.max.apply(Math,
-          adlist().map(function (ad) {
-            return ad.id;
-          }))));
-
-        // modify XMLHttpRequest to store original request
-        var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function (method, url) {
-          this.requestUrl = url;
-          return XMLHttpRequest_open.apply(this, arguments);
-        };
-
-        initialized = +new Date();
-
-        if (!pollingDisabled) pollQueue();
-
-        console.log('adnauseam.initialized(' + count + ')');
-    });
-  }
-
-  function byField(prop) {
-
-    var sortOrder = 1;
-
-    if (prop[0] === "-") {
-      sortOrder = -1;
-      prop = prop.substr(1);
-    }
-
-    return function (a, b) {
-      var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
-      return result * sortOrder;
+    // modify XMLHttpRequest to store original request
+    var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      this.requestUrl = url;
+      return XMLHttpRequest_open.apply(this, arguments);
     };
+
+    initialized = +new Date();
+
+    console.log('adnauseam.initialized(' + count + ')', admap);
+
+    if (!pollingDisabled) pollQueue();
   }
 
   var pollQueue = function (interval) {
@@ -79,9 +61,7 @@
 
     markActivity();
 
-    // 1. check options.disabled
-    // 2. check for non-visited ads
-    // 3.
+    // TODO check options.disabled
 
     var elapsed = lastActivity - initialized,
       pending = pendingAds();
@@ -91,8 +71,8 @@
 
     if (pending.length) {
 
-      var mostRecentAd = pending.sort(byField('-foundTs'))[0];
-      visitAd(mostRecentAd);
+      current = pending.sort(byField('-foundTs'))[0];
+      visitAd(current);
     }
 
     var elapsed = millis() - lastActivity;
@@ -131,7 +111,22 @@
     return result;
   }
 
-  var computeHash = function (ad) {
+/* TODO: remove from here, ref in shared
+  function byField(prop) { //
+
+    var sortOrder = 1;
+
+    if (prop[0] === "-") {
+      sortOrder = -1;
+      prop = prop.substr(1);
+    }
+
+    return function (a, b) {
+      var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+      return result * sortOrder;
+    };
+  }
+  var computeHash = function (ad) { // TODO: remove from here, ref in shared
 
     var hash = '';
     for (var key in ad.contentData) {
@@ -140,17 +135,14 @@
     hash += ad.title;
     return hash;
   }
-
   var stringNotEmpty = function (s) {
 
     return typeof s === 'string' && s !== '';
   };
-
+*/
   var onVisitResponse = function () {
 
     //console.log('onVisitResponse', this);
-
-    //pollingDisabled = 1;
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -162,22 +154,22 @@
     }
 
     // xhr for local files gives status 0, but actually succeeds
-    var status = this.status || 200,
-      html = this.responseText;
+    var status = this.status || 200, html = this.responseText;
     if (status < 200 || status >= 300 || !stringNotEmpty(html)) {
       return onVisitError.call(this, relatedAd);
     }
 
-    var title = html.match(/<title[^>]*>([^<]+)<\/title>/)[1];
-    if (title)
-      relatedAd.title = title;
+    var title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    if (title && title.length > 1) {
+      relatedAd.title = title[1].trim();
+    }
     else {
-      console.warn('unable to parse title from: ' + html);
+      console.warn('Unable to parse title from: ' + html);
     }
 
-    relatedAd.visitedTs = millis(); // successful visit time
-
     relatedAd.resolvedTargetUrl = this.responseURL; // URL after redirects
+
+    relatedAd.visitedTs = millis();       // successful visit time
 
     delete visitmap[this.requestUrl]; // remove from current visit map
 
@@ -214,11 +206,11 @@
 
     // TODO: check visitmap to see ad is not already in process of being visited (or has timed-out)
 
-    markActivity();
-
+    var now = markActivity()
     var xhr = new XMLHttpRequest();
 
     ad.attempts++;
+    ad.attemptedTs = now;
     visitmap[url] = ad; // add to current visits
 
     try {
@@ -265,21 +257,23 @@
 
   /******************************* API ***************************************/
 
-  var openVault = function (pageStore) {
-    console.log('adn.openVault()');
-    //var url = vAPI.getURL('adn-vault.html');
-    //vAPI.tabs.open('adn-vault.html');
-  }
+  // var openVault = function (pageStore) {
+  //   console.log('adn.openVault()');
+  //   //var url = vAPI.getURL('adn-vault.html');
+  //   //vAPI.tabs.open('adn-vault.html');
+  // }
+  //
+  // var openLog = function (pageStore) {
+  //
+  //   console.log('adn.openLog()');
+  // }
 
-  var openLog = function (pageStore) {
-    console.log('adn.openVault()');
-  }
-
-  var adsForVault = function (pageStore) {
-
-    var ads = [],
-      mapEntry = admap[pageStore.rawURL];
-    return ads;
+  var adsForVault = function () {
+    var json = {};
+    json.data = adlist();
+    json.current = current;
+    console.log('adn.adsForVault() :: '+json.data.length);
+    return json;
   }
 
   var adsForMenu = function (pageStore) {
@@ -345,13 +339,11 @@
     return ad;
   };
 
-  initialize();
+  vAPI.storage.get(µb.adnSettings, initialize);
 
   /******************************************************************************/
 
   return {
-    openLog: openLog,
-    openVault: openVault,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
     adsForVault: adsForVault
