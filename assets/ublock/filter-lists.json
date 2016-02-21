@@ -233,7 +233,7 @@
 	"mirror1.malwaredomains.com/files/justdomains": {
 		"title": "Malware domains",
 		"group": "malware",
-		"homeURL": "http://malwaredomains.lehigh.edu/files/justdomains",
+		"homeURL": "https://mirror.cedia.org.ec/malwaredomains/justdomains",
 		"supportURL": "http://www.malwaredomains.com/"
 	},
 	"pgl.yoyo.org/as/serverlist": {
@@ -350,7 +350,7 @@
 	"www.malwaredomainlist.com/hostslist/hosts.txt": {
 		"title": "Malware Domain List",
 		"group": "malware",
-		"homeURL": "http://www.malwaredomainlist.com/hostslist/hosts.txt"
+		"homeURL": "https://www.malwaredomainlist.com/hostslist/hosts.txt"
 	},
 	"https://www.void.gr/kargig/void-gr-filters.txt": {
 		"off": true,
