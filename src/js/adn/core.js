@@ -1,7 +1,9 @@
 /* global vAPI, uDom */
 
 /* TODO
-
+  update badge
+  update menu-count
+  store totalCount
 */
 
 µBlock.adnauseam = (function () {
