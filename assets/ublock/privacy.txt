@@ -48,3 +48,6 @@
 
 # Redirect to neutered Google Analytics 
 ||google-analytics.com/analytics.js$script,redirect=google-analytics.com/analytics.js
+
+# https://github.com/gorhill/uBlock/issues/1411
+||linkr.us^$document
