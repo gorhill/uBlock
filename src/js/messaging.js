@@ -211,8 +211,8 @@ var getHostnameDict = function(hostnameToCountMap) {
                 domain: domain,
                 blockCount: blockCount,
                 allowCount: allowCount,
-                totalBlockCount: 0,
-                totalAllowCount: 0
+                totalBlockCount: blockCount,
+                totalAllowCount: allowCount
             };
         } else {
             de = r[domain];

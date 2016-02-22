@@ -286,7 +286,7 @@ housekeep itself.
         this.rawURL = stackEntry.url;
         this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
         this.rootHostname = µb.URI.hostnameFromURI(this.normalURL);
-        this.rootDomain = µb.URI.domainFromHostname(this.rootHostname);
+        this.rootDomain = µb.URI.domainFromHostname(this.rootHostname) || this.rootHostname;
     };
 
     // Called whenever a candidate root URL is spotted for the tab.
