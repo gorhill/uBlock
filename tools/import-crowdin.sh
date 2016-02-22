@@ -83,6 +83,7 @@ cp $SRC/fr/description.txt    $DES/description-fr.txt
 cp $SRC/fy-NL/description.txt $DES/description-fy.txt
 cp $SRC/gl/description.txt    $DES/description-gl.txt
 cp $SRC/he/description.txt    $DES/description-he.txt
+cp $SRC/hi/description.txt    $DES/description-hi.txt
 cp $SRC/hr/description.txt    $DES/description-hr.txt
 cp $SRC/hu/description.txt    $DES/description-hu.txt
 cp $SRC/id/description.txt    $DES/description-id.txt
@@ -92,7 +93,7 @@ cp $SRC/ko/description.txt    $DES/description-ko.txt
 cp $SRC/lt/description.txt    $DES/description-lt.txt
 cp $SRC/lv/description.txt    $DES/description-lv.txt
 cp $SRC/ms/description.txt    $DES/description-ms.txt
-#cp $SRC/mr/description.txt $DES/description-mr.txt
+cp $SRC/mr/description.txt    $DES/description-mr.txt
 cp $SRC/no/description.txt    $DES/description-no.txt
 cp $SRC/nl/description.txt    $DES/description-nl.txt
 cp $SRC/pl/description.txt    $DES/description-pl.txt
