@@ -51,3 +51,6 @@
 
 # https://github.com/gorhill/uBlock/issues/1411
 ||linkr.us^$document
+
+# https://www.reddit.com/r/firefox/comments/3pwcey/firefox_extension_download_manager_s3_asks_for/
+||icontent.us^$document
