@@ -309,3 +309,7 @@ wired.com##script:inject(wired-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/1401
 armorgames.com##a[href^="http://www.mmo123.co/"]
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=28700
+||exoclick.com^$important,domain=debridfast.com
+||www.debridfast.com/bilokiyofdsdf.js$script

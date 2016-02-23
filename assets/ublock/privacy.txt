@@ -48,3 +48,9 @@
 
 # Redirect to neutered Google Analytics 
 ||google-analytics.com/analytics.js$script,redirect=google-analytics.com/analytics.js
+
+# https://github.com/gorhill/uBlock/issues/1411
+||lnkr.us^$document
+
+# https://www.reddit.com/r/firefox/comments/3pwcey/firefox_extension_download_manager_s3_asks_for/
+||icontent.us^$document
