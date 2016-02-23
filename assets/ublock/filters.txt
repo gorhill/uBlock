@@ -308,7 +308,7 @@ filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,h
 wired.com##script:inject(wired-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/1401
-armorgames.com##a[href^="http://www.mmo123.co/"]
+armorgames.com,mmohuts.com,newgrounds.com,onrpg.com,silvergames.com##a[href^="http://www.mmo123.co/"]
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=28700
 ||exoclick.com^$important,domain=debridfast.com
