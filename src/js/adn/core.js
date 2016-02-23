@@ -36,6 +36,8 @@
 
   var initialize = function (settings) {
 
+console.log(settings);
+
     admap = (settings && settings.admap) || {};
 
     // compute the highest id in our admap
@@ -105,10 +107,12 @@
 
     for (var i = 0; i < pages.length; i++) {
 
-      var hashes = Object.keys(admap[pages[i]]);
+      if (admap[pages[i]]) {
+        var hashes = Object.keys(admap[pages[i]]);
 
-      for (var j = 0; j < hashes.length; j++)
-        result.push(admap[pages[i]][hashes[j]]);
+        for (var j = 0; j < hashes.length; j++)
+          result.push(admap[pages[i]][hashes[j]]);
+      }
     }
 
     return result;
@@ -163,6 +167,8 @@
       if (!ad.errors) ad.errors = [];
       ad.errors.push(this.status + ' (' + this.statusText + ')' + (e ? ' ' + e : ''));
     }
+
+    delete visitmap[this.requestUrl];
   };
 
   var visitAd = function (ad) {
@@ -176,15 +182,19 @@
 
     // tell menu/vault we have a new 'current'
     //UIManager.updateOnAdAttempt(next);
+    ad.attempts++;
+    ad.attemptedTs = now;
 
+    if (!/^http/.test(url)) { // only visit http/https
+      console.warn("Aborting Visit::Bad targetURL: "+url);
+      return;
+    }
 
     // TODO: check visitmap to see ad is not already in process of being visited (or has timed-out)
 
     var now = markActivity()
     var xhr = new XMLHttpRequest();
 
-    ad.attempts++;
-    ad.attemptedTs = now;
     visitmap[url] = ad; // add to current visits
 
     try {
@@ -312,6 +322,7 @@
   };
 
   var updateBadge = (function() {
+
       var tabIdToTimer = Object.create(null);
 
       var updateBadgeImpl = function(tabId) {
@@ -331,6 +342,12 @@
       };
 
       return function(tabId) {
+
+          //console.log("UpdateBadge: "+tabId);
+
+          if (!µb.userSettings.showIconBadge) {
+              return;
+          }
           if ( tabIdToTimer[tabId] ) {
               return;
           }
@@ -347,6 +364,7 @@
   /******************************************************************************/
 
   return {
+    updateBadge: updateBadge,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
     adsForVault: adsForVault

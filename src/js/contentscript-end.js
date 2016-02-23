@@ -127,7 +127,6 @@ var adDetector = (function() {
 
   var filters = [
     {
-      tagName: 'li',
       selector: 'li.ads-ad',
       handler: googleText,
       name: 'adsense-1'
@@ -182,10 +181,6 @@ var adDetector = (function() {
 
     for (var i = 0; i < filters.length; i++) {
 
-      if (elem.tagName !== filters[i].tagName) { // check tag first
-        continue;
-      }
-
       if ($is(elem, filters[i].selector)) {
 
         var result = filters[i].handler(elem);
@@ -223,7 +218,7 @@ var adDetector = (function() {
           }*/
           //else { // search for text-ad
 
-              //console.log("PARSING TEXT: ", elem);
+          console.log("PARSING TEXT: ", elem);
           var ad = checkFilters(elem);
           if (ad) notifyAddon(elem, ad);
           //}
@@ -1300,7 +1295,7 @@ var detectAds = function() {
     }
 }
 
-//setTimeout(detectAds, 100);
+//setTimeout(detectAds, 100); // Is this (and above function) needed?
 
 //})();
 

@@ -130,7 +130,12 @@ var update = function(tabId) {
 
 var currentBits = 0;
 
-vAPI.contextMenu.onMustUpdate = update;
+// TODO: this gets called way top frequently
+vAPI.contextMenu.onMustUpdate = function(tabId) {
+    µb.adnauseam.updateBadge(tabId);
+    update(tabId);
+}
+// vAPI.contextMenu.onMustUpdate = update; // orig
 
 /******************************************************************************/
 
