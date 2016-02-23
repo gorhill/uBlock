@@ -4,6 +4,8 @@
   update badge
   update menu-count
   store totalCount
+  on-visit: if menu is open, update title & state
+  recent-ads in menu
 */
 
 µBlock.adnauseam = (function () {
@@ -68,8 +70,8 @@
     var elapsed = lastActivity - initialized,
       pending = pendingAds();
 
-    console.log('pollQueue(' + elapsed + ') :: ' +
-      pending.length + ' / ' + adlist().length);
+    //console.log('pollQueue(' + elapsed + ') :: ' +
+      //pending.length + ' / ' + adlist().length);
 
     if (pending.length) {
 
@@ -309,7 +311,7 @@
 
     var adhash = computeHash(ad);
 
-    if (adsOnPage[adhash]) { // this is a duplicate
+    if (adsOnPage[adhash]) { // this may be a duplicate
 
       var orig = adsOnPage[adhash],
         msSinceFound = millis() - orig.foundTs;
@@ -331,12 +333,6 @@
     console.log('DETECTED: ' + ad.contentType + 'Ad#' + ad.id, ad);
 
     storeUserData();
-    /*vAPI.storage.set(µb.adnSettings, function() {
-        vAPI.storage.get(µb.adnSettings, function(result){
-            console.log('Settings', result);
-            //console output = myVariableKeyName {myTestVar:'my test var'}
-        });
-    });*/
 
     return ad;
   };

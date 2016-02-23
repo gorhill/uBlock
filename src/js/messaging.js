@@ -1502,6 +1502,18 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
 
+      case 'deleteAdset':   //  vault
+        console.log('adnMessage::deleteAdset('+request.ids+')');
+        break;
+
+      case 'itemInspected': //  vault
+        console.log('adnMessage::itemInspected('+request.id+')');
+        break;
+
+      case 'refreshVault':  //  vault
+        console.log('adnMessage::refreshVault()');
+        break;
+
       case 'adsForVault':
 
         //console.log('adnMessage::adsForVault()');
@@ -1512,7 +1524,7 @@ var onMessage = function(request, sender, callback) {
       case 'adsForMenu':
 
         //console.log('adnMessage::adsForMenu()');
-        response = µb.adnauseam.adsForMenu(µb.pageStoreFromTabId(request.tabId));
+        response = µb.adnauseam.adsForMenu(µb.pageStoreFromTabId(request.tabId) || pageStore);
         break;
 
       case 'adDetected':

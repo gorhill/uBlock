@@ -7,9 +7,6 @@
 
   /******************************************************************************/
 
-  //var adsonpage = self.adsonpage = {};
-  //var adnmessager = adsonpage.messager = vAPI.messaging.channel('adnauseam');
-
   var renderPage = function (ads) {
 
     console.log('renderPage() :: ', ads.length);
@@ -292,8 +289,10 @@
   $('#settings-open').click(function () {
 
     // TODO: open uBlock settings here
-    $('.page').toggleClass('hide');
-    $('.settings').toggleClass('hide');
+    window.open("./popup.html", '_self');
+
+    //$('.page').toggleClass('hide');
+    //$('.settings').toggleClass('hide');
   });
 
   $('#settings-close').click(function () {

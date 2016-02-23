@@ -37,11 +37,6 @@ var gAds, gAdSets, gMin, gMax; // stateful
 
 /********************************************************************/
 
-$('#x-close-button').click(function() {
-
-    window.open(location, '_self').close();
-});
-
 var renderAds = function(json) {
 
   gAds = json.data; // store
@@ -778,10 +773,9 @@ function lightboxMode($selected) {
     }
 
     var next = selectedAdSet.nextPending(); // tell the addon
-    if (next && self.port) {
 
-      self.port.emit("item-inspected", { "id": next.id });
-    }
+    if (next)// self.port.emit("item-inspected", { "id": next.id });
+      messager.send({  what: 'itemInspected', adId: next.id }, function(){ });
 
     centerZoom($selected);
 
@@ -846,9 +840,10 @@ function findAdById(id) {
     }
   }
 
-  error('[ERROR] Vault: No ad for ID#' + id + " gAdSets: ", gAdSets);
+  console.error('[ERROR] Vault: No ad for ID#' + id + " gAdSets: ", gAdSets);
 
-  self.port && self.port.emit("refresh-vault");
+  //self.port && self.port.emit("refresh-vault");
+  messager.send({  what: 'refreshVault' }, function(){ });
 }
 
 function findItemDivByGid(gid) {
@@ -960,11 +955,20 @@ function addInterfaceHandlers(ads) {
 
   doFakeLocale(); // TODO: remove and implement
 
-  $('#x-close-button').click(function(e) {
+  // $('#x-close-button').click(function(e) {
+  //
+  //   e.preventDefault();
+  //
+  //   self.port && self.port.emit("close-vault");
+  // });
 
-    e.preventDefault();
-    self.port && self.port.emit("close-vault");
+  $('#x-close-button').click(function() {
+
+      e.preventDefault();
+
+      window.open(location, '_self').close();
   });
+
 
   $('#logo').click(function(e) {
 
@@ -1064,18 +1068,13 @@ function addInterfaceHandlers(ads) {
           });
 
           // tell the addon
-          self.port && self.port.emit("delete-adset", {
-            ids: selectedAdSet.childIds()
-          });
+          //self.port && self.port.emit("delete-adset", { ids: selectedAdSet.childIds() });
+          messager.send({  what: 'deleteAdset',
+            ids: selectedAdSet.childIds() }, function(){ });
 
           // recreate the slider, but don't redo layout
           createSlider(false);
 
-          break;
-
-        case "delete-all": // not enabled
-
-          self.port && self.port.emit("delete-all-similar", {});
           break;
       }
 

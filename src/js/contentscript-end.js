@@ -21,6 +21,8 @@
 
 /******************************************************************************/
 
+var dbugDetect = 0; // tmp
+
 // Injected into content pages
 //
 // jQuery functions: is, find, attr, text
@@ -39,13 +41,6 @@ if ( window.location === null ) {
 // This can happen
 if ( typeof vAPI !== 'object' ) {
     //console.debug('contentscript-end.js > vAPI not found');
-    return;
-}
-
-var USE_JQUERY = false;
-
-if ( USE_JQUERY && typeof $ !== 'function' ) {
-    console.debug('contentscript-end.js > jQuery not found');
     return;
 }
 
@@ -132,7 +127,7 @@ var adDetector = (function() {
 
   var filters = [
     {
-      //tagName: 'li',
+      tagName: 'li',
       selector: 'li.ads-ad',
       handler: googleText,
       name: 'adsense-1'
@@ -141,8 +136,6 @@ var adDetector = (function() {
   ];
 
   var $is = function (elem, selector) { // jquery shim
-
-    if (USE_JQUERY) return $(elem).is(selector);
 
     if (selector.nodeType) {
       return elem === selector;
@@ -164,13 +157,10 @@ var adDetector = (function() {
 
   var $attr = function(ele, attr) {    // jquery shim
 
-    return USE_JQUERY ? $(ele).attr(attr) :
-      (ele.length ? ele[0] : ele).getAttribute(attr);
+    return (ele.length ? ele[0] : ele).getAttribute(attr);
   };
 
   var $text = function(ele) {         // jquery shim
-
-    if (USE_JQUERY) return $(ele).text();
 
     if (typeof ele.length === 'undefined')
       return ele.innerText || ele.textContent;
@@ -185,12 +175,18 @@ var adDetector = (function() {
 
   var $find = function(ele, selector) { // jquery shim
 
-    return USE_JQUERY ? $(ele).find(selector) : ele.querySelectorAll(selector);
+    return ele.querySelectorAll(selector);
   };
 
   var checkFilters = function(elem) {
 
     for (var i = 0; i < filters.length; i++) {
+
+      if (elem.tagName !== filters[i].tagName) {
+        console.log("Wrong tag!");
+        continue;
+      }
+
       if ($is(elem, filters[i].selector)) {
         var result = filters[i].handler(elem);
         if (result) return result;
@@ -205,61 +201,77 @@ var adDetector = (function() {
     for (var i = 0; i < adNodes.length; i++) {
 
       var elem = adNodes[i];
-      //console.log(i, elem.tagName, elem);
-      //var img = checkChildrenFor(elem, 'IMG');
-      //var imgs = $(elem).find('img');
-      //console.log("Found "+imgs.length+" imgs");
+
+      if (dbugDetect) console.log(i, elem.tagName, elem);
+
+      if (elem.tagName === 'IMG') {
+        checkImages(elem, [elem]);
+        continue;
+      }
 
       var imgs = elem.querySelectorAll('img');
+      if (imgs.length) {
 
-      //console.log("Found " + imgs.length + " img(s)");
-
-      if (imgs.length > 0) {
-
-        for (var i = 0; i < imgs.length; i++) {
-
-          //var anchors = $(imgs2[i]).closest('a');
-          var imgSrc = imgs[i].getAttribute("src");
-          if (!imgSrc) {
-            console.log("No ImgSrc(#"+i+")!", imgs[i]);
-            continue;
-          }
-
-          //console.log('imgSrc: '+imgSrc);
-
-          var target = clickableParent(imgs[i]);
-          if (target) {
-
-            if (target.tagName === 'A') {
-
-              var targetUrl = target.getAttribute("href");
-              if (targetUrl) {
-                var ad = createImgAd(document.domain, targetUrl, imgSrc);
-                //console.log("IMG-AD", ad);
-                notifyAddon(elem, ad);
-              }
-              // Need to check for div.onclick etc.
-              else console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
-            }
-            else console.log("Bail: Non-anchor found: "+target.tagName);
-          }
-          else console.log("Bail: No ClickableParent: "+imgSrc);
-        }
+          checkImages(elem, imgs);
       }
-      else { // search for text-ad
+      else {
 
-        //console.log("PARSING TEXT: ", elem);
-        var ad = checkFilters(elem);
-        if (ad) notifyAddon(elem, ad);
+          /*var anchors = elem.querySelectorAll('a');
+          if (anchors.length) {
+
+              checkAnchors(elem, anchors);
+          }*/
+          //else { // search for text-ad
+
+              //console.log("PARSING TEXT: ", elem);
+              var ad = checkFilters(elem);
+              if (ad) notifyAddon(elem, ad);
+          //}
       }
     }
+  }
+
+  function checkImages(elem, imgs) {
+
+      console.log("Found " + imgs.length + " img(s)");
+
+      for (var i = 0; i < imgs.length; i++) {
+
+        var imgSrc = imgs[i].getAttribute("src");
+
+        if (!imgSrc) {
+          console.log("No ImgSrc(#"+i+")!", imgs[i]);
+          continue;
+        }
+
+        console.log('imgSrc: '+imgSrc);
+
+        var target = clickableParent(imgs[i]);
+        if (target) {
+
+          if (target.tagName === 'A') {
+
+            var targetUrl = target.getAttribute("href");
+            if (targetUrl) {
+
+              var ad = createImgAd(document.domain, targetUrl, imgSrc);
+              console.log("IMG-AD", ad);
+              notifyAddon(elem, ad);
+            }
+            // Need to check for div.onclick etc.
+            else console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
+          }
+          else console.log("Bail: Non-anchor found: "+target.tagName);
+        }
+        else console.log("Bail: No ClickableParent: "+imgSrc);
+      }
   }
 
   var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
 
   function googleText(li) {
 
-    //console.log('googleText('+USE_JQUERY+')',li);
+    //console.log('googleText()',li);
 
     var ad, title = $find(li, 'h3 a'),
       text = $find(li, '.ads-creative'),
@@ -281,24 +293,15 @@ var adDetector = (function() {
     return ad;
   }
 
-  //function createAd(network, target, type) {
-
-    // return {
-    //   type: type,
-    //   network: network,
-    //   pageUrl: document.URL,
-    //   pageTitle: document.title,
-    //   targetUrl: target,
-    // };
-  //}
-
   function createImgAd(network, target, img) {
+
+    //console.log("createImgAd: ",network, img, target);
 
     var ad = new Ad(network, document.title, document.URL, target, 'img');
 
     if (!/^http/.test(img)) { // relative image url
 
-      //console.log("Found Relative image: "+this.contentData.src);
+      if(dbugDetect) console.log("Found Relative image: "+this.contentData.src);
       img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
     }
 
@@ -325,7 +328,6 @@ var adDetector = (function() {
 
   return {
     findAds: findAds,
-    clickableParent: clickableParent
   }
 
 })();
@@ -400,6 +402,10 @@ var uBlockCollapser = (function() {
             // https://github.com/chrisaljoudi/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
             target.style.setProperty('display', 'none', 'important');
+            if(dbugDetect)console.log("HIT-onProcessed: ",target);
+
+            adDetector.findAds([ target ]);
+
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -581,7 +587,7 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
-                    console.log("HIT-NoShadow: ",elems[i]);
+                    if(dbugDetect)console.log("HIT-NoShadow: ",elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
                 }
             };
@@ -603,7 +609,7 @@ var uBlockCollapser = (function() {
                 // "Multiple shadow roots is being deprecated."
                 if ( shadow !== null ) {
                     if ( shadow.className !== sessionId ) {
-                        console.log("HIT-shadow: ",elem);
+                        if(dbugDetect) console.log("HIT-shadow: ",elem);
                         elem.style.setProperty('display', 'none', 'important');
                     }
                     continue;
@@ -618,13 +624,19 @@ var uBlockCollapser = (function() {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
-                    //console.log("CS-End.HIT: "+elem);
-                    adDetector.findAds([ elem ]);
+                    if(dbugDetect) console.log("CS.HIT: "+elem);
+
+                    //adDetector.findAds([ elem ]);
 
                 } catch (ex) {
+
                     elem.style.setProperty('display', 'none', 'important');
-                    console.log("CS-End.HIT/CATCH: ",elem);
+                    console.log("CS-End.CATCH: ",elem, ex);
+                    //throw ex;
                 }
+
+                adDetector.findAds([ elem ]);
+
             }
         };
     })();
@@ -970,6 +982,7 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
+            if(dbugDetect)console.log("HIT-AddStyle: ", selectors);
             addStyleTag(selectors);
         }
     };
@@ -1261,11 +1274,11 @@ var uBlockCollapser = (function() {
 /******************************************************************************/
 
 // run our ADN checks
-(function() {
+//(function() {
 
-  var detectAds = function() {
+var detectAds = function() {
 
-    //console.log('Loading adn-content-script on '+window.location);
+    if (dbugDetect) console.log('Loading adn-content-script on '+window.location);
 
     var injectedSelectors = [];
     var reProperties = /\s*\{[^}]+\}\s*/;
@@ -1280,14 +1293,16 @@ var uBlockCollapser = (function() {
     if (injectedSelectors.length !== 0) {
 
       var adNodes = document.querySelectorAll(injectedSelectors.join(','));
-      //console.log("Found " + adNodes.length + " matched selectors");
+
+      if (dbugDetect) console.log("Found " + adNodes.length + " matched selectors");
+
       if (adNodes.length > 0) adDetector.findAds(adNodes);
     }
-  }
+}
 
-  setTimeout(detectAds, 100);
+//setTimeout(detectAds, 100);
 
-})();
+//})();
 
 /******************************************************************************/
 
