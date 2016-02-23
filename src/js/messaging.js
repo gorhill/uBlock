@@ -1494,10 +1494,11 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response, pageStore;
+    var response, pageStore, tabId;
 
     if (sender && sender.tab) {
-      pageStore = µb.pageStoreFromTabId(sender.tab.id);
+      tabId = sender.tab.id;
+      pageStore = µb.pageStoreFromTabId(tabId);
     }
 
     switch ( request.what ) {
@@ -1530,7 +1531,7 @@ var onMessage = function(request, sender, callback) {
       case 'adDetected':
 
         //console.log('adnMessage::adDetected()';
-        response = µb.adnauseam.registerAd(pageStore, request.ad);
+        response = µb.adnauseam.registerAd(pageStore, request.ad, tabId);
         break;
 
       default:

@@ -21,7 +21,7 @@
 
 /******************************************************************************/
 
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages
 //
@@ -182,12 +182,12 @@ var adDetector = (function() {
 
     for (var i = 0; i < filters.length; i++) {
 
-      if (elem.tagName !== filters[i].tagName) {
-        console.log("Wrong tag!");
+      if (elem.tagName !== filters[i].tagName) { // check tag first
         continue;
       }
 
       if ($is(elem, filters[i].selector)) {
+
         var result = filters[i].handler(elem);
         if (result) return result;
       }
@@ -224,8 +224,8 @@ var adDetector = (function() {
           //else { // search for text-ad
 
               //console.log("PARSING TEXT: ", elem);
-              var ad = checkFilters(elem);
-              if (ad) notifyAddon(elem, ad);
+          var ad = checkFilters(elem);
+          if (ad) notifyAddon(elem, ad);
           //}
       }
     }
@@ -233,18 +233,18 @@ var adDetector = (function() {
 
   function checkImages(elem, imgs) {
 
-      console.log("Found " + imgs.length + " img(s)");
+      if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
 
       for (var i = 0; i < imgs.length; i++) {
 
         var imgSrc = imgs[i].getAttribute("src");
 
         if (!imgSrc) {
-          console.log("No ImgSrc(#"+i+")!", imgs[i]);
+          if (dbugDetect) console.log("No ImgSrc(#"+i+")!", imgs[i]);
           continue;
         }
 
-        console.log('imgSrc: '+imgSrc);
+        if (dbugDetect) console.log('imgSrc: '+imgSrc);
 
         var target = clickableParent(imgs[i]);
         if (target) {
@@ -258,12 +258,13 @@ var adDetector = (function() {
               console.log("IMG-AD", ad);
               notifyAddon(elem, ad);
             }
-            // Need to check for div.onclick etc.
-            else console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
+
+            // Need to check for div.onclick etc?
+            else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
           }
-          else console.log("Bail: Non-anchor found: "+target.tagName);
+          else if (dbugDetect) console.log("Bail: Non-anchor found: "+target.tagName);
         }
-        else console.log("Bail: No ClickableParent: "+imgSrc);
+        else if (dbugDetect) console.log("Bail: No ClickableParent: "+imgSrc);
       }
   }
 
@@ -301,7 +302,7 @@ var adDetector = (function() {
 
     if (!/^http/.test(img)) { // relative image url
 
-      if(dbugDetect) console.log("Found Relative image: "+this.contentData.src);
+      if(dbugDetect) console.log("Found relative image: "+this.contentData.src);
       img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
     }
 
@@ -631,8 +632,7 @@ var uBlockCollapser = (function() {
                 } catch (ex) {
 
                     elem.style.setProperty('display', 'none', 'important');
-                    console.log("CS-End.CATCH: ",elem, ex);
-                    //throw ex;
+                    if(dbugDetect) console.log("CS-End.CATCH: ",elem, ex);
                 }
 
                 adDetector.findAds([ elem ]);

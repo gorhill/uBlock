@@ -16,9 +16,8 @@
 
   /******************************************************************************/
 
-  var admap, current,
-    count = 0,
-    visitmap = {},
+  var admap, current, count = 0,
+    visitmap = {}, // TODO
     initialized = 0,
     lastActivity = 0,
     pollingDisabled = 0,
@@ -33,11 +32,11 @@
   var blockablePageDomains = [ ]; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
 
   // always block scripts from these domains (either regex or string)
-  var blockableScriptDomains = ['partner.googleadservices.com'];
+  var blockableScriptDomains = [ 'partner.googleadservices.com' ];
 
   var initialize = function (settings) {
 
-    admap = settings.admap;
+    admap = (settings && settings.admap) || {};
 
     // compute the highest id in our admap
     count = Math.max(0, (Math.max.apply(Math,
@@ -99,10 +98,10 @@
   }
 
   // returns all ads for a page, or all pages, if page arg is null
-  var adlist = function (page) {
+  var adlist = function(pageUrl) {
 
     var result = [],
-      pages = page ? [page] : Object.keys(admap);
+      pages = pageUrl ? [ pageUrl ] : Object.keys(admap);
 
     for (var i = 0; i < pages.length; i++) {
 
@@ -115,35 +114,6 @@
     return result;
   }
 
-/* TODO: remove from here, ref in shared
-  function byField(prop) { //
-
-    var sortOrder = 1;
-
-    if (prop[0] === "-") {
-      sortOrder = -1;
-      prop = prop.substr(1);
-    }
-
-    return function (a, b) {
-      var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
-      return result * sortOrder;
-    };
-  }
-  var computeHash = function (ad) { // TODO: remove from here, ref in shared
-
-    var hash = '';
-    for (var key in ad.contentData) {
-      hash += ad.contentData[key] + '::';
-    }
-    hash += ad.title;
-    return hash;
-  }
-  var stringNotEmpty = function (s) {
-
-    return typeof s === 'string' && s !== '';
-  };
-*/
   var onVisitResponse = function () {
 
     //console.log('onVisitResponse', this);
@@ -282,6 +252,8 @@
 
   var adsForMenu = function (pageStore) {
 
+    admap = admap || {};
+
     var ads = [],
       mapEntry = admap[pageStore.rawURL];
     if (mapEntry) {
@@ -297,7 +269,7 @@
     return +new Date();
   }
 
-  var registerAd = function (pageStore, ad) {
+  var registerAd = function(pageStore, ad, tabId) {
 
     var pageUrl = pageStore.rawURL,
       pageDomain = pageStore.tabHostname;
@@ -332,11 +304,44 @@
 
     console.log('DETECTED: ' + ad.contentType + 'Ad#' + ad.id, ad);
 
+    updateBadge(tabId);
+
     storeUserData();
 
     return ad;
   };
 
+  var updateBadge = (function() {
+      var tabIdToTimer = Object.create(null);
+
+      var updateBadgeImpl = function(tabId) {
+          delete tabIdToTimer[tabId];
+
+          var state = false;
+          var badge = '';
+
+          var pageStore = µb.pageStoreFromTabId(tabId);
+          if ( pageStore !== null ) {
+
+              state = pageStore.getNetFilteringSwitch();
+              badge = µb.formatCount(adlist(pageStore.rawURL).length);
+          }
+
+          vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
+      };
+
+      return function(tabId) {
+          if ( tabIdToTimer[tabId] ) {
+              return;
+          }
+          if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+              return;
+          }
+          tabIdToTimer[tabId] = vAPI.setTimeout(updateBadgeImpl.bind(this, tabId), 666);
+      };
+  })();
+
+  //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
 
   /******************************************************************************/
