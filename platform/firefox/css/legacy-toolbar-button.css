@@ -1,15 +1,15 @@
 ﻿#uBlock0-legacy-button {
-    list-style-image: url('../img/browsericons/icon24.svg');
+    list-style-image: url('../img/browsericons/adn/icon24.svg');
 }
 #uBlock0-legacy-button.off {
-    list-style-image: url('../img/browsericons/icon24-off.svg');
+    list-style-image: url('../img/browsericons/adn/icon24-off.svg');
 }
 
 toolbar[iconsize="small"] #uBlock0-legacy-button {
-    list-style-image: url('../img/browsericons/icon16.svg');
+    list-style-image: url('../img/browsericons/adn/icon16.svg');
 }
 toolbar[iconsize="small"] #uBlock0-legacy-button.off {
-    list-style-image: url('../img/browsericons/icon16-off.svg');
+    list-style-image: url('../img/browsericons/adn/icon16-off.svg');
 }
 #uBlock0-legacy-button[badge]::before {
     background: #555;
@@ -30,7 +30,7 @@ toolbar[iconsize="small"] #uBlock0-legacy-button.off {
 
 /* Override off state when in palette */
 toolbarpaletteitem #uBlock0-legacy-button.off {
-    list-style-image: url('../img/browsericons/icon24.svg');
+    list-style-image: url('../img/browsericons/adn/icon24.svg');
 }
 
 /* Override badge when in palette */
