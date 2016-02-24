@@ -653,7 +653,7 @@ function itemPosition($ele) {
 
   var off = $ele.offset(), // relative to container
     cx = $(window).width() / 2,
-    cy = $(window).height() / 2.
+    cy = $(window).height() / 2,
     iw = $ele.attr('data-width') || 80,
     ih = $ele.attr('data-height') || 40;
 
