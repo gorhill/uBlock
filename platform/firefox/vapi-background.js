@@ -3002,12 +3002,12 @@ vAPI.toolbarButton = {
         var style = [
             '#' + this.id + '.off {',
                 'list-style-image: url(',
-                    vAPI.getURL('img/browsericons/icon16-off.svg'),
+                    vAPI.getURL('img/browsericons/adn/icon16-off.svg'),
                 ');',
             '}',
             '#' + this.id + ' {',
                 'list-style-image: url(',
-                    vAPI.getURL('img/browsericons/icon16.svg'),
+                    vAPI.getURL('img/browsericons/adn/icon16.svg'),
                 ');',
             '}',
             '#' + this.viewId + ',',
@@ -3173,7 +3173,7 @@ vAPI.contextMenu = (function() {
             }
             menuitem = newMenuitems[0];
             menuitem.setAttribute('class', 'menuitem-iconic');
-            menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+            menuitem.setAttribute('image', vAPI.getURL('img/browsericons/adn/icon16.svg'));
             contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
             return;
         }
@@ -3183,7 +3183,7 @@ vAPI.contextMenu = (function() {
             menu.setAttribute('label', vAPI.app.name);
             menu.setAttribute('data-uBlock0', 'menu');
             menu.setAttribute('class', 'menu-iconic');
-            menu.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+            menu.setAttribute('image', vAPI.getURL('img/browsericons/adn/icon16.svg'));
             contextMenu.insertBefore(menu, doc.getElementById('inspect-separator'));
         }
         var menupopup = contextMenu.querySelector('[data-uBlock0="menupopup"]');
