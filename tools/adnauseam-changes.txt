@@ -12,6 +12,8 @@ changed files inside ublock/src:
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
   src/js/context-menu.js (badge-update: redo)
+  
+  src/_locales/en/messages.json (changed extension description)
 
 added files inside ublock/src:
 
