@@ -21,7 +21,7 @@
 
 /******************************************************************************/
 
-var dbugDetect = 1; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages
 //
