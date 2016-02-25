@@ -305,7 +305,7 @@ div.tooltip {
 }
 
 #logo:hover a{
-	background-image: url(img/adn_active.png);
+	background-image: url(../../img/adn/adn_active.png);
 }
 
 .item {
