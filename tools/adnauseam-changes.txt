@@ -13,7 +13,7 @@ changed files inside ublock/src:
   src/js/background.js (added settings)
   src/js/context-menu.js (badge-update: redo)
   
-  src/_locales/en/messages.json (changed extension description)
+  src/_locales/en/messages.json (added ADN locale)
 
 added files inside ublock/src:
 
