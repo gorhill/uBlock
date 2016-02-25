@@ -1,10 +1,94 @@
 {
+  "adnMenuViewLog":{
+    "message":"View Log",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked":{
+    "message":"clicked",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuOfThe":{
+    "message":"of the",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected":{
+    "message":"ads detected",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuViewVault":{
+    "message":"View Ad Vault",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuPause":{
+    "message":"Pause Adnauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuSettings":{
+    "message":"Settings",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuExportAds":{
+    "message":"Export Ads",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuImportAds":{
+    "message":"Import Ads",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging":{
+    "message":"Disable all logging",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer":{
+    "message":"Disable outgoing referrer",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAds":{
+    "message":"Clear Ads with browser history",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuHideBadge":{
+    "message":"Hide Ad count on icon",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow":{
+    "message":"Clear Ads Now",
+    "description":"appears in ADN popup menu"
+  },
+  "adnLogNoLog":{
+    "message":"No log available",
+    "description":"appears in ADN log page"
+  },
+  "adnLogViewFullLog":{
+    "message":"View full log",
+    "description":"appears in ADN log page"
+  },
+  "adnVaultSince":{
+    "message":"Since",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultDefaultDate":{
+    "message":"Jan 1 1970 0:00am",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultAdsClicked":{
+    "message":"Since",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultFound":{
+    "message":"found",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultDeleteThisAd":{
+    "message":"delete this ad",
+    "description":"appears in ADN vault page"
+  },
   "extName":{
     "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker. Easy on CPU and memory.",
+    "message":"a browser extension designed to defend against tracking by ad-networks",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -588,11 +672,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"Show Adblocker Dashboard",
     "description":"Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Logger",
+    "message":"Show Adblocker Logger",
     "description":"Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
