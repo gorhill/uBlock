@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker. Easy on CPU and memory.",
+    "message":"a browser extension designed to defend against tracking by ad-networks",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -588,11 +588,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"Show Adblocker Dashboard",
     "description":"Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Logger",
+    "message":"Show Adblocker Logger",
     "description":"Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
