@@ -962,7 +962,7 @@ function addInterfaceHandlers(ads) {
   //   self.port && self.port.emit("close-vault");
   // });
 
-  $('#x-close-button').click(function() {
+  $('#x-close-button').click(function(e) {
 
       e.preventDefault();
 
