@@ -8,6 +8,7 @@ Read first: [CONTRIBUTING](https://github.com/gorhill/uBlock/blob/master/CONTRIB
 
 ### Screenshot in which the issue can be seen
 
+[Screenshot(s) for visual issues are **mandatory**]
 
 ### Steps for anyone to reproduce the issue
 
@@ -16,6 +17,8 @@ Read first: [CONTRIBUTING](https://github.com/gorhill/uBlock/blob/master/CONTRIB
 1. nobody can read your mind. Etc.
 
 ### Your settings
+
+[If you fail to provide this info, I will mark the issue as invalid]
 
 - Browser/version: 
 - uBlock Origin version: 
