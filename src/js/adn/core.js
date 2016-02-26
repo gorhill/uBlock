@@ -314,14 +314,16 @@ console.log(settings);
 
     console.log('DETECTED: ' + ad.contentType + 'Ad#' + ad.id, ad);
 
-    updateBadge(tabId);
+    µb.updateBadgeAsync(tabId);
+
+    //updateBadge(tabId);
 
     storeUserData();
 
     return ad;
   };
 
-  var updateBadge = (function() {
+  /*var updateBadge = (function() {
 
       var tabIdToTimer = Object.create(null);
 
@@ -356,7 +358,7 @@ console.log(settings);
           }
           tabIdToTimer[tabId] = vAPI.setTimeout(updateBadgeImpl.bind(this, tabId), 666);
       };
-  })();
+  })();*/
 
   //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
@@ -364,7 +366,8 @@ console.log(settings);
   /******************************************************************************/
 
   return {
-    updateBadge: updateBadge,
+    //updateBadge: updateBadge,
+    adlist: adlist,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
     adsForVault: adsForVault
