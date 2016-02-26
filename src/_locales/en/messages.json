@@ -72,7 +72,7 @@
     "description":"appears in ADN vault page"
   },
   "adnVaultAdsClicked":{
-    "message":"Since",
+    "message":"ads clicked",
     "description":"appears in ADN vault page"
   },
   "adnVaultFound":{

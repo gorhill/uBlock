@@ -1,4 +1,88 @@
 {
+  "adnMenuViewLog":{
+    "message":"查看日志",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked":{
+    "message":"已点击",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuOfThe":{
+    "message":"总共",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected":{
+    "message":"已侦测广告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuViewVault":{
+    "message":"查看广告库",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuPause":{
+    "message":"暫停 Adnauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuSettings":{
+    "message":"设置",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuExportAds":{
+    "message":"导出广告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuImportAds":{
+    "message":"导入广告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging":{
+    "message":"关闭所有日志纪录",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer":{
+    "message":"关闭对外来源",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAds":{
+    "message":"与浏览器记录清除广告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuHideBadge":{
+    "message":"隐藏图标上的广告数目",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow":{
+    "message":"清除广告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnLogNoLog":{
+    "message":"没有可用的日志",
+    "description":"appears in ADN log page"
+  },
+  "adnLogViewFullLog":{
+    "message":"查看完整日志",
+    "description":"appears in ADN log page"
+  },
+  "adnVaultSince":{
+    "message":"自从",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultDefaultDate":{
+    "message":"Jan 1 1970 0:00am",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultAdsClicked":{
+    "message":"已点击",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultFound":{
+    "message":"个广告",
+    "description":"appears in ADN vault page"
+  },
+  "adnVaultDeleteThisAd":{
+    "message":"删除这个广告",
+    "description":"appears in ADN vault page"
+  },
   "extName":{
     "message":"uBlock₀",
     "description":"extension name."
