@@ -1,3 +1,5 @@
+Read first: [CONTRIBUTING](https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md).
+
 ### Describe the issue
 
 
