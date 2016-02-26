@@ -1,8 +1,8 @@
 /* global vAPI, uDom */
 
 /* TODO
-  update badge
-  update menu-count
+  NEXT: update menu-count
+
   store totalCount
   on-visit: if menu is open, update title & state
   recent-ads in menu
@@ -36,7 +36,7 @@
 
   var initialize = function (settings) {
 
-console.log(settings);
+//console.log(settings);
 
     admap = (settings && settings.admap) || {};
 
@@ -253,26 +253,33 @@ console.log(settings);
   // }
 
   var adsForVault = function () {
-    var json = {};
-    json.data = adlist();
-    json.current = current;
-    console.log('adn.adsForVault() :: '+json.data.length);
-    return json;
+    return {
+        data: adlist(),
+        current: current
+    }
   }
 
   var adsForMenu = function (pageStore) {
 
-    admap = admap || {};
+    //admap = admap || {};
 
-    var ads = [],
-      mapEntry = admap[pageStore.rawURL];
-    if (mapEntry) {
-      var keys = Object.keys(mapEntry);
-      for (var i = 0; i < keys.length; i++) {
-        ads.push(mapEntry[keys[i]]);
-      }
-    }
-    return ads;
+    //var ads = [];
+      //mapEntry = admap[pageStore.rawURL];
+    //
+    // if (mapEntry) {
+    //   var keys = Object.keys(mapEntry);
+    //   for (var i = 0; i < keys.length; i++) {
+    //     ads.push(mapEntry[keys[i]]);
+    //   }
+    // }
+
+    var json = {};
+    json.data = adlist(pageStore.rawURL);
+    json.total = adlist().length;
+    json.current = current;
+
+    //console.log('adn.adsForVault() :: '+json.data.length);
+    return json;
   }
 
   var millis = function () {

@@ -11,8 +11,9 @@ changed files inside ublock/src:
   src/js/messaging.js (message-handling)
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
-  src/js/context-menu.js (badge-update: redo)
-  
+  src/js/tab.js (badge-update)
+  src/background.html (added adn files)
+
   src/_locales/en/messages.json (added ADN locale)
 
 added files inside ublock/src:
@@ -45,7 +46,7 @@ added files inside ublock/src:
     bebasneue_regular-webfont.woff
     bebasneue_regular-webfont.woff2
     stylesheet.css
-    
+
 added files inside ublock/platform/chromium/img/browsericons/adn
 
   icon19.png
