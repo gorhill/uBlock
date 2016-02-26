@@ -49,6 +49,7 @@ vAPI.i18n.render = function(context) {
         if ( text.indexOf('{') !== -1 ) {
             text = text.replace(/\{\{input:([^}]+)\}\}/g, '<input type="$1">');
         }
+        text = text.replace(/uBlock₀/g, 'AdNauseam');
         uDom(elem).html(text);
     }
 
@@ -75,7 +76,7 @@ vAPI.i18n.render = function(context) {
         elem = elems[i];
         elem.setAttribute(
             'data-tip',
-            vAPI.i18n(elem.getAttribute('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
+            vAPI.i18n(elem.getAttribute('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/uBlock₀/g, 'AdNauseam')
         );
     }
 };
