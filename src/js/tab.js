@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
     Home: https://github.com/gorhill/uBlock
 */
-
-/* global vAPI, µBlock */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -565,7 +563,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( openerHostname !== '' ) {
             // Check user switch first
             if (
-                popupType !== 'popunder' &&
+                typeof clickedURL === 'string' &&
                 areDifferentURLs(targetURL, clickedURL) &&
                 µb.hnSwitches.evaluateZ('no-popups', openerHostname)
             ) {
@@ -596,14 +594,63 @@ vAPI.tabs.onPopupUpdated = (function() {
         // https://github.com/chrisaljoudi/uBlock/issues/323
         // https://github.com/chrisaljoudi/uBlock/issues/1142
         //   Don't block if uBlock is turned off in popup's context
+        var snfe = µb.staticNetFilteringEngine;
         if (
             µb.getNetFilteringSwitch(targetURL) &&
-            µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, popupType) !== undefined
+            snfe.matchStringExactType(context, targetURL, popupType) !== undefined
         ) {
-            return µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+            return snfe.toResultString(µb.logger.isEnabled());
         }
 
         return '';
+    };
+
+    var popunderMatch = function(openerURL, targetURL) {
+        var result = popupMatch(targetURL, openerURL, null, 'popunder');
+        if ( µb.isBlockResult(result) ) {
+            return result;
+        }
+        // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
+        //   Check the opener tab as if it were the newly opened tab: if there
+        //   is a hit against a popup filter, and if the matching filter is not
+        //   a broad one, we will consider the opener tab to be a popunder tab.
+        //   For now, a "broad" filter is one which does not touch any part of
+        //   the hostname part of the opener URL.
+        var openerHostname = µb.URI.hostnameFromURI(openerURL);
+        if ( openerHostname === '' ) {
+            return '';
+        }
+        result = popupMatch(targetURL, openerURL, null, 'popup');
+        if ( result.startsWith('sb:') === false ) {
+            return '';
+        }
+        var snfe = µb.staticNetFilteringEngine;
+        var token = snfe.tokenRegister;
+        if ( token === '*' ) {
+            return '';
+        }
+        if ( token === '.' ) {
+            return result;
+        }
+        result = snfe.toResultString(true);
+        var re = snfe.filterRegexFromCompiled(result.slice(3));
+        if ( re === null ) {
+            return '';
+        }
+        var matches = re.exec(openerURL);
+        if ( matches === null ) {
+            return '';
+        }
+        var beg = matches.index,
+            end = beg + matches[0].length,
+            pos = openerURL.indexOf(openerHostname);
+        if ( pos === -1 ) {
+            return '';
+        }
+        if ( beg >= pos + openerHostname.length || end < pos ) {
+            return '';
+        }
+        return result;
     };
 
     return function(targetTabId, openerTabId) {
@@ -636,23 +683,24 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // Popup test.
         var popupType = 'popup';
-        var result = popupMatch(openerURL, targetURL, µb.mouseURL, popupType);
+        var result = popupMatch(openerURL, targetURL, µb.mouseURL, 'popup');
 
         // Popunder test.
         if ( result === '' ) {
-            var tmp = openerTabId; openerTabId = targetTabId; targetTabId = tmp;
-            popupType = 'popunder';
-            result = popupMatch(targetURL, openerURL, µb.mouseURL, popupType);
+            result = popunderMatch(openerURL, targetURL);
+            if ( µb.isBlockResult(result) ) {
+                popupType = 'popunder';
+            }
         }
 
         // Log only for when there was a hit against an actual filter (allow or block).
-        if ( result !== '' && µb.logger.isEnabled() ) {
+        if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 openerTabId,
                 'net',
                 result,
                 popupType,
-                context.requestURL,
+                popupType === 'popup' ? targetURL : openerURL,
                 µb.URI.hostnameFromURI(context.rootURL),
                 µb.URI.hostnameFromURI(context.rootURL)
             );
@@ -678,7 +726,11 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // It is a popup, block and remove the tab.
         µb.unbindTabFromPageStats(targetTabId);
+
         vAPI.tabs.remove(targetTabId, true);
+        if ( popupType === 'popunder' ) {
+            vAPI.tabs.replace(openerTabId, targetURL);
+        }
 
         return true;
     };
