@@ -17,6 +17,15 @@ changed files inside ublock/src/: (html)
 
   src/background.html (added adn files)
   src/dashboard.html (added adn tabs)
+  src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
+  src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
+  src/background.html (added adn files)
+
+changed files inside ublock/_locales/: (locale)
+
+  src/_locales/en/messages.json     (added ADN locale)
+  src/_locales/zh_CN/messages.json  (added ADN locale)
+  src/_locales/zh_TW/messages.json  (added ADN locale)
 
 added files inside ublock/src:
 

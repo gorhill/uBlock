@@ -92,7 +92,7 @@
     "description":"appears in ADN vault page"
   },
   "extName":{
-    "message":"AdNauseam",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -100,8 +100,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"AdNauseam — Dashboard",
-    "description":"English: AdNauseam — Dashboard"
+    "message":"uBlock₀ — Dashboard",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"Settings",
@@ -124,7 +124,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"AdNauseam — Logger",
+    "message":"uBlock₀ — Logger",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -132,8 +132,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable AdNauseam for this site.\n\nCtrl+click: disable AdNauseam only on this page.",
-    "description":"English: Click: disable\/enable AdNauseam for this site.\n\nCtrl+click: disable AdNauseam only on this page."
+    "message":"Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"requests blocked",
@@ -364,7 +364,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases AdNauseam's memory footprint.<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -496,8 +496,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which AdNauseam will be disabled. One entry per line. Invalid host names will be silently ignored.",
-    "description":"English: Your list of host names for which AdNauseam will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Your list of host names for which uBlock₀ will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Import and append",
@@ -636,7 +636,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm" : {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and AdNauseam will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError" : {
@@ -644,7 +644,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm" : {
-    "message": "All your settings will be removed, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -652,7 +652,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"AdNauseam: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -689,11 +689,11 @@
   },
   "fennecMenuItemBlockingOff": {
     "message": "off",
-    "description": "Firefox-specific: appears as 'AdNauseam (off)'"
+    "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin has prevented the following page from loading:",
-    "description": "English: AdNauseam has prevented the following page from loading:"
+    "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
     "message": "Because of the following filter",
