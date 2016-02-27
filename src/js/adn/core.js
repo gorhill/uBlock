@@ -1,11 +1,11 @@
 /* global vAPI, uDom */
 
 /* TODO
-  NEXT: update menu-count
 
-  store totalCount
-  on-visit: if menu is open, update title & state
+  on-visit: if menu is open, update title & state (also vault)
   recent-ads in menu
+  visitmap: removed
+  ad-janitor: look for timeouts based on attemptedTs and mark as error?
 */
 
 µBlock.adnauseam = (function () {
@@ -16,46 +16,46 @@
 
   /******************************************************************************/
 
-  var admap, current, count = 0,
-    visitmap = {}, // TODO
+  var xhr,
+    idgen = 0,
+    admap = {},
     initialized = 0,
     lastActivity = 0,
+    visitTimeout = 5000,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
     pollQueueInterval = 5000,
     repeatVisitInterval = 60000;
 
   // ignore adchoices
-  var imageIgnores = [ 'http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png' ];
+  var imageIgnores = ['http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png'];
 
   // block scripts from these page domains (either regex or string)
-  var blockablePageDomains = [ ]; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
+  var blockablePageDomains = []; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
 
   // always block scripts from these domains (either regex or string)
-  var blockableScriptDomains = [ 'partner.googleadservices.com' ];
+  var blockableScriptDomains = ['partner.googleadservices.com'];
 
   var initialize = function (settings) {
 
-//console.log(settings);
-
-    admap = (settings && settings.admap) || {};
-
-    // compute the highest id in our admap
-    count = Math.max(0, (Math.max.apply(Math,
-      adlist().map(function (ad) {
-        return ad.id;
-      }))));
-
-    // modify XMLHttpRequest to store original request
-    var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+    // modify XMLHttpRequest to store original request/ad
+    var XMLHttpRequest_open = XMLHttpRequest.prototype.open, ads;
     XMLHttpRequest.prototype.open = function (method, url) {
-      this.requestUrl = url;
+      this.delegate = null; // store ad here
+      this.requestUrl = url; // store original target
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
+    admap = (settings && settings.admap) || {};
+    ads = adlist();
+
+    // compute the highest id in the admap
+    idgen = Math.max(0, (Math.max.apply(Math,
+      ads.map(function (ad) { return ad.id; }))));
+
     initialized = +new Date();
 
-    console.log('adnauseam.initialized(' + count + ')', admap);
+    console.log('AdNauseam.initialized: with ' + ads.length + ' ads');
 
     if (!pollingDisabled) pollQueue();
   }
@@ -66,24 +66,18 @@
 
     markActivity();
 
-    // TODO check options.disabled
+    // TODO check options.disabled (see #40)
 
-    var elapsed = lastActivity - initialized,
-      pending = pendingAds();
-
-    //console.log('pollQueue(' + elapsed + ') :: ' +
-      //pending.length + ' / ' + adlist().length);
+    var pending = pendingAds();
 
     if (pending.length) {
 
-      current = pending.sort(byField('-foundTs'))[0];
-      visitAd(current);
+      var next = pending.sort(byField('-foundTs'))[0];
+      visitAd(next);
     }
 
-    var elapsed = millis() - lastActivity;
-
     if (!pollingDisabled)
-      setTimeout(pollQueue, Math.max(1, interval - elapsed)); // next poll
+      setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity))); // next poll
   }
 
   var markActivity = function () {
@@ -99,23 +93,42 @@
     });
   }
 
-  // returns all ads for a page, or all pages, if page arg is null
-  var adlist = function(pageUrl) {
+  var updateAd = function (xhr, ad) {
 
-    var result = [],
-      pages = pageUrl ? [ pageUrl ] : Object.keys(admap);
-
-    for (var i = 0; i < pages.length; i++) {
-
-      if (admap[pages[i]]) {
-        var hashes = Object.keys(admap[pages[i]]);
-
-        for (var j = 0; j < hashes.length; j++)
-          result.push(admap[pages[i]][hashes[j]]);
-      }
+    var title = xhr.responseText.match(/<title[^>]*>([^<]+)<\/title>/i);
+    if (title && title.length > 1) {
+      ad.title = title[1].trim();
+    } else {
+      console.warn('Unable to parse title from: ' + html);
     }
 
-    return result;
+    ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
+    ad.visitedTs = millis(); // successful visit time
+  }
+
+  // returns the current active visit attempt or null
+  var activeVisit = function () {
+    return xhr ? xhr.delegate : null;
+  }
+
+  // returns the current active visit attempt or null
+  var activeVisitX = function () {
+
+    var list = adlist();
+
+    //console.log('activeVisit: '+list.length+' ads');
+
+    var ads = list.filter(function (ad) {
+      //console.log(ad.attemptedTs+' >? '+Math.abs(ad.visitedTs));
+      return ad.attemptedTs > Math.abs(ad.visitedTs);
+    });
+
+    if (ads.length > 1)
+      console.warn("Multiple active ad visit attempts!");
+
+    var result = ads.length ? ads[0] : undefined;
+
+    //console.log('activeVisit: ',result);
   }
 
   var onVisitResponse = function () {
@@ -124,83 +137,116 @@
 
     this.onload = this.onerror = this.ontimeout = null;
 
-    var relatedAd = visitmap[this.requestUrl];
+    markActivity();
 
-    if (!relatedAd) {
+    var ad = this.delegate;
+
+    if (!ad) {
       console.error('Request received without Ad: ' + this.responseUrl);
       return;
     }
 
-    // xhr for local files gives status 0, but actually succeeds
-    var status = this.status || 200, html = this.responseText;
+    if (!ad.id) {
+      console.warn("Visit response from deleted ad! ", ad);
+      return;
+    }
+
+    var status = this.status || 200,
+      html = this.responseText;
     if (status < 200 || status >= 300 || !stringNotEmpty(html)) {
-      return onVisitError.call(this, relatedAd);
+      return onVisitError.call(this, {
+        status: status,
+        responseText: html
+      });
     }
 
-    var title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-    if (title && title.length > 1) {
-      relatedAd.title = title[1].trim();
-    }
-    else {
-      console.warn('Unable to parse title from: ' + html);
-    }
+    updateAd(this, ad);
 
-    relatedAd.resolvedTargetUrl = this.responseURL; // URL after redirects
-
-    relatedAd.visitedTs = millis();       // successful visit time
-
-    delete visitmap[this.requestUrl]; // remove from current visit map
-
-    console.log('VISITED: ' + relatedAd.contentType + 'Ad#' + relatedAd.id, relatedAd, this);
+    console.log('VISITED: ' + adinfo(ad)); // this);
 
     storeUserData();
+
+    xhr = null; // end the visit
   };
 
-  var onVisitError = function (ad, e) {
+  var onVisitError = function (e) {
 
-    console.error('onVisitError()', ad, this);
     this.onload = this.onerror = this.ontimeout = null;
 
-    if (ad) {
+    markActivity();
 
-      ad.visitedTs = -1 * millis();
-      if (!ad.errors) ad.errors = [];
-      ad.errors.push(this.status + ' (' + this.statusText + ')' + (e ? ' ' + e : ''));
+    // Is it a timeout?
+    if (e.type === 'timeout') {
+      //this.statusText = 'Timeout(' + visitTimeout +')';
+      console.warn('TIMEOUT: visiting ' + this.requestUrl + ' / ' + this.responseURL);
+    } else {
+      // or some other error?
+      console.error('onVisitError()', e, this);
     }
 
-    delete visitmap[this.requestUrl];
+    var ad = this.delegate;
+
+    if (!ad) {
+      console.error('Request received without Ad: ' + this.responseUrl);
+      return;
+    }
+
+    // update the ad
+    ad.visitedTs = -1 * millis();
+    if (!ad.errors) ad.errors = [];
+    ad.errors.push(this.status + ' (' + this.statusText + ')' + (e ? ' ' + e : ''));
+
+    if (ad.attempts >= maxAttemptsPerAd)
+      console.log('GIVEUP: ' + adinfo(ad)); // this);
+
+    xhr = null; // end the visit
   };
 
   var visitAd = function (ad) {
 
-    var url = ad.targetUrl;
+    var url = ad.targetUrl,
+      now = markActivity();
 
-    if (ad.attempts == maxAttemptsPerAd) // double-check
-      return false;
+    //if (ad.attempts == maxAttemptsPerAd) return false;// double-check
 
-    //console.log('visitAd("%s"):', url);
-
-    // tell menu/vault we have a new 'current'
+    // TODO: tell menu/vault we have a new 'current'
     //UIManager.updateOnAdAttempt(next);
+
+    if (xhr) {
+
+      if (!xhr.delegate.attemptedTs) {
+          console.log(xhr);
+          throw Error('Invalid state: ', xhr);
+      }
+
+      var elapsed = (now - xhr.delegate.attemptedTs);
+
+      console.log('Attempt to re-use active xhr: launched ' + elapsed + " ms ago");
+
+      if (elapsed > visitTimeout) {
+        return onVisitError.call(xhr, { type: 'timeout' });
+      }
+    }
+
     ad.attempts++;
     ad.attemptedTs = now;
 
     if (!/^http/.test(url)) { // only visit http/https
-      console.warn("Aborting Visit::Bad targetURL: "+url);
+      console.warn("Aborting Visit::Bad targetURL: " + url);
       return;
     }
 
-    // TODO: check visitmap to see ad is not already in process of being visited (or has timed-out)
+    xhr = new XMLHttpRequest(); // store one of these?
 
-    var now = markActivity()
-    var xhr = new XMLHttpRequest();
+    //visitmap[url] = ad; // legacy
 
-    visitmap[url] = ad; // add to current visits
+    console.log('TRYING: ' + adinfo(ad)); // this);
 
     try {
 
       xhr.open('get', url, true);
-      xhr.timeout = 5000;
+      xhr.delegate = ad;
+      xhr.timeout = visitTimeout;
       xhr.onload = onVisitResponse;
       xhr.onerror = onVisitError;
       xhr.ontimeout = onVisitError;
@@ -209,18 +255,18 @@
 
     } catch (e) {
 
-      onErrorReceived.call(xhr, ad);
+      onVisitError.call(xhr, e);
     }
   };
 
-  var storeUserData = function(immediate) {
+  var storeUserData = function (immediate) {
 
-      // TODO: defer if we've recently written and !immediate
-      µb.adnSettings.admap = admap;
-      vAPI.storage.set(µb.adnSettings);
+    // TODO: defer if we've recently written and !immediate
+    µb.adnSettings.admap = admap;
+    vAPI.storage.set(µb.adnSettings);
   }
 
-  var validateTargetUrl = function(next) {
+  var validateTargetUrl = function (next) {
 
     if (!/^http/.test(next.targetUrl)) {
 
@@ -239,56 +285,142 @@
     }
   }
 
-  /******************************* API ***************************************/
+  var clearAdmap = function () {
 
-  // var openVault = function (pageStore) {
-  //   console.log('adn.openVault()');
-  //   //var url = vAPI.getURL('adn-vault.html');
-  //   //vAPI.tabs.open('adn-vault.html');
-  // }
-  //
-  // var openLog = function (pageStore) {
-  //
-  //   console.log('adn.openLog()');
-  // }
+    var pages = Object.keys(admap);
 
-  var adsForVault = function () {
-    return {
-        data: adlist(),
-        current: current
+    for (var i = 0; i < pages.length; i++) {
+
+      if (admap[pages[i]]) {
+
+        var hashes = Object.keys(admap[pages[i]]);
+
+        for (var j = 0; j < hashes.length; j++) {
+          var ad = admap[pages[i]][hashes[j]];
+          ad.id = null; // null the id from deleted ads (?)
+          delete admap[pages[i]][hashes[j]];
+        }
+      }
+
+      delete admap[pages[i]];
     }
-  }
 
-  var adsForMenu = function (pageStore) {
-
-    //admap = admap || {};
-
-    //var ads = [];
-      //mapEntry = admap[pageStore.rawURL];
-    //
-    // if (mapEntry) {
-    //   var keys = Object.keys(mapEntry);
-    //   for (var i = 0; i < keys.length; i++) {
-    //     ads.push(mapEntry[keys[i]]);
-    //   }
-    // }
-
-    var json = {};
-    json.data = adlist(pageStore.rawURL);
-    json.total = adlist().length;
-    json.current = current;
-
-    //console.log('adn.adsForVault() :: '+json.data.length);
-    return json;
+    admap = {}; // redundant
   }
 
   var millis = function () {
     return +new Date();
   }
 
-  var registerAd = function(pageStore, ad, tabId) {
+  var adinfo = function (ad) {
+    return 'Ad#' + ad.id + '(' + ad.contentType + ')';
+  }
 
-    var pageUrl = pageStore.rawURL,
+  // sort ads (by found time) for display in menu
+  var menuAds = function (pageUrl) {
+    return adlist(pageUrl).sort(byField('-foundTs'));
+  }
+
+  /******************************* API ***************************************/
+
+  var clearAds = function () {
+
+    var count = adlist().length;
+    clearAdmap();
+    storeUserData();
+    console.log('AdNauseam.clear: ' + count + ' ads cleared');
+  }
+
+  // returns all ads for a page, or all pages, if page arg is null
+  // called from µb.updateBadgeAsync()
+  // TODO: memoize
+  var adlist = function (pageUrl) {
+
+    var result = [],
+      pages = pageUrl ? [pageUrl] : Object.keys(admap);
+
+    for (var i = 0; i < pages.length; i++) {
+
+      if (admap[pages[i]]) {
+        var hashes = Object.keys(admap[pages[i]]);
+
+        for (var j = 0; j < hashes.length; j++)
+          result.push(admap[pages[i]][hashes[j]]);
+      }
+    }
+
+    return result;
+  }
+
+  var importAds = function (request) {
+
+    clearAds();
+    admap = request.data;
+    storeUserData();
+    console.log('AdNauseam.import: ' + adlist().length + ' ads from ' + request.file);
+  }
+
+  var exportAds = function (request) {
+
+    var filename = request.filename,
+      count = adlist().length;
+
+    vAPI.download({
+      'url': 'data:text/plain;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(admap, null, '  ')),
+      'filename': filename
+    });
+
+    console.log('AdNauseam.export: ' + count + ' ads to ' + filename);
+  }
+
+  var adsForVault = function () {
+
+    return {
+      data: adlist(),
+      current: activeVisit()
+    };
+  }
+
+  var adsForMenu = function (request, pageStore, tabId) {
+
+    var reqPageStore = request.tabId && µb.pageStoreFromTabId(request.tabId) || pageStore;
+
+    if (!reqPageStore)
+      throw Error('No pageStore found!', request, pageStore, tabId);
+
+    var pageUrl = reqPageStore.rawURL,
+      current = activeVisit(),
+      data = menuAds(pageUrl);
+
+    if (current && current.pageUrl === pageUrl) { // make sure current is at top (do we really need this?)
+
+      if (current !== data[0]) {
+
+          //console.log("Re-ordering menu list");
+          var idx = -1;
+          for (var i = 0; i < data.length; i++) {
+            if (current.id === data[i].id) idx = i;
+          }
+          if (idx >= 0) data.splice(idx, 1);
+          data.unshift(current);
+      }
+
+      //console.log('CURRENT', '#' + current.id, data);
+    }
+
+    return {
+      data: data,
+      current: current,
+      total: adlist().length
+    };
+  }
+
+  //var registerAd = function(pageStore, ad, tabId) {
+  var registerAd = function (request, pageStore, tabId) {
+
+    var ad = request.ad,
+      pageUrl = pageStore.rawURL,
       pageDomain = pageStore.tabHostname;
 
     validateTargetUrl(ad);
@@ -306,66 +438,27 @@
         msSinceFound = millis() - orig.foundTs;
 
       if (msSinceFound < repeatVisitInterval) {
-        console.log('DUPLICATE: ' + orig.contentType +
-            'Ad#' + orig.id + ' found '+msSinceFound+' ms ago');
+        console.log('DUPLICATE: ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
         return;
       }
     }
 
-    ad.id = ++count;
+    ad.id = ++idgen;
+    ad.attemptedTs = 0;
     ad.domain = pageDomain;
     ad.pageUrl = pageUrl;
 
     // this will overwrite an older ad with the same key
     adsOnPage[adhash] = ad;
 
-    console.log('DETECTED: ' + ad.contentType + 'Ad#' + ad.id, ad);
+    console.log('DETECTED: ' + adinfo(ad), ad);
 
     µb.updateBadgeAsync(tabId);
-
-    //updateBadge(tabId);
 
     storeUserData();
 
     return ad;
   };
-
-  /*var updateBadge = (function() {
-
-      var tabIdToTimer = Object.create(null);
-
-      var updateBadgeImpl = function(tabId) {
-          delete tabIdToTimer[tabId];
-
-          var state = false;
-          var badge = '';
-
-          var pageStore = µb.pageStoreFromTabId(tabId);
-          if ( pageStore !== null ) {
-
-              state = pageStore.getNetFilteringSwitch();
-              badge = µb.formatCount(adlist(pageStore.rawURL).length);
-          }
-
-          vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
-      };
-
-      return function(tabId) {
-
-          //console.log("UpdateBadge: "+tabId);
-
-          if (!µb.userSettings.showIconBadge) {
-              return;
-          }
-          if ( tabIdToTimer[tabId] ) {
-              return;
-          }
-          if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-              return;
-          }
-          tabIdToTimer[tabId] = vAPI.setTimeout(updateBadgeImpl.bind(this, tabId), 666);
-      };
-  })();*/
 
   //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
@@ -375,6 +468,9 @@
   return {
     //updateBadge: updateBadge,
     adlist: adlist,
+    clearAds: clearAds,
+    exportAds: exportAds,
+    importAds: importAds,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
     adsForVault: adsForVault

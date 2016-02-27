@@ -1472,79 +1472,30 @@ vAPI.messaging.listen('scriptlets', onMessage);
 
 // adnauseam messaging
 
-(function() {
+(function () {
 
-'use strict';
+  'use strict';
 
-/******************************************************************************/
+  vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
 
-var µb = µBlock;
+    switch (request.what) { default: break; } // Async
 
-if ( typeof µb.adnauseam !== 'object' ) {
-    console.error('messaging.js > adnauseam not found!');
-    return;
-}
-
-var onMessage = function(request, sender, callback) {
-
-    // Async
-    switch (request.what) {
-    default:
-      break;
-    }
-
-    // Sync
-    var response, pageStore, tabId;
+    var pageStore, tabId;
 
     if (sender && sender.tab) {
       tabId = sender.tab.id;
-      pageStore = µb.pageStoreFromTabId(tabId);
+      pageStore = µBlock.pageStoreFromTabId(tabId);
     }
 
-    switch ( request.what ) {
+    if (typeof µBlock.adnauseam[request.what] === 'function') {
 
-      case 'deleteAdset':   //  vault
-        console.log('adnMessage::deleteAdset('+request.ids+')');
-        break;
+      callback(µBlock.adnauseam[request.what](request, pageStore, tabId));
 
-      case 'itemInspected': //  vault
-        console.log('adnMessage::itemInspected('+request.id+')');
-        break;
+    } else {
 
-      case 'refreshVault':  //  vault
-        console.log('adnMessage::refreshVault()');
-        break;
-
-      case 'adsForVault':
-
-        //console.log('adnMessage::adsForVault()');
-        response = µb.adnauseam.adsForVault(pageStore);
-        console.log('response: ',response);
-        break;
-
-      case 'adsForMenu':
-
-        //console.log('adnMessage::adsForMenu()');
-        response = µb.adnauseam.adsForMenu(µb.pageStoreFromTabId(request.tabId) || pageStore);
-        break;
-
-      case 'adDetected':
-
-        //console.log('adnMessage::adDetected()';
-        response = µb.adnauseam.registerAd(pageStore, request.ad, tabId);
-        break;
-
-      default:
-
-        return vAPI.messaging.UNHANDLED;
+      return vAPI.messaging.UNHANDLED;
     }
-
-    callback(response);
-};
-
-vAPI.messaging.listen('adnauseam', onMessage);
-
-/******************************************************************************/
+  });
 
 })();
 

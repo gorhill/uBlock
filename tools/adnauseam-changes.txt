@@ -5,22 +5,28 @@
 # git fetch upstream
 # git merge upstream/master
 
-changed files inside ublock/src:
+changed files inside ublock/src/js:
 
   src/js/traffic.js (disable-blocking)
   src/js/messaging.js (message-handling)
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
   src/js/tab.js (badge-update)
-  src/background.html (added adn files)
 
-  src/_locales/en/messages.json (added ADN locale)
+changed files inside ublock/src/: (html)
+
+  src/background.html (added adn files)
+  src/dashboard.html (added adn tabs)
 
 added files inside ublock/src:
 
   adn-menu.html
   adn-vault.html
   adn-log.html
+  adn-settings.html
+  adn-about.html
+
+  src/js/adn/settings.js
   src/js/adn/menu.js
   src/js/adn/core.js
   src/js/adn/vault.js
@@ -46,6 +52,8 @@ added files inside ublock/src:
     bebasneue_regular-webfont.woff
     bebasneue_regular-webfont.woff2
     stylesheet.css
+
+changed files inside ublock/src/_locale (localization)
 
 added files inside ublock/platform/chromium/img/browsericons/adn
 

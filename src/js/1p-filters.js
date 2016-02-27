@@ -79,7 +79,7 @@ var handleImportFilePicker = function() {
         if ( matches === null ) {
             return s;
         }
-        // 
+        //
         var out = [];
         var filterMatch;
         while ( matches !== null ) {

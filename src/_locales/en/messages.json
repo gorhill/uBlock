@@ -1,4 +1,12 @@
 {
+  "adnImportConfirm":{
+    "message":"This action will overwrite ALL of your current ads",
+    "description":"appears in ADN settings"
+  },
+  "adnClearConfirm":{
+    "message":"This action will permanently remove ALL of your ads",
+    "description":"appears in ADN settings"
+  },
   "adnMenuViewLog":{
     "message":"View Log",
     "description":"appears in ADN popup menu"
@@ -264,8 +272,8 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
-    "description":"English: Show the number of blocked requests on the icon"
+    "message":"Show the number of found ads on the icon",
+    "description":"English: Show the number of found ads on the icon"
   },
   "settingsTooltipsPrompt":{
     "message":"Disable tooltips",
@@ -284,7 +292,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"I am an advanced uBlock user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{

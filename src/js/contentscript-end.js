@@ -118,7 +118,7 @@ var adDetector = (function() {
   var notifyAddon = function(node, ad) {
 
     adMessager.send({
-        what: 'adDetected',
+        what: 'registerAd',
         ad: ad
       }, function(obj) {
         console.log("AdDetected-callback: ", obj);

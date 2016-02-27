@@ -9,12 +9,11 @@
 
   var renderPage = function (json) {
 
-    setCurrent(json.current);
     setCounts(json);
 
     var ads = json.data;
 
-    console.log('renderPage() :: ', ads.length);
+    console.log('renderPage() :: ', ads.length, json.current);
 
     var $items = $('#ad-list-items');
     $items.removeClass().empty();
@@ -32,6 +31,8 @@
         appendTextAd(ads[i], $items);
       }
     }
+
+    setCurrent(json.current);
 
     //if (!json.pageCount) showRecentAds(ads, json.emptyMessage);
   };
@@ -194,7 +195,8 @@
       //renderPopupLazy(); // low priority rendering
       //hashFromPopupData(true);
       //pollForContentChange();
-      console.log("tabId: ", popupData.tabId);
+
+      //console.log("tabId: ", popupData.tabId);
 
       adnmessager.send({
         what: 'adsForMenu',
@@ -301,7 +303,9 @@
   $('#settings-open').click(function () {
 
     // TODO: open uBlock settings here
-    window.open("./popup.html", '_self');
+    //window.open("./popup.html", '_self');
+
+    window.open("./dashboard.html#adn-settings.html");
 
     //$('.page').toggleClass('hide');
     //$('.settings').toggleClass('hide');
