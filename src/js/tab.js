@@ -696,7 +696,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         // Log only for when there was a hit against an actual filter (allow or block).
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
-                openerTabId,
+                popupType === 'popup' ? openerTabId : targetTabId,
                 'net',
                 result,
                 popupType,
@@ -725,11 +725,12 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
 
         // It is a popup, block and remove the tab.
-        µb.unbindTabFromPageStats(targetTabId);
-
-        vAPI.tabs.remove(targetTabId, true);
-        if ( popupType === 'popunder' ) {
-            vAPI.tabs.replace(openerTabId, targetURL);
+        if ( popupType === 'popup' ) {
+            µb.unbindTabFromPageStats(targetTabId);
+            vAPI.tabs.remove(targetTabId, true);
+        } else {
+            µb.unbindTabFromPageStats(openerTabId);
+            vAPI.tabs.remove(openerTabId, true);
         }
 
         return true;
