@@ -8,7 +8,6 @@
 changed files inside ublock/src/js:
 
   src/js/traffic.js (disable-blocking)
-  src/js/messaging.js (message-handling)
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
   src/js/tab.js (badge-update)

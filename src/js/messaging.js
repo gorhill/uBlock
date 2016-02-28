@@ -20,6 +20,7 @@
 */
 
 /* global µBlock, vAPI */
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -468,18 +469,17 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
+    case 'retrieveDomainCosmeticSelectors':
+        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+            if ( response && response.skipCosmeticFiltering !== true ) {
+                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
+            }
+        }
+        break;
 
-      case 'retrieveDomainCosmeticSelectors':
-          if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-              response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-              if ( response && response.skipCosmeticFiltering !== true ) {
-                  response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
-              }
-          }
-          break;
-
-      default:
-          return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -491,6 +491,7 @@ vAPI.messaging.listen('contentscript-start.js', onMessage);
 
 })();
 
+/******************************************************************************/
 /******************************************************************************/
 
 // contentscript-end.js
@@ -559,7 +560,6 @@ var filterRequests = function(pageStore, details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
-
     // Async
     switch ( request.what ) {
     default:
@@ -575,7 +575,6 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-
     case 'retrieveGenericCosmeticSelectors':
         response = {
             shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
@@ -1466,38 +1465,6 @@ vAPI.messaging.listen('scriptlets', onMessage);
 
 })();
 
-
-/******************************************************************************/
-/******************************************************************************/
-
-// adnauseam messaging
-
-(function () {
-
-  'use strict';
-
-  vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
-
-    switch (request.what) { default: break; } // Async
-
-    var pageStore, tabId;
-
-    if (sender && sender.tab) {
-      tabId = sender.tab.id;
-      pageStore = µBlock.pageStoreFromTabId(tabId);
-    }
-
-    if (typeof µBlock.adnauseam[request.what] === 'function') {
-
-      callback(µBlock.adnauseam[request.what](request, pageStore, tabId));
-
-    } else {
-
-      return vAPI.messaging.UNHANDLED;
-    }
-  });
-
-})();
 
 /******************************************************************************/
 /******************************************************************************/

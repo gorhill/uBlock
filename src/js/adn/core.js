@@ -6,6 +6,7 @@
   recent-ads in menu
   visitmap: removed
   ad-janitor: look for timeouts based on attemptedTs and mark as error?
+  delete-ad-set
 */
 
 µBlock.adnauseam = (function () {
@@ -479,3 +480,39 @@
   /******************************************************************************/
 
 })();
+
+
+/******************************************************************************/
+/******************************************************************************/
+
+// messaging
+
+(function () {
+
+  'use strict';
+
+  vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
+
+    switch (request.what) { default: break; } // Async
+
+    var pageStore, tabId;
+
+    if (sender && sender.tab) {
+      tabId = sender.tab.id;
+      pageStore = µBlock.pageStoreFromTabId(tabId);
+    }
+
+    if (typeof µBlock.adnauseam[request.what] === 'function') {
+
+      callback(µBlock.adnauseam[request.what](request, pageStore, tabId));
+
+    } else {
+
+      return vAPI.messaging.UNHANDLED;
+    }
+  });
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
