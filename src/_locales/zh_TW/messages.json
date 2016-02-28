@@ -1,4 +1,12 @@
 {
+  "adnImportConfirm":{
+    "message":"這操作會覆蓋你目前已保存的全部廣告",
+    "description":"appears in ADN settings"
+  },
+  "adnClearConfirm":{
+    "message":"這操作會永久移除你全部已保存的廣告",
+    "description":"appears in ADN settings"
+  },
   "adnMenuViewLog":{
     "message":"查看日誌",
     "description":"appears in ADN popup menu"
@@ -88,7 +96,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"終於出現了，一個高效率的阻擋器，使用不多的 CPU 及記憶體資源。",
+    "message":"一款被設計為對抗來自廣告網絡追蹤的擴展",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -264,8 +272,8 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"在圖示上顯示已被阻擋的連線請求數量",
-    "description":"English: Show the number of blocked requests on the icon"
+    "message":"在圖示上顯示已找到的廣告數量",
+    "description":"English: Show the number of found ads on the icon"
   },
   "settingsTooltipsPrompt":{
     "message":"關閉提示文字功能",
@@ -284,7 +292,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"我是進階的使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
+    "message":"我是進階的uBlock 使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
