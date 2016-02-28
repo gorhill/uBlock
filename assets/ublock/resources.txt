@@ -427,7 +427,7 @@ yavli-defuser.js application/javascript
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
 		var re = /rec\(rid,\s*tw\s*\+\s*step\)/;
-		if ( (typeof b !== 'number' || (b % 200) === 0) && !re.test(a.toString()) ) {
+		if ( typeof b !== 'number' || (b % 200) !== 0 || !re.test(a.toString()) ) {
 			sto(a, b);
 		}
 	};
