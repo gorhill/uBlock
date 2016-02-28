@@ -88,7 +88,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"終於出現了，一個高效率的阻擋器，使用不多的 CPU 及記憶體資源。",
+    "message":"一款被設計為對抗來自廣告網絡追蹤的擴展",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

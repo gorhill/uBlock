@@ -88,7 +88,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"一款高效的网络请求过滤工具，占用极低的内存和 CPU。",
+    "message":"一款被设计为对抗来自广告网络追踪的扩展",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
