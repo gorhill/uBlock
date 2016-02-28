@@ -322,7 +322,7 @@
     return adlist(pageUrl).sort(byField('-foundTs'));
   }
 
-  /******************************* API ***************************************/
+  /******************************* API ************************************/
 
   var clearAds = function () {
 
@@ -417,7 +417,6 @@
     };
   }
 
-  //var registerAd = function(pageStore, ad, tabId) {
   var registerAd = function (request, pageStore, tabId) {
 
     var ad = request.ad,
@@ -477,15 +476,41 @@
     adsForVault: adsForVault
   };
 
-  /******************************************************************************/
-
 })();
 
+/**************************** override tab.js ****************************/
 
-/******************************************************************************/
-/******************************************************************************/
+µBlock.updateBadgeAsync = (function () {
+  console.log('MY UPDATE-ICON');
+  var tabIdToTimer = Object.create(null);
 
-// messaging
+  var updateBadge = function (tabId) {
+    delete tabIdToTimer[tabId];
+
+    var state = false;
+    var badge = '';
+
+    var pageStore = this.pageStoreFromTabId(tabId);
+    if (pageStore !== null) {
+      state = pageStore.getNetFilteringSwitch();
+
+      var count = µBlock.adnauseam.adlist(pageStore.rawURL).length;
+      if (state && this.userSettings.showIconBadge) { // only if non-zero?
+        badge = this.formatCount(count);
+      }
+    }
+
+    vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
+  };
+
+  return function (tabId) {
+
+    if (tabIdToTimer[tabId] || vAPI.isBehindTheSceneTabId(tabId)) return;
+    tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 666);
+  };
+})();
+
+/****************************** messaging ********************************/
 
 (function () {
 
@@ -514,5 +539,4 @@
 
 })();
 
-/******************************************************************************/
 /******************************************************************************/
