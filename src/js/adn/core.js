@@ -307,7 +307,7 @@
 
         for (var j = 0; j < hashes.length; j++) {
           var ad = admap[pages[i]][hashes[j]];
-          ad.id = null; // null the id from deleted ads (?)
+          //ad.id = null; // null the id from deleted ads (?)
           delete admap[pages[i]][hashes[j]];
         }
       }
@@ -346,6 +346,20 @@
       for (var i = 0; i < entities.length; i+=2)
           s = s.replace(new RegExp('&'+entities[i]+';', 'g'), entities[i+1]);
       return s;
+  }
+
+  var adById = function (id) {
+      var list = adlist();
+      for (var i = 0; i < list.length; i++) {
+          if (list[i].id === id)
+            return list[i];
+      }
+  }
+
+  var deleteAd = function (id) {
+
+      delete admap[adById(id).pageUrl][computeHash(ad)];
+      storeUserData();
   }
 
   /******************************* API ************************************/
@@ -420,7 +434,8 @@
       current = activeVisit(),
       data = menuAds(pageUrl);
 
-    if (current && current.pageUrl === pageUrl) { // make sure current is at top (do we really need this?)
+    // make sure current ad is at top (do we need this?)
+    if (current && current.pageUrl === pageUrl) {
 
       if (current !== data[0]) {
 
@@ -432,7 +447,6 @@
           if (idx >= 0) data.splice(idx, 1);
           data.unshift(current);
       }
-
       //console.log('CURRENT', '#' + current.id, data);
     }
 
@@ -441,6 +455,13 @@
       current: current,
       total: adlist().length
     };
+  }
+
+  var deleteAdset = function (request, pageStore, tabId) {
+
+      for (var j = 0; j < request.ids.length; j++) {
+          deleteAd(request.ids[j]);
+      }
   }
 
   var registerAd = function (request, pageStore, tabId) {
@@ -494,14 +515,14 @@
   /******************************************************************************/
 
   return {
-    //updateBadge: updateBadge,
     adlist: adlist,
     clearAds: clearAds,
     exportAds: exportAds,
     importAds: importAds,
     registerAd: registerAd,
     adsForMenu: adsForMenu,
-    adsForVault: adsForVault
+    adsForVault: adsForVault,
+    deleteAdset: deleteAdset
   };
 
 })();

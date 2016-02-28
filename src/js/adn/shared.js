@@ -23,7 +23,8 @@
     for (var key in ad.contentData) {
       hash += ad.contentData[key] + '::';
     }
-    hash += ad.title;
+    //hash += ad.title; // this can change
+    //hash += ad.targetUrl;
     return hash;
   }
 

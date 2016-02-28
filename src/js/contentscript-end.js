@@ -240,10 +240,12 @@ var adDetector = (function() {
 
             var targetUrl = target.getAttribute("href");
             if (targetUrl) {
-
-              var ad = createImgAd(document.domain, targetUrl, imgSrc);
-              console.log("IMG-AD", ad);
-              notifyAddon(elem, ad);
+              if (/^http/.test(targetUrl)) {
+                  var ad = createImgAd(document.domain, targetUrl, imgSrc);
+                  console.log("IMG-AD", ad);
+                  notifyAddon(elem, ad);
+              }
+              console.warn("Ignoring IMG-AD with targetUrl="+targetUrl+" src="+imgSrc);
             }
 
             // Need to check for div.onclick etc?
@@ -283,10 +285,17 @@ var adDetector = (function() {
 
   function createImgAd(network, target, img) {
 
+    if (!/^http/.test(target)) {
+
+      console.warn("Ignoring ImgAd with targetUrl="+target, arguments);
+      return;
+    }
+
     //console.log("createImgAd: ",network, img, target);
-    // if (window.self !== window.top) {
+    // if (window.self !== window.top) { // see #42
     //     console.log('iFrame: parseTitle: ', window.top.document.title);
     // }
+
     var ad = new Ad(network, document.title, document.URL, target, 'img');
 
     if (!/^http/.test(img)) { // relative image url
@@ -301,6 +310,12 @@ var adDetector = (function() {
   }
 
   function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
+
+    if (!/^http/.test(target)) {
+
+      console.warn("Ignoring TextAd with targetUrl="+target, arguments);
+      return;
+    }
 
     //console.log("createTextAd: ",network, title, text, site, target);
     var ad = new Ad(network, document.title, document.URL, target, 'text');
