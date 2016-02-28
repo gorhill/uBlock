@@ -4,9 +4,12 @@
 
   on-visit: if menu is open, update title & state (also vault)
   recent-ads in menu
-  visitmap: removed
   ad-janitor: look for timeouts based on attemptedTs and mark as error?
   delete-ad-set
+
+  traffic.js
+    onBeforeRequest
+    onBeforeRootFrameRequest
 */
 
 µBlock.adnauseam = (function () {
@@ -98,7 +101,7 @@
 
     var title = xhr.responseText.match(/<title[^>]*>([^<]+)<\/title>/i);
     if (title && title.length > 1) {
-      ad.title = title[1].trim();
+      ad.title = unescapeHTML(title[1].trim());
     } else {
       console.warn('Unable to parse title from: ' + html);
     }
@@ -267,23 +270,29 @@
     vAPI.storage.set(µb.adnSettings);
   }
 
-  var validateTargetUrl = function (next) {
+  var validate = function (ad) {
 
-    if (!/^http/.test(next.targetUrl)) {
+    if (!/^http/.test(ad.targetUrl)) {
 
       // Here we try to extract an obfuscated URL
       //console.log("Ad.targetUrl(malformed): " + next.targetUrl);
 
-      var idx = next.targetUrl.indexOf('http');
+      var idx = ad.targetUrl.indexOf('http');
       if (idx != -1) {
-        next.targetUrl = decodeURIComponent(next.targetUrl.substring(idx));
+        ad.targetUrl = decodeURIComponent(ad.targetUrl.substring(idx));
         //console.log("Ad.targetUrl Updated: " + next.targetUrl);
 
       } else {
 
-        console.warn("Ad.targetUrl(PARSE-FAIL!!!): " + next.targetUrl);
+        console.warn("Ad.targetUrl(PARSE-FAIL!!!): " + ad.targetUrl);
       }
     }
+
+    ad.title = unescapeHTML(ad.title); // fix to #31
+    if (typeof ad.contentData.title !== 'undefined')
+        ad.contentData.title = unescapeHTML(ad.contentData.title);
+    if (typeof ad.contentData.text !== 'undefined')
+        ad.contentData.text = unescapeHTML(ad.contentData.text);
   }
 
   var clearAdmap = function () {
@@ -320,6 +329,23 @@
   // sort ads (by found time) for display in menu
   var menuAds = function (pageUrl) {
     return adlist(pageUrl).sort(byField('-foundTs'));
+  }
+
+  var unescapeHTML = function (s) { // hack
+
+      var entities = [
+          '#39', '\'',
+          'apos', '\'',
+          'amp', '&',
+          'lt', '<',
+          'gt', '>',
+          'quot', '"',
+          '#x27', '\'',
+          '#x60', '`'
+      ];
+      for (var i = 0; i < entities.length; i+=2)
+          s = s.replace(new RegExp('&'+entities[i]+';', 'g'), entities[i+1]);
+      return s;
   }
 
   /******************************* API ************************************/
@@ -423,7 +449,7 @@
       pageUrl = pageStore.rawURL,
       pageDomain = pageStore.tabHostname;
 
-    validateTargetUrl(ad);
+    validate(ad);
 
     var adsOnPage = admap[pageUrl];
 
@@ -453,7 +479,9 @@
 
     console.log('DETECTED: ' + adinfo(ad), ad);
 
-    µb.updateBadgeAsync(tabId);
+    if ( µb.userSettings.showIconBadge ) {
+        µb.updateBadgeAsync(tabId);
+    }
 
     storeUserData();
 
@@ -481,7 +509,7 @@
 /**************************** override tab.js ****************************/
 
 µBlock.updateBadgeAsync = (function () {
-  console.log('MY UPDATE-ICON');
+
   var tabIdToTimer = Object.create(null);
 
   var updateBadge = function (tabId) {

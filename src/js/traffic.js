@@ -311,16 +311,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
         result = pageStore.filterRequestNoCache(context);
     }
 
-    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
-
-
-    pageStore.logRequest(context, newResult);
+    pageStore.logRequest(context, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             vAPI.noTabId,
             'net',
-            newResult,
+            result,
             details.type,
             requestURL,
             context.rootHostname,
@@ -329,13 +326,9 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(newResult) ) {
-      if (!µb.isAllowResult(result))
-        console.log('UNBLOCK(BTS)', result, requestContext);
+    if ( µb.isAllowResult(result) ) {
         return;
     }
-
-    console.log('BLOCKED(BTS) !!!!', result, requestContext);
 
     // Blocked
     return { 'cancel': true };

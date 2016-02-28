@@ -209,19 +209,11 @@ var adDetector = (function() {
 
           checkImages(elem, imgs);
       }
-      else {
+      else { // need to check domain/tag here: called way too often
 
-          /*var anchors = elem.querySelectorAll('a');
-          if (anchors.length) {
-
-              checkAnchors(elem, anchors);
-          }*/
-          //else { // search for text-ad
-
-          console.log("PARSING TEXT: ", elem);
+          //console.log("PARSING TEXT: ", elem);
           var ad = checkFilters(elem);
           if (ad) notifyAddon(elem, ad);
-          //}
       }
     }
   }
@@ -292,7 +284,9 @@ var adDetector = (function() {
   function createImgAd(network, target, img) {
 
     //console.log("createImgAd: ",network, img, target);
-
+    // if (window.self !== window.top) {
+    //     console.log('iFrame: parseTitle: ', window.top.document.title);
+    // }
     var ad = new Ad(network, document.title, document.URL, target, 'img');
 
     if (!/^http/.test(img)) { // relative image url
@@ -306,7 +300,7 @@ var adDetector = (function() {
     return ad;
   }
 
-  function createTextAd(network, target, title, text, site) {
+  function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
 
     //console.log("createTextAd: ",network, title, text, site, target);
     var ad = new Ad(network, document.title, document.URL, target, 'text');
