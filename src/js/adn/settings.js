@@ -15,6 +15,9 @@ var messager = vAPI.messaging.channel('settings.js'),
 
 var handleExportFilePicker = function() {
 
+    // TODO (#39): allow for selection of folder here
+    // finder should be pre-populated with: 'adnauseam-exported-ads.json'
+
     var file = this.files[0]; // ?
     if ( file === undefined || file.name === '' ) {
         return;
