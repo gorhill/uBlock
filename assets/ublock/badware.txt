@@ -38,7 +38,7 @@
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
 # 2015-01-21: http://www.howtogeek.com/207692/yes-every-freeware-download-site-is-serving-crapware-heres-the-proof/
 # 2014-11-25: http://blog.tedd.no/2014/11/25/sourceforge-malware/
-||sourceforge.net^$document
+! ||sourceforge.net^$document
 
 # 2015-05-17: http://lifehacker.com/antiadware-gets-rid-of-bundled-crapware-on-popular-down-1702818594
 # 2015-03-11: http://blog.emsisoft.com/2015/03/11/mind-the-pup-top-download-portals-to-avoid/
