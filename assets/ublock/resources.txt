@@ -732,3 +732,13 @@ bcplayer-defuser.js application/javascript
 		}
 	});
 })();
+
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=27719
+opensubtitles.org application/javascript
+(function() {
+	Object.defineProperty(window, '_0x1cae', {
+		get: function() { return []; },
+		set: function(a) {}
+	});
+})();

@@ -313,3 +313,7 @@ armorgames.com,mmohuts.com,newgrounds.com,onrpg.com,silvergames.com##a[href*="mm
 # https://forums.lanik.us/viewtopic.php?f=64&t=28700
 ||exoclick.com^$important,domain=debridfast.com
 ||www.debridfast.com/bilokiyofdsdf.js$script
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=27719
+opensubtitles.org##script:inject(opensubtitles.org)
+||carambo.la^$third-party
