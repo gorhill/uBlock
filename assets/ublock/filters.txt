@@ -208,6 +208,8 @@ spiegel.de#@#.wrapad
 ||hilltopads.net^$popunder,popup
 # https://github.com/gorhill/uBlock/issues/1347
 ||traffichunt.com^$document,popunder,popup
+||trhnt.com^$document,popup
+||trhunt.com^$document,popup
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=27003
 www.opensubtitles.org##div[itemscope] > fieldset
