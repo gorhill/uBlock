@@ -58,3 +58,6 @@
 # https://www.reddit.com/r/ublock/comments/47o2ih/ublock_disabling_all_javascript_links/d0fhock
 # Time to bring this filter out of experimental status
 ||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js
+
+# https://github.com/gorhill/uBlock/issues/1265
+||scorecardresearch.com/beacon.js$script,redirect=scorecardresearch.com/beacon.js
