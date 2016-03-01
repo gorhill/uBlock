@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -34,7 +34,7 @@ var messager = vAPI.messaging.channel('about.js');
 /******************************************************************************/
 
 var onAppDataReady = function(appData) {
-    uDom('#aboutNameVer').html(appData.name + ' v' + appData.version);
+    uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
 };
 
 messager.send({ what: 'getAppData' }, onAppDataReady);
