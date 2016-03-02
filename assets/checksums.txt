@@ -1,7 +1,7 @@
 538211a2228745b51b615b1b245cf99e assets/ublock/unbreak.txt
 62111a29f0a5cb361ba8dbae92054adb assets/ublock/redirect-resources.txt
 530b0bd06b04cd69aa7058dc74718d49 assets/ublock/privacy.txt
-a822465728550d424ea4752bacfe3756 assets/ublock/filters.txt
+2ec86d6121cd19685a0ba4bc1837dc8e assets/ublock/filters.txt
 98088252cedafb8571cf61b91bea219e assets/ublock/badware.txt
 5baa90e2da7cd6a73edff2010557ee57 assets/ublock/redirect.txt
 b65ec581214a0d24dad6522a60f827ab assets/ublock/experimental.txt
