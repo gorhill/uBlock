@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"এই সাইটের জন্য বৃহৎ মিডিয়া উপাদানের অবরোধ টগল করুন",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -216,23 +216,23 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"পূর্বনির্ধারিত আচরণ",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"এই পূর্বনির্ধারিত আচরণ প্রতি সাইট ভিত্তিতে ওভাররাইড করা যেতে পারে",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"প্রসাধন ফিল্টারিং নিষ্ক্রিয় করুন",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"{{input:number}} কেবির থেকে বড় মিডিয়া উপাদান অবরুদ্ধ করুন",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"রিমোট ফন্ট অবরুদ্ধ করুন",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"ক্লাউড সংগ্রহস্থল থেকে আমদানি করে বর্তমানে সেটিংসের সঙ্গে একত্রীকরণ করুন",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"সাময়িকভাবে বৃহৎ মিডিয়া উপাদান মঞ্জুরি দিন",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
