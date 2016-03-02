@@ -689,7 +689,11 @@ FilterContainer.prototype.isValidSelector = (function() {
         try {
             // https://github.com/gorhill/uBlock/issues/693
             div.matches(s + ',\n#foo');
-            return true;
+            // Discard new ABP's `-abp-properties` directive until it is
+            // implemented (if ever).
+            if ( s.indexOf('[-abp-properties=') === -1 ) {
+                return true;
+            }
         } catch (e) {
         }
         // We reach this point very rarely.
