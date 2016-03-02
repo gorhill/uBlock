@@ -301,7 +301,7 @@ kissanime.to##script:inject(kissanime-defuser.js)
 animes-mangas-ddl.com,crazymeds.us,dasolo.org,ip-address.org,uploadshub.com##script:inject(bab-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
-filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
+filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,narutoshippudenvf.com,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/1397
 ||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js,domain=focus.de
@@ -322,3 +322,6 @@ opensubtitles.org##script:inject(opensubtitles.org)
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=28856
 ||godlessnightsfilm.co.uk/scripts/ad-gallery/$important,third-party
+
+# https://github.com/gorhill/uBlock/issues/1340#issuecomment-191082824
+||gamingaffiliation.com^$third-party
