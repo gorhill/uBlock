@@ -325,3 +325,5 @@ opensubtitles.org##script:inject(opensubtitles.org)
 
 # https://github.com/gorhill/uBlock/issues/1340#issuecomment-191082824
 ||gamingaffiliation.com^$third-party
+
+tweaktown.com###background_skin
