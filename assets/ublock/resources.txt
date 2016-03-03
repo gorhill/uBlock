@@ -409,7 +409,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['_x','_y','_z','gj','pz','xz','yy','yz','zp','zx','zy'];
+	var aa = ['_x','_y','_z','pz','xz','yy','yz','zp','zx','zy','gj','fj'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -424,13 +424,6 @@ yavli-defuser.js application/javascript
 		} catch (e) {
 		}
 	}
-	var sto = window.setTimeout;
-	window.setTimeout = function(a, b) {
-		var re = /rec\(rid,\s*tw\s*\+\s*step\)/;
-		if ( typeof b !== 'number' || (b % 200) !== 0 || !re.test(a.toString()) ) {
-			sto(a, b);
-		}
-	};
 })();
 
 
