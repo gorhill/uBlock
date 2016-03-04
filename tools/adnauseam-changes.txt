@@ -5,13 +5,13 @@
 # git fetch upstream
 # git merge upstream/master
 
-changed files inside ublock/src/js:
+changed files inside src/js:
 
   src/js/traffic.js (disable-blocking)
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
 
-changed files inside ublock/src/: (html)
+changed files inside src/: (html)
 
   src/background.html (added adn files)
   src/dashboard.html (added adn tabs)
@@ -19,13 +19,18 @@ changed files inside ublock/src/: (html)
   src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
 
-changed files inside ublock/_locales/: (locale)
+changed files inside platform/: 
+
+  platform/firefox/vapi-background.js
+
+
+changed files inside _locales/: (locale)
 
   src/_locales/en/messages.json     (added ADN locale)
   src/_locales/zh_CN/messages.json  (added ADN locale)
   src/_locales/zh_TW/messages.json  (added ADN locale)
 
-added files inside ublock/src:
+added files inside src:
 
   adn-popup.html
   adn-vault.html
@@ -60,16 +65,16 @@ added files inside ublock/src:
     bebasneue_regular-webfont.woff2
     stylesheet.css
 
-changed files inside ublock/src/_locale (localization)
+changed files inside src/_locale (localization)
 
-added files inside ublock/platform/chromium/img/browsericons/adn
+added files inside platform/chromium/img/browsericons/adn
 
   icon19.png
   icon19-off.png
   icon38.png
   icon38-off.png
 
-added files inside ublock/platform/firefox/img/browsericons/adn
+added files inside platform/firefox/img/browsericons/adn
 
   icon16.svg
   icon16-off.svg

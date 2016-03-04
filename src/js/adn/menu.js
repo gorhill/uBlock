@@ -9,11 +9,11 @@
 
   var renderPage = function (json) {
 
-    setCounts(json);
-
     var ads = json.data;
 
     console.log('renderPage() :: ', ads.length, json.current);
+
+    setCounts(json.data, json.total);
 
     var $items = $('#ad-list-items');
     $items.removeClass().empty();
@@ -46,17 +46,13 @@
       current && $('#ad' + current.id).addClass('attempting');
   }
 
-  function setCounts(json) {
-
-    // var found = (json && json.pageCount) || 0,
-    //     total = (json && json.totalCount) || '?',
-    //     visited = (json && found && visitedCount(json.data)) || 0;
+  function setCounts(data, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
 
-    $('#visited-count').text(visitedCount(json.data));
-    $('#found-count').text(json.data.length);
-    $('#vault-count').text(json.total);
+    $('#visited-count').text(visitedCount(data));
+    $('#found-count').text(data.length);
+    $('#vault-count').text(total);
   }
 
   function appendImageAd(ad, $items) {

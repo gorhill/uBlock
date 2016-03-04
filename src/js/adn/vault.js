@@ -7,6 +7,21 @@
 'use strict';
 
 var messager = vAPI.messaging.channel('adnauseam');
+messager.addListener( function(request) {
+    //console.log("GOT BROADCAST", msg);
+    switch(request.what) {
+        case 'adAttempt':
+            setCurrent(request.ad);
+            break;
+        case 'adDetected':
+            gAds.push(request.ad);
+            createSlider(true);
+            break;
+        case 'adVisited':
+            break;
+    }
+});
+//console.log(messager, Object.keys(messager), messager.send);
 
 const logoURL = 'http://dhowe.github.io/AdNauseam/',
   States = ['pending', 'visited', 'failed'],
@@ -45,7 +60,7 @@ var renderAds = function(json) {
 
   addInterfaceHandlers();
   createSlider(true);
-  setCurrent(json);
+  setCurrent(json.current);
 };
 
 
@@ -74,18 +89,23 @@ function setAttempting(current) {
   }
 }
 
-function setCurrent(json) {
+// function setCurrentById(id){
+//     console.log('setCurrentById('+id+')');
+//     setCurrent(findAdById(current.id));
+// }
 
-  //log('vault::setCurrent: '+(json.current?json.current.id:-1));
+function setCurrent(ad) {
+
+  console.log('vault::setCurrent: ',ad);
 
   $('.item').removeClass('attempting just-visited just-failed');
 
-  setAttempting(json.current);
+  setAttempting(ad);
 }
 
 function doLayout(adsets) {
 
-  //log('Vault.doLayout: '+adsets.length +" ad-sets, total="+numFound(adsets));
+  console.log('Vault.doLayout: '+adsets.length +" ad-sets, total="+numFound(adsets));
 
   adsets = adsets || [];
 
@@ -775,7 +795,7 @@ function lightboxMode($selected) {
     var next = selectedAdSet.nextPending(); // tell the addon
 
     if (next)// self.port.emit("item-inspected", { "id": next.id });
-      messager.send({  what: 'itemInspected', adId: next.id }, function(){ });
+      messager.send({  what: 'itemInspected', id: next.id }, function(){ });
 
     centerZoom($selected);
 
@@ -840,10 +860,11 @@ function findAdById(id) {
     }
   }
 
-  console.error('[ERROR] Vault: No ad for ID#' + id + " gAdSets: ", gAdSets);
+  //console.error('[ERROR] Vault: No ad for ID#' + id + " gAdSets: ", gAdSets);
 
+  // WHY ????
   //self.port && self.port.emit("refresh-vault");
-  messager.send({  what: 'refreshVault' }, function(){ });
+  //messager.send({  what: 'refreshVault' }, function(){ });
 }
 
 function findItemDivByGid(gid) {
