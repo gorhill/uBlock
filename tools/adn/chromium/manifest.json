@@ -17,7 +17,7 @@
             "38": "img/browsericons/adn/icon38.png"
         },
         "default_title": "AdNauseam",
-        "default_popup": "adn-menu.html"
+        "default_popup": "adn-popup.html"
     },
 
     "author": "Daniel C. Howe",

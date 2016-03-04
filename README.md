@@ -1,169 +1,46 @@
-[![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)](https://travis-ci.org/gorhill/uBlock)
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/ublock/localized.png)](https://crowdin.com/project/ublock)
-[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
-
-***
-
-##### BEWARE! uBlock Origin is COMPLETELY UNRELATED to the web site ublock.org**
-
-The donations sought by the [individual](https://github.com/chrisaljoudi/) behind `ublock.org` are _not_ benefiting any of those who contributed most to create uBlock Origin ([developers](https://github.com/gorhill/uBlock/graphs/contributors), [translators](https://crowdin.com/project/ublock), and all those who put efforts in opening detailed issues). For the differences in features between uBlock Origin and uBlock, you are more likely than anywhere else to find an unbiased explanation in this [Wikipedia article](http://en.wikipedia.org/wiki/UBlock).
-
-***
-
-uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_](https://easylist.adblockplus.org/en/policy#easylist), [_EasyPrivacy_](https://easylist.adblockplus.org/en/policy#easyprivacy), [_Peter Lowe’s ad/tracking/malware servers_](https://pgl.yoyo.org/adservers/policy.php), various lists of [malware](http://www.malwaredomainlist.com/) [sites](http://www.malwaredomains.com/), and uBlock Origin's [own filter lists](https://github.com/gorhill/uBlock/tree/master/assets/ublock).
-
-*** 
-
-<h1 align="center">
-<sub>
-<img  src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/icon38@2x.png"
-      height="38"
-      width="38">
-</sub>
-uBlock Origin
-</h1>
-<p align="center">
-<sup> <!-- Pronounciation -->
-      pronounced <i>you-block origin</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
-</sup>
-<br>
-<sup> <!-- Languages -->
-      <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18">
-      <sup>
-            English,
-            <a href="https://github.com/fang5566/uBlock/blob/master/README.md#ublock-origin">Chinese (中文)</a>,
-            <a href="https://github.com/delightbot/uBlock/blob/master/README.md#ublock-origin">Korean (한국어)</a>,
-            <a href="https://github.com/ialexsilva/uBlock/blob/master/README.md#ublock-origin">Português (Brasil)</a>
-      </sup>
-</sup>
-</p>
-
-
-**An efficient blocker add-on for various browsers. Fast, potent, and lean.**
-
-* [Documentation](#documentation)
-* [Purpose & General Info](#philosophy)
-* [Performance and Efficiency](#performance)
-  * [Memory](#memory)
-  * [CPU](#cpu)
-  * [Blocking](#blocking)
-  * [Quick tests](#quick-tests)
-* [Installation](#installation)
-  * [Chromium](#chromium)
-  * [Firefox](#firefox--firefox-for-android)
-* [Release History](#release-history)
-* [Privacy policy](https://github.com/gorhill/uBlock/wiki/Privacy-policy)
-* [Wiki](https://github.com/gorhill/uBlock/wiki)
-
-## Documentation
-
- Basic mode | Advanced-user mode
-:----------:|:------------------:
-[Popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface) | [A point-and-click firewall which can be configured on a per-site basis](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) 
-<a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png" /></a><br><sup>.<br>.</sup> | <a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide"><img src="https://cloud.githubusercontent.com/assets/585534/9293685/378d18f0-4402-11e5-9255-8ed3fdbfa957.png" /></a><br><sup>Configure as you wish:<br>picture shows 3rd-party scripts and frames blocked by default everywhere</sup>
-
-Visit the [uBlock Origin's wiki](https://github.com/gorhill/uBlock/wiki) for documentation.
-
-## Philosophy
-
-uBlock Origin (or uBlock₀) is not an *ad blocker*; it's a general-purpose blocker. uBlock₀ blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock₀ [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters. Furthermore, advanced mode allows uBlock₀ to work in [default-deny mode](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny), which mode will cause [all 3rd-party network requests](https://requestpolicycontinued.github.io/#what-are-cross-site-requests) to be blocked by default, unless allowed by the user.
-
-That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
-
-Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **uBlock₀'s main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/gorhill/uMatrix)).
-
-_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock₀. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
-
-Once you install uBlock₀, you may easily un-select any of the pre-selected filter lists if you think uBlock₀ blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
-
-## Performance
-
-#### Memory
+<!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
 <div align="center">
-On average, uBlock Origin does make your browser run leaner. <sup>[1]</sup><br><br>
-
-Chromium<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074141/15f04128-629c-11e5-9155-177fd4909083.png" /><br><br>
-
-Firefox<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074130/0577118c-629c-11e5-9902-bf367c6a96c3.png" /><br><br>
-
+  <a href="http://ADNAUSEAM.io">
+    <img src="https://rednoise.org/adnauseam/logo.png"/>
+  </a>
 </div>
 
-<sup>[1] Details of the benchmark available at <a href="https://github.com/gorhill/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">Firefox version: benchmarking memory footprint</a>.</sup><br>
+[AdNauseam](http://adnauseam.io) is a lightweight browser extension that blends software tool and 'artware' intervention to protect users from tracking by advertising networks. AdNauseam works together with your ad-blocker to silently simulate clicks on each blocked ad (in a background thread), confusing trackers as to one's real interests. Simultaneously, AdNauseam serves as a means of amplifying users' discontent with advertising networks that disregard privacy and facilitate bulk surveillance agendas.
 
-#### CPU
+We conceptualize AdNauseam within a broader class of software systems that serve ethical, political, and expressive ends. In light of the industry's failure to achieve consensus on a Do Not Track standard<sup>1</sup>*, or to otherwise address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering cover against certain forms of surveillance, profiling, and practices of discrimination. Taken in this light, the software represents a similar approach to that of <a href="http://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, which attempts to relocate power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="http://cs.nyu.edu/trackmenot/TMN-Howe-Niss08-ch23.pdf" target="_blank">this paper</a>.
 
-<p align="center">
-uBlock Origin is also easy on the CPU<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
-<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
-</p>
+#### About the project
+--------
 
-#### Blocking
+* Web Site:         http://adnauseam.io
+* Authors:          [Daniel C. Howe](http://rednoise.org/daniel), [Helen Nissenbaum](https://www.nyu.edu/projects/nissenbaum/) & [Mushon Zer-Aviv](http://mushon.com)
+* License:          GPLv3 (see included [LICENSE](https://github.com/dhowe/AdNauseam/blob/master/LICENSE) file for full license)
+* Github Repo:      https://github.com/dhowe/adnauseam2/
+* Bug Tracker:      https://github.com/dhowe/adnauseam2/issues
+* FAQ:              https://github.com/dhowe/AdNauseam2/wiki/FAQ
 
-<p align="center">
-Being lean and efficient doesn't mean blocking less<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201502-16.png" /><br>
-<sup>For details of benchmark, see 
-<a href="https://github.com/gorhill/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock₀ and others: Blocking ads, trackers, malwares</a>.
-</p>
 
-#### Quick tests
+#### Can I contribute?
+--------
+Absolutely! We are looking for coders, designers, and translators to help on the project.
 
-- [Index](http://raymondhill.net/ublock/tests.html)
-- [Web page components](http://raymondhill.net/ublock/tiles1.html)
-- [Popups](http://raymondhill.net/ublock/popup.html)
-- [Page load speed](http://www.raymondhill.net/ublock/pageloadspeed.html)
-- [ABP Test Pages](https://testpages.adblockplus.org/)
+If you are a coder or designer, just press *Fork* at the top of this github page and get started... Or, if you'd like to contribute a translation, please visit [this page](https://crowdin.com/project/adnauseam).
 
-## Installation
+If you're not sure where to start, look at the issues labeled [HELP US CODE](https://github.com/dhowe/AdNauseam2/labels/HELP-US-CODE). Thanks!
 
-Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-#### Chromium
 
-You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Store](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/) (uBlock Origin is published under the name "µBlock" in the Opera store -- the name can't be changed).
 
-It is expected that uBlock Origin is compatible with any Chromium-based browsers.
 
-#### Firefox / Firefox for Android
+#### How to install the development environment
 
-[Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/). There is also a development version if you want to test uBlock Origin with the latest changes: see [_uBlock Origin Version History_](https://addons.mozilla.org/addon/ublock-origin/versions/beta)
+##### Developing on Firefox
 
-uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox.
+1. [Fork and clone](https://help.github.com/articles/fork-a-repo) this repository:
 
-The Firefox version of uBlock Origin has [an extra feature](https://github.com/gorhill/uBlock/wiki/Inline-script-tag-filtering) currently not yet available on Chromium-based browsers -- which feature is of great help to foil attempts by many web sites to circumvent blockers.
+    ```bash
+    $ git clone https://github.com/dhowe/AdNauseam2.git
+    ```
 
-Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
-
-##### Debian/Ubuntu
-
-Users of Debian 9 or later or Ubuntu 16.04 or later may simply
-`apt-get install xul-ext-ublock-origin`.
-
-#### Note for all browsers
-
-To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
-
-## Release History
-
-See the [releases pages](https://github.com/gorhill/uBlock/releases) for a history of releases and highlights for each release.
-
-## About
-
-[uBlock Origin's manifesto](MANIFESTO.md).
-
-Free. Open source. For users by users. No donations sought.
-
-Without the preset lists of filters, this extension is nothing. So if ever you
-really do want to contribute something, think about the people working hard
-to maintain the filter lists you are using, which were made available to use by
-all for free.
-
-You can contribute by helping translate uBlock₀ [on Crowdin](https://crowdin.net/project/ublock).
-
-## License
-
-[GPLv3](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt).
+2. See this [FAQ entry](https://github.com/dhowe/AdNauseam2/issues/9) on how to build the extensions for various browsers

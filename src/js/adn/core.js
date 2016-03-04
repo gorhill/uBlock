@@ -157,7 +157,9 @@
 
     var status = this.status || 200,
       html = this.responseText;
+
     if (status < 200 || status >= 300 || !stringNotEmpty(html)) {
+
       return onVisitError.call(this, {
         status: status,
         responseText: html

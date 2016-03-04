@@ -26,7 +26,7 @@
         <array>
             <dict>
 				<key>Filename</key>
-				<string>adn-menu.html</string>
+				<string>adn-popup.html</string>
 				<key>Height</key>
 				<integer>500</integer>
 				<key>Identifier</key>

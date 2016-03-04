@@ -2358,7 +2358,7 @@ vAPI.net.registerListeners = function() {
         var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
-        if ( details.url.startsWith(vAPI.getURL('popup.html')) ) {
+        if ( details.url.indexOf(vAPI.getURL('popup.html')) > -1 ) { // for adn
             return;
         }
 
@@ -2528,7 +2528,7 @@ vAPI.toolbarButton = {
     var tbb = vAPI.toolbarButton;
 
     tbb.onViewShowing = function({target}) {
-        target.firstChild.setAttribute('src', vAPI.getURL('adn-menu.html')); // adn
+        target.firstChild.setAttribute('src', vAPI.getURL('adn-popup.html')); // adn
     };
 
     tbb.onViewHiding = function({target}) {

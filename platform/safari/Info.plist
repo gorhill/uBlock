@@ -26,7 +26,7 @@
         <array>
             <dict>
                 <key>Filename</key>
-                <string>popup.html</string>
+                <string>adn-popup.html</string>
                 <key>Identifier</key>
                 <string>popover</string>
             </dict>
