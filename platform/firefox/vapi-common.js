@@ -118,6 +118,14 @@ setScriptDirection(navigator.language);
 
 /******************************************************************************/
 
+vAPI.confirm = (function() {                                
+    return function(msg) {
+        Services.prompt.confirm(null, "AdNauseam", msg);
+    };
+})();
+
+/******************************************************************************/
+
 vAPI.closePopup = function() {
     sendAsyncMessage(location.host + ':closePopup');
 };
