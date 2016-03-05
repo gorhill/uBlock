@@ -1,4 +1,8 @@
 {
+  "adnExportedAdsFilename" : {
+    "message": "AdNauseam-exported-ads_{{datetime}}.json",
+    "description": "English: AdNauseam-exported-ads_{{datetime}}.json"
+  },
   "adnImportConfirm":{
     "message":"This action will overwrite ALL of your current ads",
     "description":"appears in ADN settings"
