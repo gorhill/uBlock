@@ -231,6 +231,10 @@ var uBlockCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
         // Should probably also copy injected styles.
+        // The injected scripts are those which were injected in the current
+        // document, from within the `contentscript-start.js / injectScripts`,
+        // and which scripts are selectively looked-up from:
+        // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( vAPI.injectedScripts ) {
             var scriptTag = document.createElement('script');
             scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));

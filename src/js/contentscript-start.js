@@ -124,8 +124,10 @@ var netFilters = function(details) {
 
 // Create script tags and assign data URIs looked up from our library of
 // redirection resources: Sometimes it is useful to use these resources as
-// standalone scriptlets.
-// Library of redirection resources:
+// standalone scriptlets. These scriptlets are injected from within the
+// content scripts because what must be injected, if anything, depends on the
+// currently active filters, as selected by the user.
+// Library of redirection resources is located at:
 // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
 
 var injectScripts = function(scripts) {
