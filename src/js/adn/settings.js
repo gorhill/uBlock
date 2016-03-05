@@ -13,18 +13,6 @@ var messager = vAPI.messaging.channel('settings.js'),
 
 /******************************************************************************/
 
-var handleExportFilePicker = function() {
-
-    // TODO (#39): allow for selection of folder here
-    // finder should be pre-populated with: 'adnauseam-exported-ads.json'
-
-    var file = this.files[0]; // ?
-    if ( file === undefined || file.name === '' ) {
-        return;
-    }
-    adnmessager.send({ what: 'exportAds', filename: file.name }, onLocalDataReceived);
-};
-
 function handleImportFilePicker(evt) {
 
     var msg = vAPI.i18n('adnImportConfirm');
@@ -103,14 +91,14 @@ var startImportFilePicker = function() {
     input.click();
 };
 
-var startExportFilePicker = function() {
-
-    var input = document.getElementById('exportFilePicker');
-    // Reset to empty string, this will ensure an change event is properly
-    // triggered if the user pick a file, even if it is the same as the last
-    // one picked.
-    input.value = '';
-    input.click();
+var exportToFile = function() {
+    
+    var now = new Date();
+    var filename = vAPI.i18n('adnExportedAdsFilename')
+        .replace('{{datetime}}', now.toLocaleString())
+        .replace(/ +/g, '_');
+        
+    adnmessager.send({ what: 'exportAds', filename: filename }, onLocalDataReceived);
 };
 
 /******************************************************************************/
@@ -210,10 +198,9 @@ var onUserSettingsReceived = function(details) {
              .on('change', onInputChanged);
     });
 
-    uDom('#export').on('click', startExportFilePicker);
+    uDom('#export').on('click', exportToFile);
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
-    uDom('#exportFilePicker').on('change', handleExportFilePicker);
     uDom('#reset').on('click', clearAds);
 };
 

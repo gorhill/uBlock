@@ -1,4 +1,8 @@
 {
+  "adnExportedAdsFilename" : {
+    "message": "AdNauseam-已導出的廣告_{{datetime}}.json",
+    "description": "English: AdNauseam-exported-ads_{{datetime}}.json"
+  },
   "adnImportConfirm":{
     "message":"這操作會覆蓋你目前已保存的全部廣告",
     "description":"appears in ADN settings"
