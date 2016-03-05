@@ -33,7 +33,8 @@ const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 const rpcEmitterName = hostName + ':child-process-message';
 
-//Cu.import('resource://gre/modules/Console.jsm');
+//Cu.import('resource://gre/modules/Console.jsm'); // Firefox >= 44
+//Cu.import('resource://gre/modules/devtools/Console.jsm'); // Firefox < 44
 
 /******************************************************************************/
 

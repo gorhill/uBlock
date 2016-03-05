@@ -34,6 +34,11 @@ let {contentObserver, LocationChangeListener} = Components.utils.import(
     null
 );
 
+// https://github.com/gorhill/uBlock/issues/1444
+// Apparently the same context is used for all extensions, hence we must use
+// scoped variables to ensure no collision.
+let locationChangeListener;
+
 let injectContentScripts = function(win) {
     if ( !win || !win.document ) {
         return;
@@ -61,7 +66,7 @@ let shutdown = function(ev) {
     }
     context.removeMessageListener('ublock0-load-completed', onLoadCompleted);
     context.removeEventListener('unload', shutdown);
-    context.locationChangeListener = null;
+    locationChangeListener = null;
     LocationChangeListener = null;
     contentObserver = null;
 };
@@ -74,7 +79,7 @@ if ( context.docShell ) {
     let dw = wp.DOMWindow;
 
     if ( dw === dw.top ) {
-        context.locationChangeListener = new LocationChangeListener(context.docShell);
+        locationChangeListener = new LocationChangeListener(context.docShell);
     }
 }
 
