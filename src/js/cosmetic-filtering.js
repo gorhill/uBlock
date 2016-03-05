@@ -639,6 +639,10 @@ FilterContainer.prototype.reset = function() {
 
     this.selectorCache = {};
     this.selectorCacheCount = 0;
+    if ( this.selectorCacheTimer !== null ) {
+        clearTimeout(this.selectorCacheTimer);
+        this.selectorCacheTimer = null;
+    }
 
     // permanent
     // [class], [id]
