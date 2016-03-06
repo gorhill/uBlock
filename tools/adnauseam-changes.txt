@@ -11,6 +11,9 @@ changed files inside ublock/src/js:
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
 
+changed files inside ublock/src/js/scriptlets:
+  subscriber.js (window.confirm() replaced with vAPI.confirm())
+
 changed files inside ublock/src/: (html)
 
   src/background.html (added adn files)
@@ -18,12 +21,6 @@ changed files inside ublock/src/: (html)
   src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
   src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
-
-changed files inside ublock/_locales/: (locale)
-
-  src/_locales/en/messages.json     (added ADN locale)
-  src/_locales/zh_CN/messages.json  (added ADN locale)
-  src/_locales/zh_TW/messages.json  (added ADN locale)
 
 added files inside ublock/src:
 
@@ -61,6 +58,9 @@ added files inside ublock/src:
     stylesheet.css
 
 changed files inside ublock/src/_locale (localization)
+  src/_locales/en/messages.json     (added ADN locale)
+  src/_locales/zh_CN/messages.json  (added ADN locale)
+  src/_locales/zh_TW/messages.json  (added ADN locale)
 
 added files inside ublock/platform/chromium/img/browsericons/adn
 
@@ -75,19 +75,44 @@ added files inside ublock/platform/firefox/img/browsericons/adn
   icon16-off.svg
   icon24.svg
   icon24-off.svg
+  
+added files inside ublock/tools/
+
+  adnauseam-changes.txt
+  make-chromium-adn.sh
+  make-firefox-adn.sh
+  make-firefox-meta-adn.py
+  make-opera-adn.sh
+  make-safari-adn.sh
+  make-safari-meta-adn.py
+  
+added files inside ublock/tools/adn/chromium
+  manifest.json
+  
+added files inside ublock/tools/adn/opera
+  manifest.json
+  
+added files inside ublock/tools/adn/safari
+  Info.plist
+  Settings.plist
+  Update.plist
 
 changed files inside platform/chromium:
   platform/chromium/manifest.json
   platform/chromium/vapi-background.js
     (icons, line 554)
+  platform/chromium/vapi-common.js
+    (line 82, added vAPI.confirm())
 
 changed files inside platform/firefox:
   platform/firefox/vapi-background.js
     (menu, line 2472,2531)
-  platform/firefox/css/legacy-toolbar-button.css
-    (icons, line 2, 5, 9, 12, 33)
   platform/firefox/vapi-background.js
     (icons, line 3005, 3010, 3176, 3186)
+  platform/firefox/css/legacy-toolbar-button.css
+    (icons, line 2, 5, 9, 12, 33)
+  platform/firefox/vapi-common.js
+    (line 121, added vAPI.confirm())
 
 changed files inside platform/opera:
 
