@@ -174,6 +174,16 @@ var onInputChanged = function(ev) {
 
 /******************************************************************************/
 
+// Workaround for:
+// https://github.com/gorhill/uBlock/issues/1448
+
+var onPreventDefault = function(ev) {
+    ev.target.focus();
+    ev.preventDefault();
+};
+
+/******************************************************************************/
+
 // TODO: use data-* to declare simple settings
 
 var onUserSettingsReceived = function(details) {
@@ -193,7 +203,8 @@ var onUserSettingsReceived = function(details) {
 
     uDom('[data-setting-type="input"]').forEach(function(uNode) {
         uNode.val(details[uNode.attr('data-setting-name')])
-             .on('change', onInputChanged);
+             .on('change', onInputChanged)
+             .on('click', onPreventDefault);
     });
 
     uDom('#export').on('click', exportToFile);
