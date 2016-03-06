@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,10 +59,6 @@ if (
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('scriptlets');
-
-/******************************************************************************/
-
 var onAbpLinkClicked = function(ev) {
     if ( ev.button !== 0 ) {
         return;
@@ -87,21 +83,27 @@ var onAbpLinkClicked = function(ev) {
             return;
         }
     }
+
     var location = decodeURIComponent(matches[1]);
     var title = decodeURIComponent(matches[2]);
+    var messaging = vAPI.messaging;
 
     ev.stopPropagation();
     ev.preventDefault();
 
     var onListsSelectionDone = function() {
-        messager.send({ what: 'reloadAllFilters' });
+        messaging.send('scriptlets', { what: 'reloadAllFilters' });
     };
 
     var onExternalListsSaved = function() {
-        messager.send({
-            what: 'selectFilterLists',
-            switches: [ { location: location, off: false } ]
-        }, onListsSelectionDone);
+        messaging.send(
+            'scriptlets',
+            {
+                what: 'selectFilterLists',
+                switches: [ { location: location, off: false } ]
+            },
+            onListsSelectionDone
+        );
     };
 
     var onSubscriberDataReady = function(details) {
@@ -122,14 +124,22 @@ var onAbpLinkClicked = function(ev) {
         }
         lines.push(location, '');
 
-        messager.send({
-            what: 'userSettings',
-            name: 'externalLists',
-            value: lines.join('\n')
-        }, onExternalListsSaved);
+        messaging.send(
+            'scriptlets',
+            {
+                what: 'userSettings',
+                name: 'externalLists',
+                value: lines.join('\n')
+            },
+            onExternalListsSaved
+        );
     };
 
-    messager.send({ what: 'subscriberData' }, onSubscriberDataReady);
+    messaging.send(
+        'scriptlets',
+        { what: 'subscriberData' },
+        onSubscriberDataReady
+    );
 };
 
 document.addEventListener('click', onAbpLinkClicked, true);

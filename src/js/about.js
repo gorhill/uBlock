@@ -29,15 +29,11 @@ uDom.onLoad(function() {
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('about.js');
-
-/******************************************************************************/
-
 var onAppDataReady = function(appData) {
     uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
 };
 
-messager.send({ what: 'getAppData' }, onAppDataReady);
+vAPI.messaging.send('dashboard', { what: 'getAppData' }, onAppDataReady);
 
 /******************************************************************************/
 

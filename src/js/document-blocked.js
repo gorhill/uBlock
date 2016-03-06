@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('document-blocked.js');
+var messaging = vAPI.messaging;
 var details = {};
 
 (function() {
@@ -82,11 +82,15 @@ var details = {};
         uDom.nodeFromId('whyex').style.removeProperty('display');
     };
 
-    messager.send({
-        what: 'listsFromNetFilter',
-        compiledFilter: details.fc,
-        rawFilter: details.fs
-    }, onReponseReady);
+    messaging.send(
+        'documentBlocked',
+        {
+            what: 'listsFromNetFilter',
+            compiledFilter: details.fc,
+            rawFilter: details.fs
+        },
+        onReponseReady
+    );
 })();
 
 /******************************************************************************/
@@ -109,22 +113,30 @@ var proceedToURL = function() {
 /******************************************************************************/
 
 var proceedTemporary = function() {
-    messager.send({
-        what: 'temporarilyWhitelistDocument',
-        hostname: getTargetHostname()
-    }, proceedToURL);
+    messaging.send(
+        'documentBlocked',
+        {
+            what: 'temporarilyWhitelistDocument',
+            hostname: getTargetHostname()
+        },
+        proceedToURL
+    );
 };
 
 /******************************************************************************/
 
 var proceedPermanent = function() {
-    messager.send({
-        what: 'toggleHostnameSwitch',
-        name: 'no-strict-blocking',
-        hostname: getTargetHostname(),
-        deep: true,
-        state: true
-    }, proceedToURL);
+    messaging.send(
+        'documentBlocked',
+        {
+            what: 'toggleHostnameSwitch',
+            name: 'no-strict-blocking',
+            hostname: getTargetHostname(),
+            deep: true,
+            state: true
+        },
+        proceedToURL
+    );
 };
 
 /******************************************************************************/

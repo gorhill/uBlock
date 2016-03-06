@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('settings.js');
+var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
@@ -72,11 +72,14 @@ var handleImportFilePicker = function() {
                       .replace('{{time}}', time.toLocaleString());
         var proceed = window.confirm(msg);
         if ( proceed ) {
-            messager.send({
-                what: 'restoreUserData',
-                userData: userData,
-                file: filename
-            });
+            messaging.send(
+                'dashboard',
+                {
+                    what: 'restoreUserData',
+                    userData: userData,
+                    file: filename
+                }
+            );
         }
     };
 
@@ -99,7 +102,7 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 var exportToFile = function() {
-    messager.send({ what: 'backupUserData' }, onLocalDataReceived);
+    messaging.send('dashboard', { what: 'backupUserData' }, onLocalDataReceived);
 };
 
 /******************************************************************************/
@@ -143,18 +146,21 @@ var resetUserData = function() {
     var msg = vAPI.i18n('aboutResetDataConfirm');
     var proceed = window.confirm(msg);
     if ( proceed ) {
-        messager.send({ what: 'resetUserData' });
+        messaging.send('dashboard', { what: 'resetUserData' });
     }
 };
 
 /******************************************************************************/
 
 var changeUserSettings = function(name, value) {
-    messager.send({
-        what: 'userSettings',
-        name: name,
-        value: value
-    });
+    messaging.send(
+        'dashboard',
+        {
+            what: 'userSettings',
+            name: name,
+            value: value
+        }
+    );
 };
 
 /******************************************************************************/
@@ -216,8 +222,8 @@ var onUserSettingsReceived = function(details) {
 /******************************************************************************/
 
 uDom.onLoad(function() {
-    messager.send({ what: 'userSettings' }, onUserSettingsReceived);
-    messager.send({ what: 'getLocalData' }, onLocalDataReceived);
+    messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
+    messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
 });
 
 /******************************************************************************/

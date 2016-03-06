@@ -410,6 +410,7 @@ vAPI.storage = (function() {
                 if ( typeof callback === 'function' && reason === 0 ) {
                     callback(result);
                 }
+                result = null;
             },
             handleError: function(error) {
                 console.error('SQLite error ', error.result, error.message);
@@ -417,6 +418,7 @@ vAPI.storage = (function() {
                 if ( typeof callback === 'function' ) {
                     callback(null);
                 }
+                result = null;
             }
         });
     };

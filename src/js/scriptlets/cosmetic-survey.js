@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,15 +53,14 @@ if ( injectedSelectors.length !== 0 ) {
 
 /******************************************************************************/
 
-var localMessager = vAPI.messaging.channel('scriptlets');
-
-localMessager.send({
-    what: 'liveCosmeticFilteringData',
-    pageURL: window.location.href,
-    filteredElementCount: filteredElementCount
-}, function() {
-    localMessager.close();
-});
+vAPI.messaging.send(
+    'scriptlets',
+    {
+        what: 'liveCosmeticFilteringData',
+        pageURL: window.location.href,
+        filteredElementCount: filteredElementCount
+    }
+);
 
 /******************************************************************************/
 

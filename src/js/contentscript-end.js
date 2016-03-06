@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -56,15 +56,6 @@ vAPI.contentscriptEndInjected = true;
 vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
-
-var messager = vAPI.messaging.channel('contentscript-end.js');
-
-// https://github.com/gorhill/uMatrix/issues/144
-vAPI.shutdown.add(function() {
-    messager.close();
-});
-
-/******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
@@ -83,6 +74,7 @@ var uBlockCollapser = (function() {
     var src2ndProps = {
         'img': 'srcset'
     };
+    var messaging = vAPI.messaging;
 
     var PendingRequest = function(target, tagName, attr) {
         this.id = requestId++;
@@ -143,12 +135,15 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
-            messager.send({
-                what: 'cosmeticFiltersInjected',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors: selectors
-            });
+            messaging.send(
+                'contentscript',
+                {
+                    what: 'cosmeticFiltersInjected',
+                    type: 'net',
+                    hostname: window.location.hostname,
+                    selectors: selectors
+                }
+            );
         }
         // Renew map: I believe that even if all properties are deleted, an
         // object will still use more memory than a brand new one.
@@ -159,12 +154,15 @@ var uBlockCollapser = (function() {
 
     var send = function() {
         timer = null;
-        messager.send({
-            what: 'filterRequests',
-            pageURL: window.location.href,
-            pageHostname: window.location.hostname,
-            requests: newRequests
-        }, onProcessed);
+        messaging.send(
+            'contentscript',
+            {
+                what: 'filterRequests',
+                pageURL: window.location.href,
+                pageHostname: window.location.hostname,
+                requests: newRequests
+            }, onProcessed
+        );
         newRequests = [];
     };
 
@@ -400,6 +398,7 @@ var uBlockCollapser = (function() {
     };
     checkStyleTags();
 
+    var messaging = vAPI.messaging;
     var queriedSelectors = {};
     var injectedSelectors = {};
     var lowGenericSelectors = [];
@@ -410,7 +409,9 @@ var uBlockCollapser = (function() {
     var retrieveGenericSelectors = function() {
         if ( lowGenericSelectors.length !== 0 || highGenerics === null ) {
             //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', lowGenericSelectors.length);
-            messager.send({
+            messaging.send(
+                'contentscript',
+                {
                     what: 'retrieveGenericCosmeticSelectors',
                     pageURL: window.location.href,
                     selectors: lowGenericSelectors,
@@ -522,12 +523,15 @@ var uBlockCollapser = (function() {
             vAPI.styles.push(style);
         }
         hideElements(styleText);
-        messager.send({
-            what: 'cosmeticFiltersInjected',
-            type: 'cosmetic',
-            hostname: window.location.hostname,
-            selectors: selectors
-        });
+        messaging.send(
+            'contentscript',
+            {
+                what: 'cosmeticFiltersInjected',
+                type: 'cosmetic',
+                hostname: window.location.hostname,
+                selectors: selectors
+            }
+        );
         //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
@@ -850,7 +854,7 @@ var uBlockCollapser = (function() {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
             retrieveGenericSelectors();
-            messager.send({ what: 'cosmeticFiltersActivated' });
+            messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
         }
     };
 
@@ -902,6 +906,12 @@ var uBlockCollapser = (function() {
         domLayoutObserver.disconnect();
         if ( addedNodeListsTimer !== null ) {
             clearTimeout(addedNodeListsTimer);
+        }
+        if ( removedNodeListsTimer !== null ) {
+            clearTimeout(removedNodeListsTimer);
+        }
+        if ( processHighHighGenericsTimer !== null ) {
+            clearTimeout(processHighHighGenericsTimer);
         }
     });
 })();
@@ -970,20 +980,25 @@ var uBlockCollapser = (function() {
     if ( window !== window.top ) {
         return;
     }
+
+    var messaging = vAPI.messaging;
+
     var onMouseClick = function(ev) {
         var elem = ev.target;
         while ( elem !== null && elem.localName !== 'a' ) {
             elem = elem.parentElement;
         }
-        messager.send({
-            what: 'mouseClick',
-            x: ev.clientX,
-            y: ev.clientY,
-            url: elem !== null ? elem.href : ''
-        });
+        messaging.send(
+            'contentscript',
+            {
+                what: 'mouseClick',
+                x: ev.clientX,
+                y: ev.clientY,
+                url: elem !== null ? elem.href : ''
+            });
     };
 
-    window.addEventListener('mousedown', onMouseClick, true);
+    document.addEventListener('mousedown', onMouseClick, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
     vAPI.shutdown.add(function() {

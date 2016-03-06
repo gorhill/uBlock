@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,22 +35,16 @@
 
 // This can happen
 if ( typeof vAPI !== 'object' ) {
-    //console.debug('contentscript-start.js > vAPI not found');
     return;
 }
 
 // https://github.com/chrisaljoudi/uBlock/issues/456
 // Already injected?
 if ( vAPI.contentscriptStartInjected ) {
-    //console.debug('contentscript-start.js > content script already injected');
     return;
 }
 vAPI.contentscriptStartInjected = true;
 vAPI.styles = vAPI.styles || [];
-
-/******************************************************************************/
-
-var localMessager = vAPI.messaging.channel('contentscript-start.js');
 
 /******************************************************************************/
 /******************************************************************************/
@@ -166,7 +160,7 @@ var filteringHandler = function(details) {
     // This is just to inform the background process that cosmetic filters were
     // actually injected.
     if ( vAPI.styles.length !== styleTagCount ) {
-        localMessager.send({ what: 'cosmeticFiltersActivated' });
+        vAPI.messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
@@ -174,9 +168,6 @@ var filteringHandler = function(details) {
     // process was fully initialized. When this happens, pages won't be
     // cleaned right after browser launch.
     vAPI.contentscriptStartInjected = details && details.ready;
-
-    // Cleanup before leaving
-    localMessager.close();
 };
 
 /******************************************************************************/
@@ -233,7 +224,8 @@ var hideElements = function(selectors) {
 /******************************************************************************/
 
 var url = window.location.href;
-localMessager.send(
+vAPI.messaging.send(
+    'contentscript',
     {
         what: 'retrieveDomainCosmeticSelectors',
         pageURL: url,

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,11 +20,12 @@
 */
 
 /* global uDom */
-'use strict';
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -48,9 +49,7 @@ if ( self.cloud.datakey === '' ) {
     return;
 }
 
-/******************************************************************************/
-
-var messager = vAPI.messaging.channel('cloud-ui.js');
+var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
@@ -84,7 +83,8 @@ var onCloudDataReceived = function(entry) {
 /******************************************************************************/
 
 var fetchCloudData = function() {
-    messager.send(
+    messaging.send(
+        'cloudWidget',
         {
             what: 'cloudPull',
             datakey: self.cloud.datakey
@@ -99,7 +99,8 @@ var pushData = function() {
     if ( typeof self.cloud.onPush !== 'function' ) {
         return;
     }
-    messager.send(
+    messaging.send(
+        'cloudWidget',
         {
             what: 'cloudPush',
             datakey: self.cloud.datakey,
@@ -154,12 +155,16 @@ var submitOptions = function() {
         self.cloud.options = options;
     };
 
-    messager.send({
-        what: 'cloudSetOptions',
-        options: {
-            deviceName: uDom.nodeFromId('cloudDeviceName').value
-        }
-    }, onOptions);
+    messaging.send(
+        'cloudWidget',
+        {
+            what: 'cloudSetOptions',
+            options: {
+                deviceName: uDom.nodeFromId('cloudDeviceName').value
+            }
+        },
+        onOptions
+    );
     uDom.nodeFromId('cloudOptions').classList.remove('show');
 };
 
@@ -203,7 +208,7 @@ var onInitialize = function(options) {
     uDom('#cloudOptionsSubmit').on('click', submitOptions);
 };
 
-messager.send({ what: 'cloudGetOptions' }, onInitialize);
+messaging.send('cloudWidget', { what: 'cloudGetOptions' }, onInitialize);
 
 /******************************************************************************/
 

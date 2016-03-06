@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µMatrix - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uMatrix
 */
 
-/* global vAPI, uDom */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('dyna-rules.js');
+var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
@@ -125,7 +125,7 @@ function handleImportFilePicker() {
             'what': 'setSessionRules',
             'rules': rulesFromHTML('#diff .right li') + '\n' + result
         };
-        messager.send(request, renderRules);
+        messaging.send('dashboard', request, renderRules);
     };
     var file = this.files[0];
     if ( file === undefined || file.name === '' ) {
@@ -188,7 +188,7 @@ var revertHandler = function() {
         'what': 'setSessionRules',
         'rules': rulesFromHTML('#diff .left li')
     };
-    messager.send(request, renderRules);
+    messaging.send('dashboard', request, renderRules);
 };
 
 /******************************************************************************/
@@ -198,7 +198,7 @@ var commitHandler = function() {
         'what': 'setPermanentRules',
         'rules': rulesFromHTML('#diff .right li')
     };
-    messager.send(request, renderRules);
+    messaging.send('dashboard', request, renderRules);
 };
 
 /******************************************************************************/
@@ -222,7 +222,7 @@ var editStopHandler = function() {
         'what': 'setSessionRules',
         'rules': uDom('#diff .right textarea').val()
     };
-    messager.send(request, renderRules);
+    messaging.send('dashboard', request, renderRules);
 };
 
 /******************************************************************************/
@@ -249,7 +249,7 @@ var setCloudData = function(data, append) {
         'what': 'setSessionRules',
         'rules': data
     };
-    messager.send(request, renderRules);
+    messaging.send('dashboard', request, renderRules);
 };
 
 self.cloud.onPush = getCloudData;
@@ -269,7 +269,7 @@ uDom('#diff > .pane.right > .rulesContainer').on('dblclick', editStartHandler);
 uDom('#editStopButton').on('click', editStopHandler);
 uDom('#editCancelButton').on('click', editCancelHandler);
 
-messager.send({ what: 'getRules' }, renderRules);
+messaging.send('dashboard', { what: 'getRules' }, renderRules);
 
 /******************************************************************************/
 

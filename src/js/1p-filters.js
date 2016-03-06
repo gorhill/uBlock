@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom, uBlockDashboard */
+/* global uDom, uBlockDashboard */
 
 /******************************************************************************/
 
@@ -29,11 +29,8 @@
 
 /******************************************************************************/
 
+var messaging = vAPI.messaging;
 var cachedUserFilters = '';
-
-/******************************************************************************/
-
-var messager = vAPI.messaging.channel('1p-filters.js');
 
 /******************************************************************************/
 
@@ -56,13 +53,13 @@ function renderUserFilters() {
         uDom.nodeFromId('userFilters').value = details.content;
         userFiltersChanged();
     };
-    messager.send({ what: 'readUserFilters' }, onRead);
+    messaging.send('dashboard', { what: 'readUserFilters' }, onRead);
 }
 
 /******************************************************************************/
 
 function allFiltersApplyHandler() {
-    messager.send({ what: 'reloadAllFilters' });
+    messaging.send('dashboard', { what: 'reloadAllFilters' });
     uDom('#userFiltersApply').prop('disabled', true );
 }
 
@@ -160,7 +157,7 @@ var applyChanges = function() {
         what: 'writeUserFilters',
         content: textarea.value
     };
-    messager.send(request, onWritten);
+    messaging.send('dashboard', request, onWritten);
 };
 
 var revertChanges = function() {
