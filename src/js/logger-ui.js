@@ -92,7 +92,7 @@ var uglyRequestTypes = {
 };
 
 var staticFilterTypes = {
-    'doc': 'other',
+    'doc': 'document',
     'css': 'stylesheet',
     'frame': 'subdocument',
     'xhr': 'xmlhttprequest'
@@ -171,7 +171,9 @@ var filterDecompiler = (function() {
          5: 'xmlhttprequest',
          6: 'subdocument',
          7: 'font',
-         8: 'other',
+         8: 'media',
+         9: 'websocket',
+        10: 'other',
         11: 'popunder',
         12: 'document',
         13: 'elemhide',
