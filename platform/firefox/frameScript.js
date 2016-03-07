@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,68 +23,44 @@
 
 // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Frame_script_environment
 
-(function(context) {
+(function() {
 
-'use strict';
+    'use strict';
 
-/******************************************************************************/
-
-let {contentObserver, LocationChangeListener} = Components.utils.import(
-    Components.stack.filename.replace('Script', 'Module'),
-    null
-);
-
-// https://github.com/gorhill/uBlock/issues/1444
-// Apparently the same context is used for all extensions, hence we must use
-// scoped variables to ensure no collision.
-let locationChangeListener;
-
-let injectContentScripts = function(win) {
-    if ( !win || !win.document ) {
+    if ( !this.docShell ) {
         return;
     }
 
-    contentObserver.observe(win.document);
+    let {LocationChangeListener} = Components.utils.import(
+        Components.stack.filename.replace('Script', 'Module'),
+        null
+    );
 
-    if ( win.frames && win.frames.length ) {
-        let i = win.frames.length;
-        while ( i-- ) {
-            injectContentScripts(win.frames[i]);
+    // https://github.com/gorhill/uBlock/issues/1444
+    // Apparently the same context is used for all extensions, hence we must
+    // use scoped variables to ensure no collision.
+    let locationChangeListener;
+
+    // https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Progress_Listeners
+    // "Note that the browser uses a weak reference to your listener object,
+    // "so make sure to keep an external reference to your object to ensure
+    // "that it stays in memory."
+    // This listener below allows us to keep `locationChangeListener` alive
+    // until we no longer need it.
+    let shutdown = function(ev) {
+        if ( ev.target === this ) {
+            this.removeEventListener('unload', shutdown);
         }
+    };
+    this.addEventListener('unload', shutdown);
+
+    let webProgress = this.docShell
+                          .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                          .getInterface(Components.interfaces.nsIWebProgress);
+    if ( webProgress && webProgress.isTopLevel ) {
+        locationChangeListener = new LocationChangeListener(this.docShell, webProgress);
     }
-};
 
-let onLoadCompleted = function() {
-    context.removeMessageListener('ublock0-load-completed', onLoadCompleted);
-    injectContentScripts(context.content);
-};
-context.addMessageListener('ublock0-load-completed', onLoadCompleted);
-
-let shutdown = function(ev) {
-    if ( ev.target !== context ) {
-        return;
-    }
-    context.removeMessageListener('ublock0-load-completed', onLoadCompleted);
-    context.removeEventListener('unload', shutdown);
-    locationChangeListener = null;
-    LocationChangeListener = null;
-    contentObserver = null;
-};
-context.addEventListener('unload', shutdown);
-
-if ( context.docShell ) {
-    let Ci = Components.interfaces;
-    let wp = context.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
-                             .getInterface(Ci.nsIWebProgress);
-    let dw = wp.DOMWindow;
-
-    if ( dw === dw.top ) {
-        locationChangeListener = new LocationChangeListener(context.docShell);
-    }
-}
-
-/******************************************************************************/
-
-})(this);
+}).call(this);
 
 /******************************************************************************/

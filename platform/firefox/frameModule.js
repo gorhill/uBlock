@@ -471,29 +471,17 @@ var contentObserver = {
 
 /******************************************************************************/
 
-const locationChangedMessageName = hostName + ':locationChanged';
-
-var LocationChangeListener = function(docShell) {
-    if ( !docShell ) {
+var LocationChangeListener = function(docShell, webProgress) {
+    var mm = docShell.QueryInterface(Ci.nsIInterfaceRequestor)
+                     .getInterface(Ci.nsIContentFrameMessageManager);
+    if ( !mm || typeof mm.sendAsyncMessage !== 'function' ) {
         return;
     }
-
-    var requestor = docShell.QueryInterface(Ci.nsIInterfaceRequestor);
-    var ds = requestor.getInterface(Ci.nsIWebProgress);
-    if ( !ds ) {
-        return;
-    }
-    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
-    if ( !mm ) {
-        return;
-    }
-    if ( typeof mm.sendAsyncMessage !== 'function' ) {
-        return;
-    }
-    this.docShell = ds;
     this.messageManager = mm;
-    ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
+    webProgress.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
 };
+
+LocationChangeListener.prototype.messageName = hostName + ':locationChanged';
 
 LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI([
     'nsIWebProgressListener',
@@ -504,7 +492,7 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
     if ( !webProgress.isTopLevel ) {
         return;
     }
-    this.messageManager.sendAsyncMessage(locationChangedMessageName, {
+    this.messageManager.sendAsyncMessage(this.messageName, {
         url: location.asciiSpec,
         flags: flags
     });

@@ -20,7 +20,7 @@
 */
 
 /* jshint esnext: true, bitwise: false */
-/* global self, Components, punycode, µBlock */
+/* global punycode */
 
 // For background page
 
@@ -3367,16 +3367,21 @@ vAPI.lastError = function() {
 // the web pages before uBlock was ready.
 
 vAPI.onLoadAllCompleted = function() {
+    // TODO: vAPI shouldn't know about uBlock. Just like in uMatrix, uBlock
+    // should collect on its side all the opened tabs whenever it is ready.
     var µb = µBlock;
     var tabId;
     for ( var browser of tabWatcher.browsers() ) {
         tabId = tabWatcher.tabIdFromTarget(browser);
         µb.tabContextManager.commit(tabId, browser.currentURI.asciiSpec);
         µb.bindTabToPageStats(tabId);
-        browser.messageManager.sendAsyncMessage(
-            location.host + '-load-completed'
-        );
     }
+    // Inject special frame script, which sole purpose is to inject
+    // content scripts into *already* opened tabs. This allows to unclutter
+    // the main frame script.
+    vAPI.messaging
+        .globalMessageManager
+        .loadFrameScript(vAPI.getURL('frameScript0.js'), false);
 };
 
 /******************************************************************************/
