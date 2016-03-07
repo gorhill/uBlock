@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
     Home: https://github.com/gorhill/uBlock
 */
-
-/* global µBlock */
 
 /*******************************************************************************
 
@@ -229,25 +227,23 @@ var frameStoreJunkyardMax = 50;
 
 /******************************************************************************/
 
-var FrameStore = function(rootHostname, frameURL) {
-    this.init(rootHostname, frameURL);
+var FrameStore = function(frameURL) {
+    this.init(frameURL);
 };
 
 /******************************************************************************/
 
-FrameStore.factory = function(rootHostname, frameURL) {
+FrameStore.factory = function(frameURL) {
     var entry = frameStoreJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new FrameStore(rootHostname, frameURL);
-    } else {
-        entry.init(rootHostname, frameURL);
+        return new FrameStore(frameURL);
     }
-    return entry;
+    return entry.init(frameURL);
 };
 
 /******************************************************************************/
 
-FrameStore.prototype.init = function(rootHostname, frameURL) {
+FrameStore.prototype.init = function(frameURL) {
     var µburi = µb.URI;
     this.pageHostname = µburi.hostnameFromURI(frameURL);
     this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
@@ -423,9 +419,9 @@ PageStore.prototype.getFrame = function(frameId) {
 PageStore.prototype.setFrame = function(frameId, frameURL) {
     var frameStore = this.frames[frameId];
     if ( frameStore ) {
-        frameStore.init(this.rootHostname, frameURL);
+        frameStore.init(frameURL);
     } else {
-        this.frames[frameId] = FrameStore.factory(this.rootHostname, frameURL);
+        this.frames[frameId] = FrameStore.factory(frameURL);
     }
 };
 

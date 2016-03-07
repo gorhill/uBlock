@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2106 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ var deferUntil = function(testFn, mainFn, details) {
         vAPI.setTimeout(check, next);
     };
 
-    if ( details.async === false ) {
+    if ( 'sync' in details && details.sync === true ) {
         check();
     } else {
         vAPI.setTimeout(check, 1);
@@ -829,7 +829,7 @@ vAPI.tabs.get = function(tabId, callback) {
         id: tabId,
         index: tabWatcher.indexFromTarget(browser),
         windowId: winWatcher.idFromWindow(win),
-        active: browser === tabBrowser.selectedBrowser,
+        active: tabBrowser !== null && browser === tabBrowser.selectedBrowser,
         url: browser.currentURI.asciiSpec,
         title: browser.contentTitle
     });
@@ -921,6 +921,9 @@ vAPI.tabs.open = function(details) {
 
     var win = winWatcher.getCurrentWindow();
     var tabBrowser = getTabBrowser(win);
+    if ( tabBrowser === null ) {
+        return;
+    }
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {
@@ -1430,7 +1433,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         : winWatcher.getCurrentWindow();
     var curTabId;
     var tabBrowser = getTabBrowser(win);
-    if ( tabBrowser ) {
+    if ( tabBrowser !== null ) {
         curTabId = tabWatcher.tabIdFromTarget(tabBrowser.selectedTab);
     }
     var tb = vAPI.toolbarButton;
@@ -2038,12 +2041,12 @@ var httpObserver = {
             return false;
         }
 
-        if ( result.cancel === true ) {
+        if ( 'cancel' in result && result.cancel === true ) {
             channel.cancel(this.ABORT);
             return true;
         }
 
-        if ( result.redirectUrl ) {
+        if ( 'redirectUrl' in result ) {
             channel.redirectionLimit = 1;
             channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
             return true;
