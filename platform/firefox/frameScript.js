@@ -50,6 +50,7 @@
     let shutdown = function(ev) {
         if ( ev.target === this ) {
             this.removeEventListener('unload', shutdown);
+            locationChangeListener = null;
         }
     };
     this.addEventListener('unload', shutdown);
