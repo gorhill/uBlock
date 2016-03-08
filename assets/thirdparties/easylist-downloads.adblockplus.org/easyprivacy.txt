@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 3j2+mltRso7JEDTVeyVrZQ
-! Version: 201602031631
+! Checksum: pFBUDWO7mzsgrgcjCvuF6Q
+! Version: 201603081001
 ! Title: EasyPrivacy
-! Last modified: 03 Feb 2016 16:31 UTC
+! Last modified: 08 Mar 2016 10:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -154,6 +154,7 @@
 .pageVisitCounter_
 .php?logRefer=
 .php?logType=
+.php?p=stats&
 .php?refcode=
 .PixelNedstatStatistic/
 .pt/n.gif?
@@ -211,6 +212,7 @@
 /AccessCounter/*
 /AccessTrackingLogServlet?
 /acclog.cgi?
+/ace.*/?cookie
 /acecounter/*
 /acecounter_
 /acfp.js
@@ -260,7 +262,9 @@
 /adwords-conversion-tracking.
 /adx_remote.
 /aegis_tracking.
+/aff_i?offer_id=
 /aff_land?referrer
+/affil/tracker/*
 /affiliate-track.
 /affiliate-tracker.
 /affiliate.1800flowers.
@@ -283,6 +287,7 @@
 /ajax/heatmap-
 /ajax/log?
 /ajax/optimizely-
+/ajax/track.php?
 /ajax_store_analytics?
 /ajax_video_counter.php?
 /ajaxClicktrack.
@@ -365,6 +370,7 @@
 /anapixel.
 /ancAdTrack.js
 /angular-tag.
+/angular-tag_
 /angularlytics.
 /anycent_tracker_
 /api/0/stats
@@ -517,6 +523,7 @@
 /cdn-cgi/ping?$image
 /cdn5.js?
 /cds-webanalytics.
+/cdx-radar/*
 /cdx.gif?
 /cedexis-
 /cedexis.js
@@ -577,6 +584,7 @@
 /class.tracking.js
 /clear.gif?
 /clear/c.gif?
+/clicevent.php?
 /click-logger.
 /click-stat.js
 /click-tracker
@@ -713,6 +721,7 @@
 /countercgi.
 /countercollector/*
 /counterFooterFlash.
+/countertab.js?
 /countHits.
 /countinj.cgi?
 /countpixel.
@@ -1142,6 +1151,7 @@
 /imp?imgid=
 /imp_cnt.gif?
 /imp_img.php?
+/impr.xlg?
 /impress.php?
 /impression.ashx
 /impression.gif?
@@ -1629,6 +1639,7 @@
 /pixel.swf?
 /pixel.track?
 /pixel/impression/*
+/pixel1/impression.
 /pixel_iframe.
 /pixel_track.
 /pixel_tracking.
@@ -1640,6 +1651,7 @@
 /pixelNew.js
 /pixels.jsp?
 /pixelstats/*
+/pixeltag.
 /pixelTargetingCacheBuster.
 /pixeltrack.php?
 /pixeltracker.
@@ -1664,6 +1676,7 @@
 /PmsPixel?
 /pmspxl.
 /point_roll.
+/pointeur.gif?
 /PointRoll.
 /PointRollAnonymous.
 /pomegranate.js
@@ -1684,6 +1697,7 @@
 /promo_tracking/*
 /promos/pixels?
 /pstats.
+/pt.gif?type=
 /ptrack.
 /pub/as?_ri_=$image
 /pubimppixel/*
@@ -1851,7 +1865,9 @@
 /services/counters/*
 /session-hit.
 /session-tracker/tracking-
+/sessioncam.min.$script
 /sessioncam/*
+/set-cookie.gif?
 /SETCOOKAFF.
 /setcooki.
 /setcookie?
@@ -1948,6 +1964,7 @@
 /stat_page2.
 /stat_search.
 /stat_visits.
+/stat_vue.php?
 /stataffs/track.php?
 /statcapture.
 /StatCms/ViewCount?
@@ -2036,7 +2053,9 @@
 /tacoda_
 /TacodaFTT.
 /TagCommander.cfc?
+/tagcommander/*
 /tagomnitureengine.js
+/tags/angular-
 /TagSvc/*
 /tagx.js
 /taxtag.js
@@ -2086,6 +2105,7 @@
 /track.js?referrer
 /track.js?screen=
 /track.php?*&uid=
+/track.png?
 /track/*&CheckCookieId=
 /track/*?rnd=0.$image
 /track/?site
@@ -2113,6 +2133,7 @@
 /track_metric/*
 /track_pageview?
 /track_social.
+/track_views.
 /track_visit?
 /trackad.
 /trackAdHit.
@@ -2132,6 +2153,7 @@
 /tracker/blank.gif?
 /tracker/event?
 /tracker/imp?
+/tracker/index.jsp?
 /tracker/log?
 /tracker/p.gif?
 /tracker/ping/*
@@ -2145,6 +2167,7 @@
 /tracker?*=
 /tracker_activityStream.
 /tracker_article
+/tracker_czn.tsp?
 /tracker_gif.
 /tracker_pageview.
 /tracker_pixel.
@@ -2155,6 +2178,7 @@
 /trackerstatistik.
 /trackEvent.js?
 /trackEvent.min.js?
+/trackga.
 /trackimage/*
 /trackImpression/*
 /trackimps?
@@ -2457,6 +2481,7 @@
 /wlog.php?
 /wmxtracker.js
 /woopra.js
+/worldwide_analytics/*
 /wp-click-track/*
 /wp-clickmap/*
 /wp-content/plugins/stats/count.php?
@@ -2567,6 +2592,7 @@
 ?eventtype=impression&pid=
 ?eventtype=request&pid=
 ?googleTrack=
+?hmtrackerjs=
 ?record&*&serve_js
 ?ref=*&itemcnt=
 ?stwc_cz=
@@ -2622,6 +2648,7 @@ _sdctag2.
 _semanticTag/
 _setAnalyticsFields&
 _social_tracking.
+_stat_counter.php?
 _stats.js?
 _stats/Logger?
 _stats_log.
@@ -2746,6 +2773,7 @@ http://utm.$domain=~utoronto.ca
 ||addfreestats.com^$third-party
 ||addlvr.com^$third-party
 ||adelixir.com^$third-party
+||adfox.ru^$third-party
 ||adgreed.com^$third-party
 ||adinsight.com^$third-party
 ||adinsight.eu^$third-party
@@ -2766,6 +2794,7 @@ http://utm.$domain=~utoronto.ca
 ||affiliateedge.eu^$third-party
 ||affiliates-pro.com^$third-party
 ||affiliatetrackingsetup.com^$third-party
+||affiliatly.com^$third-party
 ||affinesystems.com^$third-party
 ||affinitymatrix.com^$third-party
 ||affistats.com^$third-party
@@ -2782,6 +2811,7 @@ http://utm.$domain=~utoronto.ca
 ||alltagcloud.info^$third-party
 ||alltracked.com^$third-party
 ||alnera.eu^$third-party
+||altabold1.com^$third-party
 ||altastat.com^$third-party
 ||alvenda.com^$third-party
 ||alzexa.com^$third-party
@@ -2816,7 +2846,6 @@ http://utm.$domain=~utoronto.ca
 ||arcadeweb.com^$third-party
 ||arch-nicto.com^$third-party
 ||arena-quantum.co.uk^$third-party
-||areyouahuman.com^$third-party
 ||arkayne.com^$third-party
 ||arlime.com^$third-party
 ||arpuonline.com^$third-party
@@ -2827,6 +2856,7 @@ http://utm.$domain=~utoronto.ca
 ||atatus.com^$third-party
 ||athenainstitute.biz^$third-party
 ||atoshonetwork.com^$third-party
+||atticwicket.com^$third-party
 ||attracta.com^$third-party
 ||audience.visiblemeasures.com^$object-subrequest,third-party
 ||audienceamplify.com^$third-party
@@ -3095,6 +3125,7 @@ http://utm.$domain=~utoronto.ca
 ||cya2.net^$third-party
 ||cybermonitor.com^$third-party
 ||cytoclause.com^$third-party
+||dable.io^$third-party
 ||dacounter.com^$third-party
 ||dadi.technology^$third-party
 ||dailycaller-alerts.com^$third-party
@@ -3255,6 +3286,7 @@ http://utm.$domain=~utoronto.ca
 ||fastonlineusers.com^$third-party
 ||fastwebcounter.com^$third-party
 ||fathomseo.com^$third-party
+||fcs.ovh^$third-party
 ||feedcat.net^$third-party
 ||feedjit.com^$third-party
 ||feedperfect.com^$third-party
@@ -3421,6 +3453,7 @@ http://utm.$domain=~utoronto.ca
 ||hostip.info^$third-party
 ||hoststats.info^$third-party
 ||hotjar.com^$third-party
+||hotlog.ru^$third-party
 ||hqhrt.com^$third-party
 ||hs-analytics.net^$third-party
 ||hscta.net^$third-party
@@ -3458,6 +3491,7 @@ http://utm.$domain=~utoronto.ca
 ||imrworldwide.com^$third-party
 ||inboxtag.com^$third-party
 ||incentivesnetwork.net^$third-party
+||index.ru^$third-party
 ||indexstats.com^$third-party
 ||indextools.com^$third-party
 ||indicia.com^$third-party
@@ -3558,6 +3592,7 @@ http://utm.$domain=~utoronto.ca
 ||leadforensics.com^$third-party
 ||leadformix.com^$third-party
 ||leadid.com^$third-party
+||leadin.com^$third-party
 ||leadintelligence.co.uk^$third-party
 ||leadlife.com^$third-party
 ||leadmanagerfx.com^$third-party
@@ -3572,6 +3607,7 @@ http://utm.$domain=~utoronto.ca
 ||lijit.com^$third-party
 ||linezing.com^$third-party
 ||link-smart.com^$third-party
+||linkconnector.com^$third-party
 ||linkpulse.com^$third-party
 ||linkxchanger.com^$third-party
 ||listrakbi.com^$third-party
@@ -3605,6 +3641,7 @@ http://utm.$domain=~utoronto.ca
 ||lypn.net^$third-party
 ||lytics.io^$third-party
 ||lytiks.com^$third-party
+||m1ll1c4n0.com^$third-party
 ||magiq.com^$third-party
 ||magnetmail1.net^$third-party
 ||magnify360.com^$third-party
@@ -3699,6 +3736,7 @@ http://utm.$domain=~utoronto.ca
 ||mysitetraffic.net^$third-party
 ||mytictac.com^$third-party
 ||myusersonline.com^$third-party
+||myvisualiq.net^$third-party
 ||mywebstats.com.au^$third-party
 ||mywebstats.org^$third-party
 ||naayna.com^$third-party
@@ -3991,6 +4029,7 @@ http://utm.$domain=~utoronto.ca
 ||rsvpgenius.com^$third-party
 ||rtfn.net^$third-party
 ||rtrk.co.nz^$third-party
+||rtrk.com^$third-party
 ||ru4.com^$third-party
 ||rumanalytics.com^$third-party
 ||rztrkr.com^$third-party
@@ -4324,6 +4363,7 @@ http://utm.$domain=~utoronto.ca
 ||userreport.com^$third-party
 ||userzoom.com^$third-party
 ||usuarios-online.com^$third-party
+||valaffiliates.com^$third-party
 ||valuedopinions.co.uk^$third-party
 ||vantage-media.net^$third-party
 ||vbanalytics.com^$third-party
@@ -4341,6 +4381,7 @@ http://utm.$domain=~utoronto.ca
 ||videostat.com^$third-party
 ||vigo.ru^$third-party
 ||vinlens.com^$third-party
+||vinub.com^$third-party
 ||viralninjas.com^$third-party
 ||virool.com^$third-party
 ||virtualnet.co.uk^$third-party
@@ -4396,6 +4437,7 @@ http://utm.$domain=~utoronto.ca
 ||webleads-tracker.com^$third-party
 ||weblytics.io^$third-party
 ||webmasterplan.com^$third-party
+||webseoanalytics.co.za^$third-party
 ||website-hit-counters.com^$third-party
 ||websiteceo.com^$third-party
 ||websiteonlinecounter.com^$third-party
@@ -4451,6 +4493,7 @@ http://utm.$domain=~utoronto.ca
 ||wzrk.co^$third-party
 ||wzrkt.com^$third-party
 ||x-stat.de^$third-party
+||x.ligatus.com^$third-party
 ||xclk-integracion.com^$third-party
 ||xg4ken.com^$third-party
 ||xiti.com^$third-party
@@ -4787,8 +4830,11 @@ http://utm.$domain=~utoronto.ca
 ||atraxio.com^$third-party
 ||canalstat.com^$third-party
 ||casualstat.com^$third-party
+||compteur-fr.com^$third-party
 ||compteur-gratuit.org^$third-party
+||compteur-visite.com^$third-party
 ||compteur.com^$third-party
+||compteur.org^$third-party
 ||count.fr^$third-party
 ||countus.fr^$third-party
 ||deliv.lexpress.fr^$third-party
@@ -4818,6 +4864,7 @@ http://utm.$domain=~utoronto.ca
 ||toc.io^$third-party
 ||track.effiliation.com^$third-party
 ||trafiz.net^$third-party
+||url-stats.net^$third-party
 ||webcompteur.com^$third-party
 ||wysistat.com^$third-party
 ||x-traceur.com^$third-party
@@ -5000,6 +5047,7 @@ http://utm.$domain=~utoronto.ca
 ||ziyu.net^$third-party
 ! Korean
 ||logger.co.kr^$third-party
+||recobell.io^$third-party
 ! Latvian
 ||cms.lv^$third-party
 ||erotop.lv^$third-party
@@ -5046,6 +5094,7 @@ http://utm.$domain=~utoronto.ca
 ||tagcdn.com^$third-party
 ||way2traffic.com^$third-party
 ! Portuguese
+||engageya.com^$third-party
 ||marktest.pt^$third-party
 ||popstats.com.br^$third-party
 ||tailtarget.com^$third-party
@@ -5075,7 +5124,6 @@ http://utm.$domain=~utoronto.ca
 ||gdeslon.ru^$third-party
 ||gostats.ru^$third-party
 ||hitmir.ru^$third-party
-||hotlog.ru^$third-party
 ||hsdn.org^$third-party
 ||idntfy.ru^$third-party
 ||imrk.net^$third-party
@@ -5139,6 +5187,7 @@ http://utm.$domain=~utoronto.ca
 ||contadordevisitas.es^$third-party
 ||contadorgratis.com^$third-party
 ||contadorgratis.es^$third-party
+||contadorvisitasgratis.com^$third-party
 ||contadorweb.com^$third-party
 ||delidatax.net^$third-party
 ||eresmas.net^$third-party
@@ -5185,6 +5234,7 @@ http://utm.$domain=~utoronto.ca
 ||101apps.com/tracker.ashx?
 ||107.20.91.54/partner.gif?$third-party,domain=~thedailybeast.com.ip
 ||116.213.75.36/logstat/$domain=~caixin.com.ip
+||121.78.90.104:8383/pv?*&refer=$third-party,domain=~livere-kr.ip
 ||123myp.co.uk/ip-address/
 ||148.251.8.156/track.js
 ||174.129.112.186/small.gif?$third-party,domain=~skytide.ip
@@ -5222,6 +5272,7 @@ http://utm.$domain=~utoronto.ca
 ||74.117.176.217/trf/track.php?$third-party,domain=~adult.sites.ip
 ||88.208.248.58/tracking/
 ||93.93.53.198^$third-party,domain=~awempire.ip
+||95.211.106.41^$third-party,domain=~leaseweb-nl.ip
 ||99widgets.com/counters/
 ||9fine.ru/js/counter.
 ||9msn.com.au^*/tracking/
@@ -5259,6 +5310,7 @@ http://utm.$domain=~utoronto.ca
 ||addthisedge.com/live/
 ||addtoany.com/menu/transparent.gif
 ||adf.ly/ad/conv?
+||adfox.yandex.ru^
 ||adg.bzgint.com^
 ||adlog.com.com^
 ||admission.net^*/displaytracker.js
@@ -5355,6 +5407,7 @@ http://utm.$domain=~utoronto.ca
 ||analytics.prod.aws.ecnext.net^
 ||analytics.r17.com^
 ||analytics.radiatemedia.com^
+||analytics.recruitics.com^
 ||analytics.revee.com^
 ||analytics.reyrey.net^
 ||analytics.rogersmedia.com^
@@ -5420,7 +5473,6 @@ http://utm.$domain=~utoronto.ca
 ||axislogger.appspot.com^
 ||b.bedop.com^
 ||b5media.com/bbpixel.php
-||babm.texthelp.com^
 ||bango.net/exid/*.gif?
 ||bango.net/id/*.gif?
 ||barium.cheezdev.com^
@@ -5474,6 +5526,7 @@ http://utm.$domain=~utoronto.ca
 ||breakmedia.com/track.jpg?
 ||bright.bncnt.com^
 ||browserscope.org/user/beacon/
+||bs.yandex.ru^
 ||btn.clickability.com^
 ||bufferapp.com/wf/open?upn=$third-party
 ||bumpin.com^*/analytics.html
@@ -5509,6 +5562,7 @@ http://utm.$domain=~utoronto.ca
 ||cgicounter.oneandone.co.uk^
 ||cgicounter.puretec.de^
 ||chanalytics.merchantadvantage.com^
+||changyan.sohu.com/stat/
 ||chartaca.com.s3.amazonaws.com^
 ||choicestream.com^*/pixel/
 ||chtah.com/a/*/spacer-0.gif$third-party
@@ -5682,6 +5736,7 @@ http://utm.$domain=~utoronto.ca
 ||d3l3lkinz3f56t.cloudfront.net^
 ||d3ojzyhbolvoi5.cloudfront.net^
 ||d3qxef4rp70elm.cloudfront.net/m.js
+||d3qxwzhswv93jk.cloudfront.net^
 ||d3s7ggfq1s6jlj.cloudfront.net^
 ||d4ax0r5detcsu.cloudfront.net^
 ||d5i9o0tpq9sa1.cloudfront.net^
@@ -5786,6 +5841,7 @@ http://utm.$domain=~utoronto.ca
 ||events.realgravity.com^
 ||eventtracker.videostrip.com^$third-party
 ||eveonline.com/redir.asp$third-party
+||eviesays.com/js/analytics/
 ||evri.com/analytics/
 ||evt.collarity.com^$image
 ||exct.net/open.aspx?
@@ -5842,10 +5898,11 @@ http://utm.$domain=~utoronto.ca
 ||geckofoot.com/gfvisitormap.aspx?
 ||geo.ertya.com^
 ||geo.gexo.com/geo.js$third-party
+||geo.gorillanation.com^
 ||geo.kontagent.net^
 ||geo.ltassrv.com^
 ||geo.q5media.net^
-||geo.query.yahoo.com^
+||geo.query.yahoo.com^$domain=~mail.yahoo.com
 ||geobar.ziffdavisinternational.com^
 ||geoip.taskforce.is^
 ||geolocation.performgroup.com^
@@ -6054,6 +6111,7 @@ http://utm.$domain=~utoronto.ca
 ||magnify360-cdn.s3.amazonaws.com^
 ||mail-app.com/pvtracker/
 ||mail.ebay.com/img/*.gif
+||mail.ru/grstat?
 ||mail.ru/k?
 ||mailmax.co.nz/login/open.php$third-party
 ||manager.tagcommander.com/utils/privacyHit.php?$third-party
@@ -6124,6 +6182,7 @@ http://utm.$domain=~utoronto.ca
 ||mysdcc.sdccd.edu^*/.log/
 ||mysociety.org/track/
 ||nastydollars.com/trk/
+||naver.net/wcslog.js
 ||navlink.com/__utmala.js
 ||nbcudigitaladops.com/hosted/housepix.gif
 ||neocounter.neoworx-blog-tools.net^
@@ -6150,6 +6209,7 @@ http://utm.$domain=~utoronto.ca
 ||ocp.cnettv.com^*/Request.jsp?
 ||octopart-analytics.com^$third-party
 ||oddcast.com/event.php?$object-subrequest
+||odnaknopka.ru/stat.js
 ||offermatica.intuit.com^
 ||offers.keynote.com^$third-party
 ||ohnorobot.com/verify.pl?
@@ -6185,7 +6245,7 @@ http://utm.$domain=~utoronto.ca
 ||passport.pfn.bz^
 ||paypal.com^*/pixel.gif$third-party
 ||paypalobjects.com^*/pixel.gif
-||pcmag.com/rvb/$image
+||pcmag.com/tview/$image
 ||pcrl.co/js/jstracker.min.js
 ||pebed.dm.gg^
 ||petitionermaster.appspot.com^
@@ -6280,7 +6340,7 @@ http://utm.$domain=~utoronto.ca
 ||rackcdn.com/easie.js
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|cbsnews.com|cbssports.com|cnet.com|dailystar.co.uk|express.co.uk|gamerant.com|gamespot.com|inyt.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk|zdnet.com
+||rackcdn.com^$script,domain=buysubscriptions.com|cbsnews.com|cbssports.com|cnet.com|dailystar.co.uk|express.co.uk|gamerant.com|gamespot.com|inyt.com|metrolyrics.com|page3.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk|zdnet.com
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||rbl.ms/res/users/tracking/
@@ -6466,6 +6526,7 @@ http://utm.$domain=~utoronto.ca
 ||survey.io/log?
 ||swiftypecdn.com/cc.js$third-party
 ||swiftypecdn.com/te.js$third-party
+||synapsys.us^*/tracker.js
 ||sync.adap.tv^
 ||synergizeonline.net/trackpoint/
 ||systemmonitoring.badgeville.com^
@@ -6495,6 +6556,7 @@ http://utm.$domain=~utoronto.ca
 ||tc.airfrance.com^
 ||technorati.com/technoratimedia-pixel.js
 ||techweb.com/beacon/
+||telemetry.reembed.com^
 ||the-group.net/aether/
 ||thefilter.com^*?extanonid=$~script
 ||themesltd.com/hit-counter/$third-party
@@ -6545,6 +6607,7 @@ http://utm.$domain=~utoronto.ca
 ||track.qcri.org^
 ||track.qoof.com^
 ||track.ringcentral.com^
+||track.sauce.ly^
 ||track.searchignite.com^
 ||track.securedvisit.com^
 ||track.shop2market.com^
@@ -6773,6 +6836,7 @@ http://utm.$domain=~utoronto.ca
 ||wunderloop.aol.co.uk^
 ||wvnetworkmedia.org/min/?
 ||x.weather.com^
+||yandex.ru/cycounter?
 ||yapi.awe.sm^$third-party
 ||yarpp.org/pixels/
 ||yellowbrix.com/images/content/cimage.gif?
@@ -6784,6 +6848,7 @@ http://utm.$domain=~utoronto.ca
 ||ypcdn.com/*/webyp?
 ||ywxi.net/meter/
 ||ziffprod.com^*/zdcse.min.js?referrer=
+||zoomtv.me^*?pixel=
 ||zoover.co.uk/tracking/
 ||zope.net^*/ghs_wa.js
 !-----------------International third-party tracking services-----------------!
@@ -6961,6 +7026,7 @@ http://utm.$domain=~utoronto.ca
 ||btstats.devtribu.fr^
 ||calotag.com^$third-party
 ||cdn-analytics.ladmedia.fr^
+||compteur.websiteout.net^
 ||da-kolkoz.com/da-top/track/
 ||devtribu.fr/t.php?
 ||e-pagerank.fr/bouton.gif?$third-party
@@ -7018,7 +7084,6 @@ http://utm.$domain=~utoronto.ca
 ||cbsi.com.cn/js/dw.js
 ||cdn.hiido.cn^$third-party
 ||cdnmaster.com/sitemaster/sm360.js
-||changyan.sohu.com/stat/
 ||click.bokecc.com^
 ||cms.grandcloud.cn^$third-party
 ||cnzz.com/c.php?
@@ -7044,6 +7109,7 @@ http://utm.$domain=~utoronto.ca
 ||sobeycloud.com/Services/Stat.
 ||sohu.com/pvpb.gif?
 ||stat.ws.126.net^
+||stat.youku.com^
 ||t.hypers.com.cn^
 ||tanx.com/t/tanxclick.js
 ||tanx.com/t/tanxcollect.js
@@ -7072,10 +7138,8 @@ http://utm.$domain=~utoronto.ca
 ||wee.dk/modules/$third-party
 ||wwwportal.dk/statistik.php
 ! Dutch
-||95.211.106.41^$third-party,domain=~538group.ip
 ||analytics.belgacom.be^
 ||bbvms.com/zone/js/zonestats.js
-||c.pebblemedia.be^
 ||cookies.reedbusiness.nl^
 ||hottraffic.nl^$third-party
 ||marktplaats.net/cnt/
@@ -7152,6 +7216,7 @@ http://utm.$domain=~utoronto.ca
 ||top100.tuttoperinternet.it^
 ||tr.bt.matrixspa.it^
 ||track.adintend.com^
+||track.cedsdigital.it^
 ||track.youniversalmedia.com^
 ||tracker.bestshopping.com^
 ||tracking.conversion-lab.it^
@@ -7185,7 +7250,6 @@ http://utm.$domain=~utoronto.ca
 ! Korean
 ||180.70.93.115/ndmclick/$domain=~daum.ip
 ||cafe24.com/weblog.js
-||naver.net/wcslog.js
 ! Latvian
 ||counter.hackers.lv^
 ||hits.sys.lv^
@@ -7228,7 +7292,6 @@ http://utm.$domain=~utoronto.ca
 ||awaps.yandex.ru^
 ||bigday.ru/counter.php?
 ||bioraywaterrank.ru/count/
-||bs.yandex.ru^
 ||c.bigmir.net^
 ||clck.yandex.ru^$~other
 ||climatecontrol.ru/counters/
@@ -7313,7 +7376,6 @@ http://utm.$domain=~utoronto.ca
 ||wmtools.ru/counter.php?
 ||xn--e1aaipcdgnfsn.su^*/counter.php
 ||yandeg.ru/count/
-||yandex.ru/cycounter?
 ||yandex.ru/metrika/
 ||zahodi-ka.ru/ic/index_cnt.fcgi?
 ||zahodi-ka.ru^*/schet.cgi?
@@ -7326,6 +7388,7 @@ http://utm.$domain=~utoronto.ca
 ! Slovene
 ||interseek.si^*/visit.js
 ! Spanish
+||analitica.webrpp.com^
 ||contadores.miarroba.com^
 ||contadores.miarroba.es^
 ||epimg.net/js/vr/vrs.
@@ -7349,6 +7412,8 @@ http://utm.$domain=~utoronto.ca
 ||metalportal.com.ua/count.php?
 ||mgz.com.ua/counter.php?
 ||top.zp.ua/counter/
+! Vietnam
+||analytics.mecloud.vn^
 !-----------------Individual tracking systems-----------------!
 ! *** easylist:easyprivacy/easyprivacy_specific.txt ***
 /fam/view.php?$domain=cnet.com
@@ -7469,6 +7534,7 @@ http://utm.$domain=~utoronto.ca
 ||analytics.msnbc.msn.com^
 ||analytics.newsinc.com^
 ||analytics.omgpop.com/log
+||analytics.posttv.com^
 ||analytics.services.distractify.com^
 ||analytics.teespring.com^
 ||analytics.thenest.com^
@@ -7709,6 +7775,7 @@ http://utm.$domain=~utoronto.ca
 ||cjtube.com/tp/*.php
 ||cl.expedia.com^
 ||cl.ly/metrics?
+||clc.stackoverflow.com^
 ||clck.yandex.com^
 ||click.aliexpress.com^
 ||click.engage.xbox.com^
@@ -7835,6 +7902,7 @@ http://utm.$domain=~utoronto.ca
 ||displaymate.com/cgi-bin/stat/
 ||divxden.com^*/tracker.js
 ||djtunes.com^*&__utma=
+||dmcdn.net/pxl/$domain=dailymotion.com
 ||dmcdn.net/track/$domain=dailymotion.com
 ||dmeserv.newsinc.com^
 ||dmtracking2.alibaba.com^
@@ -7865,6 +7933,7 @@ http://utm.$domain=~utoronto.ca
 ||ebay.com/op/t.do?event
 ||ebayobjects.com/*;dc_pixel_url=$image
 ||ec2-prod-tracker.babelgum.com^
+||economist.com/geoip.php
 ||ectnews.com/shared/missing.gif?
 ||edgecastcdn.net^*/ehow_am.js$domain=ehow.com
 ||edgecastcdn.net^*/pixel_1.png?
@@ -7948,6 +8017,7 @@ http://utm.$domain=~utoronto.ca
 ||farsnews.com/stcs.js.aspx?
 ||fast.forbes.com^
 ||fastexercise.com/logging.js
+||fastly.net^*/sp-analytics.min.$domain=spotify.com
 ||favicon.co.uk/stat/
 ||fc2.com/ana/
 ||fc2.com/ana2/
@@ -8048,6 +8118,7 @@ http://utm.$domain=~utoronto.ca
 ||geoip.al.com^
 ||geoip.cleveland.com^
 ||geoip.gulflive.com^
+||geoip.inquirer.net^
 ||geoip.lehighvalleylive.com^
 ||geoip.masslive.com^
 ||geoip.mlive.com^
@@ -8582,7 +8653,6 @@ http://utm.$domain=~utoronto.ca
 ||pclick.europe.yahoo.com^
 ||pclick.internal.yahoo.com^
 ||pclick.yahoo.com^
-||pcmag.com/rview/$image
 ||pcp001.com/media/globalPixel.js
 ||peacocks.co.uk^*/analytics.js
 ||pearltrees.com/s/track?
@@ -8694,7 +8764,6 @@ http://utm.$domain=~utoronto.ca
 ||reachlocal.com/js/tracklandingpage.js
 ||real.com^*/pixel?
 ||real.com^*/track.htm?
-||real.com^*/track.png?
 ||realitytvworld.com/images/pixel.gif
 ||reco.hardsextube.com^
 ||recomendedsite.com/addon/upixel/
@@ -8749,6 +8818,7 @@ http://utm.$domain=~utoronto.ca
 ||rkdms.com/sid.gif?
 ||ro89.com/hitme.php?
 ||roadandtrack.com^*/RTdartSite.js
+||roblox.com/www/e.png?
 ||rok.com.com^
 ||roll.bankofamerica.com^
 ||rottentomatoes.com/tracking/
@@ -8780,6 +8850,7 @@ http://utm.$domain=~utoronto.ca
 ||samsung.com^*/scripts/tracking.js
 ||sana.newsinc.com.s3.amazonaws.com^
 ||sap.com/global/ui/js/trackinghelper.js
+||sasontnwc.net/track/
 ||satellite-tv-guides.com/stat/
 ||sayac.hurriyettv.com^
 ||sb.vevo.com^
@@ -9057,6 +9128,7 @@ http://utm.$domain=~utoronto.ca
 ||timestrends.timesnow.tv^
 ||tinypic.com/api.php?*&action=track$object-subrequest
 ||tinypic.com/track.php?
+||tinyupload.com^*/ct_adkontekst.js
 ||tivo.com/__ssobj/track?
 ||tk.kargo.com^
 ||tmagazine.com/js/track_
@@ -9204,6 +9276,7 @@ http://utm.$domain=~utoronto.ca
 ||up.boston.com^
 ||up.nytimes.com^
 ||upi.com/*/stat/
+||uploaded.net/io/pixel/
 ||uploadrocket.net/downloadfiles.php?*&ip
 ||upornia.com/js/0818.js
 ||upromise.com/js/csgather.js
@@ -9376,6 +9449,7 @@ http://utm.$domain=~utoronto.ca
 ||yahoo.com^*/ultLog?
 ||yahoo.net^*/hittail.js
 ||yahooapis.com/get/Valueclick/CapAnywhere.getAnnotationCallback?
+||yandex.com/clck/
 ||ybinst2.ec.yimg.com/ec/*&Type=Event.CPT&$domain=search.yahoo.com
 ||yellowpages.co.in/trac/
 ||yellowpages.com/images/li.gif?
@@ -9762,6 +9836,7 @@ http://utm.$domain=~utoronto.ca
 ||grazia.fr/ea.js
 ||gstat.orange.fr^
 ||hit.leboncoin.fr^
+||jeu.net/hits.js
 ||lavenircdn.net^*/analytics.js?
 ||lecho.be/fb/?
 ||lemde.fr^*/metrics/
@@ -9775,6 +9850,7 @@ http://utm.$domain=~utoronto.ca
 ||p.pagesjaunes.fr^
 ||pagesjaunes.fr/bva/track.js
 ||pagesjaunes.fr/crmmetrix/
+||pim.nextinpact.com^
 ||r.orange.fr^
 ||rtl.be^*/trkfblk.js
 ||rtl.fr/stats/
@@ -10046,6 +10122,7 @@ http://utm.$domain=~utoronto.ca
 ! Korean
 ||211.106.66.62^*/statistics/$domain=yonhapnews.co.kr
 ||chosun.com/hitlog/
+||count.munhwa.com^
 ||gather.hankyung.com^
 ||hits.zdnet.co.kr^
 ||hitweb2.chosun.com^
@@ -10240,7 +10317,7 @@ http://utm.$domain=~utoronto.ca
 !-----------------------Whitelists to fix broken sites------------------------!
 ! *** easylist:easyprivacy/easyprivacy_whitelist.txt ***
 @@/cdn-cgi/pe/bag2?*geoiplookup$xmlhttprequest,domain=orain.org
-@@/cdn-cgi/pe/bag2?*google-analytics.com%2Fanalytics.js$domain=amypink.de|biznews.com|cryptospot.me|droid-life.com|forwardprogressives.com|fpif.org|fullpotentialma.com|geekzone.co.nz|goldsday.com|imageupload.co.uk|is-arquitectura.es|mmanews.com|orain.org|tvunblock.com|unilad.co.uk|xrussianteens.com|youngcons.com
+@@/cdn-cgi/pe/bag2?*google-analytics.com%2Fanalytics.js$domain=amypink.de|biznews.com|cryptospot.me|droid-life.com|forwardprogressives.com|fpif.org|fullpotentialma.com|geekzone.co.nz|goldsday.com|hoyentec.com|imageupload.co.uk|is-arquitectura.es|lazygamer.net|mmanews.com|orain.org|tvunblock.com|unilad.co.uk|xrussianteens.com|youngcons.com
 @@/cdn-cgi/pe/bag2?*googleadservices.com$domain=droid-life.com
 @@/cdn-cgi/pe/bag2?*googlesyndication.com%2Fpagead%2Fosd.js$domain=forwardprogressives.com
 @@/cdn-cgi/pe/bag2?*histats.com$domain=xrussianteens.com
@@ -10301,6 +10378,7 @@ http://utm.$domain=~utoronto.ca
 @@||barclays.co.uk/touchclarity/mbox.js
 @@||barclays.touchclarity.com^$domain=barclaycard.co.uk
 @@||bbc.co.uk/frameworks/nedstat/$script,~third-party
+@@||bbci.co.uk^*/comscore.js$domain=bbc.co.uk
 @@||bc.geocities.*/not_found/
 @@||beacon.guim.co.uk/accept-beacon?
 @@||beatthetraffic.com/traffic/?partner=$subdocument
@@ -10361,7 +10439,7 @@ http://utm.$domain=~utoronto.ca
 @@||cloudflare.com/analytics?$domain=cloudflare.com
 @@||cloudfront.net/assets/js/comscore_beacon.js?$domain=zap2it.com
 @@||cloudfront.net/atrk.js$domain=karnaval.com|livestream.com|luxuryrealestate.com
-@@||cloudfront.net/bugsnag-*.min.js$domain=storenvy.com|tvguide.com
+@@||cloudfront.net/bugsnag-*.min.js$domain=splice.com|storenvy.com|tvguide.com
 @@||cloudfront.net/js/reach.js$domain=zap2it.com
 @@||cloudfront.net/mngr/$script,domain=theladbible.com
 @@||cloudfront.net/opentag-*.js$domain=mackweldon.com|telegraph.co.uk
@@ -10376,6 +10454,7 @@ http://utm.$domain=~utoronto.ca
 @@||cqcounter.com^$domain=cqcounter.com
 @@||craveonline.com/wp-content/plugins/bwp-minify/$script
 @@||craveonline.com^*/google-analytics.min.js
+@@||create.kahoot.it/rest/analytics/track/$xmlhttprequest
 @@||crowdscience.com/max-$script,domain=everydayhealth.com
 @@||crowdscience.com/start-$script,domain=everydayhealth.com
 @@||cschat.ebay.com^*/scripts/log.js
@@ -10387,6 +10466,7 @@ http://utm.$domain=~utoronto.ca
 @@||d2pe20ur0h0p8p.cloudfront.net/identity/*/wapo_identity_full.js$domain=washingtonpost.com
 @@||d2pe20ur0h0p8p.cloudfront.net/identity/*/wapo_jskit_addon.js$domain=washingtonpost.com
 @@||d396ihyrqc81w.cloudfront.net^$domain=currys.co.uk
+@@||d3qxwzhswv93jk.cloudfront.net/esf.js$domain=wwe.com
 @@||d3ujids68p6xmq.cloudfront.net^$script,domain=wwe.com
 @@||dailycaller.com^*_chartbeat.js
 @@||dailyfinance.com/traffic/?
@@ -10485,6 +10565,7 @@ http://utm.$domain=~utoronto.ca
 @@||guim.co.uk/flash/video/embedded/player-$object,domain=thedailywh.at
 @@||halowars.com/stats/images/Buttons/MapStats.jpg
 @@||harvard.edu/scripts/ga_social_tracking.js
+@@||haystax.com/components/leaflet/heatmap.js
 @@||healthcare.gov/marketplace/*/clear.gif?
 @@||hhgregg.com/wcsstore/MadisonsStorefrontAssetStore/javascript/Analytics/AnalyticsTagDataObject.js
 @@||highcharts.com^*/heatmap.js
@@ -10650,7 +10731,9 @@ http://utm.$domain=~utoronto.ca
 @@||pokemonblackwhite.com^*/jquery.google-analytics.js
 @@||polycom.com/polycomservice/js/unica/ntpagetag.js
 @@||popeater.com/traffic/?$script,domain=popeater.com
+@@||popmoney.com^*/jquery.analytics.js
 @@||pp-serve.newsinc.com^*/unitsdata.js?$domain=timesfreepress.com
+@@||propelmedia.com/resources/images/load.gif
 @@||ps.w.org/google-analytics-dashboard-for-wp/assets/
 @@||pshared.5min.com/Scripts/OnePlayer/Loggers/ComScore.StreamSense.js
 @@||pshared.5min.com/Scripts/OnePlayer/Loggers/ComScore.Viewability.js
@@ -10691,6 +10774,7 @@ http://utm.$domain=~utoronto.ca
 @@||siteanalytics.compete.com^$~third-party
 @@||slatic.net/js/tracking.js$domain=lazada.co.id
 @@||smetrics.blackberry.com/b/ss/*:jump-page:$image,domain=bbm.com
+@@||snapchat.com/static/js/google-analytics.js
 @@||songza.com/static/*/songza/systems/$script
 @@||southwest.com^*/mbox.js
 @@||sportsgrid.com/decor/javascript/magnify_stats.js
@@ -10714,6 +10798,7 @@ http://utm.$domain=~utoronto.ca
 @@||t.st/video/js/kGoogleAnalytics.js?$domain=thestreet.com
 @@||tablespoon.com/library/js/TBSP_ntpagetag.js
 @@||tag.perfectaudience.com/serve/*.js$domain=asana.com
+@@||tagcommander.com^*/tc_$script
 @@||tags.bluekai.com/site/*?ret=$subdocument,domain=zillow.com
 @@||tags.crwdcntrl.net^$script,domain=weather.com
 @@||tags.w55c.net/rs?*&t=marketing$image
@@ -10866,7 +10951,7 @@ http://utm.$domain=~utoronto.ca
 @@||billiger.de/js/emos2.js
 @@||btstatic.com/tag.js$domain=oralb.de
 @@||classistatic.de^*/hitcounter.js$domain=mobile.de
-@@||cloudfront.net/bugsnag-$script,domain=nowtv.de
+@@||cloudfront.net/bugsnag-$script,domain=tvnow.de
 @@||code.etracker.com/t.js?et=$script,domain=apotheken-umschau.de|compo-hobby.de|diabetes-ratgeber.net|giz.de|kaguma.com|krombacher.de
 @@||count.rtl.de/crossdomain.xml$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||css.ch/stats/tracker.js?$xmlhttprequest
@@ -11034,7 +11119,7 @@ http://utm.$domain=~utoronto.ca
 @@||imrworldwide.com/v60.js$domain=corriereadriatico.it|ilgazzettino.it|ilmattino.it|ilmessaggero.it|leggo.it|quotidianodipuglia.it
 @@||lastampa.it/modulo/tracciatori/js/nielsen.js
 @@||maxmind.com^*/geoip.js$domain=sportube.tv
-@@||repstatic.it^*/Nielsen.js$domain=video.repubblica.it
+@@||repstatic.it^*/Nielsen.js
 @@||tiscali.it/js/webtrends/$script,domain=mail.tiscali.it
 @@||track.adform.net/serving/scripts/trackpoint$script,domain=sky.it|ubibanca.com
 @@||video.repubblica.it^*/nielsen.js
@@ -11063,6 +11148,7 @@ http://utm.$domain=~utoronto.ca
 ! Indian
 @@||playwire.com/bolt/js/zeus/$script,domain=desi-tashan.com
 ! Romanian
+@@||homebank.ro/public/HomeBankLogin/js/fingerprint/fingerprint.js
 @@||promozone.ro/wp-content/themes/nielsen/
 ! Russian
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
