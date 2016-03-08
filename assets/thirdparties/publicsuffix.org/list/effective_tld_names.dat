@@ -1,10 +1,10 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // ===BEGIN ICANN DOMAINS===
 
-// ac : http://en.wikipedia.org/wiki/.ac
+// ac : https://en.wikipedia.org/wiki/.ac
 ac
 com.ac
 edu.ac
@@ -13,11 +13,11 @@ net.ac
 mil.ac
 org.ac
 
-// ad : http://en.wikipedia.org/wiki/.ad
+// ad : https://en.wikipedia.org/wiki/.ad
 ad
 nom.ad
 
-// ae : http://en.wikipedia.org/wiki/.ae
+// ae : https://en.wikipedia.org/wiki/.ae
 // see also: "Domain Name Eligibility Policy" at http://www.aeda.ae/eng/aepolicy.php
 ae
 co.ae
@@ -28,7 +28,7 @@ ac.ae
 gov.ae
 mil.ae
 
-// aero : see http://www.information.aero/index.php?id=66
+// aero : see https://www.information.aero/index.php?id=66
 aero
 accident-investigation.aero
 accident-prevention.aero
@@ -150,10 +150,10 @@ mil.al
 net.al
 org.al
 
-// am : http://en.wikipedia.org/wiki/.am
+// am : https://en.wikipedia.org/wiki/.am
 am
 
-// ao : http://en.wikipedia.org/wiki/.ao
+// ao : https://en.wikipedia.org/wiki/.ao
 // http://www.dns.ao/REGISTR.DOC
 ao
 ed.ao
@@ -163,7 +163,7 @@ co.ao
 pb.ao
 it.ao
 
-// aq : http://en.wikipedia.org/wiki/.aq
+// aq : https://en.wikipedia.org/wiki/.aq
 aq
 
 // ar : https://nic.ar/normativa-vigente.xhtml
@@ -178,7 +178,7 @@ net.ar
 org.ar
 tur.ar
 
-// arpa : http://en.wikipedia.org/wiki/.arpa
+// arpa : https://en.wikipedia.org/wiki/.arpa
 // Confirmed by registry <iana-questions@icann.org> 2008-06-18
 arpa
 e164.arpa
@@ -188,14 +188,14 @@ iris.arpa
 uri.arpa
 urn.arpa
 
-// as : http://en.wikipedia.org/wiki/.as
+// as : https://en.wikipedia.org/wiki/.as
 as
 gov.as
 
-// asia : http://en.wikipedia.org/wiki/.asia
+// asia : https://en.wikipedia.org/wiki/.asia
 asia
 
-// at : http://en.wikipedia.org/wiki/.at
+// at : https://en.wikipedia.org/wiki/.at
 // Confirmed by registry <it@nic.at> 2008-06-17
 at
 ac.at
@@ -203,7 +203,7 @@ co.at
 gv.at
 or.at
 
-// au : http://en.wikipedia.org/wiki/.au
+// au : https://en.wikipedia.org/wiki/.au
 // http://www.auda.org.au/
 au
 // 2LDs
@@ -245,14 +245,14 @@ tas.gov.au
 vic.gov.au
 wa.gov.au
 
-// aw : http://en.wikipedia.org/wiki/.aw
+// aw : https://en.wikipedia.org/wiki/.aw
 aw
 com.aw
 
-// ax : http://en.wikipedia.org/wiki/.ax
+// ax : https://en.wikipedia.org/wiki/.ax
 ax
 
-// az : http://en.wikipedia.org/wiki/.az
+// az : https://en.wikipedia.org/wiki/.az
 az
 com.az
 net.az
@@ -267,7 +267,7 @@ name.az
 pro.az
 biz.az
 
-// ba : http://en.wikipedia.org/wiki/.ba
+// ba : https://en.wikipedia.org/wiki/.ba
 ba
 org.ba
 net.ba
@@ -280,7 +280,7 @@ co.ba
 com.ba
 rs.ba
 
-// bb : http://en.wikipedia.org/wiki/.bb
+// bb : https://en.wikipedia.org/wiki/.bb
 bb
 biz.bb
 co.bb
@@ -293,19 +293,19 @@ org.bb
 store.bb
 tv.bb
 
-// bd : http://en.wikipedia.org/wiki/.bd
+// bd : https://en.wikipedia.org/wiki/.bd
 *.bd
 
-// be : http://en.wikipedia.org/wiki/.be
+// be : https://en.wikipedia.org/wiki/.be
 // Confirmed by registry <tech@dns.be> 2008-06-08
 be
 ac.be
 
-// bf : http://en.wikipedia.org/wiki/.bf
+// bf : https://en.wikipedia.org/wiki/.bf
 bf
 gov.bf
 
-// bg : http://en.wikipedia.org/wiki/.bg
+// bg : https://en.wikipedia.org/wiki/.bg
 // https://www.register.bg/user/static/rules/en/index.html
 bg
 a.bg
@@ -345,7 +345,7 @@ z.bg
 8.bg
 9.bg
 
-// bh : http://en.wikipedia.org/wiki/.bh
+// bh : https://en.wikipedia.org/wiki/.bh
 bh
 com.bh
 edu.bh
@@ -353,7 +353,7 @@ net.bh
 org.bh
 gov.bh
 
-// bi : http://en.wikipedia.org/wiki/.bi
+// bi : https://en.wikipedia.org/wiki/.bi
 // http://whois.nic.bi/
 bi
 co.bi
@@ -362,10 +362,10 @@ edu.bi
 or.bi
 org.bi
 
-// biz : http://en.wikipedia.org/wiki/.biz
+// biz : https://en.wikipedia.org/wiki/.biz
 biz
 
-// bj : http://en.wikipedia.org/wiki/.bj
+// bj : https://en.wikipedia.org/wiki/.bj
 bj
 asso.bj
 barreau.bj
@@ -379,7 +379,7 @@ gov.bm
 net.bm
 org.bm
 
-// bn : http://en.wikipedia.org/wiki/.bn
+// bn : https://en.wikipedia.org/wiki/.bn
 *.bn
 
 // bo : http://www.nic.bo/
@@ -395,7 +395,7 @@ mil.bo
 tv.bo
 
 // br : http://registro.br/dominio/categoria.html
-// Submitted by registry <fneves@registro.br> 2014-08-11
+// Submitted by registry <fneves@registro.br>
 br
 adm.br
 adv.br
@@ -476,7 +476,7 @@ org.bs
 edu.bs
 gov.bs
 
-// bt : http://en.wikipedia.org/wiki/.bt
+// bt : https://en.wikipedia.org/wiki/.bt
 bt
 com.bt
 edu.bt
@@ -485,17 +485,17 @@ net.bt
 org.bt
 
 // bv : No registrations at this time.
-// Submitted by registry <jarle@uninett.no> 2006-06-16
+// Submitted by registry <jarle@uninett.no>
 bv
 
-// bw : http://en.wikipedia.org/wiki/.bw
+// bw : https://en.wikipedia.org/wiki/.bw
 // http://www.gobin.info/domainname/bw.doc
 // list of other 2nd level tlds ?
 bw
 co.bw
 org.bw
 
-// by : http://en.wikipedia.org/wiki/.by
+// by : https://en.wikipedia.org/wiki/.by
 // http://tld.by/rules_2006_en.html
 // list of other 2nd level tlds ?
 by
@@ -509,7 +509,7 @@ com.by
 // http://hoster.by/
 of.by
 
-// bz : http://en.wikipedia.org/wiki/.bz
+// bz : https://en.wikipedia.org/wiki/.bz
 // http://www.belizenic.bz/
 bz
 com.bz
@@ -518,7 +518,7 @@ org.bz
 edu.bz
 gov.bz
 
-// ca : http://en.wikipedia.org/wiki/.ca
+// ca : https://en.wikipedia.org/wiki/.ca
 ca
 // ca geographical names
 ab.ca
@@ -535,31 +535,31 @@ pe.ca
 qc.ca
 sk.ca
 yk.ca
-// gc.ca: http://en.wikipedia.org/wiki/.gc.ca
+// gc.ca: https://en.wikipedia.org/wiki/.gc.ca
 // see also: http://registry.gc.ca/en/SubdomainFAQ
 gc.ca
 
-// cat : http://en.wikipedia.org/wiki/.cat
+// cat : https://en.wikipedia.org/wiki/.cat
 cat
 
-// cc : http://en.wikipedia.org/wiki/.cc
+// cc : https://en.wikipedia.org/wiki/.cc
 cc
 
-// cd : http://en.wikipedia.org/wiki/.cd
+// cd : https://en.wikipedia.org/wiki/.cd
 // see also: https://www.nic.cd/domain/insertDomain_2.jsp?act=1
 cd
 gov.cd
 
-// cf : http://en.wikipedia.org/wiki/.cf
+// cf : https://en.wikipedia.org/wiki/.cf
 cf
 
-// cg : http://en.wikipedia.org/wiki/.cg
+// cg : https://en.wikipedia.org/wiki/.cg
 cg
 
-// ch : http://en.wikipedia.org/wiki/.ch
+// ch : https://en.wikipedia.org/wiki/.ch
 ch
 
-// ci : http://en.wikipedia.org/wiki/.ci
+// ci : https://en.wikipedia.org/wiki/.ci
 // http://www.nic.ci/index.php?page=charte
 ci
 org.ci
@@ -578,26 +578,26 @@ presse.ci
 md.ci
 gouv.ci
 
-// ck : http://en.wikipedia.org/wiki/.ck
+// ck : https://en.wikipedia.org/wiki/.ck
 *.ck
 !www.ck
 
-// cl : http://en.wikipedia.org/wiki/.cl
+// cl : https://en.wikipedia.org/wiki/.cl
 cl
 gov.cl
 gob.cl
 co.cl
 mil.cl
 
-// cm : http://en.wikipedia.org/wiki/.cm plus bug 981927
+// cm : https://en.wikipedia.org/wiki/.cm plus bug 981927
 cm
 co.cm
 com.cm
 gov.cm
 net.cm
 
-// cn : http://en.wikipedia.org/wiki/.cn
-// Submitted by registry <tanyaling@cnnic.cn> 2008-06-11
+// cn : https://en.wikipedia.org/wiki/.cn
+// Submitted by registry <tanyaling@cnnic.cn>
 cn
 ac.cn
 com.cn
@@ -645,8 +645,8 @@ hk.cn
 mo.cn
 tw.cn
 
-// co : http://en.wikipedia.org/wiki/.co
-// Submitted by registry <tecnico@uniandes.edu.co> 2008-06-11
+// co : https://en.wikipedia.org/wiki/.co
+// Submitted by registry <tecnico@uniandes.edu.co>
 co
 arts.co
 com.co
@@ -662,10 +662,10 @@ org.co
 rec.co
 web.co
 
-// com : http://en.wikipedia.org/wiki/.com
+// com : https://en.wikipedia.org/wiki/.com
 com
 
-// coop : http://en.wikipedia.org/wiki/.coop
+// coop : https://en.wikipedia.org/wiki/.coop
 coop
 
 // cr : http://www.nic.cr/niccr_publico/showRegistroDominiosScreen.do
@@ -678,7 +678,7 @@ go.cr
 or.cr
 sa.cr
 
-// cu : http://en.wikipedia.org/wiki/.cu
+// cu : https://en.wikipedia.org/wiki/.cu
 cu
 com.cu
 edu.cu
@@ -687,7 +687,7 @@ net.cu
 gov.cu
 inf.cu
 
-// cv : http://en.wikipedia.org/wiki/.cv
+// cv : https://en.wikipedia.org/wiki/.cv
 cv
 
 // cw : http://www.una.cw/cw_registry/
@@ -698,12 +698,12 @@ edu.cw
 net.cw
 org.cw
 
-// cx : http://en.wikipedia.org/wiki/.cx
+// cx : https://en.wikipedia.org/wiki/.cx
 // list of other 2nd level tlds ?
 cx
 gov.cx
 
-// cy : http://en.wikipedia.org/wiki/.cy
+// cy : https://en.wikipedia.org/wiki/.cy
 ac.cy
 biz.cy
 com.cy
@@ -718,22 +718,22 @@ press.cy
 pro.cy
 tm.cy
 
-// cz : http://en.wikipedia.org/wiki/.cz
+// cz : https://en.wikipedia.org/wiki/.cz
 cz
 
-// de : http://en.wikipedia.org/wiki/.de
+// de : https://en.wikipedia.org/wiki/.de
 // Confirmed by registry <ops@denic.de> (with technical
 // reservations) 2008-07-01
 de
 
-// dj : http://en.wikipedia.org/wiki/.dj
+// dj : https://en.wikipedia.org/wiki/.dj
 dj
 
-// dk : http://en.wikipedia.org/wiki/.dk
+// dk : https://en.wikipedia.org/wiki/.dk
 // Confirmed by registry <robert@dk-hostmaster.dk> 2008-06-17
 dk
 
-// dm : http://en.wikipedia.org/wiki/.dm
+// dm : https://en.wikipedia.org/wiki/.dm
 dm
 com.dm
 net.dm
@@ -741,7 +741,7 @@ org.dm
 edu.dm
 gov.dm
 
-// do : http://en.wikipedia.org/wiki/.do
+// do : https://en.wikipedia.org/wiki/.do
 do
 art.do
 com.do
@@ -754,7 +754,7 @@ org.do
 sld.do
 web.do
 
-// dz : http://en.wikipedia.org/wiki/.dz
+// dz : https://en.wikipedia.org/wiki/.dz
 dz
 com.dz
 org.dz
@@ -766,7 +766,7 @@ pol.dz
 art.dz
 
 // ec : http://www.nic.ec/reg/paso1.asp
-// Submitted by registry <vabboud@nic.ec> 2008-07-04
+// Submitted by registry <vabboud@nic.ec>
 ec
 com.ec
 info.ec
@@ -781,7 +781,7 @@ gov.ec
 gob.ec
 mil.ec
 
-// edu : http://en.wikipedia.org/wiki/.edu
+// edu : https://en.wikipedia.org/wiki/.edu
 edu
 
 // ee : http://www.eenet.ee/EENet/dom_reeglid.html#lisa_B
@@ -797,7 +797,7 @@ aip.ee
 org.ee
 fie.ee
 
-// eg : http://en.wikipedia.org/wiki/.eg
+// eg : https://en.wikipedia.org/wiki/.eg
 eg
 com.eg
 edu.eg
@@ -809,7 +809,7 @@ net.eg
 org.eg
 sci.eg
 
-// er : http://en.wikipedia.org/wiki/.er
+// er : https://en.wikipedia.org/wiki/.er
 *.er
 
 // es : https://www.nic.es/site_ingles/ingles/dominios/index.html
@@ -820,7 +820,7 @@ org.es
 gob.es
 edu.es
 
-// et : http://en.wikipedia.org/wiki/.et
+// et : https://en.wikipedia.org/wiki/.et
 et
 com.et
 gov.et
@@ -831,28 +831,28 @@ name.et
 info.et
 net.et
 
-// eu : http://en.wikipedia.org/wiki/.eu
+// eu : https://en.wikipedia.org/wiki/.eu
 eu
 
-// fi : http://en.wikipedia.org/wiki/.fi
+// fi : https://en.wikipedia.org/wiki/.fi
 fi
-// aland.fi : http://en.wikipedia.org/wiki/.ax
+// aland.fi : https://en.wikipedia.org/wiki/.ax
 // This domain is being phased out in favor of .ax. As there are still many
 // domains under aland.fi, we still keep it on the list until aland.fi is
 // completely removed.
 // TODO: Check for updates (expected to be phased out around Q1/2009)
 aland.fi
 
-// fj : http://en.wikipedia.org/wiki/.fj
+// fj : https://en.wikipedia.org/wiki/.fj
 *.fj
 
-// fk : http://en.wikipedia.org/wiki/.fk
+// fk : https://en.wikipedia.org/wiki/.fk
 *.fk
 
-// fm : http://en.wikipedia.org/wiki/.fm
+// fm : https://en.wikipedia.org/wiki/.fm
 fm
 
-// fo : http://en.wikipedia.org/wiki/.fo
+// fo : https://en.wikipedia.org/wiki/.fo
 fo
 
 // fr : http://www.afnic.fr/
@@ -883,14 +883,14 @@ pharmacien.fr
 port.fr
 veterinaire.fr
 
-// ga : http://en.wikipedia.org/wiki/.ga
+// ga : https://en.wikipedia.org/wiki/.ga
 ga
 
 // gb : This registry is effectively dormant
-// Submitted by registry <Damien.Shaw@ja.net> 2008-06-12
+// Submitted by registry <Damien.Shaw@ja.net>
 gb
 
-// gd : http://en.wikipedia.org/wiki/.gd
+// gd : https://en.wikipedia.org/wiki/.gd
 gd
 
 // ge : http://www.nic.net.ge/policy_en.pdf
@@ -903,7 +903,7 @@ mil.ge
 net.ge
 pvt.ge
 
-// gf : http://en.wikipedia.org/wiki/.gf
+// gf : https://en.wikipedia.org/wiki/.gf
 gf
 
 // gg : http://www.channelisles.net/register-domains/
@@ -913,7 +913,7 @@ co.gg
 net.gg
 org.gg
 
-// gh : http://en.wikipedia.org/wiki/.gh
+// gh : https://en.wikipedia.org/wiki/.gh
 // see also: http://www.nic.gh/reg_now.php
 // Although domains directly at second level are not possible at the moment,
 // they have been possible for some time and may come back.
@@ -933,7 +933,7 @@ mod.gi
 edu.gi
 org.gi
 
-// gl : http://en.wikipedia.org/wiki/.gl
+// gl : https://en.wikipedia.org/wiki/.gl
 // http://nic.gl
 gl
 co.gl
@@ -946,7 +946,7 @@ org.gl
 gm
 
 // gn : http://psg.com/dns/gn/gn.txt
-// Submitted by registry <randy@psg.com> 2008-06-17
+// Submitted by registry <randy@psg.com>
 gn
 ac.gn
 com.gn
@@ -955,7 +955,7 @@ gov.gn
 org.gn
 net.gn
 
-// gov : http://en.wikipedia.org/wiki/.gov
+// gov : https://en.wikipedia.org/wiki/.gov
 gov
 
 // gp : http://www.nic.gp/index.php?lang=en
@@ -967,11 +967,11 @@ edu.gp
 org.gp
 asso.gp
 
-// gq : http://en.wikipedia.org/wiki/.gq
+// gq : https://en.wikipedia.org/wiki/.gq
 gq
 
 // gr : https://grweb.ics.forth.gr/english/1617-B-2005.html
-// Submitted by registry <segred@ics.forth.gr> 2008-06-09
+// Submitted by registry <segred@ics.forth.gr>
 gr
 com.gr
 edu.gr
@@ -979,7 +979,7 @@ net.gr
 org.gr
 gov.gr
 
-// gs : http://en.wikipedia.org/wiki/.gs
+// gs : https://en.wikipedia.org/wiki/.gs
 gs
 
 // gt : http://www.gt/politicas_de_registro.html
@@ -995,10 +995,10 @@ org.gt
 // gu : http://gadao.gov.gu/registration.txt
 *.gu
 
-// gw : http://en.wikipedia.org/wiki/.gw
+// gw : https://en.wikipedia.org/wiki/.gw
 gw
 
-// gy : http://en.wikipedia.org/wiki/.gy
+// gy : https://en.wikipedia.org/wiki/.gy
 // http://registry.gy/
 gy
 co.gy
@@ -1009,7 +1009,7 @@ net.gy
 org.gy
 
 // hk : https://www.hkdnr.hk
-// Submitted by registry <hk.tech@hkirc.hk> 2008-06-11
+// Submitted by registry <hk.tech@hkirc.hk>
 hk
 com.hk
 edu.hk
@@ -1033,7 +1033,7 @@ org.hk
 組織.hk
 組织.hk
 
-// hm : http://en.wikipedia.org/wiki/.hm
+// hm : https://en.wikipedia.org/wiki/.hm
 hm
 
 // hn : http://www.nic.hn/politicas/ps02,,05.html
@@ -1121,7 +1121,7 @@ or.id
 sch.id
 web.id
 
-// ie : http://en.wikipedia.org/wiki/.ie
+// ie : https://en.wikipedia.org/wiki/.ie
 ie
 gov.ie
 
@@ -1137,7 +1137,7 @@ net.il
 org.il
 
 // im : https://www.nic.im/
-// Submitted by registry <info@nic.im> 2013-11-15
+// Submitted by registry <info@nic.im>
 im
 ac.im
 co.im
@@ -1149,7 +1149,7 @@ plc.co.im
 tt.im
 tv.im
 
-// in : http://en.wikipedia.org/wiki/.in
+// in : https://en.wikipedia.org/wiki/.in
 // see also: https://registry.in/Policies
 // Please note, that nic.in is not an official eTLD, but used by most
 // government institutions.
@@ -1167,10 +1167,10 @@ res.in
 gov.in
 mil.in
 
-// info : http://en.wikipedia.org/wiki/.info
+// info : https://en.wikipedia.org/wiki/.info
 info
 
-// int : http://en.wikipedia.org/wiki/.int
+// int : https://en.wikipedia.org/wiki/.int
 // Confirmed by registry <iana-questions@icann.org> 2008-06-18
 int
 eu.int
@@ -1215,7 +1215,7 @@ gov.is
 org.is
 int.is
 
-// it : http://en.wikipedia.org/wiki/.it
+// it : https://en.wikipedia.org/wiki/.it
 it
 gov.it
 edu.it
@@ -1613,12 +1613,12 @@ gov.jo
 mil.jo
 name.jo
 
-// jobs : http://en.wikipedia.org/wiki/.jobs
+// jobs : https://en.wikipedia.org/wiki/.jobs
 jobs
 
-// jp : http://en.wikipedia.org/wiki/.jp
+// jp : https://en.wikipedia.org/wiki/.jp
 // http://jprs.co.jp/en/jpdomain.html
-// Submitted by registry <info@jprs.jp> 2014-10-30
+// Submitted by registry <info@jprs.jp>
 jp
 // jp organizational type names
 ac.jp
@@ -3445,7 +3445,7 @@ gov.ki
 info.ki
 com.ki
 
-// km : http://en.wikipedia.org/wiki/.km
+// km : https://en.wikipedia.org/wiki/.km
 // http://www.domaine.km/documents/charte.doc
 km
 org.km
@@ -3458,7 +3458,7 @@ mil.km
 ass.km
 com.km
 // These are only mentioned as proposed suggestions at domaine.km, but
-// http://en.wikipedia.org/wiki/.km says they're available for registration:
+// https://en.wikipedia.org/wiki/.km says they're available for registration:
 coop.km
 asso.km
 presse.km
@@ -3468,7 +3468,7 @@ pharmaciens.km
 veterinaire.km
 gouv.km
 
-// kn : http://en.wikipedia.org/wiki/.kn
+// kn : https://en.wikipedia.org/wiki/.kn
 // http://www.dot.kn/domainRules.html
 kn
 net.kn
@@ -3485,7 +3485,7 @@ org.kp
 rep.kp
 tra.kp
 
-// kr : http://en.wikipedia.org/wiki/.kr
+// kr : https://en.wikipedia.org/wiki/.kr
 // see also: http://domain.nida.or.kr/eng/registration.jsp
 kr
 ac.kr
@@ -3519,7 +3519,7 @@ jeonnam.kr
 seoul.kr
 ulsan.kr
 
-// kw : http://en.wikipedia.org/wiki/.kw
+// kw : https://en.wikipedia.org/wiki/.kw
 *.kw
 
 // ky : http://www.icta.ky/da_ky_reg_dom.php
@@ -3531,7 +3531,7 @@ com.ky
 org.ky
 net.ky
 
-// kz : http://en.wikipedia.org/wiki/.kz
+// kz : https://en.wikipedia.org/wiki/.kz
 // see also: http://www.nic.kz/rules/index.jsp
 kz
 org.kz
@@ -3541,8 +3541,8 @@ gov.kz
 mil.kz
 com.kz
 
-// la : http://en.wikipedia.org/wiki/.la
-// Submitted by registry <gavin.brown@nic.la> 2008-06-10
+// la : https://en.wikipedia.org/wiki/.la
+// Submitted by registry <gavin.brown@nic.la>
 la
 int.la
 net.la
@@ -3553,8 +3553,8 @@ per.la
 com.la
 org.la
 
-// lb : http://en.wikipedia.org/wiki/.lb
-// Submitted by registry <randy@psg.com> 2008-06-17
+// lb : https://en.wikipedia.org/wiki/.lb
+// Submitted by registry <randy@psg.com>
 lb
 com.lb
 edu.lb
@@ -3562,7 +3562,7 @@ gov.lb
 net.lb
 org.lb
 
-// lc : http://en.wikipedia.org/wiki/.lc
+// lc : https://en.wikipedia.org/wiki/.lc
 // see also: http://www.nic.lc/rules.htm
 lc
 com.lc
@@ -3572,7 +3572,7 @@ org.lc
 edu.lc
 gov.lc
 
-// li : http://en.wikipedia.org/wiki/.li
+// li : https://en.wikipedia.org/wiki/.li
 li
 
 // lk : http://www.nic.lk/seclevpr.html
@@ -3594,7 +3594,7 @@ hotel.lk
 ac.lk
 
 // lr : http://psg.com/dns/lr/lr.txt
-// Submitted by registry <randy@psg.com> 2008-06-17
+// Submitted by registry <randy@psg.com>
 lr
 com.lr
 edu.lr
@@ -3602,12 +3602,12 @@ gov.lr
 org.lr
 net.lr
 
-// ls : http://en.wikipedia.org/wiki/.ls
+// ls : https://en.wikipedia.org/wiki/.ls
 ls
 co.ls
 org.ls
 
-// lt : http://en.wikipedia.org/wiki/.lt
+// lt : https://en.wikipedia.org/wiki/.lt
 lt
 // gov.lt : http://www.gov.lt/index_en.php
 gov.lt
@@ -3639,7 +3639,7 @@ med.ly
 org.ly
 id.ly
 
-// ma : http://en.wikipedia.org/wiki/.ma
+// ma : https://en.wikipedia.org/wiki/.ma
 // http://www.anrt.ma/fr/admin/download/upload/file_fr782.pdf
 ma
 co.ma
@@ -3654,10 +3654,10 @@ mc
 tm.mc
 asso.mc
 
-// md : http://en.wikipedia.org/wiki/.md
+// md : https://en.wikipedia.org/wiki/.md
 md
 
-// me : http://en.wikipedia.org/wiki/.me
+// me : https://en.wikipedia.org/wiki/.me
 me
 co.me
 net.me
@@ -3680,13 +3680,13 @@ mil.mg
 com.mg
 co.mg
 
-// mh : http://en.wikipedia.org/wiki/.mh
+// mh : https://en.wikipedia.org/wiki/.mh
 mh
 
-// mil : http://en.wikipedia.org/wiki/.mil
+// mil : https://en.wikipedia.org/wiki/.mil
 mil
 
-// mk : http://en.wikipedia.org/wiki/.mk
+// mk : https://en.wikipedia.org/wiki/.mk
 // see also: http://dns.marnet.net.mk/postapka.php
 mk
 com.mk
@@ -3698,7 +3698,7 @@ inf.mk
 name.mk
 
 // ml : http://www.gobin.info/domainname/ml-template.doc
-// see also: http://en.wikipedia.org/wiki/.ml
+// see also: https://en.wikipedia.org/wiki/.ml
 ml
 com.ml
 edu.ml
@@ -3708,10 +3708,10 @@ net.ml
 org.ml
 presse.ml
 
-// mm : http://en.wikipedia.org/wiki/.mm
+// mm : https://en.wikipedia.org/wiki/.mm
 *.mm
 
-// mn : http://en.wikipedia.org/wiki/.mn
+// mn : https://en.wikipedia.org/wiki/.mn
 mn
 gov.mn
 edu.mn
@@ -3725,17 +3725,17 @@ org.mo
 edu.mo
 gov.mo
 
-// mobi : http://en.wikipedia.org/wiki/.mobi
+// mobi : https://en.wikipedia.org/wiki/.mobi
 mobi
 
 // mp : http://www.dot.mp/
 // Confirmed by registry <dcamacho@saipan.com> 2008-06-17
 mp
 
-// mq : http://en.wikipedia.org/wiki/.mq
+// mq : https://en.wikipedia.org/wiki/.mq
 mq
 
-// mr : http://en.wikipedia.org/wiki/.mr
+// mr : https://en.wikipedia.org/wiki/.mr
 mr
 gov.mr
 
@@ -3748,14 +3748,14 @@ net.ms
 org.ms
 
 // mt : https://www.nic.org.mt/go/policy
-// Submitted by registry <help@nic.org.mt> 2013-11-19
+// Submitted by registry <help@nic.org.mt>
 mt
 com.mt
 edu.mt
 net.mt
 org.mt
 
-// mu : http://en.wikipedia.org/wiki/.mu
+// mu : https://en.wikipedia.org/wiki/.mu
 mu
 com.mu
 net.mu
@@ -4317,7 +4317,7 @@ zoology.museum
 ירושלים.museum
 иком.museum
 
-// mv : http://en.wikipedia.org/wiki/.mv
+// mv : https://en.wikipedia.org/wiki/.mv
 // "mv" included because, contra Wikipedia, google.mv exists.
 mv
 aero.mv
@@ -4350,7 +4350,7 @@ net.mw
 org.mw
 
 // mx : http://www.nic.mx/
-// Submitted by registry <farias@nic.mx> 2008-06-19
+// Submitted by registry <farias@nic.mx>
 mx
 com.mx
 org.mx
@@ -4400,13 +4400,13 @@ name
 nc
 asso.nc
 
-// ne : http://en.wikipedia.org/wiki/.ne
+// ne : https://en.wikipedia.org/wiki/.ne
 ne
 
-// net : http://en.wikipedia.org/wiki/.net
+// net : https://en.wikipedia.org/wiki/.net
 net
 
-// nf : http://en.wikipedia.org/wiki/.nf
+// nf : https://en.wikipedia.org/wiki/.nf
 nf
 com.nf
 net.nf
@@ -4448,7 +4448,7 @@ ac.ni
 in.ni
 info.ni
 
-// nl : http://en.wikipedia.org/wiki/.nl
+// nl : https://en.wikipedia.org/wiki/.nl
 //      https://www.sidn.nl/
 //      ccTLD for the Netherlands
 nl
@@ -5227,7 +5227,7 @@ våler.hedmark.no
 *.np
 
 // nr : http://cenpac.net.nr/dns/index.html
-// Confirmed by registry <technician@cenpac.net.nr> 2008-06-17
+// Submitted by registry <technician@cenpac.net.nr>
 nr
 biz.nr
 info.nr
@@ -5237,11 +5237,11 @@ org.nr
 net.nr
 com.nr
 
-// nu : http://en.wikipedia.org/wiki/.nu
+// nu : https://en.wikipedia.org/wiki/.nu
 nu
 
-// nz : http://en.wikipedia.org/wiki/.nz
-// Confirmed by registry <jay@nzrs.net.nz> 2014-05-19
+// nz : https://en.wikipedia.org/wiki/.nz
+// Submitted by registry <jay@nzrs.net.nz>
 nz
 ac.nz
 co.nz
@@ -5260,7 +5260,7 @@ org.nz
 parliament.nz
 school.nz
 
-// om : http://en.wikipedia.org/wiki/.om
+// om : https://en.wikipedia.org/wiki/.om
 om
 co.om
 com.om
@@ -5272,7 +5272,7 @@ net.om
 org.om
 pro.om
 
-// org : http://en.wikipedia.org/wiki/.org
+// org : https://en.wikipedia.org/wiki/.org
 org
 
 // pa : http://www.nic.pa/
@@ -5307,11 +5307,11 @@ com.pf
 org.pf
 edu.pf
 
-// pg : http://en.wikipedia.org/wiki/.pg
+// pg : https://en.wikipedia.org/wiki/.pg
 *.pg
 
 // ph : http://www.domains.ph/FAQ2.asp
-// Submitted by registry <jed@email.com.ph> 2008-06-13
+// Submitted by registry <jed@email.com.ph>
 ph
 com.ph
 net.ph
@@ -5340,7 +5340,7 @@ gos.pk
 info.pk
 
 // pl http://www.dns.pl/english/index.html
-// updated by .PL registry on 2015-04-28
+// Submitted by registry
 pl
 com.pl
 net.pl
@@ -5557,7 +5557,7 @@ org.pn
 edu.pn
 net.pn
 
-// post : http://en.wikipedia.org/wiki/.post
+// post : https://en.wikipedia.org/wiki/.post
 post
 
 // pr : http://www.nic.pr/index.asp?f=1
@@ -5572,22 +5572,26 @@ pro.pr
 biz.pr
 info.pr
 name.pr
-// these aren't mentioned on nic.pr, but on http://en.wikipedia.org/wiki/.pr
+// these aren't mentioned on nic.pr, but on https://en.wikipedia.org/wiki/.pr
 est.pr
 prof.pr
 ac.pr
 
-// pro : http://www.nic.pro/support_faq.htm
+// pro : http://registry.pro/get-pro
 pro
+aaa.pro
 aca.pro
+acct.pro
+avocat.pro
 bar.pro
 cpa.pro
+eng.pro
 jur.pro
 law.pro
 med.pro
-eng.pro
+recht.pro
 
-// ps : http://en.wikipedia.org/wiki/.ps
+// ps : https://en.wikipedia.org/wiki/.ps
 // http://www.nic.ps/registration/policy.html#reg
 ps
 edu.ps
@@ -5609,7 +5613,7 @@ publ.pt
 com.pt
 nome.pt
 
-// pw : http://en.wikipedia.org/wiki/.pw
+// pw : https://en.wikipedia.org/wiki/.pw
 pw
 co.pw
 ne.pw
@@ -5619,7 +5623,7 @@ go.pw
 belau.pw
 
 // py : http://www.nic.py/pautas.html#seccion_9
-// Confirmed by registry 2012-10-03
+// Submitted by registry
 py
 com.py
 coop.py
@@ -5832,7 +5836,7 @@ edu.sa
 sch.sa
 
 // sb : http://www.sbnic.net.sb/
-// Submitted by registry <lee.humphries@telekom.com.sb> 2008-06-08
+// Submitted by registry <lee.humphries@telekom.com.sb>
 sb
 com.sb
 edu.sb
@@ -5849,7 +5853,7 @@ org.sc
 edu.sc
 
 // sd : http://www.isoc.sd/sudanic.isoc.sd/billing_pricing.htm
-// Submitted by registry <admin@isoc.sd> 2008-06-17
+// Submitted by registry <admin@isoc.sd>
 sd
 com.sd
 net.sd
@@ -5860,8 +5864,8 @@ tv.sd
 gov.sd
 info.sd
 
-// se : http://en.wikipedia.org/wiki/.se
-// Submitted by registry <patrik.wallstrom@iis.se> 2014-03-18
+// se : https://en.wikipedia.org/wiki/.se
+// Submitted by registry <patrik.wallstrom@iis.se>
 se
 a.se
 ac.se
@@ -5920,19 +5924,19 @@ gov.sh
 org.sh
 mil.sh
 
-// si : http://en.wikipedia.org/wiki/.si
+// si : https://en.wikipedia.org/wiki/.si
 si
 
 // sj : No registrations at this time.
-// Submitted by registry <jarle@uninett.no> 2008-06-16
+// Submitted by registry <jarle@uninett.no>
 sj
 
-// sk : http://en.wikipedia.org/wiki/.sk
+// sk : https://en.wikipedia.org/wiki/.sk
 // list of 2nd level domains ?
 sk
 
 // sl : http://www.nic.sl
-// Submitted by registry <adam@neoip.com> 2008-06-12
+// Submitted by registry <adam@neoip.com>
 sl
 com.sl
 net.sl
@@ -5940,10 +5944,10 @@ edu.sl
 gov.sl
 org.sl
 
-// sm : http://en.wikipedia.org/wiki/.sm
+// sm : https://en.wikipedia.org/wiki/.sm
 sm
 
-// sn : http://en.wikipedia.org/wiki/.sn
+// sn : https://en.wikipedia.org/wiki/.sn
 sn
 art.sn
 com.sn
@@ -5959,7 +5963,7 @@ com.so
 net.so
 org.so
 
-// sr : http://en.wikipedia.org/wiki/.sr
+// sr : https://en.wikipedia.org/wiki/.sr
 sr
 
 // st : http://www.nic.st/html/policyrules/
@@ -5977,7 +5981,7 @@ principe.st
 saotome.st
 store.st
 
-// su : http://en.wikipedia.org/wiki/.su
+// su : https://en.wikipedia.org/wiki/.su
 su
 adygeya.su
 arkhangelsk.su
@@ -6020,12 +6024,12 @@ gob.sv
 org.sv
 red.sv
 
-// sx : http://en.wikipedia.org/wiki/.sx
-// Confirmed by registry <jcvignes@openregistry.com> 2012-05-31
+// sx : https://en.wikipedia.org/wiki/.sx
+// Submitted by registry <jcvignes@openregistry.com>
 sx
 gov.sx
 
-// sy : http://en.wikipedia.org/wiki/.sy
+// sy : https://en.wikipedia.org/wiki/.sy
 // see also: http://www.gobin.info/domainname/sy.doc
 sy
 edu.sy
@@ -6035,32 +6039,32 @@ mil.sy
 com.sy
 org.sy
 
-// sz : http://en.wikipedia.org/wiki/.sz
+// sz : https://en.wikipedia.org/wiki/.sz
 // http://www.sispa.org.sz/
 sz
 co.sz
 ac.sz
 org.sz
 
-// tc : http://en.wikipedia.org/wiki/.tc
+// tc : https://en.wikipedia.org/wiki/.tc
 tc
 
-// td : http://en.wikipedia.org/wiki/.td
+// td : https://en.wikipedia.org/wiki/.td
 td
 
-// tel: http://en.wikipedia.org/wiki/.tel
+// tel: https://en.wikipedia.org/wiki/.tel
 // http://www.telnic.org/
 tel
 
-// tf : http://en.wikipedia.org/wiki/.tf
+// tf : https://en.wikipedia.org/wiki/.tf
 tf
 
-// tg : http://en.wikipedia.org/wiki/.tg
+// tg : https://en.wikipedia.org/wiki/.tg
 // http://www.nic.tg/
 tg
 
-// th : http://en.wikipedia.org/wiki/.th
-// Submitted by registry <krit@thains.co.th> 2008-06-17
+// th : https://en.wikipedia.org/wiki/.th
+// Submitted by registry <krit@thains.co.th>
 th
 ac.th
 co.th
@@ -6088,10 +6092,10 @@ org.tj
 test.tj
 web.tj
 
-// tk : http://en.wikipedia.org/wiki/.tk
+// tk : https://en.wikipedia.org/wiki/.tk
 tk
 
-// tl : http://en.wikipedia.org/wiki/.tl
+// tl : https://en.wikipedia.org/wiki/.tl
 tl
 gov.tl
 
@@ -6106,7 +6110,7 @@ gov.tm
 mil.tm
 edu.tm
 
-// tn : http://en.wikipedia.org/wiki/.tn
+// tn : https://en.wikipedia.org/wiki/.tn
 // http://whois.ati.tn/
 tn
 com.tn
@@ -6130,8 +6134,8 @@ agrinet.tn
 defense.tn
 turen.tn
 
-// to : http://en.wikipedia.org/wiki/.to
-// Submitted by registry <egullich@colo.to> 2008-06-17
+// to : https://en.wikipedia.org/wiki/.to
+// Submitted by registry <egullich@colo.to>
 to
 com.to
 gov.to
@@ -6142,7 +6146,7 @@ mil.to
 
 // subTLDs: https://www.nic.tr/forms/eng/policies.pdf
 //     and: https://www.nic.tr/forms/politikalar.pdf
-// Submitted by <mehmetgurevin@gmail.com> 2014-07-19
+// Submitted by <mehmetgurevin@gmail.com>
 tr
 com.tr
 info.tr
@@ -6171,7 +6175,7 @@ nc.tr
 // Used by government agencies of Northern Cyprus
 gov.nc.tr
 
-// travel : http://en.wikipedia.org/wiki/.travel
+// travel : https://en.wikipedia.org/wiki/.travel
 travel
 
 // tt : http://www.nic.tt/
@@ -6194,12 +6198,12 @@ name.tt
 gov.tt
 edu.tt
 
-// tv : http://en.wikipedia.org/wiki/.tv
+// tv : https://en.wikipedia.org/wiki/.tv
 // Not listing any 2LDs as reserved since none seem to exist in practice,
 // Wikipedia notwithstanding.
 tv
 
-// tw : http://en.wikipedia.org/wiki/.tw
+// tw : https://en.wikipedia.org/wiki/.tw
 tw
 edu.tw
 gov.tw
@@ -6216,7 +6220,7 @@ club.tw
 商業.tw
 
 // tz : http://www.tznic.or.tz/index.php/domains
-// Confirmed by registry <manager@tznic.or.tz> 2013-01-22
+// Submitted by registry <manager@tznic.or.tz>
 tz
 ac.tz
 co.tz
@@ -6232,7 +6236,7 @@ sc.tz
 tv.tz
 
 // ua : https://hostmaster.ua/policy/?ua
-// Submitted by registry <dk@cctld.ua> 2012-04-27
+// Submitted by registry <dk@cctld.ua>
 ua
 // ua 2LD
 com.ua
@@ -6325,7 +6329,7 @@ ne.ug
 com.ug
 org.ug
 
-// uk : http://en.wikipedia.org/wiki/.uk
+// uk : https://en.wikipedia.org/wiki/.uk
 // Submitted by registry <Michael.Daly@nominet.org.uk>
 uk
 ac.uk
@@ -6340,7 +6344,7 @@ plc.uk
 police.uk
 *.sch.uk
 
-// us : http://en.wikipedia.org/wiki/.us
+// us : https://en.wikipedia.org/wiki/.us
 us
 dni.us
 fed.us
@@ -6598,11 +6602,11 @@ com.uz
 net.uz
 org.uz
 
-// va : http://en.wikipedia.org/wiki/.va
+// va : https://en.wikipedia.org/wiki/.va
 va
 
-// vc : http://en.wikipedia.org/wiki/.vc
-// Submitted by registry <kshah@ca.afilias.info> 2008-06-13
+// vc : https://en.wikipedia.org/wiki/.vc
+// Submitted by registry <kshah@ca.afilias.info>
 vc
 com.vc
 net.vc
@@ -6612,8 +6616,7 @@ mil.vc
 edu.vc
 
 // ve : https://registro.nic.ve/
-// Confirmed by registry 2012-10-04
-// Updated 2014-05-20 - Bug 940478
+// Submitted by registry
 ve
 arts.ve
 co.ve
@@ -6633,7 +6636,7 @@ store.ve
 tec.ve
 web.ve
 
-// vg : http://en.wikipedia.org/wiki/.vg
+// vg : https://en.wikipedia.org/wiki/.vg
 vg
 
 // vi : http://www.nic.vi/newdomainform.htm
@@ -6662,7 +6665,7 @@ name.vn
 pro.vn
 health.vn
 
-// vu : http://en.wikipedia.org/wiki/.vu
+// vu : https://en.wikipedia.org/wiki/.vu
 // http://www.vunic.vu/
 vu
 com.vu
@@ -6673,7 +6676,7 @@ org.vu
 // wf : http://www.afnic.fr/medias/documents/AFNIC-naming-policy2012.pdf
 wf
 
-// ws : http://en.wikipedia.org/wiki/.ws
+// ws : https://en.wikipedia.org/wiki/.ws
 // http://samoanic.ws/index.dhtml
 ws
 com.ws
@@ -6923,14 +6926,14 @@ school.za
 tm.za
 web.za
 
-// zm : http://en.wikipedia.org/wiki/.zm
+// zm : https://en.wikipedia.org/wiki/.zm
 *.zm
 
-// zw : http://en.wikipedia.org/wiki/.zw
+// zw : https://en.wikipedia.org/wiki/.zw
 *.zw
 
 
-// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2016-01-04T22:39:54Z
+// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2016-03-01T00:46:32Z
 
 // aaa : 2015-02-26 American Automobile Association, Inc.
 aaa
@@ -7817,9 +7820,6 @@ doha
 // domains : 2013-10-17 Sugar Cross, LLC
 domains
 
-// doosan : 2014-04-03 Doosan Corporation
-doosan
-
 // dot : 2015-05-21 Dish DBS Corporation
 dot
 
@@ -8108,6 +8108,9 @@ fujitsu
 // fujixerox : 2015-07-23 Xerox DNHC LLC
 fujixerox
 
+// fun : 2016-01-14 Oriental Trading Company, Inc.
+fun
+
 // fund : 2014-03-20 John Castle, LLC
 fund
 
@@ -8194,6 +8197,9 @@ globo
 
 // gmail : 2014-05-01 Charleston Road Registry Inc.
 gmail
+
+// gmbh : 2016-01-29 Extra Dynamite, LLC
+gmbh
 
 // gmo : 2014-01-09 GMO Internet, Inc.
 gmo
@@ -9782,6 +9788,9 @@ storage
 // store : 2015-04-09 DotStore Inc.
 store
 
+// stream : 2016-01-08 dot Stream Limited
+stream
+
 // studio : 2015-02-11
 studio
 
@@ -10592,20 +10601,21 @@ zuerich
 // (Note: these are in alphabetical order by company name)
 
 // Amazon CloudFront : https://aws.amazon.com/cloudfront/
-// Submitted by Donavan Miller <donavanm@amazon.com> 2013-03-22
+// Submitted by Donavan Miller <donavanm@amazon.com>
 cloudfront.net
 
 // Amazon Elastic Compute Cloud: https://aws.amazon.com/ec2/
-// Submitted by Osman Surkatty <osmans@amazon.com> 2014-12-16
+// Submitted by Luke Wells <lawells@amazon.com>
 ap-northeast-1.compute.amazonaws.com
+ap-northeast-2.compute.amazonaws.com
 ap-southeast-1.compute.amazonaws.com
 ap-southeast-2.compute.amazonaws.com
 cn-north-1.compute.amazonaws.cn
+compute-1.amazonaws.com
 compute.amazonaws.cn
 compute.amazonaws.com
-compute-1.amazonaws.com
-eu-west-1.compute.amazonaws.com
 eu-central-1.compute.amazonaws.com
+eu-west-1.compute.amazonaws.com
 sa-east-1.compute.amazonaws.com
 us-east-1.amazonaws.com
 us-gov-west-1.compute.amazonaws.com
@@ -10615,37 +10625,39 @@ z-1.compute-1.amazonaws.com
 z-2.compute-1.amazonaws.com
 
 // Amazon Elastic Beanstalk : https://aws.amazon.com/elasticbeanstalk/
-// Submitted by Adam Stein <astein@amazon.com> 2013-04-02
+// Submitted by Adam Stein <astein@amazon.com>
 elasticbeanstalk.com
 
 // Amazon Elastic Load Balancing : https://aws.amazon.com/elasticloadbalancing/
-// Submitted by Scott Vidmar <svidmar@amazon.com> 2013-03-27
+// Submitted by Scott Vidmar <svidmar@amazon.com>
 elb.amazonaws.com
 
 // Amazon S3 : https://aws.amazon.com/s3/
-// Submitted by Eric Kinolik <kilo@amazon.com> 2015-04-08
+// Submitted by Luke Wells <lawells@amazon.com>
 s3.amazonaws.com
 s3-ap-northeast-1.amazonaws.com
+s3-ap-northeast-2.amazonaws.com
 s3-ap-southeast-1.amazonaws.com
 s3-ap-southeast-2.amazonaws.com
+s3-eu-central-1.amazonaws.com
+s3-eu-west-1.amazonaws.com
 s3-external-1.amazonaws.com
 s3-external-2.amazonaws.com
 s3-fips-us-gov-west-1.amazonaws.com
-s3-eu-central-1.amazonaws.com
-s3-eu-west-1.amazonaws.com
 s3-sa-east-1.amazonaws.com
 s3-us-gov-west-1.amazonaws.com
 s3-us-west-1.amazonaws.com
 s3-us-west-2.amazonaws.com
+s3.ap-northeast-2.amazonaws.com
 s3.cn-north-1.amazonaws.com.cn
 s3.eu-central-1.amazonaws.com
 
 // BetaInABox
-// Submitted by adrian@betainabox.com 2012-09-13
+// Submitted by Adrian <adrian@betainabox.com>
 betainabox.com
 
 // CentralNic : http://www.centralnic.com/names/domains
-// Submitted by registry <gavin.brown@centralnic.com> 2012-09-27
+// Submitted by registry <gavin.brown@centralnic.com>
 ae.org
 ar.com
 br.com
@@ -10676,30 +10688,34 @@ za.bz
 za.com
 
 // Africa.com Web Solutions Ltd : https://registry.africa.com
-// Submitted by Gavin Brown <gavin.brown@centralnic.com> 2014-02-04
+// Submitted by Gavin Brown <gavin.brown@centralnic.com>
 africa.com
 
+// Citrix : https://citrix.com
+// Submitted by Alex Stoddard <alex.stoddard@citrix.com>
+xenapponazure.com
+
 // iDOT Services Limited : http://www.domain.gr.com
-// Submitted by Gavin Brown <gavin.brown@centralnic.com> 2014-02-04
+// Submitted by Gavin Brown <gavin.brown@centralnic.com>
 gr.com
 
 // Radix FZC : http://domains.in.net
-// Submitted by Gavin Brown <gavin.brown@centralnic.com> 2014-02-04
+// Submitted by Gavin Brown <gavin.brown@centralnic.com>
 in.net
 
 // US REGISTRY LLC : http://us.org
-// Submitted by Gavin Brown <gavin.brown@centralnic.com> 2014-02-04
+// Submitted by Gavin Brown <gavin.brown@centralnic.com>
 us.org
 
 // co.com Registry, LLC : https://registry.co.com
-// Submitted by Gavin Brown <gavin.brown@centralnic.com> 2014-02-04
+// Submitted by Gavin Brown <gavin.brown@centralnic.com>
 co.com
 
 // c.la : http://www.c.la/
 c.la
 
 // cloudControl : https://www.cloudcontrol.com/
-// Submitted by Tobias Wilken <tw@cloudcontrol.com> 2013-07-23
+// Submitted by Tobias Wilken <tw@cloudcontrol.com>
 cloudcontrolled.com
 cloudcontrolapp.com
 
@@ -10711,7 +10727,7 @@ co.ca
 co.cz
 
 // CDN77.com : http://www.cdn77.com
-// Submitted by Jan Krpes <jan.krpes@cdn77.com> 2015-07-13
+// Submitted by Jan Krpes <jan.krpes@cdn77.com>
 c.cdn77.org
 cdn77-ssl.net
 r.cdn77.net
@@ -10723,23 +10739,28 @@ co.nl
 co.no
 
 // Commerce Guys, SAS
-// Submitted by Damien Tournoud <damien@commerceguys.com> 2015-01-22
+// Submitted by Damien Tournoud <damien@commerceguys.com>
 *.platform.sh
 
 // Cupcake : https://cupcake.io/
-// Submitted by Jonathan Rudenberg <jonathan@cupcake.io> 2013-10-08
+// Submitted by Jonathan Rudenberg <jonathan@cupcake.io>
 cupcake.is
 
+// cyon GmbH : https://www.cyon.ch/
+// Submitted by Dominic Luechinger <dol@cyon.ch>
+cyon.link
+cyon.site
+
 // DreamHost : http://www.dreamhost.com/
-// Submitted by Andrew Farmer <andrew.farmer@dreamhost.com> 2012-10-02
+// Submitted by Andrew Farmer <andrew.farmer@dreamhost.com>
 dreamhosters.com
 
 // Drobo : http://www.drobo.com/
-// Submitted by Ricardo Padilha <rpadilha@drobo.com> 2015-12-17
+// Submitted by Ricardo Padilha <rpadilha@drobo.com>
 mydrobo.com
 
 // DuckDNS : http://www.duckdns.org/
-// Submitted by Richard Harper <richard@duckdns.org> 2015-05-17
+// Submitted by Richard Harper <richard@duckdns.org>
 duckdns.org
 
 // DynDNS.com : http://www.dyndns.com/services/dns/dyndns/
@@ -11023,9 +11044,12 @@ webhop.org
 worse-than.tv
 writesthisblog.com
 
-// EU.org https://eu.org/
-// Submitted by Pierre Beyssac <hostmaster@eu.org> 2015-04-17
+// dynv6 : https://dynv6.com
+// Submitted by Dominik Menke <dom@digineo.de> 2016-01-18
+dynv6.net
 
+// EU.org https://eu.org/
+// Submitted by Pierre Beyssac <hostmaster@eu.org>
 eu.org
 al.eu.org
 asso.eu.org
@@ -11083,8 +11107,12 @@ tr.eu.org
 uk.eu.org
 us.eu.org
 
+// Facebook, Inc.
+// Submitted by Peter Ruibal <public-suffix@fb.com>
+apps.fbsbx.com
+
 // Fastly Inc. http://www.fastly.com/
-// Submitted by Vladimir Vuksan <vladimir@fastly.com> 2013-05-31
+// Submitted by Vladimir Vuksan <vladimir@fastly.com>
 a.ssl.fastly.net
 b.ssl.fastly.net
 global.ssl.fastly.net
@@ -11092,28 +11120,33 @@ a.prod.fastly.net
 global.prod.fastly.net
 
 // Firebase, Inc.
-// Submitted by Chris Raynor <chris@firebase.com> 2014-01-21
+// Submitted by Chris Raynor <chris@firebase.com>
 firebaseapp.com
 
 // Flynn : https://flynn.io
-// Submitted by Jonathan Rudenberg <jonathan@flynn.io> 2014-07-12
+// Submitted by Jonathan Rudenberg <jonathan@flynn.io>
 flynnhub.com
 
 // GDS : https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains
-// Submitted by David Illsley <david.illsley@digital.cabinet-office.gov.uk> 2014-08-28
+// Submitted by David Illsley <david.illsley@digital.cabinet-office.gov.uk>
 service.gov.uk
 
 // GitHub, Inc.
-// Submitted by Ben Toews <btoews@github.com> 2014-02-06
+// Submitted by Patrick Toomey <security@github.com>
 github.io
 githubusercontent.com
+githubcloud.com
+*.api.githubcloud.com
+*.ext.githubcloud.com
+gist.githubcloud.com
+*.githubcloudusercontent.com
 
 // GlobeHosting, Inc.
-// Submitted by Zoltan Egresi <egresi@globehosting.com> 2013-07-12
+// Submitted by Zoltan Egresi <egresi@globehosting.com>
 ro.com
 
 // Google, Inc.
-// Submitted by Eduardo Vela <evn@google.com> 2014-12-19
+// Submitted by Eduardo Vela <evn@google.com>
 appspot.com
 blogspot.ae
 blogspot.al
@@ -11201,12 +11234,12 @@ withyoutube.com
 hashbang.sh
 
 // Heroku : https://www.heroku.com/
-// Submitted by Tom Maher <tmaher@heroku.com> 2013-05-02
+// Submitted by Tom Maher <tmaher@heroku.com>
 herokuapp.com
 herokussl.com
 
 // iki.fi
-// Submitted by Hannu Aronsson <haa@iki.fi> 2009-11-05
+// Submitted by Hannu Aronsson <haa@iki.fi>
 iki.fi
 
 // info.at : http://www.info.at/
@@ -11217,45 +11250,45 @@ info.at
 co.pl
 
 // Microsoft : http://microsoft.com
-// Submitted by Barry Dorrans <bdorrans@microsoft.com> 2014-01-24
+// Submitted by Barry Dorrans <bdorrans@microsoft.com>
 azurewebsites.net
 azure-mobile.net
 cloudapp.net
 
 // Mozilla Foundation : https://mozilla.org/
-// Submited by glob <glob@mozilla.com> 2015-07-06
+// Submitted by glob <glob@mozilla.com>
 bmoattachments.org
 
 // Neustar Inc.
-// Submitted by Trung Tran <Trung.Tran@neustar.biz> 2015-04-23
+// Submitted by Trung Tran <Trung.Tran@neustar.biz>
 4u.com
 
 // ngrok : https://ngrok.com/
-// Submitted by Alan Shreve <alan@ngrok.com> 2015-11-10
+// Submitted by Alan Shreve <alan@ngrok.com>
 ngrok.io
 
 // NFSN, Inc. : https://www.NearlyFreeSpeech.NET/
-// Submitted by Jeff Wheelhouse <support@nearlyfreespeech.net> 2014-02-02
+// Submitted by Jeff Wheelhouse <support@nearlyfreespeech.net>
 nfshost.com
 
 // NYC.mn : http://www.information.nyc.mn
-// Submitted by Matthew Brown <mattbrown@nyc.mn> 2013-03-11
+// Submitted by Matthew Brown <mattbrown@nyc.mn>
 nyc.mn
 
 // One Fold Media : http://www.onefoldmedia.com/
-// Submitted by Eddie Jones <eddie@onefoldmedia.com> 2014-06-10
+// Submitted by Eddie Jones <eddie@onefoldmedia.com>
 nid.io
 
 // Opera Software, A.S.A.
-// Submitted by Yngve Pettersen <yngve@opera.com> 2009-11-26
+// Submitted by Yngve Pettersen <yngve@opera.com>
 operaunite.com
 
 // OutSystems
-// Submitted by Duarte Santos <domain-admin@outsystemscloud.com> 2014-03-11
+// Submitted by Duarte Santos <domain-admin@outsystemscloud.com>
 outsystemscloud.com
 
 // Pagefront : https://www.pagefronthq.com/
-// Submitted by Jason Kriss <jason@pagefronthq.com> 2015-12-02
+// Submitted by Jason Kriss <jason@pagefronthq.com>
 pagefrontapp.com
 
 // .pl domains (grandfathered)
@@ -11267,49 +11300,49 @@ wroc.pl
 zakopane.pl
 
 // Pantheon Systems, Inc. : https://pantheon.io/
-// Submitted by Gary Dylina <gary@pantheon.io> 2015-09-14
+// Submitted by Gary Dylina <gary@pantheon.io>
 pantheon.io
 gotpantheon.com
 
 // prgmr.com : https://prgmr.com/
-// Changed by Sarah Newman <owner@prgmr.com>
+// Submitted by Sarah Newman <owner@prgmr.com>
 xen.prgmr.com
 
 // priv.at : http://www.nic.priv.at/
-// Submitted by registry <lendl@nic.at> 2008-06-09
+// Submitted by registry <lendl@nic.at>
 priv.at
 
 // QA2
-// Submitted by Daniel Dent (https://www.danieldent.com/) 2015-07-16
+// Submitted by Daniel Dent (https://www.danieldent.com/)
 qa2.com
 
 // Rackmaze LLC : https://www.rackmaze.com
-// Submitted by Kirill Pertsev <kika@rackmaze.com> 2015-12-02
+// Submitted by Kirill Pertsev <kika@rackmaze.com>
 rackmaze.com
 rackmaze.net
 
 // Red Hat, Inc. OpenShift : https://openshift.redhat.com/
-// Submitted by Tim Kramer <tkramer@rhcloud.com> 2012-10-24
+// Submitted by Tim Kramer <tkramer@rhcloud.com>
 rhcloud.com
 
 // Sandstorm Development Group, Inc. : https://sandcats.io/
-// Submitted by Asheesh Laroia <asheesh@sandstorm.io> 2015-07-21
+// Submitted by Asheesh Laroia <asheesh@sandstorm.io>
 sandcats.io
 
 // Service Online LLC : http://drs.ua/
-// Submitted by Serhii Bulakh <support@drs.ua> 2015-07-30
+// Submitted by Serhii Bulakh <support@drs.ua>
 biz.ua
 co.ua
 pp.ua
 
 // SinaAppEngine : http://sae.sina.com.cn/
-// Submitted by SinaAppEngine <saesupport@sinacloud.com> 2015-02-02
+// Submitted by SinaAppEngine <saesupport@sinacloud.com>
 sinaapp.com
 vipsinaapp.com
 1kapp.com
 
 // Synology, Inc. : https://www.synology.com/
-// Submitted by Rony Weng <ronyweng@synology.com> 2015-12-02
+// Submitted by Rony Weng <ronyweng@synology.com>
 diskstation.me
 dscloud.biz
 dscloud.me
@@ -11332,18 +11365,18 @@ med.pl
 sopot.pl
 
 // UDR Limited : http://www.udr.hk.com
-// Submitted by registry <hostmaster@udr.hk.com> 2014-11-07
+// Submitted by registry <hostmaster@udr.hk.com>
 hk.com
 hk.org
 ltd.hk
 inc.hk
 
 // Yola : https://www.yola.com/
-// Submitted by Stefano Rivera <stefano@yola.com> 2014-07-09
+// Submitted by Stefano Rivera <stefano@yola.com>
 yolasite.com
 
 // ZaNiC : http://www.za.net/
-// Submitted by registry <hostmaster@nic.za.net> 2009-10-03
+// Submitted by registry <hostmaster@nic.za.net>
 za.net
 za.org
 

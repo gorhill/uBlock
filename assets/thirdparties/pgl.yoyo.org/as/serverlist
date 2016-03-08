@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: https://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Tue, 26 Jan 2016 15:25:42 GMT
-# entries:        2443
+# last updated:   Mon, 22 Feb 2016 09:11:57 GMT
+# entries:        2431
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - https://pgl.yoyo.org/ - https://twitter.com/pgl
 # this URL:       https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -46,7 +46,6 @@
 127.0.0.1 a.sakh.com
 127.0.0.1 a.ucoz.net
 127.0.0.1 a.ucoz.ru
-127.0.0.1 a.wowinterface.com
 127.0.0.1 a.xanga.com
 127.0.0.1 a32.g.a.yimg.com
 127.0.0.1 aaddzz.com
@@ -71,7 +70,6 @@
 127.0.0.1 ad-souk.com
 127.0.0.1 ad-space.net
 127.0.0.1 ad-tech.com
-127.0.0.1 ad-universe.com
 127.0.0.1 ad-up.com
 127.0.0.1 ad.100.tbn.ru
 127.0.0.1 ad.103092804.com
@@ -152,6 +150,7 @@
 127.0.0.1 ad.smartclip.net
 127.0.0.1 ad.tbn.ru
 127.0.0.1 ad.technoratimedia.com
+127.0.0.1 ad.thewheelof.com
 127.0.0.1 ad.top50.to
 127.0.0.1 ad.turn.com
 127.0.0.1 ad.tv2.no
@@ -335,6 +334,7 @@
 127.0.0.1 adrolays.de
 127.0.0.1 adrotate.de
 127.0.0.1 adrotator.se
+127.0.0.1 ads-click.com
 127.0.0.1 ads.4tube.com
 127.0.0.1 ads.5ci.lt
 127.0.0.1 ads.abovetopsecret.com
@@ -474,7 +474,6 @@
 127.0.0.1 ads.globeandmail.com
 127.0.0.1 ads.gmodules.com
 127.0.0.1 ads.godlikeproductions.com
-127.0.0.1 ads.good.is
 127.0.0.1 ads.goyk.com
 127.0.0.1 ads.gplusmedia.com
 127.0.0.1 ads.gradfinder.com
@@ -499,7 +498,6 @@
 127.0.0.1 ads.ibest.com.br
 127.0.0.1 ads.ibryte.com
 127.0.0.1 ads.icq.com
-127.0.0.1 ads.iforex.com
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
@@ -602,6 +600,7 @@
 127.0.0.1 ads.s3.sitepoint.com
 127.0.0.1 ads.satyamonline.com
 127.0.0.1 ads.savannahnow.com
+127.0.0.1 ads.saymedia.com
 127.0.0.1 ads.scifi.com
 127.0.0.1 ads.seniorfriendfinder.com
 127.0.0.1 ads.sexinyourcity.com
@@ -739,7 +738,6 @@
 127.0.0.1 adserver.betandwin.de
 127.0.0.1 adserver.bing.com
 127.0.0.1 adserver.bizhat.com
-127.0.0.1 adserver.bluewin.ch
 127.0.0.1 adserver.break-even.it
 127.0.0.1 adserver.cams.com
 127.0.0.1 adserver.clashmusic.com
@@ -774,7 +772,6 @@
 127.0.0.1 adserver.sanomawsoy.fi
 127.0.0.1 adserver.sciflicks.com
 127.0.0.1 adserver.sharewareonline.com
-127.0.0.1 adserver.snowball.com
 127.0.0.1 adserver.spankaway.com
 127.0.0.1 adserver.startnow.com
 127.0.0.1 adserver.theonering.net
@@ -899,7 +896,6 @@
 127.0.0.1 adzerk.s3.amazonaws.com
 127.0.0.1 adzones.com
 127.0.0.1 af-ad.co.uk
-127.0.0.1 afbtracking09.com
 127.0.0.1 affbuzzads.com
 127.0.0.1 affili.net
 127.0.0.1 affiliate.1800flowers.com
@@ -988,6 +984,8 @@
 127.0.0.1 aylarl.com
 127.0.0.1 azfront.com
 127.0.0.1 b-1st.com
+127.0.0.1 b.aol.com
+127.0.0.1 b.engadget.com
 127.0.0.1 ba.afl.rakuten.co.jp
 127.0.0.1 babs.tv2.dk
 127.0.0.1 backbeatmedia.com
@@ -1190,7 +1188,6 @@
 127.0.0.1 cjlog.com
 127.0.0.1 claria.com
 127.0.0.1 class-act-clicks.com
-127.0.0.1 click-fr.com
 127.0.0.1 click.absoluteagency.com
 127.0.0.1 click.fool.com
 127.0.0.1 click.kmindex.ru
@@ -1204,7 +1201,6 @@
 127.0.0.1 clickbooth.com
 127.0.0.1 clickboothlnk.com
 127.0.0.1 clickbrokers.com
-127.0.0.1 clickchatsold.com
 127.0.0.1 clickcompare.co.uk
 127.0.0.1 clickdensity.com
 127.0.0.1 clickedyclick.com
@@ -1229,7 +1225,6 @@
 127.0.0.1 clickz.com
 127.0.0.1 clickzxc.com
 127.0.0.1 clicmanager.fr
-127.0.0.1 clictrafic.com
 127.0.0.1 clients.tbo.com
 127.0.0.1 clixgalore.com
 127.0.0.1 clkads.com
@@ -1306,7 +1301,6 @@
 127.0.0.1 cyberbounty.com
 127.0.0.1 cybermonitor.com
 127.0.0.1 d.adroll.com
-127.0.0.1 d1.openx.org
 127.0.0.1 dakic-ia-300.com
 127.0.0.1 danban.com
 127.0.0.1 dapper.net
@@ -1431,7 +1425,6 @@
 127.0.0.1 feedbackresearch.com
 127.0.0.1 feedjit.com
 127.0.0.1 ffxcam.fairfax.com.au
-127.0.0.1 filitrac.com
 127.0.0.1 fimc.net
 127.0.0.1 fimserve.com
 127.0.0.1 findcommerce.com
@@ -1450,7 +1443,6 @@
 127.0.0.1 fpctraffic.com
 127.0.0.1 fpctraffic2.com
 127.0.0.1 fragmentserv.iac-online.de
-127.0.0.1 free-banners.com
 127.0.0.1 freebanner.com
 127.0.0.1 freelogs.com
 127.0.0.1 freeonlineusers.com
@@ -1582,7 +1574,6 @@
 127.0.0.1 impressionz.co.uk
 127.0.0.1 imrworldwide.com
 127.0.0.1 inboxdollars.com
-127.0.0.1 inc.com
 127.0.0.1 incentaclick.com
 127.0.0.1 indexstats.com
 127.0.0.1 indieclick.com
@@ -1673,7 +1664,6 @@
 127.0.0.1 linktarget.com
 127.0.0.1 liquidad.narrowcastmedia.com
 127.0.0.1 liveintent.com
-127.0.0.1 liveinternet.ru
 127.0.0.1 liverail.com
 127.0.0.1 loading321.com
 127.0.0.1 log.btopenworld.com
@@ -1714,6 +1704,7 @@
 127.0.0.1 media.funpic.de
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
+127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamath.com
@@ -1864,7 +1855,6 @@
 127.0.0.1 p.adpdx.com
 127.0.0.1 pagead.l.google.com
 127.0.0.1 pagefair.com
-127.0.0.1 pagerank-estate-spb.ru
 127.0.0.1 pagerank-ranking.com
 127.0.0.1 pagerank-ranking.de
 127.0.0.1 pagerank-server7.de
@@ -1928,7 +1918,6 @@
 127.0.0.1 popuptraffic.com
 127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
-127.0.0.1 postmasterbannernet.com
 127.0.0.1 postrelease.com
 127.0.0.1 potenza.cz
 127.0.0.1 pr-star.de
@@ -1946,7 +1935,6 @@
 127.0.0.1 pro.i-doctor.co.kr
 127.0.0.1 proext.com
 127.0.0.1 profero.com
-127.0.0.1 professorbanner.com
 127.0.0.1 projectwonderful.com
 127.0.0.1 promo.badoink.com
 127.0.0.1 promo.ulust.com
@@ -1983,6 +1971,7 @@
 127.0.0.1 quinst.com
 127.0.0.1 quisma.com
 127.0.0.1 rad.msn.com
+127.0.0.1 radar.cedexis.com
 127.0.0.1 radarurl.com
 127.0.0.1 radiate.com
 127.0.0.1 rampidads.com
@@ -2343,7 +2332,6 @@
 127.0.0.1 visistat.com
 127.0.0.1 visit.webhosting.yahoo.com
 127.0.0.1 visitbox.de
-127.0.0.1 visitorprofiler.com
 127.0.0.1 visual-pagerank.fr
 127.0.0.1 visualrevenue.com
 127.0.0.1 voicefive.com
