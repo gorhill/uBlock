@@ -164,7 +164,7 @@ vAPI.messaging = {
         if ( this.port !== null ) {
             if ( this.channelCount !== 0 || this.pendingCount !== 0 ) {
                 this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
-                this.portTimerDelay = Math.min(this.portTimerDelay * 2, 3600000);
+                this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
                 return;
             }
         }
@@ -218,7 +218,7 @@ vAPI.messaging = {
             port.onDisconnect.addListener(this.disconnectListenerCallback);
         } catch (ex) {
         }
-        this.portTimerDelay = 15000;
+        this.portTimerDelay = 10000;
         if ( this.portTimer === null ) {
             this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
         }
