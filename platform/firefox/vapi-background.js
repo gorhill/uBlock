@@ -1970,16 +1970,20 @@ var httpObserver = {
     // Also:
     //   https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Limitations_of_chrome_scripts
     tabIdFromChannel: function(channel) {
-        var ncbs = channel.notificationCallbacks;
-        if ( !ncbs && channel.loadGroup ) {
-            ncbs = channel.loadGroup.notificationCallbacks;
-        }
-        if ( !ncbs ) { return vAPI.noTabId; }
         var lc;
         try {
-            lc = ncbs.getInterface(Ci.nsILoadContext);
-        } catch (ex) { }
-        if ( !lc ) { return vAPI.noTabId; }
+            lc = channel.notificationCallbacks.getInterface(Ci.nsILoadContext);
+        } catch(ex) {
+        }
+        if ( !lc ) {
+            try {
+                lc = channel.loadGroup.notificationCallbacks.getInterface(Ci.nsILoadContext);
+            } catch(ex) {
+            }
+            if ( !lc ) {
+                return vAPI.noTabId;
+            }
+        }
         if ( lc.topFrameElement ) {
             return tabWatcher.tabIdFromTarget(lc.topFrameElement);
         }
@@ -1987,7 +1991,9 @@ var httpObserver = {
         try {
             win = lc.associatedWindow;
         } catch (ex) { }
-        if ( !win ) { return vAPI.noTabId; }
+        if ( !win ) {
+            return vAPI.noTabId;
+        }
         if ( win.top ) {
             win = win.top;
         }
@@ -1999,7 +2005,9 @@ var httpObserver = {
                    .QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow)
             );
         } catch (ex) { }
-        if ( !tabBrowser ) { return vAPI.noTabId; }
+        if ( !tabBrowser ) {
+            return vAPI.noTabId;
+        }
         if ( tabBrowser.getBrowserForContentWindow ) {
             return tabWatcher.tabIdFromTarget(tabBrowser.getBrowserForContentWindow(win));
         }
