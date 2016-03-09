@@ -237,11 +237,9 @@ vAPI.messaging = {
         this.pending = Object.create(null);
         this.pendingCount = 0;
         for ( var auxId in pending ) {
-            if ( this.pending.hasOwnProperty(auxId) ) {
-                callback = pending[auxId];
-                if ( typeof callback === 'function' ) {
-                    callback(null);
-                }
+            callback = pending[auxId];
+            if ( typeof callback === 'function' ) {
+                callback(null);
             }
         }
     },
