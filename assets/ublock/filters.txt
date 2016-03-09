@@ -236,6 +236,7 @@ skystreaming.net###fanback + style + div[id]
 
 # Yavli ads
 activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,aplus.com,bizpacreview.com,boredpanda.com,breathecast.com,bulletsfirst.net,cheatsheet.com,clashdaily.com,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,cowboybyte.com,crossmap.com,dailysurge.com,dccrimestories.com,dilbert.com,drhotze.com,eaglerising.com,explosm.net,flexonline.com,genfringe.com,girlsjustwannahaveguns.com,hellou.co.uk,instigatornews.com,joeforamerica.com,latinpost.com,libertyunyielding.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,reverbpress.com,reviveusa.com,rightwingnews.com,segmentnext.com,shark-tank.com,sportsmole.co.uk,theblacksphere.net,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,traileraddict.com,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com,viralthread.com##script:inject(yavli-defuser.js)
+activistpost.com##script:inject(setTimeout-defuser)
 
 # https://github.com/gorhill/uBlock/issues/1094
 extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.com,youporngay.com##script:inject(pornhub-popup-defuser.js)
