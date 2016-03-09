@@ -745,3 +745,61 @@ setTimeout-defuser application/javascript
 		return 1;
 	};
 })();
+
+
+# Completely experimental: load Disqus on demand only. Purpose is to avoid
+# connecting to Disqus' servers, unless the user explicitly asks for the
+# comments to be loaded.
+# Works with following filters:
+# ||disqus.com/forums/*/embed.js$script,redirect=disqus.com/forums/*/embed.js
+# ||disqus.com/embed.js$script,redirect=disqus.com/embed.js
+# ||disqus.com/count.js$script
+# @@||disqus.com/embed.js?_=1457540*$script
+# If you want a site you regularly visit to always have the comment loaded,
+# just use an exception static filter. Example for wired.com:
+# @@||wired.disqus.com/embed.js
+
+# Sometimes a site will use this one script:
+disqus.com/forums/*/embed.js application/javascript
+(function() {
+    var ee = document.getElementsByTagName('script');
+    var i = ee.length, src;
+    while ( i-- ) {
+        src = ee[i].src || '';
+        if ( src === '' ) {
+            continue;
+        }
+        if ( src.lastIndexOf('disqus.com/embed.js') === (src.length - 19) ) {
+            return;
+        }
+    }
+    var e = document.createElement('script');
+    e.async = true;
+    e.src = '//' + window.disqus_shortname + '.disqus.com/embed.js';
+    document.body.appendChild(e);
+})();
+
+# Most use this one though:
+disqus.com/embed.js application/javascript
+(function() {
+    var p = document.getElementById(window.disqus_container_id || 'disqus_thread');
+    if ( p === null ) {
+        return;
+    }
+    var b = document.createElement('button');
+    b.textContent = 'Disqus blocked by uBlock Origin: click to unblock';
+    b.type = 'button';
+    p.appendChild(b);
+    var loadDisqus = function(ev) {
+        b.removeEventListener('click', loadDisqus);
+        p.removeChild(b);
+        var script = document.createElement('script');
+        script.async = true;
+        var t = Date.now().toString();
+        script.src = '//' + window.disqus_shortname + '.disqus.com/embed.js?_=1457540' + t.slice(-6);
+        document.body.appendChild(script);
+        ev.preventDefault();
+        ev.stopPropagation();
+    };
+    b.addEventListener('click', loadDisqus);
+})();

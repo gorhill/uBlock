@@ -331,3 +331,6 @@ tweaktown.com###background_skin
 # https://github.com/gorhill/uBlock/issues/1449
 # Computers seizing thanks to this moronic script
 ||twnmm.com/js/*/adobe_audience_manager$script
+
+# https://twitter.com/DThibaut67/status/707624770653843456
+||connectormwi.laterpay.net/*/app-de-de.js$script,domain=sport1.de
