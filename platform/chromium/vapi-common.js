@@ -81,7 +81,7 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 
 vAPI.confirm = (function() {                                
     return function(msg) {
-        window.confirm(msg);
+        return window.confirm(msg);
     };
 })();
 
