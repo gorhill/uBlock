@@ -5,13 +5,19 @@
 # git fetch upstream
 # git merge upstream/master
 
-changed files inside src/js:
+* changed files inside src/js:
 
   src/js/traffic.js (disable-blocking)
   src/js/contentscript-end.js (ad-detection)
   src/js/background.js (added settings)
 
-changed files inside src/: (html)
+
+* changed files inside src/js/scriptlets:
+
+  subscriber.js (window.confirm() replaced with vAPI.confirm())
+
+
+* changed files inside src/: (html)
 
   src/background.html (added adn files)
   src/dashboard.html (added adn tabs)
@@ -19,18 +25,20 @@ changed files inside src/: (html)
   src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
 
-changed files inside platform/: 
+
+* changed files inside platform/: 
 
   platform/firefox/vapi-background.js
 
 
-changed files inside _locales/: (locale)
+* changed files inside _locales/: (locale)
 
   src/_locales/en/messages.json     (added ADN locale)
   src/_locales/zh_CN/messages.json  (added ADN locale)
   src/_locales/zh_TW/messages.json  (added ADN locale)
 
-added files inside src:
+
+* added files inside src:
 
   adn-popup.html
   adn-vault.html
@@ -65,37 +73,83 @@ added files inside src:
     bebasneue_regular-webfont.woff2
     stylesheet.css
 
-changed files inside src/_locale (localization)
 
-added files inside platform/chromium/img/browsericons/adn
+* changed files inside src/_locale (localization)
+
+  src/_locales/en/messages.json     (added ADN locale)
+  src/_locales/zh_CN/messages.json  (added ADN locale)
+  src/_locales/zh_TW/messages.json  (added ADN locale)
+
+
+* added files inside platform/chromium/img/browsericons/adn
 
   icon19.png
   icon19-off.png
   icon38.png
   icon38-off.png
 
-added files inside platform/firefox/img/browsericons/adn
+
+* added files inside platform/firefox/img/browsericons/adn
 
   icon16.svg
   icon16-off.svg
   icon24.svg
   icon24-off.svg
+  
 
-changed files inside platform/chromium:
+* added files inside tools/
+
+  adnauseam-changes.txt
+  make-chromium-adn.sh
+  make-firefox-adn.sh
+  make-firefox-meta-adn.py
+  make-opera-adn.sh
+  make-safari-adn.sh
+  make-safari-meta-adn.py
+  
+
+* added files inside tools/adn/chromium
+
+  manifest.json
+  
+
+* added files inside tools/adn/opera
+
+  manifest.json
+  
+
+* added files inside tools/adn/safari
+
+  Info.plist
+  Settings.plist
+  Update.plist
+
+
+* changed files inside platform/chromium:
+
   platform/chromium/manifest.json
   platform/chromium/vapi-background.js
     (icons, line 554)
+  platform/chromium/vapi-common.js
+    (line 82, added vAPI.confirm())
 
-changed files inside platform/firefox:
+
+* changed files inside platform/firefox:
+
   platform/firefox/vapi-background.js
     (menu, line 2472,2531)
-  platform/firefox/css/legacy-toolbar-button.css
-    (icons, line 2, 5, 9, 12, 33)
   platform/firefox/vapi-background.js
     (icons, line 3005, 3010, 3176, 3186)
+  platform/firefox/css/legacy-toolbar-button.css
+    (icons, line 2, 5, 9, 12, 33)
+  platform/firefox/vapi-common.js
+    (line 121, added vAPI.confirm())
 
-changed files inside platform/opera:
 
-changed files inside platform/safari:
+* changed files inside platform/safari:
+
   platform/safari/vapi-background.js
     (icons, line 547)
+
+
+* changed files inside platform/opera:

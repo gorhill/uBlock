@@ -16,7 +16,7 @@ var messager = vAPI.messaging.channel('settings.js'),
 function handleImportFilePicker(evt) {
 
     var msg = vAPI.i18n('adnImportConfirm');
-    var proceed = window.confirm(msg);
+    var proceed = vAPI.confirm(msg);
     if ( proceed ) {
 
       var files = evt.target.files;
@@ -62,7 +62,7 @@ var handleImportFilePickerX = function() {
             return;
         }
         var msg = vAPI.i18n('adnImportConfirm');
-        var proceed = window.confirm(msg);
+        var proceed = vAPI.confirm(msg);
         if ( proceed ) {
             adnmessager.send({
                 what: 'importAds',
@@ -142,8 +142,9 @@ var onLocalDataReceived = function(details) {
 /******************************************************************************/
 
 var clearAds = function() {
+                                  
     var msg = vAPI.i18n('adnClearConfirm');
-    var proceed = window.confirm(msg);
+    var proceed = vAPI.confirm(msg);
     if ( proceed ) {
         adnmessager.send({ what: 'clearAds' });
     }
