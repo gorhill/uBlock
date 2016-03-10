@@ -120,7 +120,7 @@ setScriptDirection(navigator.language);
 
 vAPI.confirm = (function() {                                
     return function(msg) {
-        Services.prompt.confirm(null, "AdNauseam", msg);
+        return Services.prompt.confirm(null, "AdNauseam", msg);
     };
 })();
 
