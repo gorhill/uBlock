@@ -207,8 +207,23 @@
     }, onDataReceived);
   };
 
-  var adnmessager = vAPI.messaging.channel('adnauseam');
   var messager = vAPI.messaging.channel('popup.js');
+  var adnmessager = vAPI.messaging.channel('adnauseam');
+
+  adnmessager.addListener(function (request) {
+    console.log("GOT BROADCAST", msg);
+    // switch (request.what) {
+    // case 'adAttempt':
+    //   setCurrent(request.ad);
+    //   break;
+    // case 'adDetected':
+    //   gAds.push(request.ad);
+    //   createSlider(true);
+    //   break;
+    // case 'adVisited':
+    //   break;
+    // }
+  });
 
   /******************************************************************************/
   var cachedPopupHash = '';

@@ -44,7 +44,8 @@
   var initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
-    var XMLHttpRequest_open = XMLHttpRequest.prototype.open, ads;
+    var XMLHttpRequest_open = XMLHttpRequest.prototype.open,
+      ads;
     XMLHttpRequest.prototype.open = function (method, url) {
       this.delegate = null; // store ad here
       this.requestUrl = url; // store original target
@@ -56,7 +57,9 @@
 
     // compute the highest id in the admap
     idgen = Math.max(0, (Math.max.apply(Math,
-      ads.map(function (ad) { return ad.id; }))));
+      ads.map(function (ad) {
+        return ad.id;
+      }))));
 
     initialized = +new Date();
 
@@ -80,9 +83,8 @@
       // if an unvisited ad is being inspected, visit it next
       if (visitPending(inspected)) {
 
-         next = inspected;
-      }
-      else {
+        next = inspected;
+      } else {
 
         // else take the most recent ad needing a visit
         next = pending.sort(byField('-foundTs'))[0];
@@ -114,38 +116,39 @@
     return ad && ad.attempts < maxAttemptsPerAd && ad.visitedTs <= 0;
   }
 
-  var getVaultTabId = function() {
+  var getVaultTabId = function () {
 
-      var menuUrl = vAPI.getURL('adn-vault.html');
-      for ( var tabId in µb.pageStores ) {
-          var pageStore = µb.pageStoreFromTabId(tabId);
-          if ( pageStore !== null && pageStore.rawURL.startsWith(menuUrl) ) {
-              return tabId;
-          }
+    var menuUrl = vAPI.getURL('adn-vault.html');
+    for (var tabId in µb.pageStores) {
+      var pageStore = µb.pageStoreFromTabId(tabId);
+      if (pageStore !== null && pageStore.rawURL.startsWith(menuUrl)) {
+        return tabId;
       }
+    }
   }
 
   var updateAdOnFailure = function (xhr, e) {
 
-      var ad = xhr.delegate;
+    var ad = xhr.delegate;
 
-      if (ad) {
+    if (ad) {
 
-          // update the ad
-          ad.visitedTs = -1 * millis();
-          if (!ad.errors) ad.errors = [];
-          ad.errors.push(xhr.status + ' ('
-            + xhr.statusText + ')' + (e ? ' ' + e : ''));
+      // update the ad
+      ad.visitedTs = -1 * millis();
+      if (!ad.errors) ad.errors = [];
+      ad.errors.push(xhr.status + ' (' + xhr.statusText + ')' + (e ? ' ' + e : ''));
 
-          if (ad.attempts >= maxAttemptsPerAd) {
-            console.log('GIVEUP: ' + adinfo(ad)); // this);
-          }
-
-          sendToMenuAndVault({ what: 'adVisited', ad: ad });
+      if (ad.attempts >= maxAttemptsPerAd) {
+        console.log('GIVEUP: ' + adinfo(ad)); // this);
       }
-      else {
-          console.error("NO AD IN updateAdOnFailure()");
-      }
+
+      sendToUI({
+        what: 'adVisited',
+        ad: ad
+      });
+    } else {
+      console.error("NO AD IN updateAdOnFailure()");
+    }
   }
 
   var updateAdOnSuccess = function (xhr, ad) {
@@ -154,24 +157,27 @@
 
     if (ad) {
 
-        var title = xhr.responseText.match(/<title[^>]*>([^<]+)<\/title>/i);
-        if (title && title.length > 1) {
-          ad.title = unescapeHTML(title[1].trim());
-        } else {
-          console.warn('Unable to parse title from: ' + html);
-        }
+      var title = xhr.responseText.match(/<title[^>]*>([^<]+)<\/title>/i);
+      if (title && title.length > 1) {
+        ad.title = unescapeHTML(title[1].trim());
+      } else {
+        console.warn('Unable to parse title from: ' + html);
+      }
 
-        ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
-        ad.visitedTs = millis(); // successful visit time
+      ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
+      ad.visitedTs = millis(); // successful visit time
 
-        // TODO: send a message to vault/menu here
-        sendToMenuAndVault({ what: 'adVisited', ad: ad });
+      // TODO: send a message to vault/menu here
+      sendToUI({
+        what: 'adVisited',
+        ad: ad
+      });
 
-        if (ad === inspected) {
-            inspected = null;
-        }
+      if (ad === inspected) {
+        inspected = null;
+      }
 
-        console.log('VISITED: ' + adinfo(ad)); // this);
+      console.log('VISITED: ' + adinfo(ad)); // this);
     }
 
     storeUserData();
@@ -179,35 +185,35 @@
 
   // returns the current active visit attempt or null
   var activeVisit = function () {
-      return xhr ? xhr.delegate : null;
+    return xhr ? xhr.delegate : null;
   }
 
   var onVisitError = function (e) {
 
-      this.onload = this.onerror = this.ontimeout = null;
+    this.onload = this.onerror = this.ontimeout = null;
 
-      markActivity();
+    markActivity();
 
-      // Is it a timeout?
-      if (e.type === 'timeout') {
+    // Is it a timeout?
+    if (e.type === 'timeout') {
 
-        console.warn('TIMEOUT: visiting ' + this.requestUrl + ' / ' + this.responseURL);
+      console.warn('TIMEOUT: visiting ' + this.requestUrl + ' / ' + this.responseURL);
 
-      } else {
+    } else {
 
-        // or some other error?
-        console.error('onVisitError()', e, this);
-      }
+      // or some other error?
+      console.error('onVisitError()', e, this);
+    }
 
-      if (!this.delegate) {
+    if (!this.delegate) {
 
-        console.error('Request received without Ad: ' + this.responseUrl);
-        return;
-      }
+      console.error('Request received without Ad: ' + this.responseUrl);
+      return;
+    }
 
-      updateAdOnFailure(this, e);
+    updateAdOnFailure(this, e);
 
-      xhr = null; // end the visit
+    xhr = null; // end the visit
   };
 
   var onVisitResponse = function () {
@@ -251,17 +257,14 @@
     var url = ad.targetUrl,
       now = markActivity();
 
-    //if (ad.attempts == maxAttemptsPerAd) return false;// double-check
-
-    // TODO: tell menu/vault we have a new 'current' attempt
-    //UIManager.updateOnAdAttempt(next);
-    sendToMenuAndVault({ what: 'adAttempt', ad: ad });
+    // tell menu/vault we have a new attempt
+    sendToUI({ what: 'adAttempt', ad: ad });
 
     if (xhr) {
 
       if (!xhr.delegate.attemptedTs) {
-          console.log(xhr);
-          throw Error('Invalid state: ', xhr);
+        console.log(xhr);
+        throw Error('Invalid state: ', xhr);
       }
 
       var elapsed = (now - xhr.delegate.attemptedTs);
@@ -270,7 +273,9 @@
 
       if (elapsed > visitTimeout) {
 
-        return onVisitError.call(xhr, { type: 'timeout' });
+        return onVisitError.call(xhr, {
+          type: 'timeout'
+        });
       }
     }
 
@@ -282,31 +287,33 @@
       return;
     }
 
-    xhr = new XMLHttpRequest(); // store one of these?
+    console.log('TRYING: ' + adinfo(ad));
 
-    //visitmap[url] = ad; // legacy
-
-
-    console.log('TRYING: ' + adinfo(ad)); // this);
-
-
-
-    try {
-
-      xhr.open('get', url, true);
-      xhr.delegate = ad;
-      xhr.timeout = visitTimeout;
-      xhr.onload = onVisitResponse;
-      xhr.onerror = onVisitError;
-      xhr.ontimeout = onVisitError;
-      xhr.responseType = ''; // 'document'?;
-      xhr.send();
-
-    } catch (e) {
-
-      onVisitError.call(xhr, e);
-    }
+    setTimeout(function(){ sendXhr(url, ad); }, 3000);
   };
+
+  var sendXhr = function(url, ad) {
+
+      console.log('sendXhr('+url+')');
+
+      xhr = new XMLHttpRequest();
+
+      try {
+
+        xhr.open('get', url, true);
+        xhr.delegate = ad;
+        xhr.timeout = visitTimeout;
+        xhr.onload = onVisitResponse;
+        xhr.onerror = onVisitError;
+        xhr.ontimeout = onVisitError;
+        xhr.responseType = ''; // 'document'?;
+        xhr.send();
+
+      } catch (e) {
+
+        onVisitError.call(xhr, e);
+      }
+  }
 
   var storeUserData = function (immediate) {
 
@@ -335,9 +342,9 @@
 
     ad.title = unescapeHTML(ad.title); // fix to #31
     if (typeof ad.contentData.title !== 'undefined')
-        ad.contentData.title = unescapeHTML(ad.contentData.title);
+      ad.contentData.title = unescapeHTML(ad.contentData.title);
     if (typeof ad.contentData.text !== 'undefined')
-        ad.contentData.text = unescapeHTML(ad.contentData.text);
+      ad.contentData.text = unescapeHTML(ad.contentData.text);
   }
 
   var clearAdmap = function () {
@@ -379,34 +386,34 @@
 
   var unescapeHTML = function (s) { // hack
 
-      var entities = [
-          '#39', '\'',
-          'apos', '\'',
-          'amp', '&',
-          'lt', '<',
-          'gt', '>',
-          'quot', '"',
-          '#x27', '\'',
-          '#x60', '`'
-      ];
-      for (var i = 0; i < entities.length; i+=2)
-          s = s.replace(new RegExp('&'+entities[i]+';', 'g'), entities[i+1]);
-      return s;
+    var entities = [
+      '#39', '\'',
+      'apos', '\'',
+      'amp', '&',
+      'lt', '<',
+      'gt', '>',
+      'quot', '"',
+      '#x27', '\'',
+      '#x60', '`'
+    ];
+    for (var i = 0; i < entities.length; i += 2)
+      s = s.replace(new RegExp('&' + entities[i] + ';', 'g'), entities[i + 1]);
+    return s;
   }
 
   var adById = function (id) {
-      var list = adlist();
-      for (var i = 0; i < list.length; i++) {
-          if (list[i].id === id)
-            return list[i];
-      }
+    var list = adlist();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id)
+        return list[i];
+    }
   }
 
   var deleteAd = function (id) {
 
-      var ad = adById(id);
-      delete admap[ ad.pageUrl ][ computeHash(ad) ];
-      storeUserData();
+    var ad = adById(id);
+    delete admap[ad.pageUrl][computeHash(ad)];
+    storeUserData();
   }
 
   /******************************* API ************************************/
@@ -486,13 +493,13 @@
 
       if (current !== data[0]) {
 
-          //console.log("Re-ordering menu list");
-          var idx = -1;
-          for (var i = 0; i < data.length; i++) {
-            if (current.id === data[i].id) idx = i;
-          }
-          if (idx >= 0) data.splice(idx, 1);
-          data.unshift(current);
+        //console.log("Re-ordering menu list");
+        var idx = -1;
+        for (var i = 0; i < data.length; i++) {
+          if (current.id === data[i].id) idx = i;
+        }
+        if (idx >= 0) data.splice(idx, 1);
+        data.unshift(current);
       }
       //console.log('CURRENT', '#' + current.id, data);
     }
@@ -504,34 +511,34 @@
     };
   }
 
-  var itemInspected = function(request, pageStore, tabId) {
-      if (request.id) {
-          var ad = adById(request.id)
-          inspected = ad;
-      }
+  var itemInspected = function (request, pageStore, tabId) {
+    if (request.id) {
+      var ad = adById(request.id)
+      inspected = ad;
+    }
   }
 
   var deleteAdset = function (request, pageStore, tabId) {
 
-      for (var j = 0; j < request.ids.length; j++) {
-          deleteAd(request.ids[j]);
-      }
+    for (var j = 0; j < request.ids.length; j++) {
+      deleteAd(request.ids[j]);
+    }
   }
 
-  var sendToMenuAndVault = function (details) {
+  var sendToUI = function (details) {
 
-      // WORKING HERE!!
+    // WORKING HERE!!
+    vAPI.messaging.broadcast(details);
+    // var tabId = getVaultTabId();
+    // if (tabId) {
+    //   console.log('core::send->vault:' + details.what);
+    //   vAPI.messaging.broadcast(details);
+    // }
 
-      var tabId = getVaultTabId();
-      if (tabId) {
-          console.log('core::send->vault:'+details.what);
-          vAPI.messaging.broadcast(details);
-      }
-
-      /* if (menuIsOpen) {
-        console.log('core::send->menu:'+details.what);
-        vAPI.messaging.broadcast(details);
-      }*/
+    /* if (menuIsOpen) {
+      console.log('core::send->menu:'+details.what);
+      vAPI.messaging.broadcast(details);
+    }*/
   }
 
   var registerAd = function (request, pageStore, tabId) {
@@ -566,19 +573,22 @@
     ad.domain = pageDomain;
     ad.pageUrl = pageUrl;
 
-      // this will overwrite an older ad with the same key
-      adsOnPage[adhash] = ad;
+    // this will overwrite an older ad with the same key
+    adsOnPage[adhash] = ad;
 
-      // if vault or menu is open, send this new ad
-      sendToMenuAndVault({ what: 'adDetected', ad: ad });
+    // if vault or menu is open, send this new ad
+    sendToUI({
+      what: 'adDetected',
+      ad: ad
+    });
 
-      console.log('DETECTED: ' + adinfo(ad), ad);
+    console.log('DETECTED: ' + adinfo(ad), ad);
 
-      if ( µb.userSettings.showIconBadge ) {
-          µb.updateBadgeAsync(tabId);
-      }
+    if (µb.userSettings.showIconBadge) {
+      µb.updateBadgeAsync(tabId);
+    }
 
-      storeUserData();
+    storeUserData();
   };
 
   //vAPI.storage.clear();
@@ -640,7 +650,9 @@
 
   vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
 
-    switch (request.what) { default: break; } // Async
+    switch (request.what) {
+      default: break;
+    } // Async
 
     var pageStore, tabId;
 
