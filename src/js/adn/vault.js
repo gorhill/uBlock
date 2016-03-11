@@ -7,20 +7,23 @@
   'use strict';
 
   var messager = vAPI.messaging.channel('adnauseam');
+
   messager.addListener(function (request) {
-    console.log("GOT BROADCAST", msg);
+    console.log("GOT BROADCAST", request);
     switch (request.what) {
     case 'adAttempt':
       setCurrent(request.ad);
       break;
     case 'adDetected':
-      gAds.push(request.ad);
-      createSlider(true);
+      //  TODO: add to edge of pack
+      console.log('ad-detected');
       break;
     case 'adVisited':
+      updateAd(request);
       break;
     }
   });
+
   //console.log(messager, Object.keys(messager), messager.send);
 
   const logoURL = 'http://dhowe.github.io/AdNauseam/',
@@ -75,7 +78,7 @@
 
   /********************************************************************/
 
-  var renderAds = function (json) {
+  var renderAds = function(json) {
 
     gAds = json.data; // store
 
@@ -88,19 +91,18 @@
 
   function updateAd(json) {
 
-    doUpdate(json.update);
+    console.log('updateAd: ', json);
 
+    doUpdate(json.ad);
     setAttempting(json.current);
-
     computeStats(gAdSets);
   }
 
-  function setAttempting(current) {
+  function setAttempting(ad) {
 
-    if (!current) return;
+    if (!ad) return;
 
-    var groupInfo = findAdById(current.id),
-      $item;
+    var groupInfo = findAdById(ad.id), $item;
 
     if (groupInfo) {
 
@@ -110,11 +112,6 @@
       $item && $item.addClass('attempting');
     }
   }
-
-  // function setCurrentById(id){
-  //     console.log('setCurrentById('+id+')');
-  //     setCurrent(findAdById(current.id));
-  // }
 
   function setCurrent(ad) {
 
@@ -823,17 +820,17 @@
 
       var next = selectedAdSet.nextPending(); // tell the addon
 
-      if (next) // self.port.emit("item-inspected", { "id": next.id });
-        messager.send({
-        what: 'itemInspected',
-        id: next.id
-      }, function () {});
+      if (next) {
+
+        messager.send({ what: 'itemInspected', id: next.id }, function () {});
+      }
 
       centerZoom($selected);
 
       $('#container').addClass('lightbox');
 
-    } else if ($('#container').hasClass('lightbox')) {
+    }
+    else if ($('#container').hasClass('lightbox')) {
 
       var $item = $('.item.inspected');
 

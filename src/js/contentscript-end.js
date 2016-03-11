@@ -102,16 +102,16 @@ var adDetector = (function() {
   var Ad = function(network, pageTitle, pageUrl, targetUrl, contentType) {
 
     this.id = null;
-    this.title = 'Pending';
     this.attempts = 0;
-    this.foundTs = +new Date();
-    this.visitedTs = 0; // 0=unvisited, -timestamp=error, timestamp=ok
+    this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
     this.attemptedTs = 0;
+    this.title = 'Pending';
+    this.foundTs = +new Date();
+    this.resolvedTargetUrl = null;
     this.contentType = contentType;
     this.targetUrl = targetUrl;
     this.pageTitle = pageTitle;
     this.pageUrl = pageUrl;
-    this.resolvedTargetUrl = null;
     this.errors = null;
   };
 

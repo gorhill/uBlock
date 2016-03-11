@@ -25,7 +25,9 @@
     admap = {},
     idgen = 0,
     initialized = 0,
+    autoFailMode = 1,
     lastActivity = 0,
+    loadAdsOnInit = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 10000,
@@ -44,15 +46,15 @@
   var initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
-    var XMLHttpRequest_open = XMLHttpRequest.prototype.open,
-      ads;
+    var ads, XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+
     XMLHttpRequest.prototype.open = function (method, url) {
       this.delegate = null; // store ad here
       this.requestUrl = url; // store original target
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-    admap = (settings && settings.admap) || {};
+    admap = (settings && loadAdsOnInit && settings.admap) || {};
     ads = adlist();
 
     // compute the highest id in the admap
@@ -142,12 +144,11 @@
         console.log('GIVEUP: ' + adinfo(ad)); // this);
       }
 
-      sendToUI({
-        what: 'adVisited',
-        ad: ad
-      });
+      vAPI.messaging.broadcast({ what: 'adVisited', ad: ad });
+
     } else {
-      console.error("NO AD IN updateAdOnFailure()");
+
+      console.error("NO AD in updateAdOnFailure()");
     }
   }
 
@@ -167,11 +168,7 @@
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
 
-      // TODO: send a message to vault/menu here
-      sendToUI({
-        what: 'adVisited',
-        ad: ad
-      });
+      vAPI.messaging.broadcast({ what: 'adVisited', ad: ad });
 
       if (ad === inspected) {
         inspected = null;
@@ -184,8 +181,11 @@
   }
 
   // returns the current active visit attempt or null
-  var activeVisit = function () {
-    return xhr ? xhr.delegate : null;
+  var activeVisit = function (pageUrl) {
+    if (xhr && xhr.delegate) {
+      if (!pageUrl || xhr.delegate === pageUrl)
+        return xhr.delegate;
+    }
   }
 
   var onVisitError = function (e) {
@@ -239,7 +239,7 @@
     var status = this.status || 200,
       html = this.responseText;
 
-    if (status < 200 || status >= 300 || !stringNotEmpty(html)) {
+    if (autoFailMode || status < 200 || status >= 300 || !stringNotEmpty(html)) {
 
       return onVisitError.call(this, {
         status: status,
@@ -258,7 +258,7 @@
       now = markActivity();
 
     // tell menu/vault we have a new attempt
-    sendToUI({ what: 'adAttempt', ad: ad });
+    vAPI.messaging.broadcast({ what: 'adAttempt', ad: ad });
 
     if (xhr) {
 
@@ -289,12 +289,12 @@
 
     console.log('TRYING: ' + adinfo(ad));
 
-    setTimeout(function(){ sendXhr(url, ad); }, 3000);
+    sendXhr(url, ad);
   };
 
   var sendXhr = function(url, ad) {
 
-      console.log('sendXhr('+url+')');
+      //console.log('sendXhr('+url+')');
 
       xhr = new XMLHttpRequest();
 
@@ -411,9 +411,13 @@
 
   var deleteAd = function (id) {
 
+    console.log('deleteAd: id#'+ id+" pre-total: "+adlist().length);
+
     var ad = adById(id);
-    delete admap[ad.pageUrl][computeHash(ad)];
+    ad && delete admap[ad.pageUrl][computeHash(ad)];
     storeUserData();
+
+    console.log('             post-total: '+adlist().length);
   }
 
   /******************************* API ************************************/
@@ -428,7 +432,7 @@
 
   // returns all ads for a page, or all pages, if page arg is null
   // called from µb.updateBadgeAsync()
-  // TODO: memoize
+  // TODO: memoize?
   var adlist = function (pageUrl) {
 
     var result = [],
@@ -452,6 +456,7 @@
     clearAds();
     admap = request.data;
     storeUserData();
+
     console.log('AdNauseam.import: ' + adlist().length + ' ads from ' + request.file);
   }
 
@@ -477,38 +482,52 @@
     };
   }
 
-  var adsForMenu = function (request, pageStore, tabId) {
+  var adsForMenu = function(request, pageStore, tabId) {
 
     var reqPageStore = request.tabId && µb.pageStoreFromTabId(request.tabId) || pageStore;
 
     if (!reqPageStore)
       throw Error('No pageStore found!', request, pageStore, tabId);
 
-    var pageUrl = reqPageStore.rawURL,
-      current = activeVisit(),
-      data = menuAds(pageUrl);
+    var pageUrl = reqPageStore.rawURL, data = menuAds(pageUrl);
 
-    // make sure current ad is at top (do we need this?)
-    if (current && current.pageUrl === pageUrl) {
+    var current = reorder(data, pageUrl);
+    //var data = adlist();
 
-      if (current !== data[0]) {
+    var res = {
 
-        //console.log("Re-ordering menu list");
-        var idx = -1;
-        for (var i = 0; i < data.length; i++) {
-          if (current.id === data[i].id) idx = i;
-        }
-        if (idx >= 0) data.splice(idx, 1);
-        data.unshift(current);
+      data: data,
+      pageUrl: pageUrl,
+      total: adlist().length,
+      current: current
+    };
+
+    console.log('adsForMenu: '+res.data.length+','+res.total);
+
+    return res;
+  }
+
+  var reorder = function (data, pageUrl) { // do we need this at all?
+
+    var current = activeVisit(pageUrl);
+
+    // make sure current ad is at top
+    if (current && current !== data[0]) {
+
+      //console.log("Re-ordering menu list");
+      var idx = -1;
+
+      for (var i = 0; i < data.length; i++) {
+        if (current.id === data[i].id) idx = i;
       }
+
+      if (idx >= 0) data.splice(idx, 1);
+
+      data.unshift(current);
       //console.log('CURRENT', '#' + current.id, data);
     }
 
-    return {
-      data: data,
-      current: current,
-      total: adlist().length
-    };
+    return current;
   }
 
   var itemInspected = function (request, pageStore, tabId) {
@@ -523,22 +542,6 @@
     for (var j = 0; j < request.ids.length; j++) {
       deleteAd(request.ids[j]);
     }
-  }
-
-  var sendToUI = function (details) {
-
-    // WORKING HERE!!
-    vAPI.messaging.broadcast(details);
-    // var tabId = getVaultTabId();
-    // if (tabId) {
-    //   console.log('core::send->vault:' + details.what);
-    //   vAPI.messaging.broadcast(details);
-    // }
-
-    /* if (menuIsOpen) {
-      console.log('core::send->menu:'+details.what);
-      vAPI.messaging.broadcast(details);
-    }*/
   }
 
   var registerAd = function (request, pageStore, tabId) {
@@ -577,10 +580,11 @@
     adsOnPage[adhash] = ad;
 
     // if vault or menu is open, send this new ad
-    sendToUI({
-      what: 'adDetected',
-      ad: ad
-    });
+    var json = adsForMenu(request, pageStore, tabId);
+    json.what = 'adDetected';
+    json.ad = ad;
+
+    vAPI.messaging.broadcast(json);
 
     console.log('DETECTED: ' + adinfo(ad), ad);
 
@@ -638,7 +642,7 @@
   return function (tabId) {
 
     if (tabIdToTimer[tabId] || vAPI.isBehindTheSceneTabId(tabId)) return;
-    tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 666);
+    tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 665);
   };
 })();
 

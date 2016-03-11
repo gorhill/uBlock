@@ -5,11 +5,37 @@
 
   'use strict';
 
+  var messenger = vAPI.messaging.channel('adnauseam'),
+    ubmessenger = vAPI.messaging.channel('popup.js'),
+    pageUrl; // the page the menu was opened on ?
+
+  messenger.addListener(function (request) {
+
+    //console.log("menu.Message:", request.what, request);
+
+    switch (request.what) {
+
+    case 'adAttempt':
+      setAttempting(request.ad);
+      break;
+
+    case 'adDetected':
+      renderPage(request);  // for now, just re-render everything
+      break;
+
+    case 'adVisited':
+      updateAdClass(request.ad);
+      break;
+    }
+  });
+
   /******************************************************************************/
 
   var renderPage = function (json) {
 
-    var ads = json.data;
+    pageUrl = json.pageUrl;
+
+    var ads = json.onPage;
 
     console.log('renderPage() :: ', ads.length, json.current);
 
@@ -21,38 +47,53 @@
     if (!ads) return;
 
     for (var i = 0, j = ads.length; i < j; i++) {
-
-      if (ads[i].contentType === 'img') {
-
-        appendImageAd(ads[i], $items);
-
-      } else if (ads[i].contentType === 'text') {
-
-        appendTextAd(ads[i], $items);
-      }
+      appendAd($items, ads[i]);
     }
 
-    setCurrent(json.current);
+    setAttempting(json.current);
 
     //if (!json.pageCount) showRecentAds(ads, json.emptyMessage);
   };
 
-  function setCurrent(current) {
+  function appendAd($items, ad) {
 
+      if (ad.contentType === 'img') {
+
+        appendImageAd(ad, $items);
+
+      } else if (ad.contentType === 'text') {
+
+        appendTextAd(ad, $items);
+      }
+  }
+
+  function setAttempting(ad) {
+
+      //ad && console.log('setAttempting: '+ad.id);
+
+      // one 'attempt' at a time
       $('.ad-item').removeClass('attempting');
       $('.ad-item-text').removeClass('attempting');
+      ad && $('#ad' + ad.id).addClass('attempting');
+  }
 
-      // update the class for ad being attempted
-      current && $('#ad' + current.id).addClass('attempting');
+  function updateAdClass(ad) { // one state at a time
+
+      var $ad = $('#ad' + ad.id), cls = visitedClass(ad);
+      $ad.removeClass('attempting visited failed just-visited just-failed');
+      $ad.addClass(cls).addClass('just-'+cls);
+
+      // add just-X class to img for image-ads
+      if (ad.type === 'img')
+        $ad.find('img').removeClass('just-visited just-failed').addClass('just-'+cls);
   }
 
   function setCounts(data, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
-
+    $('#vault-count').text(total);
     $('#visited-count').text(visitedCount(data));
     $('#found-count').text(data.length);
-    $('#vault-count').text(total);
   }
 
   function appendImageAd(ad, $items) {
@@ -60,7 +101,7 @@
     var $a, $span, $li = $('<li/>', {
 
       'id': 'ad' + ad.id,
-      'class': 'ad-item' + visitedClass(ad)
+      'class': ('ad-item ' + visitedClass(ad)).trim()
     });
 
     $a = $('<a/>', {
@@ -103,7 +144,7 @@
     var $cite, $h3, $li = $('<li/>', {
 
       'id': 'ad' + ad.id,
-      'class': 'ad-item-text' + visitedClass(ad)
+      'class': ('ad-item-text ' + visitedClass(ad)).trim()
     });
 
     $('<span/>', {
@@ -146,8 +187,8 @@
 
   function visitedClass(ad) {
 
-    return ad.visitedTs > 0 ? ' visited' :
-      (ad.visitedTs < 0 ? ' failed' : '');
+    return ad.visitedTs > 0 ? 'visited' :
+      (ad.visitedTs < 0 ? 'failed' : '');
   }
 
   function visitedCount(arr) {
@@ -194,36 +235,18 @@
 
       //console.log("tabId: ", popupData.tabId);
 
-      adnmessager.send({
+      messenger.send({
         what: 'adsForMenu',
         tabId: popupData.tabId
       }, renderPage);
 
     };
 
-    messager.send({
+    ubmessenger.send({
       what: 'getPopupData',
       tabId: tabId
     }, onDataReceived);
   };
-
-  var messager = vAPI.messaging.channel('popup.js');
-  var adnmessager = vAPI.messaging.channel('adnauseam');
-
-  adnmessager.addListener(function (request) {
-    console.log("GOT BROADCAST", msg);
-    // switch (request.what) {
-    // case 'adAttempt':
-    //   setCurrent(request.ad);
-    //   break;
-    // case 'adDetected':
-    //   gAds.push(request.ad);
-    //   createSlider(true);
-    //   break;
-    // case 'adVisited':
-    //   break;
-    // }
-  });
 
   /******************************************************************************/
   var cachedPopupHash = '';
@@ -309,7 +332,7 @@
     window.open("./adn-vault.html");
   });
 
-  $('#pause-button').click(function () {  });
+  $('#pause-button').click(function () {});
 
   $('#settings-open').click(function () {
 
