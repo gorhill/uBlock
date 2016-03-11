@@ -10,7 +10,7 @@
 
   messenger.addListener(function (request) {
 
-    console.log("menu.Message:", request.what, request);
+    //console.log("menu.Message:", request.what, request);
 
     switch (request.what) {
 
@@ -77,6 +77,8 @@
 
       // update the visited count
       $('#visited-count').text(visitedCount(ads));
+
+      setAttempting(ad);
     }
   }
 
@@ -90,7 +92,6 @@
         }
       }
     }
-    console.warn("Ad not in menu! ", ad, ads);
     return false;
   }
 
@@ -123,8 +124,11 @@
     $('.ad-item').removeClass('attempting');
     $('.ad-item-text').removeClass('attempting');
 
-    if (ad && verify(ad)) {
-      $('#ad' + ad.id).addClass('attempting');
+    if (ad) {
+      if (verify(ad))
+        $('#ad' + ad.id).addClass('attempting');
+      else
+        console.warn('Fail on setAttempting: ', ad, ads);
     }
   }
 
