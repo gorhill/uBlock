@@ -10,7 +10,7 @@
 
   messenger.addListener(function (request) {
 
-    //console.log("menu.Message:", request.what, request);
+    console.log("menu.Message:", request.what, request);
 
     switch (request.what) {
 
@@ -134,7 +134,7 @@
       jv = 'just-visited';
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
-    $ad.removeClass('failed visited').addClass(visitedClass(ad));
+    $ad.removeClass('failed visited attempting').addClass(visitedClass(ad));
     $ad.removeClass(jv).addClass(jv);
 
     //if (ad.type === 'img') ??

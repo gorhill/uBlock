@@ -20,13 +20,13 @@
 * changed files inside src/: (html)
 
   src/background.html (added adn files)
-  src/dashboard.html (added adn tabs)
+  src/dashboard.html (added adn tabs, changed icon)
   src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
   src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
 
 
-* changed files inside platform/: 
+* changed files inside platform/:
 
   platform/firefox/vapi-background.js
 
@@ -95,7 +95,7 @@
   icon16-off.svg
   icon24.svg
   icon24-off.svg
-  
+
 
 * added files inside tools/
 
@@ -106,17 +106,17 @@
   make-opera-adn.sh
   make-safari-adn.sh
   make-safari-meta-adn.py
-  
+
 
 * added files inside tools/adn/chromium
 
   manifest.json
-  
+
 
 * added files inside tools/adn/opera
 
   manifest.json
-  
+
 
 * added files inside tools/adn/safari
 
