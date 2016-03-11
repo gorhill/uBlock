@@ -121,7 +121,7 @@ var adDetector = (function() {
         what: 'registerAd',
         ad: ad
       }, function(obj) {
-        console.log("AdDetected-callback: ", obj);
+        //console.log("AdDetected-callback: ", obj);
     });
   }
 
@@ -245,7 +245,9 @@ var adDetector = (function() {
                   console.log("IMG-AD", ad);
                   notifyAddon(elem, ad);
               }
-              console.warn("Ignoring IMG-AD with targetUrl="+targetUrl+" src="+imgSrc);
+              else {
+                  console.warn("Ignoring IMG-AD with targetUrl="+targetUrl+" src="+imgSrc);
+              }
             }
 
             // Need to check for div.onclick etc?

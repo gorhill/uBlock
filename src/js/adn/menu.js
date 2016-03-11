@@ -5,9 +5,8 @@
 
   'use strict';
 
-  var messenger = vAPI.messaging.channel('adnauseam'),
-    ubmessenger = vAPI.messaging.channel('popup.js'),
-    pageUrl; // the page the menu was opened on ?
+  var ads, messenger = vAPI.messaging.channel('adnauseam'),
+    ubmessenger = vAPI.messaging.channel('popup.js');
 
   messenger.addListener(function (request) {
 
@@ -20,11 +19,11 @@
       break;
 
     case 'adDetected':
-      renderPage(request);  // for now, just re-render everything
+      renderPage(request); // for now, just re-render everything
       break;
 
     case 'adVisited':
-      updateAdClass(request.ad);
+      updateAd(request.ad);
       break;
     }
   });
@@ -33,13 +32,11 @@
 
   var renderPage = function (json) {
 
-    pageUrl = json.pageUrl;
+    //console.log('renderPage', json);
 
-    var ads = json.onPage;
+    ads = onPage(json.data, json.pageUrl);
 
-    console.log('renderPage() :: ', ads.length, json.current);
-
-    setCounts(json.data, json.total);
+    setCounts( /*ads,*/ json.data.length);
 
     var $items = $('#ad-list-items');
     $items.removeClass().empty();
@@ -51,49 +48,107 @@
     }
 
     setAttempting(json.current);
-
     //if (!json.pageCount) showRecentAds(ads, json.emptyMessage);
-  };
+  }
+
+  function getTitle(ad) {
+
+    var title = ad.title + ' ';
+    if (ad.visitedTs < 1) {
+
+      // adds . to title for each failed attempt
+      for (var i = 0; i < ad.attempts; i++)
+        title += '.';
+    }
+    return title;
+  }
+
+  function updateAd(ad) { // update class, title, counts
+
+    if (verify(ad)) {
+
+      var $ad = updateAdClasses(ad);
+
+      // update the title
+      $ad.find('.title').text(getTitle(ad));
+
+      // update the url
+      $ad.find('cite').text(targetDomain(ad));
+
+      // update the visited count
+      $('#visited-count').text(visitedCount(ads));
+    }
+  }
+
+  function verify(ad) {
+
+    if (ad) {
+      for (var i = 0; i < ads.length; i++) {
+        if (ads[i].id === ad.id) {
+          ads[i] = ad;
+          return true;
+        }
+      }
+    }
+    console.warn("Ad not in menu! ", ad, ads);
+    return false;
+  }
+
+  function onPage(ads, pageUrl) {
+    var res = [];
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].pageUrl === pageUrl)
+        res.push(ads[i]);
+    }
+    return res.sort(byField('-foundTs'));
+  }
 
   function appendAd($items, ad) {
 
-      if (ad.contentType === 'img') {
+    if (ad.contentType === 'img') {
 
-        appendImageAd(ad, $items);
+      appendImageAd(ad, $items);
 
-      } else if (ad.contentType === 'text') {
+    } else if (ad.contentType === 'text') {
 
-        appendTextAd(ad, $items);
-      }
+      appendTextAd(ad, $items);
+    }
   }
 
   function setAttempting(ad) {
 
-      //ad && console.log('setAttempting: '+ad.id);
+    //ad && console.log('setAttempting: '+ad.id);
 
-      // one 'attempt' at a time
-      $('.ad-item').removeClass('attempting');
-      $('.ad-item-text').removeClass('attempting');
-      ad && $('#ad' + ad.id).addClass('attempting');
+    // one 'attempt' at a time
+    $('.ad-item').removeClass('attempting');
+    $('.ad-item-text').removeClass('attempting');
+
+    if (ad && verify(ad)) {
+      $('#ad' + ad.id).addClass('attempting');
+    }
   }
 
-  function updateAdClass(ad) { // one state at a time
+  function updateAdClasses(ad) {
 
-      var $ad = $('#ad' + ad.id), cls = visitedClass(ad);
-      $ad.removeClass('attempting visited failed just-visited just-failed');
-      $ad.addClass(cls).addClass('just-'+cls);
+    var $ad = $('#ad' + ad.id),
+      jv = 'just-visited';
 
-      // add just-X class to img for image-ads
-      if (ad.type === 'img')
-        $ad.find('img').removeClass('just-visited just-failed').addClass('just-'+cls);
+    // See https://github.com/dhowe/AdNauseam2/issues/61
+    $ad.removeClass('failed visited').addClass(visitedClass(ad));
+    $ad.removeClass(jv).addClass(jv);
+
+    //if (ad.type === 'img') ??
+    //$ad.find('img').removeClass('just-visited').addClass('just-visited');
+
+    return $ad;
   }
 
-  function setCounts(data, total) {
+  function setCounts(total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
     $('#vault-count').text(total);
-    $('#visited-count').text(visitedCount(data));
-    $('#found-count').text(data.length);
+    $('#visited-count').text(visitedCount(ads));
+    $('#found-count').text(ads.length);
   }
 
   function appendImageAd(ad, $items) {
@@ -226,38 +281,32 @@
   }
 
   var getPopupData = function (tabId) {
-    var onDataReceived = function (response) {
+
+    var onPopupData = function (response) {
       cachePopupData(response);
-      //renderPopup();
-      //renderPopupLazy(); // low priority rendering
-      //hashFromPopupData(true);
-      //pollForContentChange();
-
-      //console.log("tabId: ", popupData.tabId);
-
       messenger.send({
-        what: 'adsForMenu',
+        what: 'adsForPage',
         tabId: popupData.tabId
       }, renderPage);
-
     };
 
     ubmessenger.send({
       what: 'getPopupData',
       tabId: tabId
-    }, onDataReceived);
+    }, onPopupData);
   };
 
   /******************************************************************************/
-  var cachedPopupHash = '';
-  var hostnameToSortableTokenMap = {};
-  var popupData = {};
+  var cachedPopupHash = '',
+    hostnameToSortableTokenMap = {},
+    popupData = {};
+
   var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
   };
+
   var cachePopupData = function (data) {
-    console.log("DATA", data);
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
@@ -287,8 +336,6 @@
     }
     return popupData;
   };
-
-  /******************************************************************************/
 
   var hashFromPopupData = function (reset) {
     // It makes no sense to offer to refresh the behind-the-scene scope
@@ -336,13 +383,7 @@
 
   $('#settings-open').click(function () {
 
-    // TODO: open uBlock settings here
-    //window.open("./popup.html", '_self');
-
     window.open("./dashboard.html#adn-settings.html");
-
-    //$('.page').toggleClass('hide');
-    //$('.settings').toggleClass('hide');
   });
 
   $('#settings-close').click(function () {
@@ -368,7 +409,6 @@
     }
     getPopupData(tabId);
 
-    //console.log('loading menu',popupData.tabId,popupData);
   })();
 
   /********************************************************************/

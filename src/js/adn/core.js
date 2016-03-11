@@ -25,9 +25,9 @@
     admap = {},
     idgen = 0,
     initialized = 0,
-    autoFailMode = 1,
+    autoFailMode = 0,
     lastActivity = 0,
-    loadAdsOnInit = 0,
+    loadAdsOnInit = 1,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 10000,
@@ -142,13 +142,14 @@
 
       if (ad.attempts >= maxAttemptsPerAd) {
         console.log('GIVEUP: ' + adinfo(ad)); // this);
+        if (ad.title === 'Pending') ad.title = 'Failed';
       }
 
       vAPI.messaging.broadcast({ what: 'adVisited', ad: ad });
 
     } else {
 
-      console.error("NO AD in updateAdOnFailure()");
+      console.error("NO Ad in updateAdOnFailure()");
     }
   }
 
@@ -376,7 +377,7 @@
 
   var adinfo = function (ad) {
     var id = ad.id || -1;
-    return 'Ad#' + ad.id + '(' + ad.contentType + ')';
+    return 'Ad#' + id + '(' + ad.contentType + ')';
   }
 
   // sort ads (by found time) for display in menu
@@ -420,12 +421,45 @@
     console.log('             post-total: '+adlist().length);
   }
 
+  var adsForUI = function (pageUrl) {
+
+    return {
+      data: adlist(),
+      pageUrl: pageUrl,
+      current: activeVisit()
+    };
+  }
+
+  var reorder = function (data, pageUrl) { // do we need this at all?
+
+    var current = activeVisit(pageUrl);
+
+    // make sure current ad is at top
+    if (current && current !== data[0]) {
+
+      //console.log("Re-ordering menu list");
+      var idx = -1;
+
+      for (var i = 0; i < data.length; i++) {
+        if (current.id === data[i].id) idx = i;
+      }
+
+      if (idx >= 0) data.splice(idx, 1);
+
+      data.unshift(current);
+      //console.log('CURRENT', '#' + current.id, data);
+    }
+
+    return current;
+  }
+
   /******************************* API ************************************/
 
   var clearAds = function () {
 
     var count = adlist().length;
     clearAdmap();
+    vAPI.tabs.remove(getVaultTabId()); // close vault
     storeUserData();
     console.log('AdNauseam.clear: ' + count + ' ads cleared');
   }
@@ -474,63 +508,41 @@
     console.log('AdNauseam.export: ' + count + ' ads to ' + filename);
   }
 
-  var adsForVault = function () {
+  // var adsForMenu = function(request, pageStore, tabId) {
+  //
+  //     var reqPageStore = request.tabId && µb.pageStoreFromTabId(request.tabId) || pageStore;
+  //
+  //     if (!reqPageStore)
+  //     throw Error('No pageStore found!', request, pageStore, tabId);
+  //
+  //   var pageUrl = reqPageStore.rawURL;// data = menuAds(pageUrl);
+  //
+  //   // var res = {
+  //   //   data: adlist(),
+  //   //   pageUrl: pageUrl
+  //   // };
+  //   //
+  //   // console.log('adsForMenu: '+res);
+  //
+  //   return adsForUI();
+  // }
 
-    return {
-      data: adlist(),
-      current: activeVisit()
-    };
+  var adsForPage = function(request, pageStore, tabId) {
+
+      var reqPageStore = request.tabId &&
+        µb.pageStoreFromTabId(request.tabId) || pageStore;
+      if (!reqPageStore)
+        throw Error('No pageStore found!', request, pageStore, tabId);
+      return adsForUI(reqPageStore.rawURL);
   }
 
-  var adsForMenu = function(request, pageStore, tabId) {
+  var adsForVault = function(request, pageStore, tabId) {
 
-    var reqPageStore = request.tabId && µb.pageStoreFromTabId(request.tabId) || pageStore;
-
-    if (!reqPageStore)
-      throw Error('No pageStore found!', request, pageStore, tabId);
-
-    var pageUrl = reqPageStore.rawURL, data = menuAds(pageUrl);
-
-    var current = reorder(data, pageUrl);
-    //var data = adlist();
-
-    var res = {
-
-      data: data,
-      pageUrl: pageUrl,
-      total: adlist().length,
-      current: current
-    };
-
-    console.log('adsForMenu: '+res.data.length+','+res.total);
-
-    return res;
-  }
-
-  var reorder = function (data, pageUrl) { // do we need this at all?
-
-    var current = activeVisit(pageUrl);
-
-    // make sure current ad is at top
-    if (current && current !== data[0]) {
-
-      //console.log("Re-ordering menu list");
-      var idx = -1;
-
-      for (var i = 0; i < data.length; i++) {
-        if (current.id === data[i].id) idx = i;
-      }
-
-      if (idx >= 0) data.splice(idx, 1);
-
-      data.unshift(current);
-      //console.log('CURRENT', '#' + current.id, data);
-    }
-
-    return current;
+      return adsForUI();
   }
 
   var itemInspected = function (request, pageStore, tabId) {
+
     if (request.id) {
       var ad = adById(request.id)
       inspected = ad;
@@ -580,7 +592,7 @@
     adsOnPage[adhash] = ad;
 
     // if vault or menu is open, send this new ad
-    var json = adsForMenu(request, pageStore, tabId);
+    var json = adsForUI(pageUrl);
     json.what = 'adDetected';
     json.ad = ad;
 
@@ -606,7 +618,7 @@
     exportAds: exportAds,
     importAds: importAds,
     registerAd: registerAd,
-    adsForMenu: adsForMenu,
+    adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdset: deleteAdset,
     itemInspected: itemInspected
