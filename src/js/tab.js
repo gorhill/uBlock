@@ -647,7 +647,10 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( pos === -1 ) {
             return '';
         }
-        if ( beg >= pos + openerHostname.length || end < pos ) {
+        // https://github.com/gorhill/uBlock/issues/1471
+        // We test whether the opener hostname as at least one character
+        // within matched portion of URL.
+        if ( beg >= pos + openerHostname.length || end <= pos ) {
             return '';
         }
         return result;
