@@ -539,18 +539,29 @@ openload-defuser.js application/javascript
 	var noopfn = function() {
 		;
 	};
-	var excludes = ['157','161','175'];
+	var excludes = {
+		'4': ['157','161','175'],
+		'5': ['140']
+	};
 	var wjdmpGet = function() {
 		return wjdmp;
 	};
 	var wjdmpSet = function(a) {
 		wjdmp = function(r, o) {
-			if ( r.length === 1 && r[0] === 4 ) {
+			var aa;
+			for ( var excl in excludes ) {
+				if ( excludes.hasOwnProperty(excl) === false ) {
+					continue;
+				}
+				if ( r.length !== 1 || r[0].toString() !== excl ) {
+					continue;
+				}
+				aa = excludes[excl];
 				for ( var k in o ) {
 					if ( !o.hasOwnProperty(k) || typeof o[k] !== 'function' ) {
 						continue;
 					}
-					if ( excludes.indexOf(k.toString()) !== -1 ) {
+					if ( aa.length !== 0 && aa.indexOf(k.toString()) !== -1 ) {
 						continue;
 					}
 					o[k] = noopfn;
@@ -762,44 +773,44 @@ setTimeout-defuser application/javascript
 # Sometimes a site will use this one script:
 disqus.com/forums/*/embed.js application/javascript
 (function() {
-    var ee = document.getElementsByTagName('script');
-    var i = ee.length, src;
-    while ( i-- ) {
-        src = ee[i].src || '';
-        if ( src === '' ) {
-            continue;
-        }
-        if ( src.lastIndexOf('disqus.com/embed.js') === (src.length - 19) ) {
-            return;
-        }
-    }
-    var e = document.createElement('script');
-    e.async = true;
-    e.src = '//' + window.disqus_shortname + '.disqus.com/embed.js';
-    document.body.appendChild(e);
+	var ee = document.getElementsByTagName('script');
+	var i = ee.length, src;
+	while ( i-- ) {
+		src = ee[i].src || '';
+		if ( src === '' ) {
+			continue;
+		}
+		if ( src.lastIndexOf('disqus.com/embed.js') === (src.length - 19) ) {
+			return;
+		}
+	}
+	var e = document.createElement('script');
+	e.async = true;
+	e.src = '//' + window.disqus_shortname + '.disqus.com/embed.js';
+	document.body.appendChild(e);
 })();
 
 # Most use this one though:
 disqus.com/embed.js application/javascript
 (function() {
-    var p = document.getElementById(window.disqus_container_id || 'disqus_thread');
-    if ( p === null ) {
-        return;
-    }
-    var b = document.createElement('button');
-    b.textContent = 'Disqus blocked by uBlock Origin: click to unblock';
-    b.type = 'button';
-    p.appendChild(b);
-    var loadDisqus = function(ev) {
-        b.removeEventListener('click', loadDisqus);
-        p.removeChild(b);
-        var script = document.createElement('script');
-        script.async = true;
-        var t = Date.now().toString();
-        script.src = '//' + window.disqus_shortname + '.disqus.com/embed.js?_=1457540' + t.slice(-6);
-        document.body.appendChild(script);
-        ev.preventDefault();
-        ev.stopPropagation();
-    };
-    b.addEventListener('click', loadDisqus);
+	var p = document.getElementById(window.disqus_container_id || 'disqus_thread');
+	if ( p === null ) {
+		return;
+	}
+	var b = document.createElement('button');
+	b.textContent = 'Disqus blocked by uBlock Origin: click to unblock';
+	b.type = 'button';
+	p.appendChild(b);
+	var loadDisqus = function(ev) {
+		b.removeEventListener('click', loadDisqus);
+		p.removeChild(b);
+		var script = document.createElement('script');
+		script.async = true;
+		var t = Date.now().toString();
+		script.src = '//' + window.disqus_shortname + '.disqus.com/embed.js?_=1457540' + t.slice(-6);
+		document.body.appendChild(script);
+		ev.preventDefault();
+		ev.stopPropagation();
+	};
+	b.addEventListener('click', loadDisqus);
 })();
