@@ -336,3 +336,6 @@ tweaktown.com###background_skin
 
 # https://twitter.com/DThibaut67/status/707624770653843456
 ||connectormwi.laterpay.net/*/app-de-de.js$script,domain=sport1.de
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
+kisscartoon.me##script:inject(kisscartoon-defuser.js)

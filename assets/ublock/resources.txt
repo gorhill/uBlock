@@ -601,6 +601,16 @@ kissanime-defuser.js application/javascript
 })();
 
 
+# https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
+kisscartoon-defuser.js application/javascript
+(function() {
+	Object.defineProperty(window, '_0x408a', {
+		get: function() { return []; },
+		set: function(a) {}
+	});
+})();
+
+
 phenv-defuser.js application/javascript
 (function() {
 	var phenv = window.PHENV;
