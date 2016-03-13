@@ -5,7 +5,7 @@ dcc881135f01d1e264c2be59a8aaa1e0 assets/ublock/filters.txt
 98088252cedafb8571cf61b91bea219e assets/ublock/badware.txt
 5baa90e2da7cd6a73edff2010557ee57 assets/ublock/redirect.txt
 b65ec581214a0d24dad6522a60f827ab assets/ublock/experimental.txt
-5ee3e1aa589018d7abf5978306e2c018 assets/ublock/resources.txt
+f9271029eca23f1dee2da293f4c15b23 assets/ublock/resources.txt
 059e0bfbf22bd242dda7b07389fe09a2 assets/ublock/filter-lists.json
 3605c73f21abca428c7eb69a8bc32dfe assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
 a91af77c47c302c0741c7445b0fada1a assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt

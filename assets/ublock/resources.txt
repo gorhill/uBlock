@@ -832,7 +832,8 @@ ytad-defuser.js application/javascript
 	var ytp, ytpc;
     var trapytpca = function() {
         if ( ytpc && ytpc.args && typeof ytpc.args.ad_slots === 'string' ) {
-            ytpc.args.ad_slots = ytpc.args.ad_slots.replace(/^0+(,|$)/, '');
+            ytpc.args.ad_slots = '0';
+            ytpc.args.afv_instream_max = '500';
         }
     };
     var trapytpc = function() {
