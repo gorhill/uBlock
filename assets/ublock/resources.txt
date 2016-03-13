@@ -833,7 +833,7 @@ ytad-defuser.js application/javascript
                 set: function(a) {
                     ytpc = a;
                     if ( a && a.args && typeof a.args.ad_slots === 'string' ) {
-                        a.args.ad_slots = a.args.ad_slots.replace(/0,?/, '');
+                        a.args.ad_slots = a.args.ad_slots.replace(/^0+(,|$)/, '');
                     }
                 }
             });
