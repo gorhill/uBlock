@@ -830,23 +830,50 @@ disqus.com/embed.js application/javascript
 ytad-defuser.js application/javascript
 (function() {
 	var ytp, ytpc;
-	Object.defineProperty(window, 'ytplayer', {
-		get: function() {
-			return ytp;
-		},
-		set: function(a) {
-			ytp = a;
+    var trapytpca = function() {
+        if ( ytpc && ytpc.args && typeof ytpc.args.ad_slots === 'string' ) {
+            ytpc.args.ad_slots = ytpc.args.ad_slots.replace(/^0+(,|$)/, '');
+        }
+    };
+    var trapytpc = function() {
+        ytpc = ytp.config;
+        if ( ytpc ) {
+            trapytpca();
+            return;
+        }
+        try {
             Object.defineProperty(ytp, 'config', {
                 get: function() {
                     return ytpc;
                 },
                 set: function(a) {
                     ytpc = a;
-                    if ( a && a.args && typeof a.args.ad_slots === 'string' ) {
-                        a.args.ad_slots = a.args.ad_slots.replace(/^0+(,|$)/, '');
+                    trapytpca();
+                }
+            });
+        } catch (ex) {
+        }
+    };
+    var trapytp = function() {
+        ytp = window.ytplayer;
+        if ( ytp ) {
+            trapytpc();
+            return;
+        }
+        try {
+            Object.defineProperty(window, 'ytplayer', {
+                get: function() {
+                    return ytp;
+                },
+                set: function(a) {
+                    ytp = a;
+                    if ( !a.config ) {
+                        trapytpc();
                     }
                 }
             });
-		}
-	});
+        } catch (ex) {
+        }
+    };
+    trapytp();
 })();
