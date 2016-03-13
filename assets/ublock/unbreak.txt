@@ -266,7 +266,3 @@ phoronix.com#@#div[style^="text-align: center;"]
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=28701
 @@||files.explosm.net/files/$image,first-party
-
-# https://github.com/gorhill/uBlock/issues/1461
-# Experimental fix
-@@||s.youtube.com^$domain=youtube.com

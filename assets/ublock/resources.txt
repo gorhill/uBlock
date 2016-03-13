@@ -814,3 +814,29 @@ disqus.com/embed.js application/javascript
 	};
 	b.addEventListener('click', loadDisqus);
 })();
+
+
+# https://github.com/gorhill/uBlock/issues/1461
+ytad-defuser.js application/javascript
+(function() {
+	var ytp, ytpc;
+	Object.defineProperty(window, 'ytplayer', {
+		get: function() {
+			return ytp;
+		},
+		set: function(a) {
+			ytp = a;
+            Object.defineProperty(ytp, 'config', {
+                get: function() {
+                    return ytpc;
+                },
+                set: function(a) {
+                    ytpc = a;
+                    if ( a && a.args && typeof a.args.ad_slots === 'string' ) {
+                        a.args.ad_slots = a.args.ad_slots.replace(/0,?/, '');
+                    }
+                }
+            });
+		}
+	});
+})();
