@@ -251,7 +251,6 @@ google-analytics.com/inpage_linkid.js application/javascript
 	};
 })();
 
-
 # Ubiquitous googletagservices.com: not blocked by EasyPrivacy.
 # "Tags are tiny bits of website code that let you measure traffic and
 # "visitor behavior"
@@ -379,6 +378,16 @@ googletagservices.com/gpt.js application/javascript
 	while ( cmd.length !== 0 ) {
 		gpt.cmd.push(cmd.shift());
 	}
+})();
+
+# Obviously more work needs to be done, but at least for now it takes care of:
+# - https://twitter.com/kenn_butler/status/709163241021317120
+googletagmanager.com/gtm.js application/javascript
+(function() {
+	var noopfn = function() {
+		;
+	};
+	window.ga = window.ga || noopfn;
 })();
 
 
@@ -834,6 +843,7 @@ ytad-defuser.js application/javascript
         if ( ytpc && ytpc.args && typeof ytpc.args.ad_slots === 'string' ) {
             ytpc.args.ad_slots = '0';
             ytpc.args.afv_instream_max = '500';
+            delete ytpc.args.vmap;
         }
     };
     var trapytpc = function() {
