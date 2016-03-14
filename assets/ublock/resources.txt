@@ -841,7 +841,8 @@ ytad-defuser.js application/javascript
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
 		if ( b >= 15000 && b < 30000 ) {
-			return sto(a, 500);
+            console.trace('uBO> delay = ' + b);
+			return sto(a, 100);
 		}
         return sto(a, b);
 	};
