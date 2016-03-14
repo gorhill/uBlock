@@ -841,8 +841,7 @@ ytad-defuser.js application/javascript
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
 		if ( b === 15000 ) {
-            a();
-			return;
+			return sto(a, 500);
 		}
         return sto(a, b);
 	};
