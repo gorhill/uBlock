@@ -838,53 +838,12 @@ disqus.com/embed.js application/javascript
 # https://github.com/gorhill/uBlock/issues/1461
 ytad-defuser.js application/javascript
 (function() {
-	var ytp, ytpc;
-    var trapytpca = function() {
-        if ( ytpc && ytpc.args && typeof ytpc.args.ad_slots === 'string' ) {
-            ytpc.args.ad_slots = '-1';
-            ytpc.args.afv_instream_max = '500';
-            delete ytpc.args.vmap;
-        }
-    };
-    var trapytpc = function() {
-        ytpc = ytp.config;
-        if ( ytpc ) {
-            trapytpca();
-            return;
-        }
-        try {
-            Object.defineProperty(ytp, 'config', {
-                get: function() {
-                    return ytpc;
-                },
-                set: function(a) {
-                    ytpc = a;
-                    trapytpca();
-                }
-            });
-        } catch (ex) {
-        }
-    };
-    var trapytp = function() {
-        ytp = window.ytplayer;
-        if ( ytp ) {
-            trapytpc();
-            return;
-        }
-        try {
-            Object.defineProperty(window, 'ytplayer', {
-                get: function() {
-                    return ytp;
-                },
-                set: function(a) {
-                    ytp = a;
-                    if ( !a.config ) {
-                        trapytpc();
-                    }
-                }
-            });
-        } catch (ex) {
-        }
-    };
-    trapytp();
+	var sto = window.setTimeout;
+	window.setTimeout = function(a, b) {
+		if ( b === 15000 ) {
+            a();
+			return;
+		}
+        return sto(a, b);
+	};
 })();
