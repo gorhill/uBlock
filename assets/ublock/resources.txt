@@ -840,7 +840,7 @@ ytad-defuser.js application/javascript
 (function() {
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
-		if ( b >= 15000 ) {
+		if ( b >= 15000 && b < 30000 ) {
 			return sto(a, 500);
 		}
         return sto(a, b);
