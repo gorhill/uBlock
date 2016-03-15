@@ -211,18 +211,20 @@ vAPI.messaging = {
             this.disconnectListenerCallback = this.disconnectListener.bind(this);
             this.portPollerCallback = this.portPoller.bind(this);
         }
-        var port = null;
         try {
-            port = this.port = chrome.runtime.connect({name: vAPI.sessionId});
-            port.onMessage.addListener(this.messageListenerCallback);
-            port.onDisconnect.addListener(this.disconnectListenerCallback);
+            this.port = chrome.runtime.connect({name: vAPI.sessionId}) || null;
         } catch (ex) {
+            this.port = null;
+        }
+        if ( this.port !== null ) {
+            this.port.onMessage.addListener(this.messageListenerCallback);
+            this.port.onDisconnect.addListener(this.disconnectListenerCallback);
         }
         this.portTimerDelay = 10000;
         if ( this.portTimer === null ) {
             this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
         }
-        return port;
+        return this.port;
     },
 
     connect: function() {
@@ -330,7 +332,7 @@ vAPI.messaging = {
 
 vAPI.shutdown.add(function() {
     vAPI.messaging.shutdown();
-    window.vAPI = null;
+    delete window.vAPI;
 });
 
 // https://www.youtube.com/watch?v=rT5zCHn0tsg
