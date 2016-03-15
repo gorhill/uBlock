@@ -838,12 +838,20 @@ disqus.com/embed.js application/javascript
 # https://github.com/gorhill/uBlock/issues/1461
 ytad-defuser.js application/javascript
 (function() {
+    var bind = Function.prototype.bind;
+    Function.prototype.bind = function() {
+        'native code';
+        var bound = bind.apply(this, arguments);
+        if ( this.toString().indexOf('qoe.start15s') !== -1 ) {
+            bound.xpizqvtnrfkcjixkmdnu = true;
+        }
+        return bound;
+    };
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
-		if ( b >= 15000 && b < 20000 ) {
-            console.trace('uBO> delay = ' + b);
-			return sto(a, 100);
+		if ( 'xpizqvtnrfkcjixkmdnu' in a ) {
+			b = 1;
 		}
-        return sto(a, b);
+		return sto(a, b);
 	};
 })();
