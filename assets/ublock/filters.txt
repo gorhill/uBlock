@@ -269,6 +269,7 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 # https://github.com/gorhill/uBlock/issues/949
 ||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=chip.de|cdnapi.kaltura.com|focus.de|spiegel.de|stern.de|t-online.de,redirect=hd-main.js
 ||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
+||hgcorigin.svonm.com/hd-main.js$script,redirect=hd-main.js,domain=chip.de
 # https://github.com/gorhill/uBlock/issues/1216
 chip.de##script:inject(1216.js)
 stern.de##script:inject(bcplayer-defuser.js)
