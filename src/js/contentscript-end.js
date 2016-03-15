@@ -190,7 +190,7 @@ var adDetector = (function() {
       }
       else { // need to check domain/tag here: called way too often
 
-          console.log("TRYING: ", elem);
+          //console.log("TRYING: ", elem);
           var ad = checkFilters(elem);
           if (ad) {
               console.log("TEXT-AD", ad);
@@ -199,163 +199,169 @@ var adDetector = (function() {
       }
     }
   }
-function checkImages(elem, imgs) {
 
-  if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
+    function checkImages(elem, imgs) {
 
-  for (var i = 0; i < imgs.length; i++) {
+      if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
 
-    var imgSrc = imgs[i].getAttribute("src");
+      for (var i = 0; i < imgs.length; i++) {
 
-    if (!imgSrc) {
-      if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-      continue;
-    }
+        var imgSrc = imgs[i].getAttribute("src");
 
-    if (dbugDetect) console.log('imgSrc: ' + imgSrc);
-
-    var target = clickableParent(imgs[i]);
-    if (target) {
-
-      if (target.tagName === 'A') {
-
-        var targetUrl = target.getAttribute("href");
-        if (targetUrl) {
-
-          if (targetUrl.indexOf('http') >= 0) {
-            var ad = createImgAd(document.domain, targetUrl, imgSrc);
-            console.log("IMG-AD", ad);
-            notifyAddon(elem, ad);
-
-          } else {
-
-            console.warn("Ignoring IMG-AD with targetUrl=" + targetUrl + " src=" + imgSrc);
-          }
+        if (!imgSrc) {
+          if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+          continue;
         }
 
-        // Need to check for div.onclick etc?
-        else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
-      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
-    } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
-  }
-}
+        if (dbugDetect) console.log('imgSrc: ' + imgSrc);
 
-var filters = [{
-  selector: 'li.ads-ad',
-  handler: googleText,
-  name: 'adsense-1'
-    //domain: googleRegex
-}, {
-  selector: '.ads ul',
-  //waitfor: 'li',
-  handler: yahooText,
-  name: 'yahoo',
-}, {
-  selector: '.ADS RHR-ADS',
-  //waitfor: 'li',
-  handler: aolText,
-  name: 'aol',
-}];
+        var target = clickableParent(imgs[i]);
+        if (target) {
 
-function aolText(li) {
-  console.log('aolText()', li);
-}
+          if (target.tagName === 'A') {
 
-function yahooText(li) {
-  console.log('yahooText()');
-}
+            var targetUrl = target.getAttribute("href");
+            if (targetUrl) {
 
-var checkFilters = function (elem) {
+              if (targetUrl.indexOf('http') >= 0) {
+                var ad = createImgAd(document.domain, targetUrl, imgSrc);
+                console.log("IMG-AD", ad);
+                notifyAddon(elem, ad);
 
-  for (var i = 0; i < filters.length; i++) {
+              } else {
 
-    if ($is(elem, filters[i].selector)) {
+                console.warn("Ignoring IMG-AD with targetUrl=" + targetUrl + " src=" + imgSrc);
+              }
+            }
 
-      var result = filters[i].handler(elem);
-      if (result) return result;
+            // Need to check for div.onclick etc?
+            else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
+          } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
+        } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
+      }
     }
-  }
-};
 
-var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
+    var filters = [{
+      selector: 'li.ads-ad',
+      handler: googleText,
+      name: 'adsense-1'
+    }, {
+      selector: '.ad',
+      handler: aolText,
+      name: 'aol'
+    }];
 
-function googleText(li) {
+    function aolText(div) {
 
-  //console.log('googleText()',li);
+      var ad, title = $find(div, '.title span'),
+        text = $find(div, '.desc span'),
+        site = $find(div, '.durl span'),
+        target = $find(div, '.title a');
 
-  var ad, title = $find(li, 'h3 a'),
-    text = $find(li, '.ads-creative'),
-    site = $find(li, '.ads-visurl cite');
+      if (text.length && site.length && title.length && target.length) {
 
-  if (text.length && site.length && title.length) {
+        ad = createTextAd('aol', $attr(target, 'href'),
+          $text(title), $text(text), $text(site));
 
-    ad = createTextAd('google', $attr(title, 'href'),
-      $text(title), $text(text), $text(site));
+      } else {
 
-    //self.port && self.port.emit('parsed-text-ad', ad)
-    //console.log("TEXT: googleText", ad);
+        console.warn('TEXT: aolText.fail: ', text, site);
+      }
 
-  } else {
+      return ad;
+    }
 
-    console.warn('TEXT: googleText.fail: ', text, site);
-  }
+    function yahooText(li) {
 
-  return ad;
-}
+      console.log('yahooText()');
+    }
 
-function createImgAd(network, target, img) {
+    var checkFilters = function (elem) {
 
-  if (target.indexOf('http') < 0) {
+      for (var i = 0; i < filters.length; i++) {
 
-    console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
-    return;
-  }
+        if ($is(elem, filters[i].selector)) {
 
-  //console.log("createImgAd: ",network, img, target);
-  // if (window.self !== window.top) { // see #42
-  //     console.log('iFrame: parseTitle: ', window.top.document.title);
-  // }
+          var result = filters[i].handler(elem);
+          if (result) return result;
+        }
+      }
+    };
 
-  var ad = new Ad(network, document.title, document.URL, target, 'img');
+    var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
 
-  if (!/^http/.test(img)) { // relative image url
+    function googleText(li) {
 
-    if (dbugDetect) console.log("Found relative image: " + this.contentData.src);
-    img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-  }
+      var ad, title = $find(li, 'h3 a'),
+        text = $find(li, '.ads-creative'),
+        site = $find(li, '.ads-visurl cite');
 
-  ad.contentData = {
-    src: img
-  };
+      if (text.length && site.length && title.length) {
 
-  return ad;
-}
+        ad = createTextAd('google', $attr(title, 'href'),
+          $text(title), $text(text), $text(site));
 
-function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
+      } else {
 
-  if (target.indexOf('http') < 0) {
+        console.warn('TEXT: googleText.fail: ', text, site);
+      }
 
-    console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
-    return;
-  }
+      return ad;
+    }
 
-  //console.log("createTextAd: ",network, title, text, site, target);
-  var ad = new Ad(network, document.title, document.URL, target, 'text');
+    function createImgAd(network, target, img) {
 
-  if (title.length) ad.title = title;
+      if (target.indexOf('http') < 0) {
 
-  ad.contentData = {
-    title: title,
-    text: text,
-    site: site
-  }
+        console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
+        return;
+      }
 
-  return ad;
-}
+      //console.log("createImgAd: ",network, img, target);
+      // if (window.self !== window.top) { // see #42
+      //     console.log('iFrame: parseTitle: ', window.top.document.title);
+      // }
 
-return {
-  findAds: findAds,
-}
+      var ad = new Ad(network, document.title, document.URL, target, 'img');
+
+      if (!/^http/.test(img)) { // relative image url
+
+        if (dbugDetect) console.log("Found relative image: " + this.contentData.src);
+        img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+      }
+
+      ad.contentData = {
+        src: img
+      };
+
+      return ad;
+    }
+
+    function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
+
+      if (target.indexOf('http') < 0) {
+
+        console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
+        return;
+      }
+
+      //console.log("createTextAd: ",network, title, text, site, target);
+      var ad = new Ad(network, document.title, document.URL, target, 'text');
+
+      if (title.length) ad.title = title;
+
+      ad.contentData = {
+        title: title,
+        text: text,
+        site: site
+      }
+
+      return ad;
+    }
+
+    return {
+      findAds: findAds,
+    }
 
 })();
 
