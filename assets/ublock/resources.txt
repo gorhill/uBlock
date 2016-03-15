@@ -842,14 +842,13 @@ ytad-defuser.js application/javascript
     Function.prototype.bind = function() {
         'native code';
         var bound = bind.apply(this, arguments);
-        if ( this.toString().indexOf('qoe.start15s') !== -1 ) {
-            bound.xpizqvtnrfkcjixkmdnu = true;
-        }
+        bound.xpizqvtnrfkcjixkmdnu = this.toString();
         return bound;
     };
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
-		if ( 'xpizqvtnrfkcjixkmdnu' in a ) {
+		if ( b === 15000 && 'xpizqvtnrfkcjixkmdnu' in a ) {
+			console.log('uBO>', a.xpizqvtnrfkcjixkmdnu);
 			b = 1;
 		}
 		return sto(a, b);
