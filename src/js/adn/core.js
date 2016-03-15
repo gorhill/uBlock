@@ -415,7 +415,6 @@
 
     var ad = adById(id);
     if (!ad) console.warn("No ad to delete", id, admap);
-    //console.log('admap['+ad.pageUrl+']['+computeHash(ad)+']');
     delete admap[ad.pageUrl][computeHash(ad)];
     storeUserData();
   }
@@ -521,10 +520,11 @@
 
     validate(ad);
 
-    if (!admap[pageUrl])
-      admap[pageUrl] = {};
+    if (!admap[pageUrl]) admap[pageUrl] = {};
 
     adhash = computeHash(ad);
+
+    if (!adhash) console.warn('UNABLE TO computeHash() for: ',ad);
 
     if (admap[pageUrl][adhash]) { // this may be a duplicate
 
@@ -536,6 +536,7 @@
         return;
       }
     }
+
 
     ad.id = ++idgen;
     ad.attemptedTs = 0;
@@ -553,8 +554,6 @@
     vAPI.messaging.broadcast(json);
 
     console.log('DETECTED: ' + adinfo(ad), ad);
-
-    console.log(admap);
 
     if (µb.userSettings.showIconBadge) {
       µb.updateBadgeAsync(tabId);
