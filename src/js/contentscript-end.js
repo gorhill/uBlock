@@ -23,6 +23,8 @@
 
 var dbugDetect = 0; // tmp
 
+// ol.kr5y
+
 // Injected into content pages
 //
 // jQuery functions: is, find, attr, text
@@ -191,16 +193,21 @@ var adDetector = (function() {
       else { // need to check domain/tag here: called way too often
 
           //console.log("TRYING: ", elem);
-          var ad = checkFilters(elem);
-          if (ad) {
-              console.log("TEXT-AD", ad);
-              notifyAddon(elem, ad);
+          var ads = checkFilters(elem);
+          if (ads && ads.length) {
+
+              for (var i = 0; i < ads.length; i++) {
+
+                  console.log("TEXT-AD", ads[i]);
+                  notifyAddon(elem, ads[i]);
+              }
+              //notifyAddon(elem, ad);
           }
       }
     }
   }
 
-    function checkImages(elem, imgs) {
+  function checkImages(elem, imgs) {
 
       if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
 
@@ -239,19 +246,51 @@ var adDetector = (function() {
           } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
         } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
       }
-    }
+  }
 
-    var filters = [{
-      selector: 'li.ads-ad',
-      handler: googleText,
-      name: 'adsense-1'
-    }, {
-      selector: '.ad',
-      handler: aolText,
-      name: 'aol'
-    }];
+  var filters = [
+  {
+        selector: 'li.ads-ad',
+        handler: googleText,
+        name: 'adsense-1'
+  },{
+        selector: '.ad',
+        handler: aolText,
+        name: 'aol'
+  },{
+        selector: 'ol',
+        handler: yahooText,
+        name: 'yahoo'
+  }];
 
-    function aolText(div) {
+  function yahooText(e) {
+
+      var ads = [], divs = $find(e, 'div.dd');//#main > div > ol.a947i105t6.v119f
+      //console.log('DL: '+divs.length);
+      for (var i = 0; i < divs.length; i++) {
+
+        var title = $find(divs[i], 'a.td-n');
+        var site = $find(divs[i], 'a.xh52v4e');
+        var text = $find(divs[i], 'a.fc-1st');
+
+        if (text.length && site.length && title.length) {
+
+            var ad = createTextAd('yahoo', $attr(title, 'href'),
+                $text(title), $text(text), $text(site));
+
+            ads.push(ad);
+            //console.log('CREATED: ',ad);
+        }
+        else {
+          console.warn('yahooTextHandler.fail: ', divs[i]);//title, site, text);
+        }
+
+      }
+      return ads;
+      //console.log('HIT:: yahooText()', $find(e, 'div.layoutMiddle'));
+  }
+
+  function aolText(div) {
 
       var ad, title = $find(div, '.title span'),
         text = $find(div, '.desc span'),
@@ -265,19 +304,13 @@ var adDetector = (function() {
 
       } else {
 
-        console.warn('TEXT: aolText.fail: ', text, site);
+        console.warn('TEXT: aolTextHandler.fail: ', text, site);
       }
 
-      return ad;
-    }
-
-    function yahooText(li) {
-
-      console.log('yahooText()');
+      return [ ad ];
     }
 
     var checkFilters = function (elem) {
-
       for (var i = 0; i < filters.length; i++) {
 
         if ($is(elem, filters[i].selector)) {
@@ -303,10 +336,10 @@ var adDetector = (function() {
 
       } else {
 
-        console.warn('TEXT: googleText.fail: ', text, site);
+        console.warn('TEXT: googleTextHandler.fail: ', text, site);
       }
 
-      return ad;
+      return [ ad ];
     }
 
     function createImgAd(network, target, img) {
@@ -325,9 +358,13 @@ var adDetector = (function() {
       var ad = new Ad(network, document.title, document.URL, target, 'img');
 
       if (!/^http/.test(img)) { // relative image url
-
-        if (dbugDetect) console.log("Found relative image: " + this.contentData.src);
-        img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+        if (/^data:image/.test(img)) {
+          if (dbugDetect) console.log("Found encoded image: " + img);
+        }
+        else {
+          if (dbugDetect) console.log("Found relative image: " + img);
+          img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+        }
       }
 
       ad.contentData = {
@@ -651,19 +688,17 @@ var uBlockCollapser = (function () {
                 // https://github.com/gorhill/uBlock/issues/762
                 // Remove display style that might get in the way of the shadow
                 // node doing its magic.
-                try {
-                    shadow = elem.createShadowRoot();
-                    shadow.className = sessionId;
-                    elem.style.removeProperty('display');
-                    if(dbugDetect) console.log("CS.HIT: "+elem);
-
-                    //adDetector.findAds([ elem ]);
-
-                } catch (ex) {
+                // try {
+                //     shadow = elem.createShadowRoot();
+                //     shadow.className = sessionId;
+                //     elem.style.removeProperty('display');
+                //     if(dbugDetect) console.log("CS.HIT: "+elem, selectors, shadow);
+                //
+                // } catch (ex) {
 
                     elem.style.setProperty('display', 'none', 'important');
-                    if(dbugDetect) console.log("CS-End.CATCH: ",elem, ex);
-                }
+                    if(dbugDetect) console.log("CS-End.CATCH: ",elem);//, elem.classList, selectors);//, ex);
+                //}
 
                 adDetector.findAds([ elem ]);
 
