@@ -125,15 +125,6 @@ var adDetector = (function() {
     });
   }
 
-  var filters = [
-    {
-      selector: 'li.ads-ad',
-      handler: googleText,
-      name: 'adsense-1'
-      //domain: googleRegex
-    }
-  ];
-
   var $is = function (elem, selector) { // jquery shim
 
     if (selector.nodeType) {
@@ -177,18 +168,6 @@ var adDetector = (function() {
     return ele.querySelectorAll(selector);
   };
 
-  var checkFilters = function(elem) {
-
-    for (var i = 0; i < filters.length; i++) {
-
-      if ($is(elem, filters[i].selector)) {
-
-        var result = filters[i].handler(elem);
-        if (result) return result;
-      }
-    }
-  };
-
   var findAds = function(adNodes) {
 
     //console.log("findAds("+adNodes.length+")");
@@ -211,131 +190,172 @@ var adDetector = (function() {
       }
       else { // need to check domain/tag here: called way too often
 
-          //console.log("PARSING TEXT: ", elem);
+          console.log("TRYING: ", elem);
           var ad = checkFilters(elem);
-          if (ad) notifyAddon(elem, ad);
-      }
-    }
-  }
-
-  function checkImages(elem, imgs) {
-
-      if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
-
-      for (var i = 0; i < imgs.length; i++) {
-
-        var imgSrc = imgs[i].getAttribute("src");
-
-        if (!imgSrc) {
-          if (dbugDetect) console.log("No ImgSrc(#"+i+")!", imgs[i]);
-          continue;
-        }
-
-        if (dbugDetect) console.log('imgSrc: '+imgSrc);
-
-        var target = clickableParent(imgs[i]);
-        if (target) {
-
-          if (target.tagName === 'A') {
-
-            var targetUrl = target.getAttribute("href");
-            if (targetUrl) {
-              if (/^http/.test(targetUrl)) {
-                  var ad = createImgAd(document.domain, targetUrl, imgSrc);
-                  console.log("IMG-AD", ad);
-                  notifyAddon(elem, ad);
-              }
-              else {
-                  console.warn("Ignoring IMG-AD with targetUrl="+targetUrl+" src="+imgSrc);
-              }
-            }
-
-            // Need to check for div.onclick etc?
-            else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: "+imgSrc);
+          if (ad) {
+              console.log("TEXT-AD", ad);
+              notifyAddon(elem, ad);
           }
-          else if (dbugDetect) console.log("Bail: Non-anchor found: "+target.tagName);
-        }
-        else if (dbugDetect) console.log("Bail: No ClickableParent: "+imgSrc);
       }
+    }
   }
+function checkImages(elem, imgs) {
 
-  var googleRegex =  /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
+  if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
 
-  function googleText(li) {
+  for (var i = 0; i < imgs.length; i++) {
 
-    //console.log('googleText()',li);
+    var imgSrc = imgs[i].getAttribute("src");
 
-    var ad, title = $find(li, 'h3 a'),
-      text = $find(li, '.ads-creative'),
-      site = $find(li, '.ads-visurl cite');
-
-    if (text.length && site.length && title.length) {
-
-      ad = createTextAd('google', $attr(title, 'href'),
-        $text(title), $text(text), $text(site) );
-
-      //self.port && self.port.emit('parsed-text-ad', ad);
-      console.log("TEXT: googleText", ad);
-
-    } else {
-
-      console.warn('TEXT: googleText.fail: ', text, site);
+    if (!imgSrc) {
+      if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+      continue;
     }
 
-    return ad;
+    if (dbugDetect) console.log('imgSrc: ' + imgSrc);
+
+    var target = clickableParent(imgs[i]);
+    if (target) {
+
+      if (target.tagName === 'A') {
+
+        var targetUrl = target.getAttribute("href");
+        if (targetUrl) {
+
+          if (targetUrl.indexOf('http') >= 0) {
+            var ad = createImgAd(document.domain, targetUrl, imgSrc);
+            console.log("IMG-AD", ad);
+            notifyAddon(elem, ad);
+
+          } else {
+
+            console.warn("Ignoring IMG-AD with targetUrl=" + targetUrl + " src=" + imgSrc);
+          }
+        }
+
+        // Need to check for div.onclick etc?
+        else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
+      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
+    } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
+  }
+}
+
+var filters = [{
+  selector: 'li.ads-ad',
+  handler: googleText,
+  name: 'adsense-1'
+    //domain: googleRegex
+}, {
+  selector: '.ads ul',
+  //waitfor: 'li',
+  handler: yahooText,
+  name: 'yahoo',
+}, {
+  selector: '.ADS RHR-ADS',
+  //waitfor: 'li',
+  handler: aolText,
+  name: 'aol',
+}];
+
+function aolText(li) {
+  console.log('aolText()', li);
+}
+
+function yahooText(li) {
+  console.log('yahooText()');
+}
+
+var checkFilters = function (elem) {
+
+  for (var i = 0; i < filters.length; i++) {
+
+    if ($is(elem, filters[i].selector)) {
+
+      var result = filters[i].handler(elem);
+      if (result) return result;
+    }
+  }
+};
+
+var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
+
+function googleText(li) {
+
+  //console.log('googleText()',li);
+
+  var ad, title = $find(li, 'h3 a'),
+    text = $find(li, '.ads-creative'),
+    site = $find(li, '.ads-visurl cite');
+
+  if (text.length && site.length && title.length) {
+
+    ad = createTextAd('google', $attr(title, 'href'),
+      $text(title), $text(text), $text(site));
+
+    //self.port && self.port.emit('parsed-text-ad', ad)
+    //console.log("TEXT: googleText", ad);
+
+  } else {
+
+    console.warn('TEXT: googleText.fail: ', text, site);
   }
 
-  function createImgAd(network, target, img) {
+  return ad;
+}
 
-    if (!/^http/.test(target)) {
+function createImgAd(network, target, img) {
 
-      console.warn("Ignoring ImgAd with targetUrl="+target, arguments);
-      return;
-    }
+  if (target.indexOf('http') < 0) {
 
-    //console.log("createImgAd: ",network, img, target);
-    // if (window.self !== window.top) { // see #42
-    //     console.log('iFrame: parseTitle: ', window.top.document.title);
-    // }
-
-    var ad = new Ad(network, document.title, document.URL, target, 'img');
-
-    if (!/^http/.test(img)) { // relative image url
-
-      if(dbugDetect) console.log("Found relative image: "+this.contentData.src);
-      img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-    }
-
-    ad.contentData = { src: img };
-
-    return ad;
+    console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
+    return;
   }
 
-  function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
+  //console.log("createImgAd: ",network, img, target);
+  // if (window.self !== window.top) { // see #42
+  //     console.log('iFrame: parseTitle: ', window.top.document.title);
+  // }
 
-    if (!/^http/.test(target)) {
+  var ad = new Ad(network, document.title, document.URL, target, 'img');
 
-      console.warn("Ignoring TextAd with targetUrl="+target, arguments);
-      return;
-    }
+  if (!/^http/.test(img)) { // relative image url
 
-    //console.log("createTextAd: ",network, title, text, site, target);
-    var ad = new Ad(network, document.title, document.URL, target, 'text');
-
-    if (title.length) ad.title = title;
-
-    ad.contentData = {
-      title: title,
-      text: text,
-      site: site
-    }
-
-    return ad;
+    if (dbugDetect) console.log("Found relative image: " + this.contentData.src);
+    img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
   }
 
-  return {
-    findAds: findAds,
+  ad.contentData = {
+    src: img
+  };
+
+  return ad;
+}
+
+function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
+
+  if (target.indexOf('http') < 0) {
+
+    console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
+    return;
   }
+
+  //console.log("createTextAd: ",network, title, text, site, target);
+  var ad = new Ad(network, document.title, document.URL, target, 'text');
+
+  if (title.length) ad.title = title;
+
+  ad.contentData = {
+    title: title,
+    text: text,
+    site: site
+  }
+
+  return ad;
+}
+
+return {
+  findAds: findAds,
+}
 
 })();
 
@@ -343,98 +363,96 @@ var adDetector = (function() {
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
 
-var uBlockCollapser = (function() {
-    var timer = null;
-    var requestId = 1;
-    var newRequests = [];
-    var pendingRequests = Object.create(null);
-    var pendingRequestCount = 0;
-    var src1stProps = {
+var uBlockCollapser = (function () {
+      var timer = null;
+      var requestId = 1;
+      var newRequests = [];
+      var pendingRequests = Object.create(null);
+      var pendingRequestCount = 0;
+      var src1stProps = {
         'embed': 'src',
         'img': 'src',
         'object': 'data'
-    };
-    var src2ndProps = {
+      };
+      var src2ndProps = {
         'img': 'srcset'
-    };
+      };
 
-    var PendingRequest = function(target, tagName, attr) {
+      var PendingRequest = function (target, tagName, attr) {
         this.id = requestId++;
         this.target = target;
         this.tagName = tagName;
         this.attr = attr;
         pendingRequests[this.id] = this;
         pendingRequestCount += 1;
-    };
+      };
 
-    // Because a while ago I have observed constructors are faster than
-    // literal object instanciations.
-    var BouncingRequest = function(id, tagName, url) {
+      // Because a while ago I have observed constructors are faster than
+      // literal object instanciations.
+      var BouncingRequest = function (id, tagName, url) {
         this.id = id;
         this.tagName = tagName;
         this.url = url;
         this.collapse = false;
-    };
+      };
 
-    var onProcessed = function(response) {
+      var onProcessed = function (response) {
         // https://github.com/gorhill/uMatrix/issues/144
-        if ( response.shutdown ) {
-            vAPI.shutdown.exec();
-            return;
+        if (response.shutdown) {
+          vAPI.shutdown.exec();
+          return;
         }
 
         var requests = response.result;
-        if ( requests === null || Array.isArray(requests) === false ) {
-            return;
+        if (requests === null || Array.isArray(requests) === false) {
+          return;
         }
         var selectors = [];
         var i = requests.length;
         var request, entry, target, value;
-        while ( i-- ) {
-            request = requests[i];
-            entry = pendingRequests[request.id];
-            if ( entry === undefined ) {
-                continue;
-            }
-            delete pendingRequests[request.id];
-            pendingRequestCount -= 1;
+        while (i--) {
+          request = requests[i];
+          entry = pendingRequests[request.id];
+          if (entry === undefined) {
+            continue;
+          }
+          delete pendingRequests[request.id];
+          pendingRequestCount -= 1;
 
-            // https://github.com/chrisaljoudi/uBlock/issues/869
-            if ( !request.collapse ) {
-                continue;
-            }
+          // https://github.com/chrisaljoudi/uBlock/issues/869
+          if (!request.collapse) {
+            continue;
+          }
 
-            target = entry.target;
+          target = entry.target;
 
-            // https://github.com/chrisaljoudi/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            target.style.setProperty('display', 'none', 'important');
-            if(dbugDetect)console.log("HIT-onProcessed: ",target);
+          // https://github.com/chrisaljoudi/uBlock/issues/399
+          // Never remove elements from the DOM, just hide them
+          target.style.setProperty('display', 'none', 'important');
+          if (dbugDetect) console.log("HIT-onProcessed: ", target);
 
-            adDetector.findAds([ target ]);
+          adDetector.findAds([target]);
 
-
-            // https://github.com/chrisaljoudi/uBlock/issues/1048
-            // Use attribute to construct CSS rule
-            if ( (value = target.getAttribute(entry.attr)) ) {
-                selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
-            }
+          // https://github.com/chrisaljoudi/uBlock/issues/1048
+          // Use attribute to construct CSS rule
+          if ((value = target.getAttribute(entry.attr))) {
+            selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
+          }
         }
-        if ( selectors.length !== 0 ) {
-            messager.send({
-                what: 'cosmeticFiltersInjected',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors: selectors
-            });
+        if (selectors.length !== 0) {
+          messager.send({
+            what: 'cosmeticFiltersInjected',
+            type: 'net',
+            hostname: window.location.hostname,
+            selectors: selectors
+          });
         }
         // Renew map: I believe that even if all properties are deleted, an
         // object will still use more memory than a brand new one.
-        if ( pendingRequestCount === 0 ) {
-            pendingRequests = Object.create(null);
+        if (pendingRequestCount === 0) {
+          pendingRequests = Object.create(null);
         }
-    };
-
+      };
     var send = function() {
         timer = null;
         messager.send({
