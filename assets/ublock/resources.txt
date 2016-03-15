@@ -847,9 +847,8 @@ ytad-defuser.js application/javascript
     };
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
-		if ( b === 15000 && 'xpizqvtnrfkcjixkmdnu' in a ) {
+		if ( b === 15000 && b < 20000 && 'xpizqvtnrfkcjixkmdnu' in a ) {
 			console.log('uBO>', a.xpizqvtnrfkcjixkmdnu);
-			b = 1;
 		}
 		return sto(a, b);
 	};
