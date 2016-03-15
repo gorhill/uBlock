@@ -266,3 +266,9 @@ phoronix.com#@#div[style^="text-align: center;"]
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=28701
 @@||files.explosm.net/files/$image,first-party
+
+# `amazon-adsystem.com` is blocked by Peter Lowe's. The neutered script should
+# help lower chances of breakage. Examples:
+# - http://www.food.com/recipe/oven-baked-sweet-plantains-80130?photo=39927 (sliceshow controls broken)
+# - [add more]
+||amazon-adsystem.com/aax2/amzn_ads.js$script,redirect=amazon-adsystem.com/aax2/amzn_ads.js

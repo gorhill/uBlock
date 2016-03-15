@@ -838,13 +838,13 @@ disqus.com/embed.js application/javascript
 # https://github.com/gorhill/uBlock/issues/1461
 ytad-defuser.js application/javascript
 (function() {
-    var bind = Function.prototype.bind;
-    Function.prototype.bind = function() {
-        'native code';
-        var bound = bind.apply(this, arguments);
-        bound.xpizqvtnrfkcjixkmdnu = this.toString();
-        return bound;
-    };
+	var bind = Function.prototype.bind;
+	Function.prototype.bind = function() {
+		'native code';
+		var bound = bind.apply(this, arguments);
+		bound.xpizqvtnrfkcjixkmdnu = this.toString();
+		return bound;
+	};
 	var sto = window.setTimeout;
 	window.setTimeout = function(a, b) {
 		if ( b === 15000 && b < 20000 && 'xpizqvtnrfkcjixkmdnu' in a ) {
@@ -852,4 +852,55 @@ ytad-defuser.js application/javascript
 		}
 		return sto(a, b);
 	};
+})();
+
+
+amazon-adsystem.com/aax2/amzn_ads.js application/javascript
+(function() {
+	if ( amznads ) {
+		return;
+	}
+	var w = window;
+	var noopfn = function() {
+		;
+	};
+	var amznads = {
+		appendScriptTag: noopfn,
+		appendTargetingToAdServerUrl: noopfn,
+		appendTargetingToQueryString: noopfn,
+		clearTargetingFromGPTAsync: noopfn,
+		doAllTasks: noopfn,
+		doGetAdsAsync: noopfn,
+		doTask: noopfn,
+		detectIframeAndGetURL: noopfn,
+		getAds: noopfn,
+		getAdsAsync: noopfn,
+		getAdForSlot: noopfn,
+		getAdsCallback: noopfn,
+		getDisplayAds: noopfn,
+		getDisplayAdsAsync: noopfn,
+		getDisplayAdsCallback: noopfn,
+		getKeys: noopfn,
+		getReferrerURL: noopfn,
+		getScriptSource: noopfn,
+		getTargeting: noopfn,
+		getTokens: noopfn,
+		getValidMilliseconds: noopfn,
+		getVideoAds: noopfn,
+		getVideoAdsAsync: noopfn,
+		getVideoAdsCallback: noopfn,
+		handleCallBack: noopfn,
+		hasAds: noopfn,
+		renderAd: noopfn,
+		saveAds: noopfn,
+		setTargeting: noopfn,
+		setTargetingForGPTAsync: noopfn,
+		setTargetingForGPTSync: noopfn,
+		tryGetAdsAsync: noopfn,
+		updateAds: noopfn
+	};
+	w.amznads = amznads;
+	w.amzn_ads = w.amzn_ads || noopfn;
+	w.aax_write = w.aax_write || noopfn;
+	w.aax_render_ad = w.aax_render_ad || noopfn;
 })();
