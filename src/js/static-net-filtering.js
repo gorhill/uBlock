@@ -67,7 +67,7 @@ var typeNameToTypeValue = {
              'other': 10 << 4,
           'popunder': 11 << 4,
         'main_frame': 12 << 4,
-'cosmetic-filtering': 13 << 4,
+          'elemhide': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
@@ -86,7 +86,7 @@ var typeValueToTypeName = {
     10: 'other',
     11: 'popunder',
     12: 'document',
-    13: 'cosmetic-filtering',
+    13: 'elemhide',
     14: 'inline-script',
     15: 'popup'
 };
@@ -1316,7 +1316,7 @@ FilterParser.prototype.toNormalizedType = {
              'other': 'other',
           'popunder': 'popunder',
           'document': 'main_frame',
-          'elemhide': 'cosmetic-filtering',
+          'elemhide': 'elemhide',
      'inline-script': 'inline-script',
              'popup': 'popup'
 };
@@ -1359,11 +1359,13 @@ FilterParser.prototype.parseOptType = function(raw, not) {
     }
 
     // Negated type: set all valid network request type bits to 1
-    if ( this.types === 0 ) {
-        this.types = allNetRequestTypesBitmap;
+    if (
+        (typeBit & allNetRequestTypesBitmap) !== 0 &&
+        (this.types & allNetRequestTypesBitmap) === 0
+    ) {
+        this.types |= allNetRequestTypesBitmap;
     }
-
-    this.types &= ~typeBit & allNetRequestTypesBitmap;
+    this.types &= ~typeBit;
 };
 
 /******************************************************************************/
@@ -1401,7 +1403,6 @@ FilterParser.prototype.parseOptions = function(s) {
         if ( opt === 'elemhide' || opt === 'generichide' ) {
             if ( this.action === AllowAction ) {
                 this.parseOptType('elemhide', false);
-                this.action = BlockAction;
                 continue;
             }
             this.unsupported = true;
@@ -2321,6 +2322,21 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     var categories = this.categories;
     var key, bucket;
 
+    // https://github.com/gorhill/uBlock/issues/1477
+    // Special case: blocking elemhide filter ALWAYS exists, it is implicit --
+    // thus we always and only check for exception filters.
+    if ( requestType === 'elemhide' ) {
+        key = AllowAnyParty | type;
+        if (
+            (bucket = categories[toHex(key)]) &&
+            this.matchTokens(bucket, url)
+        ) {
+            this.keyRegister = key;
+            return false;
+        }
+        return undefined;
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
     key = BlockAnyParty | Important | type;
@@ -2336,27 +2352,6 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
             this.keyRegister = key;
             return true;
         }
-    }
-
-    // Test against block filters
-    key = BlockAnyParty | type;
-    if ( (bucket = categories[toHex(key)]) ) {
-        if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = key;
-        }
-    }
-    if ( this.fRegister === null ) {
-        key = BlockAction | type | party;
-        if ( (bucket = categories[toHex(key)]) ) {
-            if ( this.matchTokens(bucket, url) ) {
-                this.keyRegister = key;
-            }
-        }
-    }
-
-    // If there is no block filter, no need to test against allow filters
-    if ( this.fRegister === null ) {
-        return undefined;
     }
 
     // Test against allow filters

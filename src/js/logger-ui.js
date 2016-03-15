@@ -273,10 +273,6 @@ var filterDecompiler = (function() {
         var typeVal = bits >>> 4 & 0x0F;
         if ( typeVal ) {
             opts.push(typeValToTypeName[typeVal]);
-            // Because of the way `elemhide` is implemented
-            if ( typeVal === 13 ) {
-                filter = '@@' + filter;
-            }
         }
         if ( opts.length !== 0 ) {
             filter += '$' + opts.join(',');
