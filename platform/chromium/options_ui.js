@@ -27,15 +27,17 @@
 
 'use strict';
 
-var messager = vAPI.messaging.channel('_open');
-messager.send({
-    what: 'gotoURL',
-    details: {
-        url: 'dashboard.html',
-        select: true,
-        index: -1
+vAPI.messaging.send(
+    'default',
+    {
+        what: 'gotoURL',
+        details: {
+            url: 'dashboard.html',
+            select: true,
+            index: -1
+        }
     }
-});
+);
 window.close();
 
 /******************************************************************************/
