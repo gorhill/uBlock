@@ -2354,6 +2354,27 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
         }
     }
 
+    // Test against block filters
+    key = BlockAnyParty | type;
+    if ( (bucket = categories[toHex(key)]) ) {
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = key;
+        }
+    }
+    if ( this.fRegister === null ) {
+        key = BlockAction | type | party;
+        if ( (bucket = categories[toHex(key)]) ) {
+            if ( this.matchTokens(bucket, url) ) {
+                this.keyRegister = key;
+            }
+        }
+    }
+
+    // If there is no block filter, no need to test against allow filters
+    if ( this.fRegister === null ) {
+        return undefined;
+    }
+
     // Test against allow filters
     key = AllowAnyParty | type;
     if ( (bucket = categories[toHex(key)]) ) {
