@@ -1,4 +1,4 @@
-# Filters optimized for uBlock
+# Filters optimized for uBlock/AdNauseam
 
 # Zerohedge: ref: http://forums.lanik.us/viewtopic.php?f=62&t=17307
 www.zerohedge.com##.similar-box
