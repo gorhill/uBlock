@@ -272,3 +272,10 @@ phoronix.com#@#div[style^="text-align: center;"]
 # - http://www.food.com/recipe/oven-baked-sweet-plantains-80130 (slideshow controls broken)
 # - [add more]
 ||amazon-adsystem.com/aax2/amzn_ads.js$script,redirect=amazon-adsystem.com/aax2/amzn_ads.js
+
+# This potentially unbreaks sites broken by EasyPrivacy's `/b/ss/*&aqe=`
+# Confirmed for:
+# - http://www.surfline.com/video/ (links not working)
+# - https://github.com/gorhill/uBlock/issues/529
+# - http://www.scotrail.co.uk/check-your-journey (via https://twitter.com/andy_pee_tho/status/710508529405263872)
+*/b/ss/*&aqe=$image,redirect=1x1-transparent.gif
