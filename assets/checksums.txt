@@ -1,18 +1,19 @@
-538211a2228745b51b615b1b245cf99e assets/ublock/unbreak.txt
-62111a29f0a5cb361ba8dbae92054adb assets/ublock/redirect-resources.txt
-3d4af0ad6a79ef9940737691d78a6f10 assets/ublock/privacy.txt
-ad5c563cb0203fb48704cc75d4f46f8e assets/ublock/filters.txt
-146704ad1c0393e342afdb416762c183 assets/ublock/badware.txt
-5baa90e2da7cd6a73edff2010557ee57 assets/ublock/redirect.txt
-b65ec581214a0d24dad6522a60f827ab assets/ublock/experimental.txt
-c3613efb3ab043f2a6cb8865f783beb4 assets/ublock/resources.txt
-059e0bfbf22bd242dda7b07389fe09a2 assets/ublock/filter-lists.json
-3605c73f21abca428c7eb69a8bc32dfe assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
-a91af77c47c302c0741c7445b0fada1a assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
-7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
-0e69a0e518eef52c121547d8808f23dc assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
-748cbfc08bed9240df4912e77a1de97a assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
-042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
-28babde5108007fc3202950ee0d4905f assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
-c4785389e986b6d68a3ac43743fec40f assets/thirdparties/pgl.yoyo.org/as/serverlist
-157540fac9034c6504bcea966d57044f assets/thirdparties/pgl.yoyo.org/as/README.md
+MD5 (assets/ublock/badware.txt) = 146704ad1c0393e342afdb416762c183
+MD5 (assets/ublock/experimental.txt) = b65ec581214a0d24dad6522a60f827ab
+MD5 (assets/ublock/filter-lists.json) = 059e0bfbf22bd242dda7b07389fe09a2
+MD5 (assets/ublock/filters.txt) = 78d2621b733f82fef0de35495261aec3
+MD5 (assets/ublock/privacy.txt) = 3d4af0ad6a79ef9940737691d78a6f10
+MD5 (assets/ublock/redirect-resources.txt) = 62111a29f0a5cb361ba8dbae92054adb
+MD5 (assets/ublock/redirect.txt) = 5baa90e2da7cd6a73edff2010557ee57
+MD5 (assets/ublock/resources.txt) = c3613efb3ab043f2a6cb8865f783beb4
+MD5 (assets/ublock/unbreak.txt) = 538211a2228745b51b615b1b245cf99e
+MD5 (assets/adnauseam/filters.txt) = 81284110e628a4f99742306b9b1130a4
+MD5 (assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt) = a91af77c47c302c0741c7445b0fada1a
+MD5 (assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt) = 3605c73f21abca428c7eb69a8bc32dfe
+MD5 (assets/thirdparties/mirror1.malwaredomains.com/files/justdomains) = 0e69a0e518eef52c121547d8808f23dc
+MD5 (assets/thirdparties/mirror1.malwaredomains.com/files/README.md) = 7f0443f3dcc9abfd47cfbc95ce824ddb
+MD5 (assets/thirdparties/pgl.yoyo.org/as/README.md) = 157540fac9034c6504bcea966d57044f
+MD5 (assets/thirdparties/pgl.yoyo.org/as/serverlist) = c4785389e986b6d68a3ac43743fec40f
+MD5 (assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat) = 748cbfc08bed9240df4912e77a1de97a
+MD5 (assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt) = 28babde5108007fc3202950ee0d4905f
+MD5 (assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md) = 042419405031f0fcfac3735bf4f05e21
