@@ -63,6 +63,10 @@ var onAbpLinkClicked = function(ev) {
     if ( ev.button !== 0 ) {
         return;
     }
+    // This addresses https://github.com/ABPIsrael/EasyListHebrew/issues/89
+    if ( ev.isTrusted === false ) {
+        return;
+    }
     var target = ev.target;
     var limit = 3;
     var href = '';
