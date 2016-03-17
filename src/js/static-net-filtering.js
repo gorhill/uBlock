@@ -1686,7 +1686,7 @@ FilterContainer.prototype.reset = function() {
     this.rejectedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
-    this.duplicateCount = 0;
+    this.discardedCount = 0;
     this.duplicateBuster = {};
     this.categories = Object.create(null);
     this.filterParser.reset();
@@ -1782,7 +1782,7 @@ FilterContainer.prototype.toSelfie = function() {
         rejectedCount: this.rejectedCount,
         allowFilterCount: this.allowFilterCount,
         blockFilterCount: this.blockFilterCount,
-        duplicateCount: this.duplicateCount,
+        discardedCount: this.discardedCount,
         categories: categoriesToSelfie(this.categories)
     };
 };
@@ -1796,7 +1796,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.rejectedCount = selfie.rejectedCount;
     this.allowFilterCount = selfie.allowFilterCount;
     this.blockFilterCount = selfie.blockFilterCount;
-    this.duplicateCount = selfie.duplicateCount;
+    this.discardedCount = selfie.discardedCount;
 
     var catKey, tokenKey;
     var dict = this.categories, subdict;
@@ -2086,13 +2086,13 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
                 entry = bucket['.'] = new FilterHostnameDict();
             }
             if ( entry.add(fields[2]) === false ) {
-                this.duplicateCount += 1;
+                this.discardedCount += 1;
             }
             continue;
         }
 
         if ( this.duplicateBuster.hasOwnProperty(line) ) {
-            this.duplicateCount += 1;
+            this.discardedCount += 1;
             continue;
         }
         this.duplicateBuster[line] = true;
@@ -2569,7 +2569,7 @@ FilterContainer.prototype.toResultString = function(verbose) {
 /******************************************************************************/
 
 FilterContainer.prototype.getFilterCount = function() {
-    return this.acceptedCount - this.duplicateCount;
+    return this.acceptedCount - this.discardedCount;
 };
 
 /******************************************************************************/

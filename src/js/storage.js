@@ -180,11 +180,11 @@
         var snfe = µb.staticNetFilteringEngine;
         var cfe = µb.cosmeticFilteringEngine;
         var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
-        var duplicateCount = snfe.duplicateCount + cfe.duplicateCount;
+        var discardedCount = snfe.discardedCount + cfe.discardedCount;
         µb.applyCompiledFilters(compiledFilters, true);
         var entry = µb.remoteBlacklists[µb.userFiltersPath];
         var deltaEntryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
-        var deltaEntryUsedCount = deltaEntryCount - (snfe.duplicateCount + cfe.duplicateCount - duplicateCount);
+        var deltaEntryUsedCount = deltaEntryCount - (snfe.discardedCount + cfe.discardedCount - discardedCount);
         entry.entryCount += deltaEntryCount;
         entry.entryUsedCount += deltaEntryUsedCount;
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
@@ -417,12 +417,12 @@
         var snfe = µb.staticNetFilteringEngine;
         var cfe = µb.cosmeticFilteringEngine;
         var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
-        var duplicateCount = snfe.duplicateCount + cfe.duplicateCount;
+        var discardedCount = snfe.discardedCount + cfe.discardedCount;
         µb.applyCompiledFilters(compiled, path === µb.userFiltersPath);
         if ( µb.remoteBlacklists.hasOwnProperty(path) ) {
             var entry = µb.remoteBlacklists[path];
             entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
-            entry.entryUsedCount = entry.entryCount - (snfe.duplicateCount + cfe.duplicateCount - duplicateCount);
+            entry.entryUsedCount = entry.entryCount - (snfe.discardedCount + cfe.discardedCount - discardedCount);
         }
     };
 
