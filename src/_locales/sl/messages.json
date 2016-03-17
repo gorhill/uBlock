@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"Vklop\/izklop blokiranja večjih medijev za to stran",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -220,7 +220,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"Te privzete nastavitve lahko spremenite za posamezne strani",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
