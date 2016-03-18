@@ -62,10 +62,12 @@ var typeNameToTypeValue = {
     'xmlhttprequest':  5 << 4,
          'sub_frame':  6 << 4,
               'font':  7 << 4,
-             'other':  8 << 4,
+             'media':  8 << 4,
+         'websocket':  9 << 4,
+             'other': 10 << 4,
           'popunder': 11 << 4,
         'main_frame': 12 << 4,
-'cosmetic-filtering': 13 << 4,
+          'elemhide': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
@@ -79,10 +81,12 @@ var typeValueToTypeName = {
      5: 'xmlhttprequest',
      6: 'subdocument',
      7: 'font',
-     8: 'other',
+     8: 'media',
+     9: 'websocket',
+    10: 'other',
     11: 'popunder',
     12: 'document',
-    13: 'cosmetic-filtering',
+    13: 'elemhide',
     14: 'inline-script',
     15: 'popup'
 };
@@ -1283,8 +1287,8 @@ FilterBucket.fromSelfie = function() {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
-    this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/;
+    this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
+    this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
     this.reCleanupHostnameRule2 = /^\**|\^$/g;
     this.reHasWildcard = /[\^\*]/;
     this.reCanTrimCarets1 = /^[^*]*$/;
@@ -1307,10 +1311,12 @@ FilterParser.prototype.toNormalizedType = {
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
               'font': 'font',
+             'media': 'media',
+         'websocket': 'websocket',
              'other': 'other',
           'popunder': 'popunder',
           'document': 'main_frame',
-          'elemhide': 'cosmetic-filtering',
+          'elemhide': 'elemhide',
      'inline-script': 'inline-script',
              'popup': 'popup'
 };
@@ -1353,11 +1359,13 @@ FilterParser.prototype.parseOptType = function(raw, not) {
     }
 
     // Negated type: set all valid network request type bits to 1
-    if ( this.types === 0 ) {
-        this.types = allNetRequestTypesBitmap;
+    if (
+        (typeBit & allNetRequestTypesBitmap) !== 0 &&
+        (this.types & allNetRequestTypesBitmap) === 0
+    ) {
+        this.types |= allNetRequestTypesBitmap;
     }
-
-    this.types &= ~typeBit & allNetRequestTypesBitmap;
+    this.types &= ~typeBit;
 };
 
 /******************************************************************************/
@@ -1395,7 +1403,6 @@ FilterParser.prototype.parseOptions = function(s) {
         if ( opt === 'elemhide' || opt === 'generichide' ) {
             if ( this.action === AllowAction ) {
                 this.parseOptType('elemhide', false);
-                this.action = BlockAction;
                 continue;
             }
             this.unsupported = true;
@@ -1679,7 +1686,7 @@ FilterContainer.prototype.reset = function() {
     this.rejectedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
-    this.duplicateCount = 0;
+    this.discardedCount = 0;
     this.duplicateBuster = {};
     this.categories = Object.create(null);
     this.filterParser.reset();
@@ -1775,7 +1782,7 @@ FilterContainer.prototype.toSelfie = function() {
         rejectedCount: this.rejectedCount,
         allowFilterCount: this.allowFilterCount,
         blockFilterCount: this.blockFilterCount,
-        duplicateCount: this.duplicateCount,
+        discardedCount: this.discardedCount,
         categories: categoriesToSelfie(this.categories)
     };
 };
@@ -1789,7 +1796,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.rejectedCount = selfie.rejectedCount;
     this.allowFilterCount = selfie.allowFilterCount;
     this.blockFilterCount = selfie.blockFilterCount;
-    this.duplicateCount = selfie.duplicateCount;
+    this.discardedCount = selfie.discardedCount;
 
     var catKey, tokenKey;
     var dict = this.categories, subdict;
@@ -2079,13 +2086,13 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
                 entry = bucket['.'] = new FilterHostnameDict();
             }
             if ( entry.add(fields[2]) === false ) {
-                this.duplicateCount += 1;
+                this.discardedCount += 1;
             }
             continue;
         }
 
         if ( this.duplicateBuster.hasOwnProperty(line) ) {
-            this.duplicateCount += 1;
+            this.discardedCount += 1;
             continue;
         }
         this.duplicateBuster[line] = true;
@@ -2314,6 +2321,21 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     var categories = this.categories;
     var key, bucket;
+
+    // https://github.com/gorhill/uBlock/issues/1477
+    // Special case: blocking elemhide filter ALWAYS exists, it is implicit --
+    // thus we always and only check for exception filters.
+    if ( requestType === 'elemhide' ) {
+        key = AllowAnyParty | type;
+        if (
+            (bucket = categories[toHex(key)]) &&
+            this.matchTokens(bucket, url)
+        ) {
+            this.keyRegister = key;
+            return false;
+        }
+        return undefined;
+    }
 
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
@@ -2547,7 +2569,7 @@ FilterContainer.prototype.toResultString = function(verbose) {
 /******************************************************************************/
 
 FilterContainer.prototype.getFilterCount = function() {
-    return this.acceptedCount - this.duplicateCount;
+    return this.acceptedCount - this.discardedCount;
 };
 
 /******************************************************************************/

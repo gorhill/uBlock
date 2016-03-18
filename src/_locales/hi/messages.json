@@ -80,31 +80,31 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"बड़े मीडिया चीजों को रोक दें",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"इस वेबसाइट की खूबसूरत फ़िल्टरिंग करें",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"बाहरी फ़ॉन्ट्स को ब्लॉक करें",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Global rules: this column is for rules which apply to all sites.",
+    "message":"निन्मलिखित नियमें सब वेस्बिते पर लागू है",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message":"निन्मलिखित नियमें सिर्फ इस वेबसाइट पर लागू है",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Click to make your changes permanent.",
+    "message":"आपके परिवर्तनों को रकने के लिए क्लिक करें",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Click to revert your changes.",
+    "message":"आपके परिवर्तनों को उलटने के लिए क्लिक करें",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -120,31 +120,31 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3rd-party css\/images",
+    "message":"तृतीया पक्ष सीइसइस तस्वीरें",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"लाइन के बीच वाले स्क्रिप्ट्स",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"असली साइट के स्क्रिप्ट्स",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"दूसरी साइट के स्क्रिप्ट्स",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"दूसरी साइट के फ्रेम्स",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"योजित साइटें",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{total}} मे से {{count}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -164,7 +164,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"सुंदरता के लिए फिलटरें",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -172,23 +172,23 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"इस को ब्लॉक करो",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"ब्लॉक किये चीज़ो की प्लेसहोल्डर को हटाओ",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"इसके आइकॉन पर ब्लॉक किये चीज़ो की गिनती दिखाओ",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Disable tooltips",
+    "message":"टूलटिप्स मत दिखाओ",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"विकल्प सूचि का प्रयोग करें",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{

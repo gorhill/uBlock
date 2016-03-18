@@ -634,11 +634,15 @@ FilterContainer.prototype.reset = function() {
     this.µburi = µb.URI;
     this.frozen = false;
     this.acceptedCount = 0;
-    this.duplicateCount = 0;
+    this.discardedCount = 0;
     this.duplicateBuster = {};
 
     this.selectorCache = {};
     this.selectorCacheCount = 0;
+    if ( this.selectorCacheTimer !== null ) {
+        clearTimeout(this.selectorCacheTimer);
+        this.selectorCacheTimer = null;
+    }
 
     // permanent
     // [class], [id]
@@ -689,7 +693,11 @@ FilterContainer.prototype.isValidSelector = (function() {
         try {
             // https://github.com/gorhill/uBlock/issues/693
             div.matches(s + ',\n#foo');
-            return true;
+            // Discard new ABP's `-abp-properties` directive until it is
+            // implemented (if ever).
+            if ( s.indexOf('[-abp-properties=') === -1 ) {
+                return true;
+            }
         } catch (e) {
         }
         // We reach this point very rarely.
@@ -913,7 +921,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.hasOwnProperty(line) ) {
-            this.duplicateCount += 1;
+            this.discardedCount += 1;
             continue;
         }
         this.duplicateBuster[line] = true;
@@ -1021,6 +1029,8 @@ FilterContainer.prototype.skipCompiledContent = function(text, lineBeg) {
         if ( lineEnd === -1 ) {
             lineEnd = textEnd;
         }
+        this.acceptedCount += 1;
+        this.discardedCount += 1;
         lineBeg = lineEnd + 1;
     }
     return textEnd;
@@ -1179,7 +1189,7 @@ FilterContainer.prototype.toSelfie = function() {
 
     return {
         acceptedCount: this.acceptedCount,
-        duplicateCount: this.duplicateCount,
+        discardedCount: this.discardedCount,
         hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
         entitySpecificFilters: this.entityFilters,
         lowGenericHide: selfieFromDict(this.lowGenericHide),
@@ -1243,7 +1253,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     };
 
     this.acceptedCount = selfie.acceptedCount;
-    this.duplicateCount = selfie.duplicateCount;
+    this.discardedCount = selfie.discardedCount;
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
     this.entityFilters = selfie.entitySpecificFilters;
     this.lowGenericHide = dictFromSelfie(selfie.lowGenericHide);
@@ -1488,7 +1498,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
 /******************************************************************************/
 
 FilterContainer.prototype.getFilterCount = function() {
-    return this.acceptedCount - this.duplicateCount;
+    return this.acceptedCount - this.discardedCount;
 };
 
 /******************************************************************************/

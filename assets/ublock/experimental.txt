@@ -33,8 +33,5 @@
 # https://github.com/gorhill/uBlock/issues/897#issuecomment-180871042
 ||doubleclick.net/instream/ad_status.js$script,redirect=doubleclick.net/instream/ad_status.js,important
 
-# This potentially unbreaks sites broken by EasyPrivacy's `/b/ss/*&aqe=`
-# Confirmed for:
-# - http://www.surfline.com/video/ (links not working)
-# - https://github.com/gorhill/uBlock/issues/529
-*/b/ss/*&aqe=$image,redirect=1x1-transparent.gif
+# https://twitter.com/kenn_butler/status/709163241021317120
+||googletagmanager.com/gtm.js$script,redirect=googletagmanager.com/gtm.js

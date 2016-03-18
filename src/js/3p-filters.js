@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -48,7 +48,7 @@ var onMessage = function(msg) {
     case 'forceUpdateAssetsProgress':
         renderBusyOverlay(true, msg.progress);
         if ( msg.done ) {
-            messager.send({ what: 'reloadAllFilters' });
+            messaging.send('dashboard', { what: 'reloadAllFilters' });
         }
         break;
 
@@ -57,7 +57,8 @@ var onMessage = function(msg) {
     }
 };
 
-var messager = vAPI.messaging.channel('3p-filters.js', onMessage);
+var messaging = vAPI.messaging;
+messaging.addChannelListener('dashboard', onMessage);
 
 /******************************************************************************/
 
@@ -262,7 +263,7 @@ var renderFilterLists = function() {
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
     };
 
-    messager.send({ what: 'getLists' }, onListsReceived);
+    messaging.send('dashboard', { what: 'getLists' }, onListsReceived);
 };
 
 /******************************************************************************/
@@ -372,7 +373,7 @@ var onPurgeClicked = function() {
         return;
     }
 
-    messager.send({ what: 'purgeCache', path: href });
+    messaging.send('dashboard', { what: 'purgeCache', path: href });
     button.remove();
 
     // If the cached version is purged, the installed version must be assumed
@@ -397,11 +398,14 @@ var onPurgeClicked = function() {
 
 var selectFilterLists = function(callback) {
     // Cosmetic filtering switch
-    messager.send({
-        what: 'userSettings',
-        name: 'parseAllABPHideFilters',
-        value: listDetails.cosmetic
-    });
+    messaging.send(
+        'dashboard',
+        {
+            what: 'userSettings',
+            name: 'parseAllABPHideFilters',
+            value: listDetails.cosmetic
+        }
+    );
 
     // Filter lists
     var switches = [];
@@ -415,10 +419,14 @@ var selectFilterLists = function(callback) {
         });
     }
 
-    messager.send({
-        what: 'selectFilterLists',
-        switches: switches
-    }, callback);
+    messaging.send(
+        'dashboard',
+        {
+            what: 'selectFilterLists',
+            switches: switches
+        },
+        callback
+    );
 };
 
 /******************************************************************************/
@@ -429,7 +437,7 @@ var buttonApplyHandler = function() {
     renderBusyOverlay(true);
 
     var onSelectionDone = function() {
-        messager.send({ what: 'reloadAllFilters' });
+        messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
 
     selectFilterLists(onSelectionDone);
@@ -446,7 +454,7 @@ var buttonUpdateHandler = function() {
         renderBusyOverlay(true);
 
         var onSelectionDone = function() {
-            messager.send({ what: 'forceUpdateAssets' });
+            messaging.send('dashboard', { what: 'forceUpdateAssets' });
         };
 
         selectFilterLists(onSelectionDone);
@@ -467,17 +475,20 @@ var buttonPurgeAllHandler = function() {
         renderFilterLists();
     };
 
-    messager.send({ what: 'purgeAllCaches' }, onCompleted);
+    messaging.send('dashboard', { what: 'purgeAllCaches' }, onCompleted);
 };
 
 /******************************************************************************/
 
 var autoUpdateCheckboxChanged = function() {
-    messager.send({
-        what: 'userSettings',
-        name: 'autoUpdate',
-        value: this.checked
-    });
+    messaging.send(
+        'dashboard',
+        {
+            what: 'userSettings',
+            name: 'autoUpdate',
+            value: this.checked
+        }
+    );
 };
 
 /******************************************************************************/
@@ -494,7 +505,11 @@ var renderExternalLists = function() {
         uDom('#externalLists').val(details);
         externalLists = details;
     };
-    messager.send({ what: 'userSettings', name: 'externalLists' }, onReceived);
+    messaging.send(
+        'dashboard',
+        { what: 'userSettings', name: 'externalLists' },
+        onReceived
+    );
 };
 
 /******************************************************************************/
@@ -508,11 +523,14 @@ var externalListsChangeHandler = function() {
 
 var externalListsApplyHandler = function() {
     externalLists = uDom.nodeFromId('externalLists').value;
-    messager.send({
-        what: 'userSettings',
-        name: 'externalLists',
-        value: externalLists
-    });
+    messaging.send(
+        'dashboard',
+        {
+            what: 'userSettings',
+            name: 'externalLists',
+            value: externalLists
+        }
+    );
     renderFilterLists();
     uDom('#externalListsApply').prop('disabled', true);
 };

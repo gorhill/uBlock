@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -114,16 +114,53 @@ vAPI.shutdown = (function() {
 /******************************************************************************/
 
 vAPI.messaging = {
-    channels: {},
-    pending: {},
+    channels: Object.create(null),
+    channelCount: 0,
+    pending: Object.create(null),
     pendingCount: 0,
     auxProcessId: 1,
     connected: false,
-    connector: function(msg) {
-        messagingConnector(JSON.parse(msg));
+
+    messageListener: function(msg) {
+        var details = JSON.parse(msg);
+        if ( !details ) {
+            return;
+        }
+
+        // Sent to all channels
+        if ( details.broadcast && !details.channelName ) {
+            for ( var channelName in this.channels ) {
+                this.sendToChannelListeners(channelName, details.msg);
+            }
+            return;
+        }
+
+        // Response to specific message previously sent
+        if ( details.auxProcessId ) {
+            var listener = this.pending[details.auxProcessId];
+            delete this.pending[details.auxProcessId];
+            delete details.auxProcessId; // TODO: why?
+            if ( listener ) {
+                this.pendingCount -= 1;
+                listener(details.msg);
+                return;
+            }
+        }
+
+        // Sent to a specific channel
+        var response = this.sendToChannelListeners(details.channelName, details.msg);
+
+        // Respond back if required
+        if ( details.mainProcessId === undefined ) {
+            return;
+        }
+        sendAsyncMessage('ublock0:background', {
+            mainProcessId: details.mainProcessId,
+            msg: response
+        });
     },
 
-    builtinChannelHandler: function(msg) {
+    builtinListener: function(msg) {
         if ( msg.cmd === 'injectScript' ) {
             // injectScript is not always present.
             // - See contentObserver.initContentScripts in frameModule.js
@@ -131,12 +168,15 @@ vAPI.messaging = {
                 return;
             }
             var details = msg.details;
-            if ( details.allFrames !== true && window !== window.top ) {
+            // Whether to inject in all child frames. Default to only top frame.
+            var allFrames = details.allFrames || false;
+            if ( allFrames !== true && window !== window.top ) {
                 return;
             }
             // https://github.com/gorhill/uBlock/issues/876
             // Enforce `details.runAt`. Default to `document_end`.
-            if ( details.runAt === 'document_start' || document.readyState !== 'loading' ) {
+            var runAt = details.runAt || 'document_end';
+            if ( runAt === 'document_start' || document.readyState !== 'loading' ) {
                 self.injectScript(details.file);
                 return;
             }
@@ -149,7 +189,7 @@ vAPI.messaging = {
         }
         if ( msg.cmd === 'shutdownSandbox' ) {
             vAPI.shutdown.exec();
-            vAPI.messaging.shutdown();
+            this.stop();
             if ( typeof self.outerShutdown === 'function' ) {
                 outerShutdown();
             }
@@ -157,53 +197,56 @@ vAPI.messaging = {
         }
     },
 
-    setup: function() {
-        this.channels['vAPI'] = new MessagingChannel('vAPI', this.builtinChannelHandler);
-        window.addEventListener('pagehide', this.toggleListener, true);
-        window.addEventListener('pageshow', this.toggleListener, true);
+    toggleListener: function({type, persisted}) {
+        if ( type === 'pagehide' && !persisted ) {
+            vAPI.shutdown.exec();
+            this.stop();
+            if ( typeof self.outerShutdown === 'function' ) {
+                outerShutdown();
+            }
+            return;
+        }
+
+        if ( type === 'pagehide' ) {
+            this.disconnect();
+        } else /* if ( type === 'pageshow' ) */ {
+            this.connect();
+        }
+    },
+    toggleListenerCallback: null,
+
+    start: function() {
+        this.addChannelListener('vAPI', this.builtinListener.bind(this));
+        if ( this.toggleListenerCallback === null ) {
+            this.toggleListenerCallback = this.toggleListener.bind(this);
+        }
+        window.addEventListener('pagehide', this.toggleListenerCallback, true);
+        window.addEventListener('pageshow', this.toggleListenerCallback, true);
     },
 
-    shutdown: function() {
-        this.close();
-        window.removeEventListener('pagehide', this.toggleListener, true);
-        window.removeEventListener('pageshow', this.toggleListener, true);
-        vAPI.messaging = null;
-    },
-
-    close: function() {
+    stop: function() {
+        if ( this.toggleListenerCallback !== null ) {
+            window.removeEventListener('pagehide', this.toggleListenerCallback, true);
+            window.removeEventListener('pageshow', this.toggleListenerCallback, true);
+        }
         this.disconnect();
-        this.channels = {};
+        this.channels = Object.create(null);
+        this.channelCount = 0;
         // service pending callbacks
-        var pending = this.pending, listener;
-        this.pending = {};
+        var pending = this.pending, callback;
+        this.pending = Object.create(null);
         this.pendingCount = 0;
         for ( var auxId in pending ) {
-            if ( this.pending.hasOwnProperty(auxId) ) {
-                listener = pending[auxId];
-                if ( typeof listener === 'function' ) {
-                    listener(null);
-                }
+            callback = pending[auxId];
+            if ( typeof callback === 'function' ) {
+                callback(null);
             }
         }
     },
 
-    channel: function(channelName, callback) {
-        if ( !channelName ) {
-            return;
-        }
-        var channel = this.channels[channelName];
-        if ( channel instanceof MessagingChannel ) {
-            channel.addListener(callback);
-            channel.refCount += 1;
-        } else {
-            channel = this.channels[channelName] = new MessagingChannel(channelName, callback);
-        }
-        return channel;
-    },
-
     connect: function() {
         if ( !this.connected ) {
-            addMessageListener(this.connector);
+            addMessageListener(this.messageListener.bind(this));
             this.connected = true;
         }
     },
@@ -215,182 +258,106 @@ vAPI.messaging = {
         }
     },
 
-    toggleListener: function({type, persisted}) {
-        var me = vAPI.messaging;
-        if ( !me ) {
-            return;
-        }
+    send: function(channelName, message, callback) {
+        this.sendTo(channelName, message, undefined, undefined, callback);
+    },
 
-        if ( type === 'pagehide' ) {
-            if ( !persisted ) {
-                vAPI.shutdown.exec();
-                vAPI.messaging.shutdown();
-                if ( typeof self.outerShutdown === 'function' ) {
-                    outerShutdown();
-                }
+    sendTo: function(channelName, message, toTabId, toChannel, callback) {
+        if ( !this.connected ) {
+            if ( typeof callback === 'function' ) {
+                callback();
             }
-            me.disconnect();
             return;
         }
-
-        me.connect();
-    }
-};
-
-/******************************************************************************/
-
-var messagingConnector = function(details) {
-    if ( !details ) {
-        return;
-    }
-
-    var messaging = vAPI.messaging;
-
-    // Sandbox might have been shutdown
-    if ( !messaging ) {
-        return;
-    }
-
-    var channels = messaging.channels;
-    var channel;
-
-    // Sent to all channels
-    if ( details.broadcast && !details.channelName ) {
-        for ( channel in channels ) {
-            if ( channels[channel] instanceof MessagingChannel === false ) {
-                continue;
-            }
-            channels[channel].sendToListeners(details.msg);
+        // Too large a gap between the last request and the last response means
+        // the main process is no longer reachable: memory leaks and bad
+        // performance become a risk -- especially for long-lived, dynamic
+        // pages. Guard against this.
+        if ( this.pendingCount > 25 ) {
+            vAPI.shutdown.exec();
         }
-        return;
-    }
-
-    // Response to specific message previously sent
-    if ( details.auxProcessId ) {
-        var listener = messaging.pending[details.auxProcessId];
-        delete messaging.pending[details.auxProcessId];
-        delete details.auxProcessId; // TODO: why?
-        if ( listener ) {
-            messaging.pendingCount -= 1;
-            listener(details.msg);
-            return;
+        this.connect();
+        var auxProcessId;
+        if ( callback ) {
+            auxProcessId = this.auxProcessId++;
+            this.pending[auxProcessId] = callback;
+            this.pendingCount += 1;
         }
-    }
-
-    // Sent to a specific channel
-    var response;
-    channel = channels[details.channelName];
-    if ( channel instanceof MessagingChannel ) {
-        response = channel.sendToListeners(details.msg);
-    }
-
-    // Respond back if required
-    if ( details.mainProcessId !== undefined ) {
         sendAsyncMessage('ublock0:background', {
-            mainProcessId: details.mainProcessId,
-            msg: response
+            channelName: self._sandboxId_ + '|' + channelName,
+            auxProcessId: auxProcessId,
+            toTabId: toTabId,
+            toChannel: toChannel,
+            msg: message
         });
-    }
-};
+    },
 
-/******************************************************************************/
-
-var MessagingChannel = function(name, callback) {
-    this.channelName = name;
-    this.listeners = typeof callback === 'function' ? [callback] : [];
-    this.refCount = 1;
-    if ( typeof callback === 'function' ) {
-        vAPI.messaging.connect();
-    }
-};
-
-MessagingChannel.prototype.send = function(message, callback) {
-    this.sendTo(message, undefined, undefined, callback);
-};
-
-MessagingChannel.prototype.sendTo = function(message, toTabId, toChannel, callback) {
-    var messaging = vAPI.messaging;
-    if ( !messaging ) {
-        if ( typeof callback === 'function' ) {
-            callback();
+    addChannelListener: function(channelName, callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
         }
-        return;
-    }
-    // Too large a gap between the last request and the last response means
-    // the main process is no longer reachable: memory leaks and bad
-    // performance become a risk -- especially for long-lived, dynamic
-    // pages. Guard against this.
-    if ( messaging.pendingCount > 25 ) {
-        //console.error('uBlock> Sigh. Main process is sulking. Will try to patch things up.');
-        messaging.close();
-    }
-    messaging.connect();
-    var auxProcessId;
-    if ( callback ) {
-        auxProcessId = messaging.auxProcessId++;
-        messaging.pending[auxProcessId] = callback;
-        messaging.pendingCount += 1;
-    }
-    sendAsyncMessage('ublock0:background', {
-        channelName: self._sandboxId_ + '|' + this.channelName,
-        auxProcessId: auxProcessId,
-        toTabId: toTabId,
-        toChannel: toChannel,
-        msg: message
-    });
-};
-
-MessagingChannel.prototype.close = function() {
-    this.refCount -= 1;
-    if ( this.refCount !== 0 ) {
-        return;
-    }
-    delete vAPI.messaging.channels[this.channelName];
-};
-
-MessagingChannel.prototype.addListener = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    if ( this.listeners.indexOf(callback) !== -1 ) {
-        throw new Error('Duplicate listener.');
-    }
-    this.listeners.push(callback);
-    vAPI.messaging.connect();
-};
-
-MessagingChannel.prototype.removeListener = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    var pos = this.listeners.indexOf(callback);
-    if ( pos === -1 ) {
-        throw new Error('Listener not found.');
-    }
-    this.listeners.splice(pos, 1);
-};
-
-MessagingChannel.prototype.removeAllListeners = function() {
-    this.listeners = [];
-};
-
-MessagingChannel.prototype.sendToListeners = function(msg) {
-    var response;
-    var listeners = this.listeners;
-    for ( var i = 0, n = listeners.length; i < n; i++ ) {
-        response = listeners[i](msg);
-        if ( response !== undefined ) {
-            break;
+        var listeners = this.channels[channelName];
+        if ( listeners !== undefined && listeners.indexOf(callback) !== -1 ) {
+            console.error('Duplicate listener on channel "%s"', channelName);
+            return;
         }
+        if ( listeners === undefined ) {
+            this.channels[channelName] = [callback];
+            this.channelCount += 1;
+        } else {
+            listeners.push(callback);
+        }
+        this.connect();
+    },
+
+    removeChannelListener: function(channelName, callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
+        }
+        var listeners = this.channels[channelName];
+        if ( listeners === undefined ) {
+            return;
+        }
+        var pos = this.listeners.indexOf(callback);
+        if ( pos === -1 ) {
+            console.error('Listener not found on channel "%s"', channelName);
+            return;
+        }
+        listeners.splice(pos, 1);
+        if ( listeners.length === 0 ) {
+            delete this.channels[channelName];
+            this.channelCount -= 1;
+        }
+    },
+
+    removeAllChannelListeners: function(channelName) {
+        var listeners = this.channels[channelName];
+        if ( listeners === undefined ) {
+            return;
+        }
+        delete this.channels[channelName];
+        this.channelCount -= 1;
+    },
+
+    sendToChannelListeners: function(channelName, msg) {
+        var listeners = this.channels[channelName];
+        if ( listeners === undefined ) {
+            return;
+        }
+        var response;
+        for ( var i = 0, n = listeners.length; i < n; i++ ) {
+            response = listeners[i](msg);
+            if ( response !== undefined ) {
+                break;
+            }
+        }
+        return response;
     }
-    return response;
 };
+
+vAPI.messaging.start();
 
 // https://www.youtube.com/watch?v=Cg0cmhjdiLs
-
-/******************************************************************************/
-
-vAPI.messaging.setup();
 
 /******************************************************************************/
 

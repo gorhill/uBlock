@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode, vAPI, uDom */
+/* global punycode, uDom */
 
 /******************************************************************************/
 
@@ -81,6 +81,7 @@ if ( dfPaneVisibleStored ) {
 
 /******************************************************************************/
 
+var messaging = vAPI.messaging;
 var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
@@ -103,12 +104,6 @@ var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
 var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
-
-/******************************************************************************/
-
-// https://github.com/gorhill/httpswitchboard/issues/345
-
-var messager = vAPI.messaging.channel('popup.js');
 
 /******************************************************************************/
 
@@ -521,10 +516,14 @@ var renderPopupLazy = function() {
             .textContent = typeof v === 'number' ? v.toLocaleString() : v;
     };
 
-    messager.send({
-        what: 'getPopupDataLazy',
-        tabId: popupData.tabId
-    }, onDataReady);
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'getPopupDataLazy',
+            tabId: popupData.tabId
+        },
+        onDataReady
+    );
 };
 
 /******************************************************************************/
@@ -536,13 +535,16 @@ var toggleNetFilteringSwitch = function(ev) {
     if ( popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled ) {
         return;
     }
-    messager.send({
-        what: 'toggleNetFiltering',
-        url: popupData.pageURL,
-        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
-        state: !uDom('body').toggleClass('off').hasClass('off'),
-        tabId: popupData.tabId
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'toggleNetFiltering',
+            url: popupData.pageURL,
+            scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
+            state: !uDom('body').toggleClass('off').hasClass('off'),
+            tabId: popupData.tabId
+        }
+    );
 
     hashFromPopupData();
 };
@@ -550,10 +552,13 @@ var toggleNetFilteringSwitch = function(ev) {
 /******************************************************************************/
 
 var gotoPick = function() {
-    messager.send({
-        what: 'launchElementPicker',
-        tabId: popupData.tabId
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'launchElementPicker',
+            tabId: popupData.tabId
+        }
+    );
 
     vAPI.closePopup();
 };
@@ -569,15 +574,18 @@ var gotoURL = function(ev) {
 
     var rel = this.getAttribute('rel') || '';
 
-    messager.send({
-        what: 'gotoURL',
-        details: {
-            url: this.getAttribute('href'),
-            select: true,
-            index: -1,
-            popup: rel === 'popup' && ev.shiftKey
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'gotoURL',
+            details: {
+                url: this.getAttribute('href'),
+                select: true,
+                index: -1,
+                popup: rel === 'popup' && ev.shiftKey
+            }
         }
-    });
+    );
 
     vAPI.closePopup();
 };
@@ -590,11 +598,14 @@ var toggleFirewallPane = function() {
     }
     popupData.dfEnabled = !popupData.dfEnabled;
 
-    messager.send({
-        what: 'userSettings',
-        name: 'dynamicFilteringEnabled',
-        value: popupData.dfEnabled
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'userSettings',
+            name: 'dynamicFilteringEnabled',
+            value: popupData.dfEnabled
+        }
+    );
 
     // https://github.com/chrisaljoudi/uBlock/issues/996
     // Remember the last state of the firewall pane. This allows to
@@ -634,16 +645,20 @@ var setFirewallRule = function(src, des, type, action, persist) {
         updateAllFirewallCells();
         hashFromPopupData();
     };
-    messager.send({
-        what: 'toggleFirewallRule',
-        tabId: popupData.tabId,
-        pageHostname: popupData.pageHostname,
-        srcHostname: src,
-        desHostname: des,
-        requestType: type,
-        action: action,
-        persist: persist
-    }, onFirewallRuleChanged);
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'toggleFirewallRule',
+            tabId: popupData.tabId,
+            pageHostname: popupData.pageHostname,
+            srcHostname: src,
+            desHostname: des,
+            requestType: type,
+            action: action,
+            persist: persist
+        },
+        onFirewallRuleChanged
+    );
 };
 
 /******************************************************************************/
@@ -690,7 +705,14 @@ var setFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 var reloadTab = function() {
-    messager.send({ what: 'reloadTab', tabId: popupData.tabId, select: true });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'reloadTab',
+            tabId: popupData.tabId,
+            select: true
+        }
+    );
 
     // Polling will take care of refreshing the popup content
 
@@ -710,14 +732,17 @@ var toggleMinimize = function(ev) {
     // Useful to take snapshots of the whole list of domains -- example:
     //   https://github.com/gorhill/uBlock/issues/736#issuecomment-178879944
     if ( ev.shiftKey && ev.ctrlKey ) {
-        messager.send({
-            what: 'gotoURL',
-            details: {
-                url: 'popup.html?tabId=' + popupData.tabId + '&fullsize=1',
-                select: true,
-                index: -1
+        messaging.send(
+            'popupPanel',
+            {
+                what: 'gotoURL',
+                details: {
+                    url: 'popup.html?tabId=' + popupData.tabId + '&fullsize=1',
+                    select: true,
+                    index: -1
+                }
             }
-        });
+        );
         vAPI.closePopup();
         return;
     }
@@ -725,22 +750,28 @@ var toggleMinimize = function(ev) {
     popupData.firewallPaneMinimized = uDom.nodeFromId('firewallContainer')
                                           .classList
                                           .toggle('minimized');
-    messager.send({
-        what: 'userSettings',
-        name: 'firewallPaneMinimized',
-        value: popupData.firewallPaneMinimized
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'userSettings',
+            name: 'firewallPaneMinimized',
+            value: popupData.firewallPaneMinimized
+        }
+    );
     positionRulesetTools();
 };
 
 /******************************************************************************/
 
 var saveFirewallRules = function() {
-    messager.send({
-        what: 'saveFirewallRules',
-        srcHostname: popupData.pageHostname,
-        desHostnames: popupData.hostnameDict
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'saveFirewallRules',
+            srcHostname: popupData.pageHostname,
+            desHostnames: popupData.hostnameDict
+        }
+    );
     uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
 
@@ -752,12 +783,16 @@ var revertFirewallRules = function() {
         updateAllFirewallCells();
         hashFromPopupData();
     };
-    messager.send({
-        what: 'revertFirewallRules',
-        srcHostname: popupData.pageHostname,
-        desHostnames: popupData.hostnameDict,
-        tabId: popupData.tabId
-    }, onFirewallRuleChanged);
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'revertFirewallRules',
+            srcHostname: popupData.pageHostname,
+            desHostnames: popupData.hostnameDict,
+            tabId: popupData.tabId
+        },
+        onFirewallRuleChanged
+    );
     uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
 
@@ -770,13 +805,16 @@ var toggleHostnameSwitch = function(ev) {
         return;
     }
     target.classList.toggle('on');
-    messager.send({
-        what: 'toggleHostnameSwitch',
-        name: switchName,
-        hostname: popupData.pageHostname,
-        state: target.classList.contains('on'),
-        tabId: popupData.tabId
-    });
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'toggleHostnameSwitch',
+            name: switchName,
+            hostname: popupData.pageHostname,
+            state: target.classList.contains('on'),
+            tabId: popupData.tabId
+        }
+    );
     hashFromPopupData();
 };
 
@@ -805,7 +843,8 @@ var pollForContentChange = (function() {
 
     var pollCallback = function() {
         pollTimer = null;
-        messager.send(
+        messaging.send(
+            'popupPanel',
             {
                 what: 'hasPopupContentChanged',
                 tabId: popupData.tabId,
@@ -843,7 +882,11 @@ var getPopupData = function(tabId) {
         hashFromPopupData(true);
         pollForContentChange();
     };
-    messager.send({ what: 'getPopupData', tabId: tabId }, onDataReceived);
+    messaging.send(
+        'popupPanel',
+        { what: 'getPopupData', tabId: tabId },
+        onDataReceived
+    );
 };
 
 /******************************************************************************/

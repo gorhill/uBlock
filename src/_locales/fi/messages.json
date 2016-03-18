@@ -76,7 +76,7 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Aktivoi pop-uppien estäminen tälle sivulle",
+    "message":"Aktivoi ponnahdusikkunoiden esto tälle sivulle",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
@@ -84,11 +84,11 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Aktivoi ehostettu suodatus tälle sivulle",
+    "message":"Aktivoi kosmeettinen suodatus tälle sivulle",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Aktivoi kauko fonttien estäminen tälle sivulle",
+    "message":"Estä etäladattavat fontit tällä sivulla",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -120,7 +120,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3-osapuolen css\/kuvat",
+    "message":"Kolmannen osapuolen css\/kuvat",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -184,7 +184,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Poista käytöstä työkaluvinkit",
+    "message":"Piilota työkaluvihjeet",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -192,7 +192,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Värisokeaystävällinen",
+    "message":"Mukauta värisokeille",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -204,11 +204,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Poista käytöstä esihaku (estääksesi yhteydet estettyihin verkkopyyntöihin)",
+    "message":"Estä linkkien esihaku (jotta sitä kautta ei voi ladata estettyä sisältöä)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Poista käytöstä hyperlinkkien tarkistus",
+    "message":"Estä linkki-interaktioiden seuranta",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -220,7 +220,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Nämä oletustoiminnot voidaan ohittaa per-sivuston pohjalta",
+    "message":"Nämä oletustoiminnot voidaan ohittaa sivustokohtaisesti",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -232,7 +232,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Estä kaukofontit",
+    "message":"Estä etäladattavat kirjasimet",
     "description":""
   },
   "settingsStorageUsed":{
@@ -248,7 +248,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} verkkosuodatinta＋ {{cosmeticFilterCount}} ehostettua suodatinta kohteesta:",
+    "message":"{{netFilterCount}} verkkosuodatinta ja {{cosmeticFilterCount}} kosmeettista suodatinta kohteesta:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -404,7 +404,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Oma listasi osoitteista, joissa µBlock on pois päältä. Kirjoita yksi osoite kullekin riville. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
+    "message":"Lista osoitteista, joissa haluat kytkeä uBlock₀:n pois päältä. Kirjoita yksi osoite kullekin riville. Virheelliset säännöt ohitetaan.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -548,7 +548,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Tietoa ei voitu lukea, tai se on viallista",
+    "message":"Dataa ei voitu lukea tai se oli väärässä muodossa",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

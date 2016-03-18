@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"kërkesa të bllokuara",
+    "message":"kërkesa të refuzuara",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -84,7 +84,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Lejoj filtrat kozmetikë te kjo faqja",
+    "message":"Përdor filtrat kozmetikë te kjo faqja",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -180,7 +180,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Tregoj te ikona numrin e kërkesave që janë bllokuar",
+    "message":"Tregoj te ikona numrin e kërkesave që janë refuzuar",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -192,7 +192,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Ndryshoj ngjyrat për daltonikët",
+    "message":"Përshtat ngjyrat për daltonikët",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Çaktivizoj hapjen e parakohshme të faqeve (për të parandaluar lidhjet me kërkesat e bllokuara)",
+    "message":"Çaktivizoj hapjen e parakohshme të faqeve (për të parandaluar lidhjet me kërkesat e refuzuara)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -220,7 +220,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Këto vlera mund të jenë të panevojshme, sipas rastit",
+    "message":"Këto vlera bëhen të panevojshme, sipas rastit",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
