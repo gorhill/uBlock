@@ -1,5 +1,6 @@
 {
     "manifest_version": 2,
+    "minimum_edge_version": "33.14281.1000.0",
 
     "name": "uBlock Origin",
     "version": "1.6.5",
