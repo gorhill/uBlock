@@ -1,29 +1,6 @@
-/*******************************************************************************
-
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see {http://www.gnu.org/licenses/}.
-
-    Home: https://github.com/gorhill/uBlock
-*/
-
-/******************************************************************************/
-
 var dbugDetect = 0; // tmp
 
-console.log("ADN/CONTENT.JS LOADED...");
+console.log("CONTENT.JS LOADING...");
 
 // Injected into content pages
 //
@@ -41,8 +18,6 @@ console.log("ADN/CONTENT.JS LOADED...");
 // /******************************************************************************/
 
 var adDetector = (function() {
-
-  var adMessager = vAPI.messaging.channel('adnauseam');
 
   var clickableParent = function(node) {
 
@@ -87,7 +62,9 @@ var adDetector = (function() {
 
   var notifyAddon = function(node, ad) {
 
-    adMessager.send({
+    vAPI.messaging.send(
+      'adnauseam',
+      {
         what: 'registerAd',
         ad: ad
       }, function(obj) {
@@ -294,21 +271,26 @@ var adDetector = (function() {
       return [ ad ];
     }
 
-    var checkFilters = function (filts, elem) {
+    function checkFilters(theFilters, elem) {
 
-      for (var i = 0; i < filts.length; i++) {
+      for (var i = 0; i < theFilters.length; i++) {
 
-        if ($is(elem, filts[i].selector)) {
+        var filter = theFilters[i];
 
-          var result = filts[i].handler(elem);
+        if ($is(elem, filter.selector)) {
+
+          if (filter.name==='aol' && document.domain.indexOf('aol')<0) // TMP-REMOVE
+            continue;
+
+          var result = filter.handler(elem);
           if (result) {
-              if (!filts[i].domain.test(document.domain))
-                console.warn("Text Ad failed filter-test: ", document.URL, filts[i]);
-              return result;
+            if (!filter.domain.test(document.domain))
+              console.warn("Text Ad failed filter-test: ", document.URL, filter);
+            return result;
           }
         }
       }
-    };
+    }
 
     function googleText(li) {
 

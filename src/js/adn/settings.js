@@ -8,8 +8,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('settings.js'),
-    adnmessager = vAPI.messaging.channel('adnauseam');
+var messager = vAPI.messaging;
 
 /******************************************************************************/
 
@@ -24,7 +23,7 @@ function handleImportFilePicker(evt) {
 
       reader.onload = function (e) {
           var adData = JSON.parse(e.target.result);
-          adnmessager.send({
+          messager.send('adnauseam', {
               what: 'importAds',
               data: adData,
               file: files[0].name
@@ -64,7 +63,7 @@ var handleImportFilePickerX = function() {
         var msg = vAPI.i18n('adnImportConfirm');
         var proceed = vAPI.confirm(msg);
         if ( proceed ) {
-            adnmessager.send({
+            messager.send('adnauseam', {
                 what: 'importAds',
                 adData: adData,
                 file: filename
@@ -92,13 +91,13 @@ var startImportFilePicker = function() {
 };
 
 var exportToFile = function() {
-    
+
     var now = new Date();
     var filename = vAPI.i18n('adnExportedAdsFilename')
         .replace('{{datetime}}', now.toLocaleString())
         .replace(/ +/g, '_');
-        
-    adnmessager.send({ what: 'exportAds', filename: filename }, onLocalDataReceived);
+
+    messager.send('adnauseam', { what: 'exportAds', filename: filename }, onLocalDataReceived);
 };
 
 /******************************************************************************/
@@ -142,18 +141,18 @@ var onLocalDataReceived = function(details) {
 /******************************************************************************/
 
 var clearAds = function() {
-                                  
+
     var msg = vAPI.i18n('adnClearConfirm');
     var proceed = vAPI.confirm(msg);
     if ( proceed ) {
-        adnmessager.send({ what: 'clearAds' });
+        messager.send('adnauseam', { what: 'clearAds' });
     }
 };
 
 /******************************************************************************/
 
 var changeUserSettings = function(name, value) {
-    messager.send({
+    messager.send('dashboard', {
         what: 'userSettings',
         name: name,
         value: value
@@ -208,8 +207,8 @@ var onUserSettingsReceived = function(details) {
 /******************************************************************************/
 
 uDom.onLoad(function() {
-    messager.send({ what: 'userSettings' }, onUserSettingsReceived);
-    messager.send({ what: 'getLocalData' }, onLocalDataReceived);
+    messager.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
+    messager.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
 });
 
 /******************************************************************************/

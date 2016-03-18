@@ -100,7 +100,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"a browser extension designed to defend against tracking by ad-networks",
+    "message":"fight back against advertising surveillance",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

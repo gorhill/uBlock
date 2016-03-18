@@ -6,9 +6,9 @@
 
   'use strict';
 
-  var messager = vAPI.messaging.channel('adnauseam');
+  var messager = vAPI.messaging;
 
-  messager.addListener(function (request) {
+  messager.addChannelListener('adnauseam', function (request) {
     console.log("GOT BROADCAST", request);
     switch (request.what) {
     case 'adAttempt':
@@ -23,8 +23,6 @@
       break;
     }
   });
-
-  //console.log(messager, Object.keys(messager), messager.send);
 
   const logoURL = 'http://dhowe.github.io/AdNauseam/',
     States = ['pending', 'visited', 'failed'],
@@ -822,7 +820,7 @@
 
       if (next) {
 
-        messager.send({ what: 'itemInspected', id: next.id }, function () {});
+        messager.send('adnauseam', { what: 'itemInspected', id: next.id }, function () {});
       }
 
       centerZoom($selected);
@@ -892,7 +890,7 @@
 
     // WHY ????
     //self.port && self.port.emit("refresh-vault");
-    //messager.send({  what: 'refreshVault' }, function(){ });
+    //messager.send('adnauseam', {  what: 'refreshVault' }, function(){ });
   }
 
   function findItemDivByGid(gid) {
@@ -1114,11 +1112,7 @@
           });
 
           // tell the addon
-          //self.port && self.port.emit("delete-adset", { ids: selectedAdSet.childIds() });
-          messager.send({
-            what: 'deleteAdset',
-            ids: selectedAdSet.childIds()
-          }, function () {});
+          messager.send('adnauseam', { what: 'deleteAdset', ids: selectedAdSet.childIds() });
 
           // recreate the slider, but don't redo layout
           createSlider(false);
@@ -1599,9 +1593,7 @@
 
   /********************************************************************/
 
-  messager.send({
-    what: 'adsForVault'
-  }, renderAds);
+  messager.send('adnauseam', { what: 'adsForVault' }, renderAds);
 
   /********************************************************************/
 

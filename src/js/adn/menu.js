@@ -5,10 +5,9 @@
 
   'use strict';
 
-  var ads, messenger = vAPI.messaging.channel('adnauseam'),
-    ubmessenger = vAPI.messaging.channel('popup.js');
+  var ads; // can we remove?
 
-  messenger.addListener(function (request) {
+  vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
     //console.log("menu.Message:", request.what, request);
 
@@ -77,8 +76,6 @@
 
       // update the visited count
       $('#visited-count').text(visitedCount(ads));
-
-      setAttempting(ad);
     }
   }
 
@@ -134,15 +131,14 @@
 
   function updateAdClasses(ad) {
 
-    var $ad = $('#ad' + ad.id),
-      jv = 'just-visited';
+    var $ad = $('#ad' + ad.id), jv = 'just-visited';
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
-    $ad.removeClass('failed visited attempting').addClass(visitedClass(ad));
+    $ad.removeClass('failed visited attempting');
     $ad.removeClass(jv).addClass(jv);
 
-    //if (ad.type === 'img') ??
-    //$ad.find('img').removeClass('just-visited').addClass('just-visited');
+    // timed for animation
+    setTimeout(function() { $ad.addClass(visitedClass(ad)); }, 300);
 
     return $ad;
   }
@@ -288,13 +284,15 @@
 
     var onPopupData = function (response) {
       cachePopupData(response);
-      messenger.send({
+      vAPI.messaging.send(
+        'adnauseam', {
         what: 'adsForPage',
         tabId: popupData.tabId
       }, renderPage);
     };
 
-    ubmessenger.send({
+    vAPI.messaging.send(
+      'popupPanel', {
       what: 'getPopupData',
       tabId: tabId
     }, onPopupData);
@@ -311,6 +309,7 @@
   };
 
   var cachePopupData = function (data) {
+      console.log(data);
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
