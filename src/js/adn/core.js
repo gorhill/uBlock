@@ -161,7 +161,7 @@
       if (title && title.length > 1) {
         ad.title = unescapeHTML(title[1].trim());
       } else {
-        console.warn('Unable to parse title from: ' + html);
+        console.warn('Unable to parse title from: ' + xhr.responseText);
       }
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects

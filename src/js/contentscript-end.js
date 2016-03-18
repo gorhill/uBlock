@@ -172,6 +172,12 @@ var adDetector = (function() {
 
     //console.log("findAds("+adNodes.length+")");
 
+    // TODO: enable once all text-ad filters are working
+    var activeFilters  = true ? filters : filters.filter(function(f){
+        console.log(f, f.domain);
+        return f.domain.test(document.domain);
+    });
+
     for (var i = 0; i < adNodes.length; i++) {
 
       var elem = adNodes[i];
@@ -191,13 +197,15 @@ var adDetector = (function() {
       else { // need to check domain/tag here: called way too often
 
           //console.log("TRYING: ", elem);
-          var ads = checkFilters(elem);
+          var ads = checkFilters(activeFilters, elem);
           if (ads && ads.length) {
 
               for (var i = 0; i < ads.length; i++) {
 
+                if (ads[i]) {
                   console.log("TEXT-AD", ads[i]);
                   notifyAddon(elem, ads[i]);
+                }
               }
           }
       }
@@ -228,9 +236,13 @@ var adDetector = (function() {
             if (targetUrl) {
 
               if (targetUrl.indexOf('http') >= 0) {
+
                 var ad = createImgAd(document.domain, targetUrl, imgSrc);
-                console.log("IMG-AD", ad);
-                notifyAddon(elem, ad);
+                if (ad) {
+
+                    console.log("IMG-AD", ad);
+                    notifyAddon(elem, ad);
+                }
 
               } else {
 
@@ -245,19 +257,24 @@ var adDetector = (function() {
       }
   }
 
+  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
+
   var filters = [
   {
         selector: 'li.ads-ad',
         handler: googleText,
-        name: 'adsense-1'
+        name: 'google',
+        domain: googleRegex
   },{
         selector: '.ad',
         handler: aolText,
-        name: 'aol'
+        name: 'aol',
+        domain: /.*\.aol\.com(\.([a-z]{2}))?$/i
   },{
         selector: 'ol',
         handler: yahooText,
-        name: 'yahoo'
+        name: 'yahoo',
+        domain: /.*\.yahoo\.com$/i
   }];
 
   function yahooText(e) {
@@ -301,24 +318,27 @@ var adDetector = (function() {
 
       } else {
 
-        console.warn('TEXT: aolTextHandler.fail: ', text, site);
+        console.warn('TEXT: aolTextHandler.fail: ', text, site, document.title, document.URL);
       }
 
       return [ ad ];
     }
 
-    var checkFilters = function (elem) {
-      for (var i = 0; i < filters.length; i++) {
+    var checkFilters = function (filts, elem) {
 
-        if ($is(elem, filters[i].selector)) {
+      for (var i = 0; i < filts.length; i++) {
 
-          var result = filters[i].handler(elem);
-          if (result) return result;
+        if ($is(elem, filts[i].selector)) {
+
+          var result = filts[i].handler(elem);
+          if (result) {
+              if (!filts[i].domain.test(document.domain))
+                console.warn("Text Ad failed filter-test: ", document.URL, filts[i]);
+              return result;
+          }
         }
       }
     };
-
-    var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
 
     function googleText(li) {
 
@@ -333,11 +353,12 @@ var adDetector = (function() {
 
       } else {
 
-        console.warn('TEXT: googleTextHandler.fail: ', text, site);
+        console.warn('TEXT: googleTextHandler.fail: ', text, site, document.URL, document.title);
       }
 
       return [ ad ];
     }
+
 
     function createImgAd(network, target, img) {
 
@@ -351,6 +372,9 @@ var adDetector = (function() {
       // if (window.self !== window.top) { // see #42
       //     console.log('iFrame: parseTitle: ', window.top.document.title);
       // }
+      //
+      if (document.title.indexOf('SafeFrame')>-1)
+        console.warn("Incorrect page name: ",window.self === window.top, document.title, window.top && window.document && window.top.document.title);
 
       var ad = new Ad(network, document.title, document.URL, target, 'img');
 
