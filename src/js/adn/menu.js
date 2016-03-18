@@ -399,7 +399,8 @@
 
   $('#about-button').click(function () {
 
-    window.open(AboutURL);
+    window.open("./popup.html",'_self');
+    //window.open(AboutURL);
   });
 
   (function () {
