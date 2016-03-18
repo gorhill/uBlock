@@ -18,7 +18,7 @@ We conceptualize AdNauseam within a broader class of software systems that serve
 * License:          GPLv3 (see included [LICENSE](https://github.com/dhowe/AdNauseam/blob/master/LICENSE) file for full license)
 * Github Repo:      https://github.com/dhowe/adnauseam2/
 * Bug Tracker:      https://github.com/dhowe/adnauseam2/issues
-* FAQ:              https://github.com/dhowe/AdNauseam2/wiki/FAQ
+* FAQ:              https://github.com/dhowe/AdNauseam/wiki/FAQ
 
 
 #### Can I contribute?
