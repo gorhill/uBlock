@@ -413,9 +413,15 @@
 
   var deleteAd = function (id) {
 
-    var ad = adById(id);
+    var ad = adById(id), count = adlist().length;
     if (!ad) console.warn("No ad to delete", id, admap);
     delete admap[ad.pageUrl][computeHash(ad)];
+    if (adlist().length < count) {
+        console.log('DELETED: '+adinfo(ad));
+    }
+    else {
+        console.warn('Unable to delete: ', ad);
+    }
     storeUserData();
   }
 
