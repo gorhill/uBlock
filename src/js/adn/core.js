@@ -518,6 +518,11 @@
       pageDomain = pageStore.tabHostname,
       pageUrl = pageStore.rawURL;
 
+    if (!ad) {
+        console.warn("No Ad to register!");
+        return;
+    }
+
     validate(ad);
 
     if (!admap[pageUrl]) admap[pageUrl] = {};
