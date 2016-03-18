@@ -1039,6 +1039,11 @@ vAPI.onLoadAllCompleted = function() {
             return;
         }
         vAPI.tabs.injectScript(tabId, {
+            file: 'js/adn/content.js',
+            allFrames: true,
+            runAt: 'document_idle'
+        }, scriptDone);
+        vAPI.tabs.injectScript(tabId, {
             file: 'js/contentscript-end.js',
             allFrames: true,
             runAt: 'document_idle'

@@ -57,6 +57,7 @@
         <dict>
             <key>End</key>
             <array>
+                <string>js/adn/content.js</string>
                 <string>js/contentscript-end.js</string>
             </array>
             <key>Start</key>

@@ -416,7 +416,7 @@ var contentObserver = {
 
         // https://github.com/gorhill/uBlock/issues/260
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/contentType
-        //   "Non-standard, only supported by Gecko. To be used in 
+        //   "Non-standard, only supported by Gecko. To be used in
         //   "chrome code (i.e. Extensions and XUL applications)."
         // TODO: We may have to exclude more types, for now let's be
         //   conservative and focus only on the one issue reported, i.e. let's
@@ -450,6 +450,7 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
+            lss(this.contentBaseURI + 'adn/content.js', sandbox);
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if (
