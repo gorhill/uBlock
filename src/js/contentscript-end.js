@@ -23,8 +23,6 @@
 
 var dbugDetect = 0; // tmp
 
-// ol.kr5y
-
 // Injected into content pages
 //
 // jQuery functions: is, find, attr, text
@@ -201,7 +199,6 @@ var adDetector = (function() {
                   console.log("TEXT-AD", ads[i]);
                   notifyAddon(elem, ads[i]);
               }
-              //notifyAddon(elem, ad);
           }
       }
     }

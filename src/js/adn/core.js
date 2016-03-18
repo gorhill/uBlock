@@ -414,7 +414,7 @@
   var deleteAd = function (id) {
 
     var ad = adById(id), count = adlist().length;
-    if (!ad) console.warn("No ad to delete", id, admap);
+    if (!ad) console.warn("No Ad to delete", id, admap);
     delete admap[ad.pageUrl][computeHash(ad)];
     if (adlist().length < count) {
         console.log('DELETED: '+adinfo(ad));
@@ -548,11 +548,11 @@
       }
     }
 
-
     ad.id = ++idgen;
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.domain = pageDomain;
+    ad.version = vAPI.app.version;
 
     // this will overwrite an older ad with the same key
     admap[pageUrl][adhash] = ad;
