@@ -336,3 +336,6 @@ tweaktown.com###background_skin
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
 kisscartoon.me##script:inject(kisscartoon-defuser.js)
+
+# To counter EasyList's exception filter "@@||comeadvertisewithus.com^$script"
+||comeadvertisewithus.com^$script,third-party,important
