@@ -550,7 +550,7 @@ openload-defuser.js application/javascript
 	};
 	var excludes = {
 		'4': ['157','161','175'],
-		'5': ['140']
+		'5': ['144']
 	};
 	var wjdmpGet = function() {
 		return wjdmp;
@@ -570,7 +570,7 @@ openload-defuser.js application/javascript
 					if ( !o.hasOwnProperty(k) || typeof o[k] !== 'function' ) {
 						continue;
 					}
-					if ( aa.length !== 0 && aa.indexOf(k.toString()) !== -1 ) {
+					if ( aa.length !== 0 && aa.indexOf(k.toString()) === -1 ) {
 						continue;
 					}
 					o[k] = noopfn;
