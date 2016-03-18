@@ -337,6 +337,8 @@ header{
   background: #BD10E0;
   animation: 1000ms ease-in-out visit-marker;
 }
+.ad-item.just-failed::before,
+.ad-item-text.just-failed::before,
 .ad-item.just-visited.failed::before,
 .ad-item-text.just-visited.failed::before {
   background: #B80606;
@@ -347,34 +349,6 @@ header{
   background: #0076FF;
   animation: 200ms ease-in-out attempting-marker infinite alternate;
 }
-
-
-/*
-.ad-item.attempting::before,
-.ad-item-text.attempting::before {
-  content: "";
-  display:block;
-  height: 80px;
-  width: 400px;
-  background: transparent url("img/attempting.png") repeat scroll 0% 0%;
-  z-index: 999;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0.5;
-}
-*/
-
-/*
-.ad-item.attempting img,
-.ad-item-text.attempting .thumb {
-  animation: 200ms ease-in-out attempting infinite alternate;
-}
-
-.ad-item.just-visited.failed img {
-  animation: 1500ms ease-in-out failed;
-}
-*/
 
 .ad-item.failed img {
   border-color: #B80606;
@@ -441,6 +415,7 @@ header{
   animation: 1500ms ease-in-out visit;
 }
 
+.ad-item-text.just-failed .thumb,
 .ad-item-text.just-visited.failed .thumb {
   background: none;
   animation: 1500ms ease-in-out failed;
