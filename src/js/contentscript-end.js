@@ -129,7 +129,7 @@ var uBlockCollapser = (function() {
             target.style.setProperty('display', 'none', 'important');
 
             if (dbugDetect) console.log("HIT[OK1]: ", target);
-            adDetector.findAds([target]);
+            adDetector.findAds(target);
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -322,7 +322,7 @@ var uBlockCollapser = (function() {
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
                     elems[i].style.setProperty('display', 'none', 'important');
-                    if(dbugDetect);console.log("HIT[noShadow]: ",elems[i]);
+                    if(dbugDetect) console.log("HIT[noShadow]: ",elems[i]);
                 }
             };
         }
@@ -338,16 +338,16 @@ var uBlockCollapser = (function() {
             var elem, shadow;
             while ( i-- ) {
                 elem = elems[i];
-                shadow = elem.shadowRoot;
-                // https://www.chromestatus.com/features/4668884095336448
-                // "Multiple shadow roots is being deprecated."
-                if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {
-                        if(dbugDetect); console.log("HIT[shadow]: ",elem);
-                        elem.style.setProperty('display', 'none', 'important');
-                    }
-                    continue;
-                }
+                // shadow = elem.shadowRoot;
+                // // https://www.chromestatus.com/features/4668884095336448
+                // // "Multiple shadow roots is being deprecated."
+                // if ( shadow !== null ) {
+                //     if ( shadow.className !== sessionId ) {
+                //         if(dbugDetect); console.log("HIT[shadow]: ",elem);
+                //         elem.style.setProperty('display', 'none', 'important');
+                //     }
+                //     continue;
+                // }
                 // https://github.com/gorhill/uBlock/pull/555
                 // Not all nodes can be shadowed:
                 //   https://github.com/w3c/webcomponents/issues/102
@@ -363,7 +363,7 @@ var uBlockCollapser = (function() {
                 }*/
                 if(dbugDetect) console.log("HIT[OK2]: ",elem);
                 elem.style.setProperty('display', 'none', 'important');
-                adDetector.findAds([ elem ]);
+                adDetector.findAds(elem);
             }
         };
     })();
@@ -715,7 +715,7 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
-            if(dbugDetect); console.log("HIT[addStyle]: ", selectors);
+            if(dbugDetect) console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }
     };
