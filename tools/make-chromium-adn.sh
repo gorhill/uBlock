@@ -28,7 +28,7 @@ cp tools/adn/chromium/manifest.json $DES/       #adn#
 cp LICENSE.txt $DES/
 
 #ls -lR $DES
-#ls -l $DES/js/adn/content.js
+#ls -l $DES/js/adn/extract.js
 #cat $DES/manifest.json
 
 if [ "$1" = all ]; then

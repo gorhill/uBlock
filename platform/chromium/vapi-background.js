@@ -1039,7 +1039,7 @@ vAPI.onLoadAllCompleted = function() {
             return;
         }
         vAPI.tabs.injectScript(tabId, {
-            file: 'js/adn/content.js',
+            file: 'js/adn/extract.js',
             allFrames: true,
             runAt: 'document_idle'
         }, scriptDone);

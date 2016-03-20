@@ -451,7 +451,7 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
-            lss(this.contentBaseURI + 'adn/content.js', sandbox);
+            lss(this.contentBaseURI + 'adn/extract.js', sandbox);
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if (

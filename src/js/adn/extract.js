@@ -192,8 +192,6 @@ var dbugDetect = 0; // tmp
     }
   }
 
-  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
-
   var yahooText = function (e) {
 
     var ads = [],
@@ -241,6 +239,32 @@ var dbugDetect = 0; // tmp
     return [ad];
   }
 
+  var askText = function(dom) {
+
+     var title = $find(dom, 'a.test_titleLink.d_');
+     var site = $find(dom, 'a.test_domainLink.e_');
+     var text = $find(dom, 'span.descText');
+     var text2 = $find(dom, 'span.v_');
+
+     var textStr = "";
+     if (text2 && text2.length) {
+         textStr = $text(text) + $text(text2);
+     }
+     else {
+         textStr = $text(text);
+     }
+
+     if (text.length && site.length && title.length) {
+         var ad = createTextAd('ask', $attr(title, 'href'),
+             $text(title), textStr, $text(site));
+     }
+     else {
+         console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
+     }
+
+     return [ad];
+  }
+
   function checkFilters(theFilters, elem) {
 
     for (var i = 0; i < theFilters.length; i++) {
@@ -281,23 +305,29 @@ var dbugDetect = 0; // tmp
     return [ad];
   }
 
+  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; 
+
   var filters = [{
     selector: 'li.ads-ad',
     handler: googleText,
     name: 'google',
     domain: googleRegex
   }, {
+    selector: '.ad.a_',
+    handler: askText,
+    name: 'ask',
+    domain: /^.*\.ask\.com$/i
+  {
     selector: '.ad',
     handler: aolText,
     name: 'aol',
-    domain: /.*\.aol\.com(\.([a-z]{2}))?$/i
+    domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
   }, {
     selector: 'ol',
     handler: yahooText,
     name: 'yahoo',
-    domain: /.*\.yahoo\.com$/i
+    domain: /^.*\.yahoo\.com/i
   }];
-
 
   var createImgAd = function (network, target, img) {
 
