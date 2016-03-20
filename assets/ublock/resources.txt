@@ -418,7 +418,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['xz','yy','yz','zp','zx','zy','gj','fj','jf','kj','kp','pk'];
+	var aa = ['yy','yz','zp','zx','zy','gj','fj','jf','kj','kp','pk','uj'];
 	var no = {
 		set: noopfn,
 		get: function() {
