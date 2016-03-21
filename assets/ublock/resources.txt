@@ -904,3 +904,22 @@ amazon-adsystem.com/aax2/amzn_ads.js application/javascript
 	w.aax_write = w.aax_write || noopfn;
 	w.aax_render_ad = w.aax_render_ad || noopfn;
 })();
+
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+sas-defuser.js application/javascript
+(function() {
+	var noopfn = function() {
+		;
+	};
+	var ads = {
+		display: noopfn,
+		refresh: noopfn
+	};
+	Object.defineProperty(window, 'Ads', {
+		get: function() {
+			return ads;
+		},
+		set: noopfn
+	});
+})();
