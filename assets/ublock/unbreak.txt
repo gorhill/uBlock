@@ -283,7 +283,7 @@ phoronix.com#@#div[style^="text-align: center;"]
 # This unbreak video player:
 # - http://www.cnet.com/videos/big-mac-survives-molten-copper-and-heats-up-internet-ep-233/
 # And possibly other sites -- `taboola.com` is blocked by Peter Lowe's.
-||cdn.taboola.com/libtrc/*/loader.js$script,redirect=noopjs
+||cdn.taboola.com/libtrc/*/loader.js$script,redirect=noopjs,important,domain=cnet.com
 
 # https://twitter.com/peikas/status/711911523837460480
 # To counter `/analytics.min.js` in EasyPrivacy
