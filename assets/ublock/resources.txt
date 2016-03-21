@@ -934,3 +934,10 @@ figaro-defuser.js application/javascript
 		set: function() {}
 	});
 })();
+
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+lemonde-defuser.js application/javascript
+(function() {
+	localStorage.setItem('lmd_me_displayed',JSON.stringify({data:true,timeout:Date.now()+31536000000}));
+})();

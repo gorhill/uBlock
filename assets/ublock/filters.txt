@@ -349,3 +349,4 @@ lequipe.fr##script:inject(sas-defuser.js)
 ||lemde.fr/*/xitistatus.js$script,redirect=fuckadblock.js-3.2.0,domain=lemonde.fr
 ||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
 @@||static.lexpress.fr/*/ads.$script,stylesheet
+lemonde.fr##script:inject(lemonde-defuser.js)
