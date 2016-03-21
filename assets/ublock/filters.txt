@@ -346,5 +346,6 @@ kisscartoon.me##script:inject(kisscartoon-defuser.js)
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
 lequipe.fr##script:inject(sas-defuser.js)
 
-||lemde.fr/*/xitistatus.js$script,domain=lemonde.fr,redirect=fuckadblock.js-3.2.0
+||lemde.fr/*/xitistatus.js$script,redirect=fuckadblock.js-3.2.0,domain=lemonde.fr
 ||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
+@@||static.lexpress.fr/*/ads.$script,stylesheet
