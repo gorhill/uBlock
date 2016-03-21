@@ -342,3 +342,6 @@ kisscartoon.me##script:inject(kisscartoon-defuser.js)
 
 # https://twitter.com/FabienTipon/status/711877626638503936
 @@||f1g.fr/*/adsense.js$script
+
+# https://twitter.com/Turblog/status/711863495491514368
+@@||static.lexpress.fr/*/ads.$script,stylesheet
