@@ -95,6 +95,10 @@ var uBlockCollapser = (function() {
     };
 
     var onProcessed = function(response) {
+        // This can happens if uBO is restarted.
+        if ( !response ) {
+            return;
+        }
         // https://github.com/gorhill/uMatrix/issues/144
         if ( response.shutdown ) {
             vAPI.shutdown.exec();

@@ -923,3 +923,14 @@ sas-defuser.js application/javascript
 		set: noopfn
 	});
 })();
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+figaro-defuser.js application/javascript
+(function() {
+	Object.defineProperty(window, 'adisplaynormal', {
+		get: function() {
+			return true;
+		},
+		set: function() {}
+	});
+})();
