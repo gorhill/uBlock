@@ -347,3 +347,4 @@ kisscartoon.me##script:inject(kisscartoon-defuser.js)
 lequipe.fr##script:inject(sas-defuser.js)
 
 ||lemde.fr/*/xitistatus.js$script,domain=lemonde.fr,redirect=fuckadblock.js-3.2.0
+||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
