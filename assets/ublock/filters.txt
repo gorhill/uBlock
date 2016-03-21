@@ -339,3 +339,6 @@ kisscartoon.me##script:inject(kisscartoon-defuser.js)
 
 # https://twitter.com/hotelzululima/status/711729434458324992
 ||computerworld.com.au/compressor-staticfiles/addsmin/idg_gpt_pipeline_generated.js$script
+
+# https://twitter.com/FabienTipon/status/711877626638503936
+@@||f1g.fr/*/adsense.js$script
