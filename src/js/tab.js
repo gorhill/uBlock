@@ -807,6 +807,10 @@ vAPI.tabs.registerListeners();
     return this.pageStores[tabId] || null;
 };
 
+µb.mustPageStoreFromTabId = function(tabId) {
+    return this.pageStores[tabId] || this.pageStores[vAPI.noTabId];
+};
+
 /******************************************************************************/
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
