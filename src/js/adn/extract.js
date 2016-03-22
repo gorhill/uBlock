@@ -305,7 +305,7 @@ var dbugDetect = 0; // tmp
     return [ad];
   }
 
-  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; 
+  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
 
   var filters = [{
     selector: 'li.ads-ad',
@@ -317,7 +317,7 @@ var dbugDetect = 0; // tmp
     handler: askText,
     name: 'ask',
     domain: /^.*\.ask\.com$/i
-  {
+  }, {
     selector: '.ad',
     handler: aolText,
     name: 'aol',
