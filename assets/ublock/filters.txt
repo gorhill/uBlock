@@ -350,3 +350,5 @@ lequipe.fr##script:inject(sas-defuser.js)
 ||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
 @@||static.lexpress.fr/*/ads.$script,stylesheet
 lemonde.fr##script:inject(lemonde-defuser.js)
+# https://forums.lanik.us/viewtopic.php?f=91&t=29267
+www.rtl.fr###modal-warning
