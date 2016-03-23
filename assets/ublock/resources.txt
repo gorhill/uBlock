@@ -760,13 +760,13 @@ bcplayer-defuser.js application/javascript
 # https://forums.lanik.us/viewtopic.php?f=62&t=27719
 opensubtitles.org application/javascript
 (function() {
-    var eval = window.eval;
-    window.eval = function(a) {
-        if ( a.toString().indexOf('defaultCheckForAdBlockExistance') !== -1 ) {
-            return;
-        };
-        return eval(a);
-    };
+	var eval = window.eval;
+	window.eval = function(a) {
+		if ( a.toString().indexOf('defaultCheckForAdBlockExistance') !== -1 ) {
+			return;
+		};
+		return eval(a);
+	};
 })();
 
 
@@ -938,9 +938,16 @@ figaro-defuser.js application/javascript
 	});
 })();
 
-
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
 lemonde-defuser.js application/javascript
 (function() {
 	localStorage.setItem('lmd_me_displayed',JSON.stringify({data:true,timeout:Date.now()+31536000000}));
+})();
+
+# Good case for https://github.com/gorhill/uBlock/issues/781
+rtlfr-defuser.js application/javascript
+(function() {
+	window.addEventListener('load', function() {
+		document.body.style.setProperty('overflow', 'auto');
+	});
 })();

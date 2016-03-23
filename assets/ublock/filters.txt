@@ -347,3 +347,4 @@ lequipe.fr##script:inject(sas-defuser.js)
 lemonde.fr##script:inject(lemonde-defuser.js)
 # https://forums.lanik.us/viewtopic.php?f=91&t=29267
 www.rtl.fr###modal-warning
+rtl.fr##script:inject(rtlfr-defuser.js)
