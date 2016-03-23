@@ -288,3 +288,7 @@ phoronix.com#@#div[style^="text-align: center;"]
 # https://twitter.com/peikas/status/711911523837460480
 # To counter `/analytics.min.js` in EasyPrivacy
 @@||cdn.segment.com/analytics.js/*/analytics.min.js$script,domain=vyte.in
+
+# https://twitter.com/maknz/status/712731132484124672
+# To counter `-google-tag-manager/$script` in EasyPrivacy
+@@||sorted.org.nz/*/angulartics-google-tag-manager.js$script,first-party
