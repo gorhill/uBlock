@@ -408,7 +408,7 @@
   }
 
   var unescapeHTML = function (s) { // hack
-      
+
       var entities = [
        '#0*32', ' ',
        '#0*33', '!',
@@ -428,9 +428,7 @@
      ];
 
      for (var i = 0; i < entities.length; i += 2) {
-        var zz = '\&' + entities[i] + ';';
-        console.log(zz);
-        s = s.replace(new RegExp(zz, 'g'), entities[i + 1]);
+        s = s.replace(new RegExp('\&'+entities[i]+';','g'), entities[i + 1]);
      }
 
      return s;

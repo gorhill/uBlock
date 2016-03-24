@@ -216,7 +216,7 @@ var onBeforeRootFrameRequest = function(details) {
         }
     }
 
-    var newResult = µBlock.userSettings.noBlockingNonTrackers ? 'NBNT' : result;
+    var newResult = µBlock.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
 
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
