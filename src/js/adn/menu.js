@@ -173,7 +173,8 @@
 
       'src': (ad.contentData.src || ad.contentData),
       'class': 'ad-item-img',
-      'onerror': "this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'",
+      'onerror': "this.onerror=null; this.width=50; " +
+        "this.height=45; this.src='img/placeholder.svg'",
 
     }).appendTo($span);
 

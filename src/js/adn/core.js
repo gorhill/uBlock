@@ -159,18 +159,27 @@
     }
   }
 
+  var parseTitle = function(xhr) {
+
+      var title = xhr.match(/<title[^>]*>([^<]+)<\/title>/i);
+      if (title && title.length > 1) {
+
+        return unescapeHTML(title[1].trim());
+      }
+      else {
+        console.warn('Unable to parse title from: ' + xhr.responseText);
+      }
+      return false;
+  }
+
   var updateAdOnSuccess = function (xhr, ad) {
 
     var ad = xhr.delegate;
 
     if (ad) {
 
-      var title = xhr.responseText.match(/<title[^>]*>([^<]+)<\/title>/i);
-      if (title && title.length > 1) {
-        ad.title = unescapeHTML(title[1].trim());
-      } else {
-        console.warn('Unable to parse title from: ' + xhr.responseText);
-      }
+      var title = parseTitle(xhr.responseText);
+      if (title) ad.title = title;
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
@@ -399,20 +408,32 @@
   }
 
   var unescapeHTML = function (s) { // hack
+      
+      var entities = [
+       '#0*32', ' ',
+       '#0*33', '!',
+       '#0*34', '"',
+       '#0*35', '#',
+       '#0*36', '$',
+       '#0*37', '%',
+       '#0*38', '&',
+       '#0*39', '\'',
+       'apos',  '\'',
+       'amp',   '&',
+       'lt',    '<',
+       'gt',    '>',
+       'quot',  '"',
+       '#x27',  '\'',
+       '#x60',  '`'
+     ];
 
-    var entities = [
-      '#39', '\'',
-      'apos', '\'',
-      'amp', '&',
-      'lt', '<',
-      'gt', '>',
-      'quot', '"',
-      '#x27', '\'',
-      '#x60', '`'
-    ];
-    for (var i = 0; i < entities.length; i += 2)
-      s = s.replace(new RegExp('&' + entities[i] + ';', 'g'), entities[i + 1]);
-    return s;
+     for (var i = 0; i < entities.length; i += 2) {
+        var zz = '\&' + entities[i] + ';';
+        console.log(zz);
+        s = s.replace(new RegExp(zz, 'g'), entities[i + 1]);
+     }
+
+     return s;
   }
 
   var adById = function (id) {
