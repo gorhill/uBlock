@@ -998,22 +998,19 @@
     return ads;
   }
 
+  function closeVault() {
+    window.open(location, '_self').close();
+  }
+
   function addInterfaceHandlers(ads) {
 
     doFakeLocale(); // TODO: remove and implement
-
-    // $('#x-close-button').click(function(e) {
-    //
-    //   e.preventDefault();
-    //
-    //   self.port && self.port.emit("close-vault");
-    // });
 
     $('#x-close-button').click(function (e) {
 
       e.preventDefault();
 
-      window.open(location, '_self').close();
+      closeVault();
     });
 
     $('#logo').click(function (e) {
@@ -1084,8 +1081,6 @@
       // if a context-menu element is right-clicked
       $(".custom-menu li").click(function () {
 
-        //log("Vault::right-click: " + $(this).attr("data-action"));
-
         if (!selectedAdSet) {
 
           error("No selectedAdSet!");
@@ -1094,30 +1089,33 @@
 
         switch ($(this).attr("data-action")) {
 
-        case "delete":
+            case "delete":
 
-          var ids = selectedAdSet.childIds(),
-            $item = findItemDivByGid(selectedAdSet.gid);
+              var ids = selectedAdSet.childIds(),
+                $item = findItemDivByGid(selectedAdSet.gid);
 
-          // remove the adset item from the DOM
-          $item.remove();
+              // remove the adset item from the DOM
+              $item.remove();
 
-          // remove each ad from the full-adset
-          gAds = gAds.filter(function (ad) {
-            for (var i = 0, len = ids.length; i < len; i++) {
-              if (ad.id === ids[i])
-                return false;
-            }
-            return true;
-          });
+              // remove each ad from the full-adset
+              gAds = gAds.filter(function (ad) {
+                for (var i = 0, len = ids.length; i < len; i++) {
+                  if (ad.id === ids[i])
+                    return false;
+                }
+                return true;
+              });
 
-          // tell the addon
-          messager.send('adnauseam', { what: 'deleteAdset', ids: selectedAdSet.childIds() });
+              // tell the addon
+              messager.send('adnauseam', { what: 'deleteAdset', ids: selectedAdSet.childIds() });
 
-          // recreate the slider, but don't redo layout
-          createSlider(false);
+              // if its the last ad, close the vault
+              if (!gAds.length) return closeVault();
 
-          break;
+              // recreate the slider, but don't redo layout
+              createSlider(false);
+
+              break;
         }
 
         selectedAdSet = null;
@@ -1147,6 +1145,7 @@
 
       $("#alert").removeClass('hide');
       $("#alert p").text(msg);
+
     } else {
 
       $("#alert").addClass('hide');
@@ -1277,12 +1276,11 @@
     d3.select("svg").remove();
 
     // setting up the position of the chart
-    var iconW = 100,
-      width;
+    var iconW = 100;
 
     try {
 
-      width = parseInt(d3.select("#stage").style("width")) -
+      var width = parseInt(d3.select("#stage").style("width")) -
         (margin.left + margin.right + iconW);
     } catch (e) {
       throw Error("[D3] NO STAGE (page-not-ready?)");

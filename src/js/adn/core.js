@@ -28,7 +28,7 @@
     admap = {},
     lastActivity = 0,
     autoFailMode = 0,
-    testVisitMode = 1,
+    testVisitMode = 0,
     clearAdsOnInit = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
@@ -39,11 +39,11 @@
   // ignore adchoices
   var imageIgnores = ['http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png'];
 
-  // block scripts from these page domains (either regex or string)
+  // block scripts from these page domains (either regex or string) // add to rules
   var blockablePageDomains = []; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
 
   // always block scripts from these domains (either regex or string)
-  var blockableScriptDomains = ['partner.googleadservices.com'];
+  var blockableScriptDomains = [ 'partner.googleadservices.com' ]; // add to rules
 
   var initialize = function (settings) {
 
