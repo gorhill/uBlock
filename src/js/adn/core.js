@@ -28,7 +28,7 @@
     admap = {},
     lastActivity = 0,
     autoFailMode = 0,
-    testVisitMode = 0,
+    testVisitMode = 1,
     clearAdsOnInit = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,

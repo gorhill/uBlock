@@ -5,25 +5,24 @@
 
   'use strict';
 
-  var ads; // can we remove?
+  var ads, page; // can we remove? only if we can find an updated ad in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
-    //console.log("menu.Message:", request.what, request);
-
     switch (request.what) {
 
-    case 'adAttempt':
-      setAttempting(request.ad);
-      break;
+        case 'adAttempt':
+          setAttempting(request.ad);
+          break;
 
-    case 'adDetected':
-      renderPage(request); // for now, just re-render everything
-      break;
+        case 'adDetected':
+          // for now, just re-render
+          renderPage(request);
+          break;
 
-    case 'adVisited':
-      updateAd(request.ad);
-      break;
+        case 'adVisited':
+          updateAd(request.ad);
+          break;
     }
   });
 
@@ -31,23 +30,25 @@
 
   var renderPage = function (json) {
 
-    //console.log('renderPage', json);
+    page = json.pageUrl;
+    ads = onPage(json.data, page);
 
-    ads = onPage(json.data, json.pageUrl);
-
-    setCounts( /*ads,*/ json.data.length);
+    setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
+
     $items.removeClass().empty();
 
-    if (!ads) return;
+    if (ads) {
 
-    for (var i = 0, j = ads.length; i < j; i++) {
-      appendAd($items, ads[i]);
+        // if we have no page ads, use the most recent
+        if (!ads.length) ads = doRecent(json.data);
+
+        for (var i = 0, j = ads.length; i < j; i++)
+          appendAd($items, ads[i]);
+
+        setAttempting(json.current);
     }
-
-    setAttempting(json.current);
-    //if (!json.pageCount) showRecentAds(ads, json.emptyMessage);
   }
 
   function getTitle(ad) {
@@ -75,29 +76,42 @@
       $ad.find('cite').text(targetDomain(ad));
 
       // update the visited count
-      $('#visited-count').text(visitedCount(ads));
+      if (ad.pageUrl === page)
+        $('#visited-count').text(visitedCount(ads)); // uses global ads
     }
   }
 
-  function verify(ad) {
+  function verify(ad) { // uses global ads
 
     if (ad) {
+
       for (var i = 0; i < ads.length; i++) {
+
         if (ads[i].id === ad.id) {
           ads[i] = ad;
           return true;
         }
       }
     }
+
     return false;
   }
 
+  function doRecent(data) {
+
+    $("#alert").removeClass('hide');
+    $('#ad-list-items').addClass('recent-ads');
+    return data.sort(byField('-foundTs')).slice(0, 6);
+  }
+
   function onPage(ads, pageUrl) {
+
     var res = [];
     for (var i = 0; i < ads.length; i++) {
       if (ads[i].pageUrl === pageUrl)
         res.push(ads[i]);
     }
+
     return res.sort(byField('-foundTs'));
   }
 
@@ -131,19 +145,22 @@
 
   function updateAdClasses(ad) {
 
-    var $ad = $('#ad' + ad.id), jv = 'just-visited';
+    var $ad = $('#ad' + ad.id),
+      jv = 'just-visited';
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
     $ad.removeClass('failed visited attempting');
     $ad.removeClass(jv).addClass(jv);
 
     // timed for animation
-    setTimeout(function() { $ad.addClass(visitedClass(ad)); }, 300);
+    setTimeout(function () {
+      $ad.addClass(visitedClass(ad));
+    }, 300);
 
     return $ad;
   }
 
-  function setCounts(total) {
+  function setCounts(ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
     $('#vault-count').text(total);
@@ -287,16 +304,16 @@
       cachePopupData(response);
       vAPI.messaging.send(
         'adnauseam', {
-        what: 'adsForPage',
-        tabId: popupData.tabId
-      }, renderPage);
+          what: 'adsForPage',
+          tabId: popupData.tabId
+        }, renderPage);
     };
 
     vAPI.messaging.send(
       'popupPanel', {
-      what: 'getPopupData',
-      tabId: tabId
-    }, onPopupData);
+        what: 'getPopupData',
+        tabId: tabId
+      }, onPopupData);
   };
 
   /******************************************************************************/
@@ -310,7 +327,7 @@
   };
 
   var cachePopupData = function (data) {
-      console.log(data);
+
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
@@ -400,7 +417,7 @@
 
   $('#about-button').click(function () {
 
-    window.open("./popup.html",'_self');
+    window.open("./popup.html", '_self');
     //window.open(AboutURL);
   });
 

@@ -18,6 +18,19 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function showAlert(msg) {
+
+  if (msg) {
+
+    $("#alert").removeClass('hide');
+    $("#alert p").text(msg);
+
+  } else {
+
+    $("#alert").addClass('hide');
+  }
+}
+
 var computeHash = function (ad) { // DO NOT MODIFY
 
   if (!ad) return;
@@ -29,7 +42,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {
-      hash += '::' + ad.contentData[keys[i]];
+    hash += '::' + ad.contentData[keys[i]];
   }
 
   return hash;
@@ -71,7 +84,8 @@ var targetDomain = function (ad) {
 
 var extractDomains = function (fullUrl) { // used in targetDomain()
 
-  var result = [], matches,
+  var result = [],
+    matches,
     regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
   while ((matches = regexp.exec(fullUrl)))

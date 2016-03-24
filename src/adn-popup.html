@@ -2,145 +2,145 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <title>AdNauseam</title>
-    <link rel="icon" type="image/png" href="img/adn/icon-32.png">
-    <link rel="stylesheet" href="css/adn/font/stylesheet.css">
-    <link rel="stylesheet" href="css/adn/menu.css">
+  <meta charset="utf-8" />
+  <title>AdNauseam</title>
+  <link rel="icon" type="image/png" href="img/adn/icon-32.png">
+  <link rel="stylesheet" href="css/adn/font/stylesheet.css">
+  <link rel="stylesheet" href="css/adn/menu.css">
 </head>
 
 <body class="active">
 
-    <div class="container">
-        <div id="main" class="page">
+  <div class="container">
+    <div id="main" class="page">
 
-            <header>
-                <h1>
+      <header>
+        <h1>
           <a href="http://dhowe.github.io/AdNauseam/" target="new">
             <div id="toggle-button" background="">Toggle AdNauseam On/Off</div>
           </a>
         </h1>
-                <div id="stats">
-                    <span class="visited" data-i18n="adnMenuAdsClicked">&nbsp;</span>
-                    <span id="visited-count" class="visited">0</span>
-                    <span data-i18n="adnMenuOfThe">&nbsp;</span>
-                    <span id="found-count" class="found">0</span>
-                    <span class="found" data-i18n="adnMenuAdsDetected">&nbsp;</span>
-                    <div id="vault-btn">
-                        <button id="vault-button" data-i18n="adnMenuViewVault">&nbsp;</button>
-                        <span id="vault-count" class="count">(-)</span>
-                    </div>
-                </div>
-            </header>
-
-            <div id="ad-list" class="">
-
-                <div id="alert" class="hide">
-                    <img src="img/adn/adn_alert.png" alt="alert">
-                    <p>Alert goes here</p>
-                </div>
-
-                <ul id='ad-list-items'></ul>
-
-                <!--div id="log-button">
-                    <a href="#" data-i18n="adnMenuViewLog">&nbsp;</a>
-                </div-->
-            </div>
-
-            <footer>
-                <button id="pause-button" class="pause" data-i18n="adnMenuPause">&nbsp;</button>
-                <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
-                <button id="about-button" class="about">?</button>
-            </footer>
-
+        <div id="stats">
+          <span class="visited" data-i18n="adnMenuAdsClicked">&nbsp;</span>
+          <span id="visited-count" class="visited">0</span>
+          <span data-i18n="adnMenuOfThe">&nbsp;</span>
+          <span id="found-count" class="found">0</span>
+          <span class="found" data-i18n="adnMenuAdsDetected">&nbsp;</span>
+          <div id="vault-btn">
+            <button id="vault-button" data-i18n="adnMenuViewVault">&nbsp;</button>
+            <span id="vault-count" class="count">(-)</span>
+          </div>
         </div>
-        <!-- END #main -->
+      </header>
 
-        <div id="settings" class="page hide">
+      <div id="ad-list" class="">
 
-            <header class="">
+        <div id="alert" class="hide">
+          <img src="img/adn/adn_alert.png" alt="alert">
+          <p data-i18n="adnShowingRecentAds"></p>
+        </div>
 
-                <a href="#" id="settings-close" class="settings close">&#10006;</a>
+        <ul id='ad-list-items'></ul>
 
-                <!-- version# added via menu.js -->
-                <h2 id="settings-header">
+        <!--div id="log-button">
+            <a href="#" data-i18n="adnMenuViewLog">&nbsp;</a>
+        </div-->
+      </div>
+
+      <footer>
+        <button id="pause-button" class="pause" data-i18n="adnMenuPause">&nbsp;</button>
+        <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
+        <button id="about-button" class="about">?</button>
+      </footer>
+
+    </div>
+    <!-- END #main -->
+
+    <div id="settings" class="page hide">
+
+      <header class="">
+
+        <a href="#" id="settings-close" class="settings close">&#10006;</a>
+
+        <!-- version# added via menu.js -->
+        <h2 id="settings-header">
           <span>AdNauseam&nbsp;v</span>
           <span id="settings-version">X.Y</span>
           <span data-i18n="adnMenuSettings">&nbsp;</span>
         </h2>
-            </header>
+      </header>
 
-            <form id="settings_form" action="index.html" method="post">
+      <form id="settings_form" action="index.html" method="post">
 
-                <div class="row justified">
-                    <div class="btn">
-                        <button class="button" id="export-ads" data-i18n="adnMenuExportAds" data-tip="Export Ads">&nbsp;</button>
-                    </div>
-                    <div class="btn">
-                        <button class="button" id="import-ads" data-i18n="adnMenuImportAds" data-tip="Import Ads">&nbsp;</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="question" data-i18n="adnMenuDisableAllLogging" data-tip="Disable all logging">
-                        &nbsp;
-                    </div>
-                    <div class="switch">
-                        <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1">
-                        <label for="cmn-toggle-1"></label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="question" data-i18n="adnMenuDisableOutgoingReferrer" data-tip="Disable outgoing referrer">
-                        &nbsp;
-                    </div>
-                    <div class="switch">
-                        <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2">
-                        <label for="cmn-toggle-2"></label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="question" data-i18n="adnMenuClearAds" data-tip="Clear Ads with browser history">
-                        &nbsp;
-                    </div>
-                    <div class="switch">
-                        <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3">
-                        <label for="cmn-toggle-3"></label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="question" data-i18n="adnMenuHideBadge" data-tip="Hide Ad count on icon">
-                        &nbsp;
-                    </div>
-                    <div class="switch">
-                        <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-4">
-                        <label for="cmn-toggle-4"></label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="question">
-                        <div class="btn">
-                            <button class="button danger" id="clear-ads" data-i18n="adnMenuClearAdsNow">&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
+        <div class="row justified">
+          <div class="btn">
+            <button class="button" id="export-ads" data-i18n="adnMenuExportAds" data-tip="Export Ads">&nbsp;</button>
+          </div>
+          <div class="btn">
+            <button class="button" id="import-ads" data-i18n="adnMenuImportAds" data-tip="Import Ads">&nbsp;</button>
+          </div>
         </div>
-        <!-- END #settings -->
-    </div>
 
-    <script src="js/vapi-common.js"></script>
-    <script src="js/vapi-client.js"></script>
-    <script src="js/udom.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="lib/jquery.js"></script>
-    <script src="js/adn/shared.js"></script>
-    <script src="js/adn/menu.js"></script>
+        <div class="row">
+          <div class="question" data-i18n="adnMenuDisableAllLogging" data-tip="Disable all logging">
+            &nbsp;
+          </div>
+          <div class="switch">
+            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1">
+            <label for="cmn-toggle-1"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="question" data-i18n="adnMenuDisableOutgoingReferrer" data-tip="Disable outgoing referrer">
+            &nbsp;
+          </div>
+          <div class="switch">
+            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2">
+            <label for="cmn-toggle-2"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="question" data-i18n="adnMenuClearAds" data-tip="Clear Ads with browser history">
+            &nbsp;
+          </div>
+          <div class="switch">
+            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3">
+            <label for="cmn-toggle-3"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="question" data-i18n="adnMenuHideBadge" data-tip="Hide Ad count on icon">
+            &nbsp;
+          </div>
+          <div class="switch">
+            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-4">
+            <label for="cmn-toggle-4"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="question">
+            <div class="btn">
+              <button class="button danger" id="clear-ads" data-i18n="adnMenuClearAdsNow">&nbsp;</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <!-- END #settings -->
+  </div>
+
+  <script src="js/vapi-common.js"></script>
+  <script src="js/vapi-client.js"></script>
+  <script src="js/udom.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="lib/jquery.js"></script>
+  <script src="js/adn/shared.js"></script>
+  <script src="js/adn/menu.js"></script>
 
 </body>
 

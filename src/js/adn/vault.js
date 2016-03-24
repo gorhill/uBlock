@@ -1139,19 +1139,6 @@
     });
   }
 
-  function showAlert(msg) {
-
-    if (msg) {
-
-      $("#alert").removeClass('hide');
-      $("#alert p").text(msg);
-
-    } else {
-
-      $("#alert").addClass('hide');
-    }
-  }
-
   /********************************************************************/
 
   function createAdSets(ads) { // once per layout
