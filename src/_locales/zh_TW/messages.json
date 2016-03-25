@@ -1,4 +1,8 @@
 {
+  "adnShowingRecentAds": {
+    "message": "本頁沒有廣告 (顯示最近的)",
+    "description": "shown in menu when only 'recent' ads are shown"
+  },
   "adnExportedAdsFilename" : {
     "message": "AdNauseam-已導出的廣告_{{datetime}}.json",
     "description": "English: AdNauseam-exported-ads_{{datetime}}.json"
