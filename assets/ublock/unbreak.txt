@@ -292,3 +292,6 @@ phoronix.com#@#div[style^="text-align: center;"]
 # https://twitter.com/maknz/status/712731132484124672
 # To counter `-google-tag-manager/$script` in EasyPrivacy
 @@||sorted.org.nz/*/angulartics-google-tag-manager.js$script,first-party
+
+# https://twitter.com/mtarnovan/status/713088377994682368
+@@||analytics.google.com^$first-party
