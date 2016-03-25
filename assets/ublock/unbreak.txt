@@ -294,4 +294,5 @@ phoronix.com#@#div[style^="text-align: center;"]
 @@||sorted.org.nz/*/angulartics-google-tag-manager.js$script,first-party
 
 # https://twitter.com/mtarnovan/status/713088377994682368
+# This counters `analytics.google.com` in Peter Lowe's
 @@||analytics.google.com^$first-party
