@@ -485,7 +485,7 @@
     //check that this is not the settings tab
     var pageStore = µb.pageStoreFromTabId(tabId);
       if (pageStore !== null && pageStore.rawURL.indexOf("adn-settings.html") == -1 )
-        vAPI.setIcon(tabId, 'on', '0');
+        vAPI.setIcon(tabId, 'on', adlist().length.toString());
         }
     //vAPI.tabs.remove(getVaultTabId()); // close vault
     storeUserData();
