@@ -327,6 +327,7 @@ var uBlockCollapser = (function() {
                 while ( i-- ) {
                     elems[i].style.setProperty('display', 'none', 'important');
                     if(dbugDetect) console.log("HIT[noShadow]: ",elems[i]);
+                    adDetector.findAds(elems[i]);
                 }
             };
         }
