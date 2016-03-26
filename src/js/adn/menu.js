@@ -32,8 +32,7 @@
 
     page = json.pageUrl;
     ads = onPage(json.data, page);
-
-    console.log("DATA: ",json.data);
+        
     setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
