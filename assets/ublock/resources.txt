@@ -980,18 +980,18 @@ overlay-buster.js application/javascript
 				return;
 			}
 			style = window.getComputedStyle(el);
-			if ( (parseInt(style.zIndex, 10) || 0) >= 1000 && style.position === 'fixed' ) {
+			if ( parseInt(style.zIndex, 10) >= 1000 && style.position === 'fixed' ) {
 				rect = el.getBoundingClientRect();
 				if ( rect.left <= 0 && rect.top <= 0 && rect.right >= vw && rect.bottom >= vh ) {
-					el.parentNode.removeChild(el);
-					if ( ttlTimer !== null ) {
-						clearTimeout(ttlTimer);
-						ttlTimer = setTimeout(shutdown);
-					}
-					return;
+					break;
 				}
 			}
 			el = el.parentNode;
+		}
+		el.parentNode.removeChild(el);
+		if ( ttlTimer !== null ) {
+			clearTimeout(ttlTimer);
+			ttlTimer = setTimeout(shutdown, 15000);
 		}
 	};
 	var domChangedAsync = function(mutations) {
