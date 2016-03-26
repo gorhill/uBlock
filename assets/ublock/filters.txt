@@ -348,3 +348,5 @@ lemonde.fr##script:inject(lemonde-defuser.js)
 # https://forums.lanik.us/viewtopic.php?f=91&t=29267
 www.rtl.fr###modal-warning
 rtl.fr##script:inject(rtlfr-defuser.js)
+# https://github.com/gorhill/uBlock/issues/1505
+6play.fr,clubic.com,passeportsante.net,telerama.fr##script:inject(overlay-buster.js)

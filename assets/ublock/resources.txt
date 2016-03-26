@@ -951,3 +951,61 @@ rtlfr-defuser.js application/javascript
 		document.body.style.setProperty('overflow', 'auto');
 	});
 })();
+
+
+# Experimental: Generic overlay defuser.
+# if this works well and proves to be useful, this may end up as a stock tool
+# in uBO's popup panel.
+overlay-buster.js application/javascript
+(function() {
+	if ( window !== window.top ) {
+		return;
+	}
+	var shutdown = function() {
+		observer.disconnect();
+		observer = null;
+	};
+	var ttlTimer = setTimeout(shutdown, 15000);
+	var timer = null;
+	var domChanged = function(mutations) {
+		timer = null;
+		var docEl = document.documentElement,
+			bodyEl = document.body,
+			vw = Math.min(docEl.clientWidth, window.innerWidth),
+			vh = Math.min(docEl.clientHeight, window.innerHeight),
+			el = document.elementFromPoint(vw/2, vh/2),
+			style, rect;
+		for (;;) {
+			if ( el === null || el.parentNode === null || el === bodyEl ) {
+				return;
+			}
+			style = window.getComputedStyle(el);
+			if ( (parseInt(style.zIndex, 10) || 0) >= 1000 && style.position === 'fixed' ) {
+				rect = el.getBoundingClientRect();
+				if ( rect.left <= 0 && rect.top <= 0 && rect.right >= vw && rect.bottom >= vh ) {
+					el.parentNode.removeChild(el);
+					if ( ttlTimer !== null ) {
+						clearTimeout(ttlTimer);
+						ttlTimer = setTimeout(shutdown);
+					}
+					return;
+				}
+			}
+			el = el.parentNode;
+		}
+	};
+	var domChangedAsync = function(mutations) {
+		if ( timer === null ) {
+			timer = setTimeout(domChanged, 50);
+		}
+	};
+	var observer = new MutationObserver(domChangedAsync);
+	var domReady = function(ev) {
+		document.removeEventListener(ev.type, domReady);
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+	};
+	document.addEventListener('DOMContentLoaded', domReady);
+})();
