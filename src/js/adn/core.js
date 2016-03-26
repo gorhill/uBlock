@@ -481,13 +481,12 @@
     var count = adlist().length;
     clearAdmap();
     //get all open tabs
-    chrome.tabs.query({}, function(tabs) {
-      tabs.forEach(function(tab){
-        //check that this is not the settings tab
-      if(tab.url.indexOf("adn-settings.html") == -1 )
-        vAPI.setIcon(tab.id, 'on', '0');
-      });
-  });
+    for (var tabId in µb.pageStores) {
+    //check that this is not the settings tab
+    var pageStore = µb.pageStoreFromTabId(tabId);
+      if (pageStore !== null && pageStore.rawURL.indexOf("adn-settings.html") == -1 )
+        vAPI.setIcon(tabId, 'on', '0');
+        }
     //vAPI.tabs.remove(getVaultTabId()); // close vault
     storeUserData();
     console.log('AdNauseam.clear: ' + count + ' ads cleared');
