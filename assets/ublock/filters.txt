@@ -163,7 +163,6 @@ jav4.me##script:contains(adblock.htm)
 kino-dom.org##script:contains(my_abadiv)
 layer13.net##script:contains(adBlockDetected)
 linternaute.com##script:contains(/^\s*var\s+Asl=/)
-opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 pornfun.com##script:contains(canRunAds)
 sueddeutsche.de##script:contains(BlockAdBlock)
 vg.no##script:contains(/^\s*?window\.__AB__/)
@@ -211,10 +210,10 @@ spiegel.de#@#.wrapad
 ||trhnt.com^$document,popup
 ||trhunt.com^$document,popup
 
-# https://forums.lanik.us/viewtopic.php?f=62&t=27003
-www.opensubtitles.org##div[itemscope] > fieldset
-www.opensubtitles.org##.content > a[class]:not([id])
-www.opensubtitles.org##fieldset.intro:not([style])
+# https://forums.lanik.us/viewtopic.php?f=62&t=27719
+opensubtitles.org##script:inject(opensubtitles.org)
+||carambo.la^$third-party
+opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 
 # https://skystreaming.net/canali/sky/guarda-sky-sport-1-in-streaming-live
 skystreaming.net##script:contains(abisuq)
@@ -236,7 +235,7 @@ skystreaming.net###fanback + style + div[id]
 
 # Yavli ads
 activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,aplus.com,bizpacreview.com,boredpanda.com,breathecast.com,bulletsfirst.net,cheatsheet.com,clashdaily.com,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,cowboybyte.com,crossmap.com,dailysurge.com,dccrimestories.com,dilbert.com,drhotze.com,eaglerising.com,explosm.net,flexonline.com,genfringe.com,girlsjustwannahaveguns.com,hellou.co.uk,instigatornews.com,joeforamerica.com,latinone.com,latinpost.com,libertyunyielding.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,reverbpress.com,reviveusa.com,rightwingnews.com,segmentnext.com,shark-tank.com,sportsmole.co.uk,theblacksphere.net,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,traileraddict.com,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com,viralthread.com##script:inject(yavli-defuser.js)
-activistpost.com##script:inject(setTimeout-defuser)
+||thankyouforadvertising.com^
 
 # https://github.com/gorhill/uBlock/issues/1094
 extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.com,youporngay.com##script:inject(pornhub-popup-defuser.js)
@@ -315,10 +314,6 @@ armorgames.com,mmohuts.com,newgrounds.com,onrpg.com,silvergames.com##a[href*="mm
 ||exoclick.com^$important,domain=debridfast.com
 ||www.debridfast.com/bilokiyofdsdf.js$script
 
-# https://forums.lanik.us/viewtopic.php?f=62&t=27719
-opensubtitles.org##script:inject(opensubtitles.org)
-||carambo.la^$third-party
-
 # https://forums.lanik.us/viewtopic.php?f=62&t=28856
 ||godlessnightsfilm.co.uk/scripts/ad-gallery/$important,third-party
 
@@ -337,5 +332,19 @@ tweaktown.com###background_skin
 # https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
 kisscartoon.me##script:inject(kisscartoon-defuser.js)
 
-# To counter EasyList's exception filter "@@||comeadvertisewithus.com^$script"
-||comeadvertisewithus.com^$script,third-party,important
+# https://twitter.com/hotelzululima/status/711729434458324992
+||computerworld.com.au/compressor-staticfiles/addsmin/idg_gpt_pipeline_generated.js$script
+
+# https://twitter.com/FabienTipon/status/711877626638503936
+@@||f1g.fr/*/adsense.js$script
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+lequipe.fr##script:inject(sas-defuser.js)
+
+||lemde.fr/*/xitistatus.js$script,redirect=fuckadblock.js-3.2.0,domain=lemonde.fr
+||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
+@@||static.lexpress.fr/*/ads.$script,stylesheet
+lemonde.fr##script:inject(lemonde-defuser.js)
+# https://forums.lanik.us/viewtopic.php?f=91&t=29267
+www.rtl.fr###modal-warning
+rtl.fr##script:inject(rtlfr-defuser.js)

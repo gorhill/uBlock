@@ -1,6 +1,6 @@
 Um bloqueador eficiente: leve na memória e CPU e, no entanto, consegue carregar e aplicar milhares de filtros a mais do que outros bloqueadores populares disponíveis.
 
-Visão geral ilustrada da sua eficiência:
+Visão geral ilustradora da sua eficiência:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Utilização: O botão grande de energia na janela serve para desativar ou ativar, permanentemente, o uBlock para o web site atual. Aplica-se unicamente ao web site atual, não sendo um botão de energia global.

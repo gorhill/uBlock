@@ -35,3 +35,7 @@
 
 # https://twitter.com/kenn_butler/status/709163241021317120
 ||googletagmanager.com/gtm.js$script,redirect=googletagmanager.com/gtm.js
+
+# This should be blocked by default: need to evaluate impact, and if any
+# possibly fix with a neutered script.
+||tags.tiqcdn.com^

@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Logg för nätverksbegäranden",
+    "message":"uBlock₀ — Logg för nätverksbegäran",
     "description":"Title for the logger window"
   },
   "aboutPageName":{

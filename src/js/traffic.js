@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,6 +45,12 @@ var onBeforeRequest = function(details) {
     var requestType = details.type;
     if ( requestType === 'main_frame' ) {
       return onBeforeRootFrameRequest(details);
+    }
+
+    // https://github.com/gorhill/uBlock/issues/870
+    // This work for Chromium 49+.
+    if ( requestType === 'beacon' ) {
+        return onBeforeBeacon(details);
     }
 
     // Special treatment: behind-the-scene requests
@@ -283,6 +289,40 @@ var toBlockDocResult = function(url, hostname, result) {
     }
 
     return '';
+};
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/870
+// Finally, Chromium 49+ gained the ability to report network request of type
+// `beacon`, so now we can block them according to the state of the
+// "Disable hyperlink auditing/beacon" setting.
+
+var onBeforeBeacon = function(details) {
+    var µb = µBlock;
+    var tabId = details.tabId;
+    var pageStore = µb.mustPageStoreFromTabId(tabId);
+    var context = pageStore.createContextFromPage();
+    context.requestURL = details.url;
+    context.requestHostname = µb.URI.hostnameFromURI(details.url);
+    context.requestType = details.type;
+    // "g" in "gb:" stands for "global setting"
+    var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
+    pageStore.logRequest(context, result);
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            details.type,
+            details.url,
+            context.rootHostname,
+            context.rootHostname
+        );
+    }
+    if ( result !== '' ) {
+        return { cancel: true };
+    }
 };
 
 /******************************************************************************/

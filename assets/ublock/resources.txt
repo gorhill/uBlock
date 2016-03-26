@@ -418,7 +418,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['xz','yy','yz','zp','zx','zy','gj','fj','jf','kj','kp','pk'];
+	var aa = ['yy','yz','zp','zx','zy','gj','fj','jf','kj','kp','pk','uj'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -760,10 +760,13 @@ bcplayer-defuser.js application/javascript
 # https://forums.lanik.us/viewtopic.php?f=62&t=27719
 opensubtitles.org application/javascript
 (function() {
-	Object.defineProperty(window, '_0x1cae', {
-		get: function() { return []; },
-		set: function(a) {}
-	});
+	var eval = window.eval;
+	window.eval = function(a) {
+		if ( a.toString().indexOf('defaultCheckForAdBlockExistance') !== -1 ) {
+			return;
+		};
+		return eval(a);
+	};
 })();
 
 
@@ -903,4 +906,48 @@ amazon-adsystem.com/aax2/amzn_ads.js application/javascript
 	w.amzn_ads = w.amzn_ads || noopfn;
 	w.aax_write = w.aax_write || noopfn;
 	w.aax_render_ad = w.aax_render_ad || noopfn;
+})();
+
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+sas-defuser.js application/javascript
+(function() {
+	var noopfn = function() {
+		;
+	};
+	var ads = {
+		display: noopfn,
+		refresh: noopfn
+	};
+	Object.defineProperty(window, 'Ads', {
+		get: function() {
+			return ads;
+		},
+		set: noopfn
+	});
+})();
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+figaro-defuser.js application/javascript
+(function() {
+	Object.defineProperty(window, 'adisplaynormal', {
+		get: function() {
+			return true;
+		},
+		set: function() {}
+	});
+})();
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+lemonde-defuser.js application/javascript
+(function() {
+	localStorage.setItem('lmd_me_displayed',JSON.stringify({data:true,timeout:Date.now()+31536000000}));
+})();
+
+# Good case for https://github.com/gorhill/uBlock/issues/781
+rtlfr-defuser.js application/javascript
+(function() {
+	window.addEventListener('load', function() {
+		document.body.style.setProperty('overflow', 'auto');
+	});
 })();
