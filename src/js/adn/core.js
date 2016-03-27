@@ -568,11 +568,11 @@
   var registerAd = function (request, pageStore, tabId) {
 
     var json, adhash, msSinceFound, orig,
-      pageDomain = pageStore.tabHostname,
-      pageUrl = pageStore.rawURL,
-      ad = request.ad;
+        pageUrl = pageStore.rawURL,
+        ad = request.ad;
 
     if (!ad || !validate(ad)) {
+
       console.warn("Invalid Ad: ", ad);
       return;
     }
@@ -581,9 +581,7 @@
 
     adhash = computeHash(ad);
 
-    if (!adhash) console.warn('UNABLE TO computeHash() for: ',ad);
-
-    if (admap[pageUrl][adhash]) { // this may be a duplicate
+    if (admap[pageUrl][adhash]) { // may be a duplicate
 
       orig = admap[pageUrl][adhash];
       msSinceFound = millis() - orig.foundTs;
@@ -597,7 +595,8 @@
     ad.id = ++idgen;
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
-    ad.domain = pageDomain;
+    ad.pageTitle = pageStore.title;
+    ad.domain = pageStore.tabHostname;
     ad.version = vAPI.app.version;
 
     // this will overwrite an older ad with the same key
@@ -613,6 +612,7 @@
     console.log('DETECTED: ' + adinfo(ad), ad);
 
     if (µb.userSettings.showIconBadge) {
+
       µb.updateBadgeAsync(tabId);
     }
 

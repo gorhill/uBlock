@@ -245,7 +245,7 @@ var onBeforeRootFrameRequest = function(details) {
     // Not blocked
     if ( µb.isAllowResult(newResult) ) {
         if (!µb.isAllowResult(result))
-          console.log('UNBLOCK(MAIN_FRAME)', result, requestContext);
+            console.log('UNBLOCK(MAIN_FRAME)', newResult, result);
         return;
     }
 

@@ -204,7 +204,7 @@
 
     if (!$item) {
 
-      console.log("Item (adset=" + adset.gid + ") not currently visible");
+      console.log("Item not currently visible", $item);
       return;
     }
 

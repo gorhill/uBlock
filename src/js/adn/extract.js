@@ -1,6 +1,7 @@
-var dbugDetect = 0; // tmp
 
-// Injected into content pages before contentscipt-end.js
+ var dbugDetect = 0; // tmp
+
+// Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
 (function (self) {
 
@@ -12,11 +13,8 @@ var dbugDetect = 0; // tmp
 
   adDetector.findAds = function (elem) {
 
-    //console.log("findAds("+adNodes.length+")");
-
     // TODO: enable once all text-ad filters are working
     var activeFilters = true ? filters : filters.filter(function (f) {
-      //console.log(f, f.domain);
       return f.domain.test(document.domain);
     });
 
@@ -74,7 +72,6 @@ var dbugDetect = 0; // tmp
     return adNode === node ? null : adNode;
   };
 
-  /******************************************************************************/
   var Ad = function (network, pageTitle, pageUrl, targetUrl, contentType) {
 
     this.id = null;
@@ -148,39 +145,31 @@ var dbugDetect = 0; // tmp
 
   var checkImages = function (elem, imgs) {
 
-    //if (dbugDetect) console.log("Found " + imgs.length + " img(s)", elem.classList);
+    var target, targetUrl, ad;
 
     for (var i = 0; i < imgs.length; i++) {
 
       var imgSrc = imgs[i].getAttribute("src");
 
       if (!imgSrc) {
+
         if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
         continue;
       }
 
-      //if (dbugDetect) console.log('imgSrc: ' + imgSrc);
-
-      var target = clickableParent(imgs[i]);
+      target = clickableParent(imgs[i]);
       if (target) {
 
         if (target.tagName === 'A') {
 
-          var targetUrl = target.getAttribute("href");
+          targetUrl = target.getAttribute("href");
           if (targetUrl) {
 
-            if (targetUrl.indexOf('http') >= 0) {
+            ad = createImgAd(document.domain, targetUrl, imgSrc);
+            if (ad) {
 
-              var ad = createImgAd(document.domain, targetUrl, imgSrc);
-              if (ad) {
-
-                console.log("IMG-AD", ad);
-                notifyAddon(elem, ad);
-              }
-
-            } else {
-
-              console.warn("Ignoring IMG-AD with targetUrl=" + targetUrl + " src=" + imgSrc);
+              console.log("IMG-AD", ad);
+              notifyAddon(elem, ad);
             }
 
             // Need to check for div.onclick etc?
@@ -331,34 +320,35 @@ var dbugDetect = 0; // tmp
 
   var createImgAd = function (network, target, img) {
 
-    if (target.indexOf('http') < 0) {
+    if (target.indexOf('//') === 0) {
 
-      console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
-      return;
+        target = 'http:' + target;
+    }
+    else if (target.indexOf('http') < 0) {
+
+        console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
+        return;
     }
 
-    //console.log("createImgAd: ",network, img, target);
-    // if (window.self !== window.top) { // see #42
-    //     console.log('iFrame: parseTitle: ', window.top.document.title);
-    // }
-    //
-    if (document.title.indexOf('SafeFrame') > -1)
-      console.warn("Incorrect page name: ", window.self === window.top, document.title, window.top && window.document && window.top.document.title);
+    if (target === 'http://www.google.com/settings/ads/anonymous') {
+
+        console.log("Ignoring AdChoices image: ", img);
+        return;
+    }
 
     var ad = new Ad(network, document.title, document.URL, target, 'img');
 
     if (!/^http/.test(img)) { // relative image url
       if (/^data:image/.test(img)) {
         if (dbugDetect) console.log("Found encoded image: " + img);
-      } else {
+      }
+      else {
         if (dbugDetect) console.log("Found relative image: " + img);
         img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
       }
     }
 
-    ad.contentData = {
-      src: img
-    };
+    ad.contentData = { src: img };
 
     return ad;
   }

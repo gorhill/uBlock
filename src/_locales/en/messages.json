@@ -104,7 +104,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "fight back against advertising surveillance",
+    "message": "Fight back against advertising surveillance",
     "description": "this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
