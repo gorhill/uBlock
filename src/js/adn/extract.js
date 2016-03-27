@@ -72,19 +72,19 @@
     return adNode === node ? null : adNode;
   };
 
-  var Ad = function (network, pageTitle, pageUrl, targetUrl, contentType) {
+  var Ad = function (network, targetUrl, data) {
 
     this.id = null;
     this.attempts = 0;
     this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
     this.attemptedTs = 0;
     this.title = 'Pending';
+    this.contentType = 'img';
     this.foundTs = +new Date();
     this.resolvedTargetUrl = null;
-    this.contentType = contentType;
     this.targetUrl = targetUrl;
-    this.pageTitle = pageTitle;
     this.pageUrl = pageUrl;
+    this.pageTitle = null;
     this.errors = null;
   };
 
@@ -165,7 +165,7 @@
           targetUrl = target.getAttribute("href");
           if (targetUrl) {
 
-            ad = createImgAd(document.domain, targetUrl, imgSrc);
+            ad = createAd(document.domain, targetUrl, { src: imgSrc });
             if (ad) {
 
               console.log("IMG-AD", ad);
@@ -194,12 +194,13 @@
 
       if (text.length && site.length && title.length) {
 
-        var ad = createTextAd('yahoo', $attr(title, 'href'),
-          $text(title), $text(text), $text(site));
+        var ad = createAd('yahoo', $attr(title, 'href'),
+          { title: $text(title), text: $text(text), site: $text(site) });
 
         ads.push(ad);
-        //console.log('CREATED: ',ad);
+
       } else {
+
         console.warn('yahooTextHandler.fail: ', divs[i]); //title, site, text);
       }
 
@@ -217,8 +218,8 @@
 
     if (text.length && site.length && title.length && target.length) {
 
-      ad = createTextAd('aol', $attr(target, 'href'),
-        $text(title), $text(text), $text(site));
+      ad = createAd('aol', $attr(target, 'href'),
+        { title: $text(title), text: $text(text), site: $text(site) });
 
     } else {
 
@@ -244,8 +245,9 @@
      }
 
      if (text.length && site.length && title.length) {
-         var ad = createTextAd('ask', $attr(title, 'href'),
-             $text(title), textStr, $text(site));
+         var ad = createAd('ask', $attr(title, 'href'),
+             { title: $text(title), text: textStr, site: $text(site) });
+
      }
      else {
          console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
@@ -283,8 +285,8 @@
 
     if (text.length && site.length && title.length) {
 
-      ad = createTextAd('google', $attr(title, 'href'),
-        $text(title), $text(text), $text(site));
+      ad = createAd('google', $attr(title, 'href'),
+          { title: $text(title), text: $text(text), site: $text(site) });
 
     } else {
 
@@ -318,66 +320,51 @@
     domain: /^.*\.yahoo\.com/i
   }];
 
-  var createImgAd = function (network, target, img) {
+  var createAd = function (network, target, data) {
 
-    if (target.indexOf('//') === 0) {
+    if (target.indexOf('//')===0) {
 
         target = 'http:' + target;
     }
     else if (target.indexOf('http') < 0) {
 
-        console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
+        console.warn("Ignoring Ad with targetUrl=" + target, arguments);
         return;
     }
 
-    if (target === 'http://www.google.com/settings/ads/anonymous') {
+    if (target==='http://www.google.com/settings/ads/anonymous') { // refactor
 
-        console.log("Ignoring AdChoices image: ", img);
+        console.log("Ignoring AdChoices: ", img);
         return;
     }
 
-    var ad = new Ad(network, document.title, document.URL, target, 'img');
+    var ad = new Ad(network, target, data);
 
-    if (!/^http/.test(img)) { // relative image url
-      if (/^data:image/.test(img)) {
-        if (dbugDetect) console.log("Found encoded image: " + img);
-      }
-      else {
-        if (dbugDetect) console.log("Found relative image: " + img);
-        img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-      }
+    if (data.src) {
+
+        ad.contentType = 'img';
+
+        if (!/^http/.test(img)) { // relative image url
+          if (/^data:image/.test(img)) {
+
+            if (dbugDetect) console.log("Found encoded image: " + img);
+          }
+          else {
+
+            if (dbugDetect) console.log("Found relative image: " + img);
+            img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+          }
+        }
     }
+    else {
 
-    ad.contentData = { src: img };
+        ad.contentType = 'text';
+
+        if (title.length) ad.title = title;
+    }
 
     return ad;
   }
-
-  var createTextAd = function (network, target, title, text, site) { // unescapeHTML: fix to #31
-
-      if (target.indexOf('http') < 0) {
-
-        console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
-        return;
-      }
-
-      //console.log("createTextAd: ",network, title, text, site, target);
-      var ad = new Ad(network, document.title, document.URL, target, 'text');
-
-      if (title.length) ad.title = title;
-
-      ad.contentData = {
-        title: title,
-        text: text,
-        site: site
-      }
-
-      return ad;
-    }
-    //
-    // return {
-    //   findAds: findAds,
-    // }
 
 })(this);
 
