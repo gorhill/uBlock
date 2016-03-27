@@ -32,7 +32,7 @@
 
     page = json.pageUrl;
     ads = onPage(json.data, page);
-
+        
     setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
@@ -396,8 +396,7 @@
   });
 
   $('#vault-button').click(function () {
-
-    window.open("./adn-vault.html");
+    window.open("./adn-vault.html", "AdNauseam");
   });
 
   $('#pause-button').click(function () {});

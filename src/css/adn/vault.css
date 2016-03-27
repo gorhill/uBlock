@@ -657,6 +657,9 @@ div.bullets { display: none; } /* hide by default */
 	/*opacity: 0.85;*/
 }
 
+.ad img {
+	width: 100%;
+}
 /*
 .item, .item img {
 	//temporary fix for the big images bug

@@ -125,7 +125,6 @@
   }
 
   var getVaultTabId = function () {
-
     var menuUrl = vAPI.getURL('adn-vault.html');
     for (var tabId in µb.pageStores) {
       var pageStore = µb.pageStoreFromTabId(tabId);
@@ -481,7 +480,14 @@
 
     var count = adlist().length;
     clearAdmap();
-    vAPI.tabs.remove(getVaultTabId()); // close vault
+    //get all open tabs
+    for (var tabId in µb.pageStores) {
+    //check that this is not the settings tab
+    var pageStore = µb.pageStoreFromTabId(tabId);
+      if (pageStore !== null && pageStore.rawURL.indexOf("adn-settings.html") == -1 )
+        vAPI.setIcon(tabId, 'on', adlist().length.toString());
+        }
+    //vAPI.tabs.remove(getVaultTabId()); // close vault
     storeUserData();
     console.log('AdNauseam.clear: ' + count + ' ads cleared');
   }
