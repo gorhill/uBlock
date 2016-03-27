@@ -355,11 +355,16 @@ header{
 }
 
 .ad-item span.title {
-  display: block;
+  display: -webkit-box;
   width: 250px;
   overflow: hidden;
   max-height: 2.3em;
   line-height: 1.15em;
+  line-height: 1.4;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* -------------------------------------------------- */
