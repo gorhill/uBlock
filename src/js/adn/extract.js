@@ -1,5 +1,4 @@
-
- var dbugDetect = 0; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -42,7 +41,7 @@
 
         if (ads[i]) {
           console.log("TEXT-AD", ads[i]);
-          notifyAddon(elem, ads[i]);
+          notifyAddon(ads[i], elem);
         }
       }
     }
@@ -72,32 +71,48 @@
     return adNode === node ? null : adNode;
   };
 
-  var Ad = function (network, pageTitle, pageUrl, targetUrl, contentType) {
+  var Ad = function (network, targetUrl, data) {
 
     this.id = null;
     this.attempts = 0;
     this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
     this.attemptedTs = 0;
-    this.title = 'Pending';
-    this.foundTs = +new Date();
+    this.contentData = data;
+    this.contentType = data.src ? 'img' : 'text';
+    this.title = data.title || 'Pending';
     this.resolvedTargetUrl = null;
-    this.contentType = contentType;
+    this.foundTs = +new Date();
     this.targetUrl = targetUrl;
-    this.pageTitle = pageTitle;
-    this.pageUrl = pageUrl;
+    this.pageTitle = null;
+    this.pageUrl = null;
     this.errors = null;
+
+    checkImage(this);
   };
 
-  var notifyAddon = function (node, ad) {
+  var checkImage = function (ad) {
 
-    vAPI.messaging.send(
-      'adnauseam', {
-        what: 'registerAd',
-        ad: ad
-      },
-      function (obj) {
-        //console.log("AdDetected-callback: ", obj);
-      });
+    var img = ad.contentData.src;
+
+    if (!/^http/.test(img)) { // relative image url (move to core?)
+
+      if (/^data:image/.test(img)) {
+
+        if (dbugDetect) console.log("Found encoded image: " + img);
+
+      } else {
+
+        if (dbugDetect) console.log("Found relative image: " + img);
+
+        ad.contentData.src = ad.pageUrl.substring
+            (0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
+      }
+    }
+  }
+
+  var notifyAddon = function (ad) {
+
+    vAPI.messaging.send('adnauseam', { what: 'registerAd', ad: ad });
   }
 
   var $is = function (elem, selector) { // jquery shim
@@ -165,11 +180,13 @@
           targetUrl = target.getAttribute("href");
           if (targetUrl) {
 
-            ad = createImgAd(document.domain, targetUrl, imgSrc);
+            ad = createAd(document.domain, targetUrl, {
+              src: imgSrc
+            });
             if (ad) {
 
-              console.log("IMG-AD", ad);
-              notifyAddon(elem, ad);
+              console.log('IMG-AD', ad);
+              notifyAddon(ad, elem);
             }
 
             // Need to check for div.onclick etc?
@@ -194,12 +211,16 @@
 
       if (text.length && site.length && title.length) {
 
-        var ad = createTextAd('yahoo', $attr(title, 'href'),
-          $text(title), $text(text), $text(site));
+        var ad = createAd('yahoo', $attr(title, 'href'), {
+          title: $text(title),
+          text: $text(text),
+          site: $text(site)
+        });
 
         ads.push(ad);
-        //console.log('CREATED: ',ad);
+
       } else {
+
         console.warn('yahooTextHandler.fail: ', divs[i]); //title, site, text);
       }
 
@@ -217,8 +238,11 @@
 
     if (text.length && site.length && title.length && target.length) {
 
-      ad = createTextAd('aol', $attr(target, 'href'),
-        $text(title), $text(text), $text(site));
+      ad = createAd('aol', $attr(target, 'href'), {
+        title: $text(title),
+        text: $text(text),
+        site: $text(site)
+      });
 
     } else {
 
@@ -228,30 +252,32 @@
     return [ad];
   }
 
-  var askText = function(dom) {
+  var askText = function (dom) {
 
-     var title = $find(dom, 'a.test_titleLink.d_');
-     var site = $find(dom, 'a.test_domainLink.e_');
-     var text = $find(dom, 'span.descText');
-     var text2 = $find(dom, 'span.v_');
+    var title = $find(dom, 'a.test_titleLink.d_');
+    var site = $find(dom, 'a.test_domainLink.e_');
+    var text = $find(dom, 'span.descText');
+    var text2 = $find(dom, 'span.v_');
 
-     var textStr = "";
-     if (text2 && text2.length) {
-         textStr = $text(text) + $text(text2);
-     }
-     else {
-         textStr = $text(text);
-     }
+    var textStr = "";
+    if (text2 && text2.length) {
+      textStr = $text(text) + $text(text2);
+    } else {
+      textStr = $text(text);
+    }
 
-     if (text.length && site.length && title.length) {
-         var ad = createTextAd('ask', $attr(title, 'href'),
-             $text(title), textStr, $text(site));
-     }
-     else {
-         console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
-     }
+    if (text.length && site.length && title.length) {
+      var ad = createAd('ask', $attr(title, 'href'), {
+        title: $text(title),
+        text: textStr,
+        site: $text(site)
+      });
 
-     return [ad];
+    } else {
+      console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
+    }
+
+    return [ad];
   }
 
   function checkFilters(theFilters, elem) {
@@ -266,9 +292,12 @@
           continue;
 
         var result = filter.handler(elem);
+
         if (result) {
+
           if (!filter.domain.test(document.domain))
             console.warn("Text Ad failed filter-test: ", document.URL, filter);
+
           return result;
         }
       }
@@ -283,8 +312,11 @@
 
     if (text.length && site.length && title.length) {
 
-      ad = createTextAd('google', $attr(title, 'href'),
-        $text(title), $text(text), $text(site));
+      ad = createAd('google', $attr(title, 'href'), {
+        title: $text(title),
+        text: $text(text),
+        site: $text(site)
+      });
 
     } else {
 
@@ -318,66 +350,25 @@
     domain: /^.*\.yahoo\.com/i
   }];
 
-  var createImgAd = function (network, target, img) {
+  var createAd = function (network, target, data) {
 
     if (target.indexOf('//') === 0) {
 
-        target = 'http:' + target;
-    }
-    else if (target.indexOf('http') < 0) {
+      target = 'http:' + target;
+    } else if (target.indexOf('http') < 0) {
 
-        console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
-        return;
-    }
-
-    if (target === 'http://www.google.com/settings/ads/anonymous') {
-
-        console.log("Ignoring AdChoices image: ", img);
-        return;
+      console.warn("Ignoring Ad with targetUrl=" + target, arguments);
+      return;
     }
 
-    var ad = new Ad(network, document.title, document.URL, target, 'img');
+    if (target === 'http://www.google.com/settings/ads/anonymous') { // refactor
 
-    if (!/^http/.test(img)) { // relative image url
-      if (/^data:image/.test(img)) {
-        if (dbugDetect) console.log("Found encoded image: " + img);
-      }
-      else {
-        if (dbugDetect) console.log("Found relative image: " + img);
-        img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-      }
+      console.log("Ignoring AdChoices: ", img);
+      return;
     }
 
-    ad.contentData = { src: img };
-
-    return ad;
+    return new Ad(network, target, data);
   }
-
-  var createTextAd = function (network, target, title, text, site) { // unescapeHTML: fix to #31
-
-      if (target.indexOf('http') < 0) {
-
-        console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
-        return;
-      }
-
-      //console.log("createTextAd: ",network, title, text, site, target);
-      var ad = new Ad(network, document.title, document.URL, target, 'text');
-
-      if (title.length) ad.title = title;
-
-      ad.contentData = {
-        title: title,
-        text: text,
-        site: site
-      }
-
-      return ad;
-    }
-    //
-    // return {
-    //   findAds: findAds,
-    // }
 
 })(this);
 
