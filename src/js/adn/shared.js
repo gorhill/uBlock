@@ -35,8 +35,8 @@ var computeHash = function (ad) { // DO NOT MODIFY
 
   if (!ad) return;
 
-  if (!ad.contentData)
-    throw Error("Invalid Ad: no contentData", ad);
+  if (!ad.contentData || !ad.pageUrl)
+    throw Error("Invalid Ad: no contentData||pageUrl", ad);
 
   var hash = ad.pageUrl,
     keys = Object.keys(ad.contentData).sort();

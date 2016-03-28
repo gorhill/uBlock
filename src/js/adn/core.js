@@ -28,7 +28,7 @@
     admap = {},
     lastActivity = 0,
     autoFailMode = 0,
-    testVisitMode = 1,
+    testVisitMode = 0,
     clearAdsOnInit = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
@@ -60,8 +60,8 @@
     ads = adlist();
 
     if (testVisitMode) {
-       console.log("Clearing all Ad visit data");
-       ads.forEach(function(ad){ ad.visitedTs = 0; });
+       console.warn("[WARN] Clearing all Ad visit data!");
+       ads.forEach(function(ad){ ad.visitedTs = 0; ad.attempts = 0 });
     }
 
     // compute the highest id in the admap
@@ -83,7 +83,7 @@
 
     // TODO check options.disabled (see #40)
 
-    var next, pending = pendingAds();
+    var next, nextMs, pending = pendingAds();
 
     if (pending.length) {
 
@@ -102,8 +102,8 @@
     }
 
     if (!pollingDisabled) {
-
-      setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity))); // next poll
+      nextMs =  Math.max(1, interval - (millis() - lastActivity));
+      setTimeout(pollQueue, nextMs); // next poll
     }
   }
 
@@ -125,7 +125,9 @@
   }
 
   var getVaultTabId = function () {
+
     var menuUrl = vAPI.getURL('adn-vault.html');
+
     for (var tabId in µb.pageStores) {
       var pageStore = µb.pageStoreFromTabId(tabId);
       if (pageStore !== null && pageStore.rawURL.startsWith(menuUrl)) {
@@ -138,7 +140,7 @@
 
     var ad = xhr.delegate;
 
-    if (ad) {
+    if (ad && ad.visitedTs <= 0) { // make sure we haven't visited already
 
       // update the ad
       ad.visitedTs = -millis();
@@ -146,6 +148,7 @@
       ad.errors.push(xhr.status + ' (' + xhr.statusText + ')' + (e ? ' ' + e.type : ''));
 
       if (ad.attempts >= maxAttemptsPerAd) {
+
         console.log('GIVEUP: ' + adinfo(ad), ad); // this);
         if (ad.title === 'Pending') ad.title = 'Failed';
       }
@@ -286,9 +289,7 @@
 
       if (elapsed > visitTimeout) {
 
-        return onVisitError.call(xhr, {
-          type: 'timeout'
-        });
+        return onVisitError.call(xhr, { type: 'timeout' });
       }
     }
 
@@ -357,11 +358,21 @@
 
     ad.title = unescapeHTML(ad.title); // fix to #31
 
-    if (typeof ad.contentData.title !== 'undefined')
-      ad.contentData.title = unescapeHTML(ad.contentData.title);
+    if (ad.contentType === 'text') {
 
-    if (typeof ad.contentData.text !== 'undefined')
+      ad.contentData.title = unescapeHTML(ad.contentData.title);
       ad.contentData.text = unescapeHTML(ad.contentData.text);
+    } else {
+
+      if (!/^http/.test(ad.contentData.src) && !/^data:image/.test(ad.contentData.src)) {
+
+        console.log("Relative-image: " + ad.contentData.src);
+        ad.contentData.src = ad.pageUrl.substring
+          (0, ad.pageUrl.lastIndexOf('/')) + '/' + ad.contentData.src;
+
+        console.log("    --> " + ad.contentData.src);
+      }
+    }
 
     return validateTarget(ad);
   }
@@ -408,29 +419,31 @@
 
   var unescapeHTML = function (s) { // hack
 
+    if (s && s.length) {
       var entities = [
-       '#0*32', ' ',
-       '#0*33', '!',
-       '#0*34', '"',
-       '#0*35', '#',
-       '#0*36', '$',
-       '#0*37', '%',
-       '#0*38', '&',
-       '#0*39', '\'',
-       'apos',  '\'',
-       'amp',   '&',
-       'lt',    '<',
-       'gt',    '>',
-       'quot',  '"',
-       '#x27',  '\'',
-       '#x60',  '`'
-     ];
+        '#0*32', ' ',
+        '#0*33', '!',
+        '#0*34', '"',
+        '#0*35', '#',
+        '#0*36', '$',
+        '#0*37', '%',
+        '#0*38', '&',
+        '#0*39', '\'',
+        'apos', '\'',
+        'amp', '&',
+        'lt', '<',
+        'gt', '>',
+        'quot', '"',
+        '#x27', '\'',
+        '#x60', '`'
+      ];
 
-     for (var i = 0; i < entities.length; i += 2) {
-        s = s.replace(new RegExp('\&'+entities[i]+';','g'), entities[i + 1]);
-     }
+      for (var i = 0; i < entities.length; i += 2) {
+        s = s.replace(new RegExp('\&' + entities[i] + ';', 'g'), entities[i + 1]);
+      }
+    }
 
-     return s;
+    return s;
   }
 
   var adById = function (id) {
@@ -442,21 +455,30 @@
     }
   }
 
-  var deleteAd = function (arg) {
+  var closeVault = function () {
 
-    console.log(typeof arg, arg);
+    for (var tabId in µb.pageStores) {
+
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if (pageStore && pageStore.rawURL.indexOf("adn-vault.html") >= 0) {
+            vAPI.tabs.remove(tabId, true);
+        }
+    }
+  }
+
+  var deleteAd = function (arg) {
 
     var ad = (typeof arg === 'object') ? arg : adById(arg),
         count = adlist().length;
-
-    console.log(typeof ad, ad);
 
     if (!ad) console.warn("No Ad to delete", id, admap);
 
     delete admap[ad.pageUrl][computeHash(ad)];
 
     if (adlist().length < count) {
+
         console.log('DELETED: '+adinfo(ad));
+        updateBadges();
     }
     else {
         console.warn('Unable to delete: ', ad);
@@ -479,17 +501,31 @@
   var clearAds = function () {
 
     var count = adlist().length;
+
     clearAdmap();
-    //get all open tabs
-    for (var tabId in µb.pageStores) {
-    //check that this is not the settings tab
-    var pageStore = µb.pageStoreFromTabId(tabId);
-      if (pageStore !== null && pageStore.rawURL.indexOf("adn-settings.html") == -1 )
-        vAPI.setIcon(tabId, 'on', adlist().length.toString());
-        }
-    //vAPI.tabs.remove(getVaultTabId()); // close vault
+    updateBadges();
+    closeVault();
     storeUserData();
+
     console.log('AdNauseam.clear: ' + count + ' ads cleared');
+  }
+
+  var updateBadges = function() {
+
+      // update badges if we are showing them
+      if (µb.userSettings.showIconBadge ) {
+
+          // get all open tabs
+          for (var tabId in µb.pageStores) {
+
+              var pageStore = µb.pageStoreFromTabId(tabId);
+
+              // update the badge icon if its not the settings tab
+              if (pageStore && pageStore.rawURL.indexOf("adn-settings.html") < 0) {
+                  vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
+              }
+          }
+      }
   }
 
   // returns all ads for a page, or all pages, if page arg is null
@@ -577,6 +613,12 @@
       return;
     }
 
+    ad.attemptedTs = 0;
+    ad.pageUrl = pageUrl;
+    ad.pageTitle = pageStore.title;
+    ad.domain = pageStore.tabHostname;
+    ad.version = vAPI.app.version;
+
     if (!admap[pageUrl]) admap[pageUrl] = {};
 
     adhash = computeHash(ad);
@@ -592,12 +634,7 @@
       }
     }
 
-    ad.id = ++idgen;
-    ad.attemptedTs = 0;
-    ad.pageUrl = pageUrl;
-    ad.pageTitle = pageStore.title;
-    ad.domain = pageStore.tabHostname;
-    ad.version = vAPI.app.version;
+    ad.id = ++idgen; // gets an id only if its not a duplicate
 
     // this will overwrite an older ad with the same key
     admap[pageUrl][adhash] = ad;
@@ -645,6 +682,7 @@
   var tabIdToTimer = Object.create(null);
 
   var updateBadge = function (tabId) {
+
     delete tabIdToTimer[tabId];
 
     var state = false;
@@ -668,6 +706,7 @@
     if (tabIdToTimer[tabId] || vAPI.isBehindTheSceneTabId(tabId)) return;
     tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 665);
   };
+
 })();
 
 /****************************** messaging ********************************/
@@ -685,6 +724,7 @@
     var pageStore, tabId;
 
     if (sender && sender.tab) {
+
       tabId = sender.tab.id;
       pageStore = µBlock.pageStoreFromTabId(tabId);
     }
