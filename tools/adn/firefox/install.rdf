@@ -5,7 +5,7 @@
         <version>{version}</version>
         <name>{name}</name>
         <description>{description}</description>
-        <homepageURL>{homepage}</homepageURL>
+        <homepageURL>http://adnauseam.io</homepageURL>
         <creator>{author}</creator>
         <type>2</type>
         <bootstrap>true</bootstrap>
