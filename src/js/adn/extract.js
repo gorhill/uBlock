@@ -17,9 +17,12 @@ var dbugDetect = 0; // tmp
       return f.domain.test(document.domain);
     });
 
-    if (elem.tagName === 'IFRAME') return; // Ignore iframes, wait for sub-elements?
+    if (elem.tagName === 'IFRAME') {
+        var c = elem.contentDocument || elem.contentWindow.document;
+        //console.log($find(elem,'img').length, c);
+        return; // Ignore iframes, wait for sub-elements?
+    }
 
-    if (dbugDetect) console.log(elem.tagName, elem);
     //elem.style.setProperty('display', 'none', 'important');
 
     if (elem.tagName === 'IMG') {
@@ -33,7 +36,6 @@ var dbugDetect = 0; // tmp
       return checkImages(elem, imgs);
     }
 
-    //console.log("TRYING: ", elem);
     var ads = checkFilters(activeFilters, elem);
     if (ads && ads.length) {
 
@@ -86,29 +88,7 @@ var dbugDetect = 0; // tmp
     this.pageTitle = null;
     this.pageUrl = null;
     this.errors = null;
-
-    checkImage(this);
   };
-
-  var checkImage = function (ad) {
-
-    var img = ad.contentData.src;
-
-    if (!/^http/.test(img)) { // relative image url (move to core?)
-
-      if (/^data:image/.test(img)) {
-
-        if (dbugDetect) console.log("Found encoded image: " + img);
-
-      } else {
-
-        if (dbugDetect) console.log("Found relative image: " + img);
-
-        ad.contentData.src = ad.pageUrl.substring
-            (0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-      }
-    }
-  }
 
   var notifyAddon = function (ad) {
 
@@ -352,9 +332,10 @@ var dbugDetect = 0; // tmp
 
   var createAd = function (network, target, data) {
 
-    if (target.indexOf('//') === 0) {
+    if (target.indexOf('//') === 0) { // move to core?
 
       target = 'http:' + target;
+
     } else if (target.indexOf('http') < 0) {
 
       console.warn("Ignoring Ad with targetUrl=" + target, arguments);
