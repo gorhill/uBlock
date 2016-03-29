@@ -10,6 +10,8 @@ var dbugDetect = 0; // tmp
 
   if (adDetector.findAds) return;
 
+  vAPI.messaging.addChannelListener('adnauseam', messageListener);
+
   adDetector.findAds = function (elem) {
 
     // TODO: enable once all text-ad filters are working
@@ -18,7 +20,7 @@ var dbugDetect = 0; // tmp
     });
 
     if (elem.tagName === 'IFRAME') {
-        var c = elem.contentDocument || elem.contentWindow.document;
+        //var c = elem.contentDocument || elem.contentWindow.document;
         //console.log($find(elem,'img').length, c);
         return; // Ignore iframes, wait for sub-elements?
     }
@@ -47,6 +49,16 @@ var dbugDetect = 0; // tmp
         }
       }
     }
+  }
+
+  var pageCount = function(ads, pageUrl) {
+
+    var num = 0;
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].pageUrl === pageUrl)
+        num++;
+    }
+    return num;
   }
 
   var clickableParent = function (node) {
@@ -115,9 +127,10 @@ var dbugDetect = 0; // tmp
     return false;
   };
 
-  var $attr = function (ele, attr) { // jquery shim
+  var $attr = function (ele, attr, val) { // jquery shim
 
-    return (ele.length ? ele[0] : ele).getAttribute(attr);
+    return val ? (ele.length ? ele[0] : ele).setAttribute(attr, val) :
+        (ele.length ? ele[0] : ele).getAttribute(attr);
   };
 
   var $text = function (ele) { // jquery shim
@@ -350,6 +363,35 @@ var dbugDetect = 0; // tmp
 
     return new Ad(network, target, data);
   }
+
+  var messageListener = function (request) {
+
+      // this is a temporary means of injecting the adnauseam-count
+      // div into top-level frames for checking via automated tests
+      if (window === window.top && request.automated) {
+
+          if (request.what === 'adDetected') {
+
+              var count = pageCount(request.data, request.pageUrl),
+                adndiv = document.getElementById("adnauseam-count");
+
+              if (!adndiv) {
+
+                  adndiv = document.createElement('div');
+                  $attr(adndiv,'id', 'adnauseam-count');
+                  var body = document.getElementsByTagName("body");
+                  body.length && body[0].appendChild(adndiv);
+                  //console.log("Injected: #adnauseam-count");
+              }
+
+              $attr(adndiv, 'count', count);
+              // console.log("adndiv.attr('count', "+json.count+")");
+              console.log("INSERT_COUNT="+count+")");
+              //"=" + $attr(document.getElementById("adnauseam-count"), 'count'));
+          }
+      }
+  });
+
 
 })(this);
 

@@ -26,9 +26,11 @@
     idgen,
     inspected,
     admap = {},
+
     lastActivity = 0,
     autoFailMode = 0,
     testVisitMode = 0,
+    automatedMode = 0,
     clearAdsOnInit = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
@@ -643,6 +645,8 @@
     json = adsForUI(pageUrl);
     json.what = 'adDetected';
     json.ad = ad;
+
+    if (automatedMode) json.automated = true;
 
     vAPI.messaging.broadcast(json);
 
