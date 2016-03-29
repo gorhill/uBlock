@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
+    <r:Description about="urn:mozilla:install-manifest">
+        <id>adnauseam@rednoise.org</id>
+        <version>{version}</version>
+        <name>{name}</name>
+        <description>{description}</description>
+        <homepageURL>{homepage}</homepageURL>
+        <creator>{author}</creator>
+        <type>2</type>
+        <bootstrap>true</bootstrap>
+        <multiprocessCompatible>true</multiprocessCompatible>
+        <optionsType>2</optionsType>
+{localized}
+
+        <!-- Firefox -->
+        <targetApplication>
+            <r:Description>
+                <id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</id>
+                <minVersion>24.0</minVersion>
+                <maxVersion>*</maxVersion>
+            </r:Description>
+        </targetApplication>
+
+        <!-- Fennec -->
+        <targetApplication>
+            <r:Description>
+                <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
+                <minVersion>24.0</minVersion>
+                <maxVersion>*</maxVersion>
+            </r:Description>
+        </targetApplication>
+
+        <!-- SeaMonkey -->
+        <targetApplication>
+            <r:Description>
+                <id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</id>
+                <minVersion>2.21</minVersion>
+                <maxVersion>2.39.*</maxVersion>
+            </r:Description>
+        </targetApplication>
+
+        <!-- Pale Moon -->
+        <targetApplication>
+            <r:Description>
+                <id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</id>
+                <minVersion>25.0</minVersion>
+                <maxVersion>26.*</maxVersion>
+            </r:Description>
+        </targetApplication>
+
+        <!-- Conkeror -->
+        <targetApplication>
+            <r:Description>
+                <id>{{a79fe89b-6662-4ff4-8e88-09950ad4dfde}}</id>
+                <minVersion>0.1</minVersion>
+                <maxVersion>9.9</maxVersion>
+            </r:Description>
+        </targetApplication>
+
+        <!-- Thunderbird -->
+        <targetApplication>
+            <r:Description>
+                <id>{{3550f703-e582-4d05-9a08-453d09bdfdc6}}</id>
+                <minVersion>31.0</minVersion>
+                <maxVersion>45.0</maxVersion>
+            </r:Description>
+        </targetApplication>
+    </r:Description>
+</r:RDF>

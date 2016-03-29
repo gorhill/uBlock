@@ -4,7 +4,7 @@ set -e
 
 tools/make-firefox-adn.sh
 
-cd dist/build/adnauseam.firefox 
+cd bin/build/adnauseam.firefox 
 
 jpm run --profile $1
 

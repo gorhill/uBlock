@@ -3,9 +3,9 @@
 
 echo `pwd`
 
-cd dist/build/adnauseam.firefox
+cd bin/build/adnauseam.firefox
 jpm xpi
-cp null.xpi ../adnauseam.firefox.xpi
+cp null.xpi ../adnauseam.xpi
 ls ..
 cd -
 

@@ -27,10 +27,7 @@ cp    platform/firefox/bootstrap.js     $DES/
 cp    platform/firefox/frame*.js        $DES/
 cp -R platform/firefox/img              $DES/
 cp    platform/firefox/chrome.manifest  $DES/
-
-#cp    platform/firefox/install.rdf      $DES/
-cp    tools/adn/firefox/install.rdf      $DES/ #adn
-
+cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
