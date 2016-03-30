@@ -5,7 +5,7 @@
 echo "*** adnauseam.chromium: Creating web store package"
 echo "*** adnauseam.chromium: Copying files"
 
-DES=dist/build/adnauseam.chromium
+DES=bin/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 

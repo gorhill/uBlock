@@ -390,7 +390,7 @@ var dbugDetect = 0; // tmp
               //"=" + $attr(document.getElementById("adnauseam-count"), 'count'));
           }
       }
-  });
+  }
 
 
 })(this);
