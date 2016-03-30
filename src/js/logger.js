@@ -37,19 +37,6 @@ var LogEntry = function(args) {
 
 /******************************************************************************/
 
-var logEntryFactory = function(args) {
-    var entry = logEntryJunkyard.pop();
-    if ( entry ) {
-        return entry.init(args);
-    }
-    return new LogEntry(args);
-};
-
-var logEntryJunkyard = [];
-var logEntryJunkyardMax = 100;
-
-/******************************************************************************/
-
 LogEntry.prototype.init = function(args) {
     this.tstamp = Date.now();
     this.tab = args[0] || '';
@@ -59,18 +46,6 @@ LogEntry.prototype.init = function(args) {
     this.d2 = args[4];
     this.d3 = args[5];
     this.d4 = args[6];
-    return this;
-};
-
-/******************************************************************************/
-
-LogEntry.prototype.dispose = function() {
-    this.tstamp = 0;
-    this.tab = this.cat = '';
-    this.d0 = this.d1 = this.d2 = this.d3 = this.d4 = undefined;
-    if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
-        logEntryJunkyard.push(this);
-    }
 };
 
 /******************************************************************************/
@@ -82,21 +57,6 @@ var LogBuffer = function() {
     this.buffer = new Array(this.size);
     this.readPtr = 0;
     this.writePtr = 0;
-};
-
-/******************************************************************************/
-
-LogBuffer.prototype.dispose = function() {
-    var entry;
-    var i = this.buffer.length;
-    while ( i-- ) {
-        entry = this.buffer[i];
-        if ( entry instanceof LogEntry ) {
-            entry.dispose();
-        }
-    }
-    this.buffer = null;
-    return null;
 };
 
 /******************************************************************************/
@@ -113,7 +73,7 @@ LogBuffer.prototype.writeOne = function(args) {
     // Reusing log entry = less memory churning
     var entry = this.buffer[this.writePtr];
     if ( entry instanceof LogEntry === false ) {
-        this.buffer[this.writePtr] = logEntryFactory(args);
+        this.buffer[this.writePtr] = new LogEntry(args);
     } else {
         entry.init(args);
     }
@@ -178,7 +138,7 @@ var janitor = function() {
         logBuffer.lastReadTime < (Date.now() - logBufferObsoleteAfter)
     ) {
         api.writeOne = writeOneNoop;
-        logBuffer = logBuffer.dispose();
+        logBuffer = null;
     }
     if ( logBuffer !== null ) {
         vAPI.setTimeout(janitor, logBufferObsoleteAfter);
