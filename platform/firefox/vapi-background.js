@@ -3285,7 +3285,7 @@ vAPI.contextMenu = (function() {
 /******************************************************************************/
 
 var optionsObserver = (function() {
-    var addonId = 'uBlock0@raymondhill.net';
+    var addonId = 'adnauseam@rednoise.org';
 
     var commandHandler = function() {
         switch ( this.id ) {

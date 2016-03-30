@@ -688,11 +688,11 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Show Adblocker Dashboard",
-    "description": "Firefox/Fennec-specific: Show Dashboard"
+    "message": "Show Options",
+    "description": "Firefox/Fennec-specific: Show Options"
   },
   "showNetworkLogButton": {
-    "message": "Show Adblocker Logger",
+    "message": "Show Logger",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
