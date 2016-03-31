@@ -717,6 +717,7 @@ addthis.com/addthis_widget.js application/javascript
 	};
 	window.addthis = {
 		addEventListener: noopfn,
+		button: noopfn,
 		init: noopfn,
 		layers: noopfn,
 		toolbox: noopfn,
