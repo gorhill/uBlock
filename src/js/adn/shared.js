@@ -3,19 +3,27 @@
 'use strict';
 
 // functions shared between views
-
 var rand = function (min, max) {
 
   if (arguments.length == 1) {
     max = min;
     min = 0;
-  }
-  else if (!arguments.length) {
+  } else if (!arguments.length) {
     max = 1;
     min = 0;
   }
 
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function arrayRemove(arr, obj) {
+
+  var i = arr.indexOf(obj);
+  if (i != -1) {
+    arr.splice(i, 1);
+    return true;
+  }
+  return false;
 }
 
 function showAlert(msg) {

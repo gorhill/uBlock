@@ -9,7 +9,7 @@
   var messager = vAPI.messaging;
 
   messager.addChannelListener('adnauseam', function (request) {
-    console.log("GOT BROADCAST", request);
+    //console.log("GOT BROADCAST", request);
     switch (request.what) {
     case 'adAttempt':
       setCurrent(request.ad);
@@ -67,10 +67,8 @@
     }]
   ]);
 
-  var zoomStyle, zoomIdx = 0,
-    animatorId, animateMs = 2000,
-    locale,
-    resizeId, selectedAdSet, viewState = {};
+  var zoomStyle, zoomIdx = 0, animatorId, animateMs = 2000,
+    locale, resizeId, selectedAdSet, viewState = {};
 
   var gAds, gAdSets, gMin, gMax; // stateful
 
@@ -92,7 +90,7 @@
     console.log('updateAd: ', json);
 
     doUpdate(json.ad);
-    setAttempting(json.current);
+    //setAttempting(json.current);
     computeStats(gAdSets);
   }
 
@@ -1106,8 +1104,13 @@
                 return true;
               });
 
+              // remove the adSet
+              arrayRemove(gAdSets, selectedAdSet);
+
               // tell the addon
-              messager.send('adnauseam', { what: 'deleteAdset', ids: selectedAdSet.childIds() });
+              messager.send('adnauseam', {
+                what: 'deleteAdset', ids: selectedAdSet.childIds()
+              });
 
               // if its the last ad, close the vault
               if (!gAds.length) return closeVault();
