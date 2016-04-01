@@ -173,9 +173,14 @@ var dbugDetect = 0; // tmp
           targetUrl = target.getAttribute("href");
           if (targetUrl) {
 
+            console.log(elem.getBoundingClientRect(), imgs[i].getBoundingClientRect());
+
             ad = createAd(document.domain, targetUrl, {
               src: imgSrc
+              // width: imgs[i].clientWidth,
+              // height: imgs[i].clientHeight
             });
+
             if (ad) {
 
               console.log('IMG-AD', ad);
@@ -195,12 +200,13 @@ var dbugDetect = 0; // tmp
 
     var ads = [],
       divs = $find(e, 'div.dd'); //#main > div > ol.a947i105t6.v119f
+
     //console.log('DL: '+divs.length);
     for (var i = 0; i < divs.length; i++) {
 
-      var title = $find(divs[i], 'a.td-n');
-      var site = $find(divs[i], 'a.xh52v4e');
-      var text = $find(divs[i], 'a.fc-1st');
+      var title = $find(divs[i], 'a.td-n'),
+        site = $find(divs[i], 'a.xh52v4e'),
+        text = $find(divs[i], 'a.fc-1st');
 
       if (text.length && site.length && title.length) {
 
@@ -247,26 +253,22 @@ var dbugDetect = 0; // tmp
 
   var askText = function (dom) {
 
-    var title = $find(dom, 'a.test_titleLink.d_');
-    var site = $find(dom, 'a.test_domainLink.e_');
-    var text = $find(dom, 'span.descText');
-    var text2 = $find(dom, 'span.v_');
+    var title = $find(dom, 'a.test_titleLink.d_'),
+        site = $find(dom, 'a.test_domainLink.e_'),
+        text1 = $find(dom, 'span.descText'),
+        text2 = $find(dom, 'span.v_');
 
-    var textStr = "";
-    if (text2 && text2.length) {
-      textStr = $text(text) + $text(text2);
-    } else {
-      textStr = $text(text);
-    }
+    var text = text(text1) + (stringNotEmpty(text2) ? $text(text2) : '');
 
     if (text.length && site.length && title.length) {
       var ad = createAd('ask', $attr(title, 'href'), {
         title: $text(title),
-        text: textStr,
-        site: $text(site)
+        site: $text(site),
+        text: text
       });
 
     } else {
+
       console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
     }
 
