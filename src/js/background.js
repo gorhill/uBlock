@@ -122,6 +122,11 @@ return {
         'assets/user/filters.txt': {
             group: 'default'
         },
+        //AdNauseam
+        'assets/ublock/adnauseam.txt': {
+            title: 'AdNauseam filters',
+            group: 'default'
+        },
         // uBlock
         'assets/ublock/filters.txt': {
             title: 'uBlock filters',
