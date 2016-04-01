@@ -34,7 +34,7 @@
 # https://github.com/chrisaljoudi/uBlock/issues/141
 # Videos broken on weather.com
 # To counter `tags.tiqcdn.com` in  MVPS
-@@||tags.tiqcdn.com/utag/*.js$script,domain=cnet.com|weather.com
+@@||tags.tiqcdn.com/utag/*.js$script,domain=weather.com
 
 # http://forums.lanik.us/viewtopic.php?f=64&t=17842&sid=46bd7065193153fe46efe816b7cd32c9&start=30#p59663
 # To counter `statcounter.com` in Peter Lowe's, MVPS, Dan Pollock's and hpHosts
@@ -205,7 +205,6 @@ ovh.strim.io#@##tweets
 # http://www.reddit.com/r/AsianBeauty/comments/3ak15v/til_if_youre_using_ublock_origin_some_of_the/
 @@||img.echosting.cafe24.com/design$image,domain=jolse.com
 
-
 # https://forums.lanik.us/viewtopic.php?f=64&t=23859
 @@||imasdk.googleapis.com/js/core$subdocument,domain=globalnews.ca
 
@@ -296,3 +295,10 @@ phoronix.com#@#div[style^="text-align: center;"]
 # https://twitter.com/mtarnovan/status/713088377994682368
 # This counters `analytics.google.com` in Peter Lowe's
 @@||analytics.google.com^$first-party
+
+# This unbreaks video playback on weather.com
+# To counter `||analytics.edgekey.net^` in EasyPrivacy.
+@@||analytics.edgekey.net/html5/akamaihtml5-min.js$script,domain=weather.com
+
+# https://github.com/gorhill/uBlock/issues/1522
+||tags.tiqcdn.com/utag/*.js$script,redirect=noopjs,domain=cnet.com
