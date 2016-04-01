@@ -352,3 +352,6 @@ www.rtl.fr###modal-warning
 rtl.fr##script:inject(rtlfr-defuser.js)
 # https://github.com/gorhill/uBlock/issues/1505
 6play.fr,clubic.com,passeportsante.net,telerama.fr##script:inject(overlay-buster.js)
+
+# http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-77
+imore.com##script:inject(imore-sanitizer.js)
