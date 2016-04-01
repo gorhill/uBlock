@@ -1059,8 +1059,7 @@ var readCacheAsset = function(path, callback) {
 exports.get = function(path, callback) {
 
     if ( reIsUserPath.test(path) ) {
-        //readUserAsset(path, callback);
-        readExternalAsset(path, callback);
+        readUserAsset(path, callback);
         return;
     }
 
