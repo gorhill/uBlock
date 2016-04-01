@@ -1010,3 +1010,16 @@ overlay-buster.js application/javascript
 	};
 	document.addEventListener('DOMContentLoaded', domReady);
 })();
+
+
+# http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-77
+imore-sanitizer.js application/javascript
+(function() {
+	if ( window.mbn_zones ) {
+		delete window.mbn_zones;
+		return;
+	}
+	Object.defineProperty(window, 'mbn_zones', {
+		value: undefined
+	});
+})();
