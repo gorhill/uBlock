@@ -463,7 +463,12 @@
 
         var pageStore = µb.pageStoreFromTabId(tabId);
         if (pageStore && pageStore.rawURL.indexOf("adn-vault.html") >= 0) {
-            vAPI.tabs.remove(tabId, true);
+            try {
+                vAPI.tabs.remove(tabId, true);
+            }
+            catch (e) {
+                console.error(e);
+            }
         }
     }
   }
@@ -524,7 +529,13 @@
 
               // update the badge icon if its not the settings tab
               if (pageStore && pageStore.rawURL.indexOf("adn-settings.html") < 0) {
-                  vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
+
+                  try {
+                      vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
+                  }
+                  catch (e) {
+                      console.error(e);
+                  }
               }
           }
       }

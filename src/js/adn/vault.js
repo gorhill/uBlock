@@ -120,9 +120,9 @@
 
   function doLayout(adsets) {
 
-    console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
-
     adsets = adsets || [];
+
+    console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
 
     $('.item').remove();
 
@@ -1113,7 +1113,7 @@
               });
 
               // if its the last ad, close the vault
-              if (!gAds.length) return closeVault();
+              //if (!gAds.length) return closeVault();
 
               // recreate the slider, but don't redo layout
               createSlider(false);
@@ -1259,11 +1259,16 @@
   function createSlider(relayout) {
 
     //log('Vault-Slider.createSlider: '+gAds.length);
-    if (!gAds) return;
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
     d3.select("svg").remove();
+
+    if (!gAds || !gAds.length) {
+        computeStats();
+        showAlert('no ads found');
+        return;
+    }
 
     // setting up the position of the chart
     var iconW = 100;
