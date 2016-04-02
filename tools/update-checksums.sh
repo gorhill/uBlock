@@ -18,6 +18,7 @@ filters=(
 )
 for repoPath in "${filters[@]}"; do
     localPath=`printf $repoPath | sed 's/\.\.\/uAssets\/filters/assets\/ublock/'`
+    cp $repoPath $localPath
     echo `md5sum $localPath` >> assets/checksums.txt
 done
 
@@ -31,6 +32,7 @@ thirdparties=(
 )
 for repoPath in "${thirdparties[@]}"; do
     localPath=`printf $repoPath | sed 's/\.\.\/uAssets\/thirdparties/assets\/thirdparties/'`
+    cp $repoPath $localPath
     echo `md5sum $localPath` >> assets/checksums.txt
 done
 
