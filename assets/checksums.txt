@@ -1,4 +1,3 @@
-f484ea0333463fc3dada5ebde0fc2ba6 assets/ublock/adnauseam.txt
 059e0bfbf22bd242dda7b07389fe09a2 assets/ublock/filter-lists.json
 98088252cedafb8571cf61b91bea219e assets/ublock/badware.txt
 89f1a0b14271b83ca4980a3373d5fc12 assets/ublock/experimental.txt
@@ -12,3 +11,4 @@ a91af77c47c302c0741c7445b0fada1a assets/thirdparties/easylist-downloads.adblockp
 c4785389e986b6d68a3ac43743fec40f assets/thirdparties/pgl.yoyo.org/as/serverlist
 748cbfc08bed9240df4912e77a1de97a assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 28babde5108007fc3202950ee0d4905f assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
+f484ea0333463fc3dada5ebde0fc2ba6 assets/ublock/adnauseam.txt
