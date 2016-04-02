@@ -1,3 +1,4 @@
+f484ea0333463fc3dada5ebde0fc2ba6 assets/ublock/adnauseam.txt
 059e0bfbf22bd242dda7b07389fe09a2 assets/ublock/filter-lists.json
 98088252cedafb8571cf61b91bea219e assets/ublock/badware.txt
 89f1a0b14271b83ca4980a3373d5fc12 assets/ublock/experimental.txt
