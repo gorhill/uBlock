@@ -26,11 +26,6 @@
   src/background.html (added adn files)
 
 
-* changed files inside platform/:
-
-  platform/firefox/vapi-background.js
-
-
 * changed files inside _locales/: (locale)
 
   src/_locales/en/messages.json     (added ADN locale)
@@ -51,17 +46,6 @@
   src/js/adn/core.js
   src/js/adn/vault.js
   src/js/adn/log.js
-
-  src/css/adn/menu.css
-  src/css/adn/vault.css
-  src/css/adn/log.css
-  src/css/adn/font/..
-    bebasneue_regular-webfont.eot
-    bebasneue_regular-webfont.svg
-    bebasneue_regular-webfont.ttf
-    bebasneue_regular-webfont.woff
-    bebasneue_regular-webfont.woff2
-    stylesheet.css
 
 
 * changed files inside src/_locale (localization)

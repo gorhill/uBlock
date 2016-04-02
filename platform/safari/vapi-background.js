@@ -38,7 +38,7 @@
     /******************************************************************************/
 
     vAPI.app = {
-        name: "uBlock",
+        name: "AdNauseam",
         version: safari.extension.displayVersion
     };
 

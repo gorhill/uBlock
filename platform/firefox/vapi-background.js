@@ -72,7 +72,7 @@ var deferUntil = function(testFn, mainFn, details) {
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'uBlock Origin',
+    name: 'AdNauseam',
     version: location.hash.slice(1)
 };
 
@@ -2482,7 +2482,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'menu.html?tabId=' + curTabId, // adn
+            url: 'adn-menu.html?tabId=' + curTabId, // adn
             index: -1,
             select: true
         });
