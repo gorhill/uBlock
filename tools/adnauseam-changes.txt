@@ -1,4 +1,4 @@
-### List of Changed Items ###
+### List of Changed Items ### out-of-date
 
 # pull new changes from original ublock
 # git checkout master
@@ -51,16 +51,6 @@
   src/js/adn/core.js
   src/js/adn/vault.js
   src/js/adn/log.js
-
-  src/img/adn/..
-    adn_active.png
-    adn_alert.png
-    adn_disabled.png
-    adn_firstrun.png
-    gray_grid.png
-    icon-32.png
-    icon_128.png (needs to be remade)
-    icon_16.png
 
   src/css/adn/menu.css
   src/css/adn/vault.css

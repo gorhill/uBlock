@@ -205,7 +205,7 @@ header{
   display: block;
   height: 100px;
   width: 100px;
-  background: url(../../img/adn/adn_active.png) center center no-repeat;
+  background: url(../../img/active.png) center center no-repeat;
   background-size: 78px 75px;
   float: left;
 }
@@ -255,7 +255,7 @@ header{
 ============================================================ */
 #ad-list,
 #settings form{
-  background: #000 url(../../img/adn/gray_grid.png);
+  background: #000 url(../../img/gray_grid.png);
   height: 350px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -359,7 +359,7 @@ header{
   width: 250px;
   overflow: hidden;
   max-height: 2.3em;
-  line-height: 1.15em;  
+  line-height: 1.15em;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;

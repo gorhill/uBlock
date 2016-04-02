@@ -2,9 +2,9 @@
 
 set -e
 
-tools/make-firefox-adn.sh
+tools/make-firefox.sh
 
-cd bin/build/adnauseam.firefox 
+cd bin/build/adnauseam.firefox
 
 jpm run --profile $1
 

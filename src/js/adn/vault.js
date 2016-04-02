@@ -111,10 +111,7 @@
 
   function setCurrent(ad) {
 
-    console.log('vault::setCurrent: ', ad);
-
     $('.item').removeClass('attempting just-visited just-failed');
-
     setAttempting(ad);
   }
 
@@ -127,11 +124,8 @@
     $('.item').remove();
 
     createDivs(adsets);
-
     computeStats(adsets);
-
     enableLightbox();
-
     repack();
   }
 
