@@ -31,23 +31,29 @@
         null
     );
 
+    if ( !this.docShell ) {
+        return;
+    }
+
+    let webProgress = this.docShell
+                          .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                          .getInterface(Components.interfaces.nsIWebProgress);
+    if ( !webProgress ) {
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1514
+    // Fix?
+    let domWindow = webProgress.DOMWindow;
+    if ( domWindow !== domWindow.top ) {
+        return;
+    }
+
     // https://github.com/gorhill/uBlock/issues/1444
     // Apparently, on older versions of Firefox (31 and less), the same context
     // is used for all extensions, hence we must use a unique variable name to
     // ensure no collision.
-    this.ublock0LocationChangeListener = null;
-
-    // https://github.com/gorhill/uBlock/issues/1514
-    // Fix?
-    if ( this.docShell ) {
-        let webProgress = this.docShell
-                              .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-                              .getInterface(Components.interfaces.nsIWebProgress);
-        let domWindow = webProgress.DOMWindow;
-        if ( domWindow === domWindow.top ) {
-            this.ublock0LocationChangeListener = new LocationChangeListener(this.docShell, webProgress);
-        }
-    }
+    this.ublock0LocationChangeListener = new LocationChangeListener(this.docShell, webProgress);
 }).call(this);
 
 /******************************************************************************/
