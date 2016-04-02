@@ -418,7 +418,7 @@ yavli-defuser.js application/javascript
 		Object.defineProperty(window, '__lturl', nourl);
 	} catch (ex) {
 	}
-	var aa = ['yy','yz','zp','zx','zy','gj','fj','jf','kj','kp','pk','uj'];
+	var aa = ['zp','zx','zy','gj','fj','jf','kj','kp','pk','uj','ju','gk'];
 	var no = {
 		set: noopfn,
 		get: function() {
@@ -717,6 +717,7 @@ addthis.com/addthis_widget.js application/javascript
 	};
 	window.addthis = {
 		addEventListener: noopfn,
+		button: noopfn,
 		init: noopfn,
 		layers: noopfn,
 		toolbox: noopfn,
@@ -949,5 +950,76 @@ rtlfr-defuser.js application/javascript
 (function() {
 	window.addEventListener('load', function() {
 		document.body.style.setProperty('overflow', 'auto');
+	});
+})();
+
+
+# Experimental: Generic overlay defuser.
+# if this works well and proves to be useful, this may end up as a stock tool
+# in uBO's popup panel.
+overlay-buster.js application/javascript
+(function() {
+	if ( window !== window.top ) {
+		return;
+	}
+	var shutdown = function() {
+		observer.disconnect();
+		observer = null;
+	};
+	var ttlTimer = setTimeout(shutdown, 15000);
+	var timer = null;
+	var domChanged = function(mutations) {
+		timer = null;
+		var docEl = document.documentElement,
+			bodyEl = document.body,
+			vw = Math.min(docEl.clientWidth, window.innerWidth),
+			vh = Math.min(docEl.clientHeight, window.innerHeight),
+			el = document.elementFromPoint(vw/2, vh/2),
+			style, rect;
+		for (;;) {
+			if ( el === null || el.parentNode === null || el === bodyEl ) {
+				return;
+			}
+			style = window.getComputedStyle(el);
+			if ( parseInt(style.zIndex, 10) >= 1000 && style.position === 'fixed' ) {
+				rect = el.getBoundingClientRect();
+				if ( rect.left <= 0 && rect.top <= 0 && rect.right >= vw && rect.bottom >= vh ) {
+					break;
+				}
+			}
+			el = el.parentNode;
+		}
+		el.parentNode.removeChild(el);
+		if ( ttlTimer !== null ) {
+			clearTimeout(ttlTimer);
+			ttlTimer = setTimeout(shutdown, 15000);
+		}
+	};
+	var domChangedAsync = function(mutations) {
+		if ( timer === null ) {
+			timer = setTimeout(domChanged, 50);
+		}
+	};
+	var observer = new MutationObserver(domChangedAsync);
+	var domReady = function(ev) {
+		document.removeEventListener(ev.type, domReady);
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+	};
+	document.addEventListener('DOMContentLoaded', domReady);
+})();
+
+
+# http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-77
+imore-sanitizer.js application/javascript
+(function() {
+	if ( window.mbn_zones ) {
+		delete window.mbn_zones;
+		return;
+	}
+	Object.defineProperty(window, 'mbn_zones', {
+		value: undefined
 	});
 })();

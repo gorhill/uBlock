@@ -372,21 +372,17 @@ FilterParser.prototype.parse = function(raw) {
 
     switch ( matches[1] ) {
     case 'contains':
-        this.suffix = 'script?';
         // Plain string- or regex-based?
         if ( token.startsWith('/') === false || token.endsWith('/') === false ) {
-            this.suffix += token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            token = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         } else {
-            this.suffix += token.slice(1, -1);
-            if ( isBadRegex(this.suffix) ) {
-                console.error(
-                    "uBlock Origin> discarding bad regular expression-based cosmetic filter '%s': '%s'",
-                    raw,
-                    isBadRegex.message
-                );
+            token = token.slice(1, -1);
+            if ( isBadRegex(token) ) {
+                µb.logger.writeOne('', 'error', 'Cosmetic filtering – bad regular expression: ' + raw + ' (' + isBadRegex.message + ')');
                 this.invalid = true;
             }
         }
+        this.suffix = 'script?' + token;
         break;
     case 'inject':
         this.suffix = 'script+' + token;
@@ -706,7 +702,7 @@ FilterContainer.prototype.isValidSelector = (function() {
                 return true;
             }
         }
-        console.error('uBlock> invalid cosmetic filter:', s);
+        µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + s);
         return false;
     };
 })();

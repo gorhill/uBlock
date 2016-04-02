@@ -24,44 +24,36 @@
 // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Frame_script_environment
 
 (function() {
-
     'use strict';
-
-    if ( !this.docShell ) {
-        return;
-    }
 
     let {LocationChangeListener} = Components.utils.import(
         Components.stack.filename.replace('Script', 'Module'),
         null
     );
 
-    // https://github.com/gorhill/uBlock/issues/1444
-    // Apparently the same context is used for all extensions, hence we must
-    // use scoped variables to ensure no collision.
-    let locationChangeListener;
-
-    // https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Progress_Listeners
-    // "Note that the browser uses a weak reference to your listener object,
-    // "so make sure to keep an external reference to your object to ensure
-    // "that it stays in memory."
-    // This listener below allows us to keep `locationChangeListener` alive
-    // until we no longer need it.
-    let shutdown = function(ev) {
-        if ( ev.target === this ) {
-            this.removeEventListener('unload', shutdown);
-            locationChangeListener = null;
-        }
-    };
-    this.addEventListener('unload', shutdown);
+    if ( !this.docShell ) {
+        return;
+    }
 
     let webProgress = this.docShell
                           .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
                           .getInterface(Components.interfaces.nsIWebProgress);
-    if ( webProgress && webProgress.isTopLevel ) {
-        locationChangeListener = new LocationChangeListener(this.docShell, webProgress);
+    if ( !webProgress ) {
+        return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/1514
+    // Fix?
+    let domWindow = webProgress.DOMWindow;
+    if ( domWindow !== domWindow.top ) {
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1444
+    // Apparently, on older versions of Firefox (31 and less), the same context
+    // is used for all extensions, hence we must use a unique variable name to
+    // ensure no collision.
+    this.ublock0LocationChangeListener = new LocationChangeListener(this.docShell, webProgress);
 }).call(this);
 
 /******************************************************************************/
