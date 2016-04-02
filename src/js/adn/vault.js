@@ -24,7 +24,7 @@
     }
   });
 
-  const logoURL = 'http://dhowe.github.io/AdNauseam/',
+  const logoURL = 'http://adnauseam.io',
     States = ['pending', 'visited', 'failed'],
     Zooms = [100, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
@@ -1369,10 +1369,10 @@
 
       gMin = ext[0], gMax = ext[1];
 
-      if (gAds.length !== 1 && gMax - gMin <= 1) {
+      if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
-        console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
-        return; // fix for gh #100
+        console.log('vault-slider::ignore-micro: '+ext[0]+","+ext[1]);
+        return;// gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
       }
 
       var filtered = dateFilter(gMin, gMax);

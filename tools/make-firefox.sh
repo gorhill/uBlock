@@ -27,13 +27,12 @@ cp    platform/firefox/bootstrap.js     $DES/
 cp    platform/firefox/frame*.js        $DES/
 cp -R platform/firefox/img              $DES/
 cp    platform/firefox/chrome.manifest  $DES/
-#cp    platform/firefox/install.rdf      $DES/
-cp    tools/adn/firefox/install.rdf    $DES/ #adn
+cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
 echo "*** adnauseam.firefox: Generating meta..."
-python tools/make-firefox-meta-adn.py $DES/ "$2"  #adn
+python tools/make-firefox-meta.py $DES/ "$2"
 
 if [ "$1" = all ]; then
     echo "*** adnauseam.firefox: Creating package..."

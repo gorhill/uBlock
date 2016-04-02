@@ -5,7 +5,7 @@
 echo "*** adnauseam.chromium: Creating web store package"
 echo "*** adnauseam.chromium: Copying files"
 
-DES=dist/build/adnauseam.chromium
+DES=bin/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 
@@ -22,7 +22,6 @@ cp platform/chromium/*.js $DES/js/
 cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
-cp tools/adn/chromium/manifest.json $DES/       #adn#
 cp LICENSE.txt $DES/
 
 if [ "$1" = all ]; then

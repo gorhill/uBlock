@@ -22,8 +22,7 @@ cp platform/chromium/*.html $DES/
 cp platform/chromium/*.js   $DES/js/
 cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
-#cp platform/opera/manifest.json $DES/
-cp tools/adn/opera/manifest.json $DES/ #adn#
+cp platform/opera/manifest.json $DES/
 cp LICENSE.txt $DES/
 
 rm -r $DES/_locales/cv

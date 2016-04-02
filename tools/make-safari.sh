@@ -2,9 +2,9 @@
 #
 # This script assumes an OS X or *NIX environment
 
-echo "*** adnauseam.safariextension: Copying files..."
+echo "*** adnauseam.safari: Copying files..."
 
-DES=bin/build/adnauseam.safariextension
+DES=bin/build/adnauseam.safari
 rm -rf $DES
 mkdir -p $DES
 
@@ -19,15 +19,15 @@ cp src/*.html $DES/
 mv $DES/img/icon_128.png $DES/Icon.png
 cp platform/safari/*.js $DES/js/
 cp -R platform/safari/img $DES/
-cp tools/adn/safari/Info.plist $DES/
-cp tools/adn/safari/Settings.plist $DES/
+cp platform/safari/Info.plist $DES/
+cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt $DES/
 
-echo "*** adnauseam.safariextension: Generating Info.plist..."
-python tools/make-safari-meta-adn.py $DES/
+echo "*** adnauseam.safari: Generating Info.plist..."
+python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** Use Safari's Extension Builder to create the signed adnauseam extension package -- can't automate it."
 fi
 
-echo "*** adnauseam.safariextension: Done."
+echo "*** adnauseam.safari: Done."
