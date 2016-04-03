@@ -7,9 +7,9 @@ DES=$1/assets
 printf "*** Packaging assets in $DES... "
 
 if [ -n "${TRAVIS_TAG}" ]; then
-  pushd ..
+  pushd .. > /dev/null
   git clone https://github.com/uBlockOrigin/uAssets.git
-  popd
+  popd > /dev/null
 fi
 
 rm -rf $DES

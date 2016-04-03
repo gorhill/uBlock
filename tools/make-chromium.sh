@@ -26,9 +26,9 @@ cp LICENSE.txt              $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.chromium: Creating package..."
-    pushd $(dirname $DES/)
+    pushd $(dirname $DES/) > /dev/null
     zip uBlock0.chromium.zip -qr $(basename $DES/)/*
-    popd
+    popd > /dev/null
 fi
 
 echo "*** uBlock0.chromium: Package done."
