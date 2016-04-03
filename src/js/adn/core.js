@@ -26,7 +26,6 @@
     idgen,
     inspected,
     admap = {},
-
     lastActivity = 0,
     autoFailMode = 0,
     testVisitMode = 0,
@@ -45,7 +44,7 @@
   var blockablePageDomains = []; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
 
   // always block scripts from these domains (either regex or string)
-  var blockableScriptDomains = [ 'partner.googleadservices.com' ]; // add to rules
+  var blockableScriptDomains = ['partner.googleadservices.com']; // add to rules
 
   var initialize = function (settings) {
 
@@ -62,8 +61,11 @@
     ads = adlist();
 
     if (testVisitMode) {
-       console.warn("[WARN] Clearing all Ad visit data!");
-       ads.forEach(function(ad){ ad.visitedTs = 0; ad.attempts = 0 });
+      console.warn("[WARN] Clearing all Ad visit data!");
+      ads.forEach(function (ad) {
+        ad.visitedTs = 0;
+        ad.attempts = 0
+      });
     }
 
     // compute the highest id in the admap
@@ -104,7 +106,7 @@
     }
 
     if (!pollingDisabled) {
-      nextMs =  Math.max(1, interval - (millis() - lastActivity));
+      nextMs = Math.max(1, interval - (millis() - lastActivity));
       setTimeout(pollQueue, nextMs); // next poll
     }
   }
@@ -155,7 +157,10 @@
         if (ad.title === 'Pending') ad.title = 'Failed';
       }
 
-      vAPI.messaging.broadcast( { what: 'adVisited', ad: ad } );
+      vAPI.messaging.broadcast({
+        what: 'adVisited',
+        ad: ad
+      });
 
     } else {
 
@@ -163,17 +168,16 @@
     }
   }
 
-  var parseTitle = function(xhr) {
+  var parseTitle = function (xhr) {
 
-      var title = xhr.match(/<title[^>]*>([^<]+)<\/title>/i);
-      if (title && title.length > 1) {
+    var title = xhr.match(/<title[^>]*>([^<]+)<\/title>/i);
+    if (title && title.length > 1) {
 
-        return unescapeHTML(title[1].trim());
-      }
-      else {
-        console.warn('Unable to parse title from: ' + xhr.responseText);
-      }
-      return false;
+      return unescapeHTML(title[1].trim());
+    } else {
+      console.warn('Unable to parse title from: ' + xhr.responseText);
+    }
+    return false;
   }
 
   var updateAdOnSuccess = function (xhr, ad) {
@@ -188,7 +192,10 @@
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
 
-      vAPI.messaging.broadcast({ what: 'adVisited', ad: ad });
+      vAPI.messaging.broadcast({
+        what: 'adVisited',
+        ad: ad
+      });
 
       if (ad === inspected) {
         inspected = null;
@@ -256,7 +263,8 @@
       return;
     }
 
-    var status = this.status || 200, html = this.responseText;
+    var status = this.status || 200,
+      html = this.responseText;
 
     if (autoFailMode || status < 200 || status >= 300 || !stringNotEmpty(html)) {
 
@@ -273,10 +281,14 @@
 
   var visitAd = function (ad) {
 
-    var url = ad.targetUrl, now = markActivity();
+    var url = ad.targetUrl,
+      now = markActivity();
 
     // tell menu/vault we have a new attempt
-    vAPI.messaging.broadcast({ what: 'adAttempt', ad: ad });
+    vAPI.messaging.broadcast({
+      what: 'adAttempt',
+      ad: ad
+    });
 
     if (xhr) {
 
@@ -291,7 +303,9 @@
 
       if (elapsed > visitTimeout) {
 
-        return onVisitError.call(xhr, { type: 'timeout' });
+        return onVisitError.call(xhr, {
+          type: 'timeout'
+        });
       }
     }
 
@@ -303,27 +317,27 @@
     return sendXhr(ad);
   };
 
-  var sendXhr = function(ad) {
+  var sendXhr = function (ad) {
 
-      console.log('TRYING: ' + adinfo(ad), ad.targetUrl);
+    console.log('TRYING: ' + adinfo(ad), ad.targetUrl);
 
-      xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
 
-      try {
+    try {
 
-        xhr.open('get', ad.targetUrl, true);
-        xhr.delegate = ad;
-        xhr.timeout = visitTimeout;
-        xhr.onload = onVisitResponse;
-        xhr.onerror = onVisitError;
-        xhr.ontimeout = onVisitError;
-        xhr.responseType = ''; // 'document'?;
-        xhr.send();
+      xhr.open('get', ad.targetUrl, true);
+      xhr.delegate = ad;
+      xhr.timeout = visitTimeout;
+      xhr.onload = onVisitResponse;
+      xhr.onerror = onVisitError;
+      xhr.ontimeout = onVisitError;
+      xhr.responseType = ''; // 'document'?;
+      xhr.send();
 
-      } catch (e) {
+    } catch (e) {
 
-        onVisitError.call(xhr, e);
-      }
+      onVisitError.call(xhr, e);
+    }
   }
 
   var storeUserData = function (immediate) {
@@ -335,25 +349,25 @@
 
   var validateTarget = function (ad) {
 
-      var url = ad.targetUrl;
+    var url = ad.targetUrl;
 
-      if (!/^http/.test(url)) {
+    if (!/^http/.test(url)) {
 
-        // Here we try to extract an obfuscated URL
-        var idx = url.indexOf('http');
-        if (idx != -1) {
+      // Here we try to extract an obfuscated URL
+      var idx = url.indexOf('http');
+      if (idx != -1) {
 
-          ad.targetUrl = decodeURIComponent(url.substring(idx));
-          console.log("Ad.targetUrl Updated: " + ad.targetUrl);
+        ad.targetUrl = decodeURIComponent(url.substring(idx));
+        console.log("Ad.targetUrl Updated: " + ad.targetUrl);
 
-        } else {
+      } else {
 
-          console.warn("Invalid TargetUrl: " + url);
-          return false;
-        }
+        console.warn("Invalid TargetUrl: " + url);
+        return false;
       }
+    }
 
-      return true;
+    return true;
   }
 
   var validate = function (ad) {
@@ -369,8 +383,7 @@
       if (!/^http/.test(ad.contentData.src) && !/^data:image/.test(ad.contentData.src)) {
 
         console.log("Relative-image: " + ad.contentData.src);
-        ad.contentData.src = ad.pageUrl.substring
-          (0, ad.pageUrl.lastIndexOf('/')) + '/' + ad.contentData.src;
+        ad.contentData.src = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + ad.contentData.src;
 
         console.log("    --> " + ad.contentData.src);
       }
@@ -461,22 +474,21 @@
 
     for (var tabId in µb.pageStores) {
 
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if (pageStore && pageStore.rawURL.indexOf("vault.html") >= 0) {
-            try {
-                vAPI.tabs.remove(tabId, true);
-            }
-            catch (e) {
-                console.error(e);
-            }
+      var pageStore = µb.pageStoreFromTabId(tabId);
+      if (pageStore && pageStore.rawURL.indexOf("vault.html") >= 0) {
+        try {
+          vAPI.tabs.remove(tabId, true);
+        } catch (e) {
+          console.error(e);
         }
+      }
     }
   }
 
   var deleteAd = function (arg) {
 
     var ad = (typeof arg === 'object') ? arg : adById(arg),
-        count = adlist().length;
+      count = adlist().length;
 
     if (!ad) console.warn("No Ad to delete", id, admap);
 
@@ -484,11 +496,10 @@
 
     if (adlist().length < count) {
 
-        console.log('DELETED: '+adinfo(ad));
-        updateBadges();
-    }
-    else {
-        console.warn('Unable to delete: ', ad);
+      console.log('DELETED: ' + adinfo(ad));
+      updateBadges();
+    } else {
+      console.warn('Unable to delete: ', ad);
     }
 
     storeUserData();
@@ -517,28 +528,27 @@
     console.log('AdNauseam.clear: ' + count + ' ads cleared');
   }
 
-  var updateBadges = function() {
+  var updateBadges = function () {
 
-      // update badges if we are showing them
-      if (µb.userSettings.showIconBadge ) {
+    // update badges if we are showing them
+    if (µb.userSettings.showIconBadge) {
 
-          // get all open tabs
-          for (var tabId in µb.pageStores) {
+      // get all open tabs
+      for (var tabId in µb.pageStores) {
 
-              var pageStore = µb.pageStoreFromTabId(tabId);
+        var pageStore = µb.pageStoreFromTabId(tabId);
 
-              // update the badge icon if its not the settings tab
-              if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
+        // update the badge icon if its not the settings tab
+        if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
 
-                  try {
-                      vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
-                  }
-                  catch (e) {
-                      console.error(e);
-                  }
-              }
+          try {
+            vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
+          } catch (e) {
+            console.error(e);
           }
+        }
       }
+    }
   }
 
   // returns all ads for a page, or all pages, if page arg is null
@@ -585,18 +595,18 @@
     console.log('AdNauseam.export: ' + count + ' ads to ' + filename);
   }
 
-  var adsForPage = function(request, pageStore, tabId) {
+  var adsForPage = function (request, pageStore, tabId) {
 
-      var reqPageStore = request.tabId &&
-        µb.pageStoreFromTabId(request.tabId) || pageStore;
-      if (!reqPageStore)
-        throw Error('No pageStore found!', request, pageStore, tabId);
-      return adsForUI(reqPageStore.rawURL);
+    var reqPageStore = request.tabId &&
+      µb.pageStoreFromTabId(request.tabId) || pageStore;
+    if (!reqPageStore)
+      throw Error('No pageStore found!', request, pageStore, tabId);
+    return adsForUI(reqPageStore.rawURL);
   }
 
-  var adsForVault = function(request, pageStore, tabId) {
+  var adsForVault = function (request, pageStore, tabId) {
 
-      return adsForUI();
+    return adsForUI();
   }
 
   var itemInspected = function (request, pageStore, tabId) {
@@ -605,6 +615,12 @@
       var ad = adById(request.id)
       inspected = ad;
     }
+  }
+
+  var getPreferences = function (request, pageStore, tabId) {
+
+    // preferences relevant to contents-scripts
+    return { parseTextAds: µb.adnSettings.parseTextAds };
   }
 
   var logAdSet = function (request, pageStore, tabId) {
@@ -616,9 +632,14 @@
       data += JSON.stringify(adById(request.ids[j]));
     }
 
-    console.log('ADSET #'+request.gid+'\n', data);
+    console.log('ADSET #' + request.gid + '\n', data);
 
-    vAPI.messaging.broadcast({ what: 'logJSON', data: data });
+    vAPI.messaging.broadcast({
+      what: 'logJSON',
+      data: data
+    });
+
+    return data;
   }
 
   var deleteAdSet = function (request, pageStore, tabId) {
@@ -631,8 +652,8 @@
   var registerAd = function (request, pageStore, tabId) {
 
     var json, adhash, msSinceFound, orig,
-        pageUrl = pageStore.rawURL,
-        ad = request.ad;
+      pageUrl = pageStore.rawURL,
+      ad = request.ad;
 
     if (!ad || !validate(ad)) {
 
@@ -700,7 +721,8 @@
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
-    itemInspected: itemInspected
+    itemInspected: itemInspected,
+    getPreferences: getPreferences
   };
 
 })();

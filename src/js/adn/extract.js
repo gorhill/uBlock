@@ -6,9 +6,16 @@ var dbugDetect = 0; // tmp
 
   'use strict';
 
-  var adDetector = self.adDetector = self.adDetector || {};
+  var prefs, adDetector = self.adDetector = self.adDetector || {};
 
   if (adDetector.findAds) return;
+
+  vAPI.messaging.send('adnauseam', {
+    what: 'getPreferences'
+  }, function (req) {
+    prefs = req;
+    console.log('Preferences: ', req);
+  });
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
@@ -20,9 +27,9 @@ var dbugDetect = 0; // tmp
     });
 
     if (elem.tagName === 'IFRAME') {
-        //var c = elem.contentDocument || elem.contentWindow.document;
-        //console.log($find(elem,'img').length, c);
-        return; // Ignore iframes, wait for sub-elements?
+      //var c = elem.contentDocument || elem.contentWindow.document;
+      //console.log($find(elem,'img').length, c);
+      return; // Ignore iframes, wait for sub-elements?
     }
 
     //elem.style.setProperty('display', 'none', 'important');
@@ -38,20 +45,27 @@ var dbugDetect = 0; // tmp
       return checkImages(elem, imgs);
     }
 
-    var ads = checkFilters(activeFilters, elem);
-    if (ads && ads.length) {
+    if (prefs.parseTextAds) {
 
-      for (var i = 0; i < ads.length; i++) {
+      var ads = checkFilters(activeFilters, elem);
+      if (ads && ads.length) {
 
-        if (ads[i]) {
-          console.log("TEXT-AD", ads[i]);
-          notifyAddon(ads[i], elem);
+        for (var i = 0; i < ads.length; i++) {
+
+          if (ads[i]) {
+
+            console.log("TEXT-AD", ads[i]);
+            notifyAddon(ads[i], elem);
+          }
         }
       }
     }
+    else {
+        console.log('Skipping text-ads');
+    }
   }
 
-  var pageCount = function(ads, pageUrl) {
+  var pageCount = function (ads, pageUrl) {
 
     var num = 0;
     for (var i = 0; i < ads.length; i++) {
@@ -104,7 +118,10 @@ var dbugDetect = 0; // tmp
 
   var notifyAddon = function (ad) {
 
-    vAPI.messaging.send('adnauseam', { what: 'registerAd', ad: ad });
+    vAPI.messaging.send('adnauseam', {
+      what: 'registerAd',
+      ad: ad
+    });
   }
 
   var $is = function (elem, selector) { // jquery shim
@@ -130,7 +147,7 @@ var dbugDetect = 0; // tmp
   var $attr = function (ele, attr, val) { // jquery shim
 
     return val ? (ele.length ? ele[0] : ele).setAttribute(attr, val) :
-        (ele.length ? ele[0] : ele).getAttribute(attr);
+      (ele.length ? ele[0] : ele).getAttribute(attr);
   };
 
   var $text = function (ele) { // jquery shim
@@ -177,8 +194,8 @@ var dbugDetect = 0; // tmp
 
             ad = createAd(document.domain, targetUrl, {
               src: imgSrc
-              // width: imgs[i].clientWidth,
-              // height: imgs[i].clientHeight
+                // width: imgs[i].clientWidth,
+                // height: imgs[i].clientHeight
             });
 
             if (ad) {
@@ -254,9 +271,9 @@ var dbugDetect = 0; // tmp
   var askText = function (dom) {
 
     var title = $find(dom, 'a.test_titleLink.d_'),
-        site = $find(dom, 'a.test_domainLink.e_'),
-        text1 = $find(dom, 'span.descText'),
-        text2 = $find(dom, 'span.v_');
+      site = $find(dom, 'a.test_domainLink.e_'),
+      text1 = $find(dom, 'span.descText'),
+      text2 = $find(dom, 'span.v_');
 
     var text = text(text1) + (stringNotEmpty(text2) ? $text(text2) : '');
 
@@ -368,33 +385,30 @@ var dbugDetect = 0; // tmp
 
   var messageListener = function (request) {
 
-      // this is a temporary means of injecting the adnauseam-count
-      // div into top-level frames for checking via automated tests
-      if (window === window.top && request.automated) {
+    // this is a temporary means of injecting the adnauseam-count
+    // div into top-level frames for checking via automated tests
+    if (window === window.top && request.automated) {
 
-          if (request.what === 'adDetected') {
+      if (request.what === 'adDetected') {
 
-              var count = pageCount(request.data, request.pageUrl),
-                adndiv = document.getElementById("adnauseam-count");
+        var count = pageCount(request.data, request.pageUrl),
+          adndiv = document.getElementById("adnauseam-count");
 
-              if (!adndiv) {
+        if (!adndiv) {
 
-                  adndiv = document.createElement('div');
-                  $attr(adndiv,'id', 'adnauseam-count');
-                  var body = document.getElementsByTagName("body");
-                  body.length && body[0].appendChild(adndiv);
-                  //console.log("Injected: #adnauseam-count");
-              }
+          adndiv = document.createElement('div');
+          $attr(adndiv, 'id', 'adnauseam-count');
+          var body = document.getElementsByTagName("body");
+          body.length && body[0].appendChild(adndiv);
+          //console.log("Injected: #adnauseam-count");
+        }
 
-              $attr(adndiv, 'count', count);
-              // console.log("adndiv.attr('count', "+json.count+")");
-              console.log("INSERT_COUNT="+count+")");
-              //"=" + $attr(document.getElementById("adnauseam-count"), 'count'));
-          }
+        $attr(adndiv, 'count', count);
+        // console.log("adndiv.attr('count', "+json.count+")");
+        console.log("INSERT_COUNT=" + count + ")");
+        //"=" + $attr(document.getElementById("adnauseam-count"), 'count'));
       }
+    }
   }
 
-
 })(this);
-
-/******************************************************************************/

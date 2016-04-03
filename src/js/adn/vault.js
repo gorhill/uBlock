@@ -46,10 +46,6 @@
     case 'adVisited':
       updateAd(request);
       break;
-
-    case 'logJSON':
-      console.log(request.data);
-      break;
     }
   });
 
@@ -770,10 +766,13 @@
 
       console.log("Logging JSON for AdSet #" + selectedAdSet.gid);
       messager.send('adnauseam', {
-        what: 'logAdSet',
-        gid: selectedAdSet.gid,
-        ids: selectedAdSet.childIds()
-      });
+          what: 'logAdSet',
+          gid: selectedAdSet.gid,
+          ids: selectedAdSet.childIds()
+        },
+        function (data) {
+          console.log(data);
+        });
     }
   }
 

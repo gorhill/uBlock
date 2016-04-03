@@ -51,6 +51,7 @@ return {
 
     adnSettings: {
       noBlockingNonTrackers: true,
+      parseTextAds: false,
       admap: {}
     },
 
