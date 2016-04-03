@@ -46,6 +46,9 @@
   // always block scripts from these domains (either regex or string)
   var blockableScriptDomains = ['partner.googleadservices.com']; // add to rules
 
+  // mark ad visits as failure if any of these are included in title
+  var errorStrings = ['file not found', 'website is currently unavailable' ];
+
   var initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
@@ -106,6 +109,7 @@
     }
 
     if (!pollingDisabled) {
+
       nextMs = Math.max(1, interval - (millis() - lastActivity));
       setTimeout(pollQueue, nextMs); // next poll
     }
@@ -133,8 +137,10 @@
     var menuUrl = vAPI.getURL('vault.html');
 
     for (var tabId in µb.pageStores) {
+
       var pageStore = µb.pageStoreFromTabId(tabId);
       if (pageStore !== null && pageStore.rawURL.startsWith(menuUrl)) {
+
         return tabId;
       }
     }
@@ -174,19 +180,20 @@
     if (title && title.length > 1) {
 
       return unescapeHTML(title[1].trim());
+
     } else {
       console.warn('Unable to parse title from: ' + xhr.responseText);
     }
+
     return false;
   }
 
-  var updateAdOnSuccess = function (xhr, ad) {
+  var updateAdOnSuccess = function (xhr, ad, title) {
 
     var ad = xhr.delegate;
 
     if (ad) {
 
-      var title = parseTitle(xhr.responseText);
       if (title) ad.title = title;
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
@@ -197,9 +204,7 @@
         ad: ad
       });
 
-      if (ad === inspected) {
-        inspected = null;
-      }
+      if (ad === inspected) inspected = null;
 
       console.log('VISITED: ' + adinfo(ad), ad.title);
     }
@@ -274,7 +279,23 @@
       });
     }
 
-    updateAdOnSuccess(this, ad);
+    var title = parseTitle(html);
+    if (title) {
+
+        for (var i = 0; i < errorStrings.length; i++) {
+
+            if (title.toLowerCase().indexOf(errorStrings[i]) > -1) {
+
+                return onVisitError.call(this, {
+                  title: title,
+                  status: status,
+                  responseText: html
+                });
+            }
+        }
+    }
+
+    updateAdOnSuccess(this, ad, title);
 
     xhr = null; // end the visit
   };
@@ -358,7 +379,7 @@
       if (idx != -1) {
 
         ad.targetUrl = decodeURIComponent(url.substring(idx));
-        console.log("Ad.targetUrl Updated: " + ad.targetUrl);
+        console.log("Ad.targetUrl updated: " + ad.targetUrl);
 
       } else {
 
