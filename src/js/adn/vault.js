@@ -1040,7 +1040,7 @@
     $(document).keyup(function (e) {
 
       (e.keyCode == 27) && lightboxMode(false); // esc
-      (e.keyCode == 80) && toggleInterface(); // 'i'
+      (e.keyCode == 73) && toggleInterface(); // 'i'
       (e.keyCode == 68) && logAdSetInfo(); // 'd'
       //console.log(e);
     });
