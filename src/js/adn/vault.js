@@ -19,9 +19,11 @@
     left: 20
   };
 
-  var zoomStyle, zoomIdx = 0,
-    animatorId, animateMs = 2000,
-    locale, resizeId, selectedAdSet, viewState = {};
+  var zoomStyle, animatorId, locale, resizeId, selectedAdSet,
+    zoomIdx = 0,
+    animateMs = 2000,
+    showInterface = true,
+    viewState = {};
 
   var gAds, gAdSets, gMin, gMax; // stateful
 
@@ -38,11 +40,15 @@
 
     case 'adDetected':
       //  TODO: add to edge of pack
-      // console.log('ad-detected');
+      console.log('ad-detected');
       break;
 
     case 'adVisited':
       updateAd(request);
+      break;
+
+    case 'logJSON':
+      console.log(request.data);
       break;
     }
   });
@@ -758,13 +764,54 @@
     }
   }
 
+  function logAdSetInfo() {
+
+    if (selectedAdSet) {
+
+      console.log("Logging JSON for AdSet #" + selectedAdSet.gid);
+      messager.send('adnauseam', {
+        what: 'logAdSet',
+        gid: selectedAdSet.gid,
+        ids: selectedAdSet.childIds()
+      });
+    }
+  }
+
+  const ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom'];
+
+  function toggleInterface() {
+
+    showInterface = !showInterface;
+
+    if (!showInterface) {
+
+      $("body").css('background-image', 'none')
+        .css({
+          'background-color': '#fff'
+        });
+
+      ifs.forEach(function (s) {
+        $(s).hide();
+      });
+
+    } else {
+
+      $("body").css('background-image', 'url(../img/gray_grid.png)')
+        .css({
+          'background-color': '#000'
+        });
+
+      ifs.forEach(function (s) {
+        $(s).show();
+      });
+    }
+  }
+
   function lightboxMode($selected) {
 
     if ($selected && !$selected.hasClass('inspected')) {
 
       var inspectedGid = parseInt($selected.attr('data-gid'));
-
-      //log('Inspect.GID: '+inspectedGid);
 
       selectedAdSet = findAdSetByGid(inspectedGid); // throws
 
@@ -791,7 +838,7 @@
         messager.send('adnauseam', {
           what: 'itemInspected',
           id: next.id
-        }, function () {});
+        });
       }
 
       centerZoom($selected);
@@ -857,10 +904,6 @@
     }
 
     //console.error('[ERROR] Vault: No ad for ID#' + id + " gAdSets: ", gAdSets);
-
-    // WHY ????
-    //self.port && self.port.emit("refresh-vault");
-    //messager.send('adnauseam', {  what: 'refreshVault' }, function(){ });
   }
 
   function findItemDivByGid(gid) {
@@ -979,7 +1022,6 @@
     $('#x-close-button').click(function (e) {
 
       e.preventDefault();
-
       closeVault();
     });
 
@@ -998,6 +1040,9 @@
     $(document).keyup(function (e) {
 
       (e.keyCode == 27) && lightboxMode(false); // esc
+      (e.keyCode == 80) && toggleInterface(); // 'i'
+      (e.keyCode == 68) && logAdSetInfo(); // 'd'
+      //console.log(e);
     });
 
     /////////// DRAG-STAGE ///////// from: http://jsfiddle.net/robertc/kKuqH/
@@ -1081,7 +1126,7 @@
 
           // tell the addon
           messager.send('adnauseam', {
-            what: 'deleteAdset',
+            what: 'deleteAdSet',
             ids: selectedAdSet.childIds()
           });
 
@@ -1279,7 +1324,7 @@
     // setup the x axis
     var xAxis = d3.svg.axis()
       .scale(xScale)
-      .tickFormat( d3.time.format.multi([
+      .tickFormat(d3.time.format.multi([
         [".%L", function (d) {
           return d.getMilliseconds();
         }],

@@ -607,7 +607,21 @@
     }
   }
 
-  var deleteAdset = function (request, pageStore, tabId) {
+  var logAdSet = function (request, pageStore, tabId) {
+
+    var data = '';
+
+    for (var j = 0; j < request.ids.length; j++) {
+
+      data += JSON.stringify(adById(request.ids[j]));
+    }
+
+    console.log('ADSET #'+request.gid+'\n', data);
+
+    vAPI.messaging.broadcast({ what: 'logJSON', data: data });
+  }
+
+  var deleteAdSet = function (request, pageStore, tabId) {
 
     for (var j = 0; j < request.ids.length; j++) {
       deleteAd(request.ids[j]);
@@ -678,13 +692,14 @@
 
   return {
     adlist: adlist,
+    logAdSet: logAdSet,
     clearAds: clearAds,
     exportAds: exportAds,
     importAds: importAds,
     registerAd: registerAd,
     adsForPage: adsForPage,
     adsForVault: adsForVault,
-    deleteAdset: deleteAdset,
+    deleteAdSet: deleteAdSet,
     itemInspected: itemInspected
   };
 
