@@ -108,7 +108,7 @@ var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 /******************************************************************************/
 
 var cachePopupData = function(data) {
-  console.log("DATA",data);
+    //console.log("DATA",data);
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};

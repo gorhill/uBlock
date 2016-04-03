@@ -32,7 +32,7 @@
 
     page = json.pageUrl;
     ads = onPage(json.data, page);
-        
+
     setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
@@ -390,20 +390,20 @@
     uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
   };
 
-  $('#log-button').click(function () {
-
-    window.open("./adn-log.html");
-  });
+  // $('#log-button').click(function () {
+  //
+  //   window.open("./log.html");
+  // });
 
   $('#vault-button').click(function () {
-    window.open("./adn-vault.html", "AdNauseam");
+    window.open("./vault.html", "AdNauseam");
   });
 
   $('#pause-button').click(function () {});
 
   $('#settings-open').click(function () {
 
-    window.open("./dashboard.html#adn-settings.html");
+    window.open("./dashboard.html#options.html");
   });
 
   $('#settings-close').click(function () {

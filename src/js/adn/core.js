@@ -128,7 +128,7 @@
 
   var getVaultTabId = function () {
 
-    var menuUrl = vAPI.getURL('adn-vault.html');
+    var menuUrl = vAPI.getURL('vault.html');
 
     for (var tabId in µb.pageStores) {
       var pageStore = µb.pageStoreFromTabId(tabId);
@@ -462,7 +462,7 @@
     for (var tabId in µb.pageStores) {
 
         var pageStore = µb.pageStoreFromTabId(tabId);
-        if (pageStore && pageStore.rawURL.indexOf("adn-vault.html") >= 0) {
+        if (pageStore && pageStore.rawURL.indexOf("vault.html") >= 0) {
             try {
                 vAPI.tabs.remove(tabId, true);
             }
@@ -528,7 +528,7 @@
               var pageStore = µb.pageStoreFromTabId(tabId);
 
               // update the badge icon if its not the settings tab
-              if (pageStore && pageStore.rawURL.indexOf("adn-settings.html") < 0) {
+              if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
 
                   try {
                       vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());

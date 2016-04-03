@@ -78,7 +78,7 @@
 
     gAds = json.data; // store
 
-    console.log('renderAds: ', json);
+    //console.log('renderAds: ', json);
 
     addInterfaceHandlers();
     createSlider(true);
@@ -1008,7 +1008,7 @@
     $('#logo').click(function (e) {
 
       e.preventDefault();
-      openInNewTab(LogoURL);
+      openInNewTab('http://adnauseam.io');
     });
 
     $(document).click(function (e) {

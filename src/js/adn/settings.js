@@ -104,7 +104,7 @@ var exportToFile = function() {
 
 var onLocalDataReceived = function(details) {
 
-    console.log('onLocalDataReceived',details);
+    //onsole.log('onLocalDataReceived',details);
 
     uDom('#localData > ul > li:nth-of-type(1)').text(
         vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
