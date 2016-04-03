@@ -34,52 +34,6 @@ function handleImportFilePicker(evt) {
   }
 }
 
-var handleImportFilePickerX = function() {
-
-    var file = this.files[0];
-    if ( file === undefined || file.name === '' ) {
-        return;
-    }
-
-    var filename = file.name;
-
-    var fileReaderOnLoadHandler = function() {
-        console.log('fileReaderOnLoadHandler',this);
-        var adData;
-        try {
-            adData = JSON.parse(this.result);
-            if ( typeof adData !== 'object' ) {
-                throw 'Invalid';
-            }
-        }
-        catch (e) {
-            console.log('loading',e);
-            adData = undefined;
-        }
-        if ( adData === undefined ) {
-            window.alert(vAPI.i18n('aboutRestoreDataError'));
-            return;
-        }
-        var msg = vAPI.i18n('adnImportConfirm');
-        var proceed = vAPI.confirm(msg);
-        if ( proceed ) {
-            messager.send('adnauseam', {
-                what: 'importAds',
-                adData: adData,
-                file: filename
-            });
-        }
-    };
-
-    console.log('loading',file);
-
-    var fr = new FileReader();
-    fr.onload = fileReaderOnLoadHandler;
-    fr.readAsText(file);
-};
-
-/******************************************************************************/
-
 var startImportFilePicker = function() {
 
     var input = document.getElementById('importFilePicker');
@@ -99,8 +53,6 @@ var exportToFile = function() {
 
     messager.send('adnauseam', { what: 'exportAds', filename: filename }, onLocalDataReceived);
 };
-
-/******************************************************************************/
 
 var onLocalDataReceived = function(details) {
 

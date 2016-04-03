@@ -14,7 +14,7 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-    console.log('Preferences: ', req);
+    //console.log('AdNaauseam.prefs:', req);
   });
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
@@ -60,9 +60,7 @@ var dbugDetect = 0; // tmp
         }
       }
     }
-    else {
-        console.log('Skipping text-ads');
-    }
+    //console.log('Skipping text-ads');
   }
 
   var pageCount = function (ads, pageUrl) {

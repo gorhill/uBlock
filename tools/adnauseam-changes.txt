@@ -22,7 +22,7 @@
   src/background.html (added adn files)
   src/dashboard.html (added adn tabs, changed icon)
   src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
-  src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
+  src/js/options.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
 
 
@@ -41,7 +41,7 @@
   adn-settings.html
   adn-about.html
 
-  src/js/adn/settings.js
+  src/js/adn/options.js
   src/js/adn/menu.js
   src/js/adn/core.js
   src/js/adn/vault.js

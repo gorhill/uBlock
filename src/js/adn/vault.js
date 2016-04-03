@@ -19,7 +19,7 @@
     left: 20
   };
 
-  var zoomStyle, animatorId, locale, resizeId, selectedAdSet,
+  var zoomStyle, animatorId, locale, resizeId, selectedAdSet, // parseTextAds,
     zoomIdx = 0,
     animateMs = 2000,
     showInterface = true,
@@ -53,14 +53,20 @@
 
   var renderAds = function (json) {
 
-    gAds = json.data; // store
-
     //console.log('renderAds: ', json);
-
+    parseAdData(json); // store
     addInterfaceHandlers();
     createSlider(true);
     setCurrent(json.current);
   };
+
+  function parseAdData(json) {
+
+    gAds = (json.prefs.parseTextAds) ? json.data :
+      json.data.filter(function (ad) {
+        return (ad.contentType !== 'text')
+      });
+  }
 
   function updateAd(json) {
 

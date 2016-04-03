@@ -283,6 +283,10 @@
     "message": "Show the number of found ads on the icon",
     "description": "English: Show the number of found ads on the icon"
   },
+  "parseTextAdsPrompt": {
+    "message": "Capture text-only ads whenever possible",
+    "description": "English: Capture text-only ads whenever possible"
+  },
   "settingsTooltipsPrompt": {
     "message": "Disable tooltips",
     "description": "A checkbox in the Settings pane"

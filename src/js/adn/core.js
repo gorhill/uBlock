@@ -505,11 +505,18 @@
     storeUserData();
   }
 
+  var scriptPrefs = function () {
+
+    // preferences relevant to our content/ui-scripts
+    return { parseTextAds: µb.userSettings.parseTextAds };
+  }
+
   var adsForUI = function (pageUrl) {
 
     return {
       data: adlist(),
       pageUrl: pageUrl,
+      prefs: scriptPrefs(),
       current: activeVisit()
     };
   }
@@ -619,8 +626,7 @@
 
   var getPreferences = function (request, pageStore, tabId) {
 
-    // preferences relevant to contents-scripts
-    return { parseTextAds: µb.adnSettings.parseTextAds };
+    return scriptPrefs();
   }
 
   var logAdSet = function (request, pageStore, tabId) {

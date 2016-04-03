@@ -49,13 +49,13 @@ var defaultExternalLists = [
 return {
     firstInstall: false,
 
-    adnSettings: {
+    adnSettings: { // adn
       noBlockingNonTrackers: true,
-      parseTextAds: false,
       admap: {}
     },
 
     userSettings: {
+        parseTextAds: true, // adn
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
@@ -123,7 +123,7 @@ return {
         'assets/user/filters.txt': {
             group: 'default'
         },
-        //AdNauseam
+        // AdNauseam
         'assets/ublock/adnauseam.txt': {
             title: 'AdNauseam filters',
             group: 'default'
