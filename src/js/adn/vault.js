@@ -6,75 +6,50 @@
 
   'use strict';
 
+  const States = ['pending', 'visited', 'failed'],
+    Zooms = [100, 50, 25, 12.5, 6.25],
+    EnableContextMenu = 1,
+    MaxStartNum = 400,
+    MaxPerSet = 9;
+
+  const margin = {
+    top: 50,
+    right: 40,
+    bottom: 20,
+    left: 20
+  };
+
+  var zoomStyle, zoomIdx = 0,
+    animatorId, animateMs = 2000,
+    locale, resizeId, selectedAdSet, viewState = {};
+
+  var gAds, gAdSets, gMin, gMax; // stateful
+
   var messager = vAPI.messaging;
 
   messager.addChannelListener('adnauseam', function (request) {
+
     //console.log("GOT BROADCAST", request);
     switch (request.what) {
+
     case 'adAttempt':
       setCurrent(request.ad);
       break;
+
     case 'adDetected':
       //  TODO: add to edge of pack
-      console.log('ad-detected');
+      // console.log('ad-detected');
       break;
+
     case 'adVisited':
       updateAd(request);
       break;
     }
   });
 
-  const logoURL = 'http://adnauseam.io',
-    States = ['pending', 'visited', 'failed'],
-    Zooms = [100, 50, 25, 12.5, 6.25],
-    EnableContextMenu = 1,
-    MaxPerSet = 9;
-
-  const margin = {
-      top: 50,
-      right: 40,
-      bottom: 20,
-      left: 20
-    },
-    format = d3.time.format("%a %b %d %Y"),
-    MaxStartNum = 400;
-
-  // TODO: need to verify that at least one full bar is showing
-  const customTimeFormat = d3.time.format.multi([
-    [".%L", function (d) {
-      return d.getMilliseconds();
-    }],
-    [":%S", function (d) {
-      return d.getSeconds();
-    }],
-    ["%I:%M", function (d) {
-      return d.getMinutes();
-    }],
-    ["%I %p", function (d) {
-      return d.getHours();
-    }],
-    ["%a %d", function (d) {
-      return d.getDay() && d.getDate() != 1;
-    }],
-    ["%b %d", function (d) {
-      return d.getDate() != 1;
-    }],
-    ["%B", function (d) {
-      return d.getMonth();
-    }],
-    ["%Y", function () {
-      return true;
-    }]
-  ]);
-
-  var zoomStyle, zoomIdx = 0, animatorId, animateMs = 2000,
-    locale, resizeId, selectedAdSet, viewState = {};
-
-  var gAds, gAdSets, gMin, gMax; // stateful
-
   /********************************************************************/
 
-  var renderAds = function(json) {
+  var renderAds = function (json) {
 
     gAds = json.data; // store
 
@@ -98,7 +73,8 @@
 
     if (!ad) return;
 
-    var groupInfo = findAdById(ad.id), $item;
+    var groupInfo = findAdById(ad.id),
+      $item;
 
     if (groupInfo) {
 
@@ -721,7 +697,7 @@
       storeViewState(true);
 
       // compute target positions for transform
-      var dm, margin = 10,
+      var dm, spacing = 10,
         metaOffset = 110,
         center = -5000,
         ww = $(window).width(),
@@ -737,15 +713,15 @@
       var ih = parseInt($ele.attr('data-height'));
 
       // make sure left/bottom corner of meta-data is onscreen (#180)
-      if (iw > ww - (metaOffset * 2 + margin)) {
+      if (iw > ww - (metaOffset * 2 + spacing)) {
 
         //log('HITX:  iw='+iw+" ww="+ww+" diff="+(iw - ww)  + "  offx="+offx);
-        mleft += ((iw - ww) / 2) + (metaOffset + margin);
+        mleft += ((iw - ww) / 2) + (metaOffset + spacing);
       }
-      if (ih > wh - (metaOffset * 2 + margin)) {
+      if (ih > wh - (metaOffset * 2 + spacing)) {
 
         //log('HITY:  ih='+ih+" wh="+wh+" diff="+(ih - wh)  + "  offy="+offy);
-        mtop -= ((ih - wh) / 2) + (metaOffset + margin); // bottom-margin
+        mtop -= ((ih - wh) / 2) + (metaOffset + spacing); // bottom-margin
       }
 
       // reset zoom to 100%
@@ -812,15 +788,17 @@
 
       if (next) {
 
-        messager.send('adnauseam', { what: 'itemInspected', id: next.id }, function () {});
+        messager.send('adnauseam', {
+          what: 'itemInspected',
+          id: next.id
+        }, function () {});
       }
 
       centerZoom($selected);
 
       $('#container').addClass('lightbox');
 
-    }
-    else if ($('#container').hasClass('lightbox')) {
+    } else if ($('#container').hasClass('lightbox')) {
 
       var $item = $('.item.inspected');
 
@@ -1081,38 +1059,39 @@
 
         switch ($(this).attr("data-action")) {
 
-            case "delete":
+        case "delete":
 
-              var ids = selectedAdSet.childIds(),
-                $item = findItemDivByGid(selectedAdSet.gid);
+          var ids = selectedAdSet.childIds(),
+            $item = findItemDivByGid(selectedAdSet.gid);
 
-              // remove the adset item from the DOM
-              $item.remove();
+          // remove the adset item from the DOM
+          $item.remove();
 
-              // remove each ad from the full-adset
-              gAds = gAds.filter(function (ad) {
-                for (var i = 0, len = ids.length; i < len; i++) {
-                  if (ad.id === ids[i])
-                    return false;
-                }
-                return true;
-              });
+          // remove each ad from the full-adset
+          gAds = gAds.filter(function (ad) {
+            for (var i = 0, len = ids.length; i < len; i++) {
+              if (ad.id === ids[i])
+                return false;
+            }
+            return true;
+          });
 
-              // remove the adSet
-              arrayRemove(gAdSets, selectedAdSet);
+          // remove the adSet
+          arrayRemove(gAdSets, selectedAdSet);
 
-              // tell the addon
-              messager.send('adnauseam', {
-                what: 'deleteAdset', ids: selectedAdSet.childIds()
-              });
+          // tell the addon
+          messager.send('adnauseam', {
+            what: 'deleteAdset',
+            ids: selectedAdSet.childIds()
+          });
 
-              // if its the last ad, close the vault
-              //if (!gAds.length) return closeVault();
+          // if its the last ad, close the vault
+          //if (!gAds.length) return closeVault();
 
-              // recreate the slider, but don't redo layout
-              createSlider(false);
+          // recreate the slider, but don't redo layout
+          createSlider(false);
 
-              break;
+          break;
         }
 
         selectedAdSet = null;
@@ -1259,9 +1238,9 @@
     d3.select("svg").remove();
 
     if (!gAds || !gAds.length) {
-        computeStats();
-        showAlert('no ads found');
-        return;
+      computeStats();
+      showAlert('no ads found');
+      return;
     }
 
     // setting up the position of the chart
@@ -1295,15 +1274,37 @@
 
     // setup the histogram layout
     var histogram = d3.layout.histogram()
-      .bins(120) // how many groups? [dyn] base on width
-      //.bins(width/(barw-barg))     [dyn]
-      (map);
+      .bins(120)(map);
 
     // setup the x axis
     var xAxis = d3.svg.axis()
       .scale(xScale)
-      .tickFormat(customTimeFormat)
-      .ticks(7); // [dyn]
+      .tickFormat( d3.time.format.multi([
+        [".%L", function (d) {
+          return d.getMilliseconds();
+        }],
+        [":%S", function (d) {
+          return d.getSeconds();
+        }],
+        ["%I:%M", function (d) {
+          return d.getMinutes();
+        }],
+        ["%I %p", function (d) {
+          return d.getHours();
+        }],
+        ["%a %d", function (d) {
+          return d.getDay() && d.getDate() != 1;
+        }],
+        ["%b %d", function (d) {
+          return d.getDate() != 1;
+        }],
+        ["%B", function (d) {
+          return d.getMonth();
+        }],
+        ["%Y", function () {
+          return true;
+        }]
+      ])).ticks(7);
 
     // position the SVG
     var svg = d3.select("#svgcon")
@@ -1371,8 +1372,8 @@
 
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
-        console.log('vault-slider::ignore-micro: '+ext[0]+","+ext[1]);
-        return;// gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
+        console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
+        return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
       }
 
       var filtered = dateFilter(gMin, gMax);
@@ -1580,7 +1581,9 @@
 
   /********************************************************************/
 
-  messager.send('adnauseam', { what: 'adsForVault' }, renderAds);
+  messager.send('adnauseam', {
+    what: 'adsForVault'
+  }, renderAds);
 
   /********************************************************************/
 
