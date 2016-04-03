@@ -295,6 +295,13 @@ var toRepoURL = function(path) {
         return projectRepositoryRoot + path;
     }
 
+    if ( path.startsWith('assets/checksums.txt') ) {
+        return path.replace(
+            /^assets\/checksums.txt/,
+            assetsRepositoryRoot + 'checksums/ublock0.txt'
+        );
+    }
+
     if ( path.startsWith('assets/thirdparties/') ) {
         return path.replace(
             /^assets\/thirdparties\//,

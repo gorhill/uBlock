@@ -8,8 +8,8 @@ DES=dist/build/uBlock0.firefox
 rm -rf $DES
 mkdir -p $DES
 
-cp -R assets                            $DES/
-rm    $DES/assets/*.sh
+./tools/make-assets.sh $DES
+
 cp -R src/css                           $DES/
 cp -R src/img                           $DES/
 cp -R src/js                            $DES/
