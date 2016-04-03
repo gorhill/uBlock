@@ -6,6 +6,12 @@ DES=$1/assets
 
 echo "*** uBlock0.chromium: packaging assets in $DES"
 
+if [ -n "${TRAVIS_TAG}" ]; then
+  pushd ..
+  git clone https://github.com/uBlockOrigin/uAssets.git
+  popd
+fi
+
 rm -rf $DES
 mkdir $DES
 
