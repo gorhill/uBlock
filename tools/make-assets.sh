@@ -4,7 +4,7 @@
 
 DES=$1/assets
 
-echo "*** uBlock0.chromium: packaging assets in $DES"
+printf "*** Packaging assets in $DES... "
 
 if [ -n "${TRAVIS_TAG}" ]; then
   pushd ..
@@ -28,4 +28,4 @@ cp -R ./assets/ublock/filter-lists.json                          $DES/ublock/
 
 cp ../uAssets/checksums/ublock0.txt                              $DES/checksums.txt
 
-echo "*** uBlock0.chromium: packaging assets: done."
+echo "done."
