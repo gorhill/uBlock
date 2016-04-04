@@ -39,12 +39,19 @@ function showAlert(msg) {
   }
 }
 
+var type = function(obj) { // from Angus Croll
+
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
 var computeHash = function (ad) { // DO NOT MODIFY
 
   if (!ad) return;
 
-  if (!ad.contentData || !ad.pageUrl)
-    throw Error("Invalid Ad: no contentData||pageUrl", ad);
+  if (!ad.contentData || !ad.pageUrl) {
+    console.error("Invalid Ad: no contentData || pageUrl", ad);
+    return;
+  }
 
   var hash = ad.pageUrl,
     keys = Object.keys(ad.contentData).sort();

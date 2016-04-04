@@ -70,10 +70,9 @@
 
   function updateAd(json) {
 
-    console.log('updateAd: ', json);
+    //console.log('updateAd: ', json);
 
     doUpdate(json.ad);
-    //setAttempting(json.current);
     computeStats(gAdSets);
   }
 

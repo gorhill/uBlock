@@ -108,7 +108,7 @@
 
     var res = [];
     for (var i = 0; i < ads.length; i++) {
-      if (ads[i].pageUrl === pageUrl)
+      if (ads[i] && ads[i].pageUrl === pageUrl)
         res.push(ads[i]);
     }
 
