@@ -664,19 +664,20 @@
       return false;
     }
 
-    var newmap = {},
+    var ad, ads, hash, newmap = {},
       pages = Object.keys(map);
 
     if (!pages || !pages.length) {
+
       console.warn('no pages: ', pages);
       return false;
     }
 
     for (var i = 0; i < pages.length; i++) {
 
-      var ads = map[pages[i]];
+      ads = map[pages[i]];
 
-      if (type(ads) === 'array') {
+      if (type(ads) !== 'array') {
 
         console.warn('not array', type(ads), ads);
         return false;
@@ -686,8 +687,8 @@
 
       for (var j = 0; j < ads.length; j++) {
 
-        var ad = ads[j],
-          hash = computeHash(ad);
+        ad = ads[j];
+        hash = computeHash(ad);
 
         if (!hash || !validateFields(ad)) {
 
@@ -711,6 +712,7 @@
     ad.attemptedTs = 0;
     ad.version = vAPI.app.version;
     ad.attempts = ad.attempts || 0;
+    ad.pageDomain = parseDomain(ad.pageUrl) || ad.pageUrl;
     if (!ad.errors || !ad.errors.length)
       ad.errors = null;
     delete ad.hashkey;
@@ -907,7 +909,7 @@
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
-    ad.domain = pageStore.tabHostname;
+    ad.pageDomain = pageStore.tabHostname;
     ad.version = vAPI.app.version;
 
     if (!validate(ad)) {

@@ -11,18 +11,18 @@
 
     switch (request.what) {
 
-        case 'adAttempt':
-          setAttempting(request.ad);
-          break;
+    case 'adAttempt':
+      setAttempting(request.ad);
+      break;
 
-        case 'adDetected':
-          // for now, just re-render
-          renderPage(request);
-          break;
+    case 'adDetected':
+      // for now, just re-render
+      renderPage(request);
+      break;
 
-        case 'adVisited':
-          updateAd(request.ad);
-          break;
+    case 'adVisited':
+      updateAd(request.ad);
+      break;
     }
   });
 
@@ -41,13 +41,13 @@
 
     if (ads) {
 
-        // if we have no page ads, use the most recent
-        if (!ads.length) ads = doRecent(json.data);
+      // if we have no page ads, use the most recent
+      if (!ads.length) ads = doRecent(json.data);
 
-        for (var i = 0, j = ads.length; i < j; i++)
-          appendAd($items, ads[i]);
+      for (var i = 0, j = ads.length; i < j; i++)
+        appendAd($items, ads[i]);
 
-        setAttempting(json.current);
+      setAttempting(json.current);
     }
   }
 
@@ -77,11 +77,11 @@
 
       // update the visited count
       if (ad.pageUrl === page)
-        $('#visited-count').text(visitedCount(ads)); // uses global ads
+        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
     }
   }
 
-  function verify(ad) { // uses global ads
+  function verify(ad) { // uses global ads (can be removed)
 
     if (ad) {
 
@@ -128,8 +128,6 @@
   }
 
   function setAttempting(ad) {
-
-    //ad && console.log('setAttempting: '+ad.id);
 
     // one 'attempt' at a time
     $('.ad-item').removeClass('attempting');
@@ -269,33 +267,6 @@
     return (!(arr && arr.length)) ? 0 : arr.filter(function (ad) {
       return ad.visitedTs > 0;
     }).length;
-  }
-
-  function extractDomains(fullUrl) { // used in targetDomain
-
-    var result = [],
-      matches,
-      regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-    while ((matches = regexp.exec(fullUrl)))
-      result.push(matches[0]);
-
-    return result;
-  }
-
-  function targetDomain(ad) {
-
-    var result, url = ad.resolvedTargetUrl || ad.targetUrl,
-      domains = extractDomains(url);
-
-    if (domains.length)
-      result = new URL(domains.pop()).hostname;
-    else
-      warn("[ERROR] '" + ad.targetUrl + "' url=" + url);
-
-    if (result) result += ' (#' + ad.id + ')'; // testing-only
-
-    return result;
   }
 
   var getPopupData = function (tabId) {

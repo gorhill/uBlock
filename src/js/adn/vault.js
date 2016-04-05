@@ -1166,7 +1166,11 @@
 
   /********************************************************************/
 
-  function createAdSets(ads) { // once per layout
+  // Here is where we group individual ads into AdSets, based on their hash,
+  // created from the domain it was found on, and its content-data
+  // If we get too many cross-domain duplicate images, we may need to revisit
+  // -- called just once per layout
+  function createAdSets(ads) {
 
     console.log('Vault-Slider.createAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 

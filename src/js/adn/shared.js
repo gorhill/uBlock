@@ -3,6 +3,31 @@
 'use strict';
 
 // functions shared between views
+
+function extractDomains(fullUrl) { // used in targetDomain
+
+  var matches, result = [],
+    re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+  while ((matches = re.exec(fullUrl))) {
+    result.push(matches[0]);
+  }
+
+  return result;
+}
+
+function parseDomain(url) {
+
+  var domain, domains = extractDomains(url);
+
+  if (domains.length)
+    domain = new URL(domains.pop()).hostname;
+
+  //console.log('parsed-domain: ' + domain);
+
+  return domain;
+}
+
 var rand = function (min, max) {
 
   if (arguments.length == 1) {
@@ -39,7 +64,7 @@ function showAlert(msg) {
   }
 }
 
-var type = function(obj) { // from Angus Croll
+var type = function (obj) { // from Angus Croll
 
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
@@ -53,7 +78,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
     return;
   }
 
-  var hash = ad.pageUrl,
+  var hash = ad.pageDomain, // change from pageUrl (4/3/16) ***
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {
@@ -82,31 +107,16 @@ var byField = function (prop) {
  * Start with resolvedTargetUrl if available, else use targetUrl
  * Then extract the last domain from the (possibly complex) url
  */
-var targetDomain = function (ad) {
+function targetDomain(ad) {
 
-  var result, url = ad.resolvedTargetUrl || ad.targetUrl,
-    domains = extractDomains(url);
+  var dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl);
 
-  if (domains.length)
-    result = new URL(domains.pop()).hostname;
+  if (!dom)
+    console.warn("Unable to parse domain: " + url);
   else
-    console.warn("[ERROR] '" + ad.targetUrl + "' url=" + url);
+    dom + ' (#' + ad.id + ')'; // testing-only
 
-  if (result) result += ' (#' + ad.id + ')'; // testing-only
-
-  return result;
-}
-
-var extractDomains = function (fullUrl) { // used in targetDomain()
-
-  var result = [],
-    matches,
-    regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-  while ((matches = regexp.exec(fullUrl)))
-    result.push(matches[0]);
-
-  return result;
+  return dom;
 }
 
 var stringNotEmpty = function (s) {
