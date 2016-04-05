@@ -675,6 +675,11 @@ vAPI.tabs.onPopupUpdated = (function() {
             return;
         }
 
+        // https://github.com/gorhill/uBlock/issues/1538
+        if ( µb.getNetFilteringSwitch(µb.normalizePageURL(openerTabId, openerURL)) === false ) {
+            return;
+        }
+
         // If the page URL is that of our "blocked page" URL, extract the URL of
         // the page which was blocked.
         if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
