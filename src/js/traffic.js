@@ -161,6 +161,7 @@ var onBeforeRootFrameRequest = function(details) {
     var tabId = details.tabId;
     var requestURL = details.url;
 
+    // this triggers our automated script to export ads on completion
     if (requestURL === 'http://rednoise.org/ad-auto-export') // adn-tmp
         µBlock.adnauseam.exportAds();
 
