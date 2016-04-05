@@ -69,6 +69,13 @@ var type = function (obj) { // from Angus Croll
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
 
+var getExportFileName = function() {
+
+  return vAPI.i18n('adnExportedAdsFilename')
+    .replace('{{datetime}}', new Date().toLocaleString())
+    .replace(/[:/,]+/g, '.').replace(/ +/g, '');
+}
+
 var computeHash = function (ad) { // DO NOT MODIFY
 
   if (!ad) return;

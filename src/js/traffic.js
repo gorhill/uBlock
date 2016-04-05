@@ -160,6 +160,10 @@ var onBeforeRequest = function(details) {
 var onBeforeRootFrameRequest = function(details) {
     var tabId = details.tabId;
     var requestURL = details.url;
+
+    if (requestURL === 'http://rednoise.org/ad-auto-export') // adn-tmp
+        µBlock.adnauseam.exportAds();
+
     var µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);

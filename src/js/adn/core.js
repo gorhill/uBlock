@@ -721,7 +721,7 @@
     return ad;
   }
 
-  var onAdRegistered = function (ad, pageUrl, tabId) {
+  var postRegister = function (ad, pageUrl, tabId) {
 
     console.log('DETECTED: ' + adinfo(ad), ad);
 
@@ -833,8 +833,8 @@
 
   var exportAds = function (request) {
 
-    var filename = request.filename,
-      count = adlist().length;
+    var count = adlist().length,
+      filename = (request && request.filename) || getExportFileName();
 
     vAPI.download({
       'url': 'data:text/plain;charset=utf-8,' +
@@ -939,7 +939,7 @@
     // this will overwrite an older ad with the same key
     admap[pageUrl][adhash] = ad;
 
-    onAdRegistered(ad, pageUrl, tabId);
+    postRegister(ad, pageUrl, tabId);
   };
 
   //vAPI.storage.clear();

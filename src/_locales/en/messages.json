@@ -4,8 +4,8 @@
     "description": "shown in menu when only 'recent' ads are shown"
   },
   "adnExportedAdsFilename": {
-    "message": "AdNauseam-exported-ads_{{datetime}}.json",
-    "description": "English: AdNauseam-exported-ads_{{datetime}}.json"
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
   },
   "adnImportConfirm": {
     "message": "This action will overwrite ALL of your current ads",
