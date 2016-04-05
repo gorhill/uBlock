@@ -190,19 +190,19 @@
 
     } else {
 
-      console.error("NO Ad in updateAdOnFailure()", xhr, e);
+      console.error("No Ad in updateAdOnFailure()", xhr, e);
     }
   }
 
-  var parseTitle = function (xhr) {
+  var parseTitle = function (html) {
 
-    var title = xhr.match(/<title[^>]*>([^<]+)<\/title>/i);
+    var title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
     if (title && title.length > 1) {
 
       return unescapeHTML(title[1].trim());
 
     } else {
-      console.warn('Unable to parse title from: ' + xhr.responseText);
+      console.warn('Unable to parse title from: ' + html);
     }
 
     return false;
@@ -422,30 +422,40 @@
   var validate = function (ad) {
 
     if (!validateFields(ad)) {
-      console.warn('validateFields: ',ad);
+      console.warn('Invalid ad-fields: ', ad);
       return false;
     }
 
+    var cd = ad.contentData,
+      ct = ad.contentType,
+      pu = ad.pageUrl;
+
     ad.title = unescapeHTML(ad.title); // fix to #31
 
-    if (ad.contentType === 'text') {
+    if (ct === 'text') {
 
-      ad.contentData.title = unescapeHTML(ad.contentData.title);
-      ad.contentData.text = unescapeHTML(ad.contentData.text);
+      cd.title = unescapeHTML(cd.title);
+      cd.text = unescapeHTML(cd.text);
 
-    } else if (ad.contentType === 'img') {
+    } else if (ct === 'img') {
 
-      if (!/^http/.test(ad.contentData.src) && !/^data:image/.test(ad.contentData.src)) {
+      if (!/^http/.test(cd.src) && !/^data:image/.test(cd.src)) {
 
-        console.log("Relative-image: " + ad.contentData.src);
-        ad.contentData.src = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + ad.contentData.src;
+        if (/^\/\//.test(cd.src)) {
+            cd.src = 'http:' + cd.src;
+        }
+        else {
 
-        console.log("    --> " + ad.contentData.src);
+          console.log("Relative-image: " + cd.src);
+          cd.src = pu.substring(0, pu.lastIndexOf('/')) + '/' + cd.src;
+        }
+
+        console.log("    --> " + cd.src);
       }
 
     } else {
 
-      console.warn('Invalid ad type: ' + ad.contentType);
+      console.warn('Invalid ad type: ' + ct);
     }
 
     return validateTarget(ad);
@@ -709,6 +719,25 @@
     return ad;
   }
 
+  var onAdRegistered = function (ad, pageUrl, tabId) {
+
+    console.log('DETECTED: ' + adinfo(ad), ad);
+
+    // if vault/menu is open, send the new ad
+    var json = adsForUI(pageUrl);
+    json.what = 'adDetected';
+    json.ad = ad;
+
+    if (automatedMode) json.automated = true;
+
+    vAPI.messaging.broadcast(json);
+
+    if (µb.userSettings.showIconBadge)
+      µb.updateBadgeAsync(tabId);
+
+    storeUserData();
+  }
+
   /******************************* API ************************************/
 
   var clearAds = function () {
@@ -881,7 +910,7 @@
     ad.domain = pageStore.tabHostname;
     ad.version = vAPI.app.version;
 
-    if (!ad || !validate(ad)) {
+    if (!validate(ad)) {
 
       console.warn("Invalid Ad: ", ad);
       return;
@@ -908,23 +937,7 @@
     // this will overwrite an older ad with the same key
     admap[pageUrl][adhash] = ad;
 
-    // if vault/menu is open, send the new ad
-    json = adsForUI(pageUrl);
-    json.what = 'adDetected';
-    json.ad = ad;
-
-    if (automatedMode) json.automated = true;
-
-    vAPI.messaging.broadcast(json);
-
-    console.log('DETECTED: ' + adinfo(ad), ad);
-
-    if (µb.userSettings.showIconBadge) {
-
-      µb.updateBadgeAsync(tabId);
-    }
-
-    storeUserData();
+    onAdRegistered(ad, pageUrl, tabId);
   };
 
   //vAPI.storage.clear();

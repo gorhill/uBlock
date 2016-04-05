@@ -675,7 +675,7 @@
       ih = $ele.attr('data-height') || 40;
 
     if (!(iw && ih && iw.length && ih.length)) {
-      warn('No dimensions for item: gid=' +
+      console.warn('No dimensions for item: gid=' +
         $this.attr('data-gid') + ', using ' + iw + 'x' + ih);
     }
 
@@ -938,7 +938,7 @@
 
     $.getJSON(TEST_ADS, function (json) {
 
-      warn("Vault.js :: Loading test-ads: " + TEST_ADS);
+      console.warn("Vault.js :: Loading test-ads: " + TEST_ADS);
 
       if (Type.is(json, Type.O))
         json = toAdArray(json); //BC
@@ -950,7 +950,7 @@
 
     }).fail(function (e) {
 
-      warn("error(bad-json?):", e);
+      console.warn("error(bad-json?):", e);
     });
   }
 
