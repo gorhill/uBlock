@@ -367,7 +367,7 @@
   // });
 
   $('#vault-button').click(function () {
-    window.open("./vault.html", "AdNauseam");
+    window.open("./vault.html", "AdNauseam").focus();
   });
 
   $('#pause-button').click(function () {});
