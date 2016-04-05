@@ -414,7 +414,6 @@
   var validateFields = function (ad) {
 
     return ad && type(ad) === 'object' &&
-      type(ad.id) === 'number' &&
       type(ad.pageUrl) === 'string' &&
       type(ad.contentType) === 'string' &&
       type(ad.contentData) === 'object';
@@ -422,7 +421,10 @@
 
   var validate = function (ad) {
 
-    if (!validateFields(ad)) return false;
+    if (!validateFields(ad)) {
+      console.warn('validateFields: ',ad);
+      return false;
+    }
 
     ad.title = unescapeHTML(ad.title); // fix to #31
 
@@ -579,65 +581,6 @@
       current: activeVisit()
     };
   }
-
-  /******************************* API ************************************/
-
-  var clearAds = function () {
-
-    var count = adlist().length;
-
-    clearAdmap();
-    updateBadges();
-    closeVault();
-    storeUserData();
-
-    console.log('AdNauseam.clear: ' + count + ' ads cleared');
-  }
-
-  var updateBadges = function () {
-
-    // update badges if we are showing them
-    if (µb.userSettings.showIconBadge) {
-
-      // get all open tabs
-      for (var tabId in µb.pageStores) {
-
-        var pageStore = µb.pageStoreFromTabId(tabId);
-
-        // update the badge icon if its not the settings tab
-        if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
-
-          try {
-            vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
-          } catch (e) {
-            console.error(e);
-          }
-        }
-      }
-    }
-  }
-
-  // returns all ads for a page, or all pages, if page arg is null
-  // called from µb.updateBadgeAsync()
-  // TODO: memoize?
-  var adlist = function (pageUrl) {
-
-    var result = [],
-      pages = pageUrl ? [pageUrl] : Object.keys(admap);
-
-    for (var i = 0; i < pages.length; i++) {
-
-      if (admap[pages[i]]) {
-        var hashes = Object.keys(admap[pages[i]]);
-
-        for (var j = 0; j < hashes.length; j++)
-          result.push(admap[pages[i]][hashes[j]]);
-      }
-    }
-
-    return result;
-  }
-
   var validateImport = function (map) {
 
     if (type(map) !== 'object')
@@ -766,6 +709,64 @@
     return ad;
   }
 
+  /******************************* API ************************************/
+
+  var clearAds = function () {
+
+    var count = adlist().length;
+
+    clearAdmap();
+    updateBadges();
+    closeVault();
+    storeUserData();
+
+    console.log('AdNauseam.clear: ' + count + ' ads cleared');
+  }
+
+  var updateBadges = function () {
+
+    // update badges if we are showing them
+    if (µb.userSettings.showIconBadge) {
+
+      // get all open tabs
+      for (var tabId in µb.pageStores) {
+
+        var pageStore = µb.pageStoreFromTabId(tabId);
+
+        // update the badge icon if its not the settings tab
+        if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
+
+          try {
+            vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      }
+    }
+  }
+
+  // returns all ads for a page, or all pages, if page arg is null
+  // called from µb.updateBadgeAsync()
+  // TODO: memoize?
+  var adlist = function (pageUrl) {
+
+    var result = [],
+      pages = pageUrl ? [pageUrl] : Object.keys(admap);
+
+    for (var i = 0; i < pages.length; i++) {
+
+      if (admap[pages[i]]) {
+        var hashes = Object.keys(admap[pages[i]]);
+
+        for (var j = 0; j < hashes.length; j++)
+          result.push(admap[pages[i]][hashes[j]]);
+      }
+    }
+
+    return result;
+  }
+
   var importAds = function (request) {
 
     // try to parse imported ads in current format
@@ -788,7 +789,7 @@
 
       } else {
 
-        console.warn('Unable to parse import in legacy-format:', request.data);
+        console.warn('Unable to parse legacy-format:', request.data);
         return; // give up
       }
     }
@@ -817,8 +818,10 @@
 
     var reqPageStore = request.tabId &&
       µb.pageStoreFromTabId(request.tabId) || pageStore;
+
     if (!reqPageStore)
       throw Error('No pageStore found!', request, pageStore, tabId);
+
     return adsForUI(reqPageStore.rawURL);
   }
 
@@ -872,17 +875,17 @@
       pageUrl = pageStore.rawURL,
       ad = request.ad;
 
-    if (!ad || !validate(ad)) {
-
-      console.warn("Invalid Ad: ", ad);
-      return;
-    }
-
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
     ad.domain = pageStore.tabHostname;
     ad.version = vAPI.app.version;
+
+    if (!ad || !validate(ad)) {
+
+      console.warn("Invalid Ad: ", ad);
+      return;
+    }
 
     if (!admap[pageUrl]) admap[pageUrl] = {};
 
