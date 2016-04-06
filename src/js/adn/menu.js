@@ -378,6 +378,9 @@
             }
         }
     );
+
+    vAPI.closePopup();
+
   });
 
   $('#pause-button').click(function () {});
