@@ -11,16 +11,16 @@
 
     switch (request.what) {
 
-      case 'adAttempt':
+    case 'adAttempt':
       setAttempting(request.ad);
       break;
 
-      case 'adDetected':
+    case 'adDetected':
       // for now, just re-render
       renderPage(request);
       break;
 
-      case 'adVisited':
+    case 'adVisited':
       updateAd(request.ad);
       break;
     }
@@ -45,7 +45,7 @@
       if (!ads.length) ads = doRecent(json.data);
 
       for (var i = 0, j = ads.length; i < j; i++)
-      appendAd($items, ads[i]);
+        appendAd($items, ads[i]);
 
       setAttempting(json.current);
     }
@@ -58,7 +58,7 @@
 
       // adds . to title for each failed attempt
       for (var i = 0; i < ad.attempts; i++)
-      title += '.';
+        title += '.';
     }
     return title;
   }
@@ -77,7 +77,7 @@
 
       // update the visited count
       if (ad.pageUrl === page)
-      $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
     }
   }
 
@@ -109,7 +109,7 @@
     var res = [];
     for (var i = 0; i < ads.length; i++) {
       if (ads[i] && ads[i].pageUrl === pageUrl)
-      res.push(ads[i]);
+        res.push(ads[i]);
     }
 
     return res.sort(byField('-foundTs'));
@@ -135,16 +135,16 @@
 
     if (ad) {
       if (verify(ad))
-      $('#ad' + ad.id).addClass('attempting');
+        $('#ad' + ad.id).addClass('attempting');
       else
-      console.warn('Fail on setAttempting: ', ad, ads);
+        console.warn('Fail on setAttempting: ', ad, ads);
     }
   }
 
   function updateAdClasses(ad) {
 
     var $ad = $('#ad' + ad.id),
-    jv = 'just-visited';
+      jv = 'just-visited';
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
     $ad.removeClass('failed visited attempting');
@@ -166,48 +166,6 @@
     $('#found-count').text(ads.length);
   }
 
-  // TAKEN FROM https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Tabbed_browser
-  function openAndReuseOneTabPerURL(url) {
-    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-    .getService(Components.interfaces.nsIWindowMediator);
-    var browserEnumerator = wm.getEnumerator("navigator:browser");
-
-    // Check each browser instance for our URL
-    var found = false;
-    while (!found && browserEnumerator.hasMoreElements()) {
-      var browserWin = browserEnumerator.getNext();
-      var tabbrowser = browserWin.gBrowser;
-
-      // Check each tab of this browser instance
-      var numTabs = tabbrowser.browsers.length;
-      for (var index = 0; index < numTabs; index++) {
-        var currentBrowser = tabbrowser.getBrowserAtIndex(index);
-        if (url == currentBrowser.currentURI.spec) {
-
-          // The URL is already opened. Select this tab.
-          tabbrowser.selectedTab = tabbrowser.tabContainer.childNodes[index];
-
-          // Focus *this* browser-window
-          browserWin.focus();
-
-          found = true;
-          break;
-        }
-      }
-    }
-    // Our URL isn't open. Open it now.
-    if (!found) {
-      var recentWindow = wm.getMostRecentWindow("navigator:browser");
-      if (recentWindow) {
-        // Use an existing browser window
-        recentWindow.delayedOpenTab(url, null, null, null, null);
-      }
-      else {
-        // No browser windows are open, so open a new one.
-        window.open(url);
-      }
-    }
-  }
   function appendImageAd(ad, $items) {
 
     var $a, $span, $li = $('<li/>', {
@@ -231,7 +189,7 @@
       'src': (ad.contentData.src || ad.contentData),
       'class': 'ad-item-img',
       'onerror': "this.onerror=null; this.width=50; " +
-      "this.height=45; this.src='img/placeholder.svg'",
+        "this.height=45; this.src='img/placeholder.svg'",
 
     }).appendTo($span);
 
@@ -301,7 +259,7 @@
   function visitedClass(ad) {
 
     return ad.visitedTs > 0 ? 'visited' :
-    (ad.visitedTs < 0 ? 'failed' : '');
+      (ad.visitedTs < 0 ? 'failed' : '');
   }
 
   function visitedCount(arr) {
@@ -320,145 +278,131 @@
           what: 'adsForPage',
           tabId: popupData.tabId
         }, renderPage);
-      };
+    };
 
-      vAPI.messaging.send(
-        'popupPanel', {
-          what: 'getPopupData',
-          tabId: tabId
-        }, onPopupData);
-      };
+    vAPI.messaging.send(
+      'popupPanel', {
+        what: 'getPopupData',
+        tabId: tabId
+      }, onPopupData);
+  };
 
-      /******************************************************************************/
-      var cachedPopupHash = '',
-      hostnameToSortableTokenMap = {},
-      popupData = {};
+  /******************************************************************************/
+  var cachedPopupHash = '',
+    hostnameToSortableTokenMap = {},
+    popupData = {};
 
-      var scopeToSrcHostnameMap = {
-        '/': '*',
-        '.': ''
-      };
+  var scopeToSrcHostnameMap = {
+    '/': '*',
+    '.': ''
+  };
 
-      var cachePopupData = function (data) {
+  var cachePopupData = function (data) {
 
-        popupData = {};
-        scopeToSrcHostnameMap['.'] = '';
-        hostnameToSortableTokenMap = {};
+    popupData = {};
+    scopeToSrcHostnameMap['.'] = '';
+    hostnameToSortableTokenMap = {};
 
-        if (typeof data !== 'object') {
-          return popupData;
-        }
-        popupData = data;
-        scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
-        var hostnameDict = popupData.hostnameDict;
-        if (typeof hostnameDict !== 'object') {
-          return popupData;
-        }
-        var domain, prefix;
-        for (var hostname in hostnameDict) {
-          if (hostnameDict.hasOwnProperty(hostname) === false) {
-            continue;
-          }
-          domain = hostnameDict[hostname].domain;
-          prefix = hostname.slice(0, 0 - domain.length);
-          // Prefix with space char for 1st-party hostnames: this ensure these
-          // will come first in list.
-          if (domain === popupData.pageDomain) {
-            domain = '\u0020';
-          }
-          hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
-        }
-        return popupData;
-      };
+    if (typeof data !== 'object') {
+      return popupData;
+    }
+    popupData = data;
+    scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
+    var hostnameDict = popupData.hostnameDict;
+    if (typeof hostnameDict !== 'object') {
+      return popupData;
+    }
+    var domain, prefix;
+    for (var hostname in hostnameDict) {
+      if (hostnameDict.hasOwnProperty(hostname) === false) {
+        continue;
+      }
+      domain = hostnameDict[hostname].domain;
+      prefix = hostname.slice(0, 0 - domain.length);
+      // Prefix with space char for 1st-party hostnames: this ensure these
+      // will come first in list.
+      if (domain === popupData.pageDomain) {
+        domain = '\u0020';
+      }
+      hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
+    }
+    return popupData;
+  };
 
-      var hashFromPopupData = function (reset) {
-        // It makes no sense to offer to refresh the behind-the-scene scope
-        if (popupData.pageHostname === 'behind-the-scene') {
-          uDom('body').toggleClass('dirty', false);
-          return;
-        }
+  var hashFromPopupData = function (reset) {
+    // It makes no sense to offer to refresh the behind-the-scene scope
+    if (popupData.pageHostname === 'behind-the-scene') {
+      uDom('body').toggleClass('dirty', false);
+      return;
+    }
 
-        var hasher = [];
-        var rules = popupData.firewallRules;
-        var rule;
-        for (var key in rules) {
-          if (rules.hasOwnProperty(key) === false) {
-            continue;
-          }
-          rule = rules[key];
-          if (rule !== '') {
-            hasher.push(rule);
-          }
-        }
-        hasher.sort();
-        hasher.push(uDom('body').hasClass('off'));
-        hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
-        hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
-        hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
+    var hasher = [];
+    var rules = popupData.firewallRules;
+    var rule;
+    for (var key in rules) {
+      if (rules.hasOwnProperty(key) === false) {
+        continue;
+      }
+      rule = rules[key];
+      if (rule !== '') {
+        hasher.push(rule);
+      }
+    }
+    hasher.sort();
+    hasher.push(uDom('body').hasClass('off'));
+    hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
+    hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
+    hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
 
-        var hash = hasher.join('');
-        if (reset) {
-          cachedPopupHash = hash;
-        }
-        uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
-      };
+    var hash = hasher.join('');
+    if (reset) {
+      cachedPopupHash = hash;
+    }
+    uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
+  };
 
-      // $('#log-button').click(function () {
-      //
-      //   window.open("./log.html");
-      // });
+  // $('#log-button').click(function () {
+  //
+  //   window.open("./log.html");
+  // });
 
-      $('#vault-button').click(function () {
-        try{ // only required and supported by Firefox
-          openAndReuseOneTabPerURL("chrome://ublock0/content/vault.html");
-        }
-        catch(e){
-          //this means it's Firefox
-          window.open("./vault.html", "AdNauseam").focus();
-        }
+  $('#vault-button').click(function () {
+    window.open("./vault.html", "AdNauseam");
+  });
 
-        /*var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-        .getService(Components.interfaces.nsIWindowMediator);
-        var mainWindow = wm.getMostRecentWindow("navigator:browser");
-        mainWindow.gBrowser.addTab();
-        // Add tab, then make active
-        mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab("chrome://ublock0/content/vault.html");*/
+  $('#pause-button').click(function () {});
 
-      });
+  $('#settings-open').click(function () {
 
-      $('#pause-button').click(function () {});
+    window.open("./dashboard.html#options.html");
+  });
 
-      $('#settings-open').click(function () {
+  $('#settings-close').click(function () {
 
-        window.open("./dashboard.html#options.html");
-      });
+    $('.page').toggleClass('hide');
+    $('.settings').toggleClass('hide');
+  });
 
-      $('#settings-close').click(function () {
+  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
 
-        $('.page').toggleClass('hide');
-        $('.settings').toggleClass('hide');
-      });
+  $('#about-button').click(function () {
 
-      var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
+    window.open("./popup.html", '_self');
+    //window.open(AboutURL);
+  });
 
-      $('#about-button').click(function () {
+  (function () {
 
-        window.open("./popup.html", '_self');
-        //window.open(AboutURL);
-      });
+    var tabId = null;
+    // Extract the tab id of the page this popup is for
+    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    if (matches && matches.length === 2) {
+      tabId = matches[1];
+    }
+    getPopupData(tabId);
 
-      (function () {
+  })();
 
-        var tabId = null;
-        // Extract the tab id of the page this popup is for
-        var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
-        if (matches && matches.length === 2) {
-          tabId = matches[1];
-        }
-        getPopupData(tabId);
+  /********************************************************************/
 
-      })();
-
-      /********************************************************************/
-
-    })();
+})();
