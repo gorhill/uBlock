@@ -367,6 +367,7 @@
   // });
 
   $('#vault-button').click(function () {
+
     vAPI.messaging.send(
         'default',
         {
@@ -380,13 +381,15 @@
     );
 
     vAPI.closePopup();
-
   });
 
-  $('#pause-button').click(function () {});
+  $('#pause-button').click(function () {
+
+      // Waiting on #46
+  });
 
   $('#settings-open').click(function () {
-      
+
     vAPI.messaging.send(
         'default',
         {
@@ -398,7 +401,7 @@
             }
         }
     );
-    
+
     vAPI.closePopup();
   });
 

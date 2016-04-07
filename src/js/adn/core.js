@@ -707,7 +707,6 @@
 
   var updateLegacyAd = function (ad) {
 
-    // a new id to avoid conflicts
     ad.id = ++idgen;
     ad.attemptedTs = 0;
     ad.version = vAPI.app.version;
@@ -947,7 +946,8 @@
 
   /******************************************************************************/
 
-  return {
+  return {  // public API for
+
     adlist: adlist,
     logAdSet: logAdSet,
     clearAds: clearAds,

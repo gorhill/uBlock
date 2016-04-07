@@ -130,11 +130,11 @@ if ( window.top !== window ) {
 }
 
 var pickerRoot = document.getElementById(vAPI.sessionId);
-
 if ( pickerRoot ) {
     return;
 }
 
+var pickerStyle = null;
 var svgOcean = null;
 var svgIslands = null;
 var svgRoot = null;
@@ -902,6 +902,7 @@ var stopPicker = function() {
     dialog.removeEventListener('click', onDialogClicked);
     svgListening(false);
     svgRoot.removeEventListener('click', onSvgClicked);
+    pickerStyle.parentNode.removeChild(pickerStyle);
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.onload = null;
     pickerRoot =
@@ -1041,6 +1042,13 @@ pickerRoot.style.cssText = [
     'z-index: 2147483647',
     ''
 ].join('!important; ');
+
+// https://github.com/gorhill/uBlock/issues/1529
+// In addition to inline styles, harden the element picker styles by using
+// a dedicated style tag.
+pickerStyle = document.createElement('style');
+pickerStyle.textContent = '#' + pickerRoot.id + ' { ' + pickerRoot.style.cssText + ' }';
+document.documentElement.appendChild(pickerStyle);
 
 pickerRoot.onload = function() {
     vAPI.shutdown.add(stopPicker);

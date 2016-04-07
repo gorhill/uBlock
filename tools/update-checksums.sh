@@ -17,7 +17,9 @@ filters=(
     '../uAssets/filters/unbreak.txt'
 )
 for repoPath in "${filters[@]}"; do
-    echo `md5sum $repoPath` | sed 's/\.\.\/uAssets\/filters/assets\/ublock/' >> assets/checksums.txt
+    localPath=`printf $repoPath | sed 's/\.\.\/uAssets\/filters/assets\/ublock/'`
+    cp $repoPath $localPath
+    echo `md5sum $localPath` >> assets/checksums.txt
 done
 
 thirdparties=(
@@ -29,7 +31,9 @@ thirdparties=(
     '../uAssets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt'
 )
 for repoPath in "${thirdparties[@]}"; do
-    echo `md5sum $repoPath` | sed 's/\.\.\/uAssets\/thirdparties/assets\/thirdparties/' >> assets/checksums.txt
+    localPath=`printf $repoPath | sed 's/\.\.\/uAssets\/thirdparties/assets\/thirdparties/'`
+    cp $repoPath $localPath
+    echo `md5sum $localPath` >> assets/checksums.txt
 done
 
 echo "*** uBlock: checksums updated."

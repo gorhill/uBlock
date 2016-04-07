@@ -8,8 +8,8 @@ DES=bin/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES
 
-cp -R assets                            $DES/
-rm    $DES/assets/*.sh
+./tools/make-assets.sh $DES
+
 cp -R src/css                           $DES/
 cp -R src/img                           $DES/
 cp -R src/js                            $DES/
@@ -35,10 +35,11 @@ echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
 
 if [ "$1" = all ]; then
+    set +v
     echo "*** adnauseam.firefox: Creating package..."
-    pushd $DES/
+    pushd $DES/ > /dev/null
     zip ../adnauseam.firefox.xpi -qr *
-    popd
+    popd > /dev/null
 fi
 
 echo "*** adnauseam.firefox: Package done."
