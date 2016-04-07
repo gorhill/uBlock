@@ -200,14 +200,17 @@ header{
 }
 
 #toggle-button {
-  text-indent: -99999px;
-  overflow: hidden;
   display: block;
   height: 100px;
   width: 100px;
-  background: url(../../img/adn/adn_active.png) center center no-repeat;
-  background-size: 78px 75px;
+  background: url(../../img/adn/adn_active@2x.png) center center no-repeat;
+  background-size: 100px 100px;
   float: left;
+  font-size: 18.25px;
+  color: #A01FF0;
+  text-align: center;
+  font-weight: 700;
+  line-height: 156px;
 }
 
 #stats {
@@ -544,6 +547,92 @@ button.settings {
 }
 button.about {
   width: 27px;
+}
+
+/* ============================================================
+  PAUSED
+============================================================ */
+
+.paused header *{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+  /*background-color: #5c5c5c !important;*/
+}
+.paused header #vault-count{
+  color:#000 !important;
+  background-color: #5c5c5c !important;
+}
+.paused header #toggle-button{
+  background-image: url(../../img/adn/adn_paused@2x.png);
+  color: #5c5c5c;
+}
+.paused footer *{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+}
+.paused header button:hover,
+.paused footer button:hover{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+  background: none;
+}
+
+#paused-menu{
+  display: none;
+}
+
+.paused #paused-menu {
+  display: block;
+  position: absolute;
+  top: 100px;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  background: #000 url(../../img/adn/gray_grid.png);
+  opacity: 90%;
+  padding: 45px 85px 0;
+}
+
+#paused-menu h2{
+  font-family: bebas_neue_regularregular;
+  font-size:20px;
+  color: #dadada;
+  line-height:28px;
+  margin: 0 10px;
+}
+
+select {
+  border: 2px solid #0076FF;
+  border-radius: 5px;
+  font-family: bebas_neue_regularregular;
+  background: none;
+  box-shadow: none;
+  color: #0076FF;
+  font-size: 20px;
+  height: 30px;
+  padding-top: 1px;
+}
+
+#paused-menu select {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #5C5C5C;
+  color: #dadada;
+}
+
+#paused-menu select option{
+  text-align: center;
+}
+
+#paused-menu input{
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#paused-menu button{
+  width: 100%;
+  margin-top: 30px;
 }
 
 /* ============================================================
