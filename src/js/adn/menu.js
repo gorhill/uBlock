@@ -367,14 +367,39 @@
   // });
 
   $('#vault-button').click(function () {
-    window.open("./vault.html", "AdNauseam");
+    vAPI.messaging.send(
+        'default',
+        {
+            what: 'gotoURL',
+            details: {
+                url: "vault.html",
+                select: true,
+                index: -1
+            }
+        }
+    );
+
+    vAPI.closePopup();
+
   });
 
   $('#pause-button').click(function () {});
 
   $('#settings-open').click(function () {
-
-    window.open("./dashboard.html#options.html");
+      
+    vAPI.messaging.send(
+        'default',
+        {
+            what: 'gotoURL',
+            details: {
+                url: "dashboard.html#options.html",
+                select: true,
+                index: -1
+            }
+        }
+    );
+    
+    vAPI.closePopup();
   });
 
   $('#settings-close').click(function () {
