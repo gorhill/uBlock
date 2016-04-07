@@ -367,7 +367,20 @@
   // });
 
   $('#vault-button').click(function () {
-    window.open("./vault.html", "AdNauseam");
+    vAPI.messaging.send(
+        'default',
+        {
+            what: 'gotoURL',
+            details: {
+                url: "vault.html",
+                select: true,
+                index: -1
+            }
+        }
+    );
+
+    vAPI.closePopup();
+
   });
 
   $('#pause-button').click(function () {});
