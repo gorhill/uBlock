@@ -593,7 +593,7 @@ button.about {
   left: 0;
   right: 0;
   background: #000 url(../img/gray_grid.png);
-  opacity: 0.9;
+  opacity: 0.95;
   padding: 45px 85px 0;
   z-index: 100;
 }
