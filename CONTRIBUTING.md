@@ -2,7 +2,7 @@
 
 For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746).
 
-For filter-related issues, report at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues).
+For **filter-related issues**, report at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues).
 
 **The issue tracker is for provable issues only:** You will have to make the case that the issue is really with uBlock Origin and not something else on your side. To make a case means to provide detailed steps so that anybody can reproduce the issue. Be sure to rule out that the issue is not caused by something specific on your side.
 
