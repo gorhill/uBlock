@@ -283,6 +283,10 @@
     "message":"在圖示上顯示已找到的廣告數量",
     "description":"English: Show the number of found ads on the icon"
   },
+  "parseTextAdsPrompt": {
+    "message": "當可行時捕獲純文字廣告",
+    "description": "English: Capture text-only ads whenever possible"
+  },
   "settingsTooltipsPrompt":{
     "message":"關閉提示文字功能",
     "description":"A checkbox in the Settings pane"
