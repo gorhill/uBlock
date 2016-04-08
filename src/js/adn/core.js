@@ -154,12 +154,12 @@
 
   var getVaultTabId = function () {
 
-    var menuUrl = vAPI.getURL('vault.html');
+    var vaultUrl = vAPI.getURL('vault.html');
 
     for (var tabId in µb.pageStores) {
 
       var pageStore = µb.pageStoreFromTabId(tabId);
-      if (pageStore !== null && pageStore.rawURL.startsWith(menuUrl)) {
+      if (pageStore !== null && pageStore.rawURL.startsWith(vaultUrl)) {
 
         return tabId;
       }
@@ -442,15 +442,15 @@
       if (!/^http/.test(cd.src) && !/^data:image/.test(cd.src)) {
 
         if (/^\/\//.test(cd.src)) {
-            cd.src = 'http:' + cd.src;
-        }
-        else {
+
+          cd.src = 'http:' + cd.src;
+
+        } else {
 
           console.log("Relative-image: " + cd.src);
           cd.src = pu.substring(0, pu.lastIndexOf('/')) + '/' + cd.src;
+          console.log("    --> " + cd.src);
         }
-
-        console.log("    --> " + cd.src);
       }
 
     } else {
@@ -567,7 +567,9 @@
 
       console.log('DELETED: ' + adinfo(ad));
       updateBadges();
+
     } else {
+
       console.warn('Unable to delete: ', ad);
     }
 
@@ -758,27 +760,21 @@
     // update badges if we are showing them
     if (µb.userSettings.showIconBadge) {
 
-      // get all open tabs
+      var optionsUrl = vAPI.getURL('options.html');
+
       for (var tabId in µb.pageStores) {
 
         var pageStore = µb.pageStoreFromTabId(tabId);
+        if (pageStore !== null && !pageStore.rawURL.startsWith(optionsUrl)) {
 
-        // update the badge icon if its not the settings tab
-        if (pageStore && pageStore.rawURL.indexOf("options.html") < 0) {
-
-          try {
-            vAPI.setIcon(tabId, 'on', adlist(pageStore.rawURL).length.toString());
-          } catch (e) {
-            console.error(e);
-          }
+          µb.updateBadgeAsync(tabId);
         }
       }
     }
   }
 
-  // returns all ads for a page, or all pages, if page arg is null
-  // called from µb.updateBadgeAsync()
-  // TODO: memoize?
+  // Returns all ads for a page, or all pages, if page arg is null
+  // Called from µb.updateBadgeAsync() TODO: memoize?
   var adlist = function (pageUrl) {
 
     var result = [],
@@ -892,6 +888,15 @@
     return data;
   }
 
+  var toggleEnabled = function (request, pageStore, tabId) {
+
+    var pageStore = µb.pageStoreFromTabId(request.tabId);
+    if (pageStore) {
+      pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+      updateBadges();
+    }
+  }
+
   var deleteAdSet = function (request, pageStore, tabId) {
 
     for (var j = 0; j < request.ids.length; j++) {
@@ -946,7 +951,7 @@
 
   /******************************************************************************/
 
-  return {  // public API for
+  return { // public API for
 
     adlist: adlist,
     logAdSet: logAdSet,
@@ -957,6 +962,7 @@
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
+    toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     getPreferences: getPreferences
   };
@@ -965,7 +971,7 @@
 
 /**************************** override tab.js ****************************/
 
-µBlock.updateBadgeAsync = (function () {
+/*µBlock.updateBadgeAsync = (function () {
 
   var tabIdToTimer = Object.create(null);
 
@@ -995,7 +1001,7 @@
     tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 665);
   };
 
-})();
+})();*/
 
 /****************************** messaging ********************************/
 

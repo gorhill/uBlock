@@ -33,6 +33,10 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
+    $('#main').toggleClass('disabled', dval());
+
+    updateMenuState();
+
     setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
@@ -48,6 +52,20 @@
         appendAd($items, ads[i]);
 
       setAttempting(json.current);
+    }
+  }
+
+  function updateMenuState() {
+
+    if ($('#main').hasClass('disabled')) {
+
+      $('#resume-button').show();
+      $('#pause-button').hide();
+    } else {
+
+      $('#pause-button').show();
+      $('#resume-button').hide();
+
     }
   }
 
@@ -287,6 +305,12 @@
       }, onPopupData);
   };
 
+  function dval() {
+
+    return popupData.pageURL === '' || !popupData.netFilteringSwitch ||
+      (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled);
+  }
+
   /******************************************************************************/
   var cachedPopupHash = '',
     hostnameToSortableTokenMap = {},
@@ -417,61 +441,67 @@
     //window.open(AboutURL);
   });
 
-  var onShowTooltip = function() {
-
-      if (popupData.tooltipsDisabled) {
-          return;
-      }
-
-      var target = this;
-
-      // Tooltip container
-      var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
-                document.body;
-      var ttcRect = ttc.getBoundingClientRect();
-
-      // Tooltip itself
-      var tip = uDom.nodeFromId('tooltip');
-      tip.textContent = target.getAttribute('data-tip');
-      tip.style.removeProperty('top');
-      tip.style.removeProperty('bottom');
-      ttc.appendChild(tip);
-
-      // Target rect
-      var targetRect = target.getBoundingClientRect();
-
-      // Default is "over"
-      var pos;
-      var over = target.getAttribute('data-tip-position') !== 'under';
-      if ( over ) {
-          pos = ttcRect.height - targetRect.top + ttcRect.top;
-          tip.style.setProperty('bottom', pos + 'px');
-      } else {
-          pos = targetRect.bottom - ttcRect.top;
-          tip.style.setProperty('top', pos + 'px');
-      }
-
-      tip.classList.add('show');
+  var onHideTooltip = function () {
+    uDom.nodeFromId('tooltip').classList.remove('show');
   };
 
-  var toggleNetFilteringSwitch = function (ev) {
+  var onShowTooltip = function () {
 
-    if (!popupData || !popupData.pageURL) {
+    if (popupData.tooltipsDisabled) {
       return;
     }
-    if (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled) {
+
+    var target = this;
+
+    // Tooltip container
+    var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
+      document.body;
+    var ttcRect = ttc.getBoundingClientRect();
+
+    // Tooltip itself
+    var tip = uDom.nodeFromId('tooltip');
+    tip.textContent = target.getAttribute('data-tip');
+    tip.style.removeProperty('top');
+    tip.style.removeProperty('bottom');
+    ttc.appendChild(tip);
+
+    // Target rect
+    var targetRect = target.getBoundingClientRect();
+
+    // Default is "over"
+    var pos;
+    var over = target.getAttribute('data-tip-position') !== 'under';
+    if (over) {
+      pos = ttcRect.height - targetRect.top + ttcRect.top;
+      tip.style.setProperty('bottom', pos + 'px');
+    } else {
+      pos = targetRect.bottom - ttcRect.top;
+      tip.style.setProperty('top', pos + 'px');
+    }
+
+    tip.classList.add('show');
+  };
+
+  var toggleEnabled = function (ev) {
+
+    //console.log('toggleEnabled', ev);
+
+    if (!popupData || !popupData.pageURL || (popupData.pageHostname ===
+        'behind-the-scene' && !popupData.advancedUserEnabled)) {
+
       return;
     }
-    messaging.send(
-      'popupPanel', {
-        what: 'toggleNetFiltering',
+
+    vAPI.messaging.send(
+      'adnauseam', {
+        what: 'toggleEnabled',
         url: popupData.pageURL,
         scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
         state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
         tabId: popupData.tabId
-      }
-    );
+      });
 
+    updateMenuState();
     //hashFromPopupData();
   };
 
@@ -485,9 +515,10 @@
     }
     getPopupData(tabId);
 
-    uDom('#pause-button').on('click', toggleNetFilteringSwitch);
+    uDom('#pause-button').on('click', toggleEnabled);
+    uDom('#resume-button').on('click', toggleEnabled);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-      .on('mouseleave', '[data-tip]', onHideTooltip);
+      .on('mouseleave', '[data-tip]', onHideTooltip); // TODO
   })();
 
   /********************************************************************/

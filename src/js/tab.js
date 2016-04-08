@@ -828,6 +828,7 @@ vAPI.tabs.registerListeners();
 // Update visual of extension icon.
 
 µb.updateBadgeAsync = (function() {
+
     var tabIdToTimer = Object.create(null);
 
     var updateBadge = function(tabId) {
@@ -839,8 +840,9 @@ vAPI.tabs.registerListeners();
         var pageStore = this.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch();
-            if ( state && this.userSettings.showIconBadge && pageStore.perLoadBlockedRequestCount ) {
-                badge = this.formatCount(pageStore.perLoadBlockedRequestCount);
+
+            if (state && this.userSettings.showIconBadge) {
+                badge = this.formatCount(µb.adnauseam.adlist(pageStore.rawURL).length); // adn
             }
         }
 
@@ -854,7 +856,7 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 666);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 222);
     };
 })();
 

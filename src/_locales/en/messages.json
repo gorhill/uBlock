@@ -39,6 +39,10 @@
     "message": "Pause Adnauseam",
     "description": "appears in ADN popup menu"
   },
+  "adnMenuResume": {
+    "message": "Resume Adnauseam",
+    "description": "appears in ADN popup menu"
+  },
   "adnMenuSettings": {
     "message": "Settings",
     "description": "appears in ADN popup menu"

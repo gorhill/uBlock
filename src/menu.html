@@ -17,7 +17,7 @@
       <header>
         <h1>
           <a href="http://adnauseam.io" target="new">
-            <div id="toggle-button" background="">Toggle AdNauseam On/Off</div>
+            <span id="toggle-button" background="" title="AdNauseam">ADNAUSEAM</span>
           </a>
         </h1>
         <div id="stats">
@@ -49,6 +49,7 @@
 
       <footer>
         <button id="pause-button" class="pause" data-i18n="adnMenuPause">&nbsp;</button>
+        <button id="resume-button" class="resume" data-i18n="adnMenuResume">&nbsp;</button>
         <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
         <button id="about-button" class="about">?</button>
       </footer>
@@ -56,90 +57,14 @@
     </div>
     <!-- END #main -->
 
-    <div id="settings" class="page hide">
-
-      <header class="">
-
-        <a href="#" id="settings-close" class="settings close">&#10006;</a>
-
-        <!-- version# added via menu.js -->
-        <h2 id="settings-header">
-          <span>AdNauseam&nbsp;v</span>
-          <span id="settings-version">X.Y</span>
-          <span data-i18n="adnMenuSettings">&nbsp;</span>
-        </h2>
-      </header>
-
-      <form id="settings_form" action="index.html" method="post">
-
-        <div class="row justified">
-          <div class="btn">
-            <button class="button" id="export-ads" data-i18n="adnMenuExportAds" data-tip="Export Ads">&nbsp;</button>
-          </div>
-          <div class="btn">
-            <button class="button" id="import-ads" data-i18n="adnMenuImportAds" data-tip="Import Ads">&nbsp;</button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="question" data-i18n="adnMenuDisableAllLogging" data-tip="Disable all logging">
-            &nbsp;
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1">
-            <label for="cmn-toggle-1"></label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="question" data-i18n="adnMenuDisableOutgoingReferrer" data-tip="Disable outgoing referrer">
-            &nbsp;
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2">
-            <label for="cmn-toggle-2"></label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="question" data-i18n="adnMenuClearAds" data-tip="Clear Ads with browser history">
-            &nbsp;
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3">
-            <label for="cmn-toggle-3"></label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="question" data-i18n="adnMenuHideBadge" data-tip="Hide Ad count on icon">
-            &nbsp;
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-4">
-            <label for="cmn-toggle-4"></label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="question">
-            <div class="btn">
-              <button class="button danger" id="clear-ads" data-i18n="adnMenuClearAdsNow">&nbsp;</button>
-            </div>
-          </div>
-        </div>
-
-      </form>
-    </div>
-    <!-- END #settings -->
   </div>
   <div id="templates" style="display: none">
-      <!--div><span></span><span data-src="/" data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span></div>
+    <!--div><span></span><span data-src="/" data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span></div>
       <div id="actionSelector"><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
       <div id="hotspotTip"></div-->
-      <div id="tooltip"></div>
+    <div id="tooltip"></div>
   </div>
-  
+
   <script src="js/vapi-common.js"></script>
   <script src="js/vapi-client.js"></script>
   <script src="js/udom.js"></script>

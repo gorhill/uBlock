@@ -200,14 +200,22 @@ header{
 }
 
 #toggle-button {
-  text-indent: -99999px;
-  overflow: hidden;
   display: block;
   height: 100px;
   width: 100px;
-  background: url(../img/active.png) center center no-repeat;
-  background-size: 78px 75px;
+  background: url(../img/active@2x.png) center center no-repeat;
+  background-size: 100px 100px;
   float: left;
+  font-size: 18.25px;
+  color: #A01FF0;
+  text-align: center;
+  font-weight: 700;
+  line-height: 156px;
+}
+
+.disabled header #toggle-button{
+  background-image: url(../img/paused@2x.png);
+  color: #5c5c5c;
 }
 
 #stats {
@@ -541,6 +549,7 @@ footer {
   height: 50px;
 }
 button.pause,
+button.resume,
 button.settings {
   width: 162px;
   float: left;
