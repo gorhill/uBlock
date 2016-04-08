@@ -595,7 +595,7 @@ button.about {
   background: #000 url(../img/gray_grid.png);
   opacity: 0.95;
   padding: 45px 85px 0;
-  z-index: 100;
+  z-index: 10000;
 }
 
 #paused-menu h2{
