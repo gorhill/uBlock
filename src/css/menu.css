@@ -593,8 +593,9 @@ button.about {
   left: 0;
   right: 0;
   background: #000 url(../img/gray_grid.png);
-  opacity: 90%;
+  opacity: 0.9;
   padding: 45px 85px 0;
+  z-index: 100;
 }
 
 #paused-menu h2{
