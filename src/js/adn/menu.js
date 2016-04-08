@@ -369,15 +369,14 @@
   $('#vault-button').click(function () {
 
     vAPI.messaging.send(
-        'default',
-        {
-            what: 'gotoURL',
-            details: {
-                url: "vault.html",
-                select: true,
-                index: -1
-            }
+      'default', {
+        what: 'gotoURL',
+        details: {
+          url: "vault.html",
+          select: true,
+          index: -1
         }
+      }
     );
 
     vAPI.closePopup();
@@ -385,21 +384,20 @@
 
   $('#pause-button').click(function () {
 
-      // Waiting on #46
+    // Waiting on #46
   });
 
   $('#settings-open').click(function () {
 
     vAPI.messaging.send(
-        'default',
-        {
-            what: 'gotoURL',
-            details: {
-                url: "dashboard.html#options.html",
-                select: true,
-                index: -1
-            }
+      'default', {
+        what: 'gotoURL',
+        details: {
+          url: "dashboard.html#options.html",
+          select: true,
+          index: -1
         }
+      }
     );
 
     vAPI.closePopup();
@@ -411,13 +409,71 @@
     $('.settings').toggleClass('hide');
   });
 
-  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
+  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ"; // keep
 
   $('#about-button').click(function () {
 
     window.open("./popup.html", '_self');
     //window.open(AboutURL);
   });
+
+  var onShowTooltip = function() {
+
+      if (popupData.tooltipsDisabled) {
+          return;
+      }
+
+      var target = this;
+
+      // Tooltip container
+      var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
+                document.body;
+      var ttcRect = ttc.getBoundingClientRect();
+
+      // Tooltip itself
+      var tip = uDom.nodeFromId('tooltip');
+      tip.textContent = target.getAttribute('data-tip');
+      tip.style.removeProperty('top');
+      tip.style.removeProperty('bottom');
+      ttc.appendChild(tip);
+
+      // Target rect
+      var targetRect = target.getBoundingClientRect();
+
+      // Default is "over"
+      var pos;
+      var over = target.getAttribute('data-tip-position') !== 'under';
+      if ( over ) {
+          pos = ttcRect.height - targetRect.top + ttcRect.top;
+          tip.style.setProperty('bottom', pos + 'px');
+      } else {
+          pos = targetRect.bottom - ttcRect.top;
+          tip.style.setProperty('top', pos + 'px');
+      }
+
+      tip.classList.add('show');
+  };
+
+  var toggleNetFilteringSwitch = function (ev) {
+
+    if (!popupData || !popupData.pageURL) {
+      return;
+    }
+    if (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled) {
+      return;
+    }
+    messaging.send(
+      'popupPanel', {
+        what: 'toggleNetFiltering',
+        url: popupData.pageURL,
+        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
+        state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
+        tabId: popupData.tabId
+      }
+    );
+
+    //hashFromPopupData();
+  };
 
   (function () {
 
@@ -429,6 +485,9 @@
     }
     getPopupData(tabId);
 
+    uDom('#pause-button').on('click', toggleNetFilteringSwitch);
+    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+      .on('mouseleave', '[data-tip]', onHideTooltip);
   })();
 
   /********************************************************************/
