@@ -5,12 +5,9 @@
 
   'use strict';
 
-  var ads, messenger = vAPI.messaging.channel('adnauseam'),
-    ubmessenger = vAPI.messaging.channel('popup.js');
+  var ads, page; // can we remove? only if we can find an updated ad in the DOM
 
-  messenger.addListener(function (request) {
-
-    //console.log("menu.Message:", request.what, request);
+  vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
     switch (request.what) {
 
@@ -19,7 +16,8 @@
       break;
 
     case 'adDetected':
-      renderPage(request); // for now, just re-render everything
+      // for now, just re-render
+      renderPage(request);
       break;
 
     case 'adVisited':
@@ -32,23 +30,25 @@
 
   var renderPage = function (json) {
 
-    //console.log('renderPage', json);
+    page = json.pageUrl;
+    ads = onPage(json.data, page);
 
-    ads = onPage(json.data, json.pageUrl);
-
-    setCounts( /*ads,*/ json.data.length);
+    setCounts(ads, json.data.length);
 
     var $items = $('#ad-list-items');
+
     $items.removeClass().empty();
 
-    if (!ads) return;
+    if (ads) {
 
-    for (var i = 0, j = ads.length; i < j; i++) {
-      appendAd($items, ads[i]);
+      // if we have no page ads, use the most recent
+      if (!ads.length) ads = doRecent(json.data);
+
+      for (var i = 0, j = ads.length; i < j; i++)
+        appendAd($items, ads[i]);
+
+      setAttempting(json.current);
     }
-
-    setAttempting(json.current);
-    //if (!json.pageCount) showRecentAds(ads, json.emptyMessage);
   }
 
   function getTitle(ad) {
@@ -76,31 +76,42 @@
       $ad.find('cite').text(targetDomain(ad));
 
       // update the visited count
-      $('#visited-count').text(visitedCount(ads));
-
-      setAttempting(ad);
+      if (ad.pageUrl === page)
+        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
     }
   }
 
-  function verify(ad) {
+  function verify(ad) { // uses global ads (can be removed)
 
     if (ad) {
+
       for (var i = 0; i < ads.length; i++) {
+
         if (ads[i].id === ad.id) {
           ads[i] = ad;
           return true;
         }
       }
     }
+
     return false;
   }
 
+  function doRecent(data) {
+
+    $("#alert").removeClass('hide');
+    $('#ad-list-items').addClass('recent-ads');
+    return data.sort(byField('-foundTs')).slice(0, 6);
+  }
+
   function onPage(ads, pageUrl) {
+
     var res = [];
     for (var i = 0; i < ads.length; i++) {
-      if (ads[i].pageUrl === pageUrl)
+      if (ads[i] && ads[i].pageUrl === pageUrl)
         res.push(ads[i]);
     }
+
     return res.sort(byField('-foundTs'));
   }
 
@@ -117,8 +128,6 @@
   }
 
   function setAttempting(ad) {
-
-    //ad && console.log('setAttempting: '+ad.id);
 
     // one 'attempt' at a time
     $('.ad-item').removeClass('attempting');
@@ -138,16 +147,18 @@
       jv = 'just-visited';
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
-    $ad.removeClass('failed visited attempting').addClass(visitedClass(ad));
+    $ad.removeClass('failed visited attempting');
     $ad.removeClass(jv).addClass(jv);
 
-    //if (ad.type === 'img') ??
-    //$ad.find('img').removeClass('just-visited').addClass('just-visited');
+    // timed for animation
+    setTimeout(function () {
+      $ad.addClass(visitedClass(ad));
+    }, 300);
 
     return $ad;
   }
 
-  function setCounts(total) {
+  function setCounts(ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
     $('#vault-count').text(total);
@@ -177,7 +188,8 @@
 
       'src': (ad.contentData.src || ad.contentData),
       'class': 'ad-item-img',
-      'onerror': "this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'",
+      'onerror': "this.onerror=null; this.width=50; " +
+        "this.height=45; this.src='img/placeholder.svg'",
 
     }).appendTo($span);
 
@@ -257,47 +269,22 @@
     }).length;
   }
 
-  function extractDomains(fullUrl) { // used in targetDomain
-
-    var result = [],
-      matches,
-      regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-    while ((matches = regexp.exec(fullUrl)))
-      result.push(matches[0]);
-
-    return result;
-  }
-
-  function targetDomain(ad) {
-
-    var result, url = ad.resolvedTargetUrl || ad.targetUrl,
-      domains = extractDomains(url);
-
-    if (domains.length)
-      result = new URL(domains.pop()).hostname;
-    else
-      warn("[ERROR] '" + ad.targetUrl + "' url=" + url);
-
-    if (result) result += ' (#' + ad.id + ')'; // testing-only
-
-    return result;
-  }
-
   var getPopupData = function (tabId) {
 
     var onPopupData = function (response) {
       cachePopupData(response);
-      messenger.send({
-        what: 'adsForPage',
-        tabId: popupData.tabId
-      }, renderPage);
+      vAPI.messaging.send(
+        'adnauseam', {
+          what: 'adsForPage',
+          tabId: popupData.tabId
+        }, renderPage);
     };
 
-    ubmessenger.send({
-      what: 'getPopupData',
-      tabId: tabId
-    }, onPopupData);
+    vAPI.messaging.send(
+      'popupPanel', {
+        what: 'getPopupData',
+        tabId: tabId
+      }, onPopupData);
   };
 
   /******************************************************************************/
@@ -311,6 +298,7 @@
   };
 
   var cachePopupData = function (data) {
+
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
@@ -373,21 +361,48 @@
     uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
   };
 
-  $('#log-button').click(function () {
-
-    window.open("./adn-log.html");
-  });
+  // $('#log-button').click(function () {
+  //
+  //   window.open("./log.html");
+  // });
 
   $('#vault-button').click(function () {
 
-    window.open("./adn-vault.html");
+    vAPI.messaging.send(
+        'default',
+        {
+            what: 'gotoURL',
+            details: {
+                url: "vault.html",
+                select: true,
+                index: -1
+            }
+        }
+    );
+
+    vAPI.closePopup();
   });
 
-  $('#pause-button').click(function () {});
+  $('#pause-button').click(function () {
+
+      // Waiting on #46
+  });
 
   $('#settings-open').click(function () {
 
-    window.open("./dashboard.html#adn-settings.html");
+    vAPI.messaging.send(
+        'default',
+        {
+            what: 'gotoURL',
+            details: {
+                url: "dashboard.html#options.html",
+                select: true,
+                index: -1
+            }
+        }
+    );
+
+    vAPI.closePopup();
   });
 
   $('#settings-close').click(function () {
@@ -400,7 +415,8 @@
 
   $('#about-button').click(function () {
 
-    window.open(AboutURL);
+    window.open("./popup.html", '_self');
+    //window.open(AboutURL);
   });
 
   (function () {

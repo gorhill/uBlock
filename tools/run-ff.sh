@@ -2,10 +2,10 @@
 
 set -e
 
-tools/make-firefox-adn.sh
+tools/make-firefox.sh
 
-cd dist/build/adnauseam.firefox 
+cd bin/build/adnauseam.firefox
 
-jpm run --profile $1
+jpm run --profile ${1:-default}
 
 cd -

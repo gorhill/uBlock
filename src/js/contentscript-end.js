@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,13 +21,7 @@
 
 /******************************************************************************/
 
-var dbugDetect = 0; // tmp
-
-// ol.kr5y
-
 // Injected into content pages
-//
-// jQuery functions: is, find, attr, text
 
 (function() {
 
@@ -62,448 +56,120 @@ vAPI.contentscriptEndInjected = true;
 vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
-
-var messager = vAPI.messaging.channel('contentscript-end.js');
-
-// https://github.com/gorhill/uMatrix/issues/144
-vAPI.shutdown.add(function() {
-    messager.close();
-});
-
-/******************************************************************************/
-
-var adDetector = (function() {
-
-  var adMessager = vAPI.messaging.channel('adnauseam');
-
-  var clickableParent = function(node) {
-
-    var checkParent = function(adNode) {
-
-      var hasParent = adNode.parentNode &&
-        (adNode.parentNode.tagName == 'A' ||
-          adNode.parentNode.tagName == 'OBJECT' ||
-          adNode.parentNode.tagName == 'IFRAME' ||
-          (adNode.hasAttribute && adNode.hasAttribute('onclick')));
-
-      //console.log("check",adNode.tagName,adNode.parentNode);
-
-      return hasParent;
-    };
-
-    var adNode = node;
-
-    while (checkParent(adNode))
-      adNode = adNode.parentNode;
-
-    // returns adnode if found, or null
-    return adNode === node ? null : adNode;
-  };
-
-  /******************************************************************************/
-  var Ad = function(network, pageTitle, pageUrl, targetUrl, contentType) {
-
-    this.id = null;
-    this.attempts = 0;
-    this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
-    this.attemptedTs = 0;
-    this.title = 'Pending';
-    this.foundTs = +new Date();
-    this.resolvedTargetUrl = null;
-    this.contentType = contentType;
-    this.targetUrl = targetUrl;
-    this.pageTitle = pageTitle;
-    this.pageUrl = pageUrl;
-    this.errors = null;
-  };
-
-  var notifyAddon = function(node, ad) {
-
-    adMessager.send({
-        what: 'registerAd',
-        ad: ad
-      }, function(obj) {
-        //console.log("AdDetected-callback: ", obj);
-    });
-  }
-
-  var $is = function (elem, selector) { // jquery shim
-
-    if (selector.nodeType) {
-      return elem === selector;
-    }
-
-    var qa = (typeof (selector) === 'string' ?
-      document.querySelectorAll(selector) : selector),
-      length = qa.length,
-      returnArr = [];
-
-    while (length--) {
-      if (qa[length] === elem) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  var $attr = function(ele, attr) {    // jquery shim
-
-    return (ele.length ? ele[0] : ele).getAttribute(attr);
-  };
-
-  var $text = function(ele) {         // jquery shim
-
-    if (typeof ele.length === 'undefined')
-      return ele.innerText || ele.textContent;
-
-    var text = '';
-    for (var i = 0; i < ele.length; i++) {
-      text += ele[i].innerText || ele[i].textContent;
-    }
-
-    return text;
-  };
-
-  var $find = function(ele, selector) { // jquery shim
-
-    return ele.querySelectorAll(selector);
-  };
-
-  var findAds = function(adNodes) {
-
-    //console.log("findAds("+adNodes.length+")");
-
-    for (var i = 0; i < adNodes.length; i++) {
-
-      var elem = adNodes[i];
-
-      if (dbugDetect) console.log(i, elem.tagName, elem);
-
-      if (elem.tagName === 'IMG') {
-        checkImages(elem, [elem]);
-        continue;
-      }
-
-      var imgs = elem.querySelectorAll('img');
-      if (imgs.length) {
-
-          checkImages(elem, imgs);
-      }
-      else { // need to check domain/tag here: called way too often
-
-          //console.log("TRYING: ", elem);
-          var ads = checkFilters(elem);
-          if (ads && ads.length) {
-
-              for (var i = 0; i < ads.length; i++) {
-
-                  console.log("TEXT-AD", ads[i]);
-                  notifyAddon(elem, ads[i]);
-              }
-              //notifyAddon(elem, ad);
-          }
-      }
-    }
-  }
-
-  function checkImages(elem, imgs) {
-
-      if (dbugDetect) console.log("Found " + imgs.length + " img(s)");
-
-      for (var i = 0; i < imgs.length; i++) {
-
-        var imgSrc = imgs[i].getAttribute("src");
-
-        if (!imgSrc) {
-          if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-          continue;
-        }
-
-        if (dbugDetect) console.log('imgSrc: ' + imgSrc);
-
-        var target = clickableParent(imgs[i]);
-        if (target) {
-
-          if (target.tagName === 'A') {
-
-            var targetUrl = target.getAttribute("href");
-            if (targetUrl) {
-
-              if (targetUrl.indexOf('http') >= 0) {
-                var ad = createImgAd(document.domain, targetUrl, imgSrc);
-                console.log("IMG-AD", ad);
-                notifyAddon(elem, ad);
-
-              } else {
-
-                console.warn("Ignoring IMG-AD with targetUrl=" + targetUrl + " src=" + imgSrc);
-              }
-            }
-
-            // Need to check for div.onclick etc?
-            else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
-          } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
-        } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
-      }
-  }
-
-  var filters = [
-  {
-        selector: 'li.ads-ad',
-        handler: googleText,
-        name: 'adsense-1'
-  },{
-        selector: '.ad',
-        handler: aolText,
-        name: 'aol'
-  },{
-        selector: 'ol',
-        handler: yahooText,
-        name: 'yahoo'
-  }];
-
-  function yahooText(e) {
-
-      var ads = [], divs = $find(e, 'div.dd');//#main > div > ol.a947i105t6.v119f
-      //console.log('DL: '+divs.length);
-      for (var i = 0; i < divs.length; i++) {
-
-        var title = $find(divs[i], 'a.td-n');
-        var site = $find(divs[i], 'a.xh52v4e');
-        var text = $find(divs[i], 'a.fc-1st');
-
-        if (text.length && site.length && title.length) {
-
-            var ad = createTextAd('yahoo', $attr(title, 'href'),
-                $text(title), $text(text), $text(site));
-
-            ads.push(ad);
-            //console.log('CREATED: ',ad);
-        }
-        else {
-          console.warn('yahooTextHandler.fail: ', divs[i]);//title, site, text);
-        }
-
-      }
-      return ads;
-      //console.log('HIT:: yahooText()', $find(e, 'div.layoutMiddle'));
-  }
-
-  function aolText(div) {
-
-      var ad, title = $find(div, '.title span'),
-        text = $find(div, '.desc span'),
-        site = $find(div, '.durl span'),
-        target = $find(div, '.title a');
-
-      if (text.length && site.length && title.length && target.length) {
-
-        ad = createTextAd('aol', $attr(target, 'href'),
-          $text(title), $text(text), $text(site));
-
-      } else {
-
-        console.warn('TEXT: aolTextHandler.fail: ', text, site);
-      }
-
-      return [ ad ];
-    }
-
-    var checkFilters = function (elem) {
-      for (var i = 0; i < filters.length; i++) {
-
-        if ($is(elem, filters[i].selector)) {
-
-          var result = filters[i].handler(elem);
-          if (result) return result;
-        }
-      }
-    };
-
-    var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i; // not used now
-
-    function googleText(li) {
-
-      var ad, title = $find(li, 'h3 a'),
-        text = $find(li, '.ads-creative'),
-        site = $find(li, '.ads-visurl cite');
-
-      if (text.length && site.length && title.length) {
-
-        ad = createTextAd('google', $attr(title, 'href'),
-          $text(title), $text(text), $text(site));
-
-      } else {
-
-        console.warn('TEXT: googleTextHandler.fail: ', text, site);
-      }
-
-      return [ ad ];
-    }
-
-    function createImgAd(network, target, img) {
-
-      if (target.indexOf('http') < 0) {
-
-        console.warn("Ignoring ImgAd with targetUrl=" + target, arguments);
-        return;
-      }
-
-      //console.log("createImgAd: ",network, img, target);
-      // if (window.self !== window.top) { // see #42
-      //     console.log('iFrame: parseTitle: ', window.top.document.title);
-      // }
-
-      var ad = new Ad(network, document.title, document.URL, target, 'img');
-
-      if (!/^http/.test(img)) { // relative image url
-        if (/^data:image/.test(img)) {
-          if (dbugDetect) console.log("Found encoded image: " + img);
-        }
-        else {
-          if (dbugDetect) console.log("Found relative image: " + img);
-          img = ad.pageUrl.substring(0, ad.pageUrl.lastIndexOf('/')) + '/' + img;
-        }
-      }
-
-      ad.contentData = {
-        src: img
-      };
-
-      return ad;
-    }
-
-    function createTextAd(network, target, title, text, site) { // unescapeHTML: fix to #31
-
-      if (target.indexOf('http') < 0) {
-
-        console.warn("Ignoring TextAd with targetUrl=" + target, arguments);
-        return;
-      }
-
-      //console.log("createTextAd: ",network, title, text, site, target);
-      var ad = new Ad(network, document.title, document.URL, target, 'text');
-
-      if (title.length) ad.title = title;
-
-      ad.contentData = {
-        title: title,
-        text: text,
-        site: site
-      }
-
-      return ad;
-    }
-
-    return {
-      findAds: findAds,
-    }
-
-})();
-
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
 
-var uBlockCollapser = (function () {
-      var timer = null;
-      var requestId = 1;
-      var newRequests = [];
-      var pendingRequests = Object.create(null);
-      var pendingRequestCount = 0;
-      var src1stProps = {
+var uBlockCollapser = (function() {
+    var timer = null;
+    var requestId = 1;
+    var newRequests = [];
+    var pendingRequests = Object.create(null);
+    var pendingRequestCount = 0;
+    var src1stProps = {
         'embed': 'src',
         'img': 'src',
         'object': 'data'
-      };
-      var src2ndProps = {
+    };
+    var src2ndProps = {
         'img': 'srcset'
-      };
+    };
+    var messaging = vAPI.messaging;
 
-      var PendingRequest = function (target, tagName, attr) {
+    var PendingRequest = function(target, tagName, attr) {
         this.id = requestId++;
         this.target = target;
         this.tagName = tagName;
         this.attr = attr;
         pendingRequests[this.id] = this;
         pendingRequestCount += 1;
-      };
+    };
 
-      // Because a while ago I have observed constructors are faster than
-      // literal object instanciations.
-      var BouncingRequest = function (id, tagName, url) {
+    // Because a while ago I have observed constructors are faster than
+    // literal object instanciations.
+    var BouncingRequest = function(id, tagName, url) {
         this.id = id;
         this.tagName = tagName;
         this.url = url;
         this.collapse = false;
-      };
+    };
 
-      var onProcessed = function (response) {
+    var onProcessed = function(response) {
+        // This can happens if uBO is restarted.
+        if ( !response ) {
+            return;
+        }
         // https://github.com/gorhill/uMatrix/issues/144
-        if (response.shutdown) {
-          vAPI.shutdown.exec();
-          return;
+        if ( response.shutdown ) {
+            vAPI.shutdown.exec();
+            return;
         }
 
         var requests = response.result;
-        if (requests === null || Array.isArray(requests) === false) {
-          return;
+        if ( requests === null || Array.isArray(requests) === false ) {
+            return;
         }
         var selectors = [];
         var i = requests.length;
         var request, entry, target, value;
-        while (i--) {
-          request = requests[i];
-          entry = pendingRequests[request.id];
-          if (entry === undefined) {
-            continue;
-          }
-          delete pendingRequests[request.id];
-          pendingRequestCount -= 1;
+        while ( i-- ) {
+            request = requests[i];
+            entry = pendingRequests[request.id];
+            if ( entry === undefined ) {
+                continue;
+            }
+            delete pendingRequests[request.id];
+            pendingRequestCount -= 1;
 
-          // https://github.com/chrisaljoudi/uBlock/issues/869
-          if (!request.collapse) {
-            continue;
-          }
+            // https://github.com/chrisaljoudi/uBlock/issues/869
+            if ( !request.collapse ) {
+                continue;
+            }
 
-          target = entry.target;
+            target = entry.target;
 
-          // https://github.com/chrisaljoudi/uBlock/issues/399
-          // Never remove elements from the DOM, just hide them
-          target.style.setProperty('display', 'none', 'important');
-          if (dbugDetect) console.log("HIT-onProcessed: ", target);
+            // https://github.com/chrisaljoudi/uBlock/issues/399
+            // Never remove elements from the DOM, just hide them
+            target.style.setProperty('display', 'none', 'important');
 
-          adDetector.findAds([target]);
+            if (dbugDetect) console.log("HIT[OK1]: ", target);
+            adDetector.findAds(target);
 
-          // https://github.com/chrisaljoudi/uBlock/issues/1048
-          // Use attribute to construct CSS rule
-          if ((value = target.getAttribute(entry.attr))) {
-            selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
-          }
+            // https://github.com/chrisaljoudi/uBlock/issues/1048
+            // Use attribute to construct CSS rule
+            if ( (value = target.getAttribute(entry.attr)) ) {
+                selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
+            }
         }
-        if (selectors.length !== 0) {
-          messager.send({
-            what: 'cosmeticFiltersInjected',
-            type: 'net',
-            hostname: window.location.hostname,
-            selectors: selectors
-          });
+        if ( selectors.length !== 0 ) {
+            messaging.send(
+                'contentscript',
+                {
+                    what: 'cosmeticFiltersInjected',
+                    type: 'net',
+                    hostname: window.location.hostname,
+                    selectors: selectors
+                }
+            );
         }
         // Renew map: I believe that even if all properties are deleted, an
         // object will still use more memory than a brand new one.
-        if (pendingRequestCount === 0) {
-          pendingRequests = Object.create(null);
+        if ( pendingRequestCount === 0 ) {
+            pendingRequests = Object.create(null);
         }
-      };
+    };
+
     var send = function() {
         timer = null;
-        messager.send({
-            what: 'filterRequests',
-            pageURL: window.location.href,
-            pageHostname: window.location.hostname,
-            requests: newRequests
-        }, onProcessed);
+        messaging.send(
+            'contentscript',
+            {
+                what: 'filterRequests',
+                pageURL: window.location.href,
+                pageHostname: window.location.hostname,
+                requests: newRequests
+            }, onProcessed
+        );
         newRequests = [];
     };
 
@@ -570,6 +236,10 @@ var uBlockCollapser = (function () {
 
     var primeLocalIFrame = function(iframe) {
         // Should probably also copy injected styles.
+        // The injected scripts are those which were injected in the current
+        // document, from within the `contentscript-start.js / injectScripts`,
+        // and which scripts are selectively looked-up from:
+        // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( vAPI.injectedScripts ) {
             var scriptTag = document.createElement('script');
             scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
@@ -655,8 +325,9 @@ var uBlockCollapser = (function () {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
-                    if(dbugDetect)console.log("HIT-NoShadow: ",elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
+                    if(dbugDetect) console.log("HIT[noShadow]: ",elems[i]);
+                    adDetector.findAds(elems[i]);
                 }
             };
         }
@@ -672,36 +343,32 @@ var uBlockCollapser = (function () {
             var elem, shadow;
             while ( i-- ) {
                 elem = elems[i];
-                shadow = elem.shadowRoot;
-                // https://www.chromestatus.com/features/4668884095336448
-                // "Multiple shadow roots is being deprecated."
-                if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {
-                        if(dbugDetect) console.log("HIT-shadow: ",elem);
-                        elem.style.setProperty('display', 'none', 'important');
-                    }
-                    continue;
-                }
+                // shadow = elem.shadowRoot;
+                // // https://www.chromestatus.com/features/4668884095336448
+                // // "Multiple shadow roots is being deprecated."
+                // if ( shadow !== null ) {
+                //     if ( shadow.className !== sessionId ) {
+                //         if(dbugDetect); console.log("HIT[shadow]: ",elem);
+                //         elem.style.setProperty('display', 'none', 'important');
+                //     }
+                //     continue;
+                // }
                 // https://github.com/gorhill/uBlock/pull/555
                 // Not all nodes can be shadowed:
                 //   https://github.com/w3c/webcomponents/issues/102
                 // https://github.com/gorhill/uBlock/issues/762
                 // Remove display style that might get in the way of the shadow
                 // node doing its magic.
-                // try {
-                //     shadow = elem.createShadowRoot();
-                //     shadow.className = sessionId;
-                //     elem.style.removeProperty('display');
-                //     if(dbugDetect) console.log("CS.HIT: "+elem, selectors, shadow);
-                //
-                // } catch (ex) {
-
+                /*try {
+                    shadow = elem.createShadowRoot();
+                    shadow.className = sessionId;
+                    elem.style.removeProperty('display');
+                } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
-                    if(dbugDetect) console.log("CS-End.CATCH: ",elem);//, elem.classList, selectors);//, ex);
-                //}
-
-                adDetector.findAds([ elem ]);
-
+                }*/
+                if(dbugDetect) console.log("HIT[OK2]: ",elem);
+                elem.style.setProperty('display', 'none', 'important');
+                adDetector.findAds(elem);
             }
         };
     })();
@@ -744,6 +411,7 @@ var uBlockCollapser = (function () {
     };
     checkStyleTags();
 
+    var messaging = vAPI.messaging;
     var queriedSelectors = {};
     var injectedSelectors = {};
     var lowGenericSelectors = [];
@@ -754,7 +422,9 @@ var uBlockCollapser = (function () {
     var retrieveGenericSelectors = function() {
         if ( lowGenericSelectors.length !== 0 || highGenerics === null ) {
             //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', lowGenericSelectors.length);
-            messager.send({
+            messaging.send(
+                'contentscript',
+                {
                     what: 'retrieveGenericCosmeticSelectors',
                     pageURL: window.location.href,
                     selectors: lowGenericSelectors,
@@ -866,12 +536,15 @@ var uBlockCollapser = (function () {
             vAPI.styles.push(style);
         }
         hideElements(styleText);
-        messager.send({
-            what: 'cosmeticFiltersInjected',
-            type: 'cosmetic',
-            hostname: window.location.hostname,
-            selectors: selectors
-        });
+        messaging.send(
+            'contentscript',
+            {
+                what: 'cosmeticFiltersInjected',
+                type: 'cosmetic',
+                hostname: window.location.hostname,
+                selectors: selectors
+            }
+        );
         //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
@@ -1047,7 +720,7 @@ var uBlockCollapser = (function () {
             }
         }
         if ( selectors.length !== 0 ) {
-            if(dbugDetect)console.log("HIT-AddStyle: ", selectors);
+            if(dbugDetect) console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }
     };
@@ -1195,7 +868,7 @@ var uBlockCollapser = (function () {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
             retrieveGenericSelectors();
-            messager.send({ what: 'cosmeticFiltersActivated' });
+            messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
         }
     };
 
@@ -1247,6 +920,12 @@ var uBlockCollapser = (function () {
         domLayoutObserver.disconnect();
         if ( addedNodeListsTimer !== null ) {
             clearTimeout(addedNodeListsTimer);
+        }
+        if ( removedNodeListsTimer !== null ) {
+            clearTimeout(removedNodeListsTimer);
+        }
+        if ( processHighHighGenericsTimer !== null ) {
+            clearTimeout(processHighHighGenericsTimer);
         }
     });
 })();
@@ -1315,20 +994,25 @@ var uBlockCollapser = (function () {
     if ( window !== window.top ) {
         return;
     }
+
+    var messaging = vAPI.messaging;
+
     var onMouseClick = function(ev) {
         var elem = ev.target;
         while ( elem !== null && elem.localName !== 'a' ) {
             elem = elem.parentElement;
         }
-        messager.send({
-            what: 'mouseClick',
-            x: ev.clientX,
-            y: ev.clientY,
-            url: elem !== null ? elem.href : ''
-        });
+        messaging.send(
+            'contentscript',
+            {
+                what: 'mouseClick',
+                x: ev.clientX,
+                y: ev.clientY,
+                url: elem !== null ? elem.href : ''
+            });
     };
 
-    window.addEventListener('mousedown', onMouseClick, true);
+    document.addEventListener('mousedown', onMouseClick, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
     vAPI.shutdown.add(function() {
@@ -1337,38 +1021,6 @@ var uBlockCollapser = (function () {
 })();
 
 /******************************************************************************/
-
-// run our ADN checks
-//(function() {
-
-var detectAds = function() {
-
-    if (dbugDetect) console.log('Loading adn-content-script on '+window.location);
-
-    var injectedSelectors = [];
-    var reProperties = /\s*\{[^}]+\}\s*/;
-    var styles = vAPI.styles || [];
-    var i = styles.length;
-
-    while (i--) {
-      injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace
-        (reProperties, '').split(/\s*,\n\s*/));
-    }
-
-    if (injectedSelectors.length !== 0) {
-
-      var adNodes = document.querySelectorAll(injectedSelectors.join(','));
-
-      if (dbugDetect) console.log("Found " + adNodes.length + " matched selectors");
-
-      if (adNodes.length > 0) adDetector.findAds(adNodes);
-    }
-}
-
-//setTimeout(detectAds, 100); // Is this (and above function) needed?
-
-//})();
-
 /******************************************************************************/
 
 })();

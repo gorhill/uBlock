@@ -80,15 +80,15 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"ఈ సైట్లో వున్న పెద్దవైన దృశ్య\/శ్రవణ అంశాల నిరోధనా స్థితిని మార్చు",
+    "message":"ఈ సైట్లో వున్న భారి దృశ్య\/శ్రవణ అంశాల నిరోధనా స్థితిని మార్చు",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"ఈ వెబ్ సైట్ లో కాస్మెటిక్ వడపోత స్థితిని మార్చండి",
+    "message":"ఈ వెబ్ సైట్ లో కాస్మెటిక్ వడపోతల వాడుక స్థితిని మార్చు",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"ఈ సైట్ నుండి వచ్చే ఖతుల యొక్క వాడుక ని సక్రియ లేదా నిర్వీర్యపరచు",
+    "message":"ఈ సైట్ లో ఖతుల వాడుకని సక్రియ లేదా నిర్వీర్యపరచు",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"{{input:number}} కేబీల కన్నా పెద్దవైన అంశాలను నిరోధించు",
+    "message":"పరిమాణంలో {{input:number}} కేబీల కన్నా పెద్దవైన అంశాలను నిరోధించు",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
@@ -668,7 +668,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"తాత్కాలికంగా పెద్ద అంశాలను సైతం అనుమతించు",
+    "message":"భారి దృశ్య\/శ్రవణ అంశాలను తాత్కాలికంగా అనుమతించు",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

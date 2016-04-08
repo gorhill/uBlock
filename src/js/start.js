@@ -41,6 +41,7 @@ vAPI.app.onShutdown = function() {
     µb.staticFilteringReverseLookup.shutdown();
     µb.assetUpdater.shutdown();
     µb.staticNetFilteringEngine.reset();
+    µb.cosmeticFilteringEngine.reset();
     µb.sessionFirewall.reset();
     µb.permanentFirewall.reset();
     µb.permanentFirewall.reset();

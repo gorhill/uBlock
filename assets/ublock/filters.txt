@@ -163,7 +163,6 @@ jav4.me##script:contains(adblock.htm)
 kino-dom.org##script:contains(my_abadiv)
 layer13.net##script:contains(adBlockDetected)
 linternaute.com##script:contains(/^\s*var\s+Asl=/)
-opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 pornfun.com##script:contains(canRunAds)
 sueddeutsche.de##script:contains(BlockAdBlock)
 vg.no##script:contains(/^\s*?window\.__AB__/)
@@ -208,11 +207,13 @@ spiegel.de#@#.wrapad
 ||hilltopads.net^$popunder,popup
 # https://github.com/gorhill/uBlock/issues/1347
 ||traffichunt.com^$document,popunder,popup
+||trhnt.com^$document,popup
+||trhunt.com^$document,popup
 
-# https://forums.lanik.us/viewtopic.php?f=62&t=27003
-www.opensubtitles.org##div[itemscope] > fieldset
-www.opensubtitles.org##.content > a[class]:not([id])
-www.opensubtitles.org##fieldset.intro:not([style])
+# https://forums.lanik.us/viewtopic.php?f=62&t=27719
+opensubtitles.org##script:inject(opensubtitles.org)
+||carambo.la^$third-party
+opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 
 # https://skystreaming.net/canali/sky/guarda-sky-sport-1-in-streaming-live
 skystreaming.net##script:contains(abisuq)
@@ -230,10 +231,13 @@ skystreaming.net###fanback + style + div[id]
 
 # https://github.com/gorhill/uBlock/issues/1100
 # AdDefend
-1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,auto-motor-und-sport.de,autoextrem.de,boerse-online.de,buerstaedter-zeitung.de,computerbild.de,comunio.de,echo-online.de,fanfiktion.de,fem.com,finanzen.net,focus.de,foot01.com,gamestar.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,motorradonline.de,notebookcheck.*,oberhessische-zeitung.de,pcwelt.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,rp-online.de,runnersworld.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,spiegel.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,usinger-anzeiger.de,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,winboard.org,wn.de,wormser-zeitung.de##script:inject(uabinject-defuser.js)
+1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,autoexperience.de,auto-motor-und-sport.de,autoextrem.de,boerse.de,boerse-online.de,brigitte.de,buerstaedter-zeitung.de,caravaning.de,computerbild.de,comunio.de,eatsmarter.de,echo-online.de,elektrobike-online.com,e-mountainbike.com,fanfiktion.de,fem.com,finanzen.net,flugzeugforum.de,focus.de,foot01.com,gala.de,gamepro.de,gamestar.de,gamona.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,klettern.de,klettern-magazin.de,kreatives-wohnforum.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,mazda-forum.info,mercedes-forum.com,modernboard.de,motorradonline.de,mountainbike-magazin.de,notebookcheck.*,oberhessische-zeitung.de,outdoor-magazin.com,pcwelt.de,pkw-forum.de,promobil.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,roadbike.de,rp-online.de,runnersworld.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,skodacommunity.de,spiegel.de,sportal.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,unixboard.de,usinger-anzeiger.de,usp-forum.de,vermieter-forum.com,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,winboard.org,windows-7-forum.net,wn.de,womenshealth.de,wormser-zeitung.de,woxikon.de##script:inject(uabinject-defuser.js)
 
 # Yavli ads
-activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,aplus.com,bizpacreview.com,boredpanda.com,breathecast.com,bulletsfirst.net,cheatsheet.com,clashdaily.com,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,cowboybyte.com,crossmap.com,dailysurge.com,dccrimestories.com,dilbert.com,drhotze.com,eaglerising.com,explosm.net,flexonline.com,genfringe.com,girlsjustwannahaveguns.com,hellou.co.uk,instigatornews.com,joeforamerica.com,latinpost.com,libertyunyielding.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,reverbpress.com,reviveusa.com,rightwingnews.com,segmentnext.com,shark-tank.com,sportsmole.co.uk,theblacksphere.net,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,traileraddict.com,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com,viralthread.com##script:inject(yavli-defuser.js)
+activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,aplus.com,bizpacreview.com,boredpanda.com,breathecast.com,bulletsfirst.net,cheatsheet.com,clashdaily.com,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,cowboybyte.com,crossmap.com,dailysurge.com,dccrimestories.com,digitalmusicnews.com,dilbert.com,drhotze.com,eaglerising.com,explosm.net,flexonline.com,freedomdaily.com,genfringe.com,girlsjustwannahaveguns.com,hellou.co.uk,instigatornews.com,joeforamerica.com,latinone.com,latinpost.com,libertyunyielding.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,reverbpress.com,reviveusa.com,rightwingnews.com,segmentnext.com,shark-tank.com,sportsmole.co.uk,theblacksphere.net,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,traileraddict.com,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com,viralthread.com,winningdemocrats.com,woundedamericanwarrior.com##script:inject(yavli-defuser.js)
+# To counter EayList's bad exception filter:
+# https://forums.lanik.us/viewtopic.php?f=62&t=25601&p=88119
+||thankyouforadvertising.com^$important
 
 # https://github.com/gorhill/uBlock/issues/1094
 extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.com,youporngay.com##script:inject(pornhub-popup-defuser.js)
@@ -255,6 +259,7 @@ extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.
 ||dailymotion.com/ac/video/$image,first-party,redirect=2x2-transparent.png
 # https://github.com/gorhill/uBlock/issues/1136#issuecomment-170371863
 dailymotion.com##script:inject(1136.js)
+||liverail.com^$important,domain=dailymotion.com
 
 # https://news.ycombinator.com/item?id=10814913
 forbes.com##script:inject(forbes-defuser.js)
@@ -264,7 +269,7 @@ animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
 
 # https://github.com/gorhill/uBlock/issues/949
 ||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=chip.de|cdnapi.kaltura.com|focus.de|spiegel.de|stern.de|t-online.de,redirect=hd-main.js
-||hgc.svonm.com/hd-main.js$script,domain=cdnapi.kaltura.com,redirect=hd-main.js
+||svonm.com/hd-main.js$script,redirect=hd-main.js,domain=chip.de|cdnapi.kaltura.com
 # https://github.com/gorhill/uBlock/issues/1216
 chip.de##script:inject(1216.js)
 stern.de##script:inject(bcplayer-defuser.js)
@@ -296,13 +301,10 @@ kissanime.to##script:inject(kissanime-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=27908
 # https://github.com/gorhill/uBlock/issues/1354
-animes-mangas-ddl.com,crazymeds.us,dasolo.org,ip-address.org,uploadshub.com##script:inject(bab-defuser.js)
+animes-mangas-ddl.com,best-movies.info,crazymeds.us,dasolo.org,ip-address.org,uploadshub.com,yourvideohost.com##script:inject(bab-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
-filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
-
-# https://github.com/gorhill/uBlock/issues/1397
-||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js,domain=focus.de
+filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,narutoshippudenvf.com,thebadbuzz.com,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=43914#p147866
 wired.com##script:inject(wired-defuser.js)
@@ -313,3 +315,43 @@ armorgames.com,mmohuts.com,newgrounds.com,onrpg.com,silvergames.com##a[href*="mm
 # https://forums.lanik.us/viewtopic.php?f=64&t=28700
 ||exoclick.com^$important,domain=debridfast.com
 ||www.debridfast.com/bilokiyofdsdf.js$script
+
+# https://forums.lanik.us/viewtopic.php?f=62&t=28856
+||godlessnightsfilm.co.uk/scripts/ad-gallery/$important,third-party
+
+# https://github.com/gorhill/uBlock/issues/1340#issuecomment-191082824
+||gamingaffiliation.com^$third-party
+
+tweaktown.com###background_skin
+
+# https://github.com/gorhill/uBlock/issues/1449
+# Computers seizing thanks to this moronic script
+||twnmm.com/js/*/adobe_audience_manager$script
+
+# https://twitter.com/DThibaut67/status/707624770653843456
+||connectormwi.laterpay.net/*/app-de-de.js$script,domain=sport1.de
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
+kisscartoon.me##script:inject(kisscartoon-defuser.js)
+
+# https://twitter.com/hotelzululima/status/711729434458324992
+||computerworld.com.au/compressor-staticfiles/addsmin/idg_gpt_pipeline_generated.js$script
+
+# https://twitter.com/FabienTipon/status/711877626638503936
+@@||f1g.fr/*/adsense.js$script
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25216#p149739
+lequipe.fr##script:inject(sas-defuser.js)
+
+||lemde.fr/*/xitistatus.js$script,redirect=fuckadblock.js-3.2.0,domain=lemonde.fr
+||d1447tq2m68ekg.cloudfront.net/advertisement.js$script,redirect=noopjs,domain=leparisien.fr
+@@||static.lexpress.fr/*/ads.$script,stylesheet
+lemonde.fr##script:inject(lemonde-defuser.js)
+# https://forums.lanik.us/viewtopic.php?f=91&t=29267
+www.rtl.fr###modal-warning
+rtl.fr##script:inject(rtlfr-defuser.js)
+# https://github.com/gorhill/uBlock/issues/1505
+6play.fr,clubic.com,passeportsante.net,telerama.fr##script:inject(overlay-buster.js)
+
+# http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-77
+imore.com##script:inject(imore-sanitizer.js)

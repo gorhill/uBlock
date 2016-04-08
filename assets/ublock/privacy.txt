@@ -51,10 +51,26 @@
 
 # https://github.com/gorhill/uBlock/issues/1411
 # https://www.reddit.com/r/firefox/comments/3pwcey/firefox_extension_download_manager_s3_asks_for/
+# https://www.reddit.com/r/chrome/comments/473ves/help_how_to_remove_qipru_redirect_when_searching/
 ||lnkr.us^$document
 ||metrext.com^$document
 ||icontent.us^$document
+||qip.ng^$document
+||qip.ru^$document
+# https://github.com/gorhill/uBlock/issues/1411#issuecomment-201031771
+||ratexchange.net^
+||trendtext.eu^
+||adnotbad.com^
+||adserv.info^
+||serverads.net^
+||jsfuel.com^
+||spaceshipad.com^
+||takethatad.com^
+||tradeadsexchange.com^
 
 # https://www.reddit.com/r/ublock/comments/47o2ih/ublock_disabling_all_javascript_links/d0fhock
 # Time to bring this filter out of experimental status
 ||googletagservices.com/tag/js/gpt.js$script,redirect=googletagservices.com/gpt.js
+
+# https://github.com/gorhill/uBlock/issues/1265
+||scorecardresearch.com/beacon.js$script,redirect=scorecardresearch.com/beacon.js

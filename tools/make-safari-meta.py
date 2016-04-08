@@ -66,8 +66,9 @@ with open(info_plist, 'r+t', encoding='utf-8', newline='\n') as f:
 
     f.write(info_plist.format(**manifest))
 
-# update Update.plist
+# update Update.plist (this bit may be broken: see Update.plist in /bin/build)
 update_plist = pj(proj_dir, 'platform', 'safari', 'Update.plist')
+#update_plist_build = pj(build_dir, os.path.basename(update_plist))
 update_plist_build = pj(build_dir, '..', os.path.basename(update_plist))
 
 with open(update_plist_build, 'wt', encoding='utf-8', newline='\n') as f:

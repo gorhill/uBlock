@@ -40,7 +40,7 @@ if ( typeof Map === undefined || Map.polyfill || typeof WeakMap === undefined ) 
 /******************************************************************************/
 
 var logger = self.logger;
-var messager = logger.messager;
+var messaging = vAPI.messaging;
 
 var inspectedTabId = '';
 var inspectedURL = '';
@@ -349,9 +349,9 @@ var startDialog = (function() {
         ev.stopPropagation();
 
         if ( target.id === 'createCosmeticFilters' ) {
-            messager.send({ what: 'createUserFilter', filters: textarea.value });
+            messaging.send('loggerUI', { what: 'createUserFilter', filters: textarea.value });
             // Force a reload for the new cosmetic filter(s) to take effect
-            messager.send({ what: 'reloadTab', tabId: inspectedTabId });
+            messaging.send('loggerUI', { what: 'reloadTab', tabId: inspectedTabId });
             return stop();
         }
     };
@@ -386,26 +386,28 @@ var startDialog = (function() {
     };
 
     var showCommitted = function() {
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'showCommitted',
                 hide: hideSelectors.join(',\n'),
                 unhide: unhideSelectors.join(',\n')
             },
             inspectedTabId,
-            'dom-inspector.js'
+            'domInspector'
         );
     };
 
     var showInteractive = function() {
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'showInteractive',
                 hide: hideSelectors.join(',\n'),
                 unhide: unhideSelectors.join(',\n')
             },
             inspectedTabId,
-            'dom-inspector.js'
+            'domInspector'
         );
     };
 
@@ -422,10 +424,11 @@ var startDialog = (function() {
                 });
             }
         }
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             { what: 'cookFilters', entries: entries },
             inspectedTabId,
-            'dom-inspector.js',
+            'domInspector',
             onCooked
         );
     };
@@ -476,7 +479,8 @@ var onClick = function(ev) {
 
     // Toggle cosmetic filter
     if ( target.classList.contains('filter') ) {
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'toggleNodes',
                 original: false,
@@ -485,7 +489,7 @@ var onClick = function(ev) {
                 nid: ''
             },
             inspectedTabId,
-            'dom-inspector.js'
+            'domInspector'
         );
         uDom('[data-filter-id="' + target.getAttribute('data-filter-id') + '"]', inspector).toggleClass(
             'off',
@@ -494,7 +498,8 @@ var onClick = function(ev) {
     }
     // Toggle node
     else {
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'toggleNodes',
                 original: true,
@@ -503,7 +508,7 @@ var onClick = function(ev) {
                 nid: nidFromNode(target)
             },
             inspectedTabId,
-            'dom-inspector.js'
+            'domInspector'
         );
     }
 
@@ -520,7 +525,8 @@ var onMouseOver = (function() {
 
     var timerHandler = function() {
         mouseoverTimer = null;
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'highlightOne',
                 selector: selectorFromNode(mouseoverTarget),
@@ -528,7 +534,7 @@ var onMouseOver = (function() {
                 scrollTo: true
             },
             inspectedTabId,
-            'dom-inspector.js'
+            'domInspector'
         );
     };
 
@@ -603,13 +609,14 @@ var fetchDOMAsync = (function() {
 
     var onTimeout = function() {
         pollTimer = null;
-        messager.sendTo(
+        messaging.sendTo(
+            'loggerUI',
             {
                 what: 'domLayout',
                 fingerprint: fingerprint
             },
             inspectedTabId,
-            'dom-inspector.js',
+            'domInspector',
             onFetched
         );
     };
@@ -633,11 +640,14 @@ var injectInspector = function() {
     }
     inspectedTabId = tabId;
     fingerprint = null;
-    messager.send({
-        what: 'scriptlet',
-        tabId: tabId,
-        scriptlet: 'dom-inspector'
-    });
+    messaging.send(
+        'loggerUI',
+        {
+            what: 'scriptlet',
+            tabId: tabId,
+            scriptlet: 'dom-inspector'
+        }
+    );
     fetchDOMAsync(250);
 };
 
@@ -660,7 +670,12 @@ var injectInspectorAsync = function(delay) {
 
 var shutdownInspector = function() {
     if ( inspectedTabId !== '' ) {
-        messager.sendTo({ what: 'shutdown' }, inspectedTabId, 'dom-inspector.js');
+        messaging.sendTo(
+            'loggerUI',
+            { what: 'shutdown' },
+            inspectedTabId,
+            'domInspector'
+        );
     }
     logger.removeAllChildren(domTree);
     if ( pollTimer !== null ) {
@@ -682,13 +697,14 @@ var onTabIdChanged = function() {
 /******************************************************************************/
 
 var toggleHighlightMode = function() {
-    messager.sendTo(
+    messaging.sendTo(
+        'loggerUI',
         {
             what: 'highlightMode',
             invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
         },
         inspectedTabId,
-        'dom-inspector.js'
+        'domInspector'
     );
 };
 
@@ -696,10 +712,11 @@ var toggleHighlightMode = function() {
 
 var revert = function() {
     uDom('#domTree .off').removeClass('off');
-    messager.sendTo(
+    messaging.sendTo(
+        'loggerUI',
         { what: 'resetToggledNodes' },
         inspectedTabId,
-        'dom-inspector.js'
+        'domInspector'
     );
     inspector.querySelector('.permatoolbar .revert').classList.add('disabled');
     inspector.querySelector('.permatoolbar .commit').classList.add('disabled');

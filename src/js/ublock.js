@@ -235,7 +235,10 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.changeUserSettings = function(name, value) {
+
     var us = this.userSettings;
+
+    //console.log('changeUserSettings', name, value, us);
 
     // Return all settings if none specified.
     if ( name === undefined ) {

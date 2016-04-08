@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom, uBlockDashboard */
+/* global uDom, uBlockDashboard */
 
 /******************************************************************************/
 
@@ -29,10 +29,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('whitelist.js');
-
-/******************************************************************************/
-
+var messaging = vAPI.messaging;
 var cachedWhitelist = '';
 
 // Could make it more fancy if needed. But speed... It's a compromise.
@@ -58,7 +55,7 @@ var renderWhitelist = function() {
         uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
         whitelistChanged();
     };
-    messager.send({ what: 'getWhitelist' }, onRead);
+    messaging.send('dashboard', { what: 'getWhitelist' }, onRead);
 };
 
 /******************************************************************************/
@@ -117,7 +114,7 @@ var applyChanges = function() {
         what: 'setWhitelist',
         whitelist: cachedWhitelist
     };
-    messager.send(request, renderWhitelist);
+    messaging.send('dashboard', request, renderWhitelist);
 };
 
 var revertChanges = function() {

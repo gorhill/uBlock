@@ -1,4 +1,4 @@
-### List of Changed Items ###
+### List of Changed Items ### out-of-date
 
 # pull new changes from original ublock
 # git checkout master
@@ -22,13 +22,8 @@
   src/background.html (added adn files)
   src/dashboard.html (added adn tabs, changed icon)
   src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
-  src/js/settings.js (replace 'uBlock₀' string with 'AdNauseam')
+  src/js/options.js (replace 'uBlock₀' string with 'AdNauseam')
   src/background.html (added adn files)
-
-
-* changed files inside platform/:
-
-  platform/firefox/vapi-background.js
 
 
 * changed files inside _locales/: (locale)
@@ -46,32 +41,11 @@
   adn-settings.html
   adn-about.html
 
-  src/js/adn/settings.js
+  src/js/adn/options.js
   src/js/adn/menu.js
   src/js/adn/core.js
   src/js/adn/vault.js
   src/js/adn/log.js
-
-  src/img/adn/..
-    adn_active.png
-    adn_alert.png
-    adn_disabled.png
-    adn_firstrun.png
-    gray_grid.png
-    icon-32.png
-    icon_128.png (needs to be remade)
-    icon_16.png
-
-  src/css/adn/menu.css
-  src/css/adn/vault.css
-  src/css/adn/log.css
-  src/css/adn/font/..
-    bebasneue_regular-webfont.eot
-    bebasneue_regular-webfont.svg
-    bebasneue_regular-webfont.ttf
-    bebasneue_regular-webfont.woff
-    bebasneue_regular-webfont.woff2
-    stylesheet.css
 
 
 * changed files inside src/_locale (localization)
@@ -79,50 +53,6 @@
   src/_locales/en/messages.json     (added ADN locale)
   src/_locales/zh_CN/messages.json  (added ADN locale)
   src/_locales/zh_TW/messages.json  (added ADN locale)
-
-
-* added files inside platform/chromium/img/browsericons/adn
-
-  icon19.png
-  icon19-off.png
-  icon38.png
-  icon38-off.png
-
-
-* added files inside platform/firefox/img/browsericons/adn
-
-  icon16.svg
-  icon16-off.svg
-  icon24.svg
-  icon24-off.svg
-
-
-* added files inside tools/
-
-  adnauseam-changes.txt
-  make-chromium-adn.sh
-  make-firefox-adn.sh
-  make-firefox-meta-adn.py
-  make-opera-adn.sh
-  make-safari-adn.sh
-  make-safari-meta-adn.py
-
-
-* added files inside tools/adn/chromium
-
-  manifest.json
-
-
-* added files inside tools/adn/opera
-
-  manifest.json
-
-
-* added files inside tools/adn/safari
-
-  Info.plist
-  Settings.plist
-  Update.plist
 
 
 * changed files inside platform/chromium:

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -30,7 +30,7 @@
 /******************************************************************************/
 
 var logger = self.logger = {};
-var messager = logger.messager = vAPI.messaging.channel('logger-ui.js');
+var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
@@ -92,7 +92,7 @@ var uglyRequestTypes = {
 };
 
 var staticFilterTypes = {
-    'doc': 'other',
+    'doc': 'document',
     'css': 'stylesheet',
     'frame': 'subdocument',
     'xhr': 'xmlhttprequest'
@@ -171,7 +171,9 @@ var filterDecompiler = (function() {
          5: 'xmlhttprequest',
          6: 'subdocument',
          7: 'font',
-         8: 'other',
+         8: 'media',
+         9: 'websocket',
+        10: 'other',
         11: 'popunder',
         12: 'document',
         13: 'elemhide',
@@ -271,10 +273,6 @@ var filterDecompiler = (function() {
         var typeVal = bits >>> 4 & 0x0F;
         if ( typeVal ) {
             opts.push(typeValToTypeName[typeVal]);
-            // Because of the way `elemhide` is implemented
-            if ( typeVal === 13 ) {
-                filter = '@@' + filter;
-            }
         }
         if ( opts.length !== 0 ) {
             filter += '$' + opts.join(',');
@@ -726,7 +724,7 @@ var onLogBufferRead = function(response) {
 // require a bit more code to ensure no multi time out events.
 
 var readLogBuffer = function() {
-    messager.send({ what: 'readAll' }, onLogBufferRead);
+    messaging.send('loggerUI', { what: 'readAll' }, onLogBufferRead);
 };
 
 /******************************************************************************/
@@ -787,7 +785,7 @@ var reloadTab = function() {
     if ( tabId === 'bts' || tabId === '' ) {
         return;
     }
-    messager.send({ what: 'reloadTab', tabId: tabId });
+    messaging.send('loggerUI', { what: 'reloadTab', tabId: tabId });
 };
 
 /******************************************************************************/
@@ -808,11 +806,14 @@ var onMaxEntriesChanged = function() {
 
     input.value = maxEntries.toString(10);
 
-    messager.send({
-        what: 'userSettings',
-        name: 'requestLogMaxEntries',
-        value: maxEntries
-    });
+    messaging.send(
+        'loggerUI',
+        {
+            what: 'userSettings',
+            name: 'requestLogMaxEntries',
+            value: maxEntries
+        }
+    );
 
     truncateLog(maxEntries);
 };
@@ -875,12 +876,16 @@ var netFilteringManager = (function() {
     };
 
     var colorize = function() {
-        messager.send({
-            what: 'getURLFilteringData',
-            context: selectValue('select.dynamic.origin'),
-            urls: targetURLs,
-            type: uglyTypeFromSelector('dynamic')
-        }, onColorsReady);
+        messaging.send(
+            'loggerUI',
+            {
+                what: 'getURLFilteringData',
+                context: selectValue('select.dynamic.origin'),
+                urls: targetURLs,
+                type: uglyTypeFromSelector('dynamic')
+            },
+            onColorsReady
+        );
     };
 
     var parseStaticInputs = function() {
@@ -961,10 +966,13 @@ var netFilteringManager = (function() {
             createdStaticFilters[value] = true;
             if ( value !== '' ) {
                 var d = new Date();
-                messager.send({
-                    what: 'createUserFilter',
-                    filters: '! ' + d.toLocaleString() + ' ' + targetPageDomain + '\n' + value
-                });
+                messaging.send(
+                    'loggerUI',
+                    {
+                        what: 'createUserFilter',
+                        filters: '! ' + d.toLocaleString() + ' ' + targetPageDomain + '\n' + value
+                    }
+                );
             }
             updateWidgets();
             return;
@@ -972,12 +980,16 @@ var netFilteringManager = (function() {
 
         // Save url filtering rule(s)
         if ( target.id === 'saveRules' ) {
-            messager.send({
-                what: 'saveURLFilteringRules',
-                context: selectValue('select.dynamic.origin'),
-                urls: targetURLs,
-                type: uglyTypeFromSelector('dynamic')
-            }, colorize);
+                messaging.send(
+                'loggerUI',
+                {
+                    what: 'saveURLFilteringRules',
+                    context: selectValue('select.dynamic.origin'),
+                    urls: targetURLs,
+                    type: uglyTypeFromSelector('dynamic')
+                },
+                colorize
+            );
             return;
         }
 
@@ -985,73 +997,95 @@ var netFilteringManager = (function() {
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
-            messager.send({
-                what: 'setURLFilteringRule',
-                context: selectValue('select.dynamic.origin'),
-                url: target.getAttribute('data-url'),
-                type: uglyTypeFromSelector('dynamic'),
-                action: 0,
-                persist: persist
-            }, colorize);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'setURLFilteringRule',
+                    context: selectValue('select.dynamic.origin'),
+                    url: target.getAttribute('data-url'),
+                    type: uglyTypeFromSelector('dynamic'),
+                    action: 0,
+                    persist: persist
+                },
+                colorize
+            );
             return;
         }
 
         // add "allow" url filtering rule
         if ( tcl.contains('allow') ) {
-            messager.send({
-                what: 'setURLFilteringRule',
-                context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector('dynamic'),
-                action: 2,
-                persist: persist
-            }, colorize);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'setURLFilteringRule',
+                    context: selectValue('select.dynamic.origin'),
+                    url: target.parentNode.getAttribute('data-url'),
+                    type: uglyTypeFromSelector('dynamic'),
+                    action: 2,
+                    persist: persist
+                },
+                colorize
+            );
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('noop') ) {
-            messager.send({
-                what: 'setURLFilteringRule',
-                context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector('dynamic'),
-                action: 3,
-                persist: persist
-            }, colorize);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'setURLFilteringRule',
+                    context: selectValue('select.dynamic.origin'),
+                    url: target.parentNode.getAttribute('data-url'),
+                    type: uglyTypeFromSelector('dynamic'),
+                    action: 3,
+                    persist: persist
+                },
+                colorize
+            );
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('block') ) {
-            messager.send({
-                what: 'setURLFilteringRule',
-                context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector('dynamic'),
-                action: 1,
-                persist: persist
-            }, colorize);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'setURLFilteringRule',
+                    context: selectValue('select.dynamic.origin'),
+                    url: target.parentNode.getAttribute('data-url'),
+                    type: uglyTypeFromSelector('dynamic'),
+                    action: 1,
+                    persist: persist
+                },
+                colorize
+            );
             return;
         }
 
         // Force a reload of the tab
         if ( tcl.contains('reload') ) {
-            messager.send({
-                what: 'reloadTab',
-                tabId: targetTabId
-            });
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'reloadTab',
+                    tabId: targetTabId
+                }
+            );
             return;
         }
 
         // Hightlight corresponding element in target web page
         if ( tcl.contains('picker') ) {
-            messager.send({
-                what: 'launchElementPicker',
-                tabId: targetTabId,
-                targetURL: 'img\t' + targetURLs[0],
-                select: true
-            });
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'launchElementPicker',
+                    tabId: targetTabId,
+                    targetURL: 'img\t' + targetURLs[0],
+                    select: true
+                }
+            );
             return;
         }
     };
@@ -1097,6 +1131,17 @@ var netFilteringManager = (function() {
             return;
         }
         container.appendChild(preview);
+    };
+
+    // https://github.com/gorhill/uBlock/issues/1511
+    var shortenLongString = function(url, max) {
+        var urlLen = url.length;
+        if ( urlLen <= max ) {
+            return url;
+        }
+        var n = urlLen - max - 1;
+        var i = (urlLen - n) / 2 | 0;
+        return url.slice(0, i) + '…' + url.slice(i + n);
     };
 
     // Build list of candidate URLs
@@ -1151,7 +1196,7 @@ var netFilteringManager = (function() {
             url = targetURLs[i];
             menuEntry = menuEntryTemplate.cloneNode(true);
             menuEntry.cells[0].children[0].setAttribute('data-url', url);
-            menuEntry.cells[1].textContent = url;
+            menuEntry.cells[1].textContent = shortenLongString(url, 128);
             tbody.appendChild(menuEntry);
         }
 
@@ -1234,7 +1279,7 @@ var netFilteringManager = (function() {
                     value = targetURLs[i].replace(/^[a-z]+:\/\//, '');
                     option = document.createElement('option');
                     option.setAttribute('value', value);
-                    option.textContent = value;
+                    option.textContent = shortenLongString(value, 128);
                     select.appendChild(option);
                 }
                 nodes.push(select);
@@ -1304,10 +1349,14 @@ var netFilteringManager = (function() {
         targetFrameHostname = targetRow.getAttribute('data-hn-frame') || '';
 
         // We need the root domain names for best user experience.
-        messager.send({
-            what: 'getDomainNames',
-            targets: [targetURLs[0], targetPageHostname, targetFrameHostname]
-        }, fillDialog);
+        messaging.send(
+            'loggerUI',
+            {
+                what: 'getDomainNames',
+                targets: [targetURLs[0], targetPageHostname, targetFrameHostname]
+            },
+            fillDialog
+        );
     };
 
     var toggleOff = function() {
@@ -1423,17 +1472,25 @@ var reverseLookupManager = (function() {
         }
 
         if ( row.classList.contains('cat_net') ) {
-            messager.send({
-                what: 'listsFromNetFilter',
-                compiledFilter: row.getAttribute('data-filter') || '',
-                rawFilter: rawFilter
-            }, reverseLookupDone);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'listsFromNetFilter',
+                    compiledFilter: row.getAttribute('data-filter') || '',
+                    rawFilter: rawFilter
+                },
+                reverseLookupDone
+            );
         } else if ( row.classList.contains('cat_cosmetic') ) {
-            messager.send({
-                what: 'listsFromCosmeticFilter',
-                hostname: row.getAttribute('data-hn-frame') || '',
-                rawFilter: rawFilter,
-            }, reverseLookupDone);
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'listsFromCosmeticFilter',
+                    hostname: row.getAttribute('data-hn-frame') || '',
+                    rawFilter: rawFilter,
+                },
+                reverseLookupDone
+            );
         }
     };
 

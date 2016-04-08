@@ -49,12 +49,13 @@ var defaultExternalLists = [
 return {
     firstInstall: false,
 
-    adnSettings: {
+    adnSettings: { // adn
       noBlockingNonTrackers: true,
       admap: {}
     },
 
     userSettings: {
+        parseTextAds: true, // adn
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
@@ -98,8 +99,8 @@ return {
 
     // read-only
     systemSettings: {
-        compiledMagic: 'xtsldiywhvgc',
-        selfieMagic: 'xtsldiywhvgc'
+        compiledMagic: 'nytangedtvcz',
+        selfieMagic: 'emzolxctioww'
     },
 
     restoreBackupSettings: {
@@ -120,6 +121,11 @@ return {
     permanentLists: {
         // User
         'assets/user/filters.txt': {
+            group: 'default'
+        },
+        // AdNauseam
+        'assets/ublock/adnauseam.txt': {
+            title: 'AdNauseam filters',
             group: 'default'
         },
         // uBlock

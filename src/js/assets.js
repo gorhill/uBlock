@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, µBlock, YaMD5 */
+/* global YaMD5 */
 
 /*******************************************************************************
 
@@ -55,6 +55,7 @@ var oneDay = 24 * oneHour;
 /******************************************************************************/
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
+var assetsRepositoryRoot = 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/';
 var nullFunc = function() {};
 var reIsExternalPath = /^(file|ftps?|https?|resource):\/\//;
 var reIsUserPath = /^assets\/user\//;
@@ -288,6 +289,39 @@ var cachedAssetsManager = (function() {
 
     return exports;
 })();
+
+/******************************************************************************/
+
+var toRepoURL = function(path) {
+    if ( path.startsWith('assets/ublock/filter-lists.json') ) {
+        return projectRepositoryRoot + path;
+    }
+
+    if ( path.startsWith('assets/checksums.txt') ) {
+        return path.replace(
+            /^assets\/checksums.txt/,
+            assetsRepositoryRoot + 'checksums/ublock0.txt'
+        );
+    }
+
+    if ( path.startsWith('assets/thirdparties/') ) {
+        return path.replace(
+            /^assets\/thirdparties\//,
+            assetsRepositoryRoot + 'thirdparties/'
+        );
+    }
+
+    if ( path.startsWith('assets/ublock/') ) {
+        return path.replace(
+            /^assets\/ublock\//,
+            assetsRepositoryRoot + 'filters/'
+        );
+    }
+
+    // At this point, `path` is assumed to point to a resource specific to
+    // this project.
+    return projectRepositoryRoot + path;
+};
 
 /******************************************************************************/
 
@@ -622,7 +656,7 @@ var readRepoFile = function(path, callback) {
         callback(details);
     };
 
-    var repositoryURL = projectRepositoryRoot + path;
+    var repositoryURL = toRepoURL(path);
 
     var onRepoFileLoaded = function() {
         //console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
@@ -639,9 +673,9 @@ var readRepoFile = function(path, callback) {
         reportBack('', 'Error');
     };
 
-    // 'ublock=...' is to skip browser cache
+    // '_=...' is to skip browser cache
     getTextFileFromURL(
-        repositoryURL + '?ublock=' + Date.now(),
+        repositoryURL + '?_=' + Date.now(),
         onRepoFileLoaded,
         onRepoFileError
     );
@@ -698,8 +732,8 @@ var readRepoCopyAsset = function(path, callback) {
         getTextFileFromURL(vAPI.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
-    var repositoryURL = projectRepositoryRoot + path;
-    var repositoryURLSkipCache = repositoryURL + '?ublock=' + Date.now();
+    var repositoryURL = toRepoURL(path);
+    var repositoryURLSkipCache = repositoryURL + '?_=' + Date.now();
 
     var onRepoFileLoaded = function() {
         if ( stringIsNotEmpty(this.responseText) === false ) {
@@ -846,7 +880,7 @@ var readRepoOnlyAsset = function(path, callback) {
         getTextFileFromURL(vAPI.getURL(path), onInstallFileLoaded, onInstallFileError);
     };
 
-    var repositoryURL = projectRepositoryRoot + path + '?ublock=' + Date.now();
+    var repositoryURL = toRepoURL(path + '?_=' + Date.now());
 
     var onRepoFileLoaded = function() {
         if ( typeof this.responseText !== 'string' ) {

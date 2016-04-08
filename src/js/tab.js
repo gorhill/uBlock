@@ -647,7 +647,10 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( pos === -1 ) {
             return '';
         }
-        if ( beg >= pos + openerHostname.length || end < pos ) {
+        // https://github.com/gorhill/uBlock/issues/1471
+        // We test whether the opener hostname as at least one character
+        // within matched portion of URL.
+        if ( beg >= pos + openerHostname.length || end <= pos ) {
             return '';
         }
         return result;
@@ -669,6 +672,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         // https://github.com/gorhill/uBlock/issues/341
         // Allow popups if uBlock is turned off in opener's context.
         if ( µb.getNetFilteringSwitch(openerURL) === false ) {
+            return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/1538
+        if ( µb.getNetFilteringSwitch(µb.normalizePageURL(openerTabId, openerURL)) === false ) {
             return;
         }
 
@@ -802,6 +810,10 @@ vAPI.tabs.registerListeners();
 
 µb.pageStoreFromTabId = function(tabId) {
     return this.pageStores[tabId] || null;
+};
+
+µb.mustPageStoreFromTabId = function(tabId) {
+    return this.pageStores[tabId] || this.pageStores[vAPI.noTabId];
 };
 
 /******************************************************************************/
