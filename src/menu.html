@@ -41,7 +41,11 @@
           <option value="domain">on this domain</option>
           <option value="everywhere">everywhere</option>
         </select>
-        <input type="checkbox" name="whitelist">Add this page to the whitelist<P>
+        <div class="switch add-to-whitelist checked">
+          <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="cmn-toggle-5">
+          <label for="cmn-toggle-5"></label>
+          <p>Add this page to the whitelist</p>
+        </div>
 
         <button id="resume-paused" class="resume" data-i18n="adnResumePaused">Resume AdNauseam</button>
       </div>

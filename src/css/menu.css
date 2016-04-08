@@ -777,6 +777,38 @@ input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 30px;
   background-color: #0076FF;
 }
+input.cmn-toggle-round-flat.cmn-toggle-small + label {
+  height: 16px;
+  width: 30px;
+  padding: 1px;
+  float: left;
+  margin-right: 5px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::before{
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::after {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
+  margin-left: 14px;
+}
+.add-to-whitelist{
+  margin: 6px;
+}
+.add-to-whitelist p {
+  font-size: 14px;
+}
+.add-to-whitelist.checked p {
+  color: #0076FF;
+}
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
 [data-tip] {
