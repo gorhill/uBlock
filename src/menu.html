@@ -12,12 +12,12 @@
 <body class="active">
 
   <div class="container">
-    <div id="main" class="page">
+    <div id="main" class="page paused">
 
       <header>
         <h1>
           <a href="http://adnauseam.io" target="new">
-            <div id="toggle-button" background="">Toggle AdNauseam On/Off</div>
+            <span id="toggle-button" background="" title="Toggle AdNauseam On/Off">ADNAUSEAM</span>
           </a>
         </h1>
         <div id="stats">
@@ -32,6 +32,19 @@
           </div>
         </div>
       </header>
+
+      <div id="paused-menu">
+
+        <h2>Adnauseam is currently Paused from blocking and clicking ads</h2>
+        <select>
+          <option value="page" selected>on this page</option>
+          <option value="domain">on this domain</option>
+          <option value="everywhere">everywhere</option>
+        </select>
+        <input type="checkbox" name="whitelist">Add this page to the whitelist<P>
+
+        <button id="resume-paused" class="resume" data-i18n="adnResumePaused">Resume AdNauseam</button>
+      </div>
 
       <div id="ad-list" class="">
 
