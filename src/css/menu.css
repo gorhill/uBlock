@@ -203,11 +203,7 @@ header{
   display: block;
   height: 100px;
   width: 100px;
-<<<<<<< HEAD:src/css/adn/menu.css
-  background: url(../../img/adn/adn_active@2x.png) center center no-repeat;
-=======
   background: url(../img/active@2x.png) center center no-repeat;
->>>>>>> master:src/css/menu.css
   background-size: 100px 100px;
   float: left;
   font-size: 18.25px;
@@ -571,11 +567,7 @@ button.about {
   background-color: #5c5c5c !important;
 }
 .paused header #toggle-button{
-<<<<<<< HEAD:src/css/adn/menu.css
-  background-image: url(../../img/adn/adn_paused@2x.png);
-=======
   background-image: url(../img/paused@2x.png);
->>>>>>> master:src/css/menu.css
   color: #5c5c5c;
 }
 .paused footer *{
@@ -600,11 +592,7 @@ button.about {
   bottom: 60px;
   left: 0;
   right: 0;
-<<<<<<< HEAD:src/css/adn/menu.css
-  background: #000 url(../../img/adn/gray_grid.png);
-=======
   background: #000 url(../img/gray_grid.png);
->>>>>>> master:src/css/menu.css
   opacity: 90%;
   padding: 45px 85px 0;
 }
