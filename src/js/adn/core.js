@@ -28,8 +28,8 @@
 
   var xhr,
     idgen,
+    admap,
     inspected,
-    admap = {},
     lastActivity = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
@@ -61,6 +61,7 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
+    //console.log('clearAdsOnInit=',!clearAdsOnInit);
     admap = (!clearAdsOnInit && settings && settings.admap) || {};
     checkAdStorage(ads = adlist());
 
@@ -202,6 +203,7 @@
       return unescapeHTML(title[1].trim());
 
     } else {
+
       console.warn('Unable to parse title from: ' + html);
     }
 
@@ -254,7 +256,7 @@
     } else {
 
       // or some other error?
-      console.error('onVisitError()', e, this);
+      console.warn('onVisitError()', e, this);
     }
 
     if (!this.delegate) {
@@ -302,10 +304,9 @@
     var title = parseTitle(html);
     if (title) {
 
-      for (var i = 0; i < errorStrings.length; i++) {
-
+      // check the title isn't something like 'file not found'
+      for (var i = 0; i < errorStrings.length; i++) { // TODO: move to parseTitle?
         if (title.toLowerCase().indexOf(errorStrings[i]) > -1) {
-
           return onVisitError.call(this, {
             title: title,
             status: status,
@@ -313,6 +314,9 @@
           });
         }
       }
+    }
+    else {
+        console.warn('No title for: ', ad.targetUrl);
     }
 
     updateAdOnSuccess(this, ad, title);
@@ -422,6 +426,7 @@
   var validate = function (ad) {
 
     if (!validateFields(ad)) {
+
       console.warn('Invalid ad-fields: ', ad);
       return false;
     }

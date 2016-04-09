@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -34,16 +34,12 @@ var dbugDetect = 0; // tmp
 
     //elem.style.setProperty('display', 'none', 'important');
 
-    if (elem.tagName === 'IMG') {
-
-      return checkImages(elem, [elem]);
-    }
+    if (elem.tagName === 'IMG' && checkImages(elem, [elem]))
+      return;
 
     var imgs = elem.querySelectorAll('img');
-    if (imgs.length) {
-
-      return checkImages(elem, imgs);
-    }
+    if (imgs.length && checkImages(elem, imgs))
+      return;
 
     if (prefs.parseTextAds) {
 
@@ -55,7 +51,7 @@ var dbugDetect = 0; // tmp
           if (ads[i]) {
 
             console.log("TEXT-AD", ads[i]);
-            notifyAddon(ads[i], elem);
+            notifyAddon(ads[i]);
           }
         }
       }
@@ -120,6 +116,7 @@ var dbugDetect = 0; // tmp
       what: 'registerAd',
       ad: ad
     });
+    return true;
   }
 
   var $is = function (elem, selector) { // jquery shim
@@ -155,6 +152,7 @@ var dbugDetect = 0; // tmp
 
     var text = '';
     for (var i = 0; i < ele.length; i++) {
+
       text += ele[i].innerText || ele[i].textContent;
     }
 
@@ -163,65 +161,90 @@ var dbugDetect = 0; // tmp
 
   var $find = function (ele, selector) { // jquery shim
 
-    return ele.querySelectorAll(selector);
+    return ele && ele.querySelectorAll(selector);
   };
+
+  var processDelayedImage = function () { // this
+
+    console.log('processDelayedImage', this, this.naturalWidth, this.naturalHeight);
+    var src = this.src || this.getAttribute('src');
+    src && processImage(this, src);
+    this.removeEventListener('load', processDelayedImage);
+  }
 
   var checkImages = function (elem, imgs) {
 
-    var target, targetUrl, ad;
+    var target, targetUrl, ad, hits = 0;
 
     for (var i = 0; i < imgs.length; i++) {
 
-      var imgSrc = imgs[i].getAttribute("src");
+      var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
 
       if (!imgSrc) {
 
         if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+        imgs[i].addEventListener('load', processDelayedImage);
         continue;
       }
 
-      target = clickableParent(imgs[i]);
-      if (target) {
-
-        if (target.tagName === 'A') {
-
-          targetUrl = target.getAttribute("href");
-          if (targetUrl) {
-
-            console.log(elem.getBoundingClientRect(), imgs[i].getBoundingClientRect());
-
-            ad = createAd(document.domain, targetUrl, {
-              src: imgSrc
-                // width: imgs[i].clientWidth,
-                // height: imgs[i].clientHeight
-            });
-
-            if (ad) {
-
-              console.log('IMG-AD', ad);
-              notifyAddon(ad, elem);
-            }
-
-            // Need to check for div.onclick etc?
-          } else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
-
-        } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
-
-      } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
+      if (processImage(imgs[i], imgSrc)) hits++;
     }
+
+    return hits > 0;
+  }
+
+  var processImage = function (img, src) {
+
+    var target, targetUrl, ad, hits = 0;
+
+    target = clickableParent(img);
+    if (target) {
+
+      if (target.tagName === 'A') {
+
+        targetUrl = target.getAttribute("href");
+        if (targetUrl) {
+
+          ad = createAd(document.domain, targetUrl, {
+            src: src,
+            width: img.naturalWidth || -1,
+            height: img.naturalHeight || -1
+          });
+
+          if (ad) {
+
+            console.log('IMG-AD', ad);
+            notifyAddon(ad);
+            hits++;
+          }
+
+          // Need to check for div.onclick etc?
+        } else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
+
+      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
+
+    } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
+
   }
 
   var yahooText = function (e) {
 
-    var ads = [],
-      divs = $find(e, 'div.dd'); //#main > div > ol.a947i105t6.v119f
+    //console.log('yahooText: ', e);
 
-    //console.log('DL: '+divs.length);
+    var ads = [],
+      divs = $find(e, 'div.dd');
+
     for (var i = 0; i < divs.length; i++) {
 
-      var title = $find(divs[i], 'a.td-n'),
-        site = $find(divs[i], 'a.xh52v4e'),
-        text = $find(divs[i], 'a.fc-1st');
+      var title, site, text,
+        idiv = $find(divs[i], 'div.compTitle');
+
+      if (idiv.length) {
+        title = $find(idiv[0], 'h3.title a');
+        site = $find(idiv[0], 'div > a');
+      }
+
+      text = $find(divs[i], 'div.compText a');
 
       if (text.length && site.length && title.length) {
 
@@ -235,12 +258,12 @@ var dbugDetect = 0; // tmp
 
       } else {
 
+        //console.warn('LEN-F: ',title.length,text.length ,site.length);
         console.warn('yahooTextHandler.fail: ', divs[i]); //title, site, text);
       }
-
     }
+
     return ads;
-    //console.log('HIT:: yahooText()', $find(e, 'div.layoutMiddle'));
   }
 
   var aolText = function (div) {

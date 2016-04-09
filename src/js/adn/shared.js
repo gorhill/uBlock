@@ -4,6 +4,11 @@
 
 // functions shared between views
 
+function parseHostname(url) {
+
+  return new URL(url).hostname;
+}
+
 function extractDomains(fullUrl) { // used in targetDomain
 
   var matches, result = [],
