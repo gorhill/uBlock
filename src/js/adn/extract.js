@@ -14,7 +14,7 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-    console.log('AdNaauseam.prefs:', req);
+    //console.log('AdNaauseam.prefs:', req);
   });
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
@@ -70,27 +70,29 @@ var dbugDetect = 0; // tmp
     try {
       doc = this.contentDocument;
     } catch (e) {
-      console.warn(e);
+      if (dbugDetect) console.warn(e);
     }
     try {
       doc = doc || this.contentWindow.document;
     } catch (e) {
-      console.warn(e);
+      if (dbugDetect) console.warn(e);
     }
     try {
       doc = doc || (window.frames[this.name] && window.frames[this.name].document);
     } catch (e) {
-      console.warn(e);
+      if (dbugDetect) console.warn(e);
     }
 
     if (doc) {
+
       var body = $find(doc, 'body');
       var imgs = body.length && $find(body, 'img');
-      console.log("IMGS!!", imgs.length);
+      if (dbugDetect); console.warn("IFRAME.IMGS:", imgs.length);
       findImageAds(imgs);
+
     } else {
 
-      console.log("NO-DOC for IFRAME[" + this.name + "]=" + this.src);
+      if (dbugDetect) console.log("NO-DOC for IFRAME[" + this.name + "]=" + this.src);
     }
 
     this.removeEventListener('load', handleIFrame, false);

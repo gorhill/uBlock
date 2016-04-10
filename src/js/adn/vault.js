@@ -7,7 +7,7 @@
   'use strict';
 
   const States = ['pending', 'visited', 'failed'],
-    Zooms = [100, 50, 25, 12.5, 6.25],
+    Zooms = [100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
     MaxStartNum = 400,
     MaxPerSet = 9;
@@ -19,11 +19,12 @@
     left: 20
   };
 
-  var zoomStyle, animatorId, locale, resizeId, selectedAdSet, // parseTextAds,
-    zoomIdx = 0,
-    animateMs = 2000,
+  var zoomStyle, animatorId, locale,
+    resizeId, selectedAdSet,
     showInterface = true,
-    viewState = {};
+    animateMs = 2000,
+    viewState = {},
+    zoomIdx = 0;
 
   var gAds, gAdSets, gMin, gMax; // stateful
 
@@ -54,29 +55,19 @@
   var renderAds = function (json) {
 
     //console.log('renderAds: ', json);
-    parseAdData(json); // store
+    gAds = json.data; // store
     addInterfaceHandlers();
     createSlider(true);
     setCurrent(json.current);
   };
 
-  function parseAdData(json) {
-
-    gAds = (json.prefs.parseTextAds) ? json.data :
-      json.data.filter(function (ad) {
-        return (ad.contentType !== 'text')
-      });
-  }
-
-  function updateAd(json) {
-
-    //console.log('updateAd: ', json);
+  var updateAd = function (json) {
 
     doUpdate(json.ad);
     computeStats(gAdSets);
   }
 
-  function setAttempting(ad) {
+  var setAttempting = function (ad) {
 
     if (!ad) return;
 
@@ -798,6 +789,11 @@
         $(s).hide();
       });
 
+      // remove all duplicate classes (TODO: just hide them)
+      $(".item").removeClass(function (i, css) {
+          return (css.match(/dup-count-/g) || []).join(' ');
+      }).addClass('dup-count-1');
+
     } else {
 
       $("body").css('background-image', 'url(../img/gray_grid.png)')
@@ -1015,10 +1011,6 @@
     return ads;
   }
 
-  function closeVault() {
-    window.open(location, '_self').close();
-  }
-
   function addInterfaceHandlers(ads) {
 
     doFakeLocale(); // TODO: remove and implement
@@ -1026,7 +1018,7 @@
     $('#x-close-button').click(function (e) {
 
       e.preventDefault();
-      closeVault();
+      window.open(location, '_self').close(); // close vault
     });
 
     $('#logo').click(function (e) {
@@ -1133,9 +1125,6 @@
             what: 'deleteAdSet',
             ids: selectedAdSet.childIds()
           });
-
-          // if its the last ad, close the vault
-          //if (!gAds.length) return closeVault();
 
           // recreate the slider, but don't redo layout
           createSlider(false);
@@ -1545,15 +1534,18 @@
 
   AdSet.prototype.child = function (i) {
 
-    return this.children[(typeof i == 'undefined') ? this.index : i];
+    return this.children[(typeof i === 'undefined') ? this.index : i];
   };
 
   AdSet.prototype.state = function (i) {
 
-    var visitedTs = this.child(i).visitedTs;
+    var ad = this.child(i);
 
-    return (visitedTs === 0) ?
-      'pending' : (visitedTs < 0 ? 'failed' : 'visited');
+    // ad should not be 'failed' until 3 failed visits (gh #64)
+    if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0))
+        return 'pending';
+
+    return ad.visitedTs < 0 ? 'failed' : 'visited';
   };
 
   AdSet.prototype.type = function () {

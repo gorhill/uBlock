@@ -55,7 +55,7 @@
     }
   }
 
-  function updateMenuState() {
+  var updateMenuState = function () {
 
     if ($('#main').hasClass('disabled')) {
 
@@ -70,7 +70,7 @@
     }
   }
 
-  function getTitle(ad) {
+  var getTitle = function (ad) {
 
     var title = ad.title + ' ';
     if (ad.visitedTs < 1) {
@@ -82,7 +82,7 @@
     return title;
   }
 
-  function updateAd(ad) { // update class, title, counts
+  var updateAd = function (ad) { // update class, title, counts
 
     if (verify(ad)) {
 
@@ -95,13 +95,15 @@
       $ad.find('cite').text(targetDomain(ad));
 
       // update the visited count
-      if (ad.pageUrl === page)
+      if (ad.pageUrl === page) {
+
         $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+      }
     }
   }
 
-  function verify(ad) { // uses global ads (can be removed)
-
+  var verify = function (ad) { // uses global ads
+    if (!ads) err("NO GLOBAL ADS!!!");
     if (ad) {
 
       for (var i = 0; i < ads.length; i++) {
@@ -116,7 +118,7 @@
     return false;
   }
 
-  /*function filter(data, pageUrl) {
+  /*var filter = function(data, pageUrl) {
 
     var tmp = data.filter(function (ad) {
 
@@ -130,7 +132,7 @@
     return tmp;
   }*/
 
-  function doRecent(data) {
+  var doRecent = function (data) {
 
     $("#alert").removeClass('hide');
     $('#ad-list-items').addClass('recent-ads');
@@ -138,18 +140,18 @@
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
 
-  function onPage(ads, pageUrl) {
+  var onPage = function (ads, pageUrl) {
 
     var res = [];
     for (var i = 0; i < ads.length; i++) {
       if (ads[i] && ads[i].pageUrl === pageUrl) {
-          res.push(ads[i]);
+        res.push(ads[i]);
       }
     }
     return res.sort(byField('-foundTs'));
   }
 
-  function appendAd($items, ad) {
+  var appendAd = function ($items, ad) {
 
     if (ad.contentType === 'img') {
 
@@ -161,28 +163,35 @@
     }
   }
 
-  function setAttempting(ad) {
+  var removeClassFromAll = function (cls) {
+
+    $('.ad-item').removeClass(cls);
+    $('.ad-item-text').removeClass(cls);
+  }
+
+  var setAttempting = function (ad) {
 
     // one 'attempt' at a time
-    $('.ad-item').removeClass('attempting');
-    $('.ad-item-text').removeClass('attempting');
+    removeClassFromAll('attempting');
 
     if (ad) {
       if (verify(ad))
         $('#ad' + ad.id).addClass('attempting');
       else
-        console.warn('Fail on setAttempting: ', ad, ads);
+        console.warn('Fail on setAttempting: ', ad);
     }
   }
 
-  function updateAdClasses(ad) {
+  var updateAdClasses = function (ad) {
 
-    var $ad = $('#ad' + ad.id),
-      jv = 'just-visited';
+    var $ad = $('#ad' + ad.id);
+
+    // allow only one just-* at a time...
+    removeClassFromAll('just-visited just-failed');
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
-    $ad.removeClass('failed visited attempting');
-    $ad.removeClass(jv).addClass(jv);
+    var cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
+    $ad.removeClass('failed visited attempting').addClass(cls);
 
     // timed for animation
     setTimeout(function () {
@@ -192,7 +201,7 @@
     return $ad;
   }
 
-  function setCounts(ads, total) {
+  var setCounts = function (ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
     $('#vault-count').text(total);
@@ -200,7 +209,7 @@
     $('#found-count').text(ads.length);
   }
 
-  function appendImageAd(ad, $items) {
+  var appendImageAd = function (ad, $items) {
 
     var $a, $span, $li = $('<li/>', {
 
@@ -244,7 +253,7 @@
     $li.appendTo($items);
   }
 
-  function appendTextAd(ad, $items) {
+  var appendTextAd = function (ad, $items) {
 
     var $cite, $h3, $li = $('<li/>', {
 
@@ -290,13 +299,13 @@
     $li.appendTo($items);
   }
 
-  function visitedClass(ad) {
+  var visitedClass = function (ad) {
 
     return ad.visitedTs > 0 ? 'visited' :
-      (ad.visitedTs < 0 ? 'failed' : '');
+      (ad.visitedTs < 0 && ad.attempts >= 3) ? 'failed' : '';
   }
 
-  function visitedCount(arr) {
+  var visitedCount = function (arr) {
 
     return (!(arr && arr.length)) ? 0 : arr.filter(function (ad) {
       return ad.visitedTs > 0;
@@ -321,7 +330,7 @@
       }, onPopupData);
   };
 
-  function dval() {
+  var dval = function () {
 
     return popupData.pageURL === '' || !popupData.netFilteringSwitch ||
       (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled);
@@ -369,43 +378,6 @@
     return popupData;
   };
 
-  var hashFromPopupData = function (reset) {
-    // It makes no sense to offer to refresh the behind-the-scene scope
-    if (popupData.pageHostname === 'behind-the-scene') {
-      uDom('body').toggleClass('dirty', false);
-      return;
-    }
-
-    var hasher = [];
-    var rules = popupData.firewallRules;
-    var rule;
-    for (var key in rules) {
-      if (rules.hasOwnProperty(key) === false) {
-        continue;
-      }
-      rule = rules[key];
-      if (rule !== '') {
-        hasher.push(rule);
-      }
-    }
-    hasher.sort();
-    hasher.push(uDom('body').hasClass('off'));
-    hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
-    hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
-    hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
-
-    var hash = hasher.join('');
-    if (reset) {
-      cachedPopupHash = hash;
-    }
-    uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
-  };
-
-  // $('#log-button').click(function () {
-  //
-  //   window.open("./log.html");
-  // });
-
   $('#vault-button').click(function () {
 
     vAPI.messaging.send(
@@ -420,11 +392,6 @@
     );
 
     vAPI.closePopup();
-  });
-
-  $('#pause-button').click(function () {
-
-    // Waiting on #46
   });
 
   $('#settings-open').click(function () {
@@ -520,6 +487,8 @@
     updateMenuState();
     //hashFromPopupData();
   };
+
+  /********************************************************************/
 
   (function () {
 

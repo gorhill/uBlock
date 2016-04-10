@@ -200,6 +200,11 @@ div.tooltip {
 	transform: 			scale(1, 1);
 }
 
+.z-75 {
+
+	transform: 			scale(0.75, 0.75);
+}
+
 .z-50 {
 
 	transform: 			scale(0.5, 0.5);

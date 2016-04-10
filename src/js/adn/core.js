@@ -4,24 +4,26 @@
 
   'use strict';
 
-  // debugging only
-  var autoFailMode = 0, // all visits will fail
+  // for debugging only
+  var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
-    testVisitMode = 0, // all ad visit data reset
+    clearVisitData = 0, // reset all ad visit data
     automatedMode = 0; // for automated testing
 
   var xhr, idgen, admap, inspected,
     µb = µBlock,
     lastActivity = 0,
-    pollingDisabled = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
     pollQueueInterval = 5000,
-    repeatVisitInterval = 60000;
+    repeatVisitInterval = 3600000 * 24; // 24 hours
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
 
+  /**************************** functions ******************************/
+
+  /* called when the addon is first loaded */
   var initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
@@ -34,57 +36,71 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-    //console.log('clearAdsOnInit=',!clearAdsOnInit);
     admap = (settings && settings.admap) || {};
-    validateAdStorage(ads = adlist());
+    ads = validateAdStorage();
+    computeNextId(ads);
 
-    console.log('AdNauseam.initialized: with ' + ads.length + ' ads');
+    log('AdNauseam.initialized: with ' + ads.length + ' ads');
 
-    if (!pollingDisabled) pollQueue();
+    setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
-  // make sure we have no bad data in ad storage (should be impossible)
-  var validateAdStorage = function (ads) {
+  var clearAdVisits = function (ads) {
+
+    warn("[WARN] Clearing all Ad visit data!");
+
+    ads.forEach(function (ad) {
+
+      ad.visitedTs = 0;
+      ad.attempts = 0
+    });
+  }
+
+  /* make sure we have no bad data in ad storage */
+  var validateAdStorage = function () {
+
+    var ads = adlist(),
+      i = ads.length;
 
     if (clearAdsOnInit) {
 
-      console.warn("[DEBUG] Clearing all Ad data!");
-      clearAds();
-      return;
+      setTimeout(function () {
+
+        warn("[DEBUG] Clearing all ad data!");
+        clearAds();
+      }, pollQueueInterval);
+
+      return ads;
     }
 
-    // compute the highest id in the admap
-    idgen = Math.max(0, (Math.max.apply(Math,
-      ads.map(function (ad) {
-        return ad ? ad.id : -1;
-      }))));
+    clearVisitData && clearAdVisits(ads);
 
-    if (testVisitMode) {
-
-      console.warn("[WARN] Clearing all Ad visit data!");
-
-      ads.forEach(function (ad) {
-
-        ad.visitedTs = 0;
-        ad.attempts = 0
-      });
-    }
-
-    var i = ads.length;
     while (i--) {
 
       if (!validateFields(ads[i])) {
 
-        console.error('Invalid ad in storage', ads[i]);
+        err('Invalid ad in storage', ads[i]);
         ads.splice(i, 1);
       }
 
       if (ads[i].visitedTs === 0 && ads[i].attempts) {
 
-        console.warn('Invalid visitTs/attempts pair', ads[i]);
+        warn('Invalid visitTs/attempts pair', ads[i]);
         ads[i].attempts = 0; // this shouldn't happen
       }
     }
+
+    return ads;
+  }
+
+  // compute the highest id still in the admap
+  var computeNextId = function (ads) {
+
+    ads = ads || adlist();
+    idgen = Math.max(0, (Math.max.apply(Math,
+      ads.map(function (ad) {
+        return ad ? ad.id : -1;
+      }))));
   }
 
   var pollQueue = function (interval) {
@@ -93,9 +109,7 @@
 
     markActivity();
 
-    // TODO check options.disabled (see #40)
-
-    var next, nextMs, pending = pendingAds();
+    var next, pending = pendingAds();
 
     if (pending.length) {
 
@@ -113,11 +127,8 @@
       visitAd(next);
     }
 
-    if (!pollingDisabled) {
-
-      nextMs = Math.max(1, interval - (millis() - lastActivity));
-      setTimeout(pollQueue, nextMs); // next poll
-    }
+    // next poll
+    setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity)));
   }
 
   var markActivity = function () {
@@ -137,14 +148,14 @@
     return ad && ad.attempts < maxAttemptsPerAd && ad.visitedTs <= 0;
   }
 
-  var getVaultTabId = function () {
+  var getExtPageTabId = function (htmlPage) {
 
-    var vaultUrl = vAPI.getURL('vault.html');
+    var pageUrl = vAPI.getURL(htmlPage);
 
     for (var tabId in µb.pageStores) {
 
       var pageStore = µb.pageStoreFromTabId(tabId);
-      if (pageStore !== null && pageStore.rawURL.startsWith(vaultUrl)) {
+      if (pageStore !== null && pageStore.rawURL.startsWith(pageUrl)) {
 
         return tabId;
       }
@@ -159,12 +170,13 @@
 
       // update the ad
       ad.visitedTs = -millis();
+
       if (!ad.errors) ad.errors = [];
       ad.errors.push(xhr.status + ' (' + xhr.statusText + ')' + (e ? ' ' + e.type : ''));
 
       if (ad.attempts >= maxAttemptsPerAd) {
 
-        console.log('GIVEUP: ' + adinfo(ad), ad); // this);
+        log('GIVEUP: ' + adinfo(ad), ad); // this);
         if (ad.title === 'Pending') ad.title = 'Failed';
       }
 
@@ -175,21 +187,38 @@
 
     } else {
 
-      console.error("No Ad in updateAdOnFailure()", xhr, e);
+      err("No Ad in updateAdOnFailure()", xhr, e);
     }
   }
 
-  var parseTitle = function (html) {
+  var parseTitle = function (xhr) {
 
-    var title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    var html = xhr.responseText,
+      title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+
     if (title && title.length > 1) {
 
-      return unescapeHTML(title[1].trim());
+      title = unescapeHTML(title[1].trim());
 
-    } else {
+      for (var i = 0; i < errorStrings.length; i++) {
 
-      console.warn('Unable to parse title from: ' + html);
+        // check the title isn't something like 'file not found'
+        if (title.toLowerCase().indexOf(errorStrings[i]) > -1) {
+
+          onVisitError.call(xhr, {
+            title: title,
+            status: xhr.status,
+            responseText: html
+          });
+
+          throw Error('Bad-title: ' + title + " from: " + xhr.requestUrl);
+        }
+      }
+
+      return title;
     }
+
+    warn('Unable to parse title from: ' + xhr.requestUrl, html);
 
     return false;
   }
@@ -202,6 +231,12 @@
 
       if (title) ad.title = title;
 
+      // TODO: if title still = 'Pending' here, replace it with the hostname
+      if (ad.title === 'Pending') {
+        ad.title = parseDomain(xhr.requestUrl, true);
+        warn('replaced "Pending" with: ' + ad.title);
+      }
+
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
 
@@ -212,7 +247,7 @@
 
       if (ad === inspected) inspected = null;
 
-      console.log('VISITED: ' + adinfo(ad), ad.title);
+      log('VISITED: ' + adinfo(ad), ad.title);
     }
 
     storeUserData();
@@ -220,6 +255,7 @@
 
   // returns the current active visit attempt or null
   var activeVisit = function (pageUrl) {
+
     if (xhr && xhr.delegate) {
       if (!pageUrl || xhr.delegate === pageUrl)
         return xhr.delegate;
@@ -235,17 +271,17 @@
     // Is it a timeout?
     if (e.type === 'timeout') {
 
-      console.warn('TIMEOUT: visiting ', this.requestUrl, e, this);
+      warn('TIMEOUT: visiting ', this.requestUrl, e, this);
 
     } else {
 
       // or some other error?
-      console.warn('onVisitError()', e, this);
+      warn('onVisitError()', e, this);
     }
 
     if (!this.delegate) {
 
-      console.error('Request received without Ad: ' + this.responseUrl);
+      err('Request received without Ad: ' + this.responseUrl);
       return;
     }
 
@@ -256,7 +292,7 @@
 
   var onVisitResponse = function () {
 
-    //console.log('onVisitResponse', this);
+    //log('onVisitResponse', this);
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -265,19 +301,19 @@
     var ad = this.delegate;
 
     if (!ad) {
-      console.error('Request received without Ad: ' + this.responseUrl);
+      err('Request received without Ad: ' + this.responseUrl);
       return;
     }
 
     if (!ad.id) {
-      console.warn("Visit response from deleted ad! ", ad);
+      warn("Visit response from deleted ad! ", ad);
       return;
     }
 
     var status = this.status || 200,
       html = this.responseText;
 
-    if (autoFailMode || status < 200 || status >= 300 || !stringNotEmpty(html)) {
+    if (failAllVisits || status < 200 || status >= 300 || !stringNotEmpty(html)) {
 
       return onVisitError.call(this, {
         status: status,
@@ -285,24 +321,13 @@
       });
     }
 
-    var title = parseTitle(html);
-    if (title) {
+    try {
+      updateAdOnSuccess(this, ad, parseTitle(this));
 
-      // check the title isn't something like 'file not found'
-      for (var i = 0; i < errorStrings.length; i++) { // TODO: move to parseTitle?
-        if (title.toLowerCase().indexOf(errorStrings[i]) > -1) {
-          return onVisitError.call(this, {
-            title: title,
-            status: status,
-            responseText: html
-          });
-        }
-      }
-    } else {
-      console.warn('No title for: ', ad.targetUrl);
+    } catch (e) {
+
+      warn(e.message);
     }
-
-    updateAdOnSuccess(this, ad, title);
 
     xhr = null; // end the visit
   };
@@ -321,13 +346,13 @@
     if (xhr) {
 
       if (!xhr.delegate.attemptedTs) {
-        console.log(xhr);
+        log(xhr);
         throw Error('Invalid state: ', xhr);
       }
 
       var elapsed = (now - xhr.delegate.attemptedTs);
 
-      console.log('Attempt to re-use active xhr: launched ' + elapsed + " ms ago");
+      log('Attempt to re-use active xhr: launched ' + elapsed + " ms ago");
 
       if (elapsed > visitTimeout) {
 
@@ -347,7 +372,7 @@
 
   var sendXhr = function (ad) {
 
-    console.log('TRYING: ' + adinfo(ad), ad.targetUrl);
+    log('TRYING: ' + adinfo(ad), ad.targetUrl);
 
     xhr = new XMLHttpRequest();
 
@@ -386,11 +411,11 @@
       if (idx != -1) {
 
         ad.targetUrl = decodeURIComponent(url.substring(idx));
-        console.log("Ad.targetUrl updated: " + ad.targetUrl);
+        log("Ad.targetUrl updated: " + ad.targetUrl);
 
       } else {
 
-        console.warn("Invalid TargetUrl: " + url);
+        warn("Invalid TargetUrl: " + url);
         return false;
       }
     }
@@ -410,7 +435,7 @@
 
     if (!validateFields(ad)) {
 
-      console.warn('Invalid ad-fields: ', ad);
+      warn('Invalid ad-fields: ', ad);
       return false;
     }
 
@@ -435,15 +460,15 @@
 
         } else {
 
-          console.log("Relative-image: " + cd.src);
+          log("Relative-image: " + cd.src);
           cd.src = pu.substring(0, pu.lastIndexOf('/')) + '/' + cd.src;
-          console.log("    --> " + cd.src);
+          log("    --> " + cd.src);
         }
       }
 
     } else {
 
-      console.warn('Invalid ad type: ' + ct);
+      warn('Invalid ad type: ' + ct);
     }
 
     return validateTarget(ad);
@@ -527,19 +552,10 @@
     }
   }
 
-  var closeVault = function () {
+  var closeExtPage = function (htmlPage) {
 
-    for (var tabId in µb.pageStores) {
-
-      var pageStore = µb.pageStoreFromTabId(tabId);
-      if (pageStore && pageStore.rawURL.indexOf("vault.html") >= 0) {
-        try {
-          vAPI.tabs.remove(tabId, true);
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
+    var tabId = getExtPageTabId(htmlPage)
+    tabId && vAPI.tabs.remove(tabId, true);
   }
 
   var deleteAd = function (arg) {
@@ -547,18 +563,18 @@
     var ad = type(arg) === 'object' ? arg : adById(arg),
       count = adlist().length;
 
-    if (!ad) console.warn("No Ad to delete", id, admap);
+    if (!ad) warn("No Ad to delete", id, admap);
 
     delete admap[ad.pageUrl][computeHash(ad)];
 
     if (adlist().length < count) {
 
-      console.log('DELETED: ' + adinfo(ad));
+      log('DELETED: ' + adinfo(ad));
       updateBadges();
 
     } else {
 
-      console.warn('Unable to delete: ', ad);
+      warn('Unable to delete: ', ad);
     }
 
     storeUserData();
@@ -600,7 +616,7 @@
 
         if (type(hashes[j]) !== 'string' || hashes[j].indexOf('::') < 0) {
 
-          console.warn('Bad hash in import: ', hashes[j], ad); // tmp
+          warn('Bad hash in import: ', hashes[j], ad); // tmp
           return false;
         }
 
@@ -613,7 +629,7 @@
 
         } else {
 
-          console.warn('Invalid ad in import: ', ad); // tmp
+          warn('Invalid ad in import: ', ad); // tmp
         }
       }
     }
@@ -625,7 +641,7 @@
 
     if (type(map) !== 'object') {
 
-      console.warn('not object: ', map);
+      warn('not object: ', map);
       return false;
     }
 
@@ -634,7 +650,7 @@
 
     if (!pages || !pages.length) {
 
-      console.warn('no pages: ', pages);
+      warn('no pages: ', pages);
       return false;
     }
 
@@ -644,7 +660,7 @@
 
       if (type(ads) !== 'array') {
 
-        console.warn('not array', type(ads), ads);
+        warn('not array', type(ads), ads);
         return false;
       }
 
@@ -657,13 +673,13 @@
 
         if (!hash || !validateFields(ad)) {
 
-          console.warn('Unable to validate legacy ad', ad);
+          warn('Unable to validate legacy ad', ad);
           continue;
         }
 
         newmap[pages[i]][hash] = updateLegacyAd(ad);
 
-        console.log('converted ad', newmap[pages[i]][hash]);
+        log('converted ad', newmap[pages[i]][hash]);
       }
     }
 
@@ -687,7 +703,7 @@
 
   var postRegister = function (ad, pageUrl, tabId) {
 
-    console.log('DETECTED: ' + adinfo(ad), ad);
+    log('DETECTED: ' + adinfo(ad), ad);
 
     // if vault/menu is open, send the new ad
     var json = adsForUI(pageUrl);
@@ -708,30 +724,29 @@
 
   var clearAds = function () {
 
-    var count = adlist().length;
+    var pre = adlist().length;
 
     clearAdmap();
+    closeExtPage('vault.html');
     updateBadges();
-    closeVault();
     storeUserData();
+    computeNextId();
 
-    console.log('AdNauseam.clear: ' + count + ' ads cleared');
+    log('AdNauseam.clear: ' + pre + ' ads cleared');
   }
 
+  // update tab badges if we're showing them
   var updateBadges = function () {
-    
-    // update badges if we are showing them
+
     if (µb.userSettings.showIconBadge) {
 
       var optionsUrl = vAPI.getURL('options.html');
 
       for (var tabId in µb.pageStores) {
 
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if (pageStore !== null && !pageStore.rawURL.startsWith(optionsUrl)) {
-
+        var store = µb.pageStoreFromTabId(tabId);
+        if (store !== null && !store.rawURL.startsWith(optionsUrl))
           µb.updateBadgeAsync(tabId);
-        }
       }
     }
   }
@@ -783,20 +798,25 @@
         if (map) {
 
           // ok, legacy ads converted and verified
-          console.log('Updating legacy ads to current format');
+          log('Updating legacy ads to current format');
         }
 
       } else {
 
-        console.warn('Unable to parse legacy-format:', request.data);
+        warn('Unable to parse legacy-format:', request.data);
         return; // give up
       }
     }
 
     clearAds();
     admap = map;
+    computeNextId();
+    if (clearVisitData) {
+      clearAdVisits(ads);
+    }
     storeUserData();
-    console.log('AdNauseam.import: ' + adlist().length + ' ads from ' + request.file);
+
+    log('AdNauseam.import: ' + adlist().length + ' ads from ' + request.file);
   }
 
   var exportAds = function (request) {
@@ -810,7 +830,7 @@
       'filename': filename
     });
 
-    console.log('AdNauseam.export: ' + count + ' ads to ' + filename);
+    log('AdNauseam.export: ' + count + ' ads to ' + filename);
   }
 
   var adsForPage = function (request, pageStore, tabId) {
@@ -846,12 +866,16 @@
 
     var data = '';
 
-    for (var j = 0; j < request.ids.length; j++) {
+    request.ids.forEach(function (id) {
+      data += JSON.stringify(adById(id));
+    });
 
-      data += JSON.stringify(adById(request.ids[j]));
-    }
+    // for (var j = 0; j < request.ids.length; j++) {
+    //
+    //   data += JSON.stringify(adById(request.ids[j]));
+    // }
 
-    console.log('ADSET #' + request.gid + '\n', data);
+    log('ADSET #' + request.gid + '\n', data);
 
     vAPI.messaging.broadcast({
       what: 'logJSON',
@@ -863,18 +887,26 @@
 
   var toggleEnabled = function (request, pageStore, tabId) {
 
-    var pageStore = µb.pageStoreFromTabId(request.tabId);
-    if (pageStore) {
-      pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+    var store = µb.pageStoreFromTabId(request.tabId);
+    if (store) {
+
+      store.toggleNetFilteringSwitch(request.url, request.scope, request.state);
       updateBadges();
+
+      // see gh #113
+      var wlId = getExtPageTabId("dashboard.html#whitelist.html")
+      wlId && vAPI.tabs.replace(wlId, vAPI.getURL("dashboard.html"));
     }
   }
 
   var deleteAdSet = function (request, pageStore, tabId) {
 
-    for (var j = 0; j < request.ids.length; j++) {
-      deleteAd(request.ids[j]);
-    }
+    request.ids.forEach(function (id) {
+      deleteAd(id);
+    });
+    // for (var j = 0; j < request.ids.length; j++) {
+    //   deleteAd(request.ids[j]);
+    // }
   }
 
   var registerAd = function (request, pageStore, tabId) {
@@ -891,7 +923,7 @@
 
     if (!validate(ad)) {
 
-      console.warn("Invalid Ad: ", ad);
+      warn("Invalid Ad: ", ad);
       return;
     }
 
@@ -906,7 +938,7 @@
 
       if (msSinceFound < repeatVisitInterval) {
 
-        console.log('DUPLICATE: ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
+        log('DUPLICATE: ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
         return;
       }
     }
@@ -975,4 +1007,4 @@
 
 })();
 
-/******************************************************************************/
+/*************************************************************************/

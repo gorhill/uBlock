@@ -2,6 +2,18 @@
 
 'use strict';
 
+var log = function () {
+  console.log.apply(console, arguments);
+}
+
+var warn = function () {
+  console.warn.apply(console, arguments);
+}
+
+var err = function () {
+  console.error.apply(console, arguments);
+}
+
 var rand = function (min, max) {
 
   if (arguments.length == 1) {
@@ -55,7 +67,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
   if (!ad) return;
 
   if (!ad.contentData || !ad.pageUrl) {
-    console.error("Invalid Ad: no contentData || pageUrl", ad);
+    err("Invalid Ad: no contentData || pageUrl", ad);
     return;
   }
 
@@ -96,26 +108,26 @@ var parseHostname = function (url) {
   return new URL(url).hostname;
 }
 
-var extractDomains = function (fullUrl) { // used in targetDomain
+var extractDomains = function (fullUrl, useLast) { // used in targetDomain
 
   var matches, result = [],
     re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
   while ((matches = re.exec(fullUrl))) {
-    result.push(matches[0]);
+    result.push(useLast ? matches[matches.length-1] : matches[0]);
   }
 
   return result;
 }
 
-var parseDomain = function (url) {
+var parseDomain = function (url, useLast) {
 
-  var domain, domains = extractDomains(url);
+  var domain, domains = extractDomains(url, useLast);
 
   if (domains.length)
     domain = new URL(domains.pop()).hostname;
 
-  //console.log('parsed-domain: ' + domain);
+  //log('parsed-domain: ' + domain);
 
   return domain;
 }
@@ -129,7 +141,7 @@ var targetDomain = function (ad) {
   var dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl);
 
   if (!dom)
-    console.warn("Unable to parse domain: " + url);
+    warn("Unable to parse domain: " + url);
   else
     dom + ' (#' + ad.id + ')'; // testing-only
 
