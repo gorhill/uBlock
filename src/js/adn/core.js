@@ -4,30 +4,20 @@
 
   'use strict';
 
-  var µb = µBlock;
-
   // debugging only
   var autoFailMode = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
-    testVisitMode = 0, // all visit data is reset
+    testVisitMode = 0, // all ad visit data reset
     automatedMode = 0; // for automated testing
 
   var xhr, idgen, admap, inspected,
+    µb = µBlock,
     lastActivity = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
     pollQueueInterval = 5000,
     repeatVisitInterval = 60000;
-
-  // ignore adchoices
-  var imageIgnores = ['http://pagead2.googlesyndication.com/pagead/images/ad_choices_en.png'];
-
-  // block scripts from these page domains (either regex or string) // add to rules
-  var blockablePageDomains = []; //'www.webpronews.com', 'www.tomshardware.com', 'www.zdnet.com', 'www.techrepublic.com'],
-
-  // always block scripts from these domains (either regex or string)
-  var blockableScriptDomains = ['partner.googleadservices.com']; // add to rules
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -46,13 +36,7 @@
 
     //console.log('clearAdsOnInit=',!clearAdsOnInit);
     admap = (settings && settings.admap) || {};
-    checkAdStorage(ads = adlist());
-
-    // compute the highest id in the admap
-    idgen = Math.max(0, (Math.max.apply(Math,
-      ads.map(function (ad) {
-        return ad ? ad.id : -1;
-      }))));
+    validateAdStorage(ads = adlist());
 
     console.log('AdNauseam.initialized: with ' + ads.length + ' ads');
 
@@ -60,7 +44,7 @@
   }
 
   // make sure we have no bad data in ad storage (should be impossible)
-  var checkAdStorage = function (ads) {
+  var validateAdStorage = function (ads) {
 
     if (clearAdsOnInit) {
 
@@ -68,6 +52,12 @@
       clearAds();
       return;
     }
+
+    // compute the highest id in the admap
+    idgen = Math.max(0, (Math.max.apply(Math,
+      ads.map(function (ad) {
+        return ad ? ad.id : -1;
+      }))));
 
     if (testVisitMode) {
 
@@ -80,11 +70,13 @@
       });
     }
 
-    for (var i = 0; i < ads.length; i++) {
+    var i = ads.length;
+    while (i--) {
 
       if (!validateFields(ads[i])) {
 
-        console.warn('Invalid ad in storage', allAds[i]);
+        console.error('Invalid ad in storage', ads[i]);
+        ads.splice(i, 1);
       }
 
       if (ads[i].visitedTs === 0 && ads[i].attempts) {
@@ -629,31 +621,6 @@
     return pass ? newmap : false;
   }
 
-  var validateAdArray = function (map) { // not used
-
-    var newmap = {},
-      ads = map;
-
-    for (var j = 0; j < ads.length; j++) {
-
-      var ad = ads[j],
-        hash = computeHash(ad);
-
-      if (!validateFields(ad)) {
-        console.warn('Unable to validate legacy ad', ad);
-        continue;
-      }
-
-      var page = ad.pageUrl;
-      if (!newmap[page]) newmap[page] = {};
-      newmap[page][hash] = updateLegacyAd(ad);
-
-      console.log('converted ad', newmap[page][hash]);
-    }
-
-    return newmap;
-  }
-
   var validateLegacyImport = function (map) {
 
     if (type(map) !== 'object') {
@@ -752,7 +719,7 @@
   }
 
   var updateBadges = function () {
-
+    
     // update badges if we are showing them
     if (µb.userSettings.showIconBadge) {
 
@@ -769,8 +736,11 @@
     }
   }
 
-  // Returns all ads for a page, or all pages, if page arg is null
-  // Called also from tab.js::µb.updateBadgeAsync()
+  /*
+   Returns all ads for a page, or all pages, if page arg is null
+   Omits text-ads if specified in preferences
+   Called also from tab.js::µb.updateBadgeAsync()
+   */
   var adlist = function (pageUrl) {
 
     var result = [],
@@ -779,7 +749,9 @@
     for (var i = 0; i < pages.length; i++) {
 
       if (admap[pages[i]]) {
+
         var hashes = Object.keys(admap[pages[i]]);
+
         for (var j = 0; j < hashes.length; j++) {
 
           var ad = admap[pages[i]][hashes[j]];
@@ -963,6 +935,7 @@
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
+    updateBadges: updateBadges,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     getPreferences: getPreferences

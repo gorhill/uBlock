@@ -315,6 +315,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     case 'webrtcIPAddressHidden':
         vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
         break;
+    case 'parseTextAds':                     // adn
+        µBlock.adnauseam.updateBadges();
+        break;
     default:
         break;
     }
