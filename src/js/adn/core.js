@@ -641,8 +641,8 @@
 
     if (type(map) !== 'object') {
 
-      warn('not object: ', map);
-      return false;
+      return (type(map) === 'array') ? validateAdArray(map) :
+        warn('Import-fail: not object or array', type(map), map);
     }
 
     var ad, ads, hash, newmap = {},
@@ -684,6 +684,30 @@
     }
 
     return newmap;
+  }
+
+  var validateAdArray = function (ads, replaceAll) {
+
+    var map = replaceAll ? {} : admap;
+
+    for (var j = 0; j < ads.length; j++) {
+
+      var ad = ads[j],
+        hash = computeHash(ad);
+
+      if (!validateFields(ad)) {
+        console.warn('Unable to validate legacy ad', ad);
+        continue;
+      }
+
+      var page = ad.pageUrl;
+      if (!map[page]) map[page] = {};
+      map[page][hash] = updateLegacyAd(ad);
+
+      console.log('converted ad', map[page][hash]);
+    }
+
+    return map;
   }
 
   var updateLegacyAd = function (ad) {
@@ -784,7 +808,9 @@
   var importAds = function (request) {
 
     // try to parse imported ads in current format
-    var legacy, map = validateImport(request.data);
+    var legacy,
+      count = adlist().length,
+      map = validateImport(request.data);
 
     if (!map) {
 
