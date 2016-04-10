@@ -6,14 +6,14 @@
 #    $ brew install homebrew/dupes/grep --with-default-names
 #
 
-set -e
+#set -e
 
 # replace spaces with underscores
 #find . -name "* *" -type f | rename 's/ +/_/g'
 
 for f in *; do 
-    echo checking $f
     type=$( file "$f" | grep -oP '\w+(?= image data)' )
+    #echo checking $f $type
     case $type in  
         PNG)  newext=png ;; 
         GIF)  newext=gif ;; 
