@@ -5,7 +5,7 @@
 
   'use strict';
 
-  var ads, page; // can we remove? only if we can find an updated ad in the DOM
+  var ads, page; // remove? only if we can find an updated ad in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
@@ -33,7 +33,7 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
-    $('#main').toggleClass('disabled', dval());
+    $('#main').toggleClass('disabled', dval()); // TODO: move select into dval
 
     updateMenuState();
 
@@ -61,6 +61,7 @@
 
       $('#resume-button').show();
       $('#pause-button').hide();
+
     } else {
 
       $('#pause-button').show();
@@ -115,10 +116,25 @@
     return false;
   }
 
+  /*function filter(data, pageUrl) {
+
+    var tmp = data.filter(function (ad) {
+
+      return ad && (!pageUrl || ad.pageUrl === pageUrl) &&
+        (prefs.parseTextAds || ad.contentType !== 'text');
+    });
+
+    console.log('filter(' + data.length + '): parseText=' + prefs.parseTextAds +
+     " pageUrl=" + (pageUrl ? "true" : "false") + " -> " + tmp.length);
+
+    return tmp;
+  }*/
+
   function doRecent(data) {
 
     $("#alert").removeClass('hide');
     $('#ad-list-items').addClass('recent-ads');
+
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
 
@@ -126,10 +142,10 @@
 
     var res = [];
     for (var i = 0; i < ads.length; i++) {
-      if (ads[i] && ads[i].pageUrl === pageUrl)
-        res.push(ads[i]);
+      if (ads[i] && ads[i].pageUrl === pageUrl) {
+          res.push(ads[i]);
+      }
     }
-
     return res.sort(byField('-foundTs'));
   }
 

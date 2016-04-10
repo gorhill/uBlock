@@ -14,49 +14,107 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-    //console.log('AdNaauseam.prefs:', req);
+    console.log('AdNaauseam.prefs:', req);
   });
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
   adDetector.findAds = function (elem) {
 
-    // TODO: enable once all text-ad filters are working
+    switch (elem.tagName) {
+
+    case 'IFRAME':
+      elem.addEventListener('load', handleIFrame, false);
+      break;
+
+    case 'IMG':
+      if (findImageAds([elem])) break;
+      // fall-through
+
+    default:
+
+      // check the element for child imgs
+      var imgs = elem.querySelectorAll('img');
+      if (imgs.length && findImageAds(imgs))
+        return;
+
+      // else try text
+      prefs.parseTextAds && findTextAds(elem);
+    }
+  }
+
+  var findTextAds = function (elem) {
+
     var activeFilters = true ? filters : filters.filter(function (f) {
       return f.domain.test(document.domain);
     });
 
-    if (elem.tagName === 'IFRAME') {
-      //var c = elem.contentDocument || elem.contentWindow.document;
-      //console.log($find(elem,'img').length, c);
-      return; // Ignore iframes, wait for sub-elements?
-    }
+    var ads = checkFilters(activeFilters, elem);
+    if (ads && ads.length) {
 
-    //elem.style.setProperty('display', 'none', 'important');
+      for (var i = 0; i < ads.length; i++) {
 
-    if (elem.tagName === 'IMG' && checkImages(elem, [elem]))
-      return;
+        if (ads[i]) {
 
-    var imgs = elem.querySelectorAll('img');
-    if (imgs.length && checkImages(elem, imgs))
-      return;
-
-    if (prefs.parseTextAds) {
-
-      var ads = checkFilters(activeFilters, elem);
-      if (ads && ads.length) {
-
-        for (var i = 0; i < ads.length; i++) {
-
-          if (ads[i]) {
-
-            console.log("TEXT-AD", ads[i]);
-            notifyAddon(ads[i]);
-          }
+          console.log("TEXT-AD", ads[i]);
+          notifyAddon(ads[i]);
         }
       }
     }
-    //console.log('Skipping text-ads');
+  }
+
+  var handleIFrame = function () { // this
+
+    //console.log('handleIFrame', this);
+    var html, doc;
+    try {
+      doc = this.contentDocument;
+    } catch (e) {
+      console.warn(e);
+    }
+    try {
+      doc = doc || this.contentWindow.document;
+    } catch (e) {
+      console.warn(e);
+    }
+    try {
+      doc = doc || (window.frames[this.name] && window.frames[this.name].document);
+    } catch (e) {
+      console.warn(e);
+    }
+
+    if (doc) {
+      var body = $find(doc, 'body');
+      var imgs = body.length && $find(body, 'img');
+      console.log("IMGS!!", imgs.length);
+      findImageAds(imgs);
+    } else {
+
+      console.log("NO-DOC for IFRAME[" + this.name + "]=" + this.src);
+    }
+
+    this.removeEventListener('load', handleIFrame, false);
+  }
+
+  var findImageAds = function (imgs) {
+
+    var target, targetUrl, ad, hits = 0;
+
+    for (var i = 0; i < imgs.length; i++) {
+
+      var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
+
+      if (!imgSrc) {
+
+        if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+        imgs[i].addEventListener('load', processDelayedImage, false);
+        continue;
+      }
+
+      if (processImage(imgs[i], imgSrc)) hits++;
+    }
+
+    return hits > 0;
   }
 
   var pageCount = function (ads, pageUrl) {
@@ -161,36 +219,15 @@ var dbugDetect = 0; // tmp
 
   var $find = function (ele, selector) { // jquery shim
 
-    return ele && ele.querySelectorAll(selector);
+    return ele && (ele.length ? ele[0] : ele).querySelectorAll(selector);
   };
 
   var processDelayedImage = function () { // this
 
-    console.log('processDelayedImage', this, this.naturalWidth, this.naturalHeight);
+    console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
     var src = this.src || this.getAttribute('src');
-    src && processImage(this, src);
-    this.removeEventListener('load', processDelayedImage);
-  }
-
-  var checkImages = function (elem, imgs) {
-
-    var target, targetUrl, ad, hits = 0;
-
-    for (var i = 0; i < imgs.length; i++) {
-
-      var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
-
-      if (!imgSrc) {
-
-        if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-        imgs[i].addEventListener('load', processDelayedImage);
-        continue;
-      }
-
-      if (processImage(imgs[i], imgSrc)) hits++;
-    }
-
-    return hits > 0;
+    if (src) processImage(this, src);
+    this.removeEventListener('load', processDelayedImage, false);
   }
 
   var processImage = function (img, src) {

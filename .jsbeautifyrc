@@ -1,0 +1,21 @@
+---
+  html:
+    brace_style: "collapse"
+    indent_char: " "
+    indent_scripts: "normal"
+    indent_size: 2
+    max_preserve_newlines: 1
+    preserve_newlines: true
+    wrap_line_length: 0
+  css:
+    indent_char: " "
+    indent_size: 2
+    preserve_newlines: true
+  js:
+    indent_size: 8
+    indent_char: " "
+    indent_level: 0
+    indent_with_tabs: false
+    preserve_newlines: true
+    max_preserve_newlines: 2
+    jslint_happy: true

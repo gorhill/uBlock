@@ -1,8 +1,8 @@
-$(function(){
+$(function () {
 
-    $('#x-close-button').click(function() {
+  $('#x-close-button').click(function () {
 
-        window.close();
-    });
-    
+    window.close();
+  });
+
 });

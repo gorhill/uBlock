@@ -1,37 +1,6 @@
-//(function() {
+// functions shared between addon and ui
 
 'use strict';
-
-// functions shared between views
-
-function parseHostname(url) {
-
-  return new URL(url).hostname;
-}
-
-function extractDomains(fullUrl) { // used in targetDomain
-
-  var matches, result = [],
-    re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-  while ((matches = re.exec(fullUrl))) {
-    result.push(matches[0]);
-  }
-
-  return result;
-}
-
-function parseDomain(url) {
-
-  var domain, domains = extractDomains(url);
-
-  if (domains.length)
-    domain = new URL(domains.pop()).hostname;
-
-  //console.log('parsed-domain: ' + domain);
-
-  return domain;
-}
 
 var rand = function (min, max) {
 
@@ -46,7 +15,7 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function arrayRemove(arr, obj) {
+var arrayRemove = function (arr, obj) {
 
   var i = arr.indexOf(obj);
   if (i != -1) {
@@ -56,7 +25,7 @@ function arrayRemove(arr, obj) {
   return false;
 }
 
-function showAlert(msg) {
+var showAlert = function (msg) {
 
   if (msg) {
 
@@ -74,7 +43,7 @@ var type = function (obj) { // from Angus Croll
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
 
-var getExportFileName = function() {
+var getExportFileName = function () {
 
   return vAPI.i18n('adnExportedAdsFilename')
     .replace('{{datetime}}', new Date().toLocaleString())
@@ -115,11 +84,47 @@ var byField = function (prop) {
   };
 }
 
+var stringNotEmpty = function (s) {
+
+  return typeof s === 'string' && s !== '';
+};
+
+/************************ URL utils *****************************/
+
+var parseHostname = function (url) {
+
+  return new URL(url).hostname;
+}
+
+var extractDomains = function (fullUrl) { // used in targetDomain
+
+  var matches, result = [],
+    re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+  while ((matches = re.exec(fullUrl))) {
+    result.push(matches[0]);
+  }
+
+  return result;
+}
+
+var parseDomain = function (url) {
+
+  var domain, domains = extractDomains(url);
+
+  if (domains.length)
+    domain = new URL(domains.pop()).hostname;
+
+  //console.log('parsed-domain: ' + domain);
+
+  return domain;
+}
+
 /*
  * Start with resolvedTargetUrl if available, else use targetUrl
  * Then extract the last domain from the (possibly complex) url
  */
-function targetDomain(ad) {
+var targetDomain = function (ad) {
 
   var dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl);
 
@@ -130,11 +135,3 @@ function targetDomain(ad) {
 
   return dom;
 }
-
-var stringNotEmpty = function (s) {
-
-  return typeof s === 'string' && s !== '';
-};
-
-//  return exports;
-//})();

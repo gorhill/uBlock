@@ -1,18 +1,4 @@
-/* global vAPI, uDom */
-
-/* TODO
-
-  on-visit: if menu is open, update title & state (also vault)
-  recent-ads in menu
-  ad-janitor: look for timeouts based on attemptedTs and mark as error?
-  delete-ad-set
-
-  traffic.js
-    onBeforeRequest
-    onBeforeRootFrameRequest
-
-  visit fails: adVisited
-*/
+/* global vAPI, µBlock */
 
 µBlock.adnauseam = (function () {
 
@@ -26,10 +12,7 @@
     testVisitMode = 0, // all visit data is reset
     automatedMode = 0; // for automated testing
 
-  var xhr,
-    idgen,
-    admap,
-    inspected,
+  var xhr, idgen, admap, inspected,
     lastActivity = 0,
     pollingDisabled = 0,
     maxAttemptsPerAd = 3,
@@ -62,17 +45,8 @@
     };
 
     //console.log('clearAdsOnInit=',!clearAdsOnInit);
-    admap = (!clearAdsOnInit && settings && settings.admap) || {};
+    admap = (settings && settings.admap) || {};
     checkAdStorage(ads = adlist());
-
-    if (testVisitMode) {
-
-      console.warn("[WARN] Clearing all Ad visit data!");
-      ads.forEach(function (ad) {
-        ad.visitedTs = 0;
-        ad.attempts = 0
-      });
-    }
 
     // compute the highest id in the admap
     idgen = Math.max(0, (Math.max.apply(Math,
@@ -87,6 +61,24 @@
 
   // make sure we have no bad data in ad storage (should be impossible)
   var checkAdStorage = function (ads) {
+
+    if (clearAdsOnInit) {
+
+      console.warn("[DEBUG] Clearing all Ad data!");
+      clearAds();
+      return;
+    }
+
+    if (testVisitMode) {
+
+      console.warn("[WARN] Clearing all Ad visit data!");
+
+      ads.forEach(function (ad) {
+
+        ad.visitedTs = 0;
+        ad.attempts = 0
+      });
+    }
 
     for (var i = 0; i < ads.length; i++) {
 
@@ -314,9 +306,8 @@
           });
         }
       }
-    }
-    else {
-        console.warn('No title for: ', ad.targetUrl);
+    } else {
+      console.warn('No title for: ', ad.targetUrl);
     }
 
     updateAdOnSuccess(this, ad, title);
@@ -779,7 +770,7 @@
   }
 
   // Returns all ads for a page, or all pages, if page arg is null
-  // Called from µb.updateBadgeAsync() TODO: memoize?
+  // Called also from tab.js::µb.updateBadgeAsync()
   var adlist = function (pageUrl) {
 
     var result = [],
@@ -789,9 +780,14 @@
 
       if (admap[pages[i]]) {
         var hashes = Object.keys(admap[pages[i]]);
+        for (var j = 0; j < hashes.length; j++) {
 
-        for (var j = 0; j < hashes.length; j++)
-          result.push(admap[pages[i]][hashes[j]]);
+          var ad = admap[pages[i]][hashes[j]];
+
+          // ignore text-ads according to parseTextAds prefe
+          if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text'))
+            result.push(ad);
+        }
       }
     }
 
@@ -973,40 +969,6 @@
   };
 
 })();
-
-/**************************** override tab.js ****************************/
-
-/*µBlock.updateBadgeAsync = (function () {
-
-  var tabIdToTimer = Object.create(null);
-
-  var updateBadge = function (tabId) {
-
-    delete tabIdToTimer[tabId];
-
-    var state = false;
-    var badge = '';
-
-    var pageStore = this.pageStoreFromTabId(tabId);
-    if (pageStore !== null) {
-      state = pageStore.getNetFilteringSwitch();
-
-      var count = µBlock.adnauseam.adlist(pageStore.rawURL).length;
-      if (state && this.userSettings.showIconBadge) { // only if non-zero?
-        badge = this.formatCount(count);
-      }
-    }
-
-    vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
-  };
-
-  return function (tabId) {
-
-    if (tabIdToTimer[tabId] || vAPI.isBehindTheSceneTabId(tabId)) return;
-    tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 665);
-  };
-
-})();*/
 
 /****************************** messaging ********************************/
 
