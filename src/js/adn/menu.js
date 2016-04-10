@@ -33,7 +33,8 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
-    $('#main').toggleClass('disabled', dval()); // TODO: move select into dval
+    //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval
+    uDom('#main').toggleClass('disabled', dval());
 
     updateMenuState();
 
@@ -57,15 +58,24 @@
 
   var updateMenuState = function () {
 
-    if ($('#main').hasClass('disabled')) {
+    //if ($('#main').hasClass('disabled')) {
+    if(uDom('#main').hasClass('disabled')){
 
-      $('#resume-button').show();
-      $('#pause-button').hide();
+      //$('#resume-button').show();
+      uDom('#resume-button').removeClass('hide');
+      uDom('#resume-button').addClass('show');
+      //$('#pause-button').hide();
+      uDom('#pause-button').removeClass('show');
+      uDom('#pause-button').addClass('hide');
 
     } else {
 
-      $('#pause-button').show();
-      $('#resume-button').hide();
+      //$('#pause-button').show();
+      uDom('#pause-button').removeClass('hide');
+      uDom('#pause-button').addClass('show');
+      //$('#resume-button').hide();
+      uDom('#resume-button').removeClass('show');
+      uDom('#resume-button').addClass('hide');
 
     }
   }
@@ -97,7 +107,8 @@
       // update the visited count
       if (ad.pageUrl === page) {
 
-        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        //$('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        uDom('#visited-count').text(visitedCount(ads)); // **uses global ads, page
       }
     }
   }
@@ -134,8 +145,10 @@
 
   var doRecent = function (data) {
 
-    $("#alert").removeClass('hide');
-    $('#ad-list-items').addClass('recent-ads');
+    //$("#alert").removeClass('hide');
+    uDom("#alert").removeClass('hide');
+    //$('#ad-list-items').addClass('recent-ads');
+    uDom('#ad-list-items').addClass('recent-ads');
 
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
@@ -165,8 +178,10 @@
 
   var removeClassFromAll = function (cls) {
 
-    $('.ad-item').removeClass(cls);
-    $('.ad-item-text').removeClass(cls);
+    //$('.ad-item').removeClass(cls);
+    uDom('.ad-item').removeClass(cls);
+    //$('.ad-item-text').removeClass(cls);
+    uDom('.ad-item-text').removeClass(cls);
   }
 
   var setAttempting = function (ad) {
@@ -176,7 +191,8 @@
 
     if (ad) {
       if (verify(ad))
-        $('#ad' + ad.id).addClass('attempting');
+        //$('#ad' + ad.id).addClass('attempting');
+        uDom('#ad' + ad.id).addClass('attempting');
       else
         console.warn('Fail on setAttempting: ', ad);
     }
@@ -184,7 +200,7 @@
 
   var updateAdClasses = function (ad) {
 
-    var $ad = $('#ad' + ad.id);
+    var $ad = uDom('#ad' + ad.id);//$('#ad' + ad.id);
 
     // allow only one just-* at a time...
     removeClassFromAll('just-visited just-failed');
@@ -204,9 +220,12 @@
   var setCounts = function (ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
-    $('#vault-count').text(total);
-    $('#visited-count').text(visitedCount(ads));
-    $('#found-count').text(ads.length);
+    //$('#vault-count').text(total);
+    uDom('#vault-count').text(total);
+    //$('#visited-count').text(visitedCount(ads));
+    uDom('#visited-count').text(visitedCount(ads));
+    //$('#found-count').text(ads.length);
+    uDom('#found-count').text(ads.length);
   }
 
   var appendImageAd = function (ad, $items) {
@@ -378,6 +397,7 @@
     return popupData;
   };
 
+  //$('#vault-button')
   $('#vault-button').click(function () {
 
     vAPI.messaging.send(
@@ -394,7 +414,8 @@
     vAPI.closePopup();
   });
 
-  $('#settings-open').click(function () {
+  //$('#settings-open')
+  uDom('#settings-open').on('click', function () {
 
     vAPI.messaging.send(
       'default', {
@@ -410,15 +431,19 @@
     vAPI.closePopup();
   });
 
-  $('#settings-close').click(function () {
+  //$('#settings-close')
+  uDom('#settings-close').on('click', function () {
 
-    $('.page').toggleClass('hide');
-    $('.settings').toggleClass('hide');
+    //$('.page').toggleClass('hide');
+    uDom('.page').toggleClass('hide');
+    //$('.settings').toggleClass('hide');
+    uDom('.settings').toggleClass('hide');
   });
 
   var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ"; // keep
 
-  $('#about-button').click(function () {
+  //$('#about-button')
+  uDom('#about-button').on('click', function () {
 
     window.open("./popup.html", '_self');
     //window.open(AboutURL);
