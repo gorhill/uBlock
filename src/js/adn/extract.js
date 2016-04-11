@@ -14,8 +14,7 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-    //console.log('AdNaauseam.prefs:', req);
-  });
+  }); // only in root doc? or poll?
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
 

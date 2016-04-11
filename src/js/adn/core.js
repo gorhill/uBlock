@@ -423,7 +423,7 @@
     return true;
   }
 
-  var validateFields = function (ad) {
+  var validateFields = function (ad) { // no side-effects
 
     return ad && type(ad) === 'object' &&
       type(ad.pageUrl) === 'string' &&
@@ -565,7 +565,18 @@
 
     if (!ad) warn("No Ad to delete", id, admap);
 
-    delete admap[ad.pageUrl][computeHash(ad)];
+    if (admap[ad.pageUrl]) {
+
+      var hash = computeHash(ad);
+
+      if (admap[ad.pageUrl][hash]) {
+
+        delete admap[ad.pageUrl][hash];
+      }
+      else {
+          warn('Unable to find ad: ', ad, admap);
+      }
+    }
 
     if (adlist().length < count) {
 
@@ -641,8 +652,8 @@
 
     if (type(map) !== 'object') {
 
-      warn('not object: ', map);
-      return false;
+      return (type(map) === 'array') ? validateAdArray(map) :
+        warn('Import-fail: not object or array', type(map), map);
     }
 
     var ad, ads, hash, newmap = {},
@@ -668,22 +679,48 @@
 
       for (var j = 0; j < ads.length; j++) {
 
-        ad = ads[j];
+
+        ad = updateLegacyAd(ads[j]);
         hash = computeHash(ad);
 
-        if (!hash || !validateFields(ad)) {
+        if (!validateFields(ad)) {
 
           warn('Unable to validate legacy ad', ad);
           continue;
         }
 
-        newmap[pages[i]][hash] = updateLegacyAd(ad);
+        newmap[pages[i]][hash] = ad;
 
-        log('converted ad', newmap[pages[i]][hash]);
+        //log('converted ad', newmap[pages[i]][hash]);
       }
     }
 
     return newmap;
+  }
+
+  var validateAdArray = function (ads, replaceAll) {
+
+    var map = replaceAll ? {} : admap;
+
+    for (var j = 0; j < ads.length; j++) {
+
+      var ad = updateLegacyAd(ads[j]),
+        hash = computeHash(ad);
+
+      if (!validateFields(ad)) {
+
+        console.warn('Unable to validate legacy ad', ad);
+        continue;
+      }
+
+      var page = ad.pageUrl;
+      if (!map[page]) map[page] = {};
+      map[page][hash] = ad;
+
+      //console.log('converted ad', map[page][hash]);
+    }
+
+    return map;
   }
 
   var updateLegacyAd = function (ad) {
@@ -784,7 +821,8 @@
   var importAds = function (request) {
 
     // try to parse imported ads in current format
-    var legacy, map = validateImport(request.data);
+    var count = adlist().length,
+      map = validateImport(request.data);
 
     if (!map) {
 
@@ -982,6 +1020,8 @@
   'use strict';
 
   vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
+
+    //console.log("MSG: "+request.what);
 
     switch (request.what) {
       default: break;

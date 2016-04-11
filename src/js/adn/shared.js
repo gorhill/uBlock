@@ -4,14 +4,17 @@
 
 var log = function () {
   console.log.apply(console, arguments);
+  return true;
 }
 
 var warn = function () {
   console.warn.apply(console, arguments);
+  return false;
 }
 
 var err = function () {
   console.error.apply(console, arguments);
+  return false;
 }
 
 var rand = function (min, max) {
