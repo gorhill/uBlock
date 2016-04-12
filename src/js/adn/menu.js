@@ -33,14 +33,16 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
-    $("#alert").addClass('hide'); // reset state
-    $('#main').toggleClass('disabled', dval());
+    //$("#alert").addClass('hide'); // reset state
+    uDom("#alert").addClass('hide'); // reset state
+    //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval
+    uDom('#main').toggleClass('disabled', dval());
 
     updateMenuState();
 
     setCounts(ads, json.data.length);
 
-    var $items = $('#ad-list-items');
+    var $items = uDom('#ad-list-items');//$('#ad-list-items');
 
     $items.removeClass().empty();
 
@@ -58,15 +60,24 @@
 
   var updateMenuState = function () {
 
-    if ($('#main').hasClass('disabled')) {
+    //if ($('#main').hasClass('disabled')) {
+    if(uDom('#main').hasClass('disabled')){
 
-      $('#resume-button').show();
-      $('#pause-button').hide();
+      //$('#resume-button').show();
+      uDom('#resume-button').removeClass('hide');
+      uDom('#resume-button').addClass('show');
+      //$('#pause-button').hide();
+      uDom('#pause-button').removeClass('show');
+      uDom('#pause-button').addClass('hide');
 
     } else {
 
-      $('#pause-button').show();
-      $('#resume-button').hide();
+      //$('#pause-button').show();
+      uDom('#pause-button').removeClass('hide');
+      uDom('#pause-button').addClass('show');
+      //$('#resume-button').hide();
+      uDom('#resume-button').removeClass('show');
+      uDom('#resume-button').addClass('hide');
 
     }
   }
@@ -90,15 +101,19 @@
       var $ad = updateAdClasses(ad);
 
       // update the title
-      $ad.find('.title').text(getTitle(ad));
+      //$ad.find('.title').text(getTitle(ad));
+      $ad.descendants('.title').text(getTitle(ad));
 
       // update the url
-      $ad.find('cite').text(targetDomain(ad));
+      //$ad.find('cite').text(targetDomain(ad));
+      $ad.descendants('cite').text(targetDomain(ad));
+
 
       // update the visited count
       if (ad.pageUrl === page) {
 
-        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        //$('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        uDom('#visited-count').text(visitedCount(ads)); // **uses global ads, page
       }
     }
   }
@@ -135,8 +150,10 @@
 
   var doRecent = function (data) {
 
-    $("#alert").removeClass('hide');
-    $('#ad-list-items').addClass('recent-ads');
+    //$("#alert").removeClass('hide');
+    uDom("#alert").removeClass('hide');
+    //$('#ad-list-items').addClass('recent-ads');
+    uDom('#ad-list-items').addClass('recent-ads');
 
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
@@ -166,8 +183,10 @@
 
   var removeClassFromAll = function (cls) {
 
-    $('.ad-item').removeClass(cls);
-    $('.ad-item-text').removeClass(cls);
+    //$('.ad-item').removeClass(cls);
+    uDom('.ad-item').removeClass(cls);
+    //$('.ad-item-text').removeClass(cls);
+    uDom('.ad-item-text').removeClass(cls);
   }
 
   var setAttempting = function (ad) {
@@ -177,7 +196,8 @@
 
     if (ad) {
       if (verify(ad))
-        $('#ad' + ad.id).addClass('attempting');
+        //$('#ad' + ad.id).addClass('attempting');
+        uDom('#ad' + ad.id).addClass('attempting');
       else
         console.warn('Fail on setAttempting: ', ad);
     }
@@ -185,7 +205,7 @@
 
   var updateAdClasses = function (ad) {
 
-    var $ad = $('#ad' + ad.id);
+    var $ad = uDom('#ad' + ad.id);//$('#ad' + ad.id);
 
     // allow only one just-* at a time...
     removeClassFromAll('just-visited just-failed');
@@ -205,50 +225,75 @@
   var setCounts = function (ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
-    $('#vault-count').text(total);
-    $('#visited-count').text(visitedCount(ads));
-    $('#found-count').text(ads.length);
+    //$('#vault-count').text(total);
+    uDom('#vault-count').text(total);
+    //$('#visited-count').text(visitedCount(ads));
+    uDom('#visited-count').text(visitedCount(ads));
+    //$('#found-count').text(ads.length);
+    uDom('#found-count').text(ads.length);
   }
 
   var appendImageAd = function (ad, $items) {
 
-    var $a, $span, $li = $('<li/>', {
+    var $img, $a, $span, $li = uDom(document.createElement('li'))
+    .attr('id','ad' + ad.id)
+    .addClass(('ad-item ' + visitedClass(ad)).trim());
+
+    /*$('<li/>', {
 
       'id': 'ad' + ad.id,
       'class': ('ad-item ' + visitedClass(ad)).trim()
-    });
+    });*/
 
-    $a = $('<a/>', {
+    $a = uDom(document.createElement('a'))
+    .attr('target','new')
+    .attr('href',ad.targetUrl);
+
+    /*$('<a/>', {
 
       'target': 'new',
       'href': ad.targetUrl
-    });
+    });*/
 
-    $span = $('<span/>', {
+    $span = uDom(document.createElement('span')).addClass('thumb');
+    $span.appendTo($a);
+    /*$span = $('<span/>', {
       'class': 'thumb'
-    });
+    });*/
+    $img = uDom(document.createElement('img'))
+    .attr('src',(ad.contentData.src || ad.contentData))
+    .addClass('ad-item-img')
+    .on('click',"this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
 
-    $('<img/>', {
+    $img.appendTo($span);
+    /*$('<img/>', {
 
       'src': (ad.contentData.src || ad.contentData),
       'class': 'ad-item-img',
       'onerror': "this.onerror=null; this.width=50; " +
         "this.height=45; this.src='img/placeholder.svg'",
 
-    }).appendTo($span);
+    }).appendTo($span);*/
 
     $span.appendTo($a);
 
-    $('<span/>', {
+    /*$('<span/>', {
 
       'class': 'title',
       'text': (ad.title ? ad.title : "#" + ad.id)
 
-    }).appendTo($a);
+    }).appendTo($a);*/
+    uDom(document.createElement('span'))
+    .addClass('title')
+    .text(ad.title ? ad.title : "#" + ad.id)
+    .appendTo($a);
 
-    $('<cite/>', {
+    /*$('<cite/>', {
       'text': targetDomain(ad)
-    }).appendTo($a);
+    }).appendTo($a);*/
+    uDom(document.createElement('cite'))
+    .text(targetDomain(ad))
+    .appendTo($a);
 
     $a.appendTo($li);
     $li.appendTo($items);
@@ -256,46 +301,62 @@
 
   var appendTextAd = function (ad, $items) {
 
-    var $cite, $h3, $li = $('<li/>', {
+    var $cite, $h3, $li = uDom(document.createElement('li'))
+    .attr('id','ad' + ad.id)
+    .addClass(('ad-item-text ' + visitedClass(ad)).trim());
+
+    /*$('<li/>', {
 
       'id': 'ad' + ad.id,
       'class': ('ad-item-text ' + visitedClass(ad)).trim()
-    });
-
-    $('<span/>', {
+    });*/
+    uDom(document.createElement('span'))
+    .addClass('thumb')
+    .text('Text Ad').appendTo($li);
+    /*$('<span/>', {
 
       'class': 'thumb',
       'text': 'Text Ad'
 
-    }).appendTo($li);
+    }).appendTo($li);*/
 
-    $h3 = $('<h3/>');
+    $h3 = uDom(document.createElement('h3'));
+    //$('<h3/>');
 
-    $('<a/>', {
+    uDom(document.createElement('a'))
+    .attr('target','new')
+    .attr('href',ad.targetUrl)
+    .addClass('title')
+    .text(ad.title).appendTo($h3);
+    /*$('<a/>', {
 
       'target': 'new',
       'class': 'title',
       'href': ad.targetUrl,
       'text': ad.title
 
-    }).appendTo($h3);
+    }).appendTo($h3);*/
 
     $h3.appendTo($li);
 
-    $cite = $('<cite/>', {
+    /*$cite = $('<cite/>', {
       'text': ad.contentData.site
-    });
+    });*/
+    $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
 
     $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
 
     $cite.appendTo($li);
 
-    $('<div/>', {
+    uDom(document.createElement('div'))
+    .addClass('ads-creative')
+    .text(ad.contentData.text).appendTo($li);
+    /*$('<div/>', {
 
       'class': 'ads-creative',
       'text': ad.contentData.text
 
-    }).appendTo($li);
+    }).appendTo($li);*/
 
     $li.appendTo($items);
   }
@@ -379,7 +440,8 @@
     return popupData;
   };
 
-  $('#vault-button').click(function () {
+  //$('#vault-button').click(
+  uDom('#vault-button').on('click', function () {
 
     vAPI.messaging.send(
       'default', {
@@ -390,12 +452,13 @@
           index: -1
         }
       }
-    );
+    )
 
     vAPI.closePopup();
   });
 
-  $('#settings-open').click(function () {
+  //$('#settings-open')
+  uDom('#settings-open').on('click', function () {
 
     vAPI.messaging.send(
       'default', {
@@ -411,15 +474,19 @@
     vAPI.closePopup();
   });
 
-  $('#settings-close').click(function () {
+  //$('#settings-close')
+  uDom('#settings-close').on('click', function () {
 
-    $('.page').toggleClass('hide');
-    $('.settings').toggleClass('hide');
+    //$('.page').toggleClass('hide');
+    uDom('.page').toggleClass('hide');
+    //$('.settings').toggleClass('hide');
+    uDom('.settings').toggleClass('hide');
   });
 
   var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ"; // keep
 
-  $('#about-button').click(function () {
+  //$('#about-button')
+  uDom('#about-button').on('click', function () {
 
     window.open("./popup.html", '_self');
     //window.open(AboutURL);
