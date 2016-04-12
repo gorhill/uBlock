@@ -14,7 +14,7 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-  }); // only in root doc? or poll?
+  }); // only in root doc? or poll? or put prefs in vAPI
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
@@ -86,7 +86,8 @@ var dbugDetect = 0; // tmp
 
       var body = $find(doc, 'body');
       var imgs = body.length && $find(body, 'img');
-      if (dbugDetect); console.warn("IFRAME.IMGS:", imgs.length);
+      if (dbugDetect);
+      console.warn("IFRAME.IMGS:", imgs.length);
       findImageAds(imgs);
 
     } else {
