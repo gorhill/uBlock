@@ -33,7 +33,8 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
-    $('#main').toggleClass('disabled', dval()); // TODO: move select into dval
+    $("#alert").addClass('hide'); // reset state
+    $('#main').toggleClass('disabled', dval());
 
     updateMenuState();
 
