@@ -109,7 +109,7 @@
 
     function hoverOnDiv(e) { // on
 
-      var $this = $(this);
+      var $this = uDom(this);
 
       if ($this.hasClass('inspected')) {
 
@@ -338,7 +338,7 @@
     uDom(document.createElement('cite'))
     .attr('id','target-domain')
     .addClass('target-cite')
-    .text(argetDomain(ad))
+    .text(targetDomain(ad))
     .appendTo($target);
 
     /*$('<cite/>', {
@@ -381,7 +381,7 @@
   function bulletIndex($div, adset) { // adset.index must be updated first
 
     var $bullet = //$div.find('.bullet[data-idx=' + (adset.index) + ']'),
-      $div.descendants('.bullet[data-idx=' + (adset.index) + ']'),
+      $div.descendants('.bullet[data-idx=\'' + (adset.index) + '\']'),
       state = adset.state(),
       $ul;
 
@@ -392,7 +392,9 @@
 
     // set the active class for bullet
     $bullet.addClass('active')
-      .siblings().removeClass('active');
+      //.siblings().removeClass('active');
+      .descendants('.bullet[data-idx=\'' + (adset.index) + '\']')
+      .removeClass('active');
 
     // shift the meta-list to show correct info
     $ul = $div.descendants('.meta-list');
@@ -444,7 +446,7 @@
 
     var $img = uDom(document.createElement('img'))
     .attr('src', adset.child(0).contentData.src)
-    .attr('onerror',"this.onerror=null; this.width=80; this.height=40; " +
+    .on('onerror',"this.onerror=null; this.width=80; this.height=40; " +
       "this.alt='unable to load image'; this.src='img/placeholder.svg'")
     .appendTo($ad);
 
@@ -1038,7 +1040,7 @@
 
   function findItemDivByGid(gid) {
 
-    var $item, items = uDom('.item');
+    var $item, items = $('.item');
     for (var i = 0; i < items.length; i++) {
 
       $item = $(items[i]);
@@ -1223,9 +1225,8 @@
       // if a context-menu element is right-clicked
       uDom(".custom-menu li").on("click", function () {
 
-        if (!selectedAdSet) {
-
-          error("No selectedAdSet!");
+        if (!selectedAdSet) {          
+          console.error("No selectedAdSet!");
           return;
         }
 
