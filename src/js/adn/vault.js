@@ -729,9 +729,9 @@
 
     if (EnableContextMenu) {
 
-      $('.item').bind("contextmenu", function (e) {
+      uDom('.item').on("contextmenu", function (e) {
 
-        var $this = $(this);
+        var $this = uDom(this);
 
         if (!$this.hasClass('inspected')) {
 
