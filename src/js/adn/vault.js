@@ -675,20 +675,20 @@
 
   function dragStart(e) {
 
-    var x = parseInt(uDom(this).css("margin-left"), 10) - e.originalEvent.clientX,
-      y = parseInt(uDom(this).css("margin-top"), 10) - e.originalEvent.clientY;
+    var x = parseInt(uDom(this).css("margin-left"), 10) - e.clientX,
+      y = parseInt(uDom(this).css("margin-top"), 10) - e.clientY;
 
-    e.originalEvent.dataTransfer.setData("text/plain", x + ',' + y);
+    e.dataTransfer.setData("text/plain", x + ',' + y);
 
     uDom(this).addClass('dragged');
   }
 
   function dragOver(e) {
 
-    var offset = e.originalEvent.dataTransfer.getData("text/plain").split(',');
+    var offset = e.dataTransfer.getData("text/plain").split(',');
 
-    uDom(this).css("marginLeft", e.originalEvent.clientX + parseInt(offset[0], 10));
-    uDom(this).css("marginTop", e.originalEvent.clientY + parseInt(offset[1], 10));
+    uDom(this).css("margin-left", e.clientX + parseInt(offset[0], 10));
+    uDom(this).css("margin-top", e.clientY + parseInt(offset[1], 10));
   }
 
   function dragEnd() {
