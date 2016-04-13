@@ -185,7 +185,7 @@
     uDom('.item').removeClass('attempting just-visited just-failed');
 
     // update the ad data
-    updateMetaTarget($item.find('.target[data-idx=' + adset.index + ']'), updated);
+    updateMetaTarget($item.descendants('.target[data-idx=\'' + adset.index + '\']'), updated);
 
     // update the class
     $item.addClass(updated.visitedTs > 0 ? 'just-visited' : 'just-failed');
@@ -366,9 +366,9 @@
 
   function updateMetaTarget($target, ad) {
 
-    $target.find('#target-domain').text(targetDomain(ad));
-    $target.find('#target-date').text(formatDate(ad.visitedTs));
-    var $titleA = $target.find('#target-title').text(ad.title);
+    $target.descendants('#target-domain').text(targetDomain(ad));
+    $target.descendants('#target-date').text(formatDate(ad.visitedTs));
+    var $titleA = $target.descendants('#target-title').text(ad.title);
     if (ad.resolvedTargetUrl)
       $titleA.attr('href', ad.resolvedTargetUrl);
   }
@@ -1040,12 +1040,11 @@
 
   function findItemDivByGid(gid) {
 
-    var $item, items = $('.item');
+    var $item, items = uDom('.item');
     for (var i = 0; i < items.length; i++) {
-
-      $item = $(items[i]);
-      if (parseInt($item.attr('data-gid')) === gid)
-        return $item;
+      $item = items.nodeAt(i);
+      if (parseInt($item.getAttribute('data-gid')) === gid)
+        return uDom($item);
     }
 
     return null; // item may not be available if filtered
@@ -1225,7 +1224,7 @@
       // if a context-menu element is right-clicked
       uDom(".custom-menu li").on("click", function () {
 
-        if (!selectedAdSet) {          
+        if (!selectedAdSet) {
           console.error("No selectedAdSet!");
           return;
         }
@@ -1267,7 +1266,7 @@
         selectedAdSet = null;
 
         //$(".custom-menu").hide(100); // close context-menu
-        uDom(".custom-menu").addClass('hide');
+        uDom(".custom-menu").css("display","none");//.addClass('hide');
       });
     }
 
