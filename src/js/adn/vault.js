@@ -761,8 +761,8 @@
 
     var i = 0,
       percentVis = 0.6,
-      winW = $(window).width(),
-      winH = $('#svgcon').offset().top;
+      winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, //$(window).width(),
+      winH = uDom.nodeFromId('svgcon').offsetTop;//$('#svgcon').offset().top;
 
     while (i < items.length) {
 
@@ -1365,7 +1365,7 @@
     var done = false,
       $items = $(".item"),
       visible = $items.length,
-      $container = $('#container');
+      $container = uDom.nodeFromId('container');//$('#container');
 
     setTimeout(function () {
       if (!done) //$('#loading-img').show();
