@@ -674,21 +674,20 @@
   }
 
   function dragStart(e) {
-
-    var x = parseInt(uDom(this).css("margin-left"), 10) - e.clientX,
-      y = parseInt(uDom(this).css("margin-top"), 10) - e.clientY;
+    //this.style.marginLeft/marginTop don't seem to work, only jQuery
+    var x = parseInt($(this).css("margin-left"), 10) - e.clientX,
+      y = parseInt($(this).css("margin-top"), 10) - e.clientY;
 
     e.dataTransfer.setData("text/plain", x + ',' + y);
 
-    uDom(this).addClass('dragged');
+    $(this).addClass('dragged');
   }
 
   function dragOver(e) {
 
     var offset = e.dataTransfer.getData("text/plain").split(',');
-
-    uDom(this).css("margin-left", e.clientX + parseInt(offset[0], 10));
-    uDom(this).css("margin-top", e.clientY + parseInt(offset[1], 10));
+    $(this).css("margin-left", e.clientX + parseInt(offset[0], 10));
+    $(this).css("margin-top", e.clientY + parseInt(offset[1], 10));
   }
 
   function dragEnd() {
@@ -804,11 +803,11 @@
         $this.attr('data-gid') + ', using ' + iw + 'x' + ih);
     }
 
-    var $dm = uDom('#container');
+    var $dm = uDom.nodeFromId('container');
 
     // compute offset of dragged container
-    var dragoffX = -5000 - parseInt($dm.css('margin-left')),
-      dragoffY = -5000 - parseInt($dm.css('margin-top'));
+    var dragoffX = -5000 - parseInt($dm.style.marginLeft),
+      dragoffY = -5000 - parseInt($dm.style.marginTop);
 
     // compute offset of item-center from (dragged) window-center
     var pos = {
