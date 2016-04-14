@@ -6,19 +6,31 @@
 #    $ brew install homebrew/dupes/grep --with-default-names
 #
 
-#set -e
+# fix-filenames.pl
 
-# replace spaces with underscores
-#find . -name "* *" -type f | rename 's/ +/_/g'
+mkdir -p other
 
 for f in *; do 
+
+    if [ -d "$f" ]
+    then
+      echo Skipping directory \'$f\'
+      continue
+    fi
+
+    if [ ${f: -4} == ".svg" ]
+    then
+      echo Skipping svg \'$f\'
+      continue
+    fi
+
     type=$( file "$f" | grep -oP '\w+(?= image data)' )
     #echo checking $f $type
     case $type in  
         PNG)  newext=png ;; 
         GIF)  newext=gif ;; 
         JPEG) newext=jpg ;; 
-        *)    echo "*** SKIPPING $f ($( file "$f" | awk '{print $2;}' ))"; continue ;; 
+        *)    echo "*** Moving $f ($( file "$f" | awk '{print $2;}' ))"; mv $f other/; continue ;; 
     esac
 
     ext=${f##*.}   # remove ext
