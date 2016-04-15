@@ -39,6 +39,10 @@
     "message":"暫停 Adnauseam",
     "description":"appears in ADN popup menu"
   },
+  "adnMenuResume": {
+    "message": "恢復 Adnauseam",
+    "description": "appears in ADN popup menu"
+  },
   "adnMenuSettings":{
     "message":"設定",
     "description":"appears in ADN popup menu"
