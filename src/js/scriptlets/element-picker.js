@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CSS */
+/* global CSS, CSSImportRule, CSSStyleRule */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -265,14 +265,55 @@ var highlightElements = function(elems, force) {
 
 /******************************************************************************/
 
-var removeElements = function(elems) {
-    var i = elems.length, elem;
+var filterElements = function(filter) {
+    var items = elementsFromFilter(filter);
+    var i = items.length, item;
     while ( i-- ) {
-        elem = elems[i];
-        if ( elem.parentNode ) {
-            elem.parentNode.removeChild(elem);
+        item = items[i];
+        if (
+            item.type === 'cosmetic' ||
+            item.type === 'network' && item.src !== undefined
+        ) {
+            item.elem.style.setProperty('display', 'none', 'important');
+        }
+        if ( item.type === 'network' && item.style === 'background-image' ) {
+            item.elem.style.setProperty('background-image', 'none', 'important');
         }
     }
+};
+
+/******************************************************************************/
+
+var urlFromCSSPropertyValue = function(value) {
+    var matches = /^url\((["']?)([^"']+)\1\)$/.exec(value);
+    return matches !== null && matches.length === 3 ? matches[2] : '';
+};
+
+/******************************************************************************/
+
+var backgroundImageURLFromElement = function(elem) {
+    var style = window.getComputedStyle(elem);
+    var bgImg = style.backgroundImage || '';
+    return bgImg !== '' ? urlFromCSSPropertyValue(bgImg) : '';
+};
+
+/******************************************************************************/
+
+var resourceURLFromElement = function(elem) {
+    var tagName = elem.localName, s;
+    if ( (s = netFilter1stSources[tagName]) ) {
+        s = elem[s];
+        if ( typeof s === 'string' && s !== '' ) {
+            return s;
+        }
+    }
+    if ( (s = netFilter2ndSources[tagName]) ) {
+        s = elem[s];
+        if ( typeof s === 'string' && s !== '' ) {
+            return s;
+        }
+    }
+    return backgroundImageURLFromElement(elem);
 };
 
 /******************************************************************************/
@@ -332,7 +373,10 @@ var netFilterFromUnion = (function() {
         }
         from = fromTokens.join('').replace(/\*\*+/g, '*');
         if ( from !== '/*' && from !== to ) {
-            out.push('||' + lastNetFilterHostname + from);
+            var filter = '||' + lastNetFilterHostname + from;
+            if ( out.indexOf(filter) === -1 ) {
+                out.push(filter);
+            }
         } else {
             from = to;
         }
@@ -362,17 +406,11 @@ var netFilterFromElement = function(elem, out) {
     if ( elem.nodeType !== 1 ) {
         return;
     }
-    var tagName = elem.tagName.toLowerCase();
-    if ( netFilter1stSources.hasOwnProperty(tagName) === false ) {
+    var src = resourceURLFromElement(elem);
+    if ( src === '' ) {
         return;
     }
-    var src = elem[netFilter1stSources[tagName]];
-    if ( typeof src !== 'string' || src.length === 0 ) {
-        src = elem[netFilter2ndSources[tagName]];
-        if ( typeof src !== 'string' || src.length === 0 ) {
-            return;
-        }
-    }
+
     // Remove fragment
     var pos = src.indexOf('#');
     if ( pos !== -1 ) {
@@ -395,14 +433,25 @@ var netFilterFromElement = function(elem, out) {
 };
 
 var netFilter1stSources = {
+     'audio': 'src',
      'embed': 'src',
     'iframe': 'src',
        'img': 'src',
-    'object': 'data'
+    'object': 'data',
+     'video': 'src'
 };
 
 var netFilter2ndSources = {
        'img': 'srcset'
+};
+
+var filterTypes = {
+     'audio': 'media',
+     'embed': 'object',
+    'iframe': 'subdocument',
+       'img': 'image',
+    'object': 'object',
+     'video': 'media',
 };
 
 /******************************************************************************/
@@ -505,12 +554,36 @@ var cosmeticFilterFromElement = function(elem, out) {
 
 /******************************************************************************/
 
-var filtersFromElement = function(elem) {
+var filtersFrom = function(x, y) {
     netFilterCandidates.length = 0;
     cosmeticFilterCandidates.length = 0;
+
+    // This is to prevent revisiting the same element more than once.
+    var visited = typeof Set === 'function' ?
+        new Set() :
+        {
+            add: function() {},
+            has: function() { return true; }
+        };
+
+    // We need at least one element.
+    var first = null;
+    if ( typeof x === 'number' ) {
+        first = elementFromPoint(x, y);
+    } else if ( x instanceof HTMLElement ) {
+        first = x;
+        x = undefined;
+    }
+    if ( first === null ) {
+        return 0;
+    }
+
+    // Extract filter candidates from self and all ancestors.
+    var elem = first;
     while ( elem && elem !== document.body ) {
         netFilterFromElement(elem, netFilterCandidates);
         cosmeticFilterFromElement(elem, cosmeticFilterCandidates);
+        visited.add(elem);
         elem = elem.parentNode;
     }
     // The body tag is needed as anchor only when the immediate child
@@ -518,6 +591,72 @@ var filtersFromElement = function(elem) {
     var i = cosmeticFilterCandidates.length;
     if ( i !== 0 && cosmeticFilterCandidates[i-1].indexOf(':nth-of-type(') !== -1 ) {
         cosmeticFilterCandidates.push('##body');
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1545
+    // Extract filter candidates from all elements found at point (x, y).
+    if ( typeof x === 'number' ) {
+        var attrName = vAPI.sessionId + '-clickblind';
+        var previous;
+        elem = first;
+        for (;;) {
+            previous = elem;
+            elem.setAttribute(attrName, '');
+            elem = elementFromPoint(x, y, true);
+            if ( elem === null || elem === previous ) {
+                break;
+            }
+            if ( visited.has(elem) === false ) {
+                netFilterFromElement(elem, netFilterCandidates);
+                visited.add(elem);
+            }
+        }
+        var elems = document.querySelectorAll('[' + attrName + ']');
+        i = elems.length;
+        while ( i-- ) {
+            elems[i].removeAttribute(attrName);
+        }
+    }
+
+    return netFilterCandidates.length + cosmeticFilterCandidates.length;
+};
+
+/******************************************************************************/
+
+var elementsFromStylesheet = function(sheet, reURL, out) {
+    var rules = sheet.rules;
+    if ( !rules ) {
+        return;
+    }
+    var iRule = rules.length;
+    var rule, value, src, elems, iElem;
+    while ( iRule-- ) {
+        rule = rules[iRule];
+        if ( rule instanceof CSSImportRule ) {
+            elementsFromStylesheet(rule.styleSheet, reURL, out);
+            continue;
+        }
+        if ( rule instanceof CSSStyleRule === false ) {
+            continue;
+        }
+        value = rule.style.backgroundImage;
+        if ( value.lastIndexOf('url(', 0) !== 0 ) {
+            continue;
+        }
+        src = urlFromCSSPropertyValue(value);
+        if ( reURL.test(src) === false ) {
+            continue;
+        }
+        elems = document.querySelectorAll(rule.selectorText);
+        iElem = elems.length;
+        while ( iElem-- ) {
+            out.push({
+                type: 'network',
+                elem: elems[iElem],
+                style: 'background-image',
+                opts: 'image'
+            });
+        }
     }
 };
 
@@ -537,11 +676,20 @@ var elementsFromFilter = function(filter) {
     // One idea is to normalize all a[href] on the page, but for now I will
     // wait and see, as I prefer to refrain from tampering with the page
     // content if I can avoid it.
+    var elems, iElem, elem;
     if ( filter.lastIndexOf('##', 0) === 0 ) {
         try {
-            out = document.querySelectorAll(filter.slice(2));
+            elems = document.querySelectorAll(filter.slice(2));
         }
         catch (e) {
+            elems = [];
+        }
+        iElem = elems.length;
+        while ( iElem-- ) {
+            out.push({
+                type: 'cosmetic',
+                elem: elems[iElem],
+            });
         }
         return out;
     }
@@ -577,37 +725,68 @@ var elementsFromFilter = function(filter) {
     var reFilter = null;
     try {
         reFilter = new RegExp(reStr);
-    } catch (e) {
+    }
+    catch (e) {
         return out;
     }
 
+    // Lookup by tag names.
     var src1stProps = netFilter1stSources;
     var src2ndProps = netFilter2ndSources;
-    var elems = document.querySelectorAll(Object.keys(src1stProps).join());
-    var i = elems.length;
-    var elem, src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem[src1stProps[elem.localName]];
+    var srcProp, src;
+    elems = document.querySelectorAll(Object.keys(src1stProps).join());
+    iElem = elems.length;
+    while ( iElem-- ) {
+        elem = elems[iElem];
+        srcProp = src1stProps[elem.localName];
+        src = elem[srcProp];
         if ( typeof src !== 'string' || src.length === 0 ) {
-            src = elem[src2ndProps[elem.localName]];
+            srcProp = src2ndProps[elem.localName];
+            src = elem[srcProp];
         }
         if ( src && reFilter.test(src) ) {
-            out.push(elem);
+            out.push({
+                type: 'network',
+                elem: elem,
+                src: srcProp,
+                opts: filterTypes[elem.localName],
+            });
         }
     }
+
+    // Lookup by inline-styled background image.
+    elems = document.querySelectorAll('[style*="background-image"]');
+    iElem = elems.length;
+    while ( iElem-- ) {
+        elem = elems[iElem];
+        if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
+            out.push({
+                type: 'network',
+                elem: elem,
+                style: 'background-image',
+                opts: 'image',
+            });
+        }
+    }
+
+    // Lookup by stylesheet-styled background image.
+    var sheets = document.styleSheets;
+    var iSheet = sheets.length;
+    while ( iSheet-- ) {
+        elementsFromStylesheet(sheets[iSheet], reFilter, out);
+    }
+
     return out;
 };
 
-// https://www.youtube.com/watch?v=YI2XuIOW3gM
+// https://www.youtube.com/watch?v=nuUXJ6RfIik
 
 /******************************************************************************/
 
 var userFilterFromCandidate = function() {
     var v = taCandidate.value;
-
-    var elems = elementsFromFilter(v);
-    if ( elems.length === 0 ) {
+    var items = elementsFromFilter(v);
+    if ( items.length === 0 ) {
         return false;
     }
 
@@ -623,19 +802,34 @@ var userFilterFromCandidate = function() {
         return hostname + v;
     }
 
-    // If domain included in filter, no need for domain option
-    if ( v.lastIndexOf('||', 0) === 0 ) {
-        return v;
+    // Assume net filter
+    var opts = [];
+
+    // If no domain included in filter, we need domain option
+    if ( v.lastIndexOf('||', 0) === -1 ) {
+        opts.push('domain=' + hostname);
     }
 
-    // Assume net filter
-    return v + '$domain=' + hostname;
+    var item = items[0];
+    if ( item.opts ) {
+        opts.push(item.opts);
+    }
+
+    if ( opts.length ) {
+        v += '$' + opts.join(',');
+    }
+
+    return v;
 };
 
 /******************************************************************************/
 
 var onCandidateChanged = function() {
-    var elems = elementsFromFilter(taCandidate.value);
+    var elems = [];
+    var items = elementsFromFilter(taCandidate.value);
+    for ( var i = 0; i < items.length; i++ ) {
+        elems.push(items[i].elem);
+    }
     dialog.querySelector('#create').disabled = elems.length === 0;
     highlightElements(elems);
 };
@@ -705,7 +899,7 @@ var onDialogClicked = function(ev) {
                     filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
                 }
             );
-            removeElements(elementsFromFilter(taCandidate.value));
+            filterElements(taCandidate.value);
             stopPicker();
         }
     }
@@ -789,13 +983,16 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var elementFromPoint = function(x, y) {
+var elementFromPoint = function(x, y, includeBody) {
     if ( !pickerRoot ) {
         return null;
     }
     pickerRoot.style.pointerEvents = 'none';
     var elem = document.elementFromPoint(x, y);
-    if ( elem === document.body || elem === document.documentElement ) {
+    if (
+        elem === document.body && !includeBody ||
+        elem === document.documentElement
+    ) {
         elem = null;
     }
     pickerRoot.style.pointerEvents = '';
@@ -834,12 +1031,9 @@ var onSvgClicked = function(ev) {
         unpausePicker();
         return;
     }
-
-    var elem = elementFromPoint(ev.clientX, ev.clientY);
-    if ( elem === null ) {
+    if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
-    filtersFromElement(elem);
     showDialog();
 };
 
@@ -962,13 +1156,9 @@ var startPicker = function(details) {
 
     highlightElements([], true);
 
-    var elem;
-
     // Try using mouse position
     if ( details.clientX !== -1 ) {
-        elem = elementFromPoint(details.clientX, details.clientY);
-        if ( elem !== null ) {
-            filtersFromElement(elem);
+        if ( filtersFrom(details.clientX, details.clientY) !== 0 ) {
             showDialog();
             return;
         }
@@ -982,11 +1172,11 @@ var startPicker = function(details) {
     }
     var srcAttrMap = {
         'a': 'href',
-        'img': 'src',
-        'iframe': 'src',
+        'audio': 'src',
         'embed': 'src',
+        'iframe': 'src',
+        'img': 'src',
         'video': 'src',
-        'audio': 'src'
     };
     var tagName = target.slice(0, pos);
     var url = target.slice(pos + 1);
@@ -996,7 +1186,7 @@ var startPicker = function(details) {
     }
     var elems = document.querySelectorAll(tagName + '[' + attr + ']');
     var i = elems.length;
-    var src;
+    var elem, src;
     while ( i-- ) {
         elem = elems[i];
         src = elem[attr];
@@ -1010,7 +1200,7 @@ var startPicker = function(details) {
             behavior: 'smooth',
             block: 'start'
         });
-        filtersFromElement(elem);
+        filtersFrom(elem);
         showDialog({ modifier: true });
         return;
     }
@@ -1041,13 +1231,21 @@ pickerRoot.style.cssText = [
     'outline: 0',
     'z-index: 2147483647',
     ''
-].join('!important; ');
+].join('!important;');
 
 // https://github.com/gorhill/uBlock/issues/1529
 // In addition to inline styles, harden the element picker styles by using
 // a dedicated style tag.
 pickerStyle = document.createElement('style');
-pickerStyle.textContent = '#' + pickerRoot.id + ' { ' + pickerRoot.style.cssText + ' }';
+pickerStyle.textContent = [
+    '#' + vAPI.sessionId + ' {',
+        pickerRoot.style.cssText,
+    '}',
+    '[' + vAPI.sessionId + '-clickblind] {',
+        'pointer-events: none !important;',
+    '}',
+    ''
+].join('\n');
 document.documentElement.appendChild(pickerStyle);
 
 pickerRoot.onload = function() {
