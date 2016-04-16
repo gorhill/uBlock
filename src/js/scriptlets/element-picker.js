@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CSS, CSSImportRule, CSSStyleRule */
+/* global CSS */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -133,7 +133,7 @@ var pickerRoot = document.getElementById(vAPI.sessionId);
 if ( pickerRoot ) {
     return;
 }
-
+var pickerBody = null;
 var pickerStyle = null;
 var svgOcean = null;
 var svgIslands = null;
@@ -145,6 +145,9 @@ var netFilterCandidates = [];
 var cosmeticFilterCandidates = [];
 
 var targetElements = [];
+var candidateElements = [];
+var bestCandidateFilter = null;
+var previewedElements = [];
 
 var lastNetFilterSession = window.location.host + window.location.pathname;
 var lastNetFilterHostname = '';
@@ -267,26 +270,51 @@ var highlightElements = function(elems, force) {
 
 var filterElements = function(filter) {
     var items = elementsFromFilter(filter);
-    var i = items.length, item;
+    var i = items.length, item, elem, style;
     while ( i-- ) {
         item = items[i];
+        elem = item.elem;
+        style = elem.style;
         if (
             item.type === 'cosmetic' ||
             item.type === 'network' && item.src !== undefined
         ) {
-            item.elem.style.setProperty('display', 'none', 'important');
+            previewedElements.push({
+                elem: elem,
+                prop: 'display',
+                value: style.display
+            });
+            style.display = 'none';
         }
         if ( item.type === 'network' && item.style === 'background-image' ) {
-            item.elem.style.setProperty('background-image', 'none', 'important');
+            previewedElements.push({
+                elem: elem,
+                prop: 'background-image',
+                value: style.backgroundImage
+                });
+            style.backgroundImage = 'none';
         }
     }
 };
 
 /******************************************************************************/
 
-var urlFromCSSPropertyValue = function(value) {
-    var matches = /^url\((["']?)([^"']+)\1\)$/.exec(value);
-    return matches !== null && matches.length === 3 ? matches[2] : '';
+var preview = function(filter) {
+    filterElements(filter);
+    pickerBody.classList.add('preview');
+};
+
+/******************************************************************************/
+
+var unpreview = function() {
+    var items = previewedElements;
+    var i = items.length, item;
+    while ( i-- ) {
+        item = items[i];
+        item.elem.style[item.prop] = item.value;
+    }
+    previewedElements.length = 0;
+    pickerBody.classList.remove('preview');
 };
 
 /******************************************************************************/
@@ -294,7 +322,8 @@ var urlFromCSSPropertyValue = function(value) {
 var backgroundImageURLFromElement = function(elem) {
     var style = window.getComputedStyle(elem);
     var bgImg = style.backgroundImage || '';
-    return bgImg !== '' ? urlFromCSSPropertyValue(bgImg) : '';
+    var matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg);
+    return matches !== null && matches.length === 3 ? matches[2] : '';
 };
 
 /******************************************************************************/
@@ -399,17 +428,24 @@ var netFilterFromUnion = (function() {
 
 // Extract the best possible net filter, i.e. as specific as possible.
 
-var netFilterFromElement = function(elem, out) {
+var netFilterFromElement = function(elem) {
     if ( elem === null ) {
-        return;
+        return 0;
     }
     if ( elem.nodeType !== 1 ) {
-        return;
+        return 0;
     }
     var src = resourceURLFromElement(elem);
     if ( src === '' ) {
-        return;
+        return 0;
     }
+
+    if ( candidateElements.indexOf(elem) === -1 ) {
+        candidateElements.push(elem);
+    }
+
+    var candidates = netFilterCandidates;
+    var len = candidates.length;
 
     // Remove fragment
     var pos = src.indexOf('#');
@@ -419,17 +455,25 @@ var netFilterFromElement = function(elem, out) {
 
     var filter = src.replace(/^https?:\/\//, '||');
 
-    // Anchor absolute filter to hostname
-    out.push(filter);
+    if ( bestCandidateFilter === null ) {
+        bestCandidateFilter = {
+            filters: candidates,
+            slot: candidates.length
+        };
+    }
+
+    candidates.push(filter);
 
     // Suggest a less narrow filter if possible
     pos = filter.indexOf('?');
     if ( pos !== -1 ) {
-        out.push(filter.slice(0, pos));
+        candidates.push(filter.slice(0, pos));
     }
 
     // Suggest a filter which is a result of combining more than one URL.
-    netFilterFromUnion(src, out);
+    netFilterFromUnion(src, candidates);
+
+    return candidates.length - len;
 };
 
 var netFilter1stSources = {
@@ -458,13 +502,18 @@ var filterTypes = {
 
 // Extract the best possible cosmetic filter, i.e. as specific as possible.
 
-var cosmeticFilterFromElement = function(elem, out) {
+var cosmeticFilterFromElement = function(elem) {
     if ( elem === null ) {
-        return;
+        return 0;
     }
     if ( elem.nodeType !== 1 ) {
-        return;
+        return 0;
     }
+
+    if ( candidateElements.indexOf(elem) === -1 ) {
+        candidateElements.push(elem);
+    }
+
     var tagName = elem.tagName.toLowerCase();
     var prefix = '';
     var suffix = [];
@@ -549,22 +598,25 @@ var cosmeticFilterFromElement = function(elem, out) {
         selector += ':nth-of-type(' + i + ')';
     }
 
-    out.push('##' + selector);
+    if ( bestCandidateFilter === null ) {
+        bestCandidateFilter = {
+            filters: cosmeticFilterCandidates,
+            slot: cosmeticFilterCandidates.length
+        };
+    }
+
+    cosmeticFilterCandidates.push('##' + selector);
+
+    return 1;
 };
 
 /******************************************************************************/
 
 var filtersFrom = function(x, y) {
+    bestCandidateFilter = null;
     netFilterCandidates.length = 0;
     cosmeticFilterCandidates.length = 0;
-
-    // This is to prevent revisiting the same element more than once.
-    var visited = typeof Set === 'function' ?
-        new Set() :
-        {
-            add: function() {},
-            has: function() { return true; }
-        };
+    candidateElements.length = 0;
 
     // We need at least one element.
     var first = null;
@@ -574,16 +626,16 @@ var filtersFrom = function(x, y) {
         first = x;
         x = undefined;
     }
-    if ( first === null ) {
-        return 0;
+
+    // Network filter from element which was clicked.
+    if ( first !== null ) {
+        netFilterFromElement(first);
     }
 
-    // Extract filter candidates from self and all ancestors.
+    // Cosmetic filter candidates from ancestors.
     var elem = first;
     while ( elem && elem !== document.body ) {
-        netFilterFromElement(elem, netFilterCandidates);
-        cosmeticFilterFromElement(elem, cosmeticFilterCandidates);
-        visited.add(elem);
+        cosmeticFilterFromElement(elem);
         elem = elem.parentNode;
     }
     // The body tag is needed as anchor only when the immediate child
@@ -594,70 +646,30 @@ var filtersFrom = function(x, y) {
     }
 
     // https://github.com/gorhill/uBlock/issues/1545
-    // Extract filter candidates from all elements found at point (x, y).
+    // Network filter candidates from all other elements found at point (x, y).
     if ( typeof x === 'number' ) {
         var attrName = vAPI.sessionId + '-clickblind';
         var previous;
         elem = first;
-        for (;;) {
+        while ( elem !== null ) {
             previous = elem;
             elem.setAttribute(attrName, '');
-            elem = elementFromPoint(x, y, true);
+            elem = elementFromPoint(x, y);
             if ( elem === null || elem === previous ) {
                 break;
             }
-            if ( visited.has(elem) === false ) {
-                netFilterFromElement(elem, netFilterCandidates);
-                visited.add(elem);
-            }
+            netFilterFromElement(elem);
         }
         var elems = document.querySelectorAll('[' + attrName + ']');
         i = elems.length;
         while ( i-- ) {
             elems[i].removeAttribute(attrName);
         }
+
+        netFilterFromElement(document.body);
     }
 
     return netFilterCandidates.length + cosmeticFilterCandidates.length;
-};
-
-/******************************************************************************/
-
-var elementsFromStylesheet = function(sheet, reURL, out) {
-    var rules = sheet.rules;
-    if ( !rules ) {
-        return;
-    }
-    var iRule = rules.length;
-    var rule, value, src, elems, iElem;
-    while ( iRule-- ) {
-        rule = rules[iRule];
-        if ( rule instanceof CSSImportRule ) {
-            elementsFromStylesheet(rule.styleSheet, reURL, out);
-            continue;
-        }
-        if ( rule instanceof CSSStyleRule === false ) {
-            continue;
-        }
-        value = rule.style.backgroundImage;
-        if ( value.lastIndexOf('url(', 0) !== 0 ) {
-            continue;
-        }
-        src = urlFromCSSPropertyValue(value);
-        if ( reURL.test(src) === false ) {
-            continue;
-        }
-        elems = document.querySelectorAll(rule.selectorText);
-        iElem = elems.length;
-        while ( iElem-- ) {
-            out.push({
-                type: 'network',
-                elem: elems[iElem],
-                style: 'background-image',
-                opts: 'image'
-            });
-        }
-    }
 };
 
 /******************************************************************************/
@@ -754,8 +766,8 @@ var elementsFromFilter = function(filter) {
         }
     }
 
-    // Lookup by inline-styled background image.
-    elems = document.querySelectorAll('[style*="background-image"]');
+    // Find matching background image in current set of candidate elements.
+    elems = candidateElements;
     iElem = elems.length;
     while ( iElem-- ) {
         elem = elems[iElem];
@@ -767,13 +779,6 @@ var elementsFromFilter = function(filter) {
                 opts: 'image',
             });
         }
-    }
-
-    // Lookup by stylesheet-styled background image.
-    var sheets = document.styleSheets;
-    var iSheet = sheets.length;
-    while ( iSheet-- ) {
-        elementsFromStylesheet(sheets[iSheet], reFilter, out);
     }
 
     return out;
@@ -825,13 +830,15 @@ var userFilterFromCandidate = function() {
 /******************************************************************************/
 
 var onCandidateChanged = function() {
+    unpreview();
+
     var elems = [];
     var items = elementsFromFilter(taCandidate.value);
     for ( var i = 0; i < items.length; i++ ) {
         elems.push(items[i].elem);
     }
     dialog.querySelector('#create').disabled = elems.length === 0;
-    highlightElements(elems);
+    highlightElements(elems, true);
 };
 
 /******************************************************************************/
@@ -846,7 +853,7 @@ var candidateFromFilterChoice = function(filterChoice) {
     }
 
     // For net filters there no such thing as a path
-    if ( filterChoice.type === 'net' || filterChoice.modifier ) {
+    if ( filter.lastIndexOf('##', 0) !== 0 || filterChoice.modifier ) {
         return filter;
     }
 
@@ -869,7 +876,6 @@ var filterChoiceFromEvent = function(ev) {
     var li = ev.target;
     var isNetFilter = li.textContent.slice(0, 2) !== '##';
     var r = {
-        type: isNetFilter ? 'net' : 'cosmetic',
         filters: isNetFilter ? netFilterCandidates : cosmeticFilterCandidates,
         slot: 0,
         modifier: ev.ctrlKey || ev.metaKey
@@ -889,6 +895,10 @@ var onDialogClicked = function(ev) {
     }
 
     else if ( ev.target.id === 'create' ) {
+        // We have to exit from preview mode: this guarantees matching elements
+        // will be found for the candidate filter.
+        unpreview();
+
         var filter = userFilterFromCandidate();
         if ( filter ) {
             var d = new Date();
@@ -909,7 +919,17 @@ var onDialogClicked = function(ev) {
     }
 
     else if ( ev.target.id === 'quit' ) {
+        unpreview();
         stopPicker();
+    }
+
+    else if ( ev.target.id === 'preview' ) {
+        if ( pickerBody.classList.contains('preview') ) {
+            unpreview();
+        } else {
+            preview(taCandidate.value);
+        }
+        highlightElements(targetElements, true);
     }
 
     else if ( ev.target.parentNode.classList.contains('changeFilter') ) {
@@ -960,39 +980,31 @@ var showDialog = function(options) {
     dialog.querySelector('#create').disabled = true;
 
     // Auto-select a candidate filter
-    var filterChoice = {
-        type: '',
-        filters: [],
-        slot: 0,
-        modifier: options.modifier || false
-    };
-    if ( netFilterCandidates.length ) {
-        filterChoice.type = 'net';
-        filterChoice.filters = netFilterCandidates;
-    } else if ( cosmeticFilterCandidates.length ) {
-        filterChoice.type = 'cosmetic';
-        filterChoice.filters = cosmeticFilterCandidates;
+
+    if ( bestCandidateFilter === null ) {
+        taCandidate.value = '';
+        return;
     }
 
-    taCandidate.value = '';
-    if ( filterChoice.type !== '' ) {
-        taCandidate.value = candidateFromFilterChoice(filterChoice);
-        onCandidateChanged();
-    }
+    var filterChoice = {
+        filters: bestCandidateFilter.filters,
+        slot: bestCandidateFilter.slot,
+        modifier: options.modifier || false
+    };
+
+    taCandidate.value = candidateFromFilterChoice(filterChoice);
+    onCandidateChanged();
 };
 
 /******************************************************************************/
 
-var elementFromPoint = function(x, y, includeBody) {
+var elementFromPoint = function(x, y) {
     if ( !pickerRoot ) {
         return null;
     }
     pickerRoot.style.pointerEvents = 'none';
     var elem = document.elementFromPoint(x, y);
-    if (
-        elem === document.body && !includeBody ||
-        elem === document.documentElement
-    ) {
+    if ( elem === document.body || elem === document.documentElement ) {
         elem = null;
     }
     pickerRoot.style.pointerEvents = '';
@@ -1027,7 +1039,7 @@ var onSvgHovered = (function() {
 var onSvgClicked = function(ev) {
     // https://github.com/chrisaljoudi/uBlock/issues/810#issuecomment-74600694
     // Unpause picker if user click outside dialog
-    if ( dialog.parentNode.classList.contains('paused') ) {
+    if ( pickerBody.classList.contains('paused') ) {
         unpausePicker();
         return;
     }
@@ -1067,14 +1079,15 @@ var onScrolled = function() {
 /******************************************************************************/
 
 var pausePicker = function() {
-    dialog.parentNode.classList.add('paused');
+    pickerBody.classList.add('paused');
     svgListening(false);
 };
 
 /******************************************************************************/
 
 var unpausePicker = function() {
-    dialog.parentNode.classList.remove('paused');
+    unpreview();
+    pickerBody.classList.remove('paused');
     svgListening(true);
 };
 
@@ -1085,6 +1098,9 @@ var unpausePicker = function() {
 
 var stopPicker = function() {
     targetElements = [];
+    candidateElements = [];
+    bestCandidateFilter = null;
+    previewedElements = [];
 
     if ( pickerRoot === null ) {
         return;
@@ -1100,6 +1116,7 @@ var stopPicker = function() {
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.onload = null;
     pickerRoot =
+    pickerBody =
     dialog =
     svgRoot = svgOcean = svgIslands =
     taCandidate = null;
@@ -1127,15 +1144,16 @@ var startPicker = function(details) {
         frameDoc.documentElement
     );
 
-    frameDoc.body.setAttribute('lang', navigator.language);
+    pickerBody = frameDoc.body;
+    pickerBody.setAttribute('lang', navigator.language);
 
-    dialog = frameDoc.body.querySelector('aside');
+    dialog = pickerBody.querySelector('aside');
     dialog.addEventListener('click', onDialogClicked);
 
     taCandidate = dialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
 
-    svgRoot = frameDoc.body.querySelector('svg');
+    svgRoot = pickerBody.querySelector('svg');
     svgOcean = svgRoot.firstChild;
     svgIslands = svgRoot.lastChild;
     svgRoot.addEventListener('click', onSvgClicked);
