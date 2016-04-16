@@ -159,6 +159,10 @@
     "message":"離開",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"網址過濾規則",
     "description":"English: Net filters"

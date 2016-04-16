@@ -159,6 +159,10 @@
     "message":"Mbyll",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Filtrat e rrjetit",
     "description":"English: Net filters"
