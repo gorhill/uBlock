@@ -853,10 +853,19 @@ var candidateFromFilterChoice = function(filterChoice) {
     }
 
     // For net filters there no such thing as a path
-    if ( filter.lastIndexOf('##', 0) !== 0 || filterChoice.modifier ) {
+    if ( filter.lastIndexOf('##', 0) !== 0 ) {
         return filter;
     }
 
+    // At this point, we have a cosmetic filter
+
+    // Modifier means "target broadly". Hence:
+    // - Do not compute exact path.
+    // - Discard narrowing directives.
+    if ( filterChoice.modifier ) {
+        return filter.replace(/:nth-of-type\(\d+\)/, '');
+    }
+    
     // Return path: the target element, then all siblings prepended
     var selector = [];
     for ( ; slot < filters.length; slot++ ) {
