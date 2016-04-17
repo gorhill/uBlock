@@ -269,6 +269,7 @@ var highlightElements = function(elems, force) {
 /******************************************************************************/
 
 var filterElements = function(filter) {
+    var htmlElem = document.documentElement;
     var items = elementsFromFilter(filter);
     var i = items.length, item, elem, style;
     while ( i-- ) {
@@ -276,8 +277,9 @@ var filterElements = function(filter) {
         elem = item.elem;
         style = elem.style;
         if (
-            item.type === 'cosmetic' ||
-            item.type === 'network' && item.src !== undefined
+            (elem !== htmlElem) &&
+            (item.type === 'cosmetic' ||
+             item.type === 'network' && item.src !== undefined)
         ) {
             previewedElements.push({
                 elem: elem,
@@ -457,6 +459,7 @@ var netFilterFromElement = function(elem) {
 
     if ( bestCandidateFilter === null ) {
         bestCandidateFilter = {
+            type: 'net',
             filters: candidates,
             slot: candidates.length
         };
@@ -514,69 +517,64 @@ var cosmeticFilterFromElement = function(elem) {
         candidateElements.push(elem);
     }
 
-    var tagName = elem.tagName.toLowerCase();
-    var prefix = '';
-    var suffix = [];
+    var tagName = elem.localName;
+    var selector = '';
     var v, i;
 
     // Id
     v = typeof elem.id === 'string' && CSS.escape(elem.id);
     if ( v ) {
-        suffix.push('#', v);
+        selector = '#' + v;
     }
 
     // Class(es)
-    if ( suffix.length === 0 ) {
+    if ( selector === '' ) {
         v = elem.classList;
         if ( v ) {
             i = v.length || 0;
             while ( i-- ) {
-                suffix.push('.' + CSS.escape(v.item(i)));
+                selector += '.' + CSS.escape(v.item(i));
             }
         }
     }
 
     // Tag name
-    if ( suffix.length === 0 ) {
-        prefix = tagName;
-    }
-
-    // Attributes (depends on tag name)
-    var attributes = [], attr;
-    switch ( tagName ) {
-    case 'a':
-        v = elem.getAttribute('href');
-        if ( v ) {
-            v = v.replace(/\?.*$/, '');
-            if ( v.length ) {
-                attributes.push({ k: 'href', v: v });
+    if ( selector === '' ) {
+        selector = tagName;
+        var attributes = [], attr;
+        switch ( tagName ) {
+        case 'a':
+            v = elem.getAttribute('href');
+            if ( v ) {
+                v = v.replace(/\?.*$/, '');
+                if ( v.length ) {
+                    attributes.push({ k: 'href', v: v });
+                }
+            }
+            break;
+        case 'img':
+            v = elem.getAttribute('alt');
+            if ( v && v.length !== 0 ) {
+                attributes.push({ k: 'alt', v: v });
+            }
+            break;
+        default:
+            break;
+        }
+        while ( (attr = attributes.pop()) ) {
+            if ( attr.v.length === 0 ) {
+                continue;
+            }
+            v = elem.getAttribute(attr.k);
+            if ( attr.v === v ) {
+                selector += '[' + attr.k + '="' + attr.v + '"]';
+            } else if ( v.lastIndexOf(attr.v, 0) === 0 ) {
+                selector += '[' + attr.k + '^="' + attr.v + '"]';
+            } else {
+                selector += '[' + attr.k + '*="' + attr.v + '"]';
             }
         }
-        break;
-    case 'img':
-        v = elem.getAttribute('alt');
-        if ( v && v.length !== 0 ) {
-            attributes.push({ k: 'alt', v: v });
-        }
-        break;
-    default:
-        break;
     }
-    while ( (attr = attributes.pop()) ) {
-        if ( attr.v.length === 0 ) {
-            continue;
-        }
-        v = elem.getAttribute(attr.k);
-        if ( attr.v === v ) {
-            suffix.push('[', attr.k, '="', attr.v, '"]');
-        } else if ( v.indexOf(attr.v) === 0 ) {
-            suffix.push('[', attr.k, '^="', attr.v, '"]');
-        } else {
-            suffix.push('[', attr.k, '*="', attr.v, '"]');
-        }
-    }
-
-    var selector = prefix + suffix.join('');
 
     // https://github.com/chrisaljoudi/uBlock/issues/637
     // If the selector is still ambiguous at this point, further narrow using
@@ -587,10 +585,7 @@ var cosmeticFilterFromElement = function(elem) {
         i = 1;
         while ( elem.previousSibling !== null ) {
             elem = elem.previousSibling;
-            if ( typeof elem.tagName !== 'string' ) {
-                continue;
-            }
-            if ( elem.tagName.toLowerCase() !== tagName ) {
+            if ( typeof elem.localName !== 'string' || elem.localName !== tagName ) {
                 continue;
             }
             i++;
@@ -600,6 +595,7 @@ var cosmeticFilterFromElement = function(elem) {
 
     if ( bestCandidateFilter === null ) {
         bestCandidateFilter = {
+            type: 'cosmetic',
             filters: cosmeticFilterCandidates,
             slot: cosmeticFilterCandidates.length
         };
