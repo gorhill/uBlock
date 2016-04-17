@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"미리보기",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{

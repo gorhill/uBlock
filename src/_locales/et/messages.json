@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Lubage mahukate meediaelementide blokeerimine siin saidil",
+    "message":"Lülita mahukate meediaelementide blokeerimine siin saidil sisse\/välja",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Eelvaade",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Keela hüperlingi auditeerimine",
+    "message":"Keela hüperlingi auditeerimine\/majakas",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -224,7 +224,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Neid tavaväärtusi saab saitide põhiselt eraldi määrata",
+    "message":"Neid vaikeväärtusi saab saitide põhiselt eraldi määrata",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{

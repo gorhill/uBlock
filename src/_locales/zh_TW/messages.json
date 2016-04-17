@@ -92,11 +92,11 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"全域規則：在所有網站啟用",
+    "message":"全域規則：此欄位的規則會套用至所有網站。",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"區域規則：此欄僅供於目前網站所使用的規則使用。\n區域規則會覆蓋過全域規則的設定。",
+    "message":"區域規則：此欄位的規則僅會套用至目前網站。\n區域規則會覆蓋過全域規則。",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"預覽",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{

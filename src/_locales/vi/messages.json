@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"Bật tắt chặn yếu tố đa phương tiện lớn trên trang này",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Bật tắt chặn kiểu chữ từ xa trên trang này",
+    "message":"Bật tắt chặn font từ xa trên trang này",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Xem trước",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -220,23 +220,23 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"Hành vi mặc định",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"Những hành vi này có thể thay thế tiêu chuẩn từng trang",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"Vô hiệu lọc phần tử ẩn",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"Chặn yếu tố đa phương tiện lớn hơn {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"Chặn font từ xa",
     "description":""
   },
   "settingsStorageUsed":{
@@ -672,7 +672,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"Tạm thời cho phép yếu tố đa phương tiện lớn",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Esikatsele",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -188,7 +188,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Piilota työkaluvihjeet",
+    "message":"Poista käytöstä työkaluvinkit",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -272,7 +272,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Jäsennä ja pakota käyttöön ehostetut suodattimet.",
+    "message":"Jäsennä ja pakota käyttöön kosmeettiset suodattimet.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -552,7 +552,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Dataa ei voitu lukea tai se oli väärässä muodossa",
+    "message":"Tietoa ei voitu lukea, tai se on viallista",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
