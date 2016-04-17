@@ -1269,7 +1269,7 @@
       });
     }
 
-    uDom("body").on('mousewheel', (function (e, delta) {
+    uDom("body").on('mousewheel', (function (e) {
 
       if (uDom('#container').hasClass('lightbox')) {
 
@@ -1277,7 +1277,7 @@
         return;
       }
 
-      if (delta > 0) // scrolling mousewheel outward
+      if (e.deltaY < 0) // scrolling mousewheel outward
         zoomIn();
       else
         zoomOut(); // scrolling inward
