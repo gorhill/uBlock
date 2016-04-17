@@ -33,6 +33,14 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
+    //disable pause & resume buttons in case of options, vault, browser settings
+    if(page.indexOf("dashboard.html") > -1 ||
+       page.indexOf("vault.html") > -1 ||
+       page.indexOf("chrome://extensions") > -1 ){
+
+       uDom.nodeFromId('pause-button').disabled = true;
+     }
+
     //$("#alert").addClass('hide'); // reset state
     uDom("#alert").addClass('hide'); // reset state
     //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval

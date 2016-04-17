@@ -141,7 +141,7 @@ button {
   padding-top: 1px;
 }
 
-button:hover{
+button:hover:enabled{
   background: #0076FF;
   color: #000;
 }
@@ -554,6 +554,9 @@ button.settings {
   width: 162px;
   float: left;
   margin-right: 7px;
+}
+button:disabled {
+  opacity:.4;
 }
 button.about {
   width: 27px;
