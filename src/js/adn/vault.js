@@ -134,8 +134,8 @@
     for (var i = 0; i < adsets.length; i++) {
 
       var $div = uDom(document.createElement('div'))
-      .addClass('item dup-count-' + adsets[i].count())
-      .attr('data-gid',adsets[i].gid).appendTo('#container');
+        .addClass('item dup-count-' + adsets[i].count())
+        .attr('data-gid', adsets[i].gid).appendTo('#container');
       /*$('<div/>', {
 
         'class': 'item dup-count-' + adsets[i].count(),
@@ -213,23 +213,24 @@
     }).appendTo($div);*/
 
     var $ul = uDom(document.createElement('ul'))
-    .addClass('meta-list')
-    .css('margin-top', '0px')
-    .appendTo($meta);/*$('<ul/>', {
+      .addClass('meta-list')
+      .css('margin-top', '0px')
+      .appendTo($meta);
+    /*$('<ul/>', {
 
-      class: 'meta-list',
-      style: 'margin-top: 0px'
+          class: 'meta-list',
+          style: 'margin-top: 0px'
 
-    }).appendTo($meta);*/
+        }).appendTo($meta);*/
 
     for (var i = 0; i < adset.count(); i++) {
 
       var ad = adset.child(i);
 
       var $li = uDom(document.createElement('ul'))
-      .addClass('meta-item')
-      .css('margin-top','0px')
-      .appendTo($ul);
+        .addClass('meta-item')
+        .css('margin-top', '0px')
+        .appendTo($ul);
       /*$('<li/>', {
 
         'class': 'meta-item',
@@ -238,9 +239,9 @@
       }).appendTo($ul);*/
 
       var $target = uDom(document.createElement('div'))
-      .addClass('target')
-      .attr('data-idx',i)
-      .appendTo($li);;
+        .addClass('target')
+        .attr('data-idx', i)
+        .appendTo($li);;
       /*$('<div/>', {
 
         class: 'target',
@@ -251,8 +252,8 @@
       appendTargetTo($target, ad, adset); // tmp, remove adset
 
       var $detected = uDom(document.createElement('div'))
-      .addClass('detected-on')
-      .appendTo($li);
+        .addClass('detected-on')
+        .appendTo($li);
       /*$('<div/>', {
         class: 'detected-on'
       }).appendTo($li);*/
@@ -264,40 +265,40 @@
   function appendDetectedTo($detected, ad) {
 
     uDom(document.createElement('h3'))
-    .text(locale.foundOn + ":")
-    .appendTo($detected);
+      .text(locale.foundOn + ":")
+      .appendTo($detected);
 
     /*$('<h3/>', {
       text: locale.foundOn + ":"
     }).appendTo($detected);*/
 
     uDom(document.createElement('a'))
-    .addClass('inspected-title')
-    .attr('href',ad.pageUrl)
-    .text(ad.pageTitle)
-    .attr('target','_blank')
-    .appendTo($detected);
+      .addClass('inspected-title')
+      .attr('href', ad.pageUrl)
+      .text(ad.pageTitle)
+      .attr('target', '_blank')
+      .appendTo($detected);
 
-  /*  $('<a/>', {
-      class: 'inspected-title',
-      href: ad.pageUrl,
-      text: ad.pageTitle,
-      target: '_blank'
+    /*  $('<a/>', {
+        class: 'inspected-title',
+        href: ad.pageUrl,
+        text: ad.pageTitle,
+        target: '_blank'
 
-    }).appendTo($detected);*/
+      }).appendTo($detected);*/
 
     uDom(document.createElement('cite'))
-    .text(ad.pageUrl)
-    .appendTo($detected);
+      .text(ad.pageUrl)
+      .appendTo($detected);
 
     /*$('<cite/>', {
       text: ad.pageUrl
     }).appendTo($detected);*/
 
     uDom(document.createElement('span'))
-    .addClass('inspected-date')
-    .text(formatDate(ad.foundT))
-    .appendTo($detected);
+      .addClass('inspected-date')
+      .text(formatDate(ad.foundT))
+      .appendTo($detected);
 
     /*$('<span/>', {
 
@@ -310,36 +311,36 @@
   function appendTargetTo($target, ad, adset) {
 
     uDom(document.createElement('h3'))
-    .text(locale.target + ":")
-    .appendTo($target);
+      .text(locale.target + ":")
+      .appendTo($target);
     /*$('<h3/>', {
       text: locale.target + ":"
     }).appendTo($target);*/
 
     //log("Creating target #"+ad.id+" title="+ad.title);
     uDom(document.createElement('a'))
-    .attr('id','target-title')
-    .addClass('inspected-title')
-    .attr('href', ad.targetUrl)
-    .text(ad.title)
-    .attr('target','_blank')
-    .appendTo($target);
+      .attr('id', 'target-title')
+      .addClass('inspected-title')
+      .attr('href', ad.targetUrl)
+      .text(ad.title)
+      .attr('target', '_blank')
+      .appendTo($target);
 
-/*    $('<a/>', {
+    /*    $('<a/>', {
 
-      id: 'target-title',
-      class: 'inspected-title',
-      href: ad.targetUrl,
-      text: ad.title,
-      target: '_blank'
+          id: 'target-title',
+          class: 'inspected-title',
+          href: ad.targetUrl,
+          text: ad.title,
+          target: '_blank'
 
-    }).appendTo($target);*/
+        }).appendTo($target);*/
 
     uDom(document.createElement('cite'))
-    .attr('id','target-domain')
-    .addClass('target-cite')
-    .text(targetDomain(ad))
-    .appendTo($target);
+      .attr('id', 'target-domain')
+      .addClass('target-cite')
+      .text(targetDomain(ad))
+      .appendTo($target);
 
     /*$('<cite/>', {
 
@@ -350,10 +351,10 @@
     }).appendTo($target);*/
 
     uDom(document.createElement('span'))
-    .attr('id','target-date')
-    .addClass('inspected-date')
-    .text(formatDate(ad.visitedTs))
-    .appendTo($target);
+      .attr('id', 'target-date')
+      .addClass('inspected-date')
+      .text(formatDate(ad.visitedTs))
+      .appendTo($target);
 
     /*$('<span/>', {
 
@@ -413,15 +414,15 @@
   function appendDisplayTo($div, adset) {
 
     var $ad = uDom(document.createElement('div'))
-    .addClass('ad').appendTo($div);
+      .addClass('ad').appendTo($div);
     /*$('<div/>', {
       class: 'ad'
     }).appendTo($div);*/
 
     uDom(document.createElement('span'))
-    .addClass('counter')
-    .text(adset.count())
-    .appendTo($ad);
+      .addClass('counter')
+      .text(adset.count())
+      .appendTo($ad);
 
     /*$('<span/>', {
 
@@ -431,10 +432,10 @@
     }).appendTo($ad);*/
 
     uDom(document.createElement('span'))
-    .attr('id','index-counter')
-    .addClass('counter counter-index')
-    .text(indexCounterText(adset))
-    .appendTo($ad).addClass('hide');
+      .attr('id', 'index-counter')
+      .addClass('counter counter-index')
+      .text(indexCounterText(adset))
+      .appendTo($ad).addClass('hide');
 
     /*$('<span/>', {
 
@@ -445,11 +446,10 @@
     }).appendTo($ad).hide();*/
 
     var $img = uDom(document.createElement('img'))
-    .attr('src', adset.child(0).contentData.src)
-    .on('onerror',"this.onerror=null; this.width=80; this.height=40; " +
-      "this.alt='unable to load image'; this.src='img/placeholder.svg'")
-    .appendTo($ad);
-
+      .attr('src', adset.child(0).contentData.src)
+      .on('onerror', "this.onerror=null; this.width=80; this.height=40; " +
+        "this.alt='unable to load image'; this.src='img/placeholder.svg'")
+      .appendTo($ad);
 
     /*$('<img/>', {
 
@@ -479,9 +479,9 @@
     $pdiv.addClass('item-text');
 
     var $div = uDom(document.createElement('div'))
-    .addClass('item-text-div')
-    .prop('width', rand(TEXT_MINW, TEXT_MAXW))
-    .appendTo($pdiv);
+      .addClass('item-text-div')
+      .prop('width', rand(TEXT_MINW, TEXT_MAXW))
+      .appendTo($pdiv);
     /*$('<div/>', {
 
       class: 'item-text-div',
@@ -490,9 +490,9 @@
     }).appendTo($pdiv);*/
 
     uDom(document.createElement('span'))
-    .addClass('counter')
-    .text(total)
-    .appendTo($div);
+      .addClass('counter')
+      .text(total)
+      .appendTo($div);
 
     /*$('<span/>', {
 
@@ -502,10 +502,10 @@
     }).appendTo($div);*/
 
     uDom(document.createElement('span'))
-    .addClass('counter counter-index')
-    .attr('id','index-counter')
-    .text(indexCounterText(adset))
-    .appendTo($div).addClass('hide');
+      .addClass('counter counter-index')
+      .attr('id', 'index-counter')
+      .text(indexCounterText(adset))
+      .appendTo($div).addClass('hide');
     /*$('<span/>', {
 
       id: 'index-counter',
@@ -518,10 +518,10 @@
     //$('<h3/>', {}).appendTo($div);
 
     uDom(document.createElement('div'))
-    .addClass('title')
-    .text(ad.title)
-    .prop('target','_blank')
-    .appendTo($h3);
+      .addClass('title')
+      .text(ad.title)
+      .prop('target', '_blank')
+      .appendTo($h3);
 
     /*$('<div/>', { // title
 
@@ -531,18 +531,18 @@
 
     }).appendTo($h3);*/
 
-  uDom(document.createElement('cite'))
-  .text(ad.contentData.site)
-  .appendTo($div);
+    uDom(document.createElement('cite'))
+      .text(ad.contentData.site)
+      .appendTo($div);
 
-  /*  $('<cite/>', {
-      text: ad.contentData.site
-    }).appendTo($div); // site*/
+    /*  $('<cite/>', {
+        text: ad.contentData.site
+      }).appendTo($div); // site*/
 
     uDom(document.createElement('div'))
-    .addClass('ads-creative')
-    .text(ad.contentData.text)
-    .appendTo($div);
+      .addClass('ads-creative')
+      .text(ad.contentData.text)
+      .appendTo($div);
     /*$('<div/>', { // text
 
       class: 'ads-creative',
@@ -584,8 +584,8 @@
     if (count > 1) {
 
       var $bullets = uDom(document.createElement('div'))
-      .addClass('bullets')
-      .appendTo($div);
+        .addClass('bullets')
+        .appendTo($div);
 
       /*$('<div/>', {
         class: 'bullets'
@@ -597,8 +597,8 @@
       //log($div.find('img').height(), '?=', adHeight);
 
       var $ul = uDom(document.createElement('ul'))
-      .prop('height', adHeight)
-      .appendTo($bullets);
+        .prop('height', adHeight)
+        .appendTo($bullets);
 
       /*$('<ul/>', {
         height: adHeight
@@ -608,9 +608,9 @@
       for (var i = 0; i < adset.count(); i++) {
 
         var $li = uDom(document.createElement('il'))
-        .attr('data-idx',i)
-        .addClass('bullet ' + adset.state(i))
-        .appendTo($ul);
+          .attr('data-idx', i)
+          .addClass('bullet ' + adset.state(i))
+          .appendTo($ul);
 
         /*$('<li/>', {
 
@@ -763,7 +763,7 @@
     var i = 0,
       percentVis = 0.6,
       winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, //$(window).width(),
-      winH = uDom.nodeFromId('svgcon').offsetTop;//$('#svgcon').offset().top;
+      winH = uDom.nodeFromId('svgcon').offsetTop; //$('#svgcon').offset().top;
 
     while (i < items.length) {
 
@@ -860,8 +860,8 @@
 
       // transition to center
       uDom('#container')
-      .css('margin-left', mleft + 'px')
-      .css('margin-top', mtop + 'px');
+        .css('margin-left', mleft + 'px')
+        .css('margin-top', mtop + 'px');
 
     } else { // restore zoom-state
 
@@ -913,7 +913,7 @@
     if (!showInterface) {
 
       uDom("body").css('background-image', 'none')
-        .css('background-color','#fff');
+        .css('background-color', '#fff');
 
       ifs.forEach(function (s) {
         $(s).hide();
@@ -921,13 +921,13 @@
 
       // remove all duplicate classes (TODO: just hide them)
       uDom(".item").removeClass(function (i, css) {
-          return (css.match(/dup-count-/g) || []).join(' ');
+        return (css.match(/dup-count-/g) || []).join(' ');
       }).addClass('dup-count-1');
 
     } else {
 
       uDom("body").css('background-image', 'url(../img/gray_grid.png)')
-        .css('background-color','#000');
+        .css('background-color', '#000');
 
       ifs.forEach(function (s) {
         //$(s).show();
@@ -1265,7 +1265,7 @@
         selectedAdSet = null;
 
         //$(".custom-menu").hide(100); // close context-menu
-        uDom(".custom-menu").css("display","none");//.addClass('hide');
+        uDom(".custom-menu").css("display", "none"); //.addClass('hide');
       });
     }
 
@@ -1364,7 +1364,7 @@
     var done = false,
       $items = $(".item"),
       visible = $items.length,
-      $container = uDom.nodeFromId('container');//$('#container');
+      $container = uDom.nodeFromId('container'); //$('#container');
 
     setTimeout(function () {
       if (!done) //$('#loading-img').show();
@@ -1561,7 +1561,7 @@
     function centerContainer() {
 
       uDom('#container').addClass('notransition')
-        .css("marginLeft",'-5000px')
+        .css("marginLeft", '-5000px')
         .css("marginTop", '-5000px')
         .removeClass('notransition');
     }
@@ -1674,7 +1674,7 @@
 
     // ad should not be 'failed' until 3 failed visits (gh #64)
     if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0))
-        return 'pending';
+      return 'pending';
 
     return ad.visitedTs < 0 ? 'failed' : 'visited';
   };
@@ -1683,14 +1683,14 @@
 
     return this.children[0].contentType; // same-for-all
   };
-  
+
   AdSet.prototype.failedCount = function () {
-      
+
     var containerObj = this;
 
     return this.children.filter(function (d) {
-        
-       return containerObj.state(d) == 'failed';
+
+      return containerObj.state(d) == 'failed';
     }).length == this.children.length;
   };
 
