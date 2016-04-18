@@ -34,11 +34,13 @@
     ads = onPage(json.data, page);
 
     //disable pause & resume buttons in case of options, vault, browser settings
-    if(page.indexOf("dashboard.html") > -1 ||
+    if(page.indexOf("blank") > -1 ||
+       page.indexOf("dashboard.html") > -1 ||
        page.indexOf("vault.html") > -1 ||
-       page.indexOf("chrome://extensions") > -1 ){
+       page.indexOf("chrome://") > -1 ){
 
        uDom.nodeFromId('pause-button').disabled = true;
+       uDom.nodeFromId('resume-button').disabled = true;
      }
 
     //$("#alert").addClass('hide'); // reset state
