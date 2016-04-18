@@ -519,7 +519,8 @@ body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.en
 body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
     background-color: rgba(255, 194, 57, 1);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop,
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
     background-color: rgba(108, 108, 108, 1);
     }
 #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
