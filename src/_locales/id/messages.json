@@ -159,6 +159,10 @@
     "message":"Keluar",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Pratinjau",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Filter jaringan",
     "description":"English: Net filters"

@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"În sfârșit, un blocant eficient. Folosește procesorul și memoria foarte puțin.",
+    "message":"În sfârșit, un blocant eficient. Are un impact mic asupra procesorului și memoriei.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Modifică modul de blocare a elemetelor media de mari dimensiuni pentru acestă pagină",
+    "message":"Modifică modul de blocare a elementelor media de mari dimensiuni pentru acest sait",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -159,6 +159,10 @@
     "message":"Ieșire",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Previzualizare",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Filtre de rețea",
     "description":"English: Net filters"
@@ -220,7 +224,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Aceste comportamente implicite pot fi suprascrise petru fiecare pagină în parte",
+    "message":"Aceste comportamente implicite pot fi suprascrise pentru fiecare sait în parte",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -232,7 +236,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Blochează tipurile de caracter remote",
+    "message":"Blochează fonturile de la distanță",
     "description":""
   },
   "settingsStorageUsed":{
@@ -668,7 +672,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Permiteți temporar elementele media mari",
+    "message":"Permite temporar elementele media mari",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

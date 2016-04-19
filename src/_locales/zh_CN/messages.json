@@ -263,6 +263,10 @@
     "message":"放弃",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"预览",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"URL 过滤规则",
     "description":"English: Net filters"

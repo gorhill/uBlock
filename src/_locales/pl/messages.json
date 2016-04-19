@@ -159,6 +159,10 @@
     "message":"Zamknij",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Podgląd",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Filtry sieciowe",
     "description":"English: Net filters"

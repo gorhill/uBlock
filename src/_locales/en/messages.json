@@ -267,9 +267,13 @@
     "message": "Net filters",
     "description": "English: Net filters"
   },
-  "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
-    "description": "English: Cosmetic filters"
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
   },
   "pickerCosmeticFiltersHint": {
     "message": "Click, Ctrl-click",
