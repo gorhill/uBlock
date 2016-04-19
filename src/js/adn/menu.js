@@ -36,8 +36,10 @@
     //disable pause & resume buttons in case of options, vault, browser settings
     if(page.indexOf("dashboard.html") > -1 ||
        page.indexOf("vault.html") > -1 ||
-       page.indexOf("chrome://extensions") > -1 ){
+       page.indexOf("about:blank") > -1 ||
+       page.indexOf("chrome://") > -1 ){
 
+       uDom.nodeFromId('resume-button').disabled = true;
        uDom.nodeFromId('pause-button').disabled = true;
      }
 
