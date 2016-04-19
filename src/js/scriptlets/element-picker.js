@@ -284,17 +284,19 @@ var filterElements = function(filter) {
             previewedElements.push({
                 elem: elem,
                 prop: 'display',
-                value: style.display
+                value: style.getPropertyValue('display'),
+                priority: style.getPropertyPriority('display')
             });
-            style.display = 'none';
+            style.setProperty('display', 'none', 'important');
         }
         if ( item.type === 'network' && item.style === 'background-image' ) {
             previewedElements.push({
                 elem: elem,
                 prop: 'background-image',
-                value: style.backgroundImage
-                });
-            style.backgroundImage = 'none';
+                value: style.getPropertyValue('background-image'),
+                priority: style.getPropertyPriority('background-image')
+            });
+            style.setProperty('background-image', 'none', 'important');
         }
     }
 };
@@ -313,7 +315,7 @@ var unpreview = function() {
     var i = items.length, item;
     while ( i-- ) {
         item = items[i];
-        item.elem.style[item.prop] = item.value;
+        item.elem.style.setProperty(item.prop, item.value, item.priority);
     }
     previewedElements.length = 0;
     pickerBody.classList.remove('preview');
