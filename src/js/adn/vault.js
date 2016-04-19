@@ -551,8 +551,8 @@
     }).appendTo($div);*/
 
     // cache the dimensions of the text-item
-    $pdiv.attr('data-width', $div.nodeAt(0).offsetWidth);
-    $pdiv.attr('data-height', $div.nodeAt(0).offsetHeight);
+    $pdiv.attr('data-width', $div.width());
+    $pdiv.attr('data-height', $div.height());
   }
 
   function indexCounterText(adset) {
