@@ -1,4 +1,4 @@
-/* global vAPI, uDom, console.log, d3, byField, doLayout, createAdSets, computeStats */
+/* global uDom */
 
 /******************************************************************************/
 
@@ -52,6 +52,18 @@
 
   /********************************************************************/
 
+  function $width(ele) {
+
+    ele = ele ? (ele.length ? ele.nodes[0] : ele) : 0;
+    return ele ? ele.offsetWidth || ele.clientWidth : -1;
+  }
+
+  function $height(ele) {
+
+    ele = ele ? (ele.length ? ele.nodes[0] : ele) : 0;
+    return ele ? ele.offsetHeight || ele.clientHeight : -1;
+  }
+
   var renderAds = function (json) {
 
     //console.log('renderAds: ', json);
@@ -85,8 +97,7 @@
 
   function setCurrent(ad) {
 
-    //$('.item').removeClass('attempting just-visited just-failed');
-    uDom('.item').removeClass('attempting just-visited just-failed');
+    $('.item').removeClass('attempting just-visited just-failed');
     setAttempting(ad);
   }
 
@@ -96,8 +107,7 @@
 
     console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
 
-    //$('.item').remove();
-    uDom('.item').remove();
+    $('.item').remove();
 
     createDivs(adsets);
     computeStats(adsets);
@@ -109,7 +119,7 @@
 
     function hoverOnDiv(e) { // on
 
-      var $this = uDom(this);
+      var $this = $(this);
 
       if ($this.hasClass('inspected')) {
 
@@ -133,22 +143,16 @@
 
     for (var i = 0; i < adsets.length; i++) {
 
-      var $div = uDom(document.createElement('div'))
-        .addClass('item dup-count-' + adsets[i].count())
-        .attr('data-gid', adsets[i].gid).appendTo('#container');
-      /*$('<div/>', {
+      var $div = $('<div/>', {
 
         'class': 'item dup-count-' + adsets[i].count(),
         'data-gid': adsets[i].gid
 
-      }).appendTo('#container');*/
+      }).appendTo('#container');
 
       layoutAd($div, adsets[i]);
 
-      //$div.hover(hoverOnDiv, hoverOffDiv);
-      $div.on('mouseenter', hoverOnDiv)
-        .on('mouseleave', hoverOffDiv);
-
+      $div.hover(hoverOnDiv, hoverOffDiv);
     }
   }
 
@@ -182,10 +186,10 @@
       return;
     }
 
-    uDom('.item').removeClass('attempting just-visited just-failed');
+    $('.item').removeClass('attempting just-visited just-failed');
 
     // update the ad data
-    updateMetaTarget($item.descendants('.target[data-idx=\'' + adset.index + '\']'), updated);
+    updateMetaTarget($item.find('.target[data-idx=' + adset.index + ']'), updated);
 
     // update the class
     $item.addClass(updated.visitedTs > 0 ? 'just-visited' : 'just-failed');
@@ -207,56 +211,40 @@
   function appendMetaTo($div, adset) {
 
     //log('appendMetaTo:' + adset.gid);
-    var $meta = uDom(document.createElement('div')).addClass('meta').appendTo($div);
-    /*$('<div/>', {
+    var $meta = $('<div/>', {
       class: 'meta'
-    }).appendTo($div);*/
+    }).appendTo($div);
 
-    var $ul = uDom(document.createElement('ul'))
-      .addClass('meta-list')
-      .css('margin-top', '0px')
-      .appendTo($meta);
-    /*$('<ul/>', {
+    var $ul = $('<ul/>', {
 
-          class: 'meta-list',
-          style: 'margin-top: 0px'
+      class: 'meta-list',
+      style: 'margin-top: 0px'
 
-        }).appendTo($meta);*/
+    }).appendTo($meta);
 
     for (var i = 0; i < adset.count(); i++) {
 
       var ad = adset.child(i);
 
-      var $li = uDom(document.createElement('ul'))
-        .addClass('meta-item')
-        .css('margin-top', '0px')
-        .appendTo($ul);
-      /*$('<li/>', {
+      var $li = $('<li/>', {
 
         'class': 'meta-item',
         'style': 'margin-top: 0px'
 
-      }).appendTo($ul);*/
+      }).appendTo($ul);
 
-      var $target = uDom(document.createElement('div'))
-        .addClass('target')
-        .attr('data-idx', i)
-        .appendTo($li);;
-      /*$('<div/>', {
+      var $target = $('<div/>', {
 
         class: 'target',
         'data-idx': i
 
-      }).appendTo($li);*/
+      }).appendTo($li);
 
       appendTargetTo($target, ad, adset); // tmp, remove adset
 
-      var $detected = uDom(document.createElement('div'))
-        .addClass('detected-on')
-        .appendTo($li);
-      /*$('<div/>', {
+      var $detected = $('<div/>', {
         class: 'detected-on'
-      }).appendTo($li);*/
+      }).appendTo($li);
 
       appendDetectedTo($detected, ad);
     }
@@ -264,112 +252,69 @@
 
   function appendDetectedTo($detected, ad) {
 
-    uDom(document.createElement('h3'))
-      .text(locale.foundOn + ":")
-      .appendTo($detected);
-
-    /*$('<h3/>', {
+    $('<h3/>', {
       text: locale.foundOn + ":"
-    }).appendTo($detected);*/
+    }).appendTo($detected);
 
-    uDom(document.createElement('a'))
-      .addClass('inspected-title')
-      .attr('href', ad.pageUrl)
-      .text(ad.pageTitle)
-      .attr('target', '_blank')
-      .appendTo($detected);
+    $('<a/>', {
+      class: 'inspected-title',
+      href: ad.pageUrl,
+      text: ad.pageTitle,
+      target: '_blank'
 
-    /*  $('<a/>', {
-        class: 'inspected-title',
-        href: ad.pageUrl,
-        text: ad.pageTitle,
-        target: '_blank'
+    }).appendTo($detected);
 
-      }).appendTo($detected);*/
-
-    uDom(document.createElement('cite'))
-      .text(ad.pageUrl)
-      .appendTo($detected);
-
-    /*$('<cite/>', {
+    $('<cite/>', {
       text: ad.pageUrl
-    }).appendTo($detected);*/
+    }).appendTo($detected);
 
-    uDom(document.createElement('span'))
-      .addClass('inspected-date')
-      .text(formatDate(ad.foundT))
-      .appendTo($detected);
-
-    /*$('<span/>', {
+    $('<span/>', {
 
       class: 'inspected-date',
       text: formatDate(ad.foundTs)
 
-    }).appendTo($detected);*/
+    }).appendTo($detected);
   }
 
   function appendTargetTo($target, ad, adset) {
 
-    uDom(document.createElement('h3'))
-      .text(locale.target + ":")
-      .appendTo($target);
-    /*$('<h3/>', {
+    $('<h3/>', {
       text: locale.target + ":"
-    }).appendTo($target);*/
+    }).appendTo($target);
 
     //log("Creating target #"+ad.id+" title="+ad.title);
-    uDom(document.createElement('a'))
-      .attr('id', 'target-title')
-      .addClass('inspected-title')
-      .attr('href', ad.targetUrl)
-      .text(ad.title)
-      .attr('target', '_blank')
-      .appendTo($target);
+    $('<a/>', {
 
-    /*    $('<a/>', {
+      id: 'target-title',
+      class: 'inspected-title',
+      href: ad.targetUrl,
+      text: ad.title,
+      target: '_blank'
 
-          id: 'target-title',
-          class: 'inspected-title',
-          href: ad.targetUrl,
-          text: ad.title,
-          target: '_blank'
+    }).appendTo($target);
 
-        }).appendTo($target);*/
-
-    uDom(document.createElement('cite'))
-      .attr('id', 'target-domain')
-      .addClass('target-cite')
-      .text(targetDomain(ad))
-      .appendTo($target);
-
-    /*$('<cite/>', {
+    $('<cite/>', {
 
       id: 'target-domain',
       class: 'target-cite',
       text: targetDomain(ad)
 
-    }).appendTo($target);*/
+    }).appendTo($target);
 
-    uDom(document.createElement('span'))
-      .attr('id', 'target-date')
-      .addClass('inspected-date')
-      .text(formatDate(ad.visitedTs))
-      .appendTo($target);
-
-    /*$('<span/>', {
+    $('<span/>', {
 
       id: 'target-date',
       class: 'inspected-date',
       text: formatDate(ad.visitedTs)
 
-    }).appendTo($target);*/
+    }).appendTo($target);
   }
 
   function updateMetaTarget($target, ad) {
 
-    $target.descendants('#target-domain').text(targetDomain(ad));
-    $target.descendants('#target-date').text(formatDate(ad.visitedTs));
-    var $titleA = $target.descendants('#target-title').text(ad.title);
+    $target.find('#target-domain').text(targetDomain(ad));
+    $target.find('#target-date').text(formatDate(ad.visitedTs));
+    var $titleA = $target.find('#target-title').text(ad.title);
     if (ad.resolvedTargetUrl)
       $titleA.attr('href', ad.resolvedTargetUrl);
   }
@@ -381,8 +326,7 @@
    */
   function bulletIndex($div, adset) { // adset.index must be updated first
 
-    var $bullet = //$div.find('.bullet[data-idx=' + (adset.index) + ']'),
-      $div.descendants('.bullet[data-idx=\'' + (adset.index) + '\']'),
+    var $bullet = $div.find('.bullet[data-idx=' + (adset.index) + ']'),
       state = adset.state(),
       $ul;
 
@@ -393,16 +337,14 @@
 
     // set the active class for bullet
     $bullet.addClass('active')
-      //.siblings().removeClass('active');
-      .descendants('.bullet[data-idx=\'' + (adset.index) + '\']')
-      .removeClass('active');
+      .siblings().removeClass('active');
 
     // shift the meta-list to show correct info
-    $ul = $div.descendants('.meta-list');
+    $ul = $div.find('.meta-list');
     $ul.css('margin-top', (adset.index * -110) + 'px');
 
     // update the counter bubble
-    $div.descendants('#index-counter').text(indexCounterText(adset));
+    $div.find('#index-counter').text(indexCounterText(adset));
 
     if ($div.hasClass('inspected')) {
 
@@ -413,57 +355,37 @@
 
   function appendDisplayTo($div, adset) {
 
-    var $ad = uDom(document.createElement('div'))
-      .addClass('ad').appendTo($div);
-    /*$('<div/>', {
+    var $ad = $('<div/>', {
       class: 'ad'
-    }).appendTo($div);*/
+    }).appendTo($div);
 
-    uDom(document.createElement('span'))
-      .addClass('counter')
-      .text(adset.count())
-      .appendTo($ad);
-
-    /*$('<span/>', {
+    $('<span/>', {
 
       class: 'counter',
       text: adset.count()
 
-    }).appendTo($ad);*/
+    }).appendTo($ad);
 
-    uDom(document.createElement('span'))
-      .attr('id', 'index-counter')
-      .addClass('counter counter-index')
-      .text(indexCounterText(adset))
-      .appendTo($ad).addClass('hide');
-
-    /*$('<span/>', {
+    $('<span/>', {
 
       id: 'index-counter',
       class: 'counter counter-index',
       text: indexCounterText(adset)
 
-    }).appendTo($ad).hide();*/
+    }).appendTo($ad).hide();
 
-    var $img = uDom(document.createElement('img'))
-      .attr('src', adset.child(0).contentData.src)
-      .on('onerror', "this.onerror=null; this.width=80; this.height=40; " +
-        "this.alt='unable to load image'; this.src='img/placeholder.svg'")
-      .appendTo($ad);
-
-    /*$('<img/>', {
+    var $img = $('<img/>', {
 
       src: adset.child(0).contentData.src,
 
       onerror: "this.onerror=null; this.width=80; this.height=40; " +
         "this.alt='unable to load image'; this.src='img/placeholder.svg'",
 
-    }).appendTo($ad);*/
+    }).appendTo($ad);
 
     // fix for #291
+    $img.load(function () {
 
-    //$img.load(function () {
-    $img.on('load', function () {
       // cache the dimensions of the img-item AFTER load
       var $this = $(this);
       $div.attr('data-width', $this.width());
@@ -478,77 +400,48 @@
 
     $pdiv.addClass('item-text');
 
-    var $div = uDom(document.createElement('div'))
-      .addClass('item-text-div')
-      .prop('width', rand(TEXT_MINW, TEXT_MAXW))
-      .appendTo($pdiv);
-    /*$('<div/>', {
+    var $div = $('<div/>', {
 
       class: 'item-text-div',
       width: rand(TEXT_MINW, TEXT_MAXW)
 
-    }).appendTo($pdiv);*/
+    }).appendTo($pdiv);
 
-    uDom(document.createElement('span'))
-      .addClass('counter')
-      .text(total)
-      .appendTo($div);
-
-    /*$('<span/>', {
+    $('<span/>', {
 
       class: 'counter',
       text: total
 
-    }).appendTo($div);*/
+    }).appendTo($div);
 
-    uDom(document.createElement('span'))
-      .addClass('counter counter-index')
-      .attr('id', 'index-counter')
-      .text(indexCounterText(adset))
-      .appendTo($div).addClass('hide');
-    /*$('<span/>', {
+    $('<span/>', {
 
       id: 'index-counter',
       class: 'counter counter-index',
       text: indexCounterText(adset)
 
-    }).appendTo($div).hide();*/
+    }).appendTo($div).hide();
 
-    var $h3 = uDom(document.createElement('h3')).appendTo($div);
-    //$('<h3/>', {}).appendTo($div);
+    var $h3 = $('<h3/>', {}).appendTo($div);
 
-    uDom(document.createElement('div'))
-      .addClass('title')
-      .text(ad.title)
-      .prop('target', '_blank')
-      .appendTo($h3);
-
-    /*$('<div/>', { // title
+    $('<div/>', { // title
 
       class: 'title',
       text: ad.title,
       target: '_blank'
 
-    }).appendTo($h3);*/
+    }).appendTo($h3);
 
-    uDom(document.createElement('cite'))
-      .text(ad.contentData.site)
-      .appendTo($div);
+    $('<cite/>', {
+      text: ad.contentData.site
+    }).appendTo($div); // site
 
-    /*  $('<cite/>', {
-        text: ad.contentData.site
-      }).appendTo($div); // site*/
-
-    uDom(document.createElement('div'))
-      .addClass('ads-creative')
-      .text(ad.contentData.text)
-      .appendTo($div);
-    /*$('<div/>', { // text
+    $('<div/>', { // text
 
       class: 'ads-creative',
       text: ad.contentData.text
 
-    }).appendTo($div);*/
+    }).appendTo($div);
 
     // cache the dimensions of the text-item
     $pdiv.attr('data-width', $div.width());
@@ -568,7 +461,7 @@
 
       e.stopPropagation();
 
-      adset.index = parseInt(uDom(this).attr('data-idx'));
+      adset.index = parseInt($(this).attr('data-idx'));
       bulletIndex($div, adset);
 
       animateInspector(false);
@@ -583,45 +476,30 @@
 
     if (count > 1) {
 
-      var $bullets = uDom(document.createElement('div'))
-        .addClass('bullets')
-        .appendTo($div);
-
-      /*$('<div/>', {
+      var $bullets = $('<div/>', {
         class: 'bullets'
-      }).appendTo($div);*/
+      }).appendTo($div);
 
       // find the height of the image for bullet layout (#291)
       var adHeight = $div.attr('data-height');
 
       //log($div.find('img').height(), '?=', adHeight);
 
-      var $ul = uDom(document.createElement('ul'))
-        .prop('height', adHeight)
-        .appendTo($bullets);
-
-      /*$('<ul/>', {
+      var $ul = $('<ul/>', {
         height: adHeight
-      }).appendTo($bullets);*/
+      }).appendTo($bullets);
 
       // add items based on count/state
       for (var i = 0; i < adset.count(); i++) {
 
-        var $li = uDom(document.createElement('il'))
-          .attr('data-idx', i)
-          .addClass('bullet ' + adset.state(i))
-          .appendTo($ul);
-
-        /*$('<li/>', {
+        var $li = $('<li/>', {
 
           'data-idx': i,
           'class': 'bullet ' + adset.state(i)
 
-        }).appendTo($ul);*/
+        }).appendTo($ul);
 
-        //$li.hover(hoverOnLi, hoverOffLi);
-        $li.on('mouseenter', hoverOnDiv)
-          .on('mouseleave', hoverOffDiv);
+        $li.hover(hoverOnLi, hoverOffLi);
       }
     }
 
@@ -630,9 +508,9 @@
 
   function computeStats(adsets) {
 
-    uDom('.since').text(sinceTime(adsets));
-    uDom('#clicked').text(numVisited(adsets));
-    uDom('#detected').text(numFound(adsets));
+    $('.since').text(sinceTime(adsets));
+    $('#clicked').text(numVisited(adsets));
+    $('#detected').text(numFound(adsets));
   }
 
   function numVisited(adsets) {
@@ -674,20 +552,21 @@
   }
 
   function dragStart(e) {
-    //this.style.marginLeft/marginTop don't seem to work, only jQuery
-    var x = parseInt($(this).css("margin-left"), 10) - e.clientX,
-      y = parseInt($(this).css("margin-top"), 10) - e.clientY;
 
-    e.dataTransfer.setData("text/plain", x + ',' + y);
+    var x = parseInt($(this).css("margin-left"), 10) - e.originalEvent.clientX,
+      y = parseInt($(this).css("margin-top"), 10) - e.originalEvent.clientY;
+
+    e.originalEvent.dataTransfer.setData("text/plain", x + ',' + y);
 
     $(this).addClass('dragged');
   }
 
   function dragOver(e) {
 
-    var offset = e.dataTransfer.getData("text/plain").split(',');
-    $(this).css("margin-left", e.clientX + parseInt(offset[0], 10));
-    $(this).css("margin-top", e.clientY + parseInt(offset[1], 10));
+    var offset = e.originalEvent.dataTransfer.getData("text/plain").split(',');
+
+    $(this).css("marginLeft", e.originalEvent.clientX + parseInt(offset[0], 10));
+    $(this).css("marginTop", e.originalEvent.clientY + parseInt(offset[1], 10));
   }
 
   function dragEnd() {
@@ -722,7 +601,7 @@
 
   function enableLightbox() {
 
-    uDom('.item').on("click", function (e) {
+    $('.item').click(function (e) {
 
       e.stopPropagation();
       lightboxMode($(this));
@@ -730,9 +609,9 @@
 
     if (EnableContextMenu) {
 
-      uDom('.item').on("contextmenu", function (e) {
+      $('.item').bind("contextmenu", function (e) {
 
-        var $this = uDom(this);
+        var $this = $(this);
 
         if (!$this.hasClass('inspected')) {
 
@@ -762,8 +641,8 @@
 
     var i = 0,
       percentVis = 0.6,
-      winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, //$(window).width(),
-      winH = uDom.nodeFromId('svgcon').offsetTop; //$('#svgcon').offset().top;
+      winW = $(window).width(),
+      winH = $('#svgcon').offset().top;
 
     while (i < items.length) {
 
@@ -803,11 +682,11 @@
         $this.attr('data-gid') + ', using ' + iw + 'x' + ih);
     }
 
-    var $dm = uDom.nodeFromId('container');
+    var $dm = $('#container');
 
     // compute offset of dragged container
-    var dragoffX = -5000 - parseInt($dm.style.marginLeft),
-      dragoffY = -5000 - parseInt($dm.style.marginTop);
+    var dragoffX = -5000 - parseInt($dm.css('margin-left')),
+      dragoffY = -5000 - parseInt($dm.css('margin-top'));
 
     // compute offset of item-center from (dragged) window-center
     var pos = {
@@ -859,9 +738,10 @@
       setZoom(zoomIdx = 0);
 
       // transition to center
-      uDom('#container')
-        .css('margin-left', mleft + 'px')
-        .css('margin-top', mtop + 'px');
+      $('#container').css({
+        marginLeft: mleft + 'px',
+        marginTop: mtop + 'px'
+      });
 
     } else { // restore zoom-state
 
@@ -872,7 +752,7 @@
   // stores zoom/drag-offset for container
   function storeViewState(store) {
 
-    var $dm = uDom('#container');
+    var $dm = $('#container');
 
     if (store) {
 
@@ -912,26 +792,29 @@
 
     if (!showInterface) {
 
-      uDom("body").css('background-image', 'none')
-        .css('background-color', '#fff');
+      $("body").css('background-image', 'none')
+        .css({
+          'background-color': '#fff'
+        });
 
       ifs.forEach(function (s) {
         $(s).hide();
       });
 
       // remove all duplicate classes (TODO: just hide them)
-      uDom(".item").removeClass(function (i, css) {
+      $(".item").removeClass(function (i, css) {
         return (css.match(/dup-count-/g) || []).join(' ');
       }).addClass('dup-count-1');
 
     } else {
 
-      uDom("body").css('background-image', 'url(../img/gray_grid.png)')
-        .css('background-color', '#000');
+      $("body").css('background-image', 'url(../img/gray_grid.png)')
+        .css({
+          'background-color': '#000'
+        });
 
       ifs.forEach(function (s) {
-        //$(s).show();
-        uDom(s).addClass('show');
+        $(s).show();
       });
     }
   }
@@ -954,8 +837,7 @@
 
       if (selectedAdSet.count() > 1) {
 
-        //$selected.find('span.counter-index').show(); // show index-counter
-        $selected.descendants('span.counter-index').addClass('show');
+        $selected.find('span.counter-index').show(); // show index-counter
         bulletIndex($selected, selectedAdSet);
 
         animateInspector($selected);
@@ -973,19 +855,18 @@
 
       centerZoom($selected);
 
-      uDom('#container').addClass('lightbox');
+      $('#container').addClass('lightbox');
 
-    } else if (uDom('#container').hasClass('lightbox')) {
+    } else if ($('#container').hasClass('lightbox')) {
 
-      var $item = uDom('.item.inspected');
+      var $item = $('.item.inspected');
 
       // reset the class to the group class
       setItemClass($item, selectedAdSet.groupState());
 
       // remove inspected & re-hide index-counter
       $item.removeClass('inspected');
-      //$item.find('span.counter-index').hide();
-      $item.descendants('span.counter-index').addClass('hide');
+      $item.find('span.counter-index').hide();
 
       selectedAdSet = null;
 
@@ -993,7 +874,7 @@
       animateInspector(false);
       centerZoom(false);
 
-      uDom('#container').removeClass('lightbox');
+      $('#container').removeClass('lightbox');
     }
   }
 
@@ -1039,11 +920,12 @@
 
   function findItemDivByGid(gid) {
 
-    var $item, items = uDom('.item');
+    var $item, items = $('.item');
     for (var i = 0; i < items.length; i++) {
-      $item = items.nodeAt(i);
-      if (parseInt($item.getAttribute('data-gid')) === gid)
-        return uDom($item);
+
+      $item = $(items[i]);
+      if (parseInt($item.attr('data-gid')) === gid)
+        return $item;
     }
 
     return null; // item may not be available if filtered
@@ -1094,7 +976,7 @@
 
     //log('setZoom('+idx+','+(immediate===true)+')');
 
-    var $container = uDom('#container');
+    var $container = $('#container');
 
     // Disable transitions
     immediate && $container.addClass('notransition');
@@ -1102,10 +984,10 @@
     $container.removeClass(zoomStyle).addClass // swap zoom class
       ((zoomStyle = ('z-' + Zooms[idx]).replace(/\./, '_')));
 
-    uDom('#ratio').text(Zooms[idx] + '%'); // set zoom-text
+    $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
 
     // Trigger reflow, flush cached CSS
-    $container.first.offsetHeight;
+    $container[0].offsetHeight;
 
     // Re-enable transitions
     immediate && $container.removeClass('notransition');
@@ -1145,19 +1027,19 @@
 
     doFakeLocale(); // TODO: remove and implement
 
-    uDom('#x-close-button').on("click", function (e) {
+    $('#x-close-button').click(function (e) {
 
       e.preventDefault();
       window.open(location, '_self').close(); // close vault
     });
 
-    uDom('#logo').on("click", function (e) {
+    $('#logo').click(function (e) {
 
       e.preventDefault();
       openInNewTab('http://adnauseam.io');
     });
 
-    uDom(document).on("click", function (e) {
+    $(document).click(function (e) {
 
       if (e.which == 1) // Left-button only
         lightboxMode(false);
@@ -1173,7 +1055,7 @@
 
     /////////// DRAG-STAGE ///////// from: http://jsfiddle.net/robertc/kKuqH/
 
-    var $container = uDom('#container');
+    var $container = $('#container');
 
     if ($container) {
 
@@ -1187,13 +1069,13 @@
 
     /////////// ZOOM-STAGE ///////////
 
-    uDom('#z-in').on("click", function (e) {
+    $('#z-in').click(function (e) {
 
       e.preventDefault();
       zoomIn();
     });
 
-    uDom('#z-out').on("click", function (e) {
+    $('#z-out').click(function (e) {
 
       e.preventDefault();
       zoomOut();
@@ -1210,25 +1092,25 @@
     if (EnableContextMenu) {
 
       // if the document is clicked somewhere
-      uDom(document).on("mousedown", function (e) {
+      $(document).bind("mousedown", function (e) {
 
         // if the clicked element is not the delete-menu
-        if (uDom(e.target).ancestors(".custom-menu").length < 1) {
+        if ($(e.target).parents(".custom-menu").length < 1) {
 
-          //$(".custom-menu").hide(50);
-          uDom(".custom-menu").addClass('hide');
+          $(".custom-menu").hide(50);
         }
       });
 
       // if a context-menu element is right-clicked
-      uDom(".custom-menu li").on("click", function () {
+      $(".custom-menu li").click(function () {
 
         if (!selectedAdSet) {
-          console.error("No selectedAdSet!");
+
+          error("No selectedAdSet!");
           return;
         }
 
-        switch (uDom(this).attr("data-action")) {
+        switch ($(this).attr("data-action")) {
 
         case "delete":
 
@@ -1264,24 +1146,23 @@
 
         selectedAdSet = null;
 
-        //$(".custom-menu").hide(100); // close context-menu
-        uDom(".custom-menu").css("display", "none"); //.addClass('hide');
+        $(".custom-menu").hide(100); // close context-menu
       });
     }
 
-    uDom("body").on('mousewheel', (function (e) {
+    $("body").mousewheel(function (e, delta) {
 
-      if (uDom('#container').hasClass('lightbox')) {
+      if ($('#container').hasClass('lightbox')) {
 
         lightboxMode(false);
         return;
       }
 
-      if (e.deltaY < 0) // scrolling mousewheel outward
+      if (delta > 0) // scrolling mousewheel outward
         zoomIn();
       else
         zoomOut(); // scrolling inward
-    }));
+    });
   }
 
   /********************************************************************/
@@ -1364,11 +1245,10 @@
     var done = false,
       $items = $(".item"),
       visible = $items.length,
-      $container = uDom.nodeFromId('container'); //$('#container');
+      $container = $('#container');
 
     setTimeout(function () {
-      if (!done) //$('#loading-img').show();
-        uDom('#loading-img').addClass('show');
+      if (!done) $('#loading-img').show();
     }, 2000);
 
     showAlert(visible ? false : 'no ads found');
@@ -1397,8 +1277,7 @@
 
       done = true;
 
-      //$('#loading-img').hide();
-      uDom('#loading-img').addClass('hide');
+      $('#loading-img').hide();
     });
   }
 
@@ -1560,9 +1439,11 @@
 
     function centerContainer() {
 
-      uDom('#container').addClass('notransition')
-        .css("marginLeft", '-5000px')
-        .css("marginTop", '-5000px')
+      $('#container').addClass('notransition')
+        .css({
+          marginLeft: '-5000px',
+          marginTop: '-5000px'
+        })
         .removeClass('notransition');
     }
 
@@ -1670,7 +1551,7 @@
 
   AdSet.prototype.state = function (i) {
 
-    var ad = this.child(i) || i;
+    var ad = this.child(i);
 
     // ad should not be 'failed' until 3 failed visits (gh #64)
     if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0))
@@ -1686,12 +1567,11 @@
 
   AdSet.prototype.failedCount = function () {
 
-    var containerObj = this;
-
     return this.children.filter(function (d) {
 
-      return containerObj.state(d) == 'failed';
-    }).length == this.children.length;
+      return d.visitedTs < 0;
+
+    }).length;
   };
 
   AdSet.prototype.visitedCount = function () {
