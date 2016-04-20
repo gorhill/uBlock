@@ -1551,7 +1551,7 @@
 
   AdSet.prototype.state = function (i) {
 
-    var ad = this.child(i);
+    var ad = this.child(i) || i;
 
     // ad should not be 'failed' until 3 failed visits (gh #64)
     if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0))
@@ -1566,12 +1566,14 @@
   };
 
   AdSet.prototype.failedCount = function () {
+    
+    var containerObj = this;
 
     return this.children.filter(function (d) {
 
-      return d.visitedTs < 0;
+      return containerObj.state(d) == 'failed';
 
-    }).length;
+    }).length == containerObj.children.length;
   };
 
   AdSet.prototype.visitedCount = function () {
