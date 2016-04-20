@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Prepnúť Blokovanie veľkých mediálnych elementov na tejto stránke",
+    "message":"Prepnúť blokovanie veľkých multimediálnych prvkov na tejto stránke",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Náhľad",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -220,11 +220,11 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Prednastavené správanie",
+    "message":"Predvolené správanie",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Tieto prednastavené správania môžu byť preskočené na zvolených stránkach",
+    "message":"Tieto predvolené správania môžu byť prepísané u jednotlivých stránkach",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -232,11 +232,11 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Blokovať mediálne elementy väčšie ako {{input:number}} kB",
+    "message":"Blokovať multimediálne prvky väčšie ako {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Blokovať vzdialené fonty",
+    "message":"Blokovať vzdialené písma",
     "description":""
   },
   "settingsStorageUsed":{
@@ -648,7 +648,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importovať z cloud storage a zlúčiť so súčasnými nastaveniami",
+    "message":"Importovať z cloudového úložiska a zlúčiť so súčasnými nastaveniami",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -672,7 +672,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Dočasne povoliť veľké mediálne elementy",
+    "message":"Dočasne povoliť veľké multimediálne prvky",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
