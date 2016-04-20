@@ -916,7 +916,7 @@ vAPI.net.registerListeners = function() {
         var r = onBeforeRequestClient(details);
         // Blocked?
         if ( r && r.cancel ) {
-            return { cancel: true };
+            return r;
         }
         // Returning a 1x1 transparent pixel means "not blocked".
         return { redirectUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
