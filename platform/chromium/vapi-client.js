@@ -348,6 +348,11 @@ vAPI.shutdown.add(function() {
 // search for "https://github.com/gorhill/uBlock/issues/1497".
 
 (function() {
+    // Don't bother if WebSocket is not supported.
+    if ( window.WebSocket instanceof Function === false ) {
+        return;
+    }
+
     // Only for http/https documents.
     if ( /^https?:/.test(window.location.protocol) !== true ) {
         return;
@@ -359,120 +364,120 @@ vAPI.shutdown.add(function() {
         return;
     }
 
-    var WebSocketWrapper = function() {
-        var WS = window.WebSocket;
-
-        var onClose = function(ev) {
-            this.readyState = this.wrapped.readyState;
-            if ( this.onclose !== null ) {
-                this.onclose(ev);
-            }
-        };
-
-        var onError = function(ev) {
-            this.readyState = this.wrapped.readyState;
-            if ( this.onerror !== null ) {
-                this.onerror(ev);
-            }
-        };
-
-        var onMessage = function(ev) {
-            if ( this.onmessage !== null ) {
-                this.onmessage(ev);
-            }
-        };
-
-        var onOpen = function(ev) {
-            this.readyState = this.wrapped.readyState;
-            if ( this.onopen !== null ) {
-                this.onopen(ev);
-            }
-        };
-
-        var onAllowed = function(ws, url, protocols) {
-            this.removeEventListener('load', onAllowed);
-            this.removeEventListener('error', onBlocked);
-            connect(ws, url, protocols);
-        };
-
-        var onBlocked = function(ws) {
-            this.removeEventListener('load', onAllowed);
-            this.removeEventListener('error', onBlocked);
-            if ( ws.onerror !== null ) {
-                ws.onerror(new window.ErrorEvent('error'));
-            }
-        };
-
-        var connect = function(ws, url, protocols) {
-            ws.wrapped = new WS(url, protocols);
-            ws.wrapped.onclose = onClose.bind(ws);
-            ws.wrapped.onerror = onError.bind(ws);
-            ws.wrapped.onmessage = onMessage.bind(ws);
-            ws.wrapped.onopen = onOpen.bind(ws);
-        };
-
-        // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
-        var wrapper = function(url, protocols) {
-            this.binaryType = '';
-            this.bufferedAmount = 0;
-            this.extensions = '';
-            this.onclose = null;
-            this.onerror = null;
-            this.onmessage = null;
-            this.onopen = null;
-            this.protocol = '';
-            this.readyState = this.CONNECTING;
-            this.url = url;
-
-            this.wrapped = null;
-            if ( /^wss?:\/\//.test(url) === false ) {
-                connect(this, url, protocols);
-                return;
-            }
-
-            // We will use an image network request to communicate with uBO's
-            // main process.
-            var img = new Image();
-            img.src = [
-                window.location.origin,
-                '?url=' + encodeURIComponent(url),
-                '&ubofix=f41665f3028c7fd10eecf573336216d3'
-            ].join('');
-            img.addEventListener('load', onAllowed.bind(img, this, url, protocols));
-            img.addEventListener('error', onBlocked.bind(img, this, url, protocols));
-        };
-
-        wrapper.prototype.close = function(code, reason) {
-            if ( this.wrapped !== null ) {
-                this.wrapped.close(code, reason);
-            }
-        };
-
-        wrapper.prototype.send = function(data) {
-            if ( this.wrapped !== null ) {
-                this.wrapped.send(data);
-            }
-        };
-
-        wrapper.prototype.CONNECTING = 0;
-        wrapper.prototype.OPEN = 1;
-        wrapper.prototype.CLOSING = 2;
-        wrapper.prototype.CLOSED = 3;
-
-        window.WebSocket = wrapper;
-
-        // Remove our own tag to avoid polluting document.
-        var me = document.getElementById('ubofix-f41665f3028c7fd10eecf573336216d3');
-        if ( me !== null && me.parentNode !== null ) {
-            me.parentNode.removeChild(me);
-        }
-    };
-
+    // WebSocket reference: https://html.spec.whatwg.org/multipage/comms.html
     // The script tag will remove itself from the DOM once it completes
     // execution.
+    // For code review convenience, the stringified code below can be found at
+    // the following gist:
+    // - https://gist.github.com/gorhill/9cad94dfa438092e5fdabd7d0bdb23db
     var script = doc.createElement('script');
     script.id = 'ubofix-f41665f3028c7fd10eecf573336216d3';
-    script.textContent = '(' + WebSocketWrapper.toString() + ')();';
+    script.textContent = [
+        '(function() {',
+        '    var WS = window.WebSocket;',
+        '',
+        '    var onClose = function(ev) {',
+        '        this.readyState = this.wrapped.readyState;',
+        '        if ( this.onclose !== null ) {',
+        '            this.onclose(ev);',
+        '        }',
+        '    };',
+        '',
+        '    var onError = function(ev) {',
+        '        this.readyState = this.wrapped.readyState;',
+        '        if ( this.onerror !== null ) {',
+        '            this.onerror(ev);',
+        '        }',
+        '    };',
+        '',
+        '    var onMessage = function(ev) {',
+        '        if ( this.onmessage !== null ) {',
+        '            this.onmessage(ev);',
+        '        }',
+        '    };',
+        '',
+        '    var onOpen = function(ev) {',
+        '        this.readyState = this.wrapped.readyState;',
+        '        if ( this.onopen !== null ) {',
+        '            this.onopen(ev);',
+        '        }',
+        '    };',
+        '',
+        '    var onAllowed = function(ws, url, protocols) {',
+        '        this.removeEventListener("load", onAllowed);',
+        '        this.removeEventListener("error", onBlocked);',
+        '        connect(ws, url, protocols);',
+        '    };',
+        '',
+        '    var onBlocked = function(ws) {',
+        '        this.removeEventListener("load", onAllowed);',
+        '        this.removeEventListener("error", onBlocked);',
+        '        if ( ws.onerror !== null ) {',
+        '            ws.onerror(new window.ErrorEvent("error"));',
+        '        }',
+        '    };',
+        '',
+        '    var connect = function(ws, url, protocols) {',
+        '        ws.wrapped = new WS(url, protocols);',
+        '        ws.wrapped.onclose = onClose.bind(ws);',
+        '        ws.wrapped.onerror = onError.bind(ws);',
+        '        ws.wrapped.onmessage = onMessage.bind(ws);',
+        '        ws.wrapped.onopen = onOpen.bind(ws);',
+        '    };',
+        '',
+        '    var wrapper = function(url, protocols) {',
+        '        this.binaryType = "";',
+        '        this.bufferedAmount = 0;',
+        '        this.extensions = "";',
+        '        this.onclose = null;',
+        '        this.onerror = null;',
+        '        this.onmessage = null;',
+        '        this.onopen = null;',
+        '        this.protocol = "";',
+        '        this.readyState = this.CONNECTING;',
+        '        this.url = url;',
+        '',
+        '        this.wrapped = null;',
+        '        if ( /^wss?:\\/\\//.test(url) === false ) {',
+        '            connect(this, url, protocols);',
+        '            return;',
+        '        }',
+        '',
+        '        var img = new Image();',
+        '        img.src = ',
+        '              window.location.origin',
+        '            + "?url=" + encodeURIComponent(url)',
+        '            + "&ubofix=f41665f3028c7fd10eecf573336216d3";',
+        '        img.addEventListener("load", onAllowed.bind(img, this, url, protocols));',
+        '        img.addEventListener("error", onBlocked.bind(img, this, url, protocols));',
+        '    };',
+        '',
+        '    wrapper.prototype.close = function(code, reason) {',
+        '        if ( this.wrapped !== null ) {',
+        '            this.wrapped.close(code, reason);',
+        '        }',
+        '    };',
+        '',
+        '    wrapper.prototype.send = function(data) {',
+        '        if ( this.wrapped !== null ) {',
+        '            this.wrapped.send(data);',
+        '        }',
+        '    };',
+        '',
+        '    wrapper.prototype.CONNECTING = 0;',
+        '    wrapper.prototype.OPEN = 1;',
+        '    wrapper.prototype.CLOSING = 2;',
+        '    wrapper.prototype.CLOSED = 3;',
+        '',
+        '    window.WebSocket = wrapper;',
+        '',
+        '    var me = document.getElementById("ubofix-f41665f3028c7fd10eecf573336216d3");',
+        '    if ( me !== null && me.parentNode !== null ) {',
+        '        me.parentNode.removeChild(me);',
+        '    }',
+        '})();',
+        ].join('\n');
+
     try {
         parent.appendChild(script);
     } catch (ex) {
