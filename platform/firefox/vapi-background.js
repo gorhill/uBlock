@@ -1353,18 +1353,13 @@ var tabWatcher = (function() {
             tabs = [];
         }
 
-        var browser, URI, tabId;
+        var browser, tabId;
         var tabindex = tabs.length, tab;
         while ( tabindex-- ) {
             tab = tabs[tabindex];
             browser = browserFromTarget(tab);
             if ( browser === null ) {
                 continue;
-            }
-            URI = browser.currentURI;
-            // Close extension tabs
-            if ( URI.schemeIs('chrome') && URI.host === location.host ) {
-                vAPI.tabs._remove(tab, getTabBrowser(win));
             }
             tabId = browserToTabIdMap.get(browser);
             if ( tabId !== undefined ) {
