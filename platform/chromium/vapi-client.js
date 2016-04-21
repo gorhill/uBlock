@@ -349,8 +349,11 @@ vAPI.shutdown.add(function() {
 // search for "https://github.com/gorhill/uBlock/issues/1497".
 
 (function() {
-    // Don't bother if WebSocket is not supported.
-    if ( window.WebSocket instanceof Function === false ) {
+    // Fix won't be applied on older versions of Chromium.
+    if (
+        window.WebSocket instanceof Function === false ||
+        window.WeakMap instanceof Function === false
+    ) {
         return;
     }
 
