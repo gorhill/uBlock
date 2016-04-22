@@ -1,4 +1,8 @@
 {
+  "adnVaultName": {
+    "message": "AdNauseam — Ad Vault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
   "adnShowingRecentAds": {
     "message": "No ads on this page (showing recent)",
     "description": "shown in menu when only 'recent' ads are shown"
