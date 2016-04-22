@@ -32,117 +32,169 @@
 (function() {
     'use strict';
 
-    var WS = window.WebSocket;
+    var Wrapped = window.WebSocket;
     var toWrapped = new WeakMap();
 
-    var onClose = function(ev) {
-        var wrapped = toWrapped.get(this);
-        if ( !wrapped ) {
+    var onResponseReceived = function(wrapper, ok) {
+        this.onload = this.onerror = null;
+        var bag = toWrapped.get(wrapper);
+        if ( !ok ) {
+            if ( bag.properties.onerror ) {
+                bag.properties.onerror(new window.ErrorEvent('error'));
+            }
             return;
         }
-        this.readyState = wrapped.readyState;
-        if ( this.onclose !== null ) {
-            this.onclose(ev);
+        var wrapped = new Wrapped(bag.args.url, bag.args.protocols);
+        for ( var prop in bag.properties ) {
+            wrapped[prop] = bag.properties[prop];
         }
-    };
-
-    var onError = function(ev) {
-        var wrapped = toWrapped.get(this);
-        if ( !wrapped ) {
-            return;
-        }
-        this.readyState = wrapped.readyState;
-        if ( this.onerror !== null ) {
-            this.onerror(ev);
-        }
-    };
-
-    var onMessage = function(ev) {
-        if ( this.onmessage !== null ) {
-            this.onmessage(ev);
-        }
-    };
-
-    var onOpen = function(ev) {
-        var wrapped = toWrapped.get(this);
-        if ( !wrapped ) {
-            return;
-        }
-        this.readyState = wrapped.readyState;
-        if ( this.onopen !== null ) {
-            this.onopen(ev);
-        }
-    };
-
-    var onAllowed = function(ws, url, protocols) {
-        this.removeEventListener('load', onAllowed);
-        this.removeEventListener('error', onBlocked);
-        connect(ws, url, protocols);
-    };
-
-    var onBlocked = function(ws) {
-        this.removeEventListener('load', onAllowed);
-        this.removeEventListener('error', onBlocked);
-        if ( ws.onerror !== null ) {
-            ws.onerror(new window.ErrorEvent('error'));
-        }
-    };
-
-    var connect = function(wrapper, url, protocols) {
-        var wrapped = new WS(url, protocols);
         toWrapped.set(wrapper, wrapped);
-        wrapped.onclose = onClose.bind(wrapper);
-        wrapped.onerror = onError.bind(wrapper);
-        wrapped.onmessage = onMessage.bind(wrapper);
-        wrapped.onopen = onOpen.bind(wrapper);
+    };
+
+    var noopfn = function() {
+    };
+
+    var fallthruGet = function(wrapper, prop, value) {
+        var wrapped = toWrapped.get(wrapper);
+        if ( !wrapped ) {
+            return value;
+        }
+        if ( wrapped instanceof Wrapped ) {
+            return wrapped[prop];
+        }
+        return wrapped.properties.hasOwnProperty(prop) ?
+            wrapped.properties[prop] :
+            value;
+    };
+
+    var fallthruSet = function(wrapper, prop, value) {
+        if ( value instanceof Function ) {
+            value = value.bind(wrapper);
+        }
+        var wrapped = toWrapped.get(wrapper);
+        if ( !wrapped ) {
+            return;
+        }
+        if ( wrapped instanceof Wrapped ) {
+            wrapped[prop] = value;
+        } else {
+            wrapped.properties[prop] = value;
+        }
     };
 
     var WebSocket = function(url, protocols) {
-        this.binaryType = '';
-        this.bufferedAmount = 0;
-        this.extensions = '';
-        this.onclose = null;
-        this.onerror = null;
-        this.onmessage = null;
-        this.onopen = null;
-        this.protocol = '';
-        this.readyState = this.CONNECTING;
-        this.url = url;
-
-        if ( /^wss?:\/\//.test(url) === false ) {
-            connect(this, url, protocols);
-            return;
+        if ( window.location.protocol === 'https:' && /^ws:/.test(url) ) {
+            var ws = new Wrapped(url, protocols);
+            if ( ws ) {
+                ws.close();
+            }
         }
+
+        Object.defineProperties(this, {
+            'binaryType': {
+                get: function() {
+                    return fallthruGet(this, 'binaryType', '');
+                },
+                set: function(value) {
+                    fallthruSet(this, 'binaryType', value);
+                }
+            },
+            'bufferedAmount': {
+                get: function() {
+                    return fallthruGet(this, 'bufferedAmount', 0);
+                },
+                set: noopfn
+            },
+            'extensions': {
+                get: function() {
+                    return fallthruGet(this, 'extensions', '');
+                },
+                set: noopfn
+            },
+            'onclose': {
+                get: function() {
+                    return fallthruGet(this, 'onclose', null);
+                },
+                set: function(value) {
+                    fallthruSet(this, 'onclose', value);
+                }
+            },
+            'onerror': {
+                get: function() {
+                    return fallthruGet(this, 'onerror', null);
+                },
+                set: function(value) {
+                    fallthruSet(this, 'onerror', value);
+                }
+            },
+            'onmessage': {
+                get: function() {
+                    return fallthruGet(this, 'onmessage', null);
+                },
+                set: function(value) {
+                    fallthruSet(this, 'onmessage', value);
+                }
+            },
+            'onopen': {
+                get: function() {
+                    return fallthruGet(this, 'onopen', null);
+                },
+                set: function(value) {
+                    fallthruSet(this, 'onopen', value);
+                }
+            },
+            'protocol': {
+                get: function() {
+                    return fallthruGet(this, 'protocol', '');
+                },
+                set: noopfn
+            },
+            'readyState': {
+                get: function() {
+                    return fallthruGet(this, 'readyState', 0);
+                },
+                set: noopfn
+            },
+            'url': {
+                get: function() {
+                    return fallthruGet(this, 'url', '');
+                },
+                set: noopfn
+            }
+        });
+
+        toWrapped.set(this, {
+            args: { url: url, protocols: protocols },
+            properties: {}
+        });
 
         var img = new Image();
         img.src = 
               window.location.origin
             + '?url=' + encodeURIComponent(url)
             + '&ubofix=f41665f3028c7fd10eecf573336216d3';
-        img.addEventListener('load', onAllowed.bind(img, this, url, protocols));
-        img.addEventListener('error', onBlocked.bind(img, this, url, protocols));
-    };
-
-    WebSocket.prototype.close = function(code, reason) {
-        var wrapped = toWrapped.get(this);
-        if ( !wrapped ) {
-            return;
-        }
-        wrapped.close(code, reason);
-    };
-
-    WebSocket.prototype.send = function(data) {
-        var wrapped = toWrapped.get(this);
-        if ( !wrapped ) {
-            return;
-        }
-        wrapped.send(data);
+        img.onload = onResponseReceived.bind(img, this, true);
+        img.onerror = onResponseReceived.bind(img, this, false);
     };
 
     WebSocket.prototype.CONNECTING = 0;
     WebSocket.prototype.OPEN = 1;
     WebSocket.prototype.CLOSING = 2;
     WebSocket.prototype.CLOSED = 3;
+
+    WebSocket.prototype.close = function(code, reason) {
+        var wrapped = toWrapped.get(this);
+        if ( wrapped instanceof Wrapped ) {
+            wrapped.close(code, reason);
+        }
+    };
+
+    WebSocket.prototype.send = function(data) {
+        var wrapped = toWrapped.get(this);
+        if ( wrapped instanceof Wrapped ) {
+            wrapped.send(data);
+        }
+    };
 
     window.WebSocket = WebSocket;
 
