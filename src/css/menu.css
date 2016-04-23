@@ -700,37 +700,29 @@ input.cmn-toggle-round-flat:checked + label:after {
   background-color: #0076FF;
 }
 
-/* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
-[data-tip] {
-    cursor: pointer;
-    position: relative;
-    }
-body [data-tip]:after {
+#tooltip {
     background-color: #333;
+    border: 1px solid gray;
     border-radius: 3px;
+    box-shadow: 1px 1px 3px gray;
     box-sizing: border-box;
     color: #eee;
-    content: attr(data-tip);
-    font-family:Calibri;
+    cursor: pointer;
     font-size: 12px;
     font-weight: normal;
-    left: 0.5em;
-    line-height: 130%;
+    left: 5%;
     opacity: 0;
     padding: 4px 6px;
     pointer-events: none;
     position: absolute;
-    right: 0.5em;
     text-align: left;
-    top: 110%;
     visibility: hidden;
     white-space: pre-line;
-    z-index: 20;
+    z-index: 100;
     }
-body [data-tip]:hover:after {
-    opacity: 0.9;
-    position: absolute;
-    transition: visibility 0s 0.3s, opacity 0.2s 0.4s;
-    -webkit-transition: visibility 0s 0.3s, opacity 0.2s 0.4s;
+#tooltip.show {
+    transition: visibility 0s 0.3s;
+    -webkit-transition: visibility 0s 0.3s;
     visibility: visible;
+    opacity: 1;
     }

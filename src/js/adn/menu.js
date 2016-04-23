@@ -537,6 +537,9 @@
       pos = targetRect.bottom - ttcRect.top;
       tip.style.setProperty('top', pos + 'px');
     }
+    
+    // Tooltip's horizontal position
+    tip.style.setProperty('left', targetRect.left + 'px');
 
     tip.classList.add('show');
   };
@@ -579,7 +582,7 @@
     uDom('#pause-button').on('click', toggleEnabled);
     uDom('#resume-button').on('click', toggleEnabled);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-      .on('mouseleave', '[data-tip]', onHideTooltip); // TODO
+                .on('mouseleave', '[data-tip]', onHideTooltip);
   })();
 
   /********************************************************************/

@@ -21,16 +21,16 @@
           </a>
         </h1>
         <div id="stats">
-          <span class="visited" data-i18n="adnMenuAdsClicked">&nbsp;</span>
-          <span id="visited-count" class="visited">0</span>
-          <span data-i18n="adnMenuOfThe">&nbsp;</span>
-          <span id="found-count" class="found">0</span>
-          <span class="found" data-i18n="adnMenuAdsDetected">&nbsp;</span>
-          <div id="vault-btn">
-            <button id="vault-button" data-i18n="adnMenuViewVault">&nbsp;</button>
-            <span id="vault-count" class="count">(-)</span>
+            <span class="visited" data-i18n="adnMenuAdsClicked">&nbsp;</span>
+            <span id="visited-count" class="visited">0</span>
+            <span data-i18n="adnMenuOfThe">&nbsp;</span>
+            <span id="found-count" class="found">0</span>
+            <span class="found" data-i18n="adnMenuAdsDetected">&nbsp;</span>
+            <div id="vault-btn">
+              <button id="vault-button" data-i18n="adnMenuViewVault">&nbsp;</button>
+              <span id="vault-count" class="count">(-)</span>
+            </div>
           </div>
-        </div>
       </header>
 
       <div id="ad-list" class="">
@@ -48,10 +48,12 @@
       </div>
 
       <footer>
-        <button id="pause-button" class="pause" data-i18n="adnMenuPause">&nbsp;</button>
-        <button id="resume-button" class="resume" data-i18n="adnMenuResume">&nbsp;</button>
-        <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
-        <button id="about-button" class="about">?</button>
+        <div class="tooltipContainer">
+          <button id="pause-button" class="pause" data-i18n="adnMenuPause" data-i18n-tip="popupPowerSwitchInfo">&nbsp;</button>
+          <button id="resume-button" class="resume" data-i18n="adnMenuResume" data-i18n-tip="popupPowerSwitchInfo">&nbsp;</button>
+          <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
+          <button id="about-button" class="about">?</button>
+        </div>
       </footer>
 
     </div>
