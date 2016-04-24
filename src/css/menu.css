@@ -138,7 +138,7 @@ button {
   color: #0076FF;
   font-size: 20px;
   height: 30px;
-  padding-top: 1px;
+  padding-top: 2px;
 }
 
 button:hover:enabled{
