@@ -704,7 +704,7 @@ input.cmn-toggle-round-flat:checked + label:after {
     background-color: #333;
     border: 1px solid gray;
     border-radius: 3px;
-    box-shadow: 1px 1px 3px gray;
+    box-shadow: 0 0 10px #0076FF;
     box-sizing: border-box;
     color: #eee;
     cursor: pointer;
@@ -720,9 +720,40 @@ input.cmn-toggle-round-flat:checked + label:after {
     white-space: pre-line;
     z-index: 100;
     }
+.arrow_box:after, .arrow_box:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(51, 51, 51, 0);
+	border-top-color: #333;
+	border-width: 5px;
+	margin-left: -5px;
+}
+.arrow_box:before {
+	border-color: rgba(0, 118, 255, 0);
+	border-top-color: #0076FF;
+	border-width: 6px;
+	margin-left: -6px;
+}
 #tooltip.show {
     transition: visibility 0s 0.3s;
     -webkit-transition: visibility 0s 0.3s;
     visibility: visible;
+    animation: fadeIn 500ms ease-out;
     opacity: 1;
+    margin-bottom: 9px;
     }
+  @keyframes fadeIn {
+      from {
+        opacity: 0;
+        margin-bottom: 0;
+      }
+  }
