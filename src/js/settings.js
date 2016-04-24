@@ -64,12 +64,12 @@ var handleImportFilePicker = function() {
             userData = undefined;
         }
         if ( userData === undefined ) {
-            window.alert(vAPI.i18n('aboutRestoreDataError'));
+            window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
             return;
         }
         var time = new Date(userData.timeStamp);
         var msg = vAPI.i18n('aboutRestoreDataConfirm')
-                      .replace('{{time}}', time.toLocaleString());
+                      .replace('{{time}}', time.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam');
         var proceed = window.confirm(msg);
         if ( proceed ) {
             messaging.send(
@@ -109,7 +109,7 @@ var exportToFile = function() {
 
 var onLocalDataReceived = function(details) {
     uDom('#localData > ul > li:nth-of-type(1)').text(
-        vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
+        vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam')
     );
 
     var elem, dt;
@@ -143,7 +143,7 @@ var onLocalDataReceived = function(details) {
 /******************************************************************************/
 
 var resetUserData = function() {
-    var msg = vAPI.i18n('aboutResetDataConfirm');
+    var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam');
     var proceed = window.confirm(msg);
     if ( proceed ) {
         messaging.send('dashboard', { what: 'resetUserData' });

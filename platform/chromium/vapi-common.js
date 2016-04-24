@@ -79,6 +79,14 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 
 /******************************************************************************/
 
+vAPI.confirm = (function() {                                
+    return function(msg) {
+        return window.confirm(msg);
+    };
+})();
+
+/******************************************************************************/
+
 vAPI.closePopup = function() {
     window.open('','_self').close();
 };

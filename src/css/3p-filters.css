@@ -21,14 +21,15 @@ body[dir=rtl] #lists {
     }
 #lists > .groupEntry > .geName {
     cursor: pointer;
-    font-size: 110%;
+    font-size: 140%;
+    font-family: bebas_neue_regularregular;
     }
 #lists > .groupEntry > .geCount {
     font-size: 90%;
     }
 #lists > .groupEntry:not(:first-child) > .geName:before {
     color: #aaa;
-    content: '\2212  ';
+    /*content: '\2212  ';*/
     }
 #lists > .groupEntry.collapsed > .geName:before {
     color: #aaa;
@@ -61,17 +62,17 @@ li.listEntry > a:nth-of-type(2) {
     }
 li.listEntry > a:nth-of-type(2),
 li.listEntry > a:nth-of-type(2):visited {
-    color: mediumblue;
+    /*color: mediumblue;*/
     }
 li.listEntry > a:nth-of-type(2):hover {
     opacity: 1;
     }
 li.listEntry > a:nth-of-type(3) {
     font-size: 13px;
-    opacity: 0.5;
+    opacity: 0.75;
     }
 .dim {
-    opacity: 0.5;
+    opacity: 0.75;
     }
 #buttonApply {
     display: initial;
@@ -97,13 +98,22 @@ span.status {
     padding: 1px 2px;
 }
 span.unsecure {
-    background-color: hsl(0, 100%, 88%);
+    color: hsl(0, 100%, 83%);
     border-color: hsl(0, 100%, 83%);
+    border-radius: 2px;
+    padding: 1px 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     }
 span.purge {
+    color: #ddd;
     border-color: #ddd;
-    background-color: #eee;
-    cursor: pointer;
+    border-radius: 2px;
+    padding: 1px 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     }
 span.purge:hover {
     opacity: 1;

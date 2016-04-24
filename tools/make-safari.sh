@@ -2,9 +2,9 @@
 #
 # This script assumes an OS X or *NIX environment
 
-echo "*** uBlock.safariextension: Copying files..."
+echo "*** adnauseam.safari: Copying files..."
 
-DES=dist/build/uBlock.safariextension
+DES=bin/build/adnauseam.safari
 rm -rf $DES
 mkdir -p $DES
 
@@ -23,11 +23,11 @@ cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt $DES/
 
-echo "*** uBlock.safariextension: Generating Info.plist..."
+echo "*** adnauseam.safari: Generating Info.plist..."
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
+    echo "*** Use Safari's Extension Builder to create the signed adnauseam extension package -- can't automate it."
 fi
 
-echo "*** uBlock.safariextension: Done."
+echo "*** adnauseam.safari: Done."

@@ -1,3 +1,7 @@
+/* ============================================================
+  SETTINGS SPECIFIC
+============================================================ */
+
 ul {
     padding-left: 1em;
     }
@@ -17,6 +21,7 @@ ul#userSettings .subgroup {
 ul#userSettings .subgroup > span {
     font-size: larger;
     font-weight: bold;
+    font-family: 'bebas_neue_regularregular';
     }
 #localData > ul > li {
     margin-top: 1em;

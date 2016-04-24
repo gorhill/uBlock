@@ -108,6 +108,7 @@ var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 /******************************************************************************/
 
 var cachePopupData = function(data) {
+    //console.log("DATA",data);
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
@@ -408,6 +409,7 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
+
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
@@ -451,8 +453,8 @@ var renderPopup = function() {
     // Convenience: open the logger with current tab automatically selected
     if ( popupData.tabId ) {
         uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
-            'href',
-            'logger-ui.html#tab_' + popupData.tabId
+             'href',
+             'logger-ui.html#tab_' + popupData.tabId
         );
     }
 
@@ -944,6 +946,8 @@ var onHideTooltip = function() {
     if ( matches && matches.length === 2 ) {
         tabId = matches[1];
     }
+
+    console.log("tabId: "+tabId);
     getPopupData(tabId);
 
     uDom('#switch').on('click', toggleNetFilteringSwitch);

@@ -132,6 +132,9 @@ var uBlockCollapser = (function() {
             // Never remove elements from the DOM, just hide them
             target.style.setProperty('display', 'none', 'important');
 
+            if (dbugDetect) console.log("HIT[OK1]: ", target);
+            adDetector.findAds(target);
+
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
             if ( (value = target.getAttribute(entry.attr)) ) {
@@ -323,6 +326,8 @@ var uBlockCollapser = (function() {
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
                     elems[i].style.setProperty('display', 'none', 'important');
+                    if(dbugDetect) console.log("HIT[noShadow]: ",elems[i]);
+                    adDetector.findAds(elems[i]);
                 }
             };
         }
@@ -338,28 +343,32 @@ var uBlockCollapser = (function() {
             var elem, shadow;
             while ( i-- ) {
                 elem = elems[i];
-                shadow = elem.shadowRoot;
-                // https://www.chromestatus.com/features/4668884095336448
-                // "Multiple shadow roots is being deprecated."
-                if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {	
-                        elem.style.setProperty('display', 'none', 'important');
-                    }
-                    continue;
-                }
+                // shadow = elem.shadowRoot;
+                // // https://www.chromestatus.com/features/4668884095336448
+                // // "Multiple shadow roots is being deprecated."
+                // if ( shadow !== null ) {
+                //     if ( shadow.className !== sessionId ) {
+                //         if(dbugDetect); console.log("HIT[shadow]: ",elem);
+                //         elem.style.setProperty('display', 'none', 'important');
+                //     }
+                //     continue;
+                // }
                 // https://github.com/gorhill/uBlock/pull/555
                 // Not all nodes can be shadowed:
                 //   https://github.com/w3c/webcomponents/issues/102
                 // https://github.com/gorhill/uBlock/issues/762
                 // Remove display style that might get in the way of the shadow
                 // node doing its magic.
-                try {
+                /*try {
                     shadow = elem.createShadowRoot();
                     shadow.className = sessionId;
                     elem.style.removeProperty('display');
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
-                }
+                }*/
+                if(dbugDetect) console.log("HIT[OK2]: ",elem);
+                elem.style.setProperty('display', 'none', 'important');
+                adDetector.findAds(elem);
             }
         };
     })();
@@ -711,6 +720,7 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
+            if(dbugDetect) console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }
     };

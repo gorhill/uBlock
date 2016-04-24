@@ -39,6 +39,8 @@ File system structure:
 
 // Low-level asset files manager
 
+var dbug = true;
+
 µBlock.assets = (function() {
 
 'use strict';
@@ -1320,11 +1322,11 @@ var onOneUpdated = function(details) {
     var path = details.path;
     if ( details.error ) {
         manualUpdateNotify(false, updatedCount / (updatedCount + toUpdateCount));
-        //console.debug('µBlock.assetUpdater/onOneUpdated: "%s" failed', path);
+        if (dbug) console.debug('µBlock.assetUpdater/onOneUpdated: "%s" failed', path);
         return;
     }
 
-    //console.debug('µBlock.assetUpdater/onOneUpdated: "%s"', path);
+    if (dbug) console.debug('µBlock.assetUpdater/onOneUpdated: "%s"', path);
     updated[path] = true;
     updatedCount += 1;
 
@@ -1368,7 +1370,7 @@ var updateOne = function() {
         // anything else before the resource is fetched (or times out).
         suspendUpdateDaemon();
 
-        //console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
+        if (dbug) console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
         µb.assets.get(path, onOneUpdated);
         updatingCount = 1;
         updatingText = metaEntry.homeURL || path;
@@ -1421,7 +1423,7 @@ var safeStartListener = function(callback) {
             if ( toUpdate.hasOwnProperty(path) ) {
                 continue;
             }
-            //console.debug('assets.js > µBlock.assetUpdater/safeStartListener: "%s"', path);
+            if (dbug) console.debug('assets.js > µBlock.assetUpdater/safeStartListener: "%s"', path);
             toUpdate[path] = true;
             toUpdateCount += 1;
         }
@@ -1453,7 +1455,7 @@ var updateDaemon = function() {
     // Start an update cycle?
     if ( updateCycleTime !== 0 ) {
         if ( Date.now() >= updateCycleTime ) {
-            //console.debug('µBlock.assetUpdater/updateDaemon: update cycle started');
+            if (dbug) console.debug('µBlock.assetUpdater/updateDaemon: update cycle started');
             reset();
             safeStartListener();
         }
@@ -1473,7 +1475,7 @@ var updateDaemon = function() {
     // If anything was updated, notify listener
     if ( updatedCount !== 0 ) {
         if ( typeof onCompletedListener === 'function' ) {
-            //console.debug('µBlock.assetUpdater/updateDaemon: update cycle completed');
+            if (dbug) console.debug('µBlock.assetUpdater/updateDaemon: update cycle completed');
             onCompletedListener({
                 updated: JSON.parse(JSON.stringify(updated)), // give callee its own safe copy
                 updatedCount: updatedCount
@@ -1484,7 +1486,7 @@ var updateDaemon = function() {
     // Schedule next update cycle
     if ( updateCycleTime === 0 ) {
         reset();
-        //console.debug('µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
+        if (dbug) console.debug('µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
         updateCycleTime = Date.now() + updateCycleNextPeriod;
     }
 };

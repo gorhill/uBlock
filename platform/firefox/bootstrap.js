@@ -33,7 +33,7 @@ const {classes: Cc, interfaces: Ci} = Components;
 
 let bgProcess = null;
 let version;
-const hostName = 'ublock0';
+const hostName = 'ublock0'; // TODO: change me to adn
 const restartListener = {
     get messageManager() {
         return Cc['@mozilla.org/parentprocessmessagemanager;1']
@@ -49,6 +49,7 @@ const restartListener = {
 /******************************************************************************/
 
 function startup(data/*, reason*/) {
+
     if ( data !== undefined ) {
         version = data.version;
     }
