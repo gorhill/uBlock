@@ -211,14 +211,11 @@ header{
   text-align: center;
   font-weight: 700;
   line-height: 156px;
-<<<<<<< HEAD
-=======
 }
 
 .disabled header #toggle-button{
   background-image: url(../img/paused@2x.png);
   color: #5c5c5c;
->>>>>>> master
 }
 
 #stats {
@@ -601,7 +598,7 @@ button.about {
   display: block;
   position: absolute;
   top: 100px;
-  bottom: 60px;
+  bottom: 50px;
   left: 0;
   right: 0;
   background: #000 url(../img/gray_grid.png);
