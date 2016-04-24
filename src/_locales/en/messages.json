@@ -1,4 +1,8 @@
 {
+  "adnVaultName": {
+    "message": "AdNauseam — Ad Vault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
   "adnShowingRecentAds": {
     "message": "No ads on this page (showing recent)",
     "description": "shown in menu when only 'recent' ads are shown"
@@ -37,6 +41,10 @@
   },
   "adnMenuPause": {
     "message": "Pause Adnauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Resume Adnauseam",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
@@ -263,9 +271,13 @@
     "message": "Net filters",
     "description": "English: Net filters"
   },
-  "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
-    "description": "English: Cosmetic filters"
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
   },
   "pickerCosmeticFiltersHint": {
     "message": "Click, Ctrl-click",

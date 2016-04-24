@@ -14,53 +14,109 @@ var dbugDetect = 0; // tmp
     what: 'getPreferences'
   }, function (req) {
     prefs = req;
-    //console.log('AdNaauseam.prefs:', req);
-  });
+  }); // only in root doc? or poll? or put prefs in vAPI
 
   vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
   adDetector.findAds = function (elem) {
 
-    // TODO: enable once all text-ad filters are working
+    switch (elem.tagName) {
+
+    case 'IFRAME':
+      elem.addEventListener('load', handleIFrame, false);
+      break;
+
+    case 'IMG':
+      if (findImageAds([elem])) break;
+      // fall-through
+
+    default:
+
+      // check the element for child imgs
+      var imgs = elem.querySelectorAll('img');
+      if (imgs.length && findImageAds(imgs))
+        return;
+
+      // else try text
+      prefs.parseTextAds && findTextAds(elem);
+    }
+  }
+
+  var findTextAds = function (elem) {
+
     var activeFilters = true ? filters : filters.filter(function (f) {
       return f.domain.test(document.domain);
     });
 
-    if (elem.tagName === 'IFRAME') {
-      //var c = elem.contentDocument || elem.contentWindow.document;
-      //console.log($find(elem,'img').length, c);
-      return; // Ignore iframes, wait for sub-elements?
-    }
+    var ads = checkFilters(activeFilters, elem);
+    if (ads && ads.length) {
 
-    //elem.style.setProperty('display', 'none', 'important');
+      for (var i = 0; i < ads.length; i++) {
 
-    if (elem.tagName === 'IMG') {
+        if (ads[i]) {
 
-      return checkImages(elem, [elem]);
-    }
-
-    var imgs = elem.querySelectorAll('img');
-    if (imgs.length) {
-
-      return checkImages(elem, imgs);
-    }
-
-    if (prefs.parseTextAds) {
-
-      var ads = checkFilters(activeFilters, elem);
-      if (ads && ads.length) {
-
-        for (var i = 0; i < ads.length; i++) {
-
-          if (ads[i]) {
-
-            console.log("TEXT-AD", ads[i]);
-            notifyAddon(ads[i], elem);
-          }
+          console.log("TEXT-AD", ads[i]);
+          notifyAddon(ads[i]);
         }
       }
     }
-    //console.log('Skipping text-ads');
+  }
+
+  var handleIFrame = function () { // this
+
+    //console.log('handleIFrame', this);
+    var html, doc;
+    try {
+      doc = this.contentDocument;
+    } catch (e) {
+      if (dbugDetect) console.warn(e);
+    }
+    try {
+      doc = doc || this.contentWindow.document;
+    } catch (e) {
+      if (dbugDetect) console.warn(e);
+    }
+    try {
+      doc = doc || (window.frames[this.name] && window.frames[this.name].document);
+    } catch (e) {
+      if (dbugDetect) console.warn(e);
+    }
+
+    if (doc) {
+
+      var body = $find(doc, 'body');
+      var imgs = body.length && $find(body, 'img');
+      if (dbugDetect);
+      console.warn("IFRAME.IMGS:", imgs.length);
+      findImageAds(imgs);
+
+    } else {
+
+      if (dbugDetect) console.log("NO-DOC for IFRAME[" + this.name + "]=" + this.src);
+    }
+
+    this.removeEventListener('load', handleIFrame, false);
+  }
+
+  var findImageAds = function (imgs) {
+
+    var target, targetUrl, ad, hits = 0;
+
+    for (var i = 0; i < imgs.length; i++) {
+
+      var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
+
+      if (!imgSrc) {
+
+        if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+        imgs[i].addEventListener('load', processDelayedImage, false);
+        continue;
+      }
+
+      if (processImage(imgs[i], imgSrc)) hits++;
+    }
+
+    return hits > 0;
   }
 
   var pageCount = function (ads, pageUrl) {
@@ -120,6 +176,7 @@ var dbugDetect = 0; // tmp
       what: 'registerAd',
       ad: ad
     });
+    return true;
   }
 
   var $is = function (elem, selector) { // jquery shim
@@ -155,6 +212,7 @@ var dbugDetect = 0; // tmp
 
     var text = '';
     for (var i = 0; i < ele.length; i++) {
+
       text += ele[i].innerText || ele[i].textContent;
     }
 
@@ -163,65 +221,69 @@ var dbugDetect = 0; // tmp
 
   var $find = function (ele, selector) { // jquery shim
 
-    return ele.querySelectorAll(selector);
+    return ele && (ele.length ? ele[0] : ele).querySelectorAll(selector);
   };
 
-  var checkImages = function (elem, imgs) {
+  var processDelayedImage = function () { // this
 
-    var target, targetUrl, ad;
+    console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
+    var src = this.src || this.getAttribute('src');
+    if (src) processImage(this, src);
+    this.removeEventListener('load', processDelayedImage, false);
+  }
 
-    for (var i = 0; i < imgs.length; i++) {
+  var processImage = function (img, src) {
 
-      var imgSrc = imgs[i].getAttribute("src");
+    var target, targetUrl, ad, hits = 0;
 
-      if (!imgSrc) {
+    target = clickableParent(img);
+    if (target) {
 
-        if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-        continue;
-      }
+      if (target.tagName === 'A') {
 
-      target = clickableParent(imgs[i]);
-      if (target) {
+        targetUrl = target.getAttribute("href");
+        if (targetUrl) {
 
-        if (target.tagName === 'A') {
+          ad = createAd(document.domain, targetUrl, {
+            src: src,
+            width: img.naturalWidth || -1,
+            height: img.naturalHeight || -1
+          });
 
-          targetUrl = target.getAttribute("href");
-          if (targetUrl) {
+          if (ad) {
 
-            console.log(elem.getBoundingClientRect(), imgs[i].getBoundingClientRect());
+            console.log('IMG-AD', ad);
+            notifyAddon(ad);
+            hits++;
+          }
 
-            ad = createAd(document.domain, targetUrl, {
-              src: imgSrc
-                // width: imgs[i].clientWidth,
-                // height: imgs[i].clientHeight
-            });
+          // Need to check for div.onclick etc?
+        } else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
 
-            if (ad) {
+      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
 
-              console.log('IMG-AD', ad);
-              notifyAddon(ad, elem);
-            }
+    } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
 
-            // Need to check for div.onclick etc?
-          } else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
-
-        } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
-
-      } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
-    }
   }
 
   var yahooText = function (e) {
 
-    var ads = [],
-      divs = $find(e, 'div.dd'); //#main > div > ol.a947i105t6.v119f
+    //console.log('yahooText: ', e);
 
-    //console.log('DL: '+divs.length);
+    var ads = [],
+      divs = $find(e, 'div.dd');
+
     for (var i = 0; i < divs.length; i++) {
 
-      var title = $find(divs[i], 'a.td-n'),
-        site = $find(divs[i], 'a.xh52v4e'),
-        text = $find(divs[i], 'a.fc-1st');
+      var title, site, text,
+        idiv = $find(divs[i], 'div.compTitle');
+
+      if (idiv.length) {
+        title = $find(idiv[0], 'h3.title a');
+        site = $find(idiv[0], 'div > a');
+      }
+
+      text = $find(divs[i], 'div.compText a');
 
       if (text.length && site.length && title.length) {
 
@@ -235,12 +297,12 @@ var dbugDetect = 0; // tmp
 
       } else {
 
+        //console.warn('LEN-F: ',title.length,text.length ,site.length);
         console.warn('yahooTextHandler.fail: ', divs[i]); //title, site, text);
       }
-
     }
+
     return ads;
-    //console.log('HIT:: yahooText()', $find(e, 'div.layoutMiddle'));
   }
 
   var aolText = function (div) {

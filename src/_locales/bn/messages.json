@@ -159,6 +159,10 @@
     "message":"প্রস্থান",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"প্রাকদর্শন",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"নেট ফিল্টার",
     "description":"English: Net filters"

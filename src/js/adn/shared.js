@@ -1,31 +1,20 @@
-//(function() {
+// functions shared between addon and ui
 
 'use strict';
 
-// functions shared between views
-
-function extractDomains(fullUrl) { // used in targetDomain
-
-  var matches, result = [],
-    re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-  while ((matches = re.exec(fullUrl))) {
-    result.push(matches[0]);
-  }
-
-  return result;
+var log = function () {
+  console.log.apply(console, arguments);
+  return true;
 }
 
-function parseDomain(url) {
+var warn = function () {
+  console.warn.apply(console, arguments);
+  return false;
+}
 
-  var domain, domains = extractDomains(url);
-
-  if (domains.length)
-    domain = new URL(domains.pop()).hostname;
-
-  //console.log('parsed-domain: ' + domain);
-
-  return domain;
+var err = function () {
+  console.error.apply(console, arguments);
+  return false;
 }
 
 var rand = function (min, max) {
@@ -41,7 +30,7 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function arrayRemove(arr, obj) {
+var arrayRemove = function (arr, obj) {
 
   var i = arr.indexOf(obj);
   if (i != -1) {
@@ -51,7 +40,7 @@ function arrayRemove(arr, obj) {
   return false;
 }
 
-function showAlert(msg) {
+var showAlert = function (msg) {
 
   if (msg) {
 
@@ -69,7 +58,7 @@ var type = function (obj) { // from Angus Croll
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
 
-var getExportFileName = function() {
+var getExportFileName = function () {
 
   return vAPI.i18n('adnExportedAdsFilename')
     .replace('{{datetime}}', new Date().toLocaleString())
@@ -81,7 +70,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
   if (!ad) return;
 
   if (!ad.contentData || !ad.pageUrl) {
-    console.error("Invalid Ad: no contentData || pageUrl", ad);
+    err("Invalid Ad: no contentData || pageUrl", ad);
     return;
   }
 
@@ -110,26 +99,54 @@ var byField = function (prop) {
   };
 }
 
-/*
- * Start with resolvedTargetUrl if available, else use targetUrl
- * Then extract the last domain from the (possibly complex) url
- */
-function targetDomain(ad) {
-
-  var dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl);
-
-  if (!dom)
-    console.warn("Unable to parse domain: " + url);
-  else
-    dom + ' (#' + ad.id + ')'; // testing-only
-
-  return dom;
-}
-
 var stringNotEmpty = function (s) {
 
   return typeof s === 'string' && s !== '';
 };
 
-//  return exports;
-//})();
+/************************ URL utils *****************************/
+
+var parseHostname = function (url) {
+
+  return new URL(url).hostname;
+}
+
+var extractDomains = function (fullUrl, useLast) { // used in targetDomain
+
+  var matches, result = [],
+    re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+  while ((matches = re.exec(fullUrl))) {
+    result.push(useLast ? matches[matches.length-1] : matches[0]);
+  }
+
+  return result;
+}
+
+var parseDomain = function (url, useLast) {
+
+  var domain, domains = extractDomains(url, useLast);
+
+  if (domains.length)
+    domain = new URL(domains.pop()).hostname;
+
+  //log('parsed-domain: ' + domain);
+
+  return domain;
+}
+
+/*
+ * Start with resolvedTargetUrl if available, else use targetUrl
+ * Then extract the last domain from the (possibly complex) url
+ */
+var targetDomain = function (ad) {
+
+  var dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl);
+
+  if (!dom)
+    warn("Unable to parse domain: " + url);
+  else
+    dom + ' (#' + ad.id + ')'; // testing-only
+
+  return dom;
+}

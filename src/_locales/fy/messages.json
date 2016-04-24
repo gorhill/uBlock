@@ -159,6 +159,10 @@
     "message":"Slute",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Foarbyld",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Netfilters",
     "description":"English: Net filters"

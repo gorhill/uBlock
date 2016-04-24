@@ -159,6 +159,10 @@
     "message":"Kilép",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Előnézet",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Hálózati szűrők",
     "description":"English: Net filters"
@@ -228,7 +232,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Média elemek blokkolása, amelyek nagyobbak, mint {{input:number}} kB",
+    "message":"{{input:number}} kB-nál nagyobb média elemek blokkolása",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{

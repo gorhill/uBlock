@@ -159,6 +159,10 @@
     "message":"Sair",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Visualizar",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Filtros de rede",
     "description":"English: Net filters"

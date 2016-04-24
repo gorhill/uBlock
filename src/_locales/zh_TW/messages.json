@@ -1,4 +1,8 @@
 {
+  "adnVaultName": {
+    "message": "AdNauseam — 廣告庫",
+    "description": "English: AdNauseam — Ad Vault"
+  },
   "adnShowingRecentAds": {
     "message": "本頁沒有廣告 (顯示最近的)",
     "description": "shown in menu when only 'recent' ads are shown"
@@ -38,6 +42,10 @@
   "adnMenuPause":{
     "message":"暫停 Adnauseam",
     "description":"appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "恢復 Adnauseam",
+    "description": "appears in ADN popup menu"
   },
   "adnMenuSettings":{
     "message":"設定",
@@ -192,11 +200,11 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"全域規則：在所有網站啟用",
+    "message":"全域規則：此欄位的規則會套用至所有網站。",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"區域規則：此欄僅供於目前網站所使用的規則使用。\n區域規則會覆蓋過全域規則的設定。",
+    "message":"區域規則：此欄位的規則僅會套用至目前網站。\n區域規則會覆蓋過全域規則。",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -259,6 +267,10 @@
     "message":"離開",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"預覽",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"網址過濾規則",
     "description":"English: Net filters"
@@ -282,6 +294,10 @@
   "settingsIconBadgePrompt":{
     "message":"在圖示上顯示已找到的廣告數量",
     "description":"English: Show the number of found ads on the icon"
+  },
+  "parseTextAdsPrompt": {
+    "message": "當可行時捕獲純文字廣告",
+    "description": "English: Capture text-only ads whenever possible"
   },
   "settingsTooltipsPrompt":{
     "message":"關閉提示文字功能",

@@ -5,7 +5,7 @@
 
   'use strict';
 
-  var ads, page; // can we remove? only if we can find an updated ad in the DOM
+  var ads, page; // remove? only if we can find an updated ad in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
@@ -33,9 +33,24 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
+    //disable pause & resume buttons in case of options, vault, browser settings
+    if (page === vAPI.getURL("vault.html") ||
+          page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
+          page.indexOf("chrome://") === 0 ||
+          page.indexOf("about:") === 0) {
+          uDom.nodeFromId('pause-button').disabled = true;
+          uDom.nodeFromId('resume-button').disabled = true;
+        }
+    //$("#alert").addClass('hide'); // reset state
+    uDom("#alert").addClass('hide'); // reset state
+    //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval
+    uDom('#main').toggleClass('disabled', dval());
+
+    updateMenuState();
+
     setCounts(ads, json.data.length);
 
-    var $items = $('#ad-list-items');
+    var $items = uDom('#ad-list-items');//$('#ad-list-items');
 
     $items.removeClass().empty();
 
@@ -51,7 +66,31 @@
     }
   }
 
-  function getTitle(ad) {
+  var updateMenuState = function () {
+
+    //if ($('#main').hasClass('disabled')) {
+    if(uDom('#main').hasClass('disabled')){
+
+      //$('#resume-button').show();
+      uDom('#resume-button').removeClass('hide');
+      uDom('#resume-button').addClass('show');
+      //$('#pause-button').hide();
+      uDom('#pause-button').removeClass('show');
+      uDom('#pause-button').addClass('hide');
+
+    } else {
+
+      //$('#pause-button').show();
+      uDom('#pause-button').removeClass('hide');
+      uDom('#pause-button').addClass('show');
+      //$('#resume-button').hide();
+      uDom('#resume-button').removeClass('show');
+      uDom('#resume-button').addClass('hide');
+
+    }
+  }
+
+  var getTitle = function (ad) {
 
     var title = ad.title + ' ';
     if (ad.visitedTs < 1) {
@@ -63,26 +102,32 @@
     return title;
   }
 
-  function updateAd(ad) { // update class, title, counts
+  var updateAd = function (ad) { // update class, title, counts
 
     if (verify(ad)) {
 
       var $ad = updateAdClasses(ad);
 
       // update the title
-      $ad.find('.title').text(getTitle(ad));
+      //$ad.find('.title').text(getTitle(ad));
+      $ad.descendants('.title').text(getTitle(ad));
 
       // update the url
-      $ad.find('cite').text(targetDomain(ad));
+      //$ad.find('cite').text(targetDomain(ad));
+      $ad.descendants('cite').text(targetDomain(ad));
+
 
       // update the visited count
-      if (ad.pageUrl === page)
-        $('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+      if (ad.pageUrl === page) {
+
+        //$('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        uDom('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+      }
     }
   }
 
-  function verify(ad) { // uses global ads (can be removed)
-
+  var verify = function (ad) { // uses global ads
+    if (!ads) err("NO GLOBAL ADS!!!");
     if (ad) {
 
       for (var i = 0; i < ads.length; i++) {
@@ -97,25 +142,42 @@
     return false;
   }
 
-  function doRecent(data) {
+  /*var filter = function(data, pageUrl) {
 
-    $("#alert").removeClass('hide');
-    $('#ad-list-items').addClass('recent-ads');
+    var tmp = data.filter(function (ad) {
+
+      return ad && (!pageUrl || ad.pageUrl === pageUrl) &&
+        (prefs.parseTextAds || ad.contentType !== 'text');
+    });
+
+    console.log('filter(' + data.length + '): parseText=' + prefs.parseTextAds +
+     " pageUrl=" + (pageUrl ? "true" : "false") + " -> " + tmp.length);
+
+    return tmp;
+  }*/
+
+  var doRecent = function (data) {
+
+    //$("#alert").removeClass('hide');
+    uDom("#alert").removeClass('hide');
+    //$('#ad-list-items').addClass('recent-ads');
+    uDom('#ad-list-items').addClass('recent-ads');
+
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
 
-  function onPage(ads, pageUrl) {
+  var onPage = function (ads, pageUrl) {
 
     var res = [];
     for (var i = 0; i < ads.length; i++) {
-      if (ads[i] && ads[i].pageUrl === pageUrl)
+      if (ads[i] && ads[i].pageUrl === pageUrl) {
         res.push(ads[i]);
+      }
     }
-
     return res.sort(byField('-foundTs'));
   }
 
-  function appendAd($items, ad) {
+  var appendAd = function ($items, ad) {
 
     if (ad.contentType === 'img') {
 
@@ -127,28 +189,38 @@
     }
   }
 
-  function setAttempting(ad) {
+  var removeClassFromAll = function (cls) {
+
+    //$('.ad-item').removeClass(cls);
+    uDom('.ad-item').removeClass(cls);
+    //$('.ad-item-text').removeClass(cls);
+    uDom('.ad-item-text').removeClass(cls);
+  }
+
+  var setAttempting = function (ad) {
 
     // one 'attempt' at a time
-    $('.ad-item').removeClass('attempting');
-    $('.ad-item-text').removeClass('attempting');
+    removeClassFromAll('attempting');
 
     if (ad) {
       if (verify(ad))
-        $('#ad' + ad.id).addClass('attempting');
+        //$('#ad' + ad.id).addClass('attempting');
+        uDom('#ad' + ad.id).addClass('attempting');
       else
-        console.warn('Fail on setAttempting: ', ad, ads);
+        console.warn('Fail on setAttempting: ', ad);
     }
   }
 
-  function updateAdClasses(ad) {
+  var updateAdClasses = function (ad) {
 
-    var $ad = $('#ad' + ad.id),
-      jv = 'just-visited';
+    var $ad = uDom('#ad' + ad.id);//$('#ad' + ad.id);
+
+    // allow only one just-* at a time...
+    removeClassFromAll('just-visited just-failed');
 
     // See https://github.com/dhowe/AdNauseam2/issues/61
-    $ad.removeClass('failed visited attempting');
-    $ad.removeClass(jv).addClass(jv);
+    var cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
+    $ad.removeClass('failed visited attempting').addClass(cls);
 
     // timed for animation
     setTimeout(function () {
@@ -158,111 +230,152 @@
     return $ad;
   }
 
-  function setCounts(ads, total) {
+  var setCounts = function (ads, total) {
 
     //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
-    $('#vault-count').text(total);
-    $('#visited-count').text(visitedCount(ads));
-    $('#found-count').text(ads.length);
+    //$('#vault-count').text(total);
+    uDom('#vault-count').text(total);
+    //$('#visited-count').text(visitedCount(ads));
+    uDom('#visited-count').text(visitedCount(ads));
+    //$('#found-count').text(ads.length);
+    uDom('#found-count').text(ads.length);
   }
 
-  function appendImageAd(ad, $items) {
+  var appendImageAd = function (ad, $items) {
 
-    var $a, $span, $li = $('<li/>', {
+    var $img, $a, $span, $li = uDom(document.createElement('li'))
+    .attr('id','ad' + ad.id)
+    .addClass(('ad-item ' + visitedClass(ad)).trim());
+
+    /*$('<li/>', {
 
       'id': 'ad' + ad.id,
       'class': ('ad-item ' + visitedClass(ad)).trim()
-    });
+    });*/
 
-    $a = $('<a/>', {
+    $a = uDom(document.createElement('a'))
+    .attr('target','new')
+    .attr('href',ad.targetUrl);
+
+    /*$('<a/>', {
 
       'target': 'new',
       'href': ad.targetUrl
-    });
+    });*/
 
-    $span = $('<span/>', {
+    $span = uDom(document.createElement('span')).addClass('thumb');
+    $span.appendTo($a);
+    /*$span = $('<span/>', {
       'class': 'thumb'
-    });
+    });*/
+    $img = uDom(document.createElement('img'))
+    .attr('src',(ad.contentData.src || ad.contentData))
+    .addClass('ad-item-img')
+    .on('click',"this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
 
-    $('<img/>', {
+    $img.appendTo($span);
+    /*$('<img/>', {
 
       'src': (ad.contentData.src || ad.contentData),
       'class': 'ad-item-img',
       'onerror': "this.onerror=null; this.width=50; " +
         "this.height=45; this.src='img/placeholder.svg'",
 
-    }).appendTo($span);
+    }).appendTo($span);*/
 
     $span.appendTo($a);
 
-    $('<span/>', {
+    /*$('<span/>', {
 
       'class': 'title',
       'text': (ad.title ? ad.title : "#" + ad.id)
 
-    }).appendTo($a);
+    }).appendTo($a);*/
+    uDom(document.createElement('span'))
+    .addClass('title')
+    .text(ad.title ? ad.title : "#" + ad.id)
+    .appendTo($a);
 
-    $('<cite/>', {
+    /*$('<cite/>', {
       'text': targetDomain(ad)
-    }).appendTo($a);
+    }).appendTo($a);*/
+    uDom(document.createElement('cite'))
+    .text(targetDomain(ad))
+    .appendTo($a);
 
     $a.appendTo($li);
     $li.appendTo($items);
   }
 
-  function appendTextAd(ad, $items) {
+  var appendTextAd = function (ad, $items) {
 
-    var $cite, $h3, $li = $('<li/>', {
+    var $cite, $h3, $li = uDom(document.createElement('li'))
+    .attr('id','ad' + ad.id)
+    .addClass(('ad-item-text ' + visitedClass(ad)).trim());
+
+    /*$('<li/>', {
 
       'id': 'ad' + ad.id,
       'class': ('ad-item-text ' + visitedClass(ad)).trim()
-    });
-
-    $('<span/>', {
+    });*/
+    uDom(document.createElement('span'))
+    .addClass('thumb')
+    .text('Text Ad').appendTo($li);
+    /*$('<span/>', {
 
       'class': 'thumb',
       'text': 'Text Ad'
 
-    }).appendTo($li);
+    }).appendTo($li);*/
 
-    $h3 = $('<h3/>');
+    $h3 = uDom(document.createElement('h3'));
+    //$('<h3/>');
 
-    $('<a/>', {
+    uDom(document.createElement('a'))
+    .attr('target','new')
+    .attr('href',ad.targetUrl)
+    .addClass('title')
+    .text(ad.title).appendTo($h3);
+    /*$('<a/>', {
 
       'target': 'new',
       'class': 'title',
       'href': ad.targetUrl,
       'text': ad.title
 
-    }).appendTo($h3);
+    }).appendTo($h3);*/
 
     $h3.appendTo($li);
 
-    $cite = $('<cite/>', {
+    /*$cite = $('<cite/>', {
       'text': ad.contentData.site
-    });
+    });*/
+    $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
 
     $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
 
     $cite.appendTo($li);
 
-    $('<div/>', {
+    uDom(document.createElement('div'))
+    .addClass('ads-creative')
+    .text(ad.contentData.text).appendTo($li);
+    /*$('<div/>', {
 
       'class': 'ads-creative',
       'text': ad.contentData.text
 
-    }).appendTo($li);
+    }).appendTo($li);*/
 
     $li.appendTo($items);
   }
 
-  function visitedClass(ad) {
+  var visitedClass = function (ad) {
 
     return ad.visitedTs > 0 ? 'visited' :
-      (ad.visitedTs < 0 ? 'failed' : '');
+      (ad.visitedTs < 0 && ad.attempts >= 3) ? 'failed' : '';
   }
 
-  function visitedCount(arr) {
+  var visitedCount = function (arr) {
 
     return (!(arr && arr.length)) ? 0 : arr.filter(function (ad) {
       return ad.visitedTs > 0;
@@ -286,6 +399,12 @@
         tabId: tabId
       }, onPopupData);
   };
+
+  var dval = function () {
+
+    return popupData.pageURL === '' || !popupData.netFilteringSwitch ||
+      (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled);
+  }
 
   /******************************************************************************/
   var cachedPopupHash = '',
@@ -329,95 +448,126 @@
     return popupData;
   };
 
-  var hashFromPopupData = function (reset) {
-    // It makes no sense to offer to refresh the behind-the-scene scope
-    if (popupData.pageHostname === 'behind-the-scene') {
-      uDom('body').toggleClass('dirty', false);
-      return;
-    }
-
-    var hasher = [];
-    var rules = popupData.firewallRules;
-    var rule;
-    for (var key in rules) {
-      if (rules.hasOwnProperty(key) === false) {
-        continue;
-      }
-      rule = rules[key];
-      if (rule !== '') {
-        hasher.push(rule);
-      }
-    }
-    hasher.sort();
-    hasher.push(uDom('body').hasClass('off'));
-    hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
-    hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
-    hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
-
-    var hash = hasher.join('');
-    if (reset) {
-      cachedPopupHash = hash;
-    }
-    uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
-  };
-
-  // $('#log-button').click(function () {
-  //
-  //   window.open("./log.html");
-  // });
-
-  $('#vault-button').click(function () {
+  //$('#vault-button').click(
+  uDom('#vault-button').on('click', function () {
 
     vAPI.messaging.send(
-        'default',
-        {
-            what: 'gotoURL',
-            details: {
-                url: "vault.html",
-                select: true,
-                index: -1
-            }
+      'default', {
+        what: 'gotoURL',
+        details: {
+          url: "vault.html",
+          select: true,
+          index: -1
         }
+      }
+    )
+
+    vAPI.closePopup();
+  });
+
+  //$('#settings-open')
+  uDom('#settings-open').on('click', function () {
+
+    vAPI.messaging.send(
+      'default', {
+        what: 'gotoURL',
+        details: {
+          url: "dashboard.html#options.html",
+          select: true,
+          index: -1
+        }
+      }
     );
 
     vAPI.closePopup();
   });
 
-  $('#pause-button').click(function () {
+  //$('#settings-close')
+  uDom('#settings-close').on('click', function () {
 
-      // Waiting on #46
+    //$('.page').toggleClass('hide');
+    uDom('.page').toggleClass('hide');
+    //$('.settings').toggleClass('hide');
+    uDom('.settings').toggleClass('hide');
   });
 
-  $('#settings-open').click(function () {
+  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ"; // keep
 
-    vAPI.messaging.send(
-        'default',
-        {
-            what: 'gotoURL',
-            details: {
-                url: "dashboard.html#options.html",
-                select: true,
-                index: -1
-            }
-        }
-    );
-
-    vAPI.closePopup();
-  });
-
-  $('#settings-close').click(function () {
-
-    $('.page').toggleClass('hide');
-    $('.settings').toggleClass('hide');
-  });
-
-  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ";
-
-  $('#about-button').click(function () {
+  //$('#about-button')
+  uDom('#about-button').on('click', function () {
 
     window.open("./popup.html", '_self');
     //window.open(AboutURL);
   });
+
+  var onHideTooltip = function () {
+    uDom.nodeFromId('tooltip').classList.remove('show');
+  };
+
+  var onShowTooltip = function () {
+
+    if (popupData.tooltipsDisabled) {
+      return;
+    }
+
+    var target = this;
+
+    // Tooltip container
+    var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
+      document.body;
+    var ttcRect = ttc.getBoundingClientRect();
+
+    // Tooltip itself
+    var tip = uDom.nodeFromId('tooltip');
+    tip.textContent = target.getAttribute('data-tip');
+    tip.style.removeProperty('top');
+    tip.style.removeProperty('bottom');
+    ttc.appendChild(tip);
+
+    // Target rect
+    var targetRect = target.getBoundingClientRect();
+
+    // Default is "over"
+    var pos;
+    var over = target.getAttribute('data-tip-position') !== 'under';
+    if (over) {
+      pos = ttcRect.height - targetRect.top + ttcRect.top;
+      tip.style.setProperty('bottom', pos + 'px');
+    } else {
+      pos = targetRect.bottom - ttcRect.top;
+      tip.style.setProperty('top', pos + 'px');
+    }
+    
+    // Tooltip's horizontal position
+    tip.style.setProperty('left', targetRect.left + 'px');
+
+    tip.classList.add('show');
+  };
+
+  var toggleEnabled = function (ev) {
+
+    //console.log('toggleEnabled', ev);
+
+    if (!popupData || !popupData.pageURL || (popupData.pageHostname ===
+        'behind-the-scene' && !popupData.advancedUserEnabled)) {
+
+      return;
+    }
+
+    vAPI.messaging.send(
+      'adnauseam', {
+        what: 'toggleEnabled',
+        url: popupData.pageURL,
+        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
+        state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
+        tabId: popupData.tabId
+      });
+
+    updateMenuState();
+    //hashFromPopupData();
+  };
+
+  /********************************************************************/
 
   (function () {
 
@@ -429,6 +579,10 @@
     }
     getPopupData(tabId);
 
+    uDom('#pause-button').on('click', toggleEnabled);
+    uDom('#resume-button').on('click', toggleEnabled);
+    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+                .on('mouseleave', '[data-tip]', onHideTooltip);
   })();
 
   /********************************************************************/

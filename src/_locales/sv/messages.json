@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå till logg",
+    "message":"Öppna loggaren",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -96,7 +96,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Regionala regler: denna kolumn avser regler som endast gäller den sidan.\nRegionala regler överskrider globala regler.",
+    "message":"Lokala regler: denna kolumn avser regler som endast gäller denna sida.\nLokala regler överskrider globala regler.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -104,7 +104,7 @@
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Tryck för att ångra ändringar.",
+    "message":"Tryck för att ångra dina ändringar.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -158,6 +158,10 @@
   "pickerQuit":{
     "message":"Avsluta",
     "description":"English: Quit"
+  },
+  "pickerPreview":{
+    "message":"Förhandsvisa",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
     "message":"Nätfilter",
@@ -220,7 +224,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Dessa förinställda beteenden kan överskridas för var sida",
+    "message":"Dessa förinställda beteenden kan överskridas för varje sida",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -232,7 +236,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Blockera avlägsna typsnitt",
+    "message":"Blockera externa typsnitt",
     "description":""
   },
   "settingsStorageUsed":{
@@ -644,7 +648,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importera inställningar från molnlagring",
+    "message":"Importera från molnlagring och slå ihop med nuvarande inställningar",
     "description":"tooltip"
   },
   "cloudNoData":{

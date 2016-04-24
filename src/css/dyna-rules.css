@@ -5,9 +5,9 @@ div > p:last-child {
     margin-bottom: 0;
     }
 code {
-    background-color: #eee;
-    font: 11px monospace;
-    padding: 2px 4px;
+    background-color: #444;
+    font: 12px monospace;
+    padding: 1px 8px 2px;
 }
 #diff {
     border: 0;

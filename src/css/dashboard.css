@@ -9,7 +9,8 @@ html, body {
     }
 #dashboard-nav {
     border: 0;
-    font-size: 16px;
+    font-size: 20px;
+    line-height: 25px;
     margin: 0;
     padding: 0;
     top: 0;
@@ -17,41 +18,54 @@ html, body {
     z-index: 10;
     }
 #dashboard-nav-widgets {
-    margin: 0;
-    border-bottom: 1px solid #ccc;
-    padding: 4px 0 0;
+    border-bottom: 1px solid #444;
+    padding: 4px 10px 0;
     white-space: nowrap;
-    background-color: white;
+    background-color: #000;
     }
 #dashboard-nav-widgets span {
     padding: 0 0.5em;
-    font-size: larger;
+    font-size: 20px;
+    font-family: bebas_neue_regularregular;
+    display: block;
+    width: 100px;
+    float: left;
+    margin: 5px 0;
+    color: #fff;
     }
 .tabButton {
-    background-color: #eee;
-    border: 1px solid #ccc;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom: 1px solid #ccc;
-    color: black;
+    font-family: bebas_neue_regularregular;
+    background-color: #222;
+    border: 2px solid #444;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-width: 1px;
+    color: #ccc;
     cursor: pointer;
     display: inline-block;
-    font: inherit;
+    /*font: inherit;*/
     margin: 0;
-    padding: 4px;
+    padding: 2px 10px;
     position: relative;
     text-decoration: none;
     top: 1px;
+    opacity: 0.75;
+    }
+.tabButton:hover{
+    opacity: 1;
+    color: #ccc;
     }
 .tabButton:focus {
     outline: 0;
     }
 .tabButton:active,.tabButton:visited {
-    color: inherit;
+    /*color: inherit;*/
     }
 .tabButton.selected {
-    background-color: white;
-    border-bottom: 1px solid white;
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+    opacity: 1;
     }
 iframe {
     margin: 0;

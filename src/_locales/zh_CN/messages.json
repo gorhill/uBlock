@@ -1,4 +1,8 @@
 {
+  "adnVaultName": {
+    "message": "AdNauseam — 广告库",
+    "description": "English: AdNauseam — Ad Vault"
+  },
   "adnShowingRecentAds": {
     "message": "本页没有广告 (显示最近的)",
     "description": "shown in menu when only 'recent' ads are shown"
@@ -38,6 +42,10 @@
   "adnMenuPause":{
     "message":"暫停 Adnauseam",
     "description":"appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "恢复 Adnauseam",
+    "description": "appears in ADN popup menu"
   },
   "adnMenuSettings":{
     "message":"设置",
@@ -259,6 +267,10 @@
     "message":"放弃",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"预览",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"URL 过滤规则",
     "description":"English: Net filters"
@@ -282,6 +294,10 @@
   "settingsIconBadgePrompt":{
     "message":"在图标上显示已找到的广告数",
     "description":"English: Show the number of found ads on the icon"
+  },
+  "parseTextAdsPrompt": {
+    "message": "当可行时捕获纯文字广告",
+    "description": "English: Capture text-only ads whenever possible"
   },
   "settingsTooltipsPrompt":{
     "message":"不显示悬停提示",

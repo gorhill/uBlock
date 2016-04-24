@@ -94,6 +94,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.toggleNetFilteringSwitch = function(url, scope, newState) {
+
+    //console.log('µb.toggleNetFilteringSwitch',url,scope==='page'?'page':'site',newState);
+
     var currentState = this.getNetFilteringSwitch(url);
     if ( newState === undefined ) {
         newState = !currentState;
@@ -311,6 +314,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         break;
     case 'webrtcIPAddressHidden':
         vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
+        break;
+    case 'parseTextAds':                     // adn
+        µBlock.adnauseam.updateBadges();
         break;
     default:
         break;

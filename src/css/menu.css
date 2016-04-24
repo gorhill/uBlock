@@ -138,10 +138,10 @@ button {
   color: #0076FF;
   font-size: 20px;
   height: 30px;
-  padding-top: 1px;
+  padding-top: 2px;
 }
 
-button:hover{
+button:hover:enabled{
   background: #0076FF;
   color: #000;
 }
@@ -211,6 +211,14 @@ header{
   text-align: center;
   font-weight: 700;
   line-height: 156px;
+<<<<<<< HEAD
+=======
+}
+
+.disabled header #toggle-button{
+  background-image: url(../img/paused@2x.png);
+  color: #5c5c5c;
+>>>>>>> master
 }
 
 #stats {
@@ -544,10 +552,14 @@ footer {
   height: 50px;
 }
 button.pause,
+button.resume,
 button.settings {
   width: 162px;
   float: left;
   margin-right: 7px;
+}
+button:disabled {
+  opacity:.4;
 }
 button.about {
   width: 27px;
@@ -810,37 +822,60 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
   color: #0076FF;
 }
 
-/* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
-[data-tip] {
-    cursor: pointer;
-    position: relative;
-    }
-body [data-tip]:after {
+#tooltip {
     background-color: #333;
+    border: 1px solid gray;
     border-radius: 3px;
+    box-shadow: 0 0 10px #0076FF;
     box-sizing: border-box;
     color: #eee;
-    content: attr(data-tip);
-    font-family:Calibri;
+    cursor: pointer;
     font-size: 12px;
     font-weight: normal;
-    left: 0.5em;
-    line-height: 130%;
+    left: 5%;
     opacity: 0;
     padding: 4px 6px;
     pointer-events: none;
     position: absolute;
-    right: 0.5em;
     text-align: left;
-    top: 110%;
     visibility: hidden;
     white-space: pre-line;
-    z-index: 20;
+    z-index: 100;
     }
-body [data-tip]:hover:after {
-    opacity: 0.9;
-    position: absolute;
-    transition: visibility 0s 0.3s, opacity 0.2s 0.4s;
-    -webkit-transition: visibility 0s 0.3s, opacity 0.2s 0.4s;
+.arrow_box:after, .arrow_box:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(51, 51, 51, 0);
+	border-top-color: #333;
+	border-width: 5px;
+	margin-left: -5px;
+}
+.arrow_box:before {
+	border-color: rgba(0, 118, 255, 0);
+	border-top-color: #0076FF;
+	border-width: 6px;
+	margin-left: -6px;
+}
+#tooltip.show {
+    transition: visibility 0s 0.3s;
+    -webkit-transition: visibility 0s 0.3s;
     visibility: visible;
+    animation: fadeIn 500ms ease-out;
+    opacity: 1;
+    margin-bottom: 9px;
     }
+  @keyframes fadeIn {
+      from {
+        opacity: 0;
+        margin-bottom: 0;
+      }
+  }

@@ -159,6 +159,10 @@
     "message":"Iziet",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Priekšskatījums",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"Resursu filtri",
     "description":"English: Net filters"

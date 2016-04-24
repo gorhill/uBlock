@@ -159,6 +159,10 @@
     "message":"నిశ్క్రమించు",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"నెట్వర్క్ అభ్యర్దన వడపోతలు",
     "description":"English: Net filters"
@@ -248,7 +252,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} నెట్వర్క్ వడపోతలు ＋ {{cosmeticFilterCount}} కాస్మెటిక్ వడపోతల ఇందులోనుండి:",
+    "message":"ఈ క్రింది మూలాల నుండి వచ్చిన {{netFilterCount}} నెట్వర్క్ వడపోతలు ＋ {{cosmeticFilterCount}} కాస్మెటిక్ వడపోతలు:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -268,7 +272,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"పదనిరుపనచేసి కాస్మెటిక్ వడపోతను లాగుపరచు.",
+    "message":"పదనిరుపనచేసి కాస్మెటిక్ వడపోతలను ఉపయోగించు.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{

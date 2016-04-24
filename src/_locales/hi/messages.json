@@ -159,6 +159,10 @@
     "message":"बंद करें",
     "description":"English: Quit"
   },
+  "pickerPreview":{
+    "message":"Preview",
+    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
   "pickerNetFilters":{
     "message":"नेट फिलटर्स",
     "description":"English: Net filters"
@@ -192,11 +196,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"वरणांध अनुकूल",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"क्लाउड स्टोरिज समर्थन साझा करें",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -204,35 +208,35 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"प्री-फ़ेचिंग अक्षम करें (अवरुद्ध नेटवर्क रिक्वेस्ट को रोकने के लिए)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"हाइपरलिंक जाँच को अवरुध करें",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"WebRTC को लोकल IP ऐड्रेस प्रकट करने से रोकें",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"सामान्य व्यवहार",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"ये सामान्य व्यवहारों को प्रति-पृष्ठ आधार पर बदला जा सकता है",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"काज़्मेटिक निस्पंदन को रोकें",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"{{input:number}} kB से ज़्यादा अंश को रोकें",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"बाहरी अक्षराकृति को रोकें",
     "description":""
   },
   "settingsStorageUsed":{
