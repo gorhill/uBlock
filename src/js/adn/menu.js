@@ -35,12 +35,12 @@
 
     //disable pause & resume buttons in case of options, vault, browser settings
     if (page === vAPI.getURL("vault.html") ||
-          page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
-          page.indexOf("chrome://") === 0 ||
-          page.indexOf("about:") === 0) {
-          uDom.nodeFromId('pause-button').disabled = true;
-          uDom.nodeFromId('resume-button').disabled = true;
-        }
+      page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
+      page.indexOf("chrome://") === 0 ||
+      page.indexOf("about:") === 0) {
+      uDom.nodeFromId('pause-button').disabled = true;
+      uDom.nodeFromId('resume-button').disabled = true;
+    }
     //$("#alert").addClass('hide'); // reset state
     uDom("#alert").addClass('hide'); // reset state
     //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval
@@ -50,7 +50,7 @@
 
     setCounts(ads, json.data.length);
 
-    var $items = uDom('#ad-list-items');//$('#ad-list-items');
+    var $items = uDom('#ad-list-items'); //$('#ad-list-items');
 
     $items.removeClass().empty();
 
@@ -69,24 +69,19 @@
   var updateMenuState = function () {
 
     //if ($('#main').hasClass('disabled')) {
-    if(uDom('#main').hasClass('disabled')){
+    if (uDom('#main').hasClass('disabled')) {
 
       //$('#resume-button').show();
-      uDom('#resume-button').removeClass('hide');
-      uDom('#resume-button').addClass('show');
+      uDom('#resume-button').removeClass('hide').addClass('show');
       //$('#pause-button').hide();
-      uDom('#pause-button').removeClass('show');
-      uDom('#pause-button').addClass('hide');
+      uDom('#pause-button').removeClass('show').addClass('hide');
 
     } else {
 
       //$('#pause-button').show();
-      uDom('#pause-button').removeClass('hide');
-      uDom('#pause-button').addClass('show');
+      uDom('#pause-button').removeClass('hide').addClass('show');
       //$('#resume-button').hide();
-      uDom('#resume-button').removeClass('show');
-      uDom('#resume-button').addClass('hide');
-
+      uDom('#resume-button').removeClass('show').addClass('hide');
     }
   }
 
@@ -116,7 +111,6 @@
       //$ad.find('cite').text(targetDomain(ad));
       $ad.descendants('cite').text(targetDomain(ad));
 
-
       // update the visited count
       if (ad.pageUrl === page) {
 
@@ -127,7 +121,9 @@
   }
 
   var verify = function (ad) { // uses global ads
+
     if (!ads) err("NO GLOBAL ADS!!!");
+
     if (ad) {
 
       for (var i = 0; i < ads.length; i++) {
@@ -141,20 +137,6 @@
 
     return false;
   }
-
-  /*var filter = function(data, pageUrl) {
-
-    var tmp = data.filter(function (ad) {
-
-      return ad && (!pageUrl || ad.pageUrl === pageUrl) &&
-        (prefs.parseTextAds || ad.contentType !== 'text');
-    });
-
-    console.log('filter(' + data.length + '): parseText=' + prefs.parseTextAds +
-     " pageUrl=" + (pageUrl ? "true" : "false") + " -> " + tmp.length);
-
-    return tmp;
-  }*/
 
   var doRecent = function (data) {
 
@@ -204,7 +186,7 @@
 
     if (ad) {
       if (verify(ad))
-        //$('#ad' + ad.id).addClass('attempting');
+      //$('#ad' + ad.id).addClass('attempting');
         uDom('#ad' + ad.id).addClass('attempting');
       else
         console.warn('Fail on setAttempting: ', ad);
@@ -213,7 +195,7 @@
 
   var updateAdClasses = function (ad) {
 
-    var $ad = uDom('#ad' + ad.id);//$('#ad' + ad.id);
+    var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
 
     // allow only one just-* at a time...
     removeClassFromAll('just-visited just-failed');
@@ -244,8 +226,8 @@
   var appendImageAd = function (ad, $items) {
 
     var $img, $a, $span, $li = uDom(document.createElement('li'))
-    .attr('id','ad' + ad.id)
-    .addClass(('ad-item ' + visitedClass(ad)).trim());
+      .attr('id', 'ad' + ad.id)
+      .addClass(('ad-item ' + visitedClass(ad)).trim());
 
     /*$('<li/>', {
 
@@ -254,8 +236,8 @@
     });*/
 
     $a = uDom(document.createElement('a'))
-    .attr('target','new')
-    .attr('href',ad.targetUrl);
+      .attr('target', 'new')
+      .attr('href', ad.targetUrl);
 
     /*$('<a/>', {
 
@@ -269,9 +251,9 @@
       'class': 'thumb'
     });*/
     $img = uDom(document.createElement('img'))
-    .attr('src',(ad.contentData.src || ad.contentData))
-    .addClass('ad-item-img')
-    .on('click',"this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
+      .attr('src', (ad.contentData.src || ad.contentData))
+      .addClass('ad-item-img')
+      .on('click', "this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
 
     $img.appendTo($span);
     /*$('<img/>', {
@@ -292,16 +274,16 @@
 
     }).appendTo($a);*/
     uDom(document.createElement('span'))
-    .addClass('title')
-    .text(ad.title ? ad.title : "#" + ad.id)
-    .appendTo($a);
+      .addClass('title')
+      .text(ad.title ? ad.title : "#" + ad.id)
+      .appendTo($a);
 
     /*$('<cite/>', {
       'text': targetDomain(ad)
     }).appendTo($a);*/
     uDom(document.createElement('cite'))
-    .text(targetDomain(ad))
-    .appendTo($a);
+      .text(targetDomain(ad))
+      .appendTo($a);
 
     $a.appendTo($li);
     $li.appendTo($items);
@@ -310,8 +292,8 @@
   var appendTextAd = function (ad, $items) {
 
     var $cite, $h3, $li = uDom(document.createElement('li'))
-    .attr('id','ad' + ad.id)
-    .addClass(('ad-item-text ' + visitedClass(ad)).trim());
+      .attr('id', 'ad' + ad.id)
+      .addClass(('ad-item-text ' + visitedClass(ad)).trim());
 
     /*$('<li/>', {
 
@@ -319,8 +301,8 @@
       'class': ('ad-item-text ' + visitedClass(ad)).trim()
     });*/
     uDom(document.createElement('span'))
-    .addClass('thumb')
-    .text('Text Ad').appendTo($li);
+      .addClass('thumb')
+      .text('Text Ad').appendTo($li);
     /*$('<span/>', {
 
       'class': 'thumb',
@@ -332,10 +314,10 @@
     //$('<h3/>');
 
     uDom(document.createElement('a'))
-    .attr('target','new')
-    .attr('href',ad.targetUrl)
-    .addClass('title')
-    .text(ad.title).appendTo($h3);
+      .attr('target', 'new')
+      .attr('href', ad.targetUrl)
+      .addClass('title')
+      .text(ad.title).appendTo($h3);
     /*$('<a/>', {
 
       'target': 'new',
@@ -357,8 +339,8 @@
     $cite.appendTo($li);
 
     uDom(document.createElement('div'))
-    .addClass('ads-creative')
-    .text(ad.contentData.text).appendTo($li);
+      .addClass('ads-creative')
+      .text(ad.contentData.text).appendTo($li);
     /*$('<div/>', {
 
       'class': 'ads-creative',
@@ -537,7 +519,7 @@
       pos = targetRect.bottom - ttcRect.top;
       tip.style.setProperty('top', pos + 'px');
     }
-    
+
     // Tooltip's horizontal position
     tip.style.setProperty('left', targetRect.left + 'px');
 
@@ -582,7 +564,7 @@
     uDom('#pause-button').on('click', toggleEnabled);
     uDom('#resume-button').on('click', toggleEnabled);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-                .on('mouseleave', '[data-tip]', onHideTooltip);
+      .on('mouseleave', '[data-tip]', onHideTooltip);
   })();
 
   /********************************************************************/

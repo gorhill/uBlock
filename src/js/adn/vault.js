@@ -1566,7 +1566,7 @@
   };
 
   AdSet.prototype.failedCount = function () {
-    
+
     var containerObj = this;
 
     return this.children.filter(function (d) {
