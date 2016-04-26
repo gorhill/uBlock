@@ -125,6 +125,13 @@ button.hide {
   display: none;
 }
 
+button {
+  cursor: pointer;
+}
+button.disabled {
+  cursor: default;
+}
+
 a.hide {
   display: none;
 }
@@ -211,11 +218,6 @@ header{
   text-align: center;
   font-weight: 700;
   line-height: 156px;
-}
-
-.disabled header #toggle-button{
-  background-image: url(../img/paused@2x.png);
-  color: #5c5c5c;
 }
 
 #stats {
@@ -557,9 +559,108 @@ button.settings {
 }
 button:disabled {
   opacity:.4;
+  cursor: default;
 }
 button.about {
   width: 27px;
+}
+
+/* ============================================================
+  PAUSED
+============================================================ */
+
+.disa header *{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+  /*background-color: #5c5c5c !important;*/
+}
+.disabled header #vault-count{
+  color:#000 !important;
+  background-color: #5c5c5c !important;
+}
+.disabled header #toggle-button{
+  background-image: url(../img/paused@2x.png);
+  color: #5c5c5c;
+}
+.disabled header button {
+  color: #5c5c5c;
+  border-color: #5c5c5c;
+}
+.disabled header #stats > span{
+  color: #5c5c5c !important;
+}
+.disabled footer *{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+}
+.disabled header button:hover,
+.disabled footer button:hover{
+  color:#5c5c5c !important;
+  border-color: #5c5c5c !important;
+  background: none;
+  cursor: default;
+}
+#paused-menu{
+  display: none;
+}
+
+.disabled #paused-menu {
+  display: block;
+  position: absolute;
+  top: 100px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  background: #000 url(../img/gray_grid.png);
+  opacity: 0.95;
+  padding: 45px 85px 0;
+  z-index: 10000;
+}
+
+.disabled #tooltip {
+  display: none !important;
+}
+
+#paused-menu h2{
+  font-family: bebas_neue_regularregular;
+  font-size:20px;
+  color: #dadada;
+  line-height:28px;
+  margin: 0 10px;
+}
+
+select {
+  border: 2px solid #0076FF;
+  border-radius: 5px;
+  font-family: bebas_neue_regularregular;
+  background: none;
+  box-shadow: none;
+  color: #0076FF;
+  font-size: 20px;
+  height: 30px;
+  padding-top: 1px;
+}
+
+#paused-menu select {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #5C5C5C;
+  color: #dadada;
+}
+
+#paused-menu select option{
+  text-align: center;
+}
+
+#paused-menu input{
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#paused-menu button{
+  width: 100%;
+  margin-top: 30px;
 }
 
 /* ============================================================
@@ -699,6 +800,38 @@ input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 30px;
   background-color: #0076FF;
 }
+input.cmn-toggle-round-flat.cmn-toggle-small + label {
+  height: 16px;
+  width: 30px;
+  padding: 1px;
+  float: left;
+  margin-right: 5px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::before{
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::after {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
+  margin-left: 14px;
+}
+.add-to-whitelist{
+  margin: 6px;
+}
+.add-to-whitelist p {
+  font-size: 14px;
+}
+.add-to-whitelist.checked p {
+  color: #0076FF;
+}
 
 #tooltip {
     background-color: #333;
@@ -718,7 +851,7 @@ input.cmn-toggle-round-flat:checked + label:after {
     text-align: left;
     visibility: hidden;
     white-space: pre-line;
-    z-index: 100;
+    z-index: 100000;
     }
 .arrow_box:after, .arrow_box:before {
 	top: 100%;
