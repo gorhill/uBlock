@@ -569,7 +569,7 @@ button.about {
   PAUSED
 ============================================================ */
 
-.disa header *{
+.disabled header *{
   color:#5c5c5c !important;
   border-color: #5c5c5c !important;
   /*background-color: #5c5c5c !important;*/
@@ -585,6 +585,7 @@ button.about {
 .disabled header button {
   color: #5c5c5c;
   border-color: #5c5c5c;
+  background-color: none;
 }
 .disabled header #stats > span{
   color: #5c5c5c !important;
@@ -592,11 +593,14 @@ button.about {
 .disabled footer *{
 
 }
-.disabled header button:hover,
-.disabled footer button:hover{
-  background: none;
-  cursor: default;
+.disabled header button:hover{
+    color: #5c5c5c;
+    border-color: #5c5c5c;
+    background: none !important;
 }
+.disabled footer button:hover{
+}
+
 #paused-menu{
   display: none;
 }
@@ -609,7 +613,7 @@ button.about {
   left: 0;
   right: 0;
   background: #000 url(../img/gray_grid.png);
-  opacity: 0.9;
+  opacity: 0.95;
   padding: 145px 85px 0;
   z-index: 10000;
 }

@@ -1,6 +1,6 @@
 {
   "adnStatePaused": {
-    "message": "Adnauseam is currently paused",
+    "message": "AdNauseam is currently paused",
     "description": "English: Menu->when paused"
   },
   "adnVaultName": {
@@ -44,11 +44,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuPause": {
-    "message": "Pause Adnauseam",
+    "message": "Pause AdNauseam",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume Adnauseam",
+    "message": "Resume AdNauseam",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
@@ -152,8 +152,8 @@
     "description": "appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: disable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
-    "description": "English: Click: denable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Click: disable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page",
+    "description": "English: Click: denable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page"
   },
   "popupBlockedRequestPrompt": {
     "message": "requests blocked",
