@@ -51,8 +51,7 @@
         toWrapped.set(wrapper, wrapped);
     };
 
-    var noopfn = function() {
-    };
+    var noopfn = function() {};
 
     var fallthruGet = function(wrapper, prop, value) {
         var wrapped = toWrapped.get(wrapper);
@@ -83,7 +82,10 @@
     };
 
     var WebSocket = function(url, protocols) {
-        if ( window.location.protocol === 'https:' && /^ws:/.test(url) ) {
+        if (
+            window.location.protocol === 'https:' &&
+            url.lastIndexOf('ws:', 0) === 0
+        ) {
             var ws = new Wrapped(url, protocols);
             if ( ws ) {
                 ws.close();
@@ -198,8 +200,8 @@
 
     window.WebSocket = WebSocket;
 
-    var me = document.getElementById('ubofix-f41665f3028c7fd10eecf573336216d3');
-    if ( me !== null && me.parentNode !== null ) {
+    var me = document.currentScript;
+    if ( me && me.parentNode !== null ) {
         me.parentNode.removeChild(me);
     }
 })();
