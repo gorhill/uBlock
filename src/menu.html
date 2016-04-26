@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>AdNauseam</title>
+  <link rel="icon" type="image/png" href="img/icon-32.png">
+  <link rel="stylesheet" href="css/fonts/stylesheet.css">
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+
+<body class="active">
+
+  <div class="container">
+    <div id="main" class="page paused">
+
+      <header>
+        <h1>
+          <a href="http://adnauseam.io" target="new">
+            <span id="toggle-button" background="" title="Toggle AdNauseam On/Off">ADNAUSEAM</span>
+          </a>
+        </h1>
+        <div id="stats">
+            <span class="visited" data-i18n="adnMenuAdsClicked">&nbsp;</span>
+            <span id="visited-count" class="visited">0</span>
+            <span data-i18n="adnMenuOfThe">&nbsp;</span>
+            <span id="found-count" class="found">0</span>
+            <span class="found" data-i18n="adnMenuAdsDetected">&nbsp;</span>
+            <div id="vault-btn">
+              <button id="vault-button" data-i18n="adnMenuViewVault">&nbsp;</button>
+              <span id="vault-count" class="count">(-)</span>
+            </div>
+          </div>
+      </header>
+
+      <div id="paused-menu">
+
+        <h2>Adnauseam is currently Paused from blocking and clicking ads</h2>
+        <!-- <select>
+          <option value="page" selected>on this page</option>
+          <option value="domain">on this domain</option>
+          <option value="everywhere">everywhere</option>
+        </select>
+        <div class="switch add-to-whitelist">
+          <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="cmn-toggle-5">
+          <label for="cmn-toggle-5"></label>
+          <p>Add this page to the whitelist</p>
+        </div> -->
+
+        <button id="resume-paused" class="resume" data-i18n="adnResumePaused">Resume AdNauseam</button>
+      </div>
+
+      <div id="ad-list" class="">
+
+        <div id="alert" class="hide">
+          <img src="img/alert.png" alt="alert">
+          <p data-i18n="adnShowingRecentAds"></p>
+        </div>
+
+        <ul id='ad-list-items'></ul>
+
+        <!--div id="log-button">
+            <a href="#" data-i18n="adnMenuViewLog">&nbsp;</a>
+        </div-->
+      </div>
+
+      <footer>
+        <div class="tooltipContainer">
+          <button id="pause-button" class="pause" data-i18n="adnMenuPause" data-i18n-tip="popupPowerSwitchInfo">&nbsp;</button>
+          <button id="resume-button" class="resume" data-i18n="adnMenuResume" data-i18n-tip="popupPowerSwitchInfo">&nbsp;</button>
+          <button id="settings-open" class="settings" data-i18n="adnMenuSettings">&nbsp;</button>
+          <button id="about-button" class="about">?</button>
+        </div>
+      </footer>
+
+    </div>
+    <!-- END #main -->
+
+  </div>
+  <div id="templates" style="display: none">
+    <!--div><span></span><span data-src="/" data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span></div>
+      <div id="actionSelector"><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
+      <div id="hotspotTip"></div-->
+    <div id="tooltip" class="arrow_box"></div>
+  </div>
+
+  <script src="js/vapi-common.js"></script>
+  <script src="js/vapi-client.js"></script>
+  <script src="js/udom.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/adn/shared.js"></script>
+  <script src="js/adn/menu.js"></script>
+
+</body>
+
+</html>

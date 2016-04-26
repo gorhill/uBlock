@@ -110,7 +110,7 @@ var onAbpLinkClicked = function(ev) {
         var confirmStr = details.confirmStr
                             .replace('{{url}}', location)
                             .replace('{{title}}', title);
-        if ( !window.confirm(confirmStr) ) {
+        if ( !vAPI.confirm(confirmStr) ) {
             return;
         }
 

@@ -72,7 +72,7 @@ var deferUntil = function(testFn, mainFn, details) {
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'uBlock Origin',
+    name: 'AdNauseam',
     version: location.hash.slice(1)
 };
 
@@ -1908,7 +1908,7 @@ var httpObserver = {
 
     // Pending request ring buffer:
     // +-------+-------+-------+-------+-------+-------+-------
-    // |0      |1      |2      |3      |4      |5      |...      
+    // |0      |1      |2      |3      |4      |5      |...
     // +-------+-------+-------+-------+-------+-------+-------
     //
     // URL to ring buffer index map:
@@ -2366,7 +2366,7 @@ vAPI.net.registerListeners = function() {
         var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
-        if ( details.url.startsWith(vAPI.getURL('popup.html')) ) {
+        if ( details.url.indexOf(vAPI.getURL('menu.html')) > -1 ) { // for adn
             return;
         }
 
@@ -2477,7 +2477,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'popup.html?tabId=' + curTabId,
+            url: 'menu.html?tabId=' + curTabId, // adn
             index: -1,
             select: true
         });
@@ -2536,7 +2536,7 @@ vAPI.toolbarButton = {
     var tbb = vAPI.toolbarButton;
 
     tbb.onViewShowing = function({target}) {
-        target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
+        target.firstChild.setAttribute('src', vAPI.getURL('menu.html')); // adn
     };
 
     tbb.onViewHiding = function({target}) {
@@ -3280,7 +3280,7 @@ vAPI.contextMenu = (function() {
 /******************************************************************************/
 
 var optionsObserver = (function() {
-    var addonId = 'uBlock0@raymondhill.net';
+    var addonId = 'adnauseam@rednoise.org';
 
     var commandHandler = function() {
         switch ( this.id ) {

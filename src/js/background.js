@@ -49,7 +49,13 @@ var defaultExternalLists = [
 return {
     firstInstall: false,
 
+    adnSettings: { // adn
+      noBlockingNonTrackers: true,
+      admap: {}
+    },
+
     userSettings: {
+        parseTextAds: true, // adn
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
@@ -107,7 +113,7 @@ return {
     // EasyList, EasyPrivacy and many others have an 4-day update period,
     // as per list headers.
     updateAssetsEvery: 97 * oneHour,
-    projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
+    projectServerRoot: 'https://raw.githubusercontent.com/dhowe/AdNauseam2/master/',
     userFiltersPath: 'assets/user/filters.txt',
     pslPath: 'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
 
@@ -115,6 +121,11 @@ return {
     permanentLists: {
         // User
         'assets/user/filters.txt': {
+            group: 'default'
+        },
+        // AdNauseam
+        'assets/ublock/adnauseam.txt': {
+            title: 'AdNauseam filters',
             group: 'default'
         },
         // uBlock
@@ -220,4 +231,3 @@ return {
 })();
 
 /******************************************************************************/
-

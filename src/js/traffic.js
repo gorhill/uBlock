@@ -44,7 +44,7 @@ var onBeforeRequest = function(details) {
     // behind-the-scene
     var requestType = details.type;
     if ( requestType === 'main_frame' ) {
-        return onBeforeRootFrameRequest(details);
+      return onBeforeRootFrameRequest(details);
     }
 
     // https://github.com/gorhill/uBlock/issues/870
@@ -65,7 +65,7 @@ var onBeforeRequest = function(details) {
     if ( !pageStore ) {
         var tabContext = µb.tabContextManager.mustLookup(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
-            return onBeforeBehindTheSceneRequest(details);
+          return onBeforeBehindTheSceneRequest(details);
         }
         vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: tabContext.rawURL });
         pageStore = µb.pageStoreFromTabId(tabId);
@@ -94,13 +94,15 @@ var onBeforeRequest = function(details) {
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
-    pageStore.logRequest(requestContext, result);
+    var newResult = µb.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
+
+    pageStore.logRequest(requestContext, newResult);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            newResult,
             requestType,
             requestURL,
             requestContext.rootHostname,
@@ -109,7 +111,11 @@ var onBeforeRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( µb.isAllowResult(newResult) ) {
+      if (!µb.isAllowResult(result))
+
+        //console.log('UNBLOCK()', result, requestContext);
+
         // https://github.com/chrisaljoudi/uBlock/issues/114
         frameId = details.frameId;
         if ( frameId > 0 && isFrame ) {
@@ -117,6 +123,8 @@ var onBeforeRequest = function(details) {
         }
         return;
     }
+
+    console.error('BLOCKED !!!!!!!! ', result, requestContext);
 
     // Blocked
 
@@ -152,6 +160,11 @@ var onBeforeRequest = function(details) {
 var onBeforeRootFrameRequest = function(details) {
     var tabId = details.tabId;
     var requestURL = details.url;
+
+    // this triggers our automated script to export ads on completion
+    if (requestURL === 'http://rednoise.org/ad-auto-export') // adn-tmp
+        µBlock.adnauseam.exportAds();
+
     var µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);
@@ -214,17 +227,19 @@ var onBeforeRootFrameRequest = function(details) {
         }
     }
 
+    var newResult = µBlock.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
+
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
-        pageStore.logRequest(context, result);
+        pageStore.logRequest(context, newResult);
     }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            newResult,
             'main_frame',
             requestURL,
             requestHostname,
@@ -233,9 +248,13 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( µb.isAllowResult(newResult) ) {
+        if (!µb.isAllowResult(result))
+            console.log('UNBLOCK(MAIN_FRAME)', newResult, result);
         return;
     }
+
+    console.log("BLOCKED(MAIN_FRAME) !!!!!!!!!!!",result);
 
     var compiled = result.slice(3);
 
