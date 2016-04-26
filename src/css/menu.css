@@ -590,13 +590,10 @@ button.about {
   color: #5c5c5c !important;
 }
 .disabled footer *{
-  color:#5c5c5c !important;
-  border-color: #5c5c5c !important;
+
 }
 .disabled header button:hover,
 .disabled footer button:hover{
-  color:#5c5c5c !important;
-  border-color: #5c5c5c !important;
   background: none;
   cursor: default;
 }
@@ -612,8 +609,8 @@ button.about {
   left: 0;
   right: 0;
   background: #000 url(../img/gray_grid.png);
-  opacity: 0.95;
-  padding: 45px 85px 0;
+  opacity: 0.9;
+  padding: 145px 85px 0;
   z-index: 10000;
 }
 

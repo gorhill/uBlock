@@ -1,6 +1,10 @@
 {
+  "adnStatePaused": {
+    "message": "Adnauseam is currently paused",
+    "description": "English: Menu->when paused"
+  },
   "adnVaultName": {
-    "message": "AdNauseam — Ad Vault",
+    "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
@@ -148,8 +152,8 @@
     "description": "appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Click: disable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
+    "description": "English: Click: denable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt": {
     "message": "requests blocked",
