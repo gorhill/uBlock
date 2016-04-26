@@ -125,6 +125,13 @@ button.hide {
   display: none;
 }
 
+button {
+  cursor: pointer;
+}
+button.disabled {
+  cursor: default;
+}
+
 a.hide {
   display: none;
 }
@@ -211,11 +218,6 @@ header{
   text-align: center;
   font-weight: 700;
   line-height: 156px;
-}
-
-.disabled header #toggle-button{
-  background-image: url(../img/paused@2x.png);
-  color: #5c5c5c;
 }
 
 #stats {
@@ -557,6 +559,7 @@ button.settings {
 }
 button:disabled {
   opacity:.4;
+  cursor: default;
 }
 button.about {
   width: 27px;
@@ -566,35 +569,42 @@ button.about {
   PAUSED
 ============================================================ */
 
-.paused header *{
+.disa header *{
   color:#5c5c5c !important;
   border-color: #5c5c5c !important;
   /*background-color: #5c5c5c !important;*/
 }
-.paused header #vault-count{
+.disabled header #vault-count{
   color:#000 !important;
   background-color: #5c5c5c !important;
 }
-.paused header #toggle-button{
+.disabled header #toggle-button{
   background-image: url(../img/paused@2x.png);
   color: #5c5c5c;
 }
-.paused footer *{
+.disabled header button {
+  color: #5c5c5c;
+  border-color: #5c5c5c;
+}
+.disabled header #stats > span{
+  color: #5c5c5c !important;
+}
+.disabled footer *{
   color:#5c5c5c !important;
   border-color: #5c5c5c !important;
 }
-.paused header button:hover,
-.paused footer button:hover{
+.disabled header button:hover,
+.disabled footer button:hover{
   color:#5c5c5c !important;
   border-color: #5c5c5c !important;
   background: none;
+  cursor: default;
 }
-
 #paused-menu{
   display: none;
 }
 
-.paused #paused-menu {
+.disabled #paused-menu {
   display: block;
   position: absolute;
   top: 100px;
@@ -605,6 +615,10 @@ button.about {
   opacity: 0.95;
   padding: 45px 85px 0;
   z-index: 10000;
+}
+
+.disabled #tooltip {
+  display: none !important;
 }
 
 #paused-menu h2{
@@ -837,7 +851,7 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
     text-align: left;
     visibility: hidden;
     white-space: pre-line;
-    z-index: 100;
+    z-index: 100000;
     }
 .arrow_box:after, .arrow_box:before {
 	top: 100%;
