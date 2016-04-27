@@ -290,7 +290,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/?#^*]+)|\*)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^*]+)|\*)([^$]+)\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = (function() {
     var types = Object.create(null);
