@@ -605,22 +605,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         return '';
     };
 
-    var popunderMatch = function(openerURL, targetURL) {
-        var result = popupMatch(targetURL, openerURL, null, 'popunder');
-        if ( µb.isBlockResult(result) ) {
-            return result;
-        }
-        // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
-        //   Check the opener tab as if it were the newly opened tab: if there
-        //   is a hit against a popup filter, and if the matching filter is not
-        //   a broad one, we will consider the opener tab to be a popunder tab.
-        //   For now, a "broad" filter is one which does not touch any part of
-        //   the hostname part of the opener URL.
-        var openerHostname = µb.URI.hostnameFromURI(openerURL);
-        if ( openerHostname === '' ) {
-            return '';
-        }
-        result = popupMatch(targetURL, openerURL, null, 'popup');
+    var mapPopunderResult = function(popunderURL, popunderHostname, result) {
         if ( result.startsWith('sb:') === false ) {
             return '';
         }
@@ -637,23 +622,57 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( re === null ) {
             return '';
         }
-        var matches = re.exec(openerURL);
+        var matches = re.exec(popunderURL);
         if ( matches === null ) {
             return '';
         }
         var beg = matches.index,
             end = beg + matches[0].length,
-            pos = openerURL.indexOf(openerHostname);
+            pos = popunderURL.indexOf(popunderHostname);
         if ( pos === -1 ) {
             return '';
         }
         // https://github.com/gorhill/uBlock/issues/1471
         // We test whether the opener hostname as at least one character
         // within matched portion of URL.
-        if ( beg >= pos + openerHostname.length || end <= pos ) {
+        return beg < pos + popunderHostname.length && end > pos ? result : '';
+    };
+
+    var popunderMatch = function(openerURL, targetURL) {
+        var result = popupMatch(targetURL, openerURL, null, 'popunder');
+        if ( µb.isBlockResult(result) ) {
+            return result;
+        }
+        // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
+        //   Check the opener tab as if it were the newly opened tab: if there
+        //   is a hit against a popup filter, and if the matching filter is not
+        //   a broad one, we will consider the opener tab to be a popunder tab.
+        //   For now, a "broad" filter is one which does not touch any part of
+        //   the hostname part of the opener URL.
+        var popunderURL = openerURL;
+        var popunderHostname = µb.URI.hostnameFromURI(popunderURL);
+        if ( popunderHostname === '' ) {
             return '';
         }
-        return result;
+        result = mapPopunderResult(
+            popunderURL,
+            popunderHostname,
+            popupMatch(targetURL, popunderURL, null, 'popup')
+        );
+        if ( result !== '' ) {
+            return result;
+        }
+        // https://github.com/gorhill/uBlock/issues/1598
+        // Try to find a match against origin part of the opener URL.
+        popunderURL = µb.URI.originFromURI(popunderURL);
+        if ( popunderURL === '' ) {
+            return '';
+        }
+        return mapPopunderResult(
+            popunderURL,
+            popunderHostname,
+            popupMatch(targetURL, popunderURL, null, 'popup')
+        );
     };
 
     return function(targetTabId, openerTabId) {

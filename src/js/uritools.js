@@ -49,6 +49,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 // Derived
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
+var reOriginFromURI          = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]+)/;
 var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
 
@@ -216,6 +217,13 @@ URI.assemble = function(bits) {
         s.push('#', this.fragment);
     }
     return s.join('');
+};
+
+/******************************************************************************/
+
+URI.originFromURI = function(uri) {
+    var matches = reOriginFromURI.exec(uri);
+    return matches !== null ? matches[0].toLowerCase() : '';
 };
 
 /******************************************************************************/
