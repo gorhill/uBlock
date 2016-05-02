@@ -351,6 +351,9 @@ vAPI.shutdown.add(function() {
 /* jshint multistr: true */
 
 (function() {
+    // https://github.com/gorhill/uBlock/issues/1604
+    return;
+
     // Fix won't be applied on older versions of Chromium.
     if (
         window.WebSocket instanceof Function === false ||
