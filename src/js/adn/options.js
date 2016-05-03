@@ -14,25 +14,26 @@
 
   function handleImportFilePicker(evt) {
 
-    var msg = vAPI.i18n('adnImportConfirm');
-    var proceed = vAPI.confirm(msg);
-    if (proceed) {
+    var files = evt.target.files;
+    var reader = new FileReader();
 
-      var files = evt.target.files;
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        var adData = JSON.parse(e.target.result);
-        messager.send('adnauseam', {
-          what: 'importAds',
-          data: adData,
-          file: files[0].name
-        });
-      }
-
-      reader.readAsText(files[0]);
+    reader.onload = function (e) {
+      var adData = JSON.parse(e.target.result);
+      messager.send('adnauseam', {
+        what: 'importAds',
+        data: adData,
+        file: files[0].name
+      }, postImportConfirm);
     }
+
+    reader.readAsText(files[0]);
   }
+
+  var postImportConfirm = function (msg) {
+      console.log('postImportConfirm');
+      vAPI.confirm(vAPI.i18n('adnImportConfirm')
+        .replace('{{count}}', msg.count));
+  };
 
   var startImportFilePicker = function () {
 

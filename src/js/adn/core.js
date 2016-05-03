@@ -608,13 +608,14 @@
       current: activeVisit()
     };
   }
-  var validateImport = function (map) {
+
+  var validateImport = function (map, replaceAll) {
 
     if (type(map) !== 'object')
       return false;
 
     var pass = 0,
-      newmap = {},
+      newmap = replaceAll ? {} : admap,
       pages = Object.keys(map);
 
     for (var i = 0; i < pages.length; i++) {
@@ -635,7 +636,7 @@
         if (validateFields(ad)) {
 
           if (!newmap[pages[i]]) newmap[pages[i]] = {};
-          newmap[pages[i]][hashes[j]] = ad;
+          newmap[ pages[i]][hashes[j] ] = ad;
           pass++;
 
         } else {
@@ -646,6 +647,31 @@
     }
 
     return pass ? newmap : false;
+  }
+
+  var validateAdArray = function (ads, replaceAll) {
+
+    var map = replaceAll ? {} : admap;
+
+    for (var j = 0; j < ads.length; j++) {
+
+      var ad = updateLegacyAd(ads[j]),
+        hash = computeHash(ad);
+
+      if (!validateFields(ad)) {
+
+        console.warn('Unable to validate legacy ad', ad);
+        continue;
+      }
+
+      var page = ad.pageUrl;
+      if (!map[page]) map[page] = {};
+      map[page][hash] = ad;
+
+      //console.log('converted ad', map[page][hash]);
+    }
+
+    return map;
   }
 
   var validateLegacyImport = function (map) {
@@ -696,31 +722,6 @@
     }
 
     return newmap;
-  }
-
-  var validateAdArray = function (ads, replaceAll) {
-
-    var map = replaceAll ? {} : admap;
-
-    for (var j = 0; j < ads.length; j++) {
-
-      var ad = updateLegacyAd(ads[j]),
-        hash = computeHash(ad);
-
-      if (!validateFields(ad)) {
-
-        console.warn('Unable to validate legacy ad', ad);
-        continue;
-      }
-
-      var page = ad.pageUrl;
-      if (!map[page]) map[page] = {};
-      map[page][hash] = ad;
-
-      //console.log('converted ad', map[page][hash]);
-    }
-
-    return map;
   }
 
   var updateLegacyAd = function (ad) {
@@ -821,7 +822,7 @@
   var importAds = function (request) {
 
     // try to parse imported ads in current format
-    var count = adlist().length,
+    var count = adlist().length, importedCount = 0,
       map = validateImport(request.data);
 
     if (!map) {
@@ -846,15 +847,17 @@
       }
     }
 
-    clearAds();
+    //clearAds();
     admap = map;
     computeNextId();
-    if (clearVisitData) {
-      clearAdVisits(ads);
-    }
+    clearVisitData && clearAdVisits(ads);
     storeUserData();
 
-    log('AdNauseam.import: ' + adlist().length + ' ads from ' + request.file);
+    importedCount = adlist().length - count;
+
+    log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
+
+    return { what: 'importConfirm', count: importedCount };
   }
 
   var exportAds = function (request) {

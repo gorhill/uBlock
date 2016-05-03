@@ -16,8 +16,6 @@ var dbugDetect = 0; // tmp
     prefs = req;
   }); // only in root doc? or poll? or put prefs in vAPI
 
-  vAPI.messaging.addChannelListener('adnauseam', messageListener);
-
   adDetector.findAds = function (elem) {
 
     switch (elem.tagName) {
@@ -464,11 +462,11 @@ var dbugDetect = 0; // tmp
         }
 
         $attr(adndiv, 'count', count);
-        // console.log("adndiv.attr('count', "+json.count+")");
         console.log("INSERT_COUNT=" + count + ")");
-        //"=" + $attr(document.getElementById("adnauseam-count"), 'count'));
       }
     }
   }
+
+  vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
 })(this);

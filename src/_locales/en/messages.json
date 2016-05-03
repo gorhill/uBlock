@@ -16,7 +16,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportConfirm": {
-    "message": "This action will overwrite ALL of your current ads",
+    "message": "{{count}} ads were imported",
     "description": "appears in ADN settings"
   },
   "adnClearConfirm": {
