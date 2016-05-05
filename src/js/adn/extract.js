@@ -1,4 +1,4 @@
-var dbugDetect = 1; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -23,7 +23,7 @@ var dbugDetect = 1; // tmp
 
   adDetector.findAds = function (elem) {
 
-    console.log('findAds: ' + elem.tagName, elem);
+    //console.log('findAds: ' + elem.tagName, elem);
 
     switch (elem.tagName) {
 
@@ -255,7 +255,8 @@ var dbugDetect = 1; // tmp
 
     } else {
 
-      console.warn('TEXT: bingTextHandler.fail: ', text, site, document.URL, document.title);
+      console.warn('TEXT: bingTextHandler.fail: ',
+        text, site, document.URL, document.title);
     }
 
     return [ ad ];
