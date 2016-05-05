@@ -427,8 +427,8 @@
 
     if (targetDomain(ad) === ad.pageDomain) {
 
-        log('Ignoring ad with internal targetUrl: ', ad.targetUrl+' ?= '+ad.pageDomain, ad);
-        return false;
+      log('Ignoring ad with internal targetUrl: ', ad.targetUrl + ' ?= ' + ad.pageDomain, ad);
+      return false;
     }
 
     return true;
@@ -583,9 +583,8 @@
       if (admap[ad.pageUrl][hash]) {
 
         delete admap[ad.pageUrl][hash];
-      }
-      else {
-          warn('Unable to find ad: ', ad, admap);
+      } else {
+        warn('Unable to find ad: ', ad, admap);
       }
     }
 
@@ -621,8 +620,7 @@
 
     // preferences relevant to our content/ui-scripts
     return {
-      parseTextAds: µb.userSettings.parseTextAds,
-      parseIFrames: µb.userSettings.parseIFrames
+      parseTextAds: µb.userSettings.parseTextAds
     };
   }
 
@@ -663,7 +661,7 @@
         if (validateFields(ad)) {
 
           if (!newmap[pages[i]]) newmap[pages[i]] = {};
-          newmap[ pages[i]][hashes[j] ] = ad;
+          newmap[pages[i]][hashes[j]] = ad;
           pass++;
 
         } else {
@@ -731,7 +729,6 @@
       newmap[pages[i]] = {};
 
       for (var j = 0; j < ads.length; j++) {
-
 
         ad = updateLegacyAd(ads[j]);
         hash = computeHash(ad);
@@ -849,7 +846,8 @@
   var importAds = function (request) {
 
     // try to parse imported ads in current format
-    var count = adlist().length, importedCount = 0,
+    var count = adlist().length,
+      importedCount = 0,
       map = validateImport(request.data);
 
     if (!map) {
@@ -884,7 +882,10 @@
 
     log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
 
-    return { what: 'importConfirm', count: importedCount };
+    return {
+      what: 'importConfirm',
+      count: importedCount
+    };
   }
 
   var exportAds = function (request) {
