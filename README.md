@@ -1,5 +1,9 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
+Help test our AdNauseam for Chrome beta: with [developer-mode](http://rednoise.org/img/devmode.png) enabled, 
+download [this file](https://github.com/dhowe/AdNauseam2/releases/download/v2.0.8b/adnauseam.chromium.crx.zip), unzip, and drag into Chrome
+
+
 <div align="center">
   <a href="http://adnauseam.io">
     <img src="https://rednoise.org/adnauseam/logo.png"/>
@@ -8,7 +12,7 @@
 
 [AdNauseam](http://adnauseam.io) is a lightweight browser extension that blends software tool and 'artware' intervention to fight back against tracking by advertising networks. AdNauseam works like an ad-blocker to silently simulate clicks on each blocked ad (in a background thread), confusing trackers as to one's real interests. At the same time, AdNauseam serves as a means of amplifying users' discontent with advertising networks that disregard privacy and facilitate bulk surveillance agendas.
 
-We conceptualize AdNauseam within a broader class of software systems that serve ethical, political, and expressive ends. In light of the industry's failure to achieve consensus on a Do Not Track standard<sup>1</sup>*, or to otherwise address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering cover against certain forms of surveillance, profiling, and practices of discrimination. Taken in this light, the software represents a similar approach to that of <a href="http://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, which attempts to relocate power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="http://cs.nyu.edu/trackmenot/TMN-Howe-Niss08-ch23.pdf" target="_blank">this paper</a>.
+We conceptualize AdNauseam within a broader class of software systems that serve ethical, political, and expressive ends. In light of the industry's failure to achieve consensus on a Do Not Track standard, or to otherwise address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering cover against certain forms of surveillance, profiling, and practices of discrimination. Taken in this light, the software represents a similar approach to that of <a href="http://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, which attempts to relocate power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="http://cs.nyu.edu/trackmenot/TMN-Howe-Niss08-ch23.pdf" target="_blank">this paper</a>.
 
 #### About the project
 --------
