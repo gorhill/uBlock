@@ -12,6 +12,7 @@
 
   var xhr, idgen, admap, inspected,
     µb = µBlock,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -35,6 +36,9 @@
       this.requestUrl = url; // store original target
       return XMLHttpRequest_open.apply(this, arguments);
     };
+
+    if (production) // disable all test-modes if production
+      failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
 
     admap = (settings && settings.admap) || {};
     ads = validateAdStorage();
@@ -233,6 +237,7 @@
 
       // TODO: if title still = 'Pending' here, replace it with the hostname
       if (ad.title === 'Pending') {
+
         ad.title = parseDomain(xhr.requestUrl, true);
         warn('replaced "Pending" with: ' + ad.title);
       }
@@ -420,6 +425,12 @@
       }
     }
 
+    if (targetDomain(ad) === ad.pageDomain) {
+
+        log('Ignoring ad with internal targetUrl: ', ad.targetUrl+' ?= '+ad.pageDomain, ad);
+        return false;
+    }
+
     return true;
   }
 
@@ -591,11 +602,27 @@
     storeUserData();
   }
 
+  var log = function () {
+    !production && console.log.apply(console, arguments);
+    return true;
+  }
+
+  var warn = function () {
+    !production && console.warn.apply(console, arguments);
+    return false;
+  }
+
+  var err = function () {
+    console.error.apply(console, arguments);
+    return false;
+  }
+
   var scriptPrefs = function () {
 
     // preferences relevant to our content/ui-scripts
     return {
-      parseTextAds: µb.userSettings.parseTextAds
+      parseTextAds: µb.userSettings.parseTextAds,
+      parseIFrames: µb.userSettings.parseIFrames
     };
   }
 
