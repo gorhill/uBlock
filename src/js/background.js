@@ -55,6 +55,7 @@ return {
     },
 
     userSettings: {
+        parseIFrames: true, // adn
         parseTextAds: true, // adn
         advancedUserEnabled: false,
         autoUpdate: true,
