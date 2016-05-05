@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -16,26 +16,34 @@ var dbugDetect = 0; // tmp
     prefs = req;
   }); // only in root doc? or poll? or put prefs in vAPI
 
+  adDetector.ignoreTargets = [
+    'http://www.google.com/settings/ads/anonymous',
+    'http://choice.microsoft.com'
+  ];
+
   adDetector.findAds = function (elem) {
+
+    console.log('findAds: ' + elem.tagName, elem);
 
     switch (elem.tagName) {
 
     case 'IFRAME':
-      elem.addEventListener('load', handleIFrame, false);
+      //elem.addEventListener('load', handleIFrame, false);
       break;
 
     case 'IMG':
-      if (findImageAds([elem])) break;
-      // fall-through
+      findImageAds([elem]);
+      break;
 
-    default:
+    default: // other tag-types
 
       // check the element for child imgs
       var imgs = elem.querySelectorAll('img');
-      if (imgs.length && findImageAds(imgs))
-        return;
+      if (imgs.length) findImageAds(imgs);
 
-      // else try text
+      // Question: if we find images, do we want to still try text?
+
+      // and finally check for text ads
       prefs.parseTextAds && findTextAds(elem);
     }
   }
@@ -44,7 +52,7 @@ var dbugDetect = 0; // tmp
 
     var activeFilters = true ? filters : filters.filter(function (f) {
       return f.domain.test(document.domain);
-    });
+    }); // TODO: activate before launch (change true to false above)
 
     var ads = checkFilters(activeFilters, elem);
     if (ads && ads.length) {
@@ -58,42 +66,6 @@ var dbugDetect = 0; // tmp
         }
       }
     }
-  }
-
-  var handleIFrame = function () { // this
-
-    //console.log('handleIFrame', this);
-    var html, doc;
-    try {
-      doc = this.contentDocument;
-    } catch (e) {
-      if (dbugDetect) console.warn(e);
-    }
-    try {
-      doc = doc || this.contentWindow.document;
-    } catch (e) {
-      if (dbugDetect) console.warn(e);
-    }
-    try {
-      doc = doc || (window.frames[this.name] && window.frames[this.name].document);
-    } catch (e) {
-      if (dbugDetect) console.warn(e);
-    }
-
-    if (doc) {
-
-      var body = $find(doc, 'body');
-      var imgs = body.length && $find(body, 'img');
-      if (dbugDetect);
-      console.warn("IFRAME.IMGS:", imgs.length);
-      findImageAds(imgs);
-
-    } else {
-
-      if (dbugDetect) console.log("NO-DOC for IFRAME[" + this.name + "]=" + this.src);
-    }
-
-    this.removeEventListener('load', handleIFrame, false);
   }
 
   var findImageAds = function (imgs) {
@@ -224,9 +196,12 @@ var dbugDetect = 0; // tmp
 
   var processDelayedImage = function () { // this
 
-    console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
+    //console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
     var src = this.src || this.getAttribute('src');
-    if (src) processImage(this, src);
+    if (src) {
+      if (processImage(this, src))
+        console.log("HIT from processDelayedImage!");
+    }
     this.removeEventListener('load', processDelayedImage, false);
   }
 
@@ -237,7 +212,7 @@ var dbugDetect = 0; // tmp
     target = clickableParent(img);
     if (target) {
 
-      if (target.tagName === 'A') {
+      if (target.tagName === 'A') { // if not, need to check for div.onclick?
 
         targetUrl = target.getAttribute("href");
         if (targetUrl) {
@@ -253,15 +228,37 @@ var dbugDetect = 0; // tmp
             console.log('IMG-AD', ad);
             notifyAddon(ad);
             hits++;
-          }
 
-          // Need to check for div.onclick etc?
-        } else if (dbugDetect) console.warn("Bail: Ad / no targetURL! imgSrc: " + imgSrc);
+          } else if (dbugDetect) console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
 
-      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName);
+        } else if (dbugDetect) console.warn("Bail: No href for anchor", target, img);
 
-    } else if (dbugDetect) console.log("Bail: No ClickableParent: " + imgSrc);
+      } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName, img);
 
+    } else if (dbugDetect) console.log("Bail: No ClickableParent", img);
+
+  }
+
+  var bingText = function (dom) {
+
+    var ad, title = $find(dom, 'h2 a'),
+      text = $find(dom, 'div.b_caption p'),
+      site = $find(dom, 'div.b_attribution cite');
+
+    if (text.length && site.length && title.length) {
+
+      ad = createAd('bing', $attr(title, 'href'), {
+        title: $text(title),
+        text: $text(text),
+        site: $text(site)
+      });
+
+    } else {
+
+      console.warn('TEXT: bingTextHandler.fail: ', text, site, document.URL, document.title);
+    }
+
+    return [ ad ];
   }
 
   var yahooText = function (e) {
@@ -323,10 +320,12 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: aolTextHandler.fail: ', text, site, document.title, document.URL);
     }
 
-    return [ad];
+    return [ ad ];
   }
 
-  var askText = function (dom) {
+  var askText = function (dom) { // TODO: not working
+
+    console.log('askText');
 
     var title = $find(dom, 'a.test_titleLink.d_'),
       site = $find(dom, 'a.test_domainLink.e_'),
@@ -347,8 +346,59 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
     }
 
-    return [ad];
+    return [ ad ];
   }
+
+  var googleText = function (li) {
+
+    var ad, title = $find(li, 'h3 a'),
+      text = $find(li, '.ads-creative'),
+      site = $find(li, '.ads-visurl cite');
+
+    if (text.length && site.length && title.length) {
+
+      ad = createAd('google', $attr(title, 'href'), {
+        title: $text(title),
+        text: $text(text),
+        site: $text(site)
+      });
+
+    } else {
+
+      console.warn('TEXT: googleTextHandler.fail: ', text, site, document.URL, document.title);
+    }
+
+    return [ ad ];
+  }
+
+  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+
+  var filters = [{
+    selector: 'li.ads-ad',
+    handler: googleText,
+    name: 'google',
+    domain: googleRegex
+  }, {
+    selector: '.ad.a_',
+    handler: askText,
+    name: 'ask',
+    domain: /^.*\.ask\.com$/i
+  }, {
+    selector: '.ad',
+    handler: aolText, // TODO: not working (also DDG)
+    name: 'aol',
+    domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
+  }, {
+    selector: 'ol',
+    handler: yahooText,
+    name: 'yahoo',
+    domain: /^.*\.yahoo\.com/i
+  }, {
+    selector: 'li.b_ad',
+    handler: bingText,
+    name: 'bing',
+    domain: /^.*\.bing\.com/i
+  }];
 
   function checkFilters(theFilters, elem) {
 
@@ -374,52 +424,6 @@ var dbugDetect = 0; // tmp
     }
   }
 
-  var googleText = function (li) {
-
-    var ad, title = $find(li, 'h3 a'),
-      text = $find(li, '.ads-creative'),
-      site = $find(li, '.ads-visurl cite');
-
-    if (text.length && site.length && title.length) {
-
-      ad = createAd('google', $attr(title, 'href'), {
-        title: $text(title),
-        text: $text(text),
-        site: $text(site)
-      });
-
-    } else {
-
-      console.warn('TEXT: googleTextHandler.fail: ', text, site, document.URL, document.title);
-    }
-
-    return [ad];
-  }
-
-  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
-
-  var filters = [{
-    selector: 'li.ads-ad',
-    handler: googleText,
-    name: 'google',
-    domain: googleRegex
-  }, {
-    selector: '.ad.a_',
-    handler: askText,
-    name: 'ask',
-    domain: /^.*\.ask\.com$/i
-  }, {
-    selector: '.ad',
-    handler: aolText,
-    name: 'aol',
-    domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
-  }, {
-    selector: 'ol',
-    handler: yahooText,
-    name: 'yahoo',
-    domain: /^.*\.yahoo\.com/i
-  }];
-
   var createAd = function (network, target, data) {
 
     if (target.indexOf('//') === 0) { // move to core?
@@ -432,9 +436,9 @@ var dbugDetect = 0; // tmp
       return;
     }
 
-    if (target === 'http://www.google.com/settings/ads/anonymous') { // refactor
+    if (adDetector.ignoreTargets.indexOf(target) > -1) {
 
-      console.log("Ignoring AdChoices: ", img);
+      console.log("Ignoring choices-image: ",arguments);
       return;
     }
 
