@@ -32,16 +32,13 @@ cp ./assets/ublock/adnauseam.txt                                 $DES/ublock/ #a
 
 cp ../uAssets/checksums/ublock0.txt                              $DES/checksums.txt
 
-# append our checksum to the list
-
-echo
+# append our checksum to the uBlock checksum list
+# will either use md5sum to create it, or use the value from last time
 if hash md5csum 2>/dev/null; then
-  printf "*** Generating checksum... "
   ENTRY=assets/ublock/adnauseam.txt
   echo `md5sum -q $ENTRY` $ENTRY >> $DES/checksums.txt    # for build
   echo `md5sum -q $ENTRY` $ENTRY > assets/checksum-adn.txt # to store
 else
-  printf "*** Re-using checksum... "
   cat assets/checksum-adn.txt >> $DES/checksums.txt
 fi
 
