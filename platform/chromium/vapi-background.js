@@ -903,8 +903,35 @@ vAPI.net.registerListeners = function() {
         }
     };
 
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=129353
+    // https://github.com/gorhill/uBlock/issues/1497
+    // Expose websocket-based network requests to uBO's filtering engine,
+    // logger, etc.
+    // Counterpart of following block of code is found in "vapi-client.js" --
+    // search for "https://github.com/gorhill/uBlock/issues/1497".
+    var onBeforeWebsocketRequest = function(details) {
+        details.type = 'websocket';
+        var matches = /url=([^&]+)/.exec(details.url);
+        details.url = decodeURIComponent(matches[1]);
+        var r = onBeforeRequestClient(details);
+        // Blocked?
+        if ( r && r.cancel ) {
+            return r;
+        }
+        // Returning a 1x1 transparent pixel means "not blocked".
+        return { redirectUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
+    };
+
     var onBeforeRequestClient = this.onBeforeRequest.callback;
     var onBeforeRequest = function(details) {
+        // https://github.com/gorhill/uBlock/issues/1497
+        if (
+            details.type === 'image' &&
+            details.url.endsWith('ubofix=f41665f3028c7fd10eecf573336216d3')
+        ) {
+            return onBeforeWebsocketRequest(details);
+        }
+
         normalizeRequestDetails(details);
         return onBeforeRequestClient(details);
     };

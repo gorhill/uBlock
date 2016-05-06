@@ -193,6 +193,17 @@ vAPI.messaging = {
             if ( typeof self.outerShutdown === 'function' ) {
                 outerShutdown();
             }
+            // https://github.com/gorhill/uBlock/issues/1573
+            // Will let uBO's own web pages close themselves. `window.top` is
+            // used on the assumption that uBO's own web pages will never be
+            // embedded in anything else than its own documents.
+            try {
+                var top = window.top;
+                if ( top.location.href.startsWith(vAPI.getURL('')) ) {
+                    top.close();
+                }
+            } catch (ex) {
+            }
             return;
         }
     },

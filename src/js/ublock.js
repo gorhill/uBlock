@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
     Home: https://github.com/gorhill/uBlock
 */
-
-/* global vAPI, µBlock */
 
 /******************************************************************************/
 
@@ -55,6 +53,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     if ( directive.indexOf('*') === -1 ) {
         return url === directive;
     }
+    // TODO: Revisit implementation to avoid creating a regex each time.
     // Regex escape code inspired from:
     //   "Is there a RegExp.escape function in Javascript?"
     //   http://stackoverflow.com/a/3561711
@@ -180,7 +179,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         '#': []
     };
     var reInvalidHostname = /[^a-z0-9.\-\[\]:]/;
-    var reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-:]*[a-z0-9\]])\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
+    var reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
     var lines = s.split(/[\n\r]+/);
     var line, matches, key, directive;
     for ( var i = 0; i < lines.length; i++ ) {
