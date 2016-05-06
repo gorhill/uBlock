@@ -1,5 +1,8 @@
+
+# filters optimized for AdNauseam
+
 search.yahoo.com##.layoutMiddle
 search.yahoo.com##.kr5yi684e6
 search.yahoo.com###right
-www.ask.com##body > div.l-content > div.l-right-content.hcsa > div.l-rightrail-web-results.content-right > div:nth-child(2)
-www.ask.com##body > div.l-content > div.l-right-content.hcsa > div.l-rightrail-web-results.content-right > div:nth-child(3)
+www.ask.com##.tsrc_SAS
+www.zam.com##.ad
