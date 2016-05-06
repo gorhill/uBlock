@@ -381,12 +381,12 @@ var dbugDetect = 0; // tmp
     domain: googleRegex
   }, {
     selector: '.ad.a_',
-    handler: askText,
+    handler: askText, // not working
     name: 'ask',
     domain: /^.*\.ask\.com$/i
   }, {
     selector: '.ad',
-    handler: aolText, // TODO: not working (also DDG)
+    handler: aolText,
     name: 'aol',
     domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
   }, {
