@@ -154,7 +154,7 @@ vAPI.messaging = {
         if ( details.mainProcessId === undefined ) {
             return;
         }
-        sendAsyncMessage('ublock0:background', {
+        sendAsyncMessage('adnauseam:background', {
             mainProcessId: details.mainProcessId,
             msg: response
         });
@@ -294,7 +294,7 @@ vAPI.messaging = {
             this.pending[auxProcessId] = callback;
             this.pendingCount += 1;
         }
-        sendAsyncMessage('ublock0:background', {
+        sendAsyncMessage('adnauseam:background', {
             channelName: self._sandboxId_ + '|' + channelName,
             auxProcessId: auxProcessId,
             toTabId: toTabId,

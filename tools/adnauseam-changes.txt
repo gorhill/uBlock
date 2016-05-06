@@ -1,85 +1,11 @@
-### List of Changed Items ### out-of-date
-
-# pull new changes from original ublock
+# to pull new changes from upstream (original ublock)
 # git checkout master
 # git fetch upstream
 # git merge upstream/master
 
-* changed files inside src/js:
-
-  src/js/traffic.js (disable-blocking)
-  src/js/contentscript-end.js (ad-detection)
-  src/js/background.js (added settings)
-
-
-* changed files inside src/js/scriptlets:
-
-  subscriber.js (window.confirm() replaced with vAPI.confirm())
-
-
-* changed files inside src/: (html)
-
-  src/background.html (added adn files)
-  src/dashboard.html (added adn tabs, changed icon)
-  src/js/i18n.js (replace 'uBlock₀' string with 'AdNauseam')
-  src/js/options.js (replace 'uBlock₀' string with 'AdNauseam')
-  src/background.html (added adn files)
-
-
-* changed files inside _locales/: (locale)
-
-  src/_locales/en/messages.json     (added ADN locale)
-  src/_locales/zh_CN/messages.json  (added ADN locale)
-  src/_locales/zh_TW/messages.json  (added ADN locale)
-
-
-* added files inside src:
-
-  adn-popup.html
-  adn-vault.html
-  adn-log.html
-  adn-settings.html
-  adn-about.html
-
-  src/js/adn/options.js
-  src/js/adn/menu.js
-  src/js/adn/core.js
-  src/js/adn/vault.js
-  src/js/adn/log.js
-
-
-* changed files inside src/_locale (localization)
-
-  src/_locales/en/messages.json     (added ADN locale)
-  src/_locales/zh_CN/messages.json  (added ADN locale)
-  src/_locales/zh_TW/messages.json  (added ADN locale)
-
-
-* changed files inside platform/chromium:
-
-  platform/chromium/manifest.json
-  platform/chromium/vapi-background.js
-    (icons, line 554)
-  platform/chromium/vapi-common.js
-    (line 82, added vAPI.confirm())
-
-
-* changed files inside platform/firefox:
-
-  platform/firefox/vapi-background.js
-    (menu, line 2472,2531)
-  platform/firefox/vapi-background.js
-    (icons, line 3005, 3010, 3176, 3186)
-  platform/firefox/css/legacy-toolbar-button.css
-    (icons, line 2, 5, 9, 12, 33)
-  platform/firefox/vapi-common.js
-    (line 121, added vAPI.confirm())
-
-
-* changed files inside platform/safari:
-
-  platform/safari/vapi-background.js
-    (icons, line 547)
-
-
-* changed files inside platform/opera:
+# move ff to using adnauseam, rather than ublock0
+#
+# platform/firefox/bootstrap.js
+# tools/make-firefox-meta.py (2)
+# platform/firefox/chrome.manifest
+# platform/firefox/vapi-client.js (2) [???]
