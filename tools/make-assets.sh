@@ -26,6 +26,14 @@ mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 cp -R ./assets/ublock/filter-lists.json                          $DES/ublock/
 
+cp ./assets/ublock/adnauseam.txt                                 $DES/ublock/ #adn
+
+
+
 cp ../uAssets/checksums/ublock0.txt                              $DES/checksums.txt
+
+# append our checksum to the list
+ENTRY=assets/ublock/adnauseam.txt
+echo `md5sum -q $ENTRY` $ENTRY >> $DES/checksums.txt
 
 echo "done."
