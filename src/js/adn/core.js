@@ -37,8 +37,10 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-    if (production) // disable all test-modes if production
+    if (production) {// disable all test-modes if production
+
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
+    }
 
     admap = (settings && settings.admap) || {};
     ads = validateAdStorage();
