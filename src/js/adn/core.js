@@ -46,6 +46,8 @@
     ads = validateAdStorage();
     computeNextId(ads);
 
+    µb.assets.purgeAll(callback);
+
     log('AdNauseam.initialized: with ' + ads.length + ' ads');
 
     setTimeout(pollQueue, pollQueueInterval * 2);
@@ -427,7 +429,7 @@
       }
     }
 
-    if (targetDomain(ad) === ad.pageDomain) {
+    if (0 && targetDomain(ad) === ad.pageDomain) { // disabled for now
 
       log('Ignoring ad with internal targetUrl: ', ad.targetUrl + ' ?= ' + ad.pageDomain, ad);
       return false;

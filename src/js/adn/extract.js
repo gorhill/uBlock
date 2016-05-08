@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -326,16 +326,21 @@ var dbugDetect = 0; // tmp
 
   var askText = function (dom) { // TODO: not working
 
-    console.log('askText');
+    console.log('askText', dom);
 
     var title = $find(dom, 'a.test_titleLink.d_'),
       site = $find(dom, 'a.test_domainLink.e_'),
       text1 = $find(dom, 'span.descText'),
-      text2 = $find(dom, 'span.v_');
+      text2 = $find(dom, 'span.v_'), text;
 
-    var text = text(text1) + (stringNotEmpty(text2) ? $text(text2) : '');
+    console.log('askText2', text1, site, title);
+
+    text = $text(text1) + (text2 && text2.length ? $text(text2) : '');
+
+    console.log('askText3', text, site, title);
 
     if (text.length && site.length && title.length) {
+
       var ad = createAd('ask', $attr(title, 'href'), {
         title: $text(title),
         site: $text(site),
@@ -409,22 +414,29 @@ var dbugDetect = 0; // tmp
 
       if ($is(elem, filter.selector)) {
 
-        if (filter.name === 'aol' && document.domain.indexOf('aol') < 0) // TMP-REMOVE
-          continue;
-
         var result = filter.handler(elem);
 
         if (result) {
 
-          if (!filter.domain.test(document.domain))
-            console.warn("Text Ad failed filter-test: ", document.URL, filter);
+          console.log('pre-domain');
+          var domain = (parent !== window) ? parseDomain(document.referrer): document.domain;
+          console.log('domain='+domain);
+          if (!filter.domain.test(domain)) // tmp-remove
+            console.warn("Text Ad failed filter-test: ", domain,
+            document.domain, document.referrer, filter.domain);
 
           return result;
         }
       }
     }
   }
+  var parseDomain = function (url, useLast) { // temp
 
+    var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
+    return domains.length ? new URL(
+        useLast ? domains[domains.length - 1] : domains[0])
+        .hostname : undefined;
+  }
   var createAd = function (network, target, data) {
 
     if (target.indexOf('//') === 0) { // move to core?

@@ -4,5 +4,8 @@
 search.yahoo.com##.layoutMiddle
 search.yahoo.com##.kr5yi684e6
 search.yahoo.com###right
+
 www.ask.com##.tsrc_SAS
+www.ask.com###adBlock
+
 www.zam.com##.ad
