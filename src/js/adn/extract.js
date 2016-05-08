@@ -1,4 +1,4 @@
-var dbugDetect = 1; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -50,9 +50,12 @@ var dbugDetect = 1; // tmp
 
   var findTextAds = function (elem) {
 
-    var activeFilters = true ? filters : filters.filter(function (f) {
-      return f.domain.test(document.domain);
-    }); // TODO: activate before launch (change true to false above)
+    var activeFilters = filters.filter(function (f) {
+      var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
+      var matched = f.domain.test(domain);
+      //if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
+      return matched;
+    });
 
     var ads = checkFilters(activeFilters, elem);
     if (ads && ads.length) {
@@ -331,7 +334,8 @@ var dbugDetect = 1; // tmp
     var title = $find(dom, 'a.test_titleLink.d_'),
       site = $find(dom, 'a.test_domainLink.e_'),
       text1 = $find(dom, 'span.descText'),
-      text2 = $find(dom, 'span.v_'), text;
+      text2 = $find(dom, 'span.v_'),
+      text;
 
     console.log('askText2', text1, site, title);
 
@@ -377,6 +381,30 @@ var dbugDetect = 1; // tmp
     return [ ad ];
   }
 
+  var ddgText = function (div) { // not-working, perhaps due to shadow dom
+
+    // console.log('ddgText-', div.shadowRoot.querySelectorAll('h2.result__title'), div);
+    //return;
+    var ad, title = $find(div, 'h2.result__title'),
+      text = $find(div, 'div.result__snippet > a'),
+      site = $find(div, 'a.result__a');
+
+    if (text.length && site.length && title.length) {
+
+      ad = createAd('google', $attr(title, 'href'), {
+        title: $text(title),
+        text: $text(text),
+        site: $attr(site, 'href')
+      });
+
+    } else {
+
+      console.warn('TEXT: ddgTextHandler.fail: ', text, site, title, div);
+    }
+
+    return [ ad ];
+  }
+
   var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
 
   var filters = [{
@@ -395,6 +423,11 @@ var dbugDetect = 1; // tmp
     name: 'aol',
     domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
   }, {
+    selector: 'div#ads',
+    handler: ddgText,
+    name: 'ddg',
+    domain: /^(.*\.)?duckduckgo\.com/i
+  }, {
     selector: 'ol',
     handler: yahooText,
     name: 'yahoo',
@@ -410,33 +443,32 @@ var dbugDetect = 1; // tmp
 
     for (var i = 0; i < theFilters.length; i++) {
 
-      var filter = theFilters[i];
+      if ($is(elem, theFilters[i].selector)) {
 
-      if ($is(elem, filter.selector)) {
+        return theFilters[i].handler(elem);
 
-        var result = filter.handler(elem);
+        /*if (result) {
 
-        if (result) {
+          var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
 
-          console.log('pre-domain');
-          var domain = (parent !== window) ? parseDomain(document.referrer): document.domain;
-          console.log('domain='+domain);
           if (!filter.domain.test(domain)) // tmp-remove
             console.warn("Text Ad failed filter-test: ", domain,
             document.domain, document.referrer, filter.domain);
 
           return result;
-        }
+        }*/
       }
     }
   }
-  var parseDomain = function (url, useLast) { // temp
+
+  var parseDomain = function (url, useLast) { // dup. in shared
 
     var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
     return domains.length ? new URL(
         useLast ? domains[domains.length - 1] : domains[0])
-        .hostname : undefined;
+      .hostname : undefined;
   }
+
   var createAd = function (network, target, data) {
 
     if (target.indexOf('//') === 0) { // move to core?
@@ -451,7 +483,7 @@ var dbugDetect = 1; // tmp
 
     if (adDetector.ignoreTargets.indexOf(target) > -1) {
 
-      console.log("Ignoring choices-image: ",arguments);
+      console.log("Ignoring choices-image: ", arguments);
       return;
     }
 

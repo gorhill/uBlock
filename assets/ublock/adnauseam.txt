@@ -9,3 +9,5 @@ www.ask.com##.tsrc_SAS
 www.ask.com###adBlock
 
 www.zam.com##.ad
+
+##.GoogleActiveViewClass
