@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -329,19 +329,13 @@ var dbugDetect = 0; // tmp
 
   var askText = function (dom) { // TODO: not working
 
-    console.log('askText', dom);
-
     var title = $find(dom, 'a.test_titleLink.d_'),
       site = $find(dom, 'a.test_domainLink.e_'),
       text1 = $find(dom, 'span.descText'),
       text2 = $find(dom, 'span.v_'),
       text;
 
-    console.log('askText2', text1, site, title);
-
     text = $text(text1) + (text2 && text2.length ? $text(text2) : '');
-
-    console.log('askText3', text, site, title);
 
     if (text.length && site.length && title.length) {
 

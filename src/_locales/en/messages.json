@@ -1,6 +1,6 @@
 {
   "adnStatePaused": {
-    "message": "AdNauseam is currently paused on this page and/or site",
+    "message": "AdNauseam is currently paused on this page",
     "description": "English: Menu->when paused"
   },
   "adnVaultName": {
@@ -300,8 +300,8 @@
     "description": "English: Show the number of found ads on the icon"
   },
   "parseTextAdsPrompt": {
-    "message": "Capture text-only ads whenever possible",
-    "description": "English: Capture text-only ads whenever possible"
+    "message": "Capture text-only ads when possible",
+    "description": "English: Capture text-only ads when possible"
   },
   "settingsTooltipsPrompt": {
     "message": "Disable tooltips",

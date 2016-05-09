@@ -7,6 +7,7 @@ search.yahoo.com###right
 
 www.ask.com##.tsrc_SAS
 www.ask.com###adBlock
+www.ask.com###megaLabel
 
 www.zam.com##.ad
 
