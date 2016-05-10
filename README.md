@@ -1,7 +1,7 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
-Help test our AdNauseam for Chrome beta: with [developer-mode](http://rednoise.org/img/devmode.png) enabled, 
-download [this file](https://github.com/dhowe/AdNauseam2/files/257810/adnauseam-2.1.01.crx.zip), unzip, and drag into Chrome
+Try our AdNauseam for Chrome beta: with [developer-mode](http://rednoise.org/img/devmode.png) enabled, 
+download [this file](https://github.com/dhowe/AdNauseam2/files/257839/adnauseam-2.1.1.2.crx.zip), unzip, and drag into Chrome
 
 
 <div align="center">
