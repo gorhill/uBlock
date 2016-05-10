@@ -12,7 +12,7 @@
 
   var xhr, idgen, admap, inspected,
     µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
