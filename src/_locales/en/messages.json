@@ -1,7 +1,7 @@
 {
   "adnStatePaused": {
     "message": "AdNauseam is paused on this page",
-    "description": "English: Menu->when paused"
+    "description": "English: Menu->display when paused"
   },
   "adnVaultName": {
     "message": "AdNauseam — AdVault",
