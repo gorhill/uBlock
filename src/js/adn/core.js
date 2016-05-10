@@ -46,8 +46,6 @@
     ads = validateAdStorage();
     computeNextId(ads);
 
-    µb.assets.purgeAll(callback);
-
     log('AdNauseam.initialized: with ' + ads.length + ' ads');
 
     setTimeout(pollQueue, pollQueueInterval * 2);
