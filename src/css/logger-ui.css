@@ -1,7 +1,6 @@
 body {
     background-color: white;
     border: 0;
-    color: black;
     margin: 0;
     overflow: hidden;
     padding: 0;
@@ -15,6 +14,9 @@ textarea {
     resize: none;
     width: 100%;
     }
+.container {
+  position: relative;
+}
 .permatoolbar {
     background-color: white;
     border: 0;
@@ -137,25 +139,25 @@ textarea {
     color: #00f;
     }
 #netInspector tr.blocked {
-    background-color: rgba(192, 0, 0, 0.1);
+    background-color: rgba(192, 0, 0, 0.25);
     }
 body.colorBlind #netInspector tr.blocked {
-    background-color: rgba(0, 19, 110, 0.1);
+    background-color: rgba(0, 19, 110, 0.25);
     }
 #netInspector tr.nooped {
-    background-color: rgba(108, 108, 108, 0.1);
+    background-color: rgba(108, 108, 108, 0.25);
     }
 body.colorBlind #netInspector tr.nooped {
-    background-color: rgba(96, 96, 96, 0.1);
+    background-color: rgba(96, 96, 96, 0.25);
     }
 #netInspector tr.allowed {
-    background-color: rgba(0, 160, 0, 0.1);
+    background-color: rgba(0, 160, 0, 0.25);
     }
 body.colorBlind #netInspector tr.allowed {
-    background-color: rgba(255, 194, 57, 0.1)
+    background-color: rgba(255, 194, 57, 0.25)
     }
 #netInspector tr.cb, #netInspector tr.rr {
-    background-color: rgba(255, 255, 0, 0.1);
+    background-color: rgba(255, 255, 0, 0.25);
     }
 #netInspector tr.maindoc {
     background-color: #666;
