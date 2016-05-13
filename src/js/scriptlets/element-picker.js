@@ -275,6 +275,10 @@ var filterElements = function(filter) {
     while ( i-- ) {
         item = items[i];
         elem = item.elem;
+        // https://github.com/gorhill/uBlock/issues/1629
+        if ( elem === pickerRoot ) {
+            continue;
+        }
         style = elem.style;
         if (
             (elem !== htmlElem) &&
