@@ -571,36 +571,8 @@ button.about {
   PAUSED
 ============================================================ */
 
-.disabled header *{
-  color:#5c5c5c !important;
-  border-color: #5c5c5c !important;
-  /*background-color: #5c5c5c !important;*/
-}
-.disabled header #vault-count{
-  color:#000 !important;
-  background-color: #5c5c5c !important;
-}
-.disabled header #toggle-button{
-  background-image: url(../img/paused@2x.png);
-  color: #5c5c5c;
-}
-.disabled header button {
-  color: #5c5c5c;
-  border-color: #5c5c5c;
-  background-color: none;
-}
 .disabled header #stats > span{
   color: #5c5c5c !important;
-}
-.disabled footer *{
-
-}
-.disabled header button:hover{
-    color: #5c5c5c;
-    border-color: #5c5c5c;
-    background: none !important;
-}
-.disabled footer button:hover{
 }
 
 #paused-menu{
