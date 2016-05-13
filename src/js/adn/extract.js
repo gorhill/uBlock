@@ -2,13 +2,17 @@ var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
+
 (function (self) {
 
   'use strict';
 
   var prefs, adDetector = self.adDetector = self.adDetector || {};
 
-  if (adDetector.findAds) return;
+  if (adDetector.findAds || typeof vAPI !== 'object' ) {
+    console.log('skipping extract: ',typeof vAPI);
+    return;
+  }
 
   vAPI.messaging.send('adnauseam', {
     what: 'getPreferences'
@@ -23,7 +27,7 @@ var dbugDetect = 1; // tmp
 
   adDetector.findAds = function (elem) {
 
-    //console.log('findAds: ' + elem.tagName, elem);
+    console.log('findAds: ' + elem.tagName, elem);
 
     switch (elem.tagName) {
 
