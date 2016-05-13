@@ -276,6 +276,7 @@ header{
   border-top: #383838 1px solid;
   border-bottom: #000 1px solid;
   position: relative;
+  overflow: hidden;
 }
 
 .ad-item a {
@@ -409,6 +410,7 @@ header{
   display: block;
   width: 250px;
   overflow: hidden;
+  text-overflow: ellipsis;
   max-height: 2.3em;
   line-height: 1.15em;
 }
