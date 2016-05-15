@@ -553,10 +553,35 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // Static filtering never override dynamic filtering
-    if ( result === '' || result.charAt(1) === 'n' ) {
-        if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
-            result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+    if (result === '' || result.charAt(1) === 'n') {
+      if (µb.staticNetFilteringEngine.matchString(context) !== undefined) {
+        result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+
+        if (result) { // ADN
+
+          //console.debug('HIT staticNetFilteringEngine:', context, µb.staticNetFilteringEngine.toResultString(1));
+          //var list = µb.staticFilteringReverseLookup.fromNetFilterSync(compiled, raw);
+          if (!µb.adnauseam.strictBlocking()) {
+
+            var compiled = µb.staticNetFilteringEngine.toResultString(1).slice(3),
+            raw = µb.staticNetFilteringEngine.filterStringFromCompiled(compiled),
+            title, hits = µb.adnauseam.fromNetFilterSync(compiled, raw);
+
+            if (hits && hits.length) {
+
+              title = hits[0].title;
+              if (title !== 'EasyPrivacy' || µb.adnauseam.ruleDisabled(raw)) {
+
+                result = '';
+                //console.log("Reject-block: " + title, raw);
+
+            } else console.warn("BLOCK: " + title + " " + raw);
+
+            } else console.error("NO hits ****", raw, compiled);
+
+        } else console.warn("Ignoring: lists not yet loaded...");
         }
+      }
     }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);

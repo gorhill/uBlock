@@ -78,6 +78,7 @@ var initWorker = function(callback) {
 
     var onListLoaded = function(details) {
         var entry = entries[details.path];
+        entry.content = details.content; // ADN
 
         // https://github.com/gorhill/uBlock/issues/536
         // Use path string when there is no filter list title.
@@ -94,7 +95,7 @@ var initWorker = function(callback) {
 
         countdown -= 1;
         if ( countdown === 0 ) {
-            callback();
+            callback(entries); // ADN
         }
     };
 
@@ -215,6 +216,7 @@ return {
     fromNetFilter: fromNetFilter,
     fromCosmeticFilter: fromCosmeticFilter,
     resetLists: resetLists,
+    initWorker: initWorker, // ADN
     shutdown: stopWorker
 };
 

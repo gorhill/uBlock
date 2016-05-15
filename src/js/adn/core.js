@@ -12,15 +12,22 @@
 
   var xhr, idgen, admap, inspected,
     µb = µBlock,
+    listEntries,
+    profiler = 0,
     production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
     pollQueueInterval = 5000,
+    strictBlockingDisabled = 0,
     repeatVisitInterval = 3600000 * 24; // 24 hours
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
+
+  // rules from EasyPrivacy we need to ignore (TODO: remove in load?)
+  var disabledEasyPrivacyRules = [ '||googleadservices.com^$third-party',
+    '||pixanalytics.com^$third-party', '||stats.g.doubleclick.net^' ];
 
   /**************************** functions ******************************/
 
@@ -36,6 +43,8 @@
       this.requestUrl = url; // store original target
       return XMLHttpRequest_open.apply(this, arguments);
     };
+
+    profiler = +new Date()
 
     if (production) { // disable all test-modes if production
 
@@ -1021,13 +1030,12 @@
 
   var listsLoaded = function () {
 
-    console.log("Loaded lists in " + (+new Date() - profiler) + "ms");
-    profiler = +new Date();
+    //console.log("Loaded lists in " + (+new Date() - profiler) + "ms");
 
     µBlock.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
-      console.log("Compiled lists in " + (+new Date() - profiler) + "ms");
+      console.log("Loaded/compiled "+Object.keys(entries).length+" 3rd-party lists in " + (+new Date() - profiler) + "ms");
       //  µBlock.getAvailableLists(function(r) {
       //      console.log("getAvailableLists DONE: "+(+new Date()-profiler)+"ms",r);
       //  });
@@ -1045,6 +1053,7 @@
       entry, content, pos, c;
 
     for (var path in listEntries) {
+
       entry = listEntries[path];
       if (entry === undefined) {
         continue;
@@ -1078,6 +1087,11 @@
     return !strictBlockingDisabled;
   };
 
+  var ruleDisabled = function (test) {
+
+    return disabledEasyPrivacyRules.indexOf(test) > -1;
+  };
+
   //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
 
@@ -1096,6 +1110,7 @@
     deleteAdSet: deleteAdSet,
     listsLoaded: listsLoaded,
     updateBadges: updateBadges,
+    ruleDisabled: ruleDisabled,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     strictBlocking: strictBlocking,
