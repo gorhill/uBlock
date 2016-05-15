@@ -37,7 +37,7 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-    if (production) {// disable all test-modes if production
+    if (production) { // disable all test-modes if production
 
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
     }
@@ -975,9 +975,6 @@
     request.ids.forEach(function (id) {
       deleteAd(id);
     });
-    // for (var j = 0; j < request.ids.length; j++) {
-    //   deleteAd(request.ids[j]);
-    // }
   }
 
   var registerAd = function (request, pageStore, tabId) {
@@ -1022,12 +1019,71 @@
     postRegister(ad, pageUrl, tabId);
   };
 
+  var listsLoaded = function () {
+
+    console.log("Loaded lists in " + (+new Date() - profiler) + "ms");
+    profiler = +new Date();
+
+    µBlock.staticFilteringReverseLookup.initWorker(function (entries) {
+
+      listEntries = entries;
+      console.log("Compiled lists in " + (+new Date() - profiler) + "ms");
+      //  µBlock.getAvailableLists(function(r) {
+      //      console.log("getAvailableLists DONE: "+(+new Date()-profiler)+"ms",r);
+      //  });
+      strictBlockingDisabled = true;
+    });
+  };
+
+  var reSpecialChars = /[\*\^\t\v\n]/;
+
+  var fromNetFilterSync = function (compiledFilter, rawFilter) {
+
+    //console.log('adn.fromNetFilterSync', compiledFilter, rawFilter);
+
+    var lists = [],
+      entry, content, pos, c;
+
+    for (var path in listEntries) {
+      entry = listEntries[path];
+      if (entry === undefined) {
+        continue;
+      }
+      content = entry.content;
+      pos = content.indexOf(compiledFilter);
+      if (pos === -1) {
+        continue;
+      }
+      // We need an exact match.
+      // https://github.com/gorhill/uBlock/issues/1392
+      if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
+        continue;
+      }
+      // https://github.com/gorhill/uBlock/issues/835
+      c = content.charAt(pos + compiledFilter.length);
+      if (c !== '' && reSpecialChars.test(c) === false) {
+        continue;
+      }
+      lists.push({
+        title: entry.title,
+        supportURL: entry.supportURL
+      });
+    }
+
+    return lists;
+  };
+
+  var strictBlocking = function () {
+
+    return !strictBlockingDisabled;
+  };
+
   //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
 
   /******************************************************************************/
 
-  return { // public API for
+  return { // public API
 
     adlist: adlist,
     logAdSet: logAdSet,
@@ -1038,10 +1094,13 @@
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
+    listsLoaded: listsLoaded,
     updateBadges: updateBadges,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    getPreferences: getPreferences
+    strictBlocking: strictBlocking,
+    getPreferences: getPreferences,
+    fromNetFilterSync: fromNetFilterSync
   };
 
 })();
