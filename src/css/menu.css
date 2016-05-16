@@ -267,7 +267,7 @@ header{
 #settings form{
   background: #000 url(../img/gray_grid.png);
   height: 350px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -373,7 +373,6 @@ header{
   line-height: 1.15em;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
