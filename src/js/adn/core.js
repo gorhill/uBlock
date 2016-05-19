@@ -25,9 +25,15 @@
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
 
+  var enabledBlockLists = ['EasyPrivacy', 'uBlock filters – Badware risks',
+    'Malware domains', 'Malware Domain List'
+  ];
+  //'uBlock filters – Unbreak', 'uBlock filters – Privacy' ];
+
   // rules from EasyPrivacy we need to ignore (TODO: remove in load?)
-  var disabledEasyPrivacyRules = [ '||googleadservices.com^$third-party',
-    '||pixanalytics.com^$third-party', '||stats.g.doubleclick.net^' ];
+  var disabledBlockingRules = ['||googleadservices.com^$third-party',
+    '||pixanalytics.com^$third-party', '||stats.g.doubleclick.net^'
+  ];
 
   /**************************** functions ******************************/
 
@@ -1035,7 +1041,7 @@
     µBlock.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
-      console.log("Loaded/compiled "+Object.keys(entries).length+" 3rd-party lists in " + (+new Date() - profiler) + "ms");
+      console.log("Loaded/compiled " + Object.keys(entries).length + " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       //  µBlock.getAvailableLists(function(r) {
       //      console.log("getAvailableLists DONE: "+(+new Date()-profiler)+"ms",r);
       //  });
@@ -1055,6 +1061,7 @@
     for (var path in listEntries) {
 
       entry = listEntries[path];
+      //console.log(entry);
       if (entry === undefined) {
         continue;
       }
@@ -1082,15 +1089,39 @@
     return lists;
   };
 
-  var strictBlocking = function () {
+  var activeBlockList = function (test) {
 
-    return !strictBlockingDisabled;
-  };
+    return enabledBlockLists.indexOf(test) > -1;
+  }
 
   var ruleDisabled = function (test) {
 
-    return disabledEasyPrivacyRules.indexOf(test) > -1;
+    return disabledBlockingRules.indexOf(test) > -1;
   };
+
+  var isBlockableRequest = function (result, isMainFrame) {
+
+    //console.log('isBlockableRequest', result);
+
+    if (strictBlockingDisabled) {
+
+      var compiled = result.slice(3),
+        snfe = µb.staticNetFilteringEngine,
+        raw = snfe.filterStringFromCompiled(compiled),
+        hits = fromNetFilterSync(compiled, raw);
+
+      if (hits && hits.length) {
+
+        if (!activeBlockList(hits[0].title) || ruleDisabled(raw)) {
+
+          return false; //log("Reject-block: " + title, raw);
+
+        } else console.warn("BLOCK" + (isMainFrame ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+      } else console.error("NO hits ****", raw, compiled);
+    } else console.warn("Ignoring: lists not loaded...");
+
+    return true;
+  }
 
   //vAPI.storage.clear();
   vAPI.storage.get(µb.adnSettings, initialize);
@@ -1110,11 +1141,10 @@
     deleteAdSet: deleteAdSet,
     listsLoaded: listsLoaded,
     updateBadges: updateBadges,
-    ruleDisabled: ruleDisabled,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    strictBlocking: strictBlocking,
     getPreferences: getPreferences,
+    isBlockableRequest: isBlockableRequest,
     fromNetFilterSync: fromNetFilterSync
   };
 

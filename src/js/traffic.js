@@ -94,15 +94,13 @@ var onBeforeRequest = function(details) {
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
-    var newResult = µb.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
-
-    pageStore.logRequest(requestContext, newResult);
+    pageStore.logRequest(requestContext, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            newResult,
+            result,
             requestType,
             requestURL,
             requestContext.rootHostname,
@@ -111,8 +109,8 @@ var onBeforeRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(newResult) ) {
-      if (!µb.isAllowResult(result))
+    if ( µb.isAllowResult(result) ) {
+      //if (!µb.isAllowResult(result))
 
         //console.log('UNBLOCK()', result, requestContext);
 
@@ -124,7 +122,7 @@ var onBeforeRequest = function(details) {
         return;
     }
 
-    console.error('BLOCKED !!!!!!!! ', result, requestContext);
+    //console.error('BLOCKED !!!!!!!! ', result, requestContext);
 
     // Blocked
 
@@ -160,12 +158,11 @@ var onBeforeRequest = function(details) {
 var onBeforeRootFrameRequest = function(details) {
     var tabId = details.tabId;
     var requestURL = details.url;
+    var µb = µBlock;
 
     // this triggers our automated script to export ads on completion
     if (requestURL === 'http://rednoise.org/ad-auto-export') // adn-tmp
-        µBlock.adnauseam.exportAds();
-
-    var µb = µBlock;
+        µb.adnauseam.exportAds();
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -217,6 +214,7 @@ var onBeforeRootFrameRequest = function(details) {
     // Check for generic block
     if ( result === '' && snfe.matchString(context) !== undefined ) {
         result = snfe.toResultString(true);
+
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname, except when
         // the filter is specifically of type `other`.
@@ -227,19 +225,17 @@ var onBeforeRootFrameRequest = function(details) {
         }
     }
 
-    var newResult = µBlock.adnSettings.noBlockingNonTrackers ? 'NBNT' : result;
-
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
-        pageStore.logRequest(context, newResult);
+        pageStore.logRequest(context, result);
     }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            newResult,
+            result,
             'main_frame',
             requestURL,
             requestHostname,
@@ -248,13 +244,16 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(newResult) ) {
-        if (!µb.isAllowResult(result))
-            console.log('UNBLOCK(MAIN_FRAME)', newResult, result);
+    if ( µb.isAllowResult(result) ) {
+        // if (!µb.isAllowResult(result))
+        //     console.log('UNBLOCK(MAIN_FRAME)', newResult, result);
         return;
     }
 
-    console.log("BLOCKED(MAIN_FRAME) !!!!!!!!!!!",result);
+    // ADN: full-page blocked
+    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), true)) {
+        return;
+    }
 
     var compiled = result.slice(3);
 
