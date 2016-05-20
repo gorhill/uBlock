@@ -18,7 +18,9 @@
     var reader = new FileReader();
 
     reader.onload = function (e) {
+
       var adData = JSON.parse(e.target.result);
+      
       messager.send('adnauseam', {
         what: 'importAds',
         data: adData,
@@ -30,9 +32,10 @@
   }
 
   var postImportAlert = function (msg) {
-      console.log('postImportAlert');
-      vAPI.alert(vAPI.i18n('adnImportAlert')
-        .replace('{{count}}', msg.count));
+
+    //console.log('postImportAlert');
+    vAPI.alert(vAPI.i18n('adnImportAlert')
+      .replace('{{count}}', msg.count));
   };
 
   var startImportFilePicker = function () {

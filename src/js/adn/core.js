@@ -705,7 +705,7 @@
 
       if (!validateFields(ad)) {
 
-        console.warn('Unable to validate legacy ad', ad);
+        warn('Unable to validate legacy ad', ad);
         continue;
       }
 
@@ -1105,11 +1105,11 @@
 
           return false; //log("Reject-block: " + title, raw);
 
-        } else console.warn("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+        } else warn("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
 
-      } else console.error("NO hits ****", raw, compiled);
+      } else warn("NO hits ****", raw, compiled);
 
-    } else console.warn("Ignoring: lists not loaded...");
+    } else warn("Ignoring: lists not loaded...");
 
     return true;
   }

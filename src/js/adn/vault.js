@@ -773,6 +773,7 @@
     if (selectedAdSet) {
 
       console.log("Logging JSON for AdSet #" + selectedAdSet.gid);
+
       messager.send('adnauseam', {
           what: 'logAdSet',
           gid: selectedAdSet.gid,
@@ -784,7 +785,7 @@
     }
   }
 
-  const ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom'];
+  var ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom'];
 
   function toggleInterface() {
 
@@ -1062,9 +1063,6 @@
       $container.on('dragstart', dragStart);
       $container.on('dragover', dragOver);
       $container.on('dragend', dragEnd);
-    } else {
-
-      console.log("NO #CONTAINER!");
     }
 
     /////////// ZOOM-STAGE ///////////
