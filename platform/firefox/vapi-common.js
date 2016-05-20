@@ -126,6 +126,14 @@ vAPI.confirm = (function() {
 
 /******************************************************************************/
 
+vAPI.alert = (function() {                                
+    return function(msg) {
+        Services.prompt.alert(null, "AdNauseam", msg);
+    };
+})();
+
+/******************************************************************************/
+
 vAPI.closePopup = function() {
     sendAsyncMessage(location.host + ':closePopup');
 };
