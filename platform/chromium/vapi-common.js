@@ -87,6 +87,14 @@ vAPI.confirm = (function() {
 
 /******************************************************************************/
 
+vAPI.alert = (function() {                                
+    return function(msg) {
+        window.alert(msg);
+    };
+})();
+
+/******************************************************************************/
+
 vAPI.closePopup = function() {
     window.open('','_self').close();
 };

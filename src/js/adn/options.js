@@ -23,15 +23,15 @@
         what: 'importAds',
         data: adData,
         file: files[0].name
-      }, postImportConfirm);
+      }, postImportAlert);
     }
 
     reader.readAsText(files[0]);
   }
 
-  var postImportConfirm = function (msg) {
-      console.log('postImportConfirm');
-      vAPI.confirm(vAPI.i18n('adnImportConfirm')
+  var postImportAlert = function (msg) {
+      console.log('postImportAlert');
+      vAPI.alert(vAPI.i18n('adnImportAlert')
         .replace('{{count}}', msg.count));
   };
 

@@ -15,7 +15,7 @@
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
-  "adnImportConfirm": {
+  "adnImportAlert": {
     "message": "{{count}} ads were imported",
     "description": "appears in ADN settings"
   },
