@@ -332,8 +332,10 @@ var onBeforeBeacon = function(details) {
 /******************************************************************************/
 
 // Intercept and filter behind-the-scene requests.
-
 var onBeforeBehindTheSceneRequest = function(details) {
+
+    return; // ADN: we don't block these
+
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
     if ( !pageStore ) {
@@ -370,7 +372,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if (µb.isAllowResult(result) ) {
         return;
     }
 

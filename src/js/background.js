@@ -49,12 +49,8 @@ var defaultExternalLists = [
 return {
     firstInstall: false,
 
-    adnSettings: { // adn
-      noBlockingNonTrackers: true,
-      admap: {}
-    },
-
     userSettings: {
+        admap: {},          // adn
         parseTextAds: true, // adn
         advancedUserEnabled: false,
         autoUpdate: true,

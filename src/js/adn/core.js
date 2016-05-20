@@ -10,7 +10,8 @@
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0; // for automated testing
 
-  var xhr, idgen, admap, inspected,
+  var xhr, idgen, admap,
+    inspected,
     µb = µBlock,
     listEntries,
     profiler = 0,
@@ -27,13 +28,14 @@
 
   var enabledBlockLists = ['EasyPrivacy', 'uBlock filters – Badware risks',
     'Malware domains', 'Malware Domain List'
-  ];
-  //'uBlock filters – Unbreak', 'uBlock filters – Privacy' ];
+  ]; // 'uBlock filters – Unbreak', 'uBlock filters – Privacy' ];
 
-  // rules from EasyPrivacy we need to ignore (TODO: remove in load?)
+  // rules from EasyPrivacy we need to ignore (TODO: prune in load?)
   var disabledBlockingRules = ['||googleadservices.com^$third-party',
     '||pixanalytics.com^$third-party', '||stats.g.doubleclick.net^'
   ];
+
+  var reSpecialChars = /[\*\^\t\v\n]/;
 
   /**************************** functions ******************************/
 
@@ -89,6 +91,7 @@
 
         warn("[DEBUG] Clearing all ad data!");
         clearAds();
+
       }, pollQueueInterval);
 
       return ads;
@@ -100,8 +103,9 @@
 
       if (!validateFields(ads[i])) {
 
-        err('Invalid ad in storage', ads[i]);
+        warn('Invalid ad in storage', ads[i]);
         ads.splice(i, 1);
+        continue;
       }
 
       if (ads[i].visitedTs === 0 && ads[i].attempts) {
@@ -176,10 +180,9 @@
     for (var tabId in µb.pageStores) {
 
       var pageStore = µb.pageStoreFromTabId(tabId);
-      if (pageStore !== null && pageStore.rawURL.startsWith(pageUrl)) {
 
+      if (pageStore !== null && pageStore.rawURL.startsWith(pageUrl))
         return tabId;
-      }
     }
   }
 
@@ -418,8 +421,8 @@
   var storeUserData = function (immediate) {
 
     // TODO: defer if we've recently written and !immediate
-    µb.adnSettings.admap = admap;
-    vAPI.storage.set(µb.adnSettings);
+    µb.userSettings.admap = admap;
+    vAPI.storage.set(µb.userSettings);
   }
 
   var validateTarget = function (ad) {
@@ -799,6 +802,16 @@
     storeUserData();
   }
 
+  var activeBlockList = function (test) {
+
+    return enabledBlockLists.indexOf(test) > -1;
+  }
+
+  var ruleDisabled = function (test) {
+
+    return disabledBlockingRules.indexOf(test) > -1;
+  };
+
   /******************************* API ************************************/
 
   var clearAds = function () {
@@ -956,11 +969,6 @@
       data += JSON.stringify(adById(id));
     });
 
-    // for (var j = 0; j < request.ids.length; j++) {
-    //
-    //   data += JSON.stringify(adById(request.ids[j]));
-    // }
-
     log('ADSET #' + request.gid + '\n', data);
 
     vAPI.messaging.broadcast({
@@ -1036,27 +1044,18 @@
 
   var listsLoaded = function () {
 
-    //console.log("Loaded lists in " + (+new Date() - profiler) + "ms");
-
-    µBlock.staticFilteringReverseLookup.initWorker(function (entries) {
+    µb.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
-      console.log("Loaded/compiled " + Object.keys(entries).length + " 3rd-party lists in " + (+new Date() - profiler) + "ms");
-      //  µBlock.getAvailableLists(function(r) {
-      //      console.log("getAvailableLists DONE: "+(+new Date()-profiler)+"ms",r);
-      //  });
+      log("Loaded/compiled " + Object.keys(entries).length +
+        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
     });
   };
 
-  var reSpecialChars = /[\*\^\t\v\n]/;
-
   var fromNetFilterSync = function (compiledFilter, rawFilter) {
 
-    //console.log('adn.fromNetFilterSync', compiledFilter, rawFilter);
-
-    var lists = [],
-      entry, content, pos, c;
+    var entry, content, pos, c, lists = [];
 
     for (var path in listEntries) {
 
@@ -1089,17 +1088,7 @@
     return lists;
   };
 
-  var activeBlockList = function (test) {
-
-    return enabledBlockLists.indexOf(test) > -1;
-  }
-
-  var ruleDisabled = function (test) {
-
-    return disabledBlockingRules.indexOf(test) > -1;
-  };
-
-  var isBlockableRequest = function (result, isMainFrame) {
+  var isBlockableRequest = function (result, isTop) {
 
     //console.log('isBlockableRequest', result);
 
@@ -1116,15 +1105,33 @@
 
           return false; //log("Reject-block: " + title, raw);
 
-        } else console.warn("BLOCK" + (isMainFrame ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+        } else console.warn("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+
       } else console.error("NO hits ****", raw, compiled);
+
     } else console.warn("Ignoring: lists not loaded...");
 
     return true;
   }
 
-  //vAPI.storage.clear();
-  vAPI.storage.get(µb.adnSettings, initialize);
+  /******************************************************************************/
+
+  // start by grabbing user-settings, then calling initialize()
+  vAPI.storage.get(µb.userSettings, function (settings) {
+
+    //this for backwards compatibility
+    var mapSz = Object.keys(settings.admap).length;
+    if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
+
+      settings.admap = µb.adnSettings.admap;
+      log("Using legacy admap...");
+      setTimeout(function () {
+        storeUserData(true);
+      }, 2000);
+    }
+
+    initialize(settings);
+  });
 
   /******************************************************************************/
 
@@ -1164,17 +1171,17 @@
       default: break;
     } // Async
 
-    var pageStore, tabId;
+    var pageStore, tabId, µb = µBlock;
 
     if (sender && sender.tab) {
 
       tabId = sender.tab.id;
-      pageStore = µBlock.pageStoreFromTabId(tabId);
+      pageStore = µb.pageStoreFromTabId(tabId);
     }
 
-    if (typeof µBlock.adnauseam[request.what] === 'function') {
+    if (typeof µb.adnauseam[request.what] === 'function') {
 
-      callback(µBlock.adnauseam[request.what](request, pageStore, tabId));
+      callback(µb.adnauseam[request.what](request, pageStore, tabId));
 
     } else {
 
