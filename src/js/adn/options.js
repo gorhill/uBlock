@@ -31,7 +31,7 @@
 
   var postImportConfirm = function (msg) {
       console.log('postImportConfirm');
-      vAPI.confirm(vAPI.i18n('adnImportConfirm')
+      vAPI.confirm(vAPI.i18n('adnImportAlert')
         .replace('{{count}}', msg.count));
   };
 
