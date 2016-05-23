@@ -75,14 +75,15 @@ div.tooltip {
 }
 
 #stage{
-  float:left;
-  width:100%;
+    float:left;
+    width:100%;
 	height: 100%;
 	overflow: hidden;
 }
 
 #container {
 	position: absolute;
+  	cursor: -moz-grab;
   	cursor: -webkit-grab;
 	/* auto-centers the composition on adview-open (nice fix by cyrus) */
 	top:50%;
@@ -92,9 +93,8 @@ div.tooltip {
 	min-width: 10000px;
 }
 
-#container:active {
-	cursor: -moz-grabbing;
-	cursor: -webkit-grabbing;
+#container:active:not(.lightbox) {
+	cursor: move;
 }
 
 #loading-img{
@@ -364,6 +364,12 @@ div.tooltip {
 }
 
 /* AD */
+
+/* specify cursor so that clicking .item it won't show 'move' type cursor */
+.item:active {
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+}
 
 .item.inspected > .ad{
 	position: relative;

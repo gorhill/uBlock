@@ -551,29 +551,6 @@
     return formatDate(oldest);
   }
 
-  function dragStart(e) {
-
-    var x = parseInt($(this).css("margin-left"), 10) - e.originalEvent.clientX,
-      y = parseInt($(this).css("margin-top"), 10) - e.originalEvent.clientY;
-
-    e.originalEvent.dataTransfer.setData("text/plain", x + ',' + y);
-
-    $(this).addClass('dragged');
-  }
-
-  function dragOver(e) {
-
-    var offset = e.originalEvent.dataTransfer.getData("text/plain").split(',');
-
-    $(this).css("marginLeft", e.originalEvent.clientX + parseInt(offset[0], 10));
-    $(this).css("marginTop", e.originalEvent.clientY + parseInt(offset[1], 10));
-  }
-
-  function dragEnd() {
-
-    $(this).removeClass('dragged');
-  }
-
   function formatDate(ts) {
 
     if (!ts) return locale.notYetVisited;
@@ -1054,17 +1031,26 @@
       //console.log(e);
     });
 
-    /////////// DRAG-STAGE ///////// from: http://jsfiddle.net/robertc/kKuqH/
-
-    var $container = $('#container');
-
-    if ($container) {
-
-      $container.on('dragstart', dragStart);
-      $container.on('dragover', dragOver);
-      $container.on('dragend', dragEnd);
-    }
-
+    /////////// DRAG-STAGE ///////////
+    var offsetX = 0;
+    var offsetY = 0;
+    
+    document.onmousedown = function(e) {
+      offsetX = e.pageX;
+      offsetY = e.pageY;      
+    };
+    
+    document.onmouseup   = function(e) {
+      var style = window.getComputedStyle(document.querySelector('#container'), null),
+             dm = document.querySelector('#container');
+             
+      var x = parseInt(style.getPropertyValue('margin-left'));
+      var y = parseInt(style.getPropertyValue('margin-top'));
+      
+      dm.style.marginLeft = (x + e.pageX - offsetX) + 'px';
+      dm.style.marginTop = (y + e.pageY - offsetY) + 'px';
+    };    
+    
     /////////// ZOOM-STAGE ///////////
 
     $('#z-in').click(function (e) {
