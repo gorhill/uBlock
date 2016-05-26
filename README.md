@@ -1,6 +1,6 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
-Try our AdNauseam beta for Chrome: download [this file](https://github.com/dhowe/AdNauseam2/files/265044/adnauseam.2.1.13.crx.zip), unzip, and drag into ``chrome://extensions/`` page in Chrome
+Try our AdNauseam beta for Chrome: download [this file](https://github.com/dhowe/AdNauseam/files/265044/adnauseam.2.1.13.crx.zip), unzip, and drag into ``chrome://extensions/`` page in Chrome
 
 
 <div align="center">
@@ -19,8 +19,8 @@ We conceptualize AdNauseam within a broader class of software systems that serve
 * Web Site:         http://adnauseam.io
 * Authors:          [Daniel C. Howe](http://rednoise.org/daniel), [Helen Nissenbaum](https://www.nyu.edu/projects/nissenbaum/) & [Mushon Zer-Aviv](http://mushon.com)
 * License:          GPLv3 (see included [LICENSE](https://github.com/dhowe/AdNauseam/blob/master/LICENSE) file for full license)
-* Github Repo:      https://github.com/dhowe/adnauseam2/
-* Bug Tracker:      https://github.com/dhowe/adnauseam2/issues
+* Github Repo:      https://github.com/dhowe/adnauseam/
+* Bug Tracker:      https://github.com/dhowe/adnauseam/issues
 * FAQ:              https://github.com/dhowe/AdNauseam/wiki/FAQ
 
 
@@ -30,7 +30,7 @@ Absolutely! We are looking for coders, designers, and translators to help on the
 
 If you are a coder or designer, just press *Fork* at the top of this github page and get started... Or, if you'd like to contribute a translation, please visit [this page](https://crowdin.com/project/adnauseam).
 
-If you're not sure where to start, look at the issues labeled [HELP US CODE](https://github.com/dhowe/AdNauseam2/labels/HELP-US-CODE). Thanks!
+If you're not sure where to start, look at the issues labeled [HELP US CODE](https://github.com/dhowe/AdNauseam/labels/HELP-US-CODE). Thanks!
 
 
 
@@ -43,7 +43,7 @@ If you're not sure where to start, look at the issues labeled [HELP US CODE](htt
 1. [Fork and clone](https://help.github.com/articles/fork-a-repo) this repository:
 
     ```bash
-    $ git clone https://github.com/dhowe/AdNauseam2.git
+    $ git clone https://github.com/dhowe/AdNauseam.git
     ```
 
-2. See this [FAQ entry](https://github.com/dhowe/AdNauseam2/issues/9) on how to build the extensions for various browsers
+2. See this [FAQ entry](https://github.com/dhowe/AdNauseam/issues/9) on how to build the extensions for various browsers

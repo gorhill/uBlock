@@ -200,7 +200,7 @@
     // allow only one just-* at a time...
     removeClassFromAll('just-visited just-failed');
 
-    // See https://github.com/dhowe/AdNauseam2/issues/61
+    // See https://github.com/dhowe/AdNauseam/issues/61
     var cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
     $ad.removeClass('failed visited attempting').addClass(cls);
 
