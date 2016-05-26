@@ -1,0 +1,122 @@
+{
+  "adnStatePaused": {
+    "message": "AdNauseam is paused on this page",
+    "description": "English: Menu->display when paused"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "No ads on this page (showing recent)",
+    "description": "shown in menu when only 'recent' ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} ads were imported",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "This action will permanently remove ALL of your ads",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "View Log",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "clicked",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "of the",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "ads detected",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "View Ad Vault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuPause": {
+    "message": "Pause AdNauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Resume AdNauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Settings",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Export Ads",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Import Ads",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Disable all logging",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Disable outgoing referrer",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Clear Ads with browser history",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Hide Ad count on icon",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Clear Ads",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "No log available",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "View full log",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Since",
+    "description": "appears in ADN vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "Jan 1 1970 0:00am",
+    "description": "appears in ADN vault page"
+  },
+  "adnVaultAdsClicked": {
+    "message": "ads clicked",
+    "description": "appears in ADN vault page"
+  },
+  "adnVaultFound": {
+    "message": "found",
+    "description": "appears in ADN vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "delete this ad",
+    "description": "appears in ADN vault page"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Fight back against advertising surveillance",
+    "description": "for the chrome web store: must be 132 characters or less"
+  }
+}
