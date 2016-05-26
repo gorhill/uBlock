@@ -2,8 +2,6 @@
 #
 # This script assumes a linux environment
 
-hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
-
 echo "*** adnauseam.chromium: Creating chrome package"
 echo "*** adnauseam.chromium: Copying files"
 
