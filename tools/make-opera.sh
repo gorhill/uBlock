@@ -2,12 +2,17 @@
 #
 # This script assumes a linux environment
 
+hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
+
 echo "*** adnauseam.opera: Creating opera package"
 echo "*** adnauseam.opera: Copying files"
 
 DES=bin/build/adnauseam.opera
+
 rm -r $DES
 mkdir -p $DES
+
+VERSION=`jq .version platform/chromium/manifest.json`
 
 ./tools/make-assets.sh $DES
 ./tools/make-locales.sh $DES
@@ -28,6 +33,9 @@ cp platform/chromium/*.js   $DES/js/
 cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
 cp platform/opera/manifest.json $DES/
+sed -i .bak "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 cp LICENSE.txt $DES/
 
 echo "*** adnauseam.opera: Package done."
+
+head $DES/manifest.json
