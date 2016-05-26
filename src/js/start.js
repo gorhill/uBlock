@@ -166,10 +166,6 @@ var onUserSettingsReady = function(fetched) {
     µb.assets.autoUpdate = userSettings.autoUpdate;
     µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
-    // https://github.com/chrisaljoudi/uBlock/issues/540
-    // Disabling local mirroring for the time being
-    userSettings.experimentalEnabled = false;
-
     vAPI.browserSettings.set({
         'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
         'prefetching': !userSettings.prefetchingDisabled,

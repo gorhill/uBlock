@@ -282,8 +282,6 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     case 'contextMenuEnabled':
         this.contextMenu.update(null);
         break;
-    case 'experimentalEnabled':
-        break;
     case 'hyperlinkAuditingDisabled':
         vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
         break;
