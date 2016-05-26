@@ -4,7 +4,7 @@
 
 hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
 
-echo "*** adnauseam.chromium: Creating web store package"
+echo "*** adnauseam.chromium: Creating chrome package"
 echo "*** adnauseam.chromium: Copying files"
 
 DES=bin/build/adnauseam.chromium
@@ -12,20 +12,7 @@ rm -rf $DES
 mkdir -p $DES
 
 ./tools/make-assets.sh $DES
-
-# handle concatenating local files
-
-FILES=src/_locales/**/adnauseam.json
-for adnfile in $FILES
-do
-  messages="${adnfile/adnauseam/messages}"
-  out="${messages/src/$DES}"
-  dir=`dirname $out`
-  mkdir -p $dir && touch $out
-  echo Writing $out
-  jq -s '.[0] * .[1]' $messages $adnfile > $out
-done
-
+./tools/make-locales.sh $DES
 
 cp -R src/css               $DES/
 cp -R src/img               $DES/

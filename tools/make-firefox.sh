@@ -9,12 +9,13 @@ rm -rf $DES
 mkdir -p $DES
 
 ./tools/make-assets.sh $DES
+./tools/make-locales.sh $DES
 
 cp -R src/css                           $DES/
 cp -R src/img                           $DES/
 cp -R src/js                            $DES/
 cp -R src/lib                           $DES/
-cp -R src/_locales                      $DES/
+#cp -R src/_locales                      $DES/
 cp    src/*.html                        $DES/
 
 # AMO review feedback: avoid "unnecessary files or folders" in package
