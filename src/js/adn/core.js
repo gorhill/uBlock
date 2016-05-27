@@ -589,6 +589,12 @@
     tabId && vAPI.tabs.remove(tabId, true);
   }
 
+  var reloadExtPage = function (htmlPage) {
+
+    var tabId = getExtPageTabId(htmlPage)
+    tabId && vAPI.tabs.reload(tabId);
+  }
+
   var deleteAd = function (arg) {
 
     var ad = type(arg) === 'object' ? arg : adById(arg),
@@ -914,6 +920,9 @@
     importedCount = adlist().length - count;
 
     log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
+    
+    // reload Vault page
+    reloadExtPage('vault.html');
 
     return {
       what: 'importConfirm',
