@@ -1,6 +1,6 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
-Try AdNauseam for [FireFox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam) or try our new beta for [Chrome](https://github.com/dhowe/AdNauseam/wiki/Beta-test-AdNauseam-for-Chrome)!
+Try AdNauseam v2 on [FireFox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam) or try our new beta for [Chrome](https://github.com/dhowe/AdNauseam/wiki/Beta-test-AdNauseam-for-Chrome) !
 
 <div align="center">
   <a href="http://adnauseam.io">
