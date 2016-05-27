@@ -1,6 +1,6 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
-Try our AdNauseam beta for Chrome: download [this file](https://github.com/dhowe/AdNauseam/releases/download/v2.2.0/adnauseam.chromium.zip), unzip, and drag into the ``chrome://extensions/`` page in Chrome
+Try AdNauseam for {FireFox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam) or try our new beta for [Chrome](https://github.com/dhowe/AdNauseam/wiki/Beta-test-AdNauseam-for-Chrome)
 
 <div align="center">
   <a href="http://adnauseam.io">
