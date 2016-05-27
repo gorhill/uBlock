@@ -898,7 +898,10 @@
       } else {
 
         warn('Unable to parse legacy-format:', request.data);
-        return; // give up
+        return { // give up and show 0 ads imported
+          what: 'importConfirm',
+          count: 0
+        };
       }
     }
 
