@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-echo `pwd`
+#echo `pwd`
 
 cd bin/build/adnauseam.firefox
 jpm xpi
