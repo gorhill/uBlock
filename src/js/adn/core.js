@@ -15,7 +15,7 @@
     µb = µBlock,
     listEntries,
     profiler = 0,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
