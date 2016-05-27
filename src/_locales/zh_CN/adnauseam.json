@@ -1,19 +1,19 @@
 {
-  "adnStatePaused": {
-    "message": "AdNauseam 在本页面被暂停",
-    "description": "English: Menu->display when paused"
+  "adnStatePaused":{
+    "message":"AdNauseam 在本页面被暂停",
+    "description":"English: Menu->display when paused"
   },
-  "adnVaultName": {
-    "message": "AdNauseam — 广告库",
-    "description": "English: AdNauseam — Ad Vault"
+  "adnVaultName":{
+    "message":"AdNauseam — 广告库",
+    "description":"English: AdNauseam — Ad Vault"
   },
-  "adnShowingRecentAds": {
-    "message": "本页没有广告 (显示最近的)",
-    "description": "shown in menu when only 'recent' ads are shown"
+  "adnShowingRecentAds":{
+    "message":"本页没有广告 (显示最近的)",
+    "description":"shown in menu when only 'recent' ads are shown"
   },
-  "adnExportedAdsFilename" : {
-    "message": "AdNauseam-已导出的广告_{{datetime}}.json",
-    "description": "English: AdNauseam-exported-ads_{{datetime}}.json"
+  "adnExportedAdsFilename":{
+    "message":"AdNauseam-已导出的广告_{{datetime}}.json",
+    "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
     "message":"{{count}}個廣告被導入",
@@ -47,9 +47,9 @@
     "message":"暫停 Adnauseam",
     "description":"appears in ADN popup menu"
   },
-  "adnMenuResume": {
-    "message": "恢复 Adnauseam",
-    "description": "appears in ADN popup menu"
+  "adnMenuResume":{
+    "message":"恢复 Adnauseam",
+    "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
     "message":"设置",
@@ -96,7 +96,7 @@
     "description":"appears in ADN vault page"
   },
   "adnVaultDefaultDate":{
-    "message":"Jan 1 1970 0:00am",
+    "message":"1970 年 1 月 1 日 0:00",
     "description":"appears in ADN vault page"
   },
   "adnVaultAdsClicked":{
@@ -113,10 +113,10 @@
   },
   "extName":{
     "message":"AdNauseam",
-    "description":"extension name."
+    "description":"extension name"
   },
   "extShortDesc":{
     "message":"一款被设计为对抗来自广告网络追踪的扩展",
-    "description":"this will be in the chrome web store: must be 132 characters or less"
+    "description":"for the chrome web store: must be 132 characters or less"
   }
 }

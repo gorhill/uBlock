@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# This script assumes a linux environment
+# This script assumes a Mac environment
 
 echo "*** AdNauseam: Importing from Crowdin archive"
 
-SRC=../crowdin
-rm -r $SRC
-unzip -q ../adnauseam.zip -d $SRC
+SRC=~/Downloads/adnauseam
+#rm -r $SRC
+#unzip -q ~/Downloads/adnauseam.zip -d $SRC
 
 DES=./src/_locales
 cp $SRC/ar/adnauseam.json    $DES/ar/adnauseam.json
