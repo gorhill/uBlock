@@ -331,24 +331,38 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.toggleFirewallRule = function(details) {
+    var requestType = details.requestType;
+
     if ( details.action !== 0 ) {
-        this.sessionFirewall.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
+        this.sessionFirewall.setCellZ(details.srcHostname, details.desHostname, requestType, details.action);
     } else {
-        this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, details.requestType);
+        this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, requestType);
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/731#issuecomment-73937469
     if ( details.persist ) {
         if ( details.action !== 0 ) {
-            this.permanentFirewall.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
+            this.permanentFirewall.setCellZ(details.srcHostname, details.desHostname, requestType, details.action);
         } else {
-            this.permanentFirewall.unsetCell(details.srcHostname, details.desHostname, details.requestType, details.action);
+            this.permanentFirewall.unsetCell(details.srcHostname, details.desHostname, requestType, details.action);
         }
         this.savePermanentFirewallRules();
     }
 
+    // https://github.com/gorhill/uBlock/issues/1662
+    // Flush all cached `net` cosmetic filters if we are dealing with a
+    // collapsable type: any of the cached entries could be a resource on the
+    // target page.
+    var srcHostname = details.srcHostname;
+    if (
+        (srcHostname !== '*') &&
+        (requestType === '*' || requestType === 'image' || requestType === '3p' || requestType === '3p-frame')
+    ) {
+        srcHostname = '*';
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/420
-    this.cosmeticFilteringEngine.removeFromSelectorCache(details.srcHostname, 'net');
+    this.cosmeticFilteringEngine.removeFromSelectorCache(srcHostname, 'net');
 };
 
 /******************************************************************************/
