@@ -351,7 +351,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // https://github.com/gorhill/uBlock/issues/1662
     // Flush all cached `net` cosmetic filters if we are dealing with a
-    // collapsable type: any of the cached entries could be a resource on the
+    // collapsible type: any of the cached entries could be a resource on the
     // target page.
     var srcHostname = details.srcHostname;
     if (
