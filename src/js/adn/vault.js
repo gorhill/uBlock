@@ -951,6 +951,12 @@
   }
 
   function setZoom(idx, immediate) {
+    
+    function setScale(scale) {
+      $container.css({
+        transform: 'scale(' + scale/100 + ')'
+      })
+    }
 
     //log('setZoom('+idx+','+(immediate===true)+')');
 
@@ -959,8 +965,7 @@
     // Disable transitions
     immediate && $container.addClass('notransition');
 
-    $container.removeClass(zoomStyle).addClass // swap zoom class
-      ((zoomStyle = ('z-' + Zooms[idx]).replace(/\./, '_')));
+    setScale(Zooms[idx]); // set CSS scale for zooming
 
     $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
 
