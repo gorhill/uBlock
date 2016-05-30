@@ -336,11 +336,11 @@ vAPI.shutdown.add(function() {
 });
 
 // adn: prefs needed in content scripts
-var keys = [ 'parseTextAds' ];
-chrome.storage.local.get(keys, function (data) {
-    keys.forEach(function(k) {  vAPI[k] = data[k]; });
-    //console.log('parseTextAds: ',vAPI.parseTextAds);
-});
+// var keys = [ 'parseTextAds' ];
+// chrome.storage.local.get(keys, function (data) {
+//     keys.forEach(function(k) {  vAPI[k] = data[k]; });
+//     console.log('CLIENT.parseTextAds: ',vAPI.parseTextAds);
+// });
 
 // https://www.youtube.com/watch?v=rT5zCHn0tsg
 // https://www.youtube.com/watch?v=E-jS4e3zacI

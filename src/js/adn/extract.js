@@ -7,12 +7,18 @@ var dbugDetect = 0; // tmp
 
   'use strict';
 
-  var adDetector = self.adDetector = self.adDetector || {};
+  var prefs, adDetector = self.adDetector = self.adDetector || {};
 
-  if (adDetector.findAds || typeof vAPI !== 'object' ) {
+  if (adDetector.findAds || typeof vAPI !== 'object') {
     //console.log('skipping extract: ',typeof vAPI);
     return;
   }
+
+  vAPI.messaging.send('adnauseam', {
+    what: 'getPreferences'
+  }, function (req) {
+    prefs = req;
+  });
 
   adDetector.ignoreTargets = [
     'http://www.google.com/settings/ads/anonymous',
@@ -40,7 +46,7 @@ var dbugDetect = 0; // tmp
       // Question: if we find images, do we want to still try text?
 
       // and finally check for text ads
-      vAPI.parseTextAds && findTextAds(elem);
+      prefs.parseTextAds && findTextAds(elem);
     }
   }
 
@@ -258,7 +264,7 @@ var dbugDetect = 0; // tmp
         text, site, document.URL, document.title);
     }
 
-    return [ ad ];
+    return [ad];
   }
 
   var yahooText = function (e) {
@@ -320,7 +326,7 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: aolTextHandler.fail: ', text, site, document.title, document.URL);
     }
 
-    return [ ad ];
+    return [ad];
   }
 
   var askText = function (dom) { // TODO: not working
@@ -346,7 +352,7 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
     }
 
-    return [ ad ];
+    return [ad];
   }
 
   var googleText = function (li) {
@@ -368,7 +374,7 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: googleTextHandler.fail: ', text, site, document.URL, document.title);
     }
 
-    return [ ad ];
+    return [ad];
   }
 
   var ddgText = function (div) { // not-working, perhaps due to shadow dom
@@ -392,7 +398,7 @@ var dbugDetect = 0; // tmp
       console.warn('TEXT: ddgTextHandler.fail: ', text, site, title, div);
     }
 
-    return [ ad ];
+    return [ad];
   }
 
   var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
