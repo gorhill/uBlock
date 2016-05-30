@@ -7,18 +7,12 @@ var dbugDetect = 1; // tmp
 
   'use strict';
 
-  var prefs, adDetector = self.adDetector = self.adDetector || {};
+  var adDetector = self.adDetector = self.adDetector || {};
 
   if (adDetector.findAds || typeof vAPI !== 'object' ) {
-    console.log('skipping extract: ',typeof vAPI);
+    //console.log('skipping extract: ',typeof vAPI);
     return;
   }
-
-  vAPI.messaging.send('adnauseam', {
-    what: 'getPreferences'
-  }, function (req) {
-    prefs = req;
-  }); // only in root doc? or poll? or put prefs in vAPI
 
   adDetector.ignoreTargets = [
     'http://www.google.com/settings/ads/anonymous',
@@ -27,8 +21,7 @@ var dbugDetect = 1; // tmp
 
   adDetector.findAds = function (elem) {
 
-    console.log('findAds: ' + elem.tagName, elem);
-
+    console.log('findAds', vAPI.parseTextAds, vAPI.automated);
     switch (elem.tagName) {
 
     case 'IFRAME':
@@ -48,7 +41,7 @@ var dbugDetect = 1; // tmp
       // Question: if we find images, do we want to still try text?
 
       // and finally check for text ads
-      prefs.parseTextAds && findTextAds(elem);
+      vAPI.parseTextAds && findTextAds(elem);
     }
   }
 

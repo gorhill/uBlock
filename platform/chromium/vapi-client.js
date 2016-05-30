@@ -48,7 +48,7 @@ if ( document instanceof HTMLDocument === false ) {
 // Looks like `contentType` is on track to be standardized:
 //   https://dom.spec.whatwg.org/#concept-document-content-type
 if ( (document.contentType || '').lastIndexOf('image/', 0) === 0 ) {
-    return; 
+    return;
 }
 
 /******************************************************************************/
@@ -333,6 +333,13 @@ vAPI.messaging = {
 vAPI.shutdown.add(function() {
     vAPI.messaging.shutdown();
     delete window.vAPI;
+});
+
+// adn: prefs needed in content scripts
+var keys = [ 'parseTextAds' ];
+chrome.storage.local.get(keys, function (data) {
+    keys.forEach(function(k) {  vAPI[k] = data[k]; });
+    //console.log('parseTextAds: ',vAPI.parseTextAds);
 });
 
 // https://www.youtube.com/watch?v=rT5zCHn0tsg
