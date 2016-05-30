@@ -1,4 +1,4 @@
-var dbugDetect = 1; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -21,7 +21,6 @@ var dbugDetect = 1; // tmp
 
   adDetector.findAds = function (elem) {
 
-    console.log('findAds', vAPI.parseTextAds, vAPI.automated);
     switch (elem.tagName) {
 
     case 'IFRAME':
