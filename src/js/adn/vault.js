@@ -24,7 +24,8 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    zoomIdx = 0;
+    userZoomScale = 100, // determined by mousewheel
+    zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
 
@@ -949,6 +950,26 @@
 
     (zoomIdx < Zooms.length - 1) && setZoom(++zoomIdx, immediate);
   }
+  
+  function dynamicZoom(scaleInterval) {
+    var $container = $('#container');
+    
+    function setScale(scale) {
+      $container.css({
+        transform: 'scale(' + scale/100 + ')'
+      })
+    }
+    
+    userZoomScale += scaleInterval;
+    if (userZoomScale > 100)
+      userZoomScale = 100;
+    else if (userZoomScale < 5)
+      userZoomScale = 5;
+      
+    setScale(userZoomScale);
+    
+    
+  }
 
   function setZoom(idx, immediate) {
     
@@ -1146,11 +1167,21 @@
         lightboxMode(false);
         return;
       }
-
-      if (delta > 0) // scrolling mousewheel outward
-        zoomIn();
-      else
-        zoomOut(); // scrolling inward
+      
+      /* delta denotes how fast the mousewheel got scrolled
+         for mice with discrete steps, each step ususally 
+         have a fixed delta value e.g. 100
+         for mice with continuous scroll or on a trackpad
+         the delta can vary 
+         large delta means the scrolling is accelerated and
+         should scale the canavs faster with a larger scale 
+         
+         negative delta means scrolling inward and will 
+         produce a negative scale value; vice versa
+      */
+      var scale = (delta >= 100) ? 1 : delta / 10;
+      
+      dynamicZoom(scale);
     });
   }
 

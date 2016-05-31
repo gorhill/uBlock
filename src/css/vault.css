@@ -8,6 +8,7 @@ body {
 	color: #4C4D4C;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0;
+	overflow: hidden; /* prevent rubber band effect on Mac when doing mousewheel scrolling */
 }
 
 * {
