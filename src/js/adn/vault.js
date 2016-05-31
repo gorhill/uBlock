@@ -942,23 +942,46 @@
   }
 
   function zoomIn(immediate) {
-
+    
+    // calculate the suitable zoomIdx by userZoomScale
+    var beforeChange = zoomIdx;
+    for (var i = 0; zoomIdx == zoomIdx && i < Zooms.length - 2; i++) {
+      
+      // need this because min userZoomScale is 5, lower than Zooms[Zooms.length - 1]
+      if (userZoomScale < Zooms[Zooms.length - 1]) 
+        zoomIdx = Zooms.length;
+      else if (userZoomScale == Zooms[i])
+        zoomIdx = i;
+      else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
+        zoomIdx = i + 1;
+    }
+    
     (zoomIdx > 0) && setZoom(--zoomIdx, immediate);
   }
 
   function zoomOut(immediate) {
+    
+    // calculate the suitable zoomIdx by userZoomScale
+    var beforeChange = zoomIdx;
+    for (var i = 0; zoomIdx == beforeChange && i < Zooms.length - 2; i++) {
+      
+      if (userZoomScale == Zooms[i])
+        zoomIdx = i;
+      else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
+        zoomIdx = i;
+    }
 
     (zoomIdx < Zooms.length - 1) && setZoom(++zoomIdx, immediate);
   }
+    
+  function setScale(scale) {
+    
+    $('#container').css({
+      transform: 'scale(' + scale/100 + ')'
+    });
+  }
   
   function dynamicZoom(scaleInterval) {
-    var $container = $('#container');
-    
-    function setScale(scale) {
-      $container.css({
-        transform: 'scale(' + scale/100 + ')'
-      })
-    }
     
     userZoomScale += scaleInterval;
     if (userZoomScale > 100)
@@ -967,17 +990,10 @@
       userZoomScale = 5;
       
     setScale(userZoomScale);
-    
-    
+    $('#ratio').text(Math.round(userZoomScale * 10) / 10 + '%'); // set zoom-text to 1 decimal place
   }
 
   function setZoom(idx, immediate) {
-    
-    function setScale(scale) {
-      $container.css({
-        transform: 'scale(' + scale/100 + ')'
-      })
-    }
 
     //log('setZoom('+idx+','+(immediate===true)+')');
 
@@ -987,6 +1003,8 @@
     immediate && $container.addClass('notransition');
 
     setScale(Zooms[idx]); // set CSS scale for zooming
+    
+    userZoomScale = Zooms[idx]; // update userZoomScale
 
     $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
 
