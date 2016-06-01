@@ -132,8 +132,10 @@ var uBlockCollapser = (function() {
             // Never remove elements from the DOM, just hide them
             target.style.setProperty('display', 'none', 'important');
 
-            if (dbugDetect) console.log("HIT[OK1]: ", target);
-            adDetector.findAds(target);
+            if (typeof dbugDetect!=='undefined' && dbugDetect)
+                console.log("HIT[OK1]: ", target);
+
+            adDetector && adDetector.findAds(target);
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -326,8 +328,9 @@ var uBlockCollapser = (function() {
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
                     elems[i].style.setProperty('display', 'none', 'important');
-                    if(dbugDetect) console.log("HIT[noShadow]: ",elems[i]);
-                    adDetector.findAds(elems[i]);
+                    if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+                        console.log("HIT[noShadow]: ",elems[i]);
+                    adDetector && adDetector.findAds(elems[i]);
                 }
             };
         }
@@ -366,9 +369,10 @@ var uBlockCollapser = (function() {
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
                 }*/
-                if(dbugDetect) console.log("HIT[OK2]: ",elem);
+                if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+                 console.log("HIT[OK2]: ",elem);
                 elem.style.setProperty('display', 'none', 'important');
-                adDetector.findAds(elem);
+                adDetector && adDetector.findAds(elem);
             }
         };
     })();
@@ -720,7 +724,8 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
-            if(dbugDetect) console.log("HIT[addStyle]: ", selectors);
+            if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+                console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }
     };

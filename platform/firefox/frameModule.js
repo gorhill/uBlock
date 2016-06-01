@@ -29,6 +29,7 @@ this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
 const {interfaces: Ci, utils: Cu} = Components;
 const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
+const {PrivateBrowsingUtils} = Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm"); // adn
 
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 const rpcEmitterName = hostName + ':child-process-message';
@@ -451,7 +452,12 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
-            lss(this.contentBaseURI + 'adn/extract.js', sandbox);
+            if (!PrivateBrowsingUtils.isWindowPrivate(win)) {
+                lss(this.contentBaseURI + 'adn/extract.js', sandbox);
+            }
+            else
+                console.log("Skipping ADN");
+                
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if (

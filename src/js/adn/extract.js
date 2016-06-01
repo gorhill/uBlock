@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -470,8 +470,15 @@ var dbugDetect = 0; // tmp
     if (target.indexOf('//') === 0) { // move to core?
 
       target = 'http:' + target;
+    }
+    else if (target.indexOf('/') === 0) {
+        var domain = (parent !== window) ? parseDomain(document.referrer)
+            : document.domain;
+        target = 'http://' + domain + target;
+        console.log("Fixing absolute domain: "+target);
+    }
 
-    } else if (target.indexOf('http') < 0) {
+    if (target.indexOf('http') < 0) {
 
       console.warn("Ignoring Ad with targetUrl=" + target, arguments);
       return;
