@@ -9,13 +9,15 @@ var dbugDetect = 0; // tmp
 
   //console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
 
-  if (vAPI.chrome && chrome.extension.inIncognitoContext) { // #194
+  if (typeof vAPI !== 'object' ||
+    (vAPI.chrome && chrome.extension.inIncognitoContext))  // #194
+  {
     return;
   }
 
   var prefs, adDetector = self.adDetector = self.adDetector || {};
 
-  if (adDetector.findAds || typeof vAPI !== 'object') {
+  if (adDetector.findAds) {
     //console.log('skipping extract: ',typeof vAPI);
     return;
   }
