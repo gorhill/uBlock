@@ -8,6 +8,7 @@ body {
 	color: #4C4D4C;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0;
+	overflow: hidden; /* prevent rubber band effect on Mac when doing mousewheel scrolling */
 }
 
 * {
@@ -193,36 +194,6 @@ div.tooltip {
 
 .zoom a#z-in{
 	border-bottom: 2px solid #818181;
-}
-
-.z-100 {
-
-	transform: 			scale(1, 1);
-}
-
-.z-75 {
-
-	transform: 			scale(0.75, 0.75);
-}
-
-.z-50 {
-
-	transform: 			scale(0.5, 0.5);
-}
-
-.z-25 {
-
-	transform: 			scale(0.25, 0.25);
-}
-
-.z-12_5 {
-
-	transform: 			scale(0.125, 0.125);
-}
-
-.z-6_25 {
-
-	transform: 			scale(0.0625, 0.0625);
 }
 
 .container-trans {

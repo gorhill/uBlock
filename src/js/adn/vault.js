@@ -24,7 +24,8 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    zoomIdx = 0;
+    userZoomScale = 100, // determined by mousewheel
+    zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
 
@@ -941,13 +942,55 @@
   }
 
   function zoomIn(immediate) {
-
+    
+    // calculate the suitable zoomIdx by userZoomScale
+    var beforeChange = zoomIdx;
+    for (var i = 0; zoomIdx == zoomIdx && i < Zooms.length - 2; i++) {
+      
+      // need this because min userZoomScale is 5, lower than Zooms[Zooms.length - 1]
+      if (userZoomScale < Zooms[Zooms.length - 1]) 
+        zoomIdx = Zooms.length;
+      else if (userZoomScale == Zooms[i])
+        zoomIdx = i;
+      else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
+        zoomIdx = i + 1;
+    }
+    
     (zoomIdx > 0) && setZoom(--zoomIdx, immediate);
   }
 
   function zoomOut(immediate) {
+    
+    // calculate the suitable zoomIdx by userZoomScale
+    var beforeChange = zoomIdx;
+    for (var i = 0; zoomIdx == beforeChange && i < Zooms.length - 2; i++) {
+      
+      if (userZoomScale == Zooms[i])
+        zoomIdx = i;
+      else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
+        zoomIdx = i;
+    }
 
     (zoomIdx < Zooms.length - 1) && setZoom(++zoomIdx, immediate);
+  }
+    
+  function setScale(scale) {
+    
+    $('#container').css({
+      transform: 'scale(' + scale/100 + ')'
+    });
+  }
+  
+  function dynamicZoom(scaleInterval) {
+    
+    userZoomScale += scaleInterval;
+    if (userZoomScale > 100)
+      userZoomScale = 100;
+    else if (userZoomScale < 5)
+      userZoomScale = 5;
+      
+    setScale(userZoomScale);
+    $('#ratio').text(Math.round(userZoomScale * 10) / 10 + '%'); // set zoom-text to 1 decimal place
   }
 
   function setZoom(idx, immediate) {
@@ -959,8 +1002,9 @@
     // Disable transitions
     immediate && $container.addClass('notransition');
 
-    $container.removeClass(zoomStyle).addClass // swap zoom class
-      ((zoomStyle = ('z-' + Zooms[idx]).replace(/\./, '_')));
+    setScale(Zooms[idx]); // set CSS scale for zooming
+    
+    userZoomScale = Zooms[idx]; // update userZoomScale
 
     $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
 
@@ -1141,11 +1185,21 @@
         lightboxMode(false);
         return;
       }
-
-      if (delta > 0) // scrolling mousewheel outward
-        zoomIn();
-      else
-        zoomOut(); // scrolling inward
+      
+      /* delta denotes how fast the mousewheel got scrolled
+         for mice with discrete steps, each step ususally 
+         have a fixed delta value e.g. 100
+         for mice with continuous scroll or on a trackpad
+         the delta can vary 
+         large delta means the scrolling is accelerated and
+         should scale the canavs faster with a larger scale 
+         
+         negative delta means scrolling inward and will 
+         produce a negative scale value; vice versa
+      */
+      var scale = (delta >= 100) ? 1 : delta / 10;
+      
+      dynamicZoom(scale);
     });
   }
 
