@@ -1,4 +1,4 @@
-var dbugDetect = 1; // tmp
+var dbugDetect = 0; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -6,6 +6,12 @@ var dbugDetect = 1; // tmp
 (function (self) {
 
   'use strict';
+
+  console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
+
+  if (vAPI.chrome && chrome.extension.inIncognitoContext) { // #194
+    return;
+  }
 
   var prefs, adDetector = self.adDetector = self.adDetector || {};
 
@@ -470,12 +476,10 @@ var dbugDetect = 1; // tmp
     if (target.indexOf('//') === 0) { // move to core?
 
       target = 'http:' + target;
-    }
-    else if (target.indexOf('/') === 0) {
-        var domain = (parent !== window) ? parseDomain(document.referrer)
-            : document.domain;
-        target = 'http://' + domain + target;
-        console.log("Fixing absolute domain: "+target);
+    } else if (target.indexOf('/') === 0) {
+      var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
+      target = 'http://' + domain + target;
+      console.log("Fixing absolute domain: " + target);
     }
 
     if (target.indexOf('http') < 0) {

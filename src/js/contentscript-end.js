@@ -135,7 +135,7 @@ var uBlockCollapser = (function() {
             if (typeof dbugDetect!=='undefined' && dbugDetect)
                 console.log("HIT[OK1]: ", target);
 
-            adDetector && adDetector.findAds(target);
+            typeof adDetector !=='undefined' && adDetector.findAds(target);
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -330,7 +330,7 @@ var uBlockCollapser = (function() {
                     elems[i].style.setProperty('display', 'none', 'important');
                     if (typeof dbdbugDetect!=='undefined' && dbugDetect)
                         console.log("HIT[noShadow]: ",elems[i]);
-                    adDetector && adDetector.findAds(elems[i]);
+                    typeof adDetector !=='undefined' && adDetector.findAds(elems[i]);
                 }
             };
         }
@@ -372,7 +372,7 @@ var uBlockCollapser = (function() {
                 if (typeof dbdbugDetect!=='undefined' && dbugDetect)
                  console.log("HIT[OK2]: ",elem);
                 elem.style.setProperty('display', 'none', 'important');
-                adDetector && adDetector.findAds(elem);
+                typeof adDetector !=='undefined' && adDetector.findAds(elem);
             }
         };
     })();

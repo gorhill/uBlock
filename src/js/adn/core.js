@@ -15,7 +15,7 @@
     µb = µBlock,
     listEntries,
     profiler = 0,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -920,7 +920,7 @@
     importedCount = adlist().length - count;
 
     log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
-    
+
     // reload Vault page
     reloadExtPage('vault.html');
 
