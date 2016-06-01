@@ -211,12 +211,6 @@
 		"lang": "ar",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=98"
 	},
-	"https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
-		"off": true,
-		"title": "ara: Liste AR (obsolete, will be removed soon)",
-		"group": "regions",
-		"supportURL": "https://code.google.com/p/liste-ar-adblock/"
-	},
 	"http://margevicius.lt/easylistlithuania.txt": {
 		"off": true,
 		"title": "LTU: Adblock Plus Lithuania",
@@ -244,10 +238,16 @@
 	},
 	"https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
 		"off": true,
+		"title": "ISR: EasyList Hebrew (obsolete, will be removed soon)",
+		"group": "regions",
+		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
+	},
+	"https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": {
+		"off": true,
 		"title": "ISR: EasyList Hebrew",
 		"group": "regions",
 		"lang": "he",
-		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
+		"supportURL": "https://github.com/easylist/EasyListHebrew"
 	},
 	"https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
 		"off": true,
