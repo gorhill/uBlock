@@ -7,7 +7,7 @@ var dbugDetect = 0; // tmp
 
   'use strict';
 
-  console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
+  //console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
 
   if (vAPI.chrome && chrome.extension.inIncognitoContext) { // #194
     return;
@@ -448,17 +448,6 @@ var dbugDetect = 0; // tmp
       if ($is(elem, theFilters[i].selector)) {
 
         return theFilters[i].handler(elem);
-
-        /*if (result) {
-
-          var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
-
-          if (!filter.domain.test(domain)) // tmp-remove
-            console.warn("Text Ad failed filter-test: ", domain,
-            document.domain, document.referrer, filter.domain);
-
-          return result;
-        }*/
       }
     }
   }
@@ -477,9 +466,11 @@ var dbugDetect = 0; // tmp
 
       target = 'http:' + target;
     } else if (target.indexOf('/') === 0) {
-      var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
+
+      var domain = (parent !== window) ?
+        parseDomain(document.referrer) : document.domain;
       target = 'http://' + domain + target;
-      console.log("Fixing absolute domain: " + target);
+      //console.log("Fixing absolute domain: " + target);
     }
 
     if (target.indexOf('http') < 0) {
