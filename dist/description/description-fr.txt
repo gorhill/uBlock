@@ -18,11 +18,11 @@ Par défaut, ces listes de filtrage sont chargées et traitées :
 Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 
 - Fanboy’s Enhanced Tracking List (Liste de protection avancée contre le pistage maintenue à jour par Fanboy)
-- Dan Pollock’s hosts file (Fichier Hosts bloquants des publicités, domaines malveillants et autres pisteurs, maintenue fréquemment à jour par Dan Pollock)
+- Dan Pollock’s hosts file (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue fréquemment à jour par Dan Pollock)
 - hpHosts’s Ad and tracking servers (Fichier Hosts bloquant des serveurs publicitaires et des serveurs pistant, maintenue à jour par hpHosts)
 - MVPS HOSTS (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue à jour par MVPS)
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
-- Et plusieurs autres
+- Et plein d'autres
 
 Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier Hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs de pubs populaires.
 
@@ -30,7 +30,7 @@ Veuillez tout de même prendre en compte que le fait de choisir parmi ces listes
 
 ***
 
-Sans les listes prédéfinies de filtres, cette extension (comme d'autres) ne serait rien. Alors si vous tenez vraiment à contribuer d'une quelconque manière, pensez aux personnes qui travaillant dur pour maintenir à jour ces listes de filtres que vous utilisez, qui est en plus proposée gratuitement à tout le monde.
+Sans les listes prédéfinies de filtres, cette extension (comme d'autres) ne serait rien. Alors si vous tenez vraiment à contribuer d'une quelconque manière, pensez aux personnes travaillant dur pour maintenir à jour ces listes de filtres que vous utilisez, qui plus est proposées gratuitement à tout le monde.
 
 ***
 
