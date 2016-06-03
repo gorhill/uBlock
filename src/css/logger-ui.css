@@ -78,7 +78,7 @@ textarea {
     position: absolute;
     top: 0;
     width: 100%;
-}
+    }
 
 #netInspector {
     font: 13px sans-serif;
@@ -339,7 +339,7 @@ body[dir="rtl"] #popupContainer > div {
     max-width: 75%;
     outline: none;
     padding: 0.2em;
-}
+    }
 
 #netFilteringDialog .dialog > div.preview {
     /* http://lea.verou.me/css3patterns/ */
