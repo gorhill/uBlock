@@ -145,10 +145,7 @@ var nodeInNodeList = function(node, nodeList) {
 /******************************************************************************/
 
 var doesMatchSelector = function(node, selector) {
-    if ( !node ) {
-        return false;
-    }
-    if ( node.nodeType !== 1 ) {
+    if ( !node || node.nodeType !== 1 ) {
         return false;
     }
     if ( selector === undefined ) {
