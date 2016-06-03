@@ -25,9 +25,10 @@
 #cloudPush:after {
     content: '\f0ee';
     }
-#cloudPull:before,#cloudPullAndMerge:before {
+#cloudPull:before,
+#cloudPullAndMerge:before {
     content: '\f0ed';
-    }
+}
 #cloudPullAndMerge:after {
     content: '\f067';
     font-size: 50%;
