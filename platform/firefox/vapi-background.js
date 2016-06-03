@@ -1844,7 +1844,7 @@ var httpObserver = {
     register: function() {
         this.pendingRingBufferInit();
 
-        Services.obs.addObserver(this, 'http-on-opening-request', true);
+        Services.obs.addObserver(this, 'http-on-modify-request', true);
         Services.obs.addObserver(this, 'http-on-examine-response', true);
 
         // Guard against stale instances not having been unregistered
@@ -1872,7 +1872,7 @@ var httpObserver = {
     },
 
     unregister: function() {
-        Services.obs.removeObserver(this, 'http-on-opening-request');
+        Services.obs.removeObserver(this, 'http-on-modify-request');
         Services.obs.removeObserver(this, 'http-on-examine-response');
 
         this.componentRegistrar.unregisterFactory(this.classID, this);
@@ -2142,7 +2142,7 @@ var httpObserver = {
             return;
         }
 
-        // http-on-opening-request
+        // http-on-modify-request
 
         var pendingRequest = this.lookupPendingRequest(URI.spec);
 
