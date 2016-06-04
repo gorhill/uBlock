@@ -1179,7 +1179,7 @@
       });
     }
 
-    $("body").mousewheel(function (e, delta) {
+    $("body").mousewheel(function (e) {
 
       if ($('#container').hasClass('lightbox')) {
 
@@ -1187,25 +1187,9 @@
         return;
       }
       
-      /* 
-         delta denotes how fast the mousewheel got scrolled.
-         
-         For mice with discrete steps, each step ususally 
-         have a fixed e.deltaFactor value e.g. 100
-         
-         For mice with continuous scroll or on a trackpad
-         the computedDelta can vary 
-         
-         large computedDelta means the scrolling is accelerated and
-         should scale the canavs faster with a larger scale 
-         
-         negative computedDelta means scrolling inward and will 
-         produce a negative scale value; vice versa
-      */
-      var computedDelta = delta;
-      if (e.deltaFactor >= 100)
-        computedDelta = e.deltaFactor * e.delta;
-      var scale = (Math.abs(computedDelta) >= 100) ? delta : computedDelta / 10;
+      // rawDeltaY denotes how fast the mousewheel got scrolled
+      var rawDeltaY = e.deltaY * e.deltaFactor;
+      var scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
       
       dynamicZoom(scale);
     });
