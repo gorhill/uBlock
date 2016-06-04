@@ -734,13 +734,14 @@
 
     if (store) {
 
-      viewState.zoomIdx = zoomIdx;
+      viewState.zoomScale = userZoomScale;
       viewState.left = $dm.css('margin-left');
       viewState.top = $dm.css('margin-top');
 
     } else { // restore
 
-      setZoom(zoomIdx = viewState.zoomIdx);
+      // restore zoom scale to userZoomScale
+      dynamicZoom(viewState.zoomScale - 100);
       $dm.css('margin-left', viewState.left);
       $dm.css('margin-top', viewState.top);
     }
