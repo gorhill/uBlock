@@ -734,13 +734,14 @@
 
     if (store) {
 
-      viewState.zoomIdx = zoomIdx;
+      viewState.zoomScale = userZoomScale;
       viewState.left = $dm.css('margin-left');
       viewState.top = $dm.css('margin-top');
 
     } else { // restore
 
-      setZoom(zoomIdx = viewState.zoomIdx);
+      // restore zoom scale to userZoomScale
+      dynamicZoom(viewState.zoomScale - 100);
       $dm.css('margin-left', viewState.left);
       $dm.css('margin-top', viewState.top);
     }
@@ -1178,7 +1179,7 @@
       });
     }
 
-    $("body").mousewheel(function (e, delta) {
+    $("body").mousewheel(function (e) {
 
       if ($('#container').hasClass('lightbox')) {
 
@@ -1186,18 +1187,9 @@
         return;
       }
       
-      /* delta denotes how fast the mousewheel got scrolled
-         for mice with discrete steps, each step ususally 
-         have a fixed delta value e.g. 100
-         for mice with continuous scroll or on a trackpad
-         the delta can vary 
-         large delta means the scrolling is accelerated and
-         should scale the canavs faster with a larger scale 
-         
-         negative delta means scrolling inward and will 
-         produce a negative scale value; vice versa
-      */
-      var scale = (delta >= 100) ? 1 : delta / 10;
+      // rawDeltaY denotes how fast the mousewheel got scrolled
+      var rawDeltaY = e.deltaY * e.deltaFactor;
+      var scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
       
       dynamicZoom(scale);
     });
