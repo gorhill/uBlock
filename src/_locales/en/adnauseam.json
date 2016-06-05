@@ -111,6 +111,33 @@
     "message": "delete this ad",
     "description": "appears in ADN vault page"
   },
+
+  "parseTextAdsPrompt": {
+    "message": "Capture text-only ads when possible",
+    "description": "English: Capture text-only ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Show the number of found ads on the icon",
+    "description": "English: Show the number of found ads on the icon"
+  },
+
+  "noIncomingCookiesPrompt": {
+    "message": "Ignore cookies returned with AdNauseam visits",
+    "description": "English: Hide cookies with AdNauseam visits"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Don't send cookies on visits",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Hide user-agent header on visits",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Hide referring page on visits",
+    "description": "English: Hide referring page on visits"
+  },
+
   "extName": {
     "message": "AdNauseam",
     "description": "extension name"

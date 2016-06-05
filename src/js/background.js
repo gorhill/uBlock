@@ -54,9 +54,9 @@ return {
         admap: {},          // adn
         parseTextAds: true,
         noIncomingCookies: true,
-        noOutgoingCookies: true,
-        noOutgoingReferer: true,
-        noOutgoingUserAgent: true,
+        noOutgoingCookies: false,
+        noOutgoingReferer: false,
+        noOutgoingUserAgent: false,
 
         advancedUserEnabled: false,
         autoUpdate: true,

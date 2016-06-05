@@ -436,86 +436,91 @@
     // We only care about behind-the-scene requests here
     if (!vAPI.isBehindTheSceneTabId(details.tabId)) return;
 
-    // TODO: we need to verify this is our XMLHttpRequest (#206) ***
-
     var headers = details.requestHeaders,
-        ad = findDelegate(details.url, details.requestId);
+      ad = findDelegate(details.url, details.requestId);
 
     if (!ad) {
-        //console.warn("Ignoring non-ADN Request!!!");
-        return;
+      //console.warn("Ignoring non-ADN Request!!!");
+      return;
     }
 
     console.log("AdNauseam.beforeRequest[Re" + (ad.requestId ===
-         details.requestId ? 'direct':'quest') + ']: ' + details.url);
+      details.requestId ? 'direct' : 'quest') + ']: ' + details.url);
 
     ad.requestId = details.requestId;
 
-    var referer = ad.pageUrl, prefs = µBlock.userSettings;
+    var referer = ad.pageUrl, refererIdx = -1, prefs = µBlock.userSettings;
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
-        //console.log(i + ") " + headers[i].name);
+      //console.log(i + ") " + headers[i].name);
 
-        if ( (prefs.noOutgoingCookies && headers[i].name === 'Cookie')
-          || (prefs.noOutgoingUserAgent && headers[i].name === 'User-Agent'))
-        {
-            //console.log("Emptying "+headers[i].name);
-            //headers.splice(i, 1); // chrome
-            setHeader(headers[i], '');
-        }
-        if (headers[i].name === 'Referer') {
-            console.error('Referer already present in headers: ',
-                headers[i].name +" => "+headers[i].value);
-        }
+      if ((prefs.noOutgoingCookies && headers[i].name === 'Cookie') ||
+        (prefs.noOutgoingUserAgent && headers[i].name === 'User-Agent')) {
+        //console.log("Emptying "+headers[i].name);
+        //headers.splice(i, 1); // chrome
+        setHeader(headers[i], '');
+      }
+
+      if (headers[i].name === 'Referer') refererIdx = i;
     }
 
+    // 4 cases:
+    // noOutgoingReferer=true  / no refererIdx:     no-op
+    // noOutgoingReferer=true  / have refererIdx:   setHeader('')
+    // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
+    // noOutgoingReferer=false / have refererIdx:   no-op
+
     //console.log("Referer: "+referer);
-    addHeader(headers, 'Referer', referer);
+    if (refererIdx > -1 && prefs.noOutgoingReferer)
+        setHeader(headers[refererIdx], '');
+    else if (!prefs.noOutgoingReferer && refererIdx < 0)
+        addHeader(headers, 'Referer', referer);
 
     return { requestHeaders: headers };
   }
 
   var findDelegate = function (url, id) {
 
-      var ads = µBlock.adnauseam.adlist();
-      for (var i = 0; i < ads.length; i++) {
-          if (ads[i].attemptedTs) {
-              if (ads[i].requestId === id || ads[i].targetUrl === url) {
-                  return ads[i];
-              }
-          }
+    var ads = µBlock.adnauseam.adlist();
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].attemptedTs) {
+        if (ads[i].requestId === id || ads[i].targetUrl === url) {
+          return ads[i];
+        }
       }
+    }
   }
 
   var findDelegateByUrl = function (url) { // not used
 
-      var ads = µBlock.adnauseam.adlist();
-      for (var i = 0; i < ads.length; i++) {
-          if (ads[i].attemptedTs && ads[i].targetUrl === url)
-            return ads[i];
-      }
+    var ads = µBlock.adnauseam.adlist();
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].attemptedTs && ads[i].targetUrl === url)
+        return ads[i];
+    }
   }
 
   var findDelegateByRequestId = function (id) { // not used
 
-      var ads = µBlock.adnauseam.adlist();
-      for (var i = 0; i < ads.length; i++) {
-          if (ads[i].attemptedTs && ads[i].requestId === id)
-            return ads[i];
-      }
+    var ads = µBlock.adnauseam.adlist();
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].attemptedTs && ads[i].requestId === id)
+        return ads[i];
+    }
   }
 
   var setHeader = function (header, value) {
-      header.value = value;
+    if (header && typeof header.value !== 'undefined')
+        header.value = value;
   }
 
   var addHeader = function (headers, name, value) {
 
-      headers.push({
-        name: name,
-        value: value
-      });
+    headers.push({
+      name: name,
+      value: value
+    });
   }
 
   /******************************************************************************/

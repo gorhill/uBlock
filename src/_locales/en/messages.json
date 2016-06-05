@@ -183,14 +183,6 @@
     "message": "Hide placeholders of blocked elements",
     "description": "English: Hide placeholders of blocked elements"
   },
-  "settingsIconBadgePrompt": {
-    "message": "Show the number of found ads on the icon",
-    "description": "English: Show the number of found ads on the icon"
-  },
-  "parseTextAdsPrompt": {
-    "message": "Capture text-only ads when possible",
-    "description": "English: Capture text-only ads when possible"
-  },
   "settingsTooltipsPrompt": {
     "message": "Disable tooltips",
     "description": "A checkbox in the Settings pane"

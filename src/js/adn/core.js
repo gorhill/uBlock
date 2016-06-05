@@ -315,8 +315,8 @@
 
   var onVisitResponse = function () {
 
-    if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
-        log('onVisitResponseHeaders\n', this.responseText);
+    //if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
+        //log('onVisitResponseHeaders\n', this.responseText);
 
     this.onload = this.onerror = this.ontimeout = null;
 
