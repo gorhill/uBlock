@@ -314,10 +314,6 @@ div.tooltip {
 	z-index: 1000;
 }
 
-#container.dragged {
-	transition: none;
-}
-
 #overlay {
 	width: 100%;
 	height: 100%;
@@ -647,6 +643,7 @@ div.bullets { display: none; } /* hide by default */
 
 .ad img {
 	width: 100%;
+	pointer-events: none;
 }
 /*
 .item, .item img {
