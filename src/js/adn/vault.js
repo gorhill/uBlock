@@ -7,7 +7,7 @@
   'use strict';
 
   const States = ['pending', 'visited', 'failed'],
-    Zooms = [100, 75, 50, 25, 12.5, 6.25],
+    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
     MaxStartNum = 400,
     MaxPerSet = 9;
@@ -24,7 +24,7 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    userZoomScale = 100, // determined by mousewheel
+    userZoomScale = 200, // determined by mousewheel
     zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
@@ -985,8 +985,8 @@
   function dynamicZoom(scaleInterval) {
     
     userZoomScale += scaleInterval;
-    if (userZoomScale > 100)
-      userZoomScale = 100;
+    if (userZoomScale > 200)
+      userZoomScale = 200;
     else if (userZoomScale < 5)
       userZoomScale = 5;
       
