@@ -988,7 +988,7 @@
       userZoomScale = Zooms[Zooms.length - 1];
       
     setScale(userZoomScale);
-    $('#ratio').text(Math.round(userZoomScale * 10) / 10 + '%'); // set zoom-text to 1 decimal place
+    $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%'); // set zoom-text to 2 decimal places
   }
 
   function setZoom(idx, immediate) {
