@@ -42,7 +42,7 @@
 
     case 'adDetected':
       //  TODO: add to edge of pack
-      console.log('ad-detected');
+      //console.log('ad-detected');
       break;
 
     case 'adVisited':
@@ -647,7 +647,7 @@
   function itemPosition($ele) {
 
     // first set zoom back to 100%
-    setZoom(zoomIdx = 0, true);
+    setZoom(zoomIdx = Zooms.indexOf(100), true);
 
     var off = $ele.offset(), // relative to container
       cx = $(window).width() / 2,
@@ -713,7 +713,7 @@
       }
 
       // reset zoom to 100%
-      setZoom(zoomIdx = 2);
+      setZoom(zoomIdx = Zooms.indexOf(100));
 
       // transition to center
       $('#container').css({
@@ -943,26 +943,26 @@
   }
 
   function zoomIn(immediate) {
-    
+
     // calculate the suitable zoomIdx by userZoomScale
     var previousState = zoomIdx;
     for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
-      
+
       if (userZoomScale == Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
         zoomIdx = i + 1;
     }
-    
+
     (zoomIdx > 0) && setZoom(--zoomIdx, immediate);
   }
 
   function zoomOut(immediate) {
-    
+
     // calculate the suitable zoomIdx by userZoomScale
     var previousState = zoomIdx;
     for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
-      
+
       if (userZoomScale == Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
@@ -971,24 +971,26 @@
 
     (zoomIdx < Zooms.length - 1) && setZoom(++zoomIdx, immediate);
   }
-    
+
   function setScale(scale) {
-    
+
     $('#container').css({
       transform: 'scale(' + scale/100 + ')'
     });
   }
-  
+
   function dynamicZoom(scaleInterval) {
-    
+
     userZoomScale += scaleInterval;
     if (userZoomScale > Zooms[0])
       userZoomScale = Zooms[0];
     else if (userZoomScale < Zooms[Zooms.length - 1])
       userZoomScale = Zooms[Zooms.length - 1];
-      
+
     setScale(userZoomScale);
-    $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%'); // set zoom-text to 2 decimal places
+
+    // set zoom-text to 2 decimal places
+    $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%');
   }
 
   function setZoom(idx, immediate) {
@@ -1001,7 +1003,7 @@
     immediate && $container.addClass('notransition');
 
     setScale(Zooms[idx]); // set CSS scale for zooming
-    
+
     userZoomScale = Zooms[idx]; // update userZoomScale
 
     $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
@@ -1076,23 +1078,23 @@
     /////////// DRAG-STAGE ///////////
     var offsetX = 0;
     var offsetY = 0;
-    
+
     document.onmousedown = function(e) {
       offsetX = e.pageX;
-      offsetY = e.pageY;      
+      offsetY = e.pageY;
     };
-    
+
     document.onmouseup   = function(e) {
       var style = window.getComputedStyle(document.querySelector('#container'), null),
              dm = document.querySelector('#container');
-             
+
       var x = parseInt(style.getPropertyValue('margin-left'));
       var y = parseInt(style.getPropertyValue('margin-top'));
-      
+
       dm.style.marginLeft = (x + e.pageX - offsetX) + 'px';
       dm.style.marginTop = (y + e.pageY - offsetY) + 'px';
-    };    
-    
+    };
+
     /////////// ZOOM-STAGE ///////////
 
     $('#z-in').click(function (e) {
@@ -1183,11 +1185,11 @@
         lightboxMode(false);
         return;
       }
-      
+
       // rawDeltaY denotes how fast the mousewheel got scrolled
       var rawDeltaY = e.deltaY * e.deltaFactor;
       var scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
-      
+
       dynamicZoom(scale);
     });
   }
