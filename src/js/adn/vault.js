@@ -713,7 +713,7 @@
       }
 
       // reset zoom to 100%
-      setZoom(zoomIdx = 0);
+      setZoom(zoomIdx = 2);
 
       // transition to center
       $('#container').css({
