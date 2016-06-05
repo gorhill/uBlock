@@ -308,10 +308,6 @@ div.tooltip {
 #container.lightbox{
 	transition: transform 0.5s ease 0.1s, margin 0.5s ease;
 	z-index: 1000;
-	
-	-ms-user-select: all;
-	-webkit-user-select: all;
-	-moz-user-select: all;
 }
 
 #container.dragged {
@@ -340,6 +336,10 @@ div.tooltip {
 
 .item.inspected {
 	z-index: 2000;
+	
+	-ms-user-select: all;
+	-webkit-user-select: all;
+	-moz-user-select: all;
 }
 
 /* AD */
