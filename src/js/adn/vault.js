@@ -24,7 +24,7 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    userZoomScale = 200, // determined by mousewheel
+    userZoomScale = Zooms[0], // determined by mousewheel
     zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
@@ -615,7 +615,7 @@
 
   function computeZoom(items) { // autozoom
 
-    setZoom(zoomIdx = 0, true);
+    setZoom(zoomIdx = 2, true);
 
     var i = 0,
       percentVis = 0.6,
@@ -945,13 +945,10 @@
   function zoomIn(immediate) {
     
     // calculate the suitable zoomIdx by userZoomScale
-    var beforeChange = zoomIdx;
-    for (var i = 0; zoomIdx == zoomIdx && i < Zooms.length - 2; i++) {
+    var previousState = zoomIdx;
+    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
       
-      // need this because min userZoomScale is 5, lower than Zooms[Zooms.length - 1]
-      if (userZoomScale < Zooms[Zooms.length - 1]) 
-        zoomIdx = Zooms.length;
-      else if (userZoomScale == Zooms[i])
+      if (userZoomScale == Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
         zoomIdx = i + 1;
@@ -963,8 +960,8 @@
   function zoomOut(immediate) {
     
     // calculate the suitable zoomIdx by userZoomScale
-    var beforeChange = zoomIdx;
-    for (var i = 0; zoomIdx == beforeChange && i < Zooms.length - 2; i++) {
+    var previousState = zoomIdx;
+    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
       
       if (userZoomScale == Zooms[i])
         zoomIdx = i;
@@ -985,10 +982,10 @@
   function dynamicZoom(scaleInterval) {
     
     userZoomScale += scaleInterval;
-    if (userZoomScale > 200)
-      userZoomScale = 200;
-    else if (userZoomScale < 5)
-      userZoomScale = 5;
+    if (userZoomScale > Zooms[0])
+      userZoomScale = Zooms[0];
+    else if (userZoomScale < Zooms[Zooms.length - 1])
+      userZoomScale = Zooms[Zooms.length - 1];
       
     setScale(userZoomScale);
     $('#ratio').text(Math.round(userZoomScale * 10) / 10 + '%'); // set zoom-text to 1 decimal place
