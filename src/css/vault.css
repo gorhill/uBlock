@@ -84,14 +84,17 @@ div.tooltip {
 
 #container {
 	position: absolute;
-  	cursor: -moz-grab;
-  	cursor: -webkit-grab;
 	/* auto-centers the composition on adview-open (nice fix by cyrus) */
 	top:50%;
 	left:50%;
 	margin: -5000px 0 0 -5000px;
 	min-height: 10000px;
 	min-width: 10000px;
+}
+
+#container:not(.lightbox) {
+  	cursor: -moz-grab;
+  	cursor: -webkit-grab;
 }
 
 #container:active:not(.lightbox) {
