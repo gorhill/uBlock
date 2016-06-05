@@ -452,12 +452,12 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
-            if (!PrivateBrowsingUtils.isWindowPrivate(win)) {
+            if (!PrivateBrowsingUtils.isContentWindowPrivate(win)) {
                 lss(this.contentBaseURI + 'adn/extract.js', sandbox);
             }
             else
                 console.log("Skipping ADN");
-                
+
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if (

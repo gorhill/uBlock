@@ -457,7 +457,7 @@ var dbugDetect = 0; // tmp
   var parseDomain = function (url, useLast) { // dup. in shared
 
     var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
-    return domains.length ? new URL(
+    return domains && domains.length ? new URL(
         useLast ? domains[domains.length - 1] : domains[0])
       .hostname : undefined;
   }
@@ -516,6 +516,7 @@ var dbugDetect = 0; // tmp
     }
   }
 
-  vAPI.messaging.addChannelListener('adnauseam', messageListener);
+  // uncomment if running automated tests
+  //vAPI.messaging.addChannelListener('adnauseam', messageListener);
 
 })(this);

@@ -50,8 +50,14 @@ return {
     firstInstall: false,
 
     userSettings: {
+
         admap: {},          // adn
-        parseTextAds: true, // adn
+        parseTextAds: true,
+        noIncomingCookies: true,
+        noOutgoingCookies: true,
+        noOutgoingReferer: true,
+        noOutgoingUserAgent: true,
+
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,

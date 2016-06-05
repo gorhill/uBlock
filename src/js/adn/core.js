@@ -6,19 +6,18 @@
 
   // for debugging only
   var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 0, // start with zero ads
+    clearAdsOnInit = 1, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0; // for automated testing
+    automatedMode = 0, // for automated testing
+    logBlocks = 1; // for automated testing
 
-  var xhr, idgen, admap,
-    inspected,
+  var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    listEntries,
-    profiler = 0,
     production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
+    profiler = +new Date(),
     pollQueueInterval = 5000,
     strictBlockingDisabled = 0,
     repeatVisitInterval = 3600000 * 24; // 24 hours
@@ -51,8 +50,6 @@
       this.requestUrl = url; // store original target
       return XMLHttpRequest_open.apply(this, arguments);
     };
-
-    profiler = +new Date()
 
     if (production) { // disable all test-modes if production
 
@@ -92,7 +89,7 @@
         warn("[DEBUG] Clearing all ad data!");
         clearAds();
 
-      }, pollQueueInterval);
+      }, 2000);
 
       return ads;
     }
@@ -196,7 +193,8 @@
       ad.visitedTs = -millis();
 
       if (!ad.errors) ad.errors = [];
-      ad.errors.push(xhr.status + ' (' + xhr.statusText + ')' + (e ? ' ' + e.type : ''));
+      ad.errors.push(xhr.status + ' (' +
+        xhr.statusText + ')' + (e ? ' ' + e.type : ''));
 
       if (ad.attempts >= maxAttemptsPerAd) {
 
@@ -306,7 +304,7 @@
 
     if (!this.delegate) {
 
-      err('Request received without Ad: ' + this.responseUrl);
+      err('Request received without Ad: ' + this.responseURL);
       return;
     }
 
@@ -317,7 +315,8 @@
 
   var onVisitResponse = function () {
 
-    //log('onVisitResponse', this);
+    if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
+        log('onVisitResponseHeaders\n', this.responseText);
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -326,14 +325,18 @@
     var ad = this.delegate;
 
     if (!ad) {
-      err('Request received without Ad: ' + this.responseUrl);
+
+      err('Request received without Ad: ' + this.responseURL);
       return;
     }
 
     if (!ad.id) {
+
       warn("Visit response from deleted ad! ", ad);
       return;
     }
+
+    ad.attemptedTs = 0; // reset as visit no longer in progress
 
     var status = this.status || 200,
       html = this.responseText;
@@ -404,6 +407,8 @@
     try {
 
       xhr.open('get', ad.targetUrl, true);
+//      xhr.setRequestHeader('Referer', 'AdNauseam');
+      xhr.withCredentials = true;
       xhr.delegate = ad;
       xhr.timeout = visitTimeout;
       xhr.onload = onVisitResponse;
@@ -1117,7 +1122,8 @@
 
           return false; //log("Reject-block: " + title, raw);
 
-        } else warn("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+        } else logBlocks && log("BLOCK" + (isTop ? '-MAIN: ' : ': ')
+            + hits[0].title + " " + raw);
 
       } else warn("NO hits ****", raw, compiled);
 

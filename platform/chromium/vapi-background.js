@@ -965,6 +965,14 @@ vAPI.net.registerListeners = function() {
         return onHeadersReceivedClient(details);
     };
 
+    // adn
+    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback;
+    var onBeforeSendHeaders = function(details) {
+
+        normalizeRequestDetails(details);
+        return onBeforeSendHeadersClient(details);
+    };
+
     var installListeners = (function() {
         var listener;
         var crapi = chrome.webRequest;
@@ -996,6 +1004,19 @@ vAPI.net.registerListeners = function() {
                     'types': onHeadersReceivedTypes
                 },
                 this.onHeadersReceived.extra
+            );
+        }
+
+        // adn
+        listener = onBeforeSendHeaders;
+        if ( crapi.onBeforeSendHeaders.hasListener(listener) === false ) {
+            crapi.onBeforeSendHeaders.addListener(
+                listener,
+                {
+                    'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
+                    'types': this.onBeforeSendHeaders.types
+                },
+                this.onBeforeSendHeaders.extra
             );
         }
 

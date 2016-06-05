@@ -564,6 +564,10 @@ To create a log of net requests
         }
       }
     }
+    else if (result.length > 0) {
+
+        console.warn("ILLEGAL-STATE: AdNauseam block skipped", result, context);
+    }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
     if (collapsibleRequestTypes.indexOf(requestType) !== -1) {
@@ -624,6 +628,10 @@ To create a log of net requests
           result = '';
         }
       }
+    }
+    else if (result.length > 0) {
+
+        console.warn("ILLEGAL-STATE(nocache): AdNauseam block skipped", result, context);
     }
 
     return result;

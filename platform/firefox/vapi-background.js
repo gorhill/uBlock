@@ -1813,6 +1813,9 @@ var httpObserver = {
     onHeadersReceived: function(){},
     onHeadersReceivedTypes: null,
 
+    onBeforeSendHeaders: function(){}, // adn
+    onBeforeSendHeadersTypes: null,
+
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
     },
@@ -1845,6 +1848,7 @@ var httpObserver = {
         this.pendingRingBufferInit();
 
         Services.obs.addObserver(this, 'http-on-opening-request', true);
+        Services.obs.addObserver(this, 'http-on-modify-request', true); //adn
         Services.obs.addObserver(this, 'http-on-examine-response', true);
 
         // Guard against stale instances not having been unregistered
@@ -1873,6 +1877,7 @@ var httpObserver = {
 
     unregister: function() {
         Services.obs.removeObserver(this, 'http-on-opening-request');
+        Services.obs.removeObserver(this, 'http-on-modify-request'); // adn
         Services.obs.removeObserver(this, 'http-on-examine-response');
 
         this.componentRegistrar.unregisterFactory(this.classID, this);
@@ -2069,6 +2074,63 @@ var httpObserver = {
         return value;
     },
 
+    getRequestHeader: function(channel, name) {
+        var value;
+        try {
+            value = channel.getRequestHeader(name);
+        } catch (ex) {
+        }
+        return value;
+    },
+
+    // generate a unique requestId from URI string
+    requestId: function(s) {
+        var hash = 0, i, chr, len;
+        if (s.length === 0) return hash;
+        for (i = 0, len = s.length; i < len; i++) {
+            chr   = s.charCodeAt(i);
+            hash  = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    },
+
+    handleRequestHeaders: function(channel, URI, channelData) {
+
+        var requestType = this.typeMap[channelData[3]] || 'other',
+            checkTypes = this.onBeforeSendHeadersTypes;
+
+        if (checkTypes && checkTypes.has(requestType) === false) {
+            return;
+        }
+
+        var requestHeaders = [];
+        channel.visitRequestHeaders(function(name, value) {
+            requestHeaders.push({ name: name, value: value });
+        });
+
+        var result = this.onBeforeSendHeaders({
+            requestId: this.requestId(channel.originalURI.asciiSpec),
+            requestHeaders: requestHeaders,
+            tabId: channelData[2],
+            type: requestType,
+            url: URI.asciiSpec
+        });
+
+        if (result && result.requestHeaders) {
+
+            var headers = result.requestHeaders;
+            for (var i = 0; i < headers.length; i++) {
+
+                var header = headers[i];
+                if (header.value && header.value.length)
+                    channel.setRequestHeader(header.name, header.value, false);
+                else
+                    channel.setEmptyRequestHeader(header.name);
+            }
+        }
+    },
+
     handleResponseHeaders: function(channel, URI, channelData) {
         var requestType = this.typeMap[channelData[3]] || 'other';
         if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(requestType) === false ) {
@@ -2116,7 +2178,7 @@ var httpObserver = {
         }
     },
 
-    observe: function(channel, topic) {
+    observe: function(channel, topic, data) {
         if ( channel instanceof Ci.nsIHttpChannel === false ) {
             return;
         }
@@ -2124,6 +2186,7 @@ var httpObserver = {
         var URI = channel.URI;
 
         if ( topic === 'http-on-examine-response' ) {
+
             if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
                 return;
             }
@@ -2138,6 +2201,26 @@ var httpObserver = {
             }
 
             this.handleResponseHeaders(channel, URI, channelData);
+
+            return;
+        }
+
+        if ( topic === 'http-on-modify-request' ) {
+
+            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
+                return;
+            }
+
+            var channelData;
+            try {
+                channelData = channel.getProperty(this.REQDATAKEY);
+            } catch (ex) {
+            }
+            if ( !channelData ) {
+                return;
+            }
+
+            this.handleRequestHeaders(channel, URI, channelData);
 
             return;
         }
@@ -2261,8 +2344,17 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
+
     // Since it's not used
-    this.onBeforeSendHeaders = null;
+    //this.onBeforeSendHeaders = null;
+
+    // adn
+    if ( typeof this.onBeforeSendHeaders.callback === 'function' ) {
+        httpObserver.onBeforeSendHeaders = this.onBeforeSendHeaders.callback;
+        httpObserver.onBeforeSendHeadersTypes  = this.onBeforeSendHeaders.types ?
+            new Set(this.onBeforeSendHeaders.types) :
+            null;
+    }
 
     if ( typeof this.onBeforeRequest.callback === 'function' ) {
         httpObserver.onBeforeRequest = this.onBeforeRequest.callback;
