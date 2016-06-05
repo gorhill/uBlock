@@ -615,7 +615,7 @@
 
   function computeZoom(items) { // autozoom
 
-    setZoom(zoomIdx = 2, true);
+    setZoom(zoomIdx = Zooms.indexOf(100), true);
 
     var i = 0,
       percentVis = 0.6,
