@@ -6,10 +6,10 @@
 
   // for debugging only
   var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 1, // start with zero ads
+    clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 1; // for automated testing
+    logBlocks = 1;    // tmp: for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -19,7 +19,7 @@
     visitTimeout = 20000,
     profiler = +new Date(),
     pollQueueInterval = 5000,
-    strictBlockingDisabled = 0,
+    strictBlockingDisabled = false,
     repeatVisitInterval = 3600000 * 24; // 24 hours
 
   // mark ad visits as failure if any of these are included in title
