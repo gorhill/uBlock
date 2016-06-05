@@ -98,7 +98,8 @@ div.tooltip {
 }
 
 #container:active:not(.lightbox) {
-	cursor: move;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
 }
 
 #loading-img{
@@ -346,12 +347,6 @@ div.tooltip {
 }
 
 /* AD */
-
-/* specify cursor so that clicking .item it won't show 'move' type cursor */
-.item:active {
-	cursor: -moz-grabbing;
-	cursor: -webkit-grabbing;
-}
 
 .item.inspected > .ad{
 	position: relative;
