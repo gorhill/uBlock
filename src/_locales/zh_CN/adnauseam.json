@@ -104,7 +104,7 @@
     "description":"appears in ADN vault page"
   },
   "adnVaultFound":{
-    "message":"个广告",
+    "message":"个广告被显示",
     "description":"appears in ADN vault page"
   },
   "adnVaultDeleteThisAd":{
