@@ -104,7 +104,7 @@
     "description": "appears in ADN vault page"
   },
   "adnVaultFound": {
-    "message": "found",
+    "message": "shown",
     "description": "appears in ADN vault page"
   },
   "adnVaultDeleteThisAd": {

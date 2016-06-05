@@ -7,7 +7,7 @@
   'use strict';
 
   const States = ['pending', 'visited', 'failed'],
-    Zooms = [100, 75, 50, 25, 12.5, 6.25],
+    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
     MaxStartNum = 400,
     MaxPerSet = 9;
@@ -24,7 +24,7 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    userZoomScale = 100, // determined by mousewheel
+    userZoomScale = Zooms[0], // determined by mousewheel
     zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
@@ -615,7 +615,7 @@
 
   function computeZoom(items) { // autozoom
 
-    setZoom(zoomIdx = 0, true);
+    setZoom(zoomIdx = 2, true);
 
     var i = 0,
       percentVis = 0.6,
@@ -734,13 +734,14 @@
 
     if (store) {
 
-      viewState.zoomIdx = zoomIdx;
+      viewState.zoomScale = userZoomScale;
       viewState.left = $dm.css('margin-left');
       viewState.top = $dm.css('margin-top');
 
     } else { // restore
 
-      setZoom(zoomIdx = viewState.zoomIdx);
+      // restore zoom scale to userZoomScale
+      dynamicZoom(viewState.zoomScale - 100);
       $dm.css('margin-left', viewState.left);
       $dm.css('margin-top', viewState.top);
     }
@@ -944,13 +945,10 @@
   function zoomIn(immediate) {
     
     // calculate the suitable zoomIdx by userZoomScale
-    var beforeChange = zoomIdx;
-    for (var i = 0; zoomIdx == zoomIdx && i < Zooms.length - 2; i++) {
+    var previousState = zoomIdx;
+    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
       
-      // need this because min userZoomScale is 5, lower than Zooms[Zooms.length - 1]
-      if (userZoomScale < Zooms[Zooms.length - 1]) 
-        zoomIdx = Zooms.length;
-      else if (userZoomScale == Zooms[i])
+      if (userZoomScale == Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
         zoomIdx = i + 1;
@@ -962,8 +960,8 @@
   function zoomOut(immediate) {
     
     // calculate the suitable zoomIdx by userZoomScale
-    var beforeChange = zoomIdx;
-    for (var i = 0; zoomIdx == beforeChange && i < Zooms.length - 2; i++) {
+    var previousState = zoomIdx;
+    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
       
       if (userZoomScale == Zooms[i])
         zoomIdx = i;
@@ -984,13 +982,13 @@
   function dynamicZoom(scaleInterval) {
     
     userZoomScale += scaleInterval;
-    if (userZoomScale > 100)
-      userZoomScale = 100;
-    else if (userZoomScale < 5)
-      userZoomScale = 5;
+    if (userZoomScale > Zooms[0])
+      userZoomScale = Zooms[0];
+    else if (userZoomScale < Zooms[Zooms.length - 1])
+      userZoomScale = Zooms[Zooms.length - 1];
       
     setScale(userZoomScale);
-    $('#ratio').text(Math.round(userZoomScale * 10) / 10 + '%'); // set zoom-text to 1 decimal place
+    $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%'); // set zoom-text to 2 decimal places
   }
 
   function setZoom(idx, immediate) {
@@ -1178,7 +1176,7 @@
       });
     }
 
-    $("body").mousewheel(function (e, delta) {
+    $("body").mousewheel(function (e) {
 
       if ($('#container').hasClass('lightbox')) {
 
@@ -1186,18 +1184,9 @@
         return;
       }
       
-      /* delta denotes how fast the mousewheel got scrolled
-         for mice with discrete steps, each step ususally 
-         have a fixed delta value e.g. 100
-         for mice with continuous scroll or on a trackpad
-         the delta can vary 
-         large delta means the scrolling is accelerated and
-         should scale the canavs faster with a larger scale 
-         
-         negative delta means scrolling inward and will 
-         produce a negative scale value; vice versa
-      */
-      var scale = (delta >= 100) ? 1 : delta / 10;
+      // rawDeltaY denotes how fast the mousewheel got scrolled
+      var rawDeltaY = e.deltaY * e.deltaFactor;
+      var scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
       
       dynamicZoom(scale);
     });
