@@ -299,11 +299,19 @@ div.tooltip {
 
 #container {
 	transition: margin 0.5s ease, transform 0.2s ease;
+	
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 
 #container.lightbox{
 	transition: transform 0.5s ease 0.1s, margin 0.5s ease;
 	z-index: 1000;
+	
+	-ms-user-select: all;
+	-webkit-user-select: all;
+	-moz-user-select: all;
 }
 
 #container.dragged {
