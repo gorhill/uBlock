@@ -133,23 +133,13 @@ var fromCosmeticFilter = function(details) {
     // Second step: find hostname-based versions.
     // Reference: FilterContainer.compileHostnameSelector().
     var pos;
-    var domain = details.domain;
     var hostname = details.hostname;
-
     if ( hostname !== '' ) {
         for ( ;; ) {
             candidates[hostname + '##' + filter] = new RegExp(
                 ['c', 'h', '\\w+', reEscape(hostname), reEscape(filter)].join('\\v') +
                 '(?:\\n|$)'
             );
-            // If there is no valid domain, there won't be any other
-            // version of this hostname-based filter.
-            if ( domain === '' ) {
-                break;
-            }
-            if ( hostname === domain ) {
-                break;
-            }
             pos = hostname.indexOf('.');
             if ( pos === -1 ) {
                 break;
@@ -160,6 +150,7 @@ var fromCosmeticFilter = function(details) {
 
     // Last step: find entity-based versions.
     // Reference: FilterContainer.compileEntitySelector().
+    var domain = details.domain;
     pos = domain.indexOf('.');
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos);
