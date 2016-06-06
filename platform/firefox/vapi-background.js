@@ -2213,42 +2213,29 @@ var httpObserver = {
 
     // contentPolicy.shouldLoad doesn't detect redirects, this needs to be used
     asyncOnChannelRedirect: function(oldChannel, newChannel, flags, callback) {
-        var result = this.ACCEPT;
-
         // If error thrown, the redirect will fail
         try {
             var URI = newChannel.URI;
-
             if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
                 return;
             }
 
-            if ( !(oldChannel instanceof Ci.nsIWritablePropertyBag) ) {
-                return;
-            }
-
-            var channelData = oldChannel.getProperty(this.REQDATAKEY);
-
-            var details = {
-                frameId: channelData[0],
-                parentFrameId: channelData[1],
-                tabId: channelData[2],
-                rawtype: channelData[3]
-            };
-
-            if ( this.handleRequest(newChannel, URI, details) ) {
-                result = this.ABORT;
+            if (
+                oldChannel instanceof Ci.nsIWritablePropertyBag === false ||
+                newChannel instanceof Ci.nsIWritablePropertyBag === false
+            ) {
                 return;
             }
 
             // Carry the data on in case of multiple redirects
-            if ( newChannel instanceof Ci.nsIWritablePropertyBag ) {
-                newChannel.setProperty(this.REQDATAKEY, channelData);
-            }
+            newChannel.setProperty(
+                this.REQDATAKEY,
+                oldChannel.getProperty(this.REQDATAKEY)
+            );
         } catch (ex) {
             // console.error(ex);
         } finally {
-            callback.onRedirectVerifyCallback(result);
+            callback.onRedirectVerifyCallback(this.ACCEPT);
         }
     }
 };
