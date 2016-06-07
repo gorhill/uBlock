@@ -133,7 +133,7 @@
 
     var next, pending = pendingAds();
 
-    if (pending.length) {
+    if (pending.length && µb.userSettings.clickingAds) {
 
       // if an unvisited ad is being inspected, visit it next
       if (visitPending(inspected)) {
@@ -315,8 +315,8 @@
 
   var onVisitResponse = function () {
 
-    if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
-        log('onVisitResponseHeaders\n', this.responseText);
+    //if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
+    //    log('onVisitResponseHeaders\n', this.responseText);
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -651,6 +651,7 @@
 
     // preferences relevant to our content/ui-scripts
     return {
+      hidingAds: µb.userSettings.hidingAds,
       parseTextAds: µb.userSettings.parseTextAds
     };
   }
@@ -1127,7 +1128,7 @@
 
       } else warn("NO hits ****", raw, compiled);
 
-  } else warn("No-block: blocking disabled or lists not loaded");
+    } else logBlocks && warn("ALLOW: blocking-off or lists not loaded");
 
     return true;
   }

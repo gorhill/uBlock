@@ -504,8 +504,6 @@
       name: name,
       value: value
     });
-
-    if (dbug)console.log('addHeader',headers[headers.length-1]);
   };
 
   /******************************************************************************/
