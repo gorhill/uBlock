@@ -113,16 +113,16 @@
   },
 
   "hidingAdsPrompt": {
-    "message": "Will hide ads identified by your chosen filter lists",
-    "description": "English: Will hide ads identified by your chosen filter lists"
+    "message": "Hide ads identified by your chosen filter lists",
+    "description": "English: Hide ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Will click ads identified by your chosen filter lists",
-    "description": "English: Will click ads identified by your chosen filter lists"
+    "message": "Click ads identified by your chosen filter lists",
+    "description": "English: Click ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Will protect your browser from malware and other non-visual trackers",
-    "description": "English: Will protect your browser from malware and other non-visual trackers"
+    "message": "Protect your browser from malware and other non-visual trackers",
+    "description": "English: Protect your browser from malware and other non-visual trackers"
   },
 
   "parseTextAdsPrompt": {
