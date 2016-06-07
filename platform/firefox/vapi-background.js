@@ -2123,12 +2123,18 @@ var httpObserver = {
             for (var i = 0; i < headers.length; i++) {
 
                 var header = headers[i];
-                if (header.value && header.value.length)
+                if (header.value && header.value.length) {
                     channel.setRequestHeader(header.name, header.value, false);
-                else
-                    channel.setEmptyRequestHeader(header.name);
+                    console.log('ff.set: '+header.name, header.value);
+                }
+                else {
+                    channel.setRequestHeader(header.name, undefined, false);
+                    console.log('ff.remove: '+header.name, header.value);
+                }
             }
         }
+
+
     },
 
     handleResponseHeaders: function(channel, URI, channelData) {

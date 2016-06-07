@@ -970,7 +970,22 @@ vAPI.net.registerListeners = function() {
     var onBeforeSendHeaders = function(details) {
 
         normalizeRequestDetails(details);
-        return onBeforeSendHeadersClient(details);
+        var result = onBeforeSendHeadersClient(details);
+
+        if (result && result.requestHeaders) {
+
+            var headers = result.requestHeaders;
+            for (var i = 0; i < headers.length; i++) {
+
+                var header = headers[i];
+                if (!(header.value && header.value.length)) {
+
+                    headers.splice(i, 1); // remove
+                }
+            }
+        }
+
+        return result;
     };
 
     var installListeners = (function() {

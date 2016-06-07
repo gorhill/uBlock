@@ -6,7 +6,7 @@
 
   // for debugging only
   var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 0, // start with zero ads
+    clearAdsOnInit = 1, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
     logBlocks = 1;    // tmp: for testing list-blocking
@@ -315,8 +315,8 @@
 
   var onVisitResponse = function () {
 
-    //if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
-        //log('onVisitResponseHeaders\n', this.responseText);
+    if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
+        log('onVisitResponseHeaders\n', this.responseText);
 
     this.onload = this.onerror = this.ontimeout = null;
 

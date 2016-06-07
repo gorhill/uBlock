@@ -431,12 +431,10 @@
 
   var onBeforeSendHeaders = function (details) {
 
-    //console.log('onBeforeSendHeaders',details.url, details);
-
     // We only care about behind-the-scene requests here
     if (!vAPI.isBehindTheSceneTabId(details.tabId)) return;
 
-    var headers = details.requestHeaders,
+    var headers = details.requestHeaders, dbug = 0,
       ad = findDelegate(details.url, details.requestId);
 
     if (!ad) {
@@ -444,8 +442,8 @@
       return;
     }
 
-    console.log("AdNauseam.beforeRequest[Re" + (ad.requestId ===
-      details.requestId ? 'direct' : 'quest') + ']: ' + details.url);
+    if (dbug) console.log("AdNauseam.beforeRequest[Re" + (ad.requestId
+      === details.requestId ? 'direct' : 'quest') + ']: ' + details.url);
 
     ad.requestId = details.requestId;
 
@@ -457,8 +455,7 @@
 
       if ((prefs.noOutgoingCookies && headers[i].name === 'Cookie') ||
         (prefs.noOutgoingUserAgent && headers[i].name === 'User-Agent')) {
-        //console.log("Emptying "+headers[i].name);
-        //headers.splice(i, 1); // chrome
+
         setHeader(headers[i], '');
       }
 
@@ -471,14 +468,17 @@
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
 
-    //console.log("Referer: "+referer);
-    if (refererIdx > -1 && prefs.noOutgoingReferer)
+    if (dbug)console.log("Referer: "+referer, prefs.noOutgoingReferer, refererIdx);
+
+    if (refererIdx > -1 && prefs.noOutgoingReferer) {
         setHeader(headers[refererIdx], '');
-    else if (!prefs.noOutgoingReferer && refererIdx < 0)
+    }
+    else if (!prefs.noOutgoingReferer && refererIdx < 0) {
         addHeader(headers, 'Referer', referer);
+    }
 
     return { requestHeaders: headers };
-  }
+  };
 
   var findDelegate = function (url, id) {
 
@@ -490,30 +490,13 @@
         }
       }
     }
-  }
-
-  var findDelegateByUrl = function (url) { // not used
-
-    var ads = µBlock.adnauseam.adlist();
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i].attemptedTs && ads[i].targetUrl === url)
-        return ads[i];
-    }
-  }
-
-  var findDelegateByRequestId = function (id) { // not used
-
-    var ads = µBlock.adnauseam.adlist();
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i].attemptedTs && ads[i].requestId === id)
-        return ads[i];
-    }
-  }
+  };
 
   var setHeader = function (header, value) {
+
     if (header && typeof header.value !== 'undefined')
         header.value = value;
-  }
+  };
 
   var addHeader = function (headers, name, value) {
 
@@ -521,7 +504,9 @@
       name: name,
       value: value
     });
-  }
+
+    if (dbug)console.log('addHeader',headers[headers.length-1]);
+  };
 
   /******************************************************************************/
 
