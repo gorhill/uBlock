@@ -1109,7 +1109,7 @@
 
     //console.log('isBlockableRequest', result);
 
-    if (strictBlockingDisabled) {
+    if (strictBlockingDisabled && µb.userSettings.blockingMalware) {
 
       var compiled = result.slice(3),
         snfe = µb.staticNetFilteringEngine,
@@ -1127,7 +1127,7 @@
 
       } else warn("NO hits ****", raw, compiled);
 
-    } else warn("Ignoring: lists not loaded...");
+  } else warn("No-block: blocking disabled or lists not loaded");
 
     return true;
   }

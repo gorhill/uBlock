@@ -112,6 +112,19 @@
     "description": "appears in ADN vault page"
   },
 
+  "hidingAdsPrompt": {
+    "message": "Will hide ads identified by your chosen filter lists",
+    "description": "English: Will hide ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Will click ads identified by your chosen filter lists",
+    "description": "English: Will click ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Will protect your browser from malware and other non-visual trackers",
+    "description": "English: Will protect your browser from malware and other non-visual trackers"
+  },
+
   "parseTextAdsPrompt": {
     "message": "Capture text-only ads when possible",
     "description": "English: Capture text-only ads when possible"
