@@ -328,7 +328,7 @@ var uBlockCollapser = (function() {
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
                     elems[i].style.setProperty('display', 'none', 'important');
-                    if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+                    if (typeof dbugDetect!=='undefined' && dbugDetect)
                         console.log("HIT[noShadow]: ",elems[i]);
                     typeof adDetector !=='undefined' && adDetector.findAds(elems[i]);
                 }
@@ -369,7 +369,7 @@ var uBlockCollapser = (function() {
                 } catch (ex) {
                     elem.style.setProperty('display', 'none', 'important');
                 }*/
-                if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+                if (typeof dbugDetect!=='undefined' && dbugDetect)
                  console.log("HIT[OK2]: ",elem);
                 elem.style.setProperty('display', 'none', 'important');
                 typeof adDetector !=='undefined' && adDetector.findAds(elem);
@@ -724,7 +724,7 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
-            if (typeof dbdbugDetect!=='undefined' && dbugDetect)
+            if (typeof dbugDetect!=='undefined' && dbugDetect)
                 console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }

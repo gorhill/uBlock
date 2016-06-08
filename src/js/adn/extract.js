@@ -1,4 +1,4 @@
-var dbugDetect = 0; // tmp
+var dbugDetect = 1; // tmp
 
 // Injected into content pages before contentscript-end.js
 // jQuery polyfill: $is, $find, $attr, $text
@@ -10,7 +10,7 @@ var dbugDetect = 0; // tmp
   //console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
 
   if (typeof vAPI !== 'object' ||
-    (vAPI.chrome && chrome.extension.inIncognitoContext))  // #194
+    (vAPI.chrome && chrome.extension.inIncognitoContext)) // #194
   {
     return;
   }
@@ -159,6 +159,11 @@ var dbugDetect = 0; // tmp
       what: 'registerAd',
       ad: ad
     });
+
+    // for automated testing
+    if (prefs.automated && window === window.top)
+        injectAutoDiv();
+
     return true;
   }
 
@@ -490,33 +495,21 @@ var dbugDetect = 0; // tmp
     return new Ad(network, target, data);
   }
 
-  var messageListener = function (request) {
+  var injectAutoDiv = function (request) {
 
-    // this is a temporary means of injecting the adnauseam-count
-    // div into top-level frames for checking via automated tests
-    if (window === window.top && request.automated) {
+    var count = pageCount(request.data, request.pageUrl),
+      adndiv = document.getElementById("adnauseam-count");
 
-      if (request.what === 'adDetected') {
+    if (!adndiv) {
 
-        var count = pageCount(request.data, request.pageUrl),
-          adndiv = document.getElementById("adnauseam-count");
-
-        if (!adndiv) {
-
-          adndiv = document.createElement('div');
-          $attr(adndiv, 'id', 'adnauseam-count');
-          var body = document.getElementsByTagName("body");
-          body.length && body[0].appendChild(adndiv);
-          //console.log("Injected: #adnauseam-count");
-        }
-
-        $attr(adndiv, 'count', count);
-        console.log("INSERT_COUNT=" + count + ")");
-      }
+      adndiv = document.createElement('div');
+      $attr(adndiv, 'id', 'adnauseam-count');
+      var body = document.getElementsByTagName("body");
+      body.length && body[0].appendChild(adndiv);
+      //console.log("Injected: #adnauseam-count");
     }
-  }
 
-  // uncomment if running automated tests
-  //vAPI.messaging.addChannelListener('adnauseam', messageListener);
+    $attr(adndiv, 'count', count);
+  }
 
 })(this);
