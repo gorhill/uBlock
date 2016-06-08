@@ -7,7 +7,7 @@ var dbugDetect = 1; // tmp
 
   'use strict';
 
-  //console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
+  console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
 
   if (typeof vAPI !== 'object' ||
     (vAPI.chrome && chrome.extension.inIncognitoContext)) // #194
@@ -29,7 +29,7 @@ var dbugDetect = 1; // tmp
   });
 
   adDetector.useShadowDOM = false;
-  
+
   adDetector.ignoreTargets = [
     'http://www.google.com/settings/ads/anonymous',
     'http://choice.microsoft.com'
