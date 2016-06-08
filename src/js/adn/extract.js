@@ -7,29 +7,27 @@ var dbugDetect = 1; // tmp
 
   'use strict';
 
-  console.log("EXTRACT", vAPI, chrome.extension.inIncognitoContext);
-
   if (typeof vAPI !== 'object' ||
     (vAPI.chrome && chrome.extension.inIncognitoContext)) // #194
   {
     return;
   }
 
-  var prefs, adDetector = self.adDetector = self.adDetector || {};
+  var adDetector = self.adDetector = self.adDetector || {};
 
   if (adDetector.findAds) {
     //console.log('skipping extract: ',typeof vAPI);
     return;
   }
 
-  vAPI.messaging.send('adnauseam', {
-    what: 'getPreferences'
-  }, function (req) {
-    prefs = req;
-  });
+  // vAPI.messaging.send('adnauseam', {
+  //   what: 'getPreferences'
+  // }, function (req) {
+  //   prefs = req;
+  // });
 
+  adDetector.prefs = {};
   adDetector.useShadowDOM = false;
-
   adDetector.ignoreTargets = [
     'http://www.google.com/settings/ads/anonymous',
     'http://choice.microsoft.com'
@@ -56,7 +54,7 @@ var dbugDetect = 1; // tmp
       // Question: if we find images, do we want to still try text?
 
       // and finally check for text ads
-      prefs.parseTextAds && findTextAds(elem);
+      adDetector.prefs.parseTextAds && findTextAds(elem);
     }
   }
 
@@ -163,7 +161,7 @@ var dbugDetect = 1; // tmp
     });
 
     // for automated testing
-    if (prefs.automated && window === window.top)
+    if (adDetector.prefs.automated && window === window.top)
         injectAutoDiv();
 
     return true;
