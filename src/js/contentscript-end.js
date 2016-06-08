@@ -334,46 +334,53 @@ var uBlockCollapser = (function() {
                 }
             };
         }
-        return function(selectors) {
-            if ( selectors.length === 0 ) { return; }
+        return function (selectors) {
+            if (selectors.length === 0) {
+                return;
+            }
             var elems = document.querySelectorAll(selectors);
             var i = elems.length;
-            if ( i === 0 ) { return; }
-            // https://github.com/gorhill/uBlock/issues/435
-            // Using shadow content so that we do not have to modify style
-            // attribute.
-            var sessionId = vAPI.sessionId;
-            var elem, shadow;
-            while ( i-- ) {
+            if (i === 0) {
+                return;
+            }
+            if (typeof adDetector ==='undefined' || adDetector.useShadowDOM) {
+
+              console.warn('using shadowDom in content-scripts');
+              // https://github.com/gorhill/uBlock/issues/435
+              // Using shadow content so that we do not have to modify style
+              // attribute.
+              var sessionId = vAPI.sessionId;
+              var elem, shadow;
+              while (i--) {
                 elem = elems[i];
-                // shadow = elem.shadowRoot;
-                // // https://www.chromestatus.com/features/4668884095336448
-                // // "Multiple shadow roots is being deprecated."
-                // if ( shadow !== null ) {
-                //     if ( shadow.className !== sessionId ) {
-                //         if(dbugDetect); console.log("HIT[shadow]: ",elem);
-                //         elem.style.setProperty('display', 'none', 'important');
-                //     }
-                //     continue;
-                // }
+                shadow = elem.shadowRoot;
+                // https://www.chromestatus.com/features/4668884095336448
+                // "Multiple shadow roots is being deprecated."
+                if (shadow !== null) {
+                  if (shadow.className !== sessionId) {
+                    elem.style.setProperty('display', 'none', 'important');
+                  }
+                  continue;
+                }
                 // https://github.com/gorhill/uBlock/pull/555
                 // Not all nodes can be shadowed:
                 //   https://github.com/w3c/webcomponents/issues/102
                 // https://github.com/gorhill/uBlock/issues/762
                 // Remove display style that might get in the way of the shadow
                 // node doing its magic.
-                /*try {
-                    shadow = elem.createShadowRoot();
-                    shadow.className = sessionId;
-                    elem.style.removeProperty('display');
+                try {
+                  shadow = elem.createShadowRoot();
+                  shadow.className = sessionId;
+                  elem.style.removeProperty('display');
                 } catch (ex) {
-                    elem.style.setProperty('display', 'none', 'important');
-                }*/
-                if (typeof dbugDetect!=='undefined' && dbugDetect)
-                 console.log("HIT[OK2]: ",elem);
-                elem.style.setProperty('display', 'none', 'important');
-                typeof adDetector !=='undefined' && adDetector.findAds(elem);
+                  elem.style.setProperty('display', 'none', 'important');
+                }
             }
+            if (typeof dbugDetect !== 'undefined' && dbugDetect)
+                console.log("HIT[OK2]: ", elem);
+            elem.style.setProperty('display', 'none', 'important');
+            typeof adDetector !== 'undefined' && adDetector.findAds(elem);
+          }
         };
     })();
 
