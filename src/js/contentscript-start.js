@@ -138,13 +138,22 @@ var injectScripts = function(scripts) {
 /******************************************************************************/
 
 var filteringHandler = function(details) {
+
+    console.log('filteringHandler', typeof adDetector, details);
     var styleTagCount = vAPI.styles.length;
 
+
     if ( details ) {
+
+        if (typeof adDetector !== 'undefined') {
+            adDetector.prefs = details.prefs;
+            console.log('adDetector',adDetector);
+        }
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
             (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
         ) {
+            console.log('cosmeticFilters()');
             cosmeticFilters(details);
         }
         if ( details.netHide.length !== 0 ) {
@@ -225,7 +234,7 @@ var hideElements = function(selectors) {
 
 var url = window.location.href;
 vAPI.messaging.send(
-    'contentscript',
+    'adnauseam',
     {
         what: 'retrieveDomainCosmeticSelectors',
         pageURL: url,

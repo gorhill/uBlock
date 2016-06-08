@@ -302,12 +302,19 @@ var uBlockCollapser = (function() {
 // Cosmetic filters
 
 (function() {
+
+    console.log('CSE: cosmeticFilters()', vAPI.skipCosmeticFiltering);
+    console.log('CSE: cosmeticFilters()', Object.keys(vAPI));
+
     if ( vAPI.skipCosmeticFiltering ) {
-        //console.debug('Abort cosmetic filtering');
+        console.debug('Abort cosmetic filtering');
         return;
     }
+    else
+        console.log('CSE: cosmeticFilters()', vAPI.skipCosmeticFiltering);
 
-    //console.debug('Start cosmetic filtering');
+    console.debug('Start cosmetic filtering',vAPI);
+    console.debug('Start cosmetic filtering',vAPI['skipCosmeticFiltering']);
 
     //var timer = window.performance || Date;
     //var tStart = timer.now();
