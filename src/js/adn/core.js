@@ -651,6 +651,8 @@
 
     // preferences relevant to our content/ui-scripts
     return {
+
+      automated: automatedMode,
       hidingAds: µb.userSettings.hidingAds,
       parseTextAds: µb.userSettings.parseTextAds
     };
@@ -1106,6 +1108,20 @@
     return lists;
   };
 
+  var retrieveDomainCosmeticSelectors = function (request, pageStore, tabId) {
+
+      console.log('adn.retrieveDomainCosmeticSelectors');
+      var response;
+      if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+          response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+          if ( response && response.skipCosmeticFiltering !== true ) {
+              response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch()
+                || !µb.userSettings.hidingAds; // adn
+          }
+      }
+      return response;
+  }
+
   var isBlockableRequest = function (result, isTop) {
 
     //console.log('isBlockableRequest', result);
@@ -1170,8 +1186,9 @@
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     getPreferences: getPreferences,
+    fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
-    fromNetFilterSync: fromNetFilterSync
+    retrieveDomainCosmeticSelectors: retrieveDomainCosmeticSelectors
   };
 
 })();
