@@ -9,7 +9,7 @@
     clearAdsOnInit = 1, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 1;    // tmp: for testing list-blocking
+    logBlocks = 1; // tmp: for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -407,7 +407,6 @@
     try {
 
       xhr.open('get', ad.targetUrl, true);
-//      xhr.setRequestHeader('Referer', 'AdNauseam');
       xhr.withCredentials = true;
       xhr.delegate = ad;
       xhr.timeout = visitTimeout;
@@ -1110,16 +1109,20 @@
 
   var retrieveDomainCosmeticSelectors = function (request, pageStore, tabId) {
 
-      console.log('adn.retrieveDomainCosmeticSelectors');
-      var response;
-      if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-          response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-          if ( response && response.skipCosmeticFiltering !== true ) {
-              response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch()
-                || !µb.userSettings.hidingAds; // adn
-          }
+    //console.log('adn.retrieveDomainCosmeticSelectors');
+
+    var response;
+    if (pageStore && pageStore.getNetFilteringSwitch()) {
+      response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+      if (response) {
+        if (response.skipCosmeticFiltering !== true) {
+          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch()
+            || !µb.userSettings.hidingAds; // adn
+        }
+        response.prefs = scriptPrefs();
       }
-      return response;
+    }
+    return response;
   }
 
   var isBlockableRequest = function (result, isTop) {
@@ -1139,8 +1142,7 @@
 
           return false; //log("Reject-block: " + title, raw);
 
-        } else logBlocks && log("BLOCK" + (isTop ? '-MAIN: ' : ': ')
-            + hits[0].title + " " + raw);
+        } else logBlocks && log("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
 
       } else warn("NO hits ****", raw, compiled);
 
