@@ -41,7 +41,7 @@
 	"easylist-downloads.adblockplus.org/easylist.txt": {
 		"title": "EasyList",
 		"group": "ads",
-		"homeURL": "https://easylist-downloads.adblockplus.org/easylist.txt",
+		"homeURL": "https://easylist.github.io/easylist/easylist.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": {
@@ -93,7 +93,7 @@
 	"easylist-downloads.adblockplus.org/easyprivacy.txt": {
 		"title": "EasyPrivacy",
 		"group": "privacy",
-		"homeURL": "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+		"homeURL": "https://easylist.github.io/easylist/easyprivacy.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": {
