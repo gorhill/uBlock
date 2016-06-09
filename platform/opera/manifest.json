@@ -1,60 +1,56 @@
 {
-    "manifest_version": 2,
-    "name": "AdNauseam",
-    "version": "{version}",
-    "default_locale": "en",
-    "description": "__MSG_extShortDesc__",
-    "icons": {
-        "16": "img/icon_16.png",
-        "128": "img/icon_128.png"
-    },
+  "manifest_version": 2,
+  "name": "AdNauseam",
+  "version": "{version}",
+  "default_locale": "en",
+  "description": "__MSG_extShortDesc__",
+  "icons": {
+    "16": "img/icon_16.png",
+    "128": "img/icon_128.png"
+  },
 
-    "browser_action": {
-        "default_icon": {
-            "19": "img/browsericons/icon19.png",
-            "38": "img/browsericons/icon19.png"
-        },
-        "default_title": "AdNauseam",
-        "default_popup": "menu.html"
+  "browser_action": {
+    "default_icon": {
+      "19": "img/browsericons/icon19.png",
+      "38": "img/browsericons/icon19.png"
     },
+    "default_title": "AdNauseam",
+    "default_popup": "menu.html"
+  },
 
-    "author": "Daniel C. Howe",
-    "background": {
-        "page": "background.html"
-    },
-    "content_scripts": [
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi-client.js", "js/contentscript-start.js"],
-            "run_at": "document_start",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/adn/extract.js", "js/contentscript-end.js"],
-            "run_at": "document_end",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/scriptlets/subscriber.js"],
-            "run_at": "document_idle",
-            "all_frames": false
-        }
-    ],
-    "incognito": "split",
-    "minimum_chrome_version": "22.0",
-    "options_page": "dashboard.html",
-    "permissions": [
-        "contextMenus",
-        "privacy",
-        "storage",
-        "tabs",
-        "unlimitedStorage",
-        "webNavigation",
-        "webRequest",
-        "http://*/*",
-        "https://*/*"
-    ],
-    "short_name": "AdNauseam"
+  "author": "Daniel C. Howe",
+  "background": {
+    "page": "background.html"
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["js/vapi-client.js", "js/contentscript-start.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }, {
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["js/adn/textads.js", "js/adn/parser.js", "js/contentscript-end.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["js/scriptlets/subscriber.js"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }],
+  "incognito": "split",
+  "minimum_chrome_version": "22.0",
+  "options_page": "dashboard.html",
+  "permissions": [
+    "contextMenus",
+    "privacy",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "short_name": "AdNauseam"
 }

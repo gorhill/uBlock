@@ -134,6 +134,7 @@ var uBlockCollapser = (function() {
             // https://github.com/chrisaljoudi/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
             if (vAPI.debugAdParsing) console.log("CSS.HIT(2)");
+            vAPI.adParser.process(target);
             target.style.setProperty('display', 'none', 'important');
 
 
@@ -332,7 +333,7 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
-                    console.log("CSS.HIT(1)");
+                    if (vAPI.debugAdParsing) console.log("CSS.HIT(1)");
                     vAPI.adParser.process(elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
                 }

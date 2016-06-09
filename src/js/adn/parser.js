@@ -3,7 +3,7 @@
   'use strict';
 
   if (window.location === null || typeof vAPI !== 'object') {
-    console.debug('adparser.js > window.location===null || vAPI not found');
+    console.debug('parser.js > window.location===null || vAPI not found');
     return;
   }
 
@@ -49,7 +49,7 @@
 
         if (!imgSrc) {
 
-          if (dbugDetect) console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+          vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", imgs[i]);
           imgs[i].addEventListener('load', processDelayedImage, false);
           continue;
         }
@@ -138,7 +138,7 @@
 
     var processImage = function (img, src) {
 
-      var target, targetUrl, ad, hits = 0;
+      var target, targetUrl, ad, dbug = vAPI.debugAdParsing, hits = 0;
 
       target = clickableParent(img);
       if (target) {
@@ -160,13 +160,13 @@
               notifyAddon(ad);
               hits++;
 
-            } else if (dbugDetect) console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
+            } else if (dbug) console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
 
-          } else if (dbugDetect) console.warn("Bail: No href for anchor", target, img);
+          } else if (dbug) console.warn("Bail: No href for anchor", target, img);
 
-        } else if (dbugDetect) console.log("Bail: Non-anchor found: " + target.tagName, img);
+        } else if (dbug) console.log("Bail: Non-anchor found: " + target.tagName, img);
 
-      } else if (dbugDetect) console.log("Bail: No ClickableParent", img);
+      } else if (dbug) console.log("Bail: No ClickableParent", img);
 
     }
 
