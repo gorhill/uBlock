@@ -276,12 +276,6 @@
 		"group": "multipurpose",
 		"supportURL": "http://someonewhocares.org/hosts/"
 	},
-	"https://spam404bl.com/spam404scamlist.txt": {
-		"off": true,
-		"title": "Spam404 (obsolete, will be removed)",
-		"group": "malware",
-		"supportURL": "http://www.spam404.com/"
-	},
 	"https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": {
 		"off": true,
 		"title": "Spam404",
