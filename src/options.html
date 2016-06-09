@@ -14,7 +14,10 @@
   <br>
   <ul id="userSettings">
     <!--li><input id="collapse-blocked" type="checkbox" data-setting-name="collapseBlocked" data-setting-type="bool"><label data-i18n="settingsCollapseBlockedPrompt" for="collapse-blocked"></label-->
-
+    <li class="subgroup">
+      <span data-i18n="">AdNauseam</span>
+    </li>
+    <ul>
     <li>
       <input id="hiding-ads" type="checkbox" data-setting-name="hidingAds" data-setting-type="bool">
       <label data-i18n="hidingAdsPrompt" for="hiding-ads"></label>
@@ -27,8 +30,12 @@
       <input id="blocking-malware" type="checkbox" data-setting-name="blockingMalware" data-setting-type="bool">
       <label data-i18n="blockingMalwarePrompt" for="blocking-malware"></label>
     </li>
+    </ul>
 
-    <p></p>  <!-- separate UI? options -->
+    <li class="subgroup">
+      <span data-i18n="">AdNauseam-advanced</span>
+    </li>
+    <ul>
     <li>
       <input id="icon-badge" type="checkbox" data-setting-name="showIconBadge" data-setting-type="bool">
       <label data-i18n="settingsIconBadgePrompt" for="icon-badge"></label>
@@ -52,12 +59,18 @@
       <label data-i18n="noOutgoingUserAgentPrompt" for="no-outgoing-user-agent"></label>
     </li>
 
+
     <!--li>
       <input id="no-incoming-cookies" type="checkbox" data-setting-name="noOutgoingReferer" data-setting-type="bool">
       <label data-i18n="noOutgoingReferer" for="no-outgoing-referer"></label>
     </li-->
+    </ul>
+    <p></p> <!-- spacer -->
+    <li class="subgroup">
+      <span data-i18n="">Interface</span>
+    </li>
 
-    <p></p> <!-- separate adn options -->
+    <ul>
     <li>
       <input id="context-menu-enabled" type="checkbox" data-setting-name="contextMenuEnabled"
           data-setting-type="bool">
@@ -79,6 +92,8 @@
           data-setting-type="bool">
       <label data-i18n="settingsAdvancedUserPrompt" for="advanced-user-enabled"></label>
     </li>
+    </ul>
+
     <li class="subgroup">
       <span data-i18n="3pGroupPrivacy"></span>
     </li>
