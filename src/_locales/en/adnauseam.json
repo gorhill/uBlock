@@ -121,8 +121,8 @@
     "description": "English: Click ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Protect your browser from malware and other non-visual trackers",
-    "description": "English: Protect your browser from malware and other non-visual trackers"
+    "message": "Protect your browser from malware and non-visual trackers",
+    "description": "English: Protect your browser from malware and non-visual trackers"
   },
 
   "parseTextAdsPrompt": {
@@ -135,8 +135,8 @@
   },
 
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with AdNauseam visits",
-    "description": "English: Hide cookies with AdNauseam visits"
+    "message": "Ignore cookies returned with clicks",
+    "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
     "message": "Don't send cookies on visits",

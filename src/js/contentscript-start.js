@@ -88,7 +88,7 @@ var cosmeticFilters = function(details) {
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
         var parent = document.head || document.documentElement;
         if ( parent ) {
-            parent.appendChild(style);
+            if (0) parent.appendChild(style);
             vAPI.styles.push(style);
         }
         hideElements(styleText);
@@ -125,6 +125,7 @@ var netFilters = function(details) {
 // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
 
 var injectScripts = function(scripts) {
+    console.log('injectScripts: ',scripts);
     var parent = document.head || document.documentElement;
     if ( !parent ) {
         return;
@@ -139,21 +140,18 @@ var injectScripts = function(scripts) {
 
 var filteringHandler = function(details) {
 
-    console.log('filteringHandler', typeof adDetector, details);
-    var styleTagCount = vAPI.styles.length;
+    //console.log('LIFE(CSS):filteringHandler(from retrieveDomainCosmeticSelectors)', vAPI.prefs);
 
+    var styleTagCount = vAPI.styles.length;
 
     if ( details ) {
 
-        if (typeof adDetector !== 'undefined') {
-            adDetector.prefs = details.prefs;
-            console.log('adDetector',adDetector);
-        }
+        // TODO: can we assign prefs to adDetector here?
+
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
             (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
         ) {
-            console.log('cosmeticFilters()');
             cosmeticFilters(details);
         }
         if ( details.netHide.length !== 0 ) {
@@ -192,12 +190,15 @@ var hideElements = function(selectors) {
     }
     // https://github.com/chrisaljoudi/uBlock/issues/158
     // Using CSSStyleDeclaration.setProperty is more reliable
-    if ( document.body.shadowRoot === undefined ) {
+    //if ( document.body.shadowRoot === undefined ) {
         while ( i-- ) {
             elems[i].style.setProperty('display', 'none', 'important');
         }
         return;
-    }
+    //}
+    //
+    // ADN: SKIPPING SHADOW DOM STUFF BELOW
+    //
     // https://github.com/gorhill/uBlock/issues/435
     // Using shadow content so that we do not have to modify style
     // attribute.
@@ -233,6 +234,8 @@ var hideElements = function(selectors) {
 /******************************************************************************/
 
 var url = window.location.href;
+//console.log('LIFE(CSS):send:retrieveDomainCosmeticSelectors', vAPI.prefs);
+
 vAPI.messaging.send(
     'adnauseam',
     {

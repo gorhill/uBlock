@@ -115,9 +115,6 @@
     // Not blocked
     if (µb.isAllowResult(result)) {
       //if (!µb.isAllowResult(result))
-
-      //console.log('UNBLOCK()', result, requestContext);
-
       // https://github.com/chrisaljoudi/uBlock/issues/114
       frameId = details.frameId;
       if (frameId > 0 && isFrame) {
@@ -127,7 +124,6 @@
     }
 
     //console.error('BLOCKED !!!!!!!! ', result, requestContext);
-
     // Blocked
 
     // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
@@ -401,33 +397,52 @@
   // To handle:
   // - inline script tags
   // - media elements larger than n kB
-
   var onHeadersReceived = function (details) {
-    // Do not interfere with behind-the-scene requests.
-    var tabId = details.tabId;
-    if (vAPI.isBehindTheSceneTabId(tabId)) {
-      return;
-    }
 
-    var requestType = details.type;
+      var tabId = details.tabId, dbug = 0;
 
-    if (requestType === 'main_frame') {
-      return onRootFrameHeadersReceived(details);
-    }
+      if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-    if (requestType === 'sub_frame') {
-      return onFrameHeadersReceived(details);
-    }
+        if (µBlock.userSettings.noIncomingCookies) {  // adn
 
-    if (requestType === 'image' || requestType === 'media') {
-      return foilLargeMediaElement(details);
-    }
+            dbug && console.log('behind-the-scene.request', µBlock.userSettings);
+
+            // adn
+            var headers = details.responseHeaders,
+              ad = findDelegate(details.url, details.requestId);
+
+            if (ad) {
+              for (var i = headers.length - 1; i >= 0; i--) {
+                if (details.responseHeaders[i].name === 'Set-Cookie') {
+
+                    dbug && console.log('Removed cookies ***');
+                    details.responseHeaders.splice(i, 1);
+                }
+              }
+            }
+        }
+
+        return;
+      }
+
+      var requestType = details.type;
+
+      if (requestType === 'main_frame') {
+        return onRootFrameHeadersReceived(details);
+      }
+
+      if (requestType === 'sub_frame') {
+        return onFrameHeadersReceived(details);
+      }
+
+      if (requestType === 'image' || requestType === 'media') {
+        return foilLargeMediaElement(details);
+      }
   };
 
   /******************************************************************************/
 
-  // To handle (adn):
-  // - removing outgoing cookies, referer, user-agent
+  // adn: removing outgoing cookies, user-agent, set/hide referer,
 
   var onBeforeSendHeaders = function (details) {
 
@@ -772,6 +787,7 @@
       'https://*/*'
     ],
     types: [
+      'xmlhttprequest', // adn
       'main_frame',
       'sub_frame',
       'image',

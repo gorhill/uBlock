@@ -65,6 +65,7 @@ if ( vAPI.sessionId ) {
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
                  Math.random().toString(36).slice(2);
 vAPI.chrome = true;
+vAPI.debugAdParsing = true;
 
 /******************************************************************************/
 
@@ -336,12 +337,17 @@ vAPI.shutdown.add(function() {
 });
 
 // adn: prefs needed in content scripts
-// var keys = [ 'parseTextAds' ];
-// chrome.storage.local.get(keys, function (data) {
-//     keys.forEach(function(k) {  vAPI[k] = data[k]; });
-//     console.log('CLIENT.parseTextAds: ',vAPI.parseTextAds);
-// });
-
+vAPI.prefs = vAPI.prefs || {};
+//
+// var keys = [ /*'automated',*/ 'parseTextAds', 'hidingAds'];
+// if (typeof vAPI.prefs[keys[0]] === 'undefined') {
+//   chrome.storage.local.get(keys, function (data) {
+//     keys.forEach(function (k) {
+//       vAPI.prefs[k] = data[k];
+//     });
+//     console.log('vAPI.CLIENT.prefs: ', vAPI.prefs);
+//   });
+// }
 // https://www.youtube.com/watch?v=rT5zCHn0tsg
 // https://www.youtube.com/watch?v=E-jS4e3zacI
 

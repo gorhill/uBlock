@@ -55,6 +55,35 @@ vAPI.rpcReceiver.getScriptTagFilters = function(details) {
     }
 };
 
+vAPI.rpcReceiver.getScriptTagFiltersWithPrefs = function(details) {
+
+    // TODO: sets adn.contentPrefs() as vAPI.prefs in Firefox (see vapi-client.js)
+
+    console.log('vAPI.rpcReceiver.getScriptTagFilters()',details);
+
+    var µb = µBlock;
+    var cfe = µb.cosmeticFilteringEngine;
+
+    var result = { prefs: µBlock.adnauseam.contentPrefs() };
+
+    if ( cfe ) {
+
+        // Fetching the script tag filters first: assuming it is faster than
+        // checking whether the site is whitelisted.
+        var hostname = details.frameHostname;
+        var r = cfe.retrieveScriptTagRegex(
+            µb.URI.domainFromHostname(hostname) || hostname,
+            hostname
+        );
+        // https://github.com/gorhill/uBlock/issues/838
+        // Disable script tag filtering if document URL is whitelisted.
+        if ( r !== undefined && µb.getNetFilteringSwitch(details.rootURL) ) {
+            result.filters = r;
+        }
+    }
+    return JSON.stringify(result);
+};
+
 /******************************************************************************/
 
 })();

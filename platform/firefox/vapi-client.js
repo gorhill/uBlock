@@ -54,6 +54,7 @@ self.rpc = self.rpc || function(){};
 
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
+vAPI.debugAdParsing = false;
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
     Math.random().toString(36).slice(2);
 
@@ -110,6 +111,44 @@ vAPI.shutdown = (function() {
         }
     });
 })();
+
+/*(function() {
+
+    // TODO: sets adn.contentPrefs() as vAPI.prefs in Firefox
+    var hostname = location.hostname;
+    if ( !hostname ) {
+        return;
+    }
+    var json = self.rpc({
+        fnName: 'getScriptTagFilters',
+        rootURL: self.location.href,
+        frameURL: self.location.href,
+        frameHostname: hostname
+    });
+
+    if (!json || !json.length) {
+        console.warn("NO JSON RETURNED FROM RPC CALL (settings?) ", json);
+        return;
+    }
+    var result = JSON.parse(json);
+    var filters = result.filters;
+
+    vAPI.prefs = result.prefs;
+
+    if ( typeof filters !== 'string' || filters === '' ) {
+        //console.log('No FILTERS !!!', filters, vAPI);
+        return;
+    }
+    console.warn('!!! FILTERS !!!', filters, vAPI);
+
+    var reFilters = new RegExp(filters);
+    document.addEventListener('beforescriptexecute', function(ev) {
+        if ( reFilters.test(ev.target.textContent) ) {
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+    });
+})();*/
 
 /******************************************************************************/
 

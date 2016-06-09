@@ -95,6 +95,9 @@ var uBlockCollapser = (function() {
     };
 
     var onProcessed = function(response) {
+
+        //console.log('LIFE(CSE):onProcessed(from filterRequests)', vAPI.prefs);
+
         // This can happens if uBO is restarted.
         if ( !response ) {
             return;
@@ -130,12 +133,9 @@ var uBlockCollapser = (function() {
 
             // https://github.com/chrisaljoudi/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
+            if (vAPI.debugAdParsing) console.log("CSS.HIT(2)");
             target.style.setProperty('display', 'none', 'important');
 
-            if (typeof dbugDetect!=='undefined' && dbugDetect)
-                console.log("HIT[OK1]: ", target);
-
-            typeof adDetector !=='undefined' && adDetector.findAds(target);
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -163,6 +163,8 @@ var uBlockCollapser = (function() {
 
     var send = function() {
         timer = null;
+        //console.log('LIFE(CSE):send:filterRequests',vAPI.prefs);
+
         messaging.send(
             'contentscript',
             {
@@ -303,18 +305,14 @@ var uBlockCollapser = (function() {
 
 (function() {
 
-    console.log('CSE: cosmeticFilters()', vAPI.skipCosmeticFiltering);
-    console.log('CSE: cosmeticFilters()', Object.keys(vAPI));
-
-    if ( vAPI.skipCosmeticFiltering ) {
+    if ( vAPI.skipCosmeticFiltering){ //|| vAPI.prefs.hidingAds === false) {
         console.debug('Abort cosmetic filtering');
         return;
     }
-    else
-        console.log('CSE: cosmeticFilters()', vAPI.skipCosmeticFiltering);
 
-    console.debug('Start cosmetic filtering',vAPI);
-    console.debug('Start cosmetic filtering',vAPI['skipCosmeticFiltering']);
+    //console.log('LIFE(CSE):CosmeticFilters', vAPI.prefs);
+
+    //console.debug('Start cosmetic filtering');
 
     //var timer = window.performance || Date;
     //var tStart = timer.now();
@@ -323,7 +321,7 @@ var uBlockCollapser = (function() {
         if ( document.body === null ) {
             return function() {};
         }
-        if ( document.body.shadowRoot === undefined ) {
+        //if ( document.body.shadowRoot === undefined ) {
             return function(selectors) {
                 // https://github.com/chrisaljoudi/uBlock/issues/207
                 // Do not call querySelectorAll() using invalid CSS selectors
@@ -334,64 +332,48 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
+                    console.log("CSS.HIT(1)");
+                    vAPI.adParser.process(elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
-                    if (typeof dbugDetect!=='undefined' && dbugDetect)
-                        console.log("HIT[noShadow]: ",elems[i]);
-                    typeof adDetector !=='undefined' && adDetector.findAds(elems[i]);
                 }
             };
-        }
-        return function (selectors) {
-          if (selectors.length === 0) {
-            return;
-          }
-          var elems = document.querySelectorAll(selectors);
-          var i = elems.length;
-          if (i === 0) {
-            return;
-          }
-
-          // https://github.com/gorhill/uBlock/issues/435
-          // Using shadow content so that we do not have to modify style
-          // attribute.
-          var sessionId = vAPI.sessionId;
-          var elem, shadow;
-          while (i--) {
-            elem = elems[i];
-
-            if (typeof adDetector === 'undefined' || adDetector.useShadowDOM) {
-
-              console.warn('using shadowDom in content-scripts');
-
-              shadow = elem.shadowRoot;
-              // https://www.chromestatus.com/features/4668884095336448
-              // "Multiple shadow roots is being deprecated."
-              if (shadow !== null) {
-                if (shadow.className !== sessionId) {
-                  elem.style.setProperty('display', 'none', 'important');
+        //}
+        return function(selectors) {
+            if ( selectors.length === 0 ) { return; }
+            var elems = document.querySelectorAll(selectors);
+            var i = elems.length;
+            if ( i === 0 ) { return; }
+            // https://github.com/gorhill/uBlock/issues/435
+            // Using shadow content so that we do not have to modify style
+            // attribute.
+            var sessionId = vAPI.sessionId;
+            var elem, shadow;
+            while ( i-- ) {
+                elem = elems[i];
+                /*shadow = elem.shadowRoot;
+                // https://www.chromestatus.com/features/4668884095336448
+                // "Multiple shadow roots is being deprecated."
+                if ( shadow !== null ) {
+                    if ( shadow.className !== sessionId ) {
+                        if (0) elem.style.setProperty('display', 'none', 'important');
+                    }
+                    continue;
                 }
-                continue;
-              }
-              // https://github.com/gorhill/uBlock/pull/555
-              // Not all nodes can be shadowed:
-              //   https://github.com/w3c/webcomponents/issues/102
-              // https://github.com/gorhill/uBlock/issues/762
-              // Remove display style that might get in the way of the shadow
-              // node doing its magic.
-              try {
-                shadow = elem.createShadowRoot();
-                shadow.className = sessionId;
-                elem.style.removeProperty('display');
-              } catch (ex) {
-                elem.style.setProperty('display', 'none', 'important');
-              }
+                // https://github.com/gorhill/uBlock/pull/555
+                // Not all nodes can be shadowed:
+                //   https://github.com/w3c/webcomponents/issues/102
+                // https://github.com/gorhill/uBlock/issues/762
+                // Remove display style that might get in the way of the shadow
+                // node doing its magic.
+                try {
+                    shadow = elem.createShadowRoot();
+                    shadow.className = sessionId;
+                    if (0)elem.style.removeProperty('display');
+                } catch (ex) {
+                    console.error(ex);
+                    elem.style.setProperty('display', 'none', 'important');
+                }*/
             }
-
-            if (typeof dbugDetect !== 'undefined' && dbugDetect)
-              console.log("HIT[OK2]: ", elem);
-            elem.style.setProperty('display', 'none', 'important');
-            typeof adDetector !== 'undefined' && adDetector.findAds(elem);
-          }
         };
     })();
 
@@ -553,7 +535,11 @@ var uBlockCollapser = (function() {
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
         var parent = document.head || document.documentElement;
+
+        // THIS STYLE TAG IS CAUSING http://rednoise.org/adntest/simple.html to hide its ad
         if ( parent ) {
+            // TODO: NEED CONDITIONAL here
+            // if (prefs.hidingAds) { }
             parent.appendChild(style);
             vAPI.styles.push(style);
         }
@@ -742,8 +728,6 @@ var uBlockCollapser = (function() {
             }
         }
         if ( selectors.length !== 0 ) {
-            if (typeof dbugDetect!=='undefined' && dbugDetect)
-                console.log("HIT[addStyle]: ", selectors);
             addStyleTag(selectors);
         }
     };
@@ -987,6 +971,7 @@ var uBlockCollapser = (function() {
 
 (function() {
     var collapser = uBlockCollapser;
+    //console.log('LIFE(CSE):uBlockCollapser',vAPI.prefs);
     var elems = document.getElementsByTagName('img'),
         i = elems.length, elem;
     while ( i-- ) {

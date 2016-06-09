@@ -646,7 +646,7 @@
     return false;
   }
 
-  var scriptPrefs = function () {
+  var contentPrefs = function () {
 
     // preferences relevant to our content/ui-scripts
     return {
@@ -662,7 +662,7 @@
     return {
       data: adlist(),
       pageUrl: pageUrl,
-      prefs: scriptPrefs(),
+      prefs: contentPrefs(),
       current: activeVisit()
     };
   }
@@ -975,10 +975,10 @@
     }
   }
 
-  var getPreferences = function (request, pageStore, tabId) {
-
-    return scriptPrefs();
-  }
+  // var getPreferences = function (request, pageStore, tabId) {
+  //
+  //   return contentPrefs();
+  // }
 
   var logAdSet = function (request, pageStore, tabId) {
 
@@ -1119,7 +1119,7 @@
           response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch()
             || !µb.userSettings.hidingAds; // adn
         }
-        response.prefs = scriptPrefs();
+        response.prefs = contentPrefs();
       }
     }
     return response;
@@ -1185,9 +1185,10 @@
     deleteAdSet: deleteAdSet,
     listsLoaded: listsLoaded,
     updateBadges: updateBadges,
+    contentPrefs: contentPrefs,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    getPreferences: getPreferences,
+    //getPreferences: getPreferences,
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     retrieveDomainCosmeticSelectors: retrieveDomainCosmeticSelectors
