@@ -9,7 +9,7 @@ DES=dist/build/uBlock0.opera
 rm -r $DES
 mkdir -p $DES
 
-./tools/make-assets.sh $DES
+bash ./tools/make-assets.sh $DES
 
 cp -R src/css $DES/
 cp -R src/img $DES/
