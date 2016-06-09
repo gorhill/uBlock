@@ -1,4 +1,5 @@
 *.bak
+*-bak
 *.pem
 /dist/build/
 /bin/build/

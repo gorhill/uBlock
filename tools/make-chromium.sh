@@ -23,6 +23,7 @@ cp platform/chromium/*.js   $DES/js/
 cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
+cp manifest.json $DES/            # new-manifest
 cp LICENSE.txt              $DES/
 
 if [ "$1" = all ]; then
@@ -33,3 +34,5 @@ if [ "$1" = all ]; then
 fi
 
 echo "*** adnauseam.chromium: Package done."
+
+#ls -lR $DES

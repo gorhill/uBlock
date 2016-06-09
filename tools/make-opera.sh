@@ -12,7 +12,8 @@ DES=bin/build/adnauseam.opera
 rm -r $DES
 mkdir -p $DES
 
-VERSION=`jq .version platform/chromium/manifest.json`
+#VERSION=`jq .version platform/chromium/manifest.json`
+VERSION=`jq .version manifest.json` # new-manifest
 
 ./tools/make-assets.sh $DES
 ./tools/make-locales.sh $DES
@@ -32,7 +33,7 @@ cp platform/chromium/*.html $DES/
 cp platform/chromium/*.js   $DES/js/
 cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
-cp platform/opera/manifest.json $DES/
+cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
 sed -i .bak "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 cp LICENSE.txt $DES/
 

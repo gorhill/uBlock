@@ -68,7 +68,8 @@ rmtree(source_locale_dir)
 
 # update install.rdf
 proj_dir = pj(os.path.split(os.path.abspath(__file__))[0], '..')
-chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
+# chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
+chromium_manifest = pj(proj_dir, 'manifest.json') # new-manifest
 
 with open(chromium_manifest, encoding='utf-8') as m:
     manifest = json.load(m)
