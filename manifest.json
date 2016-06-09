@@ -27,7 +27,7 @@
     "all_frames": true
   }, {
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/contentscript-end.js"],
+    "js": ["js/adn/extract.js", "js/contentscript-end.js"],
     "run_at": "document_end",
     "all_frames": true
   }, {
