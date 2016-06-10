@@ -2016,6 +2016,15 @@ var httpObserver = {
     // https://github.com/gorhill/uBlock/issues/959
     //   Try to synthesize a pending request from a behind-the-scene request.
     synthesizePendingRequest: function(channel, rawtype) {
+        var data = this.channelDataFromChannel(channel);
+        if ( data !== null ) {
+            return {
+                frameId: data[0],
+                parentFrameId: data[1],
+                tabId: data[2],
+                rawtype: data[3]
+            };
+        }
         var tabId = this.tabIdFromChannel(channel);
         if ( tabId === vAPI.noTabId ) {
             return null;
@@ -2116,34 +2125,45 @@ var httpObserver = {
         }
     },
 
+    channelDataFromChannel: function(channel) {
+        if ( channel instanceof Ci.nsIWritablePropertyBag ) {
+            try {
+                return channel.getProperty(this.REQDATAKEY) || null;
+            } catch (ex) {
+            }
+        }
+        return null;
+    },
+
     observe: function(channel, topic) {
         if ( channel instanceof Ci.nsIHttpChannel === false ) {
             return;
         }
 
         var URI = channel.URI;
+        var channelData = this.channelDataFromChannel(channel);
 
         if ( topic === 'http-on-examine-response' ) {
-            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
-                return;
+            if ( channelData !== null ) {
+                this.handleResponseHeaders(channel, URI, channelData);
             }
-
-            var channelData;
-            try {
-                channelData = channel.getProperty(this.REQDATAKEY);
-            } catch (ex) {
-            }
-            if ( !channelData ) {
-                return;
-            }
-
-            this.handleResponseHeaders(channel, URI, channelData);
-
             return;
         }
 
         // http-on-modify-request
 
+        // The channel was previously serviced.
+        if ( channelData !== null ) {
+            this.handleRequest(channel, URI, {
+                frameId: channelData[0],
+                parentFrameId: channelData[1],
+                tabId: channelData[2],
+                rawtype: channelData[3]
+            });
+            return;
+        }
+
+        // The channel was never serviced.
         var pendingRequest = this.lookupPendingRequest(URI.spec);
 
         // https://github.com/gorhill/uMatrix/issues/390#issuecomment-155759004
