@@ -2016,15 +2016,6 @@ var httpObserver = {
     // https://github.com/gorhill/uBlock/issues/959
     //   Try to synthesize a pending request from a behind-the-scene request.
     synthesizePendingRequest: function(channel, rawtype) {
-        var data = this.channelDataFromChannel(channel);
-        if ( data !== null ) {
-            return {
-                frameId: data[0],
-                parentFrameId: data[1],
-                tabId: data[2],
-                rawtype: data[3]
-            };
-        }
         var tabId = this.tabIdFromChannel(channel);
         if ( tabId === vAPI.noTabId ) {
             return null;
