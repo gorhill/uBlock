@@ -67,6 +67,21 @@ html, body {
     border-color: #444;
     opacity: 1;
     }
+
+.alert {
+  height: 36px;
+  color: rgba(0,0,0,0.8);
+  background: #CE7B05 url(../img/icon_warning@2x.png) 5px center no-repeat;
+  background-size: 33px 29px;
+  padding: 5px 5px 5px 44px;
+  line-height: 1.5em;
+  font-family: 'bebas_neue_regularregular';
+  font-size: 1.2em;
+}
+.alert a {
+  color: #000;
+  text-decoration: underline;
+}
 iframe {
     margin: 0;
     border: 0;
