@@ -1061,17 +1061,6 @@
     postRegister(ad, pageUrl, tabId);
   };
 
-  var listsLoaded = function () {
-
-    µb.staticFilteringReverseLookup.initWorker(function (entries) {
-
-      listEntries = entries;
-      log("Loaded/compiled " + Object.keys(entries).length +
-        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
-      strictBlockingDisabled = true;
-    });
-  };
-
   var fromNetFilterSync = function (compiledFilter, rawFilter) {
 
     var entry, content, pos, c, lists = [];
@@ -1107,17 +1096,14 @@
     return lists;
   };
 
-  var retrieveDomainCosmeticSelectors = function (request, pageStore, tabId) {
-
-    //console.log('adn.retrieveDomainCosmeticSelectors');
+  var domainCosmeticSelectors = function (request, pageStore, tabId) {
 
     var response;
     if (pageStore && pageStore.getNetFilteringSwitch()) {
       response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
       if (response) {
         if (response.skipCosmeticFiltering !== true) {
-          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch()
-            || !µb.userSettings.hidingAds; // adn
+          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch() || !µb.userSettings.hidingAds; // adn
         }
         response.prefs = contentPrefs();
       }
@@ -1126,8 +1112,6 @@
   }
 
   var isBlockableRequest = function (result, isTop) {
-
-    //console.log('isBlockableRequest', result);
 
     if (strictBlockingDisabled && µb.userSettings.blockingMalware) {
 
@@ -1170,17 +1154,33 @@
     initialize(settings);
   });
 
-  var verifyListSelection = function() {
+  var verifyListSelection = function () {
 
-      µb.getAvailableLists( function(lists) {
-          var ok = (lists[requiredList].off !== true);
-          console.log('verifyListSelection->'+ok);
-          vAPI.messaging.broadcast({
-            what: 'listsVerified',
-            result: ok
-          });
+    µb.getAvailableLists(function (lists) {
+      var ok = (lists[requiredList].off !== true);
+      //console.log('verifyListSelection->' + ok);
+      vAPI.messaging.broadcast({
+        what: 'listsVerified',
+        result: ok
       });
+    });
   };
+
+  var onAllReady = function (firstRun) {
+
+    µb.staticFilteringReverseLookup.initWorker(function (entries) {
+
+      listEntries = entries;
+      log("Loaded/compiled " + Object.keys(entries).length +
+        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
+      strictBlockingDisabled = true;
+    });
+
+    if (firstRun) {
+        
+        vAPI.tabs.open({ url: 'dashboard.html#firstrun.html', index: -1 });
+    }
+  }
 
   /******************************************************************************/
 
@@ -1191,11 +1191,11 @@
     clearAds: clearAds,
     exportAds: exportAds,
     importAds: importAds,
+    onAllReady: onAllReady,
     registerAd: registerAd,
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
-    listsLoaded: listsLoaded,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
     toggleEnabled: toggleEnabled,
@@ -1203,7 +1203,7 @@
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
-    retrieveDomainCosmeticSelectors: retrieveDomainCosmeticSelectors
+    domainCosmeticSelectors: domainCosmeticSelectors
   };
 
 })();

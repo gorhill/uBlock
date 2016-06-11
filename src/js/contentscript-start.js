@@ -239,7 +239,7 @@ var url = window.location.href;
 vAPI.messaging.send(
     'adnauseam',
     {
-        what: 'retrieveDomainCosmeticSelectors',
+        what: 'domainCosmeticSelectors',
         pageURL: url,
         locationURL: url
     },

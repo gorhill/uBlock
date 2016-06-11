@@ -38,9 +38,11 @@ var resizeFrame = function() {
 /********************************** adn ***************************************/
 
 var onMessage = function(msg) {
+
     switch ( msg.what ) {
+
     case 'listsVerified':
-        console.log('listsVerified ok=',msg.result);
+    
         uDom('#list-alert').toggleClass('hide', msg.result);
         break;
     }
@@ -68,7 +70,7 @@ var loadDashboardPanel = function() {
 };
 
 
-/******************************************************************************/
+/******************************** end-adn *************************************/
 
 var onTabClickHandler = function(e) {
     var url = window.location.href,

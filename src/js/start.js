@@ -78,9 +78,10 @@ var onAllReady = function() {
 
     vAPI.onLoadAllCompleted();
     µb.contextMenu.update(null);
-    µb.firstInstall = false;
 
-    µBlock.adnauseam.listsLoaded();
+    µb.adnauseam.onAllReady(µb.firstInstall); // adn
+
+    µb.firstInstall = false;
 };
 
 /******************************************************************************/
