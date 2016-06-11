@@ -1170,6 +1170,18 @@
     initialize(settings);
   });
 
+  var verifyListSelection = function() {
+
+      µb.getAvailableLists( function(lists) {
+          var ok = (lists[requiredList].off !== true);
+          console.log('verifyListSelection->'+ok);
+          vAPI.messaging.broadcast({
+            what: 'listsVerified',
+            result: ok
+          });
+      });
+  };
+
   /******************************************************************************/
 
   return { // public API
@@ -1188,9 +1200,9 @@
     contentPrefs: contentPrefs,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    //getPreferences: getPreferences,
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
+    verifyListSelection: verifyListSelection,
     retrieveDomainCosmeticSelectors: retrieveDomainCosmeticSelectors
   };
 

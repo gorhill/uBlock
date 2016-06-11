@@ -2,6 +2,8 @@
 
 'use strict';
 
+var requiredList = 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt';
+
 var rand = function (min, max) {
 
   if (arguments.length == 1) {

@@ -39,8 +39,8 @@ var resizeFrame = function() {
 
 var onMessage = function(msg) {
     switch ( msg.what ) {
-    case 'listsChecked':
-        console.log('listsChecked ok=',msg.result);
+    case 'listsVerified':
+        console.log('listsVerified ok=',msg.result);
         uDom('#list-alert').toggleClass('hide', msg.result);
         break;
     }
@@ -64,7 +64,7 @@ var loadDashboardPanel = function() {
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
 
-    messaging.send('adnauseam', { what: 'checkLists' });
+    messaging.send('adnauseam', { what: 'verifyListSelection' });
 };
 
 
