@@ -35,13 +35,27 @@ var resizeFrame = function() {
     document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height) + 'px');
 };
 
-/******************************************************************************/
+/********************************** adn ***************************************/
+
+var onMessage = function(msg) {
+    switch ( msg.what ) {
+    case 'listsChecked':
+        console.log('listsChecked ok=',msg.result);
+        uDom('#list-alert').toggleClass('hide', msg.result);
+        break;
+    }
+};
+
+var messaging = vAPI.messaging;
+messaging.addChannelListener('adnauseam', onMessage);
 
 var loadDashboardPanel = function() {
+
     var pane = window.location.hash.slice(1);
     if ( pane === '' ) {
         pane = 'options.html';
     }
+
     var tabButton = uDom('[href="#' + pane + '"]');
     if ( !tabButton || tabButton.hasClass('selected') ) {
         return;
@@ -49,7 +63,10 @@ var loadDashboardPanel = function() {
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
+
+    messaging.send('adnauseam', { what: 'checkLists' });
 };
+
 
 /******************************************************************************/
 

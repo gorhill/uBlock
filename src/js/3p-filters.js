@@ -313,7 +313,7 @@ var listsSelectionChanged = function() {
     var availableLists = listDetails.available;
     var currentLists = listDetails.current;
     var location, availableOff, currentOff;
-    
+
     // This check existing entries
     for ( location in availableLists ) {
         if ( availableLists.hasOwnProperty(location) === false ) {
@@ -360,6 +360,11 @@ var onListCheckboxChanged = function() {
         return;
     }
     listDetails.available[href].off = !this.checked;
+
+    if (href === requiredListHref) { // adn
+        // console.log("[WARN] EasyList -> ",this.checked);
+        window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
+    }   
     renderWidgets();
 };
 
@@ -625,4 +630,3 @@ renderExternalLists();
 /******************************************************************************/
 
 })();
-
