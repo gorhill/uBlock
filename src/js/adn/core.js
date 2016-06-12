@@ -543,13 +543,6 @@
     return 'Ad#' + id + '(' + ad.contentType + ')';
   }
 
-  /* sort ads (by found time) for display in menu
-  var menuAds = function (pageUrl) {
-
-    return µb.userSettings.hidingAds ?
-        adlist(pageUrl).sort(byField('-foundTs')) : []
-  }*/
-
   var unescapeHTML = function (s) { // hack
 
     if (s && s.length) {

@@ -399,7 +399,7 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, dbug = 1;
+      var tabId = details.tabId, dbug = 0;
 
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
@@ -413,7 +413,9 @@
 
             if (ad) {
               for (var i = headers.length - 1; i >= 0; i--) {
-                console.log(i+") "+details.responseHeaders[i].name);
+
+                dbug && console.log(i+") "+details.responseHeaders[i].name);
+                
                 if (details.responseHeaders[i].name.toLowerCase() === 'set-cookie') {
 
                     dbug && console.log('Removed cookie: ',details.responseHeaders[i].value);

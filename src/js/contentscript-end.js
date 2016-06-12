@@ -532,10 +532,8 @@ var uBlockCollapser = (function() {
         style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
         var parent = document.head || document.documentElement;
 
-        // THIS STYLE TAG IS CAUSING http://rednoise.org/adntest/simple.html to hide its ad
+        // ?? this STYLE tag is causing http://rednoise.org/adntest/simple.html to hide its ad
         if ( parent ) {
-            // TODO: NEED CONDITIONAL here
-            // if (prefs.hidingAds) { }
             parent.appendChild(style);
             vAPI.styles.push(style);
         }

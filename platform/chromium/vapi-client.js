@@ -338,19 +338,6 @@ vAPI.shutdown.add(function() {
 
 vAPI.prefs = {}; // adn, for content-scripts
 
-//
-// var keys = [ /*'automated',*/ 'parseTextAds', 'hidingAds'];
-// if (typeof vAPI.prefs[keys[0]] === 'undefined') {
-//   chrome.storage.local.get(keys, function (data) {
-//     keys.forEach(function (k) {
-//       vAPI.prefs[k] = data[k];
-//     });
-//     console.log('vAPI.CLIENT.prefs: ', vAPI.prefs);
-//   });
-// }
-// https://www.youtube.com/watch?v=rT5zCHn0tsg
-// https://www.youtube.com/watch?v=E-jS4e3zacI
-
 /******************************************************************************/
 /******************************************************************************/
 
