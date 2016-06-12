@@ -399,13 +399,13 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, dbug = 0;
+      var tabId = details.tabId, dbug = 1;
 
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
         if (µBlock.userSettings.noIncomingCookies) {  // adn
 
-            dbug && console.log('behind-the-scene.request', µBlock.userSettings);
+            dbug && console.log('Headers: ',  details.type, details.url);
 
             // adn
             var headers = details.responseHeaders,
@@ -413,16 +413,17 @@
 
             if (ad) {
               for (var i = headers.length - 1; i >= 0; i--) {
-                if (details.responseHeaders[i].name === 'Set-Cookie') {
+                console.log(i+") "+details.responseHeaders[i].name);
+                if (details.responseHeaders[i].name.toLowerCase() === 'set-cookie') {
 
-                    dbug && console.log('Removed cookies ***');
+                    dbug && console.log('Removed cookie: ',details.responseHeaders[i].value);
                     details.responseHeaders.splice(i, 1);
                 }
               }
             }
         }
 
-        return;
+        return { 'responseHeaders': details.responseHeaders };
       }
 
       var requestType = details.type;
