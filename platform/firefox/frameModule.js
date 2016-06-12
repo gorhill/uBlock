@@ -453,10 +453,11 @@ var contentObserver = {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
             if (!PrivateBrowsingUtils.isContentWindowPrivate(win)) {
-                lss(this.contentBaseURI + 'adn/extract.js', sandbox);
+                lss(this.contentBaseURI + 'adn/textads.js', sandbox);
+                lss(this.contentBaseURI + 'adn/parser.js', sandbox);
             }
             else
-                console.log("Skipping ADN");
+                console.log("PrivateBrowsing: Skipping ADN cs-injection");
 
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 

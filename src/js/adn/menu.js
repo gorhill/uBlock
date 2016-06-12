@@ -33,7 +33,7 @@
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
-    //disable pause & resume buttons in case of options, vault, browser settings
+    // disable pause & resume buttons for options, vault, about/chrome
     if (page === vAPI.getURL("vault.html") ||
       page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
       page.indexOf("chrome://") === 0 ||
@@ -41,13 +41,13 @@
       uDom.nodeFromId('pause-button').disabled = true;
       uDom.nodeFromId('resume-button').disabled = true;
     }
-    //$("#alert").addClass('hide'); // reset state
+
     uDom("#alert").addClass('hide'); // reset state
-    //$('#main').toggleClass('disabled', dval()); // TODO: move select into dval
     uDom('#main').toggleClass('disabled', dval());
+    uDom('#paused-on-page').toggleClass('hide', json.prefs.hidingDisabled);
+    uDom('#paused-no-hiding').toggleClass('hide', !json.prefs.hidingDisabled);
 
     updateMenuState();
-
     setCounts(ads, json.data.length);
 
     var $items = uDom('#ad-list-items'); //$('#ad-list-items');
@@ -68,20 +68,83 @@
 
   var updateMenuState = function () {
 
-    //if ($('#main').hasClass('disabled')) {
     if (uDom('#main').hasClass('disabled')) {
 
-      //$('#resume-button').show();
       uDom('#resume-button').removeClass('hide').addClass('show');
-      //$('#pause-button').hide();
       uDom('#pause-button').removeClass('show').addClass('hide');
 
     } else {
 
-      //$('#pause-button').show();
       uDom('#pause-button').removeClass('hide').addClass('show');
-      //$('#resume-button').hide();
       uDom('#resume-button').removeClass('show').addClass('hide');
+    }
+  }
+
+  var setCounts = function (ads, total) {
+
+    uDom('#vault-count').text(total);
+    uDom('#visited-count').text(visitedCount(ads));
+    uDom('#found-count').text(ads.length);
+  }
+
+  var renderPage2 = function (json) {
+
+    //console.log('renderPage', json);
+
+    ads = onPage(json.data, page);
+    updateInterface(json);
+    layoutAds(json);
+  }
+
+  var updateInterface = function (json) {
+
+    var page = json.pageUrl;
+
+    // disable pause & resume buttons for options, vault, about/chrome
+    if (page === vAPI.getURL("vault.html") ||
+      page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
+      page.indexOf("chrome://") === 0 ||
+      page.indexOf("about:") === 0) {
+      uDom.nodeFromId('pause-button').disabled = true;
+      uDom.nodeFromId('resume-button').disabled = true;
+    }
+
+    uDom("#alert").addClass('hide'); // reset state
+    uDom('#main').toggleClass('disabled', dval());
+    uDom('#paused-on-page').toggleClass('hide', json.prefs.hidingDisabled);
+    uDom('#paused-no-hiding').toggleClass('hide', !json.prefs.hidingDisabled);
+
+    if (uDom('#main').hasClass('disabled')) {
+
+      uDom('#resume-button').removeClass('hide').addClass('show');
+      uDom('#pause-button').removeClass('show').addClass('hide');
+
+    } else {
+
+      uDom('#pause-button').removeClass('hide').addClass('show');
+      uDom('#resume-button').removeClass('show').addClass('hide');
+    }
+
+    uDom('#vault-count').text(json.data.length);
+    uDom('#visited-count').text(visitedCount(ads));
+    uDom('#found-count').text(ads.length);
+    console.log("FOUND-COUNT: " + ads.length);
+  }
+
+  var layoutAds = function (json) {
+
+    var $items = uDom('#ad-list-items');
+    $items.removeClass().empty();
+
+    if (ads) {
+
+      // if we have no page ads, use the most recent
+      if (!ads.length) ads = doRecent(json.data);
+
+      for (var i = 0, j = ads.length; i < j; i++)
+        appendAd($items, ads[i]);
+
+      setAttempting(json.current);
     }
   }
 
@@ -210,17 +273,6 @@
     }, 300);
 
     return $ad;
-  }
-
-  var setCounts = function (ads, total) {
-
-    //console.log('setCounts: '+visited+"/"+found+' of '+total+' total');
-    //$('#vault-count').text(total);
-    uDom('#vault-count').text(total);
-    //$('#visited-count').text(visitedCount(ads));
-    uDom('#visited-count').text(visitedCount(ads));
-    //$('#found-count').text(ads.length);
-    uDom('#found-count').text(ads.length);
   }
 
   var appendImageAd = function (ad, $items) {

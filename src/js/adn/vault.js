@@ -67,7 +67,7 @@
 
   var renderAds = function (json) {
 
-    //console.log('renderAds: ', json);
+    console.log('renderAds: ', json);
     gAds = json.data; // store
     addInterfaceHandlers();
     createSlider(true);

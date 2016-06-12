@@ -543,11 +543,12 @@
     return 'Ad#' + id + '(' + ad.contentType + ')';
   }
 
-  // sort ads (by found time) for display in menu
+  /* sort ads (by found time) for display in menu
   var menuAds = function (pageUrl) {
 
-    return adlist(pageUrl).sort(byField('-foundTs'));
-  }
+    return µb.userSettings.hidingAds ?
+        adlist(pageUrl).sort(byField('-foundTs')) : []
+  }*/
 
   var unescapeHTML = function (s) { // hack
 
@@ -652,8 +653,9 @@
     return {
 
       automated: automatedMode,
-      hidingAds: µb.userSettings.hidingAds,
-      parseTextAds: µb.userSettings.parseTextAds
+      hidingDisabled: !µb.userSettings.hidingAds,
+      clickingDisabled: !µb.userSettings.clickingAds,
+      textAdsDisabled: !µb.userSettings.parseTextAds
     };
   }
 
@@ -866,6 +868,8 @@
     var result = [],
       pages = pageUrl ? [pageUrl] : Object.keys(admap);
 
+    //    if (µb.userSettings.hidingAds) {
+
     for (var i = 0; i < pages.length; i++) {
 
       if (admap[pages[i]]) {
@@ -882,6 +886,7 @@
         }
       }
     }
+    //}
 
     return result;
   }
@@ -975,11 +980,6 @@
     }
   }
 
-  // var getPreferences = function (request, pageStore, tabId) {
-  //
-  //   return contentPrefs();
-  // }
-
   var logAdSet = function (request, pageStore, tabId) {
 
     var data = '';
@@ -1006,7 +1006,7 @@
       store.toggleNetFilteringSwitch(request.url, request.scope, request.state);
       updateBadges();
 
-      // see gh #113
+      // close whitelist if open (see gh #113)
       var wlId = getExtPageTabId("dashboard.html#whitelist.html")
       wlId && vAPI.tabs.replace(wlId, vAPI.getURL("dashboard.html"));
     }
@@ -1108,6 +1108,7 @@
         response.prefs = contentPrefs();
       }
     }
+    //console.log('domainCosmeticSelectors', response.prefs);
     return response;
   }
 
@@ -1177,8 +1178,11 @@
     });
 
     if (firstRun) {
-        
-        vAPI.tabs.open({ url: 'dashboard.html#firstrun.html', index: -1 });
+
+      vAPI.tabs.open({
+        url: 'dashboard.html#firstrun.html',
+        index: -1
+      });
     }
   }
 

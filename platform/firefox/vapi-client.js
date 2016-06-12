@@ -152,6 +152,8 @@ vAPI.shutdown = (function() {
 
 /******************************************************************************/
 
+vAPI.prefs = {}; // adn, for content-scripts
+
 vAPI.messaging = {
     channels: Object.create(null),
     channelCount: 0,

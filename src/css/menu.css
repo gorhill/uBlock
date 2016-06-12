@@ -117,6 +117,10 @@ a:hover {
   right: 0px;
 }
 
+h2.hide {
+  display: none;
+}
+
 div.hide {
   display: none;
 }
@@ -600,7 +604,13 @@ button.about {
   font-size:19px;
   color: #dadada;
   line-height:28px;
-  margin: 0 10px;
+}
+
+#paused-on-page {
+    margin: 0 10px;
+}
+#paused-no-hiding {
+    margin: 0 -10px;
 }
 
 select {

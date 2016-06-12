@@ -55,7 +55,7 @@ vAPI.rpcReceiver.getScriptTagFilters = function(details) {
     }
 };
 
-vAPI.rpcReceiver.getScriptTagFiltersWithPrefs = function(details) {
+vAPI.rpcReceiver.getScriptTagFiltersWithPrefs = function(details) { // not used
 
     // TODO: sets adn.contentPrefs() as vAPI.prefs in Firefox (see vapi-client.js)
 

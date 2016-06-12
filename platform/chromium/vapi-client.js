@@ -65,7 +65,7 @@ if ( vAPI.sessionId ) {
 vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
                  Math.random().toString(36).slice(2);
 vAPI.chrome = true;
-vAPI.debugAdParsing = true;
+vAPI.debugAdParsing = false;
 
 /******************************************************************************/
 
@@ -336,8 +336,8 @@ vAPI.shutdown.add(function() {
     delete window.vAPI;
 });
 
-// adn: prefs needed in content scripts
-vAPI.prefs = vAPI.prefs || {};
+vAPI.prefs = {}; // adn, for content-scripts
+
 //
 // var keys = [ /*'automated',*/ 'parseTextAds', 'hidingAds'];
 // if (typeof vAPI.prefs[keys[0]] === 'undefined') {

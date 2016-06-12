@@ -1,7 +1,11 @@
 {
-  "adnStatePaused": {
+  "adnPausedOnPage": {
     "message": "AdNauseam is paused on this page",
-    "description": "English: Menu->display when paused"
+    "description": "English: Menu->display when paused on page/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam is not currently hiding ads",
+    "description": "English: Menu->display when not hiding ads"
   },
   "adnVaultName": {
     "message": "AdNauseam — AdVault",
@@ -121,7 +125,7 @@
     "description": "English: Click ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Protect your browser from malware and non-visual trackers",
+    "message": "Block malware and non-visual trackers",
     "description": "English: Protect your browser from malware and non-visual trackers"
   },
 

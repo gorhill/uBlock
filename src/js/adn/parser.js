@@ -119,7 +119,7 @@
       });
 
       // for automated testing
-      if (0) //adDetector.prefs.automated && window === window.top)
+      if (vAPI.prefs.automated && window === window.top)
         injectAutoDiv();
 
       return true;
@@ -247,7 +247,6 @@
         if (imgs.length) findImageAds(imgs);
 
         // and finally check for text ads
-        //adDetector.prefs.parseTextAds &&
         vAPI.textAdParser.process(elem);
       }
     };

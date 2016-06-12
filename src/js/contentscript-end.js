@@ -133,7 +133,7 @@ var uBlockCollapser = (function() {
 
             // https://github.com/chrisaljoudi/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
-            if (vAPI.debugAdParsing) console.log("CSS.HIT(2)");
+            if (vAPI.debugAdParsing) console.log("CSE.HIT(2)", vAPI.prefs);
             vAPI.adParser.process(target);
             target.style.setProperty('display', 'none', 'important');
 
@@ -313,11 +313,6 @@ var uBlockCollapser = (function() {
 
     //console.log('LIFE(CSE):CosmeticFilters', vAPI.prefs);
 
-    //console.debug('Start cosmetic filtering');
-
-    //var timer = window.performance || Date;
-    //var tStart = timer.now();
-
     var hideElements = (function() {
         if ( document.body === null ) {
             return function() {};
@@ -333,8 +328,8 @@ var uBlockCollapser = (function() {
                 // https://github.com/chrisaljoudi/uBlock/issues/158
                 // Using CSSStyleDeclaration.setProperty is more reliable
                 while ( i-- ) {
-                    if (vAPI.debugAdParsing) console.log("CSS.HIT(1)");
-                    vAPI.adParser.process(elems[i]);
+                    if (vAPI.debugAdParsing) console.log("CSE.HIT(1)", vAPI.prefs);
+                    vAPI.adParser && vAPI.adParser.process(elems[i]);
                     elems[i].style.setProperty('display', 'none', 'important');
                 }
             };

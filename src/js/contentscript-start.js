@@ -125,7 +125,6 @@ var netFilters = function(details) {
 // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
 
 var injectScripts = function(scripts) {
-    console.log('injectScripts: ',scripts);
     var parent = document.head || document.documentElement;
     if ( !parent ) {
         return;
@@ -140,9 +139,10 @@ var injectScripts = function(scripts) {
 
 var filteringHandler = function(details) {
 
-    //console.log('LIFE(CSS):filteringHandler(from retrieveDomainCosmeticSelectors)', vAPI.prefs);
+    //console.log('LIFE(CSS):filteringHandler(from domainCosmeticSelectors)', details);
 
     var styleTagCount = vAPI.styles.length;
+    vAPI.prefs = details.prefs;
 
     if ( details ) {
 
@@ -234,7 +234,7 @@ var hideElements = function(selectors) {
 /******************************************************************************/
 
 var url = window.location.href;
-//console.log('LIFE(CSS):send:retrieveDomainCosmeticSelectors', vAPI.prefs);
+//console.log('LIFE(CSS):send:domainCosmeticSelectors', vAPI.prefs);
 
 vAPI.messaging.send(
     'adnauseam',

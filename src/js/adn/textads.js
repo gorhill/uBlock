@@ -281,6 +281,8 @@
 
     var process = function (elem) {
 
+        if (vAPI.prefs.textAdsDisabled) return;
+
         //console.log('TextAds.process()', elem);
 
         var ads = checkFilters(elem);
@@ -295,6 +297,7 @@
       /**********************************************************************/
 
     return {
+
       process: process
     };
 

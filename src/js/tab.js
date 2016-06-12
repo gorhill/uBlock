@@ -861,7 +861,8 @@ vAPI.tabs.registerListeners();
             state = pageStore.getNetFilteringSwitch();
 
             if (state && this.userSettings.showIconBadge) {
-                badge = this.formatCount(µb.adnauseam.adlist(pageStore.rawURL).length); // adn
+                badge = !this.userSettings.hidingAds ? '0' :   // adn
+                    this.formatCount(µb.adnauseam.adlist(pageStore.rawURL).length);
             }
         }
 
