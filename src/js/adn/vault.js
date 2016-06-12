@@ -379,10 +379,15 @@
 
       src: adset.child(0).contentData.src,
 
-      onerror: "this.onerror=null; this.width=80; this.height=40; " +
-        "this.alt='unable to load image'; this.src='img/placeholder.svg'",
-
     }).appendTo($ad);
+
+    $img.on("error", function() {
+
+        $img.css({ width: 80, height: 40 });
+        $img.attr('src', 'img/placeholder.svg');
+        $img.attr('alt', 'Unable to load image');
+        $img.off("error");
+    });
 
     // fix for #291
     $img.load(function () {
