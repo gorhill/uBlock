@@ -53,18 +53,6 @@
 
   /********************************************************************/
 
-  function $width(ele) {
-
-    ele = ele ? (ele.length ? ele.nodes[0] : ele) : 0;
-    return ele ? ele.offsetWidth || ele.clientWidth : -1;
-  }
-
-  function $height(ele) {
-
-    ele = ele ? (ele.length ? ele.nodes[0] : ele) : 0;
-    return ele ? ele.offsetHeight || ele.clientHeight : -1;
-  }
-
   var renderAds = function (json) {
 
     console.log('renderAds: ', json);
@@ -1205,12 +1193,11 @@
   // created from the domain it was found on, and its content-data
   // If we get too many cross-domain duplicate images, we may need to revisit
   // -- called just once per layout
-  function createAdSets(ads) {
+  function createAdSets() {
 
-    console.log('Vault-Slider.createAdSets: ' + ads.length + '/' + gAds.length + ' ads');
+    console.log('Vault.createAdSets: ' + gAds.length + ' ads');
 
-    var key, ad, hash = {},
-      adsets = [];
+    var key, ad, hash = {}, ads = gAds, adsets = [];
 
     // set hidden val for each ad
     for (var i = 0, j = ads.length; i < j; i++) {
@@ -1235,7 +1222,6 @@
     }
 
     // sort adset children by foundTs
-
     for (i = 0, j = adsets.length; i < j; i++) {
 
       adsets[i].children.sort(byField('-foundTs'));
@@ -1319,7 +1305,7 @@
 
   function createSlider(relayout) {
 
-    //log('Vault-Slider.createSlider: '+gAds.length);
+    //log('Vault.createSlider: '+gAds.length);
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
@@ -1429,7 +1415,7 @@
       .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 2,1; stroke: #ccc");
 
     // setup the brush
-    var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
+    var bExtent = [ computeMinDateFor(gAds, minDate), maxDate],
       brush = d3.svg.brush()
       .x(xScale)
       .extent(bExtent)
@@ -1449,6 +1435,7 @@
 
     // do filter, then call either doLayout or computeStats
     (relayout ? doLayout : computeStats)(runFilter(bExtent));
+
     // ---------------------------- functions ------------------------------
 
     // this is called on brushend() and createSlider()
@@ -1460,15 +1447,12 @@
 
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
-        console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
+        console.log('Vault::ignore-micro: ' + ext[0] + "," + ext[1]);
         return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
       }
 
-      var filtered = dateFilter(gMin, gMax);
-
-      // only create the adsets once, else filter
-      return gAdSets ? filterAdSets(filtered) :
-        (gAdSets = createAdSets(filtered));
+      gAdSets = gAdSets || createAdSets(gAds);
+      return filterAdSets(dateFilter(gMin, gMax));
     }
 
     function centerContainer() {
@@ -1483,7 +1467,7 @@
 
     function filterAdSets(ads) {
 
-      console.log('Vault-slider.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
+      //console.log('Vault.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 
       centerContainer(); // recenter on filter
 
@@ -1491,6 +1475,7 @@
       for (var i = 0, j = ads.length; i < j; i++) {
         for (var k = 0, l = gAdSets.length; k < l; k++) {
 
+          // add all adsets which contain at least 1 ad after filtering
           if (gAdSets[k].childIdxForId(ads[i].id) > -1) {
 
             if (sets.indexOf(gAdSets[k]) < 0)
