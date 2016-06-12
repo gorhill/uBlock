@@ -318,23 +318,23 @@ var uBlockCollapser = (function() {
             return function() {};
         }
         //if ( document.body.shadowRoot === undefined ) {
-            return function(selectors) {
-                // https://github.com/chrisaljoudi/uBlock/issues/207
-                // Do not call querySelectorAll() using invalid CSS selectors
-                if ( selectors.length === 0 ) { return; }
-                var elems = document.querySelectorAll(selectors);
-                var i = elems.length;
-                if ( i === 0 ) { return; }
-                // https://github.com/chrisaljoudi/uBlock/issues/158
-                // Using CSSStyleDeclaration.setProperty is more reliable
-                while ( i-- ) {
-                    if (vAPI.debugAdParsing) console.log("CSE.HIT(1)", vAPI.prefs);
-                    vAPI.adParser && vAPI.adParser.process(elems[i]);
-                    elems[i].style.setProperty('display', 'none', 'important');
-                }
-            };
-        //}
         return function(selectors) {
+            // https://github.com/chrisaljoudi/uBlock/issues/207
+            // Do not call querySelectorAll() using invalid CSS selectors
+            if ( selectors.length === 0 ) { return; }
+            var elems = document.querySelectorAll(selectors);
+            var i = elems.length;
+            if ( i === 0 ) { return; }
+            // https://github.com/chrisaljoudi/uBlock/issues/158
+            // Using CSSStyleDeclaration.setProperty is more reliable
+            while ( i-- ) {
+                if (vAPI.debugAdParsing) console.log("CSE.HIT(1)", vAPI.prefs);
+                vAPI.adParser && vAPI.adParser.process(elems[i]);
+                elems[i].style.setProperty('display', 'none', 'important');
+            }
+        };
+        //}
+        /*return function(selectors) {
             if ( selectors.length === 0 ) { return; }
             var elems = document.querySelectorAll(selectors);
             var i = elems.length;
@@ -368,9 +368,9 @@ var uBlockCollapser = (function() {
                 } catch (ex) {
                     console.error(ex);
                     elem.style.setProperty('display', 'none', 'important');
-                }*/
+                }
             }
-        };
+        };*/
     })();
 
     // https://github.com/chrisaljoudi/uBlock/issues/789

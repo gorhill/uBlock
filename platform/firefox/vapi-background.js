@@ -2125,7 +2125,7 @@ var httpObserver = {
                 var header = headers[i];
                 if (header.value && header.value.length) {
                     channel.setRequestHeader(header.name, header.value, false);
-                    console.log('ff.set: '+header.name, header.value);
+                    //console.log('ff.set: '+header.name, header.value);
                 }
                 else {
                     channel.setRequestHeader(header.name, undefined, false);

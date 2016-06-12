@@ -191,11 +191,12 @@ var hideElements = function(selectors) {
     // https://github.com/chrisaljoudi/uBlock/issues/158
     // Using CSSStyleDeclaration.setProperty is more reliable
     //if ( document.body.shadowRoot === undefined ) {
+    if (1) {
         while ( i-- ) {
             elems[i].style.setProperty('display', 'none', 'important');
         }
         return;
-    //}
+    }
     //
     // ADN: SKIPPING SHADOW DOM STUFF BELOW
     //
