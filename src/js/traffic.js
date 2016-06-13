@@ -414,7 +414,7 @@
             if (ad) {
               for (var i = headers.length - 1; i >= 0; i--) {
 
-                var name = details.responseHeaders[i].name..toLowerCase();
+                var name = details.responseHeaders[i].name.toLowerCase();
                 dbug && console.log(i+") "+name);
 
                 if (name === 'set-cookie' || name === 'set-cookie2') {

@@ -44,8 +44,8 @@
 
     uDom("#alert").addClass('hide'); // reset state
     uDom('#main').toggleClass('disabled', dval());
-    uDom('#paused-on-page').toggleClass('hide', json.prefs.hidingDisabled);
-    uDom('#paused-no-hiding').toggleClass('hide', !json.prefs.hidingDisabled);
+    //uDom('#paused-on-page').toggleClass('hide', json.prefs.hidingDisabled);
+    //uDom('#paused-no-hiding').toggleClass('hide', !json.prefs.hidingDisabled);
 
     updateMenuState();
     setCounts(ads, json.data.length);

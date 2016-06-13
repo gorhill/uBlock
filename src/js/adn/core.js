@@ -1096,7 +1096,7 @@
       response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
       if (response) {
         if (response.skipCosmeticFiltering !== true) {
-          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch() || !µb.userSettings.hidingAds; // adn
+          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();// || !µb.userSettings.hidingAds; // adn
         }
         response.prefs = contentPrefs();
       }

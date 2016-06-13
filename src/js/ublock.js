@@ -317,9 +317,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     case 'parseTextAds':                     // adn
         µBlock.adnauseam.updateBadges();
         break;
-    case 'hidingAds':                     // adn
+    /*case 'hidingAds':                     // adn
         µBlock.adnauseam.updateBadges();
-        break;
+        break;*/
     default:
         break;
     }
