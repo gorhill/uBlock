@@ -22,7 +22,7 @@ body[dir=rtl] #lists {
 #lists > .groupEntry > .geName {
     cursor: pointer;
     font-size: 140%;
-    font-family: bebas_neue_regularregular;
+    font-family: bebas_neue;
     }
 #lists > .groupEntry > .geCount {
     font-size: 90%;

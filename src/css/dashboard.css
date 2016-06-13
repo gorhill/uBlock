@@ -26,7 +26,7 @@ html, body {
 #dashboard-nav-widgets span {
     padding: 0 0.5em;
     font-size: 20px;
-    font-family: bebas_neue_regularregular;
+    font-family: bebas_neue;
     display: block;
     width: 100px;
     float: left;
@@ -34,7 +34,7 @@ html, body {
     color: #fff;
     }
 .tabButton {
-    font-family: bebas_neue_regularregular;
+    font-family: bebas_neue;
     background-color: #222;
     border: 2px solid #444;
     border-top-left-radius: 5px;
@@ -75,7 +75,7 @@ html, body {
   background-size: 33px 29px;
   padding: 5px 5px 5px 44px;
   line-height: 1.5em;
-  font-family: 'bebas_neue_regularregular';
+  font-family: 'bebas_neue';
   font-size: 1.2em;
 }
 .alert a {
