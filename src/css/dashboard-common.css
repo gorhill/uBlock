@@ -26,7 +26,7 @@ a.info.important {
     color: orangered;
     }
 button {
-    padding: 0.33em;
+    /*padding: 0.33em;*/
     }
 div > p:first-child {
     margin-top: 0;

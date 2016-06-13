@@ -1173,7 +1173,7 @@
     if (firstRun) {
 
       vAPI.tabs.open({
-        url: 'dashboard.html#firstrun.html',
+        url: 'firstrun.html',
         index: -1
       });
     }

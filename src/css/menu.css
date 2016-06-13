@@ -143,7 +143,7 @@ a.hide {
 button {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   background: none;
   box-shadow: none;
   color: #0076FF;
@@ -206,7 +206,7 @@ button.danger:hover{
 header{
   background: #000;
   height: 100px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   font-size: 20px;
 }
 
@@ -396,7 +396,7 @@ header{
   font-size: 16px;
   line-height: 1em;
   padding: 10px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   top: 40px;
   left: 63px;
 }
@@ -473,7 +473,7 @@ header{
 
 #settings {
   height: 450px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   width: 100%;
   color: #aaa;
 }
@@ -494,7 +494,7 @@ header{
   height: 100px;
   float: right;
   padding-top:30px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   font-size: 40px;
   text-align: center;
 }
@@ -600,7 +600,7 @@ button.about {
 }
 
 #paused-menu h2{
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   font-size:19px;
   color: #dadada;
   line-height:28px;
@@ -616,7 +616,7 @@ button.about {
 select {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   background: none;
   box-shadow: none;
   color: #0076FF;
@@ -703,110 +703,6 @@ select {
   }
 }
 
-/* ============================================================
-  COMMON
-============================================================ */
-.cmn-toggle {
-  position: absolute;
-  margin-left: -9999px;
-  visibility: hidden;
-}
-.cmn-toggle + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* ============================================================
-  SWITCH 2 - ROUND FLAT
-============================================================ */
-input.cmn-toggle-round-flat + label {
-  padding: 2px;
-  width: 60px;
-  height: 30px;
-  background-color: #777;
-  -webkit-border-radius: 60px;
-  -moz-border-radius: 60px;
-  -ms-border-radius: 60px;
-  -o-border-radius: 60px;
-  border-radius: 60px;
-  -webkit-transition: background 0.4s;
-  -moz-transition: background 0.4s;
-  -o-transition: background 0.4s;
-  transition: background 0.4s;
-}
-input.cmn-toggle-round-flat + label:before, input.cmn-toggle-round-flat + label:after {
-  display: block;
-  position: absolute;
-  content: "";
-}
-input.cmn-toggle-round-flat + label:before {
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  right: 2px;
-  background-color: #000;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
-  border-radius: 30px;
-  -webkit-transition: background 0.4s;
-  -moz-transition: background 0.4s;
-  -o-transition: background 0.4s;
-  transition: background 0.4s;
-}
-input.cmn-toggle-round-flat + label:after {
-  top: 4px;
-  left: 4px;
-  bottom: 4px;
-  width: 22px;
-  background-color: #777;
-  -webkit-border-radius: 22px;
-  -moz-border-radius: 22px;
-  -ms-border-radius: 22px;
-  -o-border-radius: 22px;
-  border-radius: 22px;
-  -webkit-transition: margin 0.4s, background 0.4s;
-  -moz-transition: margin 0.4s, background 0.4s;
-  -o-transition: margin 0.4s, background 0.4s;
-  transition: margin 0.4s, background 0.4s;
-}
-input.cmn-toggle-round-flat:checked + label {
-  background-color: #0076FF;
-}
-input.cmn-toggle-round-flat:checked + label:after {
-  margin-left: 30px;
-  background-color: #0076FF;
-}
-input.cmn-toggle-round-flat.cmn-toggle-small + label {
-  height: 16px;
-  width: 30px;
-  padding: 1px;
-  float: left;
-  margin-right: 5px;
-}
-input.cmn-toggle-round-flat.cmn-toggle-small + label::before{
-  top: 1px;
-  left: 1px;
-  bottom: 1px;
-  right: 1px;
-}
-input.cmn-toggle-round-flat.cmn-toggle-small + label::after {
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  right: 2px;
-  width: 12px;
-}
-input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
-  margin-left: 14px;
-}
 .add-to-whitelist{
   margin: 6px;
 }

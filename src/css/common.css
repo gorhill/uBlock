@@ -132,7 +132,7 @@ a.hide {
 button {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue_regularregular;
+  font-family: bebas_neue;
   background: none;
   box-shadow: none;
   color: #0076FF;
@@ -154,6 +154,13 @@ button.danger {
 button.danger:hover{
   background: #ff3300;
   color: #000;
+}
+
+button.large {
+  width: 80%;
+  margin: 0 70px;
+  display: block;
+  line-height: 1em;
 }
 
 #alert {
@@ -200,7 +207,40 @@ button.danger:hover{
     }
 /*@import 'fonts/stylesheet.css';*/
 @font-face {
-    font-family: 'bebas_neue_regularregular';
+    font-family: 'bebas_neue';
+    src: url('fonts/bebasneue_thin-webfont.eot');
+    src: url('fonts/bebasneue_thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/bebasneue_thin-webfont.woff2') format('woff2'),
+         url('fonts/bebasneue_thin-webfont.woff') format('woff'),
+         url('fonts/bebasneue_thin-webfont.ttf') format('truetype'),
+         url('fonts/bebasneue_thin-webfont.svg#bebas_neuethin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bebas_neue';
+    src: url('fonts/bebasneue_light-webfont.eot');
+    src: url('fonts/bebasneue_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/bebasneue_light-webfont.woff2') format('woff2'),
+         url('fonts/bebasneue_light-webfont.woff') format('woff'),
+         url('fonts/bebasneue_light-webfont.ttf') format('truetype'),
+         url('fonts/bebasneue_light-webfont.svg#bebas_neuelight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bebas_neue';
+    src: url('fonts/bebasneue_book-webfont.eot');
+    src: url('fonts/bebasneue_book-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/bebasneue_book-webfont.woff2') format('woff2'),
+         url('fonts/bebasneue_book-webfont.woff') format('woff'),
+         url('fonts/bebasneue_book-webfont.ttf') format('truetype'),
+         url('fonts/bebasneue_book-webfont.svg#bebas_neuebook') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_regular-webfont.eot');
     src: url('fonts/bebasneue_regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_regular-webfont.woff2') format('woff2'),
@@ -208,6 +248,17 @@ button.danger:hover{
          url('fonts/bebasneue_regular-webfont.ttf') format('truetype'),
          url('fonts/bebasneue_regular-webfont.svg#bebas_neue_regularregular') format('svg');
     font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bebas_neue';
+    src: url('fonts/bebasneue_bold-webfont.eot');
+    src: url('fonts/bebasneue_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/bebasneue_bold-webfont.woff2') format('woff2'),
+         url('fonts/bebasneue_bold-webfont.woff') format('woff'),
+         url('fonts/bebasneue_bold-webfont.ttf') format('truetype'),
+         url('fonts/bebasneue_bold-webfont.svg#bebas_neuebold') format('svg');
+    font-weight: 700;
     font-style: normal;
 }
 .fa {
@@ -232,7 +283,7 @@ p {
 button.custom {
     border: 2px solid #0076FF;
     border-radius: 5px;
-    font-family: bebas_neue_regularregular;
+    font-family: bebas_neue;
     background: none;
     box-shadow: none;
     color: #0076FF;
@@ -268,4 +319,128 @@ input {
   color: #ccc;
   border: solid 1px #999;
   border-radius: 2px;
+}
+/* ============================================================
+  TOGGLE: COMMON
+============================================================ */
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.row {
+    position: relative;
+}
+.row .question {
+    position: absolute;
+    left: 70px;
+    line-height: 1.8em;
+}
+.row .question.large {
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1em;
+  font-family: bebas_neue;
+}
+.row p.option-meta {
+  margin: 5px 0 20px 70px;
+  line-height: 1.2em;
+}
+
+/* ============================================================
+  TOGGLE: SWITCH 2 - ROUND FLAT
+============================================================ */
+input.cmn-toggle-round-flat + label {
+  padding: 2px;
+  width: 60px;
+  height: 30px;
+  background-color: #777;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:before, input.cmn-toggle-round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.cmn-toggle-round-flat + label:before {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: #000;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:after {
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 22px;
+  background-color: #777;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  -ms-border-radius: 22px;
+  -o-border-radius: 22px;
+  border-radius: 22px;
+  -webkit-transition: margin 0.4s, background 0.4s;
+  -moz-transition: margin 0.4s, background 0.4s;
+  -o-transition: margin 0.4s, background 0.4s;
+  transition: margin 0.4s, background 0.4s;
+}
+input.cmn-toggle-round-flat:checked + label {
+  background-color: #0076FF;
+}
+input.cmn-toggle-round-flat:checked + label:after {
+  margin-left: 30px;
+  background-color: #0076FF;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label {
+  height: 16px;
+  width: 30px;
+  padding: 1px;
+  float: left;
+  margin-right: 5px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::before{
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small + label::after {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+}
+input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
+  margin-left: 14px;
 }

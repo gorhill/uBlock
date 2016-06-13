@@ -1,3 +1,27 @@
 #aboutNameVer {
  margin-top: 500px
 }
+
+form {
+  width: 410px;
+  margin: 50px auto;
+}
+
+form h1 {
+  font-size: 30px;
+  font-family: bebas_neue;
+  font-weight: 200;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+form h1 strong {
+  font-family: bebas_neue;
+  font-weight: 700;
+  color: #fff;
+}
+
+form a {
+  color: inherit;
+  text-decoration: underline;
+}
