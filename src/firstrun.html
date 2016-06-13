@@ -1,70 +1,70 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>AdNauseam — About</title>
-<link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
-<link rel="stylesheet" type="text/css" href="css/firstrun.css">
+  <meta charset="utf-8">
+  <title>AdNauseam — About</title>
+  <link rel="stylesheet" type="text/css" href="css/common.css">
+  <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+  <link rel="stylesheet" type="text/css" href="css/firstrun.css">
 </head>
 
 <body>
 
-<!-- first run content goes here -->
-<form id="settings_form" action="index.html" method="post">
+  <!-- first run content goes here -->
+  <form id="settings_form" action="index.html" method="post">
 
-  <h1><strong>Adnauseam</strong>, Please:</h1>
+    <h1><strong>Adnauseam</strong>, Please:</h1>
 
-				<div class="row">
-					<div class="question large" data-l10n-id="adn.menu.settings.disableAllLogging" data-tip="Disable all logging">
-						Hide Ads
-					</div>
-					<div class="switch">
-						<input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1" checked>
-						<label for="cmn-toggle-1"></label>
-					</div>
-          <p class="option-meta">hides all ads identified by <a href="#">filter lists</a></p>
-				</div>
+    <div class="row">
+      <div class="question large">
+        Hide Ads
+      </div>
+      <div class="switch">
+        <input type="checkbox" data-setting-name="hidingAds" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1" checked>
+        <label for="cmn-toggle-1"></label>
+      </div>
+      <p class="option-meta">hides all ads identified by <a href="#">filter lists</a></p>
+    </div>
 
-        <div class="row">
-          <div class="question large" data-l10n-id="adn.menu.settings.disableOutgoingReferrer" data-tip="Disable outgoing referrer">
-		          Click Ads
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2" checked>
-            <label for="cmn-toggle-2"></label>
-          </div>
-          <p class="option-meta">silently registers visits on all pages linked to ads identified by <a href="#">filter lists</a></p>
-        </div>
+    <div class="row">
+      <div class="question large">
+        Click Ads
+      </div>
+      <div class="switch">
+        <input type="checkbox" data-setting-name="clickingAds" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2" checked>
+        <label for="cmn-toggle-2"></label>
+      </div>
+      <p class="option-meta">silently registers visits on all pages linked to ads identified by <a href="#">filter lists</a></p>
+    </div>
 
-        <div class="row">
-          <div class="question large" data-l10n-id="adn.menu.settings.clearAds" data-tip="Clear Ads with browser history">
-            Block Malware
-          </div>
-          <div class="switch">
-            <input type="checkbox" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3" checked>
-            <label for="cmn-toggle-3"></label>
-          </div>
-          <p class="option-meta">protects your browser from malware and other non-visual trackers according to <a href="#">filter lists</a></p>
-        </div>
+    <div class="row">
+      <div class="question large">
+        Block Malware
+      </div>
+      <div class="switch">
+        <input type="checkbox" data-setting-name="blockingMalware" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3" checked>
+        <label for="cmn-toggle-3"></label>
+      </div>
+      <p class="option-meta">protects your browser from malware and other non-visual trackers according to <a href="#">filter lists</a></p>
+    </div>
 
-        <div class="row justified">
-          <div class="btn">
-						<button class="button large" id="export-ads" data-l10n-id="adn.menu.settings.exportAds" data-tip="Export Ads">OK</button>
-					</div>
-				</div>
+    <div class="row justified">
+      <div class="btn" id='confirm-close'>
+        <button class="button large" id="" data-l10n-id="" data-tip="">OK</button>
+      </div>
+    </div>
 
+  </form>
 
-			</form>
-
-<p id="aboutNameVer"></p>
-
-<script src="js/vapi-common.js"></script>
-<script src="js/vapi-client.js"></script>
-<script src="js/udom.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/dashboard-common.js"></script>
-<script src="js/about.js"></script>
+  <script src="js/vapi-common.js"></script>
+  <script src="js/vapi-client.js"></script>
+  <script src="js/udom.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/dashboard-common.js"></script>
+  <script src="js/adn/shared.js"></script>
+  <script src="js/adn/options.js"></script>
 
 </body>
+
 </html>

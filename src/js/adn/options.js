@@ -20,7 +20,7 @@
     reader.onload = function (e) {
 
       var adData = JSON.parse(e.target.result);
-      
+
       messager.send('adnauseam', {
         what: 'importAds',
         data: adData,
@@ -33,7 +33,6 @@
 
   var postImportAlert = function (msg) {
 
-    //console.log('postImportAlert');
     vAPI.alert(vAPI.i18n('adnImportAlert')
       .replace('{{count}}', msg.count));
   };
@@ -57,8 +56,6 @@
   };
 
   var onLocalDataReceived = function (details) {
-
-    //onsole.log('onLocalDataReceived',details);
 
     uDom('#localData > ul > li:nth-of-type(1)').text(
       vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
@@ -135,7 +132,9 @@
   // TODO: use data-* to declare simple settings
 
   var onUserSettingsReceived = function (details) {
+
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
+
       uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
         .on('change', function () {
           changeUserSettings(
@@ -154,10 +153,15 @@
         .on('change', onInputChanged);
     });
 
+
     uDom('#export').on('click', exportToFile);
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#reset').on('click', clearAds);
+    uDom('#confirm-close').on('click', function (e) {
+      e.preventDefault();
+      window.open(location, '_self').close();
+    });
   };
 
   /******************************************************************************/
