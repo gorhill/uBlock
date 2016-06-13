@@ -414,9 +414,10 @@
             if (ad) {
               for (var i = headers.length - 1; i >= 0; i--) {
 
-                dbug && console.log(i+") "+details.responseHeaders[i].name);
-                
-                if (details.responseHeaders[i].name.toLowerCase() === 'set-cookie') {
+                var name = details.responseHeaders[i].name..toLowerCase();
+                dbug && console.log(i+") "+name);
+
+                if (name === 'set-cookie' || name === 'set-cookie2') {
 
                     dbug && console.log('Removed cookie: ',details.responseHeaders[i].value);
                     details.responseHeaders.splice(i, 1);
