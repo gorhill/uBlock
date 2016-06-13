@@ -939,7 +939,7 @@
 
     // calculate the suitable zoomIdx by userZoomScale
     var previousState = zoomIdx;
-    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
+    for (var i = 0; zoomIdx == previousState && i < Zooms.length; i++) {
 
       if (userZoomScale == Zooms[i])
         zoomIdx = i;
