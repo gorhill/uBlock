@@ -1368,7 +1368,7 @@ var updateOne = function() {
         // anything else before the resource is fetched (or times out).
         suspendUpdateDaemon();
 
-        console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
+        //console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
         µb.assets.get(path, onOneUpdated);
         updatingCount = 1;
         updatingText = metaEntry.homeURL || path;

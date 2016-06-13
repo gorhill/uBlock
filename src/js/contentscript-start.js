@@ -77,7 +77,8 @@ var cosmeticFilters = function(details) {
             }
         }
     }
-    if ( hide.length !== 0 ) {
+    if ( hide.length !== 0 && vAPI.prefs.hidingDisabled !== true ) {
+
         // https://github.com/gorhill/uBlock/issues/1015
         // Boost specificity of our CSS rules.
         var styleText = ':root ' + hide.join(',\n:root ');
@@ -88,7 +89,8 @@ var cosmeticFilters = function(details) {
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
         var parent = document.head || document.documentElement;
         if ( parent ) {
-            if (0) parent.appendChild(style);
+            style.setAttribute('id', 'ublock-style');
+            parent.appendChild(style);
             vAPI.styles.push(style);
         }
         hideElements(styleText);
@@ -109,6 +111,7 @@ var netFilters = function(details) {
     var css = details.netCollapse ?
         '\n{display:none !important;}' :
         '\n{visibility:hidden !important;}';
+    console.warn('[CSS] appending rule: ', text + css);
     style.appendChild(document.createTextNode(text + css));
     parent.appendChild(style);
     //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
@@ -130,6 +133,7 @@ var injectScripts = function(scripts) {
         return;
     }
     var scriptTag = document.createElement('script');
+    console.warn('[CSS] injecting script: ',scriptTag);
     scriptTag.appendChild(document.createTextNode(scripts));
     parent.appendChild(scriptTag);
     vAPI.injectedScripts = scripts;
@@ -138,8 +142,6 @@ var injectScripts = function(scripts) {
 /******************************************************************************/
 
 var filteringHandler = function(details) {
-
-    //console.log('LIFE(CSS):filteringHandler(from domainCosmeticSelectors)', details);
 
     var styleTagCount = vAPI.styles.length;
     vAPI.prefs = details.prefs;
@@ -193,7 +195,8 @@ var hideElements = function(selectors) {
     //if ( document.body.shadowRoot === undefined ) {
     if (1) {
         while ( i-- ) {
-            elems[i].style.setProperty('display', 'none', 'important');
+            if  (vAPI.prefs.hidingDisabled !== true)
+                elems[i].style.setProperty('display', 'none', 'important');
         }
         return;
     }
@@ -235,7 +238,6 @@ var hideElements = function(selectors) {
 /******************************************************************************/
 
 var url = window.location.href;
-//console.log('LIFE(CSS):send:domainCosmeticSelectors', vAPI.prefs);
 
 vAPI.messaging.send(
     'adnauseam',

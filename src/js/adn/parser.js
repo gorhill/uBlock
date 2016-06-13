@@ -16,6 +16,28 @@
     ];
 
     /***************************** Functions ******************************/
+
+    var findImageAds = function (imgs) {
+
+      var target, targetUrl, ad, hits = 0;
+
+      for (var i = 0; i < imgs.length; i++) {
+
+        var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
+
+        if (!imgSrc) {
+
+          vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", imgs[i]);
+          imgs[i].addEventListener('load', processDelayedImage, false);
+          continue;
+        }
+
+        if (processImage(imgs[i], imgSrc)) hits++;
+      }
+
+      return hits > 0;
+    }
+
     var findTextAds = function (elem) {
 
       var activeFilters = filters.filter(function (f) {
@@ -37,27 +59,6 @@
           }
         }
       }
-    }
-
-    var findImageAds = function (imgs) {
-
-      var target, targetUrl, ad, hits = 0;
-
-      for (var i = 0; i < imgs.length; i++) {
-
-        var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
-
-        if (!imgSrc) {
-
-          vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-          imgs[i].addEventListener('load', processDelayedImage, false);
-          continue;
-        }
-
-        if (processImage(imgs[i], imgSrc)) hits++;
-      }
-
-      return hits > 0;
     }
 
     var pageCount = function (ads, pageUrl) {

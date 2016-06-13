@@ -96,8 +96,6 @@ var uBlockCollapser = (function() {
 
     var onProcessed = function(response) {
 
-        //console.log('LIFE(CSE):onProcessed(from filterRequests)', vAPI.prefs);
-
         // This can happens if uBO is restarted.
         if ( !response ) {
             return;
@@ -131,12 +129,14 @@ var uBlockCollapser = (function() {
 
             target = entry.target;
 
-            // https://github.com/chrisaljoudi/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            if (vAPI.debugAdParsing) console.log("CSE.HIT(2)", vAPI.prefs);
+            if (vAPI.debugAdParsing) console.log("CSE.HIT(2)", 'Prefs:', vAPI.prefs);
             vAPI.adParser.process(target);
-            target.style.setProperty('display', 'none', 'important');
+            if  (vAPI.prefs.hidingDisabled !== true) { // include next conditional?
 
+                // https://github.com/chrisaljoudi/uBlock/issues/399
+                // Never remove elements from the DOM, just hide them
+                target.style.setProperty('display', 'none', 'important');
+            }
 
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
@@ -164,8 +164,6 @@ var uBlockCollapser = (function() {
 
     var send = function() {
         timer = null;
-        //console.log('LIFE(CSE):send:filterRequests',vAPI.prefs);
-
         messaging.send(
             'contentscript',
             {
@@ -250,6 +248,7 @@ var uBlockCollapser = (function() {
             scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
             var parent = iframe.contentDocument && iframe.contentDocument.head;
             if ( parent ) {
+                console.warn('[CSE] injecting script into iFrame, ',scriptTag);
                 parent.appendChild(scriptTag);
             }
         }
@@ -306,12 +305,10 @@ var uBlockCollapser = (function() {
 
 (function() {
 
-    if ( vAPI.skipCosmeticFiltering){ //|| vAPI.prefs.hidingAds === false) {
+    if ( vAPI.skipCosmeticFiltering) {
         console.debug('Abort cosmetic filtering');
         return;
     }
-
-    //console.log('LIFE(CSE):CosmeticFilters', vAPI.prefs);
 
     var hideElements = (function() {
         if ( document.body === null ) {
@@ -319,18 +316,23 @@ var uBlockCollapser = (function() {
         }
         //if ( document.body.shadowRoot === undefined ) {
         return function(selectors) {
+
             // https://github.com/chrisaljoudi/uBlock/issues/207
             // Do not call querySelectorAll() using invalid CSS selectors
             if ( selectors.length === 0 ) { return; }
             var elems = document.querySelectorAll(selectors);
             var i = elems.length;
             if ( i === 0 ) { return; }
-            // https://github.com/chrisaljoudi/uBlock/issues/158
-            // Using CSSStyleDeclaration.setProperty is more reliable
+
             while ( i-- ) {
-                if (vAPI.debugAdParsing) console.log("CSE.HIT(1)", vAPI.prefs);
+                if (vAPI.debugAdParsing) console.log("CSE.HIT(1)", 'Prefs:', vAPI.prefs);
                 vAPI.adParser && vAPI.adParser.process(elems[i]);
-                elems[i].style.setProperty('display', 'none', 'important');
+                if (vAPI.prefs.hidingDisabled !== true) {
+
+                    // https://github.com/chrisaljoudi/uBlock/issues/158
+                    // Using CSSStyleDeclaration.setProperty is more reliable
+                    elems[i].style.setProperty('display', 'none', 'important');
+                }
             }
         };
         //}
@@ -377,36 +379,40 @@ var uBlockCollapser = (function() {
     // https://github.com/gorhill/uBlock/issues/873
     // Be sure that our style tags used for cosmetic filtering are still applied.
     var checkStyleTags = function() {
-        var doc = document,
-            html = doc.documentElement,
-            head = doc.head,
-            newParent = head || html;
-        if ( newParent === null ) {
-            return;
-        }
-        var styles = vAPI.styles || [],
-            style, oldParent;
-        for ( var i = 0; i < styles.length; i++ ) {
-            style = styles[i];
-            oldParent = style.parentNode;
-            // https://github.com/gorhill/uBlock/issues/1031
-            // If our style tag was disabled, force a re-insert into the page.
-            if (
-                style.disabled &&
-                oldParent !== null &&
-                style[vAPI.sessionId] === undefined
-            ) {
-                oldParent.removeChild(style);
-                oldParent = null;
+
+        if (vAPI.prefs.hidingDisabled !== true) {
+
+            var doc = document,
+                html = doc.documentElement,
+                head = doc.head,
+                newParent = head || html;
+            if ( newParent === null ) {
+                return;
             }
-            if ( oldParent === head || oldParent === html ) {
-                continue;
+            var styles = vAPI.styles || [],
+                style, oldParent;
+            for ( var i = 0; i < styles.length; i++ ) {
+                style = styles[i];
+                oldParent = style.parentNode;
+                // https://github.com/gorhill/uBlock/issues/1031
+                // If our style tag was disabled, force a re-insert into the page.
+                if (
+                    style.disabled &&
+                    oldParent !== null &&
+                    style[vAPI.sessionId] === undefined
+                ) {
+                    oldParent.removeChild(style);
+                    oldParent = null;
+                }
+                if ( oldParent === head || oldParent === html ) {
+                    continue;
+                }
+                style.disabled = false;
+                newParent.appendChild(style);
+                // The page tried to get rid of us: reapply inline styles to
+                // blocked elements.
+                hideElements(style.textContent.slice(0, style.textContent.lastIndexOf('\n')));
             }
-            style.disabled = false;
-            newParent.appendChild(style);
-            // The page tried to get rid of us: reapply inline styles to
-            // blocked elements.
-            hideElements(style.textContent.slice(0, style.textContent.lastIndexOf('\n')));
         }
     };
     checkStyleTags();
@@ -508,8 +514,8 @@ var uBlockCollapser = (function() {
                 processHighHighGenericsAsync();
             }
         }
-        if ( hideSelectors.length !== 0 ) {
-            addStyleTag(hideSelectors);
+        if ( hideSelectors.length !== 0) {
+              addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
         //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
@@ -523,31 +529,39 @@ var uBlockCollapser = (function() {
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        // https://github.com/gorhill/uBlock/issues/1015
-        // Boost specificity of our CSS rules.
-        var styleText = ':root ' + selectors.join(',\n:root ');
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        // The linefeed before the style block is very important: do no remove!
-        style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
-        var parent = document.head || document.documentElement;
 
-        // ?? this STYLE tag is causing http://rednoise.org/adntest/simple.html to hide its ad
-        if ( parent ) {
-            parent.appendChild(style);
-            vAPI.styles.push(style);
-        }
-        hideElements(styleText);
-        messaging.send(
-            'contentscript',
-            {
-                what: 'cosmeticFiltersInjected',
-                type: 'cosmetic',
-                hostname: window.location.hostname,
-                selectors: selectors
+        var styleText = ':root ' + selectors.join(',\n:root ');
+
+        if (vAPI.prefs.hidingDisabled !== true) {
+
+            // https://github.com/gorhill/uBlock/issues/1015
+            // Boost specificity of our CSS rules.
+
+            var style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            // The linefeed before the style block is very important: do no remove!
+            style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
+            var parent = document.head || document.documentElement;
+            if ( parent ) {
+                style.setAttribute('id', 'ublock-style');
+                parent.appendChild(style);
+                vAPI.styles.push(style);
             }
-        );
-        //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
+            hideElements(styleText);
+            messaging.send(
+                'contentscript',
+                {
+                    what: 'cosmeticFiltersInjected',
+                    type: 'cosmetic',
+                    hostname: window.location.hostname,
+                    selectors: selectors
+                }
+            );
+            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
+        }
+        else {
+            hideElements(styleText);
+        }
     };
 
     // Extract and return the staged nodes which (may) match the selectors.
@@ -965,7 +979,6 @@ var uBlockCollapser = (function() {
 
 (function() {
     var collapser = uBlockCollapser;
-    //console.log('LIFE(CSE):uBlockCollapser',vAPI.prefs);
     var elems = document.getElementsByTagName('img'),
         i = elems.length, elem;
     while ( i-- ) {
