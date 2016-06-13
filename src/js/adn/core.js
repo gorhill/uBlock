@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // tmp: for testing list-blocking
+    logBlocks = 1; // tmp: for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -1105,14 +1105,15 @@
     return response;
   }
 
-  var isBlockableRequest = function (result, isTop) {
+  var isBlockableRequest = function (result, requestURL, isTop) {
 
     if (strictBlockingDisabled && µb.userSettings.blockingMalware) {
-
       var compiled = result.slice(3),
         snfe = µb.staticNetFilteringEngine,
         raw = snfe.filterStringFromCompiled(compiled),
         hits = fromNetFilterSync(compiled, raw);
+
+      //console.log('isBlockableRequest',requestURL, compiled);
 
       if (hits && hits.length) {
 
@@ -1120,11 +1121,11 @@
 
           return false; //log("Reject-block: " + title, raw);
 
-        } else logBlocks && log("BLOCK" + (isTop ? '-MAIN: ' : ': ') + hits[0].title + " " + raw);
+        } else logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : '] ') + hits[0].title + ' ' + raw + ': ', requestURL);
 
       } else warn("NO hits ****", raw, compiled);
 
-    } else logBlocks && warn("ALLOW: blocking-off or lists not loaded");
+    } else logBlocks && warn("[ALLOW] blocking-off or loading: ",requestURL);
 
     return true;
   }

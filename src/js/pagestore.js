@@ -559,9 +559,10 @@ To create a log of net requests
 
         // ADN
         var snfe = µb.staticNetFilteringEngine;
-        if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1))) {
-          result = '';
+        if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), context.requestURL)) {
+          result = ''; // not-blocking
         }
+
       }
     }
     else if (result.length > 0) {
@@ -625,7 +626,7 @@ To create a log of net requests
         // ADN
         if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1))) {
           console.warn("*** Blocking filterRequestNoCache ***");
-          result = '';
+          result = ''; // not-blocking
         }
       }
     }

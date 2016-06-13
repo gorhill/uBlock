@@ -111,7 +111,7 @@ var netFilters = function(details) {
     var css = details.netCollapse ?
         '\n{display:none !important;}' :
         '\n{visibility:hidden !important;}';
-    console.warn('[CSS] appending rule: ', text + css);
+    if (vAPI.debugAdParsing) console.warn('[CSS] appending rule: ', text + css);
     style.appendChild(document.createTextNode(text + css));
     parent.appendChild(style);
     //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
@@ -133,7 +133,7 @@ var injectScripts = function(scripts) {
         return;
     }
     var scriptTag = document.createElement('script');
-    console.warn('[CSS] injecting script: ',scriptTag);
+    if (vAPI.debugAdParsing) console.warn('[CSS] injecting script: ',scriptTag);
     scriptTag.appendChild(document.createTextNode(scripts));
     parent.appendChild(scriptTag);
     vAPI.injectedScripts = scripts;

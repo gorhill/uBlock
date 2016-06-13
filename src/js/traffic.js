@@ -29,6 +29,8 @@
 
   'use strict';
 
+  var dbugBlocks = false; // adn
+
   /******************************************************************************/
 
   var exports = {};
@@ -38,6 +40,16 @@
   // Intercept and filter web requests.
 
   var onBeforeRequest = function (details) {
+
+    // ADN: this triggers our automated script to export ads on completion (tmp)
+    if (details.type === 'main_frame' && details.url === 'http://rednoise.org/ad-auto-export')
+        µb.adnauseam.exportAds();
+
+    // ADN: return here if prefs say not to block
+    if (µBlock.userSettings.blockingMalware === false) {
+        return;
+    }
+
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -94,13 +106,25 @@
     requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
     requestContext.requestType = requestType;
 
+    // Note: adn-blocking happens here
     var result = pageStore.filterRequest(requestContext);
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
     pageStore.logRequest(requestContext, result);
 
-    if (µb.logger.isEnabled()) {
+    // Not blocked
+
+    if (µb.isAllowResult(result)) {
+      // https://github.com/chrisaljoudi/uBlock/issues/114
+      frameId = details.frameId;
+      if (frameId > 0 && isFrame) {
+        pageStore.setFrame(frameId, requestURL);
+      }
+      return;
+    }
+
+    if (µb.logger.isEnabled()) { // adn: moved below return
       µb.logger.writeOne(
         tabId,
         'net',
@@ -112,18 +136,6 @@
       );
     }
 
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      //if (!µb.isAllowResult(result))
-      // https://github.com/chrisaljoudi/uBlock/issues/114
-      frameId = details.frameId;
-      if (frameId > 0 && isFrame) {
-        pageStore.setFrame(frameId, requestURL);
-      }
-      return;
-    }
-
-    //console.error('BLOCKED !!!!!!!! ', result, requestContext);
     // Blocked
 
     // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
@@ -136,6 +148,9 @@
     // Redirect blocked request?
     var url = µb.redirectEngine.toURL(requestContext);
     if (url !== undefined) {
+
+      dbugBlocks && console.log("LOG-BLOCK2(redirect)");
+
       if (µb.logger.isEnabled()) {
         µb.logger.writeOne(
           tabId,
@@ -147,10 +162,13 @@
           requestContext.pageHostname
         );
       }
+
       return {
         redirectUrl: url
       };
     }
+
+    //console.warn('BLOCKED(onBeforeRequest) !!!! ', requestType, requestContext.requestURL);
 
     return {
       cancel: true
@@ -163,10 +181,6 @@
     var tabId = details.tabId;
     var requestURL = details.url;
     var µb = µBlock;
-
-    // this triggers our automated script to export ads on completion
-    if (requestURL === 'http://rednoise.org/ad-auto-export') // adn-tmp
-      µb.adnauseam.exportAds();
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -188,6 +202,8 @@
     };
 
     var result = '';
+
+    dbugBlocks && console.log('PAGE: ',requestURL);
 
     // If the site is whitelisted, disregard strict blocking
     if (µb.getNetFilteringSwitch(requestURL) === false) {
@@ -229,13 +245,23 @@
       }
     }
 
-    // Log
+    // Not blocked
+    if (µb.isAllowResult(result)) {
+      return;
+    }
+
+    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), requestURL, true)) {
+      return; // adn: not blocking
+    }
+
+    // Log (moved, from line 231, to here, below the returns)
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if (pageStore) {
       pageStore.logRequest(context, result);
     }
 
     if (µb.logger.isEnabled()) {
+
       µb.logger.writeOne(
         tabId,
         'net',
@@ -245,18 +271,6 @@
         requestHostname,
         requestHostname
       );
-    }
-
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      // if (!µb.isAllowResult(result))
-      //     console.log('UNBLOCK(MAIN_FRAME)', newResult, result);
-      return;
-    }
-
-    // ADN: full-page blocked
-    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), true)) {
-      return;
     }
 
     var compiled = result.slice(3);
@@ -271,6 +285,8 @@
     }));
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
+
+    dbugBlocks && console.log("LOG-BLOCK3(document)");
 
     return {
       cancel: true
@@ -319,6 +335,8 @@
     // "g" in "gb:" stands for "global setting"
     var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
     pageStore.logRequest(context, result);
+
+
     if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         tabId,
@@ -331,6 +349,9 @@
       );
     }
     if (result !== '') {
+
+      dbugBlocks && console.log("LOG-BLOCK4(net.beacon)", context.requestURL, result);
+
       return {
         cancel: true
       };
@@ -342,9 +363,7 @@
   // Intercept and filter behind-the-scene requests.
   var onBeforeBehindTheSceneRequest = function (details) {
 
-    if (µBlock.adnauseam) return; // ADN: we don't block these
-
-    console.warn("HANDLING BehindTheSceneRequest");
+    if (µBlock.adnauseam) return; // ADN: we can't block these
 
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
@@ -368,7 +387,6 @@
     }
 
     pageStore.logRequest(context, result);
-
     if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         vAPI.noTabId,
@@ -487,7 +505,7 @@
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
 
-    if (dbug)console.log("Referer: "+referer, prefs.noOutgoingReferer, refererIdx);
+    if (dbug) console.log("Referer: "+referer, prefs.noOutgoingReferer, refererIdx);
 
     if (refererIdx > -1 && prefs.noOutgoingReferer) {
         setHeader(headers[refererIdx], '');
@@ -550,7 +568,7 @@
 
     pageStore.logRequest(context, result);
 
-    if (µb.logger.isEnabled()) {
+    if (µb.logger.isEnabled()) { // why are these logged if not blocked?
       µb.logger.writeOne(
         tabId,
         'net',
@@ -615,6 +633,8 @@
       return;
     }
 
+    dbugBlocks && console.log("LOG-BLOCK7(net.inline-script')");
+
     µb.updateBadgeAsync(tabId);
 
     return {
@@ -654,7 +674,10 @@
 
     pageStore.logLargeMedia();
 
+    dbugBlocks && console.log("LOG-BLOCK8(net.largeMedia)");
+
     if (µb.logger.isEnabled()) {
+
       µb.logger.writeOne(
         tabId,
         'net',
