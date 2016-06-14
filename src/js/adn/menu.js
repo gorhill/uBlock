@@ -525,7 +525,7 @@
     uDom('.settings').toggleClass('hide');
   });
 
-  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/FAQ"; // keep
+  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/"; // keep
 
   //$('#about-button')
   uDom('#about-button').on('click', function () {

@@ -39,4 +39,4 @@ cp LICENSE.txt $DES/
 
 echo "*** adnauseam.opera: Package done."
 
-head $DES/manifest.json
+#head $DES/manifest.json
