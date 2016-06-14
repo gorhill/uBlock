@@ -1,7 +1,47 @@
 {
-  "adnNotHiding":{
+  "adnAboutPageName":{
+    "message":"AdNauseam — 关于",
+    "description":"English: Firstrun.html page title"
+  },
+  "adnFirstRunPlease":{
+    "message":"请:",
+    "description":"English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds":{
+    "message":"隐藏广告",
+    "description":"English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds":{
+    "message":"点击广告",
+    "description":"English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware":{
+    "message":"屏蔽恶意软件",
+    "description":"English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription":{
+    "message":"隐藏所有由<a href='\/dashboard.html#3p-filters.html'> 筛选器列表<\/a>标记的广告",
+    "description":"English: Firstrun.html -> hides all ads identified by filter lists"
+  },
+  "adnFirstRunClickingAdsDescription":{
+    "message":"后台访问由 <a href='\/dashboard.html#3p-filters.html'> 筛选器列表<\/a>标记的广告",
+    "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription":{
+    "message":"保护您的浏览器免受由<a href='\/dashboard.html#3p-filters.html'> 筛选器列表<\/a>标记的恶意软件和其他非可视的网络跟踪器",
+    "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+  },
+  "adnFirstRunOK":{
+    "message":"好",
+    "description":"English: Firstrun.html -> OK"
+  },
+  "adnPausedOnPage":{
     "message":"AdNauseam 在本页面被暂停",
-    "description":"English: Menu->display when paused"
+    "description":"English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding":{
+    "message":"AdNauseam 目前不隐藏广告",
+    "description":"English: Menu->display when not hiding ads"
   },
   "adnVaultName":{
     "message":"AdNauseam — 广告库",
@@ -110,6 +150,42 @@
   "adnVaultDeleteThisAd":{
     "message":"删除这个广告",
     "description":"appears in ADN vault page"
+  },
+  "hidingAdsPrompt":{
+    "message":"隐藏由你的筛选器列表标记的广告",
+    "description":"English: Hide ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt":{
+    "message":"点击由你的筛选器列表标记的广告",
+    "description":"English: Click ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt":{
+    "message":"屏蔽恶意软件和非可视的网络跟踪器",
+    "description":"English: Protect your browser from malware and non-visual trackers"
+  },
+  "parseTextAdsPrompt":{
+    "message":"当可行时捕捉文字广告",
+    "description":"English: Capture text-only ads when possible"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"在图标上显示已找到的广告数目",
+    "description":"English: Show the number of found ads on the icon"
+  },
+  "noIncomingCookiesPrompt":{
+    "message":"忽略由点击广告产生的 cookie",
+    "description":"English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt":{
+    "message":"不要发送 cookie 访问",
+    "description":"English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt":{
+    "message":"当访问广告时隐藏浏览器识别符",
+    "description":"English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt":{
+    "message":"当访问广告时隐藏引用页面",
+    "description":"English: Hide referring page on visits"
   },
   "extName":{
     "message":"AdNauseam",
