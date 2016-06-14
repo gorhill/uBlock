@@ -9,7 +9,7 @@
   const States = ['pending', 'visited', 'failed'],
     Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
-    MaxStartNum = 200,
+    MaxStartNum = 300,
     MaxPerSet = 9;
 
   const margin = {
