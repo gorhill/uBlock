@@ -1,4 +1,40 @@
 {
+  "adnAboutPageName": {
+    "message": "AdNauseam — About",
+    "description": "English: Firstrun.html page title"
+  },
+  "adnFirstRunPlease": {
+    "message": "Please:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Hide Ads",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Click Ads",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Block Malware",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "hides all ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> hides all ads identified by filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "silently registers visits on all pages linked to ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "protects your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+  },
+  "adnFirstRunOK": {
+    "message": "OK",
+    "description": "English: Firstrun.html -> OK"
+  },
   "adnPausedOnPage": {
     "message": "AdNauseam is paused on this page",
     "description": "English: Menu->display when paused on page/site"
@@ -154,7 +190,6 @@
     "message": "Hide referring page on visits",
     "description": "English: Hide referring page on visits"
   },
-
   "extName": {
     "message": "AdNauseam",
     "description": "extension name"
