@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>AdNauseam — Welcome</title>
+  <title data-i18n="adnAboutPageName"></title>
   <link rel="stylesheet" type="text/css" href="css/common.css">
   <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
   <link rel="stylesheet" type="text/css" href="css/firstrun.css">
@@ -14,44 +14,41 @@
   <!-- first run content goes here -->
   <form id="settings_form" action="index.html" method="post">
 
-    <h1><strong>Adnauseam</strong>, Please:</h1>
+    <h1><strong>Adnauseam</strong>, <span data-i18n="adnFirstRunPlease"></span></h1>
 
     <div class="row">
-      <div class="question large">
-        Hide Ads
+      <div class="question large" data-i18n="adnFirstRunHideAllAds">
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="hidingAds" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-1" checked>
         <label for="cmn-toggle-1"></label>
       </div>
-      <p class="option-meta">hides all ads identified by <a href="#">filter lists</a></p>
+      <p class="option-meta" data-i18n="adnFirstRunHideAllAdsDescription"></p>
     </div>
 
     <div class="row">
-      <div class="question large">
-        Click Ads
+      <div class="question large" data-i18n="adnFirstRunClickingAds">
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="clickingAds" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-2" checked>
         <label for="cmn-toggle-2"></label>
       </div>
-      <p class="option-meta">silently registers visits on all pages linked to ads identified by <a href="#">filter lists</a></p>
+      <p class="option-meta" data-i18n="adnFirstRunClickingAdsDescription"></p>
     </div>
 
     <div class="row">
-      <div class="question large">
-        Block Malware
+      <div class="question large" data-i18n="adnFirstRunBlockingMalware">
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="blockingMalware" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat" id="cmn-toggle-3" checked>
         <label for="cmn-toggle-3"></label>
       </div>
-      <p class="option-meta">protects your browser from malware and other non-visual trackers according to <a href="#">filter lists</a></p>
+      <p class="option-meta" data-i18n="adnFirstRunBlockingMalwareDescription"></p>
     </div>
 
     <div class="row justified">
       <div class="btn" id='confirm-close'>
-        <button class="button large" id="" data-l10n-id="" data-tip="">OK</button>
+        <button class="button large" id="" data-l10n-id="" data-tip="" data-i18n="adnFirstRunOK"></button>
       </div>
     </div>
 

@@ -1,7 +1,47 @@
 {
-  "adnNotHiding":{
+  "adnAboutPageName":{
+    "message":"AdNauseam — 關於",
+    "description":"English: Firstrun.html page title"
+  },
+  "adnFirstRunPlease":{
+    "message":"請:",
+    "description":"English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds":{
+    "message":"隱藏廣告",
+    "description":"English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds":{
+    "message":"點擊廣告",
+    "description":"English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware":{
+    "message":"屏蔽惡意軟件",
+    "description":"English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription":{
+    "message":"隱藏所有由<a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的廣告",
+    "description":"English: Firstrun.html -> hides all ads identified by filter lists"
+  },
+  "adnFirstRunClickingAdsDescription":{
+    "message":"後台訪問由 <a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的廣告",
+    "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription":{
+    "message":"保護您的瀏覽器免受由<a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的惡意軟件和其他非可視的網絡跟蹤器",
+    "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+  },
+  "adnFirstRunOK":{
+    "message":"好",
+    "description":"English: Firstrun.html -> OK"
+  },
+  "adnPausedOnPage":{
     "message":"AdNauseam 在本頁面被暫停",
-    "description":"English: Menu->display when paused"
+    "description":"English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding":{
+    "message":"AdNauseam 目前不隱藏廣告",
+    "description":"English: Menu->display when not hiding ads"
   },
   "adnVaultName":{
     "message":"AdNauseam — 廣告庫",
@@ -16,7 +56,7 @@
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}}个广告被导入",
+    "message":"{{count}}個廣告被導入",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
@@ -52,7 +92,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"設定",
+    "message":"設置",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
@@ -64,7 +104,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging":{
-    "message":"關閉所有日誌記錄",
+    "message":"關閉所有日誌紀錄",
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer":{
@@ -100,7 +140,7 @@
     "description":"appears in ADN vault page"
   },
   "adnVaultAdsClicked":{
-    "message":"已點擊廣告",
+    "message":"已點擊",
     "description":"appears in ADN vault page"
   },
   "adnVaultFound":{
@@ -110,6 +150,42 @@
   "adnVaultDeleteThisAd":{
     "message":"刪除這個廣告",
     "description":"appears in ADN vault page"
+  },
+  "hidingAdsPrompt":{
+    "message":"隱藏由你的篩選器列表標記的廣告",
+    "description":"English: Hide ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt":{
+    "message":"點擊由你的篩選器列表標記的廣告",
+    "description":"English: Click ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt":{
+    "message":"屏蔽惡意軟件和非可視的網絡跟蹤器",
+    "description":"English: Protect your browser from malware and non-visual trackers"
+  },
+  "parseTextAdsPrompt":{
+    "message":"當可行時捕捉文字廣告",
+    "description":"English: Capture text-only ads when possible"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"在圖標上顯示已找到的廣告數目",
+    "description":"English: Show the number of found ads on the icon"
+  },
+  "noIncomingCookiesPrompt":{
+    "message":"忽略由點擊廣告產生的 cookie",
+    "description":"English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt":{
+    "message":"不要發送 cookie 訪問",
+    "description":"English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt":{
+    "message":"當訪問廣告時隱藏瀏覽器識別符",
+    "description":"English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt":{
+    "message":"當訪問廣告時隱藏引用頁面",
+    "description":"English: Hide referring page on visits"
   },
   "extName":{
     "message":"AdNauseam",
