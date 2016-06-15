@@ -48,7 +48,7 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No ads on this page (showing recent)",
+    "message": "No ads collected on this page (showing recent)",
     "description": "shown in menu when only 'recent' ads are shown"
   },
   "adnExportedAdsFilename": {

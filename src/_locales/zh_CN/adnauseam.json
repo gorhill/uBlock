@@ -48,7 +48,7 @@
     "description":"English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds":{
-    "message":"本页没有广告 (显示最近的)",
+    "message":"没有在本页收集到广告 (显示最近的)",
     "description":"shown in menu when only 'recent' ads are shown"
   },
   "adnExportedAdsFilename":{
