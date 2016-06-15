@@ -236,7 +236,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Bloquear fontes remotas",
+    "message":"Bloquear tipos de letra remotos",
     "description":""
   },
   "settingsStorageUsed":{

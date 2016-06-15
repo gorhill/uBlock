@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} o {{percent}}%",
+    "message":"{{count}} o {{percent}} %",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -556,7 +556,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Se borrará toda la configuración y uBlock₀ se reiniciará.\n\n¿Reiniciar uBlock₀ a la configuración por defecto?",
+    "message":"Se borrará toda la configuración y uBlock₀ se reiniciará.\n\n¿Restaurar uBlock₀ a la configuración por defecto?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -564,7 +564,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Adicionar la siguiente dirección a su lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: ¿Desea añadir la siguiente dirección a su lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -672,7 +672,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Permitir elementos multimedia grandes temporalmente",
+    "message":"Permitir temporalmente elementos multimedia grandes",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
