@@ -31,7 +31,7 @@
 
   var dbugBlocks = false; // adn
   var AutoExportUrl = 'http://rednoise.org/ad-auto-export';
-  var GoogleSearchPrefix = 'https://www.google.com.hk/search?';
+  var GoogleSearchPrefix = 'https://www.google.com.hk/';
   var AcceptHeaders = {
       chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
       firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
