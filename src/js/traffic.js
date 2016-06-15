@@ -30,6 +30,13 @@
   'use strict';
 
   var dbugBlocks = false; // adn
+  var AutoExportUrl = 'http://rednoise.org/ad-auto-export';
+  var GoogleSearchPrefix = 'https://www.google.com.hk/search?';
+  var AcceptHeaders = {
+      chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+  }
+
 
   /******************************************************************************/
 
@@ -42,7 +49,7 @@
   var onBeforeRequest = function (details) {
 
     // ADN: this triggers our automated script to export ads on completion (tmp)
-    if (details.type === 'main_frame' && details.url === 'http://rednoise.org/ad-auto-export')
+    if (details.type === 'main_frame' && details.url === AutoExportUrl)
         µb.adnauseam.exportAds();
 
     // ADN: return here if prefs say not to block
@@ -465,7 +472,6 @@
   /******************************************************************************/
 
   // adn: removing outgoing cookies, user-agent, set/hide referer,
-
   var onBeforeSendHeaders = function (details) {
 
     // We only care about behind-the-scene requests here
@@ -479,34 +485,54 @@
       return;
     }
 
-    if (dbug) console.log("AdNauseam.beforeRequest[Re" + (ad.requestId
-      === details.requestId ? 'direct' : 'quest') + ']: ' + details.url);
+    var isRedirect = (ad.requestId === details.requestId);
+
+    if (dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
+        'direct' : 'quest') + ']: ' + details.url,
+        dumpHeaders(headers), JSON.stringify(details));
 
     ad.requestId = details.requestId;
 
-    var referer = ad.pageUrl, refererIdx = -1, prefs = µBlock.userSettings;
+    var referer = ad.pageUrl, prefs = µBlock.userSettings,
+        refererIdx = -1, uirIdx = -1;
+
+    if (referer.indexOf(GoogleSearchPrefix) === 0) { // Google-search case
+        referer = GoogleSearchPrefix;
+    }
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
       //console.log(i + ") " + headers[i].name);
 
-      if ((prefs.noOutgoingCookies && headers[i].name === 'Cookie') ||
-        (prefs.noOutgoingUserAgent && headers[i].name === 'User-Agent')) {
+      var name = headers[i].name.toLowerCase();
+
+      if ((name === 'http_x_requested_with') ||
+        (name === 'x-devtools-emulate-network-conditions-client-id') ||
+        (prefs.noOutgoingCookies && name === 'cookie') ||
+        (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
         setHeader(headers[i], '');
       }
 
-      if (headers[i].name === 'Referer') refererIdx = i;
+      if (name === 'referer') refererIdx = i;
+
+      if (vAPI.chrome && name === 'upgrade-insecure-requests')
+        uirIdx = i;
+
+
+      if (name === 'accept') { // set browser-specific accept header
+        setHeader(headers[i], vAPI.firefox ?
+            AcceptHeaders['firefox'] : AcceptHeaders['chrome']);
+      }
     }
 
-    // 4 cases:
+    // Referer cases (4):
     // noOutgoingReferer=true  / no refererIdx:     no-op
     // noOutgoingReferer=true  / have refererIdx:   setHeader('')
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
 
     if (dbug) console.log("Referer: "+referer, prefs.noOutgoingReferer, refererIdx);
-
     if (refererIdx > -1 && prefs.noOutgoingReferer) {
         setHeader(headers[refererIdx], '');
     }
@@ -514,8 +540,23 @@
         addHeader(headers, 'Referer', referer);
     }
 
+    if (vAPI.chrome && uirIdx < 0) { // UIR header if chrome
+        addHeader(headers, 'Upgrade-Insecure-Requests', '1');
+    }
+
+    if (dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
+        'direct' : 'quest') + ']: ', dumpHeaders(headers));
+
     return { requestHeaders: headers };
   };
+
+  function dumpHeaders(headers) {
+      var s = '\n\n';
+      for (var i = headers.length - 1; i >= 0; i--) {
+          s += headers[i].name + ': ' + headers[i].value + '\n';
+      }
+      return s;
+  }
 
   var findDelegate = function (url, id) {
 
@@ -531,8 +572,7 @@
 
   var setHeader = function (header, value) {
 
-    if (header && typeof header.value !== 'undefined')
-        header.value = value;
+    if (header) header.value = value;
   };
 
   var addHeader = function (headers, name, value) {

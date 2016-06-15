@@ -2174,7 +2174,8 @@ var httpObserver = {
             return;
         }
 
-        if ( result.responseHeaders ) {
+        // adn: throwing error in firefox
+        if ( result.responseHeaders && result.responseHeaders.length) {
             channel.setResponseHeader(
                 'Content-Security-Policy',
                 result.responseHeaders.pop().value,
