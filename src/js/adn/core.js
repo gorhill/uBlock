@@ -6,7 +6,7 @@
 
   // for debugging only
   var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 1, // start with zero ads
+    clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
     logBlocks = 0; // tmp: for testing list-blocking
