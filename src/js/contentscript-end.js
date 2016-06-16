@@ -204,9 +204,6 @@ var uBlockCollapser = (function() {
                 return;
             }
         }
-        if ( src.lastIndexOf('http', 0) !== 0 ) {
-            return;
-        }
         var req = new PendingRequest(target, tagName, prop);
         newRequests.push(new BouncingRequest(req.id, tagName, src));
     };

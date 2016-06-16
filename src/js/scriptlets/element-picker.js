@@ -344,13 +344,13 @@ var resourceURLFromElement = function(elem) {
     if ( (s = netFilter1stSources[tagName]) ) {
         s = elem[s];
         if ( typeof s === 'string' && s !== '' ) {
-            return s.slice(0, 2048);
+            return s.slice(0, 1024);
         }
     }
     if ( (s = netFilter2ndSources[tagName]) ) {
         s = elem[s];
         if ( typeof s === 'string' && s !== '' ) {
-            return s.slice(0, 2048);
+            return s.slice(0, 1024);
         }
     }
     return backgroundImageURLFromElement(elem);
