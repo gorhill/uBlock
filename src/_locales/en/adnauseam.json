@@ -166,7 +166,7 @@
   },
 
   "parseTextAdsPrompt": {
-    "message": "Capture text-only ads when possible",
+    "message": "Capture text-only adverts when possible",
     "description": "English: Capture text-only ads when possible"
   },
   "settingsIconBadgePrompt": {
