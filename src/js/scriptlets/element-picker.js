@@ -337,19 +337,17 @@ var backgroundImageURLFromElement = function(elem) {
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1725#issuecomment-226479197
-// Limit returned string to 2048 characters.
+// Limit returned string to 1024 characters.
+// Also, return only URLs which will be seen by an HTTP observer.
 
 var resourceURLFromElement = function(elem) {
     var tagName = elem.localName, s;
-    if ( (s = netFilter1stSources[tagName]) ) {
+    if (
+        (s = netFilter1stSources[tagName]) ||
+        (s = netFilter2ndSources[tagName])
+    ) {
         s = elem[s];
-        if ( typeof s === 'string' && s !== '' ) {
-            return s.slice(0, 1024);
-        }
-    }
-    if ( (s = netFilter2ndSources[tagName]) ) {
-        s = elem[s];
-        if ( typeof s === 'string' && s !== '' ) {
+        if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
             return s.slice(0, 1024);
         }
     }
@@ -514,6 +512,10 @@ var filterTypes = {
 
 // Extract the best possible cosmetic filter, i.e. as specific as possible.
 
+// https://github.com/gorhill/uBlock/issues/1725
+// Also take into account the `src` attribute for `img` elements -- and limit
+// the value to the 1024 first characters.
+
 var cosmeticFilterFromElement = function(elem) {
     if ( elem === null ) {
         return 0;
@@ -562,9 +564,15 @@ var cosmeticFilterFromElement = function(elem) {
             }
             break;
         case 'img':
+            v = elem.getAttribute('src');
+            if ( v && v.length !== 0 ) {
+                attributes.push({ k: 'src', v: v.slice(0, 1024) });
+                break;
+            }
             v = elem.getAttribute('alt');
             if ( v && v.length !== 0 ) {
                 attributes.push({ k: 'alt', v: v });
+                break;
             }
             break;
         default:
