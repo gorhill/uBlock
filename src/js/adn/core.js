@@ -20,7 +20,7 @@
     profiler = +new Date(),
     pollQueueInterval = 5000,
     strictBlockingDisabled = false,
-    repeatVisitInterval = 3600000 * 24; // 24 hours
+    repeatVisitInterval = Number.MAX_VALUE;
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
