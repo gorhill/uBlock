@@ -336,18 +336,21 @@ var backgroundImageURLFromElement = function(elem) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1725#issuecomment-226479197
+// Limit returned string to 2048 characters.
+
 var resourceURLFromElement = function(elem) {
     var tagName = elem.localName, s;
     if ( (s = netFilter1stSources[tagName]) ) {
         s = elem[s];
         if ( typeof s === 'string' && s !== '' ) {
-            return s;
+            return s.slice(0, 2048);
         }
     }
     if ( (s = netFilter2ndSources[tagName]) ) {
         s = elem[s];
         if ( typeof s === 'string' && s !== '' ) {
-            return s;
+            return s.slice(0, 2048);
         }
     }
     return backgroundImageURLFromElement(elem);
