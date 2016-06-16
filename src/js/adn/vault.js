@@ -1467,7 +1467,8 @@
       var filtered = dateFilter(gMin, gMax);
 
       centerContainer();
-      return gAdSets = createAdSets(filtered);
+      return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
+        (gAdSets = createAdSets(filtered));
     }
 
     function centerContainer() {
@@ -1483,8 +1484,6 @@
     function filterAdSets(ads) {
 
       console.log('Vault-slider.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
-
-      centerContainer(); // recenter on filter
 
       var sets = [];
       for (var i = 0, j = ads.length; i < j; i++) {
