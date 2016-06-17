@@ -31,6 +31,18 @@
     "message":"保護您的瀏覽器免受由<a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的惡意軟件和其他非可視的網絡跟蹤器",
     "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
   },
+  "adnTarget":{
+    "message":"目標",
+    "description":"English: Vault.html -> inspected ad -> TARGET"
+  },
+  "adnFoundOn":{
+    "message":"發現於",
+    "description":"English: Vault.html -> inspected ad -> FOUND ON"
+  },
+  "adnNotYetVisited":{
+    "message":"尚未訪問",
+    "description":"English: Not Yet Visited"
+  },
   "adnFirstRunOK":{
     "message":"好",
     "description":"English: Firstrun.html -> OK"

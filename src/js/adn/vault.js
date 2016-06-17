@@ -19,7 +19,7 @@
     left: 20
   };
 
-  var zoomStyle, animatorId, locale,
+  var zoomStyle, animatorId,
     resizeId, selectedAdSet,
     showInterface = true,
     animateMs = 2000,
@@ -254,7 +254,7 @@
   function appendDetectedTo($detected, ad) {
 
     $('<h3/>', {
-      text: locale.foundOn + ":"
+      text: vAPI.i18n('adnFoundOn') + ":"
     }).appendTo($detected);
 
     $('<a/>', {
@@ -280,7 +280,7 @@
   function appendTargetTo($target, ad, adset) {
 
     $('<h3/>', {
-      text: locale.target + ":"
+      text: vAPI.i18n('adnTarget') + ":"
     }).appendTo($target);
 
     //log("Creating target #"+ad.id+" title="+ad.title);
@@ -559,27 +559,17 @@
 
   function formatDate(ts) {
 
-    if (!ts) return locale.notYetVisited;
+    if (!ts) return vAPI.i18n('adnNotYetVisited');
 
-    var date = new Date(Math.abs(ts)),
-      days = [locale.sun, locale.mon,
-        locale.tue, locale.wed, locale.thu, locale.fri, locale.sat
-      ],
-      months = [locale.jan, locale.feb, locale.mar, locale.apr, locale.may,
-        locale.jun, locale.jul, locale.aug, locale.sep, locale.oct,
-        locale.nov, locale.dec
-      ];
+    function getLocale() {
+      return navigator.languages[0] || navigator.language;
+    }
 
-    var pad = function (str) {
-      var s = String(str);
-      return (s.length < 2) ? "0" + s : s;
-    };
-
-    var meridian = (parseInt(date.getHours() / 12) == 1) ? locale.pm : locale.am;
-    var hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-    return days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() +
-      ' ' + date.getFullYear() + ' ' + hours + ':' + pad(date.getMinutes()) +
-      meridian.toLowerCase();
+    var date = new Date(Math.abs(ts));
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+                    hour: 'numeric', minute: 'numeric' };
+                    
+    return new Intl.DateTimeFormat(getLocale(), options).format(date);
   }
 
   function enableLightbox() {
@@ -1052,8 +1042,6 @@
 
   function addInterfaceHandlers(ads) {
 
-    doFakeLocale(); // TODO: remove and implement
-
     $('#x-close-button').click(function (e) {
 
       e.preventDefault();
@@ -1242,36 +1230,6 @@
     }
 
     return adsets;
-  }
-
-  function doFakeLocale() {
-
-    locale = {
-      mon: "Monday",
-      tue: "tuesday",
-      wed: "Wednesday",
-      thu: "Thursday",
-      fri: "Friday",
-      sat: "Saturday",
-      sun: "Sunday",
-      jan: "January",
-      feb: "February",
-      mar: "March",
-      apr: "April",
-      may: "May",
-      jun: "June",
-      jul: "Junly",
-      aug: "August",
-      sep: "September",
-      oct: "October",
-      nov: "November",
-      dec: "December",
-      am: "am",
-      pm: "pm",
-      target: "TARGET",
-      foundOn: "FOUND ON",
-      notYetVisited: "Not Yet Visited"
-    };
   }
 
   function repack() {
