@@ -10,12 +10,7 @@
     Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
     MaxStartNum = 300,
-    MaxPerSet = 9, 
-    Locale = {
-      target: "TARGET",
-      foundOn: "FOUND ON",
-      notYetVisited: "Not Yet Visited"
-    };
+    MaxPerSet = 9;
 
   const margin = {
     top: 50,
@@ -259,7 +254,7 @@
   function appendDetectedTo($detected, ad) {
 
     $('<h3/>', {
-      text: Locale.foundOn + ":"
+      text: vAPI.i18n('adnFoundOn') + ":"
     }).appendTo($detected);
 
     $('<a/>', {
@@ -285,7 +280,7 @@
   function appendTargetTo($target, ad, adset) {
 
     $('<h3/>', {
-      text: Locale.target + ":"
+      text: vAPI.i18n('adnTarget') + ":"
     }).appendTo($target);
 
     //log("Creating target #"+ad.id+" title="+ad.title);
@@ -564,7 +559,7 @@
 
   function formatDate(ts) {
 
-    if (!ts) return Locale.notYetVisited;
+    if (!ts) return vAPI.i18n('adnNotYetVisited');
 
     function getLocale() {
       return navigator.languages[0] || navigator.language;

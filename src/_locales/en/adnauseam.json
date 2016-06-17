@@ -31,6 +31,18 @@
     "message": "protects your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
     "description": "English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
   },
+  "adnTarget": {
+    "message": "TARGET",
+    "description": "English: Vault.html -> inspected ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "FOUND ON",
+    "description": "English: Vault.html -> inspected ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Not Yet Visited",
+    "description": "English: Not Yet Visited"
+  },
   "adnFirstRunOK": {
     "message": "OK",
     "description": "English: Firstrun.html -> OK"
