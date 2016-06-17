@@ -12,27 +12,6 @@
     MaxStartNum = 300,
     MaxPerSet = 9, 
     Locale = {
-      mon: "Monday",
-      tue: "Tuesday",
-      wed: "Wednesday",
-      thu: "Thursday",
-      fri: "Friday",
-      sat: "Saturday",
-      sun: "Sunday",
-      jan: "January",
-      feb: "February",
-      mar: "March",
-      apr: "April",
-      may: "May",
-      jun: "June",
-      jul: "Junly",
-      aug: "August",
-      sep: "September",
-      oct: "October",
-      nov: "November",
-      dec: "December",
-      am: "am",
-      pm: "pm",
       target: "TARGET",
       foundOn: "FOUND ON",
       notYetVisited: "Not Yet Visited"
@@ -587,25 +566,15 @@
 
     if (!ts) return Locale.notYetVisited;
 
-    var date = new Date(Math.abs(ts)),
-      days = [Locale.sun, Locale.mon,
-        Locale.tue, Locale.wed, Locale.thu, Locale.fri, Locale.sat
-      ],
-      months = [Locale.jan, Locale.feb, Locale.mar, Locale.apr, Locale.may,
-        Locale.jun, Locale.jul, Locale.aug, Locale.sep, Locale.oct,
-        Locale.nov, Locale.dec
-      ];
+    function getLocale() {
+      return navigator.languages[0] || navigator.language;
+    }
 
-    var pad = function (str) {
-      var s = String(str);
-      return (s.length < 2) ? "0" + s : s;
-    };
-
-    var meridian = (parseInt(date.getHours() / 12) == 1) ? Locale.pm : Locale.am;
-    var hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-    return days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() +
-      ' ' + date.getFullYear() + ' ' + hours + ':' + pad(date.getMinutes()) +
-      meridian.toLowerCase();
+    var date = new Date(Math.abs(ts));
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+                    hour: 'numeric', minute: 'numeric' };
+                    
+    return new Intl.DateTimeFormat(getLocale(), options).format(date);
   }
 
   function enableLightbox() {
