@@ -652,6 +652,7 @@
     };
   }
 
+  // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
     return {
@@ -856,7 +857,7 @@
    Omits text-ads if specified in preferences
    Called also from tab.js::µb.updateBadgeAsync()
    */
-  var adlist = function (pageUrl) {
+  var adlist = function (pageUrl, currentOnly) {
 
     var result = [],
       pages = pageUrl ? [pageUrl] : Object.keys(admap);
@@ -874,8 +875,10 @@
           var ad = admap[pages[i]][hashes[j]];
 
           // ignore text-ads according to parseTextAds prefe
-          if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text'))
-            result.push(ad);
+          if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
+            if (!currentOnly || ad.current)
+              result.push(ad);
+          }
         }
       }
     }
@@ -1018,6 +1021,7 @@
       pageUrl = pageStore.rawURL,
       ad = request.ad;
 
+    ad.current = true;
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
@@ -1096,7 +1100,7 @@
       response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
       if (response) {
         if (response.skipCosmeticFiltering !== true) {
-          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();// || !µb.userSettings.hidingAds; // adn
+          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch(); // || !µb.userSettings.hidingAds; // adn
         }
         response.prefs = contentPrefs();
       }
@@ -1125,7 +1129,7 @@
 
       } else warn("NO hits ****", raw, compiled);
 
-    } else logBlocks && warn("[ALLOW] blocking-off or loading: ",requestURL);
+    } else logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
 
     return true;
   }
@@ -1161,7 +1165,17 @@
     });
   };
 
-  var onAllReady = function (firstRun) {
+  // Called when new top-level page is loaded
+  var onPageLoad = function (tadId, requestURL) {
+
+    var ads = adlist(requestURL);
+    //console.log('PAGE: ', requestURL, ads.length);
+    ads.forEach(function (ad) {
+      ad.current = false;
+    });
+  }
+
+  var onListsLoaded = function (firstRun) {
 
     µb.staticFilteringReverseLookup.initWorker(function (entries) {
 
@@ -1189,13 +1203,14 @@
     clearAds: clearAds,
     exportAds: exportAds,
     importAds: importAds,
-    onAllReady: onAllReady,
     registerAd: registerAd,
+    onPageLoad: onPageLoad,
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
+    onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     fromNetFilterSync: fromNetFilterSync,

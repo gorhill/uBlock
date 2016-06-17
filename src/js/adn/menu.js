@@ -44,8 +44,6 @@
 
     uDom("#alert").addClass('hide'); // reset state
     uDom('#main').toggleClass('disabled', dval());
-    //uDom('#paused-on-page').toggleClass('hide', json.prefs.hidingDisabled);
-    //uDom('#paused-no-hiding').toggleClass('hide', !json.prefs.hidingDisabled);
 
     updateMenuState();
     setCounts(ads, json.data.length);
@@ -214,11 +212,23 @@
   var onPage = function (ads, pageUrl) {
 
     var res = [];
+
+    // first try current ads
     for (var i = 0; i < ads.length; i++) {
-      if (ads[i] && ads[i].pageUrl === pageUrl) {
+      if (ads[i] && ads[i].current && ads[i].pageUrl === pageUrl) {
         res.push(ads[i]);
       }
     }
+
+    // then all page ads
+    if (res.length === 0) {
+        for (var i = 0; i < ads.length; i++) {
+          if (ads[i] && ads[i].pageUrl === pageUrl) {
+            res.push(ads[i]);
+          }
+        }
+    }
+
     return res.sort(byField('-foundTs'));
   }
 

@@ -101,6 +101,7 @@
       this.attempts = 0;
       this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
       this.attemptedTs = 0;
+      this.current = false;
       this.contentData = data;
       this.contentType = data.src ? 'img' : 'text';
       this.title = data.title || 'Pending';

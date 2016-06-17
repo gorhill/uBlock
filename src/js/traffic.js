@@ -37,7 +37,6 @@
       firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
   }
 
-
   /******************************************************************************/
 
   var exports = {};
@@ -189,6 +188,7 @@
     var requestURL = details.url;
     var µb = µBlock;
 
+    µb.adnauseam.onPageLoad(tabId, requestURL);
     µb.tabContextManager.push(tabId, requestURL);
 
     // Special handling for root document.
@@ -209,8 +209,6 @@
     };
 
     var result = '';
-
-    dbugBlocks && console.log('PAGE: ',requestURL);
 
     // If the site is whitelisted, disregard strict blocking
     if (µb.getNetFilteringSwitch(requestURL) === false) {
