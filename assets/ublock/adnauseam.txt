@@ -6,8 +6,8 @@ search.yahoo.com##.kr5yi684e6
 search.yahoo.com###right
 
 www.ask.com##.tsrc_SAS
-www.ask.com###adBlock
 www.ask.com###megaLabel
+www.ask.com###csaBottom
 
 www.zam.com##.ad
 
