@@ -422,7 +422,7 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, dbug = 1;
+      var tabId = details.tabId, dbug = 0;
 
       if (vAPI.isBehindTheSceneTabId(tabId)) { // adn ignore for ff
 
@@ -449,7 +449,7 @@
                 }
               }
             }
-            else if (dbug) {
+            else if (dbug&&vAPI.chrome) {
                 console.log('Ignoring non-ADN response!', details.type, details.url);
             }
         }
@@ -486,7 +486,7 @@
       ad = findDelegate(details.url, details.requestId);
 
     if (!ad) {
-      console.warn("Ignoring non-ADN Request: ", details.url);
+      //console.warn("Ignoring non-ADN request: ", details.url);
       return;
     }
 
