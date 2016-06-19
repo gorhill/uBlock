@@ -12,6 +12,7 @@ Try AdNauseam on [FireFox](https://addons.mozilla.org/en-US/firefox/addon/adnaus
 
 We conceptualize AdNauseam within a broader class of software systems that serve ethical, political, and expressive ends. In light of the industry's failure on a Do Not Track standard, or to otherwise address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering cover against certain forms of surveillance, profiling, and practices of discrimination. Taken in this light, the software represents a similar approach to that of <a href="http://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, which attempts to relocate power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="http://cs.nyu.edu/trackmenot/TMN-Howe-Niss08-ch23.pdf" target="_blank">this paper</a>.
 
+
 #### About the project
 --------
 
