@@ -9,6 +9,8 @@ DES=bin/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 
+UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version
+
 bash ./tools/make-assets.sh $DES
 bash ./tools/make-locales.sh $DES
 
@@ -26,6 +28,8 @@ cp platform/chromium/*.json $DES/
 cp manifest.json $DES/            # new-manifest
 cp LICENSE.txt              $DES/
 
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+
 if [ "$1" = all ]; then
     echo "*** adnauseam.chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null
@@ -36,3 +40,4 @@ fi
 echo "*** adnauseam.chromium: Package done."
 
 #ls -lR $DES
+cat $DES/popup.html | less

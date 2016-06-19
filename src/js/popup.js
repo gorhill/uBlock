@@ -414,8 +414,9 @@ var renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    uDom.nodeFromId('appname').textContent = popupData.appName;
-    uDom.nodeFromId('version').textContent = popupData.appVersion;
+    //uDom.nodeFromId('appname').textContent = popupData.appName; // adn
+    //uDom.nodeFromId('version').textContent = popupData.version; // adn
+
     uDom('body')
         .toggleClass('advancedUser', popupData.advancedUserEnabled)
         .toggleClass(
@@ -947,7 +948,6 @@ var onHideTooltip = function() {
         tabId = matches[1];
     }
 
-    console.log("tabId: "+tabId);
     getPopupData(tabId);
 
     uDom('#switch').on('click', toggleNetFilteringSwitch);

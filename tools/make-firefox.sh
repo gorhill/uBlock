@@ -8,6 +8,8 @@ DES=bin/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES
 
+UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version
+
 bash ./tools/make-assets.sh $DES
 bash ./tools/make-locales.sh $DES
 
@@ -32,6 +34,8 @@ cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+
 echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
 
@@ -44,3 +48,5 @@ if [ "$1" = all ]; then
 fi
 
 echo "*** adnauseam.firefox: Package done."
+
+#cat $DES/popup.html | less
