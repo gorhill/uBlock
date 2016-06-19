@@ -378,8 +378,11 @@ var onPurgeClicked = function() {
 
     // If the cached version is purged, the installed version must be assumed
     // to be obsolete.
+    // https://github.com/gorhill/uBlock/issues/1733
+    // An external filter list must not be marked as obsolete, they will always
+    // be fetched anyways if there is no cached copy.
     var entry = listDetails.current && listDetails.current[href];
-    if ( entry && entry.off !== true ) {
+    if ( entry && entry.off !== true && /^[a-z]+:\/\//.test(href) === false ) {
         if ( typeof entry.homeURL !== 'string' || entry.homeURL === '' ) {
             li.descendants('span.status.new').css('display', '');
         } else {
