@@ -183,7 +183,7 @@
 
   var verify = function (ad) { // uses global ads
 
-    if (!ads) err("NO GLOBAL ADS!!!");
+    if (!ads) console.error("NO GLOBAL ADS!!!");
 
     if (ad) {
 
@@ -259,10 +259,8 @@
 
     if (ad) {
       if (verify(ad))
-      //$('#ad' + ad.id).addClass('attempting');
         uDom('#ad' + ad.id).addClass('attempting');
-      else
-        console.warn('Fail on setAttempting: ', ad);
+      //else console.warn('Fail on setAttempting: ', ad);
     }
   }
 
@@ -291,58 +289,35 @@
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item ' + visitedClass(ad)).trim());
 
-    /*$('<li/>', {
-
-      'id': 'ad' + ad.id,
-      'class': ('ad-item ' + visitedClass(ad)).trim()
-    });*/
-
     $a = uDom(document.createElement('a'))
       .attr('target', 'new')
       .attr('href', ad.targetUrl);
 
-    /*$('<a/>', {
-
-      'target': 'new',
-      'href': ad.targetUrl
-    });*/
-
     $span = uDom(document.createElement('span')).addClass('thumb');
     $span.appendTo($a);
-    /*$span = $('<span/>', {
-      'class': 'thumb'
-    });*/
+
     $img = uDom(document.createElement('img'))
       .attr('src', (ad.contentData.src || ad.contentData))
       .addClass('ad-item-img')
       .on('click', "this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
 
+    $img.on("error", function() {
+
+      $img.css({ width: 80, height: 40 });
+      $img.attr('src', 'img/placeholder.svg');
+      $img.attr('alt', 'Unable to load image');
+      $img.off("error");
+    });
+
     $img.appendTo($span);
-    /*$('<img/>', {
 
-      'src': (ad.contentData.src || ad.contentData),
-      'class': 'ad-item-img',
-      'onerror': "this.onerror=null; this.width=50; " +
-        "this.height=45; this.src='img/placeholder.svg'",
+//    $span.appendTo($a);
 
-    }).appendTo($span);*/
-
-    $span.appendTo($a);
-
-    /*$('<span/>', {
-
-      'class': 'title',
-      'text': (ad.title ? ad.title : "#" + ad.id)
-
-    }).appendTo($a);*/
     uDom(document.createElement('span'))
       .addClass('title')
       .text(ad.title ? ad.title : "#" + ad.id)
       .appendTo($a);
 
-    /*$('<cite/>', {
-      'text': targetDomain(ad)
-    }).appendTo($a);*/
     uDom(document.createElement('cite'))
       .text(targetDomain(ad))
       .appendTo($a);
@@ -357,58 +332,27 @@
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item-text ' + visitedClass(ad)).trim());
 
-    /*$('<li/>', {
-
-      'id': 'ad' + ad.id,
-      'class': ('ad-item-text ' + visitedClass(ad)).trim()
-    });*/
     uDom(document.createElement('span'))
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
-    /*$('<span/>', {
-
-      'class': 'thumb',
-      'text': 'Text Ad'
-
-    }).appendTo($li);*/
 
     $h3 = uDom(document.createElement('h3'));
-    //$('<h3/>');
 
     uDom(document.createElement('a'))
       .attr('target', 'new')
       .attr('href', ad.targetUrl)
       .addClass('title')
       .text(ad.title).appendTo($h3);
-    /*$('<a/>', {
-
-      'target': 'new',
-      'class': 'title',
-      'href': ad.targetUrl,
-      'text': ad.title
-
-    }).appendTo($h3);*/
 
     $h3.appendTo($li);
 
-    /*$cite = $('<cite/>', {
-      'text': ad.contentData.site
-    });*/
     $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
-
     $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
-
     $cite.appendTo($li);
 
     uDom(document.createElement('div'))
       .addClass('ads-creative')
       .text(ad.contentData.text).appendTo($li);
-    /*$('<div/>', {
-
-      'class': 'ads-creative',
-      'text': ad.contentData.text
-
-    }).appendTo($li);*/
 
     $li.appendTo($items);
   }
