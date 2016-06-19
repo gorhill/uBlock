@@ -3,7 +3,7 @@
   'use strict';
 
   if (window.location === null || typeof vAPI !== 'object') {
-    console.debug('parser.js > window.location===null || vAPI not found');
+    //console.debug('parser.js > window.location===null || vAPI not found');
     return;
   }
 
@@ -36,29 +36,6 @@
       }
 
       return hits > 0;
-    }
-
-    var findTextAds = function (elem) {
-
-      var activeFilters = filters.filter(function (f) {
-        var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
-        var matched = f.domain.test(domain);
-        //if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
-        return matched;
-      });
-
-      var ads = checkFilters(activeFilters, elem);
-      if (ads && ads.length) {
-
-        for (var i = 0; i < ads.length; i++) {
-
-          if (ads[i]) {
-
-            console.log("TEXT-AD", ads[i]);
-            notifyAddon(ads[i]);
-          }
-        }
-      }
     }
 
     var pageCount = function (ads, pageUrl) {
@@ -140,7 +117,7 @@
 
     var processImage = function (img, src) {
 
-      var target, targetUrl, ad, dbug = vAPI.debugAdParsing, hits = 0;
+      var target, targetUrl, ad, dbug = vAPI.debugAdParsing && !vAPI.prefs.production , hits = 0;
 
       target = clickableParent(img);
       if (target) {
@@ -158,17 +135,21 @@
 
             if (ad) {
 
-              console.log('IMG-AD', ad);
+              if (!vAPI.prefs.production) console.log('IMG-AD', ad);
               notifyAddon(ad);
               hits++;
 
-            } else if (dbug) console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
+            } else if (dbug)
+              console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
 
-          } else if (dbug) console.warn("Bail: No href for anchor", target, img);
+          } else if (dbug)
+            console.warn("Bail: No href for anchor", target, img);
 
-        } else if (dbug) console.log("Bail: Non-anchor found: " + target.tagName, img);
+        } else if (dbug)
+          console.log("Bail: Non-anchor found: " + target.tagName, img);
 
-      } else if (dbug) console.log("Bail: No ClickableParent", img);
+      } else if (dbug)
+        console.log("Bail: No ClickableParent", img);
 
     }
 
@@ -202,7 +183,7 @@
 
       if (ignoreTargets.indexOf(target) > -1) {
 
-        console.log("Ignoring choices-image: ", arguments);
+        if (!vAPI.prefs.production) console.log("Ignoring choices-image: ", arguments);
         return;
       }
 

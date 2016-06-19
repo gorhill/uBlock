@@ -13,7 +13,7 @@
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -294,12 +294,12 @@
     // Is it a timeout?
     if (e.type === 'timeout') {
 
-      warn('TIMEOUT: visiting ', this.requestUrl, e, this);
+      warn('TIMEOUT: visiting ', this.requestUrl);//, e, this);
 
     } else {
 
       // or some other error?
-      warn('onVisitError()', e, this);
+      warn('onVisitError()', e); // this);
     }
 
     if (!this.delegate) {
@@ -645,6 +645,7 @@
     // preferences relevant to our content/ui-scripts
     return {
 
+      production: production,
       automated: automatedMode,
       hidingDisabled: !µb.userSettings.hidingAds,
       clickingDisabled: !µb.userSettings.clickingAds,

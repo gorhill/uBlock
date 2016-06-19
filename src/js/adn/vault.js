@@ -106,7 +106,7 @@
 
     adsets = adsets || [];
 
-    console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
+    //console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
 
     $('.item').remove();
 
@@ -183,7 +183,7 @@
 
     if (!$item) {
 
-      console.log("Item not currently visible", $item);
+      //console.log("Item not currently visible", $item);
       return;
     }
 
@@ -566,9 +566,9 @@
     }
 
     var date = new Date(Math.abs(ts));
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                     hour: 'numeric', minute: 'numeric' };
-                    
+
     return new Intl.DateTimeFormat(getLocale(), options).format(date);
   }
 
@@ -917,26 +917,6 @@
     throw Error('No group for gid: ' + gid);
   }
 
-  function attachTests() {
-
-    $.getJSON(TEST_ADS, function (json) {
-
-      console.warn("Vault.js :: Loading test-ads: " + TEST_ADS);
-
-      if (Type.is(json, Type.O))
-        json = toAdArray(json); //BC
-
-      layoutAds({
-        data: json,
-        page: TEST_PAGE
-      }); // currentAd?
-
-    }).fail(function (e) {
-
-      console.warn("error(bad-json?):", e);
-    });
-  }
-
   function zoomIn(immediate) {
 
     // calculate the suitable zoomIdx by userZoomScale
@@ -1195,7 +1175,7 @@
   // -- called just once per layout
   function createAdSets(ads) {
 
-    console.log('Vault-Slider.createAdSets: ' + ads.length + '/' + gAds.length + ' ads');
+    //console.log('Vault-Slider.createAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 
     var key, ad, hash = {},
       adsets = [];
@@ -1418,7 +1398,7 @@
 
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
-        console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
+        //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
         return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
       }
 
@@ -1441,7 +1421,7 @@
 
     function filterAdSets(ads) {
 
-      console.log('Vault-slider.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
+      //console.log('Vault-slider.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 
       var sets = [];
       for (var i = 0, j = ads.length; i < j; i++) {

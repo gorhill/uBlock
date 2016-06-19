@@ -456,8 +456,7 @@ var contentObserver = {
                 lss(this.contentBaseURI + 'adn/textads.js', sandbox);
                 lss(this.contentBaseURI + 'adn/parser.js', sandbox);
             }
-            else
-                console.log("PrivateBrowsing: Skipping ADN cs-injection");
+            //else console.log("PrivateBrowsing: Skipping ADN cs-injection");
 
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 

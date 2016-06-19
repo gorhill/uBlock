@@ -126,7 +126,7 @@
     uDom('#vault-count').text(json.data.length);
     uDom('#visited-count').text(visitedCount(ads));
     uDom('#found-count').text(ads.length);
-    console.log("FOUND-COUNT: " + ads.length);
+    //console.log("FOUND-COUNT: " + ads.length);
   }
 
   var layoutAds = function (json) {

@@ -361,10 +361,8 @@ var onListCheckboxChanged = function() {
     }
     listDetails.available[href].off = !this.checked;
 
-
-    console.log('changed: '+href);
     if (href === requiredList) { // adn
-        console.log("[WARN] EasyList -> ",this.checked);
+        //console.log("[WARN] EasyList -> ",this.checked);
         window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
     }
     renderWidgets();

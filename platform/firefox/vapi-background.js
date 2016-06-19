@@ -2176,11 +2176,8 @@ var httpObserver = {
         // which only runs our code in chrome
         if (µBlock.userSettings.noIncomingCookies) {
 
-            console.log('Blocking COOKIE');
+            //console.log('Blocking COOKIE');
             channel.setResponseHeader('Set-Cookie', '', false);
-        }
-        else {
-            console.log('ignore COOKIE !!!!');
         }
 
         if ( result.responseHeaders ) {
@@ -2194,12 +2191,7 @@ var httpObserver = {
         }
     },
 
-    handleResponseHeadersADN: function(channel, URI, channelData) {
-        var requestType = this.typeMap[channelData[3]] || 'other';
-        if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(requestType) === false ) {
-            //console.log('Ignoring type: '+requestType);
-            return;
-        }
+    handleResponseHeadersADN: function(channel, URI, channelData) { // not used now
 
         var responseHeaders = [];
 
@@ -2208,51 +2200,6 @@ var httpObserver = {
             responseHeaders.push({ name: name, value: value });
         });
 
-        var value = channel.contentLength;
-        if ( value !== -1 ) {
-            var foundContentLength = false;
-            for (var i = 0; i < responseHeaders.length; i++) {
-                if (responseHeaders[i].name.toLowerCase() === 'Content-Length')
-                    foundContentLength = true;
-            }
-            if (!foundContentLength) // adn: no repeated content-length
-                responseHeaders.push({ name: 'Content-Length', value: value });
-        }
-
-        if ( requestType.endsWith('_frame') ) {
-            value = this.getResponseHeader(channel, 'Content-Security-Policy');
-            if ( value !== undefined ) {
-                responseHeaders.push({ name: 'Content-Security-Policy', value: value });
-            }
-        }
-
-        var result = this.onHeadersReceived({
-            requestId: this.requestId(channel.originalURI.asciiSpec), // adn
-            parentFrameId: channelData[1],
-            responseHeaders: responseHeaders,
-            tabId: channelData[2],
-            type: requestType,
-            url: URI.asciiSpec
-        });
-
-        if ( !result ) {
-            return;
-        }
-
-        if ( result.cancel ) {
-            channel.cancel(this.ABORT);
-            return;
-        }
-
-        // if ( result.responseHeaders && result.responseHeaders.length) {
-        //     channel.setResponseHeader(
-        //         'Content-Security-Policy',
-        //         result.responseHeaders.pop().value,
-        //         true
-        //     );
-        //     return;
-        // }
-
         if (result.responseHeaders) { // adn: set response headers
 
             var headers = result.responseHeaders;
@@ -2260,18 +2207,18 @@ var httpObserver = {
 
                 var header = headers[i],
                     name = header.name.toLowerCase();
-                console.log('header: '+name);
+                //console.log('header: '+name);
 
                 if (name === 'content-length' || name === 'content-type') {
-                    console.log('FF.skip: '+header.name+"->"+header.value);
+                    //console.log('FF.skip: '+header.name+"->"+header.value);
                     continue;
                 }
                 if (header.value && header.value.length) {
-                    console.log('FF.setResponseHeader: '+header.name+"->"+header.value);
+                    //console.log('FF.setResponseHeader: '+header.name+"->"+header.value);
                     channel.setResponseHeader(header.name, header.value, false);
                 }
                 else {
-                    console.log('FF.removeResponseHeader: '+header.name);
+                    //console.log('FF.removeResponseHeader: '+header.name);
                     channel.setResponseHeader(header.name, undefined, false);
                 }
             }

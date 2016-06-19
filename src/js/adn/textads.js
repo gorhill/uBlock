@@ -3,7 +3,7 @@
   'use strict';
 
   if (window.location === null || typeof vAPI !== 'object') {
-    console.debug('textads.js > window.location===null || vAPI not found');
+    //console.debug('textads.js > window.location===null || vAPI not found');
     return;
   }
 
@@ -36,8 +36,6 @@
 
     var yahooText = function (e) {
 
-      //console.log('yahooText: ', e);
-
       var ads = [],
         divs = $find(e, 'div.dd');
 
@@ -65,8 +63,7 @@
 
         } else {
 
-          //console.warn('LEN-F: ',title.length,text.length ,site.length);
-          console.warn('yahooTextHandler.fail: ', divs[i]); //title, site, text);
+          console.warn('TEXT: yahooTextHandler.fail: ', divs[i]); //title, site, text);
         }
       }
 
@@ -146,8 +143,6 @@
 
     var ddgText = function (div) { // not-working, perhaps due to shadow dom
 
-      // console.log('ddgText-', div.shadowRoot.querySelectorAll('h2.result__title'), div);
-      //return;
       var ad, title = $find(div, 'h2.result__title'),
         text = $find(div, 'div.result__snippet > a'),
         site = $find(div, 'a.result__a');
@@ -289,7 +284,7 @@
         if (ads) {
 
           for (var i = 0; i < ads.length; i++) {
-            console.log("TEXT-AD", ads[i]);
+            if (!vAPI.prefs.production) console.log("TEXT-AD", ads[i]);
             vAPI.adParser.notifyAddon(ads[i]);
           }
         }

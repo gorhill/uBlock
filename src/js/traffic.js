@@ -449,7 +449,7 @@
                 }
               }
             }
-            else if (dbug&&vAPI.chrome) {
+            else if (dbug && vAPI.chrome) {
                 console.log('Ignoring non-ADN response!', details.type, details.url);
             }
         }

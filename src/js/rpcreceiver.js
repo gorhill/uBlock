@@ -59,7 +59,7 @@ vAPI.rpcReceiver.getScriptTagFiltersWithPrefs = function(details) { // not used
 
     // TODO: sets adn.contentPrefs() as vAPI.prefs in Firefox (see vapi-client.js)
 
-    console.log('vAPI.rpcReceiver.getScriptTagFilters()',details);
+    //console.log('vAPI.rpcReceiver.getScriptTagFilters()',details);
 
     var µb = µBlock;
     var cfe = µb.cosmeticFilteringEngine;

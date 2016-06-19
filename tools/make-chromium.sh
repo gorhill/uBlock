@@ -40,4 +40,4 @@ fi
 echo "*** adnauseam.chromium: Package done."
 
 #ls -lR $DES
-cat $DES/popup.html | less
+#cat $DES/popup.html | less

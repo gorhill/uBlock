@@ -245,7 +245,7 @@ var uBlockCollapser = (function() {
             scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
             var parent = iframe.contentDocument && iframe.contentDocument.head;
             if ( parent ) {
-                console.warn('[CSE] injecting script into iFrame, ',scriptTag);
+                //console.warn('[CSE] injecting script into iFrame, ',scriptTag);
                 parent.appendChild(scriptTag);
             }
         }
@@ -303,7 +303,7 @@ var uBlockCollapser = (function() {
 (function() {
 
     if ( vAPI.skipCosmeticFiltering) {
-        console.debug('Abort cosmetic filtering');
+        //console.debug('Abort cosmetic filtering');
         return;
     }
 
