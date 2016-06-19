@@ -9,8 +9,8 @@ DES=bin/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 
-./tools/make-assets.sh $DES
-./tools/make-locales.sh $DES
+bash ./tools/make-assets.sh $DES
+bash ./tools/make-locales.sh $DES
 
 cp -R src/css               $DES/
 cp -R src/img               $DES/

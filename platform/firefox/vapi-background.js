@@ -72,7 +72,7 @@ var deferUntil = function(testFn, mainFn, details) {
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'AdNauseam',
+    name: 'uBlock Origin',
     version: location.hash.slice(1)
 };
 
@@ -245,9 +245,11 @@ vAPI.browserSettings = {
                 if ( settingVal ) {
                     this.clear('network', 'prefetch-next');
                     this.clear('network.http', 'speculative-parallel-limit');
+                    this.clear('network.dns', 'disablePrefetch');
                 } else {
                     this.setValue('network', 'prefetch-next', false);
                     this.setValue('network.http', 'speculative-parallel-limit', 0);
+                    this.setValue('network.dns', 'disablePrefetch', true);
                 }
                 break;
 
@@ -1847,8 +1849,7 @@ var httpObserver = {
     register: function() {
         this.pendingRingBufferInit();
 
-        Services.obs.addObserver(this, 'http-on-opening-request', true);
-        Services.obs.addObserver(this, 'http-on-modify-request', true); //adn
+        Services.obs.addObserver(this, 'http-on-modify-request', true);
         Services.obs.addObserver(this, 'http-on-examine-response', true);
 
         // Guard against stale instances not having been unregistered
@@ -1876,8 +1877,7 @@ var httpObserver = {
     },
 
     unregister: function() {
-        Services.obs.removeObserver(this, 'http-on-opening-request');
-        Services.obs.removeObserver(this, 'http-on-modify-request'); // adn
+        Services.obs.removeObserver(this, 'http-on-modify-request');
         Services.obs.removeObserver(this, 'http-on-examine-response');
 
         this.componentRegistrar.unregisterFactory(this.classID, this);
@@ -1901,7 +1901,7 @@ var httpObserver = {
     // the ring buffer are overwritten.
     pendingURLToIndex: new Map(),
     pendingWritePointer: 0,
-    pendingRingBuffer: new Array(32),
+    pendingRingBuffer: new Array(256),
     pendingRingBufferInit: function() {
         // Use and reuse pre-allocated PendingRequest objects = less memory
         // churning.
@@ -1928,7 +1928,7 @@ var httpObserver = {
     createPendingRequest: function(url) {
         var bucket;
         var i = this.pendingWritePointer;
-        this.pendingWritePointer = i + 1 & 31;
+        this.pendingWritePointer = i + 1 & 255;
         var preq = this.pendingRingBuffer[i];
         var si = String.fromCharCode(i);
         // Cleanup unserviced pending request
@@ -2033,11 +2033,56 @@ var httpObserver = {
         };
     },
 
+    handleRequestHeaders: function(channel, URI, requestType, tabId) {
+
+
+         var //requestType = this.typeMap[type] || 'other',
+             checkTypes = this.onBeforeSendHeadersTypes;
+
+         //console.log('handleRequestHeaders', URI.asciiSpec, requestType, tabId);
+
+         if (checkTypes && checkTypes.has(requestType) === false) {
+             return;
+         }
+
+         var requestHeaders = [];
+         channel.visitRequestHeaders(function(name, value) {
+             requestHeaders.push({ name: name, value: value });
+         });
+
+         var result = this.onBeforeSendHeaders({
+             requestId: this.requestId(channel.originalURI.asciiSpec),
+             requestHeaders: requestHeaders,
+             tabId: tabId,
+             type: requestType,
+             url: URI.asciiSpec
+         });
+
+         if (result && result.requestHeaders) {
+
+             var headers = result.requestHeaders;
+             for (var i = 0; i < headers.length; i++) {
+
+                 var header = headers[i];
+                 if (header.value && header.value.length) {
+                     channel.setRequestHeader(header.name, header.value, false);
+                     //console.log('FF.setRequestHeader: '+header.name+"->"+header.value);
+                 }
+                 else {
+                     channel.setRequestHeader(header.name, undefined, false);
+                     //console.log('FF.removeRequestHeader: '+header.name);
+                 }
+             }
+         }
+    },
+
     handleRequest: function(channel, URI, details) {
         var type = this.typeMap[details.rawtype] || 'other';
         if ( this.onBeforeRequestTypes && this.onBeforeRequestTypes.has(type) === false ) {
             return false;
         }
+
+        this.handleRequestHeaders(channel, URI, type, details.tabId); // adn
 
         var result = this.onBeforeRequest({
             frameId: details.frameId,
@@ -2074,15 +2119,6 @@ var httpObserver = {
         return value;
     },
 
-    getRequestHeader: function(channel, name) {
-        var value;
-        try {
-            value = channel.getRequestHeader(name);
-        } catch (ex) {
-        }
-        return value;
-    },
-
     // generate a unique requestId from URI string
     requestId: function(s) {
         var hash = 0, i, chr, len;
@@ -2092,52 +2128,12 @@ var httpObserver = {
             hash  = ((hash << 5) - hash) + chr;
             hash |= 0; // Convert to 32bit integer
         }
+        //console.log('FF.requestId', s, hash);
         return hash;
     },
 
-    handleRequestHeaders: function(channel, URI, channelData) {
-
-        var requestType = this.typeMap[channelData[3]] || 'other',
-            checkTypes = this.onBeforeSendHeadersTypes;
-
-        if (checkTypes && checkTypes.has(requestType) === false) {
-            return;
-        }
-
-        var requestHeaders = [];
-        channel.visitRequestHeaders(function(name, value) {
-            requestHeaders.push({ name: name, value: value });
-        });
-
-        var result = this.onBeforeSendHeaders({
-            requestId: this.requestId(channel.originalURI.asciiSpec),
-            requestHeaders: requestHeaders,
-            tabId: channelData[2],
-            type: requestType,
-            url: URI.asciiSpec
-        });
-
-        if (result && result.requestHeaders) {
-
-            var headers = result.requestHeaders;
-            for (var i = 0; i < headers.length; i++) {
-
-                var header = headers[i];
-                if (header.value && header.value.length) {
-                    channel.setRequestHeader(header.name, header.value, false);
-                    //console.log('ff.set: '+header.name, header.value);
-                }
-                else {
-                    channel.setRequestHeader(header.name, undefined, false);
-                    console.log('ff.remove: '+header.name, header.value);
-                }
-            }
-        }
-
-
-    },
-
     handleResponseHeaders: function(channel, URI, channelData) {
+
         var requestType = this.typeMap[channelData[3]] || 'other';
         if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(requestType) === false ) {
             return;
@@ -2158,6 +2154,7 @@ var httpObserver = {
         }
 
         var result = this.onHeadersReceived({
+            requestId: this.requestId(channel.originalURI.asciiSpec), // adn
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[2],
@@ -2174,8 +2171,20 @@ var httpObserver = {
             return;
         }
 
-        // adn: throwing error in firefox
-        if ( result.responseHeaders && result.responseHeaders.length) {
+        // adn: (ugly-hack-for-firefox) we only deal with cookies here
+        // and just ignore whatever is returned from onHeadersReceived(),
+        // which only runs our code in chrome
+        if (µBlock.userSettings.noIncomingCookies) {
+
+            console.log('Blocking COOKIE');
+            channel.setResponseHeader('Set-Cookie', '', false);
+        }
+        else {
+            console.log('ignore COOKIE !!!!');
+        }
+
+        if ( result.responseHeaders ) {
+
             channel.setResponseHeader(
                 'Content-Security-Policy',
                 result.responseHeaders.pop().value,
@@ -2185,55 +2194,134 @@ var httpObserver = {
         }
     },
 
-    observe: function(channel, topic, data) {
+    handleResponseHeadersADN: function(channel, URI, channelData) {
+        var requestType = this.typeMap[channelData[3]] || 'other';
+        if ( this.onHeadersReceivedTypes && this.onHeadersReceivedTypes.has(requestType) === false ) {
+            //console.log('Ignoring type: '+requestType);
+            return;
+        }
+
+        var responseHeaders = [];
+
+        // adn: add all the incoming headers (only for xmlhttprequests?)
+        channel.visitResponseHeaders(function(name, value) {
+            responseHeaders.push({ name: name, value: value });
+        });
+
+        var value = channel.contentLength;
+        if ( value !== -1 ) {
+            var foundContentLength = false;
+            for (var i = 0; i < responseHeaders.length; i++) {
+                if (responseHeaders[i].name.toLowerCase() === 'Content-Length')
+                    foundContentLength = true;
+            }
+            if (!foundContentLength) // adn: no repeated content-length
+                responseHeaders.push({ name: 'Content-Length', value: value });
+        }
+
+        if ( requestType.endsWith('_frame') ) {
+            value = this.getResponseHeader(channel, 'Content-Security-Policy');
+            if ( value !== undefined ) {
+                responseHeaders.push({ name: 'Content-Security-Policy', value: value });
+            }
+        }
+
+        var result = this.onHeadersReceived({
+            requestId: this.requestId(channel.originalURI.asciiSpec), // adn
+            parentFrameId: channelData[1],
+            responseHeaders: responseHeaders,
+            tabId: channelData[2],
+            type: requestType,
+            url: URI.asciiSpec
+        });
+
+        if ( !result ) {
+            return;
+        }
+
+        if ( result.cancel ) {
+            channel.cancel(this.ABORT);
+            return;
+        }
+
+        // if ( result.responseHeaders && result.responseHeaders.length) {
+        //     channel.setResponseHeader(
+        //         'Content-Security-Policy',
+        //         result.responseHeaders.pop().value,
+        //         true
+        //     );
+        //     return;
+        // }
+
+        if (result.responseHeaders) { // adn: set response headers
+
+            var headers = result.responseHeaders;
+            for (var i = 0; i < headers.length; i++) {
+
+                var header = headers[i],
+                    name = header.name.toLowerCase();
+                console.log('header: '+name);
+
+                if (name === 'content-length' || name === 'content-type') {
+                    console.log('FF.skip: '+header.name+"->"+header.value);
+                    continue;
+                }
+                if (header.value && header.value.length) {
+                    console.log('FF.setResponseHeader: '+header.name+"->"+header.value);
+                    channel.setResponseHeader(header.name, header.value, false);
+                }
+                else {
+                    console.log('FF.removeResponseHeader: '+header.name);
+                    channel.setResponseHeader(header.name, undefined, false);
+                }
+            }
+        }
+    },
+
+    channelDataFromChannel: function(channel) {
+        if ( channel instanceof Ci.nsIWritablePropertyBag ) {
+            try {
+                return channel.getProperty(this.REQDATAKEY) || null;
+            } catch (ex) {
+            }
+        }
+        return null;
+    },
+
+    observe: function(channel, topic) {
         if ( channel instanceof Ci.nsIHttpChannel === false ) {
             return;
         }
 
         var URI = channel.URI;
+        var channelData = this.channelDataFromChannel(channel);
 
         if ( topic === 'http-on-examine-response' ) {
-
-            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
-                return;
+            if ( channelData !== null ) {
+                this.handleResponseHeaders(channel, URI, channelData);
             }
-
-            var channelData;
-            try {
-                channelData = channel.getProperty(this.REQDATAKEY);
-            } catch (ex) {
-            }
-            if ( !channelData ) {
-                return;
-            }
-
-            this.handleResponseHeaders(channel, URI, channelData);
-
             return;
         }
 
-        if ( topic === 'http-on-modify-request' ) {
+        // http-on-modify-request (WORKING HERE)
+        //      handleRequest ->
+        //      traffic::onBeforeRequest ->
 
-            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
-                return;
-            }
+        // The channel was previously serviced.
+        if ( channelData !== null ) {
 
-            var channelData;
-            try {
-                channelData = channel.getProperty(this.REQDATAKEY);
-            } catch (ex) {
-            }
-            if ( !channelData ) {
-                return;
-            }
-
-            this.handleRequestHeaders(channel, URI, channelData);
-
+            this.handleRequest(channel, URI, {
+                frameId: channelData[0],
+                parentFrameId: channelData[1],
+                tabId: channelData[2],
+                rawtype: channelData[3]
+            });
             return;
         }
 
         // http-on-opening-request
 
+        // The channel was never serviced.
         var pendingRequest = this.lookupPendingRequest(URI.spec);
 
         // https://github.com/gorhill/uMatrix/issues/390#issuecomment-155759004
@@ -2303,42 +2391,29 @@ var httpObserver = {
 
     // contentPolicy.shouldLoad doesn't detect redirects, this needs to be used
     asyncOnChannelRedirect: function(oldChannel, newChannel, flags, callback) {
-        var result = this.ACCEPT;
-
         // If error thrown, the redirect will fail
         try {
             var URI = newChannel.URI;
-
             if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
                 return;
             }
 
-            if ( !(oldChannel instanceof Ci.nsIWritablePropertyBag) ) {
-                return;
-            }
-
-            var channelData = oldChannel.getProperty(this.REQDATAKEY);
-
-            var details = {
-                frameId: channelData[0],
-                parentFrameId: channelData[1],
-                tabId: channelData[2],
-                rawtype: channelData[3]
-            };
-
-            if ( this.handleRequest(newChannel, URI, details) ) {
-                result = this.ABORT;
+            if (
+                oldChannel instanceof Ci.nsIWritablePropertyBag === false ||
+                newChannel instanceof Ci.nsIWritablePropertyBag === false
+            ) {
                 return;
             }
 
             // Carry the data on in case of multiple redirects
-            if ( newChannel instanceof Ci.nsIWritablePropertyBag ) {
-                newChannel.setProperty(this.REQDATAKEY, channelData);
-            }
+            newChannel.setProperty(
+                this.REQDATAKEY,
+                oldChannel.getProperty(this.REQDATAKEY)
+            );
         } catch (ex) {
             // console.error(ex);
         } finally {
-            callback.onRedirectVerifyCallback(result);
+            callback.onRedirectVerifyCallback(this.ACCEPT);
         }
     }
 };
@@ -2351,16 +2426,15 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
-
     // Since it's not used
     //this.onBeforeSendHeaders = null;
 
     // adn
-    if ( typeof this.onBeforeSendHeaders.callback === 'function' ) {
-        httpObserver.onBeforeSendHeaders = this.onBeforeSendHeaders.callback;
-        httpObserver.onBeforeSendHeadersTypes  = this.onBeforeSendHeaders.types ?
-            new Set(this.onBeforeSendHeaders.types) :
-            null;
+    if (typeof this.onBeforeSendHeaders.callback === 'function') {
+      httpObserver.onBeforeSendHeaders = this.onBeforeSendHeaders.callback;
+      httpObserver.onBeforeSendHeadersTypes = this.onBeforeSendHeaders.types ?
+        new Set(this.onBeforeSendHeaders.types) :
+        null;
     }
 
     if ( typeof this.onBeforeRequest.callback === 'function' ) {
@@ -2465,7 +2539,7 @@ vAPI.net.registerListeners = function() {
         var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
-        if ( details.url.indexOf(vAPI.getURL('menu.html')) > -1 ) { // for adn
+        if ( details.url.startsWith(vAPI.getURL('menu.html')) ) {
             return;
         }
 
@@ -2576,7 +2650,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'menu.html?tabId=' + curTabId, // adn
+            url: 'menu.html?tabId=' + curTabId,
             index: -1,
             select: true
         });
@@ -2635,7 +2709,7 @@ vAPI.toolbarButton = {
     var tbb = vAPI.toolbarButton;
 
     tbb.onViewShowing = function({target}) {
-        target.firstChild.setAttribute('src', vAPI.getURL('menu.html')); // adn
+        target.firstChild.setAttribute('src', vAPI.getURL('menu.html'));
     };
 
     tbb.onViewHiding = function({target}) {
@@ -3379,7 +3453,7 @@ vAPI.contextMenu = (function() {
 /******************************************************************************/
 
 var optionsObserver = (function() {
-    var addonId = 'adnauseam@rednoise.org';
+    var addonId = 'uBlock0@raymondhill.net';
 
     var commandHandler = function() {
         switch ( this.id ) {

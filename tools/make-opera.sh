@@ -12,11 +12,11 @@ DES=bin/build/adnauseam.opera
 rm -r $DES
 mkdir -p $DES
 
-#VERSION=`jq .version platform/chromium/manifest.json`
 VERSION=`jq .version manifest.json` # new-manifest
 
-./tools/make-assets.sh $DES
-./tools/make-locales.sh $DES
+bash ./tools/make-assets.sh $DES
+bash ./tools/make-locales.sh $DES
+
 
 cp -R src/css $DES/
 cp -R src/img $DES/

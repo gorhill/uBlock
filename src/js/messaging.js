@@ -495,13 +495,8 @@ var filterRequests = function(pageStore, details) {
     while ( i-- ) {
         request = requests[i];
         context.requestURL = punycodeURL(request.url);
-        // https://github.com/gorhill/uBlock/issues/978
-        // Ignore invalid URLs: these would not occur on the HTTP
-        // observer side.
-        if ( (context.requestHostname = hostnameFromURI(request.url)) === '' ) {
-            continue;
-        }
         context.requestType = tagNameToRequestTypeMap[request.tagName];
+        context.requestHostname = hostnameFromURI(request.url);
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
             continue;

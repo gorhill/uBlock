@@ -41,7 +41,7 @@
 	"easylist-downloads.adblockplus.org/easylist.txt": {
 		"title": "EasyList",
 		"group": "ads",
-		"homeURL": "https://easylist-downloads.adblockplus.org/easylist.txt",
+		"homeURL": "https://easylist.github.io/easylist/easylist.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": {
@@ -93,7 +93,7 @@
 	"easylist-downloads.adblockplus.org/easyprivacy.txt": {
 		"title": "EasyPrivacy",
 		"group": "privacy",
-		"homeURL": "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+		"homeURL": "https://easylist.github.io/easylist/easyprivacy.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": {
@@ -211,12 +211,6 @@
 		"lang": "ar",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=98"
 	},
-	"https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
-		"off": true,
-		"title": "ara: Liste AR (obsolete, will be removed soon)",
-		"group": "regions",
-		"supportURL": "https://code.google.com/p/liste-ar-adblock/"
-	},
 	"http://margevicius.lt/easylistlithuania.txt": {
 		"off": true,
 		"title": "LTU: Adblock Plus Lithuania",
@@ -244,10 +238,16 @@
 	},
 	"https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
 		"off": true,
+		"title": "ISR: EasyList Hebrew (obsolete, will be removed soon)",
+		"group": "regions",
+		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
+	},
+	"https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": {
+		"off": true,
 		"title": "ISR: EasyList Hebrew",
 		"group": "regions",
 		"lang": "he",
-		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
+		"supportURL": "https://github.com/easylist/EasyListHebrew"
 	},
 	"https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
 		"off": true,
@@ -275,12 +275,6 @@
 		"title": "Dan Pollock’s hosts file",
 		"group": "multipurpose",
 		"supportURL": "http://someonewhocares.org/hosts/"
-	},
-	"https://spam404bl.com/spam404scamlist.txt": {
-		"off": true,
-		"title": "Spam404 (obsolete, will be removed)",
-		"group": "malware",
-		"supportURL": "http://www.spam404.com/"
 	},
 	"https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": {
 		"off": true,

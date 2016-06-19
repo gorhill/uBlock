@@ -422,23 +422,25 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, dbug = 0;
+      var tabId = details.tabId, dbug = 1;
 
-      if (vAPI.isBehindTheSceneTabId(tabId)) {
+      if (vAPI.isBehindTheSceneTabId(tabId)) { // adn ignore for ff
 
-        if (µBlock.userSettings.noIncomingCookies) {  // adn
+        if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('Headers: ',  details.type, details.url);
+            dbug && console.log('Headers: ',  details.type, details.url, details.responseHeaders);
 
             // adn
             var headers = details.responseHeaders,
               ad = findDelegate(details.url, details.requestId);
 
             if (ad) {
+
               for (var i = headers.length - 1; i >= 0; i--) {
 
                 var name = details.responseHeaders[i].name.toLowerCase();
-                dbug && console.log(i+") "+name);
+
+                //dbug && console.log(i+") "+name);
 
                 if (name === 'set-cookie' || name === 'set-cookie2') {
 
@@ -446,6 +448,9 @@
                     details.responseHeaders.splice(i, 1);
                 }
               }
+            }
+            else if (dbug) {
+                console.log('Ignoring non-ADN response!', details.type, details.url);
             }
         }
 
@@ -475,11 +480,13 @@
     // We only care about behind-the-scene requests here
     if (!vAPI.isBehindTheSceneTabId(details.tabId)) return;
 
+    //console.log('onBeforeSendHeaders', details.url, details);
+
     var headers = details.requestHeaders, dbug = 0,
       ad = findDelegate(details.url, details.requestId);
 
     if (!ad) {
-      //console.warn("Ignoring non-ADN Request!!!");
+      console.warn("Ignoring non-ADN Request: ", details.url);
       return;
     }
 
@@ -517,10 +524,8 @@
       if (vAPI.chrome && name === 'upgrade-insecure-requests')
         uirIdx = i;
 
-
       if (name === 'accept') { // set browser-specific accept header
-        setHeader(headers[i], vAPI.firefox ?
-            AcceptHeaders['firefox'] : AcceptHeaders['chrome']);
+        setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
       }
     }
 
@@ -557,6 +562,8 @@
   }
 
   var findDelegate = function (url, id) {
+
+    //console.log('findDelegate', url, id);
 
     var ads = µBlock.adnauseam.adlist();
     for (var i = 0; i < ads.length; i++) {

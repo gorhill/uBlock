@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — لاگ درخواست های شبکه",
+    "message":"uBlock — لاگ درخواست های شبکه",
     "description":"Title for the logger window"
   },
   "aboutPageName":{

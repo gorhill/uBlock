@@ -546,8 +546,8 @@ var renderLogEntry = function(entry) {
     }
 
     rowFilterer.filterOne(tr, true);
-
     tbody.insertBefore(tr, tbody.firstChild);
+    return tr;
 };
 
 /******************************************************************************/
@@ -565,14 +565,16 @@ var renderLogEntries = function(response) {
 
     var tabIds = response.tabIds;
     var n = entries.length;
-    var entry;
+    var entry, tr;
     for ( var i = 0; i < n; i++ ) {
         entry = entries[i];
-        // Unlikely, but it may happen
+        tr = renderLogEntry(entries[i]);
+        // https://github.com/gorhill/uBlock/issues/1613#issuecomment-217637122
+        // Unlikely, but it may happen: mark as void if associated tab no
+        // longer exist.
         if ( entry.tab && tabIds.hasOwnProperty(entry.tab) === false ) {
-            continue;
+            tr.classList.remove('canMtx');
         }
-        renderLogEntry(entries[i]);
     }
 
     // Prevent logger from growing infinitely and eating all memory. For

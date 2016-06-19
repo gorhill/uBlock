@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Перейти у режим вибору элементів",
+    "message":"Перейти у режим вибору елементів",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Стандартні налаштування",
+    "message":"Стандартна поведінка",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
