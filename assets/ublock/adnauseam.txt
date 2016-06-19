@@ -1,5 +1,5 @@
 
-# filters optimized for AdNauseam
+# rules for AdNauseam
 
 search.yahoo.com##.layoutMiddle
 search.yahoo.com##.kr5yi684e6
@@ -12,3 +12,20 @@ www.ask.com###csaBottom
 www.zam.com##.ad
 
 ##.GoogleActiveViewClass
+
+
+# youtube
+
+@@||google.com/jsapi$third-party,script
+/api/ads/*
+=adunit&
+
+# /googleads.
+# /pagead2.
+# /securepubads.
+# @@||google.com/jsapi$third-party,script
+# /ad_status.
+# /pubads_
+# /api/ads/*
+# ?adformat=
+# =adunit&

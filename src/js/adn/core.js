@@ -9,11 +9,11 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // tmp: for testing list-blocking
+    logBlocks = 0;    // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -26,7 +26,8 @@
   var errorStrings = ['file not found', 'website is currently unavailable'];
 
   var enabledBlockLists = ['EasyPrivacy', 'uBlock filters – Badware risks',
-    'Malware domains', 'Malware Domain List'
+    'My filters', 'Malware domains', 'Malware Domain List', 'My rules',
+    'AdNauseam filters' //, 'EasyList'
   ]; // 'uBlock filters – Unbreak', 'uBlock filters – Privacy' ];
 
   // rules from EasyPrivacy we need to ignore (TODO: prune in load?)
@@ -294,7 +295,7 @@
     // Is it a timeout?
     if (e.type === 'timeout') {
 
-      warn('TIMEOUT: visiting ', this.requestUrl);//, e, this);
+      warn('TIMEOUT: visiting ', this.requestUrl); //, e, this);
 
     } else {
 
@@ -817,8 +818,9 @@
     return enabledBlockLists.indexOf(test) > -1;
   }
 
-  var ruleDisabled = function (test) {
-
+  var ruleDisabled = function (test, list) {
+    if (list && list === 'AdNauseam filters')
+      return false;
     return disabledBlockingRules.indexOf(test) > -1;
   };
 
@@ -1113,6 +1115,7 @@
   var isBlockableRequest = function (result, requestURL, isTop) {
 
     if (strictBlockingDisabled && µb.userSettings.blockingMalware) {
+
       var compiled = result.slice(3),
         snfe = µb.staticNetFilteringEngine,
         raw = snfe.filterStringFromCompiled(compiled),
@@ -1122,15 +1125,26 @@
 
       if (hits && hits.length) {
 
-        if (!activeBlockList(hits[0].title) || ruleDisabled(raw)) {
+        if (!activeBlockList(hits[0].title) || ruleDisabled(raw, hits[0].title)) {
 
-          return false; //log("Reject-block: " + title, raw);
+          if (logBlocks && hits[0].title === 'EasyList')
+            log("[NO_BLOCK] 'EasyList'", raw, requestURL);
 
-        } else logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : '] ') + hits[0].title + ' ' + raw + ': ', requestURL);
+          return false; // no-block
+        }
 
-      } else warn("NO hits ****", raw, compiled);
+        logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : "] '") +
+          hits[0].title + "' " + raw + ': ', requestURL);
 
-    } else logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
+      } else {
+
+        logBlocks && warn("No Hits ****", raw, compiled);
+      }
+
+    } else {
+
+      logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
+    }
 
     return true;
   }

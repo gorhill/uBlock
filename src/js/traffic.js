@@ -29,7 +29,7 @@
 
   'use strict';
 
-  var dbugBlocks = false; // adn
+  var dbugBlocks = 0; // adn (replace is logBlocks)
   var AutoExportUrl = 'http://rednoise.org/ad-auto-export';
   var GoogleSearchPrefix = 'https://www.google.com.hk';
   var AcceptHeaders = {
@@ -330,7 +330,11 @@
   // "Disable hyperlink auditing/beacon" setting.
 
   var onBeforeBeacon = function (details) {
+
     var µb = µBlock;
+    if (µBlock.userSettings.blockingMalware === false) // adn
+        return;
+
     var tabId = details.tabId;
     var pageStore = µb.mustPageStoreFromTabId(tabId);
     var context = pageStore.createContextFromPage();
@@ -353,9 +357,10 @@
         context.rootHostname
       );
     }
+
     if (result !== '') {
 
-      dbugBlocks && console.log("LOG-BLOCK4(net.beacon)", context.requestURL, result);
+      dbugBlocks && console.log("BLOCK(net.beacon)", context.requestURL, result);
 
       return {
         cancel: true
@@ -368,7 +373,8 @@
   // Intercept and filter behind-the-scene requests.
   var onBeforeBehindTheSceneRequest = function (details) {
 
-    if (µBlock.adnauseam) return; // ADN: we can't block these
+    //if (µBlock.adnauseam) return; // ADN: we can't block these
+    if (µBlock.userSettings.blockingMalware === false) return;
 
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
@@ -392,7 +398,13 @@
     }
 
     pageStore.logRequest(context, result);
-    if (µb.logger.isEnabled()) {
+
+    // Not blocked
+    if (µb.isAllowResult(result)) {
+      return;
+    }
+
+    if (µb.logger.isEnabled()) { // adn: moved below cond
       µb.logger.writeOne(
         vAPI.noTabId,
         'net',
@@ -404,12 +416,9 @@
       );
     }
 
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      return;
-    }
-
     // Blocked
+    console.warn("BLOCK(xhr) ", requestURL);
+
     return {
       'cancel': true
     };
