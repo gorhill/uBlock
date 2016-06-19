@@ -33,7 +33,7 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 if [ "$1" = all ]; then
     echo "*** adnauseam.chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null
-    zip adnauseam.chromium.zip -qr $(basename $DES/)/*
+    zip artifacts/adnauseam.chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 

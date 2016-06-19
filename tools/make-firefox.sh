@@ -40,10 +40,9 @@ echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
 
 if [ "$1" = all ]; then
-    set +v
     echo "*** adnauseam.firefox: Creating package..."
-    pushd $DES/ > /dev/null
-    zip ../adnauseam.firefox.xpi -qr *
+    pushd $(dirname $DES/) > /dev/null
+    zip artifacts/adnauseam.firefox.xpi -qr *
     popd > /dev/null
 fi
 
