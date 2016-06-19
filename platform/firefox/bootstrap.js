@@ -105,7 +105,9 @@ function startup(data/*, reason*/) {
 
     let tryDelay = 5;
     let trySum = 0;
-    let tryMax = 30000;
+    // https://trac.torproject.org/projects/tor/ticket/19438
+    // Try for a longer period.
+    let tryMax = 600011;
     let timer = Cc['@mozilla.org/timer;1']
         .createInstance(Ci.nsITimer);
 
@@ -117,8 +119,8 @@ function startup(data/*, reason*/) {
         }
         timer.init(timerObserver, tryDelay, timer.TYPE_ONE_SHOT);
         tryDelay *= 2;
-        if ( tryDelay > 500 ) {
-            tryDelay = 500;
+        if ( tryDelay > 503 ) {
+            tryDelay = 503;
         }
     };
 
