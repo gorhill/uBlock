@@ -540,7 +540,6 @@ var uBlockCollapser = (function() {
             style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
             var parent = document.head || document.documentElement;
             if ( parent ) {
-                style.setAttribute('id', 'ublock-style');
                 parent.appendChild(style);
                 vAPI.styles.push(style);
             }
