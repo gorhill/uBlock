@@ -2108,7 +2108,7 @@ var httpObserver = {
             return;
         }
 
-        if ( result.responseHeaders ) {
+        if ( result.responseHeaders && result.responseHeaders.length ) {
             channel.setResponseHeader(
                 'Content-Security-Policy',
                 result.responseHeaders.pop().value,
