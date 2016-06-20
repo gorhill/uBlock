@@ -89,7 +89,6 @@ var cosmeticFilters = function(details) {
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
         var parent = document.head || document.documentElement;
         if ( parent ) {
-            style.setAttribute('id', 'ublock-style');
             parent.appendChild(style);
             vAPI.styles.push(style);
         }
@@ -148,7 +147,7 @@ var filteringHandler = function(details) {
     if ( details ) {
 
         vAPI.prefs = details.prefs;
-        
+
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
             (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
