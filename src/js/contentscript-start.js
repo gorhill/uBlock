@@ -144,12 +144,11 @@ var injectScripts = function(scripts) {
 var filteringHandler = function(details) {
 
     var styleTagCount = vAPI.styles.length;
-    vAPI.prefs = details.prefs;
 
     if ( details ) {
 
-        // TODO: can we assign prefs to adDetector here?
-
+        vAPI.prefs = details.prefs;
+        
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
             (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
