@@ -433,7 +433,7 @@
 
       var tabId = details.tabId, dbug = 0;
 
-      if (vAPI.isBehindTheSceneTabId(tabId)) { // adn ignore for ff
+      if (vAPI.isBehindTheSceneTabId(tabId)) { // adn: ignore in ff for now
 
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
@@ -441,7 +441,7 @@
 
             // adn
             var headers = details.responseHeaders,
-              ad = findDelegate(details.url, details.requestId);
+              ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
 
             if (ad) {
 
@@ -459,11 +459,13 @@
               }
             }
             else if (dbug && vAPI.chrome) {
-                console.log('Ignoring non-ADN response!', details.type, details.url);
+                console.log('Ignoring non-ADN response', details.type, details.url);
             }
         }
 
-        return { 'responseHeaders': details.responseHeaders };
+        // don't return an empty headers array
+        return details.responseHeaders.length ?
+          { 'responseHeaders': details.responseHeaders } : null;
       }
 
       var requestType = details.type;
@@ -492,7 +494,7 @@
     //console.log('onBeforeSendHeaders', details.url, details);
 
     var headers = details.requestHeaders, dbug = 0,
-      ad = findDelegate(details.url, details.requestId);
+      ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
 
     if (!ad) {
       //console.warn("Ignoring non-ADN request: ", details.url);
@@ -569,20 +571,6 @@
       }
       return s;
   }
-
-  var findDelegate = function (url, id) {
-
-    //console.log('findDelegate', url, id);
-
-    var ads = µBlock.adnauseam.adlist();
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i].attemptedTs) {
-        if (ads[i].requestId === id || ads[i].targetUrl === url) {
-          return ads[i];
-        }
-      }
-    }
-  };
 
   var setHeader = function (header, value) {
 

@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0;    // for testing list-blocking
+    logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -1209,13 +1209,26 @@
     }
   }
 
+  var lookupAd = function (url, requestId) {
+
+    var ads = adlist();
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i].attemptedTs) {
+        if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
+          return ads[i];
+        }
+      }
+    }
+  };
+
   /******************************************************************************/
 
-  return { // public API
+  return { // exports
 
     adlist: adlist,
     logAdSet: logAdSet,
     clearAds: clearAds,
+    lookupAd: lookupAd,
     exportAds: exportAds,
     importAds: importAds,
     registerAd: registerAd,

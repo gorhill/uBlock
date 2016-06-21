@@ -2153,8 +2153,10 @@ var httpObserver = {
             }
         }
 
+        var requestId = this.requestId(channel.originalURI.asciiSpec); // adn
+
         var result = this.onHeadersReceived({
-            requestId: this.requestId(channel.originalURI.asciiSpec), // adn
+            requestId: requestId, // adn
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[2],
@@ -2172,11 +2174,11 @@ var httpObserver = {
         }
 
         // adn: (ugly-hack-for-firefox) we only deal with cookies here
-        // and just ignore whatever is returned from onHeadersReceived(),
-        // which only runs our code in chrome
-        if (µBlock.userSettings.noIncomingCookies) {
-
-            //console.log('Blocking COOKIE');
+        // and just ignore whatever is returned from onHeadersReceived()
+        if (µBlock.userSettings.noIncomingCookies &&
+          µBlock.adnauseam.lookupAd(URI.asciiSpec, requestId))
+        {
+            //console.log('Blocking COOKIE',URI.asciiSpec);
             channel.setResponseHeader('Set-Cookie', '', false);
         }
 
@@ -2249,10 +2251,6 @@ var httpObserver = {
             }
             return;
         }
-
-        // http-on-modify-request (WORKING HERE)
-        //      handleRequest ->
-        //      traffic::onBeforeRequest ->
 
         // The channel was previously serviced.
         if ( channelData !== null ) {
