@@ -2191,16 +2191,12 @@ var httpObserver = {
 
         // Behind-the-scene request... Yes, really.
         if ( pendingRequest === null ) {
-            if ( this.handleRequest(channel, URI, { tabId: vAPI.noTabId, rawtype: rawtype }) ) {
-                return;
-            }
-
-            // Carry data for behind-the-scene redirects
-            if ( channel instanceof Ci.nsIWritablePropertyBag ) {
-                channel.setProperty(this.REQDATAKEY, [0, -1, vAPI.noTabId, rawtype]);
-            }
-
-            return;
+            pendingRequest = {
+                frameId: 0,
+                parentFrameId: -1,
+                tabId: vAPI.noTabId,
+                rawtype: rawtype
+            };
         }
 
         // https://github.com/gorhill/uBlock/issues/654
