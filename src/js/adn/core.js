@@ -930,7 +930,7 @@
 
     log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
 
-    // reload Vault page
+    // reload Vault page if open
     reloadExtPage('vault.html');
 
     return {

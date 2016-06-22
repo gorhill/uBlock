@@ -19,7 +19,14 @@
 
     reader.onload = function (e) {
 
-      var adData = JSON.parse(e.target.result);
+      var adData;
+      try {
+        adData = JSON.parse(e.target.result);
+      }
+      catch(e){
+        postImportAlert({ count: -1, error: e });
+        return;
+      }
 
       messager.send('adnauseam', {
         what: 'importAds',
@@ -32,9 +39,9 @@
   }
 
   var postImportAlert = function (msg) {
-
+    var text = msg.count > -1 ? msg.count : msg.error;
     vAPI.alert(vAPI.i18n('adnImportAlert')
-      .replace('{{count}}', msg.count));
+      .replace('{{count}}', text));
   };
 
   var startImportFilePicker = function () {
