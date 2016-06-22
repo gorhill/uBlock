@@ -842,15 +842,13 @@
   // update tab badges if we're showing them
   var updateBadges = function () {
 
-    if (µb.userSettings.showIconBadge) {
+    var optionsUrl = vAPI.getURL('options.html');
 
-      var optionsUrl = vAPI.getURL('options.html');
+    for (var tabId in µb.pageStores) {
 
-      for (var tabId in µb.pageStores) {
-
-        var store = µb.pageStoreFromTabId(tabId);
-        if (store !== null && !store.rawURL.startsWith(optionsUrl))
-          µb.updateBadgeAsync(tabId);
+      var store = µb.pageStoreFromTabId(tabId);
+      if (store !== null && !store.rawURL.startsWith(optionsUrl)) {
+        µb.updateBadgeAsync(tabId);
       }
     }
   }
