@@ -1105,7 +1105,7 @@ vAPI.lastError = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-vAPI.onLoadAllCompleted = function() {
+vAPI.onLoadAllCompleted = function(tabId) {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
@@ -1116,43 +1116,46 @@ vAPI.onLoadAllCompleted = function() {
         if ( vAPI.lastError() ) {
             return;
         }
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/adn/extract.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, scriptDone);
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/contentscript-end.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, scriptDone);
-    };
-    var scriptStart = function(tabId) {
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/vapi-client.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, function(){ });
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/contentscript-start.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, function(){ scriptEnd(tabId); });
-    };
-    var bindToTabs = function(tabs) {
-        var µb = µBlock;
-        var i = tabs.length, tab;
-        while ( i-- ) {
-            tab = tabs[i];
-            µb.tabContextManager.commit(tab.id, tab.url);
-            µb.bindTabToPageStats(tab.id);
-            // https://github.com/chrisaljoudi/uBlock/issues/129
-            scriptStart(tab.id);
+        var scripts = ['js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript-end.js'];
+        for (var i = 0; i < scripts.length; i++) {
+          injectOne(tabId, scripts[i], i==scripts.length - 1 ? scriptDone : 0);
         }
     };
-
-    chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
+    var scriptStart = function(tabId) {
+      var scripts = ['js/vapi-client.js', 'js/contentscript-start.js'];
+      for (var i = 0; i < scripts.length; i++) {
+        injectOne(tabId, scripts[i], i==scripts.length - 1 ?
+          function() { scriptEnd(tabId); } : 0);
+      }
+    };
+    var startInTab = function(tab) { // adn
+        var µb = µBlock;
+        µb.tabContextManager.commit(tab.id, tab.url);
+        µb.bindTabToPageStats(tab.id);
+        // https://github.com/chrisaljoudi/uBlock/issues/129
+        scriptStart(tab.id);
+    };
+    var injectOne = function(tabId, script, cb)  {
+      vAPI.tabs.injectScript(tabId, {
+          file: script,
+          allFrames: true,
+          runAt: 'document_idle'
+      }, cb || function(){});
+    };
+    var bindToTabs = function(tabs) {
+        var i = tabs.length;
+        while ( i-- ) {
+            startInTab(tabs[i]);
+        }
+    };
+    if (tabId)  {
+        chrome.tabs.get(tabId, startInTab); // adn
+    }
+    else {
+        chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
+    }
 };
+
 
 /******************************************************************************/
 /******************************************************************************/

@@ -235,6 +235,15 @@ var uBlockCollapser = (function() {
     };
 
     var primeLocalIFrame = function(iframe) {
+
+        vAPI.messaging.send('adnauseam', {
+              what: 'injectContentScripts',
+          },
+          function (e) {
+              console.log('injectContentScripts-callback', e);
+          }
+        );
+
         // Should probably also copy injected styles.
         // The injected scripts are those which were injected in the current
         // document, from within the `contentscript-start.js / injectScripts`,

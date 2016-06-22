@@ -13,7 +13,7 @@
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -1221,6 +1221,12 @@
     }
   };
 
+  var injectContentScripts = function (request, pageStore, tabId, frameId) {
+    //console.log('injectContentScripts', tabId, frameId);
+    // Firefox already handles this correctly
+    vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
+  };
+
   /******************************************************************************/
 
   return { // exports
@@ -1244,6 +1250,7 @@
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
+    injectContentScripts: injectContentScripts,
     domainCosmeticSelectors: domainCosmeticSelectors
   };
 
