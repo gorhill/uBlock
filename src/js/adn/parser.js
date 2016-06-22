@@ -2,10 +2,10 @@
 
   'use strict';
 
-  if (window.location === null || typeof vAPI !== 'object') {
-    //console.debug('parser.js > window.location===null || vAPI not found');
-    return;
-  }
+  if (window.location === null || typeof vAPI !== 'object') return;
+
+  // no ad extraction in incognito windows (see #236)
+  if (vAPI.chrome &&  chrome.extension.inIncognitoContext) return
 
   var AdParser = (function () {
 
