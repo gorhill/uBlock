@@ -1264,23 +1264,24 @@
 
   vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
 
-    //console.log("MSG: "+request.what);
+    //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
       default: break;
     } // Async
 
-    var pageStore, tabId, µb = µBlock;
+    var pageStore, tabId, frameId, µb = µBlock;
 
     if (sender && sender.tab) {
 
       tabId = sender.tab.id;
+      frameId = sender.frameId;
       pageStore = µb.pageStoreFromTabId(tabId);
     }
 
     if (typeof µb.adnauseam[request.what] === 'function') {
 
-      callback(µb.adnauseam[request.what](request, pageStore, tabId));
+      callback(µb.adnauseam[request.what](request, pageStore, tabId, frameId));
 
     } else {
 

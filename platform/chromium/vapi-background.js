@@ -516,6 +516,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         }
     };
     if ( tabId ) {
+        //if (details.frameId) console.log('vAPI.tabs.injectScript: '+details.frameId);
         chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
     } else {
         chrome.tabs.executeScript(details, onScriptExecuted);
@@ -686,6 +687,10 @@ vAPI.messaging.onPortMessage = (function() {
     };
 
     return function(request, port) {
+
+        //console.log('vAPI.messaging.onPortMessage: ', request.channelName
+          //+ '::' + request.msg.what, port.sender.frameId, request, port);
+
         // Auxiliary process to auxiliary process
         if ( request.toTabId !== undefined ) {
             toAux(request, port);
@@ -1105,42 +1110,50 @@ vAPI.lastError = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-vAPI.onLoadAllCompleted = function(tabId) {
+vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
     var scriptDone = function() {
         vAPI.lastError();
     };
-    var scriptEnd = function(tabId) {
+    var scriptEnd = function(tabId, frameId) {
         if ( vAPI.lastError() ) {
+            console.warn(vAPI.lastError());
             return;
         }
         var scripts = ['js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript-end.js'];
         for (var i = 0; i < scripts.length; i++) {
-          injectOne(tabId, scripts[i], i==scripts.length - 1 ? scriptDone : 0);
+          injectOne(tabId, frameId, scripts[i], i==scripts.length - 1 ? scriptDone : 0);
         }
     };
-    var scriptStart = function(tabId) {
+    var scriptStart = function(tabId, frameId) {
       var scripts = ['js/vapi-client.js', 'js/contentscript-start.js'];
       for (var i = 0; i < scripts.length; i++) {
-        injectOne(tabId, scripts[i], i==scripts.length - 1 ?
-          function() { scriptEnd(tabId); } : 0);
+        injectOne(tabId, frameId, scripts[i], i==scripts.length - 1 ?
+          function() { scriptEnd(tabId, frameId); } : 0);
       }
     };
-    var startInTab = function(tab) { // adn
+    var startInTab = function(tab, frameId) { // adn
         var µb = µBlock;
         µb.tabContextManager.commit(tab.id, tab.url);
         µb.bindTabToPageStats(tab.id);
         // https://github.com/chrisaljoudi/uBlock/issues/129
-        scriptStart(tab.id);
+        scriptStart(tab.id, frameId);
     };
-    var injectOne = function(tabId, script, cb)  {
-      vAPI.tabs.injectScript(tabId, {
+    var injectOne = function(tabId, frameId, script, cb)  {
+
+      var details = {
           file: script,
           allFrames: true,
           runAt: 'document_idle'
-      }, cb || function(){});
+      }
+      if (frameId) {
+        details.frameId = frameId;
+        details.matchAboutBlank = true;
+      }
+      //console.log('injectOne: '+script,details);
+      vAPI.tabs.injectScript(tabId, details, cb || function(){});
     };
     var bindToTabs = function(tabs) {
         var i = tabs.length;
@@ -1149,7 +1162,7 @@ vAPI.onLoadAllCompleted = function(tabId) {
         }
     };
     if (tabId)  {
-        chrome.tabs.get(tabId, startInTab); // adn
+        chrome.tabs.get(tabId, function(tab) { startInTab(tab, frameId); }); // adn
     }
     else {
         chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);

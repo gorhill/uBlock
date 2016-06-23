@@ -43,6 +43,7 @@
     "page": "options_ui.html"
   },
   "permissions": [
+    "activeTab",
     "contextMenus",
     "privacy",
     "storage",

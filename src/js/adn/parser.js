@@ -7,6 +7,13 @@
     return;
   }
 
+  if ( vAPI.parserInjected ) {
+      console.debug('parser.js > content script already injected');
+      return;
+  }
+
+  vAPI.parserInjected = true;
+
   var AdParser = (function () {
 
     var useShadowDOM = false;
