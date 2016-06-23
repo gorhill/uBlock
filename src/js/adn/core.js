@@ -5,11 +5,11 @@
   'use strict';
 
   // for debugging only
-  var failAllVisits = 0,  // all visits will fail
-    clearAdsOnInit = 0,  // start with zero ads
+  var failAllVisits = 0, // all visits will fail
+    clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0;    // for testing list-blocking
+    logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -27,12 +27,13 @@
 
   var enabledBlockLists = ['EasyPrivacy', 'uBlock filters – Badware risks',
     'My filters', 'Malware domains', 'Malware Domain List', 'My rules',
-    'AdNauseam filters' //, 'EasyList'
-  ]; // 'uBlock filters – Unbreak', 'uBlock filters – Privacy' ];
+    'AdNauseam filters', 'uBlock filters – Unbreak', 'uBlock filters – Privacy'
+  ];
 
-  // rules from EasyPrivacy we need to ignore (TODO: prune in load?)
-  var disabledBlockingRules = ['||googleadservices.com^$third-party',
-    '||pixanalytics.com^$third-party', '||stats.g.doubleclick.net^'
+  // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
+  var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
+    '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
+    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
   var reSpecialChars = /[\*\^\t\v\n]/;
@@ -302,7 +303,7 @@
     } else {
 
       // or some other error?
-      warn('onVisitError()', e,  this.requestUrl, this.statusText); // this);
+      warn('onVisitError()', e, this.requestUrl, this.statusText); // this);
     }
 
     if (!this.delegate) {
@@ -1218,7 +1219,7 @@
 
     if (url.endsWith('/')) { // TODO: revisit
 
-      url = url.substring(0, url.length-1);
+      url = url.substring(0, url.length - 1);
     }
 
     var ads = adlist();
