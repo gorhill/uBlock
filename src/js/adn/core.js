@@ -13,7 +13,7 @@
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -1232,6 +1232,12 @@
     }
   };
 
+  var injectContentScripts = function (request, pageStore, tabId, frameId) {
+    //console.log('injectContentScripts', tabId, frameId);
+    // Firefox already handles this correctly
+    vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
+  };
+
   /******************************************************************************/
 
   return { // exports
@@ -1256,6 +1262,7 @@
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
+    injectContentScripts: injectContentScripts,
     domainCosmeticSelectors: domainCosmeticSelectors
   };
 
@@ -1269,23 +1276,24 @@
 
   vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
 
-    //console.log("MSG: "+request.what);
+    //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
       default: break;
     } // Async
 
-    var pageStore, tabId, µb = µBlock;
+    var pageStore, tabId, frameId, µb = µBlock;
 
     if (sender && sender.tab) {
 
       tabId = sender.tab.id;
+      frameId = sender.frameId;
       pageStore = µb.pageStoreFromTabId(tabId);
     }
 
     if (typeof µb.adnauseam[request.what] === 'function') {
 
-      callback(µb.adnauseam[request.what](request, pageStore, tabId));
+      callback(µb.adnauseam[request.what](request, pageStore, tabId, frameId));
 
     } else {
 

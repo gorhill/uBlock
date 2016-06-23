@@ -2,10 +2,17 @@
 
   'use strict';
 
-  if (window.location === null || typeof vAPI !== 'object') {
+  if (window.location === null || typeof vAPI !== 'object' || !vAPI.adParser) {
     //console.debug('textads.js > window.location===null || vAPI not found');
     return;
   }
+
+  if ( vAPI.textAdsInjected ) {
+      console.debug('textads.js > content script already injected');
+      return;
+  }
+
+  vAPI.textAdsInjected = true;
 
   var TextAds = (function () {
 
