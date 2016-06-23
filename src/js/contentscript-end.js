@@ -236,13 +236,11 @@ var uBlockCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
 
-        vAPI.messaging.send('adnauseam', {
-              what: 'injectContentScripts',
-          },
-          function (e) {
-              console.log('injectContentScripts-callback', e);
-          }
-        );
+        iframe.onload = function () {
+          this.contentWindow.chrome.runtime.connect().postMessage({
+            channelName: "adnauseam", msg: { what: "injectContentScripts" }
+          });
+        };
 
         // Should probably also copy injected styles.
         // The injected scripts are those which were injected in the current
