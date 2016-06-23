@@ -236,11 +236,13 @@ var uBlockCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
 
-        // adn: injects our content-scripts into dynamically-created iframes
+        // adn: inject our content-scripts into dynamically-created iframes
         iframe.onload = function () {
-          this.contentWindow.chrome.runtime.connect().postMessage({
-            channelName: "adnauseam", msg: { what: "injectContentScripts" }
-          });
+          if (vAPI.chrome) { // ff-already handles this case correctly
+            this.contentWindow.chrome.runtime.connect().postMessage({
+              channelName: "adnauseam", msg: { what: "injectContentScripts" }
+            });
+          }
         };
 
         // Should probably also copy injected styles.
@@ -253,7 +255,6 @@ var uBlockCollapser = (function() {
             scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
             var parent = iframe.contentDocument && iframe.contentDocument.head;
             if ( parent ) {
-                console.warn('[CSE] injecting script into iFrame, ',scriptTag);
                 parent.appendChild(scriptTag);
             }
         }
