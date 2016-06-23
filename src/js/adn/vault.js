@@ -642,7 +642,7 @@
   function itemPosition($ele) {
 
     // first set zoom back to 100%
-    setZoom(zoomIdx = Zooms.indexOf(100), true);
+    setZoom(100, true);
 
     var off = $ele.offset(), // relative to container
       cx = $(window).width() / 2,
@@ -668,7 +668,7 @@
     };
 
     // now restore zoom to user-selected level
-    setZoom(zoomIdx = viewState.zoomIdx, true);
+    setRawZoom(userZoomScale, true); // fix to #277
 
     return pos;
   }
@@ -968,26 +968,20 @@
     $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%');
   }
 
-  function setZoom(idx, immediate) {
-
-    //log('setZoom('+idx+','+(immediate===true)+')');
+  function setRawZoom(percent, immediate) {
 
     var $container = $('#container');
+    immediate && $container.addClass('notransition'); // disable transitions
+    setScale(percent); // set CSS scale for zooming
+    userZoomScale = percent; // update userZoomScale
+    $('#ratio').text(percent + '%'); // set zoom-text
+    $container[0].offsetHeight; // Trigger reflow, flush cached CSS
+    immediate && $container.removeClass('notransition'); //re-enable
+  }
 
-    // Disable transitions
-    immediate && $container.addClass('notransition');
+  function setZoom(idx, immediate) {
 
-    setScale(Zooms[idx]); // set CSS scale for zooming
-
-    userZoomScale = Zooms[idx]; // update userZoomScale
-
-    $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
-
-    // Trigger reflow, flush cached CSS
-    $container[0].offsetHeight;
-
-    // Re-enable transitions
-    immediate && $container.removeClass('notransition');
+    setRawZoom(Zooms[idx], immediate);
   }
 
   function onscreen($this, winW, winH, scale, percentVisible) {
