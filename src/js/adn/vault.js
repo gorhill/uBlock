@@ -736,7 +736,7 @@
     } else { // restore
 
       // restore zoom scale to userZoomScale
-      dynamicZoom(viewState.zoomScale - 100);
+      dynamicZoom(viewState.zoomScale);
       $dm.css('margin-left', viewState.left);
       $dm.css('margin-top', viewState.top);
     }

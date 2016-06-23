@@ -29,7 +29,6 @@
 
   'use strict';
 
-  var dbugBlocks = 0; // adn (replace is logBlocks)
   var AutoExportUrl = 'http://rednoise.org/ad-auto-export';
   var GoogleSearchPrefix = 'https://www.google.com.hk';
   var AcceptHeaders = {
@@ -155,7 +154,7 @@
     var url = µb.redirectEngine.toURL(requestContext);
     if (url !== undefined) {
 
-      dbugBlocks && console.log("LOG-BLOCK2(redirect)");
+      µb.adnauseam.blockLogging() && console.log("LOG-BLOCK2(redirect)");
 
       if (µb.logger.isEnabled()) {
         µb.logger.writeOne(
@@ -291,7 +290,7 @@
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
-    dbugBlocks && console.log("LOG-BLOCK3(document)");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK3(document)");
 
     return {
       cancel: true
@@ -360,7 +359,7 @@
 
     if (result !== '') {
 
-      dbugBlocks && console.log("BLOCK(net.beacon)", context.requestURL, result);
+      µb.adnauseam.blockLogging() && console.log("BLOCK(net.beacon)", context.requestURL, result);
 
       return {
         cancel: true
@@ -433,11 +432,12 @@
 
       var tabId = details.tabId, dbug = 0;
 
-      if (vAPI.isBehindTheSceneTabId(tabId)) { // adn: ignore in ff for now
+      if (vAPI.isBehindTheSceneTabId(tabId)) {
 
+        // adn: ignore in ff for now
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('Headers: ',  details.type, details.url, details.responseHeaders);
+            dbug && console.log('Pre.Headers: ',  details.type, details.url, details.responseHeaders);
 
             // adn
             var headers = details.responseHeaders,
@@ -462,6 +462,8 @@
                 console.log('Ignoring non-ADN response', details.type, details.url);
             }
         }
+
+        dbug && console.log('Post.Headers', details.responseHeaders);
 
         // don't return an empty headers array
         return details.responseHeaders.length ?
@@ -675,7 +677,7 @@
       return;
     }
 
-    dbugBlocks && console.log("LOG-BLOCK7(net.inline-script')");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK7(net.inline-script')");
 
     µb.updateBadgeAsync(tabId);
 
@@ -716,7 +718,7 @@
 
     pageStore.logLargeMedia();
 
-    dbugBlocks && console.log("LOG-BLOCK8(net.largeMedia)");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK8(net.largeMedia)");
 
     if (µb.logger.isEnabled()) {
 

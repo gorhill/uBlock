@@ -5,11 +5,11 @@
   'use strict';
 
   // for debugging only
-  var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 0, // start with zero ads
+  var failAllVisits = 0,  // all visits will fail
+    clearAdsOnInit = 0,  // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for testing list-blocking
+    logBlocks = 0;    // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -69,6 +69,8 @@
   var clearAdVisits = function (ads) {
 
     warn("[WARN] Clearing all Ad visit data!");
+
+    ads = ads || adlist();
 
     ads.forEach(function (ad) {
 
@@ -300,7 +302,7 @@
     } else {
 
       // or some other error?
-      warn('onVisitError()', e); // this);
+      warn('onVisitError()', e,  this.requestUrl, this.statusText); // this);
     }
 
     if (!this.delegate) {
@@ -891,8 +893,8 @@
   var importAds = function (request) {
 
     // try to parse imported ads in current format
-    var count = adlist().length,
-      importedCount = 0,
+    var importedCount = 0,
+      count = adlist().length,
       map = validateImport(request.data);
 
     if (!map) {
@@ -923,7 +925,7 @@
     //clearAds();
     admap = map;
     computeNextId();
-    clearVisitData && clearAdVisits(ads);
+    clearVisitData && clearAdVisits();
     storeUserData();
 
     importedCount = adlist().length - count;
@@ -959,7 +961,7 @@
       µb.pageStoreFromTabId(request.tabId) || pageStore;
 
     if (!reqPageStore)
-      throw Error('No pageStore found!', request, pageStore, tabId);
+      warn('Unexpected state: no pageStore', request, pageStore, tabId);
 
     return adsForUI(reqPageStore.rawURL);
   }
@@ -1207,11 +1209,22 @@
     }
   }
 
+  var blockLogging = function () {
+
+    return logBlocks;
+  }
+
   var lookupAd = function (url, requestId) {
+
+    if (url.endsWith('/')) { // TODO: revisit
+
+      url = url.substring(0, url.length-1);
+    }
 
     var ads = adlist();
     for (var i = 0; i < ads.length; i++) {
       if (ads[i].attemptedTs) {
+        //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
         if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
           return ads[i];
         }
@@ -1236,6 +1249,7 @@
     deleteAdSet: deleteAdSet,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
+    blockLogging: blockLogging,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
