@@ -20,12 +20,12 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "hides all ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> hides all ads identified by filter lists"
+    "message": "hides all Ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> hides all Ads identified by filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "silently registers visits on all pages linked to ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+    "message": "silently registers visits on all pages linked to Ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> silently registers visits on all pages linked to Ads identified by filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
     "message": "protects your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
@@ -33,11 +33,11 @@
   },
   "adnTarget": {
     "message": "TARGET",
-    "description": "English: Vault.html -> inspected ad -> TARGET"
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
     "message": "FOUND ON",
-    "description": "English: Vault.html -> inspected ad -> FOUND ON"
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
     "message": "Not Yet Visited",
@@ -52,27 +52,27 @@
     "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam is not currently hiding ads",
-    "description": "English: Menu->display when not hiding ads"
+    "message": "AdNauseam is not currently hiding Ads",
+    "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No ads collected on this page (showing recent)",
-    "description": "shown in menu when only 'recent' ads are shown"
+    "message": "No Ads collected on this page (showing recent)",
+    "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
   "adnImportAlert": {
-    "message": "{{count}} ads were imported",
+    "message": "{{count}} Ads were imported",
     "description": "appears in ADN settings"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your ads",
+    "message": "This action will permanently remove ALL of your Ads",
     "description": "appears in ADN settings"
   },
   "adnMenuViewLog": {
@@ -88,7 +88,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "ads detected",
+    "message": "Ads detected",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -152,7 +152,7 @@
     "description": "appears in ADN vault page"
   },
   "adnVaultAdsClicked": {
-    "message": "ads clicked",
+    "message": "Ads clicked",
     "description": "appears in ADN vault page"
   },
   "adnVaultFound": {
@@ -160,17 +160,17 @@
     "description": "appears in ADN vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this ad",
+    "message": "delete this Ad",
     "description": "appears in ADN vault page"
   },
 
   "hidingAdsPrompt": {
-    "message": "Hide ads identified by your chosen filter lists",
-    "description": "English: Hide ads identified by your chosen filter lists"
+    "message": "Hide Ads identified by your chosen filter lists",
+    "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Click ads identified by your chosen filter lists",
-    "description": "English: Click ads identified by your chosen filter lists"
+    "message": "Click Ads identified by your chosen filter lists",
+    "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
     "message": "Block malware and non-visual trackers",
@@ -178,12 +178,12 @@
   },
 
   "parseTextAdsPrompt": {
-    "message": "Capture text-only adverts when possible",
-    "description": "English: Capture text-only ads when possible"
+    "message": "Capture text-only Ads when possible",
+    "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of found ads on the icon",
-    "description": "English: Show the number of found ads on the icon"
+    "message": "Display the number of Ads on the icon",
+    "description": "English: Show the number of found Ads on the icon"
   },
 
   "noIncomingCookiesPrompt": {
