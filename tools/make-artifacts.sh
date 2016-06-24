@@ -6,6 +6,7 @@
 rm -rf bin/build/artifacts/*
 
 ./tools/make-chromium.sh all
+./tools/make-firefox.sh all
 
 cd bin/build/adnauseam.firefox
 jpm xpi
