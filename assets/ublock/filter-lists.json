@@ -234,7 +234,8 @@
 		"title": "Peter Lowe’s Ad server list",
 		"group": "ads",
 		"homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
-		"supportURL": "https://pgl.yoyo.org/adservers/"
+		"supportURL": "https://pgl.yoyo.org/adservers/",
+		"off": true
 	},
 	"https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
 		"off": true,
