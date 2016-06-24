@@ -46,11 +46,11 @@
 
   var onBeforeRequest = function (details) {
 
-    // ADN: this triggers our automated script to export ads on completion (tmp)
+    // adn: this triggers our automated script to export ads on completion (tmp)
     if (details.type === 'main_frame' && details.url === AutoExportUrl)
         µb.adnauseam.exportAds();
 
-    // ADN: return here if prefs say not to block
+    // adn: return here if prefs say not to block
     if (µBlock.userSettings.blockingMalware === false) {
         return;
     }
@@ -111,25 +111,14 @@
     requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
     requestContext.requestType = requestType;
 
-    // Note: adn-blocking happens here
+    // adn: note: blocking checked in this function
     var result = pageStore.filterRequest(requestContext);
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
     pageStore.logRequest(requestContext, result);
 
-    // Not blocked
-
-    if (µb.isAllowResult(result)) {
-      // https://github.com/chrisaljoudi/uBlock/issues/114
-      frameId = details.frameId;
-      if (frameId > 0 && isFrame) {
-        pageStore.setFrame(frameId, requestURL);
-      }
-      return;
-    }
-
-    if (µb.logger.isEnabled()) { // adn: moved below return
+    if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         tabId,
         'net',
@@ -139,6 +128,16 @@
         requestContext.rootHostname,
         requestContext.pageHostname
       );
+    }
+
+    // Not blocked
+    if (µb.isAllowResult(result)) {
+      // https://github.com/chrisaljoudi/uBlock/issues/114
+      frameId = details.frameId;
+      if (frameId > 0 && isFrame) {
+        pageStore.setFrame(frameId, requestURL);
+      }
+      return;
     }
 
     // Blocked
@@ -173,7 +172,7 @@
       };
     }
 
-    //console.warn('BLOCKED(onBeforeRequest) !!!! ', requestType, requestContext.requestURL);
+    //µb.adnauseam.blockLogging() && console.log("LOG-BLOCK2(onBeforeRequest)", requestURL);
 
     return {
       cancel: true
@@ -249,23 +248,12 @@
       }
     }
 
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      return;
-    }
-
-    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), requestURL, true)) {
-      return; // adn: not blocking
-    }
-
-    // Log (moved, from line 231, to here, below the returns)
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if (pageStore) {
       pageStore.logRequest(context, result);
     }
 
     if (µb.logger.isEnabled()) {
-
       µb.logger.writeOne(
         tabId,
         'net',
@@ -275,6 +263,15 @@
         requestHostname,
         requestHostname
       );
+    }
+
+    // Not blocked
+    if (µb.isAllowResult(result)) {
+      return;
+    }
+
+    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), requestURL, true)) {
+      return; // adn: not blocking
     }
 
     var compiled = result.slice(3);
@@ -343,8 +340,6 @@
     // "g" in "gb:" stands for "global setting"
     var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
     pageStore.logRequest(context, result);
-
-
     if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         tabId,
@@ -358,9 +353,7 @@
     }
 
     if (result !== '') {
-
       µb.adnauseam.blockLogging() && console.log("BLOCK(net.beacon)", context.requestURL, result);
-
       return {
         cancel: true
       };
@@ -370,9 +363,9 @@
   /******************************************************************************/
 
   // Intercept and filter behind-the-scene requests.
+  //
   var onBeforeBehindTheSceneRequest = function (details) {
 
-    //if (µBlock.adnauseam) return; // ADN: we can't block these
     if (µBlock.userSettings.blockingMalware === false) return;
 
     var µb = µBlock;
@@ -398,12 +391,7 @@
 
     pageStore.logRequest(context, result);
 
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      return;
-    }
-
-    if (µb.logger.isEnabled()) { // adn: moved below cond
+    if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         vAPI.noTabId,
         'net',
@@ -415,8 +403,12 @@
       );
     }
 
-    // Blocked
-    console.warn("BLOCK(xhr) ", requestURL);
+    // Not blocked
+    if (µb.isAllowResult(result)) {
+      return;
+    }
+
+    console.warn("BLOCK(xhr) ", requestURL); // Blocked
 
     return {
       'cancel': true
@@ -431,10 +423,9 @@
   var onHeadersReceived = function (details) {
 
       var tabId = details.tabId, dbug = 0;
-
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-        // adn: ignore in ff for now
+        // adn: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
             dbug && console.log('Pre.Headers: ',  details.type, details.url, details.responseHeaders);
@@ -519,24 +510,20 @@
     }
 
     for (var i = headers.length - 1; i >= 0; i--) {
-
       //console.log(i + ") " + headers[i].name);
-
       var name = headers[i].name.toLowerCase();
-
       if ((name === 'http_x_requested_with') ||
         (name === 'x-devtools-emulate-network-conditions-client-id') ||
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
-
         setHeader(headers[i], '');
       }
 
-      if (name === 'referer') refererIdx = i;
+      if (name === 'referer') { refererIdx = i; }
 
-      if (vAPI.chrome && name === 'upgrade-insecure-requests')
+      if (vAPI.chrome && name === 'upgrade-insecure-requests') {
         uirIdx = i;
-
+      }
       if (name === 'accept') { // set browser-specific accept header
         setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
       }
@@ -612,7 +599,7 @@
 
     pageStore.logRequest(context, result);
 
-    if (µb.logger.isEnabled()) { // why are these logged if not blocked?
+    if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
         tabId,
         'net',
@@ -631,9 +618,7 @@
 
     µb.updateBadgeAsync(tabId);
 
-    return {
-      'responseHeaders': foilInlineScripts(details.responseHeaders)
-    };
+    return { 'responseHeaders': foilInlineScripts(details.responseHeaders) };
   };
 
   /******************************************************************************/
@@ -681,9 +666,7 @@
 
     µb.updateBadgeAsync(tabId);
 
-    return {
-      'responseHeaders': foilInlineScripts(details.responseHeaders)
-    };
+    return { 'responseHeaders': foilInlineScripts(details.responseHeaders) };
   };
 
   /******************************************************************************/
@@ -717,7 +700,6 @@
     }
 
     pageStore.logLargeMedia();
-
     µb.adnauseam.blockLogging() && console.log("LOG-BLOCK8(net.largeMedia)");
 
     if (µb.logger.isEnabled()) {
@@ -868,8 +850,7 @@
     callback: onHeadersReceived
   };
 
-  // adn
-  vAPI.net.onBeforeSendHeaders = {
+  vAPI.net.onBeforeSendHeaders = {   // adn
     urls: [
       'http://*/*',
       'https://*/*'
