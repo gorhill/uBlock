@@ -7,13 +7,13 @@
   // for debugging only
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
-    clearVisitData = 1, // reset all ad visit data
+    clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
     logBlocks = 0;    // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -1232,6 +1232,9 @@
   };
 
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
+
+    log('Injecting content-scripts into dynamic-iframe',
+      request.parentUrl, tabId+'/'+frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);

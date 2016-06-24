@@ -240,7 +240,11 @@ var uBlockCollapser = (function() {
         iframe.onload = function () {
           if (vAPI.chrome) { // ff-already handles this case correctly
             this.contentWindow.chrome.runtime.connect().postMessage({
-              channelName: "adnauseam", msg: { what: "injectContentScripts" }
+              channelName: "adnauseam",
+              msg: {
+                what: "injectContentScripts",
+                parentUrl: location.href
+              }
             });
           }
         };
