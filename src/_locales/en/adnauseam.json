@@ -20,7 +20,7 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "hides all Ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message": "hides all ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
     "description": "English: Firstrun.html -> hides all Ads identified by filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
