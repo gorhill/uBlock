@@ -5,10 +5,10 @@
   if (window.location === null || typeof vAPI !== 'object') return;
 
   // no ad extraction in incognito windows (see #236)
-  if (vAPI.chrome &&  chrome.extension.inIncognitoContext) return
+  if (vAPI.chrome && chrome.extension.inIncognitoContext) return;
 
   if (vAPI.adParser) {
-      console.debug('parser.js > content script already injected');
+      // console.debug('parser.js > already injected');
       return;
   }
 

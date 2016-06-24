@@ -7,13 +7,8 @@
     return;
   }
 
-  // if ( !vAPI.adParser ) {
-  //     console.warn('textads.js > adParser not yet injected!!');
-  //     return;
-  // }
-
   if ( vAPI.textAdParser ) {
-      console.debug('textads.js > content script already injected');
+      //console.debug('textads.js > already injected');
       return;
   }
 

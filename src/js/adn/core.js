@@ -245,7 +245,9 @@
       return title;
     }
 
-    warn('Unable to parse title from: ' + xhr.requestUrl, html);
+    var shtml = html.length > 100 ? html.substring(0,100)+'...' : html;
+    console.log('shtml: '+shtml);
+    warn('Unable to parse title from: ' + xhr.requestUrl, shtml);
 
     return false;
   }
@@ -262,7 +264,7 @@
       if (ad.title === 'Pending') {
 
         ad.title = parseDomain(xhr.requestUrl, true);
-        warn('replaced "Pending" with: ' + ad.title);
+        warn('Replaced "Pending" with: ' + ad.title);
       }
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
@@ -1236,7 +1238,7 @@
   };
 
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
-    //console.log('injectContentScripts', tabId, frameId);
+    
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };

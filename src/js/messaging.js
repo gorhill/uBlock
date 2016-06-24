@@ -330,9 +330,6 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.hostnameDict
     );
 
-    // only if we are actually hiding ads
-    //if (!µb.userSettings.hidingAds) r.netFilteringSwitch = false;
-
     return r;
 };
 

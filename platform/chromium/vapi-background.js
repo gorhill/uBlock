@@ -1115,6 +1115,7 @@ vAPI.lastError = function() {
 // because we often can't block the iframe outright, as we need the ads inside.
 //
 vAPI.onLoadAllCompleted = function(tabId, frameId) {
+
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
@@ -1123,7 +1124,9 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     };
     var scriptEnd = function(tabId, frameId) {
         var err = vAPI.lastError();
-        if (err && err.message!== 'Cannot access a chrome:// URL') {
+        // these errors happen on startup (tmp: remove)
+        if (err && !err.message.startsWith('Cannot access a chrome') &&
+          (!err.message.startsWith('Cannot access contents of url "chrome'))) {
             console.warn('ERROR', err);
             return;
         }
@@ -1166,6 +1169,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
             startInTab(tabs[i]);
         }
     };
+
     if (tabId)  {
         chrome.tabs.get(tabId, function(tab) { startInTab(tab, frameId); }); // adn
     }
