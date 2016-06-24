@@ -381,15 +381,12 @@
 
     }).appendTo($ad);
 
-    $img.on("error", function () {
+    $img.on("error", function() {
 
-      $img.css({
-        width: 80,
-        height: 40
-      });
-      $img.attr('src', 'img/placeholder.svg');
-      $img.attr('alt', 'Unable to load image');
-      $img.off("error");
+        $img.css({ width: 80, height: 40 });
+        $img.attr('src', 'img/placeholder.svg');
+        $img.attr('alt', 'Unable to load image');
+        $img.off("error");
     });
 
     // fix for #291
@@ -569,14 +566,8 @@
     }
 
     var date = new Date(Math.abs(ts));
-    var options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                    hour: 'numeric', minute: 'numeric' };
 
     return new Intl.DateTimeFormat(getLocale(), options).format(date);
   }
@@ -959,7 +950,7 @@
   function setScale(scale) {
 
     $('#container').css({
-      transform: 'scale(' + scale / 100 + ')'
+      transform: 'scale(' + scale/100 + ')'
     });
   }
 
@@ -1055,30 +1046,20 @@
     var offsetX = 0;
     var offsetY = 0;
 
-    document.onmousedown = function (e) {
+    document.onmousedown = function(e) {
       offsetX = e.pageX;
       offsetY = e.pageY;
     };
 
-    function reposition(e) {
-
+    document.onmouseup   = function(e) {
       var style = window.getComputedStyle(document.querySelector('#container'), null),
-        dm = document.querySelector('#container');
+             dm = document.querySelector('#container');
 
       var x = parseInt(style.getPropertyValue('margin-left'));
       var y = parseInt(style.getPropertyValue('margin-top'));
 
       dm.style.marginLeft = (x + e.pageX - offsetX) + 'px';
       dm.style.marginTop = (y + e.pageY - offsetY) + 'px';
-    }
-
-    document.ondrag = function (e) {
-      console.log('drag');
-      reposition(e);
-    }
-
-    document.onmouseup = function (e) {
-      reposition(e);
     };
 
     /////////// ZOOM-STAGE ///////////
