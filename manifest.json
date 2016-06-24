@@ -56,7 +56,6 @@
     "http://*/*",
     "https://*/*"
   ],
-  "short_name": "AdNauseam",
   "storage": {
     "managed_schema": "managed_storage.json"
   }
