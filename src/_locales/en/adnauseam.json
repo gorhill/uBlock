@@ -24,7 +24,7 @@
     "description": "English: Firstrun.html -> hides all Ads identified by filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "silently registers visits on all pages linked to Ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message": "silently registers visits on all pages linked to ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
     "description": "English: Firstrun.html -> silently registers visits on all pages linked to Ads identified by filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
