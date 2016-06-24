@@ -9,11 +9,11 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for testing list-blocking
+    logBlocks = 0;    // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -22,12 +22,11 @@
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
-  // mark ad visits as failure if any of these are included in title
-  var errorStrings = ['file not found', 'website is currently unavailable'];
-
-  var enabledBlockLists = ['EasyPrivacy', 'uBlock filters – Badware risks',
-    'My filters', 'Malware domains', 'Malware Domain List', 'My rules',
-    'AdNauseam filters', 'uBlock filters – Unbreak', 'uBlock filters – Privacy'
+  // allow blocks only from this set of lists
+  var enabledBlockLists = ['My rules', 'EasyPrivacy',  'Fanboy’s Social Blocking List',
+    'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
+    'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
+    'Anti-ThirdpartySocial', 'AdNauseam filters'
   ];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
@@ -36,6 +35,8 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
+  // mark ad visits as failure if any of these are included in title
+  var errorStrings = ['file not found', 'website is currently unavailable'];
   var reSpecialChars = /[\*\^\t\v\n]/;
 
   /**************************** functions ******************************/
@@ -1115,39 +1116,40 @@
 
   var isBlockableRequest = function (result, requestURL, isTop) {
 
-    if (strictBlockingDisabled && µb.userSettings.blockingMalware) {
-
-      var compiled = result.slice(3),
-        snfe = µb.staticNetFilteringEngine,
-        raw = snfe.filterStringFromCompiled(compiled),
-        hits = fromNetFilterSync(compiled, raw);
-
-      //console.log('isBlockableRequest',requestURL, compiled);
-
-      if (hits && hits.length) {
-
-        if (!activeBlockList(hits[0].title) || ruleDisabled(raw, hits[0].title)) {
-
-          if (logBlocks && hits[0].title === 'EasyList')
-            log("[NO_BLOCK] 'EasyList'", raw, requestURL);
-
-          return false; // no-block
-        }
-
-        logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : "] '") +
-          hits[0].title + "' " + raw + ': ', requestURL);
-
-      } else {
-
-        logBlocks && warn("No Hits ****", raw, compiled);
-      }
-
-    } else {
+    if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
       logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
+      return;
     }
 
-    return true;
+    var compiled = result.slice(3),
+      snfe = µb.staticNetFilteringEngine,
+      raw = snfe.filterStringFromCompiled(compiled),
+      hits = fromNetFilterSync(compiled, raw);
+
+    //console.log('isBlockableRequest',requestURL, compiled);
+
+    for (var i = 0; i < hits.length; i++) { //
+
+      var name = hits[0].title;
+      if (!activeBlockList(name) || ruleDisabled(raw, name)) {
+
+        if (0 && logBlocks && name === 'EasyList')
+          log("[NO_BLOCK] 'EasyList'", raw, requestURL);
+
+        else logBlocks && log("[NO_BLOCK] ", name,
+          (ruleDisabled(raw, name) ? '**RULE**' : ''), raw, requestURL);
+
+        continue; // no-block
+      }
+
+      logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : "] '") +
+        name + "' " + raw + ': ', requestURL);
+
+      return true; // blocked, no need to continue
+    }
+
+    return false; // no valid blocks
   }
 
   /******************************************************************************/

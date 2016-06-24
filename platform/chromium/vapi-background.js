@@ -1109,7 +1109,11 @@ vAPI.lastError = function() {
 // the extension was launched. It can be used to inject content scripts
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
-
+//
+// Also being used by adn to inject content-scripts into dynamically-created
+// iframes, as Chrome does not inject into these by default. This is needed
+// because we often can't block the iframe outright, as we need the ads inside.
+//
 vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
@@ -1118,8 +1122,9 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         vAPI.lastError();
     };
     var scriptEnd = function(tabId, frameId) {
-        if ( vAPI.lastError() ) {
-            console.warn(vAPI.lastError());
+        var err = vAPI.lastError();
+        if (err && err.message!== 'Cannot access a chrome:// URL') {
+            console.warn('ERROR', err);
             return;
         }
         var scripts = ['js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript-end.js'];

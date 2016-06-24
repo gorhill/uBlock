@@ -7,14 +7,12 @@
   // no ad extraction in incognito windows (see #236)
   if (vAPI.chrome &&  chrome.extension.inIncognitoContext) return
 
-  if ( vAPI.parserInjected ) {
+  if (vAPI.adParser) {
       console.debug('parser.js > content script already injected');
       return;
   }
 
-  vAPI.parserInjected = true;
-
-  var AdParser = (function () {
+  vAPI.adParser = (function () {
 
     var useShadowDOM = false;
     var ignoreTargets = [
@@ -250,7 +248,5 @@
     };
 
   })();
-
-  vAPI.adParser = AdParser;
 
 })();
