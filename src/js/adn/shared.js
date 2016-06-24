@@ -27,6 +27,15 @@ var arrayRemove = function (arr, obj) {
   return false;
 }
 
+var trimChar = function (s, chr) {
+
+  while (s.endsWith(chr)) {
+    s = s.substring(0, s.length - chr.length);
+  }
+
+  return s;
+}
+
 var showAlert = function (msg) {
 
   if (msg) {

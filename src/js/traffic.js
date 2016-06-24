@@ -428,7 +428,7 @@
         // adn: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('Pre.Headers: ',  details.type, details.url, details.responseHeaders);
+            dbug && console.log('onHeadersReceived: ',  details.type, details.url, details);
 
             // adn
             var headers = details.responseHeaders,
@@ -436,6 +436,7 @@
 
             if (ad) {
 
+              dbug && console.log('Pre.Headers: ',  details.responseHeaders);
               for (var i = headers.length - 1; i >= 0; i--) {
 
                 var name = details.responseHeaders[i].name.toLowerCase();
@@ -448,13 +449,12 @@
                     details.responseHeaders.splice(i, 1);
                 }
               }
+              dbug && console.log('Post.Headers', details.responseHeaders);
             }
             else if (dbug && vAPI.chrome) {
                 console.log('Ignoring non-ADN response', details.type, details.url);
             }
         }
-
-        dbug && console.log('Post.Headers', details.responseHeaders);
 
         // don't return an empty headers array
         return details.responseHeaders.length ?

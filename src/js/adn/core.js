@@ -7,7 +7,7 @@
   // for debugging only
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
-    clearVisitData = 0, // reset all ad visit data
+    clearVisitData = 1, // reset all ad visit data
     automatedMode = 0, // for automated testing
     logBlocks = 0;    // for testing list-blocking
 
@@ -76,6 +76,8 @@
 
     ads.forEach(function (ad) {
 
+      ad.resolvedTargetUrl = null;
+      ad.attemptedTs = 0;
       ad.visitedTs = 0;
       ad.attempts = 0
     });
@@ -387,6 +389,7 @@
 
       var elapsed = (now - xhr.delegate.attemptedTs);
 
+      // TODO: why does this happen... a redirect?
       log('Attempt to re-use active xhr: launched ' + elapsed + " ms ago");
 
       if (elapsed > visitTimeout) {
@@ -456,11 +459,7 @@
       }
     }
 
-    if (0 && targetDomain(ad) === ad.pageDomain) { // disabled for now
-
-      log('Ignoring ad with internal targetUrl: ', ad.targetUrl + ' ?= ' + ad.pageDomain, ad);
-      return false;
-    }
+    ad.targetUrl = trimChar(ad.targetUrl, '/');
 
     return true;
   }
@@ -697,6 +696,8 @@
         var ad = map[pages[i]][hashes[j]];
         if (validateFields(ad)) {
 
+          validateTarget(ad); // accept either way
+
           if (!newmap[pages[i]]) newmap[pages[i]] = {};
           newmap[pages[i]][hashes[j]] = ad;
           pass++;
@@ -926,18 +927,14 @@
       }
     }
 
-    //clearAds();
     admap = map;
     computeNextId();
     clearVisitData && clearAdVisits();
     storeUserData();
 
     importedCount = adlist().length - count;
-
     log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
-
-    // reload Vault page if open
-    reloadExtPage('vault.html');
+    reloadExtPage('vault.html'); // reload Vault page if open
 
     return {
       what: 'importConfirm',
@@ -1221,10 +1218,7 @@
 
   var lookupAd = function (url, requestId) {
 
-    if (url.endsWith('/')) { // TODO: revisit
-
-      url = url.substring(0, url.length - 1);
-    }
+    url = trimChar(url, '/'); // no trailing slash
 
     var ads = adlist();
     for (var i = 0; i < ads.length; i++) {
@@ -1238,7 +1232,7 @@
   };
 
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
-    
+
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };
@@ -1298,6 +1292,7 @@
 
     if (typeof µb.adnauseam[request.what] === 'function') {
 
+      request.url && (request.url = trimChar(request.url, '/')); // no trailing slash
       callback(µb.adnauseam[request.what](request, pageStore, tabId, frameId));
 
     } else {
