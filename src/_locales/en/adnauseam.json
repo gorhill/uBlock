@@ -20,15 +20,15 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "hides all ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> hides all Ads identified by filter lists"
+    "message": "hide all ads found according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> hides all ads identified by filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "silently registers visits on all pages linked to Ads identified by <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> silently registers visits on all pages linked to Ads identified by filter lists"
+    "message": "simulate clicks on ads found according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "protects your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message": "protect your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
     "description": "English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
   },
   "adnTarget": {
