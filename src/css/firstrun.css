@@ -1,10 +1,19 @@
+body {
+  background: url(../img/adn_clickbot_bg.png);
+  background-size: cover;
+}
+
 #aboutNameVer {
  margin-top: 500px
 }
 
 form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 360px;
   width: 410px;
-  margin: 50px auto;
+  margin: -180px 0 0 -205px;
 }
 
 form h1 {
