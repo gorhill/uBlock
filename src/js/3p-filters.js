@@ -37,6 +37,8 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
+var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt' ]; // adn
+
 /******************************************************************************/
 
 var onMessage = function(msg) {
@@ -189,6 +191,7 @@ var renderFilterLists = function() {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
+            console.log(i+") "+listKeys[i]);
             ulGroup.append(liFromListEntry(listKeys[i]));
         }
         return liGroup;
@@ -214,6 +217,10 @@ var renderFilterLists = function() {
     };
 
     var onListsReceived = function(details) {
+
+        // adn: ignore hidden lists
+        hiddenLists.forEach(function(l) { delete details.available[l]; });
+
         // Before all, set context vars
         listDetails = details;
         cosmeticSwitch = details.cosmetic;
