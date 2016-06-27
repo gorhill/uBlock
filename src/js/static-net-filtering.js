@@ -1945,7 +1945,7 @@ FilterContainer.prototype.compile = function(raw, out) {
 FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     // Can't fit the filter in a pure hostname dictionary.
     // https://github.com/gorhill/uBlock/issues/1757
-    // This should no longer happens with fix to above issue.
+    // This should no longer happen with fix to above issue.
     //if ( parsed.domainOpt.length !== 0 ) {
     //    return;
     //}
