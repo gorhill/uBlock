@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 /* jshint bitwise: false */
 /* global punycode */
 
+'use strict';
+
 /******************************************************************************/
 
 µBlock.staticNetFilteringEngine = (function(){
-
-'use strict';
 
 /******************************************************************************/
 
@@ -1541,7 +1541,10 @@ FilterParser.prototype.parse = function(raw) {
         }
 
         // plain hostname? (from ABP filter list)
-        if ( this.reHostnameRule2.test(s) ) {
+        // https://github.com/gorhill/uBlock/issues/1757
+        // A filter can't be a pure-hostname one if there is a domain option
+        // present.
+        if ( this.domainOpt === '' && this.reHostnameRule2.test(s) ) {
             this.f = s.replace(this.reCleanupHostnameRule2, '');
             this.hostnamePure = true;
             return this;
@@ -1941,9 +1944,11 @@ FilterContainer.prototype.compile = function(raw, out) {
 
 FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     // Can't fit the filter in a pure hostname dictionary.
-    if ( parsed.domainOpt.length !== 0 ) {
-        return;
-    }
+    // https://github.com/gorhill/uBlock/issues/1757
+    // This should no longer happens with fix to above issue.
+    //if ( parsed.domainOpt.length !== 0 ) {
+    //    return;
+    //}
 
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
