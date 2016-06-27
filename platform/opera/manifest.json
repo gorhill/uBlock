@@ -27,14 +27,8 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi-client.js", "js/contentscript-start.js"],
+            "js": ["js/vapi-client.js", "js/contentscript.js"],
             "run_at": "document_start",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/contentscript-end.js"],
-            "run_at": "document_end",
             "all_frames": true
         },
         {

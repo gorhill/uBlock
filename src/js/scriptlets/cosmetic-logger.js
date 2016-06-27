@@ -19,42 +19,27 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
+(function() {
 
 /******************************************************************************/
 
-var loggedSelectors = vAPI.loggedSelectors || {};
-
-var injectedSelectors = [];
-var reProperties = /\s*\{[^}]+\}\s*/;
-var i;
-var styles = vAPI.styles || [];
-
-i = styles.length;
-while ( i-- ) {
-    injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
-}
-
-if ( injectedSelectors.length === 0 ) {
+if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
     return;
 }
 
-var matchedSelectors = [];
-var selector;
+var loggedSelectors = vAPI.loggedSelectors || {},
+    matchedSelectors = [],
+    selectors, i, selector, entry, nodes, j;
 
-i = injectedSelectors.length;
+// CSS-based selectors.
+selectors = vAPI.domFilterer.simpleSelectors.concat(vAPI.domFilterer.complexSelectors);
+i = selectors.length;
 while ( i-- ) {
-    selector = injectedSelectors[i];
+    selector = selectors[i];
     if ( loggedSelectors.hasOwnProperty(selector) ) {
         continue;
     }
@@ -62,27 +47,67 @@ while ( i-- ) {
         continue;
     }
     loggedSelectors[selector] = true;
-    // https://github.com/gorhill/uBlock/issues/1015
-    // Discard `:root ` prefix.
-    matchedSelectors.push(selector.slice(6));
+    matchedSelectors.push(selector);
+}
+
+// `:has`-based selectors.
+selectors = vAPI.domFilterer.simpleHasSelectors.concat(vAPI.domFilterer.complexHasSelectors);
+i = selectors.length;
+while ( i-- ) {
+    entry = selectors[i];
+    selector = entry.a + ':has(' + entry.b + ')';
+    if ( loggedSelectors.hasOwnProperty(selector) ) {
+        continue;
+    }
+    nodes = document.querySelectorAll(entry.a);
+    j = nodes.length;
+    while ( j-- ) {
+        if ( nodes[j].querySelector(entry.b) !== null ) {
+            loggedSelectors[selector] = true;
+            matchedSelectors.push(selector);
+            break;
+        }
+    }
+}
+
+// `:xpath`-based selectors.
+var xpr = null,
+    xpathexpr;
+selectors = vAPI.domFilterer.xpathSelectors;
+i = selectors.length;
+while ( i-- ) {
+    xpathexpr = selectors[i];
+    selector = ':xpath(' + xpathexpr + ')';
+    if ( loggedSelectors.hasOwnProperty(selector) ) {
+        continue;
+    }
+    xpr = document.evaluate(
+        'boolean(' + xpathexpr + ')',
+        document,
+        null,
+        XPathResult.BOOLEAN_TYPE,
+        xpr
+    );
+    if ( xpr.booleanValue ) {
+        loggedSelectors[selector] = true;
+        matchedSelectors.push(selector);
+    }
 }
 
 vAPI.loggedSelectors = loggedSelectors;
 
-/******************************************************************************/
-
-vAPI.messaging.send(
-    'scriptlets',
-    {
-        what: 'logCosmeticFilteringData',
-        frameURL: window.location.href,
-        frameHostname: window.location.hostname,
-        matchedSelectors: matchedSelectors
-    }
-);
+if ( matchedSelectors.length ) {
+    vAPI.messaging.send(
+        'scriptlets',
+        {
+            what: 'logCosmeticFilteringData',
+            frameURL: window.location.href,
+            frameHostname: window.location.hostname,
+            matchedSelectors: matchedSelectors
+        }
+    );
+}
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/

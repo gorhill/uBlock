@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,13 +20,13 @@
 */
 
 /* jshint bitwise: false */
-/* global punycode, µBlock */
+/* global punycode */
+
+'use strict';
 
 /******************************************************************************/
 
 µBlock.cosmeticFilteringEngine = (function(){
-
-'use strict';
 
 /******************************************************************************/
 
@@ -141,40 +141,6 @@ FilterPlainMore.fromSelfie = function(s) {
 
 /******************************************************************************/
 
-var FilterBucket = function(a, b) {
-    this.f = null;
-    this.filters = [];
-    if ( a !== undefined ) {
-        this.filters[0] = a;
-        if ( b !== undefined ) {
-            this.filters[1] = b;
-        }
-    }
-};
-
-FilterBucket.prototype.add = function(a) {
-    this.filters.push(a);
-};
-
-FilterBucket.prototype.retrieve = function(s, out) {
-    var i = this.filters.length;
-    while ( i-- ) {
-        this.filters[i].retrieve(s, out);
-    }
-};
-
-FilterBucket.prototype.fid = '[]';
-
-FilterBucket.prototype.toSelfie = function() {
-    return this.filters.length.toString();
-};
-
-FilterBucket.fromSelfie = function() {
-    return new FilterBucket();
-};
-
-/******************************************************************************/
-
 // Any selector specific to a hostname
 // Examples:
 //   search.snapdo.com###ABottomD
@@ -236,6 +202,40 @@ FilterEntity.fromSelfie = function(s) {
 };
 
 /******************************************************************************/
+
+var FilterBucket = function(a, b) {
+    this.f = null;
+    this.filters = [];
+    if ( a !== undefined ) {
+        this.filters[0] = a;
+        if ( b !== undefined ) {
+            this.filters[1] = b;
+        }
+    }
+};
+
+FilterBucket.prototype.add = function(a) {
+    this.filters.push(a);
+};
+
+FilterBucket.prototype.retrieve = function(s, out) {
+    var i = this.filters.length;
+    while ( i-- ) {
+        this.filters[i].retrieve(s, out);
+    }
+};
+
+FilterBucket.prototype.fid = '[]';
+
+FilterBucket.prototype.toSelfie = function() {
+    return this.filters.length.toString();
+};
+
+FilterBucket.fromSelfie = function() {
+    return new FilterBucket();
+};
+
+/******************************************************************************/
 /******************************************************************************/
 
 var FilterParser = function() {
@@ -245,11 +245,13 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reScriptTagFilter = /^script:(contains|inject)\((.+?)\)$/;
+    this.reNeedHostname = /^(?:.+?:has|:xpath)\(.+?\)$/;
 };
 
 /******************************************************************************/
 
 FilterParser.prototype.reset = function() {
+    this.raw = '';
     this.prefix = this.suffix = this.style = '';
     this.unhide = 0;
     this.hostnames.length = 0;
@@ -263,6 +265,8 @@ FilterParser.prototype.reset = function() {
 FilterParser.prototype.parse = function(raw) {
     // important!
     this.reset();
+
+    this.raw = raw;
 
     // Find the bounds of the anchor.
     var lpos = raw.indexOf('#');
@@ -349,6 +353,16 @@ FilterParser.prototype.parse = function(raw) {
         this.hostnames = this.prefix.split(/\s*,\s*/);
     }
 
+    // For some selectors, it is mandatory to have a hostname or entity.
+    if (
+        this.hostnames.length === 0 &&
+        this.unhide === 0 &&
+        this.reNeedHostname.test(this.suffix)
+    ) {
+        this.invalid = true;
+        return this;
+    }
+
     // Script tag filters: pre-process them so that can be used with minimal
     // overhead in the content script.
     // Examples:
@@ -357,10 +371,16 @@ FilterParser.prototype.parse = function(raw) {
     //   focus.de##script:inject(uabinject-defuser.js)
 
     var matches = this.reScriptTagFilter.exec(this.suffix);
-    if ( matches === null ) {
-        return this;
+    if ( matches !== null ) {
+        return this.parseScriptTagFilter(matches);
     }
 
+    return this;
+};
+
+/******************************************************************************/
+
+FilterParser.prototype.parseScriptTagFilter = function(matches) {
     // Currently supported only as non-generic selector. Also, exception
     // script tag filter makes no sense, ignore.
     if ( this.hostnames.length === 0 || this.unhide === 1 ) {
@@ -378,7 +398,7 @@ FilterParser.prototype.parse = function(raw) {
         } else {
             token = token.slice(1, -1);
             if ( isBadRegex(token) ) {
-                µb.logger.writeOne('', 'error', 'Cosmetic filtering – bad regular expression: ' + raw + ' (' + isBadRegex.message + ')');
+                µb.logger.writeOne('', 'error', 'Cosmetic filtering – bad regular expression: ' + this.raw + ' (' + isBadRegex.message + ')');
                 this.invalid = true;
             }
         }
@@ -676,19 +696,33 @@ FilterContainer.prototype.reset = function() {
 
 FilterContainer.prototype.isValidSelector = (function() {
     var div = document.createElement('div');
-
+    var matchesProp = (function() {
+        if ( typeof div.matches === 'function' ) {
+            return 'matches';
+        }
+        if ( typeof div.mozMatchesSelector === 'function' ) {
+            return 'mozMatchesSelector';
+        }
+        if ( typeof div.webkitMatchesSelector === 'function' ) {
+            return 'webkitMatchesSelector';
+        }
+        return '';
+    })();
     // Not all browsers support `Element.matches`:
     // http://caniuse.com/#feat=matchesselector
-    if ( typeof div.matches !== 'function' ) {
+    if ( matchesProp === '' ) {
         return function() {
             return true;
         };
     }
 
+    var reHasSelector = /^(.+?):has\((.+?)\)$/;
+    var reXpathSelector = /^:xpath\((.+?)\)$/;
+
     return function(s) {
         try {
             // https://github.com/gorhill/uBlock/issues/693
-            div.matches(s + ',\n#foo');
+            div[matchesProp](s + ',\n#foo');
             // Discard new ABP's `-abp-properties` directive until it is
             // implemented (if ever).
             if ( s.indexOf('[-abp-properties=') === -1 ) {
@@ -697,6 +731,24 @@ FilterContainer.prototype.isValidSelector = (function() {
         } catch (e) {
         }
         // We reach this point very rarely.
+        var matches;
+
+        // Future `:has`-based filter? If so, validate both parts of the whole
+        // selector.
+        matches = reHasSelector.exec(s);
+        if ( matches !== null ) {
+            return this.isValidSelector(matches[1]) && this.isValidSelector(matches[2]);
+        }
+        // Custom `:xpath`-based filter?
+        matches = reXpathSelector.exec(s);
+        if ( matches !== null ) {
+            try {
+                return document.createExpression(matches[1], null) instanceof XPathExpression;
+            } catch (e) {
+            }
+            return false;
+        }
+        // Special `script:` filter?
         if ( s.startsWith('script') ) {
             if ( s.startsWith('?', 6) || s.startsWith('+', 6) ) {
                 return true;
@@ -924,7 +976,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
 
         fields = line.split('\v');
 
-        // h	ir	twitter.com	.promoted-tweet
+        // h  [\t]  ir  [\t]  twitter.com  [\t]  .promoted-tweet
         if ( fields[0] === 'h' ) {
             // Special filter: script tags. Not a real CSS selector.
             if ( fields[3].startsWith('script') ) {
@@ -943,8 +995,8 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        // lg	105	.largeAd
-        // lg+	2jx	.Mpopup + #Mad > #MadZone
+        // lg  [\t]  105  [\t]  .largeAd
+        // lg+  [\t]  2jx  [\t]  .Mpopup + #Mad > #MadZone
         if ( fields[0] === 'lg' || fields[0] === 'lg+' ) {
             filter = fields[0] === 'lg' ?
                         filterPlain :
@@ -960,7 +1012,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        // entity	selector
+        // entity  [\t]  selector
         if ( fields[0] === 'e' ) {
             // Special filter: script tags. Not a real CSS selector.
             if ( fields[2].startsWith('script') ) {
@@ -1392,8 +1444,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             hideHigh: this.highHighGenericHide,
             hideHighCount: this.highHighGenericHideCount
         };
-        // https://github.com/chrisaljoudi/uBlock/issues/497
-        r.donthide = this.genericDonthide;
     }
 
     var hideSelectors = r.hide;
@@ -1437,13 +1487,16 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     // r.ready will tell the content script the cosmetic filtering engine is
     // up and ready.
 
+    // https://github.com/chrisaljoudi/uBlock/issues/497
+    // Generic exception filters are to be applied on all pages.
+
     var r = {
         ready: this.frozen,
         domain: domain,
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
         skipCosmeticFiltering: this.acceptedCount === 0,
         cosmeticHide: [],
-        cosmeticDonthide: [],
+        cosmeticDonthide: this.genericDonthide,
         netHide: [],
         netCollapse: µb.userSettings.collapseBlocked,
         scripts: this.retrieveScriptTags(domain, hostname)

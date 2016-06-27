@@ -28,13 +28,14 @@
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
+if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
     return;
 }
 
 /******************************************************************************/
 
 var sessionId = vAPI.sessionId;
+var shadowId = vAPI.domFilterer.shadowId;
 
 if ( document.querySelector('iframe.dom-inspector.' + sessionId) !== null ) {
     return;
@@ -690,19 +691,20 @@ var cosmeticFilterMapper = (function() {
     //   Not all target nodes have necessarily been force-hidden,
     //   do it now so that the inspector does not unhide these
     //   nodes when disabling style tags.
-    var nodesFromStyleTag = function(styleTag, rootNode) {
-        var filterMap = nodeToCosmeticFilterMap;
-        var styleText = styleTag.textContent;
-        var selectors = styleText.slice(0, styleText.lastIndexOf('\n')).split(/,\n/);
-        var i = selectors.length;
-        var selector, nodes, j, node;
+    var nodesFromStyleTag = function(rootNode) {
+        var filterMap = nodeToCosmeticFilterMap,
+            selectors, selector,
+            nodes, node,
+            entries, entry,
+            i, j;
+
+        // CSS-based selectors: simple one.
+        selectors = vAPI.domFilterer.simpleSelectors;
+        i = selectors.length;
         while ( i-- ) {
-            // https://github.com/gorhill/uBlock/issues/1015
-            // Discard `:root ` prefix.
-            selector = selectors[i].slice(6);
+            selector = selectors[i];
             if ( filterMap.has(rootNode) === false && rootNode[matchesFnName](selector) ) {
                 filterMap.set(rootNode, selector);
-                hideNode(node);
             }
             nodes = rootNode.querySelectorAll(selector);
             j = nodes.length;
@@ -710,24 +712,106 @@ var cosmeticFilterMapper = (function() {
                 node = nodes[j];
                 if ( filterMap.has(node) === false ) {
                     filterMap.set(node, selector);
-                    hideNode(node);
+                }
+            }
+        }
+    
+        // CSS-based selectors: complex one (must query from doc root).
+        selectors = vAPI.domFilterer.complexSelectors;
+        i = selectors.length;
+        while ( i-- ) {
+            selector = selectors[i];
+            nodes = document.querySelectorAll(selector);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if ( filterMap.has(node) === false ) {
+                    filterMap.set(node, selector);
+                }
+            }
+        }
+
+        // `:has()`-based selectors: simple ones.
+        entries = vAPI.domFilterer.simpleHasSelectors;
+        i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            selector = entries.a + ':has(' + entries.b + ')';
+            if (
+                filterMap.has(rootNode) === false &&
+                rootNode[matchesFnName](entry.a) &&
+                rootNode.querySelector(entry.b) !== null
+            ) {
+                filterMap.set(rootNode, selector);
+            }
+            nodes = rootNode.querySelectorAll(entries.a);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if (
+                    filterMap.has(node) === false &&
+                    node.querySelector(entry.b) !== null
+                ) {
+                    filterMap.set(node, selector);
+                }
+            }
+        }
+
+        // `:has()`-based selectors: complex ones (must query from doc root).
+        entries = vAPI.domFilterer.complexHasSelectors;
+        i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            selector = entries.a + ':has(' + entries.b + ')';
+            nodes = document.querySelectorAll(entries.a);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if (
+                    filterMap.has(node) === false &&
+                    node.querySelector(entry.b) !== null
+                ) {
+                    filterMap.set(node, selector);
+                }
+            }
+        }
+
+        // `:xpath()`-based selectors.
+        var xpr;
+        entries = vAPI.domFilterer.xpathSelectors;
+        i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            selector = ':xpath(' + entry + ')';
+            xpr = document.evaluate(
+                entry,
+                document,
+                null,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                xpr
+            );
+            j = xpr.snapshotLength;
+            while ( j-- ) {
+                node = xpr.snapshotItem(j);
+                if ( filterMap.has(node) === false ) {
+                    filterMap.set(node, selector);
                 }
             }
         }
     };
 
     var incremental = function(rootNode) {
-        var styleTags = vAPI.styles || [];
+        var styleTags = vAPI.domFilterer.styleTags || [];
         var styleTag;
         var i = styleTags.length;
         while ( i-- ) {
             styleTag = styleTags[i];
-            nodesFromStyleTag(styleTag, rootNode);
             if ( styleTag.sheet !== null ) {
                 styleTag.sheet.disabled = true;
                 styleTag[vAPI.sessionId] = true;
             }
         }
+        nodesFromStyleTag(rootNode);
     };
 
     var reset = function() {
@@ -736,7 +820,7 @@ var cosmeticFilterMapper = (function() {
     };
 
     var shutdown = function() {
-        var styleTags = vAPI.styles || [];
+        var styleTags = vAPI.domFilterer.styleTags || [];
         var styleTag;
         var i = styleTags.length;
         while ( i-- ) {
@@ -761,12 +845,51 @@ var elementsFromSelector = function(selector, context) {
     if ( !context ) {
         context = document;
     }
-    var out = [];
+    var out;
+    if ( selector.indexOf(':') !== -1 ) {
+        out = elementsFromSpecialSelector(selector);
+        if ( out !== undefined ) {
+            return out;
+        }
+    }
+    // plain CSS selector
     try {
         out = context.querySelectorAll(selector);
     } catch (ex) {
     }
-    return out;
+    return out || [];
+};
+
+var elementsFromSpecialSelector = function(selector) {
+    var out = [], i;
+    var matches = /^(.+?):has\((.+?)\)$/.exec(selector);
+    if ( matches !== null ) {
+        var nodes = document.querySelector(matches[1]);
+        i = nodes.length;
+        while ( i-- ) {
+            var node = nodes[i];
+            if ( node.querySelector(matches[2]) !== null ) {
+                out.push(node);
+            }
+        }
+        return out;
+    }
+
+    matches = /^:xpath\((.+?)\)$/.exec(selector);
+    if ( matches !== null ) {
+        var xpr = document.evaluate(
+            matches[1],
+            document,
+            null,
+            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+            null
+        );
+        i = xpr.snapshotLength;
+        while ( i-- ) {
+            out.push(xpr.snapshotItem(i));
+        }
+        return out;
+    }
 };
 
 /******************************************************************************/
@@ -970,7 +1093,7 @@ var showNode = function(node, v1, v2) {
         } else {
             node.style.setProperty('display', v1, v2);
         }
-    } else if ( shadow !== null && shadow.className === sessionId && shadow.firstElementChild === null ) {
+    } else if ( shadow !== null && shadow.className === shadowId && shadow.firstElementChild === null ) {
         shadow.appendChild(document.createElement('content'));
     }
 };
@@ -983,7 +1106,7 @@ var hideNode = function(node) {
         node.style.setProperty('display', 'none', 'important');
         return;
     }
-    if ( shadow !== null && shadow.className === sessionId ) {
+    if ( shadow !== null && shadow.className === shadowId ) {
         if ( shadow.firstElementChild !== null ) {
             shadow.removeChild(shadow.firstElementChild);
         }
@@ -995,7 +1118,7 @@ var hideNode = function(node) {
     } catch (ex) {
         return;
     }
-    shadow.className = sessionId;
+    shadow.className = shadowId;
 };
 
 /******************************************************************************/
@@ -1050,6 +1173,12 @@ var onMessage = function(request) {
         toggleNodes(selectNodes(request.unhide, ''), false, true);
         highlightedElementLists = [ [], [], [] ];
         highlightElements();
+        break;
+
+    case 'toggleFilter':
+        highlightedElementLists[0] = selectNodes(request.filter, request.nid);
+        toggleNodes(highlightedElementLists[0], request.original, request.target);
+        highlightElements(true);
         break;
 
     case 'toggleNodes':

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,13 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global uDom */
+
+'use strict';
 
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -257,26 +257,37 @@ var countFromNode = function(li) {
 
 /******************************************************************************/
 
-var selectorFromNode = function(node, nth) {
+var selectorFromNode = function(node) {
     var selector = '';
     var code;
-    if ( nth === undefined ) {
-        nth = 1;
-    }
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
-            code = node.querySelector('code:nth-of-type(' + nth + ')');
+            code = node.querySelector('code');
             if ( code !== null ) {
                 selector = code.textContent + ' > ' + selector;
                 if ( selector.indexOf('#') !== -1 ) {
                     break;
                 }
-                nth = 1;
             }
         }
         node = node.parentElement;
     }
     return selector.slice(0, -3);
+};
+
+/******************************************************************************/
+
+var selectorFromFilter = function(node) {
+    while ( node !== null ) {
+        if ( node.localName === 'li' ) {
+            var code = node.querySelector('code:nth-of-type(2)');
+            if ( code !== null ) {
+                return code.textContent;
+            }
+        }
+        node = node.parentElement;
+    }
+    return '';
 };
 
 /******************************************************************************/
@@ -482,10 +493,11 @@ var onClick = function(ev) {
         messaging.sendTo(
             'loggerUI',
             {
-                what: 'toggleNodes',
+                what: 'toggleFilter',
                 original: false,
                 target: target.classList.toggle('off'),
-                selector: selectorFromNode(target, 2),
+                selector: selectorFromNode(target),
+                filter: selectorFromFilter(target),
                 nid: ''
             },
             inspectedTabId,
@@ -504,7 +516,7 @@ var onClick = function(ev) {
                 what: 'toggleNodes',
                 original: true,
                 target: target.classList.toggle('off') === false,
-                selector: selectorFromNode(target, 1),
+                selector: selectorFromNode(target),
                 nid: nidFromNode(target)
             },
             inspectedTabId,

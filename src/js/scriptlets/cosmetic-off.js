@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,75 +19,51 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
-
-/******************************************************************************/
-
-var styles = vAPI.styles;
-
-if ( Array.isArray(styles) === false ) {
-    return;
-}
-
-var sessionId = vAPI.sessionId;
-
-/******************************************************************************/
-
-// Remove all cosmetic filtering-related styles from the DOM
-
-var selectors = [];
-var reProperties = /\s*\{[^}]+\}\s*/;
-var style, i;
-
-i = styles.length;
-while ( i-- ) {
-    style = styles[i];
-    selectors.push(style.textContent.replace(reProperties, ''));
-    if ( style.sheet !== null ) {
-        style.sheet.disabled = true;
-        style[vAPI.sessionId] = true;
+(function() {
+    if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
+        return;
     }
-}
 
-if ( selectors.length === 0 ) {
-    return;
-}
+    var styles = vAPI.domFilterer.styleTags;
 
-var elems = [];
-try {
-    elems = document.querySelectorAll(selectors.join(','));
-} catch (e) {
-}
-i = elems.length;
-
-var elem, shadow;
-while ( i-- ) {
-    elem = elems[i];
-    shadow = elem.shadowRoot;
-    if ( shadow === undefined ) {
-        style = elem.style;
-        if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
-            style.removeProperty('display');
+    // Disable all cosmetic filtering-related styles from the DOM
+    var i = styles.length, style;
+    while ( i-- ) {
+        style = styles[i];
+        if ( style.sheet !== null ) {
+            style.sheet.disabled = true;
+            style[vAPI.sessionId] = true;
         }
-        continue;
     }
-    if ( shadow !== null && shadow.className === sessionId && shadow.firstElementChild === null ) {
-        shadow.appendChild(document.createElement('content'));
+
+    var elems = [];
+    try {
+        elems = document.querySelectorAll('[' + vAPI.domFilterer.hiddenId + ']');
+    } catch (e) {
     }
-}
+    i = elems.length;
+    while ( i-- ) {
+        var elem = elems[i];
+        var shadow = elem.shadowRoot;
+        if ( shadow === undefined ) {
+            style = elem.style;
+            if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
+                style.removeProperty('display');
+            }
+            continue;
+        }
+        if (
+            shadow !== null &&
+            shadow.className === vAPI.domFilterer.shadowId &&
+            shadow.firstElementChild === null
+        ) {
+            shadow.appendChild(document.createElement('content'));
+        }
+    }
 
-/******************************************************************************/
-
+    vAPI.domFilterer.toggleOff();
 })();
-
-/******************************************************************************/

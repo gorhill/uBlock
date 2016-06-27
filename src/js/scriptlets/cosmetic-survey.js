@@ -19,51 +19,29 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
-
-/******************************************************************************/
-
-// Insert all cosmetic filtering-related style tags in the DOM
-
-var injectedSelectors = [];
-var filteredElementCount = 0;
-
-var reProperties = /\s*\{[^}]+\}\s*/;
-var i;
-
-var styles = vAPI.styles || [];
-i = styles.length;
-while ( i-- ) {
-    injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
-}
-
-if ( injectedSelectors.length !== 0 ) {
-    filteredElementCount = document.querySelectorAll(injectedSelectors.join(',')).length;
-}
-
-/******************************************************************************/
-
-vAPI.messaging.send(
-    'scriptlets',
-    {
-        what: 'liveCosmeticFilteringData',
-        pageURL: window.location.href,
-        filteredElementCount: filteredElementCount
+(function() {
+    if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
+        return;
     }
-);
 
-/******************************************************************************/
+    var xpr = document.evaluate(
+        'count(//*[@' + vAPI.domFilterer.hiddenId + '])',
+        document,
+        null,
+        XPathResult.NUMBER_TYPE,
+        null
+    );
 
+    vAPI.messaging.send(
+        'scriptlets',
+        {
+            what: 'liveCosmeticFilteringData',
+            pageURL: window.location.href,
+            filteredElementCount: xpr && xpr.numberValue || 0
+        }
+    );
 })();
-
-/******************************************************************************/

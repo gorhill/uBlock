@@ -19,48 +19,452 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-// Injected into content pages
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-// I've seen this happens on Firefox
-if ( window.location === null ) {
-    return;
+// Injected into content pages
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+// Abort execution by throwing if an unexpected condition arise.
+// - https://github.com/chrisaljoudi/uBlock/issues/456
+
+if ( typeof vAPI !== 'object' || vAPI.contentscriptInjected ) {
+    throw new Error('Unexpected condition: aborting.');
 }
 
-// This can happen
-if ( typeof vAPI !== 'object' ) {
-    //console.debug('contentscript-end.js > vAPI not found');
-    return;
-}
+vAPI.contentscriptInjected = true;
 
-// https://github.com/chrisaljoudi/uBlock/issues/587
-// Pointless to execute without the start script having done its job.
-if ( !vAPI.contentscriptStartInjected ) {
-    return;
-}
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
 
-// https://github.com/chrisaljoudi/uBlock/issues/456
-// Already injected?
-if ( vAPI.contentscriptEndInjected ) {
-    //console.debug('contentscript-end.js > content script already injected');
-    return;
-}
-vAPI.contentscriptEndInjected = true;
-vAPI.styles = vAPI.styles || [];
+vAPI.domFilterer = {
+    allExceptions: Object.create(null),
+    allSelectors: Object.create(null),
+    cssNotHiddenId: '',
+    disabledId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
+    enabled: true,
+    hiddenId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
+    matchesProp: 'matches',
+    newSelectors: [],
+    shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
+    styleTags: [],
+    xpathNotHiddenId: '',
 
+    complexGroupSelector: null,
+    complexSelectors: [],
+    simpleGroupSelector: null,
+    simpleSelectors: [],
+
+    complexHasSelectors: [],
+    simpleHasSelectors: [],
+
+    xpathSelectors: [],
+    xpathExpression: null,
+    xpathResult: null,
+
+    addExceptions: function(aa) {
+        for ( var i = 0, n = aa.length; i < n; i++ ) {
+            this.allExceptions[aa[i]] = true;
+        }
+    },
+
+    addHasSelector: function(s1, s2) {
+        var entry = { a: s1, b: s2.slice(5, -1) };
+        if ( s1.indexOf(' ') === -1 ) {
+            this.simpleHasSelectors.push(entry);
+        } else {
+            this.complexHasSelectors.push(entry);
+        }
+    },
+
+    addSelector: function(s) {
+        if ( this.allSelectors[s] || this.allExceptions[s] ) {
+            return;
+        }
+        this.allSelectors[s] = true;
+        var pos = s.indexOf(':');
+        if ( pos !== -1 ) {
+            pos = s.indexOf(':has(');
+            if ( pos !== -1 ) {
+                this.addHasSelector(s.slice(0, pos), s.slice(pos));
+                return;
+            }
+            if ( s.lastIndexOf(':xpath(', 0) === 0 ) {
+                this.addXpathSelector('', s);
+                return;
+            }
+        }
+        if ( s.indexOf(' ') === -1 ) {
+            this.simpleSelectors.push(s);
+            this.simpleGroupSelector = null;
+        } else {
+            this.complexSelectors.push(s);
+            this.complexGroupSelector = null;
+        }
+        this.newSelectors.push(s);
+    },
+
+    addSelectors: function(aa) {
+        for ( var i = 0, n = aa.length; i < n; i++ ) {
+            this.addSelector(aa[i]);
+        }
+    },
+
+    addXpathSelector: function(s1, s2) {
+        this.xpathSelectors.push(s2.slice(7, -1));
+        this.xpathExpression = null;
+    },
+
+    checkStyleTags: function(commitIfNeeded) {
+        var doc = document,
+            html = doc.documentElement,
+            head = doc.head,
+            newParent = head || html;
+        if ( newParent === null ) {
+            return;
+        }
+        var styles = this.styleTags,
+            style, oldParent,
+            mustCommit = false;
+        for ( var i = 0; i < styles.length; i++ ) {
+            style = styles[i];
+            oldParent = style.parentNode;
+            // https://github.com/gorhill/uBlock/issues/1031
+            // If our style tag was disabled, re-insert into the page.
+            if (
+                style.disabled &&
+                oldParent !== null &&
+                style.hasAttribute(this.disabledId) === false
+            ) {
+                oldParent.removeChild(style);
+                oldParent = null;
+            }
+            if ( oldParent === head || oldParent === html ) {
+                continue;
+            }
+            style.disabled = false;
+            newParent.appendChild(style);
+            mustCommit = true;
+        }
+        if ( mustCommit && commitIfNeeded ) {
+            this.commit();
+        }
+    },
+
+    commit: function(newNodes) {
+        if ( newNodes === undefined ) {
+            newNodes = [ document.documentElement ];
+        }
+
+        // Inject new selectors as CSS rules in a style tags.
+        if ( this.newSelectors.length ) {
+            var styleTag = document.createElement('style');
+            styleTag.setAttribute('type', 'text/css');
+            styleTag.textContent =
+                ':root ' +
+                this.newSelectors.join(',\n:root ') +
+                '\n{ display: none !important; }';
+            document.head.appendChild(styleTag);
+            this.styleTags.push(styleTag);
+        }
+
+        var nodes, node, parents, parent, i, j, k, entry;
+
+        // Simple `:has()` selectors.
+        i = this.simpleHasSelectors.length;
+        while ( i-- ) {
+            entry = this.simpleHasSelectors[i];
+            parents = newNodes;
+            j = parents.length;
+            while ( j-- ) {
+                parent = parents[j];
+                if ( parent[this.matchesProp](entry.a) && parent.querySelector(entry.b) !== null ) {
+                    this.hideNode(parent);
+                }
+                nodes = parent.querySelectorAll(entry.a + this.cssNotHiddenId);
+                k = nodes.length;
+                while ( k-- ) {
+                    node = nodes[k];
+                    if ( node.querySelector(entry.b) !== null ) {
+                        this.hideNode(node);
+                    }
+                }
+            }
+        }
+
+        // Complex `:has()` selectors.
+        i = this.complexHasSelectors.length;
+        while ( i-- ) {
+            entry = this.complexHasSelectors[i];
+            nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if ( node.querySelector(entry.b) !== null ) {
+                    this.hideNode(node);
+                }
+            }
+        }
+
+        // `:xpath()` selectors.
+        if ( this.xpathSelectors.length ) {
+            if ( this.xpathExpression === null ) {
+                this.xpathExpression = document.createExpression(
+                    this.xpathSelectors.join(this.xpathNotHiddenId + '|') + this.xpathNotHiddenId,
+                    null
+                );
+            }
+            this.xpathResult = this.xpathExpression.evaluate(
+                document,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                this.xpathResult
+            );
+            i = this.xpathResult.snapshotLength;
+            while ( i-- ) {
+                node = this.xpathResult.snapshotItem(i);
+                if ( node.nodeType === 1 ) {
+                    this.hideNode(node);
+                }
+            }
+        }
+
+        // Simple selectors.
+        if ( this.simpleSelectors.length ) {
+            if ( this.simpleGroupSelector === null ) {
+                this.simpleGroupSelector =
+                    this.simpleSelectors.join(this.cssNotHiddenId + ',') +
+                    this.cssNotHiddenId;
+            }
+            parents = newNodes;
+            i = parents.length;
+            while ( i-- ) {
+                parent = parents[i];
+                if ( parent[this.matchesProp](this.simpleGroupSelector) ) {
+                    this.hideNode(parent);
+                }
+                nodes = parent.querySelectorAll(this.simpleGroupSelector);
+                j = nodes.length;
+                while ( j-- ) {
+                    this.hideNode(nodes[j]);
+                }
+            }
+        }
+
+        // Complex selectors.
+        if ( this.complexSelectors.length ) {
+            if ( this.complexGroupSelector === null ) {
+                this.complexGroupSelector =
+                    this.complexSelectors.join(this.cssNotHiddenId + ',') +
+                    this.cssNotHiddenId;
+            }
+            nodes = document.querySelectorAll(this.complexGroupSelector);
+            i = nodes.length;
+            while ( i-- ) {
+                this.hideNode(nodes[i]);
+            }
+        }
+
+        // Reset transient state.
+        this.newSelectors.length = 0;
+    },
+
+    hideNode: (function() {
+        if ( document.documentElement.shadowRoot === undefined ) {
+            return function(node) {
+                node.setAttribute(this.hiddenId, '');
+                if ( this.enabled ) {
+                    node.style.setProperty('display', 'none', 'important');
+                }
+            };
+        }
+        return function(node) {
+            node.setAttribute(this.hiddenId, '');
+            var shadow = node.shadowRoot;
+            // https://www.chromestatus.com/features/4668884095336448
+            // "Multiple shadow roots is being deprecated."
+            if ( shadow !== null ) {
+                if ( shadow.className !== this.shadowId ) {
+                    node.style.setProperty('display', 'none', 'important');
+                }
+                return;
+            }
+            // https://github.com/gorhill/uBlock/pull/555
+            // Not all nodes can be shadowed:
+            //   https://github.com/w3c/webcomponents/issues/102
+            // https://github.com/gorhill/uBlock/issues/762
+            // Remove display style that might get in the way of the shadow
+            // node doing its magic.
+            try {
+                shadow = node.createShadowRoot();
+                shadow.className = this.shadowId;
+                node.style.removeProperty('display');
+            } catch (ex) {
+                node.style.setProperty('display', 'none', 'important');
+            }
+        };
+    })(),
+
+    toggleOff: function() {
+        this.enabled = false;
+    },
+
+    toggleOn: function() {
+        this.enabled = true;
+    }
+};
+
+
+// Not everything could be initialized at declaration time.
+(function() {
+    var df = vAPI.domFilterer;
+    df.cssNotHiddenId = ':not([' + df.hiddenId + '])';
+    df.xpathNotHiddenId = '[not(@' + df.hiddenId + ')]';
+    var docElem = document.documentElement;
+    if ( typeof docElem.matches !== 'function' ) {
+        if ( typeof docElem.mozMatchesSelector === 'function' ) {
+            df.matchesProp = 'mozMatchesSelector';
+        } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
+            df.matchesProp =  'webkitMatchesSelector';
+        }
+    }
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+// This is executed once, and since no hooks are left behind once the response
+// is received, I expect this code to be garbage collected by the browser.
+
+(function domIsLoading() {
+
+/******************************************************************************/
+
+// Domain-based ABP cosmetic filters.
+// These can be inserted before the DOM is loaded.
+
+var cosmeticFilters = function(details) {
+    var domFilterer = vAPI.domFilterer;
+    domFilterer.addExceptions(details.cosmeticDonthide);
+    // https://github.com/chrisaljoudi/uBlock/issues/143
+    domFilterer.addSelectors(details.cosmeticHide);
+    domFilterer.commit();
+};
+
+/******************************************************************************/
+
+var netFilters = function(details) {
+    var parent = document.head || document.documentElement;
+    if ( !parent ) {
+        return;
+    }
+    var styleTag = document.createElement('style');
+    styleTag.setAttribute('type', 'text/css');
+    var text = details.netHide.join(',\n');
+    var css = details.netCollapse ?
+        '\n{display:none !important;}' :
+        '\n{visibility:hidden !important;}';
+    styleTag.appendChild(document.createTextNode(text + css));
+    parent.appendChild(styleTag);
+};
+
+/******************************************************************************/
+
+// Create script tags and assign data URIs looked up from our library of
+// redirection resources: Sometimes it is useful to use these resources as
+// standalone scriptlets. These scriptlets are injected from within the
+// content scripts because what must be injected, if anything, depends on the
+// currently active filters, as selected by the user.
+// Library of redirection resources is located at:
+// https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
+
+var injectScripts = function(scripts) {
+    var parent = document.head || document.documentElement;
+    if ( !parent ) {
+        return;
+    }
+    var scriptTag = document.createElement('script');
+    // Have the injected script tag remove itself when execution completes: to
+    // keep DOM as clean as possible.
+    scripts +=
+        "\n" +
+        "(function() {\n" +
+        "    var c = document.currentScript,\n" +
+        "        p = c && c.parentNode;\n" +
+        "    if ( p ) {\n" +
+        "        p.removeChild(c);\n" +
+        "    }\n" +
+        "})();";
+    scriptTag.appendChild(document.createTextNode(scripts));
+    parent.appendChild(scriptTag);
+    vAPI.injectedScripts = scripts;
+};
+
+/******************************************************************************/
+
+var responseHandler = function(details) {
+    var domFilterer = vAPI.domFilterer;
+    var styleTagCount = domFilterer.styleTags.length;
+
+    if ( details ) {
+        if (
+            (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
+            (details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0)
+        ) {
+            cosmeticFilters(details);
+        }
+        if ( details.netHide.length !== 0 ) {
+            netFilters(details);
+        }
+        if ( details.scripts ) {
+            injectScripts(details.scripts);
+        }
+        // The port will never be used again at this point, disconnecting allows
+        // the browser to flush this script from memory.
+    }
+
+    // This is just to inform the background process that cosmetic filters were
+    // actually injected.
+    if ( domFilterer.styleTags.length !== styleTagCount ) {
+        vAPI.messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
+    }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/587
+    // If no filters were found, maybe the script was injected before uBlock's
+    // process was fully initialized. When this happens, pages won't be
+    // cleaned right after browser launch.
+    vAPI.contentscriptInjected = details && details.ready;
+};
+
+/******************************************************************************/
+
+var url = window.location.href;
+vAPI.messaging.send(
+    'contentscript',
+    {
+        what: 'retrieveDomainCosmeticSelectors',
+        pageURL: url,
+        locationURL: url
+    },
+    responseHandler
+);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
 
-var uBlockCollapser = (function() {
+var domCollapser = (function() {
     var timer = null;
     var requestId = 1;
     var newRequests = [];
@@ -290,6 +694,28 @@ var uBlockCollapser = (function() {
 
 /******************************************************************************/
 /******************************************************************************/
+/******************************************************************************/
+
+var domIsLoaded = function(ev) {
+
+/******************************************************************************/
+
+if ( ev ) {
+    document.removeEventListener('DOMContentLoaded', domIsLoaded);
+}
+
+// I've seen this happens on Firefox
+if ( window.location === null ) {
+    return;
+}
+
+// https://github.com/chrisaljoudi/uBlock/issues/587
+// Pointless to execute without the start script having done its job.
+if ( !vAPI.contentscriptInjected ) {
+    return;
+}
+
+/******************************************************************************/
 
 // Cosmetic filters
 
@@ -304,112 +730,56 @@ var uBlockCollapser = (function() {
     //var timer = window.performance || Date;
     //var tStart = timer.now();
 
-    var hideElements = (function() {
-        if ( document.body === null ) {
-            return function() {};
-        }
-        if ( document.body.shadowRoot === undefined ) {
-            return function(selectors) {
-                // https://github.com/chrisaljoudi/uBlock/issues/207
-                // Do not call querySelectorAll() using invalid CSS selectors
-                if ( selectors.length === 0 ) { return; }
-                var elems = document.querySelectorAll(selectors);
-                var i = elems.length;
-                if ( i === 0 ) { return; }
-                // https://github.com/chrisaljoudi/uBlock/issues/158
-                // Using CSSStyleDeclaration.setProperty is more reliable
-                while ( i-- ) {
-                    elems[i].style.setProperty('display', 'none', 'important');
-                }
-            };
-        }
-        return function(selectors) {
-            if ( selectors.length === 0 ) { return; }
-            var elems = document.querySelectorAll(selectors);
-            var i = elems.length;
-            if ( i === 0 ) { return; }
-            // https://github.com/gorhill/uBlock/issues/435
-            // Using shadow content so that we do not have to modify style
-            // attribute.
-            var sessionId = vAPI.sessionId;
-            var elem, shadow;
-            while ( i-- ) {
-                elem = elems[i];
-                shadow = elem.shadowRoot;
-                // https://www.chromestatus.com/features/4668884095336448
-                // "Multiple shadow roots is being deprecated."
-                if ( shadow !== null ) {
-                    if ( shadow.className !== sessionId ) {	
-                        elem.style.setProperty('display', 'none', 'important');
-                    }
-                    continue;
-                }
-                // https://github.com/gorhill/uBlock/pull/555
-                // Not all nodes can be shadowed:
-                //   https://github.com/w3c/webcomponents/issues/102
-                // https://github.com/gorhill/uBlock/issues/762
-                // Remove display style that might get in the way of the shadow
-                // node doing its magic.
-                try {
-                    shadow = elem.createShadowRoot();
-                    shadow.className = sessionId;
-                    elem.style.removeProperty('display');
-                } catch (ex) {
-                    elem.style.setProperty('display', 'none', 'important');
-                }
-            }
-        };
-    })();
-
     // https://github.com/chrisaljoudi/uBlock/issues/789
     // https://github.com/gorhill/uBlock/issues/873
     // Be sure that our style tags used for cosmetic filtering are still applied.
-    var checkStyleTags = function() {
-        var doc = document,
-            html = doc.documentElement,
-            head = doc.head,
-            newParent = head || html;
-        if ( newParent === null ) {
+    var domFilterer = vAPI.domFilterer;
+    domFilterer.checkStyleTags(false);
+    domFilterer.commit();
+
+    var contextNodes = [ document.documentElement ];
+    var messaging = vAPI.messaging;
+    var highGenerics = null;
+    var highHighGenericsInjected = false;
+    var lowGenericSelectors = [];
+    var queriedSelectors = Object.create(null);
+
+    var responseHandler = function(response) {
+        // https://github.com/gorhill/uMatrix/issues/144
+        if ( response && response.shutdown ) {
+            vAPI.shutdown.exec();
             return;
         }
-        var styles = vAPI.styles || [],
-            style, oldParent;
-        for ( var i = 0; i < styles.length; i++ ) {
-            style = styles[i];
-            oldParent = style.parentNode;
-            // https://github.com/gorhill/uBlock/issues/1031
-            // If our style tag was disabled, force a re-insert into the page.
-            if (
-                style.disabled &&
-                oldParent !== null &&
-                style[vAPI.sessionId] === undefined
-            ) {
-                oldParent.removeChild(style);
-                oldParent = null;
-            }
-            if ( oldParent === head || oldParent === html ) {
-                continue;
-            }
-            style.disabled = false;
-            newParent.appendChild(style);
-            // The page tried to get rid of us: reapply inline styles to
-            // blocked elements.
-            hideElements(style.textContent.slice(0, style.textContent.lastIndexOf('\n')));
-        }
-    };
-    checkStyleTags();
 
-    var messaging = vAPI.messaging;
-    var queriedSelectors = {};
-    var injectedSelectors = {};
-    var lowGenericSelectors = [];
-    var highGenerics = null;
-    var contextNodes = [document];
-    var nullArray = { push: function(){} };
+        //var tStart = timer.now();
+        var result = response && response.result;
+
+        if ( result ) {
+            if ( result.hide.length ) {
+                processLowGenerics(result.hide);
+            }
+            if ( result.highGenerics ) {
+                highGenerics = result.highGenerics;
+            }
+        }
+        if ( highGenerics ) {
+            if ( highGenerics.hideLowCount ) {
+                processHighLowGenerics(highGenerics.hideLow);
+            }
+            if ( highGenerics.hideMediumCount ) {
+                processHighMediumGenerics(highGenerics.hideMedium);
+            }
+            if ( highGenerics.hideHighCount ) {
+                processHighHighGenericsAsync();
+            }
+        }
+        domFilterer.commit(contextNodes);
+        contextNodes = [];
+        //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
+    };
 
     var retrieveGenericSelectors = function() {
         if ( lowGenericSelectors.length !== 0 || highGenerics === null ) {
-            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', lowGenericSelectors.length);
             messaging.send(
                 'contentscript',
                 {
@@ -418,124 +788,18 @@ var uBlockCollapser = (function() {
                     selectors: lowGenericSelectors,
                     firstSurvey: highGenerics === null
                 },
-                retrieveHandler
+                responseHandler
             );
-            // https://github.com/chrisaljoudi/uBlock/issues/452
-            retrieveHandler = nextRetrieveHandler;
         } else {
-            nextRetrieveHandler(null);
+            responseHandler(null);
         }
         lowGenericSelectors = [];
     };
-
-    // https://github.com/chrisaljoudi/uBlock/issues/452
-    // This needs to be executed *after* the response from our query is
-    // received, not at `DOMContentLoaded` time, or else there is a good
-    // likeliness to outrun contentscript-start.js, which may still be waiting
-    // on a response from its own query.
-    var firstRetrieveHandler = function(response) {
-        // https://github.com/chrisaljoudi/uBlock/issues/158
-        // Ensure injected styles are enforced
-        // rhill 2014-11-16: not sure this is needed anymore. Test case in
-        //  above issue was fine without the line below..
-        var selectors = vAPI.hideCosmeticFilters;
-        if ( typeof selectors === 'object' ) {
-            injectedSelectors = selectors;
-            hideElements(Object.keys(selectors));
-        }
-        // Add exception filters into injected filters collection, in order
-        // to force them to be seen as "already injected".
-        selectors = vAPI.donthideCosmeticFilters;
-        if ( typeof selectors === 'object' ) {
-            for ( var selector in selectors ) {
-                if ( selectors.hasOwnProperty(selector) ) {
-                    injectedSelectors[selector] = true;
-                }
-            }
-        }
-        // Flush dead code from memory
-        firstRetrieveHandler = null;
-
-        // These are sent only once
-        var result = response && response.result;
-        if ( result ) {
-            if ( result.highGenerics ) {
-                highGenerics = result.highGenerics;
-            }
-            if ( result.donthide ) {
-                processLowGenerics(result.donthide, nullArray);
-            }
-        }
-
-        nextRetrieveHandler(response);
-    };
-
-    var nextRetrieveHandler = function(response) {
-        // https://github.com/gorhill/uMatrix/issues/144
-        if ( response && response.shutdown ) {
-            vAPI.shutdown.exec();
-            return;
-        }
-
-        //var tStart = timer.now();
-        //console.debug('µBlock> contextNodes = %o', contextNodes);
-        var result = response && response.result;
-        var hideSelectors = [];
-
-        if ( result && result.hide.length ) {
-            processLowGenerics(result.hide, hideSelectors);
-        }
-        if ( highGenerics ) {
-            if ( highGenerics.hideLowCount ) {
-                processHighLowGenerics(highGenerics.hideLow, hideSelectors);
-            }
-            if ( highGenerics.hideMediumCount ) {
-                processHighMediumGenerics(highGenerics.hideMedium, hideSelectors);
-            }
-            if ( highGenerics.hideHighCount ) {
-                processHighHighGenericsAsync();
-            }
-        }
-        if ( hideSelectors.length !== 0 ) {
-            addStyleTag(hideSelectors);
-        }
-        contextNodes.length = 0;
-        //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
-    };
-
-    var retrieveHandler = firstRetrieveHandler;
 
     // Ensure elements matching a set of selectors are visually removed
     // from the page, by:
     // - Modifying the style property on the elements themselves
     // - Injecting a style tag
-
-    var addStyleTag = function(selectors) {
-        // https://github.com/gorhill/uBlock/issues/1015
-        // Boost specificity of our CSS rules.
-        var styleText = ':root ' + selectors.join(',\n:root ');
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        // The linefeed before the style block is very important: do no remove!
-        style.appendChild(document.createTextNode(styleText + '\n{display:none !important;}'));
-        var parent = document.head || document.documentElement;
-        if ( parent ) {
-            parent.appendChild(style);
-            vAPI.styles.push(style);
-        }
-        hideElements(styleText);
-        messaging.send(
-            'contentscript',
-            {
-                what: 'cosmeticFiltersInjected',
-                type: 'cosmetic',
-                hostname: window.location.hostname,
-                selectors: selectors
-            }
-        );
-        //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
-    };
-
     // Extract and return the staged nodes which (may) match the selectors.
 
     var selectNodes = function(selector) {
@@ -562,24 +826,15 @@ var uBlockCollapser = (function() {
     // - [id]
     // - [class]
 
-    var processLowGenerics = function(generics, out) {
-        var i = generics.length;
-        var selector;
-        while ( i-- ) {
-            selector = generics[i];
-            if ( injectedSelectors.hasOwnProperty(selector) ) {
-                continue;
-            }
-            injectedSelectors[selector] = true;
-            out.push(selector);
-        }
+    var processLowGenerics = function(generics) {
+        domFilterer.addSelectors(generics);
     };
 
     // High-low generics:
     // - [alt="..."]
     // - [title="..."]
 
-    var processHighLowGenerics = function(generics, out) {
+    var processHighLowGenerics = function(generics) {
         var attrs = ['title', 'alt'];
         var attr, attrValue, nodeList, iNode, node;
         var selector;
@@ -595,19 +850,15 @@ var uBlockCollapser = (function() {
                 // form, as the generic will affect all related specific forms
                 selector = '[' + attr + '="' + attrValue + '"]';
                 if ( generics.hasOwnProperty(selector) ) {
-                    if ( injectedSelectors.hasOwnProperty(selector) === false ) {
-                        injectedSelectors[selector] = true;
-                        out.push(selector);
-                        continue;
-                    }
+                    domFilterer.addSelector(selector);
+                    domFilterer.hideNode(node);
+                    continue;
                 }
                 // Candidate 2 = specific form
                 selector = node.localName + selector;
                 if ( generics.hasOwnProperty(selector) ) {
-                    if ( injectedSelectors.hasOwnProperty(selector) === false ) {
-                        injectedSelectors[selector] = true;
-                        out.push(selector);
-                    }
+                    domFilterer.addSelector(selector);
+                    domFilterer.hideNode(node);
                 }
             }
         }
@@ -616,7 +867,7 @@ var uBlockCollapser = (function() {
     // High-medium generics:
     // - [href^="http"]
 
-    var processHighMediumGenerics = function(generics, out) {
+    var processHighMediumGenerics = function(generics) {
         var doc = document;
         var i = contextNodes.length;
         var aa = [ null ];
@@ -625,18 +876,18 @@ var uBlockCollapser = (function() {
             node = contextNodes[i];
             if ( node.localName === 'a' ) {
                 aa[0] = node;
-                processHighMediumGenericsForNodes(aa, generics, out);
+                processHighMediumGenericsForNodes(aa, generics);
             }
             nodes = node.getElementsByTagName('a');
             if ( nodes.length === 0 ) { continue; }
-            processHighMediumGenericsForNodes(nodes, generics, out);
+            processHighMediumGenericsForNodes(nodes, generics);
             if ( node === doc ) {
                 break;
             }
         }
     };
 
-    var processHighMediumGenericsForNodes = function(nodes, generics, out) {
+    var processHighMediumGenericsForNodes = function(nodes, generics) {
         var i = nodes.length;
         var node, href, pos, hash, selectors, j, selector;
         var aa = [ '' ];
@@ -658,20 +909,17 @@ var uBlockCollapser = (function() {
             j = selectors.length;
             while ( j-- ) {
                 selector = selectors[j];
-                if (
-                    href.lastIndexOf(selector.slice(8, -2), 0) === 0 &&
-                    injectedSelectors.hasOwnProperty(selector) === false
-                ) {
-                    injectedSelectors[selector] = true;
-                    out.push(selector);
+                if ( href.lastIndexOf(selector, 8) === 8 ) {
+                    domFilterer.addSelector(selector);
+                    domFilterer.hideNode(node);
                 }
             }
         }
     };
 
-    // High-high generics are *very costly* to process, so we will coalesce
+    // High-high generics are very costly to process, so we will coalesce
     // requests to process high-high generics into as few requests as possible.
-    // The gain is *significant* on bloated pages.
+    // The gain is significant on bloated pages.
 
     var processHighHighGenericsMisses = 8;
     var processHighHighGenericsTimer = null;
@@ -681,7 +929,7 @@ var uBlockCollapser = (function() {
         if ( highGenerics.hideHigh === '' ) {
             return;
         }
-        if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) {
+        if ( highHighGenericsInjected ) {
             return;
         }
         // When there are too many misses for these highly generic CSS rules,
@@ -689,27 +937,15 @@ var uBlockCollapser = (function() {
         if ( document.querySelector(highGenerics.hideHigh) === null ) {
             processHighHighGenericsMisses -= 1;
             if ( processHighHighGenericsMisses === 0 ) {
-                injectedSelectors['{{highHighGenerics}}'] = true;
+                highHighGenericsInjected = true;
             }
             return;
         }
-        injectedSelectors['{{highHighGenerics}}'] = true;
+        highHighGenericsInjected = true;
         // We need to filter out possible exception cosmetic filters from
         // high-high generics selectors.
-        var selectors = highGenerics.hideHigh.split(',\n');
-        var i = selectors.length;
-        var selector;
-        while ( i-- ) {
-            selector = selectors[i];
-            if ( injectedSelectors.hasOwnProperty(selector) ) {
-                selectors.splice(i, 1);
-            } else {
-                injectedSelectors[selector] = true;
-            }
-        }
-        if ( selectors.length !== 0 ) {
-            addStyleTag(selectors);
-        }
+        domFilterer.addSelectors(highGenerics.hideHigh.split(',\n'));
+        domFilterer.commit();
     };
 
     var processHighHighGenericsAsync = function() {
@@ -719,58 +955,41 @@ var uBlockCollapser = (function() {
         processHighHighGenericsTimer = vAPI.setTimeout(processHighHighGenerics, 300);
     };
 
-    // Extract all ids: these will be passed to the cosmetic filtering
-    // engine, and in return we will obtain only the relevant CSS selectors.
-
-    var idsFromNodeList = function(nodes) {
-        if ( !nodes || !nodes.length ) {
-            return;
-        }
-        var qq = queriedSelectors;
-        var ll = lowGenericSelectors;
-        var node, v;
-        var i = nodes.length;
-        while ( i-- ) {
-            node = nodes[i];
-            if ( node.nodeType !== 1 ) { continue; }
-            v = node.id;
-            if ( typeof v !== 'string' ) { continue; }
-            v = v.trim();
-            if ( v === '' ) { continue; }
-            v = '#' + v;
-            if ( qq.hasOwnProperty(v) ) { continue; }
-            ll.push(v);
-            qq[v] = true;
-        }
-    };
-
-    // Extract all classes: these will be passed to the cosmetic filtering
+    // Extract all classes/ids: these will be passed to the cosmetic filtering
     // engine, and in return we will obtain only the relevant CSS selectors.
 
     // https://github.com/gorhill/uBlock/issues/672
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
     // http://jsperf.com/enumerate-classes/6
 
-    var classesFromNodeList = function(nodes) {
+    var classesAndIdsFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
             return;
         }
-
         var qq = queriedSelectors;
         var ll = lowGenericSelectors;
-        var v, vv, len, c, beg, end;
+        var node, v, vv, len, c, beg, end;
         var i = nodes.length;
-
         while ( i-- ) {
-            vv = nodes[i].className;
-            if ( typeof vv !== 'string' ) { continue; }
+            node = nodes[i];
+            if ( node.nodeType !== 1 ) { continue; }
+            v = node.id;
+            if ( v !== '' && typeof v === 'string' ) {
+                v = '#' + v.trim();
+                if ( v !== '#' && qq[v] === undefined ) {
+                    ll.push(v);
+                    qq[v] = true;
+                }
+            }
+            vv = node.className;
+            if ( vv === '' || typeof vv !== 'string' ) { continue; }
             len = vv.length;
             beg = 0;
             for (;;) {
                 // Skip whitespaces
                 while ( beg !== len ) {
                     c = vv.charCodeAt(beg);
-                    if ( c !== 0x20 && (c > 0x0D || c < 0x09) ) { break; }
+                    if ( c > 0x20 ) { break; }
                     beg++;
                 }
                 if ( beg === len ) { break; }
@@ -778,11 +997,11 @@ var uBlockCollapser = (function() {
                 // Skip non-whitespaces
                 while ( end !== len ) {
                     c = vv.charCodeAt(end);
-                    if ( c === 0x20 || (c <= 0x0D && c >= 0x09) ) { break; }
+                    if ( c <= 0x20 ) { break; }
                     end++;
                 }
                 v = '.' + vv.slice(beg, end);
-                if ( qq.hasOwnProperty(v) === false ) {
+                if ( qq[v] === undefined ) {
                     ll.push(v);
                     qq[v] = true;
                 }
@@ -794,8 +1013,7 @@ var uBlockCollapser = (function() {
 
     // Start cosmetic filtering.
 
-    idsFromNodeList(document.querySelectorAll('[id]'));
-    classesFromNodeList(document.querySelectorAll('[class]'));
+    classesAndIdsFromNodeList(document.querySelectorAll('[class],[id]'));
     retrieveGenericSelectors();
 
     //console.debug('%f: uBlock: survey time', timer.now() - tStart);
@@ -824,8 +1042,9 @@ var uBlockCollapser = (function() {
     // Added node lists will be cumulated here before being processed
     var addedNodeLists = [];
     var addedNodeListsTimer = null;
+    var addedNodeListsTimerDelay = 10;
     var removedNodeListsTimer = null;
-    var collapser = uBlockCollapser;
+    var collapser = domCollapser;
 
     // The `cosmeticFiltersActivated` message is required: a new element could
     // be matching an already injected but otherwise inactive cosmetic filter.
@@ -833,6 +1052,7 @@ var uBlockCollapser = (function() {
     // effect on the document), and thus must be logged if needed.
     var addedNodesHandler = function() {
         addedNodeListsTimer = null;
+        addedNodeListsTimerDelay = Math.min(addedNodeListsTimerDelay*2, 100);
         var iNodeList = addedNodeLists.length,
             nodeList, iNode, node;
         while ( iNodeList-- ) {
@@ -852,8 +1072,7 @@ var uBlockCollapser = (function() {
         }
         addedNodeLists.length = 0;
         if ( contextNodes.length !== 0 ) {
-            idsFromNodeList(selectNodes('[id]'));
-            classesFromNodeList(selectNodes('[class]'));
+            classesAndIdsFromNodeList(selectNodes('[class],[id]'));
             retrieveGenericSelectors();
             messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
         }
@@ -863,7 +1082,7 @@ var uBlockCollapser = (function() {
     // This will ensure our style elements will stay in the DOM.
     var removedNodesHandler = function() {
         removedNodeListsTimer = null;
-        checkStyleTags();
+        domFilterer.checkStyleTags(true);
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
@@ -886,7 +1105,7 @@ var uBlockCollapser = (function() {
             }
         }
         if ( addedNodeLists.length !== 0 && addedNodeListsTimer === null ) {
-            addedNodeListsTimer = vAPI.setTimeout(addedNodesHandler, 100);
+            addedNodeListsTimer = vAPI.setTimeout(addedNodesHandler, addedNodeListsTimerDelay);
         }
         if ( removedNodeLists && removedNodeListsTimer === null ) {
             removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, 100);
@@ -918,7 +1137,6 @@ var uBlockCollapser = (function() {
 })();
 
 /******************************************************************************/
-/******************************************************************************/
 
 // Permanent
 
@@ -930,8 +1148,8 @@ var uBlockCollapser = (function() {
 (function() {
     var onResourceFailed = function(ev) {
         //console.debug('onResourceFailed(%o)', ev);
-        uBlockCollapser.add(ev.target);
-        uBlockCollapser.process();
+        domCollapser.add(ev.target);
+        domCollapser.process();
     };
     document.addEventListener('error', onResourceFailed, true);
 
@@ -942,7 +1160,6 @@ var uBlockCollapser = (function() {
 })();
 
 /******************************************************************************/
-/******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/7
 // Executed only once.
@@ -950,7 +1167,7 @@ var uBlockCollapser = (function() {
 //   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
 
 (function() {
-    var collapser = uBlockCollapser;
+    var collapser = domCollapser;
     var elems = document.getElementsByTagName('img'),
         i = elems.length, elem;
     while ( i-- ) {
@@ -965,7 +1182,6 @@ var uBlockCollapser = (function() {
     collapser.process(0);
 })();
 
-/******************************************************************************/
 /******************************************************************************/
 
 // To send mouse coordinates to main process, as the chrome API fails
@@ -1008,8 +1224,15 @@ var uBlockCollapser = (function() {
 })();
 
 /******************************************************************************/
+
+};
+
+/******************************************************************************/
+/******************************************************************************/
 /******************************************************************************/
 
-})();
-
-/******************************************************************************/
+if ( document.readyState !== 'loading' ) {
+    domIsLoaded();
+} else {
+    document.addEventListener('DOMContentLoaded', domIsLoaded);
+}
