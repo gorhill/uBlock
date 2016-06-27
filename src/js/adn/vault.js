@@ -642,7 +642,7 @@
   function itemPosition($ele) {
 
     // first set zoom back to 100%
-    setZoom(100, true);
+    setZoom(zoomIdx = Zooms.indexOf(100), true);
 
     var off = $ele.offset(), // relative to container
       cx = $(window).width() / 2,
@@ -668,7 +668,7 @@
     };
 
     // now restore zoom to user-selected level
-    setRawZoom(userZoomScale, true); // fix to #277
+    setZoom(zoomIdx = viewState.zoomIdx, true);
 
     return pos;
   }
@@ -736,7 +736,7 @@
     } else { // restore
 
       // restore zoom scale to userZoomScale
-      dynamicZoom(viewState.zoomScale);
+      dynamicZoom(viewState.zoomScale - 100);
       $dm.css('margin-left', viewState.left);
       $dm.css('margin-top', viewState.top);
     }
@@ -968,20 +968,26 @@
     $('#ratio').text(Math.round(userZoomScale * 100) / 100 + '%');
   }
 
-  function setRawZoom(percent, immediate) {
-
-    var $container = $('#container');
-    immediate && $container.addClass('notransition'); // disable transitions
-    setScale(percent); // set CSS scale for zooming
-    userZoomScale = percent; // update userZoomScale
-    $('#ratio').text(percent + '%'); // set zoom-text
-    $container[0].offsetHeight; // Trigger reflow, flush cached CSS
-    immediate && $container.removeClass('notransition'); //re-enable
-  }
-
   function setZoom(idx, immediate) {
 
-    setRawZoom(Zooms[idx], immediate);
+    //log('setZoom('+idx+','+(immediate===true)+')');
+
+    var $container = $('#container');
+
+    // Disable transitions
+    immediate && $container.addClass('notransition');
+
+    setScale(Zooms[idx]); // set CSS scale for zooming
+
+    userZoomScale = Zooms[idx]; // update userZoomScale
+
+    $('#ratio').text(Zooms[idx] + '%'); // set zoom-text
+
+    // Trigger reflow, flush cached CSS
+    $container[0].offsetHeight;
+
+    // Re-enable transitions
+    immediate && $container.removeClass('notransition');
   }
 
   function onscreen($this, winW, winH, scale, percentVisible) {
