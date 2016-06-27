@@ -24,7 +24,7 @@
     showInterface = true,
     animateMs = 2000,
     viewState = {},
-    userZoomScale = Zooms[0], // determined by mousewheel
+    userZoomScale = Zooms[Zooms.indexOf(100)], // determined by mousewheel
     zoomIdx = 0; // determined by zoom in / out buttons
 
   var gAds, gAdSets, gMin, gMax; // stateful
@@ -642,7 +642,7 @@
   function itemPosition($ele) {
 
     // first set zoom back to 100%
-    setZoom(zoomIdx = Zooms.indexOf(100), true);
+    setZoom(Zooms.indexOf(100), true);
 
     var off = $ele.offset(), // relative to container
       cx = $(window).width() / 2,
@@ -668,7 +668,7 @@
     };
 
     // now restore zoom to user-selected level
-    setZoom(zoomIdx = viewState.zoomIdx, true);
+    setZoom(zoomIdx = viewState.zoomScale, true);
 
     return pos;
   }
@@ -708,7 +708,7 @@
       }
 
       // reset zoom to 100%
-      setZoom(zoomIdx = Zooms.indexOf(100));
+      setZoom(Zooms.indexOf(100));
 
       // transition to center
       $('#container').css({
