@@ -1566,7 +1566,11 @@ FilterParser.prototype.parse = function(raw) {
     // normalize placeholders
     if ( this.reHasWildcard.test(s) ) {
         // remove pointless leading *
-        if ( s.startsWith('*') ) {
+        // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
+        // Keep the leading asterisk if we are dealing with a hostname-anchored
+        // filter, this will ensure the generic filter implementation is
+        // used.
+        if ( s.startsWith('*') && this.hostnameAnchored === false ) {
             s = s.replace(/^\*+([^%0-9a-z])/, '$1');
         }
         // remove pointless trailing *
