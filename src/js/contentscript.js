@@ -42,6 +42,8 @@ vAPI.contentscriptInjected = true;
 /******************************************************************************/
 /******************************************************************************/
 
+// The DOM filterer is the heart of uBO's cosmetic filtering.
+
 vAPI.domFilterer = {
     allExceptions: Object.create(null),
     allSelectors: Object.create(null),
@@ -49,6 +51,7 @@ vAPI.domFilterer = {
     disabledId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     enabled: true,
     hiddenId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
+    hiddenNodeCount: 0,
     matchesProp: 'matches',
     newSelectors: [],
     shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
@@ -57,15 +60,18 @@ vAPI.domFilterer = {
 
     complexGroupSelector: null,
     complexSelectors: [],
+    complexSelectorsMissCount: 0,
     simpleGroupSelector: null,
     simpleSelectors: [],
 
     complexHasSelectors: [],
+    complexHasSelectorsMissCount: 0,
     simpleHasSelectors: [],
 
-    xpathSelectors: [],
     xpathExpression: null,
     xpathResult: null,
+    xpathSelectors: [],
+    xpathSelectorsMissCount: 0,
 
     addExceptions: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
@@ -79,6 +85,7 @@ vAPI.domFilterer = {
             this.simpleHasSelectors.push(entry);
         } else {
             this.complexHasSelectors.push(entry);
+            this.complexHasSelectorsMissCount = 0;
         }
     },
 
@@ -105,6 +112,7 @@ vAPI.domFilterer = {
         } else {
             this.complexSelectors.push(s);
             this.complexGroupSelector = null;
+            this.complexSelectorsMissCount = 0;
         }
         this.newSelectors.push(s);
     },
@@ -157,11 +165,13 @@ vAPI.domFilterer = {
     },
 
     commit: function(newNodes) {
+        var beforeHiddenNodeCount = this.hiddenNodeCount;
+
         if ( newNodes === undefined ) {
             newNodes = [ document.documentElement ];
         }
 
-        // Inject new selectors as CSS rules in a style tags.
+        // Inject new selectors as CSS rules in a style tag.
         if ( this.newSelectors.length ) {
             var styleTag = document.createElement('style');
             styleTag.setAttribute('type', 'text/css');
@@ -198,21 +208,26 @@ vAPI.domFilterer = {
         }
 
         // Complex `:has()` selectors.
-        i = this.complexHasSelectors.length;
-        while ( i-- ) {
-            entry = this.complexHasSelectors[i];
-            nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
-            j = nodes.length;
-            while ( j-- ) {
-                node = nodes[j];
-                if ( node.querySelector(entry.b) !== null ) {
-                    this.hideNode(node);
+        if ( this.complexHasSelectorsMissCount < 5 && this.complexHasSelectors.length ) {
+            this.complexHasSelectorsMissCount += 1;
+            i = this.complexHasSelectors.length;
+            while ( i-- ) {
+                entry = this.complexHasSelectors[i];
+                nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
+                j = nodes.length;
+                while ( j-- ) {
+                    node = nodes[j];
+                    if ( node.querySelector(entry.b) !== null ) {
+                        this.hideNode(node);
+                        this.complexHasSelectorsMissCount = 0;
+                    }
                 }
             }
         }
 
         // `:xpath()` selectors.
-        if ( this.xpathSelectors.length ) {
+        if ( this.xpathSelectorsMissCount < 5 && this.xpathSelectors.length ) {
+            this.xpathSelectorsMissCount += 1;
             if ( this.xpathExpression === null ) {
                 this.xpathExpression = document.createExpression(
                     this.xpathSelectors.join(this.xpathNotHiddenId + '|') + this.xpathNotHiddenId,
@@ -229,6 +244,7 @@ vAPI.domFilterer = {
                 node = this.xpathResult.snapshotItem(i);
                 if ( node.nodeType === 1 ) {
                     this.hideNode(node);
+                    this.xpathSelectorsMissCount = 0;
                 }
             }
         }
@@ -256,7 +272,8 @@ vAPI.domFilterer = {
         }
 
         // Complex selectors.
-        if ( this.complexSelectors.length ) {
+        if ( this.complexSelectorsMissCount < 5 && this.complexSelectors.length ) {
+            this.complexSelectorsMissCount += 1;
             if ( this.complexGroupSelector === null ) {
                 this.complexGroupSelector =
                     this.complexSelectors.join(this.cssNotHiddenId + ',') +
@@ -266,16 +283,26 @@ vAPI.domFilterer = {
             i = nodes.length;
             while ( i-- ) {
                 this.hideNode(nodes[i]);
+                this.complexSelectorsMissCount = 0;
             }
         }
 
         // Reset transient state.
         this.newSelectors.length = 0;
+
+        // If DOM nodes have been affected, notify core process.
+        if ( this.hiddenNodeCount !== beforeHiddenNodeCount ) {
+            vAPI.messaging.send(
+                'contentscript',
+                { what: 'cosmeticFiltersActivated' }
+            );
+        }
     },
 
     hideNode: (function() {
         if ( document.documentElement.shadowRoot === undefined ) {
             return function(node) {
+                this.hiddenNodeCount += 1;
                 node.setAttribute(this.hiddenId, '');
                 if ( this.enabled ) {
                     node.style.setProperty('display', 'none', 'important');
@@ -283,6 +310,7 @@ vAPI.domFilterer = {
             };
         }
         return function(node) {
+            this.hiddenNodeCount += 1;
             node.setAttribute(this.hiddenId, '');
             var shadow = node.shadowRoot;
             // https://www.chromestatus.com/features/4668884095336448
@@ -408,9 +436,6 @@ var injectScripts = function(scripts) {
 /******************************************************************************/
 
 var responseHandler = function(details) {
-    var domFilterer = vAPI.domFilterer;
-    var styleTagCount = domFilterer.styleTags.length;
-
     if ( details ) {
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
@@ -426,12 +451,6 @@ var responseHandler = function(details) {
         }
         // The port will never be used again at this point, disconnecting allows
         // the browser to flush this script from memory.
-    }
-
-    // This is just to inform the background process that cosmetic filters were
-    // actually injected.
-    if ( domFilterer.styleTags.length !== styleTagCount ) {
-        vAPI.messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
@@ -1042,17 +1061,16 @@ if ( !vAPI.contentscriptInjected ) {
     // Added node lists will be cumulated here before being processed
     var addedNodeLists = [];
     var addedNodeListsTimer = null;
-    var addedNodeListsTimerDelay = 10;
+    var addedNodeListsTimerDelay = 25;
     var removedNodeListsTimer = null;
+    var removedNodeListsTimerDelay = 25;
     var collapser = domCollapser;
 
-    // The `cosmeticFiltersActivated` message is required: a new element could
-    // be matching an already injected but otherwise inactive cosmetic filter.
-    // This means the already injected cosmetic filter become active (has an
-    // effect on the document), and thus must be logged if needed.
     var addedNodesHandler = function() {
         addedNodeListsTimer = null;
-        addedNodeListsTimerDelay = Math.min(addedNodeListsTimerDelay*2, 100);
+        if ( addedNodeListsTimerDelay < 100 ) {
+            addedNodeListsTimerDelay *= 2;
+        }
         var iNodeList = addedNodeLists.length,
             nodeList, iNode, node;
         while ( iNodeList-- ) {
@@ -1074,7 +1092,6 @@ if ( !vAPI.contentscriptInjected ) {
         if ( contextNodes.length !== 0 ) {
             classesAndIdsFromNodeList(selectNodes('[class],[id]'));
             retrieveGenericSelectors();
-            messaging.send('contentscript', { what: 'cosmeticFiltersActivated' });
         }
     };
 
@@ -1082,6 +1099,11 @@ if ( !vAPI.contentscriptInjected ) {
     // This will ensure our style elements will stay in the DOM.
     var removedNodesHandler = function() {
         removedNodeListsTimer = null;
+        removedNodeListsTimerDelay *= 2;
+        // Stop watching style tags after a while.
+        if ( removedNodeListsTimerDelay > 1000 ) {
+            removedNodeListsTimerDelay = 0;
+        }
         domFilterer.checkStyleTags(true);
     };
 
@@ -1107,8 +1129,8 @@ if ( !vAPI.contentscriptInjected ) {
         if ( addedNodeLists.length !== 0 && addedNodeListsTimer === null ) {
             addedNodeListsTimer = vAPI.setTimeout(addedNodesHandler, addedNodeListsTimerDelay);
         }
-        if ( removedNodeLists && removedNodeListsTimer === null ) {
-            removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, 100);
+        if ( removedNodeListsTimerDelay !== 0 && removedNodeLists && removedNodeListsTimer === null ) {
+            removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, removedNodeListsTimerDelay);
         }
     };
 
