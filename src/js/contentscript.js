@@ -47,31 +47,34 @@ vAPI.contentscriptInjected = true;
 vAPI.domFilterer = {
     allExceptions: Object.create(null),
     allSelectors: Object.create(null),
+    cosmeticFiltersActivatedTimer: null,
     cssNotHiddenId: '',
     disabledId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     enabled: true,
     hiddenId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     hiddenNodeCount: 0,
     matchesProp: 'matches',
-    newSelectors: [],
+    newDeclarativeSelectors: [],
     shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     styleTags: [],
     xpathNotHiddenId: '',
 
-    complexGroupSelector: null,
-    complexSelectors: [],
-    complexSelectorsMissCount: 0,
     simpleGroupSelector: null,
     simpleSelectors: [],
 
+    complexGroupSelector: null,
+    complexSelectors: [],
+    complexSelectorsCost: 0,
+    complexSelectorsNodeSet: null,
+
     complexHasSelectors: [],
-    complexHasSelectorsMissCount: 0,
+    complexHasSelectorsCost: 0,
     simpleHasSelectors: [],
 
     xpathExpression: null,
     xpathResult: null,
     xpathSelectors: [],
-    xpathSelectorsMissCount: 0,
+    xpathSelectorsCost: 0,
 
     addExceptions: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
@@ -85,7 +88,7 @@ vAPI.domFilterer = {
             this.simpleHasSelectors.push(entry);
         } else {
             this.complexHasSelectors.push(entry);
-            this.complexHasSelectorsMissCount = 0;
+            this.complexHasSelectorsCost = 0;
         }
     },
 
@@ -112,9 +115,9 @@ vAPI.domFilterer = {
         } else {
             this.complexSelectors.push(s);
             this.complexGroupSelector = null;
-            this.complexSelectorsMissCount = 0;
+            this.complexSelectorsCost = 0;
         }
-        this.newSelectors.push(s);
+        this.newDeclarativeSelectors.push(s);
     },
 
     addSelectors: function(aa) {
@@ -126,6 +129,7 @@ vAPI.domFilterer = {
     addXpathSelector: function(s1, s2) {
         this.xpathSelectors.push(s2.slice(7, -1));
         this.xpathExpression = null;
+        this.xpathSelectorsCost = 0;
     },
 
     checkStyleTags: function(commitIfNeeded) {
@@ -164,35 +168,115 @@ vAPI.domFilterer = {
         }
     },
 
-    commit: function(newNodes) {
+    commit: function(stagedNodes) {
         var beforeHiddenNodeCount = this.hiddenNodeCount;
 
-        if ( newNodes === undefined ) {
-            newNodes = [ document.documentElement ];
+        if ( stagedNodes === undefined ) {
+            stagedNodes = [ document.documentElement ];
         }
 
-        // Inject new selectors as CSS rules in a style tag.
-        if ( this.newSelectors.length ) {
+        // Inject new declarative selectors.
+        if ( this.newDeclarativeSelectors.length ) {
             var styleTag = document.createElement('style');
             styleTag.setAttribute('type', 'text/css');
             styleTag.textContent =
                 ':root ' +
-                this.newSelectors.join(',\n:root ') +
+                this.newDeclarativeSelectors.join(',\n:root ') +
                 '\n{ display: none !important; }';
             document.head.appendChild(styleTag);
             this.styleTags.push(styleTag);
+            this.newDeclarativeSelectors.length = 0;
         }
 
-        var nodes, node, parents, parent, i, j, k, entry;
-
         // Simple `:has()` selectors.
-        i = this.simpleHasSelectors.length;
+        if ( this.simpleHasSelectors.length ) {
+            this.commitSimpleHasSelectors(stagedNodes);
+        }
+
+        // Complex `:has()` selectors.
+        if ( this.complexHasSelectorsCost < 10 && this.complexHasSelectors.length ) {
+            this.commitComplexHasSelectors();
+        }
+
+        // `:xpath()` selectors.
+        if ( this.xpathSelectorsCost < 10 && this.xpathSelectors.length ) {
+            this.commitXpathSelectors();
+        }
+
+        // Committing declarative selectors is entirely optional, but it helps
+        // harden uBO against sites which try to bypass uBO's injected styles.
+
+        // Simple selectors.
+        if ( this.simpleSelectors.length ) {
+            this.commitSimpleSelectors(stagedNodes);
+        }
+
+        // Complex selectors.
+        if ( this.complexSelectorsCost < 10 && this.complexSelectors.length ) {
+            this.commitComplexSelectors();
+        }
+
+        // If DOM nodes have been affected, lazily notify core process.
+        if (
+            this.hiddenNodeCount !== beforeHiddenNodeCount &&
+            this.cosmeticFiltersActivatedTimer === null
+        ) {
+            this.cosmeticFiltersActivatedTimer = vAPI.setTimeout(
+                this.cosmeticFiltersActivated,
+                503
+            );
+        }
+    },
+
+    commitComplexHasSelectors: function() {
+        var tstart = window.performance.now(),
+            entry, nodes, j, node,
+            i = this.complexHasSelectors.length;
+        while ( i-- ) {
+            entry = this.complexHasSelectors[i];
+            nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
+            j = nodes.length;
+            while ( j-- ) {
+                node = nodes[j];
+                if ( node.querySelector(entry.b) !== null ) {
+                    this.hideNode(node);
+                }
+            }
+        }
+        this.complexHasSelectorsCost = window.performance.now() - tstart;
+    },
+
+    commitComplexSelectors: function() {
+        var tstart = window.performance.now(),
+            newNodeSet = new Set();
+        if ( this.complexGroupSelector === null ) {
+            this.complexGroupSelector = this.complexSelectors.join(',');
+        }
+        var nodes = document.querySelectorAll(this.complexGroupSelector),
+            i = nodes.length, node;
+        while ( i-- ) {
+            node = nodes[i];
+            newNodeSet.add(node);
+            if ( !this.complexSelectorsNodeSet.delete(node) ) {
+                this.hideNode(node);
+            }
+        }
+        var iter = this.complexSelectorsNodeSet.values();
+        while ( (node = iter.next().value) ) {
+            this.unhideNode(node);
+        }
+        this.complexSelectorsNodeSet = newNodeSet;
+        this.complexSelectorsCost = window.performance.now() - tstart;
+    },
+
+    commitSimpleHasSelectors: function(stagedNodes) {
+        var i = this.simpleHasSelectors.length,
+            entry, j, parent, nodes, k, node;
         while ( i-- ) {
             entry = this.simpleHasSelectors[i];
-            parents = newNodes;
-            j = parents.length;
+            j = stagedNodes.length;
             while ( j-- ) {
-                parent = parents[j];
+                parent = stagedNodes[j];
                 if ( parent[this.matchesProp](entry.a) && parent.querySelector(entry.b) !== null ) {
                     this.hideNode(parent);
                 }
@@ -206,97 +290,57 @@ vAPI.domFilterer = {
                 }
             }
         }
+    },
 
-        // Complex `:has()` selectors.
-        if ( this.complexHasSelectorsMissCount < 5 && this.complexHasSelectors.length ) {
-            this.complexHasSelectorsMissCount += 1;
-            i = this.complexHasSelectors.length;
-            while ( i-- ) {
-                entry = this.complexHasSelectors[i];
-                nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
-                j = nodes.length;
-                while ( j-- ) {
-                    node = nodes[j];
-                    if ( node.querySelector(entry.b) !== null ) {
-                        this.hideNode(node);
-                        this.complexHasSelectorsMissCount = 0;
-                    }
-                }
+    commitSimpleSelectors: function(stagedNodes) {
+        if ( this.simpleGroupSelector === null ) {
+            this.simpleGroupSelector =
+                this.simpleSelectors.join(this.cssNotHiddenId + ',') +
+                this.cssNotHiddenId;
+        }
+        var i = stagedNodes.length, stagedNode, nodes, j;
+        while ( i-- ) {
+            stagedNode = stagedNodes[i];
+            if ( stagedNode[this.matchesProp](this.simpleGroupSelector) ) {
+                this.hideNode(stagedNode);
+            }
+            nodes = stagedNode.querySelectorAll(this.simpleGroupSelector);
+            j = nodes.length;
+            while ( j-- ) {
+                this.hideNode(nodes[j]);
             }
         }
+    },
 
-        // `:xpath()` selectors.
-        if ( this.xpathSelectorsMissCount < 5 && this.xpathSelectors.length ) {
-            this.xpathSelectorsMissCount += 1;
-            if ( this.xpathExpression === null ) {
-                this.xpathExpression = document.createExpression(
-                    this.xpathSelectors.join(this.xpathNotHiddenId + '|') + this.xpathNotHiddenId,
-                    null
-                );
-            }
-            this.xpathResult = this.xpathExpression.evaluate(
-                document,
-                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                this.xpathResult
-            );
-            i = this.xpathResult.snapshotLength;
-            while ( i-- ) {
-                node = this.xpathResult.snapshotItem(i);
-                if ( node.nodeType === 1 ) {
-                    this.hideNode(node);
-                    this.xpathSelectorsMissCount = 0;
-                }
-            }
-        }
-
-        // Simple selectors.
-        if ( this.simpleSelectors.length ) {
-            if ( this.simpleGroupSelector === null ) {
-                this.simpleGroupSelector =
-                    this.simpleSelectors.join(this.cssNotHiddenId + ',') +
-                    this.cssNotHiddenId;
-            }
-            parents = newNodes;
-            i = parents.length;
-            while ( i-- ) {
-                parent = parents[i];
-                if ( parent[this.matchesProp](this.simpleGroupSelector) ) {
-                    this.hideNode(parent);
-                }
-                nodes = parent.querySelectorAll(this.simpleGroupSelector);
-                j = nodes.length;
-                while ( j-- ) {
-                    this.hideNode(nodes[j]);
-                }
-            }
-        }
-
-        // Complex selectors.
-        if ( this.complexSelectorsMissCount < 5 && this.complexSelectors.length ) {
-            this.complexSelectorsMissCount += 1;
-            if ( this.complexGroupSelector === null ) {
-                this.complexGroupSelector =
-                    this.complexSelectors.join(this.cssNotHiddenId + ',') +
-                    this.cssNotHiddenId;
-            }
-            nodes = document.querySelectorAll(this.complexGroupSelector);
-            i = nodes.length;
-            while ( i-- ) {
-                this.hideNode(nodes[i]);
-                this.complexSelectorsMissCount = 0;
-            }
-        }
-
-        // Reset transient state.
-        this.newSelectors.length = 0;
-
-        // If DOM nodes have been affected, notify core process.
-        if ( this.hiddenNodeCount !== beforeHiddenNodeCount ) {
-            vAPI.messaging.send(
-                'contentscript',
-                { what: 'cosmeticFiltersActivated' }
+    commitXpathSelectors: function() {
+        var tstart = window.performance.now();
+        if ( this.xpathExpression === null ) {
+            this.xpathExpression = document.createExpression(
+                this.xpathSelectors.join(this.xpathNotHiddenId + '|') + this.xpathNotHiddenId,
+                null
             );
         }
+        this.xpathResult = this.xpathExpression.evaluate(
+            document,
+            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+            this.xpathResult
+        );
+        var i = this.xpathResult.snapshotLength, node;
+        while ( i-- ) {
+            node = this.xpathResult.snapshotItem(i);
+            if ( node.nodeType === 1 ) {
+                this.hideNode(node);
+            }
+        }
+        this.xpathSelectorsCost = window.performance.now() - tstart;
+    },
+
+    cosmeticFiltersActivated: function() {
+        this.cosmeticFiltersActivatedTimer = null;
+        vAPI.messaging.send(
+            'contentscript',
+            { what: 'cosmeticFiltersActivated' }
+        );
     },
 
     hideNode: (function() {
@@ -343,6 +387,20 @@ vAPI.domFilterer = {
 
     toggleOn: function() {
         this.enabled = true;
+    },
+
+    unhideNode: function(node) {
+        this.hiddenNodeCount--;
+        node.removeAttribute(this.hiddenId);
+        var shadow = node.shadowRoot;
+        if ( shadow && shadow.className === this.shadowId ) {
+            if ( shadow.firstElementChild !== null ) {
+                shadow.removeChild(shadow.firstElementChild);
+            }
+            shadow.appendChild(document.createElement('content'));
+        } else {
+            node.style.removeProperty('display');
+        }
     }
 };
 
@@ -360,6 +418,21 @@ vAPI.domFilterer = {
             df.matchesProp =  'webkitMatchesSelector';
         }
     }
+
+    // Complex selectors, due to their nature may need to be "de-committed". A
+    // Set() is used to implement this functionality. For browser with no
+    // support of Set(), uBO will skip committing complex selectors.
+    if ( typeof window.Set === 'function' ) {
+        df.complexSelectorsNodeSet = new Set();
+    } else {
+        df.complexSelectorsCost = Number.MAX_VALUE;
+    }
+
+    // Theoretically, `:has`- and `:xpath`-based selectors may also need to
+    // be de-committed. But for performance purpose, this is not implemented,
+    // and anyways, the point of these selectors is to be very accurate, so
+    // I do not expect de-committing scenarios to occur with proper use of
+    // these selectors.
 })();
 
 /******************************************************************************/
@@ -696,9 +769,15 @@ var domCollapser = (function() {
     var iframesFromNode = function(node) {
         if ( node.localName === 'iframe' ) {
             addIFrame(node);
+            process();
         }
-        addIFrames(node.getElementsByTagName('iframe'));
-        process();
+        if ( node.children.length !== 0 ) {
+            var iframes = node.getElementsByTagName('iframe');
+            if ( iframes.length !== 0 ) {
+                addIFrames(iframes);
+                process();
+            }
+        }
     };
 
     return {
@@ -736,7 +815,7 @@ if ( !vAPI.contentscriptInjected ) {
 
 /******************************************************************************/
 
-// Cosmetic filters
+// Cosmetic filtering.
 
 (function() {
     if ( vAPI.skipCosmeticFiltering ) {
@@ -770,7 +849,6 @@ if ( !vAPI.contentscriptInjected ) {
             return;
         }
 
-        //var tStart = timer.now();
         var result = response && response.result;
 
         if ( result ) {
@@ -794,7 +872,6 @@ if ( !vAPI.contentscriptInjected ) {
         }
         domFilterer.commit(contextNodes);
         contextNodes = [];
-        //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
     };
 
     var retrieveGenericSelectors = function() {
@@ -815,10 +892,6 @@ if ( !vAPI.contentscriptInjected ) {
         lowGenericSelectors = [];
     };
 
-    // Ensure elements matching a set of selectors are visually removed
-    // from the page, by:
-    // - Modifying the style property on the elements themselves
-    // - Injecting a style tag
     // Extract and return the staged nodes which (may) match the selectors.
 
     var selectNodes = function(selector) {
@@ -1069,7 +1142,7 @@ if ( !vAPI.contentscriptInjected ) {
     var addedNodesHandler = function() {
         addedNodeListsTimer = null;
         if ( addedNodeListsTimerDelay < 100 ) {
-            addedNodeListsTimerDelay *= 2;
+            addedNodeListsTimerDelay += 25;
         }
         var iNodeList = addedNodeLists.length,
             nodeList, iNode, node;
