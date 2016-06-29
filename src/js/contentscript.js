@@ -209,7 +209,7 @@ vAPI.domFilterer = {
         if ( this.newCSSRules.length ) {
             styleTag = document.createElement('style');
             styleTag.setAttribute('type', 'text/css');
-            styleTag.textContent = ':root ' + this.newCSSRules.join(',\n:root ');
+            styleTag.textContent = ':root ' + this.newCSSRules.join('\n:root ');
             document.head.appendChild(styleTag);
             this.styleTags.push(styleTag);
             this.newCSSRules.length = 0;

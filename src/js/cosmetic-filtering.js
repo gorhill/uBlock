@@ -388,6 +388,10 @@ FilterParser.prototype.translateAdguardCSSInjectionFilter = function(raw) {
     if ( matches === null ) {
         return '';
     }
+    // For now we do not allow generic CSS injections (prolly never).
+    if ( matches[1] === '' && matches[2] !== '@' ) {
+        return '';
+    }
     return matches[1] +
            '#' + matches[2] + '#' +
            matches[3].trim() +
