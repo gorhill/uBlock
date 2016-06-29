@@ -374,6 +374,10 @@ vAPI.storage = (function() {
             return null;
         }
 
+        // Since database could be opened successfully, reset error flag (its
+        // purpose is to avoid spamming console with error messages).
+        dbOpenError = '';
+
         // Database was opened, register cleanup task
         cleanupTasks.push(close);
 
