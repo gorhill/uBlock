@@ -316,8 +316,9 @@ cleanupTasks.push(vAPI.browserSettings.restoreAll.bind(vAPI.browserSettings));
 vAPI.storage = (function() {
     var db = null;
     var vacuumTimer = null;
+    var dbOpenError = '';
 
-    var close = function() {
+    var close = function(now) {
         if ( vacuumTimer !== null ) {
             clearTimeout(vacuumTimer);
             vacuumTimer = null;
@@ -325,7 +326,11 @@ vAPI.storage = (function() {
         if ( db === null ) {
             return;
         }
-        db.asyncClose();
+        if ( now ) {
+            db.close();
+        } else {
+            db.asyncClose();
+        }
         db = null;
     };
 
@@ -345,7 +350,10 @@ vAPI.storage = (function() {
         }
         path.append(location.host + '.sqlite');
 
-        // Open database
+        // Open database.
+        // https://github.com/gorhill/uBlock/issues/1768
+        // If the SQL file is found to be corrupted at launch time, nuke
+        // existing SQL file so that a new one can be created.
         try {
             db = Services.storage.openDatabase(path);
             if ( db.connectionReady === false ) {
@@ -353,6 +361,13 @@ vAPI.storage = (function() {
                 db = null;
             }
         } catch (ex) {
+            if ( dbOpenError === '' ) {
+                console.error('vAPI.storage/open() error: ', ex.message);
+                dbOpenError = ex.name;
+                if ( ex.name === 'NS_ERROR_FILE_CORRUPTED' ) {
+                    nuke();
+                }
+            }
         }
 
         if ( db === null ) {
@@ -371,6 +386,22 @@ vAPI.storage = (function() {
         }
 
         return db;
+    };
+
+    var nuke = function() {
+        var removeDB = function() {
+            close(true);
+            var path = Services.dirsvc.get('ProfD', Ci.nsIFile);
+            path.append('extension-data');
+            if ( !path.exists() || !path.isDirectory() ) {
+                return;
+            }
+            path.append(location.host + '.sqlite');
+            if ( path.exists() ) {
+                path.remove(false);
+            }
+        };
+        vAPI.setTimeout(removeDB, 1);
     };
 
     // https://developer.mozilla.org/en-US/docs/Storage/Performance#Vacuuming_and_zero-fill
@@ -421,6 +452,14 @@ vAPI.storage = (function() {
                     callback({});
                 }
                 result = null;
+                // https://github.com/gorhill/uBlock/issues/1768
+                // Error cases which warrant a removal of the SQL file, so far:
+                // - SQLLite error 11 database disk image is malformed
+                // Can't find doc on MDN about the type of error.result, so I
+                // force a string comparison.
+                if ( error.result.toString() === '11' ) {
+                    nuke();
+                }
             }
         });
     };
