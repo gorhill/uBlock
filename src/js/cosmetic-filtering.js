@@ -297,17 +297,29 @@ FilterParser.prototype.parse = function(raw) {
 
     // https://github.com/gorhill/uBlock/issues/952
     // Find out whether we are dealing with an Adguard-specific cosmetic
-    // filter, and if so, discard the filter.
+    // filter, and if so, translate it if supported, or discard it if not
+    // supported.
     var cCode = raw.charCodeAt(rpos - 1);
     if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
         // We have an Adguard cosmetic filter if and only if the character is
         // `$` or `%`, otherwise it's not a cosmetic filter.
-        if ( cCode === 0x24 /* '$' */ || cCode === 0x25 /* '%' */ ) {
-            this.invalid = true;
-        } else {
+        // Not a cosmetic filter.
+        if ( cCode !== 0x24 /* '$' */ && cCode !== 0x25 /* '%' */ ) {
             this.cosmetic = false;
+            return this;
         }
-        return this;
+        // Not supported.
+        if ( cCode !== 0x24 /* '$' */ ) {
+            this.invalid = true;
+            return this;
+        }
+        // CSS injection rule: supported, but translate into uBO's own format.
+        raw = this.translateAdguardCSSInjectionFilter(raw);
+        if ( raw === '' ) {
+            this.invalid = true;
+            return this;
+        }
+        rpos = raw.indexOf('#', lpos + 1);
     }
 
     // Extract the hostname(s).
@@ -319,17 +331,6 @@ FilterParser.prototype.parse = function(raw) {
     this.suffix = raw.slice(rpos + 1);
     if ( this.suffix.length === 0 ) {
         this.cosmetic = false;
-        return this;
-    }
-
-    // Cosmetic filters with explicit style properties can apply only:
-    // - to specific cosmetic filters (those which apply to a specific site)
-    // - to block cosmetic filters (not exception cosmetic filters)
-    if ( this.suffix.endsWith('}') ) {
-        // Not supported for now: this code will ensure some backward
-        // compatibility for when cosmetic filters with explicit style
-        // properties start to be in use.
-        this.invalid = true;
         return this;
     }
 
@@ -376,6 +377,21 @@ FilterParser.prototype.parse = function(raw) {
     }
 
     return this;
+};
+
+/******************************************************************************/
+
+// Reference: https://adguard.com/en/filterrules.html#cssInjection
+
+FilterParser.prototype.translateAdguardCSSInjectionFilter = function(raw) {
+    var matches = /^([^#]*)#(@?)\$#([^{]+)\{([^}]+)\}$/.exec(raw);
+    if ( matches === null ) {
+        return '';
+    }
+    return matches[1] +
+           '#' + matches[2] + '#' +
+           matches[3].trim() +
+           ':style(' +  matches[4].trim() + ')';
 };
 
 /******************************************************************************/
@@ -699,6 +715,10 @@ FilterContainer.prototype.reset = function() {
 // https://github.com/chrisaljoudi/uBlock/issues/1004
 // Detect and report invalid CSS selectors.
 
+// Discard new ABP's `-abp-properties` directive until it is
+// implemented (if ever). Unlikely, see:
+// https://github.com/gorhill/uBlock/issues/1752
+
 FilterContainer.prototype.isValidSelector = (function() {
     var div = document.createElement('div');
     var matchesProp = (function() {
@@ -722,18 +742,22 @@ FilterContainer.prototype.isValidSelector = (function() {
     }
 
     var reHasSelector = /^(.+?):has\((.+?)\)$/;
+    var reStyleSelector = /^(.+?):style\((.+?)\)$/;
     var reXpathSelector = /^:xpath\((.+?)\)$/;
 
-    return function(s) {
+    // Keep in mind: https://github.com/gorhill/uBlock/issues/693
+    var isValidCSSSelector = function(s) {
         try {
-            // https://github.com/gorhill/uBlock/issues/693
             div[matchesProp](s + ',\n#foo');
-            // Discard new ABP's `-abp-properties` directive until it is
-            // implemented (if ever).
-            if ( s.indexOf('[-abp-properties=') === -1 ) {
-                return true;
-            }
-        } catch (e) {
+        } catch (ex) {
+            return false;
+        }
+        return true;
+    };
+
+    return function(s) {
+        if ( isValidCSSSelector(s) && s.indexOf('[-abp-properties=') === -1 ) {
+            return true;
         }
         // We reach this point very rarely.
         var matches;
@@ -752,6 +776,11 @@ FilterContainer.prototype.isValidSelector = (function() {
             } catch (e) {
             }
             return false;
+        }
+        // `:style` selector?
+        matches = reStyleSelector.exec(s);
+        if ( matches !== null ) {
+            return isValidCSSSelector(matches[1]);
         }
         // Special `script:` filter?
         if ( s.startsWith('script') ) {

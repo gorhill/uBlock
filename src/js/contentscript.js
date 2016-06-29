@@ -66,6 +66,7 @@ vAPI.domFilterer = {
     hiddenId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     hiddenNodeCount: 0,
     matchesProp: vAPI.matchesProp,
+    newCSSRules: [],
     newDeclarativeSelectors: [],
     shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     styleTags: [],
@@ -94,32 +95,13 @@ vAPI.domFilterer = {
         }
     },
 
-    addHasSelector: function(s1, s2) {
-        var entry = { a: s1, b: s2.slice(5, -1) };
-        if ( s1.indexOf(' ') === -1 ) {
-            this.simpleHasSelectors.push(entry);
-        } else {
-            this.complexHasSelectors.push(entry);
-            this.complexHasSelectorsCost = 0;
-        }
-    },
-
     addSelector: function(s) {
         if ( this.allSelectors[s] || this.allExceptions[s] ) {
             return;
         }
         this.allSelectors[s] = true;
-        var pos = s.indexOf(':');
-        if ( pos !== -1 ) {
-            pos = s.indexOf(':has(');
-            if ( pos !== -1 ) {
-                this.addHasSelector(s.slice(0, pos), s.slice(pos));
-                return;
-            }
-            if ( s.lastIndexOf(':xpath(', 0) === 0 ) {
-                this.addXpathSelector('', s);
-                return;
-            }
+        if ( s.indexOf(':') !== -1 && this.addSelectorEx(s) ) {
+            return;
         }
         if ( s.indexOf(' ') === -1 ) {
             this.simpleSelectors.push(s);
@@ -132,16 +114,39 @@ vAPI.domFilterer = {
         this.newDeclarativeSelectors.push(s);
     },
 
+    addSelectorEx: function(s) {
+        var pos = s.indexOf(':has(');
+        if ( pos !== -1 ) {
+            var entry = {
+                a: s.slice(0, pos),
+                b: s.slice(pos + 5, -1)
+            };
+            if ( entry.a.indexOf(' ') === -1 ) {
+                this.simpleHasSelectors.push(entry);
+            } else {
+                this.complexHasSelectors.push(entry);
+                this.complexHasSelectorsCost = 0;
+            }
+            return true;
+        }
+        pos = s.indexOf(':style(');
+        if ( pos !== -1 ) {
+            this.newCSSRules.push(s.slice(0, pos) + ' {' + s.slice(pos + 7, -1) + '}');
+            return true;
+        }
+        if ( s.lastIndexOf(':xpath(', 0) === 0 ) {
+            this.xpathExpression = null;
+            this.xpathSelectorsCost = 0;
+            this.addXpathSelector('', s.slice(7, -1));
+            return true;
+        }
+        return false;
+    },
+
     addSelectors: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
             this.addSelector(aa[i]);
         }
-    },
-
-    addXpathSelector: function(s1, s2) {
-        this.xpathSelectors.push(s2.slice(7, -1));
-        this.xpathExpression = null;
-        this.xpathSelectorsCost = 0;
     },
 
     checkStyleTags: function(commitIfNeeded) {
@@ -188,8 +193,9 @@ vAPI.domFilterer = {
         }
 
         // Inject new declarative selectors.
+        var styleTag;
         if ( this.newDeclarativeSelectors.length ) {
-            var styleTag = document.createElement('style');
+            styleTag = document.createElement('style');
             styleTag.setAttribute('type', 'text/css');
             styleTag.textContent =
                 ':root ' +
@@ -198,6 +204,15 @@ vAPI.domFilterer = {
             document.head.appendChild(styleTag);
             this.styleTags.push(styleTag);
             this.newDeclarativeSelectors.length = 0;
+        }
+        // Inject new CSS rules.
+        if ( this.newCSSRules.length ) {
+            styleTag = document.createElement('style');
+            styleTag.setAttribute('type', 'text/css');
+            styleTag.textContent = ':root ' + this.newCSSRules.join(',\n:root ');
+            document.head.appendChild(styleTag);
+            this.styleTags.push(styleTag);
+            this.newCSSRules.length = 0;
         }
 
         // Simple `:has()` selectors.
