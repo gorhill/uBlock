@@ -418,7 +418,7 @@ vAPI.storage = (function() {
                 console.error('SQLite error ', error.result, error.message);
                 // Caller expects an answer regardless of failure.
                 if ( typeof callback === 'function' ) {
-                    callback(null);
+                    callback({});
                 }
                 result = null;
             }
@@ -468,7 +468,7 @@ vAPI.storage = (function() {
         }
 
         runStatement(stmt, function(result) {
-            callback(result.size);
+            callback(result.size || 0);
         });
     };
 
