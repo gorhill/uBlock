@@ -234,7 +234,7 @@ vAPI.domFilterer = {
             this.cosmeticFiltersActivatedTimer === null
         ) {
             this.cosmeticFiltersActivatedTimer = vAPI.setTimeout(
-                this.cosmeticFiltersActivated,
+                this.cosmeticFiltersActivated.bind(this),
                 503
             );
         }
