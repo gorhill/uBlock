@@ -125,8 +125,10 @@ var fromCosmeticFilter = function(details) {
         reStr.push('c', 'hlg0', reEscape(filter));
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
         reStr.push('c', 'hmg0', '[^"]{8}', '[a-z]*' + reEscape(filter));
-    } else {                                    // all else
-        reStr.push('c', 'hhg0', reEscape(filter));
+    } else if ( filter.indexOf(' ') === -1 ) {  // high-high-simple selector
+        reStr.push('c', 'hhsg0', reEscape(filter));
+    } else {                                    // high-high-complex selector
+        reStr.push('c', 'hhcg0', reEscape(filter));
     }
     candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
 

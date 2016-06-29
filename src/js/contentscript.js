@@ -38,6 +38,18 @@ if ( typeof vAPI !== 'object' || vAPI.contentscriptInjected ) {
 
 vAPI.contentscriptInjected = true;
 
+vAPI.matchesProp = (function() {
+    var docElem = document.documentElement;
+    if ( typeof docElem.matches !== 'function' ) {
+        if ( typeof docElem.mozMatchesSelector === 'function' ) {
+            return 'mozMatchesSelector';
+        } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
+            return 'webkitMatchesSelector';
+        }
+    }
+    return 'matches';
+})();
+
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
@@ -53,7 +65,7 @@ vAPI.domFilterer = {
     enabled: true,
     hiddenId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     hiddenNodeCount: 0,
-    matchesProp: 'matches',
+    matchesProp: vAPI.matchesProp,
     newDeclarativeSelectors: [],
     shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     styleTags: [],
@@ -410,14 +422,6 @@ vAPI.domFilterer = {
     var df = vAPI.domFilterer;
     df.cssNotHiddenId = ':not([' + df.hiddenId + '])';
     df.xpathNotHiddenId = '[not(@' + df.hiddenId + ')]';
-    var docElem = document.documentElement;
-    if ( typeof docElem.matches !== 'function' ) {
-        if ( typeof docElem.mozMatchesSelector === 'function' ) {
-            df.matchesProp = 'mozMatchesSelector';
-        } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
-            df.matchesProp =  'webkitMatchesSelector';
-        }
-    }
 
     // Complex selectors, due to their nature may need to be "de-committed". A
     // Set() is used to implement this functionality. For browser with no
@@ -835,12 +839,11 @@ if ( !vAPI.contentscriptInjected ) {
     domFilterer.checkStyleTags(false);
     domFilterer.commit();
 
-    var contextNodes = [ document.documentElement ];
-    var messaging = vAPI.messaging;
-    var highGenerics = null;
-    var highHighGenericsInjected = false;
-    var lowGenericSelectors = [];
-    var queriedSelectors = Object.create(null);
+    var contextNodes = [ document.documentElement ],
+        messaging = vAPI.messaging,
+        highGenerics = null,
+        lowGenericSelectors = [],
+        queriedSelectors = Object.create(null);
 
     var responseHandler = function(response) {
         // https://github.com/gorhill/uMatrix/issues/144
@@ -859,6 +862,7 @@ if ( !vAPI.contentscriptInjected ) {
                 highGenerics = result.highGenerics;
             }
         }
+
         if ( highGenerics ) {
             if ( highGenerics.hideLowCount ) {
                 processHighLowGenerics(highGenerics.hideLow);
@@ -866,10 +870,11 @@ if ( !vAPI.contentscriptInjected ) {
             if ( highGenerics.hideMediumCount ) {
                 processHighMediumGenerics(highGenerics.hideMedium);
             }
-            if ( highGenerics.hideHighCount ) {
-                processHighHighGenericsAsync();
+            if ( highGenerics.hideHighSimpleCount || highGenerics.hideHighComplexCount ) {
+                processHighHighGenerics();
             }
         }
+
         domFilterer.commit(contextNodes);
         contextNodes = [];
     };
@@ -886,10 +891,10 @@ if ( !vAPI.contentscriptInjected ) {
                 },
                 responseHandler
             );
+            lowGenericSelectors = [];
         } else {
             responseHandler(null);
         }
-        lowGenericSelectors = [];
     };
 
     // Extract and return the staged nodes which (may) match the selectors.
@@ -1009,42 +1014,50 @@ if ( !vAPI.contentscriptInjected ) {
         }
     };
 
-    // High-high generics are very costly to process, so we will coalesce
-    // requests to process high-high generics into as few requests as possible.
-    // The gain is significant on bloated pages.
-
-    var processHighHighGenericsMisses = 8;
-    var processHighHighGenericsTimer = null;
+    var highHighSimpleGenericsCost = 0,
+        highHighSimpleGenericsInjected = false,
+        highHighComplexGenericsCost = 0,
+        highHighComplexGenericsInjected = false;
 
     var processHighHighGenerics = function() {
-        processHighHighGenericsTimer = null;
-        if ( highGenerics.hideHigh === '' ) {
-            return;
-        }
-        if ( highHighGenericsInjected ) {
-            return;
-        }
-        // When there are too many misses for these highly generic CSS rules,
-        // we will just give up on looking whether they need to be injected.
-        if ( document.querySelector(highGenerics.hideHigh) === null ) {
-            processHighHighGenericsMisses -= 1;
-            if ( processHighHighGenericsMisses === 0 ) {
-                highHighGenericsInjected = true;
+        var tstart;
+        // Simple selectors.
+        if (
+            highHighSimpleGenericsInjected === false &&
+            highHighSimpleGenericsCost < 50 &&
+            highGenerics.hideHighSimpleCount !== 0
+        ) {
+            tstart = window.performance.now();
+            var matchesProp = vAPI.matchesProp,
+                nodes = contextNodes,
+                i = nodes.length, node;
+            while ( i-- ) {
+                node = nodes[i];
+                if (
+                    node[matchesProp](highGenerics.hideHighSimple) ||
+                    node.querySelector(highGenerics.hideHighSimple) !== null
+                ) {
+                    highHighSimpleGenericsInjected = true;
+                    domFilterer.addSelectors(highGenerics.hideHighSimple.split(',\n'));
+                    break;
+                }
             }
-            return;
+            highHighSimpleGenericsCost += window.performance.now() - tstart;
         }
-        highHighGenericsInjected = true;
-        // We need to filter out possible exception cosmetic filters from
-        // high-high generics selectors.
-        domFilterer.addSelectors(highGenerics.hideHigh.split(',\n'));
-        domFilterer.commit();
-    };
-
-    var processHighHighGenericsAsync = function() {
-        if ( processHighHighGenericsTimer !== null ) {
-            clearTimeout(processHighHighGenericsTimer);
+        // Complex selectors.
+        if (
+            highHighComplexGenericsInjected === false &&
+            highHighComplexGenericsCost < 50 &&
+            highGenerics.hideHighComplexCount !== 0
+        ) {
+            tstart = window.performance.now();
+            if ( document.querySelector(highGenerics.hideHighComplex) !== null ) {
+                highHighComplexGenericsInjected = true;
+                domFilterer.addSelectors(highGenerics.hideHighComplex.split(',\n'));
+                domFilterer.commit();
+            }
+            highHighComplexGenericsCost += window.performance.now() - tstart;
         }
-        processHighHighGenericsTimer = vAPI.setTimeout(processHighHighGenerics, 300);
     };
 
     // Extract all classes/ids: these will be passed to the cosmetic filtering
@@ -1224,9 +1237,6 @@ if ( !vAPI.contentscriptInjected ) {
         }
         if ( removedNodeListsTimer !== null ) {
             clearTimeout(removedNodeListsTimer);
-        }
-        if ( processHighHighGenericsTimer !== null ) {
-            clearTimeout(processHighHighGenericsTimer);
         }
     });
 })();

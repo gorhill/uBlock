@@ -672,10 +672,15 @@ FilterContainer.prototype.reset = function() {
     this.highMediumGenericHide = {};
     this.highMediumGenericHideCount = 0;
 
-    // everything else
-    this.highHighGenericHideArray = [];
-    this.highHighGenericHide = '';
-    this.highHighGenericHideCount = 0;
+    // high-high-simple selectors
+    this.highHighSimpleGenericHideArray = [];
+    this.highHighSimpleGenericHide = '';
+    this.highHighSimpleGenericHideCount = 0;
+
+    // high-high-complex selectors
+    this.highHighComplexGenericHideArray = [];
+    this.highHighComplexGenericHide = '';
+    this.highHighComplexGenericHideCount = 0;
 
     // generic exception filters
     this.genericDonthide = [];
@@ -888,8 +893,13 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         return;
     }
 
-    // All else
-    out.push('c\vhhg0\v' + selector);
+    // All else: high-high generics.
+    // Distinguish simple vs complex selectors.
+    if ( selector.indexOf(' ') === -1 ) {
+        out.push('c\vhhsg0\v' + selector);
+    } else {
+        out.push('c\vhhcg0\v' + selector);
+    }
 };
 
 FilterContainer.prototype.reClassOrIdSelector = /^[#.][\w-]+$/;
@@ -1048,9 +1058,15 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        if ( fields[0] === 'hhg0' ) {
-            this.highHighGenericHideArray.push(fields[1]);
-            this.highHighGenericHideCount += 1;
+        if ( fields[0] === 'hhsg0' ) {
+            this.highHighSimpleGenericHideArray.push(fields[1]);
+            this.highHighSimpleGenericHideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hhcg0' ) {
+            this.highHighComplexGenericHideArray.push(fields[1]);
+            this.highHighComplexGenericHideCount += 1;
             continue;
         }
 
@@ -1197,11 +1213,17 @@ FilterContainer.prototype.retrieveScriptTags = function(domain, hostname) {
 FilterContainer.prototype.freeze = function() {
     this.duplicateBuster = {};
 
-    if ( this.highHighGenericHide !== '' ) {
-        this.highHighGenericHideArray.unshift(this.highHighGenericHide);
+    if ( this.highHighSimpleGenericHide !== '' ) {
+        this.highHighSimpleGenericHideArray.unshift(this.highHighSimpleGenericHide);
     }
-    this.highHighGenericHide = this.highHighGenericHideArray.join(',\n');
-    this.highHighGenericHideArray = [];
+    this.highHighSimpleGenericHide = this.highHighSimpleGenericHideArray.join(',\n');
+    this.highHighSimpleGenericHideArray = [];
+
+    if ( this.highHighComplexGenericHide !== '' ) {
+        this.highHighComplexGenericHideArray.unshift(this.highHighComplexGenericHide);
+    }
+    this.highHighComplexGenericHide = this.highHighComplexGenericHideArray.join(',\n');
+    this.highHighComplexGenericHideArray = [];
 
     this.parser.reset();
     this.frozen = true;
@@ -1245,8 +1267,10 @@ FilterContainer.prototype.toSelfie = function() {
         highLowGenericHideCount: this.highLowGenericHideCount,
         highMediumGenericHide: this.highMediumGenericHide,
         highMediumGenericHideCount: this.highMediumGenericHideCount,
-        highHighGenericHide: this.highHighGenericHide,
-        highHighGenericHideCount: this.highHighGenericHideCount,
+        highHighSimpleGenericHide: this.highHighSimpleGenericHide,
+        highHighSimpleGenericHideCount: this.highHighSimpleGenericHideCount,
+        highHighComplexGenericHide: this.highHighComplexGenericHide,
+        highHighComplexGenericHideCount: this.highHighComplexGenericHideCount,
         genericDonthide: this.genericDonthide,
         scriptTagFilters: this.scriptTagFilters,
         scriptTagFilterCount: this.scriptTagFilterCount,
@@ -1309,8 +1333,10 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highLowGenericHideCount = selfie.highLowGenericHideCount;
     this.highMediumGenericHide = selfie.highMediumGenericHide;
     this.highMediumGenericHideCount = selfie.highMediumGenericHideCount;
-    this.highHighGenericHide = selfie.highHighGenericHide;
-    this.highHighGenericHideCount = selfie.highHighGenericHideCount;
+    this.highHighSimpleGenericHide = selfie.highHighSimpleGenericHide;
+    this.highHighSimpleGenericHideCount = selfie.highHighSimpleGenericHideCount;
+    this.highHighComplexGenericHide = selfie.highHighComplexGenericHide;
+    this.highHighComplexGenericHideCount = selfie.highHighComplexGenericHideCount;
     this.genericDonthide = selfie.genericDonthide;
     this.scriptTagFilters = selfie.scriptTagFilters;
     this.scriptTagFilterCount = selfie.scriptTagFilterCount;
@@ -1441,8 +1467,10 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             hideLowCount: this.highLowGenericHideCount,
             hideMedium: this.highMediumGenericHide,
             hideMediumCount: this.highMediumGenericHideCount,
-            hideHigh: this.highHighGenericHide,
-            hideHighCount: this.highHighGenericHideCount
+            hideHighSimple: this.highHighSimpleGenericHide,
+            hideHighSimpleCount: this.highHighSimpleGenericHideCount,
+            hideHighComplex: this.highHighComplexGenericHide,
+            hideHighComplexCount: this.highHighComplexGenericHideCount
         };
     }
 
