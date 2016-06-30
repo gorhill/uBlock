@@ -70,7 +70,6 @@ vAPI.domFilterer = {
     newDeclarativeSelectors: [],
     shadowId: String.fromCharCode(Date.now() % 26 + 97) + Math.floor(Math.random() * 982451653 + 982451653).toString(36),
     styleTags: [],
-    xpathNotHiddenId: '',
 
     simpleGroupSelector: null,
     simpleSelectors: [],
@@ -100,7 +99,7 @@ vAPI.domFilterer = {
             return;
         }
         this.allSelectors[s] = true;
-        if ( s.indexOf(':') !== -1 && this.addSelectorEx(s) ) {
+        if ( s.charCodeAt(s.length-1) === 0x29 && this.addSelectorEx(s) ) {
             return;
         }
         if ( s.indexOf(' ') === -1 ) {
@@ -137,7 +136,7 @@ vAPI.domFilterer = {
         if ( s.lastIndexOf(':xpath(', 0) === 0 ) {
             this.xpathExpression = null;
             this.xpathSelectorsCost = 0;
-            this.addXpathSelector('', s.slice(7, -1));
+            this.xpathSelectors.push(s.slice(7, -1));
             return true;
         }
         return false;
@@ -261,7 +260,7 @@ vAPI.domFilterer = {
             i = this.complexHasSelectors.length;
         while ( i-- ) {
             entry = this.complexHasSelectors[i];
-            nodes = document.querySelectorAll(entry.a + this.cssNotHiddenId);
+            nodes = document.querySelectorAll(entry.a);
             j = nodes.length;
             while ( j-- ) {
                 node = nodes[j];
@@ -307,7 +306,7 @@ vAPI.domFilterer = {
                 if ( parent[this.matchesProp](entry.a) && parent.querySelector(entry.b) !== null ) {
                     this.hideNode(parent);
                 }
-                nodes = parent.querySelectorAll(entry.a + this.cssNotHiddenId);
+                nodes = parent.querySelectorAll(entry.a);
                 k = nodes.length;
                 while ( k-- ) {
                     node = nodes[k];
@@ -343,7 +342,7 @@ vAPI.domFilterer = {
         var tstart = window.performance.now();
         if ( this.xpathExpression === null ) {
             this.xpathExpression = document.createExpression(
-                this.xpathSelectors.join(this.xpathNotHiddenId + '|') + this.xpathNotHiddenId,
+                this.xpathSelectors.join('|'),
                 null
             );
         }
@@ -389,6 +388,8 @@ vAPI.domFilterer = {
             if ( shadow !== null ) {
                 if ( shadow.className !== this.shadowId ) {
                     node.style.setProperty('display', 'none', 'important');
+                } else if ( shadow.firstElementChild !== null ) {
+                    shadow.removeChild(shadow.firstElementChild);
                 }
                 return;
             }
@@ -436,7 +437,6 @@ vAPI.domFilterer = {
 (function() {
     var df = vAPI.domFilterer;
     df.cssNotHiddenId = ':not([' + df.hiddenId + '])';
-    df.xpathNotHiddenId = '[not(@' + df.hiddenId + ')]';
 
     // Complex selectors, due to their nature may need to be "de-committed". A
     // Set() is used to implement this functionality. For browser with no
@@ -1083,9 +1083,7 @@ if ( !vAPI.contentscriptInjected ) {
     // http://jsperf.com/enumerate-classes/6
 
     var classesAndIdsFromNodeList = function(nodes) {
-        if ( !nodes || !nodes.length ) {
-            return;
-        }
+        if ( !nodes ) { return; }
         var qq = queriedSelectors;
         var ll = lowGenericSelectors;
         var node, v, vv, len, c, beg, end;
