@@ -2331,15 +2331,8 @@ vAPI.net.registerListeners = function() {
     }
 
     var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
-    var shouldLoadPopupListener = function(e) {
-        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
-            return;
-        }
-
-        var openerURL = e.data;
-        var popupTabId = tabWatcher.tabIdFromTarget(e.target);
+    var shouldLoadPopupListener = function(openerURL, popupTabId) {
         var uri, openerTabId;
-
         for ( var browser of tabWatcher.browsers() ) {
             uri = browser.currentURI;
 
@@ -2362,10 +2355,20 @@ vAPI.net.registerListeners = function() {
             }
         }
     };
+    var shouldLoadPopupListenerAsync = function(e) {
+        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
+            return;
+        }
+        // We are handling a synchronous message: do not block.
+        vAPI.setTimeout(
+            shouldLoadPopupListener.bind(null, e.data, tabWatcher.tabIdFromTarget(e.target)),
+            1
+        );
+    };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
         shouldLoadPopupListenerMessageName,
-        shouldLoadPopupListener
+        shouldLoadPopupListenerAsync
     );
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
@@ -2451,7 +2454,7 @@ vAPI.net.registerListeners = function() {
     cleanupTasks.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadPopupListenerMessageName,
-            shouldLoadPopupListener
+            shouldLoadPopupListenerAsync
         );
 
         vAPI.messaging.globalMessageManager.removeMessageListener(
