@@ -36,6 +36,8 @@ if ( typeof vAPI !== 'object' || vAPI.contentscriptInjected ) {
     throw new Error('Unexpected condition: aborting.');
 }
 
+vAPI.executionCost.start();
+
 vAPI.contentscriptInjected = true;
 
 vAPI.matchesProp = (function() {
@@ -273,6 +275,9 @@ vAPI.domFilterer = {
     },
 
     commitComplexSelectors: function() {
+        if ( this.complexSelectorsNodeSet === null ) {
+            return;
+        }
         var tstart = window.performance.now(),
             newNodeSet = new Set();
         if ( this.complexGroupSelector === null ) {
@@ -443,8 +448,6 @@ vAPI.domFilterer = {
     // support of Set(), uBO will skip committing complex selectors.
     if ( typeof window.Set === 'function' ) {
         df.complexSelectorsNodeSet = new Set();
-    } else {
-        df.complexSelectorsCost = Number.MAX_VALUE;
     }
 
     // Theoretically, `:has`- and `:xpath`-based selectors may also need to
@@ -528,6 +531,8 @@ var injectScripts = function(scripts) {
 /******************************************************************************/
 
 var responseHandler = function(details) {
+    vAPI.executionCost.start();
+
     if ( details ) {
         if (
             (vAPI.skipCosmeticFiltering = details.skipCosmeticFiltering) !== true &&
@@ -550,6 +555,8 @@ var responseHandler = function(details) {
     // process was fully initialized. When this happens, pages won't be
     // cleaned right after browser launch.
     vAPI.contentscriptInjected = details && details.ready;
+
+    vAPI.executionCost.stop('domIsLoading/responseHandler');
 };
 
 /******************************************************************************/
@@ -832,6 +839,8 @@ if ( !vAPI.contentscriptInjected ) {
     return;
 }
 
+vAPI.executionCost.start();
+
 /******************************************************************************/
 
 // Cosmetic filtering.
@@ -841,11 +850,6 @@ if ( !vAPI.contentscriptInjected ) {
         //console.debug('Abort cosmetic filtering');
         return;
     }
-
-    //console.debug('Start cosmetic filtering');
-
-    //var timer = window.performance || Date;
-    //var tStart = timer.now();
 
     // https://github.com/chrisaljoudi/uBlock/issues/789
     // https://github.com/gorhill/uBlock/issues/873
@@ -866,6 +870,8 @@ if ( !vAPI.contentscriptInjected ) {
             vAPI.shutdown.exec();
             return;
         }
+
+        vAPI.executionCost.start();
 
         var result = response && response.result;
 
@@ -892,6 +898,8 @@ if ( !vAPI.contentscriptInjected ) {
 
         domFilterer.commit(contextNodes);
         contextNodes = [];
+
+        vAPI.executionCost.stop('domIsLoaded/responseHandler');
     };
 
     var retrieveGenericSelectors = function() {
@@ -1166,6 +1174,8 @@ if ( !vAPI.contentscriptInjected ) {
     var collapser = domCollapser;
 
     var addedNodesHandler = function() {
+        vAPI.executionCost.start();
+
         addedNodeListsTimer = null;
         if ( addedNodeListsTimerDelay < 100 ) {
             addedNodeListsTimerDelay += 25;
@@ -1192,6 +1202,8 @@ if ( !vAPI.contentscriptInjected ) {
             classesAndIdsFromNodeList(selectNodes('[class],[id]'));
             retrieveGenericSelectors();
         }
+
+        vAPI.executionCost.stop('domIsLoaded/responseHandler');
     };
 
     // https://github.com/gorhill/uBlock/issues/873
@@ -1212,6 +1224,8 @@ if ( !vAPI.contentscriptInjected ) {
     // overhead of processing too few nodes too often and the delay of many
     // nodes less often.
     var domLayoutChanged = function(mutations) {
+        vAPI.executionCost.start();
+
         var removedNodeLists = false;
         var iMutation = mutations.length;
         var nodeList, mutation;
@@ -1231,6 +1245,8 @@ if ( !vAPI.contentscriptInjected ) {
         if ( removedNodeListsTimerDelay !== 0 && removedNodeLists && removedNodeListsTimer === null ) {
             removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, removedNodeListsTimerDelay);
         }
+
+        vAPI.executionCost.stop('domIsLoaded/domLayoutChanged');
     };
 
     //console.debug('Starts cosmetic filtering\'s mutations observer');
@@ -1265,9 +1281,10 @@ if ( !vAPI.contentscriptInjected ) {
 
 (function() {
     var onResourceFailed = function(ev) {
-        //console.debug('onResourceFailed(%o)', ev);
+        vAPI.executionCost.start();
         domCollapser.add(ev.target);
         domCollapser.process();
+        vAPI.executionCost.stop('domIsLoaded/onResourceFailed');
     };
     document.addEventListener('error', onResourceFailed, true);
 
@@ -1319,6 +1336,7 @@ if ( !vAPI.contentscriptInjected ) {
     var messaging = vAPI.messaging;
 
     var onMouseClick = function(ev) {
+        vAPI.executionCost.start();
         var elem = ev.target;
         while ( elem !== null && elem.localName !== 'a' ) {
             elem = elem.parentElement;
@@ -1331,6 +1349,7 @@ if ( !vAPI.contentscriptInjected ) {
                 y: ev.clientY,
                 url: elem !== null ? elem.href : ''
             });
+        vAPI.executionCost.stop('domIsLoaded/onMouseClick');
     };
 
     document.addEventListener('mousedown', onMouseClick, true);
@@ -1343,6 +1362,8 @@ if ( !vAPI.contentscriptInjected ) {
 
 /******************************************************************************/
 
+vAPI.executionCost.stop('domIsLoaded');
+
 };
 
 /******************************************************************************/
@@ -1354,3 +1375,5 @@ if ( document.readyState !== 'loading' ) {
 } else {
     document.addEventListener('DOMContentLoaded', domIsLoaded);
 }
+
+vAPI.executionCost.stop('contentscript.js');
