@@ -58,13 +58,13 @@ NetFilteringResultCacheEntry.prototype.init = function(result, type) {
     this.result = result;
     this.type = type;
     this.time = Date.now();
+    return this;
 };
 
 /******************************************************************************/
 
 NetFilteringResultCacheEntry.prototype.dispose = function() {
-    this.result = '';
-    this.type = '';
+    this.result = this.type = '';
     if ( netFilteringResultCacheEntryJunkyard.length < netFilteringResultCacheEntryJunkyardMax ) {
         netFilteringResultCacheEntryJunkyard.push(this);
     }
@@ -73,13 +73,10 @@ NetFilteringResultCacheEntry.prototype.dispose = function() {
 /******************************************************************************/
 
 NetFilteringResultCacheEntry.factory = function(result, type) {
-    var entry = netFilteringResultCacheEntryJunkyard.pop();
-    if ( entry === undefined ) {
-        entry = new NetFilteringResultCacheEntry(result, type);
-    } else {
-        entry.init(result, type);
+    if ( netFilteringResultCacheEntryJunkyard.length ) {
+        return netFilteringResultCacheEntryJunkyard.pop().init(result, type);
     }
-    return entry;
+    return new NetFilteringResultCacheEntry(result, type);
 };
 
 /******************************************************************************/
@@ -110,7 +107,7 @@ NetFilteringResultCache.factory = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.init = function() {
-    this.urls = {};
+    this.urls = Object.create(null);
     this.count = 0;
     this.shelfLife = 15 * 1000;
     this.timer = null;
@@ -131,16 +128,17 @@ NetFilteringResultCache.prototype.dispose = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.add = function(context, result) {
-    var url = context.requestURL;
-    var type = context.requestType;
-    var entry = this.urls[url];
+    var url = context.requestURL,
+        type = context.requestType,
+        key = type + ' ' + url,
+        entry = this.urls[key];
     if ( entry !== undefined ) {
         entry.result = result;
         entry.type = type;
         entry.time = Date.now();
         return;
     }
-    this.urls[url] = NetFilteringResultCacheEntry.factory(result, type);
+    this.urls[key] = NetFilteringResultCacheEntry.factory(result, type);
     if ( this.count === 0 ) {
         this.pruneAsync();
     }
@@ -151,12 +149,9 @@ NetFilteringResultCache.prototype.add = function(context, result) {
 
 NetFilteringResultCache.prototype.empty = function() {
     for ( var key in this.urls ) {
-        if ( this.urls.hasOwnProperty(key) === false ) {
-            continue;
-        }
         this.urls[key].dispose();
     }
-    this.urls = {};
+    this.urls = Object.create(null);
     this.count = 0;
     if ( this.timer !== null ) {
         clearTimeout(this.timer);
