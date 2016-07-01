@@ -98,11 +98,11 @@ vAPI.domFilterer = {
 
     addSelector: function(s) {
         if ( this.allSelectors[s] || this.allExceptions[s] ) {
-            return;
+            return this;
         }
         this.allSelectors[s] = true;
         if ( s.charCodeAt(s.length-1) === 0x29 && this.addSelectorEx(s) ) {
-            return;
+            return this;
         }
         if ( s.indexOf(' ') === -1 ) {
             this.simpleSelectors.push(s);
@@ -113,6 +113,7 @@ vAPI.domFilterer = {
             this.complexSelectorsCost = 0;
         }
         this.newDeclarativeSelectors.push(s);
+        return this;
     },
 
     addSelectorEx: function(s) {
@@ -992,15 +993,13 @@ vAPI.executionCost.start();
                 // form, as the generic will affect all related specific forms
                 selector = '[' + attr + '="' + attrValue + '"]';
                 if ( generics.hasOwnProperty(selector) ) {
-                    domFilterer.addSelector(selector);
-                    domFilterer.hideNode(node);
+                    domFilterer.addSelector(selector).hideNode(node);
                     continue;
                 }
                 // Candidate 2 = specific form
                 selector = node.localName + selector;
                 if ( generics.hasOwnProperty(selector) ) {
-                    domFilterer.addSelector(selector);
-                    domFilterer.hideNode(node);
+                    domFilterer.addSelector(selector).hideNode(node);
                 }
             }
         }
@@ -1033,29 +1032,26 @@ vAPI.executionCost.start();
 
     var processHighMediumGenericsForNodes = function(nodes, generics) {
         var i = nodes.length,
-            node, href, pos, hash, selectors, j, selector,
-            aa = [ '' ];
+            node, href, pos, entry, j, selector;
         while ( i-- ) {
             node = nodes[i];
             href = node.getAttribute('href');
             if ( !href ) { continue; }
             pos = href.indexOf('://');
             if ( pos === -1 ) { continue; }
-            hash = href.slice(pos + 3, pos + 11);
-            selectors = generics[hash];
-            if ( selectors === undefined ) { continue; }
-            // A string.
-            if ( typeof selectors === 'string' ) {
-                aa[0] = selectors;
-                selectors = aa;
+            entry = generics[href.slice(pos + 3, pos + 11)];
+            if ( entry === undefined ) { continue; }
+            if ( typeof entry === 'string' ) {
+                if ( href.lastIndexOf(entry.slice(8, -2), 0) === 0 ) {
+                    domFilterer.addSelector(entry).hideNode(node);
+                }
+                continue;
             }
-            // An array of strings.
-            j = selectors.length;
+            j = entry.length;
             while ( j-- ) {
-                selector = selectors[j];
+                selector = entry[j];
                 if ( href.lastIndexOf(selector.slice(8, -2), 0) === 0 ) {
-                    domFilterer.addSelector(selector);
-                    domFilterer.hideNode(node);
+                    domFilterer.addSelector(selector).hideNode(node);
                 }
             }
         }
@@ -1197,9 +1193,9 @@ vAPI.executionCost.start();
     // Added node lists will be cumulated here before being processed
     var addedNodeLists = [];
     var addedNodeListsTimer = null;
-    var addedNodeListsTimerDelay = 25;
+    var addedNodeListsTimerDelay = 0;
     var removedNodeListsTimer = null;
-    var removedNodeListsTimerDelay = 25;
+    var removedNodeListsTimerDelay = 5;
     var collapser = domCollapser;
 
     var addedNodesHandler = function() {

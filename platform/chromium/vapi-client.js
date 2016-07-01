@@ -63,12 +63,12 @@ if ( vAPI.sessionId ) {
 }
 
 /******************************************************************************/
-
+/*
 vAPI.executionCost = {
     start: function(){},
     stop: function(){}
 };
-/*
+*/
 vAPI.executionCost = {
     tcost: 0,
     tstart: 0,
@@ -106,7 +106,7 @@ vAPI.executionCost = {
         );
     }
 };
-*/
+
 vAPI.executionCost.start();
 
 /******************************************************************************/
