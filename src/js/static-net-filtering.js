@@ -209,8 +209,10 @@ var strToRegex = function(s, anchor, flags) {
 
     // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+    // Also: remove leading/trailing wildcards -- there is no point.
     var reStr = s.replace(/[.+?${}()|[\]\\]/g, '\\$&')
                  .replace(/\^/g, '(?:[^%.0-9a-z_-]|$)')
+                 .replace(/^\*|\*$/g, '')
                  .replace(/\*/g, '[^ ]*?');
 
     if ( anchor < 0 ) {
@@ -1991,10 +1993,6 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
 
 FilterContainer.prototype.compileFilter = function(parsed, out) {
     parsed.makeToken();
-    if ( parsed.token === '*' && parsed.hostnameAnchored ) {
-        console.error('FilterContainer.compileFilter("%s"): invalid filter', parsed.f);
-        return false;
-    }
 
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
