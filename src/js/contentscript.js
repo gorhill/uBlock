@@ -387,13 +387,18 @@ vAPI.domFilterer = {
         return function(node) {
             this.hiddenNodeCount += 1;
             node.setAttribute(this.hiddenId, '');
-            var shadow = node.shadowRoot;
+            if ( this.enabled === false ) {
+                return;
+            }
+            // https://github.com/gorhill/uBlock/issues/762
+            // https://github.com/gorhill/uBlock/issues/769#issuecomment-229873048
+            // Always enforce `display: none`.
+            node.style.setProperty('display', 'none', 'important');
             // https://www.chromestatus.com/features/4668884095336448
             // "Multiple shadow roots is being deprecated."
-            if ( shadow !== null ) {
-                if ( shadow.className !== this.shadowId ) {
-                    node.style.setProperty('display', 'none', 'important');
-                } else if ( shadow.firstElementChild !== null ) {
+            var shadow = node.shadowRoot;
+            if ( shadow ) {
+                if ( shadow.className === this.shadowId && shadow.firstElementChild !== null ) {
                     shadow.removeChild(shadow.firstElementChild);
                 }
                 return;
@@ -401,18 +406,24 @@ vAPI.domFilterer = {
             // https://github.com/gorhill/uBlock/pull/555
             // Not all nodes can be shadowed:
             //   https://github.com/w3c/webcomponents/issues/102
-            // https://github.com/gorhill/uBlock/issues/762
-            // Remove display style that might get in the way of the shadow
-            // node doing its magic.
             try {
                 shadow = node.createShadowRoot();
                 shadow.className = this.shadowId;
-                node.style.removeProperty('display');
             } catch (ex) {
-                node.style.setProperty('display', 'none', 'important');
             }
         };
     })(),
+
+    showNode: function(node) {
+        node.style.removeProperty('display');
+        var shadow = node.shadowRoot;
+        if ( shadow && shadow.className === this.shadowId ) {
+            if ( shadow.firstElementChild !== null ) {
+                shadow.removeChild(shadow.firstElementChild);
+            }
+            shadow.appendChild(document.createElement('content'));
+        }
+    },
 
     toggleOff: function() {
         this.enabled = false;
@@ -425,16 +436,27 @@ vAPI.domFilterer = {
     unhideNode: function(node) {
         this.hiddenNodeCount--;
         node.removeAttribute(this.hiddenId);
+        node.style.removeProperty('display');
         var shadow = node.shadowRoot;
         if ( shadow && shadow.className === this.shadowId ) {
             if ( shadow.firstElementChild !== null ) {
                 shadow.removeChild(shadow.firstElementChild);
             }
             shadow.appendChild(document.createElement('content'));
-        } else {
-            node.style.removeProperty('display');
         }
-    }
+    },
+
+    unshowNode: function(node) {
+        node.style.setProperty('display', 'none', 'important');
+        var shadow = node.shadowRoot;
+        if (
+            shadow &&
+            shadow.className === this.shadowId &&
+            shadow.firstElementChild !== null
+        ) {
+            shadow.removeChild(shadow.firstElementChild);
+        }
+    },
 };
 
 

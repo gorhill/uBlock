@@ -47,22 +47,7 @@
     }
     i = elems.length;
     while ( i-- ) {
-        var elem = elems[i];
-        var shadow = elem.shadowRoot;
-        if ( shadow === undefined ) {
-            style = elems[i].style;
-            if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
-                style.setProperty('display', 'none', 'important');
-            }
-            continue;
-        }
-        if (
-            shadow !== null &&
-            shadow.className === vAPI.domFilterer.shadowId &&
-            shadow.firstElementChild !== null
-        ) {
-            shadow.removeChild(shadow.firstElementChild);
-        }
+        vAPI.domFilterer.unshowNode(elems[i]);
     }
 
     vAPI.domFilterer.toggleOn();

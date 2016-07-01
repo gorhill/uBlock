@@ -47,22 +47,7 @@
     }
     i = elems.length;
     while ( i-- ) {
-        var elem = elems[i];
-        var shadow = elem.shadowRoot;
-        if ( shadow === undefined ) {
-            style = elem.style;
-            if ( typeof style === 'object' || typeof style.removeProperty === 'function' ) {
-                style.removeProperty('display');
-            }
-            continue;
-        }
-        if (
-            shadow !== null &&
-            shadow.className === vAPI.domFilterer.shadowId &&
-            shadow.firstElementChild === null
-        ) {
-            shadow.appendChild(document.createElement('content'));
-        }
+        vAPI.domFilterer.showNode(elems[i]);
     }
 
     vAPI.domFilterer.toggleOff();
