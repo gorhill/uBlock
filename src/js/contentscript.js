@@ -1053,7 +1053,7 @@ vAPI.executionCost.start();
             j = selectors.length;
             while ( j-- ) {
                 selector = selectors[j];
-                if ( href.lastIndexOf(selector, 8) === 8 ) {
+                if ( href.lastIndexOf(selector.slice(8, -2), 0) === 0 ) {
                     domFilterer.addSelector(selector);
                     domFilterer.hideNode(node);
                 }
