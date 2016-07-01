@@ -503,6 +503,8 @@ var filterRequests = function(pageStore, details) {
         }
         request.collapse = true;
     }
+
+    context.dispose();
     return requests;
 };
 

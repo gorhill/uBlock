@@ -19,15 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, vAPI */
+'use strict';
 
 /******************************************************************************/
 
 // Start isolation from global scope
 
 µBlock.webRequest = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -115,6 +113,7 @@ var onBeforeRequest = function(details) {
         if ( frameId > 0 && isFrame ) {
             pageStore.setFrame(frameId, requestURL);
         }
+        requestContext.dispose();
         return;
     }
 
@@ -141,9 +140,11 @@ var onBeforeRequest = function(details) {
                 requestContext.pageHostname
             );
         }
+        requestContext.dispose();
         return { redirectUrl: url };
     }
 
+    requestContext.dispose();
     return { cancel: true };
 };
 
@@ -306,6 +307,7 @@ var onBeforeBeacon = function(details) {
             context.rootHostname
         );
     }
+    context.dispose();
     if ( result !== '' ) {
         return { cancel: true };
     }
@@ -350,6 +352,8 @@ var onBeforeBehindTheSceneRequest = function(details) {
             context.rootHostname
         );
     }
+
+    context.dispose();
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -425,6 +429,8 @@ var onRootFrameHeadersReceived = function(details) {
         );
     }
 
+    context.dispose();
+
     // Don't block
     if ( µb.isAllowResult(result) ) {
         return;
@@ -470,6 +476,8 @@ var onFrameHeadersReceived = function(details) {
             context.pageHostname
         );
     }
+
+    context.dispose();
 
     // Don't block
     if ( µb.isAllowResult(result) ) {

@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
 /*******************************************************************************
 
 A PageRequestStore object is used to store net requests in two ways:
@@ -32,8 +34,6 @@ To create a log of net requests
 /******************************************************************************/
 
 µBlock.PageStore = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -428,14 +428,14 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 /******************************************************************************/
 
 PageStore.prototype.createContextFromPage = function() {
-    var context = new µb.tabContextManager.createContext(this.tabId);
+    var context = µb.tabContextManager.createContext(this.tabId);
     context.pageHostname = context.rootHostname;
     context.pageDomain = context.rootDomain;
     return context;
 };
 
 PageStore.prototype.createContextFromFrameId = function(frameId) {
-    var context = new µb.tabContextManager.createContext(this.tabId);
+    var context = µb.tabContextManager.createContext(this.tabId);
     var frameStore = this.frames[frameId];
     if ( frameStore ) {
         context.pageHostname = frameStore.pageHostname;
@@ -448,7 +448,7 @@ PageStore.prototype.createContextFromFrameId = function(frameId) {
 };
 
 PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
-    var context = new µb.tabContextManager.createContext(this.tabId);
+    var context = µb.tabContextManager.createContext(this.tabId);
     context.pageHostname = frameHostname;
     context.pageDomain = µb.URI.domainFromHostname(frameHostname) || frameHostname;
     return context;

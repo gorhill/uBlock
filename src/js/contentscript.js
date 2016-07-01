@@ -923,15 +923,15 @@ vAPI.executionCost.start();
     // Extract and return the staged nodes which (may) match the selectors.
 
     var selectNodes = function(selector) {
-        var targetNodes = [];
-        var i = contextNodes.length;
-        var node, nodeList, j;
-        var doc = document;
+        var stagedNodes = contextNodes,
+            i = stagedNodes.length;
+        if ( i === 1 && stagedNodes[0] === document.documentElement ) {
+            return document.querySelectorAll(selector);
+        }
+        var targetNodes = [],
+            node, nodeList, j;
         while ( i-- ) {
-            node = contextNodes[i];
-            if ( node === doc ) {
-                return doc.querySelectorAll(selector);
-            }
+            node = stagedNodes[i];
             targetNodes.push(node);
             nodeList = node.querySelectorAll(selector);
             j = nodeList.length;
@@ -988,29 +988,31 @@ vAPI.executionCost.start();
     // - [href^="http"]
 
     var processHighMediumGenerics = function(generics) {
-        var doc = document;
-        var i = contextNodes.length;
-        var aa = [ null ];
-        var node, nodes;
+        var stagedNodes = contextNodes,
+            i = stagedNodes.length;
+        if ( i === 1 && stagedNodes[0] === document.documentElement ) {
+            processHighMediumGenericsForNodes(document.links, generics);
+            return;
+        }
+        var aa = [ null ],
+            node, nodes;
         while ( i-- ) {
-            node = contextNodes[i];
+            node = stagedNodes[i];
             if ( node.localName === 'a' ) {
                 aa[0] = node;
                 processHighMediumGenericsForNodes(aa, generics);
             }
             nodes = node.getElementsByTagName('a');
-            if ( nodes.length === 0 ) { continue; }
-            processHighMediumGenericsForNodes(nodes, generics);
-            if ( node === doc ) {
-                break;
+            if ( nodes.length !== 0 ) {
+                processHighMediumGenericsForNodes(nodes, generics);
             }
         }
     };
 
     var processHighMediumGenericsForNodes = function(nodes, generics) {
-        var i = nodes.length;
-        var node, href, pos, hash, selectors, j, selector;
-        var aa = [ '' ];
+        var i = nodes.length,
+            node, href, pos, hash, selectors, j, selector,
+            aa = [ '' ];
         while ( i-- ) {
             node = nodes[i];
             href = node.getAttribute('href');
@@ -1139,7 +1141,12 @@ vAPI.executionCost.start();
 
     // Start cosmetic filtering.
 
-    classesAndIdsFromNodeList(document.querySelectorAll('[class],[id]'));
+    var allElems = document.all;
+    classesAndIdsFromNodeList(
+        allElems instanceof Object ?
+            allElems :
+            document.querySelectorAll('[class],[id]')
+    );
     retrieveGenericSelectors();
 
     //console.debug('%f: uBlock: survey time', timer.now() - tStart);

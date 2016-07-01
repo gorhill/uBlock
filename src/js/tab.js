@@ -405,7 +405,11 @@ housekeep itself.
     })();
 
     // Context object, typically to be used to feed filtering engines.
+    var contextJunkyard = [];
     var Context = function(tabId) {
+        this.init(tabId);
+    };
+    Context.prototype.init = function(tabId) {
         var tabContext = lookup(tabId);
         this.rootHostname = tabContext.rootHostname;
         this.rootDomain = tabContext.rootDomain;
@@ -414,9 +418,16 @@ housekeep itself.
         this.requestURL =
         this.requestHostname =
         this.requestDomain = '';
+        return this;
+    };
+    Context.prototype.dispose = function() {
+        contextJunkyard.push(this);
     };
 
     var createContext = function(tabId) {
+        if ( contextJunkyard.length ) {
+            return contextJunkyard.pop().init(tabId);
+        }
         return new Context(tabId);
     };
 
