@@ -1310,7 +1310,7 @@ vAPI.executionCost.start();
 
 (function() {
     var collapser = domCollapser;
-    var elems = document.getElementsByTagName('img'),
+    var elems = document.images || document.getElementsByTagName('img'),
         i = elems.length, elem;
     while ( i-- ) {
         elem = elems[i];
@@ -1318,7 +1318,7 @@ vAPI.executionCost.start();
             collapser.add(elem);
         }
     }
-    collapser.addMany(document.getElementsByTagName('embed'));
+    collapser.addMany(document.embeds || document.getElementsByTagName('embed'));
     collapser.addMany(document.getElementsByTagName('object'));
     collapser.addIFrames(document.getElementsByTagName('iframe'));
     collapser.process(0);
