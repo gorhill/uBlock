@@ -1159,12 +1159,7 @@ vAPI.executionCost.start();
 
     // Start cosmetic filtering.
 
-    var allElems = document.all;
-    classesAndIdsFromNodeList(
-        allElems instanceof Object ?
-            allElems :
-            document.querySelectorAll('[class],[id]')
-    );
+    classesAndIdsFromNodeList(document.querySelectorAll('[class],[id]'));
     retrieveGenericSelectors();
 
     //console.debug('%f: uBlock: survey time', timer.now() - tStart);
@@ -1203,7 +1198,7 @@ vAPI.executionCost.start();
 
         addedNodeListsTimer = null;
         if ( addedNodeListsTimerDelay < 100 ) {
-            addedNodeListsTimerDelay += 25;
+            addedNodeListsTimerDelay += 10;
         }
         var iNodeList = addedNodeLists.length,
             nodeList, iNode, node;
