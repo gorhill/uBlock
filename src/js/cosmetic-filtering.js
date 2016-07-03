@@ -1557,7 +1557,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
         skipCosmeticFiltering: this.acceptedCount === 0,
         cosmeticHide: [],
-        cosmeticDonthide: this.genericDonthide,
+        cosmeticDonthide: this.genericDonthide.slice(),
         netHide: [],
         netCollapse: µb.userSettings.collapseBlocked,
         scripts: this.retrieveScriptTags(domain, hostname)
