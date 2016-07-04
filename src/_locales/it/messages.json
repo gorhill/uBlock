@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disabilita\/abilita permanentemente uBlock₀ per questo sito.\n\nCtrl+click: disabilita uBlock₀ solo su questa pagina.",
+    "message":"Click: disabilita\/abilita uBlock₀ per questo sito.\n\nCtrl+click: disabilita uBlock₀ solo per questa pagina.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -476,7 +476,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} la richiesta di rete di {{type}} {{br}}che indirizzo URL corrisponde {{url}} {{br}}e che ha origine {{origin}},{{br}}{{importance}} c'è una corrispondenza nel filtro delle eccezioni.",
+    "message":"{{action}} la richiesta di rete di {{type}} {{br}} il cui indirizzo URL corrisponde a {{url}} {{br}}e che proviene da {{origin}},{{br}}{{importance}} c'è una corrispondenza nel filtro delle eccezioni.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
