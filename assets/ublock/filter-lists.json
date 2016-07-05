@@ -122,7 +122,7 @@
 		"lang": "lv",
 		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
 	},
-	"http://hosts-file.net/.%5Cad_servers.txt": {
+	"http://hosts-file.net/ad_servers.txt": {
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
 		"group": "multipurpose",
