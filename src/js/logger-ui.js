@@ -972,6 +972,7 @@ var netFilteringManager = (function() {
                     'loggerUI',
                     {
                         what: 'createUserFilter',
+                        pageDomain: targetPageDomain,
                         filters: '! ' + d.toLocaleString() + ' ' + targetPageDomain + '\n' + value
                     }
                 );
