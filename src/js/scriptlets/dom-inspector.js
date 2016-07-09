@@ -694,11 +694,10 @@ var cosmeticFilterMapper = (function() {
         var filterMap = nodeToCosmeticFilterMap,
             selectors, selector,
             nodes, node,
-            entries, entry,
             i, j;
 
         // CSS-based selectors: simple one.
-        selectors = vAPI.domFilterer.simpleSelectors;
+        selectors = vAPI.domFilterer.job2._0;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -716,7 +715,7 @@ var cosmeticFilterMapper = (function() {
         }
     
         // CSS-based selectors: complex one (must query from doc root).
-        selectors = vAPI.domFilterer.complexSelectors;
+        selectors = vAPI.domFilterer.job3._0;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -730,72 +729,14 @@ var cosmeticFilterMapper = (function() {
             }
         }
 
-        // `:has()`-based selectors: simple ones.
-        entries = vAPI.domFilterer.simpleHasSelectors;
-        i = entries.length;
-        while ( i-- ) {
-            entry = entries[i];
-            selector = entry.a + ':has(' + entry.b + ')';
-            if (
-                filterMap.has(rootNode) === false &&
-                rootNode[matchesFnName](entry.a) &&
-                rootNode.querySelector(entry.b) !== null
-            ) {
-                filterMap.set(rootNode, selector);
+        // Non-CSS selectors.
+        var runJobCallback = function(node, job) {
+            if ( filterMap.has(node) === false ) {
+                filterMap.set(node, job.raw);
             }
-            nodes = rootNode.querySelectorAll(entry.a);
-            j = nodes.length;
-            while ( j-- ) {
-                node = nodes[j];
-                if (
-                    filterMap.has(node) === false &&
-                    node.querySelector(entry.b) !== null
-                ) {
-                    filterMap.set(node, selector);
-                }
-            }
-        }
-
-        // `:has()`-based selectors: complex ones (must query from doc root).
-        entries = vAPI.domFilterer.complexHasSelectors;
-        i = entries.length;
-        while ( i-- ) {
-            entry = entries[i];
-            selector = entry.a + ':has(' + entry.b + ')';
-            nodes = document.querySelectorAll(entry.a);
-            j = nodes.length;
-            while ( j-- ) {
-                node = nodes[j];
-                if (
-                    filterMap.has(node) === false &&
-                    node.querySelector(entry.b) !== null
-                ) {
-                    filterMap.set(node, selector);
-                }
-            }
-        }
-
-        // `:xpath()`-based selectors.
-        var xpr;
-        entries = vAPI.domFilterer.xpathSelectors;
-        i = entries.length;
-        while ( i-- ) {
-            entry = entries[i];
-            selector = ':xpath(' + entry + ')';
-            xpr = document.evaluate(
-                entry,
-                document,
-                null,
-                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                xpr
-            );
-            j = xpr.snapshotLength;
-            while ( j-- ) {
-                node = xpr.snapshotItem(j);
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, selector);
-                }
-            }
+        };
+        for ( i = 4; i < vAPI.domFilterer.jobQueue.length; i++ ) {
+            vAPI.domFilterer.runJob(vAPI.domFilterer.jobQueue[i], runJobCallback);
         }
     };
 

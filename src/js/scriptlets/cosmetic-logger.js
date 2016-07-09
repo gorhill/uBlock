@@ -31,12 +31,14 @@ if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
     return;
 }
 
-var loggedSelectors = vAPI.loggedSelectors || {},
+var df = vAPI.domFilterer,
+    loggedSelectors = vAPI.loggedSelectors || {},
     matchedSelectors = [],
-    selectors, i, selector, entry, nodes, j;
+    selectors, i, selector;
 
-// CSS-based selectors.
-selectors = vAPI.domFilterer.simpleSelectors.concat(vAPI.domFilterer.complexSelectors);
+
+// CSS selectors.
+selectors = df.jobQueue[2]._0.concat(df.jobQueue[3]._0);
 i = selectors.length;
 while ( i-- ) {
     selector = selectors[i];
@@ -50,48 +52,16 @@ while ( i-- ) {
     matchedSelectors.push(selector);
 }
 
-// `:has`-based selectors.
-selectors = vAPI.domFilterer.simpleHasSelectors.concat(vAPI.domFilterer.complexHasSelectors);
-i = selectors.length;
-while ( i-- ) {
-    entry = selectors[i];
-    selector = entry.a + ':has(' + entry.b + ')';
-    if ( loggedSelectors.hasOwnProperty(selector) ) {
-        continue;
+// Non-CSS selectors.
+var logHit = function(node, job) {
+    if ( !job.raw || loggedSelectors.hasOwnProperty(job.raw) ) {
+        return;
     }
-    nodes = document.querySelectorAll(entry.a);
-    j = nodes.length;
-    while ( j-- ) {
-        if ( nodes[j].querySelector(entry.b) !== null ) {
-            loggedSelectors[selector] = true;
-            matchedSelectors.push(selector);
-            break;
-        }
-    }
-}
-
-// `:xpath`-based selectors.
-var xpr = null,
-    xpathexpr;
-selectors = vAPI.domFilterer.xpathSelectors;
-i = selectors.length;
-while ( i-- ) {
-    xpathexpr = selectors[i];
-    selector = ':xpath(' + xpathexpr + ')';
-    if ( loggedSelectors.hasOwnProperty(selector) ) {
-        continue;
-    }
-    xpr = document.evaluate(
-        'boolean(' + xpathexpr + ')',
-        document,
-        null,
-        XPathResult.BOOLEAN_TYPE,
-        xpr
-    );
-    if ( xpr.booleanValue ) {
-        loggedSelectors[selector] = true;
-        matchedSelectors.push(selector);
-    }
+    loggedSelectors[job.raw] = true;
+    matchedSelectors.push(job.raw);
+};
+for ( i = 4; i < df.jobQueue.length; i++ ) {
+    df.runJob(df.jobQueue[i], logHit);
 }
 
 vAPI.loggedSelectors = loggedSelectors;

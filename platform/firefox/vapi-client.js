@@ -102,8 +102,13 @@ vAPI.executionCost.start();
 /******************************************************************************/
 
 vAPI.firefox = true;
-vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
-    Math.random().toString(36).slice(2);
+
+vAPI.randomToken = function() {
+    return String.fromCharCode(Date.now() % 26 + 97) +
+           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+};
+
+vAPI.sessionId = vAPI.randomToken();
 
 /******************************************************************************/
 
