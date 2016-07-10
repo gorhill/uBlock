@@ -212,7 +212,7 @@ var domFilterer = {
 
         // Modify style
         if ( sel1 === undefined ) {
-            this.job1._0.push(sel0);
+            this.job1._0.push(sel0 + ' { ' + style.slice(7, -1) + ' }');
             this.job1._1 = undefined;
             return this;
         }
