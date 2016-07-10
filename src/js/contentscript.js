@@ -62,49 +62,47 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-var SSet = (function() {
-    if ( typeof self.Set === 'function' ) {
-        return self.Set;
-    }
-    var Set = function() {
+if ( typeof self.Set !== 'function' ) {
+    self.Set = function() {
         this._set = [];
         this._i = 0;
         this.value = undefined;
     };
-    Set.prototype.polyfill = true;
-    Set.prototype.clear = function() {
-        this._set = [];
-    };
-    Set.prototype.add = function(k) {
-        if ( this._set.indexOf(k) === -1 ) {
-            this._set.push(k);
+    self.Set.prototype = {
+        polyfill: true,
+        clear: function() {
+            this._set = [];
+        },
+        add: function(k) {
+            if ( this._set.indexOf(k) === -1 ) {
+                this._set.push(k);
+            }
+        },
+        delete: function(k) {
+            var pos = this._set.indexOf(k);
+            if ( pos !== -1 ) {
+                this._set.splice(pos, 1);
+                return true;
+            }
+            return false;
+        },
+        has: function(k) {
+            return this._set.indexOf(k) !== -1;
+        },
+        values: function() {
+            this._i = 0;
+            return this;
+        },
+        next: function() {
+            this.value = this._set[this._i];
+            this._i += 1;
+            return this;
         }
     };
-    Set.prototype.delete = function(k) {
-        var pos = this._set.indexOf(k);
-        if ( pos !== -1 ) {
-            this._set.splice(pos, 1);
-            return true;
-        }
-        return false;
-    };
-    Set.prototype.has = function(k) {
-        return this._set.indexOf(k) !== -1;
-    };
-    Set.prototype.values = function() {
-        this._i = 0;
-        return this;
-    };
-    Set.prototype.next = function() {
-        this.value = this._set[this._i];
-        this._i += 1;
-        return this;
-    };
-    Object.defineProperty(Set.prototype, 'size', {
+    Object.defineProperty(self.Set.prototype, 'size', {
         get: function() { return this._set.length; }
     });
-    return Set;
-})();
+}
 
 /******************************************************************************/
 
@@ -125,11 +123,10 @@ var allExceptions = Object.create(null);
 var allSelectors = Object.create(null);
 
 // Complex selectors, due to their nature may need to be "de-committed". A
-// Set() is used to implement this functionality. For browser with no
-// support of Set(), uBO will skip committing complex selectors.
+// Set() is used to implement this functionality.
 
 var complexSelectorsOldResultSet;
-var complexSelectorsCurrentResultSet = new SSet();
+var complexSelectorsCurrentResultSet = new Set();
 
 /******************************************************************************/
 
@@ -311,7 +308,7 @@ var domFilterer = {
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
-        complexSelectorsCurrentResultSet = new SSet();
+        complexSelectorsCurrentResultSet = new Set();
 
         // Stock job 3 = complex css selectors/hide
         // The handling of these can be considered optional, since they are
