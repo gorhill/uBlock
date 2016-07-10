@@ -100,7 +100,7 @@ var SSet = (function() {
         this._i += 1;
         return this;
     };
-    Object.defineProperty(self.Set.prototype, 'size', {
+    Object.defineProperty(Set.prototype, 'size', {
         get: function() { return this._set.length; }
     });
     return Set;
