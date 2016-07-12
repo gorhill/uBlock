@@ -49,7 +49,7 @@ var isBadRegex = function(s) {
     return false;
 };
 
-var cosmeticSurveyingMissCountMax = parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) || 10;
+var cosmeticSurveyingMissCountMax = parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) || 15;
 
 /******************************************************************************/
 /*

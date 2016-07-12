@@ -121,6 +121,7 @@ var reParserEx = /^(.*?(:has\(.+?\)|:xpath\(.+?\))?)(:style\(.+?\))?$/;
 
 var allExceptions = Object.create(null);
 var allSelectors = Object.create(null);
+var stagedNodes = [];
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
@@ -143,6 +144,7 @@ var cosmeticFiltersActivated = function() {
 /******************************************************************************/
 
 var domFilterer = {
+    commitMissCount: 0,
     disabledId: vAPI.randomToken(),
     enabled: true,
     hiddenId: vAPI.randomToken(),
@@ -202,7 +204,6 @@ var domFilterer = {
                 return this;
             }
             if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
-                if ( sel0 !== sel1 ) { return this; }
                 this.jobQueue.push({ t: 'xpath-hide', raw: s, _0: sel1.slice(7, -1) });
                 return this;
             }
@@ -267,14 +268,9 @@ var domFilterer = {
         }
     },
 
-    commit: function(stagedNodes) {
-        var beforeHiddenNodeCount = this.hiddenNodeCount;
-
-        if ( stagedNodes === undefined ) {
-            stagedNodes = [ document.documentElement ];
-        }
-
-        var styleText = '', i, n;
+    commit_: function() {
+        var beforeHiddenNodeCount = this.hiddenNodeCount,
+            styleText = '', i, n;
 
         // Stock job 0 = css rules/hide
         if ( this.job0._0.length ) {
@@ -305,6 +301,7 @@ var domFilterer = {
                 this.runSimpleSelectorJob(this.job2, stagedNodes[i], hideNode);
             }
         }
+        stagedNodes = [];
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
@@ -323,6 +320,13 @@ var domFilterer = {
             this.runJob(this.jobQueue[i], complexHideNode);
         }
 
+        var commitHit = this.hiddenNodeCount !== beforeHiddenNodeCount;
+        if ( commitHit ) {
+            this.commitMissCount = 0;
+        } else {
+            this.commitMissCount += 1;
+        }
+
         // Un-hide nodes previously hidden.
         i = complexSelectorsOldResultSet.size;
         if ( i !== 0 ) {
@@ -334,10 +338,7 @@ var domFilterer = {
         }
 
         // If DOM nodes have been affected, lazily notify core process.
-        if (
-            this.hiddenNodeCount !== beforeHiddenNodeCount &&
-            cosmeticFiltersActivatedTimer === null
-        ) {
+        if ( commitHit && cosmeticFiltersActivatedTimer === null ) {
             cosmeticFiltersActivatedTimer = vAPI.setTimeout(
                 cosmeticFiltersActivated,
                 503
@@ -345,20 +346,35 @@ var domFilterer = {
         }
     },
 
+    commit: function(nodes) {
+        if ( stagedNodes.length === 0 ) {
+            window.requestAnimationFrame(this.commit_.bind(this));
+        }
+        if ( nodes === undefined ) {
+            stagedNodes = [ document.documentElement ];
+        } else if ( stagedNodes[0] !== document.documentElement ) {
+            stagedNodes = stagedNodes.concat(nodes);
+        }
+    },
+
     hideNode: function(node) {
-        if ( node[this.hiddenId] ) {
+        if ( node[this.hiddenId] !== undefined ) {
             return;
         }
         node.setAttribute(this.hiddenId, '');
-        node[this.hiddenId] = true;
         this.hiddenNodeCount += 1;
         node.hidden = true;
-        // TODO: conditionally make use of `display: none !important;` style.
-        // - is node.style.display !== ''?
-        // - if yes, is node.hasAttribute('style') true?
-        // - if yes: node.setAttribute('style', node.getAttribute('style') +
-        //                                      ';display: none !important'
-        // - remember this was done
+        node[this.hiddenId] = null;
+        var style = window.getComputedStyle(node),
+            display = style.getPropertyValue('display');
+        if ( display !== '' && display !== 'none' ) {
+            var styleAttr = node.getAttribute('style') || '';
+            node[this.hiddenId] = node.hasAttribute('style') && styleAttr;
+            if ( styleAttr !== '' ) {
+                styleAttr += '; ';
+            }
+            node.setAttribute('style', styleAttr + 'display: none !important;');
+        }
         if ( shadowId === undefined ) {
             return;
         }
@@ -452,6 +468,12 @@ var domFilterer = {
 
     showNode: function(node) {
         node.hidden = false;
+        var styleAttr = node[this.hiddenId];
+        if ( styleAttr === false ) {
+            node.removeAttribute('style');
+        } else if ( typeof styleAttr === 'string' ) {
+            node.setAttribute('style', node[this.hiddenId]);
+        }
         var shadow = node.shadowRoot;
         if ( shadow && shadow[shadowId] ) {
             if ( shadow.firstElementChild !== null ) {
@@ -470,7 +492,7 @@ var domFilterer = {
     },
 
     unhideNode: function(node) {
-        if ( node[this.hiddenId] ) {
+        if ( node[this.hiddenId] !== undefined ) {
             this.hiddenNodeCount--;
         }
         node.removeAttribute(this.hiddenId);
@@ -487,6 +509,12 @@ var domFilterer = {
 
     unshowNode: function(node) {
         node.hidden = true;
+        var styleAttr = node[this.hiddenId];
+        if ( styleAttr === false ) {
+            node.setAttribute('style', 'display: none !important;');
+        } else if ( typeof styleAttr === 'string' ) {
+            node.setAttribute('style', node[this.hiddenId] + '; display: none !important;');
+        }
         var shadow = node.shadowRoot;
         if ( shadow && shadow[shadowId] && shadow.firstElementChild !== null ) {
             shadow.removeChild(shadow.firstElementChild);
@@ -921,9 +949,10 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
             return;
         }
 
-        var queriedSelectors = Object.create(null),
+        var cosmeticSurveyingMissCount = 0,
             highGenerics = null,
-            lowGenericSelectors = [];
+            lowGenericSelectors = [],
+            queriedSelectors = Object.create(null);
 
         // Handle main process' response.
 
@@ -972,6 +1001,16 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
                         selectors: domFilterer.job0._0
                     }
                 );
+            }
+
+            // Shutdown surveyor if too many consecutive empty resultsets.
+            if ( domFilterer.job0._0.length === 0 ) {
+                cosmeticSurveyingMissCount += 1;
+                if ( cosmeticSurveyingMissCount > 255 ) {
+                    domSurveyor = undefined;
+                }
+            } else {
+                cosmeticSurveyingMissCount = 0;
             }
 
             domFilterer.commit(contextNodes);
@@ -1280,6 +1319,9 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
             } else {
                 domFilterer.commit(contextNodes);
                 contextNodes = [];
+                if ( domFilterer.commitMissCount > 255 ) {
+                    domLayoutObserver.disconnect();
+                }
             }
         }
 
