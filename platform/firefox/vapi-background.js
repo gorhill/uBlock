@@ -621,12 +621,29 @@ vAPI.storage = (function() {
 // This must be executed/setup early.
 
 var winWatcher = (function() {
-    var chromeWindowType = vAPI.thunderbird ? 'mail:3pane' : 'navigator:browser';
     var windowToIdMap = new Map();
     var windowIdGenerator = 1;
     var api = {
         onOpenWindow: null,
         onCloseWindow: null
+    };
+
+    // https://github.com/gorhill/uMatrix/issues/586
+    // This is necessary hack because on SeaMonkey 2.40, for unknown reasons
+    // private windows do not have the attribute `windowtype` set to
+    // `navigator:browser`. As a fallback, the code here will also test whether
+    // the id attribute is `main-window`.
+    api.toBrowserWindow = function(win) {
+        var docElement = win && win.document && win.document.documentElement;
+        if ( !docElement ) {
+            return null;
+        }
+        if ( vAPI.thunderbird ) {
+            return docElement.getAttribute('windowtype') === 'mail:3pane' ? win : null;
+        }
+        return docElement.getAttribute('windowtype') === 'navigator:browser' ||
+               docElement.getAttribute('id') === 'main-window' ?
+               win : null;
     };
 
     api.getWindows = function() {
@@ -638,7 +655,7 @@ var winWatcher = (function() {
     };
 
     api.getCurrentWindow = function() {
-        return Services.wm.getMostRecentWindow(chromeWindowType) || null;
+        return this.toBrowserWindow(Services.wm.getMostRecentWindow(null));
     };
 
     var addWindow = function(win) {
@@ -1366,8 +1383,7 @@ var tabWatcher = (function() {
             return false;
         }
 
-        var docElement = document.documentElement;
-        return docElement && docElement.getAttribute('windowtype') === 'navigator:browser';
+        return winWatcher.toBrowserWindow(window) !== null;
     };
 
     var onWindowLoad = function(win) {
