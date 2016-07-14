@@ -47,7 +47,10 @@ if ( document instanceof HTMLDocument === false ) {
 // https://github.com/gorhill/uBlock/issues/1124
 // Looks like `contentType` is on track to be standardized:
 //   https://dom.spec.whatwg.org/#concept-document-content-type
-if ( (document.contentType || '').lastIndexOf('image/', 0) === 0 ) {
+// https://forums.lanik.us/viewtopic.php?f=64&t=31522
+//   Skip text/plain documents.
+var contentType = document.contentType || '';
+if ( /^image\/|^text\/plain/.test(contentType) ) {
     return; 
 }
 
