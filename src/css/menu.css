@@ -346,11 +346,18 @@ header{
   position: absolute;
   top: 0;
   left: 0;
+  color: #fff;
+  overflow: hidden;
+  line-height: 85px;
+  text-indent: 20px;
+  font-size: 30px;
+  font-family: Bebas Neue;
 }
 .ad-item.just-visited::before,
 .ad-item-text.just-visited::before {
   background: #BD10E0;
   animation: 1000ms ease-in-out visit-marker;
+  content: "VISITED";
 }
 .ad-item.just-failed::before,
 .ad-item-text.just-failed::before,
@@ -358,6 +365,7 @@ header{
 .ad-item-text.just-visited.failed::before {
   background: #B80606;
   animation: 1200ms ease-in-out failed-marker;
+  content: "FAILED";
 }
 .ad-item.attempting::before,
 .ad-item-text.attempting::before {
