@@ -38,6 +38,18 @@
 		"group": "regions",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102"
 	},
+	"http://www.zoso.ro/pages/rolist.txt": {
+		"off": true,
+		"title": "ROU: RO-LIST by MenetZ & Zoso",
+		"group": "regions",
+		"supportURL": "http://www.zoso.ro/rolist/"
+	},
+	"http://www.zoso.ro/pages/rolist2.txt": {
+		"off": true,
+		"title": "ROU: RO-LIST2 by Zoso (complementary list for Rolist with annoyances that are not necessarly banners)",
+		"group": "regions",
+		"supportURL": "http://www.zoso.ro/rolist/"
+	},
 	"easylist-downloads.adblockplus.org/easylist.txt": {
 		"title": "EasyList",
 		"group": "ads",
