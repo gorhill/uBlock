@@ -280,7 +280,7 @@ var domFilterer = {
 
         // Stock job 1 = css rules/any css declaration
         if ( this.job1._0.length ) {
-            styleText += '\n:root ' + this.job1._0.join('\n:root ');
+            styleText += '\n' + this.job1._0.join('\n');
             this.job1._0.length = 0;
         }
 
