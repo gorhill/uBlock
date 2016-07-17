@@ -111,6 +111,16 @@
 
   /******************************************************************************/
 
+  var resetUserData = function() {
+      var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam');
+      var proceed = vAPI.confirm(msg);
+      if ( proceed ) {
+          messager.send('dashboard', { what: 'resetUserData' });
+      }
+  };
+
+  /******************************************************************************/
+
   var changeUserSettings = function (name, value) {
     messager.send('dashboard', {
       what: 'userSettings',
@@ -165,6 +175,7 @@
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#reset').on('click', clearAds);
+    uDom('#resetOptions').on('click', resetUserData);
     uDom('#confirm-close').on('click', function (e) {
       e.preventDefault();
       window.open(location, '_self').close();
