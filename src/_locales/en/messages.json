@@ -540,8 +540,8 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Reset to default settings...",
-    "description": "English: Reset to default settings..."
+    "message": "Reset to default settings",
+    "description": "English: Reset to default settings"
   },
   "aboutRestoreDataConfirm": {
     "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
