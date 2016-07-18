@@ -240,6 +240,7 @@ vAPI.browserSettings = {
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=814169
                 // Sigh.
                 this.rememberOriginalValue('network.http', 'speculative-parallel-limit');
+                this.rememberOriginalValue('network.dns', 'disablePrefetch');
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
                 if ( settingVal ) {
