@@ -1,6 +1,6 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
 
-Install [AdNauseam](http://adnauseam.io) for [Chrome](https://chrome.google.com/webstore/detail/adnauseam/hgfacieeomogkcchookiodlpppbcolha), [FireFox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), or [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2)...
+Install [AdNauseam](http://adnauseam.io) for [Chrome](https://chrome.google.com/webstore/detail/adnauseam/hgfacieeomogkcchookiodlpppbcolha), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), or [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2)...
 
 <div align="center">
   <a href="http://adnauseam.io">
