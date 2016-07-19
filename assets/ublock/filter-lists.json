@@ -197,6 +197,12 @@
 		"group": "regions",
 		"supportURL": "https://github.com/liamja/Prebake"
 	},
+	"http://www.kiboke-studio.hr/i-dont-care-about-cookies/abp/": {
+		"off": true,
+		"title": "I don't care about cookies‎",
+		"group": "regions",
+		"supportURL": "http://www.kiboke-studio.hr/i-dont-care-about-cookies/"
+	},
 	"https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": {
 		"off": true,
 		"title": "KOR: YousList",
