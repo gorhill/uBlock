@@ -1,0 +1,64 @@
+{
+    "manifest_version": 2,
+
+    "name": "uBlock Origin",
+    "version": "1.7.7",
+
+    "default_locale": "en",
+    "description": "__MSG_extShortDesc__",
+    "icons": {
+        "16": "img/icon_16.png",
+        "128": "img/icon_128.png"
+    },
+
+    "browser_action": {
+        "default_icon": {
+            "19": "img/browsericons/icon19.png",
+            "38": "img/browsericons/icon38.png"
+        },
+        "default_title": "uBlock Origin",
+        "default_popup": "popup.html"
+    },
+
+    "author": "All uBlock Origin contributors",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/vapi-client.js", "js/contentscript.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/scriptlets/subscriber.js"],
+            "run_at": "document_idle",
+            "all_frames": false
+        }
+    ],
+    "incognito": "split",
+    "minimum_edge_version": "38.14393",
+    "options_page": "dashboard.html",
+    "options_ui": {
+        "page": "options_ui.html"
+    },
+    "permissions": [
+        "contextMenus",
+        "privacy",
+        "storage",
+        "tabs",
+        "unlimitedStorage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "short_name": "uBlock₀",
+    "storage": {
+        "managed_schema": "managed_storage.json"
+    }
+}
