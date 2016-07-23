@@ -98,6 +98,9 @@ textarea {
 #netInspector.f #filterButton {
     opacity: 1;
     }
+#netInspector #filterInput {
+    min-width: 18em;
+    }
 #netInspector #filterInput.bad {
     background-color: #fee;
     }
