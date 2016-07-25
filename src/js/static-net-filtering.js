@@ -172,8 +172,8 @@ var atoi = function(s) {
     return cachedParseInt(s, 10);
 };
 
+// Be sure to not confuse 'example.com' with 'anotherexample.com'
 var isFirstParty = function(domain, hostname) {
-    // Be sure to not confuse 'example.com' with 'anotherexample.com'
     return hostname.endsWith(domain) &&
           (hostname.length === domain.length ||
            hostname.charAt(hostname.length - domain.length - 1) === '.');

@@ -471,7 +471,10 @@ var tagNameToRequestTypeMap = {
 
 /******************************************************************************/
 
-// Evaluate many requests
+// Evaluate many requests.
+
+// https://github.com/gorhill/uBlock/issues/1782
+//   Treat `data:` URIs as 1st-party resources.
 
 var filterRequests = function(pageStore, details) {
     var requests = details.requests;
@@ -492,9 +495,14 @@ var filterRequests = function(pageStore, details) {
     var i = requests.length;
     while ( i-- ) {
         request = requests[i];
-        context.requestURL = punycodeURL(request.url);
+        if ( request.url.startsWith('data:') ) {
+            context.requestURL = request.url;
+            context.requestHostname = context.pageHostname;
+        } else {
+            context.requestURL = punycodeURL(request.url);
+            context.requestHostname = hostnameFromURI(context.requestURL);
+        }
         context.requestType = tagNameToRequestTypeMap[request.tagName];
-        context.requestHostname = hostnameFromURI(request.url);
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
             continue;

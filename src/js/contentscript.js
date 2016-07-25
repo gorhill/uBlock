@@ -803,6 +803,11 @@ var domCollapser = (function() {
                 return;
             }
         }
+        // Some data: URI can be quite large: no point in taking into account
+        // the whole URI.
+        if ( src.lastIndexOf('data:', 0) === 0 ) {
+            src = src.slice(0, 255);
+        }
         var req = new PendingRequest(target, tagName, prop);
         newRequests.push(new BouncingRequest(req.id, tagName, src));
     };
