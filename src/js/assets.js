@@ -221,7 +221,12 @@ var cachedAssetsManager = (function() {
             }
             entries[path] = Date.now();
             bin.cached_asset_entries = entries;
-            vAPI.storage.set(bin, onSaved);
+            try {
+                vAPI.storage.set(bin, onSaved);
+            } catch (ex) {
+                console.error('Error storing data in cache:', ex);
+                onSaved();
+            }
         };
         getEntries(onEntries);
     };

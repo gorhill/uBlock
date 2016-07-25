@@ -7,7 +7,7 @@
 2af4312e06a346c29d0483ba7831687c assets/ublock/unbreak.txt
 a91af77c47c302c0741c7445b0fada1a assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 3605c73f21abca428c7eb69a8bc32dfe assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
-0e69a0e518eef52c121547d8808f23dc assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
-c4785389e986b6d68a3ac43743fec40f assets/thirdparties/pgl.yoyo.org/as/serverlist
+0e69a0e518eef52c121547d8808f23dc assets/thirdparties/mirror1.malwaredomains.com/files/justdomains.txt
+c4785389e986b6d68a3ac43743fec40f assets/thirdparties/pgl.yoyo.org/as/serverlist.txt
 748cbfc08bed9240df4912e77a1de97a assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 28babde5108007fc3202950ee0d4905f assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
