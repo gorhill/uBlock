@@ -72,7 +72,7 @@ var deferUntil = function(testFn, mainFn, details) {
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'uBlock Origin',
+    name: 'AdNauseam',
     version: location.hash.slice(1)
 };
 
