@@ -288,7 +288,9 @@ var domFilterer = {
             var styleTag = document.createElement('style');
             styleTag.setAttribute('type', 'text/css');
             styleTag.textContent = styleText;
-            document.head.appendChild(styleTag);
+            if ( document.head ) {
+                document.head.appendChild(styleTag);
+            }
             this.styleTags.push(styleTag);
         }
 
