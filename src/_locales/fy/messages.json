@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Grutte media-eleminten foar dizze website yn- of útskeakelje",
+    "message":"Grutte media-eleminten foar dizze website yn-\/útskeakelje",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Blokkearjen fan eksterne lettertypen foar dizze site yn-\/útskeakelje",
+    "message":"Blokkearjen fan eksterne lettertypen foar dizze website yn-\/útskeakelje",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -120,19 +120,19 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"3e-party css\/ôfbyldingen",
+    "message":"css\/ôfbyldingen fan tredden",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"ynline skripts",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"scripts fan de sites sels",
+    "message":"skripts fan de websites sels",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"scripts fan tredden",
+    "message":"skripts fan tredden",
     "description":""
   },
   "popup3pFrameRulePrompt":{
@@ -192,15 +192,15 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"Wêr mooglik fan it kontekstmenu gebrûk meitsje",
+    "message":"Wêr mooglik gebrûk meitsje fan it kontekstmenu",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Kleureblyn freonlik",
+    "message":"Kleureblynfreonlik",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Stipe cloudûnthâld ynskeakelje",
+    "message":"Stipe foar cloudûnthâld ynskeakelje",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -224,7 +224,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Dizze standertgedragingen kinne per website oerskreaun wurde",
+    "message":"Dizze standertgedragingen kinne foar eltse website oerskreaun wurde",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -276,11 +276,11 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Dizze opsje skeakelt it ynlêzen en tapassen fan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibele &ldquo;element hiding&rdquo; filters<\/a> yn. Dizze filters binne suver kosmetysk: se ferstopje eleminten yn de webside dy't fisueel steurend wêze kinne en kinne dus net blokkearre wurde troch de op netfersiken basearre filterengine.<\/p><p>It ynskeakeljen fan dizze funksje ferheget it ûnthâldgebrûk fan uBlock₀.<\/p>",
+    "message":"<p>Dizze opsje skeakelt it ynlêzen en tapassen fan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibele &ldquo;element hiding&rdquo;-filters<\/a> yn. Dizze filters binne suver kosmetysk: se ferstopje eleminten yn de webside dy't fisueel steurend wêze kinne en kinne dus net blokkearre wurde troch de op netfersiken basearre filtermasine.<\/p><p>It ynskeakeljen fan dizze funksje ferheget it ûnthâldgebrûk fan uBlock₀.<\/p>",
     "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"List fan blokkearree hosts",
+    "message":"List fan blokkearre hosts",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -484,7 +484,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Tastien",
+    "message":"Tastean",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
@@ -552,7 +552,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"De gegevens koenen net lêzen wurde of binne ûnjildich",
+    "message":"De gegevens koene net lêzen wurde of binne ûnjildich",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
@@ -592,11 +592,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Dashboard toane",
+    "message":"Dashboerd toane",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Netwurkfersiken-lochboek toane",
+    "message":"Lochboek toane",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -604,7 +604,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ hat it laden fan de folgjende side opkeard:",
+    "message":"uBlock Origin hat it laden fan de folgjende side opkeard:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -624,11 +624,11 @@
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Finster slute",
+    "message":"Dit finster slute",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Strikte blokkearring útskeakelje foar {{hostname}}",
+    "message":"Strikte blokkearing foar {{hostname}} útskeakelje",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -648,7 +648,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Ut cloudopslach ymportearje en mei aktuele ynstellingen gearfoegje",
+    "message":"Ut cloudopslach ymportearje en gearfoegje mei aktuele ynstellingen",
     "description":"tooltip"
   },
   "cloudNoData":{

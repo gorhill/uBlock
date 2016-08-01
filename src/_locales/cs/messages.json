@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} neboli {{percent}}%",
+    "message":"{{count}} neboli {{percent}} %",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
