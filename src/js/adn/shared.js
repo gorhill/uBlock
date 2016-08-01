@@ -70,7 +70,8 @@ var computeHash = function (ad) { // DO NOT MODIFY
     return;
   }
 
-  var hash = ad.pageDomain, // change from pageUrl (4/3/16) ***
+  var hash = ad.pageDomain || ad.pageUrl, // change from pageUrl (4/3/16) ***
+  // fall back to pageUrl if pageDomain is undefined for backward compatibility 
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {
