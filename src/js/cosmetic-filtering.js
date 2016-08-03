@@ -247,7 +247,7 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reScriptTagFilter = /^script:(contains|inject)\((.+?)\)$/;
-    this.reNeedHostname = /^(?:.+?:has|:xpath)\(.+?\)$/;
+    this.reNeedHostname = /^(?:.+?:csstext|.+?:has|:xpath)\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -754,6 +754,7 @@ FilterContainer.prototype.isValidSelector = (function() {
         };
     }
 
+    var reCSSTextSelector = /^(.+?):csstext\((.+?)\)$/;
     var reHasSelector = /^(.+?):has\((.+?)\)$/;
     var reXpathSelector = /^:xpath\((.+?)\)$/;
     var reStyleSelector = /^(.+?):style\((.+?)\)$/;
@@ -776,11 +777,16 @@ FilterContainer.prototype.isValidSelector = (function() {
         // We reach this point very rarely.
         var matches;
 
+        // Custom `:csstext`-based filter?
+        matches = reCSSTextSelector.exec(s);
+        if ( matches !== null ) {
+            return isValidCSSSelector(matches[1]);
+        }
         // Future `:has`-based filter? If so, validate both parts of the whole
         // selector.
         matches = reHasSelector.exec(s);
         if ( matches !== null ) {
-            return this.isValidSelector(matches[1]) && this.isValidSelector(matches[2]);
+            return isValidCSSSelector(matches[1]) && isValidCSSSelector(matches[2]);
         }
         // Custom `:xpath`-based filter?
         matches = reXpathSelector.exec(s);

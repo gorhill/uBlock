@@ -117,7 +117,7 @@ var jobQueue = [
     { t: 'css-csel',  _0: [] }  // to manually hide (not incremental)
 ];
 
-var reParserEx = /^(.*?(:has\(.+?\)|:xpath\(.+?\))?)(:style\(.+?\))?$/;
+var reParserEx = /:(?:csstext|has|style|xpath)\(.+?\)$/;
 
 var allExceptions = Object.create(null);
 var allSelectors = Object.create(null);
@@ -172,58 +172,45 @@ var domFilterer = {
     //     2 = simple css selectors/hide
     //     3 = complex css selectors/hide
     // Custom jobs:
+    //     csstext/hide
     //     has/hide
     //     xpath/hide
-    //     has/inline css declaration (not supported yet)
-    //     xpath/inline css declaration (not supported yet)
 
     addSelector: function(s) {
         if ( allSelectors[s] || allExceptions[s] ) {
             return this;
         }
         allSelectors[s] = true;
-        var parts = reParserEx.exec(s);
-        if ( parts === null ) { return this; }
-        var sel0 = parts[1], sel1 = parts[2], style = parts[3];
-
-        // Hide
-        if ( style === undefined ) {
-            if ( sel1 === undefined ) {
-                this.job0._0.push(sel0);
-                if ( sel0.indexOf(' ') === -1 ) {
-                    this.job2._0.push(sel0);
-                    this.job2._1 = undefined;
-                } else {
-                    this.job3._0.push(sel0);
-                    this.job3._1 = undefined;
-                }
-                return this;
+        var sel0 = s, sel1 = '';
+        if ( s.charCodeAt(s.length - 1) === 0x29 ) {
+            var parts = reParserEx.exec(s);
+            if ( parts !== null ) {
+                sel1 = parts[0];
             }
-            if ( sel1.lastIndexOf(':has', 0) === 0 ) {
-                this.jobQueue.push({ t: 'has-hide', raw: s, _0: sel0.slice(0, sel0.length - sel1.length), _1: sel1.slice(5, -1) });
-                return this;
+        }
+        if ( sel1 === '' ) {
+            this.job0._0.push(sel0);
+            if ( sel0.indexOf(' ') === -1 ) {
+                this.job2._0.push(sel0);
+                this.job2._1 = undefined;
+            } else {
+                this.job3._0.push(sel0);
+                this.job3._1 = undefined;
             }
-            if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
-                this.jobQueue.push({ t: 'xpath-hide', raw: s, _0: sel1.slice(7, -1) });
-                return this;
-            }
-            // ignore unknown selector
             return this;
         }
-
-        // Modify style
-        if ( sel1 === undefined ) {
-            this.job1._0.push(sel0 + ' { ' + style.slice(7, -1) + ' }');
+        sel0 = sel0.slice(0, sel0.length - sel1.length);
+        if ( sel1.lastIndexOf(':csstext', 0) === 0 ) {
+            this.jobQueue.push({ t: 'csstext-hide', raw: s, _0: sel0, _1: sel1.slice(9, -1) });
+        } else if ( sel1.lastIndexOf(':has', 0) === 0 ) {
+            this.jobQueue.push({ t: 'has-hide', raw: s, _0: sel0, _1: sel1.slice(5, -1) });
+        } else if ( sel1.lastIndexOf(':style',0) === 0 ) {
+            this.job1._0.push(sel0 + ' { ' + sel1.slice(7, -1) + ' }');
             this.job1._1 = undefined;
-            return this;
+        } else if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
+            this.jobQueue.push({ t: 'xpath-hide', raw: s, _0: sel1.slice(7, -1) });
         }
-        if ( sel1.lastIndexOf(':has', 0) === 0 ) {
-            return this;
-        }
-        if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
-            if ( sel0 !== sel1 ) { return this; }
-            return this;
-        }
+        return this;
     },
 
     addSelectors: function(aa) {
@@ -238,7 +225,7 @@ var domFilterer = {
             head = doc.head,
             newParent = head || html;
         if ( newParent === null ) {
-            return;
+            return false;
         }
         var styles = this.styleTags,
             style, oldParent,
@@ -266,6 +253,7 @@ var domFilterer = {
         if ( mustCommit && commitIfNeeded ) {
             this.commit();
         }
+        return mustCommit;
     },
 
     commit_: function() {
@@ -375,9 +363,7 @@ var domFilterer = {
         if ( display !== '' && display !== 'none' ) {
             var styleAttr = node.getAttribute('style') || '';
             node[this.hiddenId] = node.hasAttribute('style') && styleAttr;
-            if ( styleAttr !== '' ) {
-                styleAttr += '; ';
-            }
+            if ( styleAttr !== '' ) { styleAttr += '; '; }
             node.setAttribute('style', styleAttr + 'display: none !important;');
         }
         if ( shadowId === undefined ) {
@@ -425,6 +411,21 @@ var domFilterer = {
         }
     },
 
+    runCSSTextJob: function(job, fn) {
+        var nodes = document.querySelectorAll(job._0),
+            i = nodes.length, node;
+        if ( i === 0 ) { return; }
+        if ( typeof job._1 === 'string' ) {
+            job._1 = new RegExp(job._1.replace(/\s*\*\s*/g, '.*?'));
+        }
+        while ( i-- ) {
+            node = nodes[i];
+            if ( job._1.test(window.getComputedStyle(node).cssText) ) {
+                fn(node, job);
+            }
+        }
+    },
+
     runHasJob: function(job, fn) {
         var nodes = document.querySelectorAll(job._0),
             i = nodes.length, node;
@@ -456,17 +457,14 @@ var domFilterer = {
 
     runJob: function(job, fn) {
         switch ( job.t ) {
+        case 'csstext-hide':
+            this.runCSSTextJob(job, fn);
+            break;
         case 'has-hide':
             this.runHasJob(job, fn);
             break;
         case 'xpath-hide':
             this.runXpathJob(job, fn);
-            break;
-        case 'has-style':
-            // not supported yet
-            break;
-        case 'xpath-style':
-            // not supported yet
             break;
         }
     },
@@ -1291,20 +1289,16 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
     };
 
     // Added node lists will be cumulated here before being processed
-    var addedNodeLists = [];
-    var addedNodeListsTimer = null;
-    var addedNodeListsTimerDelay = 0;
-    var removedNodeListsTimer = null;
-    var removedNodeListsTimerDelay = 5;
-    var collapser = domCollapser;
+    var addedNodeLists = [],
+        addedNodeListsTimer = null,
+        removedNodeListsTimer = null,
+        removedNodesHandlerMissCount = 0,
+        collapser = domCollapser;
 
     var addedNodesHandler = function() {
         vAPI.executionCost.start();
 
         addedNodeListsTimer = null;
-        if ( addedNodeListsTimerDelay < 100 ) {
-            addedNodeListsTimerDelay += 10;
-        }
         var iNodeList = addedNodeLists.length,
             nodeList, iNode, node;
         while ( iNodeList-- ) {
@@ -1341,13 +1335,12 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
     // https://github.com/gorhill/uBlock/issues/873
     // This will ensure our style elements will stay in the DOM.
     var removedNodesHandler = function() {
-        removedNodeListsTimer = null;
-        removedNodeListsTimerDelay *= 2;
-        // Stop watching style tags after a while.
-        if ( removedNodeListsTimerDelay > 1000 ) {
-            removedNodeListsTimerDelay = 0;
+        if ( domFilterer.checkStyleTags(true) === false ) {
+            removedNodesHandlerMissCount += 1;
         }
-        domFilterer.checkStyleTags(true);
+        if ( removedNodesHandlerMissCount < 16 ) {
+            removedNodeListsTimer = null;
+        }
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
@@ -1372,10 +1365,10 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
             }
         }
         if ( addedNodeLists.length !== 0 && addedNodeListsTimer === null ) {
-            addedNodeListsTimer = vAPI.setTimeout(addedNodesHandler, addedNodeListsTimerDelay);
+            addedNodeListsTimer = window.requestAnimationFrame(addedNodesHandler);
         }
-        if ( removedNodeListsTimerDelay !== 0 && removedNodeLists && removedNodeListsTimer === null ) {
-            removedNodeListsTimer = vAPI.setTimeout(removedNodesHandler, removedNodeListsTimerDelay);
+        if ( removedNodeLists && removedNodeListsTimer === null ) {
+            removedNodeListsTimer = window.requestAnimationFrame(removedNodesHandler);
         }
 
         vAPI.executionCost.stop('domIsLoaded/domLayoutChanged');
@@ -1394,10 +1387,10 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
     vAPI.shutdown.add(function() {
         domLayoutObserver.disconnect();
         if ( addedNodeListsTimer !== null ) {
-            clearTimeout(addedNodeListsTimer);
+            window.cancelAnimationFrame(addedNodeListsTimer);
         }
         if ( removedNodeListsTimer !== null ) {
-            clearTimeout(removedNodeListsTimer);
+            window.cancelAnimationFrame(removedNodeListsTimer);
         }
     });
 })();
