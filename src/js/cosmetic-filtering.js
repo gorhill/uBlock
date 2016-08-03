@@ -247,7 +247,7 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reScriptTagFilter = /^script:(contains|inject)\((.+?)\)$/;
-    this.reNeedHostname = /^(?:.+?:csstext|.+?:has|:xpath)\(.+?\)$/;
+    this.reNeedHostname = /^(?:.+?:has|.+?:matches-css|:xpath)\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -754,8 +754,8 @@ FilterContainer.prototype.isValidSelector = (function() {
         };
     }
 
-    var reCSSTextSelector = /^(.+?):csstext\((.+?)\)$/;
     var reHasSelector = /^(.+?):has\((.+?)\)$/;
+    var reMatchesCSSSelector = /^(.+?):matches-css\((.+?)\)$/;
     var reXpathSelector = /^:xpath\((.+?)\)$/;
     var reStyleSelector = /^(.+?):style\((.+?)\)$/;
     var reStyleBad = /url\([^)]+\)/;
@@ -777,16 +777,16 @@ FilterContainer.prototype.isValidSelector = (function() {
         // We reach this point very rarely.
         var matches;
 
-        // Custom `:csstext`-based filter?
-        matches = reCSSTextSelector.exec(s);
-        if ( matches !== null ) {
-            return isValidCSSSelector(matches[1]);
-        }
         // Future `:has`-based filter? If so, validate both parts of the whole
         // selector.
         matches = reHasSelector.exec(s);
         if ( matches !== null ) {
             return isValidCSSSelector(matches[1]) && isValidCSSSelector(matches[2]);
+        }
+        // Custom `:matches-css`-based filter?
+        matches = reMatchesCSSSelector.exec(s);
+        if ( matches !== null ) {
+            return isValidCSSSelector(matches[1]);
         }
         // Custom `:xpath`-based filter?
         matches = reXpathSelector.exec(s);

@@ -117,7 +117,7 @@ var jobQueue = [
     { t: 'css-csel',  _0: [] }  // to manually hide (not incremental)
 ];
 
-var reParserEx = /:(?:csstext|has|style|xpath)\(.+?\)$/;
+var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 
 var allExceptions = Object.create(null);
 var allSelectors = Object.create(null);
@@ -172,7 +172,7 @@ var domFilterer = {
     //     2 = simple css selectors/hide
     //     3 = complex css selectors/hide
     // Custom jobs:
-    //     csstext/hide
+    //     matches-css/hide
     //     has/hide
     //     xpath/hide
 
@@ -200,10 +200,10 @@ var domFilterer = {
             return this;
         }
         sel0 = sel0.slice(0, sel0.length - sel1.length);
-        if ( sel1.lastIndexOf(':csstext', 0) === 0 ) {
-            this.jobQueue.push({ t: 'csstext-hide', raw: s, _0: sel0, _1: sel1.slice(9, -1) });
-        } else if ( sel1.lastIndexOf(':has', 0) === 0 ) {
+        if ( sel1.lastIndexOf(':has', 0) === 0 ) {
             this.jobQueue.push({ t: 'has-hide', raw: s, _0: sel0, _1: sel1.slice(5, -1) });
+        } else if ( sel1.lastIndexOf(':matches-css', 0) === 0 ) {
+            this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(13, -1) });
         } else if ( sel1.lastIndexOf(':style',0) === 0 ) {
             this.job1._0.push(sel0 + ' { ' + sel1.slice(7, -1) + ' }');
             this.job1._1 = undefined;
@@ -411,27 +411,47 @@ var domFilterer = {
         }
     },
 
-    runCSSTextJob: function(job, fn) {
-        var nodes = document.querySelectorAll(job._0),
-            i = nodes.length, node;
-        if ( i === 0 ) { return; }
-        if ( typeof job._1 === 'string' ) {
-            job._1 = new RegExp(job._1.replace(/\s*\*\s*/g, '.*?'));
-        }
-        while ( i-- ) {
-            node = nodes[i];
-            if ( job._1.test(window.getComputedStyle(node).cssText) ) {
-                fn(node, job);
-            }
-        }
-    },
-
     runHasJob: function(job, fn) {
         var nodes = document.querySelectorAll(job._0),
             i = nodes.length, node;
         while ( i-- ) {
             node = nodes[i];
             if ( node.querySelector(job._1) !== null ) {
+                fn(node, job);
+            }
+        }
+    },
+
+    runMatchesCSSJob: function(job, fn) {
+        var nodes = document.querySelectorAll(job._0),
+            i = nodes.length;
+        if ( i === 0 ) { return; }
+        if ( typeof job._1 === 'string' ) {
+            var aa = job._1.split(/;(?:\s+|$)/),
+                j = aa.length,
+                dict = Object.create(null),
+                s, pos;
+            while ( j-- ) {
+                s = aa[j].trim();
+                if ( s === '' ) { continue; }
+                pos = s.indexOf(':');
+                if ( pos === -1 ) { continue; }
+                dict[s.slice(0, pos).trim()] = s.slice(pos + 1).trim();
+            }
+            job._1 = dict;
+        }
+        var node, match, style;
+        while ( i-- ) {
+            node = nodes[i];
+            style = window.getComputedStyle(node);
+            match = undefined;
+            for ( var prop in job._1 ) {
+                match = style[prop] === job._1[prop];
+                if ( match === false ) {
+                    break;
+                }
+            }
+            if ( match === true ) {
                 fn(node, job);
             }
         }
@@ -457,11 +477,11 @@ var domFilterer = {
 
     runJob: function(job, fn) {
         switch ( job.t ) {
-        case 'csstext-hide':
-            this.runCSSTextJob(job, fn);
-            break;
         case 'has-hide':
             this.runHasJob(job, fn);
+            break;
+        case 'matches-css-hide':
+            this.runMatchesCSSJob(job, fn);
             break;
         case 'xpath-hide':
             this.runXpathJob(job, fn);
