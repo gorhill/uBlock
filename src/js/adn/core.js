@@ -8,12 +8,12 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0, // for automated testing
+    automatedMode = 1, // for automated testing
     logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -59,9 +59,12 @@
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
 
     } else if (automatedMode && vAPI.chrome) {
+
+      console.log('adding automatedMode hooks');
+
       chrome.runtime.onConnectExternal.addListener(function (port) {
         port.onMessage.addListener(function (msg) {
-          console.log('automatedMode.onMessage->',msg);.
+          console.log('automatedMode.onMessage->',msg);
         });
       });
     }
