@@ -53,6 +53,7 @@ return {
 
         admap: {},          // adn
         hidingAds: true,
+        respectDNT: false,
         clickingAds: true,
         parseTextAds: true,
         blockingMalware: true,

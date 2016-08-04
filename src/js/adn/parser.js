@@ -103,7 +103,7 @@
       });
 
       // for automated testing
-      if (vAPI.prefs.automated && window === window.top)
+      if (false && vAPI.prefs.automated && window === window.top)
         injectAutoDiv();
 
       return true;

@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0;    // for testing list-blocking
+    logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -23,7 +23,7 @@
     repeatVisitInterval = Number.MAX_VALUE;
 
   // allow blocks only from this set of lists
-  var enabledBlockLists = ['My rules', 'EasyPrivacy',  'Fanboy’s Social Blocking List',
+  var enabledBlockLists = ['My rules', 'EasyPrivacy', 'Fanboy’s Social Blocking List',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
     'Anti-ThirdpartySocial', 'AdNauseam filters'
@@ -57,6 +57,13 @@
     if (production) { // disable all test-modes if production
 
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
+
+    } else if (automatedMode && vAPI.chrome) {
+      chrome.runtime.onConnectExternal.addListener(function (port) {
+        port.onMessage.addListener(function (msg) {
+          console.log('automatedMode.onMessage->',msg);.
+        });
+      });
     }
 
     admap = (settings && settings.admap) || {};
@@ -247,8 +254,8 @@
       return title;
     }
 
-    var shtml = html.length > 100 ? html.substring(0,100)+'...' : html;
-    console.log('shtml: '+shtml);
+    var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
+    console.log('shtml: ' + shtml);
     warn('Unable to parse title from: ' + xhr.requestUrl, shtml);
 
     return false;
@@ -1234,7 +1241,7 @@
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
 
     log('Injecting content-scripts into dynamic-iframe',
-      request.parentUrl, tabId+'/'+frameId);
+      request.parentUrl, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
