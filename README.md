@@ -46,4 +46,4 @@ If you're not sure where to start, look at the issues labeled [HELP US CODE](htt
     $ git clone https://github.com/dhowe/AdNauseam.git
     ```
 
-2. See this [FAQ entry](https://github.com/dhowe/AdNauseam/wiki/Building-AdNauseam-from-source-(for-developers)) on how to build the extensions for various browsers
+2. [How to build the extension for various browsers](https://github.com/dhowe/AdNauseam/wiki/Building-AdNauseam-from-source-(for-developers))
