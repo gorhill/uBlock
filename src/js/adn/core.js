@@ -65,6 +65,8 @@
       chrome.runtime.onConnectExternal.addListener(function (port) {
         port.onMessage.addListener(function (msg) {
           console.log('automatedMode.onMessage->',msg);
+
+          // return results from calling: adlist(msg.url).length;
         });
       });
     }
