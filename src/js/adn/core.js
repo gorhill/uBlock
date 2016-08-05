@@ -45,7 +45,7 @@
   var initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
-    var ads, XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+    var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
 
     XMLHttpRequest.prototype.open = function (method, url) {
 
@@ -54,30 +54,43 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
+    initializeState(settings);
+
+    setTimeout(pollQueue, pollQueueInterval * 2);
+  }
+
+  var initializeState = function(settings) {
+
+    admap = (settings && settings.admap) || {};
+
+    validateAdStorage();
+
     if (production) { // disable all test-modes if production
 
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
 
-    } else if (automatedMode && vAPI.chrome) {
+    } else if (automatedMode && vAPI.chrome) { // using sessbench
 
-      console.log('adding automatedMode hooks');
+      console.warn('AdNauseam in automated-mode: eid=' + chrome.runtime.id);
 
-      chrome.runtime.onConnectExternal.addListener(function (port) {
-        port.onMessage.addListener(function (msg) {
-          console.log('automatedMode.onMessage->',msg);
+      chrome.runtime.onMessageExternal.addListener(
+        function(request, sender, sendResponse) {
 
-          // return results from calling: adlist(msg.url).length;
+          if (request.what === 'getAdCount') {
+
+            var url = request.pageURL, count = adlist(url).length,
+              json = { url: url, count: count };
+            console.log('TESTCOUNT: ', JSON.stringify(json));
+            sendResponse({ what: 'setPageCount', pageURL: url, count: count });
+          }
+          else if (request.what === 'startTest') {
+
+            console.log('AUTOTEST: ', JSON.stringify({url: request.pageURL}));
+            //warn("[DEBUG] Clearing all ad data!");
+            //clearAds();
+          }
         });
-      });
     }
-
-    admap = (settings && settings.admap) || {};
-    ads = validateAdStorage();
-    computeNextId(ads);
-
-    log('AdNauseam.initialized: with ' + ads.length + ' ads');
-
-    setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
   var clearAdVisits = function (ads) {
@@ -131,6 +144,10 @@
       }
     }
 
+    computeNextId(ads);
+
+    log('AdNauseam.initialized: with ' + ads.length + ' ads');
+
     return ads;
   }
 
@@ -150,9 +167,9 @@
 
     markActivity();
 
-    var next, pending = pendingAds();
+    var next, pending = pendingAds(), settings = µb.userSettings;
 
-    if (pending.length && µb.userSettings.clickingAds) {
+    if (pending.length && settings.clickingAds && !automatedMode) {
 
       // if an unvisited ad is being inspected, visit it next
       if (visitPending(inspected)) {
@@ -260,7 +277,7 @@
     }
 
     var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
-    console.log('shtml: ' + shtml);
+    //console.log('shtml: ' + shtml);
     warn('Unable to parse title from: ' + xhr.requestUrl, shtml);
 
     return false;
