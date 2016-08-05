@@ -80,14 +80,13 @@
 
             var url = request.pageURL, count = adlist(url).length,
               json = { url: url, count: count };
-            console.log('TESTCOUNT: ', JSON.stringify(json));
+
+            console.log('TEST-FOUND: ', JSON.stringify(json));
+
             sendResponse({ what: 'setPageCount', pageURL: url, count: count });
           }
-          else if (request.what === 'startTest') {
-
-            console.log('AUTOTEST: ', JSON.stringify({url: request.pageURL}));
-            //warn("[DEBUG] Clearing all ad data!");
-            //clearAds();
+          else if (request.what === 'clearAds') {
+            clearAds();
           }
         });
     }
