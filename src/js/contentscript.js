@@ -1516,7 +1516,7 @@ vAPI.executionCost.stop('domIsLoaded');
 /******************************************************************************/
 
 if ( document.readyState !== 'loading' ) {
-    domIsLoaded();
+    window.requestAnimationFrame(domIsLoaded);
 } else {
     document.addEventListener('DOMContentLoaded', domIsLoaded);
 }

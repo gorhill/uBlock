@@ -248,25 +248,26 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
-        let details = {
-            frameId: this.getFrameId(context),
-            parentFrameId: context.parent === context.top ? 0 : this.getFrameId(context.parent),
-            rawtype: type,
-            tabId: '',
-            url: location.spec
-        };
+        let rpcData = this.rpcData;
+        rpcData.frameId = this.getFrameId(context);
+        rpcData.pFrameId = context.parent === context.top ? 0 : this.getFrameId(context.parent);
+        rpcData.type = type;
+        rpcData.url = location.spec;
 
         //console.log('shouldLoad: type=' + type + ' url=' + location.spec);
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.cpMessageName, details);
+            messageManager.sendRpcMessage(this.cpMessageName, rpcData);
         } else {
             // Compatibility for older versions
-            messageManager.sendSyncMessage(this.cpMessageName, details);
+            messageManager.sendSyncMessage(this.cpMessageName, rpcData);
         }
 
         return this.ACCEPT;
     },
+
+    // Reuse object to avoid repeated memory allocation.
+    rpcData: { frameId: 0, pFrameId: -1, type: 0, url: '' },
 
     initContentScripts: function(win, create) {
         let messager = getMessageManager(win);
