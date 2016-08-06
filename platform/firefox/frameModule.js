@@ -94,6 +94,7 @@ var contentObserver = {
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
+    canE10S: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -239,7 +240,8 @@ var contentObserver = {
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
         // For top-level resources, no need to send information to the
         // main process.
-        if ( context === context.top ) {
+        let isTopContext = context === context.top;
+        if ( isTopContext && this.canE10S ) {
             return this.ACCEPT;
         }
 
@@ -248,9 +250,18 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
+        var parentFrameId;
+        if ( isTopContext ) {
+            parentFrameId = -1;
+        } else if ( context.parent === context.top ) {
+            parentFrameId = 0;
+        } else {
+            parentFrameId = this.getFrameId(context.parent);
+        }
+
         let rpcData = this.rpcData;
-        rpcData.frameId = this.getFrameId(context);
-        rpcData.pFrameId = context.parent === context.top ? 0 : this.getFrameId(context.parent);
+        rpcData.frameId = isTopContext ? 0 : this.getFrameId(context);
+        rpcData.pFrameId = parentFrameId;
         rpcData.type = type;
         rpcData.url = location.spec;
 
