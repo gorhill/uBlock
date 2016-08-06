@@ -236,14 +236,11 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
-        let isTopLevel = context === context.top;
-        let parentFrameId;
-        if ( isTopLevel ) {
-            parentFrameId = -1;
-        } else if ( context.parent === context.top ) {
-            parentFrameId = 0;
-        } else {
-            parentFrameId = this.getFrameId(context.parent);
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // For top-level resources, no need to send information to the
+        // main process.
+        if ( context === context.top ) {
+            return this.ACCEPT;
         }
 
         let messageManager = getMessageManager(context);
@@ -252,8 +249,8 @@ var contentObserver = {
         }
 
         let details = {
-            frameId: isTopLevel ? 0 : this.getFrameId(context),
-            parentFrameId: parentFrameId,
+            frameId: this.getFrameId(context),
+            parentFrameId: context.parent === context.top ? 0 : this.getFrameId(context.parent),
             rawtype: type,
             tabId: '',
             url: location.spec
