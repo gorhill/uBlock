@@ -21,11 +21,11 @@
 
 /* global punycode, uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -507,22 +507,23 @@ var renderPopup = function() {
 /******************************************************************************/
 
 var renderPopupLazy = function() {
-    var onDataReady = function(data) {
-        if ( !data ) { return; }
-        var v = data.hiddenElementCount || '';
+    messaging.send('popupPanel', { what: 'getPopupLazyData', tabId: popupData.tabId });
+};
+
+var onPopupMessage = function(data) {
+    if ( !data ) { return; }
+    if ( data.tabId !== popupData.tabId ) { return; }
+
+    switch ( data.what ) {
+    case 'cosmeticallyFilteredElementCountChanged':
+        var v = data.count || '';
         uDom.nodeFromSelector('#no-cosmetic-filtering > span.badge')
             .textContent = typeof v === 'number' ? v.toLocaleString() : v;
-    };
-
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'getPopupDataLazy',
-            tabId: popupData.tabId
-        },
-        onDataReady
-    );
+        break;
+    }
 };
+
+messaging.addChannelListener('popup', onPopupMessage);
 
 /******************************************************************************/
 
