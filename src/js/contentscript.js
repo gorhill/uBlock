@@ -122,6 +122,7 @@ var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 var allExceptions = Object.create(null);
 var allSelectors = Object.create(null);
 var stagedNodes = [];
+var matchesProp = vAPI.matchesProp;
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
@@ -143,13 +144,107 @@ var cosmeticFiltersActivated = function() {
 
 /******************************************************************************/
 
+var runSimpleSelectorJob = function(job, root, fn) {
+    if ( job._1 === undefined ) {
+        job._1 = job._0.join(cssNotHiddenId + ',');
+    }
+    if ( root[matchesProp](job._1) ) {
+        fn(root);
+    }
+    var nodes = root.querySelectorAll(job._1),
+        i = nodes.length;
+    while ( i-- ) {
+        fn(nodes[i], job);
+    }
+};
+
+var runComplexSelectorJob = function(job, fn) {
+    if ( job._1 === undefined ) {
+        job._1 = job._0.join(',');
+    }
+    var nodes = document.querySelectorAll(job._1),
+        i = nodes.length;
+    while ( i-- ) {
+        fn(nodes[i], job);
+    }
+};
+
+var runHasJob = function(job, fn) {
+    var nodes = document.querySelectorAll(job._0),
+        i = nodes.length, node;
+    while ( i-- ) {
+        node = nodes[i];
+        if ( node.querySelector(job._1) !== null ) {
+            fn(node, job);
+        }
+    }
+};
+
+var csspropDictFromString = function(s) {
+    var aa = s.split(/;\s+|;$/),
+        i = aa.length,
+        dict = Object.create(null),
+        prop, pos;
+    while ( i-- ) {
+        prop = aa[i].trim();
+        if ( prop === '' ) { continue; }
+        pos = prop.indexOf(':');
+        if ( pos === -1 ) { continue; }
+        dict[prop.slice(0, pos).trim()] = prop.slice(pos + 1).trim();
+    }
+    return dict;
+};
+
+var runMatchesCSSJob = function(job, fn) {
+    var nodes = document.querySelectorAll(job._0),
+        i = nodes.length;
+    if ( i === 0 ) { return; }
+    if ( typeof job._1 === 'string' ) {
+        job._1 = csspropDictFromString(job._1);
+    }
+    var node, match, style;
+    while ( i-- ) {
+        node = nodes[i];
+        style = window.getComputedStyle(node);
+        match = undefined;
+        for ( var prop in job._1 ) {
+            match = style[prop] === job._1[prop];
+            if ( match === false ) {
+                break;
+            }
+        }
+        if ( match === true ) {
+            fn(node, job);
+        }
+    }
+};
+
+var runXpathJob = function(job, fn) {
+    if ( job._1 === undefined ) {
+        job._1 = document.createExpression(job._0, null);
+    }
+    var xpr = job._2 = job._1.evaluate(
+        document,
+        XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+        job._2 || null
+    );
+    var i = xpr.snapshotLength, node;
+    while ( i-- ) {
+        node = xpr.snapshotItem(i);
+        if ( node.nodeType === 1 ) {
+            fn(node, job);
+        }
+    }
+};
+
+/******************************************************************************/
+
 var domFilterer = {
     commitMissCount: 0,
     disabledId: vAPI.randomToken(),
     enabled: true,
     hiddenId: vAPI.randomToken(),
     hiddenNodeCount: 0,
-    matchesProp: vAPI.matchesProp,
     styleTags: [],
 
     jobQueue: jobQueue,
@@ -288,7 +383,7 @@ var domFilterer = {
         if ( this.job2._0.length ) {
             i = stagedNodes.length;
             while ( i-- ) {
-                this.runSimpleSelectorJob(this.job2, stagedNodes[i], hideNode);
+                runSimpleSelectorJob(this.job2, stagedNodes[i], hideNode);
             }
         }
         stagedNodes = [];
@@ -301,7 +396,7 @@ var domFilterer = {
         // The handling of these can be considered optional, since they are
         // also applied declaratively using a style tag.
         if ( this.job3._0.length ) {
-            this.runComplexSelectorJob(this.job3, complexHideNode);
+            runComplexSelectorJob(this.job3, complexHideNode);
         }
 
         // Custom jobs. No optional since they can't be applied in a
@@ -386,105 +481,16 @@ var domFilterer = {
         }
     },
 
-    runSimpleSelectorJob: function(job, root, fn) {
-        if ( job._1 === undefined ) {
-            job._1 = job._0.join(cssNotHiddenId + ',');
-        }
-        if ( root[this.matchesProp](job._1) ) {
-            fn(root);
-        }
-        var nodes = root.querySelectorAll(job._1),
-            i = nodes.length;
-        while ( i-- ) {
-            fn(nodes[i], job);
-        }
-    },
-
-    runComplexSelectorJob: function(job, fn) {
-        if ( job._1 === undefined ) {
-            job._1 = job._0.join(',');
-        }
-        var nodes = document.querySelectorAll(job._1),
-            i = nodes.length;
-        while ( i-- ) {
-            fn(nodes[i], job);
-        }
-    },
-
-    runHasJob: function(job, fn) {
-        var nodes = document.querySelectorAll(job._0),
-            i = nodes.length, node;
-        while ( i-- ) {
-            node = nodes[i];
-            if ( node.querySelector(job._1) !== null ) {
-                fn(node, job);
-            }
-        }
-    },
-
-    runMatchesCSSJob: function(job, fn) {
-        var nodes = document.querySelectorAll(job._0),
-            i = nodes.length;
-        if ( i === 0 ) { return; }
-        if ( typeof job._1 === 'string' ) {
-            var aa = job._1.split(/;(?:\s+|$)/),
-                j = aa.length,
-                dict = Object.create(null),
-                s, pos;
-            while ( j-- ) {
-                s = aa[j].trim();
-                if ( s === '' ) { continue; }
-                pos = s.indexOf(':');
-                if ( pos === -1 ) { continue; }
-                dict[s.slice(0, pos).trim()] = s.slice(pos + 1).trim();
-            }
-            job._1 = dict;
-        }
-        var node, match, style;
-        while ( i-- ) {
-            node = nodes[i];
-            style = window.getComputedStyle(node);
-            match = undefined;
-            for ( var prop in job._1 ) {
-                match = style[prop] === job._1[prop];
-                if ( match === false ) {
-                    break;
-                }
-            }
-            if ( match === true ) {
-                fn(node, job);
-            }
-        }
-    },
-
-    runXpathJob: function(job, fn) {
-        if ( job._1 === undefined ) {
-            job._1 = document.createExpression(job._0, null);
-        }
-        var xpr = job._2 = job._1.evaluate(
-            document,
-            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-            job._2 || null
-        );
-        var i = xpr.snapshotLength, node;
-        while ( i-- ) {
-            node = xpr.snapshotItem(i);
-            if ( node.nodeType === 1 ) {
-                fn(node, job);
-            }
-        }
-    },
-
     runJob: function(job, fn) {
         switch ( job.t ) {
         case 'has-hide':
-            this.runHasJob(job, fn);
+            runHasJob(job, fn);
             break;
         case 'matches-css-hide':
-            this.runMatchesCSSJob(job, fn);
+            runMatchesCSSJob(job, fn);
             break;
         case 'xpath-hide':
-            this.runXpathJob(job, fn);
+            runXpathJob(job, fn);
             break;
         }
     },
