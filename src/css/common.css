@@ -70,7 +70,7 @@ a img {
 body {
 	height: 100%;
 	background-image: url(../img/gray_grid.png);
-	font: 16px/13px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font: "Helvetica Neue",Helvetica,Arial,sans-serif;
   margin: 0;
   color: #999;
 }
