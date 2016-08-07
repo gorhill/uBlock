@@ -273,7 +273,7 @@ var domFilterer = {
 
     addSelector: function(s) {
         if ( allSelectors[s] || allExceptions[s] ) {
-            return this;
+            return;
         }
         allSelectors[s] = true;
         var sel0 = s, sel1 = '';
@@ -292,7 +292,7 @@ var domFilterer = {
                 this.job3._0.push(sel0);
                 this.job3._1 = undefined;
             }
-            return this;
+            return;
         }
         sel0 = sel0.slice(0, sel0.length - sel1.length);
         if ( sel1.lastIndexOf(':has', 0) === 0 ) {
@@ -305,7 +305,7 @@ var domFilterer = {
         } else if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
             this.jobQueue.push({ t: 'xpath-hide', raw: s, _0: sel1.slice(7, -1) });
         }
-        return this;
+        return;
     },
 
     addSelectors: function(aa) {
