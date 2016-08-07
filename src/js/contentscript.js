@@ -1102,13 +1102,13 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
                     // specific forms.
                     selector = '[' + attr + '="' + attrValue + '"]';
                     if ( generics.hasOwnProperty(selector) ) {
-                        domFilterer.addSelector(selector).hideNode(node);
+                        domFilterer.addSelector(selector);
                         continue;
                     }
                     // Candidate 2 = specific form
                     selector = node.localName + selector;
                     if ( generics.hasOwnProperty(selector) ) {
-                        domFilterer.addSelector(selector).hideNode(node);
+                        domFilterer.addSelector(selector);
                     }
                 }
             }
@@ -1152,7 +1152,7 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
                 if ( entry === undefined ) { continue; }
                 if ( typeof entry === 'string' ) {
                     if ( href.lastIndexOf(entry.slice(8, -2), 0) === 0 ) {
-                        domFilterer.addSelector(entry).hideNode(node);
+                        domFilterer.addSelector(entry);
                     }
                     continue;
                 }
@@ -1160,7 +1160,7 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
                 while ( j-- ) {
                     selector = entry[j];
                     if ( href.lastIndexOf(selector.slice(8, -2), 0) === 0 ) {
-                        domFilterer.addSelector(selector).hideNode(node);
+                        domFilterer.addSelector(selector);
                     }
                 }
             }
