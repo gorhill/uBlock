@@ -8,7 +8,7 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 1, // for automated testing
+    automatedMode = 0, // for automated testing
     logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,

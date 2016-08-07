@@ -1,5 +1,5 @@
 
-# rules for AdNauseam
+# Rules for AdNauseam
 
 search.yahoo.com##.layoutMiddle
 search.yahoo.com##.kr5yi684e6
@@ -20,12 +20,8 @@ www.zam.com##.ad
 /api/ads/*
 =adunit&
 
-# /googleads.
-# /pagead2.
-# /securepubads.
-# @@||google.com/jsapi$third-party,script
-# /ad_status.
-# /pubads_
-# /api/ads/*
-# ?adformat=
-# =adunit&
+
+# haaretz.co.il
+
+##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
+###top_banners
