@@ -78,11 +78,26 @@
     }
   }
 
+  var setCost = function (ads) {
+
+    var vcount = visitedCount(ads),
+      $west = uDom('#worth-estimate');
+
+    if (vcount > 0) {
+      $west.removeClass('hidden');
+      $west.text('= $'+ (vcount * 1.58).toFixed(2) );
+    }
+    else {
+      $west.addClass('hidden');
+    }
+  }
+
   var setCounts = function (ads, total) {
 
     uDom('#vault-count').text(total);
     uDom('#visited-count').text(visitedCount(ads));
     uDom('#found-count').text(ads.length);
+    setCost(ads, total);
   }
 
   var renderPage2 = function (json) {
@@ -177,6 +192,7 @@
 
         //$('#visited-count').text(visitedCount(ads)); // **uses global ads, page
         uDom('#visited-count').text(visitedCount(ads)); // **uses global ads, page
+        setCost(ads);
       }
     }
   }
