@@ -239,6 +239,10 @@ header{
   color: #0076FF;
 }
 
+#stats .cost{
+  color: #85bb65;
+}
+
 #vault-btn {
   margin: 9px;
   position: absolute;
