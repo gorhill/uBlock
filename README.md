@@ -49,6 +49,7 @@ uBlock Origin
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
+  * [Edge](#edge)
   * [Chromium](#chromium)
   * [Firefox](#firefox--firefox-for-android)
 * [Release History](#release-history)
@@ -113,6 +114,19 @@ Being lean and efficient doesn't mean blocking less<br>
 ## Installation
 
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
+
+#### Edge
+
+While in pre-release, you will need to side-load the extension. You need to have the Windows 10 Anniversary Update to use extensions in Edge.
+
+1. Download the latest release from [the Releases page](https://github.com/nikrolls/uBlock-Edge/releases)
+2. Extract the zip file somewhere safe (it will need to remain there as long as you use the extension)
+3. Browse to `about:flags` in Edge and turn on the option `Enable extension developer features`
+4. Restart your browser
+5. Go to Extensions in the browser menu and click `Load extension`
+6. Select the `uBlock0.edge` folder you extracted earlier
+
+Edge disables side-loaded extensions whenever you restart the browser. However after a few seconds you will get a prompt to re-enable them with a single clik.
 
 #### Chromium
 
