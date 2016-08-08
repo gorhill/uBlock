@@ -137,6 +137,10 @@ Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Polic
 Users of Debian 9 or later or Ubuntu 16.04 or later may simply
 `apt-get install xul-ext-ublock-origin`.
 
+#### Microsoft Edge
+
+Early development version by @nikrolls: <https://github.com/nikrolls/uBlock-Edge/releases>.
+
 #### Note for all browsers
 
 To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
