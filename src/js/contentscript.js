@@ -689,7 +689,6 @@ return domFilterer;
 
 var domCollapser = (function() {
     var timer = null;
-    var newRequests = [];
     var pendingRequests = Object.create(null);
     var roundtripRequests = [];
     var src1stProps = {
@@ -790,7 +789,7 @@ var domCollapser = (function() {
                 requests: roundtripRequests
             }, onProcessed
         );
-        newRequests = [];
+        roundtripRequests = [];
     };
 
     var process = function(delay) {
@@ -1321,6 +1320,7 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
 
     var ignoreTags = {
         'link': true,
+        'meta': true,
         'script': true,
         'style': true
     };
@@ -1415,7 +1415,7 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
 
     // https://github.com/gorhill/httpswitchboard/issues/176
     var domLayoutObserver = new MutationObserver(domLayoutChanged);
-    domLayoutObserver.observe(document.body, {
+    domLayoutObserver.observe(document.documentElement, {
         childList: true,
         subtree: true
     });
