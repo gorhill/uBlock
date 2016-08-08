@@ -25,3 +25,4 @@ www.zam.com##.ad
 
 ##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
 ###top_banners
+haaretz.co.il##[id^="dclk"]
