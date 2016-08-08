@@ -22,11 +22,11 @@
 /******************************************************************************/
 /******************************************************************************/
 
+'use strict';
+
 // Default handler
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -192,8 +192,6 @@ vAPI.messaging.setup(onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -356,30 +354,17 @@ var popupDataFromRequest = function(request, callback) {
 
 /******************************************************************************/
 
-var getPopupDataLazy = function(tabId, callback) {
-    var r = {
-        hiddenElementCount: ''
-    };
-    var pageStore = µb.pageStoreFromTabId(tabId);
-
-    if ( !pageStore ) {
-        callback(r);
-        return;
-    }
-
-    µb.scriptlets.inject(tabId, 'cosmetic-survey', function() {
-        r.hiddenElementCount = pageStore.hiddenElementCount;
-        callback(r);
-    });
-};
-
-/******************************************************************************/
-
 var onMessage = function(request, sender, callback) {
+    var pageStore;
+
     // Async
     switch ( request.what ) {
-    case 'getPopupDataLazy':
-        getPopupDataLazy(request.tabId, callback);
+    case 'getPopupLazyData':
+        pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore !== null ) {
+            pageStore.hiddenElementCount = 0;
+            µb.scriptlets.injectDeep(request.tabId, 'cosmetic-survey');
+        }
         return;
 
     case 'getPopupData':
@@ -391,7 +376,6 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var pageStore;
     var response;
 
     switch ( request.what ) {
@@ -454,8 +438,6 @@ vAPI.messaging.listen('popupPanel', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -471,7 +453,10 @@ var tagNameToRequestTypeMap = {
 
 /******************************************************************************/
 
-// Evaluate many requests
+// Evaluate many requests.
+
+// https://github.com/gorhill/uBlock/issues/1782
+//   Treat `data:` URIs as 1st-party resources.
 
 var filterRequests = function(pageStore, details) {
     var requests = details.requests;
@@ -492,9 +477,14 @@ var filterRequests = function(pageStore, details) {
     var i = requests.length;
     while ( i-- ) {
         request = requests[i];
-        context.requestURL = punycodeURL(request.url);
+        if ( request.url.startsWith('data:') ) {
+            context.requestURL = request.url;
+            context.requestHostname = context.pageHostname;
+        } else {
+            context.requestURL = punycodeURL(request.url);
+            context.requestHostname = hostnameFromURI(context.requestURL);
+        }
         context.requestType = tagNameToRequestTypeMap[request.tagName];
-        context.requestHostname = hostnameFromURI(request.url);
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
             continue;
@@ -577,8 +567,6 @@ vAPI.messaging.listen('contentscript', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -657,8 +645,6 @@ vAPI.messaging.listen('elementPicker', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -718,8 +704,6 @@ vAPI.messaging.listen('cloudWidget', onMessage);
 // channel: dashboard
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -1023,8 +1007,6 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -1138,8 +1120,6 @@ vAPI.messaging.listen('loggerUI', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
@@ -1177,11 +1157,27 @@ vAPI.messaging.listen('documentBlocked', onMessage);
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 var µb = µBlock;
+var broadcastTimers = Object.create(null);
+
+/******************************************************************************/
+
+var cosmeticallyFilteredElementCountChanged = function(tabId) {
+    delete broadcastTimers[tabId + '-cosmeticallyFilteredElementCountChanged'];
+
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null ) {
+        return;
+    }
+
+    vAPI.messaging.broadcast({
+        what: 'cosmeticallyFilteredElementCountChanged',
+        tabId: tabId,
+        count: pageStore.hiddenElementCount
+    });
+};
 
 /******************************************************************************/
 
@@ -1223,9 +1219,16 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'liveCosmeticFilteringData':
-        if ( pageStore !== null ) {
-            pageStore.hiddenElementCount = request.filteredElementCount;
+    case 'cosmeticallyFilteredElementCount':
+        if ( pageStore !== null && request.filteredElementCount ) {
+            pageStore.hiddenElementCount += request.filteredElementCount;
+            var broadcastKey = tabId + '-cosmeticallyFilteredElementCountChanged';
+            if ( broadcastTimers[broadcastKey] === undefined ) {
+                broadcastTimers[broadcastKey] = vAPI.setTimeout(
+                    cosmeticallyFilteredElementCountChanged.bind(null, tabId),
+                    250
+                );
+            }
         }
         break;
 

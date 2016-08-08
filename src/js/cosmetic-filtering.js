@@ -247,7 +247,7 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reScriptTagFilter = /^script:(contains|inject)\((.+?)\)$/;
-    this.reNeedHostname = /^(?:.+?:has|:xpath)\(.+?\)$/;
+    this.reNeedHostname = /^(?:.+?:has|.+?:matches-css|:xpath)\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -755,6 +755,7 @@ FilterContainer.prototype.isValidSelector = (function() {
     }
 
     var reHasSelector = /^(.+?):has\((.+?)\)$/;
+    var reMatchesCSSSelector = /^(.+?):matches-css\((.+?)\)$/;
     var reXpathSelector = /^:xpath\((.+?)\)$/;
     var reStyleSelector = /^(.+?):style\((.+?)\)$/;
     var reStyleBad = /url\([^)]+\)/;
@@ -780,7 +781,12 @@ FilterContainer.prototype.isValidSelector = (function() {
         // selector.
         matches = reHasSelector.exec(s);
         if ( matches !== null ) {
-            return this.isValidSelector(matches[1]) && this.isValidSelector(matches[2]);
+            return isValidCSSSelector(matches[1]) && isValidCSSSelector(matches[2]);
+        }
+        // Custom `:matches-css`-based filter?
+        matches = reMatchesCSSSelector.exec(s);
+        if ( matches !== null ) {
+            return isValidCSSSelector(matches[1]);
         }
         // Custom `:xpath`-based filter?
         matches = reXpathSelector.exec(s);

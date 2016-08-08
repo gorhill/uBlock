@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Dashboard",
+    "message":"uBlock₀ – Dashboard",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Logboek",
+    "message":"uBlock₀ – Logger",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikken: uBlock₀ voor deze website in- of uitschakelen.\n\nCtrl+klikken: uBlock₀ enkel voor deze pagina uitschakelen.",
+    "message":"Klikken: uBlock₀ voor deze website in- of uitschakelen.\n\nCtrl+klikken: uBlock₀ alleen voor deze pagina uitschakelen.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -68,43 +68,43 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Elementkiesmodus openen",
+    "message":"Elementkiezermodus openen",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Logboek openen",
+    "message":"Logger openen",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Alle pop-ups voor deze website in- of uitschakelen",
+    "message":"Alle pop-ups voor deze website in-\/uitschakelen",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Grote media-elementen voor deze website in- of uitschakelen",
+    "message":"Grote media-elementen voor deze website in-\/uitschakelen",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Cosmetische filters voor deze website in- of uitschakelen",
+    "message":"Cosmetische filters voor deze website in-\/uitschakelen",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Blokkeren van externe lettertypen voor deze site in- of uitschakelen",
+    "message":"Blokkeren van externe lettertypen voor deze website in-\/uitschakelen",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Globale regels: deze kolom is voor regels die op alle websites van toepassing zijn.",
+    "message":"Algemene regels: deze kolom is voor regels die op alle websites van toepassing zijn.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Lokale regels: deze kolom is voor regels die alleen op de huidige website van toepassing zijn.\nLokale regels hebben voorrang op globale regels.",
+    "message":"Lokale regels: deze kolom is voor regels die alleen op de huidige website van toepassing zijn.\nLokale regels hebben voorrang op algemene regels.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Klik om je wijzigingen permanent te maken.",
+    "message":"Klik om uw wijzigingen permanent te maken.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Klik om je wijzigingen terug te draaien.",
+    "message":"Klik om uw wijzigingen ongedaan te maken.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -128,7 +128,7 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"scripts van de sites zelf",
+    "message":"scripts van de webpagina",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -164,7 +164,7 @@
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
-    "message":"Netfilters",
+    "message":"Netwerkfilters",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Auditing\/beacon van koppeling uitschakelen",
+    "message":"Hyperlink auditing\/beacon uitschakelen",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -260,7 +260,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Filterlijsten automatisch bijwerken.",
+    "message":"Filterlijsten automatisch bijwerken",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -272,7 +272,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Cosmetische filters inlezen en toepassen.",
+    "message":"Cosmetische filters inlezen en toepassen",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -316,7 +316,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Eén URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stilletjes genegeerd.",
+    "message":"Eén URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL’s worden zonder mededeling genegeerd.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -372,7 +372,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Toepassen",
+    "message":"Vastleggen",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -400,7 +400,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lijst van je dynamische filterregels.",
+    "message":"Lijst van uw dynamische filterregels.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Je lijst van hostnamen waarop uBlock₀ is uitgeschakeld. Eén per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
+    "message":"Uw lijst van hostnamen waarvoor uBlock₀ wordt uitgeschakeld. Eén vermelding per regel. Ongeldige hostnamen worden zonder mededeling genegeerd.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -544,11 +544,11 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Naar de standaardinstellingen terugzetten...",
+    "message":"Standaardinstellingen terugzetten...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Al je instellingen zullen worden overschreven met de back-upgegevens van {{time}} en uBlock₀ zal worden herstart.\n\nWeet je zeker dat je alle bestaande instellingen wil overschrijven met de back-upgegevens?",
+    "message":"Al uw instellingen zullen met back-upgegevens van {{time}} worden overschreven, en uBlock₀ zal worden herstart.\n\nWilt u alle bestaande instellingen met back-upgegevens overschrijven?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -556,7 +556,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Al je instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardwaarden van uBlock₀ terugzetten?",
+    "message":"Al uw instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardwaarden van uBlock₀ terugzetten?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -564,7 +564,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: de volgende URL aan je lijsten met aangepaste filters toevoegen?\n\nTitel: ‘{{title}}’\nURL: {{url}}",
+    "message":"uBlock₀: de volgende URL aan uw lijsten met aangepaste filters toevoegen?\n\nTitel: ‘{{title}}’\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -596,7 +596,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Logboek tonen",
+    "message":"Logger tonen",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -628,7 +628,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Strikte blokkering voor {{hostname}} uitschakelen",
+    "message":"Strenge blokkering voor {{hostname}} uitschakelen",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -644,7 +644,7 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importeren van cloudopslag",
+    "message":"Importeren uit cloudopslag",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{

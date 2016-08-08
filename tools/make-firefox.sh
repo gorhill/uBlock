@@ -32,7 +32,7 @@ cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
 echo "*** uBlock0.firefox: Generating meta..."
-python tools/make-firefox-meta.py $DES/ "$2"
+python tools/make-firefox-meta.py $DES/
 
 if [ "$1" = all ]; then
     set +v

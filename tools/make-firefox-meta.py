@@ -2,6 +2,7 @@
 
 import os
 import json
+import re
 import sys
 from io import open
 from shutil import rmtree
@@ -75,8 +76,10 @@ with open(chromium_manifest, encoding='utf-8') as m:
 
 # https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Maintenance#How_do_I_submit_a_Beta_add-on.3F
 # "To create a beta channel [...] '(a|alpha|b|beta|pre|rc)\d*$' "
-if sys.argv[2]:
-    manifest['version'] += sys.argv[2]
+
+match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
+if match:
+    manifest['version'] = match.group(1) + 'b' + match.group(2)[1:]
 
 manifest['homepage'] = 'https://github.com/gorhill/uBlock'
 manifest['description'] = descriptions['en']

@@ -2089,19 +2089,7 @@ var httpObserver = {
     },
 
     // https://github.com/gorhill/uBlock/issues/959
-    //   Try to synthesize a pending request from a behind-the-scene request.
-    synthesizePendingRequest: function(channel, rawtype) {
-        var tabId = this.tabIdFromChannel(channel);
-        if ( tabId === vAPI.noTabId ) {
-            return null;
-        }
-        return {
-            frameId: 0,
-            parentFrameId: -1,
-            tabId: tabId,
-            rawtype: rawtype
-        };
-    },
+    syntheticPendingRequest: { frameId: 0, parentFrameId: -1, tabId: '', rawtype: 1 },
 
     handleRequest: function(channel, URI, details) {
         var type = this.typeMap[details.rawtype] || 'other';
@@ -2244,37 +2232,28 @@ var httpObserver = {
             }
         }
 
-        // IMPORTANT:
-        // If this is a main frame, ensure that the proper tab id is being
-        // used: it can happen that the wrong tab id was looked up at
-        // `shouldLoadListener` time. Without this, the popup blocker may
-        // not work properly, and also a tab opened from a link may end up
-        // being wrongly reported as an embedded element.
-        if ( pendingRequest !== null && pendingRequest.rawtype === 6 ) {
-            var tabId = this.tabIdFromChannel(channel);
-            if ( tabId !== vAPI.noTabId ) {
-                pendingRequest.tabId = tabId;
+        if ( pendingRequest !== null ) {
+            // https://github.com/gorhill/uBlock/issues/654
+            //   Use the request type from the HTTP observer point of view.
+            if ( rawtype !== 1 ) {
+                pendingRequest.rawtype = rawtype;
             }
-        }
-
-        // Behind-the-scene request... Really?
-        if ( pendingRequest === null ) {
-            pendingRequest = this.synthesizePendingRequest(channel, rawtype);
-        }
-
-        // Behind-the-scene request... Yes, really.
-        if ( pendingRequest === null ) {
-            pendingRequest = {
-                frameId: 0,
-                parentFrameId: -1,
-                tabId: vAPI.noTabId,
-                rawtype: rawtype
-            };
-        }
-
-        // https://github.com/gorhill/uBlock/issues/654
-        // Use the request type from the HTTP observer point of view.
-        if ( rawtype !== 1 ) {
+            // IMPORTANT:
+            // If this is a main frame, ensure that the proper tab id is being
+            // used: it can happen that the wrong tab id was looked up at
+            // `shouldLoadListener` time. Without this, the popup blocker may
+            // not work properly, and also a tab opened from a link may end up
+            // being wrongly reported as an embedded element.
+            if ( pendingRequest.rawtype === 6 ) {
+                var tabId = this.tabIdFromChannel(channel);
+                if ( tabId !== vAPI.noTabId ) {
+                    pendingRequest.tabId = tabId;
+                }
+            }
+        } else { // pendingRequest === null
+            // No matching pending request found, synthetize one.
+            pendingRequest = this.syntheticPendingRequest;
+            pendingRequest.tabId = this.tabIdFromChannel(channel);
             pendingRequest.rawtype = rawtype;
         }
 
@@ -2401,8 +2380,8 @@ vAPI.net.registerListeners = function() {
         // request into a ring buffer for later retrieval by the HTTP observer.
         var pendingReq = httpObserver.createPendingRequest(details.url);
         pendingReq.frameId = details.frameId;
-        pendingReq.parentFrameId = details.parentFrameId;
-        pendingReq.rawtype = details.rawtype;
+        pendingReq.parentFrameId = details.pFrameId;
+        pendingReq.rawtype = details.type;
         pendingReq.tabId = tabWatcher.tabIdFromTarget(e.target);
     };
 

@@ -929,6 +929,7 @@ var onDialogClicked = function(ev) {
                 {
                     what: 'createUserFilter',
                     filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+                    pageDomain: window.location.hostname
                 }
             );
             filterElements(taCandidate.value);

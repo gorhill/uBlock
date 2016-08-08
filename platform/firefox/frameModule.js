@@ -94,6 +94,7 @@ var contentObserver = {
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
+    canE10S: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -236,14 +237,12 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
-        let isTopLevel = context === context.top;
-        let parentFrameId;
-        if ( isTopLevel ) {
-            parentFrameId = -1;
-        } else if ( context.parent === context.top ) {
-            parentFrameId = 0;
-        } else {
-            parentFrameId = this.getFrameId(context.parent);
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // For top-level resources, no need to send information to the
+        // main process.
+        let isTopContext = context === context.top;
+        if ( isTopContext && this.canE10S ) {
+            return this.ACCEPT;
         }
 
         let messageManager = getMessageManager(context);
@@ -251,25 +250,35 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
-        let details = {
-            frameId: isTopLevel ? 0 : this.getFrameId(context),
-            parentFrameId: parentFrameId,
-            rawtype: type,
-            tabId: '',
-            url: location.spec
-        };
+        var parentFrameId;
+        if ( isTopContext ) {
+            parentFrameId = -1;
+        } else if ( context.parent === context.top ) {
+            parentFrameId = 0;
+        } else {
+            parentFrameId = this.getFrameId(context.parent);
+        }
+
+        let rpcData = this.rpcData;
+        rpcData.frameId = isTopContext ? 0 : this.getFrameId(context);
+        rpcData.pFrameId = parentFrameId;
+        rpcData.type = type;
+        rpcData.url = location.spec;
 
         //console.log('shouldLoad: type=' + type + ' url=' + location.spec);
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.cpMessageName, details);
+            messageManager.sendRpcMessage(this.cpMessageName, rpcData);
         } else {
             // Compatibility for older versions
-            messageManager.sendSyncMessage(this.cpMessageName, details);
+            messageManager.sendSyncMessage(this.cpMessageName, rpcData);
         }
 
         return this.ACCEPT;
     },
+
+    // Reuse object to avoid repeated memory allocation.
+    rpcData: { frameId: 0, pFrameId: -1, type: 0, url: '' },
 
     initContentScripts: function(win, create) {
         let messager = getMessageManager(win);
