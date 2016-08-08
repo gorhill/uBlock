@@ -484,7 +484,7 @@ var filterRequests = function(pageStore, details) {
             context.requestURL = punycodeURL(request.url);
             context.requestHostname = hostnameFromURI(context.requestURL);
         }
-        context.requestType = tagNameToRequestTypeMap[request.tagName];
+        context.requestType = tagNameToRequestTypeMap[request.tag];
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
             continue;
@@ -540,7 +540,8 @@ var onMessage = function(request, sender, callback) {
     case 'filterRequests':
         response = {
             shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
-            result: null
+            result: null,
+            netSelectorCacheCountMax: µb.cosmeticFilteringEngine.netSelectorCacheCountMax
         };
         if ( !response.shutdown ) {
             response.result = filterRequests(pageStore, request);
