@@ -689,10 +689,9 @@ return domFilterer;
 
 var domCollapser = (function() {
     var timer = null;
-    var requestId = 1;
     var newRequests = [];
     var pendingRequests = Object.create(null);
-    var pendingRequestCount = 0;
+    var roundtripRequests = [];
     var src1stProps = {
         'embed': 'src',
         'img': 'src',
@@ -701,22 +700,14 @@ var domCollapser = (function() {
     var src2ndProps = {
         'img': 'srcset'
     };
+    var netSelectorCacheCount = 0;
     var messaging = vAPI.messaging;
-
-    var PendingRequest = function(target, tagName, attr) {
-        this.id = requestId++;
-        this.target = target;
-        this.tagName = tagName;
-        this.attr = attr;
-        pendingRequests[this.id] = this;
-        pendingRequestCount += 1;
-    };
 
     // Because a while ago I have observed constructors are faster than
     // literal object instanciations.
-    var BouncingRequest = function(id, tagName, url) {
-        this.id = id;
-        this.tagName = tagName;
+    var RoundtripRequest = function(tag, attr, url) {
+        this.tag = tag;
+        this.attr = attr;
         this.url = url;
         this.collapse = false;
     };
@@ -736,34 +727,43 @@ var domCollapser = (function() {
         if ( requests === null || Array.isArray(requests) === false ) {
             return;
         }
-        var selectors = [];
-        var i = requests.length;
-        var request, entry, target, value;
-        while ( i-- ) {
+        var selectors = [],
+            netSelectorCacheCountMax = response.netSelectorCacheCountMax,
+            aa = [ null ],
+            request, key, entry, target, value;
+        // Important: process in chronological order -- this ensures the
+        // cached selectors are the most useful ones.
+        for ( var i = 0, ni = requests.length; i < ni; i++ ) {
             request = requests[i];
-            entry = pendingRequests[request.id];
+            key = request.tag + ' ' + request.attr + ' ' + request.url;
+            entry = pendingRequests[key];
             if ( entry === undefined ) {
                 continue;
             }
-            delete pendingRequests[request.id];
-            pendingRequestCount -= 1;
-
+            delete pendingRequests[key];
             // https://github.com/chrisaljoudi/uBlock/issues/869
             if ( !request.collapse ) {
                 continue;
             }
-
-            target = entry.target;
-
-            // https://github.com/chrisaljoudi/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            target.style.setProperty('display', 'none', 'important');
-            target.hidden = true;
-
-            // https://github.com/chrisaljoudi/uBlock/issues/1048
-            // Use attribute to construct CSS rule
-            if ( (value = target.getAttribute(entry.attr)) ) {
-                selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
+            if ( Array.isArray(entry) === false ) {
+                aa[0] = entry;
+                entry = aa;
+            }
+            for ( var j = 0, nj = entry.length; j < nj; j++ ) {
+                target = entry[j];
+                // https://github.com/chrisaljoudi/uBlock/issues/399
+                // Never remove elements from the DOM, just hide them
+                target.style.setProperty('display', 'none', 'important');
+                target.hidden = true;
+                // https://github.com/chrisaljoudi/uBlock/issues/1048
+                // Use attribute to construct CSS rule
+                if (
+                    netSelectorCacheCount <= netSelectorCacheCountMax &&
+                    (value = target.getAttribute(request.attr))
+                ) {
+                    selectors.push(request.tag + '[' + request.attr + '="' + value + '"]');
+                    netSelectorCacheCount += 1;
+                }
             }
         }
         if ( selectors.length !== 0 ) {
@@ -777,11 +777,6 @@ var domCollapser = (function() {
                 }
             );
         }
-        // Renew map: I believe that even if all properties are deleted, an
-        // object will still use more memory than a brand new one.
-        if ( pendingRequestCount === 0 ) {
-            pendingRequests = Object.create(null);
-        }
     };
 
     var send = function() {
@@ -792,14 +787,14 @@ var domCollapser = (function() {
                 what: 'filterRequests',
                 pageURL: window.location.href,
                 pageHostname: window.location.hostname,
-                requests: newRequests
+                requests: roundtripRequests
             }, onProcessed
         );
         newRequests = [];
     };
 
     var process = function(delay) {
-        if ( newRequests.length === 0 ) {
+        if ( roundtripRequests.length === 0 ) {
             return;
         }
         if ( delay === 0 ) {
@@ -814,8 +809,8 @@ var domCollapser = (function() {
     // for iframes.
 
     var add = function(target) {
-        var tagName = target.localName;
-        var prop = src1stProps[tagName];
+        var tag = target.localName;
+        var prop = src1stProps[tag];
         if ( prop === undefined ) {
             return;
         }
@@ -823,7 +818,7 @@ var domCollapser = (function() {
         // Do not remove fragment from src URL
         var src = target[prop];
         if ( typeof src !== 'string' || src.length === 0 ) {
-            prop = src2ndProps[tagName];
+            prop = src2ndProps[tag];
             if ( prop === undefined ) {
                 return;
             }
@@ -837,8 +832,16 @@ var domCollapser = (function() {
         if ( src.lastIndexOf('data:', 0) === 0 ) {
             src = src.slice(0, 255);
         }
-        var req = new PendingRequest(target, tagName, prop);
-        newRequests.push(new BouncingRequest(req.id, tagName, src));
+        var key = tag + ' ' + prop + ' ' + src,
+            entry = pendingRequests[key];
+        if ( entry === undefined ) {
+            pendingRequests[key] = target;
+            roundtripRequests.push(new RoundtripRequest(tag, prop, src));
+        } else if ( Array.isArray(entry) ) {
+            entry.push(target);
+        } else {
+            pendingRequests[key] = [ entry, target ];
+        }
     };
 
     var addMany = function(targets) {
@@ -892,8 +895,16 @@ var domCollapser = (function() {
         if ( src.lastIndexOf('http', 0) !== 0 ) {
             return;
         }
-        var req = new PendingRequest(iframe, 'iframe', 'src');
-        newRequests.push(new BouncingRequest(req.id, 'iframe', src));
+        var key = 'iframe' + ' ' + 'src' + ' ' + src,
+            entry = pendingRequests[key];
+        if ( entry === undefined ) {
+            pendingRequests[key] = iframe;
+            roundtripRequests.push(new RoundtripRequest('iframe', 'src', src));
+        } else if ( Array.isArray(entry) ) {
+            entry.push(iframe);
+        } else {
+            pendingRequests[key] = [ entry, iframe ];
+        }
     };
 
     var addIFrames = function(iframes) {
@@ -1453,8 +1464,8 @@ skip-survey=false: survey-phase-1 => survey-phase-2 => survey-phase-3 => commit
 //   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
 
 (function() {
-    var collapser = domCollapser;
-    var elems = document.images || document.getElementsByTagName('img'),
+    var collapser = domCollapser,
+        elems = document.images || document.getElementsByTagName('img'),
         i = elems.length, elem;
     while ( i-- ) {
         elem = elems[i];

@@ -458,8 +458,8 @@ SelectorCacheEntry.factory = function() {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.netLowWaterMark = 20;
-SelectorCacheEntry.prototype.netHighWaterMark = 30;
+var netSelectorCacheLowWaterMark = 20;
+var netSelectorCacheHighWaterMark = 30;
 
 /******************************************************************************/
 
@@ -507,13 +507,13 @@ SelectorCacheEntry.prototype.addNet = function(selectors) {
     // Net request-derived selectors: I limit the number of cached selectors,
     // as I expect cases where the blocked net-requests are never the
     // exact same URL.
-    if ( this.netCount < this.netHighWaterMark ) {
+    if ( this.netCount < netSelectorCacheHighWaterMark ) {
         return;
     }
     var dict = this.net;
     var keys = Object.keys(dict).sort(function(a, b) {
         return dict[b] - dict[a];
-    }).slice(this.netLowWaterMark);
+    }).slice(netSelectorCacheLowWaterMark);
     var i = keys.length;
     while ( i-- ) {
         delete dict[keys[i]];
@@ -664,6 +664,7 @@ var FilterContainer = function() {
     this.selectorCachePruneDelay = 10 * 60 * 1000; // 15 minutes
     this.selectorCacheAgeMax = 120 * 60 * 1000; // 120 minutes
     this.selectorCacheCountMin = 25;
+    this.netSelectorCacheCountMax = netSelectorCacheHighWaterMark;
     this.selectorCacheTimer = null;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.punycode = punycode;
