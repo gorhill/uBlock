@@ -262,6 +262,10 @@ div.tooltip {
 	color: #85bb65;
 }
 
+.hidden {
+  display: none;
+}
+
 .help-mark {
 	font-size: 14px;
 	border-radius: 3px;
@@ -280,7 +284,7 @@ div.tooltip {
 	margin-left: 2px;
 }
 
-.cost .help-mark {
+.help-mark {
 	background-color: #85bb65;
 }
 

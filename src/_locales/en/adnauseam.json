@@ -145,23 +145,27 @@
   },
   "adnVaultSince": {
     "message": "Since",
-    "description": "appears in ADN vault page"
+    "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
     "message": "Jan 1 1970 0:00am",
-    "description": "appears in ADN vault page"
+    "description": "appears on vault page"
   },
   "adnVaultAdsClicked": {
     "message": "Ads clicked",
-    "description": "appears in ADN vault page"
+    "description": "appears on vault page"
   },
   "adnVaultFound": {
     "message": "shown",
-    "description": "appears in ADN vault page"
+    "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
     "message": "delete this Ad",
-    "description": "appears in ADN vault page"
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "total estimated cost",
+    "description": "appears on vault page"
   },
 
   "hidingAdsPrompt": {
