@@ -56,7 +56,128 @@ vAPI.app.restart = function() {
 
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
-vAPI.storage = browser.storage.local;
+vAPI.storage = (function() {
+    // Found through trial and error.
+    // Edge aparrently supports 1MB per value, but we get errors
+    // even with 400,000 chars.
+    const MAX_BYTES_PER_VALUE = 300000;
+    const storage = browser.storage.local;
+
+    function get(key, callback) {
+        if (typeof key !== 'string') {
+            storage.get(key, callback);
+        } else {
+           getValueAndJoinIfRequired(key, callback);
+        }
+    }
+
+    function getValueAndJoinIfRequired(key, callback) {
+        storage.get(key, (response) => {
+            if (!response[key]) {
+                getJoinedValue(key, callback);
+            } else {
+                callback(response);
+            }
+        });
+    }
+
+    function getJoinedValue(key, callback) {
+        const parts = [];
+        getNextValue();
+
+        function getNextValue(index = 0) {
+            const nextKey = `${key}__${index}`;
+            storage.get(nextKey, (response) => {
+                if (response[nextKey]) {
+                    storePartAndContinue(response[nextKey], index);
+                } else {
+                    joinAndRespond();
+                }
+            });
+        }
+
+        function storePartAndContinue(part, currentIndex) {
+            parts.push(part);
+            getNextValue(currentIndex + 1);
+        }
+
+        function joinAndRespond() {
+            const response = {};
+            let value;
+            try {
+                value = JSON.parse(parts.join(''));
+            } catch (e) {
+                value = null;
+            }
+            response[key] = value;
+            callback(response); 
+        }
+    }
+
+    function set(data, callback) {
+        setWithSplitLargeValues(data, callback);
+    }   
+
+    function remove(key, callback) {
+        if (typeof key !== 'string') {
+            storage.remove(key, callback);
+        } else {
+            storage.get(key, removePartsIfRequired);
+        }
+
+        function removePartsIfRequired(response) {
+            if (response[key]) {
+                storage.remove(key);
+            } else {
+                removeNextPart();
+            }
+        }       
+
+        function removeNextPart(index = 0) {
+            storage.remove(`${key}__${index}`);
+            const nextKey = `${key}__${index + 1}`; 
+            storage.get(nextKey, (result) => {
+                if (result[nextKey]) {
+                    removeNextPart(index + 1);
+                }
+            });
+        }
+    }
+
+    function setWithSplitLargeValues(data, callback) {
+        const split = Object.keys(data).reduce((output, key) => {
+            const stringified = JSON.stringify(data[key]);
+            if (stringified.length > MAX_BYTES_PER_VALUE) {
+                storage.remove(key);
+                const parts = splitStringByLength(stringified, MAX_BYTES_PER_VALUE);
+                parts.forEach((part, index) => {
+                    output[`${key}__${index}`] = part;
+                });
+                output[`${key}__${parts.length}`] = null;
+            } else {
+                output[key] = data[key];
+            }
+            return output;
+        }, {});
+        storage.set(split, callback);
+    }
+
+    function splitStringByLength(str, length) {
+        const output = [];
+        while(str.length > length) {
+            output.push(str.substr(0, length));
+            str = str.substr(length);
+        }
+        output.push(str);
+        return output;
+    }
+ 
+    return {
+        get, set, remove,
+        clear: storage.clear,
+        getBytesInUse: storage.getBytesInUse
+    }
+}());
 
 /******************************************************************************/
 /******************************************************************************/
