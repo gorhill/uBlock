@@ -51,6 +51,7 @@ uBlock Origin
 * [Installation](#installation)
   * [Chromium](#chromium)
   * [Firefox](#firefox--firefox-for-android)
+  * [Microsoft Edge](#microsoft-edge)
 * [Release History](#release-history)
 * [Privacy policy](https://github.com/gorhill/uBlock/wiki/Privacy-policy)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
@@ -139,7 +140,7 @@ Users of Debian 9 or later or Ubuntu 16.04 or later may simply
 
 #### Microsoft Edge
 
-Early development version by [@nikrolls](https://github.com/nikrolls): <https://github.com/nikrolls/uBlock-Edge/releases>.
+Early development version by [@nikrolls](https://github.com/nikrolls): <https://github.com/nikrolls/uBlock-Edge#edge>.
 
 #### Note for all browsers
 
