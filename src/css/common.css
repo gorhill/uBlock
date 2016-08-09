@@ -529,3 +529,31 @@ input.cmn-toggle-round-flat.cmn-toggle-small + label::after {
 input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
   margin-left: 14px;
 }
+
+
+.hidden {
+  display: none !important;
+}
+
+.cost{
+	font-weight: 700;
+	color: #85bb65;
+}
+
+.help-mark {
+	font-size: 14px;
+	border-radius: 3px;
+	background-color: #85bb65;
+	padding: 2px 2px 0;
+	display: inline-block;
+	height: 14px;
+	line-height: 1em;
+	position: relative;
+	bottom: 7px;
+	color: #000 !important;
+	text-shadow: none;
+	text-decoration: none;
+	text-align: center;
+	font-weight: 400;
+	margin-left: 2px;
+}

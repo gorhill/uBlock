@@ -257,37 +257,6 @@ div.tooltip {
 	color: #0076FF;
 }
 
-.session-sum .cost{
-	font-weight: 700;
-	color: #85bb65;
-}
-
-.hidden {
-  display: none;
-}
-
-.help-mark {
-	font-size: 14px;
-	border-radius: 3px;
-	background-color: #999;
-	padding: 2px 2px 0;
-	display: inline-block;
-	height: 14px;
-	line-height: 1em;
-	position: relative;
-	bottom: 7px;
-	color: #000;
-	text-shadow: none;
-	text-decoration: none;
-	text-align: center;
-	font-weight: 400;
-	margin-left: 2px;
-}
-
-.help-mark {
-	background-color: #85bb65;
-}
-
 #logo{
 	z-index: 100;
 	bottom: 0;

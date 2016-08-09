@@ -17,6 +17,22 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+var setCost = function(numVisited) {
+
+  //console.log('setCost: '+numVisited);
+
+  var $west = uDom('#worth-estimate'),
+    $cost = uDom('.cost');
+
+  if (numVisited > 0) {
+    $cost.removeClass('hidden');
+    $west.text('= $'+ (numVisited * 1.58).toFixed(2));
+  }
+  else {
+    $cost.addClass('hidden');
+  }
+}
+
 var arrayRemove = function (arr, obj) {
 
   var i = arr.indexOf(obj);
@@ -71,7 +87,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
   }
 
   var hash = ad.pageDomain || ad.pageUrl, // change from pageUrl (4/3/16) ***
-  // fall back to pageUrl if pageDomain is undefined for backward compatibility 
+  // fall back to pageUrl if pageDomain is undefined for backward compatibility
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {

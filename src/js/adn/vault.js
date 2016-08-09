@@ -512,29 +512,13 @@
     appendMetaTo($div, adset)
   }
 
-  function setCost(adsets) {
-
-    //console.log('setCost:'+adsets.length);
-
-    var vcount = numVisited(adsets),
-      $west = uDom('#worth-estimate'),
-      $cost = uDom('.cost');
-
-    if (vcount > 0) {
-      $cost.removeClass('hidden');
-      $west.text('= $'+ (vcount * 1.58).toFixed(2) );
-    }
-    else {
-      $cost.addClass('hidden');
-    }
-  }
-
   function computeStats(adsets) {
 
+    var numVisits = numVisited(adsets);
     $('.since').text(sinceTime(adsets));
-    $('#clicked').text(numVisited(adsets));
+    $('#clicked').text(numVisits);
     $('#detected').text(numFound(adsets));
-    setCost(adsets);
+    setCost(numVisits);
   }
 
   function numVisited(adsets) {

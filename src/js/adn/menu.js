@@ -78,26 +78,13 @@
     }
   }
 
-  var setCost = function (ads) {
-
-    var vcount = visitedCount(ads),
-      $west = uDom('#worth-estimate');
-
-    if (vcount > 0) {
-      $west.removeClass('hidden');
-      $west.text('= $'+ (vcount * 1.58).toFixed(2) );
-    }
-    else {
-      $west.addClass('hidden');
-    }
-  }
-
   var setCounts = function (ads, total) {
 
+    var numVisits = visitedCount(ads);
     uDom('#vault-count').text(total);
-    uDom('#visited-count').text(visitedCount(ads));
+    uDom('#visited-count').text(numVisits);
     uDom('#found-count').text(ads.length);
-    setCost(ads, total);
+    setCost(numVisits);
   }
 
   var renderPage2 = function (json) {
@@ -180,19 +167,17 @@
       var $ad = updateAdClasses(ad);
 
       // update the title
-      //$ad.find('.title').text(getTitle(ad));
       $ad.descendants('.title').text(getTitle(ad));
 
       // update the url
-      //$ad.find('cite').text(targetDomain(ad));
       $ad.descendants('cite').text(targetDomain(ad));
 
       // update the visited count
       if (ad.pageUrl === page) {
 
-        //$('#visited-count').text(visitedCount(ads)); // **uses global ads, page
-        uDom('#visited-count').text(visitedCount(ads)); // **uses global ads, page
-        setCost(ads);
+        var numVisits = visitedCount(ads);
+        uDom('#visited-count').text(numVisits); // **uses global ads, page
+        setCost(numVisits);
       }
     }
   }
