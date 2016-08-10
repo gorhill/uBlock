@@ -37,6 +37,7 @@
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
+  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
   var reSpecialChars = /[\*\^\t\v\n]/;
 
   /**************************** functions ******************************/
@@ -59,7 +60,7 @@
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
-  var initializeState = function(settings) {
+  var initializeState = function (settings) {
 
     admap = (settings && settings.admap) || {};
 
@@ -74,18 +75,25 @@
       console.warn('AdNauseam in automated-mode: eid=' + chrome.runtime.id);
 
       chrome.runtime.onMessageExternal.addListener(
-        function(request, sender, sendResponse) {
+        function (request, sender, sendResponse) {
 
           if (request.what === 'getAdCount') {
 
-            var url = request.pageURL, count = adlist(url).length,
-              json = { url: url, count: count };
+            var url = request.pageURL,
+              count = adlist(url).length,
+              json = {
+                url: url,
+                count: count
+              };
 
             console.log('TEST-FOUND: ', JSON.stringify(json));
 
-            sendResponse({ what: 'setPageCount', pageURL: url, count: count });
-          }
-          else if (request.what === 'clearAds') {
+            sendResponse({
+              what: 'setPageCount',
+              pageURL: url,
+              count: count
+            });
+          } else if (request.what === 'clearAds') {
             clearAds();
           }
         });
@@ -166,7 +174,8 @@
 
     markActivity();
 
-    var next, pending = pendingAds(), settings = µb.userSettings;
+    var next, pending = pendingAds(),
+      settings = µb.userSettings;
 
     if (pending.length && settings.clickingAds && !automatedMode) {
 
@@ -488,8 +497,14 @@
     }
 
     ad.targetUrl = trimChar(ad.targetUrl, '/');
+    ad.targetDomain = domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
 
     return true;
+  }
+
+  var domainFromURI = function (url) { // via uBlock/psl
+
+    return µb.URI.domainFromHostname(µb.URI.hostnameFromURI(url));
   }
 
   var validateFields = function (ad) { // no side-effects
@@ -820,7 +835,7 @@
     ad.attemptedTs = 0;
     ad.version = vAPI.app.version;
     ad.attempts = ad.attempts || 0;
-    ad.pageDomain = parseDomain(ad.pageUrl) || ad.pageUrl;
+    ad.pageDomain = domainFromURI(ad.pageUrl) || ad.pageUrl; // DCH: 8/10
     if (!ad.errors || !ad.errors.length)
       ad.errors = null;
     delete ad.hashkey;
@@ -1057,13 +1072,22 @@
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
-    ad.pageDomain = pageStore.tabHostname;
+    ad.pageDomain = µb.URI.domainFromHostname(pageStore.tabHostname); // DCH: 8/10
     ad.version = vAPI.app.version;
+
+    //console.log('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
 
     if (!validate(ad)) {
 
       warn("Invalid Ad: ", ad);
       return;
+    }
+
+    if (internalTarget(ad)) {
+
+      warn('INTERNAL: ' + ad.pageDomain + ' = ' + ad.targetDomain +
+        ' (' + ad.targetUrl + ')\n    old: ' + targetDomain(ad));
+      //return; // just warn for now
     }
 
     if (!admap[pageUrl]) admap[pageUrl] = {};
@@ -1088,6 +1112,17 @@
     admap[pageUrl][adhash] = ad;
 
     postRegister(ad, pageUrl, tabId);
+  };
+
+  // check target domain against page-domain #337
+  var internalTarget = function (ad) {
+
+    if (ad.contentType === 'text') return false;
+
+    // if an image ad and page/target domains match, its internal
+    return (ad.pageDomain === ad.targetDomain ||
+      ad.pageDomain.indexOf(ad.targetDomain) > -1 ||
+      ad.targetDomain.indexOf(ad.pageDomain) > -1);
   };
 
   var fromNetFilterSync = function (compiledFilter, rawFilter) {

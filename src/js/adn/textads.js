@@ -168,6 +168,7 @@
       return [ad];
     }
 
+    // TODO: replace with core::domainFromURI
     var parseDomain = function (url, useLast) { // dup. in shared
 
       var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);

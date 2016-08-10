@@ -122,7 +122,8 @@
 
     var processImage = function (img, src) {
 
-      var target, targetUrl, ad, dbug = vAPI.debugAdParsing && !vAPI.prefs.production , hits = 0;
+      var target, targetUrl, ad, hits = 0,
+        dbug = vAPI.debugAdParsing && !vAPI.prefs.production;
 
       target = clickableParent(img);
       if (target) {
@@ -158,6 +159,7 @@
 
     }
 
+    // TODO: replace with core::domainFromURI
     var parseDomain = function (url, useLast) { // dup. in shared
 
       var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);

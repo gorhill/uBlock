@@ -124,6 +124,7 @@ var parseHostname = function (url) {
   return new URL(url).hostname;
 }
 
+// TODO: replace with core::domainFromURI
 var parseDomain = function (url, useLast) {
 
   var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
