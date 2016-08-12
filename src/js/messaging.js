@@ -518,12 +518,18 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-    case 'retrieveDomainCosmeticSelectors':
+    case 'retrieveContentScriptParameters':
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-            if ( response && response.skipCosmeticFiltering !== true ) {
-                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
-            }
+            response = {
+                loggerEnabled: µb.logger.isEnabled(),
+                collapseBlocked: µb.userSettings.collapseBlocked,
+                noCosmeticFiltering: µb.cosmeticFilteringEngine.acceptedCount === 0 || pageStore.noCosmeticFiltering === true,
+                noGenericCosmeticFiltering: pageStore.noGenericCosmeticFiltering === true
+            };
+            response.specificCosmeticFilters = µb.cosmeticFilteringEngine.retrieveDomainSelectors(
+                request,
+                response.noCosmeticFiltering
+            );
         }
         break;
 

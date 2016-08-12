@@ -27,7 +27,7 @@
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' || typeof vAPI.domFilterer !== 'object' ) {
+if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) {
     return;
 }
 

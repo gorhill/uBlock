@@ -1550,16 +1550,17 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveDomainSelectors = function(request) {
+FilterContainer.prototype.retrieveDomainSelectors = function(request, noCosmeticFiltering) {
     if ( !request.locationURL ) {
         return;
     }
 
     //quickProfiler.start('FilterContainer.retrieve()');
 
-    var hostname = this.µburi.hostnameFromURI(request.locationURL);
-    var domain = this.µburi.domainFromHostname(hostname) || hostname;
-    var pos = domain.indexOf('.');
+    var hostname = this.µburi.hostnameFromURI(request.locationURL),
+        domain = this.µburi.domainFromHostname(hostname) || hostname,
+        pos = domain.indexOf('.'),
+        cacheEntry = this.selectorCache[hostname];
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
     // r.ready will tell the content script the cosmetic filtering engine is
@@ -1572,57 +1573,58 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
         ready: this.frozen,
         domain: domain,
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
-        skipCosmeticSurveying: false,
-        skipCosmeticFiltering: this.acceptedCount === 0,
+        noDOMSurveying: false,
         cosmeticHide: [],
-        cosmeticDonthide: this.genericDonthide.slice(),
+        cosmeticDonthide: [],
         netHide: [],
-        netCollapse: µb.userSettings.collapseBlocked,
         scripts: this.retrieveScriptTags(domain, hostname)
     };
 
-    var hash, bucket;
-    hash = makeHash(0, domain, this.domainHashMask);
-    if ( (bucket = this.hostnameFilters[hash]) ) {
-        bucket.retrieve(hostname, r.cosmeticHide);
-    }
-    // https://github.com/chrisaljoudi/uBlock/issues/188
-    // Special bucket for those filters without a valid domain name as per PSL
-    if ( (bucket = this.hostnameFilters[this.type0NoDomainHash]) ) {
-        bucket.retrieve(hostname, r.cosmeticHide);
+    if ( !noCosmeticFiltering ) {
+        var hash, bucket;
+        hash = makeHash(0, domain, this.domainHashMask);
+        if ( (bucket = this.hostnameFilters[hash]) ) {
+            bucket.retrieve(hostname, r.cosmeticHide);
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/188
+        // Special bucket for those filters without a valid domain name as per PSL
+        if ( (bucket = this.hostnameFilters[this.type0NoDomainHash]) ) {
+            bucket.retrieve(hostname, r.cosmeticHide);
+        }
+
+        // entity filter buckets are always plain js array
+        if ( this.entityFilters.hasOwnProperty(r.entity) ) {
+            r.cosmeticHide = r.cosmeticHide.concat(this.entityFilters[r.entity]);
+        }
+
+        // cached cosmetic filters.
+        if ( cacheEntry ) {
+            cacheEntry.retrieve('cosmetic', r.cosmeticHide);
+            r.noDOMSurveying = cacheEntry.cosmeticSurveyingMissCount > cosmeticSurveyingMissCountMax;
+        }
+
+        // Exception cosmetic filters.
+        r.cosmeticDonthide = this.genericDonthide.slice();
+
+        hash = makeHash(1, domain, this.domainHashMask);
+        if ( (bucket = this.hostnameFilters[hash]) ) {
+            bucket.retrieve(hostname, r.cosmeticDonthide);
+        }
+
+        // https://github.com/chrisaljoudi/uBlock/issues/188
+        // Special bucket for those filters without a valid domain name as per PSL
+        if ( (bucket = this.hostnameFilters[this.type1NoDomainHash]) ) {
+            bucket.retrieve(hostname, r.cosmeticDonthide);
+        }
+        // No entity exceptions as of now
     }
 
-    // entity filter buckets are always plain js array
-    if ( this.entityFilters.hasOwnProperty(r.entity) ) {
-        r.cosmeticHide = r.cosmeticHide.concat(this.entityFilters[r.entity]);
-    }
-    // No entity exceptions as of now
-
-    hash = makeHash(1, domain, this.domainHashMask);
-    if ( (bucket = this.hostnameFilters[hash]) ) {
-        bucket.retrieve(hostname, r.cosmeticDonthide);
-    }
-
-    // https://github.com/chrisaljoudi/uBlock/issues/188
-    // Special bucket for those filters without a valid domain name as per PSL
-    if ( (bucket = this.hostnameFilters[this.type1NoDomainHash]) ) {
-        bucket.retrieve(hostname, r.cosmeticDonthide);
-    }
-
-    var cacheEntry = this.selectorCache[hostname];
+    // Collapsible blocked resources.
     if ( cacheEntry ) {
-        cacheEntry.retrieve('cosmetic', r.cosmeticHide);
         cacheEntry.retrieve('net', r.netHide);
-        r.skipCosmeticSurveying = cacheEntry.cosmeticSurveyingMissCount > cosmeticSurveyingMissCountMax;
     }
 
     //quickProfiler.stop();
-
-    //console.log(
-    //    'µBlock> abp-hide-filters.js: "%s" => %d selectors out',
-    //    request.locationURL,
-    //    r.cosmeticHide.length + r.cosmeticDonthide.length
-    //);
 
     return r;
 };

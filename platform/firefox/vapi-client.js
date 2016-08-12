@@ -56,6 +56,18 @@ var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
 
+var referenceCounter = 0;
+
+vAPI.lock = function() {
+    referenceCounter += 1;
+};
+
+vAPI.unlock = function() {
+    referenceCounter -= 1;
+};
+
+/******************************************************************************/
+
 vAPI.executionCost = {
     start: function(){},
     stop: function(){}
