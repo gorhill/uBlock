@@ -1087,7 +1087,7 @@
 
       warn('INTERNAL: ' + ad.pageDomain + ' = ' + ad.targetDomain +
         ' (' + ad.targetUrl + ')\n    old: ' + targetDomain(ad));
-      //return; // just warn for now
+      return; // testing this
     }
 
     if (!admap[pageUrl]) admap[pageUrl] = {};
