@@ -1502,7 +1502,7 @@ vAPI.domSurveyor = (function() {
 /******************************************************************************/
 
 vAPI.domIsLoaded = function(ev) {
-    if ( ev ) {
+    if ( ev instanceof Event ) {
         document.removeEventListener('DOMContentLoaded', vAPI.domIsLoaded);
     }
     vAPI.domIsLoaded = null;
