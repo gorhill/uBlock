@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>啟用此選項後，您就可以使用 <a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">與 Adblock Plus 相容的「元素隱藏」過濾規則<\/a>。這些過濾規則可用來隱藏網頁中礙眼，卻又不能被網路請求的過濾引擎所阻擋的元素。<\/p><p>啟用這項功能後將增加 <i>uBlock₀ <\/i> 的記憶體使用量。<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"忽略一般元素隱藏過濾規則。",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>一般元素過濾規則是指會套用於所有網站的規則。<p>雖然 uBlock₀ 會有效率地處理這些規則，但這些規則還是可能會在某些網頁中造成許多多餘的記憶體與 CPU 使用率，尤其是在較長又較舊的網頁。<p>開啟此選項後將可避免處理一般元素過濾規則時，鎖造成多餘的記憶體與 CPU 使用率，也能降低 uBlock₀ 本身的記憶體用量。<p>建議您在效能較差的裝置中開啟此選項。",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"已阻擋的主機列表",
