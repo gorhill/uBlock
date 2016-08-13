@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Увімк\/Вимк блокування великих медіа елементів на цьому сайті",
+    "message":"Перемкнути блокування великих медіа елементів на цьому сайті",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Стандартна поведінка",
+    "message":"Стандартні налаштування",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
@@ -648,7 +648,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Імпортувати з хмаринки і обєднати з поточними налаштуваннями",
+    "message":"Імпортувати з хмаринки та обєднати з поточними налаштуваннями",
     "description":"tooltip"
   },
   "cloudNoData":{
