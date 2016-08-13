@@ -37,7 +37,10 @@
           continue;
         }
 
-        if (processImage(imgs[i], imgSrc)) hits++;
+        if (processImage(imgs[i], imgSrc)) {
+          hits++;
+        }
+        // else: we may want to unhide the element here (see #337)
       }
 
       return hits > 0;
@@ -55,6 +58,25 @@
 
     var clickableParent = function (node) {
 
+      var checkNode = node;
+
+      while (checkNode) {
+
+        if (checkNode)
+          console.log('CHECKING: '+checkNode.tagName, checkNode);
+
+        if (checkNode.tagName === 'A') {
+          return checkNode;
+        }
+
+        checkNode = checkNode.parentNode;
+      }
+
+      return null;
+    }
+
+    var clickableParentX = function (node) {
+
       var checkParent = function (adNode) {
 
         var hasParent = adNode.parentNode &&
@@ -63,7 +85,7 @@
             adNode.parentNode.tagName == 'IFRAME' ||
             (adNode.hasAttribute && adNode.hasAttribute('onclick')));
 
-        //console.log("check",adNode.tagName,adNode.parentNode);
+        console.log("check",adNode.tagName,adNode.parentNode);
 
         return hasParent;
       };
@@ -102,14 +124,10 @@
         ad: ad
       });
 
-      // for automated testing
-      if (false && vAPI.prefs.automated && window === window.top)
-        injectAutoDiv();
-
       return true;
     }
 
-    var processDelayedImage = function () { // this
+    var processDelayedImage = function () { // this=img
 
       //console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
       var src = this.src || this.getAttribute('src');
@@ -155,7 +173,7 @@
           console.log("Bail: Non-anchor found: " + target.tagName, img);
 
       } else if (dbug)
-        console.log("Bail: No ClickableParent", img);
+        console.log("Bail: No ClickableParent", img, img.parentNode, img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
 
     }
 
@@ -170,14 +188,17 @@
 
     var createAd = function (network, target, data) {
 
-      if (target.indexOf('//') === 0) { // move to core?
+      var domain = (parent !== window) ?
+        parseDomain(document.referrer) : document.domain;
+
+      console.log('createAd on ', domain, target, typeof target);
+
+      if (target.indexOf('//') === 0) {
 
         target = 'http:' + target;
 
       } else if (target.indexOf('/') === 0) {
 
-        var domain = (parent !== window) ?
-          parseDomain(document.referrer) : document.domain;
         target = 'http://' + domain + target;
         //console.log("Fixing absolute domain: " + target);
       }
@@ -194,10 +215,36 @@
         return;
       }
 
+      // only need to do this if we are going to re-hide internal elements
+      // otherwise we let core.js handle it using the PSL (#337)
+      if (false && isInternal(target, domain)) {
+
+        console.warn("Ignoring Ad with internal target=" + isInternal(target));
+        return;
+      }
+
       return new Ad(network, target, data);
     }
 
-    var injectAutoDiv = function (request) {
+    var isInternal = (function() {  // not used
+
+      var domainRe = /https?:\/\/((?:[\w\d]+\.)+[\w\d]{2,})/i;
+
+      return function(url, pageDomain) {
+          function domain(url) {
+            var host = domainRe.exec(url)[1];
+            var parts = host.split('.');
+            var subdomain = parts.shift();
+            return parts.join('.');
+          }
+
+          console.log("domain: "+domain(url));
+
+          return domain(url) === pageDomain;
+      }
+    })();
+
+    var injectAutoDiv = function (request) { // not used
 
       var count = pageCount(request.data, request.pageUrl),
         adndiv = document.getElementById("adnauseam-count");

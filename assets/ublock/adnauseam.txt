@@ -27,3 +27,7 @@ www.zam.com##.ad
 ##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
 ###top_banners
 haaretz.co.il##[id^="dclk"]
+
+#facebook
+
+facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt][data-xt-vimpr="1"][data-ftr="1"][data-fte="1"]

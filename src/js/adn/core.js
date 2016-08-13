@@ -35,6 +35,9 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
+  // targets on these domains are never internal (may need to be regexs)
+  var internalLinkDomains = [ 'facebook.com', 'google.com' ];
+
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
   var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
@@ -1083,10 +1086,10 @@
       return;
     }
 
-    if (internalTarget(ad)) {
+    if (internalLinkDomains.indexOf(ad.pageDomain) < 0 && internalTarget(ad)) {
 
       warn('INTERNAL: ' + ad.pageDomain + ' = ' + ad.targetDomain +
-        ' (' + ad.targetUrl + ')\n    old: ' + targetDomain(ad));
+        ' (' + ad.targetUrl + ')\n    old: ' + targetDomain(ad), Object.keys([]));
       return; // testing this
     }
 
@@ -1120,9 +1123,15 @@
     if (ad.contentType === 'text') return false;
 
     // if an image ad and page/target domains match, its internal
-    return (ad.pageDomain === ad.targetDomain ||
-      ad.pageDomain.indexOf(ad.targetDomain) > -1 ||
-      ad.targetDomain.indexOf(ad.pageDomain) > -1);
+    var match = (ad.pageDomain === ad.targetDomain);
+
+    // tmp: minor sanity check -- Remove
+    if (!match && ad.pageDomain.indexOf(ad.targetDomain) > -1 ||
+     ad.targetDomain.indexOf(ad.pageDomain) > -1) {
+        warn('Near-domain-match: "'+ad.pageDomain+'" "'+ad.targetDomain+'"');
+    }
+
+    return match;
   };
 
   var fromNetFilterSync = function (compiledFilter, rawFilter) {
