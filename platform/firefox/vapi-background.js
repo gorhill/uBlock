@@ -42,6 +42,10 @@ vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 vAPI.thunderbird = Services.appinfo.ID === '{3550f703-e582-4d05-9a08-453d09bdfdc6}';
 
+if ( vAPI.fennec ) {
+    vAPI.battery = true;
+}
+
 /******************************************************************************/
 
 var deferUntil = function(testFn, mainFn, details) {

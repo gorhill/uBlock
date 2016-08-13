@@ -280,7 +280,8 @@ var runXpathJob = function(job, fn) {
 /******************************************************************************/
 
 var domFilterer = {
-    commitMissCount: 0,
+    addedNodesHandlerMissCount: 0,
+    removedNodesHandlerMissCount: 0,
     disabledId: vAPI.randomToken(),
     enabled: true,
     hiddenId: vAPI.randomToken(),
@@ -387,7 +388,7 @@ var domFilterer = {
             mustCommit = true;
         }
         if ( mustCommit && commitIfNeeded ) {
-            this.commit();
+            this.commit('all');
         }
         return mustCommit;
     },
@@ -396,6 +397,8 @@ var domFilterer = {
         if ( stagedNodes.length === 0 ) {
             return;
         }
+
+        vAPI.executionCost.start();
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
             styleText = '', i, n;
@@ -452,9 +455,9 @@ var domFilterer = {
 
         var commitHit = this.hiddenNodeCount !== beforeHiddenNodeCount;
         if ( commitHit ) {
-            this.commitMissCount = 0;
+            this.addedNodesHandlerMissCount = 0;
         } else {
-            this.commitMissCount += 1;
+            this.addedNodesHandlerMissCount += 1;
         }
 
         // Un-hide nodes previously hidden.
@@ -478,11 +481,13 @@ var domFilterer = {
                 503
             );
         }
+
+        vAPI.executionCost.stop('domFilterer.commit_');
     },
 
     commit: function(nodes, commitNow) {
         var firstCommit = stagedNodes.length === 0;
-        if ( nodes === undefined ) {
+        if ( nodes === 'all' ) {
             stagedNodes = [ document.documentElement ];
         } else if ( stagedNodes[0] !== document.documentElement ) {
             stagedNodes = stagedNodes.concat(nodes);
@@ -601,6 +606,29 @@ var domFilterer = {
         if ( shadow && shadow[shadowId] && shadow.firstElementChild !== null ) {
             shadow.removeChild(shadow.firstElementChild);
         }
+    },
+
+    domChangedHandler: function(addedNodes, removedNodes) {
+        if ( addedNodes.length !== 0 ) {
+            this.commit(addedNodes);
+        }
+        // https://github.com/gorhill/uBlock/issues/873
+        // This will ensure our style elements will stay in the DOM.
+        if ( removedNodes && this.removedNodesHandlerMissCount < 16 ) {
+            if ( domFilterer.checkStyleTags(true) ) {
+                this.removedNodesHandlerMissCount = 0;
+            } else {
+                this.removedNodesHandlerMissCount += 1;
+            }
+        }
+    },
+
+    start: function() {
+        var domChangedHandler = this.domChangedHandler.bind(this);
+        vAPI.domWatcher.addListener(domChangedHandler);
+        vAPI.shutdown.add(function() {
+            vAPI.domWatcher.removeListener(domChangedHandler);
+        });
     }
 };
 
@@ -660,7 +688,7 @@ return domFilterer;
             if ( cfeDetails.cosmeticHide.length !== 0 || cfeDetails.cosmeticDonthide.length !== 0 ) {
                 domFilterer.addExceptions(cfeDetails.cosmeticDonthide);
                 domFilterer.addSelectors(cfeDetails.cosmeticHide);
-                domFilterer.commit(undefined, true);
+                domFilterer.commit('all', true);
             }
         }
 
@@ -759,7 +787,7 @@ vAPI.domWatcher = (function() {
             }
         }
         addedNodeLists.length = 0;
-        if ( addedNodes.length !== 0 ) {
+        if ( addedNodes.length !== 0 || removedNodes ) {
             listeners[0](addedNodes, removedNodes);
             if ( listeners[1] ) {
                 listeners[1](addedNodes, removedNodes);
@@ -825,26 +853,16 @@ vAPI.domWatcher = (function() {
         domLayoutObserver = null;
     };
 
-    var stop = function() {
-        if ( domLayoutObserver !== null ) {
-            domLayoutObserver.disconnect();
-            domLayoutObserver = null;
-        }
-        if ( safeObserverHandlerTimer !== null ) {
-            window.cancelAnimationFrame(safeObserverHandlerTimer);
-        }
-    };
-
     var start = function() {
-        // Observe changes in the DOM only if...
-        // - there is a document.body
-        // - there is at least one `script` tag
-        if ( document.body === null || document.querySelector('script') === null ) {
-            vAPI.domWatcher = null;
-            return;
-        }
-        // https://github.com/gorhill/uMatrix/issues/144
-        vAPI.shutdown.add(stop);
+        vAPI.shutdown.add(function() {
+            if ( domLayoutObserver !== null ) {
+                domLayoutObserver.disconnect();
+                domLayoutObserver = null;
+            }
+            if ( safeObserverHandlerTimer !== null ) {
+                window.cancelAnimationFrame(safeObserverHandlerTimer);
+            }
+        });
     };
 
     return {
@@ -887,16 +905,11 @@ vAPI.domCollapser = (function() {
         if ( !response ) {
             return;
         }
-        // https://github.com/gorhill/uMatrix/issues/144
-        if ( response.shutdown ) {
-            vAPI.shutdown.exec();
-            return;
-        }
-
         var requests = response.result;
         if ( requests === null || Array.isArray(requests) === false ) {
             return;
         }
+        vAPI.executionCost.start();
         var selectors = [],
             netSelectorCacheCountMax = response.netSelectorCacheCountMax,
             aa = [ null ],
@@ -947,9 +960,11 @@ vAPI.domCollapser = (function() {
                 }
             );
         }
+        vAPI.executionCost.stop('domCollapser/onProcessed');
     };
 
     var send = function() {
+        vAPI.executionCost.start();
         timer = null;
         messaging.send(
             'contentscript',
@@ -961,6 +976,7 @@ vAPI.domCollapser = (function() {
             }, onProcessed
         );
         roundtripRequests = [];
+        vAPI.executionCost.stop('domCollapser/send');
     };
 
     var process = function(delay) {
@@ -1084,6 +1100,13 @@ vAPI.domCollapser = (function() {
         }
     };
 
+    var onResourceFailed = function(ev) {
+        vAPI.executionCost.start();
+        vAPI.domCollapser.add(ev.target);
+        vAPI.domCollapser.process();
+        vAPI.executionCost.stop('domCollapser/onResourceFailed');
+    };
+
     var domChangedHandler = function(nodes) {
         var node;
         for ( var i = 0, ni = nodes.length; i < ni; i++ ) {
@@ -1099,13 +1122,6 @@ vAPI.domCollapser = (function() {
             }
         }
         process();
-    };
-
-    var onResourceFailed = function(ev) {
-        vAPI.executionCost.start();
-        vAPI.domCollapser.add(ev.target);
-        vAPI.domCollapser.process();
-        vAPI.executionCost.stop('domIsLoaded/onResourceFailed');
     };
 
     var start = function() {
@@ -1131,15 +1147,13 @@ vAPI.domCollapser = (function() {
         process(0);
 
         document.addEventListener('error', onResourceFailed, true);
-        if ( vAPI.domWatcher ) {
-            vAPI.domWatcher.addListener(domChangedHandler);
-        }
+        vAPI.domWatcher.addListener(domChangedHandler);
 
-        // https://github.com/gorhill/uMatrix/issues/144
         vAPI.shutdown.add(function() {
             document.removeEventListener('error', onResourceFailed, true);
-            if ( vAPI.domWatcher ) {
-                vAPI.domWatcher.removeListener(domChangedHandler);
+            vAPI.domWatcher.removeListener(domChangedHandler);
+            if ( timer !== null ) {
+                clearTimeout(timer);
             }
         });
     };
@@ -1159,29 +1173,17 @@ vAPI.domCollapser = (function() {
 /******************************************************************************/
 
 vAPI.domSurveyor = (function() {
-    // https://github.com/chrisaljoudi/uBlock/issues/789
-    // https://github.com/gorhill/uBlock/issues/873
-    // Be sure that our style tags used for cosmetic filtering are still
-    // applied.
-
     var domFilterer = null,
         messaging = vAPI.messaging,
         surveyPhase3Nodes = [],
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = Object.create(null),
-        removedNodesHandlerMissCount = 0;
+        queriedSelectors = Object.create(null);
 
     // Handle main process' response.
 
     var surveyPhase3 = function(response) {
-        // https://github.com/gorhill/uMatrix/issues/144
-        if ( response && response.shutdown ) {
-            vAPI.shutdown.exec();
-            return;
-        }
-
         vAPI.executionCost.start();
 
         var result = response && response.result,
@@ -1232,7 +1234,7 @@ vAPI.domSurveyor = (function() {
         domFilterer.commit(surveyPhase3Nodes);
         surveyPhase3Nodes = [];
 
-        vAPI.executionCost.stop('domIsLoaded/surveyPhase2');
+        vAPI.executionCost.stop('domSurveyor/surveyPhase3');
     };
 
     // Query main process.
@@ -1465,31 +1467,27 @@ vAPI.domSurveyor = (function() {
     };
 
     var domChangedHandler = function(addedNodes, removedNodes) {
-        if ( cosmeticSurveyingMissCount < 256 ) {
-            surveyPhase1(addedNodes);
-        } else {
-            domFilterer.commit(addedNodes);
+        if ( cosmeticSurveyingMissCount > 255 ) {
+            vAPI.domWatcher.removeListener(domChangedHandler);
+            vAPI.domSurveyor = null;
+            domFilterer.domChangedHandler(addedNodes, removedNodes);
+            domFilterer.start();
+            return;
         }
-        // https://github.com/gorhill/uBlock/issues/873
-        // This will ensure our style elements will stay in the DOM.
-        if ( removedNodes && removedNodesHandlerMissCount < 16 ) {
-            if ( domFilterer.checkStyleTags(true) === false ) {
-                removedNodesHandlerMissCount += 1;
-            }
+
+        surveyPhase1(addedNodes);
+        if ( removedNodes ) {
+            domFilterer.domChangedHandler([], true);
         }
     };
 
     var start = function() {
         domFilterer = vAPI.domFilterer;
-        if ( domFilterer === null ) {
-            return;
-        }
-        domFilterer.checkStyleTags(false);
-        domFilterer.commit();
         domChangedHandler([ document.documentElement ]);
-        if ( vAPI.domWatcher ) {
-            vAPI.domWatcher.addListener(domChangedHandler);
-        }
+        vAPI.domWatcher.addListener(domChangedHandler);
+        vAPI.shutdown.add(function() {
+            vAPI.domWatcher.removeListener(domChangedHandler);
+        });
     };
 
     return {
@@ -1514,16 +1512,20 @@ vAPI.domIsLoaded = function(ev) {
 
     vAPI.executionCost.start();
 
-    if ( vAPI.domWatcher ) {
-        vAPI.domWatcher.start();
-    }
+    vAPI.domWatcher.start();
+    vAPI.domCollapser.start();
 
-    if ( vAPI.domCollapser ) {
-        vAPI.domCollapser.start();
-    }
-
-    if ( vAPI.domFilterer && vAPI.domSurveyor ) {
-        vAPI.domSurveyor.start();
+    if ( vAPI.domFilterer ) {
+        // https://github.com/chrisaljoudi/uBlock/issues/789
+        // https://github.com/gorhill/uBlock/issues/873
+        // Be sure our style tags used for cosmetic filtering are still applied.
+        vAPI.domFilterer.checkStyleTags(false);
+        vAPI.domFilterer.commit('all');
+        if ( vAPI.domSurveyor ) {
+            vAPI.domSurveyor.start();
+        } else {
+            vAPI.domFilterer.start();
+        }
     }
 
     // To send mouse coordinates to main process, as the chrome API fails
@@ -1533,30 +1535,26 @@ vAPI.domIsLoaded = function(ev) {
     // as nuisance popups.
     // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
+    var onMouseClick = function(ev) {
+        var elem = ev.target;
+        while ( elem !== null && elem.localName !== 'a' ) {
+            elem = elem.parentElement;
+        }
+        vAPI.messaging.send(
+            'contentscript',
+            {
+                what: 'mouseClick',
+                x: ev.clientX,
+                y: ev.clientY,
+                url: elem !== null ? elem.href : ''
+            }
+        );
+    };
+
     (function() {
         if ( window !== window.top || !vAPI.domFilterer ) {
             return;
         }
-
-        var messaging = vAPI.messaging;
-
-        var onMouseClick = function(ev) {
-            vAPI.executionCost.start();
-            var elem = ev.target;
-            while ( elem !== null && elem.localName !== 'a' ) {
-                elem = elem.parentElement;
-            }
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'mouseClick',
-                    x: ev.clientX,
-                    y: ev.clientY,
-                    url: elem !== null ? elem.href : ''
-                });
-            vAPI.executionCost.stop('domIsLoaded/onMouseClick');
-        };
-
         document.addEventListener('mousedown', onMouseClick, true);
 
         // https://github.com/gorhill/uMatrix/issues/144

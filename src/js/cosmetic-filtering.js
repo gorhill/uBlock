@@ -690,9 +690,12 @@ FilterContainer.prototype.reset = function() {
         this.selectorCacheTimer = null;
     }
 
-    // permanent
+    // generic filters
+    this.hasGenericHide = false;
+
     // [class], [id]
     this.lowGenericHide = {};
+    this.lowGenericHideCount = 0;
 
     // [alt="..."], [title="..."]
     this.highLowGenericHide = {};
@@ -722,6 +725,33 @@ FilterContainer.prototype.reset = function() {
     this.scriptTagFilterCount = 0;
     this.scriptTags = {};
     this.scriptTagCount = 0;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.freeze = function() {
+    this.duplicateBuster = {};
+
+    if ( this.highHighSimpleGenericHide !== '' ) {
+        this.highHighSimpleGenericHideArray.unshift(this.highHighSimpleGenericHide);
+    }
+    this.highHighSimpleGenericHide = this.highHighSimpleGenericHideArray.join(',\n');
+    this.highHighSimpleGenericHideArray = [];
+
+    if ( this.highHighComplexGenericHide !== '' ) {
+        this.highHighComplexGenericHideArray.unshift(this.highHighComplexGenericHide);
+    }
+    this.highHighComplexGenericHide = this.highHighComplexGenericHideArray.join(',\n');
+    this.highHighComplexGenericHideArray = [];
+
+    this.hasGenericHide = this.lowGenericHideCount !== 0 ||
+                          this.highLowGenericHideCount !== 0 ||
+                          this.highMediumGenericHideCount !== 0 ||
+                          this.highHighSimpleGenericHideCount !== 0 ||
+                          this.highHighComplexGenericHideCount !== 0;
+
+    this.parser.reset();
+    this.frozen = true;
 };
 
 /******************************************************************************/
@@ -1006,26 +1036,23 @@ FilterContainer.prototype.compileEntitySelector = function(hostname, parsed, out
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
-    if ( skip ) {
-        return this.skipCompiledContent(text, lineBeg);
+FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCosmetic, skipCosmetic) {
+    if ( skipCosmetic ) {
+        this.skipCompiledContent(lineIter);
+        return;
+    }
+    if ( skipGenericCosmetic ) {
+        this.skipGenericCompiledContent(lineIter);
+        return;
     }
 
-    var lineEnd;
-    var textEnd = text.length;
     var line, fields, filter, key, bucket;
 
-    while ( lineBeg < textEnd ) {
-        if ( text.charCodeAt(lineBeg) !== 0x63 /* 'c' */ ) {
-            return lineBeg;
+    while ( lineIter.eot() === false ) {
+        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+            return;
         }
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd === -1 ) {
-            lineEnd = textEnd;
-        }
-        line = text.slice(lineBeg + 2, lineEnd);
-        lineBeg = lineEnd + 1;
-
+        line = lineIter.next().slice(2);
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.hasOwnProperty(line) ) {
@@ -1069,6 +1096,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             } else {
                 this.lowGenericHide[fields[1]] = new FilterBucket(bucket, filter);
             }
+            this.lowGenericHideCount += 1;
             continue;
         }
 
@@ -1124,30 +1152,114 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
         // Generic exception filters: expected to be a rare occurrence.
         if ( fields[0] === 'g1' ) {
             this.genericDonthide.push(fields[1]);
+            continue;
         }
+
+        this.discardedCount += 1;
     }
-    return textEnd;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.skipCompiledContent = function(text, lineBeg) {
-    var lineEnd;
-    var textEnd = text.length;
+FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
+    var line, fields, filter, bucket;
 
-    while ( lineBeg < textEnd ) {
-        if ( text.charCodeAt(lineBeg) !== 0x63 /* 'c' */ ) {
-            return lineBeg;
+    while ( lineIter.eot() === false ) {
+        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+            return;
         }
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd === -1 ) {
-            lineEnd = textEnd;
-        }
+        line = lineIter.next().slice(2);
+
         this.acceptedCount += 1;
+        if ( this.duplicateBuster.hasOwnProperty(line) ) {
+            this.discardedCount += 1;
+            continue;
+        }
+
+        fields = line.split('\v');
+
+        // h  [\t]  ir  [\t]  twitter.com  [\t]  .promoted-tweet
+        if ( fields[0] === 'h' ) {
+            this.duplicateBuster[line] = true;
+            // Special filter: script tags. Not a real CSS selector.
+            if ( fields[3].startsWith('script') ) {
+                this.createScriptFilter(fields[2], fields[3].slice(6));
+                continue;
+            }
+            filter = new FilterHostname(fields[3], fields[2]);
+            bucket = this.hostnameFilters[fields[1]];
+            if ( bucket === undefined ) {
+                this.hostnameFilters[fields[1]] = filter;
+            } else if ( bucket instanceof FilterBucket ) {
+                bucket.add(filter);
+            } else {
+                this.hostnameFilters[fields[1]] = new FilterBucket(bucket, filter);
+            }
+            continue;
+        }
+
+        // entity  [\t]  selector
+        if ( fields[0] === 'e' ) {
+            this.duplicateBuster[line] = true;
+            // Special filter: script tags. Not a real CSS selector.
+            if ( fields[2].startsWith('script') ) {
+                this.createScriptFilter(fields[1], fields[2].slice(6));
+                continue;
+            }
+            bucket = this.entityFilters[fields[1]];
+            if ( bucket === undefined ) {
+                this.entityFilters[fields[1]] = [fields[2]];
+            } else {
+                bucket.push(fields[2]);
+            }
+            continue;
+        }
+
+        // https://github.com/chrisaljoudi/uBlock/issues/497
+        // Generic exception filters: expected to be a rare occurrence.
+        if ( fields[0] === 'g1' ) {
+            this.duplicateBuster[line] = true;
+            this.genericDonthide.push(fields[1]);
+            continue;
+        }
+
+         this.discardedCount += 1;
+   }
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.skipCompiledContent = function(lineIter) {
+    var line, fields;
+
+    while ( lineIter.eot() === false ) {
+        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+            return;
+        }
+        line = lineIter.next().slice(2);
+
+        this.acceptedCount += 1;
+        if ( this.duplicateBuster.hasOwnProperty(line) ) {
+            this.discardedCount += 1;
+            continue;
+        }
+
+        fields = line.split('\v');
+
+        if ( fields[0] === 'h' && fields[3].startsWith('script') ) {
+            this.duplicateBuster[line] = true;
+            this.createScriptFilter(fields[2], fields[3].slice(6));
+            continue;
+        }
+
+        if ( fields[0] === 'e' && fields[2].startsWith('script') ) {
+            this.duplicateBuster[line] = true;
+            this.createScriptFilter(fields[1], fields[2].slice(6));
+            continue;
+        }
+
         this.discardedCount += 1;
-        lineBeg = lineEnd + 1;
     }
-    return textEnd;
 };
 
 /******************************************************************************/
@@ -1260,27 +1372,6 @@ FilterContainer.prototype.retrieveScriptTags = function(domain, hostname) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.freeze = function() {
-    this.duplicateBuster = {};
-
-    if ( this.highHighSimpleGenericHide !== '' ) {
-        this.highHighSimpleGenericHideArray.unshift(this.highHighSimpleGenericHide);
-    }
-    this.highHighSimpleGenericHide = this.highHighSimpleGenericHideArray.join(',\n');
-    this.highHighSimpleGenericHideArray = [];
-
-    if ( this.highHighComplexGenericHide !== '' ) {
-        this.highHighComplexGenericHideArray.unshift(this.highHighComplexGenericHide);
-    }
-    this.highHighComplexGenericHide = this.highHighComplexGenericHideArray.join(',\n');
-    this.highHighComplexGenericHideArray = [];
-
-    this.parser.reset();
-    this.frozen = true;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.toSelfie = function() {
     var selfieFromDict = function(dict) {
         var selfie = [];
@@ -1312,7 +1403,9 @@ FilterContainer.prototype.toSelfie = function() {
         discardedCount: this.discardedCount,
         hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
         entitySpecificFilters: this.entityFilters,
+        hasGenericHide: this.hasGenericHide,
         lowGenericHide: selfieFromDict(this.lowGenericHide),
+        lowGenericHideCount: this.lowGenericHideCount,
         highLowGenericHide: this.highLowGenericHide,
         highLowGenericHideCount: this.highLowGenericHideCount,
         highMediumGenericHide: this.highMediumGenericHide,
@@ -1378,7 +1471,9 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.discardedCount = selfie.discardedCount;
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
     this.entityFilters = selfie.entitySpecificFilters;
+    this.hasGenericHide = selfie.hasGenericHide;
     this.lowGenericHide = dictFromSelfie(selfie.lowGenericHide);
+    this.lowGenericHideCount = selfie.lowGenericHideCount;
     this.highLowGenericHide = selfie.highLowGenericHide;
     this.highLowGenericHideCount = selfie.highLowGenericHideCount;
     this.highMediumGenericHide = selfie.highMediumGenericHide;
@@ -1573,7 +1668,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request, noCosmetic
         ready: this.frozen,
         domain: domain,
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
-        noDOMSurveying: false,
+        noDOMSurveying: this.hasGenericHide === false,
         cosmeticHide: [],
         cosmeticDonthide: [],
         netHide: [],
@@ -1600,7 +1695,9 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request, noCosmetic
         // cached cosmetic filters.
         if ( cacheEntry ) {
             cacheEntry.retrieve('cosmetic', r.cosmeticHide);
-            r.noDOMSurveying = cacheEntry.cosmeticSurveyingMissCount > cosmeticSurveyingMissCountMax;
+            if ( r.noDOMSurveying === false ) {
+                r.noDOMSurveying = cacheEntry.cosmeticSurveyingMissCount > cosmeticSurveyingMissCountMax;
+            }
         }
 
         // Exception cosmetic filters.

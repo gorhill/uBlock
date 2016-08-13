@@ -2055,22 +2055,15 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
-    var lineEnd;
-    var textEnd = text.length;
+FilterContainer.prototype.fromCompiledContent = function(lineIter) {
     var line, fields, bucket, entry, factory, filter;
 
-    while ( lineBeg < textEnd ) {
-        if ( text.charCodeAt(lineBeg) !== 0x6E /* 'n' */ ) {
-            return lineBeg;
+    while ( lineIter.eot() === false ) {
+        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x6E /* 'n' */ ) {
+            return;
         }
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd === -1 ) {
-            lineEnd = textEnd;
-        }
-        line = text.slice(lineBeg + 2, lineEnd);
+        line = lineIter.next().slice(2);
         fields = line.split('\v');
-        lineBeg = lineEnd + 1;
 
         // Special cases: delegate to more specialized engines.
         // Redirect engine.
@@ -2124,7 +2117,6 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
         }
         bucket[fields[1]] = new FilterBucket(entry, filter);
     }
-    return textEnd;
 };
 
 /******************************************************************************/
