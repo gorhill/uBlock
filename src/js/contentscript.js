@@ -1500,15 +1500,16 @@ vAPI.domSurveyor = (function() {
 /******************************************************************************/
 
 vAPI.domIsLoaded = function(ev) {
+    // This can happen on Firefox. For instance:
+    // https://github.com/gorhill/uBlock/issues/1893
+    if ( window.location === null ) {
+        return;
+    }
+
     if ( ev instanceof Event ) {
         document.removeEventListener('DOMContentLoaded', vAPI.domIsLoaded);
     }
     vAPI.domIsLoaded = null;
-
-    // I've seen this happens on Firefox
-    if ( window.location === null ) {
-        return;
-    }
 
     vAPI.executionCost.start();
 

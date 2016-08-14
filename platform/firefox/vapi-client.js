@@ -23,13 +23,13 @@
    addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown
  */
 
+'use strict';
+
 // For non background pages
 
 /******************************************************************************/
 
 (function(self) {
-
-'use strict';
 
 // https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {

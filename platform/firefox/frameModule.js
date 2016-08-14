@@ -231,6 +231,14 @@ var contentObserver = {
             context = (context.ownerDocument || context).defaultView;
         }
 
+        // https://github.com/gorhill/uBlock/issues/1893
+        // I don't know why this happens. I observed that when it occurred, the
+        // resource was not seen by the HTTP observer, as if it was a spurious
+        // call to shouldLoad().
+        if ( !context ) {
+            return this.ACCEPT;
+        }
+
         // The context for the toolbar popup is an iframe element here,
         // so check context.top instead of context
         if ( !context.top || !context.location ) {
