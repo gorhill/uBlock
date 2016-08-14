@@ -543,6 +543,9 @@ div.bullets { display: none; } /* hide by default */
 	margin: 0 0 3px;
 	display: block;
 	font-style: normal;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .item-text-div > cite:before {
@@ -566,8 +569,9 @@ div.bullets { display: none; } /* hide by default */
 }
 
 .item-text-div .ads-creative {
-
   color: #979797;
+	max-height: 5em;
+	overflow: hidden;
 }
 
 .item-text-div h3 a {
