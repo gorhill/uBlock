@@ -17,15 +17,12 @@ www.zam.com##.ad
 
 # youtube
 
-@@||google.com/jsapi$third-party,script
 /api/ads/*
-=adunit&
-
 
 # haaretz.co.il
 
-##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
-###top_banners
+haaretz.co.il##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
+haaretz.co.il###top_banners
 haaretz.co.il##[id^="dclk"]
 
 #facebook
