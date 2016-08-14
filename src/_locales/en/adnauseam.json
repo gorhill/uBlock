@@ -163,8 +163,12 @@
     "message": "delete this Ad",
     "description": "appears on vault page"
   },
+  "adnVaultTotalEstimated": {
+    "message": "total estimated",
+    "description": "appears on vault page"
+  },
   "adnVaultAdsCost": {
-    "message": "total estimated cost",
+    "message": "cost",
     "description": "appears on vault page"
   },
 

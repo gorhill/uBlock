@@ -196,19 +196,6 @@ button.large {
   text-shadow: 0 0 3px #000;
 }
 
-.help-mark {
-  font-size: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background-color: #999;
-  padding: 3px 3px 0;
-  display: inline-block;
-  height: 17px;
-  line-height: 1em;
-  position: relative;
-  bottom: 7px;
-}
-
 /* ============================================================
   NOTIFICATIONS
 ============================================================ */
@@ -219,7 +206,7 @@ button.large {
   padding: 5px 5px 5px 44px;
   line-height: 1.7em;
   font-family: 'bebas_neue';
-  font-size: 1.125em;
+  font-size: 18px;
   border-bottom: 1px solid;
   background-position: 3px center;
   background-repeat: no-repeat;
@@ -536,7 +523,6 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 }
 
 .cost{
-	font-weight: 700;
 	color: #85bb65;
 }
 
@@ -544,16 +530,16 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 	font-size: 14px;
 	border-radius: 3px;
 	background-color: #85bb65;
-	padding: 2px 2px 0;
+	padding: 0 2px 0;
 	display: inline-block;
 	height: 14px;
 	line-height: 1em;
 	position: relative;
 	bottom: 7px;
-	color: #000 !important;
+	color: #000;
 	text-shadow: none;
 	text-decoration: none;
 	text-align: center;
-	font-weight: 400;
+	font-weight: 700;
 	margin-left: 2px;
 }
