@@ -249,7 +249,7 @@
       name: 'ddg',
       domain: /^(.*\.)?duckduckgo\.com/i
     }, {
-      selector: 'ol',
+      selector: 'div',
       handler: yahooText,
       name: 'yahoo',
       domain: /^.*\.yahoo\.com/i
@@ -269,6 +269,7 @@
         return matched;
       });
 
+      console.log('active: ', active);
       for (var i = 0; i < active.length; i++) {
 
         if ($is(elem, active[i].selector)) {
