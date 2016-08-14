@@ -518,6 +518,7 @@ div.bullets { display: none; } /* hide by default */
 	border: 2px dashed;
 	border-radius: 5px;
 	position: relative;
+	overflow: hidden;
 }
 
 .inspected.visited .item-text-div,
