@@ -161,6 +161,7 @@ var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 
 var allExceptions = Object.create(null),
     allSelectors = Object.create(null),
+    commitTimer = null,
     stagedNodes = [],
     matchesProp = vAPI.matchesProp;
 
@@ -356,17 +357,15 @@ var domFilterer = {
         }
     },
 
-    checkStyleTags: function(commitIfNeeded) {
+    checkStyleTags_: function() {
         var doc = document,
             html = doc.documentElement,
             head = doc.head,
             newParent = head || html;
-        if ( newParent === null ) {
-            return false;
-        }
+        if ( newParent === null ) { return; }
+        this.removedNodesHandlerMissCount += 1;
         var styles = this.styleTags,
-            style, oldParent,
-            mustCommit = false;
+            style, oldParent;
         for ( var i = 0; i < styles.length; i++ ) {
             style = styles[i];
             oldParent = style.parentNode;
@@ -380,25 +379,23 @@ var domFilterer = {
                 oldParent.removeChild(style);
                 oldParent = null;
             }
-            if ( oldParent === head || oldParent === html ) {
-                continue;
-            }
+            if ( oldParent === head || oldParent === html ) { continue; }
             style.disabled = false;
             newParent.appendChild(style);
-            mustCommit = true;
+            this.removedNodesHandlerMissCount = 0;
         }
-        if ( mustCommit && commitIfNeeded ) {
-            this.commit('all');
+    },
+
+    checkStyleTags: function() {
+        if ( this.removedNodesHandlerMissCount < 16 ) {
+            this.checkStyleTags_();
         }
-        return mustCommit;
     },
 
     commit_: function() {
-        if ( stagedNodes.length === 0 ) {
-            return;
-        }
-
         vAPI.executionCost.start();
+
+        commitTimer = null;
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
             styleText = '', i, n;
@@ -486,16 +483,20 @@ var domFilterer = {
     },
 
     commit: function(nodes, commitNow) {
-        var firstCommit = stagedNodes.length === 0;
         if ( nodes === 'all' ) {
             stagedNodes = [ document.documentElement ];
         } else if ( stagedNodes[0] !== document.documentElement ) {
             stagedNodes = stagedNodes.concat(nodes);
         }
         if ( commitNow ) {
+            if ( commitTimer !== null ) {
+                window.cancelAnimationFrame(commitTimer);
+            }
             this.commit_();
-        } else if ( firstCommit ) {
-            window.requestAnimationFrame(this.commit_.bind(this));
+            return;
+        }
+        if ( commitTimer === null ) {
+            commitTimer = window.requestAnimationFrame(this.commit_.bind(this));
         }
     },
 
@@ -609,17 +610,11 @@ var domFilterer = {
     },
 
     domChangedHandler: function(addedNodes, removedNodes) {
-        if ( addedNodes.length !== 0 ) {
-            this.commit(addedNodes);
-        }
+        this.commit(addedNodes);
         // https://github.com/gorhill/uBlock/issues/873
         // This will ensure our style elements will stay in the DOM.
-        if ( removedNodes && this.removedNodesHandlerMissCount < 16 ) {
-            if ( domFilterer.checkStyleTags(true) ) {
-                this.removedNodesHandlerMissCount = 0;
-            } else {
-                this.removedNodesHandlerMissCount += 1;
-            }
+        if ( removedNodes ) {
+            domFilterer.checkStyleTags();
         }
     },
 
@@ -1477,7 +1472,7 @@ vAPI.domSurveyor = (function() {
 
         surveyPhase1(addedNodes);
         if ( removedNodes ) {
-            domFilterer.domChangedHandler([], true);
+            domFilterer.checkStyleTags();
         }
     };
 
@@ -1506,7 +1501,8 @@ vAPI.domIsLoaded = function(ev) {
         return;
     }
 
-    if ( ev instanceof Event ) {
+    var slowLoad = ev instanceof Event;
+    if ( slowLoad ) {
         document.removeEventListener('DOMContentLoaded', vAPI.domIsLoaded);
     }
     vAPI.domIsLoaded = null;
@@ -1519,9 +1515,16 @@ vAPI.domIsLoaded = function(ev) {
     if ( vAPI.domFilterer ) {
         // https://github.com/chrisaljoudi/uBlock/issues/789
         // https://github.com/gorhill/uBlock/issues/873
-        // Be sure our style tags used for cosmetic filtering are still applied.
-        vAPI.domFilterer.checkStyleTags(false);
-        vAPI.domFilterer.commit('all');
+        // Be sure our style tags used for cosmetic filtering are still
+        // applied.
+        vAPI.domFilterer.checkStyleTags();
+        // To avoid neddless CPU overhead, we commit existing cosmetic filters
+        // only if the page loaded "slowly", i.e. if the code here had to wait
+        // for a DOMContentLoaded event -- in which case the DOM may have
+        // changed a lot since last time the domFilterer acted on it.
+        if ( slowLoad ) {
+            vAPI.domFilterer.commit('all');
+        }
         if ( vAPI.domSurveyor ) {
             vAPI.domSurveyor.start();
         } else {
