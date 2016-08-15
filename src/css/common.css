@@ -522,7 +522,7 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
   display: none !important;
 }
 
-.cost{
+.cost.highlighted{
 	color: #85bb65;
 }
 
