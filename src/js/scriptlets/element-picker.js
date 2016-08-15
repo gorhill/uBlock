@@ -554,6 +554,8 @@ var cosmeticFilterFromElement = function(elem) {
     }
 
     // Tag name
+    // https://github.com/gorhill/uBlock/issues/1901
+    // Trim attribute value, this may help in case of malformed HTML.
     if ( selector === '' ) {
         selector = tagName;
         var attributes = [], attr;
@@ -561,7 +563,7 @@ var cosmeticFilterFromElement = function(elem) {
         case 'a':
             v = elem.getAttribute('href');
             if ( v ) {
-                v = v.replace(/\?.*$/, '');
+                v = v.trim().replace(/\?.*$/, '');
                 if ( v.length ) {
                     attributes.push({ k: 'href', v: v });
                 }
@@ -570,7 +572,7 @@ var cosmeticFilterFromElement = function(elem) {
         case 'img':
             v = elem.getAttribute('src');
             if ( v && v.length !== 0 ) {
-                attributes.push({ k: 'src', v: v.slice(0, 1024) });
+                attributes.push({ k: 'src', v: v.trim().slice(0, 1024) });
                 break;
             }
             v = elem.getAttribute('alt');
