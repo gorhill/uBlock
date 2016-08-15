@@ -327,11 +327,15 @@ var unpreview = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1897
+// Ignore `data:` URI, they can't be handled by an HTTP observer.
+
 var backgroundImageURLFromElement = function(elem) {
-    var style = window.getComputedStyle(elem);
-    var bgImg = style.backgroundImage || '';
-    var matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg);
-    return matches !== null && matches.length === 3 ? matches[2] : '';
+    var style = window.getComputedStyle(elem),
+        bgImg = style.backgroundImage || '',
+        matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg),
+        url = matches !== null && matches.length === 3 ? matches[2] : '';
+    return url.lastIndexOf('data:', 0) === -1 ? url.slice(0, 1024) : '';
 };
 
 /******************************************************************************/
