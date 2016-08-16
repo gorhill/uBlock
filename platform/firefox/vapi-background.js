@@ -2016,7 +2016,7 @@ var httpObserver = {
             }
         }
         bucket = this.pendingURLToIndex.get(url);
-        this.pendingURLToIndex.set(url, bucket === undefined ? si : bucket + si);
+        this.pendingURLToIndex.set(url, bucket === undefined ? si : si + bucket);
         preq._key = url;
         return preq;
     },
@@ -2026,11 +2026,11 @@ var httpObserver = {
         if ( bucket === undefined ) {
             return null;
         }
-        var i = bucket.charCodeAt(bucket.length - 1);
+        var i = bucket.charCodeAt(0);
         if ( bucket.length === 1 ) {
             this.pendingURLToIndex.delete(url);
         } else {
-            this.pendingURLToIndex.set(url, bucket.slice(0, -1));
+            this.pendingURLToIndex.set(url, bucket.slice(1));
         }
         var preq = this.pendingRingBuffer[i];
         preq._key = ''; // mark as "serviced"
