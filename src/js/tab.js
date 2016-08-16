@@ -644,9 +644,16 @@ vAPI.tabs.onPopupUpdated = (function() {
             return '';
         }
         // https://github.com/gorhill/uBlock/issues/1471
-        // We test whether the opener hostname as at least one character
-        // within matched portion of URL.
-        return beg < pos + popunderHostname.length && end > pos ? result : '';
+        //   We test whether the opener hostname as at least one character
+        //   within matched portion of URL.
+        // https://github.com/gorhill/uBlock/issues/1903
+        //   Ignore filters which cause a match before the start of the
+        //   hostname in the URL.
+        return beg >= pos &&
+               beg < pos + popunderHostname.length &&
+               end > pos ?
+           result :
+           '';
     };
 
     var popunderMatch = function(openerURL, targetURL) {
