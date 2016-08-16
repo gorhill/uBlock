@@ -77,10 +77,9 @@ var onBeforeRequest = function(details) {
     // > the outer frame.
     // > (ref: https://developer.chrome.com/extensions/webRequest)
     var isFrame = requestType === 'sub_frame';
-    var frameId = isFrame ? details.parentFrameId : details.frameId;
 
     // https://github.com/chrisaljoudi/uBlock/issues/114
-    var requestContext = pageStore.createContextFromFrameId(frameId);
+    var requestContext = pageStore.createContextFromFrameId(isFrame ? details.parentFrameId : details.frameId);
 
     // Setup context and evaluate
     var requestURL = details.url;
@@ -109,9 +108,8 @@ var onBeforeRequest = function(details) {
     // Not blocked
     if ( µb.isAllowResult(result) ) {
         // https://github.com/chrisaljoudi/uBlock/issues/114
-        frameId = details.frameId;
-        if ( frameId > 0 && isFrame ) {
-            pageStore.setFrame(frameId, requestURL);
+        if ( details.parentFrameId !== -1 && isFrame ) {
+            pageStore.setFrame(details.frameId, requestURL);
         }
         requestContext.dispose();
         return;
