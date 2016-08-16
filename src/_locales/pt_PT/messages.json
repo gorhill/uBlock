@@ -196,7 +196,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Modo daltónico",
+    "message":"Cores amigáveis para daltónicos",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -208,7 +208,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar 'pre-fetching' (para impedir ligações para pedidos de rede bloqueados)",
+    "message":"Desativar 'pre-fetching' (para impedir qualquer ligação para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Impedir que o WebRTC divulgue os endereços de IP locais",
+    "message":"Impedir que o WebRTC divulgue endereços de IP locais",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{

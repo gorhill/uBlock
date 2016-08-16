@@ -216,7 +216,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Hindre WebRTC i å lekke lokale-IP-adresser",
+    "message":"Hindre WebRTC i å lekke lokale IP-adresser",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{

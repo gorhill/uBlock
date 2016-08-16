@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"நிர்வாக மையத்தை திறக்க இங்கே சொடுக்கவும்",
+    "message":"நிர்வாக மையத்தைத் திறக்க இங்கே சொடுக்கவும்",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -620,7 +620,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"உரலியில் அளவுருக்கள் இல்லாமல்",
     "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
@@ -648,15 +648,15 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"மேகக்கணினி சேமிப்பகத்திற்கு ஏற்று",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"மேகக்கணினி சேமிப்பகத்திலிருந்து இறக்கு",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"மேகக்கணினி சேமிப்பகத்திலிருந்து இறக்கியபின் நடப்பு அமைப்புகளுடன் இணை",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -664,11 +664,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"இந்தச் சாதனத்தின் பெயர்:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"சமர்ப்பி",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
@@ -676,11 +676,11 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"பைட்டுகள்",
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"தற்காலிகமாகப் பெரிய ஒலி‍-ஒளி-படத்தொகுப்புகளின் கூறுகளை அனுமதி",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

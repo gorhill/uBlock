@@ -280,11 +280,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"Ignorar os filtros cosméticos xenéricos",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>Os filtros cosméticos xenéricos estanche pensados para ser aplicados en todas as páxinas.<p>Aínda que o uBlock₀ os xestiona dun xeito eficiente, algúns deles precisan de altas cantidades de memoria é sobreemprego da CPU, especialmente nas páxinas grandes e nas máis duradeiras.<p>Activar esta opción suprimirá os requerimentos de memoria e CPU por causa destes filtros cosméticos xenéricos, así como reducirá a cantidade de memoria ocupada polo uBlock₀ mesmo.<p>Recomendámosche activar esta opción sobre todo nos dispositivos menos potentes.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

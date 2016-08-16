@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Protokoll der Netzwerk-Anforderungen",
+    "message":"uBlock₀ — Protokoll der Netzwerkanfragen",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -280,7 +280,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignoriere generische kosmetische Filter.",
+    "message":"Generische kosmetische Filter ignorieren",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{

@@ -280,11 +280,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Abaikan filter kosmetik generik.",
+    "message":"Abaikan filter tampilan generik",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p> Penapis kosmetik umum adalah penapis kosmetik yang dimaksudkan untuk diterapkan pada semua situs web. <p> Meskipun ditangani secara efisien oleh uBlock₀, penapis kosmetik umum masih mungkin berkontribusi pada memori terukur dan CPU overhead pada beberapa laman web, terutama yang besar dan yang lama tinggal. <p> Dengan mengaktifkan pilihan ini akan menghapuskan memori dan CPU overhead ditambahkan pada laman web sebagai hasil penanganan penapis kosmetik umum, dan juga menurunkan jejak memori uBlock₀ sendiri. <p> disarankan untuk mengaktifkan pilihan ini pada perangkat yang kurang bertenaga.",
+    "message":"<p>Filter tampilan generik adalah filter tampilan yang dibuat untuk diterapkan pada semua situs web.<p>Meskipun dikelola secara efisien oleh uBlock₀, filter tampilan generik masih dapat menyebabkan peningkatan overhead memori ram dan CPU pada beberapa halaman web, terutama untuk halaman berukuran besar dan jarang diperbarui dalam waktu lama.<p>Mengaktifkan opsi ini akan menghilangkan peningkatan overhead memori ram dan CPU pada halaman web akibat diterapkannya filter tampilan generik, dan juga mengurangi penggunaan memori ram uBlock₀ itu sendiri.<p>Direkomendasikan untuk mengaktifkan opsi ini pada perangkat dengan ram kecil atau kekuatan CPU yang lemah.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

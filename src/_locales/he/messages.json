@@ -280,11 +280,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"התעלם ממסננים קוסמטיים כלליים",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>מסננים קוסמטיים כלליים הם המסננים הקוסמטיים אשר מיועדים להיות מוחלים על כל דפי האינטרנט.<p>למרות ש uBlock₀ מטפל בהם ביעילות, מסננים קוסמטיים כללים יכולים להכביד על הזיכרון וה CPU בדפי אינטרנט מסוימים, בעיקר לדפי אינטרנט גדולים ובעלי חיים ארוכים.<p>אפשור הגדרה זו תמנע את השימוש הרב בזיכרון וב CPU אשר נוספים לדפי אינטרנט כתוצאה משימוש במסננים קוסמטיים כלליים, וגם תוריד את צריכת הזיכרון של uBlock₀ עצמו.<p>מומלץ לאפשר הגדרה זו במכשירים חלשים יותר.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

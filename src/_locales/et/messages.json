@@ -196,7 +196,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Värvipimeduse sõbralik",
+    "message":"Värvipimeduse-sõbralik",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Tavaväärtused",
+    "message":"Vaikeväärtused",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
@@ -280,11 +280,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Eira üldiseid kosmeetilisi filtreid.",
+    "message":"Eira üldiseid ilufiltreid.",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Üldised kosmeetilised filtrid on kõikides veebiportaalides kasutamiseks mõeldud kosmeetilised filtrid.<p>Olgugi, et uBlock₀ suudab üldiste kosmeetiliste filtritega tõhusalt toime tulla, siis osades portaalides, eriti mahukates ja kaua üleval olnutes, võivad need ikkagi tarbida palju mälu ja CPU'd.<p>Selle valiku lubamine vähendab üldiste kosmeetiliste filtrite kasutamisest tulenevat mälu ja CPU koormust ning vähendab ka uBlock₀i mälu tarbimist.<p>Selle valiku lubamine on soovitatav mitte väga võimekates seadmetes.",
+    "message":"<p>Üldised ilufiltrid on need ilufiltrid, mis töötavad kõikidel veebisaitidel.<p>Kuigi uBlock₀ käsitleb neid tõhusalt, võivad üldised ilufiltrid siiski tarbida küllaltki palju mälu ja protsessori ressursse teatud veebisaitidel, eriti suurte ja kaua eksisteerivate puhul.<p>Selle valiku lubamine vähendab üldiste ilufiltrite kasutamisest tulenevat mälu ja protsessori koormust ning vähendab ka uBlock₀i mälu tarbimist.<p>Selle valiku lubamine on soovitatav vähem võimekates seadmetes.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
