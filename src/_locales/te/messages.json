@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>సాధారణ కాస్మెటిక్ వడపోతలు అన్ని సైట్లపై ఉపయోగించబడుతాయి.<p>వీటిని uBlock₀ సమర్థవంతంగా ఉపయోగించగలిగినా, కొన్ని పెద్ద మరియు దీర్ఘకాలికంగా వీక్షిస్తున్న పేజీలలో ఇవి CPU మరియు RAM వాడుకను దుష్ప్రభావితం చేయగలవు.<p>ఈ ఎంపికను ఎంచుకున్న యెడల ఇది CPU ఇంకా RAM వాడుకను తగ్గించగలదు<p>తక్కువ శక్తి కలిగిన పరికరాలలో దీనిని ఎంచుకోవడం శ్రేయస్కరం.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -292,7 +292,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"మార్పులను భద్రపరచు",
+    "message":"మార్పులను అమలుపరచు",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{

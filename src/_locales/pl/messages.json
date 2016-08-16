@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Ogólne filtry kosmetyczne, to te które mają być zastosowane do wszystkich stron www.<p>Mimo, że zaprogramowane w uBlock₀ wydajnie, ogólne filtry kosmetyczne mogą nadal w mierzalny sposób przyczyniać się do obciążenia procesora i pamięci na niektórych stronach, szczególnie dużych i otwartych przez dłuższy czas.<p>Włącznie tej opcji wyeliminuje narzut pamięci i CPU dodany do stron www przez obsługę filtrów ogólnych oraz zmniejszy zapotrzebowanie na pamięć samego uBlocka₀.<p>Zalecane jest by włączyć tą opcję na mniej wydajnych urządzeniach.",
+    "message":"<p>Ogólne filtry kosmetyczne, to filtry przeznaczone do stosowania na wszystkich stronach internetowych.<p>Choć dobrze obsługiwane przez uBlock₀ mogą na niektórych stronach, szczególnie dużych i otwartych przez dłuższy czas, przyczyniać się do obciążenia procesora i pamięci operacyjnej.<p>Włącznie tej funkcji wyeliminuje obciążenie procesora i pamięci operacyjnej powodowane stosowaniem filtrów kosmetycznych, a także zmniejszy zapotrzebowanie na pamięć samego uBlocka₀.<p>Zaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
