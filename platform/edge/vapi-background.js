@@ -612,7 +612,9 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
         }
     };
 
-    browser.tabs.reload(tabId, onReloaded);
+    // Workaround for Edge tab reloading
+    tabUrl = browser.tabs.get(tabId).url;
+    browser.tabs.update(tabId, {active: true, url: tabUrl}, onReloaded);
 };
 
 /******************************************************************************/
