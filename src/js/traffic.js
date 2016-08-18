@@ -611,7 +611,13 @@ var foilInlineScripts = function(headers) {
     //   Since we are modifying an existing CSP header, we need to strip out
     //   'report-uri' if it is present, to prevent spurious reporting of CSP
     //   violation, and thus the leakage of information to the remote site.
-    csp = csp.replace(reScriptsrc, '') + scriptsrc.replace(reUnsafeinline, '');
+    csp = csp.replace(reScriptsrc, '').trim();
+    // https://github.com/gorhill/uBlock/issues/1909
+    //   Add missing `;` if needed.
+    if ( csp !== '' && csp.slice(-1) !== ';' ) {
+        csp += '; ';
+    }
+    csp += scriptsrc.replace(reUnsafeinline, '').trim();
     headers.push({
         'name': 'Content-Security-Policy',
         'value': csp.replace(reReporturi, '')
