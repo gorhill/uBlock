@@ -237,6 +237,14 @@ var csspropDictFromString = function(s) {
 };
 
 var runMatchesCSSJob = function(job, fn) {
+    if ( job._2 === undefined ) {
+        if ( job._0.indexOf(':after', job._0.length - 6) !== -1 ) {
+            job._0 = job._0.slice(0, -6);
+            job._2 = ':after';
+        } else {
+            job._2 = null;
+        }
+    }
     var nodes = document.querySelectorAll(job._0),
         i = nodes.length;
     if ( i === 0 ) { return; }
@@ -246,7 +254,7 @@ var runMatchesCSSJob = function(job, fn) {
     var node, match, style;
     while ( i-- ) {
         node = nodes[i];
-        style = window.getComputedStyle(node);
+        style = window.getComputedStyle(node, job._2);
         match = undefined;
         for ( var prop in job._1 ) {
             match = style[prop] === job._1[prop];
@@ -342,10 +350,10 @@ var domFilterer = {
             this.jobQueue.push({ t: 'has-hide', raw: s, _0: sel0, _1: sel1.slice(5, -1) });
         } else if ( sel1.lastIndexOf(':matches-css', 0) === 0 ) {
             this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(13, -1) });
-        } else if ( sel1.lastIndexOf(':style',0) === 0 ) {
+        } else if ( sel1.lastIndexOf(':style', 0) === 0 ) {
             this.job1._0.push(sel0 + ' { ' + sel1.slice(7, -1) + ' }');
             this.job1._1 = undefined;
-        } else if ( sel1.lastIndexOf(':xpath',0) === 0 ) {
+        } else if ( sel1.lastIndexOf(':xpath', 0) === 0 ) {
             this.jobQueue.push({ t: 'xpath-hide', raw: s, _0: sel1.slice(7, -1) });
         }
         return;
