@@ -1000,7 +1000,8 @@ vAPI.tabs.open = function(details) {
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {
-            selected: details.active !== false
+            selected: details.active !== false,
+            parentId: tabBrowser.selectedTab.id
         });
         // Note that it's impossible to move tabs on Fennec, so don't bother
         return;
