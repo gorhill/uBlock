@@ -569,6 +569,7 @@ var cosmeticFilterFromElement = function(elem) {
                 }
             }
             break;
+        case 'iframe':
         case 'img':
             v = elem.getAttribute('src');
             if ( v && v.length !== 0 ) {
