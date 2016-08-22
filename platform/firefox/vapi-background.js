@@ -174,6 +174,7 @@ vAPI.browserSettings = {
         // Original value was a default one
         if ( value === undefined ) {
             try {
+                //console.log('Services.prefs.getBranch('+path + '.)clearUserPref('+setting+');');
                 Services.prefs.getBranch(path + '.').clearUserPref(setting);
             } catch (ex) {
             }
@@ -220,12 +221,15 @@ vAPI.browserSettings = {
         }
 
         try {
+            //console.log('Services.prefs.getBranch('+path + '.'+')['+setMethod+']('+setting+','+value+');');
             Services.prefs.getBranch(path + '.')[setMethod](setting, value);
         } catch (ex) {
+          //console.warn(ex);
         }
     },
 
     set: function(details) {
+        //console.log('vapi.settings.set: ',details);
         var settingVal;
         var prefName, prefVal;
         for ( var setting in details ) {
@@ -285,6 +289,17 @@ vAPI.browserSettings = {
                     this.clear('media.peerconnection', prefName);
                 } else {
                     this.setValue('media.peerconnection', prefName, prefVal);
+                }
+                break;
+
+            // adn: see http://kb.mozillazine.org/Network.cookie.cookieBehavior
+            case 'thirdPartyCookiesAllowed':
+
+                this.rememberOriginalValue('network.cookie', 'cookieBehavior');
+                if ( settingVal ) {
+                    this.clear('network.cookie', 'cookieBehavior');
+                } else {
+                    this.setValue('network.cookie', 'cookieBehavior', 1);
                 }
                 break;
 

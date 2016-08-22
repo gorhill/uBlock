@@ -138,6 +138,9 @@ vAPI.browserSettings = {
     },
 
     set: function(details) {
+
+        //console.log('vAPI.browserSettings.set: ',details);
+
         // https://github.com/gorhill/uBlock/issues/875
         // Must not leave `lastError` unchecked.
         var callback = function() {
@@ -163,6 +166,18 @@ vAPI.browserSettings = {
             case 'hyperlinkAuditing':
                 try {
                     chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                        value: !!details[setting],
+                        scope: 'regular'
+                    }, callback);
+                } catch(ex) {
+                    console.error(ex);
+                }
+                break;
+
+            case 'thirdPartyCookiesAllowed':
+                //console.log('vapi: thirdPartyCookiesAllowed', !!details[setting]);
+                try {
+                    chrome.privacy.websites.thirdPartyCookiesAllowed.set({
                         value: !!details[setting],
                         scope: 'regular'
                     }, callback);

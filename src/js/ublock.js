@@ -318,6 +318,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     case 'showIconBadge':
         µBlock.adnauseam.updateBadges();
         break;
+    case 'noThirdPartyCookies':
+        vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
+        break;
     default:
         break;
     }

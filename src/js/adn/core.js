@@ -40,7 +40,7 @@
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
-  var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+
   var reSpecialChars = /[\*\^\t\v\n]/;
 
   /**************************** functions ******************************/
@@ -65,6 +65,10 @@
 
   var initializeState = function (settings) {
 
+    // console.log('pre-set thirdPartyCookiesDisabled');
+    // vAPI.browserSettings.set('thirdPartyCookiesDisabled', true);
+    // console.log('post-set thirdPartyCookiesDisabled');
+
     admap = (settings && settings.admap) || {};
 
     validateAdStorage();
@@ -75,7 +79,7 @@
 
     } else if (automatedMode && vAPI.chrome) { // using sessbench
 
-      console.warn('AdNauseam in automated-mode: eid=' + chrome.runtime.id);
+      console.warn('AdNauseam automated: eid=' + chrome.runtime.id);
 
       chrome.runtime.onMessageExternal.addListener(
         function (request, sender, sendResponse) {

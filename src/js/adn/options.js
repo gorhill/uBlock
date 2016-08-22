@@ -122,6 +122,7 @@
   /******************************************************************************/
 
   var changeUserSettings = function (name, value) {
+    //console.log('changeUserSettings',name, value);
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -170,7 +171,6 @@
         .on('change', onInputChanged);
     });
 
-
     uDom('#export').on('click', exportToFile);
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
@@ -185,12 +185,15 @@
   /******************************************************************************/
 
   uDom.onLoad(function () {
+
     messager.send('dashboard', {
       what: 'userSettings'
     }, onUserSettingsReceived);
+
     messager.send('dashboard', {
       what: 'getLocalData'
     }, onLocalDataReceived);
+
   });
 
   /******************************************************************************/

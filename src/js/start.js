@@ -172,7 +172,8 @@ var onUserSettingsReady = function(fetched) {
     vAPI.browserSettings.set({
         'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
         'prefetching': !userSettings.prefetchingDisabled,
-        'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+        'webrtcIPAddress': !userSettings.webrtcIPAddressHidden,
+        'thirdPartyCookiesAllowed': !userSettings.noThirdPartyCookies // adn
     });
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);

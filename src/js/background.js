@@ -60,8 +60,9 @@ return {
         noIncomingCookies: true,
         noOutgoingCookies: false,
         noOutgoingReferer: false,
+        noThirdPartyCookies: true,
         noOutgoingUserAgent: false,
-
+        
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
