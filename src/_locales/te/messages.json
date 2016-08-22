@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>సాధారణ కాస్మెటిక్ వడపోతలు అన్ని సైట్లపై ఉపయోగించబడుతాయి.<p>వీటిని uBlock₀ సమర్థవంతంగా ఉపయోగించగలిగినా, కొన్ని పెద్ద మరియు దీర్ఘకాలికంగా వీక్షిస్తున్న పేజీలలో ఇవి CPU మరియు RAM వాడుకను దుష్ప్రభావితం చేయగలవు.<p>ఈ ఎంపికను ఎంచుకున్న యెడల ఇది CPU ఇంకా RAM వాడుకను తగ్గించగలదు<p>తక్కువ శక్తి కలిగిన పరికరాలలో దీనిని ఎంచుకోవడం శ్రేయస్కరం.",
+    "message":"<p>సాధారణ కాస్మెటిక్ వడపోతలు అన్ని సైట్లపై ఉపయోగించబడుతాయి.<p>వీటిని uBlock₀ సమర్థవంతంగా ఉపయోగించగలిగినా, కొన్ని భారీ లేదా దీర్ఘకాలికంగా వీక్షిస్తున్న పేజీలలో CPU ఇంకా RAM వాడుకను ఇవి పెంచగలవు.<p>ఈ ఎంపికను ఎంచుకోవడంవలన, సాధారణ కాస్మెటిక్ వడపోతల కొరకు అదనపు CPU ఉపయోగాన్ని నివారిస్తుంది, పైగా uBlock₀ యొక్క RAM వాడుక తగ్గడానికి తోడ్పడుతుంది.<p>అల్పసామర్ధ్య పరికరాలలో దీన్ని ఎంచుకోవడం శ్రేయస్కరం.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -668,7 +668,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"పంపిందు",
+    "message":"పంపించు",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
