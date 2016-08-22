@@ -969,12 +969,21 @@ vAPI.domCollapser = (function() {
     var send = function() {
         vAPI.executionCost.start();
         timer = null;
+        // https://github.com/gorhill/uBlock/issues/1927
+        // Normalize hostname to avoid trailing dot of FQHN.
+        var pageHostname = window.location.hostname || '';
+        if (
+            pageHostname.length &&
+            pageHostname.charCodeAt(pageHostname.length - 1) === 0x2e
+        ) {
+            pageHostname = pageHostname.slice(0, -1);
+        }
         messaging.send(
             'contentscript',
             {
                 what: 'filterRequests',
                 pageURL: window.location.href,
-                pageHostname: window.location.hostname,
+                pageHostname: pageHostname,
                 requests: roundtripRequests
             }, onProcessed
         );
@@ -1016,10 +1025,8 @@ vAPI.domCollapser = (function() {
                 return;
             }
         }
-        // Some data: URI can be quite large: no point in taking into account
-        // the whole URI.
-        if ( src.lastIndexOf('data:', 0) === 0 ) {
-            src = src.slice(0, 255);
+        if ( src.lastIndexOf('http', 0) !== 0 ) {
+            return;
         }
         var key = tag + ' ' + prop + ' ' + src,
             entry = pendingRequests[key];

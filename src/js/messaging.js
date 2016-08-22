@@ -477,13 +477,8 @@ var filterRequests = function(pageStore, details) {
     var i = requests.length;
     while ( i-- ) {
         request = requests[i];
-        if ( request.url.startsWith('data:') ) {
-            context.requestURL = request.url;
-            context.requestHostname = context.pageHostname;
-        } else {
-            context.requestURL = punycodeURL(request.url);
-            context.requestHostname = hostnameFromURI(context.requestURL);
-        }
+        context.requestURL = punycodeURL(request.url);
+        context.requestHostname = hostnameFromURI(context.requestURL);
         context.requestType = tagNameToRequestTypeMap[request.tag];
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
