@@ -309,14 +309,24 @@ var filterDecompiler = (function() {
         case 'a|h':
         case '_':
         case '_h':
+            reStr = tfields[0]
+                .replace(reEscape, '\\$&')
+                .replace(reWildcards, '.*?')
+                .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
+            break;
         case '||a':
         case '||ah':
         case '||_':
         case '||_h':
-            reStr = tfields[0]
-                    .replace(reEscape, '\\$&')
-                    .replace(reWildcards, '.*')
-                    .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
+            reStr = '';
+            if ( tfields[0].charCodeAt(0) === 0x2A ) {
+                reStr = '[0-9a-z.-]*?';
+                tfields[0] = tfields[0].slice(1);
+            }
+            reStr += tfields[0]
+                .replace(reEscape, '\\$&')
+                .replace(reWildcards, '.*?')
+                .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
             break;
         case '//':
         case '//h':
