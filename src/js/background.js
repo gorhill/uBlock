@@ -80,6 +80,7 @@ return {
         'chrome-scheme',
         'loopconversation.about-scheme',
         'opera-scheme',
+        'vivaldi-scheme',
         ''
     ].join('\n').trim(),
 
