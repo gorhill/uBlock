@@ -1,8 +1,10 @@
 # Submitting issues
 
-For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746). Ignorance of this rule is no excuse: **Opening an issue for purpose of support or discussion will result in the user being immediately blocked.**
+For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746).
 
-For **filter-related issues**, report on the respective filter list support site, or at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues). Ignorance of this rule is no excuse: **Opening an issue for filter-related issues will result in the user being immediately blocked.**
+For **filter-related issues**, report on the respective filter list support site, or at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues).
+
+Ignorance of the above rules is no excuse: **Opening an issue for purpose of support or discussion, or opening a filter-related issue will result in the user being immediately blocked.** Given the [amount of invalid issues being opened](https://github.com/gorhill/uBlock/issues?q=is%3Aissue+label%3Ainvalid+is%3Aclosed), I have no choice but to resort to such a drastic measure.
 
 **The issue tracker is for provable issues only:** You will have to make the case that the issue is really with uBlock Origin and not something else on your side. To make a case means to provide detailed steps so that anybody can reproduce the issue. Be sure to rule out that the issue is not caused by something specific on your side.
 
