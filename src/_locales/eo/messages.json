@@ -280,7 +280,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"Ignori ĝeneralajn ornamajn filtrilojn",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
