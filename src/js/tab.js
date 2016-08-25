@@ -200,6 +200,7 @@ housekeep itself.
         this.rootDomain = '';
         this.commitTimer = null;
         this.gcTimer = null;
+        this.onGCBarrier = false;
         this.netFiltering = true;
         this.netFilteringReadTime = 0;
 
@@ -226,11 +227,21 @@ housekeep itself.
     };
 
     TabContext.prototype.onGC = function() {
-        this.gcTimer = null;
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
+        // https://github.com/gorhill/uBlock/issues/1713
+        // For unknown reasons, Firefox's setTimeout() will sometimes
+        // causes the callback function to be called immediately, bypassing
+        // the main event loop. For now this should prevent uBO from crashing
+        // as a result of the bad setTimeout() behavior.
+        if ( this.onGCBarrier ) {
+            return;
+        }
+        this.onGCBarrier = true;
+        this.gcTimer = null;
         vAPI.tabs.get(this.tabId, this.onTab.bind(this));
+        this.onGCBarrier = false;
     };
 
     // https://github.com/gorhill/uBlock/issues/248
