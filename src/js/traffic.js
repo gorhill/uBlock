@@ -422,7 +422,7 @@ var onFrameHeadersReceived = function(details) {
     return processCSP(
         details,
         pageStore,
-        pageStore.createContextFromFrameId(details.parentFrameId)
+        pageStore.createContextFromFrameId(details.frameId)
     );
 };
 
