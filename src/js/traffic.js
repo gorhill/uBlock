@@ -442,7 +442,7 @@ var processCSP = function(details, pageStore, context) {
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
 
     context.requestType = 'websocket';
-    var websocketResult = pageStore.filterRequestNoCache(context),
+    var websocketResult = µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket'),
         blockWebsocket = µb.isBlockResult(websocketResult);
 
     var headersChanged = false;
