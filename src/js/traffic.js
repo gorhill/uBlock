@@ -442,7 +442,8 @@ var processCSP = function(details, pageStore, context) {
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
 
     context.requestType = 'websocket';
-    var websocketResult = µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket'),
+    µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
+    var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
 
     var headersChanged = false;
