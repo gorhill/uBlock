@@ -35,6 +35,7 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
+vAPI.cantWebsocket = true;
 
 var noopFunc = function(){};
 
