@@ -195,6 +195,23 @@ var filterDecompiler = (function() {
         var tfields = fid !== '.' ? vfields[3].split('\t') : [];
         var tfield0 = tfields[0];
 
+        // Filter options
+        // Importance
+        if ( bits & 0x02 ) {
+            opts.push('important');
+        }
+        // Party
+        if ( bits & 0x08 ) {
+            opts.push('third-party');
+        } else if ( bits & 0x04 ) {
+            opts.push('first-party');
+        }
+        // Type
+        var typeVal = bits >>> 4 & 0x0F;
+        if ( typeVal ) {
+            opts.push(typeValToTypeName[typeVal]);
+        }
+
         switch ( fid ) {
         case '.':
             filter += '||' + vfields[2] + '^';
@@ -258,22 +275,6 @@ var filterDecompiler = (function() {
             break;
         }
 
-        // Filter options
-        // Importance
-        if ( bits & 0x02 ) {
-            opts.push('important');
-        }
-        // Party
-        if ( bits & 0x08 ) {
-            opts.push('third-party');
-        } else if ( bits & 0x04 ) {
-            opts.push('first-party');
-        }
-        // Type
-        var typeVal = bits >>> 4 & 0x0F;
-        if ( typeVal ) {
-            opts.push(typeValToTypeName[typeVal]);
-        }
         if ( opts.length !== 0 ) {
             filter += '$' + opts.join(',');
         }
