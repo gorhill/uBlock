@@ -169,7 +169,7 @@ var onBeforeRootFrameRequest = function(details) {
         pageDomain: requestDomain,
         requestURL: requestURL,
         requestHostname: requestHostname,
-        requestType: 'notype'
+        requestType: 'main_frame'
     };
 
     var result = '';
@@ -196,12 +196,18 @@ var onBeforeRootFrameRequest = function(details) {
     var snfe = µb.staticNetFilteringEngine;
 
     // Check for specific block
-    if ( result === '' && snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined ) {
+    if (
+        result === '' &&
+        snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
+    ) {
         result = snfe.toResultString(true);
     }
 
     // Check for generic block
-    if ( result === '' && snfe.matchString(context) !== undefined ) {
+    if (
+        result === '' &&
+        snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
+    ) {
         result = snfe.toResultString(true);
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname, except when

@@ -55,7 +55,7 @@ var ThirdParty = 2 << 2;
 
 var AnyType = 0 << 4;
 var typeNameToTypeValue = {
-            'notype':  0 << 4,
+           'no_type':  0 << 4,
         'stylesheet':  1 << 4,
              'image':  2 << 4,
             'object':  3 << 4,
@@ -2336,8 +2336,8 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
     // Be prepared to support unknown types
-    var type = typeNameToTypeValue[requestType] || 0;
-    if ( type === 0 ) {
+    var type = typeNameToTypeValue[requestType];
+    if ( type === undefined ) {
         return undefined;
     }
 
@@ -2436,7 +2436,7 @@ FilterContainer.prototype.matchString = function(context) {
     var type = typeNameToTypeValue[context.requestType];
     if ( type === undefined ) {
          type = typeOtherValue;
-    } else if ( type > typeOtherValue ) {
+    } else if ( type === 0 || type > typeOtherValue ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 
