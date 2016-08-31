@@ -169,7 +169,7 @@ var onBeforeRootFrameRequest = function(details) {
         pageDomain: requestDomain,
         requestURL: requestURL,
         requestHostname: requestHostname,
-        requestType: 'main_frame'
+        requestType: 'notype'
     };
 
     var result = '';

@@ -55,6 +55,7 @@ var ThirdParty = 2 << 2;
 
 var AnyType = 0 << 4;
 var typeNameToTypeValue = {
+            'notype':  0 << 4,
         'stylesheet':  1 << 4,
              'image':  2 << 4,
             'object':  3 << 4,
@@ -2432,8 +2433,10 @@ FilterContainer.prototype.matchString = function(context) {
     // https://github.com/chrisaljoudi/uBlock/issues/519
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
-    var type = typeNameToTypeValue[context.requestType] || typeOtherValue;
-    if ( type > typeOtherValue ) {
+    var type = typeNameToTypeValue[context.requestType];
+    if ( type === undefined ) {
+         type = typeOtherValue;
+    } else if ( type > typeOtherValue ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 
