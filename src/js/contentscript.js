@@ -163,7 +163,8 @@ var allExceptions = Object.create(null),
     allSelectors = Object.create(null),
     commitTimer = null,
     stagedNodes = [],
-    matchesProp = vAPI.matchesProp;
+    matchesProp = vAPI.matchesProp,
+    userCSS = vAPI.userCSS;
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
@@ -428,6 +429,9 @@ var domFilterer = {
                 document.head.appendChild(styleTag);
             }
             this.styleTags.push(styleTag);
+            if ( userCSS ) {
+                userCSS.add(styleText);
+            }
         }
 
         // Simple selectors: incremental.
@@ -580,10 +584,16 @@ var domFilterer = {
     },
 
     toggleOff: function() {
+        if ( userCSS ) {
+            userCSS.toggle(false);
+        }
         this.enabled = false;
     },
 
     toggleOn: function() {
+        if ( userCSS ) {
+            userCSS.toggle(true);
+        }
         this.enabled = true;
     },
 

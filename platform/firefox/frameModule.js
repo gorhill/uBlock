@@ -319,13 +319,29 @@ var contentObserver = {
             }
 
             sandbox.injectScript = function(script) {
-                var svc = Services;
+                let svc = Services;
                 // Sandbox appears void.
                 // I've seen this happens, need to investigate why.
-                if ( svc === undefined ) {
-                    return;
-                }
+                if ( svc === undefined ) { return; }
                 svc.scriptloader.loadSubScript(script, sandbox);
+            };
+
+            sandbox.injectCSS = function(sheetURI) {
+                try {
+                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                .getInterface(Ci.nsIDOMWindowUtils);
+                    wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                } catch(ex) {
+                }
+            };
+
+            sandbox.removeCSS = function(sheetURI) {
+                try {
+                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                .getInterface(Ci.nsIDOMWindowUtils);
+                    wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                } catch (ex) {
+                }
             };
 
             // The goal is to have content scripts removed from web pages. This
@@ -337,8 +353,10 @@ var contentObserver = {
             sandbox.outerShutdown = function() {
                 sandbox.removeMessageListener();
                 sandbox.addMessageListener =
+                sandbox.injectCSS =
                 sandbox.injectScript =
                 sandbox.outerShutdown =
+                sandbox.removeCSS =
                 sandbox.removeMessageListener =
                 sandbox.rpc =
                 sandbox.sendAsyncMessage = function(){};

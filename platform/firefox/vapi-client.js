@@ -437,6 +437,46 @@ vAPI.messaging.start();
 
 /******************************************************************************/
 
+vAPI.userCSS = (function() {
+    if ( !self.injectCSS ) {
+        return;
+    }
+    var injectCSS = self.injectCSS,
+        removeCSS = self.removeCSS,
+        userCSS = '',
+        sheetURI = '';
+    var load = function() {
+        if ( userCSS === '' || sheetURI !== '' ) { return; }
+        sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(userCSS);
+        injectCSS(sheetURI);
+    };
+    var unload = function() {
+        if ( sheetURI === '' ) { return; }
+        removeCSS(sheetURI);
+        sheetURI = '';
+    };
+    var add = function(cssText) {
+        if ( cssText === '' ) { return; }
+        if ( userCSS !== '' ) { userCSS += '\n'; }
+        userCSS += cssText;
+        unload();
+        load();
+    };
+    var toggle = function(state) {
+        if ( userCSS === '' ) { return; }
+        if ( state === undefined ) {
+            state = sheetURI === '';
+        }
+        return state ? load() : unload();
+    };
+    return {
+        add: add,
+        toggle: toggle
+    };
+})();
+
+/******************************************************************************/
+
 // No need to have vAPI client linger around after shutdown if
 // we are not a top window (because element picker can still
 // be injected in top window).
