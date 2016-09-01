@@ -2102,6 +2102,13 @@ var httpObserver = {
             return false;
         }
 
+        // https://github.com/uBlockOrigin/uAssets/issues/123#issuecomment-244055243
+        // Need special handling for websocket requests: http-based websocket
+        // requests will be evaluated as ws-based websocket requests.
+        if ( details.rawtype === 16 && URI.asciiSpec.startsWith('http') ) {
+            URI = Services.io.newURI(URI.asciiSpec.replace(/^http(s)?:/, 'ws$1:'), null, null);
+        }
+
         var result = this.onBeforeRequest({
             frameId: details.frameId,
             parentFrameId: details.parentFrameId,
@@ -2110,19 +2117,16 @@ var httpObserver = {
             url: URI.asciiSpec
         });
 
-        if ( !result || typeof result !== 'object' ) {
-            return false;
-        }
-
-        if ( 'cancel' in result && result.cancel === true ) {
-            channel.cancel(this.ABORT);
-            return true;
-        }
-
-        if ( 'redirectUrl' in result ) {
-            channel.redirectionLimit = 1;
-            channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
-            return true;
+        if ( result && typeof result === 'object' ) {
+            if ( 'cancel' in result && result.cancel === true ) {
+                channel.cancel(this.ABORT);
+                return true;
+            }
+            if ( 'redirectUrl' in result ) {
+                channel.redirectionLimit = 1;
+                channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
+                return true;
+            }
         }
 
         return false;
