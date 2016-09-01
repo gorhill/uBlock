@@ -330,7 +330,7 @@ FilterParser.prototype.parse = function(raw) {
     }
 
     // Extract the selector.
-    this.suffix = raw.slice(rpos + 1);
+    this.suffix = raw.slice(rpos + 1).trim();
     if ( this.suffix.length === 0 ) {
         this.cosmetic = false;
         return this;
@@ -791,10 +791,12 @@ FilterContainer.prototype.isValidSelector = (function() {
     var reStyleSelector = /^(.+?):style\((.+?)\)$/;
     var reStyleBad = /url\([^)]+\)/;
 
-    // Keep in mind: https://github.com/gorhill/uBlock/issues/693
+    // Keep in mind:
+    //   https://github.com/gorhill/uBlock/issues/693
+    //   https://github.com/gorhill/uBlock/issues/1955
     var isValidCSSSelector = function(s) {
         try {
-            div[matchesProp](s + ',\n#foo');
+            div[matchesProp](s + ', ' + s + ':not(#foo)');
         } catch (ex) {
             return false;
         }
