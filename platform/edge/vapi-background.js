@@ -35,6 +35,7 @@ var browser = self.browser;
 var manifest = browser.runtime.getManifest();
 
 vAPI.chrome = true;
+vAPI.cantWebsocket = true; 
 
 var noopFunc = function(){};
 
@@ -195,6 +196,12 @@ vAPI.storage = (function() {
 vAPI.browserSettings = {
     webRTCSupported: undefined,
 
+    // https://github.com/gorhill/uBlock/issues/875 
+    // Must not leave `lastError` unchecked. 
+    noopCallback: function() { 
+        void chrome.runtime.lastError; 
+    },
+
     // https://github.com/gorhill/uBlock/issues/533
     // We must first check wether this Chromium-based browser was compiled
     // with WebRTC support. To do this, we use an iframe, this way the
@@ -241,30 +248,35 @@ vAPI.browserSettings = {
             return;
         }
 
-        // Older version of Chromium do not support this setting.
-        if ( typeof browser.privacy.network.webRTCMultipleRoutesEnabled !== 'object' ) {
-            return;
+        var cp = chrome.privacy, cpi = cp.IPHandlingPolicy, cpn = cp.network; 
+ 
+        // Older version of Chromium do not support this setting, and is 
+        // marked as "deprecated" since Chromium 48. 
+        if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) { 
+            try { 
+                cpn.webRTCMultipleRoutesEnabled.set({ 
+                    value: !!setting, 
+                    scope: 'regular' 
+                }, this.noopCallback); 
+            } catch(ex) { 
+                console.error(ex); 
+            } 
         }
 
-        try {
-            browser.privacy.network.webRTCMultipleRoutesEnabled.set({
-                value: !!setting,
-                scope: 'regular'
-            }, function() {
-                void browser.runtime.lastError;
-            });
-        } catch(ex) {
-            console.error(ex);
+        // This setting became available in Chromium 48. 
+        if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) { 
+            try { 
+                cpn.webRTCIPHandlingPolicy.set({ 
+                    value: !!setting ? cpi.DEFAULT : cpi.DEFAULT_PUBLIC_INTERFACE_ONLY, 
+                    scope: 'regular' 
+                }, this.noopCallback); 
+            } catch(ex) { 
+                console.error(ex); 
+            } 
         }
     },
 
     set: function(details) {
-        // https://github.com/gorhill/uBlock/issues/875
-        // Must not leave `lastError` unchecked.
-        var callback = function() {
-            void browser.runtime.lastError;
-        };
-
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
                 continue;
@@ -275,7 +287,7 @@ vAPI.browserSettings = {
                     browser.privacy.network.networkPredictionEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    }, callback);
+                    }, this.noopCallback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -286,7 +298,7 @@ vAPI.browserSettings = {
                     browser.privacy.websites.hyperlinkAuditingEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    }, callback);
+                    }, this.noopCallback);
                 } catch(ex) {
                     console.error(ex);
                 }

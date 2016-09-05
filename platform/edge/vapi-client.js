@@ -67,6 +67,23 @@ if ( vAPI.sessionId ) {
 
 /******************************************************************************/
 
+var referenceCounter = 0; 
+ 
+vAPI.lock = function() { 
+    referenceCounter += 1; 
+}; 
+ 
+vAPI.unlock = function() { 
+    referenceCounter -= 1; 
+    if ( referenceCounter === 0 ) { 
+        // Eventually there will be code here to flush the javascript code 
+        // from this file out of memory when it ends up unused. 
+
+    } 
+}; 
+
+/******************************************************************************/ 
+
 vAPI.executionCost = {
     start: function(){},
     stop: function(){}

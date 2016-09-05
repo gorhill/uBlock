@@ -49,7 +49,6 @@ uBlock Origin
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
-  * [Edge](#edge)
   * [Chromium](#chromium)
   * [Firefox](#firefox--firefox-for-android)
   * [Microsoft Edge](#microsoft-edge)
@@ -116,19 +115,6 @@ Being lean and efficient doesn't mean blocking less<br>
 
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-#### Edge
-
-While in pre-release, you will need to side-load the extension. You need to have the Windows 10 Anniversary Update to use extensions in Edge.
-
-1. Download the latest release from [the Releases page](https://github.com/nikrolls/uBlock-Edge/releases)
-2. Extract the zip file somewhere safe (it will need to remain there as long as you use the extension)
-3. Browse to `about:flags` in Edge and turn on the option `Enable extension developer features`
-4. Restart your browser
-5. Go to Extensions in the browser menu and click `Load extension`
-6. Select the `uBlock0.edge` folder you extracted earlier
-
-Edge disables side-loaded extensions whenever you restart the browser. However after a few seconds you will get a prompt to re-enable them with a single clik.
-
 #### Chromium
 
 You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Store](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
@@ -154,7 +140,16 @@ Users of Debian 9 or later or Ubuntu 16.04 or later may simply
 
 #### Microsoft Edge
 
-Early development version by [@nikrolls](https://github.com/nikrolls): <https://github.com/nikrolls/uBlock-Edge#edge>.
+While in pre-release, you will need to side-load the extension. You need to have the Windows 10 Anniversary Update to use extensions in Edge.
+
+1. Download the latest release from [the Releases page](https://github.com/nikrolls/uBlock-Edge/releases)
+2. Extract the zip file somewhere safe (it will need to remain there as long as you use the extension)
+3. Browse to `about:flags` in Edge and turn on the option `Enable extension developer features`
+4. Restart your browser
+5. Go to Extensions in the browser menu and click `Load extension`
+6. Select the `uBlock0.edge` folder you extracted earlier
+
+Edge disables side-loaded extensions whenever you restart the browser. However after a few seconds you will get a prompt to re-enable them with a single clik.
 
 #### Note for all browsers
 
