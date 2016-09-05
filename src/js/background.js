@@ -52,17 +52,20 @@ return {
     userSettings: {
 
         admap: {},          // adn
-        hidingAds: true,
-        respectDNT: false,
-        clickingAds: true,
         parseTextAds: true,
-        blockingMalware: true,
+
+        hidingAds: false,
+        clickingAds: false,
+        blockingMalware: false,
+        respectDNT: false,
+
+        noThirdPartyCookies: false,
+
         noIncomingCookies: true,
-        noOutgoingCookies: false,
-        noOutgoingReferer: false,
-        noThirdPartyCookies: true,
-        noOutgoingUserAgent: false,
-        
+        noOutgoingCookies: true,
+        noOutgoingReferer: true,
+        noOutgoingUserAgent: true,
+
         advancedUserEnabled: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
