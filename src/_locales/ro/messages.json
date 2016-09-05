@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de uBlock₀ va crește.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignoră filtrele cosmetice generice",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>FIltrele cosmetice generice sunt acelea care se aplică tuturor site-urilor.<p>Deși sunt folosite eficient de uBlock₀, filtrele cosmetice generice pot contribui semnificativ la creșterea cantității de memorie și a utilizării procesorului pe anumite pagini, în special cele de mari dimensiuni și care sunt încărcate pentru mult timp.<p>Activarea acestei opțiuni va elimina încărcarea suplimentară a memoriei și a procesorului rezultată în urma folosirii filtrelor cosmetice generice, și, de asemenea, va micșora impactul uBlock₀ asupra sistemului.<p>Se recomandă activarea acestei opțiuni pe dispozitivele mai puțin performante.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lista adreselor blocate",

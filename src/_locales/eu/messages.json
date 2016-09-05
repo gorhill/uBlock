@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Aukera honek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusekin bateragarriak diren &ldquo;elementuak ezkutatzeko&rdquo; iragazkiak<\/a> prozesatzea eta ezartzea gaitzen du. Iragazki hauek nagusiki kosmetikoak dira, web orri batean itsusitzat jo diren eta sare iragazkien bidez blokeatzerik ez dauden elementuak ezkutatzeko balio dute.<\/p><p>Ezaugarri hau gaitzeak uBlock₀en memoria erabilera handitzen du.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ezikusi iragazki kosmetiko orokorrak",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Iragazki kosmetiko orokorrak webgune guztietan aplikatzeko sortu diren iragazki kosmetikoak dira. <p>uBlock₀ aplikazioak ongi kudeatzen baditu ere iragazki kosmetiko orokorrek wegune batzuetan memoria edo PUZ erabilera nabarmena ekar dezakete handiak eta antzinakoak diren horietan gehienbat. <p>Aukera hau gaituz iragazki kosmetiko orokorren erabileraren ondoriozko memoria eta PUZ erabilera gehigarria sahiestuko da, eta baita uBlock₀ beraren memoria erabilera gutxiagotu. <p> Ahalmen gutxiagoko gailuetan aukera hau gaitzea aholkatzen da.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lists of blocked hosts",

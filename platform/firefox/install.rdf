@@ -66,7 +66,7 @@
             <r:Description>
                 <id>{{3550f703-e582-4d05-9a08-453d09bdfdc6}}</id>
                 <minVersion>31.0</minVersion>
-                <maxVersion>45.0</maxVersion>
+                <maxVersion>45.*</maxVersion>
             </r:Description>
         </targetApplication>
     </r:Description>

@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Превключване блокирането на странични шрифтове за този сайт",
+    "message":"Превключване блокирането на външни шрифтове за този сайт",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -236,7 +236,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Блокиране на странични шрифтове",
+    "message":"Блокиране на външни шрифтове",
     "description":""
   },
   "settingsStorageUsed":{
@@ -276,8 +276,16 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в web страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази функция увеличава паметта, която  <i>uBlock₀<\/i> използва.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в уеб страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази опция увеличава паметта, която  uBlock₀ използва.<\/p>",
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Игнориране на общите козметични филтри.",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Общите козметични филтри са тези филтри, които са предназначени за прилагане във всички уеб сайтове.<p>Въпреки, че работят ефективно с uBlock₀, те могат да окажат влияние върху използването на паметта и процесора при някои уеб страници, особено големите такива.<p>Активирането на тази опция ще премахне натоварването към тях, като резултат от обработката на общите козметични филтри, също така ще намали и използваната от uBlock₀ памет.<p>Тази опция е препоръчително да се използва на по-слаби устройства.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Списъци на блокираните хостове",

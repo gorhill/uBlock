@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>µBlock<\/i>.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignora els filtres cosmètics genèrics",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Els Filtres cosmètics genèrics són filtres que no s'apliquen a tots els llocs web.<p>Tot i que l'uBlock₀ els gestiona de manera eficient, aquests filtres encara poden contribuir a un augment d'ús de la memòria o sobrecàrrega de la CPU en algunes pàgines web, especialment si tenen molt contingut, elements d'animació o temps real.<p>En habilitar aquesta opció s'elimina el risc de sobrecàrrega a la CPU i excés d'ús de la memòria com a resultat de la manipulació de filtres cosmètics genèrics i també es redueix el consum de memòria de l'uBlock₀.<p>Es recomana habilitar aquesta opció en dispositius poc potents.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Llistes de servidors bloquejats",

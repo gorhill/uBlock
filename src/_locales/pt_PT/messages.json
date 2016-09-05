@@ -196,7 +196,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Modo daltónico",
+    "message":"Cores amigáveis para daltónicos",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -204,11 +204,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Sou um utilizador avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Requer leitura<\/a>)",
+    "message":"Sou um utilizador avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar 'pre-fetching' (para impedir ligações para pedidos de rede bloqueados)",
+    "message":"Desativar 'pre-fetching' (para impedir qualquer ligação para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Impedir que o WebRTC divulgue os endereços de IP locais",
+    "message":"Impedir que o WebRTC divulgue endereços de IP locais",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -272,12 +272,20 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analisar e aplicar os filtros cosméticos.",
+    "message":"Analisar e aplicar filtros cosméticos.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos numa página web que sejam considerados incómodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativar esta funcionalidade aumenta o consumo de memória do <i>uBlock₀<\/i>.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignorar filtros cosméticos genéricos.",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a ser aplicados em todos os web sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para uma memória mensurável e overhead da CPU em algumas páginas web, especialmente os grandes e duradouros.<p>Ao ativar esta opção irá eliminar a overhead da memória e CPU adicionada a páginas web como resultado do manuseamento de filtros cosméticos genéricos, e também irá diminuir a pegada de memória do próprio uBlock₀.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Listas de servidores bloqueados",

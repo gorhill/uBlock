@@ -23,13 +23,13 @@
    addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown
  */
 
+'use strict';
+
 // For non background pages
 
 /******************************************************************************/
 
 (function(self) {
-
-'use strict';
 
 // https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
@@ -53,6 +53,18 @@ self.rpc = self.rpc || function(){};
 /******************************************************************************/
 
 var vAPI = self.vAPI = self.vAPI || {};
+
+/******************************************************************************/
+
+var referenceCounter = 0;
+
+vAPI.lock = function() {
+    referenceCounter += 1;
+};
+
+vAPI.unlock = function() {
+    referenceCounter -= 1;
+};
 
 /******************************************************************************/
 
@@ -422,6 +434,46 @@ vAPI.messaging = {
 vAPI.messaging.start();
 
 // https://www.youtube.com/watch?v=Cg0cmhjdiLs
+
+/******************************************************************************/
+
+vAPI.userCSS = (function() {
+    if ( !self.injectCSS ) {
+        return;
+    }
+    var injectCSS = self.injectCSS,
+        removeCSS = self.removeCSS,
+        userCSS = '',
+        sheetURI = '';
+    var load = function() {
+        if ( userCSS === '' || sheetURI !== '' ) { return; }
+        sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(userCSS);
+        injectCSS(sheetURI);
+    };
+    var unload = function() {
+        if ( sheetURI === '' ) { return; }
+        removeCSS(sheetURI);
+        sheetURI = '';
+    };
+    var add = function(cssText) {
+        if ( cssText === '' ) { return; }
+        if ( userCSS !== '' ) { userCSS += '\n'; }
+        userCSS += cssText;
+        unload();
+        load();
+    };
+    var toggle = function(state) {
+        if ( userCSS === '' ) { return; }
+        if ( state === undefined ) {
+            state = sheetURI === '';
+        }
+        return state ? load() : unload();
+    };
+    return {
+        add: add,
+        toggle: toggle
+    };
+})();
 
 /******************************************************************************/
 

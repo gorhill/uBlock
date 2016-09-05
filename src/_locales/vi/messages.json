@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Tuỳ chọn này kích hoạt phân tích và áp dụng <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">các bộ lọc &ldquo;ẩn phần tử&rdquo; tương thích với Adblock Plus<\/a>. Những bộ lọc này dùng để ẩn phần tử trong một trang web được xem là gây phiền hà đến thị giác và không thể chặn bởi bộ lọc dựa địa chỉ trang web.<\/p><p>Kích hoạt tính năng này sẽ tăng mức sử dụng bộ nhớ của uBlock₀.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Bỏ qua bộ lọc phần tử ẩn chung",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Bộ lọc phần tử ẩn chung là là những bộ lọc phần tử ẩn áp dụng cho tất cả các website.<p>Mặc dù được xử lý hiệu quả bởi uBlock₀, các bộ lọc phần tử ẩn chung vẫn chiếm dụng bộ nhớ và CPU quá mức trên một số trang web, đặc biệt là các trang lớn và lâu năm.<p>Kích hoạt tuỳ chọn này sẽ loại bỏ sử dụng bộ nhớ và CPU quá mức thêm vào trang web nhờ khả năng xử lý các bộ lọc phần tử ẩn chung và cũng làm giảm sử dụng bộ nhớ của uBlock₀.<p>Chúng tôi khuyến cáo bạn nên kích hoạt tuỳ chọn này trên các thiết bị không quá mạnh.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Danh sách những máy chủ bị chặn",

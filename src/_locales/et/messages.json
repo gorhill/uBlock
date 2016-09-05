@@ -196,7 +196,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Värvipimeduse sõbralik",
+    "message":"Värvipimeduse-sõbralik",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Tavaväärtused",
+    "message":"Vaikeväärtused",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>uBlock₀<\/i>'i mälu kasutavust.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Eira üldiseid ilufiltreid.",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Üldised ilufiltrid on need ilufiltrid, mis töötavad kõikidel veebisaitidel.<p>Kuigi uBlock₀ käsitleb neid tõhusalt, võivad üldised ilufiltrid siiski tarbida küllaltki palju mälu ja protsessori ressursse teatud veebisaitidel, eriti suurte ja kaua eksisteerivate puhul.<p>Selle valiku lubamine vähendab üldiste ilufiltrite kasutamisest tulenevat mälu ja protsessori koormust ning vähendab ka uBlock₀i mälu tarbimist.<p>Selle valiku lubamine on soovitatav vähem võimekates seadmetes.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Blokeeritud domeenide loendid",

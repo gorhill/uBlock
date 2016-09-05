@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"অবশেষে, একটি দক্ষ প্রতিরোধক। সিপিইউ এবং মেমরির জন্য সহজ।",
+    "message":"অবশেষে, একটি দক্ষ প্রতিরোধকারী। সিপিইউ এবং মেমরির জন্য হালকা।",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>এই অপশনটি <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">অ্যাডব্লক-প্লাসের সামঞ্জস্যপূর্ণ &ldquo;উপাদান আড়াল করার&rdquo; ফিল্টারকে<\/a> সক্রিয় করবে। এই ফিল্টারগুলি মূলত প্রসাধনী, তাদের একটি ওয়েব পাতায় উপাদান আড়াল করতে প্রয়োজন হয় যাকে চাক্ষুষ উত্পাত বলিয়া গণ্য করা হয়, এবং যাদের নেট অনুরোধ ভিত্তিক ফিল্টারিং ইঞ্জিন দ্বারা অবরুদ্ধ করা যায় না।<\/p><p>এই বৈশিষ্ট্য সক্রিয় করলে uBlock₀-এর মেমরির পদচিহ্ন বৃদ্ধি পাবে।<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"জেরেরিক প্রসাধনী ছাঁকনি উপেক্ষা করুন।",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>জেনেরিক প্রসাধনী ছাঁকনি হচ্ছে সেইসব প্রসাধনী ছাঁকনি যা সব ওয়েবসাইটে প্রয়োগের জন্য অভিপ্রেত।<p>যদিও তা uBlock₀ দ্বারা দক্ষতার সঙ্গে পরিচালনা করে, কিন্তু জেনেরিক প্রসাধন ফিল্টার এখনও কিছু ওয়েব পাতার পরিমাপযোগ্য মেমরি ও CPU-র অত্যাধিক চাপ সৃষ্টিতে অবদান রাখতে পারে, বিশেষ করে বড় এবং দীর্ঘ একটিতে।<p>এই অপশন সক্রিয় করলে জেনেরিক প্রসাধনী ছাঁকনি পরিচালিত হবে যা ওয়েব পাতার পরিমাপযোগ্য মেমরি ও CPU-র অত্যাধিক চাপ সৃষ্টি দূর করবে এবং uBlock₀ নিজেই মেমরি পদাঙ্ক অর্ধ করবে।<p>এটা কম শক্তিশালী ডিভাইসে এই অপশনটি সক্রিয় করার জন্য সুপারিশ করা হচ্ছে।",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"অবরুদ্ধ হোস্টের তালিকা",

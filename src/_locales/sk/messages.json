@@ -272,12 +272,20 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyzovať a vynútiť kozmetické filtre.",
+    "message":"Spracovať a vynútiť kozmetické filtre",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Táto možnosť povoľuje analyzovanie a vynútenie <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrov &ldquo;skrývajúcich prvky&rdquo; a kompatibilných s Adblock Plus<\/a>. Tieto filtre sú prevažne kozmetické. Skrývajú prvky webových stránok, ktoré sú vizuálne otravné a nemôžu byť zablokované filtrovaním sieťových požiadavkov.<\/p><p>Povolenie tejto funkcie zvyšujte nároky <i>uBlock<\/i>na pamäť.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignorovať generické kozmetické filtre",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach.<p>Aj keď ich uBlock₀ používa efektívne, generické kozmetické filtre môžu stále prispievať k zaťaženiu pamäte a procesora na niektorých webových stránkach, a to najmä na veľkých a zložitých.<p>Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov pre webové stránky, a taktiež sa znížia nároky samotného rozšírenia uBlock₀ na pamäť.<p>Odporúča sa povoliť túto možnosť na menej výkonných zariadení.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Zoznamy zablokovaných hostiteľov",
@@ -320,7 +328,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Analyzovať",
+    "message":"Spracovať",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{

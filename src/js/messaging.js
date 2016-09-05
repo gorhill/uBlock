@@ -477,14 +477,9 @@ var filterRequests = function(pageStore, details) {
     var i = requests.length;
     while ( i-- ) {
         request = requests[i];
-        if ( request.url.startsWith('data:') ) {
-            context.requestURL = request.url;
-            context.requestHostname = context.pageHostname;
-        } else {
-            context.requestURL = punycodeURL(request.url);
-            context.requestHostname = hostnameFromURI(context.requestURL);
-        }
-        context.requestType = tagNameToRequestTypeMap[request.tagName];
+        context.requestURL = punycodeURL(request.url);
+        context.requestHostname = hostnameFromURI(context.requestURL);
+        context.requestType = tagNameToRequestTypeMap[request.tag];
         r = pageStore.filterRequest(context);
         if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
             continue;
@@ -518,32 +513,35 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-    case 'retrieveDomainCosmeticSelectors':
+    case 'retrieveContentScriptParameters':
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-            if ( response && response.skipCosmeticFiltering !== true ) {
-                response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch();
-            }
+            response = {
+                loggerEnabled: µb.logger.isEnabled(),
+                collapseBlocked: µb.userSettings.collapseBlocked,
+                noCosmeticFiltering: µb.cosmeticFilteringEngine.acceptedCount === 0 || pageStore.noCosmeticFiltering === true,
+                noGenericCosmeticFiltering: pageStore.noGenericCosmeticFiltering === true
+            };
+            response.specificCosmeticFilters = µb.cosmeticFilteringEngine.retrieveDomainSelectors(
+                request,
+                response.noCosmeticFiltering
+            );
         }
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        response = {
-            shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
-            result: null
-        };
-        if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
-            response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(request);
+        if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
+            response = {
+                result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request)
+            };
         }
         break;
 
     case 'filterRequests':
-        response = {
-            shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
-            result: null
-        };
-        if ( !response.shutdown ) {
-            response.result = filterRequests(pageStore, request);
+        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+            response = {
+                result: filterRequests(pageStore, request),
+                netSelectorCacheCountMax: µb.cosmeticFilteringEngine.netSelectorCacheCountMax
+            };
         }
         break;
 
@@ -848,9 +846,10 @@ var getLists = function(callback) {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
         cache: null,
-        cosmetic: µb.userSettings.parseAllABPHideFilters,
+        parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         current: µb.remoteBlacklists,
+        ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         manualUpdate: false,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         userFiltersPath: µb.userFiltersPath

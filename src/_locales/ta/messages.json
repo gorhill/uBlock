@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"நிர்வாக மையத்தை திறக்க இங்கே சொடுக்கவும்",
+    "message":"நிர்வாக மையத்தைத் திறக்க இங்கே சொடுக்கவும்",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>இந்தத் தேர்வு <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-க்கு ஏற்ற &ldquo;உறுப்பு மறைக்கும்&rdquo; வடிகட்டிகளைப்<\/a> படிப்பதையும் பயன்படுத்துவத்தையும் செயல்படுத்தும். இந்த வடிகட்டிகள் அடிப்படையில் மேலோட்டமானவை. இணையப் பக்கத்தின் தோற்றத்தில் தொந்தரவாகக் கருதப்பட்டு, ஆனால் இணையக்கோரிக்கைகளை வடிகட்டும் எஞ்சினின் மூலம் தடுக்கப்பட முடியாத பக்க-உறுப்புகளை, பார்வையிலிருந்து மட்டும் மறைக்கும்<\/p><p>இந்தத் தேர்வு uBlock₀-இன் நினைவக உபயோகத்தை அதிகரிக்கும்.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignore generic cosmetic filters",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"தடைசெய்யப்பட்ட வழங்கிகளின் பட்டியல்",
@@ -612,7 +620,7 @@
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
-    "message":"without parameters",
+    "message":"உரலியில் அளவுருக்கள் இல்லாமல்",
     "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
@@ -640,15 +648,15 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export to cloud storage",
+    "message":"மேகக்கணினி சேமிப்பகத்திற்கு ஏற்று",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import from cloud storage",
+    "message":"மேகக்கணினி சேமிப்பகத்திலிருந்து இறக்கு",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"மேகக்கணினி சேமிப்பகத்திலிருந்து இறக்கியபின் நடப்பு அமைப்புகளுடன் இணை",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -656,11 +664,11 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"This device name:",
+    "message":"இந்தச் சாதனத்தின் பெயர்:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"Submit",
+    "message":"சமர்ப்பி",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{
@@ -668,11 +676,11 @@
     "description":"for generic 'revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"பைட்டுகள்",
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"தற்காலிகமாகப் பெரிய ஒலி‍-ஒளி-படத்தொகுப்புகளின் கூறுகளை அனுமதி",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

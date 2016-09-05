@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Questa opzione abilita i filtri di <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.<\/p><p>Questa funziona aumenta l'uso della memoria da parte di <i>uBlock<\/i>.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignora filtri cosmetici generici.",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>I filtri cosmetici generici sono i filtri cosmetici intesi per essere applicati a tutti i siti Web.<p>Benché questi siano gestiti in modo efficiente da uBlock₀, i filtri cosmetici generici potrebbero contribuire a un overhead misurabile in termini di memoria e CPU su alcune pagine Web, in particolare quelle di notevoli dimensioni e a lunga scadenza.<p>L'attivazione di quest'opzione eliminerà l'overhead in termini di memoria e CPU aggiunto alle pagine Web in conseguenza della gestione dei filtri cosmetici generici, e inoltre ridurrà l'impatto sulla memoria di uBlock₀ stesso.<p>È raccomandato abilitare quest'opzione sui dispositivi meno potenti.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lista degli hosts bloccati",

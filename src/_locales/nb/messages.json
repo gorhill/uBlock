@@ -216,7 +216,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Hindre WebRTC i å lekke hjemme-IP-adresser",
+    "message":"Hindre WebRTC i å lekke lokale IP-adresser",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener den hensikt å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørselsbaserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>uBlock₀<\/i>.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignorer generelle kosmetiske filtre.",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Generelle kosmetiske filtre er de kosmetiske filtrene som er ment å brukes på alle nettsteder.<p>Selv om de håndteres effektivt av uBlock₀, kan generelle kosmetiske filtre likevel ende opp med å bidra til målbar ekstra minne- og prosessorbruk på noen nettsider, særlig de store og de som er åpne lenge.<p>Aktivering av dette alternativet vil eliminere ekstra minne- og prosessorbruk på nettsider grunnet håndteringen av generelle kosmetiske filtre, og også redusere minnebruken til selve uBlock₀.<p>Det anbefales å aktivere dette alternativet på mindre kraftige enheter.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lister over blokkerte verter",

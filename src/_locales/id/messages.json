@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Opsi ini memfungsikan penguraian dan memaksa-jalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar penyaring tampilan, berfungsi untuk menyembunyikan elemen di halaman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Memfungsikan fitur ini akan meningkatkan penggunaan memori <i>uBlock₀<\/i>.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Abaikan filter tampilan generik",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Filter tampilan generik adalah filter tampilan yang dibuat untuk diterapkan pada semua situs web.<p>Meskipun dikelola secara efisien oleh uBlock₀, filter tampilan generik masih dapat menyebabkan peningkatan overhead memori ram dan CPU pada beberapa halaman web, terutama untuk halaman berukuran besar dan jarang diperbarui dalam waktu lama.<p>Mengaktifkan opsi ini akan menghilangkan peningkatan overhead memori ram dan CPU pada halaman web akibat diterapkannya filter tampilan generik, dan juga mengurangi penggunaan memori ram uBlock₀ itu sendiri.<p>Direkomendasikan untuk mengaktifkan opsi ini pada perangkat dengan ram kecil atau kekuatan CPU yang lemah.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Daftar host yang diblokir",

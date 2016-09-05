@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Dizze opsje skeakelt it ynlêzen en tapassen fan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibele &ldquo;element hiding&rdquo;-filters<\/a> yn. Dizze filters binne suver kosmetysk: se ferstopje eleminten yn de webside dy't fisueel steurend wêze kinne en kinne dus net blokkearre wurde troch de op netfersiken basearre filtermasine.<\/p><p>It ynskeakeljen fan dizze funksje ferheget it ûnthâldgebrûk fan uBlock₀.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Algemiene kosmetyske filters negearje",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Algemiene kosmetyske filters binne dy kosmetyske filters dy't bedoeld binne om op alle websites tapast te wurden.<p>Hoewol't se effisjint troch uBlock₀ ferwurke wurde, kinne algemiene kosmetyske filters op guon websiden dochs bydrage oan mjitbere ûnthâld- en cpu-oerhead, mei nammen op grutte siden en dy't mei in lange libbensdoer.<p>It ynskeakeljen fan dizze opsje eliminearret de oan websiden tafoege ûnthâld- en cpu-oerhead as gefolch fan it ferwurkjen fan algemiene kosmetyske filters, en ferleget ek it ûnthâldgebrûk fan uBlock₀ sels.<p>It wurdt oanrekommandearre dizze opsje op minder krêftige apparaten yn te skeakeljen.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"List fan blokkearre hosts",

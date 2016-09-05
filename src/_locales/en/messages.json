@@ -260,7 +260,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Auto-update filter lists",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -272,12 +272,20 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Parse and enforce cosmetic filters",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignore generic cosmetic filters",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Lists of blocked hosts",
@@ -522,6 +530,10 @@
   "aboutWiki":{
     "message":"Wiki",
     "description":"English: project' wiki on Github"
+  },
+  "aboutSupport":{
+    "message":"Support",
+    "description":"A link for where to get support"
   },
   "aboutCode":{
     "message":"Source code (GPLv3)",

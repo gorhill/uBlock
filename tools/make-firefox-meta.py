@@ -79,7 +79,12 @@ with open(chromium_manifest, encoding='utf-8') as m:
 
 match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
 if match:
-    manifest['version'] = match.group(1) + 'b' + match.group(2)[1:]
+    buildtype = int(match.group(2)[1:])
+    if buildtype < 100:
+        builttype = 'b' + str(buildtype)
+    else:
+        builttype = 'rc' + str(buildtype - 100)
+    manifest['version'] = match.group(1) + builttype
 
 manifest['homepage'] = 'https://github.com/gorhill/uBlock'
 manifest['description'] = descriptions['en']

@@ -277,14 +277,22 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>ఈ ఎంపిక  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-అనుకూల &ldquo;అంశాల దపరికాన్ని&rdquo; వడపోతలను<\/a> పదనిరుపనచేసి లాగుపరుస్తుంది. ఈ వడపోతలు చాలావరకు కాస్మెటిక్ అయివుంటాయి, అవి నెట్వర్క్ అభ్యర్ధన నిరోదన ద్వారా నిరోధించాబడలేని అవాంఛిథ అంశాలను దాచుటకు ఉపకరిస్తాయి.<\/p><p>ఈ ఎంపిక ను ఎంచుకున్నయేడల uBlock₀ యొక్క మెమరీ వాడుక పెరిగే ఆస్కారమున్నది<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"కాస్మెటిక్ వడపోతలను విస్మరించు",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>సాధారణ కాస్మెటిక్ వడపోతలు అన్ని సైట్లపై ఉపయోగించబడుతాయి.<p>వీటిని uBlock₀ సమర్థవంతంగా ఉపయోగించగలిగినా, కొన్ని భారీ లేదా దీర్ఘకాలికంగా వీక్షిస్తున్న పేజీలలో CPU ఇంకా RAM వాడుకను ఇవి పెంచగలవు.<p>ఈ ఎంపికను ఎంచుకోవడంవలన, సాధారణ కాస్మెటిక్ వడపోతల కొరకు అదనపు CPU ఉపయోగాన్ని నివారిస్తుంది, పైగా uBlock₀ యొక్క RAM వాడుక తగ్గడానికి తోడ్పడుతుంది.<p>అల్పసామర్ధ్య పరికరాలలో దీన్ని ఎంచుకోవడం శ్రేయస్కరం.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"నిరోధించబడిన చిరునామాల జాబితా",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"మార్పులను భద్రపరచు",
+    "message":"మార్పులను అమలుపరచు",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -660,7 +668,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "genericSubmit":{
-    "message":"పంపిందు",
+    "message":"పంపించు",
     "description":"for generic 'submit' buttons"
   },
   "genericRevert":{

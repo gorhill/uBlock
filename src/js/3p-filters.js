@@ -31,7 +31,8 @@
 
 var userListName = vAPI.i18n('1pPageName');
 var listDetails = {};
-var cosmeticSwitch = true;
+var parseCosmeticFilters = true;
+var ignoreGenericCosmeticFilters = false;
 var externalLists = '';
 var cacheWasPurged = false;
 var needUpdate = false;
@@ -216,7 +217,8 @@ var renderFilterLists = function() {
     var onListsReceived = function(details) {
         // Before all, set context vars
         listDetails = details;
-        cosmeticSwitch = details.cosmetic;
+        parseCosmeticFilters = details.parseCosmeticFilters;
+        ignoreGenericCosmeticFilters = details.ignoreGenericCosmeticFilters;
         needUpdate = false;
         hasCachedContent = false;
 
@@ -257,7 +259,8 @@ var renderFilterLists = function() {
                 .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
         );
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
-        uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
+        uDom('#parseCosmeticFilters').prop('checked', listDetails.parseCosmeticFilters === true);
+        uDom('#ignoreGenericCosmeticFilters').prop('checked', listDetails.ignoreGenericCosmeticFilters === true);
 
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
@@ -302,7 +305,10 @@ var renderWidgets = function() {
 // Return whether selection of lists changed.
 
 var listsSelectionChanged = function() {
-    if ( listDetails.cosmetic !== cosmeticSwitch ) {
+    if (
+        listDetails.parseCosmeticFilters !== parseCosmeticFilters ||
+        listDetails.parseCosmeticFilters && listDetails.ignoreGenericCosmeticFilters !== ignoreGenericCosmeticFilters
+    ) {
         return true;
     }
 
@@ -401,14 +407,16 @@ var onPurgeClicked = function() {
 
 var selectFilterLists = function(callback) {
     // Cosmetic filtering switch
-    messaging.send(
-        'dashboard',
-        {
-            what: 'userSettings',
-            name: 'parseAllABPHideFilters',
-            value: listDetails.cosmetic
-        }
-    );
+    messaging.send('dashboard', {
+        what: 'userSettings',
+        name: 'parseAllABPHideFilters',
+        value: listDetails.parseCosmeticFilters
+    });
+    messaging.send('dashboard', {
+        what: 'userSettings',
+        name: 'ignoreGenericCosmeticFilters',
+        value: listDetails.ignoreGenericCosmeticFilters
+    });
 
     // Filter lists
     var switches = [];
@@ -497,7 +505,8 @@ var autoUpdateCheckboxChanged = function() {
 /******************************************************************************/
 
 var cosmeticSwitchChanged = function() {
-    listDetails.cosmetic = this.checked;
+    listDetails.parseCosmeticFilters = uDom.nodeFromId('parseCosmeticFilters').checked;
+    listDetails.ignoreGenericCosmeticFilters = uDom.nodeFromId('ignoreGenericCosmeticFilters').checked;
     renderWidgets();
 };
 
@@ -556,6 +565,7 @@ var groupEntryClickHandler = function() {
 var getCloudData = function() {
     var bin = {
         parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
+        ignoreGenericCosmeticFilters: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
         selectedLists: [],
         externalLists: externalLists
     };
@@ -580,9 +590,12 @@ var setCloudData = function(data, append) {
     var elem, checked;
 
     elem = uDom.nodeFromId('parseCosmeticFilters');
-    checked = data.parseCosmeticFilters === true ||
-              append && elem.checked;
-    elem.checked = listDetails.cosmetic = checked;
+    checked = data.parseCosmeticFilters === true || append && elem.checked;
+    elem.checked = listDetails.parseCosmeticFilters = checked;
+
+    elem = uDom.nodeFromId('ignoreGenericCosmeticFilters');
+    checked = data.ignoreGenericCosmeticFilters === true || append && elem.checked;
+    elem.checked = listDetails.ignoreGenericCosmeticFilters = checked;
 
     var lis = uDom('#lists .listEntry'), li, listKey;
     var i = lis.length;
@@ -613,6 +626,7 @@ self.cloud.onPull = setCloudData;
 
 uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
 uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
+uDom('#ignoreGenericCosmeticFilters').on('change', cosmeticSwitchChanged);
 uDom('#buttonApply').on('click', buttonApplyHandler);
 uDom('#buttonUpdate').on('click', buttonUpdateHandler);
 uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);

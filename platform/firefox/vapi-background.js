@@ -42,6 +42,10 @@ vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 vAPI.thunderbird = Services.appinfo.ID === '{3550f703-e582-4d05-9a08-453d09bdfdc6}';
 
+if ( vAPI.fennec ) {
+    vAPI.battery = true;
+}
+
 /******************************************************************************/
 
 var deferUntil = function(testFn, mainFn, details) {
@@ -996,7 +1000,8 @@ vAPI.tabs.open = function(details) {
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {
-            selected: details.active !== false
+            selected: details.active !== false,
+            parentId: tabBrowser.selectedTab.id
         });
         // Note that it's impossible to move tabs on Fennec, so don't bother
         return;
@@ -2012,7 +2017,7 @@ var httpObserver = {
             }
         }
         bucket = this.pendingURLToIndex.get(url);
-        this.pendingURLToIndex.set(url, bucket === undefined ? si : bucket + si);
+        this.pendingURLToIndex.set(url, bucket === undefined ? si : si + bucket);
         preq._key = url;
         return preq;
     },
@@ -2097,6 +2102,13 @@ var httpObserver = {
             return false;
         }
 
+        // https://github.com/uBlockOrigin/uAssets/issues/123#issuecomment-244055243
+        // Need special handling for websocket requests: http-based websocket
+        // requests will be evaluated as ws-based websocket requests.
+        if ( details.rawtype === 16 && URI.asciiSpec.startsWith('http') ) {
+            URI = Services.io.newURI(URI.asciiSpec.replace(/^http(s)?:/, 'ws$1:'), null, null);
+        }
+
         var result = this.onBeforeRequest({
             frameId: details.frameId,
             parentFrameId: details.parentFrameId,
@@ -2105,19 +2117,16 @@ var httpObserver = {
             url: URI.asciiSpec
         });
 
-        if ( !result || typeof result !== 'object' ) {
-            return false;
-        }
-
-        if ( 'cancel' in result && result.cancel === true ) {
-            channel.cancel(this.ABORT);
-            return true;
-        }
-
-        if ( 'redirectUrl' in result ) {
-            channel.redirectionLimit = 1;
-            channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
-            return true;
+        if ( result && typeof result === 'object' ) {
+            if ( 'cancel' in result && result.cancel === true ) {
+                channel.cancel(this.ABORT);
+                return true;
+            }
+            if ( 'redirectUrl' in result ) {
+                channel.redirectionLimit = 1;
+                channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
+                return true;
+            }
         }
 
         return false;
@@ -2221,14 +2230,26 @@ var httpObserver = {
         var pendingRequest = this.lookupPendingRequest(URI.spec);
 
         // https://github.com/gorhill/uMatrix/issues/390#issuecomment-155759004
-        var rawtype = 1;
-        var loadInfo = channel.loadInfo;
+        var loadInfo = channel.loadInfo,
+            rawtype = 1,
+            frameId = 0,
+            parentFrameId = -1;
+
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // https://dxr.mozilla.org/mozilla-central/source/toolkit/modules/addons/WebRequest.jsm#537-553
+        // For modern Firefox, loadInfo contains the information about the
+        // context of the network request.
         if ( loadInfo ) {
             rawtype = loadInfo.externalContentPolicyType !== undefined ?
                 loadInfo.externalContentPolicyType :
                 loadInfo.contentPolicyType;
             if ( !rawtype ) {
                 rawtype = 1;
+            }
+            frameId = loadInfo.frameOuterWindowID ? loadInfo.frameOuterWindowID : loadInfo.outerWindowID;
+            parentFrameId = loadInfo.frameOuterWindowID ? loadInfo.outerWindowID : loadInfo.parentOuterWindowID;
+            if ( frameId === parentFrameId ) {
+                parentFrameId = -1;
             }
         }
 
@@ -2255,6 +2276,8 @@ var httpObserver = {
             pendingRequest = this.syntheticPendingRequest;
             pendingRequest.tabId = this.tabIdFromChannel(channel);
             pendingRequest.rawtype = rawtype;
+            pendingRequest.frameId = frameId;
+            pendingRequest.parentFrameId = parentFrameId;
         }
 
         if ( this.handleRequest(channel, URI, pendingRequest) ) {

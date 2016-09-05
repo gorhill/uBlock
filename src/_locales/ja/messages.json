@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"リクエストはブロックされました",
+    "message":"ブロックされたリクエスト",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -84,7 +84,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"このサイトのコスメティックフィルターを切り替えます",
+    "message":"このサイトの要素隠蔽フィルタを切り替える",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -92,11 +92,11 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"グローバルルール: この列にあるルールは、すべてのサイトに適応されます。",
+    "message":"グローバルルール: この列にあるルールは、すべてのサイトに適用されます。",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"ローカルルール: この列にあるルールは、現在のサイトのみに適応されます。\nローカルルールはグローバルルールを上書きします。",
+    "message":"ローカルルール: この列にあるルールは、現在のサイトのみに適用されます。\nローカルルールはグローバルルールを上書きします。",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -168,7 +168,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"コスメチックフィルタ",
+    "message":"要素隠蔽フィルタ",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -252,7 +252,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}}ネットワークフィルタ＋{{cosmeticFilterCount}}コスメチックフィルタ：",
+    "message":"{{netFilterCount}} ネットワークフィルタ＋{{cosmeticFilterCount}} 要素隠蔽フィルタ：",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の &ldquo;要素遮蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"要素隠蔽フィルタを無視します",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>要素隠蔽フィルタは、ほぼすべてのウェブサイトに適用することができるフィルタです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルタの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"ブロックされたホストの一覧表示",

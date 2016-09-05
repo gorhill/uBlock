@@ -277,7 +277,15 @@
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock Origin.<\/p>",
-    "description":"This option enables the parsing and enforcing of Adblock Plus-compatible 'element hiding' filters. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.\n\nEnabling this feature increases uBlock Origin's memory footprint."
+    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters":{
+    "message":"Ignorer les filtres esthétiques génériques",
+    "description":"This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo":{
+    "message":"<p>Les filtres esthétiques génériques sont des filtres esthétiques conçus pour être appliqués sur tous les sites Web.<p>Bien qu'ils soient pris en charge efficacement par uBlock₀, les filtres esthétiques génériques restent susceptibles de consommer des ressources supplémentaires en mémoire vive & en processeur central sur certaines pages Web, tout particulièrement ceux de grandes taille & longévité.<p>Ignorer ce type de filtrage esthétique réduira l'utilisation supplémentaire en RAM & en CPU sur les pages Web, diminuant également l'empreinte mémoire d'uBlock₀.<p>Il est recommandé d'activer ce paramètre sur des appareils modestes.",
+    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
     "message":"Listes prédéfinies d'hôtes à bloquer",
