@@ -32,4 +32,5 @@ facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt]
 
 ##iframe[src*="adxprts.com"]
 ##iframe[src*="exoclick.com"]
+##iframe[src*="thepiratebay.org/static/ads"]
 ##img[src*="exdynsrv.com"]
