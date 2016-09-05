@@ -1304,7 +1304,7 @@ var FilterParser = function() {
     this.reHasUppercase = /[A-Z]/;
     this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
-    this.reWebsocketAny = /^ws[s*]?:\/?\/?\*?$/;
+    this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
     this.domainOpt = '';
     this.reset();
 };
