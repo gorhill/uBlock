@@ -26,7 +26,8 @@
   var enabledBlockLists = ['My rules', 'EasyPrivacy', 'Fanboy’s Social Blocking List',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
-    'Anti-ThirdpartySocial', 'AdNauseam filters'
+    'Anti-ThirdpartySocial', 'AdNauseam filters', 'Malware filter list by Disconnect',
+    'Fanboy’s Annoyance List‎', 'CHN: CJX\'s Annoyance List‎ (github.com)'
   ];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
