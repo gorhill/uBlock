@@ -24,14 +24,16 @@
 
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
-    'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
-    'Anti-ThirdpartySocial', 'AdNauseam filters', 'Malware filter list by Disconnect',
-    'Fanboy’s Annoyance List‎', 'CHN: CJX\'s Annoyance List‎', 'Spam404',
-    'Anti-Adblock Killer | Reek‎', 'Fanboy’s Social Blocking List'
+    'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
+    'Anti-ThirdpartySocial', 'AdNauseam filters', 'Fanboy’s Annoyance List‎',
+    'CHN: CJX\'s Annoyance List‎', 'Spam404', 'Anti-Adblock Killer | Reek‎',
+    'Fanboy’s Social Blocking List', 'Malware domains (long-lived)‎',
+    'Adblock Warning Removal List', 'Malware filter list by Disconnect'
   ];
 
-  var blockAllDomains = [ ];
+  // allow all blocks on these domains, regardless of list
+  var blockAllDomains = [ 'youtube.com' ];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
@@ -1281,7 +1283,8 @@
     µb.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
-      log("Loaded/compiled " + Object.keys(entries).length +
+      var keys = Object.keys(entries);
+      log("Loaded/compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
     });
