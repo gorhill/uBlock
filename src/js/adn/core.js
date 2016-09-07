@@ -23,11 +23,12 @@
     repeatVisitInterval = Number.MAX_VALUE;
 
   // allow blocks only from this set of lists
-  var enabledBlockLists = ['My rules', 'EasyPrivacy', 'Fanboy’s Social Blocking List',
+  var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
     'Anti-ThirdpartySocial', 'AdNauseam filters', 'Malware filter list by Disconnect',
-    'Fanboy’s Annoyance List‎', 'CHN: CJX\'s Annoyance List‎ (github.com)'
+    'Fanboy’s Annoyance List‎', 'CHN: CJX\'s Annoyance List‎', 'Spam404',
+    'Anti-Adblock Killer | Reek‎', 'Fanboy’s Social Blocking List'
   ];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
