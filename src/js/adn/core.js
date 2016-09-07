@@ -1295,6 +1295,9 @@
         url: 'firstrun.html',
         index: -1
       });
+
+      // collapses 'languages' group in dashboard:3rd-party
+      vAPI.localStorage.setItem('collapseGroup5', 'y');
     }
   }
 

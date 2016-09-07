@@ -37,7 +37,8 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt' ]; // adn
+var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
+  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" ]; // adn
 
 /******************************************************************************/
 
@@ -181,12 +182,14 @@ var renderFilterLists = function() {
     var liFromListGroup = function(groupKey, listKeys) {
 
         var liGroup = listGroupTemplate.clone();
+
+        // adn: change some group key names
+        if (groupKey === 'default') groupKey = 'essentials';
+        if (groupKey === 'multipurpose') groupKey = 'other';
+
         var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
 
-//console.log('NAME: '+groupKey,  listKeys ? listKeys.length : 0);
-
-        // lets call 'default' rules 'essentials' instead
-        groupName = groupName.length ? groupName : 'essentials';
+//console.log('NAME: '+groupKey,  groupName, listKeys ? listKeys.length : 0);
 
         if ( groupName !== '' ) {
             liGroup.descendants('span.geName').text(groupName);
@@ -197,11 +200,20 @@ var renderFilterLists = function() {
         if ( !listKeys ) {
             return liGroup;
         }
+
         listKeys.sort(function(a, b) {
-            return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
+            var aTitle = listDetails.available[a].title || '',
+              bTitle = listDetails.available[b].title || '';
+
+            // adn: push 'My filters' to last
+            if (aTitle === 'My filters') return 1;
+            if (bTitle === 'My filters') return -1;
+
+            return aTitle.localeCompare(bTitle);
         });
+
         for ( var i = 0; i < listKeys.length; i++ ) {
-//console.log(i+") "+listDetails.available[listKeys[i]].title);
+//console.log("  "+i+") "+listDetails.available[listKeys[i]].title);
             ulGroup.append(liFromListEntry(listKeys[i]));
         }
         return liGroup;
@@ -228,8 +240,6 @@ var renderFilterLists = function() {
 
     var onListsReceived = function(details) {
 
-//console.log('onListsReceived',details);
-
         // adn: ignore hidden lists
         hiddenLists.forEach(function(l) { delete details.available[l]; });
 
@@ -240,34 +250,53 @@ var renderFilterLists = function() {
         hasCachedContent = false;
 
         // Visually split the filter lists in purpose-based groups
+
         var ulLists = uDom('#lists').empty(), liGroup;
         var groups = groupsFromLists(details.available);
         var groupKey, i;
         var groupKeys = [
             'default',
-            'ads',
-            'privacy',
             'malware',
             'social',
             'multipurpose',
             'regions',
             'custom'
         ];
+
+        // adn: move the lists in these groups to 'other'
+        var toOther = ['ads', 'privacy'];
+        for (i = 0; i < toOther.length; i++) {
+            Array.prototype.push.apply(groups['multipurpose'], groups[toOther[i]]);
+            delete groups[toOther[i]];
+        }
+
+        // adn: move these specific lists to 'essentials'
+        var toDefault = ['assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
+            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'];
+        for (i = 0; i < toDefault.length; i++) {
+            var idx = groups['multipurpose'].indexOf(toDefault[i]);
+            idx > -1 && groups['default'].push(groups['multipurpose'].splice(idx, 1));
+        }
+
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            liGroup = liFromListGroup(groupKey, groups[groupKey]);
-            liGroup.toggleClass(
-                'collapsed',
-                vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
-            );
-            ulLists.append(liGroup);
+            if (groups[groupKey]) {
+
+              liGroup = liFromListGroup(groupKey, groups[groupKey]);
+              liGroup.toggleClass(
+                  'collapsed',
+                  vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
+              );
+              ulLists.append(liGroup);
+            }
+
             delete groups[groupKey];
         }
+
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-//console.log('**** '+groupKey);
             ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
         }
 
@@ -570,8 +599,11 @@ var groupEntryClickHandler = function() {
     li.toggleClass('collapsed');
     var key = 'collapseGroup' + li.nthOfType();
     if ( li.hasClass('collapsed') ) {
+      console.log("COLLAPSE: ",key);
         vAPI.localStorage.setItem(key, 'y');
     } else {
+        console.log("UNCOLLAPSE: ",key);
+
         vAPI.localStorage.removeItem(key);
     }
 };

@@ -221,5 +221,21 @@
   "extShortDesc": {
     "message": "Fight back against advertising surveillance",
     "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Essentials",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Other",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Malware",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Languages",
+    "description": "English: Languages"
   }
 }
