@@ -17,6 +17,7 @@ www.zam.com##.ad
 # youtube
 
 /api/ads/*
+get_video_info?*=adunit& 
 
 # haaretz.co.il
 
