@@ -260,7 +260,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Përditësoj filtrat automatikisht.",
+    "message":"Përditësoj filtrat automatikisht",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -272,7 +272,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analizoj dhe zbatoj filtrat kozmetikë.",
+    "message":"Analizoj dhe zbatoj filtrat kozmetikë",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -280,7 +280,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Nuk marr parasysh filtrat kozmetikë jospeficikë.",
+    "message":"Nuk marr parasysh filtrat kozmetikë jospecifikë",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{

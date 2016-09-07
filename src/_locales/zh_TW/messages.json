@@ -208,7 +208,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"關閉預讀功能（用以避免來自已阻擋的網路連線請求的任何連線）",
+    "message":"關閉預讀功能（用以避免已經阻擋的網域的任何連線）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
