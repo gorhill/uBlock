@@ -40,7 +40,7 @@
 	},
 	"easylist-downloads.adblockplus.org/easylist.txt": {
 		"title": "EasyList",
-		"group": "ads",
+		"group": "privacy",
 		"homeURL": "https://easylist.github.io/easylist/easylist.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -160,7 +160,7 @@
 	"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
 		"off": true,
 		"title": "Adblock Warning Removal List",
-		"group": "ads",
+		"group": "multipurpose",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"http://adb.juvander.net/Finland_adb.txt": {
