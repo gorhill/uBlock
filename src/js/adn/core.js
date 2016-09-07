@@ -1259,7 +1259,6 @@
 
     µb.getAvailableLists(function (lists) {
       var ok = (lists[requiredList].off !== true);
-      //console.log('verifyListSelection->' + ok);
       vAPI.messaging.broadcast({
         what: 'listsVerified',
         result: ok

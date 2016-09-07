@@ -265,7 +265,7 @@
 
     var process = function (elem) {
 
-      //console.log('AdParser.process()', elem);
+      //console.log('AdParser.process()', elem.tagName, elem);
 
       switch (elem.tagName) {
 
