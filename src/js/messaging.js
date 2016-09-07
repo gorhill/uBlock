@@ -744,7 +744,7 @@ var backupUserData = function(callback) {
 
         var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', now.toLocaleString())
+            .replace('{{datetime}}', now.toISOString().substring(0,10))
             .replace(/ +/g, '_');
 
         vAPI.download({

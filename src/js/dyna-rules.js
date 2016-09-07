@@ -155,7 +155,7 @@ var startImportFilePicker = function() {
 function exportUserRulesToFile() {
     var now = new Date();
     var filename = vAPI.i18n('rulesDefaultFileName')
-        .replace('{{datetime}}', now.toLocaleString())
+        .replace('{{datetime}}', now.toISOString().substring(0,10))
         .replace(/ +/g, '_');
     vAPI.download({
         'url': 'data:text/plain,' + encodeURIComponent(rulesFromHTML('#diff .left li') + '\n'),
@@ -274,4 +274,3 @@ messaging.send('dashboard', { what: 'getRules' }, renderRules);
 /******************************************************************************/
 
 })();
-

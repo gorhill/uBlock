@@ -98,7 +98,7 @@ var exportWhitelistToFile = function() {
     }
     var now = new Date();
     var filename = vAPI.i18n('whitelistExportFilename')
-        .replace('{{datetime}}', now.toLocaleString())
+        .replace('{{datetime}}', now.toISOString().substring(0,10))
         .replace(/ +/g, '_');
     vAPI.download({
         'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),
