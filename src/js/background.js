@@ -130,6 +130,7 @@ return {
     permanentLists: {
         // User
         'assets/user/filters.txt': {
+            title: 'My filters', // adn
             group: 'default'
         },
         // AdNauseam
@@ -158,7 +159,7 @@ return {
         },
         'assets/ublock/experimental.txt': {
             title: 'uBlock filters – Experimental',
-            group: 'default',
+            group: 'multipurpose',
             off: true,
             supportURL: 'https://github.com/gorhill/uBlock/wiki/Experimental-filters',
             instructionURL: 'https://github.com/gorhill/uBlock/wiki/Experimental-filters'
