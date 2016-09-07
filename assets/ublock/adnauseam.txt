@@ -17,6 +17,7 @@ www.zam.com##.ad
 # youtube
 
 /api/ads/*
+get_video_info?*=adunit& 
 
 # haaretz.co.il
 
@@ -34,3 +35,6 @@ facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt]
 ##iframe[src*="exoclick.com"]
 ##iframe[src*="thepiratebay.org/static/ads"]
 ##img[src*="exdynsrv.com"]
+
+# 10tv.nana10.co.il
+||advsnx.net^$third-party
