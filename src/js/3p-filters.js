@@ -123,7 +123,9 @@ var renderFilterLists = function() {
         var text = listStatsTemplate
             .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
-        elem.text(text);
+
+        // adn: only show counts if entry is on
+        elem.text(entry.off ? '' : text);
 
         // https://github.com/gorhill/uBlock/issues/78
         // Badge for non-secure connection
@@ -177,12 +179,20 @@ var renderFilterLists = function() {
     };
 
     var liFromListGroup = function(groupKey, listKeys) {
+
         var liGroup = listGroupTemplate.clone();
         var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+
+//console.log('NAME: '+groupKey,  listKeys ? listKeys.length : 0);
+
+        // lets call 'default' rules 'essentials' instead
+        groupName = groupName.length ? groupName : 'essentials';
+
         if ( groupName !== '' ) {
             liGroup.descendants('span.geName').text(groupName);
             liGroup.descendants('span.geCount').text(listEntryCountFromGroup(listKeys));
         }
+
         var ulGroup = liGroup.descendants('ul');
         if ( !listKeys ) {
             return liGroup;
@@ -191,7 +201,7 @@ var renderFilterLists = function() {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
-            console.log(i+") "+listKeys[i]);
+//console.log(i+") "+listDetails.available[listKeys[i]].title);
             ulGroup.append(liFromListEntry(listKeys[i]));
         }
         return liGroup;
@@ -217,6 +227,8 @@ var renderFilterLists = function() {
     };
 
     var onListsReceived = function(details) {
+
+//console.log('onListsReceived',details);
 
         // adn: ignore hidden lists
         hiddenLists.forEach(function(l) { delete details.available[l]; });
@@ -255,6 +267,7 @@ var renderFilterLists = function() {
         groupKeys = Object.keys(groups);
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
+//console.log('**** '+groupKey);
             ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
         }
 
@@ -369,7 +382,7 @@ var onListCheckboxChanged = function() {
     listDetails.available[href].off = !this.checked;
 
     if (href === requiredList) { // adn
-        //console.log("[WARN] EasyList -> ",this.checked);
+//console.log("[WARN] EasyList -> ",this.checked);
         window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
     }
     renderWidgets();
