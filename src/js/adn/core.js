@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for testing list-blocking
+    logBlocks = 1; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -30,6 +30,8 @@
     'Fanboy’s Annoyance List‎', 'CHN: CJX\'s Annoyance List‎', 'Spam404',
     'Anti-Adblock Killer | Reek‎', 'Fanboy’s Social Blocking List'
   ];
+
+  var blockAllDomains = [ ];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
@@ -877,9 +879,14 @@
     return enabledBlockLists.indexOf(test) > -1;
   }
 
+  // check that the rule is not disabled in 'disabledBlockingRules'
   var ruleDisabled = function (test, list) {
-    if (list && list === 'AdNauseam filters')
+
+    if (list && (list === 'AdNauseam filters' ||
+        list === 'My filters')) { // never disabled
       return false;
+    }
+
     return disabledBlockingRules.indexOf(test) > -1;
   };
 
