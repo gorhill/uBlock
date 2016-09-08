@@ -280,7 +280,6 @@ header{
   border-top: #383838 1px solid;
   border-bottom: #000 1px solid;
   position: relative;
-  overflow: hidden;
 }
 
 .ad-item a {
@@ -332,6 +331,24 @@ header{
     font-size: 14px;
     border: 1px solid #0076FF;
 }
+
+.ad-item img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -o-transition: all 1s ease; /* IE 9 */
+    -ms-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.ad-item img:hover{
+  max-width:none;
+  max-height: 300px;
+  position:absolute;
+  left:0px;
+  top:0px;
+  z-index: 100;
+}
+
 .ad-item.visited img {
     border: 1px solid #BD10E0;
 }
