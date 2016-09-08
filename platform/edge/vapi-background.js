@@ -605,14 +605,15 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
         return;
     }
 
-    var onReloaded = function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( browser.runtime.lastError ) {
+    // Workaround for Edge tab reloading
+    // see: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/reload#Browser_compatibility
+    browser.tabs.get(tabId, function(tab){
+        if (browser.tabs.lastError || !tab) {
             /* noop */
+            return;
         }
-    };
-
-    browser.tabs.reload(tabId, onReloaded);
+        vAPI.tabs.replace(tabId, tab.url);
+    });
 };
 
 /******************************************************************************/
