@@ -244,7 +244,7 @@
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Laatste herstel:",
+    "message":"Laatste terugzetactie:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
@@ -400,7 +400,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exporteren naar bestand",
+    "message":"Exporteren naar bestand...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -531,6 +531,10 @@
     "message":"Wiki",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Ondersteuning",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"Broncode (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -540,7 +544,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Back-up maken naar bestand",
+    "message":"Back-up maken naar bestand...",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{

@@ -531,6 +531,10 @@
     "message":"விக்கி",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Support",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"மூல நிரல் (பொது மக்கள் உரிமம் பதிப்பு 3)",
     "description":"English: Source code (GPLv3)"

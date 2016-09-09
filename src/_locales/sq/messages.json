@@ -248,7 +248,7 @@
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Kopjimi i fundit:",
+    "message":"Kopja e fundit:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -530,6 +530,10 @@
   "aboutWiki":{
     "message":"Dokumentimi",
     "description":"English: project' wiki on Github"
+  },
+  "aboutSupport":{
+    "message":"Mbështetja teknike",
+    "description":"A link for where to get support"
   },
   "aboutCode":{
     "message":"Materiali burimor (GPLv3)",
