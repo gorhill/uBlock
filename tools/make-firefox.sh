@@ -11,7 +11,7 @@ mkdir -p $DES
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version
 
 bash ./tools/make-assets.sh $DES
-bash ./tools/make-locales.sh $DES
+bash ./tools/make-locales.sh $DES locale
 
 cp -R src/css                           $DES/
 cp -R src/img                           $DES/
