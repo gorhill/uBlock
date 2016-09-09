@@ -19,13 +19,12 @@ do
   #echo Writing $out
   #outfile=`echo $out | sed "s/_locales/${DIR}/"`
   #echo Writing $outfile
-  echo mking $dir
+  #echo mking $dir
   mkdir -p $dir && touch $outfile
   #echo "      $outfile"
   jq -s '.[0] * .[1]' $messages $adnfile > $outfile
 done
 
-echo
-ls -Rl $DES/*
+#echo && ls -Rl $DES/*
 
 echo "done."
