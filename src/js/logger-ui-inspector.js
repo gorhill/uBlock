@@ -32,7 +32,7 @@
 var showdomButton = uDom.nodeFromId('showdom');
 
 // Don't bother if the browser is not modern enough.
-if ( typeof Map === undefined || Map.polyfill || typeof WeakMap === undefined ) {
+if ( typeof Map === 'undefined' || Map.polyfill || typeof WeakMap === 'undefined' ) {
     showdomButton.classList.add('disabled');
     return;
 }
