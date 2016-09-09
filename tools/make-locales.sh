@@ -3,6 +3,7 @@
 # This script assumes a linux environment
 
 DES=${1-/tmp}
+DIR=${2-_locales}
 
 hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
 
@@ -13,10 +14,18 @@ for adnfile in $FILES
 do
   messages="${adnfile/adnauseam/messages}"
   out="${messages/src/$DES}"
-  dir=`dirname $out`
-  mkdir -p $dir && touch $out
+  outfile=`echo $out | sed "s/_locales/${DIR}/"`
+  dir=`dirname $outfile`
   #echo Writing $out
-  jq -s '.[0] * .[1]' $messages $adnfile > $out
+  #outfile=`echo $out | sed "s/_locales/${DIR}/"`
+  #echo Writing $outfile
+  echo mking $dir
+  mkdir -p $dir && touch $outfile
+  #echo "      $outfile"
+  jq -s '.[0] * .[1]' $messages $adnfile > $outfile
 done
+
+echo
+ls -Rl $DES/*
 
 echo "done."
