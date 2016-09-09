@@ -11,8 +11,9 @@
   var messager = vAPI.messaging;
 
   /******************************************************************************/
-  var changeUserSettings = function (name, value) {
+  var changeUserSettings = function (name, value) {  
 
+    console.log("changing", name, value);
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -30,23 +31,24 @@
     changeUserSettings(name, value);
   };
 
+  function getValueOfSwitch(name){
+    return uDom('[data-setting-name='+name+']').prop('checked');
+  }
+
   function hideOrClickTrue () {
     var showBox = false;
-    uDom('[data-setting-type="bool"]').forEach(function (uNode) {
-      var name = uNode.attr('data-setting-name');
-      if((name === 'hidingAds' || name === 'clickingAds') && uNode.prop('checked')){
-        showBox = true;
-      }
-    });
+    if(getValueOfSwitch('hidingAds') === true || getValueOfSwitch('clickingAds') === true){
+      showBox = true;
+    }
     return showBox;
   }
 
   function toggleDNTExceptionBox(bool){
-    var elem = uDom('#dnt-exception')["nodes"][0].parentElement;
-    if(hideOrClickTrue()){
-      elem.style.display = "block";
+    var dntInputWrapper = uDom('#dnt-exception')["nodes"][0].parentElement;
+    if(hideOrClickTrue()){   
+      dntInputWrapper.style.display = "block";
     }else{
-      elem.style.display = "none";
+      dntInputWrapper.style.display = "none";
     }
   }
 
@@ -56,11 +58,11 @@
 
   var onUserSettingsReceived = function (details) {
 
-
+    
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
       uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
         .on('change', function () {
-
+          
           changeUserSettings(
             this.getAttribute('data-setting-name'),
             this.checked
@@ -71,6 +73,8 @@
         });
     });
 
+
+    //not sure when this one is called
     uDom('[data-setting-type="input"]').forEach(function (uNode) {
       uNode.val(details[uNode.attr('data-setting-name')])
         .on('change', onInputChanged);
@@ -79,7 +83,9 @@
     uDom('#confirm-close').on('click', function (e) {
       e.preventDefault();
       // handle #371 here 
-      // is this function not only called on submit, why #371 here?
+      if(getValueOfSwitch('hidingAds') === false && getValueOfSwitch('clickingAds') === false){
+        changeUserSettings('respectDNT', false);
+      }
       window.open(location, '_self').close();
     });
 
@@ -89,11 +95,9 @@
   /******************************************************************************/
 
   uDom.onLoad(function () {
-
     messager.send('dashboard', {
       what: 'userSettings'
     }, onUserSettingsReceived);
-
   });
 
   /******************************************************************************/
