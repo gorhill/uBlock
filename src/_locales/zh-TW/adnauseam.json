@@ -33,11 +33,11 @@
   },
   "adnTarget":{
     "message":"目標",
-    "description":"English: Vault.html -> inspected ad -> TARGET"
+    "description":"English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn":{
     "message":"發現於",
-    "description":"English: Vault.html -> inspected ad -> FOUND ON"
+    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
     "message":"尚未訪問",
@@ -53,7 +53,7 @@
   },
   "adnNotHiding":{
     "message":"AdNauseam 目前不隱藏廣告",
-    "description":"English: Menu->display when not hiding ads"
+    "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
     "message":"AdNauseam — 廣告庫",
@@ -61,7 +61,7 @@
   },
   "adnShowingRecentAds":{
     "message":"沒有在本頁收集到廣告 (顯示最近的)",
-    "description":"shown in menu when only 'recent' ads are shown"
+    "description":"shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename":{
     "message":"AdNauseam-已導出的廣告_{{datetime}}.json",
@@ -145,31 +145,39 @@
   },
   "adnVaultSince":{
     "message":"自從",
-    "description":"appears in ADN vault page"
+    "description":"appears on vault page"
   },
   "adnVaultDefaultDate":{
     "message":"1970 年 1 月 1 日 0:00",
-    "description":"appears in ADN vault page"
+    "description":"appears on vault page"
   },
   "adnVaultAdsClicked":{
     "message":"已點擊",
-    "description":"appears in ADN vault page"
+    "description":"appears on vault page"
   },
   "adnVaultFound":{
     "message":"個廣告被顯示",
-    "description":"appears in ADN vault page"
+    "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
     "message":"刪除這個廣告",
-    "description":"appears in ADN vault page"
+    "description":"appears on vault page"
+  },
+  "adnVaultTotalEstimated":{
+    "message":"估計總",
+    "description":"appears on vault page"
+  },
+  "adnVaultAdsCost":{
+    "message":"費用",
+    "description":"appears on vault page"
   },
   "hidingAdsPrompt":{
     "message":"隱藏由你的篩選器列表標記的廣告",
-    "description":"English: Hide ads identified by your chosen filter lists"
+    "description":"English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt":{
     "message":"點擊由你的篩選器列表標記的廣告",
-    "description":"English: Click ads identified by your chosen filter lists"
+    "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
     "message":"屏蔽惡意軟件和非可視的網絡跟蹤器",
@@ -177,11 +185,11 @@
   },
   "parseTextAdsPrompt":{
     "message":"當可行時捕捉文字廣告",
-    "description":"English: Capture text-only ads when possible"
+    "description":"English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt":{
     "message":"在圖標上顯示已找到的廣告數目",
-    "description":"English: Show the number of found ads on the icon"
+    "description":"English: Show the number of found Ads on the icon"
   },
   "noIncomingCookiesPrompt":{
     "message":"忽略由點擊廣告產生的 cookie",
@@ -199,6 +207,10 @@
     "message":"當訪問廣告時隱藏引用頁面",
     "description":"English: Hide referring page on visits"
   },
+  "noThirdPartyCookiesPrompt":{
+    "message":"禁止使用第三方cookie",
+    "description":"English: Disallow third-party cookies"
+  },
   "extName":{
     "message":"AdNauseam",
     "description":"extension name"
@@ -206,5 +218,21 @@
   "extShortDesc":{
     "message":"一款被設計為對抗來自廣告網絡追蹤的擴展",
     "description":"for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials":{
+    "message":"基本",
+    "description":"English: Essentials"
+  },
+  "3pGroupOther":{
+    "message":"其它",
+    "description":"English: Other"
+  },
+  "3pGroupMalware":{
+    "message":"惡意軟體",
+    "description":"English: Malware"
+  },
+  "3pGroupRegions":{
+    "message":"語言",
+    "description":"English: Languages"
   }
 }
