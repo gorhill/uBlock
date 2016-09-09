@@ -16,7 +16,7 @@ do
   #echo $dir
   mkdir -p $DES/$dir
   #echo $SRC/$dir/$FILE $DES/$dir/$FILE # 2>/dev/null
-  cp $SRC/$dir/$FILE $DES/$dir/$FILE # 2>/dev/null
+  cp $SRC/$dir/$FILE $DES/$dir/$FILE 2>/dev/null
   ls -l $DES/$dir/$FILE
 
 done
