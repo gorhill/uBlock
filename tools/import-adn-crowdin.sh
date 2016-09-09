@@ -4,14 +4,18 @@
 
 echo "*** AdNauseam: Importing from Crowdin archive"
 
+LANGS=(en zh-TW zh-CN)
+
+FILE=adnauseam.json
 SRC=~/Downloads/adnauseam
 DES=./src/_locales
 
-for dir in `/bin/ls $SRC | grep -v en`
+#for dir in `/bin/ls $SRC | grep -v en`
+for dir in ${LANGS[@]}
 do
   #echo $dir
-  mkdir -p $DES/$name
-  cp $dir/adnauseam.json $DES/$name/adnauseam.json 2>/dev/null
+  mkdir -p $DES/$dir
+  cp $SRC/$dir/$FILE $DES/$dir/$FILE 2>/dev/null
 done
 
 ls -lR $DES
