@@ -15,7 +15,7 @@ for dir in ${LANGS[@]}
 do
   #echo $dir
   mkdir -p $DES/$dir
-  cp $SRC/$dir/$FILE $DES/$dir/$FILE 2>/dev/null
+  cp $SRC/$dir/$FILE $DES/$dir/$FILE # 2>/dev/null
 done
 
 ls -lR $DES
