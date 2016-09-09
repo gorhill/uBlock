@@ -16,12 +16,8 @@ do
   out="${messages/src/$DES}"
   outfile=`echo $out | sed "s/_locales/${DIR}/"`
   dir=`dirname $outfile`
-  #echo Writing $out
-  #outfile=`echo $out | sed "s/_locales/${DIR}/"`
-  #echo Writing $outfile
-  #echo mking $dir
   mkdir -p $dir && touch $outfile
-  #echo "      $outfile"
+  echo Writing $outfile
   jq -s '.[0] * .[1]' $messages $adnfile > $outfile
 done
 
