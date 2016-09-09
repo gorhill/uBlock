@@ -19,7 +19,7 @@ do
   outfile=`echo $out | sed "s/_locales/${DIR}/"`
   dir=`dirname $outfile`
   mkdir -p $dir && touch $outfile
-  echo Writing $outfile
+  #echo Writing $outfile
   jq -s '.[0] * .[1]' $messages $adnfile > $outfile
   sed -i '' "s/uBlock₀/AdNauseam/g" $outfile
 done
@@ -30,4 +30,4 @@ done
 
 echo "done."
 
-less /tmp/_locales/en/messages.json
+#less /tmp/_locales/en/messages.json
