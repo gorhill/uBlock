@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
 # This script assumes a linux environment
+#
+
 
 DES=${1-/tmp}
 DIR=${2-_locales}
@@ -17,7 +19,7 @@ do
   outfile=`echo $out | sed "s/_locales/${DIR}/"`
   dir=`dirname $outfile`
   mkdir -p $dir && touch $outfile
-  echo Writing $outfile
+  #echo Writing $outfile
   jq -s '.[0] * .[1]' $messages $adnfile > $outfile
 done
 

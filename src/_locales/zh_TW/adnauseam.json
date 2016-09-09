@@ -1,0 +1,238 @@
+{
+  "adnAboutPageName":{
+    "message":"AdNauseam — 關於",
+    "description":"English: Firstrun.html page title"
+  },
+  "adnFirstRunPlease":{
+    "message":"請:",
+    "description":"English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds":{
+    "message":"隱藏廣告",
+    "description":"English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds":{
+    "message":"點擊廣告",
+    "description":"English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware":{
+    "message":"屏蔽惡意軟件",
+    "description":"English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription":{
+    "message":"隱藏所有由<a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的廣告",
+    "description":"English: Firstrun.html -> hides all ads identified by filter lists"
+  },
+  "adnFirstRunClickingAdsDescription":{
+    "message":"後台訪問由 <a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的廣告",
+    "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription":{
+    "message":"保護您的瀏覽器免受由<a href='\/dashboard.html#3p-filters.html'> 篩選器列表<\/a>標記的惡意軟件和其他非可視的網絡跟蹤器",
+    "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+  },
+  "adnTarget":{
+    "message":"目標",
+    "description":"English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn":{
+    "message":"發現於",
+    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited":{
+    "message":"尚未訪問",
+    "description":"English: Not Yet Visited"
+  },
+  "adnFirstRunOK":{
+    "message":"好",
+    "description":"English: Firstrun.html -> OK"
+  },
+  "adnPausedOnPage":{
+    "message":"AdNauseam 在本頁面被暫停",
+    "description":"English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding":{
+    "message":"AdNauseam 目前不隱藏廣告",
+    "description":"English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName":{
+    "message":"AdNauseam — 廣告庫",
+    "description":"English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds":{
+    "message":"沒有在本頁收集到廣告 (顯示最近的)",
+    "description":"shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename":{
+    "message":"AdNauseam-已導出的廣告_{{datetime}}.json",
+    "description":"English: AdNauseam file export"
+  },
+  "adnImportAlert":{
+    "message":"{{count}}個廣告被導入",
+    "description":"appears in ADN settings"
+  },
+  "adnClearConfirm":{
+    "message":"這操作會永久移除你全部已保存的廣告",
+    "description":"appears in ADN settings"
+  },
+  "adnMenuViewLog":{
+    "message":"查看日誌",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked":{
+    "message":"已點擊",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuOfThe":{
+    "message":"總共",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected":{
+    "message":"已偵測廣告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuViewVault":{
+    "message":"查看廣告庫",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuPause":{
+    "message":"暫停 Adnauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuResume":{
+    "message":"恢復 Adnauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuSettings":{
+    "message":"設置",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuExportAds":{
+    "message":"導出廣告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuImportAds":{
+    "message":"導入廣告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging":{
+    "message":"關閉所有日誌紀錄",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer":{
+    "message":"關閉對外來源",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAds":{
+    "message":"與瀏覽器記錄清除廣告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuHideBadge":{
+    "message":"隱藏圖標上的廣告數目",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow":{
+    "message":"清除廣告",
+    "description":"appears in ADN popup menu"
+  },
+  "adnLogNoLog":{
+    "message":"沒有可用的日誌",
+    "description":"appears in ADN log page"
+  },
+  "adnLogViewFullLog":{
+    "message":"查看完整日誌",
+    "description":"appears in ADN log page"
+  },
+  "adnVaultSince":{
+    "message":"自從",
+    "description":"appears on vault page"
+  },
+  "adnVaultDefaultDate":{
+    "message":"1970 年 1 月 1 日 0:00",
+    "description":"appears on vault page"
+  },
+  "adnVaultAdsClicked":{
+    "message":"已點擊",
+    "description":"appears on vault page"
+  },
+  "adnVaultFound":{
+    "message":"個廣告被顯示",
+    "description":"appears on vault page"
+  },
+  "adnVaultDeleteThisAd":{
+    "message":"刪除這個廣告",
+    "description":"appears on vault page"
+  },
+  "adnVaultTotalEstimated":{
+    "message":"估計總",
+    "description":"appears on vault page"
+  },
+  "adnVaultAdsCost":{
+    "message":"費用",
+    "description":"appears on vault page"
+  },
+  "hidingAdsPrompt":{
+    "message":"隱藏由你的篩選器列表標記的廣告",
+    "description":"English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt":{
+    "message":"點擊由你的篩選器列表標記的廣告",
+    "description":"English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt":{
+    "message":"屏蔽惡意軟件和非可視的網絡跟蹤器",
+    "description":"English: Protect your browser from malware and non-visual trackers"
+  },
+  "parseTextAdsPrompt":{
+    "message":"當可行時捕捉文字廣告",
+    "description":"English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"在圖標上顯示已找到的廣告數目",
+    "description":"English: Show the number of found Ads on the icon"
+  },
+  "noIncomingCookiesPrompt":{
+    "message":"忽略由點擊廣告產生的 cookie",
+    "description":"English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt":{
+    "message":"不要發送 cookie 訪問",
+    "description":"English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt":{
+    "message":"當訪問廣告時隱藏瀏覽器識別符",
+    "description":"English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt":{
+    "message":"當訪問廣告時隱藏引用頁面",
+    "description":"English: Hide referring page on visits"
+  },
+  "noThirdPartyCookiesPrompt":{
+    "message":"禁止使用第三方cookie",
+    "description":"English: Disallow third-party cookies"
+  },
+  "extName":{
+    "message":"AdNauseam",
+    "description":"extension name"
+  },
+  "extShortDesc":{
+    "message":"一款被設計為對抗來自廣告網絡追蹤的擴展",
+    "description":"for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials":{
+    "message":"基本",
+    "description":"English: Essentials"
+  },
+  "3pGroupOther":{
+    "message":"其它",
+    "description":"English: Other"
+  },
+  "3pGroupMalware":{
+    "message":"惡意軟體",
+    "description":"English: Malware"
+  },
+  "3pGroupRegions":{
+    "message":"語言",
+    "description":"English: Languages"
+  }
+}

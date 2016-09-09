@@ -62,7 +62,7 @@ cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 
 #
 
-DES=./dist/description
+DES=./bin/description
 cp $SRC/ar/description.txt    $DES/description-ar.txt
 cp $SRC/bg/description.txt    $DES/description-bg.txt
 cp $SRC/bn/description.txt    $DES/description-bn.txt

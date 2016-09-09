@@ -1,0 +1,238 @@
+{
+  "adnAboutPageName":{
+    "message":"AdNauseam — о дополнении",
+    "description":"English: Firstrun.html page title"
+  },
+  "adnFirstRunPlease":{
+    "message":"Пожалуйста:",
+    "description":"English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds":{
+    "message":"Скрывать рекламу",
+    "description":"English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds":{
+    "message":"Кликать по рекламе",
+    "description":"English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware":{
+    "message":"Блокировать вредоносное ПО",
+    "description":"English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription":{
+    "message":"Скрыть всю рекламу, соответствующую <a href='\/dashboard.html#3p-filters.html'>спискам фильтров<\/a>",
+    "description":"English: Firstrun.html -> hides all ads identified by filter lists"
+  },
+  "adnFirstRunClickingAdsDescription":{
+    "message":"Имитировать клики по рекламе, соответствующей <a href='\/dashboard.html#3p-filters.html'> спискам фильтров<\/a>",
+    "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription":{
+    "message":"protect your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+  },
+  "adnTarget":{
+    "message":"TARGET",
+    "description":"English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn":{
+    "message":"FOUND ON",
+    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited":{
+    "message":"Not Yet Visited",
+    "description":"English: Not Yet Visited"
+  },
+  "adnFirstRunOK":{
+    "message":"OK",
+    "description":"English: Firstrun.html -> OK"
+  },
+  "adnPausedOnPage":{
+    "message":"AdNauseam приостановлен на этой странице",
+    "description":"English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding":{
+    "message":"AdNauseam is not currently hiding Ads",
+    "description":"English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName":{
+    "message":"AdNauseam — хранилище рекламы",
+    "description":"English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds":{
+    "message":"No Ads collected on this page (showing recent)",
+    "description":"shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename":{
+    "message":"AdNauseam_Export_{{datetime}}.json",
+    "description":"English: AdNauseam file export"
+  },
+  "adnImportAlert":{
+    "message":"{{count}} Ads were imported",
+    "description":"appears in ADN settings"
+  },
+  "adnClearConfirm":{
+    "message":"Это действие приведет к окончательному удалению ВСЕЙ вашей рекламы",
+    "description":"appears in ADN settings"
+  },
+  "adnMenuViewLog":{
+    "message":"Просмотр журнала",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked":{
+    "message":"кликнуто",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuOfThe":{
+    "message":"из",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected":{
+    "message":"Ads detected",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuViewVault":{
+    "message":"Просмотр хранилища рекламы",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuPause":{
+    "message":"Приостановить AdNauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuResume":{
+    "message":"Возобновить AdNauseam",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuSettings":{
+    "message":"Настройки",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuExportAds":{
+    "message":"Экспортировать рекламу",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuImportAds":{
+    "message":"Импортировать рекламу",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging":{
+    "message":"Отключить ведение журнала",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer":{
+    "message":"Disable outgoing referrer",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAds":{
+    "message":"Clear Ads with browser history",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuHideBadge":{
+    "message":"Скрыть счетчик рекламы на значке",
+    "description":"appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow":{
+    "message":"Clear Ads",
+    "description":"appears in ADN popup menu"
+  },
+  "adnLogNoLog":{
+    "message":"Нет доступных журналов",
+    "description":"appears in ADN log page"
+  },
+  "adnLogViewFullLog":{
+    "message":"Просмотр полного журнала",
+    "description":"appears in ADN log page"
+  },
+  "adnVaultSince":{
+    "message":"С",
+    "description":"appears on vault page"
+  },
+  "adnVaultDefaultDate":{
+    "message":"1 января 1970 года 0:00",
+    "description":"appears on vault page"
+  },
+  "adnVaultAdsClicked":{
+    "message":"Рекламы кликнуто",
+    "description":"appears on vault page"
+  },
+  "adnVaultFound":{
+    "message":"показано",
+    "description":"appears on vault page"
+  },
+  "adnVaultDeleteThisAd":{
+    "message":"delete this Ad",
+    "description":"appears on vault page"
+  },
+  "adnVaultTotalEstimated":{
+    "message":"total estimated",
+    "description":"appears on vault page"
+  },
+  "adnVaultAdsCost":{
+    "message":"cost",
+    "description":"appears on vault page"
+  },
+  "hidingAdsPrompt":{
+    "message":"Скрыть рекламу, соответствующую выбранным спискам фильтров",
+    "description":"English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt":{
+    "message":"Кликать на рекламу, соответствующую выбранным спискам фильтров",
+    "description":"English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt":{
+    "message":"Блокировать вредоносные программы и невизуальные трекеры",
+    "description":"English: Protect your browser from malware and non-visual trackers"
+  },
+  "parseTextAdsPrompt":{
+    "message":"Захватывать только текстовую рекламу, если возможно",
+    "description":"English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Показывать количество рекламы на значке",
+    "description":"English: Show the number of found Ads on the icon"
+  },
+  "noIncomingCookiesPrompt":{
+    "message":"Игнорировать куки, возвращаемые по кликам",
+    "description":"English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt":{
+    "message":"Не отправлять куки при посещениях",
+    "description":"English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt":{
+    "message":"Скрывать заголовок User-agent при посещении",
+    "description":"English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt":{
+    "message":"Скрывать исходную страницу при посещении",
+    "description":"English: Hide referring page on visits"
+  },
+  "noThirdPartyCookiesPrompt":{
+    "message":"Disallow third-party cookies",
+    "description":"English: Disallow third-party cookies"
+  },
+  "extName":{
+    "message":"AdNauseam",
+    "description":"extension name"
+  },
+  "extShortDesc":{
+    "message":"Противодействие рекламному шпионажу",
+    "description":"for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials":{
+    "message":"Essentials",
+    "description":"English: Essentials"
+  },
+  "3pGroupOther":{
+    "message":"Other",
+    "description":"English: Other"
+  },
+  "3pGroupMalware":{
+    "message":"Malware",
+    "description":"English: Malware"
+  },
+  "3pGroupRegions":{
+    "message":"Languages",
+    "description":"English: Languages"
+  }
+}
