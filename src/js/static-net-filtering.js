@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 /* jshint bitwise: false */
 /* global punycode */
 
+'use strict';
+
 /******************************************************************************/
 
 µBlock.staticNetFilteringEngine = (function(){
-
-'use strict';
 
 /******************************************************************************/
 
@@ -55,6 +55,7 @@ var ThirdParty = 2 << 2;
 
 var AnyType = 0 << 4;
 var typeNameToTypeValue = {
+           'no_type':  0 << 4,
         'stylesheet':  1 << 4,
              'image':  2 << 4,
             'object':  3 << 4,
@@ -104,8 +105,6 @@ var BlockAnyParty = BlockAction | AnyParty;
 var AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 var AllowAnyType = AllowAction | AnyType;
 var AllowAnyParty = AllowAction | AnyParty;
-
-var reURLPostHostnameAnchors = /[\/?#]/;
 
 // ABP filters: https://adblockplus.org/en/filters
 // regex tester: http://regex101.com/
@@ -172,8 +171,8 @@ var atoi = function(s) {
     return cachedParseInt(s, 10);
 };
 
+// Be sure to not confuse 'example.com' with 'anotherexample.com'
 var isFirstParty = function(domain, hostname) {
-    // Be sure to not confuse 'example.com' with 'anotherexample.com'
     return hostname.endsWith(domain) &&
           (hostname.length === domain.length ||
            hostname.charAt(hostname.length - domain.length - 1) === '.');
@@ -206,11 +205,17 @@ var strToRegex = function(s, anchor, flags) {
     if ( s === '*' ) {
         return alwaysTruePseudoRegex;
     }
-
+    var anchorToHnStart;
+    if ( s.startsWith('||') ) {
+        s = s.slice(2);
+        anchorToHnStart = s.charCodeAt(0) === 0x2A;
+    }
     // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+    // Also: remove leading/trailing wildcards -- there is no point.
     var reStr = s.replace(/[.+?${}()|[\]\\]/g, '\\$&')
                  .replace(/\^/g, '(?:[^%.0-9a-z_-]|$)')
+                 .replace(/^\*|\*$/g, '')
                  .replace(/\*/g, '[^ ]*?');
 
     if ( anchor < 0 ) {
@@ -218,7 +223,9 @@ var strToRegex = function(s, anchor, flags) {
     } else if ( anchor > 0 ) {
         reStr += '$';
     }
-
+    if ( anchorToHnStart ) {
+        reStr = '[0-9a-z.-]*?' + reStr;
+    }
     //console.debug('µBlock.staticNetFilteringEngine: created RegExp("%s")', reStr);
     return new RegExp(reStr, flags);
 };
@@ -226,6 +233,26 @@ var strToRegex = function(s, anchor, flags) {
 var toHex = function(n) {
     return n.toString(16);
 };
+
+// First character of match must be within the hostname part of the url.
+var isHnAnchored = function(url, matchStart) {
+    var hnStart = url.indexOf('://');
+    if ( hnStart === -1 ) {
+        return false;
+    }
+    hnStart += 3;
+    if ( matchStart <= hnStart ) {
+        return true;
+    }
+    if ( reURLPostHostnameAnchors.test(url.slice(hnStart, matchStart)) ) {
+        return false;
+    }
+    // https://github.com/gorhill/uBlock/issues/1929
+    // Match only hostname label boundaries.
+    return url.charCodeAt(matchStart - 1) === 0x2E;
+};
+
+var reURLPostHostnameAnchors = /[\/?#]/;
 
 /******************************************************************************/
 
@@ -697,13 +724,8 @@ var FilterPlainHnAnchored = function(s) {
 };
 
 FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
-    if ( url.startsWith(this.s, tokenBeg) === false ) {
-        return false;
-    }
-    // Valid only if hostname-valid characters to the left of token
-    var pos = url.indexOf('://');
-    return pos !== -1 &&
-           reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
+    return url.startsWith(this.s, tokenBeg) &&
+           isHnAnchored(url, tokenBeg);
 };
 
 FilterPlainHnAnchored.fid =
@@ -737,16 +759,9 @@ var FilterPlainHnAnchoredHostname = function(s, domainOpt) {
 };
 
 FilterPlainHnAnchoredHostname.prototype.match = function(url, tokenBeg) {
-    if (
-        url.startsWith(this.s, tokenBeg) === false ||
-        this.hostnameTest(this) === false
-    ) {
-        return false;
-    }
-    // Valid only if hostname-valid characters to the left of token
-    var pos = url.indexOf('://');
-    return pos !== -1 &&
-           reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
+    return url.startsWith(this.s, tokenBeg) &&
+           this.hostnameTest(this) &&
+           isHnAnchored(url, tokenBeg);
 };
 
 FilterPlainHnAnchoredHostname.fid =
@@ -850,18 +865,10 @@ var FilterGenericHnAnchored = function(s) {
 
 FilterGenericHnAnchored.prototype.match = function(url) {
     if ( this.re === null ) {
-        this.re = strToRegex(this.s, 0);
+        this.re = strToRegex('||' + this.s, 0);
     }
-    // Quick test first
-    if ( this.re.test(url) === false ) {
-        return false;
-    }
-    // Valid only if begininning of match is within the hostname
-    // part of the url
-    var match = this.re.exec(url);
-    var pos = url.indexOf('://');
-    return pos !== -1 &&
-           reURLPostHostnameAnchors.test(url.slice(pos + 3, match.index)) === false;
+    var matchStart = url.search(this.re);
+    return matchStart !== -1 && isHnAnchored(url, matchStart);
 };
 
 FilterGenericHnAnchored.fid =
@@ -1287,6 +1294,7 @@ FilterBucket.fromSelfie = function() {
 /******************************************************************************/
 
 var FilterParser = function() {
+    this.cantWebsocket = vAPI.cantWebsocket;
     this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
     this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
     this.reCleanupHostnameRule2 = /^\**|\^$/g;
@@ -1296,6 +1304,7 @@ var FilterParser = function() {
     this.reHasUppercase = /[A-Z]/;
     this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
+    this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
     this.domainOpt = '';
     this.reset();
 };
@@ -1347,11 +1356,17 @@ FilterParser.prototype.reset = function() {
 
 /******************************************************************************/
 
+FilterParser.prototype.bitFromType = function(type) {
+    return 1 << ((typeNameToTypeValue[type] >>> 4) - 1);
+};
+
+/******************************************************************************/
+
 // https://github.com/chrisaljoudi/uBlock/issues/589
 // Be ready to handle multiple negated types
 
 FilterParser.prototype.parseOptType = function(raw, not) {
-    var typeBit = 1 << ((typeNameToTypeValue[this.toNormalizedType[raw]] >>> 4) - 1);
+    var typeBit = this.bitFromType(this.toNormalizedType[raw]);
 
     if ( !not ) {
         this.types |= typeBit;
@@ -1418,6 +1433,11 @@ FilterParser.prototype.parseOptions = function(s) {
         }
         if ( this.toNormalizedType.hasOwnProperty(opt) ) {
             this.parseOptType(opt, not);
+            // Due to ABP categorizing `websocket` requests as `other`, we need
+            // to add `websocket` for when `other` is used.
+            if ( opt === 'other' ) {
+                this.parseOptType('websocket', not);
+            }
             continue;
         }
         if ( opt.startsWith('domain=') ) {
@@ -1541,7 +1561,10 @@ FilterParser.prototype.parse = function(raw) {
         }
 
         // plain hostname? (from ABP filter list)
-        if ( this.reHostnameRule2.test(s) ) {
+        // https://github.com/gorhill/uBlock/issues/1757
+        // A filter can't be a pure-hostname one if there is a domain option
+        // present.
+        if ( this.domainOpt === '' && this.reHostnameRule2.test(s) ) {
             this.f = s.replace(this.reCleanupHostnameRule2, '');
             this.hostnamePure = true;
             return this;
@@ -1563,7 +1586,11 @@ FilterParser.prototype.parse = function(raw) {
     // normalize placeholders
     if ( this.reHasWildcard.test(s) ) {
         // remove pointless leading *
-        if ( s.startsWith('*') ) {
+        // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
+        // Keep the leading asterisk if we are dealing with a hostname-anchored
+        // filter, this will ensure the generic filter implementation is
+        // used.
+        if ( s.startsWith('*') && this.hostnameAnchored === false ) {
             s = s.replace(/^\*+([^%0-9a-z])/, '$1');
         }
         // remove pointless trailing *
@@ -1587,6 +1614,20 @@ FilterParser.prototype.parse = function(raw) {
     // toLowerCase(), at least on Chromium. Because copy-on-write?
 
     this.f = this.reHasUppercase.test(s) ? s.toLowerCase() : s;
+
+    // https://github.com/gorhill/uBlock/issues/1943#issuecomment-243188946
+    // Convert websocket-related filter where possible to a format which
+    // can be handled using CSP injection.
+    if (
+        this.cantWebsocket &&
+        this.anchor === -1 &&
+        this.firstParty === false &&
+        this.thirdParty === false &&
+        this.reWebsocketAny.test(this.f)
+    ) {
+        this.f = '*';
+        this.types = this.bitFromType('websocket');
+    }
 
     return this;
 };
@@ -1941,9 +1982,11 @@ FilterContainer.prototype.compile = function(raw, out) {
 
 FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     // Can't fit the filter in a pure hostname dictionary.
-    if ( parsed.domainOpt.length !== 0 ) {
-        return;
-    }
+    // https://github.com/gorhill/uBlock/issues/1757
+    // This should no longer happen with fix to above issue.
+    //if ( parsed.domainOpt.length !== 0 ) {
+    //    return;
+    //}
 
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
@@ -1982,10 +2025,6 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
 
 FilterContainer.prototype.compileFilter = function(parsed, out) {
     parsed.makeToken();
-    if ( parsed.token === '*' && parsed.hostnameAnchored ) {
-        console.error('FilterContainer.compileFilter("%s"): invalid filter', parsed.f);
-        return false;
-    }
 
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
@@ -2048,22 +2087,15 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
-    var lineEnd;
-    var textEnd = text.length;
+FilterContainer.prototype.fromCompiledContent = function(lineIter) {
     var line, fields, bucket, entry, factory, filter;
 
-    while ( lineBeg < textEnd ) {
-        if ( text.charCodeAt(lineBeg) !== 0x6E /* 'n' */ ) {
-            return lineBeg;
+    while ( lineIter.eot() === false ) {
+        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x6E /* 'n' */ ) {
+            return;
         }
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd === -1 ) {
-            lineEnd = textEnd;
-        }
-        line = text.slice(lineBeg + 2, lineEnd);
+        line = lineIter.next().slice(2);
         fields = line.split('\v');
-        lineBeg = lineEnd + 1;
 
         // Special cases: delegate to more specialized engines.
         // Redirect engine.
@@ -2117,7 +2149,6 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
         }
         bucket[fields[1]] = new FilterBucket(entry, filter);
     }
-    return textEnd;
 };
 
 /******************************************************************************/
@@ -2229,11 +2260,13 @@ FilterContainer.prototype.filterRegexFromCompiled = function(compiled, flags) {
     case '1ah':
     case '_':
     case '_h':
+        re = strToRegex(tfields[0], 0, flags);
+        break;
     case '||a':
     case '||ah':
     case '||_':
     case '||_h':
-        re = strToRegex(tfields[0], 0, flags);
+        re = strToRegex('||' + tfields[0], 0, flags);
         break;
     case '|a':
     case '|ah':
@@ -2303,8 +2336,8 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
     // Be prepared to support unknown types
-    var type = typeNameToTypeValue[requestType] || 0;
-    if ( type === 0 ) {
+    var type = typeNameToTypeValue[requestType];
+    if ( type === undefined ) {
         return undefined;
     }
 
@@ -2400,8 +2433,10 @@ FilterContainer.prototype.matchString = function(context) {
     // https://github.com/chrisaljoudi/uBlock/issues/519
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
-    var type = typeNameToTypeValue[context.requestType] || typeOtherValue;
-    if ( type > typeOtherValue ) {
+    var type = typeNameToTypeValue[context.requestType];
+    if ( type === undefined ) {
+         type = typeOtherValue;
+    } else if ( type === 0 || type > typeOtherValue ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 

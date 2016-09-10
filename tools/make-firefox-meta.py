@@ -2,6 +2,7 @@
 
 import os
 import json
+import re
 import sys
 from io import open
 from shutil import rmtree
@@ -76,8 +77,15 @@ with open(chromium_manifest, encoding='utf-8') as m:
 
 # https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Maintenance#How_do_I_submit_a_Beta_add-on.3F
 # "To create a beta channel [...] '(a|alpha|b|beta|pre|rc)\d*$' "
-if sys.argv[2]:
-    manifest['version'] += sys.argv[2]
+
+match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
+if match:
+    buildtype = int(match.group(2)[1:])
+    if buildtype < 100:
+        builttype = 'b' + str(buildtype)
+    else:
+        builttype = 'rc' + str(buildtype - 100)
+    manifest['version'] = match.group(1) + builttype
 
 manifest['homepage'] = 'http://adnauseam.io'
 manifest['description'] = descriptions['en']

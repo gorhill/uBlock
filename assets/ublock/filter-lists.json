@@ -40,8 +40,8 @@
 	},
 	"easylist-downloads.adblockplus.org/easylist.txt": {
 		"title": "EasyList",
-		"group": "privacy",
-		"homeURL": "https://easylist.github.io/easylist/easylist.txt",
+		"group": "ads",
+		"homeURL": "https://easylist.to/easylist/easylist.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": {
@@ -93,7 +93,7 @@
 	"easylist-downloads.adblockplus.org/easyprivacy.txt": {
 		"title": "EasyPrivacy",
 		"group": "privacy",
-		"homeURL": "https://easylist.github.io/easylist/easyprivacy.txt",
+		"homeURL": "https://easylist.to/easylist/easyprivacy.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": {
@@ -160,7 +160,7 @@
 	"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
 		"off": true,
 		"title": "Adblock Warning Removal List",
-		"group": "multipurpose",
+		"group": "ads",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"http://adb.juvander.net/Finland_adb.txt": {
@@ -234,8 +234,7 @@
 		"title": "Peter Lowe’s Ad server list",
 		"group": "ads",
 		"homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
-		"supportURL": "https://pgl.yoyo.org/adservers/",
-		"off": true
+		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
 	"https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
 		"off": true,

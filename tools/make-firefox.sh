@@ -39,6 +39,7 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
 
+
 if [ "$1" = all ]; then
     echo "*** adnauseam.firefox: Creating package..."
     pushd $(dirname $DES/) > /dev/null

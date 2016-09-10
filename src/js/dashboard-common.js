@@ -110,5 +110,6 @@ uDom('.whatisthis').on('click', function() {
     uDom(this)
         .parent()
         .descendants('.whatisthis-expandable')
+        .first()
         .toggleClass('whatisthis-expanded');
 });

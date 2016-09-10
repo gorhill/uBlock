@@ -23,13 +23,13 @@
    addMessageListener, removeMessageListener, sendAsyncMessage, outerShutdown
  */
 
+'use strict';
+
 // For non background pages
 
 /******************************************************************************/
 
 (function(self) {
-
-'use strict';
 
 // https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
@@ -53,10 +53,75 @@ self.rpc = self.rpc || function(){};
 /******************************************************************************/
 
 var vAPI = self.vAPI = self.vAPI || {};
+
+/******************************************************************************/
+
+var referenceCounter = 0;
+
+vAPI.lock = function() {
+    referenceCounter += 1;
+};
+
+vAPI.unlock = function() {
+    referenceCounter -= 1;
+};
+
+/******************************************************************************/
+
+vAPI.executionCost = {
+    start: function(){},
+    stop: function(){}
+};
+/*
+vAPI.executionCost = vAPI.executionCost || {
+    tcost: 0,
+    tstart: 0,
+    nstart: 0,
+    level: 1,
+    start: function() {
+        if ( this.nstart === 0 ) {
+            this.tstart = window.performance.now();
+        }
+        this.nstart += 1;
+    },
+    stop: function(mark) {
+        this.nstart -= 1;
+        if ( this.nstart !== 0 ) {
+            return;
+        }
+        var tcost = window.performance.now() - this.tstart;
+        this.tcost += tcost;
+        if ( mark === undefined ) {
+            return;
+        }
+        var top = window === window.top;
+        if ( !top && this.level < 2 ) {
+            return;
+        }
+        var context = window === window.top ? '  top' : 'frame';
+        var percent = this.tcost / window.performance.now() * 100;
+        console.log(
+            'uBO cost (' + context + '): ' +
+            this.tcost.toFixed(1) + 'ms/' +
+            percent.toFixed(1) + '% (' +
+            mark + ': ' + tcost.toFixed(2) + 'ms)'
+        );
+    }
+};
+*/
+vAPI.executionCost.start();
+
+/******************************************************************************/
+
 vAPI.firefox = true;
-vAPI.debugAdParsing = false;
-vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
-    Math.random().toString(36).slice(2);
+vAPI.debugAdParsing = false; // adn
+
+vAPI.randomToken = function() {
+    return String.fromCharCode(Date.now() % 26 + 97) +
+           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+};
+
+vAPI.sessionId = vAPI.randomToken();
 
 /******************************************************************************/
 
@@ -413,12 +478,56 @@ vAPI.messaging.start();
 
 /******************************************************************************/
 
+vAPI.userCSS = (function() {
+    if ( !self.injectCSS ) {
+        return;
+    }
+    var injectCSS = self.injectCSS,
+        removeCSS = self.removeCSS,
+        userCSS = '',
+        sheetURI = '';
+    var load = function() {
+        if ( userCSS === '' || sheetURI !== '' ) { return; }
+        sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(userCSS);
+        injectCSS(sheetURI);
+    };
+    var unload = function() {
+        if ( sheetURI === '' ) { return; }
+        removeCSS(sheetURI);
+        sheetURI = '';
+    };
+    var add = function(cssText) {
+        if ( cssText === '' ) { return; }
+        if ( userCSS !== '' ) { userCSS += '\n'; }
+        userCSS += cssText;
+        unload();
+        load();
+    };
+    var toggle = function(state) {
+        if ( userCSS === '' ) { return; }
+        if ( state === undefined ) {
+            state = sheetURI === '';
+        }
+        return state ? load() : unload();
+    };
+    return {
+        add: add,
+        toggle: toggle
+    };
+})();
+
+/******************************************************************************/
+
 // No need to have vAPI client linger around after shutdown if
 // we are not a top window (because element picker can still
 // be injected in top window).
 if ( window !== window.top ) {
     // Can anything be done?
 }
+
+/******************************************************************************/
+
+vAPI.executionCost.stop('vapi-client.js');
 
 /******************************************************************************/
 

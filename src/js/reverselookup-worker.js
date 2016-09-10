@@ -41,7 +41,6 @@ var reSpecialChars = /[\*\^\t\v\n]/;
 
 var fromNetFilter = function(details) {
     var lists = [];
-
     var compiledFilter = details.compiledFilter;
     var entry, content, pos, c;
     for ( var path in listEntries ) {
@@ -50,24 +49,27 @@ var fromNetFilter = function(details) {
             continue;
         }
         content = entry.content;
-        pos = content.indexOf(compiledFilter);
-        if ( pos === -1 ) {
-            continue;
+        pos = 0;
+        for (;;) {
+            pos = content.indexOf(compiledFilter, pos);
+            if ( pos === -1 ) {
+                break;
+            }
+            // We need an exact match.
+            // https://github.com/gorhill/uBlock/issues/1392
+            // https://github.com/gorhill/uBlock/issues/835
+            if ( pos === 0 || reSpecialChars.test(content.charAt(pos - 1)) ) {
+                c = content.charAt(pos + compiledFilter.length);
+                if ( c === '' || reSpecialChars.test(c) ) {
+                    lists.push({
+                        title: entry.title,
+                        supportURL: entry.supportURL
+                    });
+                    break;
+                }
+            }
+            pos += compiledFilter.length;
         }
-        // We need an exact match.
-        // https://github.com/gorhill/uBlock/issues/1392
-        if ( pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false ) {
-            continue;
-        }
-        // https://github.com/gorhill/uBlock/issues/835
-        c = content.charAt(pos + compiledFilter.length);
-        if ( c !== '' && reSpecialChars.test(c) === false ) {
-            continue;
-        }
-        lists.push({
-            title: entry.title,
-            supportURL: entry.supportURL
-        });
     }
 
     var response = {};
@@ -125,8 +127,10 @@ var fromCosmeticFilter = function(details) {
         reStr.push('c', 'hlg0', reEscape(filter));
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
         reStr.push('c', 'hmg0', '[^"]{8}', '[a-z]*' + reEscape(filter));
-    } else {                                    // all else
-        reStr.push('c', 'hhg0', reEscape(filter));
+    } else if ( filter.indexOf(' ') === -1 ) {  // high-high-simple selector
+        reStr.push('c', 'hhsg0', reEscape(filter));
+    } else {                                    // high-high-complex selector
+        reStr.push('c', 'hhcg0', reEscape(filter));
     }
     candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
 

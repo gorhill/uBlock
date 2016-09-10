@@ -62,8 +62,7 @@
 
       while (checkNode) {
 
-        if (checkNode)
-          console.log('CHECKING: '+checkNode.tagName, checkNode);
+        //checkNode && console.log('CHECKING: '+checkNode.tagName, checkNode);
 
         if (checkNode.tagName === 'A') {
           return checkNode;
@@ -191,7 +190,7 @@
       var domain = (parent !== window) ?
         parseDomain(document.referrer) : document.domain;
 
-      console.log('createAd on ', domain, target, typeof target);
+      //console.log('createAd:', domain, target, typeof target);
 
       if (target.indexOf('//') === 0) {
 

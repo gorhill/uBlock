@@ -294,13 +294,14 @@ RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^*]+)|\*)([^$]+)\$([^
 
 RedirectEngine.prototype.supportedTypes = (function() {
     var types = Object.create(null);
-    types.stylesheet = 'stylesheet';
+    types.font = 'font';
     types.image = 'image';
+    types.media = 'media';
     types.object = 'object';
     types.script = 'script';
-    types.xmlhttprequest = 'xmlhttprequest';
+    types.stylesheet = 'stylesheet';
     types.subdocument = 'sub_frame';
-    types.font = 'font';
+    types.xmlhttprequest = 'xmlhttprequest';
     return types;
 })();
 

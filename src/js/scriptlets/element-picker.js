@@ -327,11 +327,15 @@ var unpreview = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1897
+// Ignore `data:` URI, they can't be handled by an HTTP observer.
+
 var backgroundImageURLFromElement = function(elem) {
-    var style = window.getComputedStyle(elem);
-    var bgImg = style.backgroundImage || '';
-    var matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg);
-    return matches !== null && matches.length === 3 ? matches[2] : '';
+    var style = window.getComputedStyle(elem),
+        bgImg = style.backgroundImage || '',
+        matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg),
+        url = matches !== null && matches.length === 3 ? matches[2] : '';
+    return url.lastIndexOf('data:', 0) === -1 ? url.slice(0, 1024) : '';
 };
 
 /******************************************************************************/
@@ -550,6 +554,8 @@ var cosmeticFilterFromElement = function(elem) {
     }
 
     // Tag name
+    // https://github.com/gorhill/uBlock/issues/1901
+    // Trim attribute value, this may help in case of malformed HTML.
     if ( selector === '' ) {
         selector = tagName;
         var attributes = [], attr;
@@ -557,16 +563,17 @@ var cosmeticFilterFromElement = function(elem) {
         case 'a':
             v = elem.getAttribute('href');
             if ( v ) {
-                v = v.replace(/\?.*$/, '');
+                v = v.trim().replace(/\?.*$/, '');
                 if ( v.length ) {
                     attributes.push({ k: 'href', v: v });
                 }
             }
             break;
+        case 'iframe':
         case 'img':
             v = elem.getAttribute('src');
             if ( v && v.length !== 0 ) {
-                attributes.push({ k: 'src', v: v.slice(0, 1024) });
+                attributes.push({ k: 'src', v: v.trim().slice(0, 1024) });
                 break;
             }
             v = elem.getAttribute('alt');
@@ -929,6 +936,7 @@ var onDialogClicked = function(ev) {
                 {
                     what: 'createUserFilter',
                     filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+                    pageDomain: window.location.hostname
                 }
             );
             filterElements(taCandidate.value);

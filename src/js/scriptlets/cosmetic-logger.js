@@ -19,42 +19,29 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
+(function() {
 
 /******************************************************************************/
 
-var loggedSelectors = vAPI.loggedSelectors || {};
-
-var injectedSelectors = [];
-var reProperties = /\s*\{[^}]+\}\s*/;
-var i;
-var styles = vAPI.styles || [];
-
-i = styles.length;
-while ( i-- ) {
-    injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
-}
-
-if ( injectedSelectors.length === 0 ) {
+if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) {
     return;
 }
 
-var matchedSelectors = [];
-var selector;
+var df = vAPI.domFilterer,
+    loggedSelectors = vAPI.loggedSelectors || {},
+    matchedSelectors = [],
+    selectors, i, selector;
 
-i = injectedSelectors.length;
+
+// CSS selectors.
+selectors = df.jobQueue[2]._0.concat(df.jobQueue[3]._0);
+i = selectors.length;
 while ( i-- ) {
-    selector = injectedSelectors[i];
+    selector = selectors[i];
     if ( loggedSelectors.hasOwnProperty(selector) ) {
         continue;
     }
@@ -62,27 +49,35 @@ while ( i-- ) {
         continue;
     }
     loggedSelectors[selector] = true;
-    // https://github.com/gorhill/uBlock/issues/1015
-    // Discard `:root ` prefix.
-    matchedSelectors.push(selector.slice(6));
+    matchedSelectors.push(selector);
+}
+
+// Non-CSS selectors.
+var logHit = function(node, job) {
+    if ( !job.raw || loggedSelectors.hasOwnProperty(job.raw) ) {
+        return;
+    }
+    loggedSelectors[job.raw] = true;
+    matchedSelectors.push(job.raw);
+};
+for ( i = 4; i < df.jobQueue.length; i++ ) {
+    df.runJob(df.jobQueue[i], logHit);
 }
 
 vAPI.loggedSelectors = loggedSelectors;
 
-/******************************************************************************/
-
-vAPI.messaging.send(
-    'scriptlets',
-    {
-        what: 'logCosmeticFilteringData',
-        frameURL: window.location.href,
-        frameHostname: window.location.hostname,
-        matchedSelectors: matchedSelectors
-    }
-);
+if ( matchedSelectors.length ) {
+    vAPI.messaging.send(
+        'scriptlets',
+        {
+            what: 'logCosmeticFilteringData',
+            frameURL: window.location.href,
+            frameHostname: window.location.hostname,
+            matchedSelectors: matchedSelectors
+        }
+    );
+}
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/

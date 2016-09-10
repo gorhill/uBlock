@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.7.6",
+    "version": "1.9.6",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -27,14 +27,8 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi-client.js", "js/contentscript-start.js"],
+            "js": ["js/vapi-client.js", "js/contentscript.js"],
             "run_at": "document_start",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/contentscript-end.js"],
-            "run_at": "document_end",
             "all_frames": true
         },
         {
@@ -45,7 +39,7 @@
         }
     ],
     "incognito": "split",
-    "minimum_chrome_version": "22.0",
+    "minimum_chrome_version": "26.0",
     "options_page": "dashboard.html",
     "options_ui": {
         "page": "options_ui.html"

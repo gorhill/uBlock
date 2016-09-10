@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ var contentObserver = {
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
+    canE10S: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -207,16 +208,19 @@ var contentObserver = {
         // - Enable uBlock
         // - Services and all other global variables are undefined
         // Hopefully will eventually understand why this happens.
-        if ( Services === undefined ) {
-            return this.ACCEPT;
-        }
-
-        if ( !context ) {
+        if ( Services === undefined || !context ) {
             return this.ACCEPT;
         }
 
         if ( type === this.MAIN_FRAME ) {
             this.handlePopup(location, origin, context);
+        }
+
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // For modern versions of Firefox, the frameId/parentFrameId
+        // information can be found in channel.loadInfo of the HTTP observer.
+        if ( this.canE10S ) {
+            return this.ACCEPT;
         }
 
         if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
@@ -231,20 +235,18 @@ var contentObserver = {
             context = (context.ownerDocument || context).defaultView;
         }
 
+        // https://github.com/gorhill/uBlock/issues/1893
+        // I don't know why this happens. I observed that when it occurred, the
+        // resource was not seen by the HTTP observer, as if it was a spurious
+        // call to shouldLoad().
+        if ( !context ) {
+            return this.ACCEPT;
+        }
+
         // The context for the toolbar popup is an iframe element here,
         // so check context.top instead of context
         if ( !context.top || !context.location ) {
             return this.ACCEPT;
-        }
-
-        let isTopLevel = context === context.top;
-        let parentFrameId;
-        if ( isTopLevel ) {
-            parentFrameId = -1;
-        } else if ( context.parent === context.top ) {
-            parentFrameId = 0;
-        } else {
-            parentFrameId = this.getFrameId(context.parent);
         }
 
         let messageManager = getMessageManager(context);
@@ -252,25 +254,36 @@ var contentObserver = {
             return this.ACCEPT;
         }
 
-        let details = {
-            frameId: isTopLevel ? 0 : this.getFrameId(context),
-            parentFrameId: parentFrameId,
-            rawtype: type,
-            tabId: '',
-            url: location.spec
-        };
+        let isTopContext = context === context.top;
+        var parentFrameId;
+        if ( isTopContext ) {
+            parentFrameId = -1;
+        } else if ( context.parent === context.top ) {
+            parentFrameId = 0;
+        } else {
+            parentFrameId = this.getFrameId(context.parent);
+        }
+
+        let rpcData = this.rpcData;
+        rpcData.frameId = isTopContext ? 0 : this.getFrameId(context);
+        rpcData.pFrameId = parentFrameId;
+        rpcData.type = type;
+        rpcData.url = location.spec;
 
         //console.log('shouldLoad: type=' + type + ' url=' + location.spec);
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.cpMessageName, details);
+            messageManager.sendRpcMessage(this.cpMessageName, rpcData);
         } else {
             // Compatibility for older versions
-            messageManager.sendSyncMessage(this.cpMessageName, details);
+            messageManager.sendSyncMessage(this.cpMessageName, rpcData);
         }
 
         return this.ACCEPT;
     },
+
+    // Reuse object to avoid repeated memory allocation.
+    rpcData: { frameId: 0, pFrameId: -1, type: 0, url: '' },
 
     initContentScripts: function(win, create) {
         let messager = getMessageManager(win);
@@ -307,13 +320,29 @@ var contentObserver = {
             }
 
             sandbox.injectScript = function(script) {
-                var svc = Services;
+                let svc = Services;
                 // Sandbox appears void.
                 // I've seen this happens, need to investigate why.
-                if ( svc === undefined ) {
-                    return;
-                }
+                if ( svc === undefined ) { return; }
                 svc.scriptloader.loadSubScript(script, sandbox);
+            };
+
+            sandbox.injectCSS = function(sheetURI) {
+                try {
+                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                .getInterface(Ci.nsIDOMWindowUtils);
+                    wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                } catch(ex) {
+                }
+            };
+
+            sandbox.removeCSS = function(sheetURI) {
+                try {
+                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                .getInterface(Ci.nsIDOMWindowUtils);
+                    wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                } catch (ex) {
+                }
             };
 
             // The goal is to have content scripts removed from web pages. This
@@ -325,8 +354,10 @@ var contentObserver = {
             sandbox.outerShutdown = function() {
                 sandbox.removeMessageListener();
                 sandbox.addMessageListener =
+                sandbox.injectCSS =
                 sandbox.injectScript =
                 sandbox.outerShutdown =
+                sandbox.removeCSS =
                 sandbox.removeMessageListener =
                 sandbox.rpc =
                 sandbox.sendAsyncMessage = function(){};
@@ -443,7 +474,11 @@ var contentObserver = {
 
         try {
             lss(this.contentBaseURI + 'vapi-client.js', sandbox);
-            lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
+            if (!PrivateBrowsingUtils.isContentWindowPrivate(win)) {
+                lss(this.contentBaseURI + 'adn/textads.js', sandbox);
+                lss(this.contentBaseURI + 'adn/parser.js', sandbox);
+            }
+            lss(this.contentBaseURI + 'contentscript.js', sandbox);
         } catch (ex) {
             //console.exception(ex.msg, ex.stack);
             return;
@@ -452,18 +487,8 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
-            if (!PrivateBrowsingUtils.isContentWindowPrivate(win)) {
-                lss(this.contentBaseURI + 'adn/textads.js', sandbox);
-                lss(this.contentBaseURI + 'adn/parser.js', sandbox);
-            }
-            //else console.log("PrivateBrowsing: Skipping ADN cs-injection");
 
-            lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
-
-            if (
-                doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ||
-                loc.href === 'https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web'
-            ) {
+            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
                 lss(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
             }
         };

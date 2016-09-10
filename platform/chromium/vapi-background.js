@@ -35,6 +35,7 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
+vAPI.cantWebsocket = true;
 
 var noopFunc = function(){};
 
@@ -73,6 +74,12 @@ vAPI.storage = chrome.storage.local;
 
 vAPI.browserSettings = {
     webRTCSupported: undefined,
+
+    // https://github.com/gorhill/uBlock/issues/875
+    // Must not leave `lastError` unchecked.
+    noopCallback: function() {
+        void chrome.runtime.lastError;
+    },
 
     // https://github.com/gorhill/uBlock/issues/533
     // We must first check wether this Chromium-based browser was compiled
@@ -120,20 +127,31 @@ vAPI.browserSettings = {
             return;
         }
 
-        // Older version of Chromium do not support this setting.
-        if ( typeof chrome.privacy.network.webRTCMultipleRoutesEnabled !== 'object' ) {
-            return;
+        var cp = chrome.privacy, cpi = cp.IPHandlingPolicy, cpn = cp.network;
+
+        // Older version of Chromium do not support this setting, and is
+        // marked as "deprecated" since Chromium 48.
+        if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) {
+            try {
+                cpn.webRTCMultipleRoutesEnabled.set({
+                    value: !!setting,
+                    scope: 'regular'
+                }, this.noopCallback);
+            } catch(ex) {
+                console.error(ex);
+            }
         }
 
-        try {
-            chrome.privacy.network.webRTCMultipleRoutesEnabled.set({
-                value: !!setting,
-                scope: 'regular'
-            }, function() {
-                void chrome.runtime.lastError;
-            });
-        } catch(ex) {
-            console.error(ex);
+        // This setting became available in Chromium 48.
+        if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) {
+            try {
+                cpn.webRTCIPHandlingPolicy.set({
+                    value: !!setting ? cpi.DEFAULT : cpi.DEFAULT_PUBLIC_INTERFACE_ONLY,
+                    scope: 'regular'
+                }, this.noopCallback);
+            } catch(ex) {
+                console.error(ex);
+            }
         }
     },
 
@@ -157,7 +175,7 @@ vAPI.browserSettings = {
                     chrome.privacy.network.networkPredictionEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    }, callback);
+                    }, this.noopCallback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -168,7 +186,7 @@ vAPI.browserSettings = {
                     chrome.privacy.websites.hyperlinkAuditingEnabled.set({
                         value: !!details[setting],
                         scope: 'regular'
-                    }, callback);
+                    }, this.noopCallback);
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -1137,6 +1155,8 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     var scriptDone = function() {
         vAPI.lastError();
     };
+
+    // TODO: this needs post-merge checking (adn)
     var scriptEnd = function(tabId, frameId) {
         var err = vAPI.lastError();
         // these errors happen on startup (tmp: remove)
@@ -1145,13 +1165,9 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
             console.warn('ERROR', err);
             return;
         }
-        var scripts = ['js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript-end.js'];
-        for (var i = 0; i < scripts.length; i++) {
-          injectOne(tabId, frameId, scripts[i], i==scripts.length - 1 ? scriptDone : 0);
-        }
     };
     var scriptStart = function(tabId, frameId) {
-      var scripts = ['js/vapi-client.js', 'js/contentscript-start.js'];
+      var scripts = ['js/vapi-client.js', 'js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript.js'];
       for (var i = 0; i < scripts.length; i++) {
         injectOne(tabId, frameId, scripts[i], i==scripts.length - 1 ?
           function() { scriptEnd(tabId, frameId); } : 0);

@@ -269,7 +269,6 @@
         return matched;
       });
 
-      console.log('active: ', active);
       for (var i = 0; i < active.length; i++) {
 
         if ($is(elem, active[i].selector)) {
@@ -283,7 +282,10 @@
 
     var process = function (elem) {
 
-        if (vAPI.prefs.textAdsDisabled) return;
+        if (vAPI.prefs.textAdsDisabled) {
+          console.log("adn: texts-ads disabled");
+          return;
+        }
 
         //console.log('TextAds.process()', elem);
 

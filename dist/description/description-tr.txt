@@ -20,12 +20,12 @@ Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 
 - Fanboy’un Gelişmiş İzleyici Listesi
 - Dan Pollock’un alan adları dosyası
-- hpHosts'un Reklam ve izleme sunucuları
+- hpHosts'un Reklam ve izleyici sunucuları
 - MVPS HOSTS
 - Spam404
 - Ve daha birçoğu
 
-Tabii ki,  daha fazla süzgeç etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleme sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.
+Tabii ki,  daha fazla süzgeç etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleyici sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.
 
 Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olasılığını artırabileceğini unutmayın -- özellikle normalde alan adları dosyası olarak kullanılan listelerin.
 
@@ -35,7 +35,7 @@ Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olası
 
 ***
 
-Ücretsiz.
+Özgür.
 Açık kaynak kamu lisanslı (GPLv3)
 Kullanıcılar tarafından kullanıcılar için.
 

@@ -1184,21 +1184,21 @@
     return lists;
   };
 
-  var domainCosmeticSelectors = function (request, pageStore, tabId) {
-
-    var response;
-    if (pageStore && pageStore.getNetFilteringSwitch()) {
-      response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-      if (response) {
-        if (response.skipCosmeticFiltering !== true) {
-          response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch(); // || !µb.userSettings.hidingAds; // adn
-        }
-        response.prefs = contentPrefs();
-      }
-    }
-    //console.log('domainCosmeticSelectors', response.prefs);
-    return response;
-  }
+  // var domainCosmeticSelectors = function (request, pageStore, tabId) {
+  //
+  //   var response;
+  //   if (pageStore && pageStore.getNetFilteringSwitch()) {
+  //     response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+  //     if (response) {
+  //       if (response.skipCosmeticFiltering !== true) {
+  //         response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch(); // || !µb.userSettings.hidingAds; // adn
+  //       }
+  //       response.prefs = contentPrefs();
+  //     }
+  //   }
+  //   //console.log('domainCosmeticSelectors', response.prefs);
+  //   return response;
+  // }
 
   var isBlockableRequest = function (result, requestURL, isTop) {
 
@@ -1354,8 +1354,8 @@
     fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
-    injectContentScripts: injectContentScripts,
-    domainCosmeticSelectors: domainCosmeticSelectors
+    injectContentScripts: injectContentScripts
+    //domainCosmeticSelectors: domainCosmeticSelectors
   };
 
 })();

@@ -42,6 +42,10 @@ vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 vAPI.thunderbird = Services.appinfo.ID === '{3550f703-e582-4d05-9a08-453d09bdfdc6}';
 
+if ( vAPI.fennec ) {
+    vAPI.battery = true;
+}
+
 /******************************************************************************/
 
 var deferUntil = function(testFn, mainFn, details) {
@@ -244,6 +248,7 @@ vAPI.browserSettings = {
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=814169
                 // Sigh.
                 this.rememberOriginalValue('network.http', 'speculative-parallel-limit');
+                this.rememberOriginalValue('network.dns', 'disablePrefetch');
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
                 if ( settingVal ) {
@@ -331,8 +336,9 @@ cleanupTasks.push(vAPI.browserSettings.restoreAll.bind(vAPI.browserSettings));
 vAPI.storage = (function() {
     var db = null;
     var vacuumTimer = null;
+    var dbOpenError = '';
 
-    var close = function() {
+    var close = function(now) {
         if ( vacuumTimer !== null ) {
             clearTimeout(vacuumTimer);
             vacuumTimer = null;
@@ -340,7 +346,11 @@ vAPI.storage = (function() {
         if ( db === null ) {
             return;
         }
-        db.asyncClose();
+        if ( now ) {
+            db.close();
+        } else {
+            db.asyncClose();
+        }
         db = null;
     };
 
@@ -360,7 +370,10 @@ vAPI.storage = (function() {
         }
         path.append(location.host + '.sqlite');
 
-        // Open database
+        // Open database.
+        // https://github.com/gorhill/uBlock/issues/1768
+        // If the SQL file is found to be corrupted at launch time, nuke
+        // existing SQL file so that a new one can be created.
         try {
             db = Services.storage.openDatabase(path);
             if ( db.connectionReady === false ) {
@@ -368,11 +381,22 @@ vAPI.storage = (function() {
                 db = null;
             }
         } catch (ex) {
+            if ( dbOpenError === '' ) {
+                console.error('vAPI.storage/open() error: ', ex.message);
+                dbOpenError = ex.name;
+                if ( ex.name === 'NS_ERROR_FILE_CORRUPTED' ) {
+                    nuke();
+                }
+            }
         }
 
         if ( db === null ) {
             return null;
         }
+
+        // Since database could be opened successfully, reset error flag (its
+        // purpose is to avoid spamming console with error messages).
+        dbOpenError = '';
 
         // Database was opened, register cleanup task
         cleanupTasks.push(close);
@@ -386,6 +410,22 @@ vAPI.storage = (function() {
         }
 
         return db;
+    };
+
+    var nuke = function() {
+        var removeDB = function() {
+            close(true);
+            var path = Services.dirsvc.get('ProfD', Ci.nsIFile);
+            path.append('extension-data');
+            if ( !path.exists() || !path.isDirectory() ) {
+                return;
+            }
+            path.append(location.host + '.sqlite');
+            if ( path.exists() ) {
+                path.remove(false);
+            }
+        };
+        vAPI.setTimeout(removeDB, 1);
     };
 
     // https://developer.mozilla.org/en-US/docs/Storage/Performance#Vacuuming_and_zero-fill
@@ -433,9 +473,17 @@ vAPI.storage = (function() {
                 console.error('SQLite error ', error.result, error.message);
                 // Caller expects an answer regardless of failure.
                 if ( typeof callback === 'function' ) {
-                    callback(null);
+                    callback({});
                 }
                 result = null;
+                // https://github.com/gorhill/uBlock/issues/1768
+                // Error cases which warrant a removal of the SQL file, so far:
+                // - SQLLite error 11 database disk image is malformed
+                // Can't find doc on MDN about the type of error.result, so I
+                // force a string comparison.
+                if ( error.result.toString() === '11' ) {
+                    nuke();
+                }
             }
         });
     };
@@ -483,7 +531,7 @@ vAPI.storage = (function() {
         }
 
         runStatement(stmt, function(result) {
-            callback(result.size);
+            callback(result.size || 0);
         });
     };
 
@@ -593,12 +641,29 @@ vAPI.storage = (function() {
 // This must be executed/setup early.
 
 var winWatcher = (function() {
-    var chromeWindowType = vAPI.thunderbird ? 'mail:3pane' : 'navigator:browser';
     var windowToIdMap = new Map();
     var windowIdGenerator = 1;
     var api = {
         onOpenWindow: null,
         onCloseWindow: null
+    };
+
+    // https://github.com/gorhill/uMatrix/issues/586
+    // This is necessary hack because on SeaMonkey 2.40, for unknown reasons
+    // private windows do not have the attribute `windowtype` set to
+    // `navigator:browser`. As a fallback, the code here will also test whether
+    // the id attribute is `main-window`.
+    api.toBrowserWindow = function(win) {
+        var docElement = win && win.document && win.document.documentElement;
+        if ( !docElement ) {
+            return null;
+        }
+        if ( vAPI.thunderbird ) {
+            return docElement.getAttribute('windowtype') === 'mail:3pane' ? win : null;
+        }
+        return docElement.getAttribute('windowtype') === 'navigator:browser' ||
+               docElement.getAttribute('id') === 'main-window' ?
+               win : null;
     };
 
     api.getWindows = function() {
@@ -610,7 +675,7 @@ var winWatcher = (function() {
     };
 
     api.getCurrentWindow = function() {
-        return Services.wm.getMostRecentWindow(chromeWindowType) || null;
+        return this.toBrowserWindow(Services.wm.getMostRecentWindow(null));
     };
 
     var addWindow = function(win) {
@@ -836,7 +901,7 @@ vAPI.tabs.get = function(tabId, callback) {
         return browser;
     }
 
-    if ( !browser ) {
+    if ( !browser || !browser.currentURI ) {
         callback();
         return;
     }
@@ -844,9 +909,13 @@ vAPI.tabs.get = function(tabId, callback) {
     var win = getOwnerWindow(browser);
     var tabBrowser = getTabBrowser(win);
 
+    // https://github.com/gorhill/uMatrix/issues/540
+    // The `index` property is nowhere used by uBlock at this point, so we
+    // will refrain from returning this information for the time being.
+
     callback({
         id: tabId,
-        index: tabWatcher.indexFromTarget(browser),
+        index: undefined,
         windowId: winWatcher.idFromWindow(win),
         active: tabBrowser !== null && browser === tabBrowser.selectedBrowser,
         url: browser.currentURI.asciiSpec,
@@ -946,7 +1015,8 @@ vAPI.tabs.open = function(details) {
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {
-            selected: details.active !== false
+            selected: details.active !== false,
+            parentId: tabBrowser.selectedTab.id
         });
         // Note that it's impossible to move tabs on Fennec, so don't bother
         return;
@@ -1113,12 +1183,16 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 /******************************************************************************/
 
 var tabWatcher = (function() {
-    // TODO: find out whether we need a janitor to take care of stale entries.
-    var browserToTabIdMap = new Map();
+    // https://github.com/gorhill/uMatrix/issues/540
+    // Use only weak references to hold onto browser references.
+    var browserToTabIdMap = new WeakMap();
     var tabIdToBrowserMap = new Map();
     var tabIdGenerator = 1;
 
     var indexFromBrowser = function(browser) {
+        if ( !browser ) {
+            return -1;
+        }
         // TODO: Add support for this
         if ( vAPI.thunderbird ) {
             return -1;
@@ -1208,22 +1282,14 @@ var tabWatcher = (function() {
         if ( tabId === undefined ) {
             tabId = '' + tabIdGenerator++;
             browserToTabIdMap.set(browser, tabId);
-            tabIdToBrowserMap.set(tabId, browser);
+            tabIdToBrowserMap.set(tabId, Cu.getWeakReference(browser));
         }
         return tabId;
     };
 
     var browserFromTabId = function(tabId) {
-        var browser = tabIdToBrowserMap.get(tabId);
-        if ( browser === undefined ) {
-            return null;
-        }
-        // Verify that the browser is still live
-        if ( indexFromBrowser(browser) !== -1 ) {
-            return browser;
-        }
-        removeBrowserEntry(tabId, browser);
-        return null;
+        var weakref = tabIdToBrowserMap.get(tabId);
+        return weakref && weakref.get() || null;
     };
 
     var currentBrowser = function() {
@@ -1257,6 +1323,19 @@ var tabWatcher = (function() {
 
     var removeTarget = function(target) {
         onClose({ target: target });
+    };
+
+    var getAllBrowsers = function() {
+        var browsers = [], browser;
+        for ( var weakref of tabIdToBrowserMap.values() ) {
+            browser = weakref.get();
+            // TODO:
+            // Maybe call removeBrowserEntry() if the browser no longer exists?
+            if ( browser ) {
+                browsers.push(browser);
+            }
+        }
+        return browsers;
     };
 
     // https://developer.mozilla.org/en-US/docs/Web/Events/TabShow
@@ -1325,8 +1404,7 @@ var tabWatcher = (function() {
             return false;
         }
 
-        var docElement = document.documentElement;
-        return docElement && docElement.getAttribute('windowtype') === 'navigator:browser';
+        return winWatcher.toBrowserWindow(window) !== null;
     };
 
     var onWindowLoad = function(win) {
@@ -1419,14 +1497,14 @@ var tabWatcher = (function() {
         for ( var win of winWatcher.getWindows() ) {
             onWindowUnload(win);
         }
-        browserToTabIdMap.clear();
+        browserToTabIdMap = new WeakMap();
         tabIdToBrowserMap.clear();
     };
 
     cleanupTasks.push(stop);
 
     return {
-        browsers: function() { return browserToTabIdMap.keys(); },
+        browsers: getAllBrowsers,
         browserFromTabId: browserFromTabId,
         browserFromTarget: browserFromTarget,
         currentBrowser: currentBrowser,
@@ -1957,7 +2035,7 @@ var httpObserver = {
             }
         }
         bucket = this.pendingURLToIndex.get(url);
-        this.pendingURLToIndex.set(url, bucket === undefined ? si : bucket + si);
+        this.pendingURLToIndex.set(url, bucket === undefined ? si : si + bucket);
         preq._key = url;
         return preq;
     },
@@ -2034,19 +2112,7 @@ var httpObserver = {
     },
 
     // https://github.com/gorhill/uBlock/issues/959
-    //   Try to synthesize a pending request from a behind-the-scene request.
-    synthesizePendingRequest: function(channel, rawtype) {
-        var tabId = this.tabIdFromChannel(channel);
-        if ( tabId === vAPI.noTabId ) {
-            return null;
-        }
-        return {
-            frameId: 0,
-            parentFrameId: -1,
-            tabId: tabId,
-            rawtype: rawtype
-        };
-    },
+    syntheticPendingRequest: { frameId: 0, parentFrameId: -1, tabId: '', rawtype: 1 },
 
     handleRequestHeaders: function(channel, URI, requestType, tabId) {
 
@@ -2097,6 +2163,13 @@ var httpObserver = {
             return false;
         }
 
+        // https://github.com/uBlockOrigin/uAssets/issues/123#issuecomment-244055243
+        // Need special handling for websocket requests: http-based websocket
+        // requests will be evaluated as ws-based websocket requests.
+        if ( details.rawtype === 16 && URI.asciiSpec.startsWith('http') ) {
+            URI = Services.io.newURI(URI.asciiSpec.replace(/^http(s)?:/, 'ws$1:'), null, null);
+        }
+
         this.handleRequestHeaders(channel, URI, type, details.tabId); // adn
 
         var result = this.onBeforeRequest({
@@ -2107,19 +2180,16 @@ var httpObserver = {
             url: URI.asciiSpec
         });
 
-        if ( !result || typeof result !== 'object' ) {
-            return false;
-        }
-
-        if ( 'cancel' in result && result.cancel === true ) {
-            channel.cancel(this.ABORT);
-            return true;
-        }
-
-        if ( 'redirectUrl' in result ) {
-            channel.redirectionLimit = 1;
-            channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
-            return true;
+        if ( result && typeof result === 'object' ) {
+            if ( 'cancel' in result && result.cancel === true ) {
+                channel.cancel(this.ABORT);
+                return true;
+            }
+            if ( 'redirectUrl' in result ) {
+                channel.redirectionLimit = 1;
+                channel.redirectTo(Services.io.newURI(result.redirectUrl, null, null));
+                return true;
+            }
         }
 
         return false;
@@ -2284,8 +2354,15 @@ var httpObserver = {
         var pendingRequest = this.lookupPendingRequest(URI.spec);
 
         // https://github.com/gorhill/uMatrix/issues/390#issuecomment-155759004
-        var rawtype = 1;
-        var loadInfo = channel.loadInfo;
+        var loadInfo = channel.loadInfo,
+            rawtype = 1,
+            frameId = 0,
+            parentFrameId = -1;
+
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // https://dxr.mozilla.org/mozilla-central/source/toolkit/modules/addons/WebRequest.jsm#537-553
+        // For modern Firefox, loadInfo contains the information about the
+        // context of the network request.
         if ( loadInfo ) {
             rawtype = loadInfo.externalContentPolicyType !== undefined ?
                 loadInfo.externalContentPolicyType :
@@ -2293,40 +2370,38 @@ var httpObserver = {
             if ( !rawtype ) {
                 rawtype = 1;
             }
-        }
-
-        // IMPORTANT:
-        // If this is a main frame, ensure that the proper tab id is being
-        // used: it can happen that the wrong tab id was looked up at
-        // `shouldLoadListener` time. Without this, the popup blocker may
-        // not work properly, and also a tab opened from a link may end up
-        // being wrongly reported as an embedded element.
-        if ( pendingRequest !== null && pendingRequest.rawtype === 6 ) {
-            var tabId = this.tabIdFromChannel(channel);
-            if ( tabId !== vAPI.noTabId ) {
-                pendingRequest.tabId = tabId;
+            frameId = loadInfo.frameOuterWindowID ? loadInfo.frameOuterWindowID : loadInfo.outerWindowID;
+            parentFrameId = loadInfo.frameOuterWindowID ? loadInfo.outerWindowID : loadInfo.parentOuterWindowID;
+            if ( frameId === parentFrameId ) {
+                parentFrameId = -1;
             }
         }
 
-        // Behind-the-scene request... Really?
-        if ( pendingRequest === null ) {
-            pendingRequest = this.synthesizePendingRequest(channel, rawtype);
-        }
-
-        // Behind-the-scene request... Yes, really.
-        if ( pendingRequest === null ) {
-            pendingRequest = {
-                frameId: 0,
-                parentFrameId: -1,
-                tabId: vAPI.noTabId,
-                rawtype: rawtype
-            };
-        }
-
-        // https://github.com/gorhill/uBlock/issues/654
-        // Use the request type from the HTTP observer point of view.
-        if ( rawtype !== 1 ) {
+        if ( pendingRequest !== null ) {
+            // https://github.com/gorhill/uBlock/issues/654
+            //   Use the request type from the HTTP observer point of view.
+            if ( rawtype !== 1 ) {
+                pendingRequest.rawtype = rawtype;
+            }
+            // IMPORTANT:
+            // If this is a main frame, ensure that the proper tab id is being
+            // used: it can happen that the wrong tab id was looked up at
+            // `shouldLoadListener` time. Without this, the popup blocker may
+            // not work properly, and also a tab opened from a link may end up
+            // being wrongly reported as an embedded element.
+            if ( pendingRequest.rawtype === 6 ) {
+                var tabId = this.tabIdFromChannel(channel);
+                if ( tabId !== vAPI.noTabId ) {
+                    pendingRequest.tabId = tabId;
+                }
+            }
+        } else { // pendingRequest === null
+            // No matching pending request found, synthetize one.
+            pendingRequest = this.syntheticPendingRequest;
+            pendingRequest.tabId = this.tabIdFromChannel(channel);
             pendingRequest.rawtype = rawtype;
+            pendingRequest.frameId = frameId;
+            pendingRequest.parentFrameId = parentFrameId;
         }
 
         if ( this.handleRequest(channel, URI, pendingRequest) ) {
@@ -2407,15 +2482,8 @@ vAPI.net.registerListeners = function() {
     }
 
     var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
-    var shouldLoadPopupListener = function(e) {
-        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
-            return;
-        }
-
-        var openerURL = e.data;
-        var popupTabId = tabWatcher.tabIdFromTarget(e.target);
+    var shouldLoadPopupListener = function(openerURL, popupTabId) {
         var uri, openerTabId;
-
         for ( var browser of tabWatcher.browsers() ) {
             uri = browser.currentURI;
 
@@ -2438,10 +2506,20 @@ vAPI.net.registerListeners = function() {
             }
         }
     };
+    var shouldLoadPopupListenerAsync = function(e) {
+        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
+            return;
+        }
+        // We are handling a synchronous message: do not block.
+        vAPI.setTimeout(
+            shouldLoadPopupListener.bind(null, e.data, tabWatcher.tabIdFromTarget(e.target)),
+            1
+        );
+    };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
         shouldLoadPopupListenerMessageName,
-        shouldLoadPopupListener
+        shouldLoadPopupListenerAsync
     );
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
@@ -2457,8 +2535,8 @@ vAPI.net.registerListeners = function() {
         // request into a ring buffer for later retrieval by the HTTP observer.
         var pendingReq = httpObserver.createPendingRequest(details.url);
         pendingReq.frameId = details.frameId;
-        pendingReq.parentFrameId = details.parentFrameId;
-        pendingReq.rawtype = details.rawtype;
+        pendingReq.parentFrameId = details.pFrameId;
+        pendingReq.rawtype = details.type;
         pendingReq.tabId = tabWatcher.tabIdFromTarget(e.target);
     };
 
@@ -2527,7 +2605,7 @@ vAPI.net.registerListeners = function() {
     cleanupTasks.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadPopupListenerMessageName,
-            shouldLoadPopupListener
+            shouldLoadPopupListenerAsync
         );
 
         vAPI.messaging.globalMessageManager.removeMessageListener(
