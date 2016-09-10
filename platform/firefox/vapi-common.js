@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 The uBlock Orign authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 
 // For background page or non-background pages
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
