@@ -27,7 +27,6 @@
 
 µBlock.webRequest = (function () {
 
-  var AutoExportUrl = 'http://rednoise.org/ad-auto-export';
   var GoogleSearchPrefix = 'https://www.google.com.hk';
   var AcceptHeaders = {
       chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -43,10 +42,6 @@
   // Intercept and filter web requests.
 
   var onBeforeRequest = function (details) {
-
-    // adn: this triggers our automated script to export ads on completion (tmp)
-    if (details.type === 'main_frame' && details.url === AutoExportUrl)
-        µb.adnauseam.exportAds();
 
     // adn: return here if prefs say not to block
     if (µBlock.userSettings.blockingMalware === false) {
@@ -160,7 +155,7 @@
 
     if ( url !== undefined ) {
 
-        µb.adnauseam.blockLogging() && console.log("LOG-BLOCK2(redirect)");
+        µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(redirect)");
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -298,7 +293,7 @@
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK3(document)");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(document)");
 
     return {
       cancel: true
@@ -731,7 +726,7 @@ var processCSP = function(details, pageStore, context) {
         return;
     }
 
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK7(net.inline-script')");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(net.inline-script')");
     µb.updateBadgeAsync(tabId);
 
     return { 'responseHeaders': details.responseHeaders };
@@ -768,7 +763,7 @@ var processCSP = function(details, pageStore, context) {
     }
 
     pageStore.logLargeMedia();
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK8(net.largeMedia)");
+    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(net.largeMedia)");
 
     if (µb.logger.isEnabled()) {
 

@@ -1140,12 +1140,6 @@
     // if an image ad and page/target domains match, its internal
     var match = (ad.pageDomain === ad.targetDomain);
 
-    // tmp: minor sanity check -- Remove
-    if (!match && ad.pageDomain.indexOf(ad.targetDomain) > -1 ||
-     ad.targetDomain.indexOf(ad.pageDomain) > -1) {
-        warn('Near-domain-match: "'+ad.pageDomain+'" "'+ad.targetDomain+'"');
-    }
-
     return match;
   };
 
