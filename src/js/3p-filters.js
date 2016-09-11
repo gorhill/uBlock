@@ -39,7 +39,8 @@ var needUpdate = false;
 var hasCachedContent = false;
 
 var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
-  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" ]; // adn
+  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
+  "assets/thirdparties/pgl.yoyo.org/as/serverlist" ]; // adn
 
 /******************************************************************************/
 
@@ -240,6 +241,8 @@ var renderFilterLists = function() {
     };
 
     var onListsReceived = function(details) {
+
+console.log(Object.keys(details.available));
 
         // adn: ignore hidden lists
         hiddenLists.forEach(function(l) { delete details.available[l]; });

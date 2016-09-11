@@ -279,7 +279,7 @@
     }
 
     if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), requestURL, true)) {
-      return; // adn: not blocking
+      return; // adn: not blocking (do we actually need to check this for root pages? no)
     }
 
     var compiled = result.slice(3);

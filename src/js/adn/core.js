@@ -1143,7 +1143,7 @@
     return match;
   };
 
-  var fromNetFilterSync = function (compiledFilter, rawFilter) {
+  var listsForFilter = function (compiledFilter) {
 
     var entry, content, pos, c, lists = [];
 
@@ -1169,10 +1169,9 @@
       if (c !== '' && reSpecialChars.test(c) === false) {
         continue;
       }
-      lists.push({
-        title: entry.title,
-        supportURL: entry.supportURL
-      });
+      lists.push(entry.title); // only need titles
+        /*{ title: entry.title
+        supportURL: entry.supportURL }*/
     }
 
     return lists;
@@ -1189,17 +1188,23 @@
     var compiled = result.slice(3),
       snfe = µb.staticNetFilteringEngine,
       raw = snfe.filterStringFromCompiled(compiled),
-      hits = fromNetFilterSync(compiled, raw);
+      lists = listsForFilter(compiled/*, raw*/);
 
     //console.log('isBlockableRequest',requestURL, compiled);
 
-    for (var i = 0; i < hits.length; i++) { //
+    for (var i = 0; i < lists.length; i++) { //
 
-      var name = hits[0].title;
+      var name = lists[0]; //.title;
       if (!activeBlockList(name) || ruleDisabled(raw, name)) {
 
-        if (logBlocks && log("[ALLOW] '" + name + "'",
-          (ruleDisabled(raw, name) ? '**RULE**' : ''), raw, requestURL);
+        if (logBlocks && name !== 'EasyList') {
+          log("[ALLOW] '" + name + "'", (ruleDisabled(raw, name) ?
+            '**RULE**' : ''), raw, requestURL);
+
+          // Note: need to mark allowed requests here so that we can
+          // block any incoming cookies later (see #301)
+          // NEXT: check pagestore 'context'
+        }
 
         continue; // no-block
       }
@@ -1326,11 +1331,9 @@
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    fromNetFilterSync: fromNetFilterSync,
     isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
     injectContentScripts: injectContentScripts
-    //domainCosmeticSelectors: domainCosmeticSelectors
   };
 
 })();

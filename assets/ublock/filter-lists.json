@@ -231,6 +231,7 @@
 		"supportURL": "http://www.malwaredomains.com/"
 	},
 	"pgl.yoyo.org/as/serverlist": {
+		"off": true,
 		"title": "Peter Lowe’s Ad server list",
 		"group": "ads",
 		"homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
