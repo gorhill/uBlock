@@ -11,9 +11,10 @@
   var messager = vAPI.messaging;
 
   /******************************************************************************/
-  var changeUserSettings = function (name, value) {  
+  var changeUserSettings = function (name, value) {
 
-    console.log("changing", name, value);
+    //console.log("changing", name, value);
+
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -31,23 +32,19 @@
     changeUserSettings(name, value);
   };
 
-  function getValueOfSwitch(name){
-    return uDom('[data-setting-name='+name+']').prop('checked');
+  function switchValue(name) {
+    return uDom('[data-setting-name=' + name + ']').prop('checked');
   }
 
-  function hideOrClickTrue () {
-    var showBox = false;
-    if(getValueOfSwitch('hidingAds') === true || getValueOfSwitch('clickingAds') === true){
-      showBox = true;
-    }
-    return showBox;
+  function hideOrClick() {
+    return switchValue('hidingAds') || switchValue('clickingAds');
   }
 
-  function toggleDNTExceptionBox(bool){
+  function toggleDNTException(bool) {
     var dntInputWrapper = uDom('#dnt-exception')["nodes"][0].parentElement;
-    if(hideOrClickTrue()){   
+    if (hideOrClick()) {
       dntInputWrapper.style.display = "block";
-    }else{
+    } else {
       dntInputWrapper.style.display = "none";
     }
   }
@@ -58,23 +55,20 @@
 
   var onUserSettingsReceived = function (details) {
 
-    
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
       uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
         .on('change', function () {
-          
+
           changeUserSettings(
             this.getAttribute('data-setting-name'),
             this.checked
           );
-          
-          toggleDNTExceptionBox();
+
+          toggleDNTException();
 
         });
     });
 
-
-    //not sure when this one is called
     uDom('[data-setting-type="input"]').forEach(function (uNode) {
       uNode.val(details[uNode.attr('data-setting-name')])
         .on('change', onInputChanged);
@@ -82,14 +76,14 @@
 
     uDom('#confirm-close').on('click', function (e) {
       e.preventDefault();
-      // handle #371 here 
-      if(getValueOfSwitch('hidingAds') === false && getValueOfSwitch('clickingAds') === false){
+      // handles #371
+      if (!hideOrClick()) {
         changeUserSettings('respectDNT', false);
       }
       window.open(location, '_self').close();
     });
 
-    toggleDNTExceptionBox();
+    toggleDNTException();
   };
 
   /******************************************************************************/
