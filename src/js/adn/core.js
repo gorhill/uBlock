@@ -1178,22 +1178,6 @@
     return lists;
   };
 
-  // var domainCosmeticSelectors = function (request, pageStore, tabId) {
-  //
-  //   var response;
-  //   if (pageStore && pageStore.getNetFilteringSwitch()) {
-  //     response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-  //     if (response) {
-  //       if (response.skipCosmeticFiltering !== true) {
-  //         response.skipCosmeticFiltering = !pageStore.getSpecificCosmeticFilteringSwitch(); // || !µb.userSettings.hidingAds; // adn
-  //       }
-  //       response.prefs = contentPrefs();
-  //     }
-  //   }
-  //   //console.log('domainCosmeticSelectors', response.prefs);
-  //   return response;
-  // }
-
   var isBlockableRequest = function (result, requestURL, isTop) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
@@ -1214,10 +1198,7 @@
       var name = hits[0].title;
       if (!activeBlockList(name) || ruleDisabled(raw, name)) {
 
-        if (0 && logBlocks && name === 'EasyList')
-          log("[NO_BLOCK] 'EasyList'", raw, requestURL);
-
-        else logBlocks && log("[NO_BLOCK] ", name,
+        if (logBlocks && log("[ALLOW] '" + name + "'",
           (ruleDisabled(raw, name) ? '**RULE**' : ''), raw, requestURL);
 
         continue; // no-block
