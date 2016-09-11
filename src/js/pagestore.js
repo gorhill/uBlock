@@ -565,6 +565,12 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+
+            // ADN
+            var snfe = µb.staticNetFilteringEngine;
+            if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), context.requestURL)) {
+              result = ''; // not-blocking
+            }
         }
     }
 
@@ -619,7 +625,17 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+
+            // ADN
+            if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1))) {
+              console.warn("*** Blocking filterRequestNoCache ***");
+              result = ''; // not-blocking
+            }
         }
+    }
+    else if (result.length > 0) {
+
+        console.warn("ILLEGAL(nocache): adn block skipped", result, context);
     }
 
     return result;
