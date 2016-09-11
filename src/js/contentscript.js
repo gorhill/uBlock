@@ -538,12 +538,17 @@ var domFilterer = {
             node.setAttribute('style', styleAttr + 'display: none !important;');
         }
 
-        vAPI.adParser && vAPI.adParser.process(node);
+        if (vAPI.adParser) {
+          vAPI.adParser.process(node);
+          if (!vAPI.adParser.useShadowDOM())
+            return;
+          console.log("adn: shadowDOM allowed!");
+        }
 
-        if ( shadowId === undefined ) {
+        if (shadowId === undefined) {
             return;
         }
-        console.log("adn: using shadow node - disable?");
+
         var shadow = node.shadowRoot;
         if ( shadow ) {
             if ( shadow[shadowId] && shadow.firstElementChild !== null ) {

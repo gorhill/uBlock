@@ -14,7 +14,6 @@
 
   vAPI.adParser = (function () {
 
-    var useShadowDOM = false;
     var ignoreTargets = [
       'http://www.google.com/settings/ads/anonymous',
       'http://choice.microsoft.com'
@@ -116,16 +115,6 @@
       this.errors = null;
     };
 
-    var notifyAddon = function (ad) {
-
-      vAPI.messaging.send('adnauseam', {
-        what: 'registerAd',
-        ad: ad
-      });
-
-      return true;
-    }
-
     var processDelayedImage = function () { // this=img
 
       //console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
@@ -183,46 +172,6 @@
       return domains && domains.length ? new URL(
           useLast ? domains[domains.length - 1] : domains[0])
         .hostname : undefined;
-    }
-
-    var createAd = function (network, target, data) {
-
-      var domain = (parent !== window) ?
-        parseDomain(document.referrer) : document.domain;
-
-      //console.log('createAd:', domain, target, typeof target);
-
-      if (target.indexOf('//') === 0) {
-
-        target = 'http:' + target;
-
-      } else if (target.indexOf('/') === 0) {
-
-        target = 'http://' + domain + target;
-        //console.log("Fixing absolute domain: " + target);
-      }
-
-      if (target.indexOf('http') < 0) {
-
-        console.warn("Ignoring Ad with targetUrl=" + target, arguments);
-        return;
-      }
-
-      if (ignoreTargets.indexOf(target) > -1) {
-
-        if (!vAPI.prefs.production) console.log("Ignoring choices-image: ", arguments);
-        return;
-      }
-
-      // only need to do this if we are going to re-hide internal elements
-      // otherwise we let core.js handle it using the PSL (#337)
-      if (false && isInternal(target, domain)) {
-
-        console.warn("Ignoring Ad with internal target=" + isInternal(target));
-        return;
-      }
-
-      return new Ad(network, target, data);
     }
 
     var isInternal = (function() {  // not used
@@ -287,12 +236,69 @@
       }
     };
 
+    var notifyAddon = function (ad) {
+
+      vAPI.messaging.send('adnauseam', {
+        what: 'registerAd',
+        ad: ad
+      });
+
+      return true;
+    }
+
+    var createAd = function (network, target, data) {
+
+      var domain = (parent !== window) ?
+        parseDomain(document.referrer) : document.domain;
+
+      //console.log('createAd:', domain, target, typeof target);
+
+      if (target.indexOf('//') === 0) {
+
+        target = 'http:' + target;
+
+      } else if (target.indexOf('/') === 0) {
+
+        target = 'http://' + domain + target;
+        //console.log("Fixing absolute domain: " + target);
+      }
+
+      if (target.indexOf('http') < 0) {
+
+        console.warn("Ignoring Ad with targetUrl=" + target, arguments);
+        return;
+      }
+
+      if (ignoreTargets.indexOf(target) > -1) {
+
+        if (!vAPI.prefs.production) console.log("Ignoring choices-image: ", arguments);
+        return;
+      }
+
+      // only need to do this if we are going to re-hide internal elements
+      // otherwise we let core.js handle it using the PSL (#337)
+      if (false && isInternal(target, domain)) {
+
+        console.warn("Ignoring Ad with internal target=" + isInternal(target));
+        return;
+      }
+
+      return new Ad(network, target, data);
+    }
+
+    var useShadowDOM = function () {
+
+        return false; // for now
+    }
+
     /**********************************************************************/
 
     return {
+
       process: process,
       createAd: createAd,
-      notifyAddon: notifyAddon
+      notifyAddon: notifyAddon,
+      useShadowDOM: useShadowDOM
     };
 
   })();
