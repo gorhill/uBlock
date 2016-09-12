@@ -1103,8 +1103,7 @@
 
     if (internalLinkDomains.indexOf(ad.pageDomain) < 0 && internalTarget(ad)) {
 
-      warn('INTERNAL: ' + ad.pageDomain + ' = ' + ad.targetDomain +
-        ' (' + ad.targetUrl + ')\n    old: ' + targetDomain(ad), Object.keys([]));
+      warn('[INTERNAL] Ignoring ad on ' + ad.pageDomain, adinfo(ad));
       return; // testing this
     }
 
@@ -1119,7 +1118,7 @@
 
       if (msSinceFound < repeatVisitInterval) {
 
-        log('DUPLICATE: ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
+        log('[DUPLICATE] ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
         return;
       }
     }
@@ -1197,13 +1196,9 @@
       var name = lists[0]; //.title;
       if (!activeBlockList(name) || ruleDisabled(raw, name)) {
 
-        if (logBlocks && name !== 'EasyList') {
+        if (logBlocks) { // } && name !== 'EasyList') {
           log("[ALLOW] '" + name + "'", (ruleDisabled(raw, name) ?
             '**RULE**' : ''), raw, requestURL);
-
-          // Note: need to mark allowed requests here so that we can
-          // block any incoming cookies later (see #301)
-          // NEXT: check pagestore 'context'
         }
 
         continue; // no-block
@@ -1228,7 +1223,7 @@
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
       settings.admap = µb.adnSettings.admap;
-      log("Using legacy admap...");
+      log("[IMPORT] Using legacy admap...");
       setTimeout(function () {
         storeUserData(true);
       }, 2000);
@@ -1291,7 +1286,9 @@
     url = trimChar(url, '/'); // no trailing slash
 
     var ads = adlist();
+
     for (var i = 0; i < ads.length; i++) {
+
       if (ads[i].attemptedTs) {
         //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
         if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
@@ -1303,8 +1300,7 @@
 
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    log('Injecting content-scripts into dynamic-iframe',
-      request.parentUrl, tabId + '/' + frameId);
+    log('[INJECT] Dynamic-iFrame: '+request.parentUrl, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
