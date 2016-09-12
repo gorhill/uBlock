@@ -16,11 +16,11 @@ a {
     text-decoration: none;
     }
 a.info {
-    color: black;
-    opacity: 0.3;
+    color: white;
+    opacity: 0.8;
     }
 a.info:hover {
-    opacity: 0.9
+    opacity: 1
     }
 a.info.important {
     color: orangered;
