@@ -163,6 +163,14 @@ button.large {
   line-height: 1em;
 }
 
+button.small {
+  font-size: 16px;
+  height: 20px;
+  border-width: 1px;
+  padding: 0 5px;
+  border-color: rgba(0,118,255,0.5);
+}
+
 #alert {
     height: 200;
     width: 100%;
