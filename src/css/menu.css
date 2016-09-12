@@ -340,12 +340,10 @@ header{
     transition: all 1s ease;
 }
 
-.ad-item img:hover{
+.ad-item .thumb:hover img{
   max-width:none;
   max-height: 300px;
-  position:absolute;
-  left:0px;
-  top:0px;
+  position:relative;
   z-index: 100;
 }
 

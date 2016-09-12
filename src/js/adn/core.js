@@ -42,7 +42,7 @@
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = [ 'facebook.com', 'google.com' ];
+  var internalLinkDomains = [ 'facebook.com', 'google.com','asiaxpat.com'];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
