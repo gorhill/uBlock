@@ -987,166 +987,24 @@ FilterRegexHostname.fromSelfie = function(s) {
 
 // Dictionary of hostnames
 //
-// FilterHostnameDict is the main reason why uBlock is not equipped to keep
-// track of which filter comes from which list, and also why it's not equipped
-// to be able to disable a specific filter -- other than through using a
-// counter-filter.
-//
-// On the other hand it is also *one* of the reason uBlock's memory and CPU
-// footprint is smaller. Compacting huge list of hostnames into single strings
-// saves a lot of memory compared to having one dictionary entry per hostname.
-
 var FilterHostnameDict = function() {
     this.h = ''; // short-lived register
-    this.dict = {};
-    this.count = 0;
-};
-
-// Somewhat arbitrary: I need to come up with hard data to know at which
-// point binary search is better than indexOf.
-//
-// http://jsperf.com/string-indexof-vs-binary-search
-// Tuning above performance benchmark, it appears 250 is roughly a good value
-// for both Chromium/Firefox.
-// Example of benchmark values: '------30', '-----100', etc. -- the
-// needle string must always be 8-character long.
-
-FilterHostnameDict.prototype.cutoff = 250;
-
-// Probably not needed under normal circumstances.
-
-FilterHostnameDict.prototype.meltBucket = function(len, bucket) {
-    var map = {};
-    if ( bucket.startsWith(' ') ) {
-        bucket.trim().split(' ').map(function(k) {
-            map[k] = true;
-        });
-    } else {
-        var offset = 0;
-        while ( offset < bucket.length ) {
-            map[bucket.substr(offset, len)] = true;
-            offset += len;
-        }
-    }
-    return map;
-};
-
-FilterHostnameDict.prototype.freezeBucket = function(bucket) {
-    var hostnames = Object.keys(bucket);
-    if ( hostnames[0].length * hostnames.length < this.cutoff ) {
-        return ' ' + hostnames.join(' ') + ' ';
-    }
-    return hostnames.sort().join('');
-};
-
-// How the key is derived dictates the number and size of buckets:
-// - more bits = more buckets = higher memory footprint
-// - less bits = less buckets = lower memory footprint
-// - binary search mitigates very well the fact that some buckets may grow
-//   large when fewer bits are used (or when a large number of items are
-//   stored). Binary search also mitigate to the point of non-issue the
-//   CPU footprint requirement with large buckets, as far as reference
-//   benchmark shows.
-//
-// A hash key capable of better spread while being as fast would be
-// just great.
-
-FilterHostnameDict.prototype.makeKey = function(hn) {
-    var len = hn.length;
-    if ( len > 255 ) {
-        len = 255;
-    }
-    var i8 = len >>> 3;
-    var i4 = len >>> 2;
-    var i2 = len >>> 1;
-
-    // http://jsperf.com/makekey-concat-vs-join/3
-
-    // Be sure the msb is not set, this will guarantee a valid unicode
-    // character (because 0xD800-0xDFFF).
-    return String.fromCharCode(
-        (hn.charCodeAt(      i8) & 0x01) << 14 |
-//        (hn.charCodeAt(   i4   ) & 0x01) << 13 |
-        (hn.charCodeAt(   i4+i8) & 0x01) << 12 |
-        (hn.charCodeAt(i2      ) & 0x01) << 11 |
-        (hn.charCodeAt(i2   +i8) & 0x01) << 10 |
-//        (hn.charCodeAt(i2+i4   ) & 0x01) <<  9 |
-        (hn.charCodeAt(i2+i4+i8) & 0x01) <<  8 ,
-        len
-    );
+    this.dict = new Set();
 };
 
 FilterHostnameDict.prototype.add = function(hn) {
-    var key = this.makeKey(hn);
-    var bucket = this.dict[key];
-    if ( bucket === undefined ) {
-        bucket = this.dict[key] = {};
-        bucket[hn] = true;
-        this.count += 1;
-        return true;
-    }
-    if ( typeof bucket === 'string' ) {
-        bucket = this.dict[key] = this.meltBucket(hn.length, bucket);
-    }
-    if ( bucket.hasOwnProperty(hn) ) {
+    if ( this.dict.has(hn) ) {
         return false;
     }
-    bucket[hn] = true;
-    this.count += 1;
+    this.dict.add(hn);
     return true;
-};
-
-FilterHostnameDict.prototype.freeze = function() {
-    var buckets = this.dict;
-    var bucket;
-    for ( var key in buckets ) {
-        bucket = buckets[key];
-        if ( typeof bucket === 'object' ) {
-            buckets[key] = this.freezeBucket(bucket);
-        }
-    }
-};
-
-FilterHostnameDict.prototype.matchesExactly = function(hn) {
-    // TODO: Handle IP address
-
-    var key = this.makeKey(hn);
-    var bucket = this.dict[key];
-    if ( bucket === undefined ) {
-        return false;
-    }
-    if ( typeof bucket === 'object' ) {
-        bucket = this.dict[key] = this.freezeBucket(bucket);
-    }
-    if ( bucket.startsWith(' ') ) {
-        return bucket.indexOf(' ' + hn + ' ') !== -1;
-    }
-    // binary search
-    var len = hn.length;
-    var left = 0;
-    // http://jsperf.com/or-vs-floor/17
-    var right = (bucket.length / len + 0.5) | 0;
-    var i, needle;
-    while ( left < right ) {
-        i = left + right >> 1;
-        needle = bucket.substr( len * i, len );
-        if ( hn < needle ) {
-            right = i;
-        } else if ( hn > needle ) {
-            left = i + 1;
-        } else {
-            return true;
-        }
-    }
-    return false;
 };
 
 FilterHostnameDict.prototype.match = function() {
     // TODO: mind IP addresses
-
     var pos,
         hostname = requestHostnameRegister;
-    while ( this.matchesExactly(hostname) === false ) {
+    while ( this.dict.has(hostname) === false ) {
         pos = hostname.indexOf('.');
         if ( pos === -1 ) {
             this.h = '';
@@ -1167,17 +1025,12 @@ FilterHostnameDict.prototype.rtCompile = function() {
 };
 
 FilterHostnameDict.prototype.toSelfie = function() {
-    return JSON.stringify({
-        count: this.count,
-        dict: this.dict
-    });
+    return JSON.stringify(µb.setToArray(this.dict));
 };
 
 FilterHostnameDict.fromSelfie = function(s) {
     var f = new FilterHostnameDict();
-    var o = JSON.parse(s);
-    f.count = o.count;
-    f.dict = o.dict;
+    f.dict = µb.setFromArray(JSON.parse(s));
     return f;
 };
 
@@ -1728,8 +1581,8 @@ FilterContainer.prototype.reset = function() {
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.discardedCount = 0;
-    this.duplicateBuster = {};
-    this.categories = Object.create(null);
+    this.duplicateBuster = new Set();
+    this.categories = new Map();
     this.filterParser.reset();
     this.filterCounts = {};
 
@@ -1743,17 +1596,7 @@ FilterContainer.prototype.reset = function() {
 
 FilterContainer.prototype.freeze = function() {
     histogram('allFilters', this.categories);
-    this.duplicateBuster = {};
-
-    var categories = this.categories;
-    var bucket;
-    for ( var k in categories ) {
-        bucket = categories[k]['.'];
-        if ( bucket !== undefined ) {
-            bucket.freeze();
-        }
-    }
-
+    this.duplicateBuster = new Set();
     this.filterParser.reset();
     this.frozen = true;
 };
@@ -1786,20 +1629,23 @@ FilterContainer.prototype.factories = {
 /******************************************************************************/
 
 FilterContainer.prototype.toSelfie = function() {
-    var categoryToSelfie = function(dict) {
-        var selfie = [];
-        var bucket, ff, n, i, f;
-        for ( var token in dict ) {
-            // No need for hasOwnProperty() here: there is no prototype chain.
-            selfie.push('k2\t' + token);
-            bucket = dict[token];
+    var categoryToSelfie = function(map) {
+        var selfie = [],
+            iterator = map.entries(),
+            entry, bucket, ff, f;
+        for (;;) {
+            entry = iterator.next();
+            if ( entry.done ) {
+                break;
+            }
+            selfie.push('k2\t' + entry.value[0]);
+            bucket = entry.value[1];
             selfie.push(bucket.fid + '\t' + bucket.toSelfie());
             if ( bucket.fid !== '[]' ) {
                 continue;
             }
             ff = bucket.filters;
-            n = ff.length;
-            for ( i = 0; i < n; i++ ) {
+            for ( var i = 0, ni = ff.length; i < ni; i++ ) {
                 f = ff[i];
                 selfie.push(f.fid + '\t' + f.toSelfie());
             }
@@ -1807,12 +1653,17 @@ FilterContainer.prototype.toSelfie = function() {
         return selfie.join('\n');
     };
 
-    var categoriesToSelfie = function(dict) {
-        var selfie = [];
-        for ( var key in dict ) {
-            // No need for hasOwnProperty() here: there is no prototype chain.
-            selfie.push('k1\t' + key);
-            selfie.push(categoryToSelfie(dict[key]));
+    var categoriesToSelfie = function(map) {
+        var selfie = [],
+            iterator = map.entries(),
+            entry;
+        for (;;) {
+            entry = iterator.next();
+            if ( entry.done ) {
+                break;
+            }
+            selfie.push('k1\t' + entry.value[0]);
+            selfie.push(categoryToSelfie(entry.value[1]));
         }
         return selfie.join('\n');
     };
@@ -1840,7 +1691,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.discardedCount = selfie.discardedCount;
 
     var catKey, tokenKey;
-    var dict = this.categories, subdict;
+    var map = this.categories, submap;
     var bucket = null;
     var rawText = selfie.categories;
     var rawEnd = rawText.length;
@@ -1857,7 +1708,8 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         what = line.slice(0, pos);
         if ( what === 'k1' ) {
             catKey = line.slice(pos + 1);
-            subdict = dict[catKey] = Object.create(null);
+            submap = new Map();
+            map.set(catKey, submap);
             bucket = null;
             continue;
         }
@@ -1868,7 +1720,8 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         }
         factory = this.factories[what];
         if ( bucket === null ) {
-            bucket = subdict[tokenKey] = factory.fromSelfie(line.slice(pos + 1));
+            bucket = factory.fromSelfie(line.slice(pos + 1));
+            submap.set(tokenKey, bucket);
             continue;
         }
         // When token key is reused, it can't be anything
@@ -2088,66 +1941,69 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
 /******************************************************************************/
 
 FilterContainer.prototype.fromCompiledContent = function(lineIter) {
-    var line, fields, bucket, entry, factory, filter;
+    var line, hash, token, fclass, fdata,
+        bucket, entry, factory, filter,
+        fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
         if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x6E /* 'n' */ ) {
             return;
         }
-        line = lineIter.next().slice(2);
-        fields = line.split('\v');
+        line = lineIter.next();
+
+        fieldIter.first(line);
+        hash = fieldIter.next();
+        token = fieldIter.next();
+        fclass = fieldIter.next();
+        fdata = fieldIter.next();
 
         // Special cases: delegate to more specialized engines.
         // Redirect engine.
-        if ( fields[2] === '=>' ) {
-            µb.redirectEngine.fromCompiledRule(fields[3]);
+        if ( fclass === '=>' ) {
+            µb.redirectEngine.fromCompiledRule(fdata);
             continue;
         }
 
         // Plain static filters.
         this.acceptedCount += 1;
 
-        bucket = this.categories[fields[0]];
+        bucket = this.categories.get(hash);
         if ( bucket === undefined ) {
-            bucket = this.categories[fields[0]] = Object.create(null);
+            bucket = new Map();
+            this.categories.set(hash, bucket);
         }
-        entry = bucket[fields[1]];
+        entry = bucket.get(token);
 
-        if ( fields[1] === '.' ) {
+        if ( token === '.' ) {
             if ( entry === undefined ) {
-                entry = bucket['.'] = new FilterHostnameDict();
+                entry = new FilterHostnameDict();
+                bucket.set('.', new FilterHostnameDict());
             }
-            if ( entry.add(fields[2]) === false ) {
+            // 'fclass' is hostname
+            if ( entry.add(fclass) === false ) {
                 this.discardedCount += 1;
             }
             continue;
         }
 
-        if ( this.duplicateBuster.hasOwnProperty(line) ) {
+        if ( this.duplicateBuster.has(line) ) {
             this.discardedCount += 1;
             continue;
         }
-        this.duplicateBuster[line] = true;
+        this.duplicateBuster.add(line);
 
-        factory = this.factories[fields[2]];
+        factory = this.factories[fclass];
 
-        // For development purpose
-        //if ( this.filterCounts.hasOwnProperty(fields[2]) === false ) {
-        //    this.filterCounts[fields[2]] = 1;
-        //} else {
-        //    this.filterCounts[fields[2]]++;
-        //}
-
-        filter = factory.fromSelfie(fields[3]);
+        filter = factory.fromSelfie(fdata);
         if ( entry === undefined ) {
-            bucket[fields[1]] = filter;
+            bucket.set(token, filter);
             continue;
         }
         if ( entry.fid === '[]' ) {
             entry.add(filter);
             continue;
         }
-        bucket[fields[1]] = new FilterBucket(entry, filter);
+        bucket.set(token, new FilterBucket(entry, filter));
     }
 };
 
@@ -2289,9 +2145,12 @@ FilterContainer.prototype.filterRegexFromCompiled = function(compiled, flags) {
 
 /******************************************************************************/
 
+// bucket: Map
+// url: string
+
 FilterContainer.prototype.matchTokens = function(bucket, url) {
     // Hostname-only filters
-    var f = bucket['.'];
+    var f = bucket.get('.');
     if ( f !== undefined && f.match() ) {
         this.tokenRegister = '.';
         this.fRegister = f;
@@ -2307,7 +2166,7 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
         if ( token === '' ) {
             break;
         }
-        f = bucket[token];
+        f = bucket.get(token);
         if ( f !== undefined && f.match(url, tokenEntry.beg) ) {
             this.tokenRegister = token;
             this.fRegister = f;
@@ -2316,7 +2175,7 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
     }
 
     // Regex-based filters
-    f = bucket['*'];
+    f = bucket.get('*');
     if ( f !== undefined && f.match(url) ) {
         this.tokenRegister = '*';
         this.fRegister = f;
@@ -2361,7 +2220,7 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     if ( requestType === 'elemhide' ) {
         key = AllowAnyParty | type;
         if (
-            (bucket = categories[toHex(key)]) &&
+            (bucket = categories.get(toHex(key))) &&
             this.matchTokens(bucket, url)
         ) {
             this.keyRegister = key;
@@ -2373,14 +2232,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
     key = BlockAnyParty | Important | type;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
@@ -2389,14 +2248,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against block filters
     key = BlockAnyParty | type;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAction | type | party;
-        if ( (bucket = categories[toHex(key)]) ) {
+        if ( (bucket = categories.get(toHex(key))) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
@@ -2410,14 +2269,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against allow filters
     key = AllowAnyParty | type;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAction | type | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
@@ -2480,28 +2339,28 @@ FilterContainer.prototype.matchString = function(context) {
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
     key = BlockAnyTypeAnyParty | Important;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAnyType | Important | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAnyParty | Important | type;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return true;
@@ -2510,28 +2369,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against block filters
     key = BlockAnyTypeAnyParty;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAnyType | party;
-        if ( (bucket = categories[toHex(key)]) ) {
+        if ( (bucket = categories.get(toHex(key))) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
         }
         if ( this.fRegister === null ) {
             key = BlockAnyParty | type;
-            if ( (bucket = categories[toHex(key)]) ) {
+            if ( (bucket = categories.get(toHex(key))) ) {
                 if ( this.matchTokens(bucket, url) ) {
                     this.keyRegister = key;
                 }
             }
             if ( this.fRegister === null ) {
                 key = BlockAction | type | party;
-                if ( (bucket = categories[toHex(key)]) ) {
+                if ( (bucket = categories.get(toHex(key))) ) {
                     if ( this.matchTokens(bucket, url) ) {
                         this.keyRegister = key;
                     }
@@ -2547,28 +2406,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against allow filters
     key = AllowAnyTypeAnyParty;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAnyType | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAnyParty | type;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
         }
     }
     key = AllowAction | type | party;
-    if ( (bucket = categories[toHex(key)]) ) {
+    if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return false;
