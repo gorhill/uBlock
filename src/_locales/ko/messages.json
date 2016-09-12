@@ -168,7 +168,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"시각적 필터",
+    "message":"표면 필터",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -224,11 +224,11 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"이러한 기본 동작들은 사이트 별로 재정의 할 수 있습니다.",
+    "message":"이 기본 동작들은 사이트 별로 정의 할 수 있습니다.",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"시각적 필터 비활성화",
+    "message":"표면 필터 비활성화",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -252,7 +252,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 시각적 필터:",
+    "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 표면 필터:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -272,7 +272,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"시각적 필터 분석 및 적용",
+    "message":"표면 필터 분석 및 적용",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>전체적 표면 필터들은 방문하는 모든 사이트에 적용하는 표면 필터입니다. <p>uBlock₀는 이를 효율하게 적용하지만, 전체적 표면 필터들은 그래도 사이트의 크기와 지속기간에 따라 표시날 정도로 추가 메모리와 CPU부담을 줄 수 있읍니다. <p>이 옵션의 활성화함은 전체적 표면 필터 적용으로 인해서 추가된 메모리와 CPU부담이 없게 하고, uBlock₀자체의 메모리 사용량도 줄입니다. <p>저출력 단말기에 활성화함을 조언합니다.",
+    "message":"<p>전체적 표면 필터들은 방문하는 모든 사이트에 적용하는 표면 필터입니다. <p>uBlock₀는 이를 효율적으로 적용하지만, 전체적 표면 필터들은 사이트의 크기와 유지시간에 따라 확연할 정도의 메모리 및 CPU 오버헤드를 줄 수 있습니다. <p>이 옵션을 활성화하면 전체적 표면 필터 적용으로 메모리 및 CPU 오버헤드를 제거하고, uBlock₀ 자체의 메모리 사용량도 줄입니다. <p>저전력 기기에 사용하는 것을 권장합니다.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
