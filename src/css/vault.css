@@ -257,7 +257,7 @@ div.tooltip {
 	color: #0076FF;
 }
 
-#export {
+#actions {
 	position: absolute;
 	z-index: 100;
 	bottom: 81px;
