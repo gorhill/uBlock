@@ -28,8 +28,8 @@
     "description": "English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "optimizes your browser settings to protect from malware and other non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
-    "description": "English: Firstrun.html -> optimizes your browser settings to protect from malware and other non-visual trackers (customize)"
+    "message": "optimizes your settings to protect from malware and other non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
+    "description": "English: Firstrun.html -> optimizes your settings to protect from malware and other non-visual trackers (customize)"
   },
   "adnTarget": {
     "message": "TARGET",
