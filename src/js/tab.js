@@ -392,15 +392,14 @@ housekeep itself.
     };
 
     // https://github.com/gorhill/uBlock/issues/1735
-    //   Always push before committing, to allow popup detector code to do its
-    //   job.
+    //   Filter for popups if actually committing.
     var commit = function(tabId, url) {
         var entry = tabContexts[tabId];
         if ( entry === undefined ) {
             entry = push(tabId, url);
         } else {
-            entry.push(url);
             entry.commit(url);
+            popupCandidateTest(tabId);
         }
         return entry;
     };
