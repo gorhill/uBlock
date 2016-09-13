@@ -126,18 +126,16 @@
 
 µBlock.LineIterator = function(text, offset) {
     this.text = text;
+    this.textLen = this.text.length;
     this.offset = offset || 0;
 };
 
 µBlock.LineIterator.prototype.next = function() {
-    if ( this.offset >= this.text.length ) {
-        return undefined;
-    }
     var lineEnd = this.text.indexOf('\n', this.offset);
     if ( lineEnd === -1 ) {
         lineEnd = this.text.indexOf('\r', this.offset);
         if ( lineEnd === -1 ) {
-            lineEnd = this.text.length;
+            lineEnd = this.textLen;
         }
     }
     var line = this.text.slice(this.offset, lineEnd);
@@ -146,7 +144,69 @@
 };
 
 µBlock.LineIterator.prototype.eot = function() {
-    return this.offset >= this.text.length;
+    return this.offset >= this.textLen;
+};
+
+/******************************************************************************/
+
+// The field iterator is less CPU-intensive than when using native
+// String.split().
+
+µBlock.FieldIterator = function(sep) {
+    this.text = '';
+    this.sep = sep;
+    this.sepLen = sep.length;
+    this.offset = 0;
+};
+
+µBlock.FieldIterator.prototype.first = function(text) {
+    this.text = text;
+    this.offset = 0;
+    return this.next();
+};
+
+µBlock.FieldIterator.prototype.next = function() {
+    var end = this.text.indexOf(this.sep, this.offset);
+    if ( end === -1 ) {
+        end = this.text.length;
+    }
+    var field = this.text.slice(this.offset, end);
+    this.offset = end + this.sepLen;
+    return field;
+};
+
+/******************************************************************************/
+
+µBlock.mapToArray = function(map) {
+    var out = [],
+        entries = map.entries(),
+        entry;
+    for (;;) {
+        entry = entries.next();
+        if ( entry.done ) { break; }
+        out.push([ entry.value[0], entry.value[1] ]);
+    }
+    return out;
+};
+
+µBlock.mapFromArray = function(arr) {
+    return new Map(arr);
+};
+
+µBlock.setToArray = function(dict) {
+    var out = [],
+        entries = dict.values(),
+        entry;
+    for (;;) {
+        entry = entries.next();
+        if ( entry.done ) { break; }
+        out.push(entry.value);
+    }
+    return out;
+};
+
+µBlock.setFromArray = function(arr) {
+    return new Set(arr);
 };
 
 /******************************************************************************/

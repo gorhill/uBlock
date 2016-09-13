@@ -22,6 +22,7 @@ cat   src/background.html | sed -e '/vapi-polyfill\.js/d' > $DES/background.html
 
 mv    $DES/img/icon_128.png             $DES/icon.png
 cp    platform/firefox/css/*            $DES/css/
+cp    platform/firefox/polyfill.js      $DES/js/
 cp    platform/firefox/vapi-*.js        $DES/js/
 cp    platform/firefox/bootstrap.js     $DES/
 cp    platform/firefox/frame*.js        $DES/
