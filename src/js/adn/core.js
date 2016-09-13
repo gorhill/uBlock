@@ -1344,12 +1344,12 @@
   var checkAllowedException = function (url, headers) {
 
     if (typeof allowedExceptions[url] !== 'undefined')
-      stripCookies(headers);
+      stripCookies(headers, 'In');
   }
 
   var stripCookies = function (headers) {           // ADN
 
-    var pre = headers.length, dbug = 1;
+    var pre = headers.length, dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
 
       var name = headers[i].name.toLowerCase();
@@ -1358,7 +1358,7 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        dbug && console.log('[COOKIE] (strip)', headers[i].value);
+        dbug && console.log('[COOKIE] (Strip-' + dir + ')', headers[i].value);
         headers.splice(i, 1);
       }
     }

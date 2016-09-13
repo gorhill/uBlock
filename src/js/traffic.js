@@ -428,7 +428,7 @@
             // ADN
             if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-              µBlock.adnauseam.stripCookies(details.responseHeaders, dbug);
+              µBlock.adnauseam.stripCookies(details.responseHeaders, 'In');
             }
             else if (dbug && vAPI.chrome) {
 
@@ -469,7 +469,7 @@
 
     //console.log('onBeforeSendHeaders', details.url, details);
 
-    var headers = details.requestHeaders, dbug = 0,
+    var headers = details.requestHeaders, dbug = 1,
       ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
 
     if (!ad) {
@@ -479,7 +479,7 @@
 
     var isRedirect = (ad.requestId === details.requestId);
 
-    if (dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
+    if (0&&dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
         'direct' : 'quest') + ']: ' + details.url,
         dumpHeaders(headers), JSON.stringify(details));
 
@@ -493,14 +493,23 @@
     }
 
     for (var i = headers.length - 1; i >= 0; i--) {
+
       //console.log(i + ") " + headers[i].name);
       var name = headers[i].name.toLowerCase();
+
       if ((name === 'http_x_requested_with') ||
         (name === 'x-devtools-emulate-network-conditions-client-id') ||
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
-        // block outgoing cookies here
+        // block outgoing cookies, user-agent here
+        if (dbug && prefs.noOutgoingCookies && name==='cookie') {
+          console.log('[COOKIE] (Strip-Out)', headers[i].value);
+        }
+        if (dbug && prefs.noOutgoingUserAgent && name==='user-agent') {
+          console.log('[UAGENT] (Strip-Out)', headers[i].value);
+        }
+
         setHeader(headers[i], '');
       }
 
@@ -520,11 +529,14 @@
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
 
-    if (dbug) console.log("Referer: "+referer, prefs.noOutgoingReferer, refererIdx);
+
     if (refererIdx > -1 && prefs.noOutgoingReferer) {
+
+        if (dbug) console.log("[REFERER] (Strip-Out)", referer);
         setHeader(headers[refererIdx], '');
     }
     else if (!prefs.noOutgoingReferer && refererIdx < 0) {
+        if (dbug) console.log("[REFERER] (Included)", referer);
         addHeader(headers, 'Referer', referer);
     }
 
@@ -532,7 +544,7 @@
         addHeader(headers, 'Upgrade-Insecure-Requests', '1');
     }
 
-    if (dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
+    if (0&&dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
         'direct' : 'quest') + ']: ', dumpHeaders(headers));
 
     return { requestHeaders: headers };
