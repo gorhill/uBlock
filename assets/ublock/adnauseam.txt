@@ -11,35 +11,40 @@ www.ask.com###megaLabel
 www.ask.com###csaBottom
 
 www.zam.com##.ad
-
 ##.GoogleActiveViewClass
 
 # youtube
-
 /api/ads/*
 get_video_info?*=adunit&
 
 # haaretz.co.il
-
 haaretz.co.il##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper > .modal--subscription-weekly.modal--subscription.modal
 haaretz.co.il###top_banners
 haaretz.co.il##[id^="dclk"]
 
 # facebook
-
 facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt][data-xt-vimpr="1"][data-ftr="1"][data-fte="1"]
 
 # piratebay
-
 ##iframe[src*="adxprts.com"]
 ##iframe[src*="exoclick.com"]
 ##iframe[src*="thepiratebay.org/static/ads"]
 ##img[src*="exdynsrv.com"]
 
 # 10tv.nana10.co.il
-
 ||advsnx.net^$third-party
 
 # marinetraffic.com
-
 ##.home-page.has-ad-space.container-fluid > .upper.row > .hidden-print.vertical-offset-5 > .mtseventwentyeight > a[href^="/en/p/plans"] > img[src="/img/upper_02.gif"]
+
+# asiaxpat
+##.AdBanner
+##.header_in1
+##.megaBanner
+###pnlClassReplaced
+##.main_content_rit
+###BusyBox6
+##.renaud
+
+# documentaryheaven
+##iframe[src*=“cse.google.com"]

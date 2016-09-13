@@ -26,6 +26,7 @@ body {
   line-height: 1;
   height: 500px;
   width: 400px;
+  font-size: 75%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -340,12 +341,10 @@ header{
     transition: all 1s ease;
 }
 
-.ad-item img:hover{
+.ad-item .thumb:hover img{
   max-width:none;
   max-height: 300px;
-  position:absolute;
-  left:0px;
-  top:0px;
+  position:relative;
   z-index: 100;
 }
 

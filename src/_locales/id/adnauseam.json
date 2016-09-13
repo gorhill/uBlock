@@ -4,31 +4,31 @@
     "description":"English: Firstrun.html page title"
   },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"Mohon:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Sembunyikan iklan",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"Klik iklan",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
+    "message":"Memblokir Malware",
     "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide all ads found according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message":"menyembunyikan semua iklan yang ditemukan menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
     "description":"English: Firstrun.html -> hides all ads identified by filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"simulate clicks on ads found according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message":"mensimulasi klik semua iklan yang ditemukan menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
     "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"protect your browser from malware and other non-visual trackers according to <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message":"melindungi browser Anda dari malware dan pelacak bebas-visual lainnya menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
     "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
   },
   "adnTarget":{

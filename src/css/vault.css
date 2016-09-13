@@ -257,6 +257,13 @@ div.tooltip {
 	color: #0076FF;
 }
 
+#actions {
+	position: absolute;
+	z-index: 100;
+	bottom: 81px;
+	right: 136px;
+}
+
 #logo{
 	z-index: 100;
 	bottom: 0;
