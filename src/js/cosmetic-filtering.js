@@ -1337,7 +1337,7 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
         bucket.retrieve(hostname, selectors);
     }
     if ( entity !== '' && (bucket = this.userScripts.get(entity)) ) {
-        bucket.retrieve(hostname, selectors);
+        bucket.retrieve(entity, selectors);
     }
     var i = selectors.length;
     while ( i-- ) {
