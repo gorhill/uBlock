@@ -526,7 +526,7 @@ var onMessage = function(request, sender, callback) {
                 request,
                 response.noCosmeticFiltering
             );
-            response.prefs = µb.adnauseam.contentPrefs(); // adn
+            response.prefs = µb.adnauseam.contentPrefs(); // ADN
         }
         break;
 

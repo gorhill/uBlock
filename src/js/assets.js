@@ -1109,7 +1109,7 @@ exports.get = function(path, callback) {
     var onRepoMetaReady = function(meta) {
         var assetEntry = meta.entries[path];
 
-        // adn: fix for #258
+        // ADN: fix for #258
         if ( assetEntry === undefined && path === adnauseamListPath) {
             //console.log('Creating new ADN asset: '+adnauseamListPath);
             assetEntry= new AssetEntry();

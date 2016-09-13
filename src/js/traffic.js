@@ -43,7 +43,7 @@
 
   var onBeforeRequest = function (details) {
 
-    // adn: return here if prefs say not to block
+    // ADN: return here if prefs say not to block
     if (µBlock.userSettings.blockingMalware === false) {
         return;
     }
@@ -103,7 +103,7 @@
     requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
     requestContext.requestType = requestType;
 
-    // adn: note: blocking checked in this function
+    // ADN: note: blocking checked in this function
     var result = pageStore.filterRequest(requestContext);
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
@@ -145,7 +145,7 @@
 
     if ( url !== undefined ) {
 
-        µb.adnauseam.logNetBlock('redirect', requestURL+'->'+url,  JSON.stringify(requestContext));
+        µb.adnauseam.logRedirect(requestURL, url);
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -315,7 +315,7 @@
   var onBeforeBeacon = function (details) {
 
     var µb = µBlock;
-    if (µBlock.userSettings.blockingMalware === false) // adn
+    if (µBlock.userSettings.blockingMalware === false) // ADN
         return;
 
     var tabId = details.tabId;
@@ -341,8 +341,8 @@
     context.dispose();
     if ( result !== '' ) {
 
-        // adn: no need to ever allow beacons, just log...
-        µb.adnauseam.logNetBlock('beacon', context.requestURL, result, context);
+        // ADN: no need to ever allow beacons, just log...
+        µb.adnauseam.logNetBlock(details.type, context.rootHostname, details.url);
         return { cancel: true };
     }
   };
@@ -397,7 +397,8 @@
       return;
     }
 
-    µb.adnauseam.logNetBlock('xhr', context, requestURL); // Blocked
+    // Blocked xhr
+    µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
 
     return {
       'cancel': true
@@ -408,8 +409,7 @@
 
   var onBeforeRedirect = function (details) {
 
-    var logRedirects = true;
-    logRedirects && console.log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
+    //log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
   };
 
   // To handle:
@@ -420,12 +420,12 @@
       var tabId = details.tabId, dbug = 0;
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-        // adn: handle incoming cookies for our visits (ignore in ff for now)
+        // ADN: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
             dbug && console.log('onHeadersReceived: ',  details.type, details.url, details);
 
-            // adn
+            // ADN
             if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
               µBlock.adnauseam.stripCookies(details.responseHeaders, dbug);
@@ -441,7 +441,7 @@
           { 'responseHeaders': details.responseHeaders } : null;
       }
 
-      // adn: check if this was an allowed exception and, if so, strip cookies
+      // ADN: check if this was an allowed exception and, if so, strip cookies
       µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
 
       var requestType = details.type;
@@ -461,7 +461,7 @@
 
   /******************************************************************************/
 
-  // adn: removing outgoing cookies, user-agent, set/hide referer,
+  // ADN: removing outgoing cookies, user-agent, set/hide referer,
   var onBeforeSendHeaders = function (details) {
 
     // We only care about behind-the-scene requests here
@@ -658,23 +658,6 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
-// <<<<<<< HEAD
-//     if (µb.logger.isEnabled()) {
-//       µb.logger.writeOne(
-//         tabId,
-//         'net',
-//         result,
-//         'inline-script',
-//         requestURL,
-//         context.rootHostname,
-//         context.pageHostname
-//       );
-//     }
-//
-//     // Don't block
-//     if (µb.isAllowResult(result)) {
-//       return;
-// =======
     if ( loggerEnabled ) {
         µb.logger.writeOne(
             tabId,
@@ -682,7 +665,7 @@ var processCSP = function(details, pageStore, context) {
             inlineScriptResult,
             'inline-script',
             requestURL,
-            contextcontext.rootHostname,
+            context.rootHostname,
             context.pageHostname
         );
     }
@@ -699,14 +682,19 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
+    if (blockInlineScript)
+      µb.adnauseam.logNetBlock(context.requestType, requestURL);
+
+    if (blockWebsocket)
+      µb.adnauseam.logNetBlock(context.requestType, requestURL);
+
+    µb.updateBadgeAsync(tabId);
+
     context.dispose();
 
     if ( headersChanged !== true ) {
         return;
     }
-
-    µb.adnauseam.logNetBlock('net.inline-script', context);
-    µb.updateBadgeAsync(tabId);
 
     return { 'responseHeaders': details.responseHeaders };
 };
@@ -896,7 +884,7 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
       'https://*/*'
     ],
     types: [
-      'xmlhttprequest', // adn
+      'xmlhttprequest', // ADN
       'main_frame',
       'sub_frame',
       'image',
@@ -906,7 +894,7 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     callback: onHeadersReceived
   };
 
-  vAPI.net.onBeforeRedirect = {
+  vAPI.net.onBeforeRedirect = { // ADN
     urls: [
       'http://*/*',
       'https://*/*'
@@ -914,7 +902,7 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     callback: onBeforeRedirect
   };
 
-  vAPI.net.onBeforeSendHeaders = {   // adn
+  vAPI.net.onBeforeSendHeaders = {   // ADN
     urls: [
       'http://*/*',
       'https://*/*'
@@ -925,8 +913,6 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     extra: ['blocking', 'requestHeaders'],
     callback: onBeforeSendHeaders
   };
-
-
 
   vAPI.net.registerListeners();
 

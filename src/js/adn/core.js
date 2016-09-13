@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 1; // for testing list-blocking
+    logBlocks = 0; // for testing list-blocking
 
   var xhr, idgen, admap, inspected, listEntries,
     µb = µBlock,
@@ -23,6 +23,14 @@
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
+  // allow all blocks on requests to/from these domains
+  var allowAnyBlockOnDomains = [ 'youtube.com' ];
+
+  // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
+  var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
+    '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
+    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
+  ];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
@@ -34,17 +42,8 @@
     'Adblock Warning Removal List', 'Malware filter list by Disconnect'
   ];
 
-  // allow all blocks on these domains, regardless of list
-  var blockAllDomains = [ 'youtube.com' ];
-
-  // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
-  var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
-    '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
-    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
-  ];
-
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = [ 'facebook.com', 'google.com','asiaxpat.com'];
+  var internalLinkDomains = [ 'facebook.com', 'google.com', 'asiaxpat.com'];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -168,7 +167,7 @@
 
     computeNextId(ads);
 
-    log('[STARTUP] Initialized with ' + ads.length + ' ads');
+    log('[INIT] Initialized with ' + ads.length + ' ads');
 
     return ads;
   }
@@ -1172,16 +1171,29 @@
     return lists;
   };
 
-  var isBlockableDomain = function (url) {
-    for (var i = 0; i < blockAllDomains.length; i++) {
-      if (url.indexOf(blockAllDomains[i]) >= 0) {
+  var isBlockableDomain = function (context) {
+
+    //console.log('isBlockableDomain',context.rootDomain, context);
+
+    var domain = context.rootDomain,
+      host = context.requestHostname;
+
+    for (var i = 0; i < allowAnyBlockOnDomains.length; i++) {
+
+      var dom = allowAnyBlockOnDomains[i];
+      if (dom === domain || host.indexOf(dom) > -1) {
         return true;
       }
     }
     return false;
   };
 
-  var isBlockableRequest = function (compiled, requestURL) {
+  var mustAllow = function (result, context) {
+
+    return result && result.length && !isBlockableRequest(context);
+  }
+
+  var isBlockableRequest = function (context) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
@@ -1189,17 +1201,20 @@
       return false;
     }
 
-    if (isBlockableDomain(requestURL)) {
+    if (µb.redirectEngine.toURL(context)) { // always allow redirect blocks
+      return true;
+    }
 
-      logNetBlock('DOMAIN', requestURL);
+    if (isBlockableDomain(context)) {
+
+      logNetBlock('ByDomain', context.rootDomain + ' => ' + context.requestURL);
       return true;
     }
 
     var snfe = µb.staticNetFilteringEngine,
+      compiled = snfe.toResultString(1).slice(3),
       raw = snfe.filterStringFromCompiled(compiled),
       lists = listsForFilter(compiled/*, raw*/);
-
-    //console.log('isBlockableRequest',requestURL, compiled);
 
     for (var i = 0; i < lists.length; i++) { //
 
@@ -1208,17 +1223,17 @@
 
         if (logBlocks) { // } && name !== 'EasyList') {
           log("[ALLOW] (" + name + ")", (ruleDisabled(raw, name) ?
-            '**RULE**' : ''), raw, requestURL);
+            '**RULE**' : ''), raw, context.requestURL);
         }
 
         // Note: need to store allowed requests here so that we can
         // block any incoming cookies later (see #301)
-        allowedExceptions[requestURL] = +new Date();
+        allowedExceptions[context.requestURL] = +new Date();
 
         continue; // no-block
       }
 
-      logNetBlock(name, raw + ': ', requestURL);
+      logNetBlock(name, raw + ': ', context.requestURL);
 
       return true; // blocked, no need to continue
     }
@@ -1272,7 +1287,7 @@
 
       listEntries = entries;
       var keys = Object.keys(entries);
-      log("[STARTUP] Compiled " + keys.length +
+      log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
     });
@@ -1294,7 +1309,11 @@
       arguments[0] = '[BLOCK] (' + arguments[0] + ')';
       log.apply(this, arguments);
     }
-    return logBlocks;
+  }
+
+  var logRedirect = function (from, to) {
+    if (logBlocks && arguments.length)
+      log('[REDIRECT] ' + from + ' => '+ to);
   }
 
   var lookupAd = function (url, requestId) {
@@ -1328,7 +1347,7 @@
       stripCookies(headers);
   }
 
-  var stripCookies = function (headers) {           // adn
+  var stripCookies = function (headers) {           // ADN
 
     var pre = headers.length, dbug = 1;
     for (var i = headers.length - 1; i >= 0; i--) {
@@ -1353,6 +1372,7 @@
     logAdSet: logAdSet,
     clearAds: clearAds,
     lookupAd: lookupAd,
+    mustAllow: mustAllow,
     exportAds: exportAds,
     importAds: importAds,
     registerAd: registerAd,
@@ -1361,13 +1381,13 @@
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
     logNetBlock: logNetBlock,
+    logRedirect: logRedirect,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
     stripCookies: stripCookies,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
-    isBlockableRequest: isBlockableRequest,
     verifyListSelection: verifyListSelection,
     injectContentScripts: injectContentScripts,
     checkAllowedException: checkAllowedException,

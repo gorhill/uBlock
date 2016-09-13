@@ -516,7 +516,7 @@ var domFilterer = {
 
     hideNode: function(node) {
 
-        if (vAPI.prefs.hidingDisabled) { // adn
+        if (vAPI.prefs.hidingDisabled) { // ADN
           console.log('adn: hiding disabled');
           return;
         }
@@ -1094,7 +1094,7 @@ vAPI.domCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
 
-      // adn: inject our content-scripts into dynamically-created iframes
+      // ADN: inject our content-scripts into dynamically-created iframes
       iframe.onload = function () {
         if (vAPI.chrome) { // ff-already handles this case correctly
           this.contentWindow.chrome.runtime.connect().postMessage({

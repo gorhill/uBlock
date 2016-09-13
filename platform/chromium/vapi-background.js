@@ -1003,7 +1003,7 @@ vAPI.net.registerListeners = function() {
         return onHeadersReceivedClient(details);
     };
 
-    // adn
+    // ADN
     var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback;
     var onBeforeSendHeaders = function(details) {
 
@@ -1026,7 +1026,7 @@ vAPI.net.registerListeners = function() {
         return result;
     };
 
-    // adn
+    // ADN
     var onBeforeRedirectClient = this.onBeforeRedirect.callback;
     var onBeforeRedirect = function(details) {
 
@@ -1068,7 +1068,7 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        // adn
+        // ADN
         listener = onBeforeSendHeaders;
         if ( crapi.onBeforeSendHeaders.hasListener(listener) === false ) {
             crapi.onBeforeSendHeaders.addListener(
@@ -1081,8 +1081,8 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        // adn
-        listener = onBeforeRedirect;
+        // ADN
+        /*listener = onBeforeRedirect;
         if ( crapi.onBeforeRedirect.hasListener(listener) === false ) {
             crapi.onBeforeRedirect.addListener(
                 listener,
@@ -1092,7 +1092,7 @@ vAPI.net.registerListeners = function() {
                 },
                 this.onBeforeRedirect.extra
             );
-        }
+        }*/
 
         // https://github.com/gorhill/uBlock/issues/675
         // Experimental: keep polling to be sure our listeners are still installed.
@@ -1194,7 +1194,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
           function() { scriptEnd(tabId, frameId); } : 0);
       }
     };
-    var startInTab = function(tab, frameId) { // adn
+    var startInTab = function(tab, frameId) { // ADN
         var µb = µBlock;
         µb.tabContextManager.commit(tab.id, tab.url);
         µb.bindTabToPageStats(tab.id);
@@ -1223,7 +1223,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     };
 
     if (tabId)  {
-        chrome.tabs.get(tabId, function(tab) { startInTab(tab, frameId); }); // adn
+        chrome.tabs.get(tabId, function(tab) { startInTab(tab, frameId); }); // ADN
     }
     else {
         chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);

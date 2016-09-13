@@ -40,7 +40,7 @@ var hasCachedContent = false;
 
 var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
   "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
-  "assets/thirdparties/pgl.yoyo.org/as/serverlist" ]; // adn
+  "assets/thirdparties/pgl.yoyo.org/as/serverlist" ]; // ADN
 
 /******************************************************************************/
 
@@ -127,7 +127,7 @@ var renderFilterLists = function() {
             .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
 
-        // adn: only show counts if entry is on
+        // ADN: only show counts if entry is on
         elem.text(entry.off ? '' : text);
 
         // https://github.com/gorhill/uBlock/issues/78
@@ -185,7 +185,7 @@ var renderFilterLists = function() {
 
         var liGroup = listGroupTemplate.clone();
 
-        // adn: change some group key names
+        // ADN: change some group key names
         if (groupKey === 'default') groupKey = 'essentials';
         if (groupKey === 'multipurpose') groupKey = 'other';
 
@@ -207,7 +207,7 @@ var renderFilterLists = function() {
             var aTitle = listDetails.available[a].title || '',
               bTitle = listDetails.available[b].title || '';
 
-            // adn: push 'My filters' to last
+            // ADN: push 'My filters' to last
             if (aTitle === 'My filters') return 1;
             if (bTitle === 'My filters') return -1;
 
@@ -244,7 +244,7 @@ var renderFilterLists = function() {
 
 console.log(Object.keys(details.available));
 
-        // adn: ignore hidden lists
+        // ADN: ignore hidden lists
         hiddenLists.forEach(function(l) { delete details.available[l]; });
 
         // Before all, set context vars
@@ -268,14 +268,14 @@ console.log(Object.keys(details.available));
             'custom'
         ];
 
-        // adn: move the lists in these groups to 'other'
+        // ADN: move the lists in these groups to 'other'
         var toOther = ['ads', 'privacy'];
         for (i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups['multipurpose'], groups[toOther[i]]);
             delete groups[toOther[i]];
         }
 
-        // adn: move these specific lists to 'essentials'
+        // ADN: move these specific lists to 'essentials'
         var toDefault = ['assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
             'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'];
         for (i = 0; i < toDefault.length; i++) {
@@ -419,7 +419,7 @@ var onListCheckboxChanged = function() {
     }
     listDetails.available[href].off = !this.checked;
 
-    if (href === requiredList) { // adn
+    if (href === requiredList) { // ADN
 //console.log("[WARN] EasyList -> ",this.checked);
         window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
     }

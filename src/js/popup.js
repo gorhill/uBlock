@@ -414,8 +414,8 @@ var renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    //uDom.nodeFromId('appname').textContent = popupData.appName; // adn
-    //uDom.nodeFromId('version').textContent = popupData.version; // adn
+    //uDom.nodeFromId('appname').textContent = popupData.appName; // ADN
+    //uDom.nodeFromId('version').textContent = popupData.version; // ADN
 
     uDom('body')
         .toggleClass('advancedUser', popupData.advancedUserEnabled)

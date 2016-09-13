@@ -29,7 +29,7 @@ this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
 const {interfaces: Ci, utils: Cu} = Components;
 const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
-const {PrivateBrowsingUtils} = Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm"); // adn
+const {PrivateBrowsingUtils} = Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm"); // ADN
 
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 const rpcEmitterName = hostName + ':child-process-message';

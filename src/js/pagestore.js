@@ -575,17 +575,8 @@ PageStore.prototype.filterRequest = function(context) {
 
     // console.debug('[%s, %s] = "%s"', context.requestHostname, requestType, result);
 
-    // ADN
-    var compiledFilter = µb.staticNetFilteringEngine.toResultString(1).slice(3);
-    if (result && result.length) {
-
-      // blocked-by-ublock: check that we don't need to allow it
-      if (!µb.adnauseam.isBlockableRequest(compiledFilter, context.requestURL)) {
-
-        if (!µb.redirectEngine.toURL(context)) // make sure its not a redirect
-
-          result = ''; // OK, lets allow it
-      }
+    if (µb.adnauseam.mustAllow(result, context)) { // ADN
+        result = ''; // not-blocking
     }
 
     return result;
@@ -635,10 +626,8 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         }
     }
 
-    // ADN
-    var compiledFilter = µb.staticNetFilteringEngine.toResultString(1).slice(3);
-    if (result && result.length && !µb.adnauseam.isBlockableRequest(compiledFilter, context.requestURL)) {
-        console.warn("*** Blocking filterRequestNoCache ***");
+    if (µb.adnauseam.mustAllow(result, context)) {
+        console.warn("*** Blocking filterRequestNoCache ***"); // when?
         result = ''; // not-blocking
     }
 

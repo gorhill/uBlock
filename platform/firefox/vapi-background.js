@@ -297,7 +297,7 @@ vAPI.browserSettings = {
                 }
                 break;
 
-            // adn: see http://kb.mozillazine.org/Network.cookie.cookieBehavior
+            // ADN: see http://kb.mozillazine.org/Network.cookie.cookieBehavior
             case 'thirdPartyCookiesAllowed':
 
                 this.rememberOriginalValue('network.cookie', 'cookieBehavior');
@@ -1908,7 +1908,7 @@ var httpObserver = {
     onHeadersReceived: function(){},
     onHeadersReceivedTypes: null,
 
-    onBeforeSendHeaders: function(){}, // adn
+    onBeforeSendHeaders: function(){}, // ADN
     onBeforeSendHeadersTypes: null,
 
     get componentRegistrar() {
@@ -2170,7 +2170,7 @@ var httpObserver = {
             URI = Services.io.newURI(URI.asciiSpec.replace(/^http(s)?:/, 'ws$1:'), null, null);
         }
 
-        this.handleRequestHeaders(channel, URI, type, details.tabId); // adn
+        this.handleRequestHeaders(channel, URI, type, details.tabId); // ADN
 
         var result = this.onBeforeRequest({
             frameId: details.frameId,
@@ -2238,10 +2238,10 @@ var httpObserver = {
             }
         }
 
-        var requestId = this.requestId(channel.originalURI.asciiSpec); // adn
+        var requestId = this.requestId(channel.originalURI.asciiSpec); // ADN
 
         var result = this.onHeadersReceived({
-            requestId: requestId, // adn
+            requestId: requestId, // ADN
             parentFrameId: channelData[1],
             responseHeaders: responseHeaders,
             tabId: channelData[2],
@@ -2258,7 +2258,7 @@ var httpObserver = {
             return;
         }
 
-        // adn: (ugly-hack-for-firefox) we only deal with cookies here
+        // ADN: (ugly-hack-for-firefox) we only deal with cookies here
         // and just ignore whatever is returned from onHeadersReceived()
         if (µBlock.userSettings.noIncomingCookies &&
           µBlock.adnauseam.lookupAd(URI.asciiSpec, requestId))
@@ -2281,12 +2281,12 @@ var httpObserver = {
 
         var responseHeaders = [];
 
-        // adn: add all the incoming headers (only for xmlhttprequests?)
+        // ADN: add all the incoming headers (only for xmlhttprequests?)
         channel.visitResponseHeaders(function(name, value) {
             responseHeaders.push({ name: name, value: value });
         });
 
-        if (result.responseHeaders) { // adn: set response headers
+        if (result.responseHeaders) { // ADN: set response headers
 
             var headers = result.responseHeaders;
             for (var i = 0; i < headers.length; i++) {
@@ -2459,7 +2459,7 @@ vAPI.net.registerListeners = function() {
     // Since it's not used
     //this.onBeforeSendHeaders = null;
 
-    // adn
+    // ADN
     if (typeof this.onBeforeSendHeaders.callback === 'function') {
       httpObserver.onBeforeSendHeaders = this.onBeforeSendHeaders.callback;
       httpObserver.onBeforeSendHeadersTypes = this.onBeforeSendHeaders.types ?
@@ -2467,7 +2467,7 @@ vAPI.net.registerListeners = function() {
         null;
     }
 
-    // adn
+    // ADN
     if (typeof this.onBeforeRedirect.callback === 'function') {
       httpObserver.onBeforeRedirect = this.onBeforeRedirect.callback;
       httpObserver.onBeforeRedirectTypes = this.onBeforeRedirect.types ?

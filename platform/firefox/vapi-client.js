@@ -114,7 +114,7 @@ vAPI.executionCost.start();
 /******************************************************************************/
 
 vAPI.firefox = true;
-vAPI.debugAdParsing = false; // adn
+vAPI.debugAdParsing = false; // ADN
 
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +
@@ -217,7 +217,7 @@ vAPI.shutdown = (function() {
 
 /******************************************************************************/
 
-vAPI.prefs = {}; // adn, for content-scripts
+vAPI.prefs = {}; // ADN, for content-scripts
 
 vAPI.messaging = {
     channels: Object.create(null),

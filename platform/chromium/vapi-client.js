@@ -61,7 +61,7 @@ if ( vAPI.sessionId ) {
     return;
 }
 
-vAPI.debugAdParsing = true; // adn
+vAPI.debugAdParsing = true; // ADN
 
 /******************************************************************************/
 
@@ -403,7 +403,7 @@ vAPI.shutdown.add(function() {
     delete window.vAPI;
 });
 
-vAPI.prefs = {}; // adn, for content-scripts
+vAPI.prefs = {}; // ADN, for content-scripts
 
 vAPI.executionCost.stop('vapi-client.js');
 

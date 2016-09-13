@@ -79,7 +79,7 @@ var onAllReady = function() {
     vAPI.onLoadAllCompleted();
     µb.contextMenu.update(null);
 
-    µb.adnauseam.onListsLoaded(µb.firstInstall); // adn
+    µb.adnauseam.onListsLoaded(µb.firstInstall); // ADN
 
     µb.firstInstall = false;
 };
@@ -173,7 +173,7 @@ var onUserSettingsReady = function(fetched) {
         'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
         'prefetching': !userSettings.prefetchingDisabled,
         'webrtcIPAddress': !userSettings.webrtcIPAddressHidden,
-        'thirdPartyCookiesAllowed': !userSettings.noThirdPartyCookies // adn
+        'thirdPartyCookiesAllowed': !userSettings.noThirdPartyCookies // ADN
     });
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);

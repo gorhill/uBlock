@@ -50,7 +50,7 @@ return {
 
     userSettings: {
 
-        admap: {},          // adn
+        admap: {},          // ADN
         parseTextAds: true,
 
         hidingAds: false,
@@ -131,7 +131,7 @@ return {
     permanentLists: {
         // User
         'assets/user/filters.txt': {
-            title: 'My filters', // adn
+            title: 'My filters', // ADN
             group: 'default'
         },
         // AdNauseam
