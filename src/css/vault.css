@@ -677,17 +677,25 @@ div.bullets { display: none; } /* hide by default */
   position: absolute;
   top: 0;
   left: 0;
+  color: #fff;
+  overflow: hidden;
+  line-height: 85px;
+  text-indent: 20px;
+  font-size: 30px;
+  font-family: Bebas Neue;
 }
 .item.just-failed .ad::before,
 .item-text.just-failed .item-text-div::before {
 	background: #B80606;
 	animation: 1200ms ease-in-out failed-marker;
+  content: "FAILED";
 }
 
 .item.just-visited .ad::before,
 .item-text.just-visited .item-text-div::before {
 	background: #BD10E0;
 	animation: 1000ms ease-in-out visit-marker;
+  content: "VISITED";
 }
 .item.attempting .ad::before,
 .item-text.attempting .item-text-div::before {
