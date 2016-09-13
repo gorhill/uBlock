@@ -565,12 +565,6 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
-
-            // ADN
-            var snfe = µb.staticNetFilteringEngine;
-            if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), context.requestURL)) {
-              result = ''; // not-blocking
-            }
         }
     }
 
@@ -580,6 +574,19 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // console.debug('[%s, %s] = "%s"', context.requestHostname, requestType, result);
+
+    // ADN
+    var compiledFilter = µb.staticNetFilteringEngine.toResultString(1).slice(3);
+    if (result && result.length) {
+
+      // blocked-by-ublock: check that we don't need to allow it
+      if (!µb.adnauseam.isBlockableRequest(compiledFilter, context.requestURL)) {
+
+        if (!µb.redirectEngine.toURL(context)) // make sure its not a redirect
+
+          result = ''; // OK, lets allow it
+      }
+    }
 
     return result;
 };
@@ -625,17 +632,14 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
-
-            // ADN
-            if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1))) {
-              console.warn("*** Blocking filterRequestNoCache ***");
-              result = ''; // not-blocking
-            }
         }
     }
-    else if (result.length > 0) {
 
-        console.warn("ILLEGAL(nocache): adn block skipped", result, context);
+    // ADN
+    var compiledFilter = µb.staticNetFilteringEngine.toResultString(1).slice(3);
+    if (result && result.length && !µb.adnauseam.isBlockableRequest(compiledFilter)) {
+        console.warn("*** Blocking filterRequestNoCache ***");
+        result = ''; // not-blocking
     }
 
     return result;

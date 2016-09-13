@@ -18,9 +18,11 @@
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
     profiler = +new Date(),
+    allowedExceptions = [],
     pollQueueInterval = 5000,
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
+
 
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
@@ -1176,7 +1178,7 @@
     return lists;
   };
 
-  var isBlockableRequest = function (result, requestURL, isTop) {
+  var isBlockableRequest = function (compiled, requestURL, isTop) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
@@ -1184,8 +1186,7 @@
       return;
     }
 
-    var compiled = result.slice(3),
-      snfe = µb.staticNetFilteringEngine,
+    var snfe = µb.staticNetFilteringEngine,
       raw = snfe.filterStringFromCompiled(compiled),
       lists = listsForFilter(compiled/*, raw*/);
 
@@ -1201,11 +1202,14 @@
             '**RULE**' : ''), raw, requestURL);
         }
 
+        // Note: need to store allowed requests here so that we can
+        // block any incoming cookies later (see #301)
+        allowedExceptions[requestURL] = +new Date();
+
         continue; // no-block
       }
 
-      logBlocks && log("[BLOCK" + (isTop ? '-MAIN] ' : "] '") +
-        name + "' " + raw + ': ', requestURL);
+0 && logBlocks && log('[BLOCK] ' +name + "' " + raw + ': ', requestURL);
 
       return true; // blocked, no need to continue
     }
@@ -1306,6 +1310,14 @@
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
+  var wasAllowedException = function (url) {
+
+    var r = (typeof allowedExceptions[url] !== 'undefined');
+    if (url.indexOf('https://s.zkcdn.net') === 0)
+      console.log('MISS: '+url.substring(0,30));
+    return r;
+  }
+
   /******************************************************************************/
 
   return { // exports
@@ -1328,8 +1340,9 @@
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     isBlockableRequest: isBlockableRequest,
+    wasAllowedException: wasAllowedException,
     verifyListSelection: verifyListSelection,
-    injectContentScripts: injectContentScripts
+    injectContentScripts: injectContentScripts,
   };
 
 })();

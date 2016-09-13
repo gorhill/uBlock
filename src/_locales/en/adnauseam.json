@@ -210,9 +210,9 @@
     "message": "Hide referring page on visits",
     "description": "English: Hide referring page on visits"
   },
-  "noThirdPartyCookiesPrompt": {
-    "message": "Disallow third-party cookies",
-    "description": "English: Disallow third-party cookies"
+  "respectDNTPrompt": {
+    "message": "Respect DoNotTrack exceptions",
+    "description": "English: Respect the EFF's DoNotTrack exceptions"
   },
   "extName": {
     "message": "AdNauseam",

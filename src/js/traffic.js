@@ -122,16 +122,6 @@
       );
     }
 
-    // Not blocked
-    // <<<<<<< HEAD
-    //     if (µb.isAllowResult(result)) {
-    //       // https://github.com/chrisaljoudi/uBlock/issues/114
-    //       frameId = details.frameId;
-    //       if (frameId > 0 && isFrame) {
-    //         pageStore.setFrame(frameId, requestURL);
-    //       }
-    //       return;
-    // =======
     if ( µb.isAllowResult(result) ) {
         // https://github.com/chrisaljoudi/uBlock/issues/114
         if ( details.parentFrameId !== -1 && isFrame ) {
@@ -155,7 +145,7 @@
 
     if ( url !== undefined ) {
 
-        µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(redirect)");
+        //µb.adnauseam.blockLogging() && console.log("BLOCK(redirect) :: "+requestURL, '->', url);
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -183,123 +173,114 @@
 
   /******************************************************************************/
 
-  var onBeforeRootFrameRequest = function (details) {
-    var tabId = details.tabId;
-    var requestURL = details.url;
-    var µb = µBlock;
+  var onBeforeRootFrameRequest = function(details) {
+      var tabId = details.tabId;
+      var requestURL = details.url;
+      var µb = µBlock;
 
-    µb.adnauseam.onPageLoad(tabId, requestURL);
-    µb.tabContextManager.push(tabId, requestURL);
+      µb.tabContextManager.push(tabId, requestURL);
 
-    // Special handling for root document.
-    // https://github.com/chrisaljoudi/uBlock/issues/1001
-    // This must be executed regardless of whether the request is
-    // behind-the-scene
-    var µburi = µb.URI;
-    var requestHostname = µburi.hostnameFromURI(requestURL);
-    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
-    var context = {
+      // Special handling for root document.
+      // https://github.com/chrisaljoudi/uBlock/issues/1001
+      // This must be executed regardless of whether the request is
+      // behind-the-scene
+      var µburi = µb.URI;
+      var requestHostname = µburi.hostnameFromURI(requestURL);
+      var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+      var context = {
+          rootHostname: requestHostname,
+          rootDomain: requestDomain,
+          pageHostname: requestHostname,
+          pageDomain: requestDomain,
+          requestURL: requestURL,
+          requestHostname: requestHostname,
+          requestType: 'main_frame'
+      };
 
-      rootHostname: requestHostname,
-      rootDomain: requestDomain,
-      pageHostname: requestHostname,
-      pageDomain: requestDomain,
-      requestURL: requestURL,
-      requestHostname: requestHostname,
-      requestType: 'main_frame'
-    };
+      var result = '';
 
-    var result = '';
-
-    // If the site is whitelisted, disregard strict blocking
-    if (µb.getNetFilteringSwitch(requestURL) === false) {
-      result = 'ua:whitelisted';
-    }
-
-    // Permanently unrestricted?
-    if (result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname)) {
-      result = 'ua:no-strict-blocking: ' + µb.hnSwitches.z + ' true';
-    }
-
-    // Temporarily whitelisted?
-    if (result === '') {
-      result = isTemporarilyWhitelisted(result, requestHostname);
-      if (result.charAt(1) === 'a') {
-        result = 'ua:no-strict-blocking true (temporary)';
+      // If the site is whitelisted, disregard strict blocking
+      if ( µb.getNetFilteringSwitch(requestURL) === false ) {
+          result = 'ua:whitelisted';
       }
-    }
 
-    // Static filtering: We always need the long-form result here.
-    var snfe = µb.staticNetFilteringEngine;
+      // Permanently unrestricted?
+      if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+          result = 'ua:no-strict-blocking: ' + µb.hnSwitches.z + ' true';
+      }
 
-    // Check for specific block
-    if (
-        result === '' &&
-        snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
-    ) {
-        result = snfe.toResultString(true);
-    }
+      // Temporarily whitelisted?
+      if ( result === '' ) {
+          result = isTemporarilyWhitelisted(result, requestHostname);
+          if ( result.charAt(1) === 'a' ) {
+              result = 'ua:no-strict-blocking true (temporary)';
+          }
+      }
 
-    // Check for generic block
-    if (
-        result === '' &&
-        snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
-    ) {
-        result = snfe.toResultString(true);
-        // https://github.com/chrisaljoudi/uBlock/issues/1128
-        // Do not block if the match begins after the hostname, except when
-        // the filter is specifically of type `other`.
-        // https://github.com/gorhill/uBlock/issues/490
-        // Removing this for the time being, will need a new, dedicated type.
-        if ( result.charAt(1) === 'b' ) {
-            result = toBlockDocResult(requestURL, requestHostname, result);
-        }
-    }
+      // Static filtering: We always need the long-form result here.
+      var snfe = µb.staticNetFilteringEngine;
 
-    var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
-    if (pageStore) {
-      pageStore.logRequest(context, result);
-    }
+      // Check for specific block
+      if (
+          result === '' &&
+          snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
+      ) {
+          result = snfe.toResultString(true);
+      }
 
-    if (µb.logger.isEnabled()) {
-      µb.logger.writeOne(
-        tabId,
-        'net',
-        result,
-        'main_frame',
-        requestURL,
-        requestHostname,
-        requestHostname
-      );
-    }
+      // Check for generic block
+      if (
+          result === '' &&
+          snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
+      ) {
+          result = snfe.toResultString(true);
+          // https://github.com/chrisaljoudi/uBlock/issues/1128
+          // Do not block if the match begins after the hostname, except when
+          // the filter is specifically of type `other`.
+          // https://github.com/gorhill/uBlock/issues/490
+          // Removing this for the time being, will need a new, dedicated type.
+          if ( result.charAt(1) === 'b' ) {
+              result = toBlockDocResult(requestURL, requestHostname, result);
+          }
+      }
 
-    // Not blocked
-    if (µb.isAllowResult(result)) {
-      return;
-    }
+      // Log
+      var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+      if ( pageStore ) {
+          pageStore.logRequest(context, result);
+      }
 
-    if (result && !µb.adnauseam.isBlockableRequest(snfe.toResultString(1), requestURL, true)) {
-      return; // adn: not blocking (do we actually need to check this for root pages? no)
-    }
+      if ( µb.logger.isEnabled() ) {
+          µb.logger.writeOne(
+              tabId,
+              'net',
+              result,
+              'main_frame',
+              requestURL,
+              requestHostname,
+              requestHostname
+          );
+      }
 
-    var compiled = result.slice(3);
+      // Not blocked
+      if ( µb.isAllowResult(result) ) {
+          return;
+      }
 
-    // Blocked
-    var query = btoa(JSON.stringify({
-      url: requestURL,
-      hn: requestHostname,
-      dn: requestDomain,
-      fc: compiled,
-      fs: snfe.filterStringFromCompiled(compiled)
-    }));
+      var compiled = result.slice(3);
 
-    vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
+      // Blocked
+      var query = btoa(JSON.stringify({
+          url: requestURL,
+          hn: requestHostname,
+          dn: requestDomain,
+          fc: compiled,
+          fs: snfe.filterStringFromCompiled(compiled)
+      }));
 
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(document)");
+      vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
-    return {
-      cancel: true
-    };
+      return { cancel: true };
   };
 
   /******************************************************************************/
@@ -361,7 +342,9 @@
     }
     context.dispose();
     if ( result !== '' ) {
-        µb.adnauseam.blockLogging() && console.log("BLOCK(net.beacon)", context.requestURL, result);
+
+        // adn: no need to ever allow beacons, just log... 
+        µb.adnauseam.blockLogging() && console.log("[BLOCK] beacon)", context.requestURL, result);
         return { cancel: true };
     }
   };
@@ -425,6 +408,23 @@
 
   /******************************************************************************/
 
+  var stripCookies = function (headers, dbug) {           // adn
+
+    var pre = headers.length;
+    for (var i = headers.length - 1; i >= 0; i--) {
+
+      var name = headers[i].name.toLowerCase();
+
+      //dbug && console.log(i+") "+name);
+
+      if (name === 'set-cookie' || name === 'set-cookie2') {
+
+        dbug && console.log('*** Removed cookie: ', headers[i].value);
+        headers.splice(i, 1);
+      }
+    }
+  }
+
   // To handle:
   // - inline script tags
   // - media elements larger than n kB
@@ -439,34 +439,26 @@
             dbug && console.log('onHeadersReceived: ',  details.type, details.url, details);
 
             // adn
-            var headers = details.responseHeaders,
-              ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
+            if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-            if (ad) {
-
-              dbug && console.log('Pre.Headers: ',  details.responseHeaders);
-              for (var i = headers.length - 1; i >= 0; i--) {
-
-                var name = details.responseHeaders[i].name.toLowerCase();
-
-                //dbug && console.log(i+") "+name);
-
-                if (name === 'set-cookie' || name === 'set-cookie2') {
-
-                    dbug && console.log('Removed cookie: ',details.responseHeaders[i].value);
-                    details.responseHeaders.splice(i, 1);
-                }
-              }
-              dbug && console.log('Post.Headers', details.responseHeaders);
+              stripCookies(details.responseHeaders, dbug);
             }
             else if (dbug && vAPI.chrome) {
-                console.log('Ignoring non-ADN response', details.type, details.url);
+
+              console.log('Ignoring non-ADN response', details.type, details.url);
             }
         }
 
         // don't return an empty headers array
         return details.responseHeaders.length ?
           { 'responseHeaders': details.responseHeaders } : null;
+      }
+
+      //console.log("GOT-HEADERS", details);
+      // TODO: need to check here if this was an allowed request
+      if (µBlock.adnauseam.wasAllowedException(details.url)) {
+        console.log('STRIP COOKIES FOR: '+details.url);
+        stripCookies(details.responseHeaders, 1);
       }
 
       var requestType = details.type;

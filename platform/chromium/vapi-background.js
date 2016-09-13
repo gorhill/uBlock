@@ -978,6 +978,7 @@ vAPI.net.registerListeners = function() {
     var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
     var onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
+if (details.url.indexOf('zkcdn')>-1) console.log('onHeadersReceived', details.url);
         normalizeRequestDetails(details);
         // Hack to work around Chromium API limitations, where requests of
         // type `font` are returned as `other`. For example, our normalization
