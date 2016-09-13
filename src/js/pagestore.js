@@ -637,7 +637,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
     // ADN
     var compiledFilter = µb.staticNetFilteringEngine.toResultString(1).slice(3);
-    if (result && result.length && !µb.adnauseam.isBlockableRequest(compiledFilter)) {
+    if (result && result.length && !µb.adnauseam.isBlockableRequest(compiledFilter, context.requestURL)) {
         console.warn("*** Blocking filterRequestNoCache ***");
         result = ''; // not-blocking
     }

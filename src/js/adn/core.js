@@ -168,7 +168,7 @@
 
     computeNextId(ads);
 
-    log('AdNauseam.initialized: with ' + ads.length + ' ads');
+    log('[STARTUP] Initialized with ' + ads.length + ' ads');
 
     return ads;
   }
@@ -257,7 +257,7 @@
 
       if (ad.attempts >= maxAttemptsPerAd) {
 
-        log('GIVEUP: ' + adinfo(ad), ad); // this);
+        log('[FAILED] ' + adinfo(ad), ad); // this);
         if (ad.title === 'Pending') ad.title = 'Failed';
       }
 
@@ -301,7 +301,7 @@
 
     var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
     //console.log('shtml: ' + shtml);
-    warn('Unable to parse title from: ' + xhr.requestUrl, shtml);
+    warn('[VISITED] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
 
     return false;
   }
@@ -318,7 +318,6 @@
       if (ad.title === 'Pending') {
 
         ad.title = parseDomain(xhr.requestUrl, true);
-        warn('Replaced "Pending" with: ' + ad.title);
       }
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
@@ -331,7 +330,7 @@
 
       if (ad === inspected) inspected = null;
 
-      log('VISITED: ' + adinfo(ad), ad.title);
+      log('[VISITED] ' + adinfo(ad), ad.title);
     }
 
     storeUserData();
@@ -355,7 +354,7 @@
     // Is it a timeout?
     if (e.type === 'timeout') {
 
-      warn('TIMEOUT: visiting ', this.requestUrl); //, e, this);
+      warn('[TIMEOUT] Visiting ' + this.requestUrl); //, e, this);
 
     } else {
 
@@ -434,15 +433,10 @@
 
     if (xhr) {
 
-      if (!xhr.delegate.attemptedTs) {
-        log(xhr);
-        throw Error('Invalid state: ', xhr);
-      }
-
       var elapsed = (now - xhr.delegate.attemptedTs);
 
       // TODO: why does this happen... a redirect?
-      log('Attempt to re-use active xhr: launched ' + elapsed + " ms ago");
+      warn('[TRYING] Attempt to reuse xhr from ' + elapsed + " ms ago");
 
       if (elapsed > visitTimeout) {
 
@@ -462,7 +456,7 @@
 
   var sendXhr = function (ad) {
 
-    log('TRYING: ' + adinfo(ad), ad.targetUrl);
+    log('[ATTEMPT] ' + adinfo(ad), ad.targetUrl);
 
     xhr = new XMLHttpRequest();
 
@@ -678,7 +672,7 @@
 
     if (adlist().length < count) {
 
-      log('DELETED: ' + adinfo(ad));
+      log('[DELETE] ' + adinfo(ad));
       updateBadges();
 
     } else {
@@ -861,7 +855,7 @@
 
   var postRegister = function (ad, pageUrl, tabId) {
 
-    log('DETECTED: ' + adinfo(ad), ad);
+    log('[FOUND] ' + adinfo(ad), ad);
 
     // if vault/menu is open, send the new ad
     var json = adsForUI(pageUrl);
@@ -906,7 +900,7 @@
     storeUserData();
     computeNextId();
 
-    log('AdNauseam.clear: ' + pre + ' ads cleared');
+    log('[CLEAR] ' + pre + ' ads cleared');
   }
 
   // update tab badges if we're showing them
@@ -977,12 +971,12 @@
         if (map) {
 
           // ok, legacy ads converted and verified
-          log('Updating legacy ads to current format');
+          log('[IMPORT] Updating legacy ads');
         }
 
       } else {
 
-        warn('Unable to parse legacy-format:', request.data);
+        warn('[IMPORT] Unable to parse legacy-format:', request.data);
         return { // give up and show 0 ads imported
           what: 'importConfirm',
           count: 0
@@ -996,7 +990,7 @@
     storeUserData();
 
     importedCount = adlist().length - count;
-    log('AdNauseam.import: ' + importedCount + ' ads from ' + request.file);
+    log('[IMPORT]: ' + importedCount + ' ads from ' + request.file);
     reloadExtPage('vault.html'); // reload Vault page if open
 
     return {
@@ -1016,7 +1010,7 @@
       'filename': filename
     });
 
-    log('AdNauseam.export: ' + count + ' ads to ' + filename);
+    log('[EXPORT] ' + count + ' ads to ' + filename);
   }
 
   var adsForPage = function (request, pageStore, tabId) {
@@ -1178,16 +1172,16 @@
     return lists;
   };
 
-  var isBlockableDomain = function (requestURL) {
+  var isBlockableDomain = function (url) {
     for (var i = 0; i < blockAllDomains.length; i++) {
-      if (requestUrl.indexOf(blockAllDomains[i]) >= 0) {
-        console.log('[BLOCK]');
-        return;
+      if (url.indexOf(blockAllDomains[i]) >= 0) {
+        return true;
       }
     }
+    return false;
   };
 
-  var isBlockableRequest = function (compiled, requestURL, isTop) {
+  var isBlockableRequest = function (compiled, requestURL) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
@@ -1197,7 +1191,7 @@
 
     if (isBlockableDomain(requestURL)) {
 
-      logBlocks && log('[BLOCK] ***DOMAIN***', requestURL);
+      logNetBlock('DOMAIN', requestURL);
       return true;
     }
 
@@ -1213,7 +1207,7 @@
       if (!activeBlockList(name) || ruleDisabled(raw, name)) {
 
         if (logBlocks) { // } && name !== 'EasyList') {
-          log("[ALLOW] '" + name + "'", (ruleDisabled(raw, name) ?
+          log("[ALLOW] (" + name + ")", (ruleDisabled(raw, name) ?
             '**RULE**' : ''), raw, requestURL);
         }
 
@@ -1224,7 +1218,7 @@
         continue; // no-block
       }
 
-      0 && logBlocks && log('[BLOCK] ' +name + "' " + raw + ': ', requestURL);
+      logNetBlock(name, raw + ': ', requestURL);
 
       return true; // blocked, no need to continue
     }
@@ -1278,7 +1272,7 @@
 
       listEntries = entries;
       var keys = Object.keys(entries);
-      log("Loaded/compiled " + keys.length +
+      log("[STARTUP] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
     });
@@ -1297,7 +1291,7 @@
 
   var logNetBlock = function () {
     if (logBlocks && arguments.length) {
-      arguments[0] = '[BLOCK] ' + arguments[0];
+      arguments[0] = '[BLOCK] (' + arguments[0] + ')';
       log.apply(this, arguments);
     }
     return logBlocks;
@@ -1330,18 +1324,13 @@
 
   var checkAllowedException = function (url, headers) {
 
-    if (typeof allowedExceptions[url] !== 'undefined'))
-      stripCookies(headers, 1);
+    if (typeof allowedExceptions[url] !== 'undefined')
+      stripCookies(headers);
   }
 
-  var wasAllowedException = function (url) {
+  var stripCookies = function (headers) {           // adn
 
-    return (typeof allowedExceptions[url] !== 'undefined');
-  }
-
-  var stripCookies = function (headers, dbug) {           // adn
-
-    var pre = headers.length;
+    var pre = headers.length, dbug = 1;
     for (var i = headers.length - 1; i >= 0; i--) {
 
       var name = headers[i].name.toLowerCase();
@@ -1350,7 +1339,7 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        dbug && console.log('*** Removed cookie: ', headers[i].value);
+        dbug && console.log('[COOKIE] (strip)', headers[i].value);
         headers.splice(i, 1);
       }
     }
@@ -1371,16 +1360,17 @@
     adsForPage: adsForPage,
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
+    logNetBlock: logNetBlock,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
-    logNetBlock: logNetBlock,
+    stripCookies: stripCookies,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
     isBlockableRequest: isBlockableRequest,
-    wasAllowedException: wasAllowedException,
     verifyListSelection: verifyListSelection,
     injectContentScripts: injectContentScripts,
+    checkAllowedException: checkAllowedException,
   };
 
 })();

@@ -145,6 +145,7 @@
 
     if ( url !== undefined ) {
 
+        µb.adnauseam.logNetBlock('redirect', requestURL+'->'+url,  JSON.stringify(requestContext));
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -160,8 +161,6 @@
         requestContext.dispose();
         return { redirectUrl: url };
     }
-
-    µb.adnauseam.logNetBlock('redirect:', requestURL+'->'+url, JSON.stringify(requestContext));
 
     requestContext.dispose();
 
@@ -343,7 +342,7 @@
     if ( result !== '' ) {
 
         // adn: no need to ever allow beacons, just log...
-        µb.adnauseam.logNetBlock("beacon:", context.requestURL, result, context);
+        µb.adnauseam.logNetBlock('beacon', context.requestURL, result, context);
         return { cancel: true };
     }
   };
@@ -398,7 +397,7 @@
       return;
     }
 
-    console.log("[BLOCK] xhr:", context, requestURL); // Blocked
+    µb.adnauseam.logNetBlock('xhr', context, requestURL); // Blocked
 
     return {
       'cancel': true
@@ -409,7 +408,8 @@
 
   var onBeforeRedirect = function (details) {
 
-    console.log('HANDLER: Redirect', details.url + ' -> ' + details.redirectUrl);
+    var logRedirects = true;
+    logRedirects && console.log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
   };
 
   // To handle:
@@ -428,7 +428,7 @@
             // adn
             if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-              stripCookies(details.responseHeaders, dbug);
+              µBlock.adnauseam.stripCookies(details.responseHeaders, dbug);
             }
             else if (dbug && vAPI.chrome) {
 
@@ -441,12 +441,8 @@
           { 'responseHeaders': details.responseHeaders } : null;
       }
 
-      //console.log("GOT-HEADERS", details);
-      // TODO: need to check here if this was an allowed request
-      if (µBlock.adnauseam.wasAllowedException(details.url)) {
-        console.log('STRIP COOKIES FOR: '+details.url);
-        stripCookies(details.responseHeaders, 1);
-      }
+      // adn: check if this was an allowed exception and, if so, strip cookies
+      µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
 
       var requestType = details.type;
 
@@ -503,6 +499,8 @@
         (name === 'x-devtools-emulate-network-conditions-client-id') ||
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
+
+        // block outgoing cookies here
         setHeader(headers[i], '');
       }
 
@@ -707,7 +705,7 @@ var processCSP = function(details, pageStore, context) {
         return;
     }
 
-    µb.adnauseam.logNetBlock('net.inline-script:', context);
+    µb.adnauseam.logNetBlock('net.inline-script', context);
     µb.updateBadgeAsync(tabId);
 
     return { 'responseHeaders': details.responseHeaders };
@@ -744,7 +742,7 @@ var processCSP = function(details, pageStore, context) {
     }
 
     pageStore.logLargeMedia();
-    µb.adnauseam.logNetBlock('net.largeMedia:', details);
+    µb.adnauseam.logNetBlock('net.largeMedia', details);
 
     if (µb.logger.isEnabled()) {
 
