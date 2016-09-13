@@ -145,7 +145,6 @@
 
     if ( url !== undefined ) {
 
-        //µb.adnauseam.blockLogging() && console.log("BLOCK(redirect) :: "+requestURL, '->', url);
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -162,7 +161,7 @@
         return { redirectUrl: url };
     }
 
-    //µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(request)", requestURL);
+    µb.adnauseam.logNetBlock('redirect:', requestURL+'->'+url, JSON.stringify(requestContext));
 
     requestContext.dispose();
 
@@ -343,8 +342,8 @@
     context.dispose();
     if ( result !== '' ) {
 
-        // adn: no need to ever allow beacons, just log... 
-        µb.adnauseam.blockLogging() && console.log("[BLOCK] beacon)", context.requestURL, result);
+        // adn: no need to ever allow beacons, just log...
+        µb.adnauseam.logNetBlock("beacon:", context.requestURL, result, context);
         return { cancel: true };
     }
   };
@@ -399,7 +398,7 @@
       return;
     }
 
-    console.warn("BLOCK(xhr) ", requestURL); // Blocked
+    console.log("[BLOCK] xhr:", context, requestURL); // Blocked
 
     return {
       'cancel': true
@@ -408,22 +407,10 @@
 
   /******************************************************************************/
 
-  var stripCookies = function (headers, dbug) {           // adn
+  var onBeforeRedirect = function (details) {
 
-    var pre = headers.length;
-    for (var i = headers.length - 1; i >= 0; i--) {
-
-      var name = headers[i].name.toLowerCase();
-
-      //dbug && console.log(i+") "+name);
-
-      if (name === 'set-cookie' || name === 'set-cookie2') {
-
-        dbug && console.log('*** Removed cookie: ', headers[i].value);
-        headers.splice(i, 1);
-      }
-    }
-  }
+    console.log('HANDLER: Redirect', details.url + ' -> ' + details.redirectUrl);
+  };
 
   // To handle:
   // - inline script tags
@@ -697,7 +684,7 @@ var processCSP = function(details, pageStore, context) {
             inlineScriptResult,
             'inline-script',
             requestURL,
-            context.rootHostname,
+            contextcontext.rootHostname,
             context.pageHostname
         );
     }
@@ -720,7 +707,7 @@ var processCSP = function(details, pageStore, context) {
         return;
     }
 
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(net.inline-script')");
+    µb.adnauseam.logNetBlock('net.inline-script:', context);
     µb.updateBadgeAsync(tabId);
 
     return { 'responseHeaders': details.responseHeaders };
@@ -757,7 +744,7 @@ var processCSP = function(details, pageStore, context) {
     }
 
     pageStore.logLargeMedia();
-    µb.adnauseam.blockLogging() && console.log("LOG-BLOCK(net.largeMedia)");
+    µb.adnauseam.logNetBlock('net.largeMedia:', details);
 
     if (µb.logger.isEnabled()) {
 
@@ -921,6 +908,14 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     callback: onHeadersReceived
   };
 
+  vAPI.net.onBeforeRedirect = {
+    urls: [
+      'http://*/*',
+      'https://*/*'
+    ],
+    callback: onBeforeRedirect
+  };
+
   vAPI.net.onBeforeSendHeaders = {   // adn
     urls: [
       'http://*/*',
@@ -932,6 +927,8 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     extra: ['blocking', 'requestHeaders'],
     callback: onBeforeSendHeaders
   };
+
+
 
   vAPI.net.registerListeners();
 

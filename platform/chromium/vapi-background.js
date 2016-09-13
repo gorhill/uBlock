@@ -978,7 +978,6 @@ vAPI.net.registerListeners = function() {
     var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
     var onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
-if (details.url.indexOf('zkcdn')>-1) console.log('onHeadersReceived', details.url);
         normalizeRequestDetails(details);
         // Hack to work around Chromium API limitations, where requests of
         // type `font` are returned as `other`. For example, our normalization
@@ -1027,6 +1026,14 @@ if (details.url.indexOf('zkcdn')>-1) console.log('onHeadersReceived', details.ur
         return result;
     };
 
+    // adn
+    var onBeforeRedirectClient = this.onBeforeRedirect.callback;
+    var onBeforeRedirect = function(details) {
+
+      normalizeRequestDetails(details);
+      return onBeforeRedirectClient(details);
+    };
+
     var installListeners = (function() {
         var listener;
         var crapi = chrome.webRequest;
@@ -1071,6 +1078,19 @@ if (details.url.indexOf('zkcdn')>-1) console.log('onHeadersReceived', details.ur
                     'types': this.onBeforeSendHeaders.types
                 },
                 this.onBeforeSendHeaders.extra
+            );
+        }
+
+        // adn
+        listener = onBeforeRedirect;
+        if ( crapi.onBeforeRedirect.hasListener(listener) === false ) {
+            crapi.onBeforeRedirect.addListener(
+                listener,
+                {
+                    'urls': this.onBeforeRedirect.urls || ['<all_urls>'],
+                    'types': this.onBeforeRedirect.types
+                },
+                this.onBeforeRedirect.extra
             );
         }
 

@@ -17,7 +17,7 @@ www.zam.com##.ad
 # youtube
 
 /api/ads/*
-get_video_info?*=adunit& 
+get_video_info?*=adunit&
 
 # haaretz.co.il
 
@@ -37,4 +37,9 @@ facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt]
 ##img[src*="exdynsrv.com"]
 
 # 10tv.nana10.co.il
+
 ||advsnx.net^$third-party
+
+# marinetraffic.com
+
+##.home-page.has-ad-space.container-fluid > .upper.row > .hidden-print.vertical-offset-5 > .mtseventwentyeight > a[href^="/en/p/plans"] > img[src="/img/upper_02.gif"]

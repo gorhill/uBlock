@@ -1178,12 +1178,27 @@
     return lists;
   };
 
+  var isBlockableDomain = function (requestURL) {
+    for (var i = 0; i < blockAllDomains.length; i++) {
+      if (requestUrl.indexOf(blockAllDomains[i]) >= 0) {
+        console.log('[BLOCK]');
+        return;
+      }
+    }
+  };
+
   var isBlockableRequest = function (compiled, requestURL, isTop) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
       logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
-      return;
+      return false;
+    }
+
+    if (isBlockableDomain(requestURL)) {
+
+      logBlocks && log('[BLOCK] ***DOMAIN***', requestURL);
+      return true;
     }
 
     var snfe = µb.staticNetFilteringEngine,
@@ -1209,7 +1224,7 @@
         continue; // no-block
       }
 
-0 && logBlocks && log('[BLOCK] ' +name + "' " + raw + ': ', requestURL);
+      0 && logBlocks && log('[BLOCK] ' +name + "' " + raw + ': ', requestURL);
 
       return true; // blocked, no need to continue
     }
@@ -1280,8 +1295,11 @@
     }
   }
 
-  var blockLogging = function () {
-
+  var logNetBlock = function () {
+    if (logBlocks && arguments.length) {
+      arguments[0] = '[BLOCK] ' + arguments[0];
+      log.apply(this, arguments);
+    }
     return logBlocks;
   }
 
@@ -1310,13 +1328,33 @@
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
+  var checkAllowedException = function (url, headers) {
+
+    if (typeof allowedExceptions[url] !== 'undefined'))
+      stripCookies(headers, 1);
+  }
+
   var wasAllowedException = function (url) {
 
-    var r = (typeof allowedExceptions[url] !== 'undefined');
-    if (url.indexOf('https://s.zkcdn.net') === 0)
-      console.log('MISS: '+url.substring(0,30));
-    return r;
+    return (typeof allowedExceptions[url] !== 'undefined');
   }
+
+  var stripCookies = function (headers, dbug) {           // adn
+
+    var pre = headers.length;
+    for (var i = headers.length - 1; i >= 0; i--) {
+
+      var name = headers[i].name.toLowerCase();
+
+      //dbug && console.log(i+") "+name);
+
+      if (name === 'set-cookie' || name === 'set-cookie2') {
+
+        dbug && console.log('*** Removed cookie: ', headers[i].value);
+        headers.splice(i, 1);
+      }
+    }
+  };
 
   /******************************************************************************/
 
@@ -1335,7 +1373,7 @@
     deleteAdSet: deleteAdSet,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
-    blockLogging: blockLogging,
+    logNetBlock: logNetBlock,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
