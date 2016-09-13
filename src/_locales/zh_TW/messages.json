@@ -208,7 +208,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"關閉預讀功能（用以避免來自已阻擋的網路連線請求的任何連線）",
+    "message":"關閉預讀功能（用以避免已經阻擋的網域的任何連線）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -530,6 +530,10 @@
   "aboutWiki":{
     "message":"共筆系統",
     "description":"English: project' wiki on Github"
+  },
+  "aboutSupport":{
+    "message":"支援",
+    "description":"A link for where to get support"
   },
   "aboutCode":{
     "message":"原始程式碼（GPLv3）",

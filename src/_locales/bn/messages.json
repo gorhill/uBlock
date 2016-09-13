@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"অবশেষে, একটি দক্ষ প্রতিরোধকারী। সিপিইউ এবং মেমরির জন্য হালকা।",
+    "message":"অবশেষে, একটি কার্যকর বিজ্ঞাপন প্রতিরোধক। সিপিইউ এবং মেমরি সহায়ক।",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,11 +16,11 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"৩য়-দলের ফিল্টার",
+    "message":"তৃতীয় পক্ষের ফিল্টারস",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"আমার ফিল্টার",
+    "message":"আমার ফিল্টারস",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -28,11 +28,11 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"সাদাতালিকা",
+    "message":"পরিচ্ছন্ন তালিকা",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — নেটওয়ার্ক অনুরোধ লগ",
+    "message":"uBlock₀ — ঘটনাবলী",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -68,35 +68,35 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"চয়নকারী মোডে উপাদান লিখুন",
+    "message":"উপাদান বাছাইকারী মোডে প্রবেশ করুন",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"অনুরোধ লগে যান",
+    "message":"ঘটনাবলী খুলুন",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"এই সাইটের জন্য সব পপআপ অবরোধ টগল করুন",
+    "message":"এই সাইটের জন্য সব পপআপ প্রতিরোধ অদলবদল করুন",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"এই সাইটের জন্য বৃহৎ মিডিয়া উপাদানের অবরোধ টগল করুন",
+    "message":"এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ অদলবদল করুন",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"এই সাইটের জন্য প্রসাধনী ফিল্টারিং টগল করুন",
+    "message":"এই সাইটের জন্য বাহ্যিক ফিল্টারিং অদলবদল করুন",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"এই সাইটের রিমোট ফন্টের অবরোধ টগল করুন",
+    "message":"এই সাইটের রিমোট ফন্টের অবরোধ অদলবদল করুন",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"বৈশ্বিক নিয়ম: এই কলামটি নিয়মের জন্য যা সকল সাইটে প্রয়োগ করা হবে।",
+    "message":"সার্বজনীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা সকল সাইটের উপর প্রযোজ্য।",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"স্থানীয় নিয়ম: এই কলামটি নিয়মের জন্য যা শুধু বর্তমান সাইটে প্রয়োগ করা হবে।\nস্থানীয় নিয়ম বৈশ্বিক নিয়মকে অগ্রাহ্য করবে।",
+    "message":"অভ্যন্তরীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা শুধু বর্তমান সাইটে প্রয়োগ করা হবে।\nঅভ্যন্তরীন নিয়ম সার্বজনীন নিয়মকে অগ্রাহ্য করবে।",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -104,7 +104,7 @@
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"আপনার পরিবর্তনগুলি ফেরত নিতে ক্লিক করুন।",
+    "message":"আপনার পরিবর্তনগুলি প্রত্যাবর্তন করতে ক্লিক করুন।",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -531,6 +531,10 @@
     "message":"উইকি",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Support",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"উত্স কোড (GPLv৩)",
     "description":"English: Source code (GPLv3)"
@@ -564,7 +568,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nuBlock₀ কারখানা সেটিংস পুনঃস্থাপন করবেন?",
+    "message":"আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nuBlock₀ সেটিংস পুনঃস্থাপন করবেন?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

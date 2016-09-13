@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clique para abrir o painel de controlo",
+    "message":"Clique para abrir o painel de controle",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -530,6 +530,10 @@
   "aboutWiki":{
     "message":"Documentação",
     "description":"English: project' wiki on Github"
+  },
+  "aboutSupport":{
+    "message":"Suporte",
+    "description":"A link for where to get support"
   },
   "aboutCode":{
     "message":"Código fonte (GPLv3)",

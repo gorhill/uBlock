@@ -531,6 +531,10 @@
     "message":"Viki",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Palaikymas",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"Pirminis tekstas (GPLv3)",
     "description":"English: Source code (GPLv3)"

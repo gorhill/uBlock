@@ -280,11 +280,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"시각적 필터 무시",
+    "message":"전체적 표면 필터 무시",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>전체적 표면 필터들은 방문하는 모든 사이트에 적용하는 표면 필터입니다. <p>uBlock₀는 이를 효율하게 적용하지만, 전체적 표면 필터들은 그래도 사이트의 크기와 지속기간에 따라 표시날 정도로 추가 메모리와 CPU부담을 줄 수 있읍니다. <p>이 옵션의 활성화함은 전체적 표면 필터 적용으로 인해서 추가된 메모리와 CPU부담이 없게 하고, uBlock₀자체의 메모리 사용량도 줄입니다. <p>저출력 단말기에 활성화함을 조언합니다.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -530,6 +530,10 @@
   "aboutWiki":{
     "message":"위키",
     "description":"English: project' wiki on Github"
+  },
+  "aboutSupport":{
+    "message":"지원",
+    "description":"A link for where to get support"
   },
   "aboutCode":{
     "message":"소스 코드 (GPLv3)",

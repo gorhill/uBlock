@@ -531,6 +531,10 @@
     "message":"Viki",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Tugi",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"Lähtekood (GPLv3)",
     "description":"English: Source code (GPLv3)"

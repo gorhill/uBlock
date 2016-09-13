@@ -531,6 +531,10 @@
     "message":"Wiki",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Suport",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"Codi font (GPLv3)",
     "description":"English: Source code (GPLv3)"

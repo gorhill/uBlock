@@ -531,6 +531,10 @@
     "message":"Вікі",
     "description":"English: project' wiki on Github"
   },
+  "aboutSupport":{
+    "message":"Підтримка",
+    "description":"A link for where to get support"
+  },
   "aboutCode":{
     "message":"Джерельний код (GPLv3)",
     "description":"English: Source code (GPLv3)"
