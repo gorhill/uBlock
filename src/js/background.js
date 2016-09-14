@@ -56,7 +56,8 @@ return {
         hidingAds: false,
         clickingAds: false,
         blockingMalware: false,
-        respectDNT: true,
+        disableHidingForDNT: true,
+        disableClickingForDNT: true,
 
         noThirdPartyCookies: false,
 

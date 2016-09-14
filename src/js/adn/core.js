@@ -15,10 +15,11 @@
     µb = µBlock,
     production = 0,
     lastActivity = 0,
+    notifications = [],
+    allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
     profiler = +new Date(),
-    allowedExceptions = [],
     pollQueueInterval = 5000,
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
