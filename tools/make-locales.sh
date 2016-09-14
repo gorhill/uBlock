@@ -13,7 +13,7 @@ printf "*** Generating locale files in $DES... "
 
 LANGS=(en zh_TW zh_CN de)
 FILES=src/_locales/**/adnauseam.json
-echo "Languages:" ${LANGS[*]}
+# echo "Languages:" ${LANGS[*]}
 
 for adnfile in $FILES
 do
@@ -26,7 +26,7 @@ do
 
   # continue ONLY IF $lang is in LANGS
   if [[ " ${LANGS[@]} " =~ " $lang " ]]
-  then 
+  then
     mkdir -p $dir && touch $outfile
     #echo Writing $outfile
     jq -s '.[0] * .[1]' $messages $adnfile > $outfile

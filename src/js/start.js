@@ -47,6 +47,7 @@ vAPI.app.onShutdown = function() {
     µb.permanentFirewall.reset();
     µb.sessionURLFiltering.reset();
     µb.permanentURLFiltering.reset();
+    µb.adnauseam.shutdown(); // ADN
 };
 
 /******************************************************************************/
@@ -182,10 +183,11 @@ var onUserSettingsReady = function(fetched) {
     µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
     µb.hnSwitches.fromString(fetched.hostnameSwitchesString);
 
+
     // https://github.com/gorhill/uBlock/issues/1892
     // For first installation on a battery-powered device, disable generic
     // cosmetic filtering.
-    if ( µb.firstInstall && vAPI.battery ) {
+    if (false && µb.firstInstall && vAPI.battery ) { // ADN: we need these
         userSettings.ignoreGenericCosmeticFilters = true;
     }
 
@@ -284,8 +286,6 @@ var onAdminSettingsRestored = function() {
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
-
-    // TODO: somewhere around here, merge dynamicFilteringString from storage with adn defaultDynamicFilters
 
     vAPI.storage.get(fetchableProps, onFirstFetchReady);
 };

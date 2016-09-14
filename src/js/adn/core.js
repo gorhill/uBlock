@@ -11,7 +11,7 @@
     automatedMode = 0, // for automated testing
     logBlocks = 0; // for testing list-blocking
 
-  var xhr, idgen, admap, inspected, listEntries,
+  var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
     production = 0,
     lastActivity = 0,
@@ -33,7 +33,9 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
-  var defaultDynamicFilters = [ ];
+  var defaultDynamicFilters = [ 'nytimes.com nytimes.com * allow',
+    'nytimes.com facebook.com * block',
+  ];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
@@ -75,11 +77,8 @@
 
   var initializeState = function (settings) {
 
-    // console.log('pre-set thirdPartyCookiesDisabled');
-    // vAPI.browserSettings.set('thirdPartyCookiesDisabled', true);
-    // console.log('post-set thirdPartyCookiesDisabled');
-
     admap = (settings && settings.admap) || {};
+    (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
 
     validateAdStorage();
 
@@ -1217,17 +1216,15 @@
     var snfe = µb.staticNetFilteringEngine,
       compiled = snfe.toResultString(1).slice(3),
       raw = snfe.filterStringFromCompiled(compiled),
-      lists = listsForFilter(compiled/*, raw*/);
+      lists = listsForFilter(compiled);
 
     for (var i = 0; i < lists.length; i++) { //
 
       var name = lists[0]; //.title;
       if (!activeBlockList(name) || ruleDisabled(raw, name)) {
 
-        if (logBlocks) { // } && name !== 'EasyList') {
-          log("[ALLOW] (" + name + ")", (ruleDisabled(raw, name) ?
-            '**RULE**' : ''), raw, context.requestURL);
-        }
+        logNetAllow(name, (ruleDisabled(raw, name) ? '**RULE**' : ''),
+          raw, context.requestURL);
 
         // Note: need to store allowed requests here so that we can
         // block any incoming cookies later (see #301)
@@ -1307,10 +1304,18 @@
     }
   }
 
+  var logNetAllow = function () {
+    logNetResult('[ALLOW]', arguments);
+  }
+
   var logNetBlock = function () {
-    if (logBlocks && arguments.length) {
-      arguments[0] = '[BLOCK] (' + arguments[0] + ')';
-      log.apply(this, arguments);
+    logNetResult('[BLOCK]', arguments);
+  }
+
+  var logNetResult = function (action, args) {
+    if (logBlocks && args.length) {
+      args[0] = action + ' (' + args[0] + ')';
+      log.apply(this, args);
     }
   }
 
@@ -1338,7 +1343,7 @@
 
   var injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    log('[INJECT] Dynamic-iFrame: '+request.parentUrl, tabId + '/' + frameId);
+    logBlocks && log('[INJECT] Dynamic-iFrame: '+request.parentUrl, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
@@ -1350,7 +1355,11 @@
       stripCookies(headers, 'In');
   }
 
-  var stripCookies = function (headers) {           // ADN
+  var firewall = function () {
+    return firewall;
+  }
+
+  var stripCookies = function (headers) {
 
     var pre = headers.length, dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
@@ -1367,6 +1376,27 @@
     }
   };
 
+  var shutdown = function () {
+    firewall.reset();
+  }
+
+  var checkFirewall = function (context) {
+
+    firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+
+    var result = '';
+    if (firewall.mustBlockOrAllow()) {
+
+      result = firewall.toFilterString();
+      var action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
+
+      logNetResult('['+action+']', ['Firewall', ' ' + context.rootHostname + ' => ' +
+        context.requestHostname, '(' + context.requestType + ') ', context.requestURL]);
+    }
+
+    return result;
+  }
+
   /******************************************************************************/
 
   return { // exports
@@ -1375,6 +1405,7 @@
     logAdSet: logAdSet,
     clearAds: clearAds,
     lookupAd: lookupAd,
+    shutdown: shutdown,
     mustAllow: mustAllow,
     exportAds: exportAds,
     importAds: importAds,
@@ -1384,6 +1415,7 @@
     adsForVault: adsForVault,
     deleteAdSet: deleteAdSet,
     logNetBlock: logNetBlock,
+    logNetAllow: logNetAllow,
     logRedirect: logRedirect,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
@@ -1391,6 +1423,7 @@
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
+    checkFirewall: checkFirewall,
     verifyListSelection: verifyListSelection,
     injectContentScripts: injectContentScripts,
     checkAllowedException: checkAllowedException,

@@ -531,7 +531,6 @@ PageStore.prototype.filterRequest = function(context) {
 
     var entry = this.netFilteringCache.lookup(context);
     if ( entry !== undefined ) {
-        //console.debug('cache HIT: PageStore.filterRequest("%s")', context.requestURL);
         return entry.result;
     }
 
@@ -547,7 +546,11 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === '' ) {
         µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
         result = µb.sessionURLFiltering.toFilterString();
+        (result !== '') && console.log('[WARN] sessionURLFiltering hit!', context, result);
     }
+
+    // ADN: now check our firewall (top precedence)
+    if ( result === '' ) result = µb.adnauseam.checkFirewall(context);
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -565,6 +568,10 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+
+            if (µb.adnauseam.mustAllow(result, context)) {
+                result = ''; // ADN: cannot block
+            }
         }
     }
 
@@ -574,10 +581,6 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // console.debug('[%s, %s] = "%s"', context.requestHostname, requestType, result);
-
-    if (µb.adnauseam.mustAllow(result, context)) { // ADN
-        result = ''; // not-blocking
-    }
 
     return result;
 };
@@ -607,6 +610,9 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         result = µb.sessionURLFiltering.toFilterString();
     }
 
+    // ADN: now check our firewall (top precendence)
+    if ( result === '' ) result = µb.adnauseam.checkFirewall(context);
+
     // Given that:
     // - Dynamic filtering override static filtering
     // - Evaluating dynamic filtering is much faster than static filtering
@@ -623,12 +629,12 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     if ( result === '' || result.charAt(1) === 'n' ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
-        }
-    }
 
-    if (µb.adnauseam.mustAllow(result, context)) {
-        console.warn("*** Blocking filterRequestNoCache ***"); // when?
-        result = ''; // not-blocking
+            if (µb.adnauseam.mustAllow(result, context)) {
+                console.warn("*** Blocking filterRequestNoCache ***"); // when?
+                result = ''; // not-blocking
+            }
+        }
     }
 
     return result;
