@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for testing list-blocking
+    logBlocks = 0;    // for debugging blocks/allows
 
   var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
@@ -33,9 +33,7 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
-  var defaultDynamicFilters = [ 'nytimes.com nytimes.com * allow',
-    'nytimes.com facebook.com * block',
-  ];
+  var defaultDynamicFilters = [ 'nytimes.com nytimes.com * allow' ];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',

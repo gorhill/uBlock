@@ -213,12 +213,12 @@
 
     var process = function (elem) {
 
-      vAPI.debugAdParsing && console.log('process('+elem.tagName+')', elem);
+      vAPI.debugAdParsing && console.log('process('+elem.tagName+')',
+        elem.tagName==='IFRAME' ? elem.getAttribute('src') : elem);
 
       switch (elem.tagName) {
 
       case 'IFRAME':
-        vAPI.debugAdParsing && console.log('Ignoring iFrame: ', $attr(elem, 'src'));
         //elem.addEventListener('load', handleIFrame, false);
         break;
 
@@ -232,9 +232,6 @@
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
           findImageAds(imgs);
-        }
-        else if (vAPI.debugAdParsing) {
-          console.log('No imgs found in: ', elem.tagName, elem); 
         }
 
         // and finally check for text ads
