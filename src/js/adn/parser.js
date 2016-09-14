@@ -213,11 +213,12 @@
 
     var process = function (elem) {
 
-      //console.log('AdParser.process()', elem.tagName, elem);
+      vAPI.debugAdParsing && console.log('process('+elem.tagName+')', elem);
 
       switch (elem.tagName) {
 
       case 'IFRAME':
+        vAPI.debugAdParsing && console.log('Ignoring iFrame: ', $attr(elem, 'src'));
         //elem.addEventListener('load', handleIFrame, false);
         break;
 
@@ -229,7 +230,12 @@
 
         // check the element for child imgs
         var imgs = elem.querySelectorAll('img');
-        if (imgs.length) findImageAds(imgs);
+        if (imgs.length) {
+          findImageAds(imgs);
+        }
+        else if (vAPI.debugAdParsing) {
+          console.log('No imgs found in: ', elem.tagName, elem); 
+        }
 
         // and finally check for text ads
         vAPI.textAdParser.process(elem);

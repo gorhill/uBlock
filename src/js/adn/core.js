@@ -33,6 +33,8 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
+  var defaultDynamicFilters = [ ];
+
   // allow blocks only from this set of lists
   var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
@@ -44,7 +46,7 @@
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = [ 'facebook.com', 'google.com', 'asiaxpat.com'];
+  var internalLinkDomains = [ 'facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com' ];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -1198,7 +1200,7 @@
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
-      logBlocks && warn("[ALLOW] blocking-off or loading: ", requestURL);
+      logBlocks && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
       return false;
     }
 

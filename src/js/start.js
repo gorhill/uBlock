@@ -285,6 +285,8 @@ var onAdminSettingsRestored = function() {
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
 
+    // TODO: somewhere around here, merge dynamicFilteringString from storage with adn defaultDynamicFilters
+
     vAPI.storage.get(fetchableProps, onFirstFetchReady);
 };
 

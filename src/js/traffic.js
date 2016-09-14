@@ -315,7 +315,7 @@
   var onBeforeBeacon = function (details) {
 
     var µb = µBlock;
-    if (µBlock.userSettings.blockingMalware === false) // ADN
+    if (µb.userSettings.blockingMalware === false) // ADN
         return;
 
     var tabId = details.tabId;
