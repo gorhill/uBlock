@@ -20,12 +20,12 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "hide ads in your selected <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> hide ads in your selected filter lists"
+    "message": "hide Ads in your selected <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "register visits on ads found via your <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
-    "description": "English: Firstrun.html -> register visits on ads found via your filter lists"
+    "message": "register visits on Ads found via your <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description": "English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
     "message": "optimize your settings to protect against malware and non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
@@ -211,8 +211,16 @@
     "description": "English: Hide referring page on visits"
   },
   "respectDNTPrompt": {
-    "message": "Respect DoNotTrack exceptions",
-    "description": "English: Respect the EFF's DoNotTrack exceptions"
+    "message": "Make exceptions for non-tracking Ads",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Don't hide non-tracking Ads",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Don't click non-tracking Ads",
+    "description": "English: Don't click non-tracking Ads"
   },
   "extName": {
     "message": "AdNauseam",
