@@ -894,7 +894,7 @@
     var pre = adlist().length;
 
     clearAdmap();
-    closeExtPage('vault.html');
+    reloadExtPage('vault.html');
     updateBadges();
     storeUserData();
     computeNextId();
