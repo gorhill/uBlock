@@ -241,9 +241,9 @@ vAPI.tabs.registerListeners = function() {
     var reGoodForWebRequestAPI = /^https?:\/\//;
 
     // https://forums.lanik.us/viewtopic.php?f=62&t=32826
-    //   Chromium-based browsers: sanitize target URL. I've seen
-    //   data: URI-based with newline characters, possibly as a way of
-    //   evading filters. There should be no whitespaces in a data: URI's
+    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
+    //   newline characters in standard fields, possibly as a way of evading
+    //   filters. As per spec, there should be no whitespaces in a data: URI's
     //   standard fields.
     var sanitizeURL = function(url) {
         if ( url.startsWith('data:') === false ) { return url; }
