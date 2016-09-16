@@ -59,10 +59,12 @@
     messager.send('adnauseam', {
       what: 'exportAds',
       filename: getExportFileName()
-    }, onLocalDataReceived);
+    });
   };
 
   var onLocalDataReceived = function (details) {
+
+    console.log('onLocalDataReceived',details);
 
     uDom('#localData > ul > li:nth-of-type(1)').text(
       vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
