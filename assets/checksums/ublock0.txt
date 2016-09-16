@@ -1,0 +1,15 @@
+eb94964669e712ddac10c6e4b2d2b6ce assets/ublock/filter-lists.json
+871cd89190e7084df95421e464070ebe assets/ublock/badware.txt
+33f4a2aa009aa05264266e66046f5ecc assets/ublock/experimental.txt
+fce2d6164888c0439c5d7f42e4d67a25 assets/ublock/filters.txt
+ef059f65b5460a6b575efc7753ac28b8 assets/ublock/privacy.txt
+db2612a0db8a290cc1ba7e2dc7fe5215 assets/ublock/resources.txt
+24b78c4869ca76ca47d963bfe5955ec1 assets/ublock/unbreak.txt
+c8a5281bce4c031cd9d1984ffc5a3ce6 assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
+ab2b41e4245fa77bfecf8938f32d6929 assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
+94bb6a788c9aa3606a37bbae8f5dc853 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
+03ab45503578b15aaa2b9c1befff37cc assets/thirdparties/pgl.yoyo.org/as/serverlist
+79e5517b2760a6aed72789ba0f62e4ad assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
+36eaa2db93d9c6a26f2f9395c2cdb6c9 assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
+3017558c6ce6bdbfa62db7be7a506b73 assets/thirdparties/www.eff.org/files/effdntlist.txt
+33a10c7305befa4afefba24a468ef2eb assets/ublock/adnauseam.txt
