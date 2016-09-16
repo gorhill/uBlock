@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0;    // for debugging blocks/allows
+    logBlocks = 0; // for debugging blocks/allows
 
   var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
@@ -25,7 +25,7 @@
     repeatVisitInterval = Number.MAX_VALUE;
 
   // allow all blocks on requests to/from these domains
-  var allowAnyBlockOnDomains = [ 'youtube.com' ];
+  var allowAnyBlockOnDomains = ['youtube.com'];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
@@ -33,10 +33,10 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
-  var defaultDynamicFilters = [ 'nytimes.com nytimes.com * allow' ];
+  var defaultDynamicFilters = ['nytimes.com nytimes.com * allow'];
 
   // allow blocks only from this set of lists
-  var enabledBlockLists = [ 'My filters', 'EasyPrivacy',
+  var enabledBlockLists = ['My filters', 'EasyPrivacy',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'Anti-ThirdpartySocial', 'AdNauseam filters', 'Fanboy’s Annoyance List‎',
@@ -46,7 +46,7 @@
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = [ 'facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com' ];
+  var internalLinkDomains = ['facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com'];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -114,6 +114,49 @@
     }
   }
 
+  /* make sure we have no bad data in ad storage */
+   var validateAdStorage = function () {
+
+     var ads = adlist(),
+       i = ads.length;
+
+     if (clearAdsOnInit) {
+
+       setTimeout(function () {
+
+         warn("[DEBUG] Clearing all ad data!");
+         clearAds();
+
+       }, 2000);
+
+       return ads;
+     }
+
+     clearVisitData && clearAdVisits(ads);
+
+     while (i--) {
+
+       if (!validateFields(ads[i])) {
+
+         warn('Invalid ad in storage', ads[i]);
+         ads.splice(i, 1);
+         continue;
+       }
+
+       if (ads[i].visitedTs === 0 && ads[i].attempts) {
+
+         warn('Invalid visitTs/attempts pair', ads[i]);
+         ads[i].attempts = 0; // this shouldn't happen
+       }
+     }
+
+     computeNextId(ads);
+
+     log('[INIT] Initialized with ' + ads.length + ' ads');
+
+     return ads;
+   }
+
   var clearAdVisits = function (ads) {
 
     warn("[WARN] Clearing all Ad visit data!");
@@ -127,49 +170,6 @@
       ad.visitedTs = 0;
       ad.attempts = 0
     });
-  }
-
-  /* make sure we have no bad data in ad storage */
-  var validateAdStorage = function () {
-
-    var ads = adlist(),
-      i = ads.length;
-
-    if (clearAdsOnInit) {
-
-      setTimeout(function () {
-
-        warn("[DEBUG] Clearing all ad data!");
-        clearAds();
-
-      }, 2000);
-
-      return ads;
-    }
-
-    clearVisitData && clearAdVisits(ads);
-
-    while (i--) {
-
-      if (!validateFields(ads[i])) {
-
-        warn('Invalid ad in storage', ads[i]);
-        ads.splice(i, 1);
-        continue;
-      }
-
-      if (ads[i].visitedTs === 0 && ads[i].attempts) {
-
-        warn('Invalid visitTs/attempts pair', ads[i]);
-        ads[i].attempts = 0; // this shouldn't happen
-      }
-    }
-
-    computeNextId(ads);
-
-    log('[INIT] Initialized with ' + ads.length + ' ads');
-
-    return ads;
   }
 
   // compute the highest id still in the admap
@@ -697,19 +697,6 @@
     return false;
   }
 
-  var contentPrefs = function () {
-
-    // preferences relevant to our content/ui-scripts
-    return {
-
-      production: production,
-      automated: automatedMode,
-      hidingDisabled: !µb.userSettings.hidingAds,
-      clickingDisabled: !µb.userSettings.clickingAds,
-      textAdsDisabled: !µb.userSettings.parseTextAds
-    };
-  }
-
   // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
@@ -887,174 +874,173 @@
     return disabledBlockingRules.indexOf(test) > -1;
   };
 
-  /******************************* API ************************************/
+  // check target domain against page-domain #337
+  var internalTarget = function (ad) {
 
-  var clearAds = function () {
+    if (ad.contentType === 'text') return false;
 
-    var pre = adlist().length;
+    // if an image ad and page/target domains match, its internal
+    var match = (ad.pageDomain === ad.targetDomain);
 
-    clearAdmap();
-    reloadExtPage('vault.html');
-    updateBadges();
-    storeUserData();
-    computeNextId();
+    return match;
+  };
 
-    log('[CLEAR] ' + pre + ' ads cleared');
+  var listsForFilter = function (compiledFilter) {
+
+    var entry, content, pos, c, lists = [];
+
+    for (var path in listEntries) {
+
+      entry = listEntries[path];
+      //console.log(entry);
+      if (entry === undefined) {
+        continue;
+      }
+      content = entry.content;
+      pos = content.indexOf(compiledFilter);
+      if (pos === -1) {
+        continue;
+      }
+      // We need an exact match.
+      // https://github.com/gorhill/uBlock/issues/1392
+      if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
+        continue;
+      }
+      // https://github.com/gorhill/uBlock/issues/835
+      c = content.charAt(pos + compiledFilter.length);
+      if (c !== '' && reSpecialChars.test(c) === false) {
+        continue;
+      }
+      lists.push(entry.title); // only need titles
+      /*{ title: entry.title
+      supportURL: entry.supportURL }*/
+    }
+
+    return lists;
+  };
+
+  var isBlockableDomain = function (context) {
+
+    //console.log('isBlockableDomain',context.rootDomain, context);
+
+    var domain = context.rootDomain,
+      host = context.requestHostname;
+
+    for (var i = 0; i < allowAnyBlockOnDomains.length; i++) {
+
+      var dom = allowAnyBlockOnDomains[i];
+      if (dom === domain || host.indexOf(dom) > -1) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  var isBlockableRequest = function (context) {
+
+    if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
+
+      logBlocks && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
+      return false;
+    }
+
+    if (µb.redirectEngine.toURL(context)) { // always allow redirect blocks
+      return true;
+    }
+
+    if (isBlockableDomain(context)) {
+
+      logNetBlock('ByDomain', context.rootDomain + ' => ' + context.requestURL);
+      return true;
+    }
+
+    var snfe = µb.staticNetFilteringEngine,
+      compiled = snfe.toResultString(1).slice(3),
+      raw = snfe.filterStringFromCompiled(compiled),
+      lists = listsForFilter(compiled);
+
+    for (var i = 0; i < lists.length; i++) { //
+
+      var name = lists[0]; //.title;
+      if (!activeBlockList(name) || ruleDisabled(raw, name)) {
+
+        logNetAllow(name, (ruleDisabled(raw, name) ? '**RULE**' : ''),
+          raw, context.requestURL);
+
+        // Note: need to store allowed requests here so that we can
+        // block any incoming cookies later (see #301)
+        allowedExceptions[context.requestURL] = +new Date();
+
+        continue; // no-block
+      }
+
+      logNetBlock(name, raw + ': ', context.requestURL);
+
+      return true; // blocked, no need to continue
+    }
+
+    return false; // no valid blocks
   }
 
-  // update tab badges if we're showing them
-  var updateBadges = function () {
-
-    var optionsUrl = vAPI.getURL('options.html');
-
-    for (var tabId in µb.pageStores) {
-
-      var store = µb.pageStoreFromTabId(tabId);
-      if (store !== null && !store.rawURL.startsWith(optionsUrl)) {
-        µb.updateBadgeAsync(tabId);
-      }
+  var logNetResult = function (action, args) {
+    if (logBlocks && args.length) {
+      args[0] = action + ' (' + args[0] + ')';
+      log.apply(this, args);
     }
   }
 
-  /*
-   Returns all ads for a page, or all pages, if page arg is null
-   Omits text-ads if specified in preferences
-   Called also from tab.js::µb.updateBadgeAsync()
-   */
-  var adlist = function (pageUrl, currentOnly) {
+  // start by grabbing user-settings, then calling initialize()
+  vAPI.storage.get(µb.userSettings, function (settings) {
 
-    var result = [],
-      pages = pageUrl ? [pageUrl] : Object.keys(admap);
+    //this for backwards compatibility
+    var mapSz = Object.keys(settings.admap).length;
+    if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
-    //    if (µb.userSettings.hidingAds) {
-
-    for (var i = 0; i < pages.length; i++) {
-
-      if (admap[pages[i]]) {
-
-        var hashes = Object.keys(admap[pages[i]]);
-
-        for (var j = 0; j < hashes.length; j++) {
-
-          var ad = admap[pages[i]][hashes[j]];
-
-          // ignore text-ads according to parseTextAds prefe
-          if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-            if (!currentOnly || ad.current)
-              result.push(ad);
-          }
-        }
-      }
-    }
-    //}
-
-    return result;
-  }
-
-  var importAds = function (request) {
-
-    // try to parse imported ads in current format
-    var importedCount = 0,
-      count = adlist().length,
-      map = validateImport(request.data);
-
-    if (!map) {
-
-      // no good, try to parse in legacy-format
-      map = validateLegacyImport(request.data);
-
-      if (map) {
-
-        // check that legacy ads were converted ok
-        map = validateImport(map);
-        if (map) {
-
-          // ok, legacy ads converted and verified
-          log('[IMPORT] Updating legacy ads');
-        }
-
-      } else {
-
-        warn('[IMPORT] Unable to parse legacy-format:', request.data);
-        return { // give up and show 0 ads imported
-          what: 'importConfirm',
-          count: 0
-        };
-      }
+      settings.admap = µb.adnSettings.admap;
+      log("[IMPORT] Using legacy admap...");
+      setTimeout(function () {
+        storeUserData(true);
+      }, 2000);
     }
 
-    admap = map;
-    computeNextId();
-    clearVisitData && clearAdVisits();
-    storeUserData();
+    initialize(settings);
+  });
 
-    importedCount = adlist().length - count;
-    log('[IMPORT]: ' + importedCount + ' ads from ' + request.file);
-    reloadExtPage('vault.html'); // reload Vault page if open
+  /********************************** API *************************************/
 
-    return {
-      what: 'importConfirm',
-      count: importedCount
-    };
-  }
+  var exports = {};
 
-  var exportAds = function (request) {
-
-    var count = adlist().length,
-      filename = (request && request.filename) || getExportFileName();
-
-    vAPI.download({
-      'url': 'data:text/plain;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(admap, null, '  ')),
-      'filename': filename
-    });
-
-    log('[EXPORT] ' + count + ' ads to ' + filename);
-  }
-
-  var adsForPage = function (request, pageStore, tabId) {
-
-    var reqPageStore = request.tabId &&
-      µb.pageStoreFromTabId(request.tabId) || pageStore;
-
-    if (!reqPageStore)
-      warn('Unexpected state: no pageStore', request, pageStore, tabId);
-
-    return adsForUI(reqPageStore.rawURL);
-  }
-
-  var adsForVault = function (request, pageStore, tabId) {
+  exports.adsForVault = function (request, pageStore, tabId) {
 
     return adsForUI();
   }
 
-  var itemInspected = function (request, pageStore, tabId) {
+  exports.mustAllow = function (result, context) {
+
+    return result && result.length && !isBlockableRequest(context);
+  }
+
+  exports.itemInspected = function (request, pageStore, tabId) {
 
     if (request.id) {
       var ad = adById(request.id)
       inspected = ad;
     }
-  }
+  };
 
-  var logAdSet = function (request, pageStore, tabId) {
+  var contentPrefs = exports.contentPrefs = function () {
 
-    var data = '';
+    // preferences relevant to our content/ui-scripts
+    return {
+      production: production,
+      automated: automatedMode,
+      hidingDisabled: !µb.userSettings.hidingAds,
+      clickingDisabled: !µb.userSettings.clickingAds,
+      textAdsDisabled: !µb.userSettings.parseTextAds
+    };
+  };
 
-    request.ids.forEach(function (id) {
-      data += JSON.stringify(adById(id));
-    });
-
-    log('ADSET #' + request.gid + '\n', data);
-
-    vAPI.messaging.broadcast({
-      what: 'logJSON',
-      data: data
-    });
-
-    return data;
-  }
-
-  var toggleEnabled = function (request, pageStore, tabId) {
+  exports.toggleEnabled = function (request, pageStore, tabId) {
 
     var store = µb.pageStoreFromTabId(request.tabId);
     if (store) {
@@ -1066,16 +1052,86 @@
       var wlId = getExtPageTabId("dashboard.html#whitelist.html")
       wlId && vAPI.tabs.replace(wlId, vAPI.getURL("dashboard.html"));
     }
-  }
+  };
 
-  var deleteAdSet = function (request, pageStore, tabId) {
+  exports.verifyListSelection = function () {
 
-    request.ids.forEach(function (id) {
-      deleteAd(id);
+    µb.getAvailableLists(function (lists) {
+      var ok = (lists[requiredList].off !== true);
+      vAPI.messaging.broadcast({
+        what: 'listsVerified',
+        result: ok
+      });
     });
-  }
+  };
 
-  var registerAd = function (request, pageStore, tabId) {
+  // Called when new top-level page is loaded
+  exports.onPageLoad = function (tadId, requestURL) {
+
+    var ads = adlist(requestURL);
+    //console.log('PAGE: ', requestURL, ads.length);
+    ads.forEach(function (ad) {
+      ad.current = false;
+    });
+  };
+
+  exports.onListsLoaded = function (firstRun) {
+
+    µb.staticFilteringReverseLookup.initWorker(function (entries) {
+
+      listEntries = entries;
+      var keys = Object.keys(entries);
+      log("[LOAD] Compiled " + keys.length +
+        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
+      strictBlockingDisabled = true;
+    });
+
+    if (firstRun) {
+
+      vAPI.tabs.open({
+        url: 'firstrun.html',
+        index: -1
+      });
+
+      // collapses 'languages' group in dashboard:3rd-party
+      vAPI.localStorage.setItem('collapseGroup5', 'y');
+    }
+  };
+
+  var logNetAllow = exports.logNetAllow = function () {
+
+    logNetResult('[ALLOW]', arguments);
+  };
+
+  var logNetBlock = exports.logNetBlock = function () {
+
+    logNetResult('[BLOCK]', arguments);
+  };
+
+  var logRedirect = exports.logRedirect = function (from, to) {
+
+    if (logBlocks && arguments.length)
+      log('[REDIRECT] ' + from + ' => ' + to);
+  };
+
+  exports.lookupAd = function (url, requestId) {
+
+    url = trimChar(url, '/'); // no trailing slash
+
+    var ads = adlist();
+
+    for (var i = 0; i < ads.length; i++) {
+
+      if (ads[i].attemptedTs) {
+        //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
+        if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
+          return ads[i];
+        }
+      }
+    }
+  };
+
+  exports.registerAd = function (request, pageStore, tabId) {
 
     var json, adhash, msSinceFound, orig,
       pageUrl = pageStore.rawURL,
@@ -1126,240 +1182,38 @@
     postRegister(ad, pageUrl, tabId);
   };
 
-  // check target domain against page-domain #337
-  var internalTarget = function (ad) {
+  // update tab badges if we're showing them
+  var updateBadges = exports.updateBadges = function () {
 
-    if (ad.contentType === 'text') return false;
+    var optionsUrl = vAPI.getURL('options.html');
 
-    // if an image ad and page/target domains match, its internal
-    var match = (ad.pageDomain === ad.targetDomain);
+    for (var tabId in µb.pageStores) {
 
-    return match;
-  };
-
-  var listsForFilter = function (compiledFilter) {
-
-    var entry, content, pos, c, lists = [];
-
-    for (var path in listEntries) {
-
-      entry = listEntries[path];
-      //console.log(entry);
-      if (entry === undefined) {
-        continue;
-      }
-      content = entry.content;
-      pos = content.indexOf(compiledFilter);
-      if (pos === -1) {
-        continue;
-      }
-      // We need an exact match.
-      // https://github.com/gorhill/uBlock/issues/1392
-      if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
-        continue;
-      }
-      // https://github.com/gorhill/uBlock/issues/835
-      c = content.charAt(pos + compiledFilter.length);
-      if (c !== '' && reSpecialChars.test(c) === false) {
-        continue;
-      }
-      lists.push(entry.title); // only need titles
-        /*{ title: entry.title
-        supportURL: entry.supportURL }*/
-    }
-
-    return lists;
-  };
-
-  var isBlockableDomain = function (context) {
-
-    //console.log('isBlockableDomain',context.rootDomain, context);
-
-    var domain = context.rootDomain,
-      host = context.requestHostname;
-
-    for (var i = 0; i < allowAnyBlockOnDomains.length; i++) {
-
-      var dom = allowAnyBlockOnDomains[i];
-      if (dom === domain || host.indexOf(dom) > -1) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  var mustAllow = function (result, context) {
-
-    return result && result.length && !isBlockableRequest(context);
-  }
-
-  var isBlockableRequest = function (context) {
-
-    if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
-
-      logBlocks && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
-      return false;
-    }
-
-    if (µb.redirectEngine.toURL(context)) { // always allow redirect blocks
-      return true;
-    }
-
-    if (isBlockableDomain(context)) {
-
-      logNetBlock('ByDomain', context.rootDomain + ' => ' + context.requestURL);
-      return true;
-    }
-
-    var snfe = µb.staticNetFilteringEngine,
-      compiled = snfe.toResultString(1).slice(3),
-      raw = snfe.filterStringFromCompiled(compiled),
-      lists = listsForFilter(compiled);
-
-    for (var i = 0; i < lists.length; i++) { //
-
-      var name = lists[0]; //.title;
-      if (!activeBlockList(name) || ruleDisabled(raw, name)) {
-
-        logNetAllow(name, (ruleDisabled(raw, name) ? '**RULE**' : ''),
-          raw, context.requestURL);
-
-        // Note: need to store allowed requests here so that we can
-        // block any incoming cookies later (see #301)
-        allowedExceptions[context.requestURL] = +new Date();
-
-        continue; // no-block
-      }
-
-      logNetBlock(name, raw + ': ', context.requestURL);
-
-      return true; // blocked, no need to continue
-    }
-
-    return false; // no valid blocks
-  }
-
-  /******************************************************************************/
-
-  // start by grabbing user-settings, then calling initialize()
-  vAPI.storage.get(µb.userSettings, function (settings) {
-
-    //this for backwards compatibility
-    var mapSz = Object.keys(settings.admap).length;
-    if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
-
-      settings.admap = µb.adnSettings.admap;
-      log("[IMPORT] Using legacy admap...");
-      setTimeout(function () {
-        storeUserData(true);
-      }, 2000);
-    }
-
-    initialize(settings);
-  });
-
-  var verifyListSelection = function () {
-
-    µb.getAvailableLists(function (lists) {
-      var ok = (lists[requiredList].off !== true);
-      vAPI.messaging.broadcast({
-        what: 'listsVerified',
-        result: ok
-      });
-    });
-  };
-
-  // Called when new top-level page is loaded
-  var onPageLoad = function (tadId, requestURL) {
-
-    var ads = adlist(requestURL);
-    //console.log('PAGE: ', requestURL, ads.length);
-    ads.forEach(function (ad) {
-      ad.current = false;
-    });
-  }
-
-  var onListsLoaded = function (firstRun) {
-
-    µb.staticFilteringReverseLookup.initWorker(function (entries) {
-
-      listEntries = entries;
-      var keys = Object.keys(entries);
-      log("[LOAD] Compiled " + keys.length +
-        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
-      strictBlockingDisabled = true;
-    });
-
-    if (firstRun) {
-
-      vAPI.tabs.open({
-        url: 'firstrun.html',
-        index: -1
-      });
-
-      // collapses 'languages' group in dashboard:3rd-party
-      vAPI.localStorage.setItem('collapseGroup5', 'y');
-    }
-  }
-
-  var logNetAllow = function () {
-    logNetResult('[ALLOW]', arguments);
-  }
-
-  var logNetBlock = function () {
-    logNetResult('[BLOCK]', arguments);
-  }
-
-  var logNetResult = function (action, args) {
-    if (logBlocks && args.length) {
-      args[0] = action + ' (' + args[0] + ')';
-      log.apply(this, args);
-    }
-  }
-
-  var logRedirect = function (from, to) {
-    if (logBlocks && arguments.length)
-      log('[REDIRECT] ' + from + ' => '+ to);
-  }
-
-  var lookupAd = function (url, requestId) {
-
-    url = trimChar(url, '/'); // no trailing slash
-
-    var ads = adlist();
-
-    for (var i = 0; i < ads.length; i++) {
-
-      if (ads[i].attemptedTs) {
-        //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
-        if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
-          return ads[i];
-        }
+      var store = µb.pageStoreFromTabId(tabId);
+      if (store !== null && !store.rawURL.startsWith(optionsUrl)) {
+        µb.updateBadgeAsync(tabId);
       }
     }
   };
 
-  var injectContentScripts = function (request, pageStore, tabId, frameId) {
+  exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    logBlocks && log('[INJECT] Dynamic-iFrame: '+request.parentUrl, tabId + '/' + frameId);
+    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
-  var checkAllowedException = function (url, headers) {
+  exports.checkAllowedException = function (url, headers) {
 
     if (typeof allowedExceptions[url] !== 'undefined')
       blockIncomingCookies(headers);
-  }
+  };
 
-  var firewall = function () {
-    return firewall;
-  }
+  var blockIncomingCookies = exports.blockIncomingCookies = function (headers, dir) {
 
-  var blockIncomingCookies = function (headers, dir) {
-
-    var pre = headers.length, dbug = 0;
+    var pre = headers.length,
+      dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
 
       var name = headers[i].name.toLowerCase();
@@ -1374,11 +1228,12 @@
     }
   };
 
-  var shutdown = function () {
-    firewall.reset();
-  }
+  exports.shutdown = function () {
 
-  var checkFirewall = function (context) {
+    firewall.reset();
+  };
+
+  exports.checkFirewall = function (context) {
 
     firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
 
@@ -1388,44 +1243,157 @@
       result = firewall.toFilterString();
       var action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
 
-      logNetResult('['+action+']', ['Firewall', ' ' + context.rootHostname + ' => ' +
-        context.requestHostname, '(' + context.requestType + ') ', context.requestURL]);
+      logNetResult('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
+        context.requestHostname, '(' + context.requestType + ') ', context.requestURL
+      ]);
     }
 
     return result;
-  }
-
-  /******************************************************************************/
-
-  return { // exports
-
-    adlist: adlist,
-    logAdSet: logAdSet,
-    clearAds: clearAds,
-    lookupAd: lookupAd,
-    shutdown: shutdown,
-    mustAllow: mustAllow,
-    exportAds: exportAds,
-    importAds: importAds,
-    registerAd: registerAd,
-    onPageLoad: onPageLoad,
-    adsForPage: adsForPage,
-    adsForVault: adsForVault,
-    deleteAdSet: deleteAdSet,
-    logNetBlock: logNetBlock,
-    logNetAllow: logNetAllow,
-    logRedirect: logRedirect,
-    updateBadges: updateBadges,
-    contentPrefs: contentPrefs,
-    blockIncomingCookies: blockIncomingCookies,
-    onListsLoaded: onListsLoaded,
-    toggleEnabled: toggleEnabled,
-    itemInspected: itemInspected,
-    checkFirewall: checkFirewall,
-    verifyListSelection: verifyListSelection,
-    injectContentScripts: injectContentScripts,
-    checkAllowedException: checkAllowedException,
   };
+
+  exports.deleteAdSet = function (request, pageStore, tabId) {
+
+    request.ids.forEach(function (id) {
+      deleteAd(id);
+    });
+  };
+
+  exports.logAdSet = function (request, pageStore, tabId) {
+
+    var data = '';
+
+    request.ids.forEach(function (id) {
+      data += JSON.stringify(adById(id));
+    });
+
+    log('ADSET #' + request.gid + '\n', data);
+
+    vAPI.messaging.broadcast({
+      what: 'logJSON',
+      data: data
+    });
+
+    return data;
+  };
+
+  /*
+   Returns all ads for a page, or all pages, if page arg is null
+   Omits text-ads if specified in preferences
+   Called also from tab.js::µb.updateBadgeAsync()
+   */
+  var adlist = exports.adlist = function(pageUrl, currentOnly) {
+
+    var result = [],
+      pages = pageUrl ? [pageUrl] : Object.keys(admap);
+
+    for (var i = 0; i < pages.length; i++) {
+
+      if (admap[pages[i]]) {
+
+        var hashes = Object.keys(admap[pages[i]]);
+
+        for (var j = 0; j < hashes.length; j++) {
+
+          var ad = admap[pages[i]][hashes[j]];
+
+          // ignore text-ads according to parseTextAds prefe
+          if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
+            if (!currentOnly || ad.current)
+              result.push(ad);
+          }
+        }
+      }
+    }
+
+    return result;
+  };
+
+  var clearAds = exports.clearAds = function () {
+
+    var pre = adlist().length;
+
+    clearAdmap();
+    reloadExtPage('vault.html');
+    updateBadges();
+    storeUserData();
+    computeNextId();
+
+    log('[CLEAR] ' + pre + ' ads cleared');
+  };
+
+  exports.importAds = function (request) {
+
+    // try to parse imported ads in current format
+    var importedCount = 0,
+      count = adlist().length,
+      map = validateImport(request.data);
+
+    if (!map) {
+
+      // no good, try to parse in legacy-format
+      map = validateLegacyImport(request.data);
+
+      if (map) {
+
+        // check that legacy ads were converted ok
+        map = validateImport(map);
+        if (map) {
+
+          // ok, legacy ads converted and verified
+          log('[IMPORT] Updating legacy ads');
+        }
+
+      } else {
+
+        warn('[IMPORT] Unable to parse legacy-format:', request.data);
+        return { // give up and show 0 ads imported
+          what: 'importConfirm',
+          count: 0
+        };
+      }
+    }
+
+    admap = map;
+    computeNextId();
+    clearVisitData && clearAdVisits();
+    storeUserData();
+
+    importedCount = adlist().length - count;
+    log('[IMPORT]: ' + importedCount + ' ads from ' + request.file);
+    reloadExtPage('vault.html'); // reload Vault page if open
+
+    return {
+      what: 'importConfirm',
+      count: importedCount
+    };
+  };
+
+  exports.exportAds = function (request) {
+
+    var count = adlist().length,
+      filename = (request && request.filename) || getExportFileName();
+
+    vAPI.download({
+      'url': 'data:text/plain;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(admap, null, '  ')),
+      'filename': filename
+    });
+
+    log('[EXPORT] ' + count + ' ads to ' + filename);
+  };
+
+  exports.adsForPage = function (request, pageStore, tabId) {
+
+    var reqPageStore = request.tabId &&
+      µb.pageStoreFromTabId(request.tabId) || pageStore;
+
+    if (!reqPageStore)
+      warn('Unexpected state: no pageStore', request, pageStore, tabId);
+
+    return adsForUI(reqPageStore.rawURL);
+  };
+
+  return exports;
 
 })();
 
