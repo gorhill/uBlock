@@ -210,3 +210,15 @@
 };
 
 /******************************************************************************/
+
+µBlock.openNewTab = function(details) {
+    if ( details.url.startsWith('logger-ui.html') ) {
+        if ( details.shiftKey ) {
+            this.userSettings.alwaysDetachLogger = !this.userSettings.alwaysDetachLogger;
+        }
+        details.popup = this.userSettings.alwaysDetachLogger;
+    }
+    vAPI.tabs.open(details);
+};
+
+/******************************************************************************/
