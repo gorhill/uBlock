@@ -1350,14 +1350,14 @@
   var checkAllowedException = function (url, headers) {
 
     if (typeof allowedExceptions[url] !== 'undefined')
-      blockCookies(headers);
+      blockIncomingCookies(headers);
   }
 
   var firewall = function () {
     return firewall;
   }
 
-  var blockCookies = function (headers, dir) {
+  var blockIncomingCookies = function (headers, dir) {
 
     var pre = headers.length, dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
@@ -1417,7 +1417,7 @@
     logRedirect: logRedirect,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
-    blockCookies: blockCookies,
+    blockIncomingCookies: blockIncomingCookies,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
