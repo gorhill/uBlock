@@ -428,7 +428,7 @@
             // ADN
             if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-              µBlock.adnauseam.stripCookies(details.responseHeaders, 'In');
+              µBlock.adnauseam.blockIncomingCookies(details.responseHeaders);
             }
             else if (dbug && vAPI.chrome) {
 
@@ -441,7 +441,7 @@
           { 'responseHeaders': details.responseHeaders } : null;
       }
 
-      // ADN: check if this was an allowed exception and, if so, strip cookies
+      // ADN: check if this was an allowed exception and, if so, block cookies
       µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
 
       var requestType = details.type;
@@ -504,10 +504,10 @@
 
         // block outgoing cookies, user-agent here
         if (dbug && prefs.noOutgoingCookies && name==='cookie') {
-          console.log('[COOKIE] (Strip-Out)', headers[i].value);
+          console.log('[COOKIE] (Strip)', headers[i].value);
         }
         if (dbug && prefs.noOutgoingUserAgent && name==='user-agent') {
-          console.log('[UAGENT] (Strip-Out)', headers[i].value);
+          console.log('[UAGENT] (Strip)', headers[i].value);
         }
 
         setHeader(headers[i], '');
@@ -532,11 +532,11 @@
 
     if (refererIdx > -1 && prefs.noOutgoingReferer) {
 
-        if (dbug) console.log("[REFERER] (Strip-Out)", referer);
+        if (dbug) console.log("[REFERER] (Strip)", referer);
         setHeader(headers[refererIdx], '');
     }
     else if (!prefs.noOutgoingReferer && refererIdx < 0) {
-        if (dbug) console.log("[REFERER] (Included)", referer);
+        if (dbug) console.log("[REFERER] (Allow)", referer);
         addHeader(headers, 'Referer', referer);
     }
 

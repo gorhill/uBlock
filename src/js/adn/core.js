@@ -1350,14 +1350,14 @@
   var checkAllowedException = function (url, headers) {
 
     if (typeof allowedExceptions[url] !== 'undefined')
-      stripCookies(headers, 'In');
+      blockCookies(headers);
   }
 
   var firewall = function () {
     return firewall;
   }
 
-  var stripCookies = function (headers) {
+  var blockCookies = function (headers, dir) {
 
     var pre = headers.length, dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
@@ -1368,7 +1368,7 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        dbug && console.log('[COOKIE] (Strip-' + dir + ')', headers[i].value);
+        dbug && console.log('[COOKIE] (Block)', headers[i].value);
         headers.splice(i, 1);
       }
     }
@@ -1417,7 +1417,7 @@
     logRedirect: logRedirect,
     updateBadges: updateBadges,
     contentPrefs: contentPrefs,
-    stripCookies: stripCookies,
+    blockCookies: blockCookies,
     onListsLoaded: onListsLoaded,
     toggleEnabled: toggleEnabled,
     itemInspected: itemInspected,
