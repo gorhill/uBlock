@@ -1,15 +1,11 @@
-# Filters optimized for uBlock/AdNauseam
-
-# Zerohedge: ref: http://forums.lanik.us/viewtopic.php?f=62&t=17307
-www.zerohedge.com##.similar-box
+# Filters optimized for uBlock
 
 # https://github.com/chrisaljoudi/uBlock/issues/57
 # https://github.com/chrisaljoudi/uBlock/issues/98
-# New filter class: entity filters, where
-# entity = domain minus public suffix
+# New filter class: entity filters, where entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-# Last updated: 2015-10-15
+# Last updated: 2016-07-02
 google.*###center_col > #\5f Emc
 google.*###center_col > #main > .dfrd > .mnr-c > .c._oc._zs
 google.*###center_col > #res > #topstuff + #search > div > #ires > #rso > #flun
@@ -29,6 +25,8 @@ google.*###mn #center_col > div > h2.spon:first-child + ol:last-child
 google.*###mn div[style="position:relative"] > #center_col > ._Ak
 google.*###mn div[style="position:relative"] > #center_col > div > ._dPg
 google.*###resultspanel > #topads
+google.*###rhs_block .mod > .gws-local-hotels__booking-module
+google.*###rhs_block .mod > .luhb-div > div[data-async-type="updateHotelBookingModule"]
 google.*###rhs_block > #mbEnd
 google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
 google.*###rhs_block > ol > .rhsvw > .kp-blk > .xpdopen > ._OKe > ol > ._DJe > .luhb-div
@@ -60,57 +58,22 @@ google.*##.ra[align="right"][width="30%"]
 google.*##.ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"]
 google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"]
 google.*##.rscontainer > .ellip
+google.*##.widget-pane-section-result[data-result-ad-type]
 
 # https://github.com/chrisaljoudi/uBlock/issues/381
 google.*###sqh
-
-# For when javascript is disabled
-google.*###center_col > #tads
-
-# https://github.com/gorhill/uBlock/issues/621
-search.yahoo.com###main > div > style + ol
 
 # http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-25#post-2461804
 # Specific cosmetic filters for Youtube home page
 www.youtube.com##.masthead-ad-control
 www.youtube.com##.ad-div
-
-www.thesimsresource.com##.ad-topleader
-# http://www.reddit.com/r/chromeos/comments/2q4q3s/im_not_sure_if_this_belongs_here_but_adblock/
-# Following needed for http://putlocker.is/
-||vprmnwbskk.com^$popup
-||fmdwbsfxf0.com^$popup
-# This needs to be in EasyList Germany
-# url = http://www.click-learn.de/ (right vertical banner)
-||click-learn.de^*_155x420.swf
-
-# https://github.com/chrisaljoudi/uBlock/issues/510#issuecomment-71050211
-||racksauce.com^$domain=promptfile.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/510#issuecomment-71078475
-|http://$popup,domain=filenuke.com|sharesix.com
-||filenuke.com/a/script.js$script
-||mwem.filenuke.com/*/*$script
-||rrnq.filenuke.com/*/*$script
-||szbek.filenuke.com/*/*$script
-||wwegr.filenuke.com/*/*$script
-||sharesix.com/a/script.js$script
-||hhg.sharesix.com/*/*$script
-||jha.sharesix.com/*/*$script
-||lsg.sharesix.com/*/*$script
-||nvy.sharesix.com/*/*$script
+www.youtube.com##.pyv-afc-ads-container
 
 # https://github.com/chrisaljoudi/uBlock/issues/618
 deviantart.com##.dp-ad-chrome.dp-ad-visible
 
-# http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
-||www.notempire.com/js/gridview$script
-
 # https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^
-
-# https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/720518/
-mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-item-container)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=38703
 # http://www.christiantoday.com/article/huawei.nexus.release.news.could.be.googles.ticket.back.into.china/58786.htm
@@ -118,35 +81,12 @@ mail.yahoo.com###inboxcontainer .list-view-items-page > .ml-bg:not(.list-view-it
 #   complete block.
 ||username1.link^$important
 
-# https://github.com/gorhill/uBlock/issues/651
-ink361.com##.getridofAdsBlock[href^="javascript:"]
-
-# http://www.extremetech.com/mobile/214358-ad-blocking-for-the-masses-part-two-adblock-browser
-# "anyone else trying it on ET find that one ziffdavis.com ad bypasses ublock0 even though it's in the default lists for block"
-||inspiringsweater.xyz^
-||deservedlimp.xyz^
-
-# https://www.reddit.com/r/facebook/comments/3ld5gn/ive_discovered_that_i_cant_access_facebook/
-# Until all users have latest EasyList
-@@RPNcr3s-aD2.js$script,domain=facebook.com
-
 # https://github.com/gorhill/uBlock/issues/275
 jeu.info###page [class^="banniere-"]
 filmvf.net,hentaifr.net,jeu.info,tuxboard.com,xstory-fr.com##script:inject(goyavelab-defuser.js)
 
-# https://github.com/gorhill/uBlock/issues/759
-# Until fixed in EasyPrivacy
-@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/quant.js$script,first-party
-@@||eplayerhtml5.performgroup.com/js/tsEplayerHtml5/js/Eplayer/js/quantcast/vquant.js$script,first-party
-
 # This prevents spurious redirections
 washingtonpost.com##script:inject(wpredirect-defuser.js)
-
-# https://adblockplus.org/forum/viewtopic.php?f=2&t=26700&start=120#p141228
-www.valuewalk.com##.entry-footer
-
-# https://github.com/gorhill/uBlock/issues/923#issuecomment-154903084
-investopedia.com##.pg-wrapper > div:not(#Nav):not(.nav-space):not(.subnav-space):not(#Header):not(#Content):not(#Footer):not(.region-content)
 
 # Useful inline script tag filters until filter list maintainers start to use
 # it in their respective filter lists
@@ -156,8 +96,7 @@ bild.de##script:contains(/^\s*de.bild.cmsKonfig/)
 bild.de##script:contains(Javascript)
 commentcamarche.net,foot01.com,journaldunet.com,metronews.fr##script:contains(/[Ll]igatus/)
 dayt.se##script:contains(adblock.php)
-dpstream.net,jeux-porno.net##script:contains(/^\s*?var\s+?uniqueParam\s*?=/)
-finanzen.ch##script:contains(/^\s*function\s+UABPInject/)
+jeux-porno.net##script:contains(/^\s*?var\s+?uniqueParam\s*?=/)
 getvids.de,podcast.de,sommerhaus.de,spielespielen24.de##script:contains(/^\s*function\s+gS/)
 jav4.me##script:contains(adblock.htm)
 kino-dom.org##script:contains(my_abadiv)
@@ -211,9 +150,7 @@ spiegel.de#@#.wrapad
 ||trhunt.com^$document,popup
 
 # https://forums.lanik.us/viewtopic.php?f=62&t=27719
-opensubtitles.org##script:inject(opensubtitles.org)
 ||carambo.la^$third-party
-opensubtitles.org##script:contains(defaultCheckForAdBlockExistance)
 
 # https://skystreaming.net/canali/sky/guarda-sky-sport-1-in-streaming-live
 skystreaming.net##script:contains(abisuq)
@@ -223,21 +160,13 @@ skystreaming.net###fanback + style + div[id]
 # https://github.com/gorhill/uBlock/issues/1049
 ||d1zatounuylvwg.cloudfront.net/abw.js$script,third-party
 
-# https://github.com/gorhill/uBlock/issues/1079
-# These are just used by obnoxious click-bait ads with obfuscated links -- they
-# appear as 1st-party links but redirect to 3rd-party sites.
-||c8factor.com^
-||k5zoom.com^
-
 # https://github.com/gorhill/uBlock/issues/1100
 # AdDefend
-1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,autoexperience.de,auto-motor-und-sport.de,autoextrem.de,boerse.de,boerse-online.de,brigitte.de,buerstaedter-zeitung.de,caravaning.de,computerbild.de,comunio.de,eatsmarter.de,echo-online.de,elektrobike-online.com,e-mountainbike.com,fanfiktion.de,fem.com,finanzen.net,flugzeugforum.de,focus.de,foot01.com,gala.de,gamepro.de,gamestar.de,gamona.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,klettern.de,klettern-magazin.de,kreatives-wohnforum.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,mazda-forum.info,mercedes-forum.com,modernboard.de,motorradonline.de,mountainbike-magazin.de,notebookcheck.*,oberhessische-zeitung.de,outdoor-magazin.com,pcwelt.de,pkw-forum.de,promobil.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,roadbike.de,rp-online.de,runnersworld.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,skodacommunity.de,spiegel.de,sportal.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,unixboard.de,usinger-anzeiger.de,usp-forum.de,vermieter-forum.com,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,winboard.org,windows-7-forum.net,wn.de,womenshealth.de,wormser-zeitung.de,woxikon.de##script:inject(uabinject-defuser.js)
+1erforum.de,20min.ch,abendzeitung-muenchen.de,allgemeine-zeitung.de,arcor.de,ariva.de,autoexperience.de,auto-motor-und-sport.de,autoextrem.de,boerse.de,boerse-online.de,brigitte.de,buerstaedter-zeitung.de,caravaning.de,computerbild.de,comunio.de,eatsmarter.de,echo-online.de,elektrobike-online.com,e-mountainbike.com,fanfiktion.de,fem.com,finanzen.net,flugzeugforum.de,focus.de,foot01.com,gala.de,gamepro.de,gamestar.de,gamona.de,gelnhaeuser-tageblatt.de,general-anzeiger-bonn.de,giessener-anzeiger.de,hamburg.de,hochheimer-zeitung.de,hofheimer-zeitung.de,kabeleins.de,klettern.de,klettern-magazin.de,kreatives-wohnforum.de,kreis-anzeiger.de,lampertheimer-zeitung.de,lauterbacher-anzeiger.de,lpgforum.de,lustich.de,main-spitze.de,mazda-forum.info,mercedes-forum.com,modernboard.de,motorradonline.de,mountainbike-magazin.de,notebookcheck.*,oberhessische-zeitung.de,outdoor-magazin.com,pcwelt.de,pkw-forum.de,promobil.de,prosieben.de,prosiebenmaxx.de,rhein-main-presse.de,roadbike.de,rp-online.de,runnersworld.de,sat1.de,sat1gold.de,serienjunkies.de,sixx.de,skodacommunity.de,spiegel.de,sportal.de,spox.com,shz.de,teccentral.de,the-voice-of-germany.de,transfermarkt.de,tvspielfilm.de,tvtoday.de,unixboard.de,usinger-anzeiger.de,usp-forum.de,vermieter-forum.com,webfail.com,wetter.com,wetteronline.at,wetteronline.de,wiesbadener-kurier.de,wiesbadener-tagblatt.de,winboard.org,windows-7-forum.net,wn.de,womenshealth.de,wormser-zeitung.de,woxikon.de##script:inject(uabinject-defuser.js)
 
 # Yavli ads
-activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,aplus.com,bizpacreview.com,boredpanda.com,breathecast.com,bulletsfirst.net,cheatsheet.com,clashdaily.com,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,cowboybyte.com,crossmap.com,dailysurge.com,dccrimestories.com,digitalmusicnews.com,dilbert.com,drhotze.com,eaglerising.com,explosm.net,flexonline.com,freedomdaily.com,genfringe.com,girlsjustwannahaveguns.com,hellou.co.uk,instigatornews.com,joeforamerica.com,latinone.com,latinpost.com,libertyunyielding.com,mensfitness.com,minutemennews.com,mobilelikez.com,muscleandfitness.com,naturalblaze.com,oddee.com,okmagazine.com,patriotoutdoornews.com,pitgrit.com,radaronline.com,redmaryland.com,reverbpress.com,reviveusa.com,rightwingnews.com,segmentnext.com,shark-tank.com,sportsmole.co.uk,theblacksphere.net,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,traileraddict.com,unilad.co.uk,valuewalk.com,vcpost.com,victoriajackson.com,viralnova.com,viralthread.com,winningdemocrats.com,woundedamericanwarrior.com##script:inject(yavli-defuser.js)
-# To counter EayList's bad exception filter:
-# https://forums.lanik.us/viewtopic.php?f=62&t=25601&p=88119
-||thankyouforadvertising.com^$important
+100percentfedup.com,activistpost.com,addictinginfo.org,alfonzorachel.com,allenwestrepublic.com,allthingsvegas.com,americansublime.com,aplus.com,barbwire.com,blog.auntyacid.com,bighealthreport.com,bipartisan.report,bipartisanreport.com,bizpacreview.com,boredpanda.com,breaking911.com,breathecast.com,bulletsfirst.net,businessfinancenews.com,buzzlamp.com,celebrity-gossip.net,cheatsheet.com,clashdaily.com,collapse.news,comicallyincorrect.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,constitution.com,coviral.com,cowboybyte.com,craigjames.com,creepybasement.com,crossmap.com,cyberwar.news,deneenborelli.com,dailyfeed.co.uk,dailyhealthpost.com,dailysurge.com,dccrimestories.com,dennismichaellynch.com,digitalmusicnews.com,dilbert.com,drhotze.com,eaglerising.com,earnthenecklace.com,evil.news,explosm.net,faithit.com,fitnessconnoisseur.com,flexonline.com,foreverymom.com,freedomdaily.com,freedomforce.com,freedomoutpost.com,freedom.news,genfringe.com,girlsjustwannahaveguns.com,glitch.news,gopocalypse.org,gossipgirl.com,news.groopspeak.com,guardianlv.com,guns.news,gymflow100.com,hallels.com,hautereport.com,hellou.co.uk,hispolitica.com,hypable.com,ifyouonlynews.com,instigatornews.com,jobsnhire.com,joeforamerica.com,juicerhead.com,justdiy.com,keepandbear.com,lastresistance.com,latinone.com,latinpost.com,liberty.news,libertyunyielding.com,lidblog.com,medicine.news,mensfitness.com,millionpictures.co,minutemennews.com,mobilelikez.com,muscleandfitness.com,myscienceacademy.org,naturalblaze.com,natural.news,newseveryday.com,newsninja2012.com,newsthump.com,nster.com,oddee.com,okmagazine.com,oldschoolmemories.co.uk,oopsmile.com,operationsports.com,patriotoutdoornews.com,patriottribune.com,patriotupdate.com,pickthebrain.com,pitgrit.com,politicaloutcast.com,politichicks.com,practicallyviral.com,profitconfidential.com,quirlycues.com,radaronline.com,realmomsrealreviews.com,redhotchacha.com,redmaryland.com,returnofkings.com,reverbpress.com,reviveusa.com,rightwingnews.com,robotics.news,segmentnext.com,shark-tank.com,shedthoselbs.com,skrillionaire.com,slender.news,sonsoflibertymedia.com,sportsmole.co.uk,stupid.news,techconsumer.com,theblacksphere.net,theboredmind.com,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,tosavealife.com,traileraddict.com,truththeory.com,twisted.news,valuewalk.com,vampirediaries.com,vcpost.com,victoriajackson.com,videogamesblogger.com,viralnova.com,viralthread.com,visiontoamerica.com,whatzbuzzing.com,winningdemocrats.com,woundedamericanwarrior.com,xtribune.com,yourtango.com,youthhealthmag.com##script:inject(yavli-defuser.js)
+100percentfedup.com,activistpost.com,addictinginfo.org,alfonzorachel.com,allenbwest.com,allenwestrepublic.com,allthingsvegas.com,americansublime.com,aplus.com,askmefast.com,auntyacid.com,barbwire.com,benzinga.com,bighealthreport.com,bipartisan.report,bizpacreview.com,boredpanda.com,breaking911.com,breathecast.com,bulletsfirst.net,businessfinancenews.com,buzzlamp.com,celebrity-gossip.net,chacha.com,cheatsheet.com,christianpost.com,christiantoday.com,clashdaily.com,classicalite.com,comicallyincorrect.com,comicbookmovie.com,conservativebyte.com,conservativeintel.com,conservativetribune.com,conservativevideos.com,constitution.com,coviral.com,cowboybyte.com,craigjames.com,creepybasement.com,crossmap.com,cyberwar.news,dailyfeed.co.uk,dailyheadlines.net,dailyhealthpost.com,dailysurge.com,damnlol.com,dccrimestories.com,deneenborelli.com,dennismichaellynch.com,digitaljournal.com,digitalmusicnews.com,drhotze.com,eaglerising.com,earnthenecklace.com,enstarz.com,evil.news,explosm.net,faithit.com,fitnessconnoisseur.com,foreverymom.com,freedom.news,freedomdaily.com,freedomforce.com,freedomoutpost.com,gamezone.com,gamingsofar.com,genfringe.com,girlsjustwannahaveguns.com,glitch.news,globalpost.com,godfatherpolitics.com,godlikeproductions.com,gopocalypse.org,gosocial.co,gossipgirl.com,groopspeak.com,guardianlv.com,guns.news,gymflow100.com,hallels.com,hautereport.com,hellou.co.uk,heroichollywood.com,hngn.com,hypable.com,ifyouonlynews.com,infowars.com,instigatornews.com,janmorganmedia.com,jobsnhire.com,joeforamerica.com,juicerhead.com,justdiy.com,kdramastars.com,keepandbear.com,kpopstarz.com,lastresistance.com,latinone.com,latinopost.com,latinpost.com,liberty.news,libertyalliance.com,libertyunyielding.com,listverse.com,medicine.news,mensfitness.com,millionpictures.co,minutemennews.com,mobilelikez.com,mstarz.com,musictimes.com,myscienceacademy.org,natural.news,naturalblaze.com,naturalnews.com,natureworldnews.com,newseveryday.com,newsninja2012.com,newsthump.com,nster.com,oddee.com,oldschoolmemories.co.uk,ollapse.news,oopsmile.com,opednews.com,parentherald.com,patriotoutdoornews.com,patriottribune.com,patriotupdate.com,pickthebrain.com,pitgrit.com,politicaloutcast.com,politichicks.com,practicallyviral.com,profitconfidential.com,quirlycues.com,realfarmacy.com,realmomsrealreviews.com,realtytoday.com,redhotchacha.com,redmaryland.com,returnofkings.com,reverbpress.com,reviveusa.com,rightwingnews.com,robotics.news,segmentnext.com,shark-tank.com,shedthoselbs.com,skrillionaire.com,slender.news,sonsoflibertymedia.com,sportsmole.co.uk,stevedeace.com,stupid.news,techconsumer.com,techtimes.com,theblacksphere.net,theboredmind.com,thecountrycaller.com,thefreethoughtproject.com,thegatewaypundit.com,themattwalshblog.com,thepoke.co.uk,tinypic.com,tosavealife.com,traileraddict.com,truththeory.com,twisted.news,universityherald.com,valuewalk.com,vampirediaries.com,vcpost.com,victoriajackson.com,videogamesblogger.com,viralnova.com,viralthread.com,visiontoamerica.com,whatzbuzzing.com,winningdemocrats.com,xtribune.com,youngcons.com,yourtango.com,youthhealthmag.com##:xpath(//artcle[.//text()="Paid Content:"])
 
 # https://github.com/gorhill/uBlock/issues/1094
 extremetube.com,pornhub.com,primewire.*,redtube.*,spankwire.com,tube8.*,youporn.com,youporngay.com##script:inject(pornhub-popup-defuser.js)
@@ -264,14 +193,9 @@ dailymotion.com##script:inject(1136.js)
 # https://news.ycombinator.com/item?id=10814913
 forbes.com##script:inject(forbes-defuser.js)
 
-# https://forums.lanik.us/viewtopic.php?f=62&t=25212&start=15
-animeuploads.com,cizgifilmlerizle.com##script:inject(impspcabe-defuser.js)
-
 # https://github.com/gorhill/uBlock/issues/949
-||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=chip.de|cdnapi.kaltura.com|focus.de|spiegel.de|stern.de|t-online.de,redirect=hd-main.js
+||s3.amazonaws.com/homad-global-configs.schneevonmorgen.com/hd-main.js$script,domain=chip.de|computerbild.de|cdnapi.kaltura.com|focus.de|spiegel.de|stern.de|sueddeutsche.de|t-online.de,redirect=hd-main.js
 ||svonm.com/hd-main.js$script,redirect=hd-main.js,domain=chip.de|cdnapi.kaltura.com
-# https://github.com/gorhill/uBlock/issues/1216
-chip.de##script:inject(1216.js)
 stern.de##script:inject(bcplayer-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=40985
@@ -288,11 +212,8 @@ stern.de##script:inject(bcplayer-defuser.js)
 # https://github.com/gorhill/uBlock/issues/1078
 ||eurotransport.de/*/antiAdBlock.js$script,first-party,redirect=antiAdBlock.js
 
-# https://forums.lanik.us/viewtopic.php?f=91&t=27188
-||i.ligatus.com/*/angular-tag.js$script,redirect=i.ligatus.com/*/angular-tag.js
-
 # https://github.com/gorhill/uBlock/issues/1194
-openload.co##script:inject(openload-defuser.js)
+openload.co##script:inject(openload.co.js)
 # https://github.com/gorhill/uBlock/issues/1201
 openload.*##script:contains(/^\s*window\.popAdsLoaded=/)
 
@@ -301,7 +222,7 @@ kissanime.to##script:inject(kissanime-defuser.js)
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=27908
 # https://github.com/gorhill/uBlock/issues/1354
-animes-mangas-ddl.com,best-movies.info,crazymeds.us,dasolo.org,ip-address.org,uploadshub.com,yourvideohost.com##script:inject(bab-defuser.js)
+animes-mangas-ddl.com,animmex.co,best-movies.info,bnonews.com,crazymeds.us,dasolo.org,d-h.st,hulkusc.com,ip-address.org,megapanda.net,nplay.com,playlivenewz.com,sadeempc.com,upload.so,uploadshub.com,userscdn.com,yourvideohost.com##script:inject(bab-defuser.js)
 
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=41860
 filmvf.net,filmstreaming-hd.com,gaara-fr.com,gaytube.com,gum-gum-streaming.com,hentaifr.net,hentaihaven.org,narutoshippudenvf.com,thebadbuzz.com,tuxboard.com,xstory-fr.com##script:inject(phenv-defuser.js)
@@ -322,20 +243,11 @@ armorgames.com,mmohuts.com,newgrounds.com,onrpg.com,silvergames.com##a[href*="mm
 # https://github.com/gorhill/uBlock/issues/1340#issuecomment-191082824
 ||gamingaffiliation.com^$third-party
 
-tweaktown.com###background_skin
-
-# https://github.com/gorhill/uBlock/issues/1449
-# Computers seizing thanks to this moronic script
-||twnmm.com/js/*/adobe_audience_manager$script
-
 # https://twitter.com/DThibaut67/status/707624770653843456
 ||connectormwi.laterpay.net/*/app-de-de.js$script,domain=sport1.de
 
 # https://forums.lanik.us/viewtopic.php?f=64&t=22975&start=45#p77969
 kisscartoon.me##script:inject(kisscartoon-defuser.js)
-
-# https://twitter.com/hotelzululima/status/711729434458324992
-||computerworld.com.au/compressor-staticfiles/addsmin/idg_gpt_pipeline_generated.js$script
 
 # https://twitter.com/FabienTipon/status/711877626638503936
 @@||f1g.fr/*/adsense.js$script
@@ -350,8 +262,543 @@ lemonde.fr##script:inject(lemonde-defuser.js)
 # https://forums.lanik.us/viewtopic.php?f=91&t=29267
 www.rtl.fr###modal-warning
 rtl.fr##script:inject(rtlfr-defuser.js)
-# https://github.com/gorhill/uBlock/issues/1505
-6play.fr,clubic.com,passeportsante.net,telerama.fr##script:inject(overlay-buster.js)
 
 # http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-77
 imore.com##script:inject(imore-sanitizer.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=25212&start=15
+! https://github.com/uBlockOrigin/uAssets/issues/3
+animeuploads.com,christianpost.com,cizgifilmlerizle.com,thefreethoughtproject.com##script:inject(impspcabe-defuser.js)
+||christianpost.com/js/plugins/sticky/sticky.js
+||letsadvertisetogether.com^$important,domain=christianpost.com
+
+# https://github.com/uBlockOrigin/uAssets/issues/8
+navigaweb.net##script:inject(alert-buster.js)
+
+# https://adblockplus.org/forum/viewtopic.php?f=10&t=44887
+vaughnlive.tv##.abvsDynamic
+
+# https://github.com/uBlockOrigin/uAssets/issues/9
+sembilhete.tv##script:inject(fuckadblock.js-3.2.0)
+
+# https://github.com/uBlockOrigin/uAssets/issues/15
+||file-upload.net^$subdocument
+file-upload.net##iframe
+
+# https://forums.lanik.us/viewtopic.php?f=64&t=29410#p91041
+*$popup,third-party,domain=anilinkz.tv
+
+! https://github.com/gorhill/uBlock/issues/1216
+! https://github.com/uBlockOrigin/uAssets/issues/17
+chip.de##script:inject(uAssets-17)
+
+! https://github.com/uBlockOrigin/uAssets/issues/2
+||data.*.com^$document,popup,domain=hqprn.com|tvil.me|viptube.com|vivatube.com
+
+! https://archive.rebeccablacktech.com/g/thread/S54040346#p54046766
+pornhub.com##script:inject(pornhub-sanitizer.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=25847&start=30#p91604
+||widgethost.barnebys.com^$third-party
+
+! https://github.com/uBlockOrigin/uAssets/issues/25
+www.wired.com###around-the-web
+
+! https://github.com/uBlockOrigin/uAssets/issues/28
+||pagead2.googlesyndication.com/pagead/*/show_ads_impl.js$script,important,domain=wired.com
+||pagead2.googlesyndication.com/pagead/show_ads.js$script,important,domain=wired.com
+||wired.com/ams/page-ads.js$important,script
+
+! https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/792454/
+vipleague.sx##script:inject(overlay-buster.js)
+
+! https://github.com/gorhill/uBlock/issues/1591
+||static.adzerk.net/ados.js$script,important,domain=serverfault.com|stackoverflow.com
+
+! https://github.com/uBlockOrigin/uAssets/issues/35
+||im9.eu^*fa.js$script,redirect=fuckadblock.js-3.2.0
+||g9g.eu^*fa.js$script,redirect=fuckadblock.js-3.2.0
+
+! https://github.com/ryanbr/fanboy-adblock/issues/8
+etc.se##script:inject(overlay-buster.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/36
+play.spotify.com##script:inject(nr-unwrapper.js)
+
+! Computers seizing thanks to these moronic scripts leading to system-wide out
+! of memory condition
+# https://github.com/gorhill/uBlock/issues/1449
+||twnmm.com/js/*/adobe_audience_manager$script
+! https://forums.informaction.com/viewtopic.php?f=10&t=21675
+||twnmm.com/js/*/dfpad$script
+
+! https://github.com/uBlockOrigin/uAssets/issues/38
+cityam.com,professionaladviser.com,techworld.com##script:inject(r3z-defuser.js)
+
+! https://hg.adblockplus.org/easylist/rev/04e7e8f52de9
+! To counter EasyList exception filters which are not required for uBO
+||cityam.com/assets/js/dfp/dfp.js$script,important
+||partner.googleadservices.com/gpt/pubads_impl_$script,important,domain=cityam.com
+||ad.crwdcntrl.net^$script,important,domain=cityam.com
+
+# https://forums.lanik.us/viewtopic.php?f=91&t=27188
+||ligatus.com/*/angular-tag.js$script,redirect=ligatus.com/*/angular-tag.js
+# https://forums.lanik.us/viewtopic.php?f=91&t=29609
+||ligatus.com/*/angular-tag-https.js$script,redirect=ligatus.com/*/angular-tag.js
+
+! Use on `http://thewatchseries.to/` to deliver ads
+||ws-gateway.com^
+
+! https://github.com/gorhill/uBlock/issues/1628
+||gitcdn.pw^
+
+! https://news.ycombinator.com/item?id=11791940
+ibtimes.co.uk###signin_popup
+
+! https://github.com/uBlockOrigin/uAssets/issues/58
+||cdn*.deadline.com^
+deadline.com,tweaktown.com##script:inject(gpt-defuser.js)
+
+! https://adblockplus.org/forum/viewtopic.php?f=1&t=45634#p157317
+allmusic.com##script:inject(allmusic.com.js)
+! https://adblockplus.org/forum/viewtopic.php?f=1&t=45634
+||1rx.s3.amazonaws.com/advert.js$script,redirect=noopjs,domain=allmusic.com
+||cdn.complexmedianetwork.com/js/cmnUNT.js$important,script,redirect=noopjs,domain=allmusic.com
+||allmedia-d.openx.net/w/1.0/jstag?nc=22732481-SideReel$script,redirect=noopjs,domain=allmusic.com
+||asset.pagefair.net/ads.min.js$script,important,redirect=noopjs,domain=allmusic.com
+||asset.pagefair.com/adimages/adsense.js$script,redirect=noopjs,domain=allmusic.com
+allmusic.com#@#.advertising
+allmusic.com#@#.medium-rectangle
+allmusic.com##.advertising.medium-rectangle:style(min-height: 1px !important;)
+! To override https://github.com/easylist/easylist/commit/af5062ec57ea0c2fd43306c6bdc961bcc8e4e546 
+||amazon-adsystem.com/aax2/amzn_ads.js$script,important,domain=allmusic.com
+
+! https://twitter.com/omgmog/status/743026214156312576
+bloomberg.com###adBlockerContainer
+
+! Spotted on routine testing of opensubtitles.org
+||104.198.198.188^
+||104.198.198.188^$popup
+! https://forums.lanik.us/viewtopic.php?f=62&t=32144
+||104.197.199.227^
+||104.197.199.227^$popup
+
+! https://github.com/uBlockOrigin/uAssets/issues/68
+fullpremiums.com##script:inject(overlay-buster.js)
+||fullpremiums.com/templates/plugmod/images/a.png
+@@||fullpremiums.com/adblock.js$script,first-party
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31363
+videowood.tv##script:inject(videowood.tv.js)
+*$websocket,domain=videowood.tv
+
+! https://github.com/gorhill/uBlock/issues/1340#issuecomment-230280766
+generation-nt.com##script:inject(phenv-defuser.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31389
+livenewschat.eu##script:inject(bab-defuser.js)
+livenewschat.eu##ins[id^="aswift_"]
+
+! uBO's own solution for incessant attempts at circumventing blockers:
+! "important" option used to bypass EasyList exception filters.
+*$script,websocket,third-party,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+||cdn.engine.*.doublepimp.com^$important,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||ajax.googleapis.com^$script,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||phncdn.com^$image,media,object,stylesheet,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||cdn-d-static.pornhub.com^$image,object,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||rncdn2.com^$image,media,object,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||rncdn3.com^$image,media,object,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||static.redtube.com^$domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+@@||videos2.cdn1122.com^$image,object,domain=gaytube.com|pornhub.com|redtube.com|redtube.it|tube8.com|tube8.es|tube8.fr|xtube.com|youjizz.com|youporn.com|youporngay.com
+
+! https://github.com/uBlockOrigin/uAssets/issues/78
+*$popup,third-party,domain=nowvideo.ag|nowvideo.co|nowvideo.li|nowvideo.sx|nowvideo.to
+
+! https://github.com/gorhill/uBlock/issues/1340#issuecomment-230495317
+mangas-fr.com##script:inject(__$dc-defuser.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/80
+upornia.com##.mjs-closeplay:style(z-index:-1)
+
+! https://github.com/reek/anti-adblock-killer/issues/1618
+strikeout.me##body > div:has(img[alt="AdBlock Alert"])
+
+! https://github.com/gorhill/uBlock/issues/1752
+go.mail.ru##.responses__wrapper > div > div:has([href^="http://an.yandex.ru/"])
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31220
+merriam-webster.com##script:inject(nowebrtc.js)
+
+! https://adblockplus.org/forum/viewtopic.php?f=10&t=44944
+||adf.ly/puopen.php?$popup,important
+! https://forums.lanik.us/viewtopic.php?f=23&t=31545 https://github.com/gorhill/uBlock/issues/1843
+adf.ly,q.gs##script:inject(adf.ly.js)
+! https://github.com/uBlockOrigin/uAssets/issues/107
+||s1-adfly.com/show.php?url=$subdocument,redirect=noopframe,domain=ay.gy
+
+! https://forums.lanik.us/viewtopic.php?f=91&t=31272
+dpstream.net##script:inject(fuckadblock.js-3.2.0)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=30509
+al.ly##script:inject(bab-defuser.js)
+al.ly##script:inject(fuckadblock.js-3.2.0)
+
+! https://adblockplus.org/forum/viewtopic.php?f=10&t=47070
+empyrion.gamepedia.com###atflb
+
+! https://forums.lanik.us/viewtopic.php?f=91&t=31251
+@@||ops.prismamediadigital.com/js/advertisement.js$xmlhttprequest,domain=programme-tv.net
+
+! https://www.reddit.com/r/dataisbeautiful/comments/4t4d16/chart_shows_why_pharma_companies_are_fighting/d5ejqc0
+washingtonpost.com###bottom-furniture
+washingtonpost.com##html:style(height: initial !important; overflow: auto !important;)
+
+! https://issues.adblockplus.org/ticket/4118
+yandex.ru##.serp-item:has(:scope > .organic > .organic__subtitle > .label_color_yellow)
+
+! https://www.reddit.com/r/firefox/comments/4ucrvy/can_ublock_origin_disable_javascript_for_a/
+hindustantimes.com##script:inject(hindustantimes.com.js)
+! https://forums.lanik.us/viewtopic.php?f=62&t=31600
+hindustantimes.com###div_adblock
+hindustantimes.com###div_storyContent:style(display: initial !important;)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31285&start=30
+||indiatimes.com/detector$script
+indiatimes.com##script:inject(indiatimes.com.js)
+||static.clmbtech.com^$script,important,domain=indiatimes.com
+||chartbeat.com/js/chartbeat.js$script,important,domain=indiatimes.com
+||tags.crwdcntrl.net^$script,important,domain=indiatimes.com
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31681
+||mid-day.com/Resources/midday/js/adblocker$script,first-party,important
+
+! https://github.com/gorhill/uBlock/issues/1789
+! https://forums.lanik.us/viewtopic.php?p=98839
+bhaskar.com,divyabhaskar.co.in##script:inject(bhaskar.com.js)
+
+! https://adblockplus.org/forum/viewtopic.php?f=1&t=47754
+thesimsresource.com##script:inject(thesimsresource.com.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/88
+||hgcorigin.svonm.com/hd-main.js$script,domain=golem.de,redirect=hd-main.js
+golem.de##script:inject(golem.de.js)
+
+! https://adblockplus.org/forum/viewtopic.php?f=10&t=45273&start=15#p156427
+dailycaller.com##[id^="outbrain_widget"]
+
+! https://github.com/uBlockOrigin/uAssets/issues/70
+! https://forums.lanik.us/viewtopic.php?p=99583#p99583
+||aranzulla.it$inline-script
+
+! https://forums.lanik.us/viewtopic.php?p=99593
+@@||financialexpress.com/*/ad*$script,first-party
+
+! https://forums.lanik.us/viewtopic.php?f=102&t=29381
+seasonvar.ru##.td-for-left-block
+seasonvar.ru##html > body:style(padding-top: 4px !important;)
+seasonvar.ru###b_sl_51
+
+! https://github.com/uBlockOrigin/uAssets/issues/90
+pikabu.ru##.story:has(a[href*='pikabu.ru/html.php?id=ad'])
+
+! https://github.com/uBlockOrigin/uAssets/issues/66
+blogfolha.uol.com.br,economia.uol.com.br,educacao.uol.com.br,folha.uol.com.br##script:inject(folha-de-sp.js)
+||paywall.folha.uol.com.br/wall.jsonp?callback=paywall.inicio$domain=blogfolha.uol.com.br|educacao.uol.com.br|folha.uol.com.br
+! https://github.com/uBlockOrigin/uAssets/issues/124
+||jsuol.com.br^*detectadblock.js$script,domain=economia.uol.com.br
+
+! https://forums.lanik.us/viewtopic.php?f=9&t=31927
+quora.com##body > div[id]:has(.signup_modal_content)
+! https://news.ycombinator.com/edit?id=12281229
+quora.com##body:style(overflow: auto !important)
+
+! https://github.com/uBlockOrigin/uAssets/issues/94
+||static.exoclick.com/*.png$image,redirect=2x2-transparent.png,domain=anigod.com|anigod.gryfindor.com
+@@||anigod.com/js/ads.js
+anigod.gryfindor.com#@#.ads-link
+
+! https://github.com/uBlockOrigin/uAssets/issues/96
+||newartspy.link^
+||newartspy.link^$popup
+
+! https://github.com/uBlockOrigin/uAssets/issues/71
+motobanda.pl###mvideo:style(z-index: 1 !important;)
+
+! https://www.reddit.com/r/firefox/comments/4wpd23/popads_just_announced_that_they_have_a_new_method/d69940z
+extratorrent.*##body > div[class]:matches-css(position: absolute;)
+
+! https://github.com/gorhill/uBlock/issues/1879
+||popads.net/pop.js$script,redirect=popads.net.js
+
+! https://github.com/uBlockOrigin/uAssets/issues/99
+||tlootas.org^
+||tlootas.org^$popup
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31357&p=100144
+@@||indiatoday.intoday.in/video/$generichide
+
+! https://github.com/uBlockOrigin/uAssets/issues/101
+||infoyours.info^
+||infoyours.info^$popup
+
+! https://github.com/reek/anti-adblock-killer/issues/1698
+! https://github.com/uBlockOrigin/uAssets/issues/102
+businesstoday.in###zedoads1:style(height: 1px !important)
+businesstoday.in###zedoads2:style(height: 1px !important)
+businesstoday.in###zedotopnavads:style(height: 1px !important)
+businesstoday.in###zedotopnavads1:style(height: 1px !important)
+businesstoday.in###adbocker_alt
+! https://github.com/uBlockOrigin/uAssets/issues/102#issuecomment-241239514
+businesstoday.in##.adblocker-container
+businesstoday.in###story-maincontent:style(display: block !important)
+
+! https://adblockplus.org/forum/viewtopic.php?f=10&t=46010
+! https://github.com/uBlockOrigin/uAssets/issues/102
+indiatoday.in,indiatoday.intoday.in##script:inject(indiatoday.intoday.in.js)
+indiatoday.in,indiatoday.intoday.in##.ad_bn.row
+indiatoday.in,intoday.in###adbocker_alt
+indiatoday.in,intoday.in###zedoads1:style(height: 1px !important)
+indiatoday.in,intoday.in###zedoads2:style(height: 1px !important)
+indiatoday.in,intoday.in##.adblockcontainer:style(display: block !important)
+! https://github.com/uBlockOrigin/uAssets/issues/102#issuecomment-239625264
+||zedo.com^$script,important,domain=indiatoday.in|intoday.in
+||pagead2.googlesyndication.com^$script,important,domain=indiatoday.in|intoday.in
+
+! https://forums.lanik.us/viewtopic.php?f=102&t=23934&start=30
+fastpic.ru##body > div:matches-css(position: absolute;)
+fastpic.ru##body:style(cursor: default !important;)
+fastpic.ru##html:style(cursor: default !important;)
+
+! https://github.com/gorhill/uBlock/issues/1879#issuecomment-239651221
+123bay.*,inbypass.*,tormirror.*,tpb.*,unlockme.*,yts.ag##script:inject(noeval.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32108
+imgpile.com##script:inject(bab-defuser.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32100
+700mbmovies.com##script:inject(bab-defuser.js)
+
+! https://forums.lanik.us/viewtopic.php?f=102&t=30468&start=15
+hdrezka.me##html > body.active-brand.pp:style(padding-top: 0 !important;)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32109
+ndtv.com###ndtv-message-users
+ndtv.com###ins_videodetail:style(display: block !important;)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32128
+planetatvonlinehd.com##.adsantilok:style(height: 1px)
+
+! http://www.eurogamer.net/forum/thread/262043?start=810
+eurogamer.net###page-wrapper:style(background: none !important; padding-top: 0 !important;)
+eurogamer.net##html:style(cursor: default !important;)
+||bit.ly^$popup,domain=eurogamer.net
+
+! https://github.com/uBlockOrigin/uAssets/issues/98
+facebook.com###stream_pagelet div[id^="hyperfeed_story_id_"]:has(a.uiStreamSponsoredLink)
+! "People You May Know": EasyList tries to block these, might as well block them fully
+facebook.com##:xpath(//div[@id="stream_pagelet"]//div[starts-with(@id,"hyperfeed_story_id_")][.//h6//span/text()="People You May Know"])
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32142
+||ruiguozhi.cc^
+
+! This removes blank space the right-hand side
+mail.yahoo.com###shellcontent:style(right: 0px !important;)
+
+! https://github.com/uBlockOrigin/uAssets/issues/103
+happy-hack.ru##script:inject(noeval.js)
+||pagead2.googlesyndication.com^$script,important,domain=happy-hack.ru
+||google.com/ads/popudner/banner.jpg$image,important,domain=happy-hack.ru
+happy-hack.ru##.adsbygoogle
+happy-hack.ru##table[id^='blockblock']
+happy-hack.ru##body > *[id^="blockblock"]:style(visibility: visible !important; display: block !important;)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32070
+! https://forums.lanik.us/viewtopic.php?f=62&t=32255
+xnxx.com,xvideos.com##script:inject(xvideos.com.js)
+xvideos.com###content > [id]:has(:scope > img:first-of-type + img:last-of-type)
+xvideos.com###page > [id]:has(:scope > img:only-of-type)
+xvideos.com###main > [id]:has(a[href^="https://main.trafficfactory.biz/"])
+! video pages
+xvideos.com###page.video-page > [id]:has(a[href^="https://main.trafficfactory.biz/"])
+xvideos.com##.sponsor_popup
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32165
+watch8x.com##script:inject(noeval.js)
+||fieldpprofile.com^
+||fieldpprofile.com^$popup
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31796
+fullstuff.co##script:inject(bab-defuser.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32190
+short.am###id64
+short.am##.content:style(display: block !important)
+
+! https://forums.lanik.us/viewtopic.php?p=88373#p88373
+nextinpact.com##section:has(:scope > lulz)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32208
+||popcash.net^$script,redirect=noopjs,domain=fastrapidleech.com
+||dubshub.com^$script,redirect=noopjs,domain=fastrapidleech.com
+||googlesyndication.com^$script,redirect=noopjs,domain=fastrapidleech.com
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31989
+hastlegames.com###eb81
+hastlegames.com###pageWrapper:style(display: block !important)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31322&start=30
+ndtv.com###ndtv-myModal
+ndtv.com##body:style(overflow: auto !important)
+ndtv.com##script:inject(ndtv.com.js)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31409&start=15
+nmac.to##script:inject(bab-defuser.js)
+
+! https://forums.lanik.us/viewtopic.php?f=64&t=24179
+sc2casts.com##body > div:has(:scope > div > div > a[href="http://i.imgur.com/7On9KMf.png"])
+||googlesyndication.com^$script,redirect=noopjs,important,domain=sc2casts.com
+
+! https://twitter.com/xxdesmus/status/767410203792805888
+foreignpolicy.com###TB_window
+foreignpolicy.com##body:style(overflow: auto !important;)
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=28492
+userscloud.com##script:inject(noeval.js)
+
+! https://forums.lanik.us/viewtopic.php?f=64&t=32278
+jpost.com##script:inject(jpost.com.js)
+
+! https://forums.lanik.us/viewtopic.php?f=91&t=22581
+||pagead2.googlesyndication.com/pagead/js/$script,important,redirect=noopjs,domain=onvasortir.com
+
+! http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/page-90#post-2612679
+diablofans.com##div[class]:has(:scope > div[data-google-query-id])
+
+! https://github.com/uBlockOrigin/uAssets/issues/108
+wetteronline.de##script:inject(wetteronline.de.js)
+wetteronline.de###woRect
+wetteronline.de###woCsiAdContent
+
+! https://adblockplus.org/forum/viewtopic.php?f=10&t=48156
+trafictube.ro##script:inject(trafictube.ro.js)
+trafictube.ro##.smecher
+trafictube.ro##.widget-smecher
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=30547
+dragoart.com##script:inject(bab-defuser.js)
+||pagead2.googlesyndication.com^$script,important,domain=dragoart.com
+dragoart.com###centercol_io > div[style]:has(script[src^="https://pagead2.googlesyndication.com/"])
+
+! https://github.com/uBlockOrigin/uAssets/issues/104
+timesofindia.com##script:inject(indiatimes.com.js)
+m.timesofindia.com##.ad1
+@@||imasdk.googleapis.com/js/sdkloader/ima3.js$script,domain=m.timesofindia.com
+
+! https://github.com/uBlockOrigin/uAssets/issues/104
+m.aajtak.in##body > #adbocker_alt.adblocker-page
+m.aajtak.in##body > .secArticleTitle:style(display: block !important)
+m.aajtak.in##body > .pubTime:style(display: block !important)
+m.aajtak.in##body > .secArticleImage:style(display: block !important)
+m.aajtak.in##body > .storyBody:style(display: block !important)
+
+! Remove ancestor div with random id as well
+tomshardware.com##.page-content-rightcol > .is-sticky > div[id]:has(a[href*="%26tag%3Dpurch_ramp_ab-20%26"])
+
+! https://github.com/uBlockOrigin/uAssets/issues/110
+finanzen.*##script:inject(uabinject-defuser.js)
+finanzen.*##script:inject(smartadserver.com.js)
+finanzen.*###bs_abstand
+finanzen.*##[id^="sas_"]:style(height: 1px !important)
+
+! https://github.com/gorhill/uBlock/issues/1936
+parentherald.com##script:inject(noeval.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/117
+@@||mid-day.com/Resources/middaymobile/js/ads.js$script,first-party
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32381
+||trackpprofile.com^$popup
+
+! https://github.com/gorhill/uBlock/issues/1936
+! https://github.com/uBlockOrigin/uAssets/issues/120
+! https://forums.lanik.us/viewtopic.php?f=62&t=32184
+! https://github.com/uBlockOrigin/uAssets/issues/123
+*$websocket,domain=24video.xxx|extratorrent.cc|filmix.net|free-torrent.org|free-torrents.org|free-torrent.pw|free-torrents.pw|hdrezka.me|kino-dom.org|kinotochka.net|natureworldnews.com|nnmclub.to|opensubtitles.org|parentherald.com|pornhub.com|putlocker9.com|redtube.com|redtube.com.br|rufilmtv.org|rustorka.com|seasonvar.ru|stream-tv-series.net|stream-tv2.to|tomshardware.com|tube8.com|tube8.es|tube8.fr|xtube.com|youporn.com|youporngay.com
+||free-torrents.pw^$websocket
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32401
+minecraftbuildinginc.com##script:inject(bab-defuser.js)
+
+! https://github.com/reek/anti-adblock-killer/issues/2000
+@@||360haven.com/*ad$script
+360haven.com##script:inject(bab-defuser.js)
+||pagead2.googlesyndication.com^$script,important,domain=360haven.com
+360haven.com###pageWrapper:style(display: initial !important;)
+360haven.com###notices
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32150
+||bpasyspro.com^
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=31589
+||serve.popads.net/checkInventory.php$important,script,redirect=noopjs,domain=jav4.me
+
+! https://forums.lanik.us/viewtopic.php?f=64&t=31840
+@@||js.jansatta.com/ads_js.js?$domain=financialexpress.com|indianexpress.com|jansatta.com
+
+! https://github.com/uBlockOrigin/uAssets/issues/101
+tugaflix.*##script:inject(fuckadblock.js-3.2.0)
+openload.co#@#.vjs-poster
+openload.co#@##videooverlay
+||tugaflix.net/tema/marsbet_3.gif
+||ajax.cloudflare.com/cdn-cgi/nexp/dok3v=0489c402f5/cloudflare.min.js$script,domain=tugaflix.net
+
+! https://github.com/uBlockOrigin/uAssets/issues/125
+@@||d3pkae9owd2lcf.cloudfront.net/mb105.gz.js$script,domain=hotslogs.com
+
+! http://www.linuxtricks.fr/news/10-logiciels-libres/169-contourner-les-anti-bloqueurs-de-pub-la-revanche/
+lesechos.fr##script:inject(lesechos.fr.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/126
+uploaded.net##script:inject(fuckadblock.js-3.2.0)
+uploaded.net###pico-1
+uploaded.net##.pico-overlay
+uploaded.net###fakeContentBoxContainer
+||exoclick.com/ad_track.js$important,script,domain=uploaded.net
+
+! https://github.com/uBlockOrigin/uAssets/issues/127
+gadgets.ndtv.com##.adblockerContent:style(display: initial !important;)
+gadgets.ndtv.com###ndtv-message-userss
+
+! https://issues.adblockplus.org/ticket/4390
+joyreactor.cc,reactor.cc###content:matches-css(font-size: 31px)
+
+! https://adblockplus.org/forum/viewtopic.php?f=1&t=48346
+icefilms.info##body > div:matches-css(z-index: 999999;)
+
+! https://github.com/reek/anti-adblock-killer/issues/2039
+@@||diep.io^$script,~third-party
+
+! https://twitter.com/MatteoPretenzio/status/773146417355452416
+||norgerockingham.com$script,domain=lequipe.fr
+
+! https://forums.lanik.us/viewtopic.php?p=102620#p102620
+amazon.*###s-results-list-atf > .s-result-item:has(:scope > .s-item-container h5.s-sponsored-list-header)
+
+! https://github.com/uBlockOrigin/uAssets/issues/131
+sourceforge.net##script:inject(nowebrtc.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/132
+||adternal.com^$image,redirect=3x2-transparent.png,domain=frag-mutti.de
+
+! https://forums.lanik.us/viewtopic.php?f=62&t=32636
+! https://forums.lanik.us/viewtopic.php?f=62&t=32703
+boston.com,photobucket.com##script:inject(i10c-defuser.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/137
+||tripadvisor.*/PricefinderPopunder$popunder,popup
+
+! https://github.com/gorhill/uBlock/issues/1984
+avaxhome.co##script:inject(bab-defuser.js)
+
+! https://github.com/uBlockOrigin/uAssets/issues/141
+viedemerde.fr##script:inject(criteo.net.js)

@@ -242,8 +242,6 @@ var renderFilterLists = function() {
 
     var onListsReceived = function(details) {
 
-console.log(Object.keys(details.available));
-
         // ADN: ignore hidden lists
         hiddenLists.forEach(function(l) { delete details.available[l]; });
 
@@ -277,7 +275,10 @@ console.log(Object.keys(details.available));
 
         // ADN: move these specific lists to 'essentials'
         var toDefault = ['assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
-            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'];
+            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt',
+            'https://www.eff.org/files/effdntlist.txt'
+          ];
+
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
             idx > -1 && groups['default'].push(groups['multipurpose'].splice(idx, 1));
@@ -419,7 +420,7 @@ var onListCheckboxChanged = function() {
     }
     listDetails.available[href].off = !this.checked;
 
-    if (href === requiredList) { // ADN
+    if (href === requiredList) { // ADN: NOTIFICATIONS
 //console.log("[WARN] EasyList -> ",this.checked);
         window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
     }
@@ -611,11 +612,8 @@ var groupEntryClickHandler = function() {
     li.toggleClass('collapsed');
     var key = 'collapseGroup' + li.nthOfType();
     if ( li.hasClass('collapsed') ) {
-      console.log("COLLAPSE: ",key);
         vAPI.localStorage.setItem(key, 'y');
     } else {
-        console.log("UNCOLLAPSE: ",key);
-
         vAPI.localStorage.removeItem(key);
     }
 };

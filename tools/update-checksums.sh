@@ -2,6 +2,9 @@
 #
 # This script assumes a linux environment
 
+echo "not an AdNauseam file"
+exit
+
 echo "*** uBlock: generating checksums.txt file..."
 
 truncate -s 0 assets/checksums.txt
@@ -29,6 +32,7 @@ thirdparties=(
     '../uAssets/thirdparties/pgl.yoyo.org/as/serverlist'
     '../uAssets/thirdparties/publicsuffix.org/list/effective_tld_names.dat'
     '../uAssets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt'
+    '../uAssets/thirdparties/www.eff.org/files/effdntlist.txt'
 )
 for repoPath in "${thirdparties[@]}"; do
     localPath=`printf $repoPath | sed 's/\.\.\/uAssets\/thirdparties/assets\/thirdparties/'`

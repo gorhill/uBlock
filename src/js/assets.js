@@ -54,7 +54,7 @@ var oneDay = 24 * oneHour;
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
 var adnauseamListPath = 'assets/ublock/adnauseam.txt';
-var assetsRepositoryRoot = 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/';
+var assetsRepositoryRoot = 'https://raw.githubusercontent.com/dhowe/AdNauseam/master/assets/'; // ADN
 var nullFunc = function() {};
 var reIsExternalPath = /^(file|ftps?|https?|resource):\/\//;
 var reIsUserPath = /^assets\/user\//;
