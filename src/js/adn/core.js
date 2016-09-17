@@ -864,12 +864,7 @@
   }
 
   // check that the rule is not disabled in 'disabledBlockingRules'
-  var ruleDisabled = function (test, list) {
-
-    if (list && (list === 'AdNauseam filters' ||
-        list === 'My filters')) { // never disabled
-      return false;
-    }
+  var ruleDisabled = function (test) {
 
     return disabledBlockingRules.indexOf(test) > -1;
   };
@@ -936,6 +931,17 @@
     return false;
   };
 
+  /**
+   *  NOTE: this is called AFTER our firewall rules, and checks the following:
+   *  1) whether we are blocking at all
+   *  		if not, return false
+   *  2) whether domain is blockable (allowAnyBlockOnDomains)
+   *  		if so, return true;
+   *  3) if it is in the globally disabled rules (disabledBlockingRules)
+   *  		if so return false
+   *  4) if any list it was found on allows blocks
+   *  		if so, return true;
+   */
   var isBlockableRequest = function (context) {
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
@@ -944,45 +950,58 @@
       return false;
     }
 
-    if (µb.redirectEngine.toURL(context)) { // always allow redirect blocks
-      return true;
-    }
-
     if (isBlockableDomain(context)) {
 
-      logNetBlock('ByDomain', context.rootDomain + ' => ' + context.requestURL);
+      logNetBlock('Domains', context.rootDomain + ' => ' + context.requestURL);
       return true;
     }
 
     var snfe = µb.staticNetFilteringEngine,
       compiled = snfe.toResultString(1).slice(3),
       raw = snfe.filterStringFromCompiled(compiled),
-      lists = listsForFilter(compiled);
+      url = context.requestURL;
 
-    for (var i = 0; i < lists.length; i++) { //
+    if (ruleDisabled(raw)) {
 
-      var name = lists[0]; //.title;
-      if (!activeBlockList(name) || ruleDisabled(raw, name)) {
+      // TODO: check that the rule hasn't been added in 'My filters'
 
-        logNetAllow(name, (ruleDisabled(raw, name) ? '**RULE**' : ''),
-          raw, context.requestURL);
-
-        // Note: need to store allowed requests here so that we can
-        // block any incoming cookies later (see #301)
-        allowedExceptions[context.requestURL] = +new Date();
-
-        continue; // no-block
-      }
-
-      logNetBlock(name, raw + ': ', context.requestURL);
-
-      return true; // blocked, no need to continue
+      return allowRequest('RuleOff', raw, url);
     }
 
-    return false; // no valid blocks
+    // always allow redirect blocks from list
+    if (µb.redirectEngine.toURL(context)) {
+
+      return true;
+    }
+
+    // check the rule is on at least one blockable list
+    var lists = listsForFilter(compiled);
+    for (var i = 0; i < lists.length; i++) { //
+
+      var name = lists[0];
+
+      if (activeBlockList(name)) {
+
+        logNetBlock(name, raw + ': ', url);
+
+        return true; // blocked, no need to continue
+      }
+    }
+
+    return allowRequest(lists.join(' '), raw, url); // no valid blocks
+  }
+
+  var allowRequest = function (msg, rule, requestUrl) {
+
+    // Note: need to store allowed requests here so that we can
+    // block any incoming cookies later (see #301)
+    allowedExceptions[requestUrl] = +new Date();
+    logNetAllow(msg, rule, requestUrl);
+    return false;
   }
 
   var logNetResult = function (action, args) {
+
     if (logBlocks && args.length) {
       args[0] = action + ' (' + args[0] + ')';
       log.apply(this, args);

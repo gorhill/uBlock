@@ -342,7 +342,7 @@
     if ( result !== '' ) {
 
         // ADN: no need to ever allow beacons, just log...
-        µb.adnauseam.logNetBlock(details.type, context.rootHostname, details.url);
+        µb.adnauseam.logNetBlock('Beacon', context.rootHostname, details.url);
         return { cancel: true };
     }
   };
