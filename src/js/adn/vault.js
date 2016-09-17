@@ -1637,6 +1637,9 @@
 
   /********************************************************************/
 
-  CHANGE
+  $('#export').on('click', exportToFile);
+  $('#import').on('click', startImportFilePicker);
+  $('#importFilePicker').on('change', handleImportFilePicker);
+  $('#reset').on('click', clearAds);
 
 })();
