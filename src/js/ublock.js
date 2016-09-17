@@ -248,6 +248,8 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
         us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;
         us.noRemoteFonts = this.hnSwitches.evaluate('no-remote-fonts', '*') === 1;
+        us.appName = vAPI.app.name;
+        us.appVersion = vAPI.app.version;
         return us;
     }
 
@@ -312,15 +314,17 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     case 'webrtcIPAddressHidden':
         vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
         break;
-    case 'parseTextAds':
+
+    case 'parseTextAds':  // ADN
         µBlock.adnauseam.updateBadges();
         break;
-    case 'showIconBadge':
+    case 'showIconBadge': // ADN
         µBlock.adnauseam.updateBadges();
         break;
-    case 'noThirdPartyCookies':
+    case 'noThirdPartyCookies':  // ADN
         vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;
+
     default:
         break;
     }

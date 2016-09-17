@@ -2,11 +2,6 @@ body {
   background: url(../img/adn_clickbot_bg.jpg);
   background-size: cover;
 }
-
-#aboutNameVer {
- margin-top: 500px
-}
-
 form {
   position: absolute;
   top: 50%;
@@ -15,7 +10,6 @@ form {
   width: 410px;
   margin: -180px 0 0 -205px;
 }
-
 form h1 {
   font-size: 30px;
   font-family: bebas_neue;
@@ -23,26 +17,35 @@ form h1 {
   text-transform: uppercase;
   margin-bottom: 20px;
 }
-
 form h1 strong {
   font-family: bebas_neue;
   font-weight: 700;
   color: #fff;
 }
-
 form a {
   color: inherit;
   text-decoration: underline;
 }
-
+.help-mark {
+  background-color: #0076FF;
+}
 #clicker {
   margin-top: 50px
 }
-
 #dnt-exception {
   margin: 0 5px 30px 50px;
 }
-
-.help-mark {
-  background-color: #0076FF;
+#version-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 8px;
+}
+#app-version {
+  color: #fff;
+  font-family: bebas_neue;
+  font-size: 10px;
 }
