@@ -31,6 +31,9 @@ body[dir=rtl] #lists {
     color: #aaa;
     /*content: '\2212  ';*/
     }
+#lists > .groupEntry > .geName:before {
+    content: '-  ';
+    }
 #lists > .groupEntry.collapsed > .geName:before {
     color: #aaa;
     content: '+  ';
