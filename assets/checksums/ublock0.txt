@@ -1,4 +1,4 @@
-eb94964669e712ddac10c6e4b2d2b6ce assets/ublock/filter-lists.json
+039b46bd38fbececcf064d67d3de1629 assets/ublock/filter-lists.json
 871cd89190e7084df95421e464070ebe assets/ublock/badware.txt
 33f4a2aa009aa05264266e66046f5ecc assets/ublock/experimental.txt
 fce2d6164888c0439c5d7f42e4d67a25 assets/ublock/filters.txt
