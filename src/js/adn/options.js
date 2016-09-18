@@ -31,56 +31,6 @@
 
   /******************************************************************************/
 
-  function handleImportFilePicker(evt) {
-
-    var files = evt.target.files;
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-
-      var adData;
-      try {
-        adData = JSON.parse(e.target.result);
-      }
-      catch(e){
-        postImportAlert({ count: -1, error: e });
-        return;
-      }
-
-      messager.send('adnauseam', {
-        what: 'importAds',
-        data: adData,
-        file: files[0].name
-      }, postImportAlert);
-    }
-
-    reader.readAsText(files[0]);
-  }
-
-  var postImportAlert = function (msg) {
-    var text = msg.count > -1 ? msg.count : msg.error;
-    vAPI.alert(vAPI.i18n('adnImportAlert')
-      .replace('{{count}}', text));
-  };
-
-  var startImportFilePicker = function () {
-
-    var input = document.getElementById('importFilePicker');
-    // Reset to empty string, this will ensure an change event is properly
-    // triggered if the user pick a file, even if it is the same as the last
-    // one picked.
-    input.value = '';
-    input.click();
-  };
-
-  var exportToFile = function () {
-
-    messager.send('adnauseam', {
-      what: 'exportAds',
-      filename: getExportFileName()
-    });
-  };
-
   var onLocalDataReceived = function (details) {
 
     //console.log('onLocalDataReceived',details);
@@ -117,18 +67,6 @@
     }
   };
 
-  /******************************************************************************/
-
-  var clearAds = function () {
-
-    var msg = vAPI.i18n('adnClearConfirm');
-    var proceed = vAPI.confirm(msg);
-    if (proceed) {
-      messager.send('adnauseam', {
-        what: 'clearAds'
-      });
-    }
-  };
 
   /******************************************************************************/
 
