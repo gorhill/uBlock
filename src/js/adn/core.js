@@ -33,6 +33,7 @@
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
 
+  // default rules for adnauseam's firewall
   var defaultDynamicFilters = ['nytimes.com nytimes.com * allow'];
 
   // allow blocks only from this set of lists

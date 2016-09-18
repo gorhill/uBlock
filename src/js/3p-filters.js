@@ -40,7 +40,9 @@ var hasCachedContent = false;
 
 var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
   "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
-  "assets/thirdparties/pgl.yoyo.org/as/serverlist" ]; // ADN
+  "assets/thirdparties/pgl.yoyo.org/as/serverlist",
+  "https://www.eff.org/files/effdntlist.txt"
+]; // ADN
 
 /******************************************************************************/
 
@@ -96,6 +98,7 @@ var renderFilterLists = function() {
     };
 
     var liFromListEntry = function(listKey) {
+
         var entry = listDetails.available[listKey];
         var li = listEntryTemplate.clone();
 
@@ -164,6 +167,12 @@ var renderFilterLists = function() {
             elem.attr('title', lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.lastModified)));
             hasCachedContent = true;
         }
+
+        // ADN: hide entries from hiddenLists
+        if (hiddenLists.indexOf(listKey) > -1) {
+          li.css('display', 'none');
+        }
+
         return li;
     };
 
@@ -215,7 +224,7 @@ var renderFilterLists = function() {
         });
 
         for ( var i = 0; i < listKeys.length; i++ ) {
-//console.log("  "+i+") "+listDetails.available[listKeys[i]].title);
+
             ulGroup.append(liFromListEntry(listKeys[i]));
         }
         return liGroup;
@@ -241,9 +250,6 @@ var renderFilterLists = function() {
     };
 
     var onListsReceived = function(details) {
-
-        // ADN: ignore hidden lists
-        hiddenLists.forEach(function(l) { delete details.available[l]; });
 
         // Before all, set context vars
         listDetails = details;
@@ -274,11 +280,10 @@ var renderFilterLists = function() {
         }
 
         // ADN: move these specific lists to 'essentials'
-        var toDefault = ['assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
+        var toDefault = [ 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
             'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt',
-            'https://www.eff.org/files/effdntlist.txt'
-          ];
-
+            //'https://www.eff.org/files/effdntlist.txt'
+        ];
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
             idx > -1 && groups['default'].push(groups['multipurpose'].splice(idx, 1));
@@ -287,7 +292,6 @@ var renderFilterLists = function() {
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
             if (groups[groupKey]) {
-
               liGroup = liFromListGroup(groupKey, groups[groupKey]);
               liGroup.toggleClass(
                   'collapsed',
