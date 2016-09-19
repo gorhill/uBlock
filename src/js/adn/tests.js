@@ -64,5 +64,5 @@ QUnit.test('parseOnClick', function (assert) {
   assert.equal(parseOnClick(test, host), undefined);
 
   test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
-  assert.equal(parseOnClick(test, host), 'http://thepage.com/link.html');
+  assert.equal(parseOnClick(test, host), 'http://thepage.com/relative/link.html');
 });
