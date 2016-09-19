@@ -38,6 +38,14 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+// attempts to parse the target link from a js onclick handler
+var parseOnClick = function(s) {
+
+  var matches = /(?:javascript)?window.open\(([^,]+),/gi.exec(s);
+  if (matches.length > 0)
+    return matches[1].replace(/['"]+/g, "");
+}
+
 var setCost = function(numVisited) {
 
   //console.log('setCost: '+numVisited);
@@ -168,10 +176,10 @@ var targetDomain = function (ad) {
 }
 
 /*** functions used to export/import/clear ads in vault.js and options.js ***/
-var messager = vAPI.messaging;
 
 var exportToFile = function () {
-  messager.send('adnauseam', {
+
+  vAPI.messaging.send('adnauseam', {
     what: 'exportAds',
     filename: getExportFileName()
   });
@@ -204,6 +212,7 @@ function handleImportFilePicker(evt) {
 }
 
 var postImportAlert = function (msg) {
+
   var text = msg.count > -1 ? msg.count : msg.error;
   vAPI.alert(vAPI.i18n('adnImportAlert')
     .replace('{{count}}', text));
@@ -224,9 +233,8 @@ var clearAds = function () {
   var msg = vAPI.i18n('adnClearConfirm');
   var proceed = vAPI.confirm(msg);
   if (proceed) {
-    messager.send('adnauseam', {
+    vAPI.messaging.send('adnauseam', {
       what: 'clearAds'
     });
   }
 };
-
