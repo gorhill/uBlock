@@ -157,9 +157,9 @@ var fromCosmeticFilter = function(details) {
     var domain = details.domain;
     pos = domain.indexOf('.');
     if ( pos !== -1 ) {
-        var entity = domain.slice(0, pos);
-        candidates[entity + '.*##' + filter] = new RegExp(
-            ['c', 'e', reEscape(entity), reEscape(filter)].join('\\v') +
+        var entity = domain.slice(0, pos) + '.*';
+        candidates[entity + '##' + filter] = new RegExp(
+            ['c', 'h', '\\w+', reEscape(entity), reEscape(filter)].join('\\v') +
             '(?:\\n|$)'
         );
     }

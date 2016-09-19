@@ -139,7 +139,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'gotoURL':
-        vAPI.tabs.open(request.details);
+        µb.openNewTab(request.details);
         break;
 
     case 'reloadTab':

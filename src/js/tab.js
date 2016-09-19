@@ -391,12 +391,15 @@ housekeep itself.
         return tabContexts[vAPI.noTabId];
     };
 
+    // https://github.com/gorhill/uBlock/issues/1735
+    //   Filter for popups if actually committing.
     var commit = function(tabId, url) {
         var entry = tabContexts[tabId];
         if ( entry === undefined ) {
             entry = push(tabId, url);
         } else {
             entry.commit(url);
+            popupCandidateTest(tabId);
         }
         return entry;
     };
@@ -534,8 +537,6 @@ vAPI.tabs.onClosed = function(tabId) {
 // d: close target
 
 vAPI.tabs.onPopupUpdated = (function() {
-    //console.debug('vAPI.tabs.onPopup: details = %o', details);
-
     // The same context object will be reused everytime. This also allows to
     // remember whether a popup or popunder was matched.
     var context = {};
@@ -575,9 +576,15 @@ vAPI.tabs.onPopupUpdated = (function() {
         context.requestType = 'popup';
 
         // https://github.com/gorhill/uBlock/commit/1d448b85b2931412508aa01bf899e0b6f0033626#commitcomment-14944764
-        // Ignore bad target URL. On Firefox, an `about:blank` tab may be
-        // opened for a new tab before it is filled in with the real target URL.
-        if ( context.requestHostname === '' ) {
+        //   Ignore bad target URL. On Firefox, an `about:blank` tab may be
+        //   opened for a new tab before it is filled in with the real target
+        //   URL.
+        // https://github.com/gorhill/uBlock/issues/1735
+        //   Do not bail out on `data:` URI, they are commonly used for popups.
+        if (
+            context.requestHostname === '' &&
+            targetURL.startsWith('data:') === false
+        ) {
             return '';
         }
 

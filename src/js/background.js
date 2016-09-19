@@ -50,6 +50,7 @@ return {
 
     userSettings: {
         advancedUserEnabled: false,
+        alwaysDetachLogger: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
         collapseBlocked: true,

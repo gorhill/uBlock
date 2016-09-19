@@ -135,7 +135,7 @@ Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Polic
 
 ##### Debian/Ubuntu
 
-Users of Debian 9 or later or Ubuntu 16.04 or later may simply
+Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton), users of Debian 9 or later or Ubuntu 16.04 or later may simply
 `apt-get install xul-ext-ublock-origin`.
 
 #### Microsoft Edge
