@@ -38,23 +38,6 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-// attempts to parse the target link from a js onclick handler
-var parseOnClick = function(str, hostname) {
-
-  var result,
-    matches = /(?:javascript)?window.open\(([^,]+)[,)]/gi.exec(str);
-
-  if (matches && matches.length > 0) {
-    result = matches[1].replace(/['"]+/g, "");
-  }
-
-  if (result && (!result.startsWith('http'))) {
-    // handle relative paths
-  }
-
-  return result;
-}
-
 var setCost = function(numVisited) {
 
   //console.log('setCost: '+numVisited);
