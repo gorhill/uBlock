@@ -424,10 +424,10 @@ var onListCheckboxChanged = function() {
     }
     listDetails.available[href].off = !this.checked;
 
-    if (href === requiredList) { // ADN: NOTIFICATIONS
+    /*if (Object.keys(requiredLists).indexOf(href) > -1) { // ADN: NOTIFICATIONS
 //console.log("[WARN] EasyList -> ",this.checked);
         window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
-    }
+    }*/
     renderWidgets();
 };
 

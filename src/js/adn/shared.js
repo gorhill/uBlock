@@ -23,7 +23,41 @@
 
 'use strict';
 
-var requiredList = 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt';
+
+
+
+var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success';
+var nTypes = [ WARNING, ERROR, INFO, SUCCESS ];
+
+var FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
+
+function Notification(m) {
+  //if (typeof m === 'object')
+
+  this.type = null;
+  this.button = m && m.hasOwnProperty('button') ? m.button : '';
+  this.text = m && m.hasOwnProperty('text') ? m.text : '';
+  this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
+  if (m && m.hasOwnProperty('type')) {
+    if (nTypes.indexOf(m.type) < 0)
+      throw Error('Bad type: '+type);
+  }
+  this.toString = function() {
+    return this.type + ': ' + this.text;
+  }
+}
+
+var requiredLists = {
+  EasyList: new Notification({
+    type: WARNING,
+    text: 'Activate the EasyList filter',
+    button: 'Reactivate'
+  })
+}
+
+console.log(requiredLists);
+console.log(requiredLists['EasyList']);
+
 
 var rand = function (min, max) {
 

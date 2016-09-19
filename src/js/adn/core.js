@@ -15,12 +15,12 @@
     µb = µBlock,
     production = 0,
     lastActivity = 0,
-    notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
-    profiler = +new Date(),
     pollQueueInterval = 5000,
+    profiler = +new Date(),
+    notifications = new Set(),
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
@@ -1076,11 +1076,30 @@
 
   exports.verifyListSelection = function () {
 
+    console.log('verifyListSelection');
+
     µb.getAvailableLists(function (lists) {
-      var ok = (lists[requiredList].off !== true);
+
+      var keys = Object.keys(lists);
+      for (var i = 0; i < keys.length; i++) {
+
+        var path = keys[i],
+          name = lists[keys[i]].title,
+          off = lists[keys[i]].off;
+
+        //console.log('checking ',name, 'against', requiredLists);
+
+        if (off && requiredLists.hasOwnProperty(name)) {
+
+
+          console.log("HIT:", requiredLists[name]);
+          notifications.add('x');
+        }
+      }
+
       vAPI.messaging.broadcast({
-        what: 'listsVerified',
-        result: ok
+        what: 'notifications',
+        data: notifications
       });
     });
   };

@@ -38,12 +38,15 @@ var resizeFrame = function() {
 /********************************** adn ***************************************/
 
 var onMessage = function(msg) {
-
+  console.log('dashaboard.onMessage:',msg);
     switch ( msg.what ) {
 
-    case 'listsVerified':
-    
-        uDom('#list-alert').toggleClass('hide', msg.result);
+    case 'notifications':
+        var notifies = msg.data
+        for (var i = 0; i < notifies.length; i++) {
+          if (notifies[i] === 'DisabledEasyList')
+            uDom('#list-alert').toggleClass('hide', msg.result);
+        }
         break;
     }
 };
