@@ -44,3 +44,6 @@ facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt]
 
 # documentaryheaven
 ##iframe[src*=“cse.google.com"]
+
+#columbiagreenemedia.com
+###sawyer_container
