@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"このサイトでリモートのフォントをブロックするか切り替える",
+    "message":"このサイトでリモートのフォントをブロックするか切り替えます",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
