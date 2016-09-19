@@ -44,10 +44,25 @@ QUnit.test('parseDomain', function (assert) {
 
 QUnit.test('parseOnClick', function (assert) {
 
+  var host = 'http://thepage.com/';
   var test = '<div onclick=\"window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
-  assert.equal(parseOnClick(test), 'http://google.com');
+  assert.equal(parseOnClick(test, host), 'http://google.com');
 
   test = '<div onclick=\"javascript:window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
-  assert.equal(parseOnClick(test), 'http://google.com');
+  assert.equal(parseOnClick(test, host), 'http://google.com');
 
+  test = '<div onclick=\"javascript:window.open(\'http://google.com\')\">link</div>';
+  assert.equal(parseOnClick(test, host), 'http://google.com');
+
+  test = '<div onClick=\'window.open("http://google.com")\'>link</div>';
+  assert.equal(parseOnClick(test, host), 'http://google.com');
+
+  test = '<div onClick=\'window.open(http://google.com)\'>link</div>';
+  assert.equal(parseOnClick(test, host), 'http://google.com');
+
+  test = '<div onclick=\"aBunchofRandomJScode();\">link</div>';
+  assert.equal(parseOnClick(test, host), undefined);
+
+  test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
+  assert.equal(parseOnClick(test, host), 'http://thepage.com/link.html');
 });

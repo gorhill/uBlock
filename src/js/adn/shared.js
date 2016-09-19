@@ -39,11 +39,20 @@ var rand = function (min, max) {
 }
 
 // attempts to parse the target link from a js onclick handler
-var parseOnClick = function(s) {
+var parseOnClick = function(str, hostname) {
 
-  var matches = /(?:javascript)?window.open\(([^,]+),/gi.exec(s);
-  if (matches.length > 0)
-    return matches[1].replace(/['"]+/g, "");
+  var result,
+    matches = /(?:javascript)?window.open\(([^,]+)[,)]/gi.exec(str);
+
+  if (matches && matches.length > 0) {
+    result = matches[1].replace(/['"]+/g, "");
+  }
+
+  if (result && (!result.startsWith('http'))) {
+    // handle relative paths
+  }
+
+  return result;
 }
 
 var setCost = function(numVisited) {
