@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Los filtros cosméticos genéricos son filtros que no se aplican a todas las webs.<p>Aunque Block₀ los gestiona de forma eficiente, estos filtros aun pueden contribuir a un aumento del uso de la memoria o sobrecarga de la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido, elementos e animación o tiempo real.<p>Al habilitar esta opción se elimina el riesgo de sobrecarga a la CPU y exceso de uso de la memoria como resultado de la manipulación de filtros cosméticos genéricos y también se reduce el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
+    "message":"<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas. <p>Aunque Block₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
