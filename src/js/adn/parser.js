@@ -76,15 +76,14 @@
       return num;
     }
 
-    var clickableParent = function (node) {
+     var clickableParent = function (node) {
 
       var checkNode = node;
 
-      while (checkNode) {
+      while (checkNode && checkNode.nodeType ===1) {
 
         //checkNode && console.log('CHECKING: '+checkNode.tagName, checkNode);
-
-        if (checkNode.tagName === 'A') {
+        if (checkNode.tagName === 'A' || checkNode.hasAttribute('onclick')) {
           return checkNode;
         }
 
@@ -155,9 +154,16 @@
       target = clickableParent(img);
       if (target) {
 
-        if (target.tagName === 'A') { // if not, need to check for div.onclick?
+        if (target.tagName === 'A' || target.hasAttribute('onclick')) { // if not, need to check for div.onclick?
+          
+          //onclick possibilities
+          if(target.hasAttribute('onclick')) {
+            var onclickInfo = target.getAttribute("onclick")
+            targetUrl = onclickInfo.match(/window.open\((.*),/g);
+            if(targetUrl) targetUrl = targetUrl[0].substring(13,targetUrl[0].length-2);
+          }
+          else targetUrl = target.getAttribute("href");
 
-          targetUrl = target.getAttribute("href");
           if (targetUrl) {
 
             ad = createAd(document.domain, targetUrl, {
