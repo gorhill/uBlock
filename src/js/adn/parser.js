@@ -19,6 +19,7 @@
     Home: https://github.com/dhowe/AdNauseam
 */
 
+
 (function () {
 
   'use strict';
@@ -32,6 +33,8 @@
       // console.debug('parser.js > already injected');
       return;
   }
+
+
 
   vAPI.adParser = (function () {
 
@@ -158,9 +161,9 @@
           
           //onclick possibilities
           if(target.hasAttribute('onclick')) {
-            var onclickInfo = target.getAttribute("onclick")
-            targetUrl = onclickInfo.match(/window.open\((.*),/g);
-            if(targetUrl) targetUrl = targetUrl[0].substring(13,targetUrl[0].length-2);
+            var onclickInfo = target.getAttribute("onclick");
+            var hostname = window.location.hostname;
+            targetUrl = parseOnClick(onclickInfo, hostname);
           }
           else targetUrl = target.getAttribute("href");
 
@@ -321,10 +324,11 @@
         return false; // for now
     }
 
+
+
     /**********************************************************************/
 
     return {
-
       process: process,
       createAd: createAd,
       notifyAddon: notifyAddon,
@@ -334,3 +338,24 @@
   })();
 
 })();
+
+  // parse the target link from a js onclick handler
+  var  parseOnClick = function(str, hostname) {
+
+      var result,
+          matches = /(?:javascript)?window.open\(([^,]+)[,)]/gi.exec(str);
+
+      if (matches && matches.length > 0) {
+        result = matches[1].replace(/['"]+/g, "");
+      }
+      
+      // handle relative urls
+      if (result && result.startsWith('//')) {
+         result = "http:" + result;
+      }
+      if(result && (!result.startsWith('http'))){ 
+        result = "http://" + hostname + "/" + result; 
+      }
+
+      return result;
+  }
