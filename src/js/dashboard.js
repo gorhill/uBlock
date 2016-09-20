@@ -37,18 +37,18 @@ var resizeFrame = function() {
 
 /********************************** adn ***************************************/
 
-var onMessage = function(msg) {
-  console.log('dashaboard.onMessage:',msg);
-    switch ( msg.what ) {
+var onMessage = function (msg) {
 
-    case 'notifications':
-        var notifies = msg.data
-        for (var i = 0; i < notifies.length; i++) {
-          if (notifies[i] === 'DisabledEasyList')
-            uDom('#list-alert').toggleClass('hide', msg.result);
-        }
-        break;
-    }
+  console.log('dashboard.onMessage:', msg);
+
+  switch (msg.what) {
+
+  case 'notifications':
+    var notifications = msg.data;
+    if (notifications && notifications.length)
+      renderNotifications(notifications);
+    break;
+  }
 };
 
 var messaging = vAPI.messaging;

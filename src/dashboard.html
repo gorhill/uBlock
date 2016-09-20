@@ -13,7 +13,7 @@
 
 <body>
 
-<div id='list-alert' class="notification warning hide">Activate the Easylist filter <a href="#" target="FAQ" class="help-mark">?</a> <button type="button">Reactivate</button></div>
+<div id="notifications" class=""></div>
 
 <div id="dashboard-nav">
     <div id="dashboard-nav-widgets">
@@ -29,10 +29,18 @@
 
 <iframe id="iframe" src=""></iframe>
 
+<!-- for notifications -->
+<div id='notify-template' class="notification">
+  <span id='notify-text'></span>
+  <a id="notify-link" href="#" class="help-mark">?</a>
+  <button id="notify-button" type="button"></button>
+</div>
+
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
+<script src="js/adn/shared.js"></script>
 <script src="js/dashboard.js"></script>
 
 </body>
