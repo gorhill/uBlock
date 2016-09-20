@@ -7,6 +7,7 @@ ul {
     }
 ul#userSettings {
     padding-left: 0;
+    margin: 50px;
     }
 li {
     margin-top: 0.25em;
@@ -19,8 +20,13 @@ ul#userSettings .subgroup {
     margin: 1em 0 2em;
     }
 ul#userSettings .subgroup p {
-    margin: 0 0 0 70px;
+    margin: 0 0 0 50px;
+    clear: both;
+    line-height: 1.5em;
 }
+div > p:last-child {
+    margin-bottom: 0;
+    }
 ul#userSettings .subgroup > span {
     font-size: larger;
     font-weight: bold;
