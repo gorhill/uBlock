@@ -439,12 +439,12 @@ input {
 .row {
     position: relative;
 }
-.row .question {
+.question {
     position: absolute;
     left: 70px;
     line-height: 1.8em;
 }
-.row .question.large {
+.question.large {
   font-size: 30px;
   font-weight: 700;
   color: #fff;
@@ -452,7 +452,7 @@ input {
   line-height: 1em;
   font-family: bebas_neue;
 }
-.row p.option-meta {
+p.option-meta {
   margin: 5px 0 20px 70px;
   line-height: 1.2em;
 }
