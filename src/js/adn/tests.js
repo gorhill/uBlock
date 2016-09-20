@@ -44,7 +44,8 @@ QUnit.test('parseDomain', function (assert) {
 
 QUnit.test('parseOnClick', function (assert) {
 
-  var host = 'http://thepage.com/';
+
+  var host = 'thepage.com';
   var test = '<div onclick=\"window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
   assert.equal(parseOnClick(test, host), 'http://google.com');
 
@@ -65,4 +66,8 @@ QUnit.test('parseOnClick', function (assert) {
 
   test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
   assert.equal(parseOnClick(test, host), 'http://thepage.com/relative/link.html');
+
+  test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
+  assert.equal(parseOnClick(test, 'https://thepage.com'), 'https://thepage.com/relative/link.html');
+
 });
