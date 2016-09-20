@@ -16,13 +16,22 @@ ul#userSettings ul {
     list-style-type: none;
     }
 ul#userSettings .subgroup {
-    margin-top: 1em;
+    margin: 1em 0 2em;
     }
+ul#userSettings .subgroup p {
+    margin: 0 0 0 70px;
+}
 ul#userSettings .subgroup > span {
     font-size: larger;
     font-weight: bold;
     font-family: 'bebas_neue';
     }
+ul#userSettings .subgroup > ul {
+  padding: 10px 0 10px 44px;
+}
+ul#userSettings .subgroup > ul > li label {
+  margin-left: 5px;
+}
 #localData > ul > li {
     margin-top: 1em;
     }

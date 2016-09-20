@@ -33,19 +33,15 @@ form a {
   margin-top: 50px
 }
 #dnt-exception {
-  margin: 0 5px 30px 50px;
+  margin: 20px 5px 30px 50px;
 }
 #version-div {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 50px;
-  text-align: right;
-  margin-top: 5px;
-  margin-right: 8px;
+  bottom: 8px;
+  left: 8px;
 }
 #app-version {
-  color: #fff;
+  color: #999;
   font-family: bebas_neue;
-  font-size: 10px;
+  font-size: 12px;
 }

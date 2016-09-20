@@ -171,7 +171,31 @@ button.small {
   /*border-color: rgba(0,118,255,0.5);*/
   border: none;
 }
-
+/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
+button.custom {
+    border: 2px solid #0076FF;
+    border-radius: 5px;
+    font-family: bebas_neue;
+    background: none;
+    box-shadow: none;
+    color: #0076FF;
+    font-size: 20px;
+    height: 30px;
+    padding-top: 2px;
+    }
+button.custom.disabled,
+button.custom[disabled] {
+    border-color: #999;
+    color: #999;
+    opacity: 0.6;
+    pointer-events: none;
+    }
+button.custom:hover {
+    opacity: 1.0;
+    }
+button.important {
+    padding: 1px 2em;
+    }
 #alert {
     height: 200;
     width: 100%;
@@ -224,7 +248,7 @@ button.small {
   background-position: 3px center;
   background-repeat: no-repeat;
 }
-.notification button {
+.notification button{
   background-image: none !important;
   font-size: 18px;
   height: 28px;
@@ -232,53 +256,67 @@ button.small {
   display: block;
   float: right;
 }
+button.info, button.success, button.warning, button.error {
+  background: none !important;
+  font-size: 18px;
+  height: 28px;
+  line-height: 1.3em;
+}
 .notification.info,
-.notification.info button{
+.notification.info button,
+button.info{
   color: #00529B;
   background-color: #BDE5F8;
   background-image: url(../img/icon_info@2x.png);
   border-color: #00529B;
 }
 .notification.info button:hover:enabled,
-.notification.info a.help-mark {
+.notification.info a.help-mark,
+button.info:hover:enabled{
   color: #BDE5F8;
-  background-color: #00529B;
+  background-color: #00529B !important;
 }
 .notification.success,
-.notification.success button{
+.notification.success button,
+button.success{
   color: #4F8A10;
   background-color: #DFF2BF;
   background-image: url(../img/icon_success@2x.png);
   border-color: #4F8A10;
 }
 .notification.success button:hover:enabled,
-.notification.success a.help-mark {
+.notification.success a.help-mark,
+button.success:hover:enabled {
   color: #DFF2BF;
-  background-color: #4F8A10;
+  background-color: #4F8A10 !important;
 }
 .notification.warning,
-.notification.warning button{
+.notification.warning button,
+button.warning{
   color: #9F6000;
   background-color: #FEEFB3;
   background-image: url(../img/icon_warning@2x.png);
   border-color: #9F6000;
 }
 .notification.warning button:hover:enabled,
-.notification.warning a.help-mark {
+.notification.warning a.help-mark,
+button.warning:hover:enabled {
   color: #FEEFB3;
-  background-color: #9F6000;
+  background-color: #9F6000 !important;
 }
 .notification.error,
-.notification.error button{
+.notification.error button,
+button.error{
   color: #D8000C;
   background-color: #FFBABA;
   background-image: url(../img/icon_error@2x.png);
   border-color: #D8000C;
 }
 .notification.error button:hover:enabled,
-.notification.error a.help-mark {
+.notification.error a.help-mark,
+ button.error:hover:enabled{
   color: #FFBABA;
-  background-color: #D8000C;
+  background-color: #D8000C !important;
 }
 
 /* ============================================================
@@ -364,31 +402,6 @@ a:hover {
 p {
   margin: 1em 0;
 }
-/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button.custom {
-    border: 2px solid #0076FF;
-    border-radius: 5px;
-    font-family: bebas_neue;
-    background: none;
-    box-shadow: none;
-    color: #0076FF;
-    font-size: 20px;
-    height: 30px;
-    padding-top: 2px;
-    }
-button.custom.disabled,
-button.custom[disabled] {
-    border-color: #999;
-    color: #999;
-    opacity: 0.6;
-    pointer-events: none;
-    }
-button.custom:hover {
-    opacity: 1.0;
-    }
-button.important {
-    padding: 1px 2em;
-    }
 .hiddenFileInput {
     height: 0;
     visibility: hidden;
@@ -426,12 +439,12 @@ input {
 .row {
     position: relative;
 }
-.row .question {
+.question {
     position: absolute;
     left: 70px;
     line-height: 1.8em;
 }
-.row .question.large {
+.question.large {
   font-size: 30px;
   font-weight: 700;
   color: #fff;
@@ -439,7 +452,7 @@ input {
   line-height: 1em;
   font-family: bebas_neue;
 }
-.row p.option-meta {
+p.option-meta {
   margin: 5px 0 20px 70px;
   line-height: 1.2em;
 }

@@ -3,11 +3,16 @@ body {
     /*padding: 0 0.5em 0.5em 0.5em;*/
     }
 h2, h3 {
-    margin: 1em 0;
-    font-family: sans-serif;
+    /*margin: 1em 0;
+    font-family: sans-serif;*/
     }
 h2 {
     font-size: 18px;
+    /*font-weight: 700;*/
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1em;
+    font-family: bebas_neue;
     }
 h3 {
     font-size: 16px;
