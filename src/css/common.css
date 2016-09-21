@@ -525,7 +525,7 @@ input.cmn-toggle-round-flat:checked + label {
   background-color: #0076FF;
 }
 input.cmn-toggle-round-flat:checked + label:after {
-  margin-left: 20px;
+  margin-left: 30px;
   background-color: #0076FF;
 }
 input.cmn-toggle-round-flat.cmn-toggle-small + label {

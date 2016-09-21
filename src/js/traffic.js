@@ -463,19 +463,24 @@
 
   // ADN: removing outgoing cookies, user-agent, set/hide referer,
   var onBeforeSendHeaders = function (details) {
-
-    // We only care about behind-the-scene requests here
-    if (!vAPI.isBehindTheSceneTabId(details.tabId)) return;
-
     //console.log('onBeforeSendHeaders', details.url, details);
 
-    var headers = details.requestHeaders, dbug = 1,
+    var headers = details.requestHeaders, dbug = 1, prefs = µBlock.userSettings,
       ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
+    
+    if(!hasDNT(headers)){
+      //DNT header for all outgoing requests
+      if( prefs.disableClickingForDNT || prefs.disableHidingForDNT)  addHeader(headers, 'DNT', '1');
+    }
+    
+    if (!vAPI.isBehindTheSceneTabId(details.tabId)) return { requestHeaders: headers };
 
     if (!ad) {
       //console.warn("Ignoring non-ADN request: ", details.url);
-      return;
+      return { requestHeaders: headers };
     }
+
+    // We only care about behind-the-scene requests here
 
     var isRedirect = (ad.requestId === details.requestId);
 
@@ -485,7 +490,7 @@
 
     ad.requestId = details.requestId;
 
-    var referer = ad.pageUrl, prefs = µBlock.userSettings,
+    var referer = ad.pageUrl, 
         refererIdx = -1, uirIdx = -1;
 
     if (referer.indexOf(GoogleSearchPrefix) === 0) { // Google-search case
@@ -502,15 +507,15 @@
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
-        // block outgoing cookies, user-agent here
-        if (dbug && prefs.noOutgoingCookies && name==='cookie') {
-          console.log('[COOKIE] (Strip)', headers[i].value);
-        }
-        if (dbug && prefs.noOutgoingUserAgent && name==='user-agent') {
-          console.log('[UAGENT] (Strip)', headers[i].value);
-        }
+            // block outgoing cookies, user-agent here
+            if (dbug && prefs.noOutgoingCookies && name==='cookie') {
+              console.log('[COOKIE] (Strip)', headers[i].value);
+            }
+            if (dbug && prefs.noOutgoingUserAgent && name==='user-agent') {
+              console.log('[UAGENT] (Strip)', headers[i].value);
+            }
 
-        setHeader(headers[i], '');
+            setHeader(headers[i], '');
       }
 
       if (name === 'referer') { refererIdx = i; }
@@ -546,7 +551,7 @@
 
     if (0&&dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
         'direct' : 'quest') + ']: ', dumpHeaders(headers));
-
+    
     return { requestHeaders: headers };
   };
 
@@ -570,7 +575,20 @@
       value: value
     });
   };
+  
+  var hasDNT = function (headers){
 
+     for (var i = headers.length - 1; i >= 0; i--) {
+         var name = headers[i].name;
+         if(name === 'DNT' && headers[i].value === '1') 
+          {
+            // console.log("DNT is already in the header!")
+            return true;
+          }
+     }
+
+     return false;
+  }
   /******************************************************************************/
 
   var onRootFrameHeadersReceived = function (details) {
