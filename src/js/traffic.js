@@ -461,40 +461,42 @@
 
   /******************************************************************************/
 
-  // ADN: removing outgoing cookies, user-agent, set/hide referer,
+  // ADN: removing outgoing cookies, user-agent, set/hide referer, DNT header
   var onBeforeSendHeaders = function (details) {
+
     //console.log('onBeforeSendHeaders', details.url, details);
 
-    var headers = details.requestHeaders, dbug = 1, prefs = µBlock.userSettings,
+    var headers = details.requestHeaders, prefs = µBlock.userSettings,
       ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
-    
-    if(!hasDNT(headers)){
-      //DNT header for all outgoing requests
-      if( prefs.disableClickingForDNT || prefs.disableHidingForDNT)  addHeader(headers, 'DNT', '1');
-    }
-    
-    if (!vAPI.isBehindTheSceneTabId(details.tabId)) return { requestHeaders: headers };
 
-    if (!ad) {
-      //console.warn("Ignoring non-ADN request: ", details.url);
-      return { requestHeaders: headers };
+    // ADN: Do we need to add a DNT header?
+    if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
+
+      if (!hasDNT(headers)) {
+
+        console.log('[HEADER] (Add)', 'DNT: 1');
+        addHeader(headers, 'DNT', '1');
+      }
     }
 
-    // We only care about behind-the-scene requests here
+    // ADN: Is this a (behind-the-scenes) Ad visit?
+    if (vAPI.isBehindTheSceneTabId(details.tabId) && ad) {
 
-    var isRedirect = (ad.requestId === details.requestId);
+      beforeAdVisit(details, ad);
+    }
 
-    if (0&&dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
-        'direct' : 'quest') + ']: ' + details.url,
-        dumpHeaders(headers), JSON.stringify(details));
+    return { requestHeaders: headers };
+  };
 
-    ad.requestId = details.requestId;
+  var beforeAdVisit = function (details, ad) {
 
-    var referer = ad.pageUrl, 
-        refererIdx = -1, uirIdx = -1;
+    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1;
 
-    if (referer.indexOf(GoogleSearchPrefix) === 0) { // Google-search case
-        referer = GoogleSearchPrefix;
+    ad.requestId = details.requestId; // needed?
+
+    // Google-search case
+    if (referer.indexOf(GoogleSearchPrefix) === 0) {
+      referer = GoogleSearchPrefix;
     }
 
     for (var i = headers.length - 1; i >= 0; i--) {
@@ -507,26 +509,34 @@
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
-            // block outgoing cookies, user-agent here
-            if (dbug && prefs.noOutgoingCookies && name==='cookie') {
-              console.log('[COOKIE] (Strip)', headers[i].value);
-            }
-            if (dbug && prefs.noOutgoingUserAgent && name==='user-agent') {
-              console.log('[UAGENT] (Strip)', headers[i].value);
-            }
+        // block outgoing cookies and user-agent here if specified
+        if (dbug && prefs.noOutgoingCookies && name === 'cookie') {
+          console.log('[COOKIE] (Strip)', headers[i].value, details.url);
+        }
+        if (dbug && prefs.noOutgoingUserAgent && name === 'user-agent') {
+          console.log('[UAGENT] (Strip)', headers[i].value, details.url);
+        }
 
-            setHeader(headers[i], '');
+        setHeader(headers[i], '');
       }
 
-      if (name === 'referer') { refererIdx = i; }
+      if (name === 'referer') refererIdx = i;
 
-      if (vAPI.chrome && name === 'upgrade-insecure-requests') {
-        uirIdx = i;
-      }
+      if (vAPI.chrome && name === 'upgrade-insecure-requests') uirIdx = i;
+
       if (name === 'accept') { // set browser-specific accept header
         setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
       }
     }
+
+    if (vAPI.chrome && uirIdx < 0) { // add UIR header if chrome
+      addHeader(headers, 'Upgrade-Insecure-Requests', '1');
+    }
+
+    handleRefererForVisit(refererIdx);
+  };
+
+  var handleRefererForVisit = function (refIdx) {
 
     // Referer cases (4):
     // noOutgoingReferer=true  / no refererIdx:     no-op
@@ -534,33 +544,32 @@
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
 
+    if (refIdx > -1 && prefs.noOutgoingReferer) {
 
-    if (refererIdx > -1 && prefs.noOutgoingReferer) {
+      if (dbug) console.log("[REFERER] (Strip)", referer);
+      setHeader(headers[refererIdx], '');
 
-        if (dbug) console.log("[REFERER] (Strip)", referer);
-        setHeader(headers[refererIdx], '');
+    } else if (!prefs.noOutgoingReferer && refIdx < 0) {
+
+      if (dbug) console.log("[REFERER] (Allow)", referer);
+      addHeader(headers, 'Referer', referer);
     }
-    else if (!prefs.noOutgoingReferer && refererIdx < 0) {
-        if (dbug) console.log("[REFERER] (Allow)", referer);
-        addHeader(headers, 'Referer', referer);
-    }
-
-    if (vAPI.chrome && uirIdx < 0) { // UIR header if chrome
-        addHeader(headers, 'Upgrade-Insecure-Requests', '1');
-    }
-
-    if (0&&dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
-        'direct' : 'quest') + ']: ', dumpHeaders(headers));
-    
-    return { requestHeaders: headers };
   };
 
+  /*var isRedirect = (ad.requestId === details.requestId);
+  if (dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
+      'direct' : 'quest') + ']: ' + details.url,
+      dumpHeaders(headers), JSON.stringify(details));*/
+  /*if (0&&dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
+      'direct' : 'quest') + ']: ', dumpHeaders(headers));*/
+
   function dumpHeaders(headers) {
-      var s = '\n\n';
-      for (var i = headers.length - 1; i >= 0; i--) {
-          s += headers[i].name + ': ' + headers[i].value + '\n';
-      }
-      return s;
+
+    var s = '\n\n';
+    for (var i = headers.length - 1; i >= 0; i--) {
+      s += headers[i].name + ': ' + headers[i].value + '\n';
+    }
+    return s;
   }
 
   var setHeader = function (header, value) {
@@ -575,22 +584,21 @@
       value: value
     });
   };
-  
-  var hasDNT = function (headers){
 
-     for (var i = headers.length - 1; i >= 0; i--) {
-         var name = headers[i].name;
-         if(name === 'DNT' && headers[i].value === '1') 
-          {
-            // console.log("DNT is already in the header!")
-            return true;
-          }
-     }
+  var hasDNT = function (headers) {
 
-     return false;
+    for (var i = headers.length - 1; i >= 0; i--) {
+      var name = headers[i].name;
+      if (name === 'DNT' && headers[i].value === '1') {
+        // console.log("DNT is already in the header!")
+        return true;
+      }
+    }
+
+    return false;
   }
-  /******************************************************************************/
 
+  /******************************************************************************/
   var onRootFrameHeadersReceived = function (details) {
 
     var µb = µBlock,

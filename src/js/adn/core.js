@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for debugging blocks/allows
+    logBlocks = 1; // for debugging blocks/allows
 
   var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
@@ -34,7 +34,7 @@
   ];
 
   // default rules for adnauseam's firewall
-  var defaultDynamicFilters = [''];
+  var defaultDynamicFilters = ['nytimes.com nytimes.com * allow'];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
@@ -90,10 +90,11 @@
       setupTesting();
     }
 
-    // tmp remove
-    addNotification(EasyList);
-    addNotification(ClickingDisabled);
-    console.log('notifications:',notifications);
+// tmp remove
+// addNotification(EasyList);
+// addNotification(ClickingDisabled);
+console.log(settings);
+console.log('notifications:',notifications);
   }
 
   var addNotification = function (note) {
@@ -716,7 +717,7 @@
   // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
-    console.log('adsForUI.notes: ',notifications);
+    //console.log('adsForUI.notes: ',notifications);
     return {
       data: adlist(),
       pageUrl: pageUrl,
@@ -1252,7 +1253,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, tabId + '/' + frameId);
+    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
