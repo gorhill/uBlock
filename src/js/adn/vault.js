@@ -91,6 +91,8 @@
     addInterfaceHandlers();
     createSlider(true);
     setCurrent(json.current);
+    if (json.notifications && json.notifications.length)
+      renderNotifications(json.notifications);
   };
 
   var updateAd = function (json) {

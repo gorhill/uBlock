@@ -19,8 +19,8 @@
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
-    profiler = +new Date(),
     pollQueueInterval = 5000,
+    profiler = +new Date(),
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
@@ -34,7 +34,7 @@
   ];
 
   // default rules for adnauseam's firewall
-  var defaultDynamicFilters = [''];
+  var defaultDynamicFilters = ['nytimes.com nytimes.com * allow'];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
@@ -47,7 +47,7 @@
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = ['facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com','columbiagreenemedia.com'];
+  var internalLinkDomains = ['facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com', 'columbiagreenemedia.com'];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -87,76 +87,90 @@
 
     } else if (automatedMode && vAPI.chrome) { // using sessbench
 
-      console.warn('AdNauseam automated: eid=' + chrome.runtime.id);
-
-      chrome.runtime.onMessageExternal.addListener(
-        function (request, sender, sendResponse) {
-
-          if (request.what === 'getAdCount') {
-
-            var url = request.pageURL,
-              count = adlist(url).length,
-              json = {
-                url: url,
-                count: count
-              };
-
-            console.log('TEST-FOUND: ', JSON.stringify(json));
-
-            sendResponse({
-              what: 'setPageCount',
-              pageURL: url,
-              count: count
-            });
-          } else if (request.what === 'clearAds') {
-            clearAds();
-          }
-        });
+      setupTesting();
     }
+
+    // tmp remove
+    // addNotification(EasyList);
+    // addNotification(ClickingDisabled);
+  }
+
+  var addNotification = function (note) {
+
+    if (notifications.indexOf(note) < 0)
+      notifications.push(note);
+  }
+
+  var setupTesting = function () {
+
+    console.warn('AdNauseam automated: eid=' + chrome.runtime.id);
+    chrome.runtime.onMessageExternal.addListener(
+      function (request, sender, sendResponse) {
+
+        if (request.what === 'getAdCount') {
+          var url = request.pageURL,
+            count = adlist(url).length,
+            json = {
+              url: url,
+              count: count
+            };
+
+          console.log('TEST-FOUND: ', JSON.stringify(json));
+
+          sendResponse({
+            what: 'setPageCount',
+            pageURL: url,
+            count: count
+          });
+
+        } else if (request.what === 'clearAds') {
+          clearAds();
+        }
+      });
   }
 
   /* make sure we have no bad data in ad storage */
-   var validateAdStorage = function () {
+  var validateAdStorage = function () {
 
-     var ads = adlist(),
-       i = ads.length;
+    var ads = adlist(),
+      i = ads.length;
 
-     if (clearAdsOnInit) {
+    if (clearAdsOnInit) {
 
-       setTimeout(function () {
+      setTimeout(function () {
 
-         warn("[DEBUG] Clearing all ad data!");
-         clearAds();
+        warn("[DEBUG] Clearing all ad data!");
+        clearAds();
 
-       }, 2000);
+      }, 2000);
 
-       return ads;
-     }
+      return ads;
+    }
 
-     clearVisitData && clearAdVisits(ads);
+    clearVisitData && clearAdVisits(ads);
 
-     while (i--) {
+    while (i--) {
 
-       if (!validateFields(ads[i])) {
+      if (!validateFields(ads[i])) {
 
-         warn('Invalid ad in storage', ads[i]);
-         ads.splice(i, 1);
-         continue;
-       }
+        warn('Invalid ad in storage', ads[i]);
+        ads.splice(i, 1);
+        continue;
+      }
 
-       if (ads[i].visitedTs === 0 && ads[i].attempts) {
+      if (ads[i].visitedTs === 0 && ads[i].attempts) {
 
-         warn('Invalid visitTs/attempts pair', ads[i]);
-         ads[i].attempts = 0; // this shouldn't happen
-       }
-     }
+        warn('Invalid visitTs/attempts pair', ads[i]);
+        ads[i].attempts = 0; // this shouldn't happen
+      }
+    }
 
-     computeNextId(ads);
+    computeNextId(ads);
 
-     log('[INIT] Initialized with ' + ads.length + ' ads');
+    log('[INIT] Initialized with ' + ads.length + ' ads');
 
-     return ads;
-   }
+    return ads;
+  }
 
   var clearAdVisits = function (ads) {
 
@@ -701,11 +715,13 @@
   // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
+    //console.log('adsForUI.notes: ',notifications);
     return {
       data: adlist(),
       pageUrl: pageUrl,
       prefs: contentPrefs(),
-      current: activeVisit()
+      current: activeVisit(),
+      notifications: notifications,
     };
   }
 
@@ -1077,10 +1093,27 @@
   exports.verifyListSelection = function () {
 
     µb.getAvailableLists(function (lists) {
-      var ok = (lists[requiredList].off !== true);
+
+      var keys = Object.keys(lists);
+      for (var i = 0; i < keys.length; i++) {
+
+        var path = keys[i],
+          name = lists[keys[i]].title,
+          off = lists[keys[i]].off;
+
+        //console.log('checking ',name, 'against', requiredLists);
+
+        if (off && requiredLists.hasOwnProperty(name)) {
+
+          //console.log("HIT: " + name, requiredLists[name]);
+          addNotification(requiredLists[name]);
+          //console.log(notifications);
+        }
+      }
+
       vAPI.messaging.broadcast({
-        what: 'listsVerified',
-        result: ok
+        what: 'notifications',
+        data: notifications
       });
     });
   };
@@ -1218,7 +1251,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, tabId + '/' + frameId);
+    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
@@ -1301,7 +1334,7 @@
    Omits text-ads if specified in preferences
    Called also from tab.js::µb.updateBadgeAsync()
    */
-  var adlist = exports.adlist = function(pageUrl, currentOnly) {
+  var adlist = exports.adlist = function (pageUrl, currentOnly) {
 
     var result = [],
       pages = pageUrl ? [pageUrl] : Object.keys(admap);

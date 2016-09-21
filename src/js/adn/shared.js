@@ -23,7 +23,65 @@
 
 'use strict';
 
-var requiredList = 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt';
+var WARNING = 'warning', DANGER = 'danger', INFO = 'info', SUCCESS = 'success';
+var FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
+
+function Notification(m) {
+
+  this.name = m && m.hasOwnProperty('name') ? m.name : '';
+  this.text = m && m.hasOwnProperty('text') ? m.text : '';
+  this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
+  this.type = m && m.hasOwnProperty('type') ? m.type : WARNING;
+  this.button = m && m.hasOwnProperty('button') ? m.button : 'Reactivate';
+  this.buttonLink = m && m.hasOwnProperty('buttonLink') ? m.buttonLink : 'dashboard.html';
+  if ([WARNING, DANGER, INFO, SUCCESS].indexOf(this.type) < 0)
+    throw Error('Bad type: '+m.type);
+}
+
+var ClickingDisabled = new Notification({
+  name: 'ClickingDisabled',
+  text: 'Activate Ad clicking'
+});
+
+var HidingDisabled = new Notification({
+  name: 'HidingDisabled',
+  text: 'Activate Ad hiding'
+});
+
+var BlockingDisabled = new Notification({
+  name: 'BlockingDisabled',
+  text: 'Activate malware blocking',
+});
+
+var EasyList = new Notification({
+  name: 'EasyListDisabled',
+  type: WARNING,
+  text: 'Activate the EasyList filter',
+  buttonLink: '3p-filters.html'
+});
+
+var requiredLists = { EasyList };
+
+var renderNotifications = function (notes) {
+
+  console.log('renderNotifications', notes);
+
+  var template = uDom('#notify-template');
+  for (var i = 0; i < notes.length; i++) {
+    var id = 'div-' + notes[i].name;
+    if (uDom('#'+id).length) {
+      console.log('IGNORING: ', notes[i].name);
+      continue;
+    }
+    var note = template.clone(false);
+    note.attr('id', id);
+    note.addClass(notes[i].type);
+    uDom('#notify-text',   note.nodes[0]).text(notes[i].text);
+    uDom('#notify-button', note.nodes[0]).text(notes[i].button);
+    uDom('#notify-link',   note.nodes[0]).attr('href', notes[i].link);
+    uDom('#notifications').append(note);
+  }
+}
 
 var rand = function (min, max) {
 

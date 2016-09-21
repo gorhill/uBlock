@@ -18,6 +18,8 @@
 
     <div id="stage" class="stage">
 
+        <div id="notifications" class=""></div>
+
         <div class="zoom">
             <a href="" id="z-in">&#43;</a>
             <a href="" id="z-out">&#8211;</a>
@@ -63,6 +65,18 @@
         <li data-action="delete" data-i18n="adnVaultDeleteThisAd">&nbsp;</li>
         <!--li data-action="delete-all">delete similar ads</li-->
     </ul>
+
+    <div id="templates" style="display: none">
+      <div id="tooltip" class="arrow_box"></div>
+
+      <!-- for notifications -->
+      <div id='notify-template' class="notification">
+        <span id='notify-text'></span>
+        <a id="notify-link" href="#" class="help-mark">?</a>
+        <button id="notify-button" type="button"></button>
+      </div>
+
+    </div>
 
     <script src="js/vapi-common.js"></script>
     <script src="js/vapi-client.js"></script>

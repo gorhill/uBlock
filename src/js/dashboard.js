@@ -37,15 +37,18 @@ var resizeFrame = function() {
 
 /********************************** adn ***************************************/
 
-var onMessage = function(msg) {
+var onMessage = function (msg) {
 
-    switch ( msg.what ) {
+  console.log('dashboard.onMessage:', msg);
 
-    case 'listsVerified':
-    
-        uDom('#list-alert').toggleClass('hide', msg.result);
-        break;
-    }
+  switch (msg.what) {
+
+  case 'notifications':
+    var notifications = msg.data;
+    if (notifications && notifications.length)
+      renderNotifications(notifications);
+    break;
+  }
 };
 
 var messaging = vAPI.messaging;

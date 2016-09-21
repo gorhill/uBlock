@@ -50,6 +50,8 @@
 
   var renderPage = function (json) {
 
+    //console.log('renderPage', json);
+
     page = json.pageUrl;
     ads = onPage(json.data, page);
 
@@ -82,6 +84,9 @@
 
       setAttempting(json.current);
     }
+
+    if (json.notifications && json.notifications.length)
+      renderNotifications(json.notifications);
   }
 
   var updateMenuState = function () {
@@ -105,15 +110,6 @@
     uDom('#visited-count').text(numVisits);
     uDom('#found-count').text(ads.length);
     setCost(numVisits);
-  }
-
-  var renderPage2 = function (json) {
-
-    //console.log('renderPage', json);
-
-    ads = onPage(json.data, page);
-    updateInterface(json);
-    layoutAds(json);
   }
 
   var updateInterface = function (json) {

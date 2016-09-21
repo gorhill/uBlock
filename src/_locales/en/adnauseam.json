@@ -245,5 +245,9 @@
   "3pGroupRegions": {
     "message": "Languages",
     "description": "English: Languages"
+  },
+  "whitelistPageName": {
+    "message": "Whitelists",
+    "description": "appears as tab name in dashboard"
   }
 }
