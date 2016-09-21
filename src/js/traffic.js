@@ -463,7 +463,10 @@
 
   // ADN: removing outgoing cookies, user-agent, set/hide referer,
   var onBeforeSendHeaders = function (details) {
-
+    var prefs = µBlock.userSettings;
+    //DNT header for all outgoing requests
+    if( prefs.disableClickingForDNT || prefs.disableHidingForDNT)  addHeader(headers, 'DNT', '1');
+    
     // We only care about behind-the-scene requests here
     if (!vAPI.isBehindTheSceneTabId(details.tabId)) return;
 
@@ -485,7 +488,7 @@
 
     ad.requestId = details.requestId;
 
-    var referer = ad.pageUrl, prefs = µBlock.userSettings,
+    var referer = ad.pageUrl, 
         refererIdx = -1, uirIdx = -1;
 
     if (referer.indexOf(GoogleSearchPrefix) === 0) { // Google-search case
