@@ -193,7 +193,7 @@ function handleImportFilePicker(evt) {
       return;
     }
 
-    messager.send('adnauseam', {
+    vAPI.messaging.send('adnauseam', {
       what: 'importAds',
       data: adData,
       file: files[0].name
