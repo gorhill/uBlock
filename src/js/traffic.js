@@ -473,8 +473,8 @@
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
 
       if (!hasDNT(headers)) {
-
-        console.log('[HEADER] (Add)', 'DNT: 1');
+        
+        console.log('[HEADER] (Append)', 'DNT:1', details.url);
         addHeader(headers, 'DNT', '1');
       }
     }
@@ -482,15 +482,15 @@
     // ADN: Is this a (behind-the-scenes) Ad visit?
     if (vAPI.isBehindTheSceneTabId(details.tabId) && ad) {
 
-      beforeAdVisit(details, ad);
+      beforeAdVisit(details, headers, prefs, ad);
     }
 
     return { requestHeaders: headers };
   };
 
-  var beforeAdVisit = function (details, ad) {
+  var beforeAdVisit = function (details, headers, prefs, ad) {
 
-    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1;
+    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 1;
 
     ad.requestId = details.requestId; // needed?
 
@@ -533,10 +533,10 @@
       addHeader(headers, 'Upgrade-Insecure-Requests', '1');
     }
 
-    handleRefererForVisit(refererIdx);
+    handleRefererForVisit(prefs, refererIdx);
   };
 
-  var handleRefererForVisit = function (refIdx) {
+  var handleRefererForVisit = function (prefs, refIdx) {
 
     // Referer cases (4):
     // noOutgoingReferer=true  / no refererIdx:     no-op

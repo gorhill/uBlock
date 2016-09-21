@@ -61,7 +61,7 @@ if ( vAPI.sessionId ) {
     return;
 }
 
-vAPI.debugAdParsing = true; // ADN
+vAPI.debugAdParsing = 0; // ADN
 
 /******************************************************************************/
 

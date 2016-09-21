@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 1; // for debugging blocks/allows
+    logBlocks = 0; // for debugging blocks/allows
 
   var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
@@ -90,11 +90,9 @@
       setupTesting();
     }
 
-// tmp remove
-// addNotification(EasyList);
-// addNotification(ClickingDisabled);
-console.log(settings);
-console.log('notifications:',notifications);
+    // tmp remove
+    // addNotification(EasyList);
+    // addNotification(ClickingDisabled);
   }
 
   var addNotification = function (note) {
