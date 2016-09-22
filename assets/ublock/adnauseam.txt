@@ -47,3 +47,8 @@ facebook.com##DIV[id^="substream_"] ._5jmm[data-dedupekey][data-cursor][data-xt]
 
 #columbiagreenemedia.com
 ###sawyer_container
+
+#si.com
+si.com#@#.ad
+si.com#@#.mobile-ad  
+si.com#@#.cm-ad
