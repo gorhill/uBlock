@@ -23,20 +23,8 @@
 
 'use strict';
 
-var WARNING = 'warning', DANGER = 'danger', INFO = 'info', SUCCESS = 'success';
-var FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
-
-function Notification(m) {
-
-  this.name = m && m.hasOwnProperty('name') ? m.name : '';
-  this.text = m && m.hasOwnProperty('text') ? m.text : '';
-  this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
-  this.type = m && m.hasOwnProperty('type') ? m.type : WARNING;
-  this.button = m && m.hasOwnProperty('button') ? m.button : 'Reactivate';
-  this.buttonLink = m && m.hasOwnProperty('buttonLink') ? m.buttonLink : 'dashboard.html';
-  if ([WARNING, DANGER, INFO, SUCCESS].indexOf(this.type) < 0)
-    throw Error('Bad type: '+m.type);
-}
+var FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ',
+  WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success';
 
 var ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
@@ -51,20 +39,32 @@ var HidingDisabled = new Notification({
 var BlockingDisabled = new Notification({
   name: 'BlockingDisabled',
   text: 'Activate malware blocking',
+  type: ERROR
 });
 
 var EasyList = new Notification({
   name: 'EasyListDisabled',
-  type: WARNING,
   text: 'Activate the EasyList filter',
   buttonLink: '3p-filters.html'
 });
 
-var requiredLists = { EasyList };
+var RequiredLists = { EasyList };
+
+function Notification(m) {
+
+  this.name = m && m.hasOwnProperty('name') ? m.name : '';
+  this.text = m && m.hasOwnProperty('text') ? m.text : '';
+  this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
+  this.type = m && m.hasOwnProperty('type') ? m.type : WARNING;
+  this.button = m && m.hasOwnProperty('button') ? m.button : 'Reactivate';
+  this.buttonLink = m && m.hasOwnProperty('buttonLink') ? m.buttonLink : 'dashboard.html';
+  if ([WARNING, ERROR, INFO, SUCCESS].indexOf(this.type) < 0)
+    throw Error('Bad type: ' + m.type);
+}
 
 var renderNotifications = function (notes) {
 
-  console.log('renderNotifications', notes);
+  //console.log('renderNotifications', notes);
 
   var template = uDom('#notify-template');
   for (var i = 0; i < notes.length; i++) {

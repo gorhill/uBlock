@@ -315,15 +315,28 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
         break;
 
-    case 'parseTextAds':  // ADN
+    /***************************** ADN *******************************/
+
+    case 'parseTextAds':
         µBlock.adnauseam.updateBadges();
         break;
-    case 'showIconBadge': // ADN
+    case 'hidingAds':
+        µBlock.adnauseam.verifySetting(HidingDisabled,   !us.hidingAds);
+        break;
+    case 'clickingAds':
+        µBlock.adnauseam.verifySetting(ClickingDisabled, !us.clickingAds);
+        break;
+    case 'blockingMalware':
+        µBlock.adnauseam.verifySetting(BlockingDisabled, !us.blockingMalware);
+        break;
+    case 'showIconBadge':
         µBlock.adnauseam.updateBadges();
         break;
-    case 'noThirdPartyCookies':  // ADN
+    case 'noThirdPartyCookies':
         vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;
+
+    /****************************************************************/
 
     default:
         break;

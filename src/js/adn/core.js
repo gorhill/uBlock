@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for debugging blocks/allows
+    logBlocks = 1; // for debugging blocks/allows
 
   var xhr, idgen, admap, inspected, listEntries, firewall,
     µb = µBlock,
@@ -90,20 +90,13 @@
       setupTesting();
     }
 
-    // tmp remove
-    // addNotification(EasyList);
-    // addNotification(ClickingDisabled);
-  }
-
-  var addNotification = function (note) {
-
-    if (notifications.indexOf(note) < 0)
-      notifications.push(note);
+    verifySettings(settings);
   }
 
   var setupTesting = function () {
 
-    console.warn('AdNauseam automated: eid=' + chrome.runtime.id);
+    warn('AdNauseam automated: eid=' + chrome.runtime.id);
+
     chrome.runtime.onMessageExternal.addListener(
       function (request, sender, sendResponse) {
 
@@ -1101,12 +1094,12 @@
           name = lists[keys[i]].title,
           off = lists[keys[i]].off;
 
-        //console.log('checking ',name, 'against', requiredLists);
+        //console.log('checking ',name, 'against', RequiredLists);
 
-        if (off && requiredLists.hasOwnProperty(name)) {
+        if (RequiredLists.hasOwnProperty(name)) {
 
-          //console.log("HIT: " + name, requiredLists[name]);
-          addNotification(requiredLists[name]);
+          //console.log("HIT: " + name, RequiredLists[name]);
+          verifySetting(RequiredLists[name], off);
           //console.log(notifications);
         }
       }
@@ -1361,6 +1354,22 @@
     return result;
   };
 
+  var verifySettings = exports.verifySettings = function (prefs) {
+
+    verifySetting(HidingDisabled,   !prefs.hidingAds);
+    verifySetting(ClickingDisabled, !prefs.clickingAds);
+    verifySetting(BlockingDisabled, !prefs.blockingMalware);
+  }
+
+  var verifySetting = exports.verifySetting = function (note, val) {
+
+    if (val && notifications.indexOf(note) < 0)
+      notifications.push(note);
+    else if (!val)
+      arrayRemove(notifications, note);
+    //console.log(note.name+",", val, notifications);
+  }
+
   var clearAds = exports.clearAds = function () {
 
     var pre = adlist().length;
@@ -1452,7 +1461,7 @@
 
 /****************************** messaging ********************************/
 
-(function () {
+(function () { // pass all incoming messages directly to exported functions
 
   'use strict';
 
