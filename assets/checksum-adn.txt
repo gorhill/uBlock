@@ -1,1 +1,1 @@
-8a1cd6b255611844beb2ffb749631d8a assets/ublock/adnauseam.txt
+06d6b696f7bbd27ab3a9ba567875086a assets/ublock/adnauseam.txt
