@@ -5,22 +5,29 @@
 DES=/tmp
 
 if hash md5sum 2>/dev/null; then
- echo copying ../uAssets/checksums/ublock0.txt to $DES/checksums.txt
+
+ echo Pulling uAssets...
+ cd ../uAssets && git fetch upstream && git merge upstream/master && cd -
+
+ echo Copying ../uAssets/checksums/ublock0.txt to $DES/checksums.txt
  cp ../uAssets/checksums/ublock0.txt $DES/checksums.txt
  ENTRY=assets/ublock/adnauseam.txt
  CS="`md5sum -q $ENTRY` $ENTRY"
- echo appending \"$CS\" to $DES/checksums.txt
+
+ echo Adding  \"$CS\" to $DES/checksums.txt
  echo $CS >> $DES/checksums.txt    # for build
- echo writing \"$CS\" to assets/checksum-adn.txt
+
+ echo Writing \"$CS\" to assets/checksum-adn.txt
  echo $CS > assets/checksum-adn.txt # to store
+
 else
-  echo requires md5sum, which appears not to be installed
+  echo; echo [FATAL] requires 'md5sum', which appears not to be installed; echo
   exit
 fi
 
-echo writing $DES/checksums.txt to ./assets/checksums/ublock0.txt
+echo Writing $DES/checksums.txt to ./assets/checksums/ublock0.txt
 cp $DES/checksums.txt ./assets/checksums/ublock0.txt  # for checking in adn repo
 
 echo "done."
 
-cat ./assets/checksums.txt
+#cat ./assets/checksums.txt
