@@ -219,11 +219,29 @@ var onUserSettingsReceived = function(details) {
     uDom('#restoreFilePicker').on('change', handleImportFilePicker);
 };
 
+var onCloudSupportReceived = function(isSupported) {
+    // Only disable when support is explicitly set to false
+    if ( isSupported === false ) {
+        // Force disabling of cloud storage if enabled previously
+        messaging.send(
+            'dashboard',
+            {
+                what: 'userSettings',
+                name: "cloudStorageEnabled",
+                value: false
+            }
+        );
+        uDom.nodeFromId('cloud-storage-enabled').disabled = true;
+        uDom.nodeFromSelector('#cloud-storage-enabled ~ .fa.info').title = "Cloud sync not supported in this browser";
+    }
+}
+
 /******************************************************************************/
 
 uDom.onLoad(function() {
     messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
     messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
+    messaging.send('cloudWidget', { what: 'cloudSupported' }, onCloudSupportReceived);
 });
 
 /******************************************************************************/
