@@ -159,13 +159,15 @@
 
         if (target.tagName === 'A' || target.hasAttribute('onclick')) { // if not, need to check for div.onclick?
           
-          //onclick possibilities
-          if(target.hasAttribute('onclick')) {
+          
+          if(target.hasAttribute('href')) 
+            targetUrl = target.getAttribute("href");
+          else if(target.hasAttribute('onclick')){
+            //onclick possibilities
             var onclickInfo = target.getAttribute("onclick");
             var hostname = window.location.hostname;
             targetUrl = parseOnClick(onclickInfo, hostname);
           }
-          else targetUrl = target.getAttribute("href");
 
           if (targetUrl) {
 
