@@ -50,9 +50,14 @@ var whitelistChanged = function() {
 /******************************************************************************/
 
 var renderWhitelist = function() {
-    var onRead = function(whitelist) {
-        cachedWhitelist = whitelist.trim();
+    var onRead = function(response) {
+        console.log("renderWhitelist.onRead",whitelist);
+        cachedWhitelist = response.whitelist.trim();
         uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
+
+        // update state of the dnt list based on prefs
+        uDom.nodeFromId('effListInput').checked = response.effListEnabled;
+
         whitelistChanged();
     };
     messaging.send('dashboard', { what: 'getWhitelist' }, onRead);

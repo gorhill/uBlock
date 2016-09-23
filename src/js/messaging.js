@@ -129,7 +129,10 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'getWhitelist':
-        response = µb.stringFromWhitelist(µb.netWhitelist);
+        response = {
+          whitelist: µb.stringFromWhitelist(µb.netWhitelist),
+          effListEnabled: (µb.userSettings.disableHidingForDNT || µb.userSettings.disableClickingForDNT)
+        };
         break;
 
     case 'launchElementPicker':

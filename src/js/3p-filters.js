@@ -40,8 +40,8 @@ var hasCachedContent = false;
 
 var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
   "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
-  "assets/thirdparties/pgl.yoyo.org/as/serverlist"
-  //,"https://www.eff.org/files/effdntlist.txt"
+  "assets/thirdparties/pgl.yoyo.org/as/serverlist",
+  "https://www.eff.org/files/effdntlist.txt"
 ]; // ADN
 
 /******************************************************************************/
