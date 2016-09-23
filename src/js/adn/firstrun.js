@@ -74,7 +74,7 @@
 
     var dntInput = uDom('#dnt-exception');
 
-    if (!dntRespectAppeared) { // runs once only
+    if (hideOrClick() && !dntRespectAppeared) { // runs once only
 
       changeDNTexceptions(true);
       dntInput.prop('checked', true);
