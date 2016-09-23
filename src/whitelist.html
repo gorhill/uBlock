@@ -11,6 +11,23 @@
 
 <body>
 
+  <ul id="lists"><li class="groupEntry"><span class="geName">External Whitelists</span>
+    <span class="geCount dim">(1)</span>
+    <ul>
+      <li class="listEntry">
+        <input type="checkbox">
+        <a type="text/html" target="_blank" href="asset-viewer.html?url=https://www.eff.org/files/effdntlist.txt" data-listkey="https://www.eff.org/files/effdntlist.txt">EFF DNT Policy Whitelist‎</a>
+        <a class="fa" style="display: none;" target="_blank"></a>
+        <a href="https://www.eff.org/dnt-policy" target="_blank">(www.eff.org)</a> <!--
+     --><span class="counts dim"></span><!--
+     --><span class="status unsecure" style="display: none;">http</span><!--
+     --><span class="status new" style="display: none;" data-i18n="3pExternalListNew">new version available</span><!--
+     --><span class="status obsolete" style="display: none;" data-i18n="3pExternalListObsolete">out of date</span><!--
+     --><span class="status purge" style="display: none;" data-i18n="3pExternalListPurge">purge cache</span>
+      </li>
+    </ul>
+  </ul>
+
 <div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
 
 <p data-i18n="whitelistPrompt"></p>
@@ -24,25 +41,6 @@
     <button id="exportWhitelistToFile" class="custom" data-i18n="whitelistExport"></button>
     <input id="importFilePicker" type="file" accept="text/plain" class="hiddenFileInput">
 </p>
-
-<div id="templates" style="display: none;">
-  <ul>
-    <li class="groupEntry"><span class="geName"></span> <span class="geCount dim"></span>
-        <ul></ul>
-    </li>
-    <li class="listEntry">
-        <input type="checkbox">
-        <a type="text/plain" target="_blank" href=""></a>
-        <a class="fa" style="display: none;" target="_blank">&#xf05a;</a>
-        <a href="" style="display: none;" target="_blank"></a> <!--
-     --><span class="counts dim"></span><!--
-     --><span class="status unsecure" style="display: none;">http</span><!--
-     --><span class="status new" style="display: none;" data-i18n="3pExternalListNew"></span><!--
-     --><span class="status obsolete" style="display: none;" data-i18n="3pExternalListObsolete"></span><!--
-     --><span class="status purge" style="display: none;" data-i18n="3pExternalListPurge"></span>
-    </li>
-  </ul>
-</div>
 
 <script src="lib/punycode.js"></script>
 <script src="js/vapi-common.js"></script>
