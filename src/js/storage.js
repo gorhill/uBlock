@@ -406,7 +406,8 @@
 
         //quickProfiler.stop(0);
 
-        vAPI.messaging.broadcast({ what: 'allFilterListsReloaded' });
+        vAPI.messaging.broadcast({ what: 'staticFilteringDataChanged' });
+
         callback();
 
         µb.selfieManager.create();

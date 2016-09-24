@@ -23,21 +23,16 @@
 
 // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Frame_script_environment
 
-(function() {
+(function(context) {
     'use strict';
 
-    let {LocationChangeListener} = Components.utils.import(
-        Components.stack.filename.replace('Script', 'Module'),
-        null
-    );
-
-    if ( !this.docShell ) {
+    if ( !context.docShell ) {
         return;
     }
 
-    let webProgress = this.docShell
-                          .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-                          .getInterface(Components.interfaces.nsIWebProgress);
+    let webProgress = context.docShell
+                      .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+                      .getInterface(Components.interfaces.nsIWebProgress);
     if ( !webProgress ) {
         return;
     }
@@ -49,11 +44,19 @@
         return;
     }
 
+    let {LocationChangeListener} = Components.utils.import(
+        Components.stack.filename.replace('Script', 'Module'),
+        null
+    );
+
     // https://github.com/gorhill/uBlock/issues/1444
     // Apparently, on older versions of Firefox (31 and less), the same context
-    // is used for all extensions, hence we must use a unique variable name to
-    // ensure no collision.
-    this.ublock0LocationChangeListener = new LocationChangeListener(this.docShell, webProgress);
-}).call(this);
+    // is used for all frame scripts, hence we must use a unique variable name
+    // to ensure no collision.
+    context.ublock0LocationChangeListener = new LocationChangeListener(
+        context.docShell,
+        webProgress
+    );
+})(this);
 
 /******************************************************************************/

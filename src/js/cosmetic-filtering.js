@@ -1237,6 +1237,12 @@ FilterContainer.prototype.createScriptTagFilter = function(hash, hostname, selec
 
 /******************************************************************************/
 
+FilterContainer.prototype.retrieveScriptTagHostnames = function() {
+    return Object.keys(this.scriptTagFilters);
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
     if ( this.scriptTagFilterCount === 0 ) {
         return;

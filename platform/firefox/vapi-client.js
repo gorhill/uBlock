@@ -45,13 +45,6 @@ if ( document instanceof HTMLDocument === false ) {
 
 /******************************************************************************/
 
-// Not all sandboxes are given an rpc function, so assign a dummy one if it is
-// missing -- this avoids the need for testing before use.
-
-self.rpc = self.rpc || function(){};
-
-/******************************************************************************/
-
 var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
@@ -154,12 +147,14 @@ vAPI.shutdown = (function() {
 /******************************************************************************/
 
 (function() {
+    if ( !self.getScriptTagFilters ) {
+        return;
+    }
     var hostname = location.hostname;
     if ( !hostname ) {
         return;
     }
-    var filters = self.rpc({
-        fnName: 'getScriptTagFilters',
+    var filters = self.getScriptTagFilters({
         rootURL: self.location.href,
         frameURL: self.location.href,
         frameHostname: hostname
