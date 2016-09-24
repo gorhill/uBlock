@@ -319,11 +319,8 @@
 
       if (title) ad.title = title;
 
-      // TODO: if title still = 'Pending' here, replace it with the hostname
-      if (ad.title === 'Pending') {
-
+      if (ad.title === 'Pending')
         ad.title = parseDomain(xhr.requestUrl, true);
-      }
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
