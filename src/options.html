@@ -18,28 +18,24 @@
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="hidingAds" data-setting-type="bool" class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small"
-            id="cmn-toggle-1" checked>
-        <label for="cmn-toggle-1"></label>
+            id="hiding-ads-toggle" checked>
+        <label for="hiding-ads-toggle"></label>
       </div>
       <p data-i18n="hidingAdsPrompt" for="hiding-ads"></p>
       <ul>
-        <!-- <li>
-          <input id="hiding-ads" type="checkbox" data-setting-name="hidingAds" data-setting-type="bool">
-          <label data-i18n="hidingAdsPrompt" for="hiding-ads"></label>
-        </li> -->
         <li>
-          <input id="respect-dnt-for-hiding" type="checkbox" data-setting-name="disableHidingForDNT"
+          <input id="respect-dnt-for-hiding" class="hidingAds-child" type="checkbox" data-setting-name="disableHidingForDNT"
               data-setting-type="bool">
           <label data-i18n="disableHidingForDNTPrompt" for="respect-dnt"></label>
           <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ" target="_blank">&#xf05a;</a>
         </li>
         <li>
-          <input id="no-large-media" type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool">
+          <input id="no-large-media" class="hidingAds-child" type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool">
           <label data-i18n="settingsNoLargeMediaPrompt" for="no-large-media"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-large-media-elements"
               target="_blank">&#xf05a;</a>
         </li>
         <li>
-          <input id="no-remote-fonts" type="checkbox" data-setting-name="noRemoteFonts" data-setting-type="bool">
+          <input id="no-remote-fonts" class="hidingAds-child" type="checkbox" data-setting-name="noRemoteFonts" data-setting-type="bool">
           <label data-i18n="settingsNoRemoteFontsPrompt" for="no-remote-fonts"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-remote-fonts"
               target="_blank">&#xf05a;</a>
         </li>
@@ -51,17 +47,13 @@
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="clickingAds" data-setting-type="bool"
-            class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="cmn-toggle-2" checked>
-        <label for="cmn-toggle-2"></label>
+            class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="clicking-ads-toggle" checked>
+        <label for="clicking-ads-toggle"></label>
       </div>
       <p data-i18n="clickingAdsPrompt" for="clicking-ads"></p>
       <ul>
-        <!-- <li>
-          <input id="clicking-ads" type="checkbox" data-setting-name="clickingAds" data-setting-type="bool">
-          <label data-i18n="clickingAdsPrompt" for="clicking-ads"></label>
-        </li> -->
         <li>
-          <input id="respect-dnt-for-clicking" type="checkbox" data-setting-name="disableClickingForDNT"
+          <input id="respect-dnt-for-clicking" class="clickingAds-child" type="checkbox" data-setting-name="disableClickingForDNT"
               data-setting-type="bool">
           <label data-i18n="disableClickingForDNTPrompt" for="respect-dnt"></label>
           <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ" target="_blank">&#xf05a;</a>
@@ -71,17 +63,17 @@
           <label data-i18n="parseTextAdsPrompt" for="parse-text-ads"></label>
         </li> -->
         <li>
-          <input id="no-outgoing-cookies" type="checkbox" data-setting-name="noOutgoingCookies"
+          <input id="no-outgoing-cookies" class="clickingAds-child" type="checkbox" data-setting-name="noOutgoingCookies"
               data-setting-type="bool">
           <label data-i18n="noOutgoingCookiesPrompt" for="no-outgoing-cookies"></label>
         </li>
         <li>
-          <input id="no-outgoing-referer" type="checkbox" data-setting-name="noOutgoingReferer"
+          <input id="no-outgoing-referer" class="clickingAds-child" type="checkbox" data-setting-name="noOutgoingReferer"
               data-setting-type="bool">
           <label data-i18n="noOutgoingRefererPrompt" for="no-outgoing-referer"></label>
         </li>
         <li>
-          <input id="no-outgoing-user-agent" type="checkbox" data-setting-name="noOutgoingUserAgent"
+          <input id="no-outgoing-user-agent" class="clickingAds-child" type="checkbox" data-setting-name="noOutgoingUserAgent"
               data-setting-type="bool">
           <label data-i18n="noOutgoingUserAgentPrompt" for="no-outgoing-user-agent"></label>
         </li>
@@ -93,17 +85,10 @@
       </div>
       <div class="switch">
         <input type="checkbox" data-setting-name="blockingMalware" data-setting-type="bool"
-            class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="cmn-toggle-3" checked>
-        <label for="cmn-toggle-3"></label>
+            class="cmn-toggle cmn-toggle-round-flat cmn-toggle-small" id="blocking-malware-toggle" checked>
+        <label for="blocking-malware-toggle"></label>
       </div>
       <p data-i18n="blockingMalwarePrompt" for="blocking-malware"></p>
-      <!-- <ul>
-        <li>
-          <input id="blocking-malware" type="checkbox" data-setting-name="blockingMalware"
-              data-setting-type="bool">
-          <label data-i18n="blockingMalwarePrompt" for="blocking-malware"></label>
-        </li>
-      </ul> -->
     </li>
     <!-- spacer -->
 

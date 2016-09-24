@@ -33,8 +33,6 @@
 
   var onLocalDataReceived = function (details) {
 
-    //console.log('onLocalDataReceived',details);
-
     uDom('#localData > ul > li:nth-of-type(1)').text(
       vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
     );
@@ -49,6 +47,7 @@
       minute: 'numeric',
       timeZoneName: 'short'
     };
+
     var lastBackupFile = details.lastBackupFile || '';
     if (lastBackupFile !== '') {
       dt = new Date(details.lastBackupTime);
@@ -81,12 +80,17 @@
   /******************************************************************************/
 
   var changeUserSettings = function (name, value) {
+
     //console.log('changeUserSettings',name, value);
+
+    updateSubgroupState(name, value);
+
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
       value: value
-    });
+    }, renderNotifications);
+    //function() { console.log('CONFIRM: '+name+'='+value); });
   };
 
   /******************************************************************************/
@@ -101,7 +105,18 @@
     if (value !== input.value) {
       input.value = value;
     }
+
     changeUserSettings(name, value);
+  };
+
+  /******************************************************************************/
+
+  // if any of 3 main toggles are off, disabled their subgroup
+  var updateSubgroupState = function (name, value) {
+
+    if (['hidingAds', 'clickingAds', 'blockingMalware'].contains(name)) {
+      uDom('.'+name+'-child').prop('disabled', !value);
+    }
   };
 
   /******************************************************************************/
@@ -110,9 +125,15 @@
 
   var onUserSettingsReceived = function (details) {
 
+    //console.log('onUserSettingsReceived', details);
+
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
 
-      uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
+      var name = uNode.attr('data-setting-name'), value = details[name];
+
+      updateSubgroupState(name, value);
+
+      uNode.prop('checked', value === true)
         .on('change', function () {
           changeUserSettings(
             this.getAttribute('data-setting-name'),
@@ -125,20 +146,22 @@
       .attr('data-setting-name', 'largeMediaSize')
       .attr('data-setting-type', 'input');
 
-    uDom('[data-setting-type="input"]').forEach(function (uNode) {
-      uNode.val(details[uNode.attr('data-setting-name')])
-        .on('change', onInputChanged);
-    });
+      uDom('[data-setting-type="input"]').forEach(function (uNode) {
+        uNode.val(details[uNode.attr('data-setting-name')])
+          .on('change', onInputChanged);
+      });
 
+    uDom('#reset').on('click', clearAds);
     uDom('#export').on('click', exportToFile);
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
-    uDom('#reset').on('click', clearAds);
     uDom('#resetOptions').on('click', resetUserData);
     uDom('#confirm-close').on('click', function (e) {
       e.preventDefault();
       window.open(location, '_self').close();
     });
+
+    renderNotifications(details.notifications);
   };
 
   /******************************************************************************/

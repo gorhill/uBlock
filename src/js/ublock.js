@@ -238,18 +238,19 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 µBlock.changeUserSettings = function(name, value) {
 
-    var us = this.userSettings;
+    var us = this.userSettings, adn = µBlock.adnauseam;
 
     //console.log('changeUserSettings', name, value, us);
 
     // Return all settings if none specified.
     if ( name === undefined ) {
+        µBlock.adnauseam.verifySettings();
         us = JSON.parse(JSON.stringify(us));
         us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
         us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;
         us.noRemoteFonts = this.hnSwitches.evaluate('no-remote-fonts', '*') === 1;
-        us.appName = vAPI.app.name;
-        us.appVersion = vAPI.app.version;
+        us.appName = vAPI.app.name; // ADN
+        us.appVersion = vAPI.app.version; // ADN
         return us;
     }
 
@@ -317,21 +318,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     /***************************** ADN *******************************/
 
+    case 'showIconBadge':
+        adn.updateBadges();
+        break;
     case 'parseTextAds':
-        µBlock.adnauseam.updateBadges();
+        adn.updateBadges();
         break;
     case 'hidingAds':
-        µBlock.adnauseam.verifySetting(HidingDisabled,   !us.hidingAds);
-        break;
+        return adn.verifySetting(HidingDisabled,   !us.hidingAds);
     case 'clickingAds':
-        µBlock.adnauseam.verifySetting(ClickingDisabled, !us.clickingAds);
-        break;
+        return adn.verifySetting(ClickingDisabled, !us.clickingAds);
     case 'blockingMalware':
-        µBlock.adnauseam.verifySetting(BlockingDisabled, !us.blockingMalware);
-        break;
-    case 'showIconBadge':
-        µBlock.adnauseam.updateBadges();
-        break;
+        return adn.verifySetting(BlockingDisabled, !us.blockingMalware);
     case 'noThirdPartyCookies':
         vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;

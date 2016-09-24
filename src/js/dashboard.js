@@ -37,22 +37,25 @@ var resizeFrame = function() {
 
 /********************************** adn ***************************************/
 
-var onMessage = function (msg) {
-
-  console.log('dashboard.onMessage:', msg);
-
-  switch (msg.what) {
-
-  case 'notifications':
-    var notifications = msg.data;
-    if (notifications && notifications.length)
-      renderNotifications(notifications);
-    break;
-  }
-};
-
-var messaging = vAPI.messaging;
-messaging.addChannelListener('adnauseam', onMessage);
+// var onMessage = function (msg) {
+//
+//   //console.log('dashboard.onMessage:', msg);
+//
+//   switch (msg.what) {
+//
+//   case 'notifications':
+//
+//     var notifies = msg.data;
+//
+//     if (notifies && notifies.length)
+//       renderNotifications(notifies);
+//
+//     break;
+//   }
+// };
+//
+// var messaging = vAPI.messaging;
+// messaging.addChannelListener('adnauseam', onMessage);
 
 var loadDashboardPanel = function() {
 
@@ -68,10 +71,7 @@ var loadDashboardPanel = function() {
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
-
-    messaging.send('adnauseam', { what: 'verifyListSelection' });
 };
-
 
 /******************************** end-adn *************************************/
 

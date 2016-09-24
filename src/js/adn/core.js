@@ -11,11 +11,9 @@
     automatedMode = 0, // for automated testing
     logBlocks = 0; // for debugging blocks/allows
 
-  var xhr, idgen, admap, inspected, listEntries, firewall,
-    µb = µBlock,
+  var µb = µBlock,
     production = 0,
     lastActivity = 0,
-    notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -23,6 +21,11 @@
     profiler = +new Date(),
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
+
+  var xhr, idgen, admap, inspected, listEntries, firewall;
+
+  // default rules for adnauseam's firewall
+  var defaultDynamicFilters = [ ];
 
   // allow all blocks on requests to/from these domains
   var allowAnyBlockOnDomains = ['youtube.com'];
@@ -32,9 +35,6 @@
     '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
-
-  // default rules for adnauseam's firewall
-  var defaultDynamicFilters = [];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
@@ -89,8 +89,6 @@
 
       setupTesting();
     }
-
-    verifySettings(settings);
   }
 
   var setupTesting = function () {
@@ -714,7 +712,7 @@
       pageUrl: pageUrl,
       prefs: contentPrefs(),
       current: activeVisit(),
-      notifications: notifications,
+      notifications: µb.userSettings.notifications
     };
   }
 
@@ -1059,13 +1057,13 @@
 
   var contentPrefs = exports.contentPrefs = function () {
 
-    // preferences relevant to our content/ui-scripts
+    // preferences relevant to our ui-scripts
     return {
       production: production,
       automated: automatedMode,
       hidingDisabled: !µb.userSettings.hidingAds,
       clickingDisabled: !µb.userSettings.clickingAds,
-      textAdsDisabled: !µb.userSettings.parseTextAds
+      textAdsDisabled: !µb.userSettings.parseTextAds,
     };
   };
 
@@ -1083,24 +1081,23 @@
     }
   };
 
-  exports.verifyListSelection = function () {
+  /*exports.verifyListSelection = function () {
 
     µb.getAvailableLists(function (lists) {
 
       var keys = Object.keys(lists);
       for (var i = 0; i < keys.length; i++) {
 
-        var path = keys[i],
-          name = lists[keys[i]].title,
-          off = lists[keys[i]].off;
+        var path = keys[i], list,
+          off = lists[keys[i]].off,
+          name = lists[keys[i]].title;
 
-        //console.log('checking ',name, 'against', RequiredLists);
+        // ADN: check we don't have a disabled required-list
+        if (off) {
+          //console.log('checking ',name+"/"+path+' against', RequiredLists[0].listUrl);
 
-        if (RequiredLists.hasOwnProperty(name)) {
 
-          //console.log("HIT: " + name, RequiredLists[name]);
-          verifySetting(RequiredLists[name], off);
-          //console.log(notifications);
+          //verifyList(path, !off);
         }
       }
 
@@ -1109,7 +1106,7 @@
         data: notifications
       });
     });
-  };
+  };*/
 
   // Called when new top-level page is loaded
   exports.onPageLoad = function (tadId, requestURL) {
@@ -1354,21 +1351,42 @@
     return result;
   };
 
-  var verifySettings = exports.verifySettings = function (prefs) {
+  var verifySettings = exports.verifySettings = function () {
 
-    verifySetting(HidingDisabled,   !prefs.hidingAds);
-    verifySetting(ClickingDisabled, !prefs.clickingAds);
-    verifySetting(BlockingDisabled, !prefs.blockingMalware);
+    verifySetting(HidingDisabled,   !µb.userSettings.hidingAds);
+    verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
+    verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
   }
 
-  var verifySetting = exports.verifySetting = function (note, val) {
+  var verifySetting = exports.verifySetting = function (note, state) {
 
-    if (val && notifications.indexOf(note) < 0)
+    //console.log('verifySetting:', note.name, state);
+    var notifications = µb.userSettings.notifications;
+
+    if (state && notifications.indexOf(note) < 0) {
       notifications.push(note);
-    else if (!val)
+    }
+    else if (!state) {
       arrayRemove(notifications, note);
-    //console.log(note.name+",", val, notifications);
+    }
+    return notifications;
   }
+
+  /*var verifyLists = exports.verifyLists = function (lists, switches) {
+
+    for (var i = 0; i < RequiredLists.length; i++) {
+      //verifyList(RequiredLists[i].listUrl, switches[i]);
+    }
+    return notifications;
+  }
+  var //verifyList = exports.verifyList = function (path, state) {
+
+    if (!state) {
+      var list = checkRequiredList(path);
+      list && console.log("HIT: " + name, list);
+      list && verifySetting(list, !state);
+    }
+  }*/
 
   var clearAds = exports.clearAds = function () {
 
