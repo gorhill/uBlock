@@ -79,3 +79,17 @@ si.com#@#.cm-ad
 
 #weibo.com
 ##DIV[id*="adcontent"]
+
+#forbes.com
+www.forbes.com###google_ads_iframe_\/7175\/fdc\.forbes\/home_1
+www.forbes.com###google_ads_iframe_\/7175\/fdc\.forbes\/home_0
+
+#pcmag.com/
+##img[src*="ziffty"]
+www.pcmag.com##.deal-widget
+
+#sfgate.com
+www.sfgate.com##.dealnews
+
+#theatlantic.com
+###tl_main_single
