@@ -255,6 +255,8 @@ var renderFilterLists = function() {
 
     var onListsReceived = function(details) {
 
+        //console.log('onListsReceived', details.notifications, details.available);
+
         // Before all, set context vars
         listDetails = details;
         parseCosmeticFilters = details.parseCosmeticFilters;
@@ -325,6 +327,7 @@ var renderFilterLists = function() {
 
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
+        renderNotifications(details.notifications);
     };
 
     messaging.send('dashboard', { what: 'getLists' }, onListsReceived);

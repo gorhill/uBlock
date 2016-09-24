@@ -416,13 +416,14 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, dbug = 0;
+      var tabId = details.tabId, requestType = details.type, dbug = 0;
+
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
         // ADN: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('onHeadersReceived: ',  details.type, details.url, details);
+            dbug && console.log('onHeadersReceived: ',  requestType, details.url, details);
 
             // ADN
             if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
@@ -431,7 +432,7 @@
             }
             else if (dbug && vAPI.chrome) {
 
-              console.log('Ignoring non-ADN response', details.type, details.url);
+              console.log('Ignoring non-ADN response', requestType, details.url);
             }
         }
 
@@ -442,8 +443,6 @@
 
       // ADN: check if this was an allowed exception and, if so, block cookies
       µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
-
-      var requestType = details.type;
 
       if (requestType === 'main_frame') {
         return onRootFrameHeadersReceived(details);
@@ -466,14 +465,14 @@
     //console.log('onBeforeSendHeaders', details.url, details);
 
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
-      ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
+      adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
 
     // ADN: Do we need to add a DNT header?
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
 
       if (!hasDNT(headers)) {
 
-        µb.adnauseam.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+        adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
         addHeader(headers, 'DNT', '1');
       }
     }

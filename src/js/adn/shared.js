@@ -88,13 +88,13 @@ var removeNotification = function (notes, note) {
 };
 
 
-var checkRequiredList = function (listUrl) {
-
-  for (var i = 0; i < Notifications.length; i++) {
-    if (Notifications[i].listUrl === listUrl)
-      return Notifications[i];
-  }
-}
+// var checkRequiredList = function (listUrl) {
+//
+//   for (var i = 0; i < Notifications.length; i++) {
+//     if (Notifications[i].listUrl === listUrl)
+//       return Notifications[i];
+//   }
+// }
 
 var renderNotifications = function (visibleNotes) {
 
@@ -123,12 +123,12 @@ var renderNotifications = function (visibleNotes) {
     var note = uDom('#' + notify.name),
       exists = note.length;
 
-    if (match.length) {
+    if (match && match.length) {
       //console.log("MATCH: "+notify.name, match);
       if (exists)
         note.toggleClass('hide', false);
       else
-        appendNotify(notify, template, uDom);
+        appendNotifyDiv(notify, template, uDom);
     } else {
 
       exists && note.toggleClass('hide', true);
@@ -138,7 +138,7 @@ var renderNotifications = function (visibleNotes) {
   uDom = origUdom; // reset uDom
 }
 
-var appendNotify = function (notify, template, uDom) {
+var appendNotifyDiv = function (notify, template, uDom) {
 
   var node = template.clone(false);
 
