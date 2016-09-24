@@ -509,10 +509,10 @@
 
         // block outgoing cookies and user-agent here if specified
         if (prefs.noOutgoingCookies && name === 'cookie') {
-          µb.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
+          µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
         }
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-          µb.adnauseam.logNetEvent('[UAGENT]', 'Strip', headers[i].value, details.url);
+          µBlock.adnauseam.logNetEvent('[UAGENT]', 'Strip', headers[i].value, details.url);
         }
 
         setHeader(headers[i], '');

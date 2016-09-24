@@ -28,7 +28,7 @@
   var defaultDynamicFilters = [ ];
 
   // allow all blocks on requests to/from these domains
-  var allowAnyBlockOnDomains = ['youtube.com'];
+  var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com'];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
@@ -306,7 +306,7 @@
 
     var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
     //console.log('shtml: ' + shtml);
-    warn('[VISITED] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
+    warn('[VISIT] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
 
     return false;
   }
@@ -335,7 +335,7 @@
 
       if (ad === inspected) inspected = null;
 
-      log('[VISITED] ' + adinfo(ad), ad.title);
+      log('[VISIT] ' + adinfo(ad), ad.title);
     }
 
     storeUserData();
@@ -461,7 +461,7 @@
 
   var sendXhr = function (ad) {
 
-    log('[ATTEMPT] ' + adinfo(ad), ad.targetUrl);
+    log('[TRYING] ' + adinfo(ad), ad.targetUrl);
 
     xhr = new XMLHttpRequest();
 

@@ -871,25 +871,16 @@ var getLists = function(callback) {
       var listKeys = Object.keys(r.available),
         notes = µb.userSettings.notifications;
 
+      // check each list for an associated notification
       listKeys.forEach(function(url) {
         for (var i = 0; i < Notifications.length; i++) {
           if (Notifications[i].listUrl === url) {
-            //console.log('HIT: '+Notifications[i].name + "/" + r.available[url].off);
-
-            /*if (r.available[url].off) // just commented to test TODO: below
-              addNotification(notes, Notifications[i]);
-            else
-              removeNotification(notes, Notifications[i]);
-            */
-
-            // TODO: last thing: vault no refresh for EasyList
-            adn.verifySetting(Notifications[i], r.available[url].off);
+            µb.adnauseam.verifySetting(Notifications[i], r.available[url].off);
           }
         }
       });
       r.notifications = notes;
     };
-
     var onLists = function(lists) {
         r.available = lists;
         prepListEntries(r.available);
