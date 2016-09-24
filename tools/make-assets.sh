@@ -4,6 +4,12 @@
 
 DES=$1/assets
 
+if [ $# -eq 0 ]
+  then
+    echo "[FATAL] No destination supplied"
+    exit
+fi
+
 printf "*** Packaging assets in $DES... "
 
 if [ -n "${TRAVIS_TAG}" ]; then
