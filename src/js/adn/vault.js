@@ -67,6 +67,10 @@
     case 'adVisited':
       updateAd(request);
       break;
+
+    case 'notifications':
+      renderNotifications(request.notifications);
+      break;
     }
   });
 

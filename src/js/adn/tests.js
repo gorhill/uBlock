@@ -19,6 +19,27 @@
     Home: https://github.com/dhowe/AdNauseam
 */
 
+QUnit.test('notifications', function (assert) {
+
+  var notes = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
+  assert.equal(addNotification(notes, HidingDisabled), false);
+  assert.equal(notes.length,4);
+  assert.equal(removeNotification(notes, EasyList), true);
+  assert.equal(notes.length,3);
+  assert.equal(removeNotification(notes, EasyList), false);
+  assert.equal(notes.length,3);
+
+  var notes = [];
+  assert.equal(addNotification(notes, ClickingDisabled), true);
+  assert.equal(notes.length, 1);
+  assert.equal(removeNotification(notes, BlockingDisabled), false);
+  assert.equal(notes.length,1);
+  assert.equal(removeNotification(notes, ClickingDisabled), true);
+  assert.equal(notes.length,0);
+  assert.equal(addNotification(notes, EasyList), true);
+  assert.equal(notes.length,1);
+});
+
 QUnit.test('parseDomain', function (assert) {
 
   assert.equal(parseDomain("http://google.com"), "google.com");

@@ -866,13 +866,31 @@ var getLists = function(callback) {
         prepListEntries(r.cache);
         callback(r);
     };
+    var appendNotifications = function(r) { // ADN
+
+      var listKeys = Object.keys(r.available),
+        notes = µb.userSettings.notifications;
+
+      // check each list for an associated notification
+      listKeys.forEach(function(url) {
+        for (var i = 0; i < Notifications.length; i++) {
+          if (Notifications[i].listUrl === url) {
+            µb.adnauseam.verifySetting(Notifications[i], r.available[url].off);
+          }
+        }
+      });
+      r.notifications = notes;
+    };
     var onLists = function(lists) {
         r.available = lists;
         prepListEntries(r.available);
+        appendNotifications(r); // ADN
         µb.assets.metadata(onMetadataReady);
     };
     µb.getAvailableLists(onLists);
 };
+
+
 
 /******************************************************************************/
 

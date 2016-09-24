@@ -23,9 +23,12 @@
 
 'use strict';
 
-var FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ',
-  WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success';
+/**************************** Notifications *********************************/
 
+var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
+  FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
+
+// TODO: set as properties of Notifications obj
 var ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
   text: 'Activate Ad clicking'
@@ -45,10 +48,11 @@ var BlockingDisabled = new Notification({
 var EasyList = new Notification({
   name: 'EasyListDisabled',
   text: 'Activate the EasyList filter',
-  buttonLink: '3p-filters.html'
+  buttonLink: '3p-filters.html',
+  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
 });
 
-var RequiredLists = { EasyList };
+var Notifications = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
 
 function Notification(m) {
 
@@ -56,32 +60,132 @@ function Notification(m) {
   this.text = m && m.hasOwnProperty('text') ? m.text : '';
   this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
   this.type = m && m.hasOwnProperty('type') ? m.type : WARNING;
+  this.listUrl = m && m.hasOwnProperty('listUrl') ? m.listUrl : '';
   this.button = m && m.hasOwnProperty('button') ? m.button : 'Reactivate';
   this.buttonLink = m && m.hasOwnProperty('buttonLink') ? m.buttonLink : 'dashboard.html';
+
   if ([WARNING, ERROR, INFO, SUCCESS].indexOf(this.type) < 0)
     throw Error('Bad type: ' + m.type);
 }
 
-var renderNotifications = function (notes) {
-
-  //console.log('renderNotifications', notes);
-
-  var template = uDom('#notify-template');
+var addNotification = function (notes, note) {
   for (var i = 0; i < notes.length; i++) {
-    var id = 'div-' + notes[i].name;
-    if (uDom('#'+id).length) {
-      console.log('IGNORING: ', notes[i].name);
-      continue;
-    }
-    var note = template.clone(false);
-    note.attr('id', id);
-    note.addClass(notes[i].type);
-    uDom('#notify-text',   note.nodes[0]).text(notes[i].text);
-    uDom('#notify-button', note.nodes[0]).text(notes[i].button);
-    uDom('#notify-link',   note.nodes[0]).attr('href', notes[i].link);
-    uDom('#notifications').append(note);
+    if (notes[i].name === note.name)
+      return false;
   }
+  notes.push(note);
+  return true;
+};
+
+var removeNotification = function (notes, note) {
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].name === note.name) {
+      notes.splice(i, 1);
+      return true;
+    }
+  }
+  return false;
+};
+
+
+// var checkRequiredList = function (listUrl) {
+//
+//   for (var i = 0; i < Notifications.length; i++) {
+//     if (Notifications[i].listUrl === listUrl)
+//       return Notifications[i];
+//   }
+// }
+
+var renderNotifications = function (visibleNotes) {
+
+  //console.log('renderNotifications', visibleNotes);
+
+  var template = uDom('#notify-template'),
+    origUdom = uDom;
+  if (!template.length) {
+
+    template = window.parent.uDom('#notify-template');
+    if (!template.length) {
+      throw 'no-template found!';
+    }
+    uDom = window.parent.uDom; // use uDom from parent
+  }
+
+  for (var i = 0; i < Notifications.length; i++) {
+
+    var notify = Notifications[i];
+
+    //var showing = (notes.indexOf(notify) > -1);
+    var match = visibleNotes && visibleNotes.filter(function (n) {
+      return notify.name === n.name;
+    });
+
+    var note = uDom('#' + notify.name),
+      exists = note.length;
+
+    if (match && match.length) {
+      //console.log("MATCH: "+notify.name, match);
+      if (exists)
+        note.toggleClass('hide', false);
+      else
+        appendNotifyDiv(notify, template, uDom);
+    } else {
+
+      exists && note.toggleClass('hide', true);
+    }
+  }
+
+  uDom = origUdom; // reset uDom
 }
+
+var appendNotifyDiv = function (notify, template, uDom) {
+
+  var node = template.clone(false);
+
+  node.addClass(notify.type);
+  node.attr('id', notify.name);
+  uDom('#notify-text', node.nodes[0]).text(notify.text);
+  uDom('#notify-button', node.nodes[0]).text(notify.button);
+  uDom('#notify-link', node.nodes[0]).attr('href', notify.link);
+
+  uDom('#notifications').append(node);
+}
+
+/******************************* Polyfill ***********************************/
+
+if (Array.prototype.contains instanceof Function === false) {
+
+  Array.prototype.contains = function (a) {
+    var b = this.length;
+    while (b--) {
+      if (this[b] === a) {
+        return true;
+      }
+    }
+    return false;
+  };
+}
+
+if (String.prototype.startsWith instanceof Function === false) {
+  String.prototype.startsWith = function (needle, pos) {
+    if (typeof pos !== 'number') {
+      pos = 0;
+    }
+    return this.lastIndexOf(needle, pos) === pos;
+  };
+}
+
+if (String.prototype.endsWith instanceof Function === false) {
+  String.prototype.endsWith = function (needle, pos) {
+    if (typeof pos !== 'number') {
+      pos = this.length;
+    }
+    pos -= needle.length;
+    return this.indexOf(needle, pos) === pos;
+  };
+}
+
+/****************************************************************************/
 
 var rand = function (min, max) {
 
@@ -96,7 +200,7 @@ var rand = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var setCost = function(numVisited) {
+var setCost = function (numVisited) {
 
   //console.log('setCost: '+numVisited);
 
@@ -105,9 +209,8 @@ var setCost = function(numVisited) {
 
   if (numVisited > 0) {
     $cost.removeClass('hidden');
-    $west.text('= $'+ (numVisited * 1.58).toFixed(2));
-  }
-  else {
+    $west.text('= $' + (numVisited * 1.58).toFixed(2));
+  } else {
     $cost.addClass('hidden');
   }
 }
@@ -166,7 +269,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
   }
 
   var hash = ad.pageDomain || ad.pageUrl, // change from pageUrl (4/3/16) ***
-  // fall back to pageUrl if pageDomain is undefined for backward compatibility
+    // fall back to pageUrl if pageDomain is undefined for backward compatibility
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {
@@ -209,7 +312,7 @@ var parseDomain = function (url, useLast) {
   var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
   return domains.length ? new URL(
       useLast ? domains[domains.length - 1] : domains[0])
-      .hostname : undefined;
+    .hostname : undefined;
 }
 
 /*
@@ -245,9 +348,11 @@ function handleImportFilePicker(evt) {
     var adData;
     try {
       adData = JSON.parse(e.target.result);
-    }
-    catch(e){
-      postImportAlert({ count: -1, error: e });
+    } catch (e) {
+      postImportAlert({
+        count: -1,
+        error: e
+      });
       return;
     }
 

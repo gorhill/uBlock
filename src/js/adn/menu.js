@@ -43,6 +43,10 @@
     case 'adVisited':
       updateAd(request.ad);
       break;
+
+    case 'notifications':
+      renderNotifications(request.notifications);
+      break;
     }
   });
 

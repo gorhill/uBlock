@@ -78,6 +78,7 @@ var renderNumber = function(value) {
 // TODO: get rid of background page dependencies
 
 var renderFilterLists = function() {
+
     var listGroupTemplate = uDom('#templates .groupEntry');
     var listEntryTemplate = uDom('#templates .listEntry');
     var listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats');
@@ -170,8 +171,10 @@ var renderFilterLists = function() {
 
         // ADN: hide entries from hiddenLists
         if (hiddenLists.indexOf(listKey) > -1) {
-          li.css('display', 'none');
+            li.css('display', 'none');
         }
+
+        //checkListNotify(listKey, entry.off);
 
         return li;
     };
@@ -227,6 +230,7 @@ var renderFilterLists = function() {
 
             ulGroup.append(liFromListEntry(listKeys[i]));
         }
+
         return liGroup;
     };
 
@@ -250,6 +254,8 @@ var renderFilterLists = function() {
     };
 
     var onListsReceived = function(details) {
+
+        //console.log('onListsReceived', details.notifications, details.available);
 
         // Before all, set context vars
         listDetails = details;
@@ -321,6 +327,7 @@ var renderFilterLists = function() {
 
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
+        renderNotifications(details.notifications);
     };
 
     messaging.send('dashboard', { what: 'getLists' }, onListsReceived);
@@ -415,7 +422,11 @@ var listsContentChanged = function() {
 /******************************************************************************/
 
 var onListCheckboxChanged = function() {
+
     var href = uDom(this).parent().descendants('a').first().attr('data-listkey');
+
+    // console.log('onListCheckboxChanged', this.checked, href);
+
     if ( typeof href !== 'string' ) {
         return;
     }
@@ -424,10 +435,6 @@ var onListCheckboxChanged = function() {
     }
     listDetails.available[href].off = !this.checked;
 
-    /*if (Object.keys(RequiredLists).indexOf(href) > -1) { // ADN: NOTIFICATIONS
-//console.log("[WARN] EasyList -> ",this.checked);
-        window.parent.uDom('#list-alert').toggleClass('hide', this.checked);
-    }*/
     renderWidgets();
 };
 
@@ -486,10 +493,10 @@ var selectFilterLists = function(callback) {
     var i = lis.length;
     while ( i-- ) {
         li = lis.at(i);
-        switches.push({
-            location: li.descendants('a').attr('data-listkey'),
-            off: li.descendants('input').prop('checked') === false
-        });
+        //var name = li.descendants('a').text();
+        var loc = li.descendants('a').attr('data-listkey');
+        var off = li.descendants('input').prop('checked') === false;
+        switches.push({ location: loc, off: off });
     }
 
     messaging.send(
@@ -501,6 +508,32 @@ var selectFilterLists = function(callback) {
         callback
     );
 };
+
+/******************************************************************************/
+
+var checkListNotify = function (url, isOff) {
+
+    Notifications.forEach(function (n) {
+
+        if (url === n.listUrl) {
+
+            //console.log("HIT: " + n.name);
+            var notify = window.parent.uDom('#' + n.name);
+
+            if (notify.length) {
+
+                // update the notification if needed
+                notify.toggleClass('hide', !isOff);
+
+            } else if (isOff) {
+
+                // TODO: need to check for pre-existing notifications here!
+
+                renderNotifications([ n ]);
+            }
+        }
+    });
+}
 
 /******************************************************************************/
 

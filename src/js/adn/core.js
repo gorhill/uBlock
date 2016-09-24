@@ -11,11 +11,9 @@
     automatedMode = 0, // for automated testing
     logBlocks = 0; // for debugging blocks/allows
 
-  var xhr, idgen, admap, inspected, listEntries, firewall,
-    µb = µBlock,
+  var µb = µBlock,
     production = 0,
     lastActivity = 0,
-    notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -24,17 +22,19 @@
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
+  var xhr, idgen, admap, inspected, listEntries, firewall;
+
+  // default rules for adnauseam's firewall
+  var defaultDynamicFilters = [ ];
+
   // allow all blocks on requests to/from these domains
-  var allowAnyBlockOnDomains = ['youtube.com'];
+  var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com'];
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
     '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
     '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
   ];
-
-  // default rules for adnauseam's firewall
-  var defaultDynamicFilters = [];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
@@ -89,8 +89,6 @@
 
       setupTesting();
     }
-
-    verifySettings(settings);
   }
 
   var setupTesting = function () {
@@ -308,7 +306,7 @@
 
     var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
     //console.log('shtml: ' + shtml);
-    warn('[VISITED] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
+    warn('[VISIT] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
 
     return false;
   }
@@ -321,11 +319,8 @@
 
       if (title) ad.title = title;
 
-      // TODO: if title still = 'Pending' here, replace it with the hostname
-      if (ad.title === 'Pending') {
-
+      if (ad.title === 'Pending')
         ad.title = parseDomain(xhr.requestUrl, true);
-      }
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
@@ -337,7 +332,7 @@
 
       if (ad === inspected) inspected = null;
 
-      log('[VISITED] ' + adinfo(ad), ad.title);
+      log('[VISIT] ' + adinfo(ad), ad.title);
     }
 
     storeUserData();
@@ -463,7 +458,7 @@
 
   var sendXhr = function (ad) {
 
-    log('[ATTEMPT] ' + adinfo(ad), ad.targetUrl);
+    log('[TRYING] ' + adinfo(ad), ad.targetUrl);
 
     xhr = new XMLHttpRequest();
 
@@ -714,7 +709,7 @@
       pageUrl: pageUrl,
       prefs: contentPrefs(),
       current: activeVisit(),
-      notifications: notifications,
+      notifications: µb.userSettings.notifications
     };
   }
 
@@ -1010,14 +1005,6 @@
     return false;
   }
 
-  var logNetResult = function (action, args) {
-
-    if (logBlocks && args.length) {
-      args[0] = action + ' (' + args[0] + ')';
-      log.apply(this, args);
-    }
-  }
-
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1059,13 +1046,13 @@
 
   var contentPrefs = exports.contentPrefs = function () {
 
-    // preferences relevant to our content/ui-scripts
+    // preferences relevant to our ui-scripts
     return {
       production: production,
       automated: automatedMode,
       hidingDisabled: !µb.userSettings.hidingAds,
       clickingDisabled: !µb.userSettings.clickingAds,
-      textAdsDisabled: !µb.userSettings.parseTextAds
+      textAdsDisabled: !µb.userSettings.parseTextAds,
     };
   };
 
@@ -1083,24 +1070,23 @@
     }
   };
 
-  exports.verifyListSelection = function () {
+  /*exports.verifyListSelection = function () {
 
     µb.getAvailableLists(function (lists) {
 
       var keys = Object.keys(lists);
       for (var i = 0; i < keys.length; i++) {
 
-        var path = keys[i],
-          name = lists[keys[i]].title,
-          off = lists[keys[i]].off;
+        var path = keys[i], list,
+          off = lists[keys[i]].off,
+          name = lists[keys[i]].title;
 
-        //console.log('checking ',name, 'against', RequiredLists);
+        // ADN: check we don't have a disabled required-list
+        if (off) {
+          //console.log('checking ',name+"/"+path+' against', RequiredLists[0].listUrl);
 
-        if (RequiredLists.hasOwnProperty(name)) {
 
-          //console.log("HIT: " + name, RequiredLists[name]);
-          verifySetting(RequiredLists[name], off);
-          //console.log(notifications);
+          //verifyList(path, !off);
         }
       }
 
@@ -1109,7 +1095,7 @@
         data: notifications
       });
     });
-  };
+  };*/
 
   // Called when new top-level page is loaded
   exports.onPageLoad = function (tadId, requestURL) {
@@ -1130,6 +1116,8 @@
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
+      vAPI.storage.set( {'notifications': [] });
+
     });
 
     if (firstRun) {
@@ -1146,12 +1134,12 @@
 
   var logNetAllow = exports.logNetAllow = function () {
 
-    logNetResult('[ALLOW]', arguments);
+    logNetEvent('[ALLOW]', arguments);
   };
 
   var logNetBlock = exports.logNetBlock = function () {
 
-    logNetResult('[BLOCK]', arguments);
+    logNetEvent('[BLOCK]', arguments);
   };
 
   var logRedirect = exports.logRedirect = function (from, to) {
@@ -1159,6 +1147,14 @@
     if (logBlocks && arguments.length)
       log('[REDIRECT] ' + from + ' => ' + to);
   };
+
+  var logNetEvent = exports.logNetEvent = function (action, args) {
+
+    if (logBlocks && args.length) {
+      args[0] = action + ' (' + args[0] + ')';
+      log.apply(this, args);
+    }
+  }
 
   exports.lookupAd = function (url, requestId) {
 
@@ -1289,7 +1285,7 @@
       result = firewall.toFilterString();
       var action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
 
-      logNetResult('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
+      logNetEvent('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
         context.requestHostname, '(' + context.requestType + ') ', context.requestURL
       ]);
     }
@@ -1354,21 +1350,52 @@
     return result;
   };
 
-  var verifySettings = exports.verifySettings = function (prefs) {
+  var verifySettings = exports.verifySettings = function () {
 
-    verifySetting(HidingDisabled,   !prefs.hidingAds);
-    verifySetting(ClickingDisabled, !prefs.clickingAds);
-    verifySetting(BlockingDisabled, !prefs.blockingMalware);
+    verifySetting(HidingDisabled,   !µb.userSettings.hidingAds);
+    verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
+    verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
   }
 
-  var verifySetting = exports.verifySetting = function (note, val) {
+  var verifySetting = exports.verifySetting = function (note, state) {
 
-    if (val && notifications.indexOf(note) < 0)
-      notifications.push(note);
-    else if (!val)
-      arrayRemove(notifications, note);
-    //console.log(note.name+",", val, notifications);
+    var notifications = µb.userSettings.notifications, dirty = false;
+
+    if (state && notifications.indexOf(note) < 0) {
+
+      dirty = addNotification(notifications, note);
+    }
+    else if (!state) {
+
+      dirty = removeNotification(notifications, note);
+    }
+
+    //console.log('verifySetting:', note.name, state, dirty, notifications);
+
+    // if notifications were updated and vault/menu is open, send them
+    if (dirty) vAPI.messaging.broadcast({
+      what: 'notifications',
+      notifications: notifications
+    });
+
+    return notifications;
   }
+
+  /*var verifyLists = exports.verifyLists = function (lists, switches) {
+
+    for (var i = 0; i < RequiredLists.length; i++) {
+      //verifyList(RequiredLists[i].listUrl, switches[i]);
+    }
+    return notifications;
+  }
+  var //verifyList = exports.verifyList = function (path, state) {
+
+    if (!state) {
+      var list = checkRequiredList(path);
+      list && console.log("HIT: " + name, list);
+      list && verifySetting(list, !state);
+    }
+  }*/
 
   var clearAds = exports.clearAds = function () {
 
