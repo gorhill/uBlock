@@ -1008,14 +1008,6 @@
     return false;
   }
 
-  var logNetResult = function (action, args) {
-
-    if (logBlocks && args.length) {
-      args[0] = action + ' (' + args[0] + ')';
-      log.apply(this, args);
-    }
-  }
-
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1127,6 +1119,8 @@
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
+      vAPI.storage.set( {'notifications': [] });
+
     });
 
     if (firstRun) {
@@ -1143,12 +1137,12 @@
 
   var logNetAllow = exports.logNetAllow = function () {
 
-    logNetResult('[ALLOW]', arguments);
+    logNetEvent('[ALLOW]', arguments);
   };
 
   var logNetBlock = exports.logNetBlock = function () {
 
-    logNetResult('[BLOCK]', arguments);
+    logNetEvent('[BLOCK]', arguments);
   };
 
   var logRedirect = exports.logRedirect = function (from, to) {
@@ -1156,6 +1150,14 @@
     if (logBlocks && arguments.length)
       log('[REDIRECT] ' + from + ' => ' + to);
   };
+
+  var logNetEvent = exports.logNetEvent = function (action, args) {
+
+    if (logBlocks && args.length) {
+      args[0] = action + ' (' + args[0] + ')';
+      log.apply(this, args);
+    }
+  }
 
   exports.lookupAd = function (url, requestId) {
 
@@ -1286,7 +1288,7 @@
       result = firewall.toFilterString();
       var action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
 
-      logNetResult('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
+      logNetEvent('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
         context.requestHostname, '(' + context.requestType + ') ', context.requestURL
       ]);
     }
@@ -1360,15 +1362,25 @@
 
   var verifySetting = exports.verifySetting = function (note, state) {
 
-    //console.log('verifySetting:', note.name, state);
-    var notifications = µb.userSettings.notifications;
+    var notifications = µb.userSettings.notifications, dirty = false;
 
     if (state && notifications.indexOf(note) < 0) {
-      notifications.push(note);
+
+      dirty = addNotification(notifications, note);
     }
     else if (!state) {
-      arrayRemove(notifications, note);
+
+      dirty = removeNotification(notifications, note);
     }
+
+    //console.log('verifySetting:', note.name, state, dirty, notifications);
+
+    // if notifications were updated and vault/menu is open, send them
+    if (dirty) vAPI.messaging.broadcast({
+      what: 'notifications',
+      notifications: notifications
+    });
+
     return notifications;
   }
 

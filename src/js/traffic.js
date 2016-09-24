@@ -408,7 +408,6 @@
   /******************************************************************************/
 
   var onBeforeRedirect = function (details) {
-
     //log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
   };
 
@@ -473,8 +472,8 @@
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
 
       if (!hasDNT(headers)) {
-        
-        console.log('[HEADER] (Append)', 'DNT:1', details.url);
+
+        µb.adnauseam.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
         addHeader(headers, 'DNT', '1');
       }
     }
@@ -490,7 +489,7 @@
 
   var beforeAdVisit = function (details, headers, prefs, ad) {
 
-    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 1;
+    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1;
 
     ad.requestId = details.requestId; // needed?
 
@@ -510,11 +509,11 @@
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
         // block outgoing cookies and user-agent here if specified
-        if (dbug && prefs.noOutgoingCookies && name === 'cookie') {
-          console.log('[COOKIE] (Strip)', headers[i].value, details.url);
+        if (prefs.noOutgoingCookies && name === 'cookie') {
+          µb.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
         }
-        if (dbug && prefs.noOutgoingUserAgent && name === 'user-agent') {
-          console.log('[UAGENT] (Strip)', headers[i].value, details.url);
+        if (prefs.noOutgoingUserAgent && name === 'user-agent') {
+          µb.adnauseam.logNetEvent('[UAGENT]', 'Strip', headers[i].value, details.url);
         }
 
         setHeader(headers[i], '');
@@ -546,12 +545,12 @@
 
     if (refIdx > -1 && prefs.noOutgoingReferer) {
 
-      if (dbug) console.log("[REFERER] (Strip)", referer);
+      µb.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, details.url);
       setHeader(headers[refererIdx], '');
 
     } else if (!prefs.noOutgoingReferer && refIdx < 0) {
 
-      if (dbug) console.log("[REFERER] (Allow)", referer);
+      µb.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, details.url);
       addHeader(headers, 'Referer', referer);
     }
   };

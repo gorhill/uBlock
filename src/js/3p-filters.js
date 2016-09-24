@@ -514,7 +514,7 @@ var checkListNotify = function (url, isOff) {
 
         if (url === n.listUrl) {
 
-            console.log("HIT: " + n.name);
+            //console.log("HIT: " + n.name);
             var notify = window.parent.uDom('#' + n.name);
 
             if (notify.length) {

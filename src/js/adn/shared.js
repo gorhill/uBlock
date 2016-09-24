@@ -68,6 +68,26 @@ function Notification(m) {
     throw Error('Bad type: ' + m.type);
 }
 
+var addNotification = function (notes, note) {
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].name === note.name)
+      return false;
+  }
+  notes.push(note);
+  return true;
+};
+
+var removeNotification = function (notes, note) {
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].name === note.name) {
+      notes.splice(i, 1);
+      return true;
+    }
+  }
+  return false;
+};
+
+
 var checkRequiredList = function (listUrl) {
 
   for (var i = 0; i < Notifications.length; i++) {
