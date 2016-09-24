@@ -1134,12 +1134,16 @@
 
   var logNetAllow = exports.logNetAllow = function () {
 
-    logNetEvent('[ALLOW]', arguments);
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift('[ALLOW]')
+    logNetEvent.apply(this, args);
   };
 
   var logNetBlock = exports.logNetBlock = function () {
 
-    logNetEvent('[BLOCK]', arguments);
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift('[BLOCK]');
+    logNetEvent.apply(this, args);
   };
 
   var logRedirect = exports.logRedirect = function (from, to) {
@@ -1148,8 +1152,10 @@
       log('[REDIRECT] ' + from + ' => ' + to);
   };
 
-  var logNetEvent = exports.logNetEvent = function (action, args) {
+  var logNetEvent = exports.logNetEvent = function () {
 
+    var args = Array.prototype.slice.call(arguments);
+    var action = args.shift()
     if (netLogging && args.length) {
       args[0] = action + ' (' + args[0] + ')';
       log.apply(this, args);
