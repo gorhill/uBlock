@@ -296,6 +296,7 @@ var domFilterer = {
     enabled: true,
     hiddenId: vAPI.randomToken(),
     hiddenNodeCount: 0,
+    hiddenNodeEnforcer: false,
     loggerEnabled: undefined,
     styleTags: [],
 
@@ -434,10 +435,6 @@ var domFilterer = {
             this.job1._0.length = 0;
         }
 
-        if ( styleText !== '' ) {
-            this.addStyleTag(styleText);
-        }
-
         // Simple selectors: incremental.
 
         // Stock job 2 = simple css selectors/hide
@@ -472,12 +469,17 @@ var domFilterer = {
         //   user styles, this allows uBO to win.
         var commitHit = this.hiddenNodeCount !== beforeHiddenNodeCount;
         if ( commitHit ) {
-            if ( beforeHiddenNodeCount === 0 ) {
-                this.addStyleTag(':root *[' + this.hiddenId + '][hidden] { display: none !important; }');
+            if ( this.hiddenNodeEnforcer === false ) {
+                styleText += '\n:root *[' + this.hiddenId + '][hidden] { display: none !important; }';
+                this.hiddenNodeEnforcer = true;
             }
             this.addedNodesHandlerMissCount = 0;
         } else {
             this.addedNodesHandlerMissCount += 1;
+        }
+
+        if ( styleText !== '' ) {
+            this.addStyleTag(styleText);
         }
 
         // Un-hide nodes previously hidden.
