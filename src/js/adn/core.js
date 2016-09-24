@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    logBlocks = 0; // for debugging blocks/allows
+    netLogging = 0; // for debugging network event
 
   var µb = µBlock,
     production = 0,
@@ -951,7 +951,7 @@
 
     if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
 
-      logBlocks && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
+      netLogging && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
       return false;
     }
 
@@ -1144,13 +1144,13 @@
 
   var logRedirect = exports.logRedirect = function (from, to) {
 
-    if (logBlocks && arguments.length)
+    if (netLogging && arguments.length)
       log('[REDIRECT] ' + from + ' => ' + to);
   };
 
   var logNetEvent = exports.logNetEvent = function (action, args) {
 
-    if (logBlocks && args.length) {
+    if (netLogging && args.length) {
       args[0] = action + ' (' + args[0] + ')';
       log.apply(this, args);
     }
@@ -1240,7 +1240,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    logBlocks && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
+    netLogging && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
