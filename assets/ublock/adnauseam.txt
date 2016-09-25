@@ -81,8 +81,8 @@ si.com#@#.cm-ad
 ##DIV[id*="adcontent"]
 
 #forbes.com
-www.forbes.com###google_ads_iframe_\/7175\/fdc\.forbes\/home_1
-www.forbes.com###google_ads_iframe_\/7175\/fdc\.forbes\/home_0
+##DIV[class*="header_ad_container"] > div
+##DIV[class*="rec-ad"]
 
 #pcmag.com/
 ##img[src*="ziffty"]
