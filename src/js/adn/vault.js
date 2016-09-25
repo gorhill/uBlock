@@ -90,7 +90,7 @@
 
   var renderAds = function (json) {
 
-    //console.log('renderAds: ', json);
+    // console.log('renderAds: ', json);
     gAds = json.data; // store
     addInterfaceHandlers();
     createSlider(true);
@@ -1284,7 +1284,7 @@
 
   function createSlider(relayout) {
 
-    //console.log('Vault-Slider.createSlider: '+gAds.length);
+    // console.log('Vault-Slider.createSlider: '+gAds.length);
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
@@ -1293,6 +1293,7 @@
     if (!gAds || !gAds.length) {
       computeStats();
       showAlert('no ads found');
+      $('#loading-img').hide();
       return;
     }
 
