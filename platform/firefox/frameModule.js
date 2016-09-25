@@ -88,18 +88,6 @@ var scriptTagFilterer = (function() {
         if ( cpmm ) { return cpmm.getService(Ci.nsISyncMessageSender); }
     };
 
-    var listener = function(message) {
-        var details;
-        try {
-            details = JSON.parse(message.data);
-        } catch (ex) {
-        }
-        if ( !details || !details.msg ) { return; }
-        if (details.msg.what === 'staticFilteringDataChanged' ) {
-            reset();
-        }
-    };
-
     var getScriptTagHostnames = function() {
         if ( scriptTagHostnames ) {
             return scriptTagHostnames;
@@ -154,7 +142,6 @@ var scriptTagFilterer = (function() {
 
     return {
         get: regexFromHostname,
-        listener: listener,
         reset: reset
     };
 })();
@@ -417,6 +404,7 @@ var contentObserver = {
 
             sandbox.topContentScript = win === win.top;
 
+            // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Message_Manager/Frame_script_loading_and_lifetime#Unloading_frame_scripts
             // The goal is to have content scripts removed from web pages. This
             // helps remove traces of uBlock from memory when disabling/removing
             // the addon.
@@ -434,7 +422,11 @@ var contentObserver = {
                 sandbox.removeMessageListener =
                 sandbox.sendAsyncMessage = function(){};
                 sandbox.vAPI = {};
-                messager = sandbox = null;
+                if ( messager && messager.ublock0LocationChangeListener ) {
+                    messager.ublock0LocationChangeListener.stop();
+                    delete messager.ublock0LocationChangeListener;
+                }
+                messager = null;
             };
         }
         else {
@@ -456,7 +448,14 @@ var contentObserver = {
             sandbox._broadcastListener_ = function(message) {
                 // https://github.com/gorhill/uBlock/issues/2014
                 if ( sandbox.topContentScript ) {
-                    scriptTagFilterer.listener(message);
+                    let details;
+                    try { details = JSON.parse(message.data); } catch (ex) {}
+                    let msg = details && details.msg || {};
+                    if ( msg.what === 'staticFilteringDataChanged' ) {
+                        if ( scriptTagFilterer ) {
+                            scriptTagFilterer.reset();
+                        }
+                    }
                 }
                 callback(message.data);
             };
@@ -475,17 +474,20 @@ var contentObserver = {
             if ( !sandbox._messageListener_ ) {
                 return;
             }
+            // It throws sometimes, mostly when the popup closes
             try {
                 messager.removeMessageListener(
                     sandbox._sandboxId_,
                     sandbox._messageListener_
                 );
+            } catch (ex) {
+            }
+            try {
                 messager.removeMessageListener(
                     hostName + ':broadcast',
                     sandbox._broadcastListener_
                 );
             } catch (ex) {
-                // It throws sometimes, mostly when the popup closes
             }
 
             sandbox._messageListener_ = sandbox._broadcastListener_ = null;
@@ -594,6 +596,7 @@ var LocationChangeListener = function(docShell, webProgress) {
         return;
     }
     this.messageManager = mm;
+    this.webProgress = webProgress;
     webProgress.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
 };
 
@@ -612,6 +615,13 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
         url: location.asciiSpec,
         flags: flags
     });
+};
+
+LocationChangeListener.prototype.stop = function() {
+    if ( this.webProgress ) {
+        this.webProgress.removeProgressListener(this);
+    }
+    this.messageManager = this.webProgress = null;
 };
 
 /******************************************************************************/
