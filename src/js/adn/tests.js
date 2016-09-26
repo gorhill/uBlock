@@ -19,6 +19,7 @@
     Home: https://github.com/dhowe/AdNauseam
 */
 
+
 QUnit.test('notifications', function (assert) {
 
   var notes = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
@@ -65,30 +66,31 @@ QUnit.test('parseDomain', function (assert) {
 
 QUnit.test('parseOnClick', function (assert) {
 
-
-  var host = 'thepage.com';
+  var host = 'thepage.com', proto = "http:";
   var test = '<div onclick=\"window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
-  assert.equal(parseOnClick(test, host), 'http://google.com');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onclick=\"javascript:window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
-  assert.equal(parseOnClick(test, host), 'http://google.com');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onclick=\"javascript:window.open(\'http://google.com\')\">link</div>';
-  assert.equal(parseOnClick(test, host), 'http://google.com');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onClick=\'window.open("http://google.com")\'>link</div>';
-  assert.equal(parseOnClick(test, host), 'http://google.com');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onClick=\'window.open(http://google.com)\'>link</div>';
-  assert.equal(parseOnClick(test, host), 'http://google.com');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onclick=\"aBunchofRandomJScode();\">link</div>';
-  assert.equal(parseOnClick(test, host), undefined);
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), undefined);
 
   test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
-  assert.equal(parseOnClick(test, host), 'http://thepage.com/relative/link.html');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://thepage.com/relative/link.html');
 
   test = '<div onClick=\'window.open("relative/link.html")\'>link</div>';
-  assert.equal(parseOnClick(test, 'https://thepage.com'), 'https://thepage.com/relative/link.html');
+  assert.equal(vAPI.adParser.parseOnClick(test, host, 'https:'), 'https://thepage.com/relative/link.html');
 
+  test = 'onclick="EBG.ads[&quot;39178788_6277666087953531&quot;].onImageClick(&quot;39178788_6277666087953531&quot;, false,&quot;ebDefaultImg_39178788_6277666087953531&quot;, &quot;https://www.rolex.com/?cmpid=dw_TheRolexWay_201604843&quot;, &quot;&quot;, &quot;&quot;)">';
+  assert.equal(vAPI.adParser.parseOnClick(test, 'nytimes.com'), 'https://www.rolex.com/?cmpid=dw_TheRolexWay_201604843');
 });

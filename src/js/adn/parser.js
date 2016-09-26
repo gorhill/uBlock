@@ -121,8 +121,8 @@
 
     var processImage = function (img, src) {
 
-      var target, targetUrl, ad, hits = 0,
-        dbug = vAPI.debugAdParsing && !vAPI.prefs.production;
+      var target, targetUrl, ad, hits = 0, loc = window.location,
+        dbug = (vAPI.debugAdParsing && !vAPI.prefs.production);
 
       target = clickableParent(img);
       if (target) {
@@ -137,7 +137,7 @@
           var onclickInfo = target.getAttribute("onclick");
           if (onclickInfo && onclickInfo.length) {
 
-            targetUrl = parseOnClick(onclickInfo, window.location.hostname);
+            targetUrl = parseOnClick(onclickInfo, loc.hostname, loc.protocol);
           }
         }
 
@@ -162,7 +162,8 @@
           console.warn("Bail: No href for anchor", target, img);
 
       } else if (dbug)
-        console.log("Bail: No ClickableParent", img, img.parentNode, img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
+        console.log("Bail: No ClickableParent", img, img.parentNode,
+          img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
     }
 
     // TODO: replace with core::domainFromURI?
@@ -173,24 +174,6 @@
           useLast ? domains[domains.length - 1] : domains[0])
         .hostname : undefined;
     }
-
-    var isInternal = (function() {  // not used
-
-      var domainRe = /https?:\/\/((?:[\w\d]+\.)+[\w\d]{2,})/i;
-
-      return function(url, pageDomain) {
-          function domain(url) {
-            var host = domainRe.exec(url)[1];
-            var parts = host.split('.');
-            var subdomain = parts.shift();
-            return parts.join('.');
-          }
-
-          console.log("domain: "+domain(url));
-
-          return domain(url) === pageDomain;
-      }
-    })();
 
     var injectAutoDiv = function (request) { // not used
 
@@ -262,24 +245,28 @@
       });
 
       return true;
-    }
+    };
+
+    var normalizeUrl = function (proto, host, url) {
+      var dbg = proto==='https:'
+
+      if (url.indexOf('http') === 0) return url;
+
+      if (url.indexOf('//') === 0) return proto + url;
+      if (url.indexOf('/') !== 0) url = '/' + url;
+
+      return proto + '//' + host + url;
+    };
 
     var createAd = function (network, target, data) {
 
       var domain = (parent !== window) ?
-        parseDomain(document.referrer) : document.domain;
+        parseDomain(document.referrer) : document.domain,
+        proto = window.location.protocol || 'http';
 
       //console.log('createAd:', domain, target, typeof target);
 
-      if (target.indexOf('//') === 0) {
-
-        target = 'http:' + target;
-
-      } else if (target.indexOf('/') === 0) {
-
-        target = 'http://' + domain + target;
-        //console.log("Fixing absolute domain: " + target);
-      }
+      target = normalizeUrl(proto, domain, target);
 
       if (target.indexOf('http') < 0) {
 
@@ -293,14 +280,6 @@
         return;
       }
 
-      // only need to do this if we are going to re-hide internal elements
-      // otherwise we let core.js handle it using the PSL (#337)
-      if (false && isInternal(target, domain)) {
-
-        console.warn("Ignoring Ad with internal target=" + isInternal(target));
-        return;
-      }
-
       return new Ad(network, target, data);
     }
 
@@ -309,38 +288,37 @@
         return false; // for now
     }
 
+    // parse the target link from a js onclick handler
+    var parseOnClick = function (str, hostname, proto) {
 
+      var result,
+        matches = /(?:javascript)?window.open\(([^,]+)[,)]/gi.exec(str);
+
+      if (!(matches && matches.length)) {
+
+        // if failed try generic regex to extract any URLs
+        var re = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi
+        matches = re.exec(str);
+      }
+
+      if (matches && matches.length > 0) {
+
+        result = matches[1].replace(/('|"|&quot;)+/g, '');
+        return normalizeUrl(proto, hostname, result);
+      }
+    }
 
     /**********************************************************************/
 
     return {
+
       process: process,
       createAd: createAd,
       notifyAddon: notifyAddon,
-      useShadowDOM: useShadowDOM
+      useShadowDOM: useShadowDOM,
+      parseOnClick: parseOnClick
     };
 
   })();
 
 })();
-
-  // parse the target link from a js onclick handler
-  var  parseOnClick = function(str, hostname) {
-
-      var result,
-          matches = /(?:javascript)?window.open\(([^,]+)[,)]/gi.exec(str);
-
-      if (matches && matches.length > 0) {
-        result = matches[1].replace(/['"]+/g, "");
-      }
-
-      // handle relative urls
-      if (result && result.startsWith('//')) {
-         result = "http:" + result;
-      }
-      if(result && (!result.startsWith('http'))){
-        result = "http://" + hostname + "/" + result;
-      }
-
-      return result;
-  }

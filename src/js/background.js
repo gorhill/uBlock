@@ -67,7 +67,7 @@ return {
         noOutgoingReferer: true,
         noOutgoingUserAgent: true,
 
-        advancedUserEnabled: false,
+        advancedUserEnabled: true,
         autoUpdate: true,
         cloudStorageEnabled: false,
         collapseBlocked: true,
