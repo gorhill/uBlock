@@ -422,10 +422,6 @@ var contentObserver = {
                 sandbox.removeMessageListener =
                 sandbox.sendAsyncMessage = function(){};
                 sandbox.vAPI = {};
-                if ( messager && messager.ublock0LocationChangeListener ) {
-                    messager.ublock0LocationChangeListener.stop();
-                    delete messager.ublock0LocationChangeListener;
-                }
                 messager = null;
             };
         }
@@ -596,7 +592,6 @@ var LocationChangeListener = function(docShell, webProgress) {
         return;
     }
     this.messageManager = mm;
-    this.webProgress = webProgress;
     webProgress.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
 };
 
@@ -615,13 +610,6 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
         url: location.asciiSpec,
         flags: flags
     });
-};
-
-LocationChangeListener.prototype.stop = function() {
-    if ( this.webProgress ) {
-        this.webProgress.removeProgressListener(this);
-    }
-    this.messageManager = this.webProgress = null;
 };
 
 /******************************************************************************/
