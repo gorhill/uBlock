@@ -60,9 +60,19 @@ si.com#@#.cm-ad
 ##DIV[id*="IndexFlashBg"]
 ##.mod_zheye
 ##iframe[src*='kaolaad']
+##iframe[src*='jd.com']
+##iframe[src*='g.163.com']
+##a[href*='AID']
+##a[href*='kaolaad']
 
 #sohu.com
-||images.sohu.com/bill/
+||images.sohu.com/bill/s2015/jscript/lib/sjs/matrix/ad/form/bigView.js
+##DIV[class^="ad_"]
+##DIV[id^="ad_"]
+##DIV[id^="beans_"]
+##DIV[class^="TurnAD"]
+##iframe[src*='taobaocdn']
+##span[id^="_AdSame"]
 
 #sina.com
 ##.sinaad-toolkit-box
@@ -93,3 +103,4 @@ www.sfgate.com##.dealnews
 
 #theatlantic.com
 ###tl_main_single
+
