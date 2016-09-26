@@ -158,9 +158,9 @@
       if (target) {
 
         if (target.tagName === 'A' || target.hasAttribute('onclick')) { // if not, need to check for div.onclick?
-          
-          
-          if(target.hasAttribute('href')) 
+
+
+          if(target.hasAttribute('href'))
             targetUrl = target.getAttribute("href");
           else if(target.hasAttribute('onclick')){
             //onclick possibilities
@@ -251,7 +251,7 @@
       switch (elem.tagName) {
 
       case 'IFRAME':
-        //elem.addEventListener('load', handleIFrame, false);
+        elem.addEventListener('load', handleIFrame, false);
         break;
 
       case 'IMG':
@@ -269,6 +269,21 @@
         // and finally check for text ads
         vAPI.textAdParser.process(elem);
       }
+    };
+
+    var handleIFrame = function () {
+
+      try {
+        var doc = this.contentDocument || this.contentWindow.document;
+      }
+      catch(e) {
+        console.log(e); // ignore cross-domain iframes here
+        return;
+      }
+      var imgs = doc.querySelectorAll('img');
+      //console.log('handleIFrame: ', imgs.length);
+      imgs.length && findImageAds(imgs);
+      //vAPI.textAdParser.process(this); // text-ads?
     };
 
     var notifyAddon = function (ad) {
@@ -350,13 +365,13 @@
       if (matches && matches.length > 0) {
         result = matches[1].replace(/['"]+/g, "");
       }
-      
+
       // handle relative urls
       if (result && result.startsWith('//')) {
          result = "http:" + result;
       }
-      if(result && (!result.startsWith('http'))){ 
-        result = "http://" + hostname + "/" + result; 
+      if(result && (!result.startsWith('http'))){
+        result = "http://" + hostname + "/" + result;
       }
 
       return result;

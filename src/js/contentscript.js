@@ -21,7 +21,8 @@
 
 'use strict';
 
-//console.log('contentscript.js');
+//if (window.self !== window.top)
+  //console.log('contentscript.js::iframe: '+location.href);
 
 /*******************************************************************************
 
