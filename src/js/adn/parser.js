@@ -24,48 +24,43 @@
 
   'use strict';
 
-  if (window.location === null || typeof vAPI !== 'object') return;
-
-  // no ad extraction in incognito windows (see #236)
-  if (vAPI.chrome && chrome.extension.inIncognitoContext) return;
-
-  if (vAPI.adParser) {
-      // console.debug('parser.js > already injected');
-      return;
+  if ( typeof vAPI !== 'object' ) {
+      throw new Error('Aborting content-scripts for ' + window.location);
   }
 
-
+  // no ad extraction in incognito windows (see #236), or parse already exists
+  if (vAPI.chrome && chrome.extension.inIncognitoContext || vAPI.adParser)
+    return;
 
   vAPI.adParser = (function () {
 
+    // we ignore the tiny ad-choice ads from google, ms, etc.
     var ignoreTargets = [
       'http://www.google.com/settings/ads/anonymous',
       'http://choice.microsoft.com'
     ];
 
-    /***************************** Functions ******************************/
+    var findImageAd = function (img) {
+
+      var imgSrc = img.src || img.getAttribute("src");
+
+      if (!imgSrc) {
+
+        vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", img);
+        img.addEventListener('load', processDelayedImage, false);
+        return false;
+      }
+
+      return processImage(img, imgSrc);
+    }
 
     var findImageAds = function (imgs) {
 
-      var target, targetUrl, ad, hits = 0;
-
+      var hits = 0;
       for (var i = 0; i < imgs.length; i++) {
 
-        var imgSrc = imgs[i].src || imgs[i].getAttribute("src");
-
-        if (!imgSrc) {
-
-          vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", imgs[i]);
-          imgs[i].addEventListener('load', processDelayedImage, false);
-          continue;
-        }
-
-        if (processImage(imgs[i], imgSrc)) {
-          hits++;
-        }
-        // else: we may want to unhide the element here (see #337)
+        if (findImageAd(imgs[i])) hits++;
       }
-
       return hits > 0;
     }
 
@@ -96,37 +91,12 @@
       return null;
     }
 
-    var clickableParentX = function (node) {
-
-      var checkParent = function (adNode) {
-
-        var hasParent = adNode.parentNode &&
-          (adNode.parentNode.tagName == 'A' ||
-            adNode.parentNode.tagName == 'OBJECT' ||
-            adNode.parentNode.tagName == 'IFRAME' ||
-            (adNode.hasAttribute && adNode.hasAttribute('onclick')));
-
-        console.log("check",adNode.tagName,adNode.parentNode);
-
-        return hasParent;
-      };
-
-      var adNode = node;
-
-      while (checkParent(adNode))
-        adNode = adNode.parentNode;
-
-      // returns adnode if found, or null
-      return adNode === node ? null : adNode;
-    };
-
     var Ad = function (network, targetUrl, data) {
 
       this.id = null;
       this.attempts = 0;
       this.visitedTs = 0; // 0=unattempted, -timestamp=err, +timestamp=ok
       this.attemptedTs = 0;
-      this.current = false;
       this.contentData = data;
       this.contentType = data.src ? 'img' : 'text';
       this.title = data.title || 'Pending';
@@ -157,47 +127,45 @@
       target = clickableParent(img);
       if (target) {
 
-        if (target.tagName === 'A' || target.hasAttribute('onclick')) { // if not, need to check for div.onclick?
+        if (target.hasAttribute('href')) {
 
+          targetUrl = target.getAttribute("href");
+        }
+        else if (target.hasAttribute('onclick')) {
 
-          if(target.hasAttribute('href'))
-            targetUrl = target.getAttribute("href");
-          else if(target.hasAttribute('onclick')){
-            //onclick possibilities
-            var onclickInfo = target.getAttribute("onclick");
-            var hostname = window.location.hostname;
-            targetUrl = parseOnClick(onclickInfo, hostname);
+          // handle onclick
+          var onclickInfo = target.getAttribute("onclick");
+          if (onclickInfo && onclickInfo.length) {
+
+            targetUrl = parseOnClick(onclickInfo, window.location.hostname);
           }
+        }
 
-          if (targetUrl) {
+        if (targetUrl) {
 
-            ad = createAd(document.domain, targetUrl, {
-              src: src,
-              width: img.naturalWidth || -1,
-              height: img.naturalHeight || -1
-            });
+          ad = createAd(document.domain, targetUrl, {
+            src: src,
+            width: img.naturalWidth || -1,
+            height: img.naturalHeight || -1
+          });
 
-            if (ad) {
+          if (ad) {
 
-              if (!vAPI.prefs.production) console.log('IMG-AD', ad);
-              notifyAddon(ad);
-              hits++;
-
-            } else if (dbug)
-              console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
+            if (!vAPI.prefs.production) console.log('IMG-AD', ad);
+            notifyAddon(ad);
+            return true;
 
           } else if (dbug)
-            console.warn("Bail: No href for anchor", target, img);
+            console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
 
         } else if (dbug)
-          console.log("Bail: Non-anchor found: " + target.tagName, img);
+          console.warn("Bail: No href for anchor", target, img);
 
       } else if (dbug)
         console.log("Bail: No ClickableParent", img, img.parentNode, img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
-
     }
 
-    // TODO: replace with core::domainFromURI
+    // TODO: replace with core::domainFromURI?
     var parseDomain = function (url, useLast) { // dup. in shared
 
       var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);

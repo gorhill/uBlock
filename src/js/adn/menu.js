@@ -235,11 +235,11 @@
     var res = [];
 
     // first try current ads
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i] && ads[i].current && ads[i].pageUrl === pageUrl) {
-        res.push(ads[i]);
-      }
-    }
+    // for (var i = 0; i < ads.length; i++) {
+    //   if (ads[i] && ads[i].pageUrl === pageUrl) {
+    //     res.push(ads[i]);
+    //   }
+    // }
 
     // then all page ads
     if (res.length === 0) {

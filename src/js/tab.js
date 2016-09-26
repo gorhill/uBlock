@@ -890,8 +890,8 @@ vAPI.tabs.registerListeners();
             state = pageStore.getNetFilteringSwitch();
 
             if (state && this.userSettings.showIconBadge) {
-                var num = µb.adnauseam.adlist(pageStore.rawURL, true).length;
-                num = num || µb.adnauseam.adlist(pageStore.rawURL).length;
+
+                var num = µb.adnauseam.adlist(pageStore.rawURL).length;
                 badge = this.formatCount(num);
             }
         }

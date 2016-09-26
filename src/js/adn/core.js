@@ -1070,41 +1070,11 @@
     }
   };
 
-  /*exports.verifyListSelection = function () {
-
-    µb.getAvailableLists(function (lists) {
-
-      var keys = Object.keys(lists);
-      for (var i = 0; i < keys.length; i++) {
-
-        var path = keys[i], list,
-          off = lists[keys[i]].off,
-          name = lists[keys[i]].title;
-
-        // ADN: check we don't have a disabled required-list
-        if (off) {
-          //console.log('checking ',name+"/"+path+' against', RequiredLists[0].listUrl);
-
-
-          //verifyList(path, !off);
-        }
-      }
-
-      vAPI.messaging.broadcast({
-        what: 'notifications',
-        data: notifications
-      });
-    });
-  };*/
-
   // Called when new top-level page is loaded
   exports.onPageLoad = function (tadId, requestURL) {
 
-    var ads = adlist(requestURL);
-    //console.log('PAGE: ', requestURL, ads.length);
-    ads.forEach(function (ad) {
-      ad.current = false;
-    });
+    // var ads = adlist(requestURL);
+    // console.log('PAGE: ', requestURL, ads.length);
   };
 
   exports.onListsLoaded = function (firstRun) {
@@ -1185,7 +1155,6 @@
       pageUrl = pageStore.rawURL,
       ad = request.ad;
 
-    ad.current = true;
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
@@ -1329,7 +1298,7 @@
    Omits text-ads if specified in preferences
    Called also from tab.js::µb.updateBadgeAsync()
    */
-  var adlist = exports.adlist = function (pageUrl, currentOnly) {
+  var adlist = exports.adlist = function (pageUrl) {
 
     var result = [],
       pages = pageUrl ? [pageUrl] : Object.keys(admap);
@@ -1346,7 +1315,6 @@
 
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-            if (!currentOnly || ad.current)
               result.push(ad);
           }
         }
