@@ -3,7 +3,7 @@
 33f4a2aa009aa05264266e66046f5ecc assets/ublock/experimental.txt
 1cb6b01a23b40a52105c97924389af42 assets/ublock/filters.txt
 ef059f65b5460a6b575efc7753ac28b8 assets/ublock/privacy.txt
-4003c182037774f72107291c288fb45a assets/ublock/resources.txt
+a19a8d38ad236678e447670abcf1e397 assets/ublock/resources.txt
 552159e5c6c0a559911307e9ad1ad17c assets/ublock/unbreak.txt
 c8a5281bce4c031cd9d1984ffc5a3ce6 assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 ab2b41e4245fa77bfecf8938f32d6929 assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt
@@ -12,4 +12,4 @@ ab2b41e4245fa77bfecf8938f32d6929 assets/thirdparties/easylist-downloads.adblockp
 79e5517b2760a6aed72789ba0f62e4ad assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 36eaa2db93d9c6a26f2f9395c2cdb6c9 assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 3017558c6ce6bdbfa62db7be7a506b73 assets/thirdparties/www.eff.org/files/effdntlist.txt
-2f3366596a71917ea920b832b421f1a7 assets/ublock/adnauseam.txt
+c6a10599651172838d6f44f063de2fe7 assets/ublock/adnauseam.txt

@@ -47,7 +47,7 @@
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = ['facebook.com', 'google.com', 'asiaxpat.com', 'nytimes.com', 'columbiagreenemedia.com','163.com','sohu.com'];
+  var internalLinkDomains = [ 'google.com', 'asiaxpat.com', 'nytimes.com', 'columbiagreenemedia.com','163.com', 'sohu.com'];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
@@ -879,10 +879,8 @@
 
     if (ad.contentType === 'text') return false;
 
-    // if an image ad and page/target domains match, its internal
-    var match = (ad.pageDomain === ad.targetDomain);
-
-    return match;
+    // if an image ad's page/target domains match, it's internal
+    return (ad.pageDomain === ad.targetDomain);
   };
 
   var listsForFilter = function (compiledFilter) {
@@ -1171,7 +1169,7 @@
 
     if (internalLinkDomains.indexOf(ad.pageDomain) < 0 && internalTarget(ad)) {
 
-      warn('[INTERNAL] Ignoring ad on ' + ad.pageDomain, adinfo(ad));
+      warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
       return; // testing this
     }
 
@@ -1186,7 +1184,7 @@
 
       if (msSinceFound < repeatVisitInterval) {
 
-        log('[DUPLICATE] ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
+        log('[EXISTS] ' + adinfo(ad) + ' found ' + msSinceFound + ' ms ago');
         return;
       }
     }
