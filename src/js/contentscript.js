@@ -1095,18 +1095,18 @@ vAPI.domCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
 
-      // ADN: inject our content-scripts into dynamically-created iframes
-      iframe.onload = function () {
-        if (vAPI.chrome) { // ff-already handles this case correctly
-          this.contentWindow.chrome.runtime.connect().postMessage({
-            channelName: "adnauseam",
-            msg: {
-              what: "injectContentScripts",
-              parentUrl: location.href
-            }
-          });
-        }
-      };
+        // ADN: inject our content-scripts into dynamically-created iframes
+        iframe.onload = function () {
+          if (vAPI.chrome) { // ff-already handles this case correctly
+            this.contentWindow.chrome.runtime.connect().postMessage({
+              channelName: "adnauseam",
+              msg: {
+                what: "injectContentScripts",
+                parentUrl: location.href
+              }
+            });
+          }
+        };
 
         // Should probably also copy injected styles.
         // The injected scripts are those which were injected in the current
