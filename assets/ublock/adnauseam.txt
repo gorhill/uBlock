@@ -104,3 +104,5 @@ www.sfgate.com##.dealnews
 #theatlantic.com
 ###tl_main_single
 
+# creativebloq.com
+creativebloq.com##iframe[width="160px"][height="600px"]
