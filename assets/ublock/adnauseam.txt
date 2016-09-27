@@ -77,18 +77,30 @@ si.com#@#.cm-ad
 #sina.com
 ##.sinaad-toolkit-box
 ##iframe[src*='sinaads']
+##iframe[src*='2mdn']
+
+#qq.com
+##iframe[src*='gtimg']
+##iframe[src*='tanx']
+##DIV[class="l_qq_com"]
+##a[href*='srd.simba.taobao.com']
 
 #zol.com.cn/
 ##DIV[class*="zmall-ad"]
 ##iframe[src*='zol.com.cn/ad/']
+##DIV[class="ad-box"]
 
 ＃baidu.com
 ##.ad-imax
 ##.search-aside-adWrap
 ##DIV[class^="baidu-adv"]
+##DIV[id*='BAIDU_SSP'] > iframe
+##img[src*="ubmcmm.baidustatic"]
+@@||pos.baidu.com$subdocument,domain=music.baidu.com
 
 #weibo.com
 ##DIV[id*="adcontent"]
+##DIV[class*="advert"]
 
 #forbes.com
 ##DIV[class*="header_ad_container"] > div
