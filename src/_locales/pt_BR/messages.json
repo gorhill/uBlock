@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Painel de controlo",
+    "message":"uBlock₀ — Painel",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
+    "message":"Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Abrir o registrador",
+    "message":"Abrir Registro de Eventos",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -108,7 +108,7 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"tudo",
+    "message":"todos",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -128,7 +128,7 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"scripts de primeiros",
+    "message":"scripts do domínio",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -212,11 +212,11 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar auditoria de hiperligações\/'beacon'",
+    "message":"Desativar auditoria de hyperlink\/beacon",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Impedir o protocolo WebRTC de vazar endereços de IP locais",
+    "message":"Impedir o protocolo WebRTC de vazar meu endereço de IP local",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -268,7 +268,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
-    "message":"Limpar todas as caches",
+    "message":"Limpar todos caches",
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -536,7 +536,7 @@
     "description":"A link for where to get support"
   },
   "aboutCode":{
-    "message":"Código fonte (GPLv3)",
+    "message":"Código-fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -604,7 +604,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Mostrar Painel de controlo",
+    "message":"Mostrar Painel",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
@@ -652,7 +652,7 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportar para armazenamento em nuvem",
+    "message":"Exportar para armazenamento na nuvem",
     "description":"tooltip"
   },
   "cloudPull":{

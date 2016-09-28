@@ -100,7 +100,7 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"変更を記憶するにはクリックしてください。",
+    "message":"変更を保存するにはクリックしてください。",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
