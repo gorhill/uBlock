@@ -118,3 +118,14 @@ www.sfgate.com##.dealnews
 
 # creativebloq.com
 creativebloq.com##iframe[width="160px"][height="600px"]
+
+# wmoov.com
+##a[href*='adsfactor']
+##a[href*='adnxs']
+##iframe[class*='af_space']
+###google_image_div
+##DIV[id*='aswift']
+##DIV[id*='Zedo-Ad']
+##DIV[id*='MAXI_CRZ']
+##DIV[id*='ucfad']
+##DIV[id*='movie_ad']
