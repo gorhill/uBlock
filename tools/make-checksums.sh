@@ -28,6 +28,6 @@ fi
 echo Writing $DES/checksums.txt to ./assets/checksums/ublock0.txt
 cp $DES/checksums.txt ./assets/checksums/ublock0.txt  # for checking in adn repo
 
-echo "Done, ready to push"; echo
+echo "Done, ready to commit/push"; echo
 
 #cat ./assets/checksums.txt

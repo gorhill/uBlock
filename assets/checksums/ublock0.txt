@@ -12,4 +12,4 @@ ab2b41e4245fa77bfecf8938f32d6929 assets/thirdparties/easylist-downloads.adblockp
 79e5517b2760a6aed72789ba0f62e4ad assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 36eaa2db93d9c6a26f2f9395c2cdb6c9 assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 3017558c6ce6bdbfa62db7be7a506b73 assets/thirdparties/www.eff.org/files/effdntlist.txt
-ca21204817dfe5369142c283eee4c799 assets/ublock/adnauseam.txt
+3484f16c8fb36e47602b9014693389d9 assets/ublock/adnauseam.txt
