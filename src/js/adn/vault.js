@@ -1438,7 +1438,7 @@
     }
 
     function centerContainer() {
-      console.log("centering");
+
       $('#container').addClass('notransition')
         .css({
           marginLeft: '-5000px',
