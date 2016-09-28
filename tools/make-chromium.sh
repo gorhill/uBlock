@@ -29,6 +29,7 @@ cp manifest.json $DES/            # new-manifest
 cp LICENSE.txt              $DES/
 
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 if [ "$1" = all ]; then
     echo "*** adnauseam.chromium: Creating package..."
