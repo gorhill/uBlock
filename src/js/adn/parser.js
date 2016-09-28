@@ -202,7 +202,7 @@
       switch (elem.tagName) {
 
       case 'IFRAME':
-        elem.addEventListener('load', handleIFrame, false);
+        elem.addEventListener('load', processIFrame, false);
         break;
 
       case 'IMG':
@@ -222,19 +222,18 @@
       }
     };
 
-    var handleIFrame = function () {
+    var processIFrame = function () {
 
       try {
         var doc = this.contentDocument || this.contentWindow.document;
       }
       catch(e) {
-        console.log(e); // ignore cross-domain iframes here
+        //console.log(e); // ignore cross-domain iframes here
         return;
       }
+
       var imgs = doc.querySelectorAll('img');
-      //console.log('handleIFrame: ', imgs.length);
       imgs.length && findImageAds(imgs);
-      //vAPI.textAdParser.process(this); // text-ads?
     };
 
     var notifyAddon = function (ad) {
