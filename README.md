@@ -149,7 +149,7 @@ While in pre-release, you will need to side-load the extension. You need to have
 5. Go to Extensions in the browser menu and click `Load extension`
 6. Select the `uBlock0.edge` folder you extracted earlier
 
-Edge disables side-loaded extensions whenever you restart the browser. However after a few seconds you will get a prompt to re-enable them with a single clik.
+Edge disables side-loaded extensions whenever you restart the browser. However after a few seconds you will get a prompt to re-enable them with a single click.
 
 #### Note for all browsers
 
