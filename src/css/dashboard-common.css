@@ -28,7 +28,7 @@ a.info:hover {
     opacity: 1
     }
 a.info.important {
-    color: orangered;
+    color: #9F6000;
     }
 button {
     /*padding: 0.33em;*/
