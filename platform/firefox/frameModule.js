@@ -19,12 +19,18 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* exported processObserver */
+
 'use strict';
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/800
-this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
+this.EXPORTED_SYMBOLS = [
+    'contentObserver',
+    'processObserver',
+    'LocationChangeListener'
+];
 
 const {interfaces: Ci, utils: Cu} = Components;
 const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
@@ -64,20 +70,81 @@ const getMessageManager = function(win) {
 
 /******************************************************************************/
 
-const getChildProcessMessageManager = function() {
-    var svc = Services;
-    if ( !svc ) {
-        return;
-    }
-    var cpmm = svc.cpmm;
-    if ( cpmm ) {
-        return cpmm;
-    }
-    cpmm = Components.classes['@mozilla.org/childprocessmessagemanager;1'];
-    if ( cpmm ) {
-        return cpmm.getService(Ci.nsISyncMessageSender);
-    }
-};
+// https://github.com/gorhill/uBlock/issues/2014
+// Have a dictionary of hostnames for which there are script tag filters. This
+// allow for coarse-testing before firing a synchronous message to the
+// parent process. Script tag filters are not very common, so this allows
+// to skip the blocking of the child process most of the time.
+
+var scriptTagFilterer = (function() {
+    var scriptTagHostnames;
+
+    var getCpmm = function() {
+        var svc = Services;
+        if ( !svc ) { return; }
+        var cpmm = svc.cpmm;
+        if ( cpmm ) { return cpmm; }
+        cpmm = Components.classes['@mozilla.org/childprocessmessagemanager;1'];
+        if ( cpmm ) { return cpmm.getService(Ci.nsISyncMessageSender); }
+    };
+
+    var getScriptTagHostnames = function() {
+        if ( scriptTagHostnames ) {
+            return scriptTagHostnames;
+        }
+        var cpmm = getCpmm();
+        if ( !cpmm ) { return; }
+        var r = cpmm.sendSyncMessage(rpcEmitterName, { fnName: 'getScriptTagHostnames' });
+        if ( Array.isArray(r) && Array.isArray(r[0]) ) {
+            scriptTagHostnames = new Set(r[0]);
+        }
+        return scriptTagHostnames;
+    };
+
+    var getScriptTagFilters = function(details) {
+        let cpmm = getCpmm();
+        if ( !cpmm ) { return; }
+        let r = cpmm.sendSyncMessage(rpcEmitterName, {
+            fnName: 'getScriptTagFilters',
+            rootURL: details.rootURL,
+            frameURL: details.frameURL,
+            frameHostname: details.frameHostname
+        });
+        if ( Array.isArray(r) ) {
+            return r[0];
+        }
+    };
+
+    var regexFromHostname = function(details) {
+        // If target hostname has no script tag filter, no point querying
+        // chrome process.
+        var hostnames = getScriptTagHostnames();
+        if ( !hostnames ) { return; }
+        var hn = details.frameHostname, pos, entity;
+        for (;;) {
+            if ( hostnames.has(hn) ) {
+                return getScriptTagFilters(details);
+            }
+            pos = hn.indexOf('.');
+            if ( pos === -1 ) { break; }
+            entity = hn.slice(0, pos) + '.*';
+            if ( hostnames.has(entity) ) {
+                return getScriptTagFilters(details);
+            }
+            hn = hn.slice(pos + 1);
+            if ( hn === '' ) { break; }
+        }
+    };
+
+    var reset = function() {
+        scriptTagHostnames = undefined;
+    };
+
+    return {
+        get: regexFromHostname,
+        reset: reset
+    };
+})();
 
 /******************************************************************************/
 
@@ -305,18 +372,9 @@ var contentObserver = {
                 wantXHRConstructor: false
             });
 
-            if ( getChildProcessMessageManager() ) {
-                sandbox.rpc = function(details) {
-                    var cpmm = getChildProcessMessageManager();
-                    if ( !cpmm ) { return; }
-                    var r = cpmm.sendSyncMessage(rpcEmitterName, details);
-                    if ( Array.isArray(r) ) {
-                        return r[0];
-                    }
-                };
-            } else {
-                sandbox.rpc = function() {};
-            }
+            sandbox.getScriptTagFilters = function(details) {
+                return scriptTagFilterer.get(details);
+            };
 
             sandbox.injectScript = function(script) {
                 let svc = Services;
@@ -344,6 +402,9 @@ var contentObserver = {
                 }
             };
 
+            sandbox.topContentScript = win === win.top;
+
+            // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Message_Manager/Frame_script_loading_and_lifetime#Unloading_frame_scripts
             // The goal is to have content scripts removed from web pages. This
             // helps remove traces of uBlock from memory when disabling/removing
             // the addon.
@@ -353,12 +414,12 @@ var contentObserver = {
             sandbox.outerShutdown = function() {
                 sandbox.removeMessageListener();
                 sandbox.addMessageListener =
+                sandbox.getScriptTagFilters =
                 sandbox.injectCSS =
                 sandbox.injectScript =
                 sandbox.outerShutdown =
                 sandbox.removeCSS =
                 sandbox.removeMessageListener =
-                sandbox.rpc =
                 sandbox.sendAsyncMessage = function(){};
                 sandbox.vAPI = {};
                 messager = null;
@@ -380,13 +441,28 @@ var contentObserver = {
                 callback(message.data);
             };
 
+            sandbox._broadcastListener_ = function(message) {
+                // https://github.com/gorhill/uBlock/issues/2014
+                if ( sandbox.topContentScript ) {
+                    let details;
+                    try { details = JSON.parse(message.data); } catch (ex) {}
+                    let msg = details && details.msg || {};
+                    if ( msg.what === 'staticFilteringDataChanged' ) {
+                        if ( scriptTagFilterer ) {
+                            scriptTagFilterer.reset();
+                        }
+                    }
+                }
+                callback(message.data);
+            };
+
             messager.addMessageListener(
                 sandbox._sandboxId_,
                 sandbox._messageListener_
             );
             messager.addMessageListener(
                 hostName + ':broadcast',
-                sandbox._messageListener_
+                sandbox._broadcastListener_
             );
         };
 
@@ -394,20 +470,23 @@ var contentObserver = {
             if ( !sandbox._messageListener_ ) {
                 return;
             }
+            // It throws sometimes, mostly when the popup closes
             try {
                 messager.removeMessageListener(
                     sandbox._sandboxId_,
                     sandbox._messageListener_
                 );
+            } catch (ex) {
+            }
+            try {
                 messager.removeMessageListener(
                     hostName + ':broadcast',
-                    sandbox._messageListener_
+                    sandbox._broadcastListener_
                 );
             } catch (ex) {
-                // It throws sometimes, mostly when the popup closes
             }
 
-            sandbox._messageListener_ = null;
+            sandbox._messageListener_ = sandbox._broadcastListener_ = null;
         };
 
         return sandbox;
@@ -493,6 +572,14 @@ var contentObserver = {
         } else {
             docReady({ target: doc, type: 'DOMContentLoaded' });
         }
+    }
+};
+
+/******************************************************************************/
+
+var processObserver = {
+    start: function() {
+        scriptTagFilterer.reset();
     }
 };
 

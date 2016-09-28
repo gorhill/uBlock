@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν τη σελίδα.",
+    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν την σελίδα.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -532,7 +532,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Υποστήριξη",
     "description":"A link for where to get support"
   },
   "aboutCode":{

@@ -296,6 +296,7 @@ var domFilterer = {
     enabled: true,
     hiddenId: vAPI.randomToken(),
     hiddenNodeCount: 0,
+    hiddenNodeEnforcer: false,
     loggerEnabled: undefined,
     styleTags: [],
 
@@ -366,6 +367,19 @@ var domFilterer = {
         }
     },
 
+    addStyleTag: function(text) {
+        var styleTag = document.createElement('style');
+        styleTag.setAttribute('type', 'text/css');
+        styleTag.textContent = text;
+        if ( document.head ) {
+            document.head.appendChild(styleTag);
+        }
+        this.styleTags.push(styleTag);
+        if ( userCSS ) {
+            userCSS.add(text);
+        }
+    },
+
     checkStyleTags_: function() {
         var doc = document,
             html = doc.documentElement,
@@ -421,19 +435,6 @@ var domFilterer = {
             this.job1._0.length = 0;
         }
 
-        if ( styleText !== '' ) {
-            var styleTag = document.createElement('style');
-            styleTag.setAttribute('type', 'text/css');
-            styleTag.textContent = styleText;
-            if ( document.head ) {
-                document.head.appendChild(styleTag);
-            }
-            this.styleTags.push(styleTag);
-            if ( userCSS ) {
-                userCSS.add(styleText);
-            }
-        }
-
         // Simple selectors: incremental.
 
         // Stock job 2 = simple css selectors/hide
@@ -462,11 +463,23 @@ var domFilterer = {
             this.runJob(this.jobQueue[i], complexHideNode);
         }
 
+        // https://github.com/gorhill/uBlock/issues/1912
+        //   If one or more nodes have been manually hidden, insert a style tag
+        //   targeting these manually hidden nodes. For browsers supporting
+        //   user styles, this allows uBO to win.
         var commitHit = this.hiddenNodeCount !== beforeHiddenNodeCount;
         if ( commitHit ) {
+            if ( this.hiddenNodeEnforcer === false ) {
+                styleText += '\n:root *[' + this.hiddenId + '][hidden] { display: none !important; }';
+                this.hiddenNodeEnforcer = true;
+            }
             this.addedNodesHandlerMissCount = 0;
         } else {
             this.addedNodesHandlerMissCount += 1;
+        }
+
+        if ( styleText !== '' ) {
+            this.addStyleTag(styleText);
         }
 
         // Un-hide nodes previously hidden.

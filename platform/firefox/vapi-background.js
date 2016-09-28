@@ -1760,16 +1760,15 @@ vAPI.messaging.setup = function(defaultHandler) {
     }
     this.defaultHandler = defaultHandler;
 
-    this.globalMessageManager.addMessageListener(
+    var gmm = this.globalMessageManager;
+    gmm.addMessageListener(
         location.host + ':background',
         this.onMessage
     );
-
-    this.globalMessageManager.loadFrameScript(this.frameScriptURL, true);
+    gmm.loadFrameScript(this.frameScriptURL, true);
 
     cleanupTasks.push(function() {
         var gmm = vAPI.messaging.globalMessageManager;
-
         gmm.broadcastAsyncMessage(
             location.host + ':broadcast',
             JSON.stringify({
@@ -1778,13 +1777,11 @@ vAPI.messaging.setup = function(defaultHandler) {
                 msg: { cmd: 'shutdownSandbox' }
             })
         );
-
         gmm.removeDelayedFrameScript(vAPI.messaging.frameScriptURL);
         gmm.removeMessageListener(
             location.host + ':background',
             vAPI.messaging.onMessage
         );
-
         vAPI.messaging.defaultHandler = null;
     });
 };
@@ -1820,8 +1817,9 @@ vAPI.messaging.broadcast = function(message) {
 // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Message_Manager/Message_manager_overview#Content_frame_message_manager
 
 vAPI.rpcReceiver = (function() {
-    var calls = Object.create(null);
-    var childProcessMessageName = location.host + ':child-process-message';
+    var calls = Object.create(null),
+        childProcessMessageName = location.host + ':child-process-message',
+        processScriptURL = vAPI.getURL('processScript.js');
 
     var onChildProcessMessage = function(ev) {
         var msg = ev.data;
@@ -1838,22 +1836,31 @@ vAPI.rpcReceiver = (function() {
         if ( ppmm ) {
             ppmm = ppmm.getService(Ci.nsIMessageListenerManager);
         }
+        if ( !ppmm ) {
+            return calls;
+        }
     }
 
-    if ( ppmm ) {
-        ppmm.addMessageListener(
+    // https://github.com/gorhill/uBlock/issues/2014
+    // Not supported on older versions of Firefox.
+    if ( ppmm.loadProcessScript instanceof Function ) {
+        ppmm.loadProcessScript(processScriptURL, true);
+    }
+
+    ppmm.addMessageListener(
+        childProcessMessageName,
+        onChildProcessMessage
+    );
+
+    cleanupTasks.push(function() {
+        if ( ppmm.removeDelayedProcessScript instanceof Function ) {
+            ppmm.removeDelayedProcessScript(processScriptURL);
+        }
+
+        ppmm.removeMessageListener(
             childProcessMessageName,
             onChildProcessMessage
         );
-    }
-
-    cleanupTasks.push(function() {
-        if ( ppmm ) {
-            ppmm.removeMessageListener(
-                childProcessMessageName,
-                onChildProcessMessage
-            );
-        }
     });
 
     return calls;

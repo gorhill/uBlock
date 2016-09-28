@@ -25,6 +25,7 @@ cp    platform/firefox/css/*            $DES/css/
 cp    platform/firefox/polyfill.js      $DES/js/
 cp    platform/firefox/vapi-*.js        $DES/js/
 cp    platform/firefox/bootstrap.js     $DES/
+cp    platform/firefox/processScript.js $DES/
 cp    platform/firefox/frame*.js        $DES/
 cp -R platform/firefox/img              $DES/
 cp    platform/firefox/chrome.manifest  $DES/
