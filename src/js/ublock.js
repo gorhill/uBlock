@@ -325,11 +325,14 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         adn.updateBadges();
         break;
     case 'hidingAds':
-        return adn.verifySetting(HidingDisabled,   !us.hidingAds);
+        adn.verifySetting(HidingDisabled,   !us.hidingAds);
+        break;
     case 'clickingAds':
-        return adn.verifySetting(ClickingDisabled, !us.clickingAds);
+        adn.verifySetting(ClickingDisabled, !us.clickingAds);
+        break;
     case 'blockingMalware':
-        return adn.verifySetting(BlockingDisabled, !us.blockingMalware);
+        adn.verifySetting(BlockingDisabled, !us.blockingMalware);
+        break;
     case 'noThirdPartyCookies':
         vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;

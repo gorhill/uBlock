@@ -670,8 +670,8 @@
         filterLists[location].off = state;
     }
 
-    //console.log('storage.js::µBlock.selectFilterLists -> ', verifySettings);
-    //µBlock.adnauseam.verifySettings();
+    //console.log('storage.js::µBlock.selectFilterLists->verifyLists');
+    µBlock.adnauseam.verifyLists(filterLists);
 
     vAPI.storage.set({ 'remoteBlacklists': filterLists });
 };

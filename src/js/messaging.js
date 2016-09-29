@@ -173,6 +173,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
+        if (!response) { // return notifications either way
+          response = { notifications: µb.userSettings.notifications };
+        }
         break;
 
     default:

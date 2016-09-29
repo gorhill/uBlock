@@ -511,32 +511,6 @@ var selectFilterLists = function(callback) {
 
 /******************************************************************************/
 
-var checkListNotify = function (url, isOff) {
-
-    Notifications.forEach(function (n) {
-
-        if (url === n.listUrl) {
-
-            //console.log("HIT: " + n.name);
-            var notify = window.parent.uDom('#' + n.name);
-
-            if (notify.length) {
-
-                // update the notification if needed
-                notify.toggleClass('hide', !isOff);
-
-            } else if (isOff) {
-
-                // TODO: need to check for pre-existing notifications here!
-
-                renderNotifications([ n ]);
-            }
-        }
-    });
-}
-
-/******************************************************************************/
-
 var buttonApplyHandler = function() {
     uDom('#buttonApply').removeClass('enabled');
 

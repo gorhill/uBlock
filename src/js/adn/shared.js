@@ -53,6 +53,8 @@ var EasyList = new Notification({
   text: 'Activate the EasyList filter',
   listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt'
 });
+EasyList.func = reactivateList.bind(EasyList);
+
 
 var Notifications = [ HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
 
@@ -104,7 +106,7 @@ var renderNotifications = function (visibleNotes) {
 
   //console.log('renderNotifications', visibleNotes);
 
-  var origUdom = uDom; // this may be called from a frame or not
+  var origUdom = uDom; // this may be called from a frame or not ??
   if (window.self != window.top) uDom = window.top.uDom;
 
   var template = uDom('#notify-template');
@@ -141,25 +143,30 @@ var renderNotifications = function (visibleNotes) {
 
 var appendNotifyDiv = function (notify, template) {
 
-  var node = template.clone(false),
-    context = node.nodes[0];
+  var node = template.clone(false);
 
   node.addClass(notify.type);
   node.attr('id', notify.name);
+  node.descendants('#notify-text').text(notify.text);
+  node.descendants('#notify-button').text(notify.button);
+  node.descendants('#notify-link').attr('href', notify.link);
 
-  uDom('#notify-text', context).text(notify.text);
-  uDom('#notify-button', context).text(notify.button);
-  uDom('#notify-link', context).attr('href', notify.link);
+  // add click handler to reactivate button (a better way to do this??)
+  uDom(node.nodes[0]).on('click', "#notify-button", function (e) {
 
-  // add click handler to reactivate button
-  // this is failing when not on options.html pane
-  uDom(context).on('click', "#notify-button", function (e) {
-
-    console.log('#notify-button clicked', e, window);
-    notify.func.apply(this); // by default calls reactivateSetting
+    console.log('#notify-button:', e);
+    notify.func.apply(this); // calls reactivateSetting or reactivateList
   });
 
   uDom('#notifications').append(node);
+}
+
+function udomFromIFrame(selector) {  // this may be called from a frame or not??
+
+  var aDom = uDom, iframe = uDom('#iframe');
+  if (iframe.length)
+    aDom = iframe.nodes[0].contentDocument.defaultView.uDom || uDom;
+  return aDom(selector);
 }
 
 function reactivateSetting() {
@@ -169,13 +176,42 @@ function reactivateSetting() {
       what: 'userSettings',
       name: this.prop,
       value: this.expected
-    }, function(n) {
+    }, reloadPane);
+}
 
-      // reload if we are on options.html ?
-      if (window && window.location && window.location.href.endsWith('options.html'))
-        window.location.reload();
-    }
-  );
+function reactivateList() {
+
+  //console.log('reactivateList', this);
+
+  var switches = [], li;
+  var lis = udomFromIFrame('#lists .listEntry'), i = lis.length;
+  while ( i-- ) {
+      li = lis.at(i);
+      var loc = li.descendants('a').attr('data-listkey');
+      var off = li.descendants('input').prop('checked') === false;
+      //console.log('Check: ', loc, off);
+      if (loc === this.listUrl) {
+        off = false;
+        li.descendants('input').prop('checked', true);
+        console.log('Toggling: ', li.descendants('a').text());
+      }
+      switches.push({ location: loc, off: off });
+  }
+
+  vAPI.messaging.send(
+    'dashboard', {
+      what: 'selectFilterLists',
+      switches: switches
+    }, reloadPane);
+}
+
+function reloadPane() {
+
+  if (window && window.location) {
+    var pane = window.location.href;
+    if (pane.indexOf('dashboard.html') > -1)
+      window.location.reload();
+  }
 }
 
 /******************************* Polyfill ***********************************/
