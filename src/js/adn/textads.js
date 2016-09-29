@@ -46,7 +46,7 @@
 
         var title, site, text,
           idiv = divs[i];
-        
+
         title = $find(idiv, 'h2 a');
         site = $find(idiv, 'div.b_attribution cite');
         text = $find(idiv, 'div.b_caption p');
@@ -61,7 +61,7 @@
           ads.push(ad);
 
         } else {
-          console.warn('TEXT: bingTextHandler.fail: ', divs[i]); //title, site, text);
+          console.warn('[TEXTADS] bingTextHandler.fail: ', divs[i]); //title, site, text);
         }
 
       }
@@ -98,7 +98,7 @@
 
         } else {
 
-          console.warn('TEXT: yahooTextHandler.fail: ', divs[i]); //title, site, text);
+          console.warn('[TEXTADS] yahooTextHandler.fail: ', divs[i]); //title, site, text);
         }
       }
 
@@ -122,7 +122,7 @@
 
       } else {
 
-        console.warn('TEXT: aolTextHandler.fail: ', text, site, document.title, document.URL);
+        console.warn('[TEXTADS] aolTextHandler.fail: ', text, site, document.title, document.URL);
       }
 
       return [ad];
@@ -148,7 +148,7 @@
 
       } else {
 
-        console.warn('TEXT: askTextHandler.fail: ', text, site, document.URL, document.title);
+        console.warn('[TEXTADS] askTextHandler.fail: ', text, site, document.URL, document.title);
       }
 
       return [ad];
@@ -170,7 +170,7 @@
 
       } else {
 
-        console.warn('TEXT: googleTextHandler.fail: ', text, site, document.URL, document.title);
+        console.warn('[TEXTADS] googleTextHandler.fail: ', text, site, document.URL, document.title);
       }
 
       return [ad];
@@ -192,7 +192,7 @@
 
       } else {
 
-        console.warn('TEXT: ddgTextHandler.fail: ', text, site, title, div);
+        console.warn('[TEXTADS] ddgTextHandler.fail: ', text, site, title, div);
       }
 
       return [ad];
@@ -302,7 +302,7 @@
       for (var i = 0; i < active.length; i++) {
 
         if ($is(elem, active[i].selector)) {
-          console.log("handle?");
+          // console.log("handle?");
           return active[i].handler(elem);
         }
       }
@@ -323,18 +323,15 @@
         if (ads) {
 
           for (var i = 0; i < ads.length; i++) {
-            if (!vAPI.prefs.production) console.log("TEXT-AD", ads[i]);
+            if (!vAPI.prefs.production) console.log("[PARSED] TEXT-AD", ads[i]);
             vAPI.adParser.notifyAddon(ads[i]);
           }
         }
       }
-      /**********************************************************************/
 
-    return {
+    /**********************************************************************/
 
-      process: process
-    };
+    return {  process: process };
 
   })();
-
 })();

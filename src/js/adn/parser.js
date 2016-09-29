@@ -46,7 +46,7 @@
 
       if (!imgSrc) {
 
-        vAPI.debugAdParsing && console.log("No ImgSrc(#" + i + ")!", img);
+        logP("No ImgSrc(#" + i + ")!", img);
         img.addEventListener('load', processDelayedImage, false);
         return false;
       }
@@ -61,6 +61,9 @@
 
         if (findImageAd(imgs[i])) hits++;
       }
+
+      (hits < 1) && logP('No Ads found in', imgs);
+
       return hits > 0;
     }
 
@@ -114,7 +117,7 @@
       var src = this.src || this.getAttribute('src');
       if (src) {
         if (processImage(this, src))
-          console.log("HIT from processDelayedImage!");
+          console.log("[PARSER] HIT from processDelayedImage!");
       }
       this.removeEventListener('load', processDelayedImage, false);
     }
@@ -151,22 +154,22 @@
 
           if (ad) {
 
-            if (!vAPI.prefs.production) console.log('IMG-AD', ad);
+            if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
             notifyAddon(ad);
             return true;
 
-          } else if (dbug)
-            console.warn("Bail: Unable to create Ad", document.domain, targetUrl, src);
-
-        } else if (dbug)
-          console.warn("Bail: No href for anchor", target, img);
-
-      } else if (dbug)
-        console.log("Bail: No ClickableParent", img, img.parentNode,
-          img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
+          } else {
+            warnP("Bail: Unable to create Ad", document.domain, targetUrl, src);
+          }
+        } else {
+          warnP("Bail: No href for anchor", target, img);
+        }
+      } else {
+        logP("Bail: No ClickableParent", img, img.parentNode,
+        img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
+      }
     }
 
-    // TODO: replace with core::domainFromURI?
     var parseDomain = function (url, useLast) { // dup. in shared
 
       var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
@@ -192,12 +195,42 @@
       $attr(adndiv, 'count', count);
     }
 
+    var normalizeUrl = function (proto, host, url) {
+
+      var dbg = proto==='https:'
+
+      if (url.indexOf('http') === 0) return url;
+
+      if (url.indexOf('//') === 0) return proto + url;
+      if (url.indexOf('/') !== 0) url = '/' + url;
+
+      return proto + '//' + host + url;
+    };
+
+    var logP = function () {
+
+      if (vAPI.debugAdParsing) {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('[PARSER]');
+        console.log.apply(console, args);
+      }
+    }
+
+    var warnP = function () {
+
+      if (vAPI.debugAdParsing) {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('[PARSER]');
+        console.warn.apply(console, args);
+      }
+    }
+
     /******************************** API *********************************/
 
     var process = function (elem) {
 
-      vAPI.debugAdParsing && console.log('process('+elem.tagName+')',
-        elem.tagName==='IFRAME' ? elem.getAttribute('src') : elem);
+      logP('Process('+elem.tagName+')', elem.tagName === 'IFRAME'
+        ? elem.getAttribute('src') : elem);
 
       switch (elem.tagName) {
 
@@ -211,10 +244,16 @@
 
       default: // other tag-types
 
-        // check the element for child imgs
+        logP('Checking children of', elem);
+
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
+
           findImageAds(imgs);
+        }
+        else {
+
+          logP('No images in children of', elem);
         }
 
         // and finally check for text ads
@@ -228,12 +267,18 @@
         var doc = this.contentDocument || this.contentWindow.document;
       }
       catch(e) {
-        //console.log(e); // ignore cross-domain iframes here
+        logP('Forced to ignore cross-domain iframe', this.getAttribute('src'));
         return;
       }
 
       var imgs = doc.querySelectorAll('img');
-      imgs.length && findImageAds(imgs);
+      if (imgs.length) {
+
+        findImageAds(imgs);
+      }
+      else {
+        logP('no images in iFrame');
+      }
     };
 
     var notifyAddon = function (ad) {
@@ -246,36 +291,25 @@
       return true;
     };
 
-    var normalizeUrl = function (proto, host, url) {
-      var dbg = proto==='https:'
-
-      if (url.indexOf('http') === 0) return url;
-
-      if (url.indexOf('//') === 0) return proto + url;
-      if (url.indexOf('/') !== 0) url = '/' + url;
-
-      return proto + '//' + host + url;
-    };
-
     var createAd = function (network, target, data) {
 
       var domain = (parent !== window) ?
         parseDomain(document.referrer) : document.domain,
         proto = window.location.protocol || 'http';
 
-      //console.log('createAd:', domain, target, typeof target);
+      //logP('createAd:', domain, target, typeof target);
 
       target = normalizeUrl(proto, domain, target);
 
       if (target.indexOf('http') < 0) {
 
-        console.warn("Ignoring Ad with targetUrl=" + target, arguments);
+        warnP("Ignoring Ad with targetUrl=" + target, arguments);
         return;
       }
 
       if (ignoreTargets.indexOf(target) > -1) {
 
-        if (!vAPI.prefs.production) console.log("Ignoring choices-image: ", arguments);
+        logP("Ignoring choices-image: ", arguments);
         return;
       }
 
