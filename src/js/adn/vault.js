@@ -1421,7 +1421,7 @@
     function runFilter(ext) {
 
       //log('vault.js::runFilter: '+ext[0]+","+ext[1]);
-
+      centerContainer();
       gMin = ext[0], gMax = ext[1];
 
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
@@ -1432,7 +1432,7 @@
 
       var filtered = dateFilter(gMin, gMax);
 
-      centerContainer();
+      
       return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
         (gAdSets = createAdSets(filtered));
     }
