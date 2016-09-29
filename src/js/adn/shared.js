@@ -25,47 +25,58 @@
 
 /**************************** Notifications *********************************/
 
+
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
 
-// TODO: set as properties of Notifications obj
-var ClickingDisabled = new Notification({
-  name: 'ClickingDisabled',
-  text: 'Activate Ad clicking'
-});
-
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
-  text: 'Activate Ad hiding'
+  text: 'Activate Ad hiding',
+  prop: 'hidingAds'
+});
+
+var ClickingDisabled = new Notification({
+  name: 'ClickingDisabled',
+  text: 'Activate Ad clicking',
+  prop: 'clickingAds'
 });
 
 var BlockingDisabled = new Notification({
   name: 'BlockingDisabled',
   text: 'Activate malware blocking',
+  prop: 'blockingMalware',
   type: ERROR
 });
 
 var EasyList = new Notification({
   name: 'EasyListDisabled',
   text: 'Activate the EasyList filter',
-  buttonLink: '3p-filters.html',
-  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
+  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt'
 });
 
-var Notifications = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
+var Notifications = [ HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
 
 function Notification(m) {
 
-  this.name = m && m.hasOwnProperty('name') ? m.name : '';
-  this.text = m && m.hasOwnProperty('text') ? m.text : '';
-  this.link = m && m.hasOwnProperty('link') ? m.link : FAQ;
-  this.type = m && m.hasOwnProperty('type') ? m.type : WARNING;
-  this.listUrl = m && m.hasOwnProperty('listUrl') ? m.listUrl : '';
-  this.button = m && m.hasOwnProperty('button') ? m.button : 'Reactivate';
-  this.buttonLink = m && m.hasOwnProperty('buttonLink') ? m.buttonLink : 'dashboard.html';
+  this.prop = opt(m, 'prop', '');
+  this.name = opt(m, 'name', '');
+  this.text = opt(m, 'text', '');
+  this.link = opt(m, 'link', FAQ);
+  this.type = opt(m, 'type', WARNING);
+  this.listUrl = opt(m, 'listUrl', '');
+  this.expected = opt(m, 'expected', true);
+  this.button = opt(m, 'button', 'Reactivate');
+
+  // default function to be called on click
+  this.func = opt(m, 'func', reactivateSetting.bind(this));
 
   if ([WARNING, ERROR, INFO, SUCCESS].indexOf(this.type) < 0)
     throw Error('Bad type: ' + m.type);
+}
+
+function opt(opts, name, def) {
+
+  return opts && opts.hasOwnProperty(name) ? opts[name] : def;
 }
 
 var addNotification = function (notes, note) {
@@ -128,17 +139,43 @@ var renderNotifications = function (visibleNotes) {
   uDom = origUdom; // reset uDom
 }
 
-var appendNotifyDiv = function (notify, template) {//}, uDom) {
+var appendNotifyDiv = function (notify, template) {
 
-  var node = template.clone(false);
+  var node = template.clone(false),
+    context = node.nodes[0];
 
   node.addClass(notify.type);
   node.attr('id', notify.name);
-  uDom('#notify-text', node.nodes[0]).text(notify.text);
-  uDom('#notify-button', node.nodes[0]).text(notify.button);
-  uDom('#notify-link', node.nodes[0]).attr('href', notify.link);
+
+  uDom('#notify-text', context).text(notify.text);
+  uDom('#notify-button', context).text(notify.button);
+  uDom('#notify-link', context).attr('href', notify.link);
+
+  // add click handler to reactivate button
+  // this is failing when not on options.html pane
+  uDom(context).on('click', "#notify-button", function (e) {
+
+    console.log('#notify-button clicked', e, window);
+    notify.func.apply(this); // by default calls reactivateSetting
+  });
 
   uDom('#notifications').append(node);
+}
+
+function reactivateSetting() {
+
+  vAPI.messaging.send('dashboard', {
+
+      what: 'userSettings',
+      name: this.prop,
+      value: this.expected
+    }, function(n) {
+
+      // reload if we are on options.html ?
+      if (window && window.location && window.location.href.endsWith('options.html'))
+        window.location.reload();
+    }
+  );
 }
 
 /******************************* Polyfill ***********************************/

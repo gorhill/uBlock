@@ -35,28 +35,6 @@ var resizeFrame = function() {
     document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height) + 'px');
 };
 
-/********************************** adn ***************************************/
-
-// var onMessage = function (msg) {
-//
-//   //console.log('dashboard.onMessage:', msg);
-//
-//   switch (msg.what) {
-//
-//   case 'notifications':
-//
-//     var notifies = msg.data;
-//
-//     if (notifies && notifies.length)
-//       renderNotifications(notifies);
-//
-//     break;
-//   }
-// };
-//
-// var messaging = vAPI.messaging;
-// messaging.addChannelListener('adnauseam', onMessage);
-
 var loadDashboardPanel = function() {
 
     var pane = window.location.hash.slice(1);
@@ -72,8 +50,6 @@ var loadDashboardPanel = function() {
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
 };
-
-/******************************** end-adn *************************************/
 
 var onTabClickHandler = function(e) {
     var url = window.location.href,
