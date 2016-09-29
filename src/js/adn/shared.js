@@ -69,6 +69,7 @@ function Notification(m) {
 }
 
 var addNotification = function (notes, note) {
+
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].name === note.name)
       return false;
@@ -78,6 +79,7 @@ var addNotification = function (notes, note) {
 };
 
 var removeNotification = function (notes, note) {
+
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].name === note.name) {
       notes.splice(i, 1);
@@ -87,29 +89,16 @@ var removeNotification = function (notes, note) {
   return false;
 };
 
-
-// var checkRequiredList = function (listUrl) {
-//
-//   for (var i = 0; i < Notifications.length; i++) {
-//     if (Notifications[i].listUrl === listUrl)
-//       return Notifications[i];
-//   }
-// }
-
 var renderNotifications = function (visibleNotes) {
 
   //console.log('renderNotifications', visibleNotes);
 
-  var template = uDom('#notify-template'),
-    origUdom = uDom;
-  if (!template.length) {
+  var origUdom = uDom; // this may be called from a frame or not
+  if (window.self != window.top) uDom = window.top.uDom;
 
-    template = window.parent.uDom('#notify-template');
-    if (!template.length) {
-      throw 'no-template found!';
-    }
-    uDom = window.parent.uDom; // use uDom from parent
-  }
+  var template = uDom('#notify-template');
+
+  if (!template.length) throw Error('no template');
 
   for (var i = 0; i < Notifications.length; i++) {
 
@@ -129,6 +118,7 @@ var renderNotifications = function (visibleNotes) {
         note.toggleClass('hide', false);
       else
         appendNotifyDiv(notify, template, uDom);
+
     } else {
 
       exists && note.toggleClass('hide', true);
@@ -138,7 +128,7 @@ var renderNotifications = function (visibleNotes) {
   uDom = origUdom; // reset uDom
 }
 
-var appendNotifyDiv = function (notify, template, uDom) {
+var appendNotifyDiv = function (notify, template) {//}, uDom) {
 
   var node = template.clone(false);
 

@@ -83,15 +83,18 @@
 
     //console.log('changeUserSettings',name, value);
 
-    updateSubgroupState(name, value);
-
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
       value: value
-    }, renderNotifications);
-    //function() { console.log('CONFIRM: '+name+'='+value); });
+    },
+    function(n) {
+
+      renderNotifications(n);
+      updateGroupState();
+    });
   };
+
 
   /******************************************************************************/
 
@@ -111,13 +114,13 @@
 
   /******************************************************************************/
 
-  // if any of 3 main toggles are off, disabled their subgroup
-  var updateSubgroupState = function (name, value) {
+  // if any of 3 main toggles are off, disabled their subgroups
+  var updateGroupState = function () {
 
-    if (['hidingAds', 'clickingAds', 'blockingMalware'].contains(name)) {
-      uDom('.'+name+'-child').prop('disabled', !value);
-    }
-  };
+    uDom('.hidingAds-child').prop('disabled', !uDom('#hidingAds').prop('checked'));
+    uDom('.clickingAds-child').prop('disabled', !uDom('#clickingAds').prop('checked'));
+    uDom('.blockingMalware-child').prop('disabled', !uDom('#blockingMalware').prop('checked'));
+  }
 
   /******************************************************************************/
 
@@ -131,7 +134,7 @@
 
       var name = uNode.attr('data-setting-name'), value = details[name];
 
-      updateSubgroupState(name, value);
+      //updateSubgroupState(name, value);
 
       uNode.prop('checked', value === true)
         .on('change', function () {
@@ -162,6 +165,7 @@
     });
 
     renderNotifications(details.notifications);
+    updateGroupState();
   };
 
   /******************************************************************************/
