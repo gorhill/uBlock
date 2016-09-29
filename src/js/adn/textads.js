@@ -39,25 +39,34 @@
 
     var bingText = function (dom) {
 
-      var ad, title = $find(dom, 'h2 a'),
-        text = $find(dom, 'div.b_caption p'),
-        site = $find(dom, 'div.b_attribution cite');
+      var ads = [],
+      divs = $find(dom,'div.sb_add');
 
-      if (text.length && site.length && title.length) {
+      for (var i = 0; i < divs.length; i++) {
 
-        ad = vAPI.adParser.createAd('bing', $attr(title, 'href'), {
-          title: $text(title),
-          text: $text(text),
-          site: $text(site)
-        });
+        var title, site, text,
+          idiv = divs[i];
+        
+        title = $find(idiv, 'h2 a');
+        site = $find(idiv, 'div.b_attribution cite');
+        text = $find(idiv, 'div.b_caption p');
 
-      } else {
+        if (text.length && site.length && title.length) {
 
-        console.warn('TEXT: bingTextHandler.fail: ',
-          text, site, document.URL, document.title);
+          var ad = vAPI.adParser.createAd('bing', $attr(title, 'href'), {
+            title: $text(title),
+            text: $text(text),
+            site: $text(site)
+          });
+          ads.push(ad);
+
+        } else {
+          console.warn('TEXT: bingTextHandler.fail: ', divs[i]); //title, site, text);
+        }
+
       }
 
-      return [ad];
+      return ads;
     }
 
     var yahooText = function (e) {
@@ -293,7 +302,7 @@
       for (var i = 0; i < active.length; i++) {
 
         if ($is(elem, active[i].selector)) {
-
+          console.log("handle?");
           return active[i].handler(elem);
         }
       }
