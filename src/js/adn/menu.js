@@ -579,15 +579,19 @@
   };
 
   var adjustBlockHeight = function() {
-      //recalculate the height
+      //recalculate the height of ad-list
       var h = document.getElementById('notifications').offsetHeight;
       console.log(h);
       var newh = 350 - h;
       uDom('#ad-list').css('height', newh + 'px');
+      //adjust the starting point of paused-menu
+      var newTop = 100 + h;
+      uDom('#paused-menu').css('top', newTop + 'px');
   };
 
   var setBackBlockHeight = function() {
     uDom('#ad-list').css('height', '350px');
+    uDom('#paused-menu').css('top', '100px');
   };
   /********************************************************************/
 
