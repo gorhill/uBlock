@@ -129,3 +129,6 @@ creativebloq.com##iframe[width="160px"][height="600px"]
 ##DIV[id*='MAXI_CRZ']
 ##DIV[id*='ucfad']
 ##DIV[id*='movie_ad']
+
+#computerworld.com
+computerworld.com###superadunit
