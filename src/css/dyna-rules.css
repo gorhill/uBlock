@@ -36,6 +36,9 @@ code {
     padding: 0 0 1em 0;
     text-align: center;
     }
+.ruleActions h2{
+    padding:.5em;
+}
 body[dir="ltr"] #revertButton:after {
     content: '\2009\f061';
     font-family: FontAwesome;

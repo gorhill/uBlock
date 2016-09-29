@@ -89,8 +89,10 @@
       setAttempting(json.current);
     }
 
-    if (json.notifications && json.notifications.length)
+    if (json.notifications && json.notifications.length){
       renderNotifications(json.notifications);
+      adjustBlockHeight();    
+    }
   }
 
   var updateMenuState = function () {
@@ -576,6 +578,17 @@
     //hashFromPopupData();
   };
 
+  var adjustBlockHeight = function() {
+      //recalculate the height
+      var h = document.getElementById('notifications').offsetHeight;
+      console.log(h);
+      var newh = 350 - h;
+      uDom('#ad-list').css('height', newh + 'px');
+  };
+
+  var setBackBlockHeight = function() {
+    uDom('#ad-list').css('height', '350px');
+  };
   /********************************************************************/
 
   (function () {
@@ -590,6 +603,7 @@
 
     uDom('#pause-button').on('click', toggleEnabled);
     uDom('#resume-button').on('click', toggleEnabled);
+    uDom('#notifications').on('click', setBackBlockHeight);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
       .on('mouseleave', '[data-tip]', onHideTooltip);
   })();
