@@ -581,7 +581,6 @@
   var adjustBlockHeight = function() {
       //recalculate the height of ad-list
       var h = document.getElementById('notifications').offsetHeight;
-      console.log(h);
       var newh = 350 - h;
       uDom('#ad-list').css('height', newh + 'px');
       //adjust the starting point of paused-menu
@@ -590,8 +589,15 @@
   };
 
   var setBackBlockHeight = function() {
-    uDom('#ad-list').css('height', '350px');
-    uDom('#paused-menu').css('top', '100px');
+    var height = document.getElementById('ad-list').offsetHeight;
+    var top =  parseInt(uDom('#paused-menu').css('top'));
+
+    var unit = 39;
+    height += unit;
+    top -= unit;
+
+    uDom('#ad-list').css('height', height + 'px');
+    uDom('#paused-menu').css('top', top +'px');
   };
   /********************************************************************/
 
