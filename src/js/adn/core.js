@@ -1327,6 +1327,17 @@
     verifySetting(HidingDisabled,   !µb.userSettings.hidingAds);
     verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
     verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
+    //verifyList(EasyList, µb.userSettings.remoteBlacklists);
+  }
+
+  var verifyLists = exports.verifyLists = function (lists) {
+
+    verifyList(EasyList, lists);
+  }
+
+  var verifyList = exports.verifyList = function (note, lists) {
+    console.log('core::verifyList()', note);
+    //console.warn('Implement me');
   }
 
   var verifySetting = exports.verifySetting = function (note, state) {
@@ -1349,25 +1360,7 @@
       what: 'notifications',
       notifications: notifications
     });
-
-    return notifications;
   }
-
-  /*var verifyLists = exports.verifyLists = function (lists, switches) {
-
-    for (var i = 0; i < RequiredLists.length; i++) {
-      //verifyList(RequiredLists[i].listUrl, switches[i]);
-    }
-    return notifications;
-  }
-  var //verifyList = exports.verifyList = function (path, state) {
-
-    if (!state) {
-      var list = checkRequiredList(path);
-      list && console.log("HIT: " + name, list);
-      list && verifySetting(list, !state);
-    }
-  }*/
 
   var clearAds = exports.clearAds = function () {
 

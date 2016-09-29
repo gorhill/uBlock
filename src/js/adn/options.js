@@ -88,9 +88,9 @@
       name: name,
       value: value
     },
-    function(n) {
+    function(details) {
 
-      renderNotifications(n);
+      renderNotifications(details.notifications);
       updateGroupState();
     });
   };

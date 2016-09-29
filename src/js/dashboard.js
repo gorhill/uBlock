@@ -67,7 +67,7 @@ var onTabClickHandler = function(e) {
 
 vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
-  console.log("dashboard.js::GOT BROADCAST", request);
+  //console.log("dashboard.js::GOT BROADCAST", request);
 
   switch (request.what) {
 
