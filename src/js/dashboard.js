@@ -65,6 +65,18 @@ var onTabClickHandler = function(e) {
     e.preventDefault();
 };
 
+vAPI.messaging.addChannelListener('adnauseam', function (request) {
+
+  console.log("dashboard.js::GOT BROADCAST", request);
+
+  switch (request.what) {
+
+  case 'notifications':
+    renderNotifications(request.notifications);
+    break;
+  }
+});
+
 /******************************************************************************/
 
 uDom.onLoad(function() {
