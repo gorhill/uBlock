@@ -1075,7 +1075,7 @@ vAPI.net.registerListeners = function() {
                 listener,
                 {
                     'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
-                    'types': this.onBeforeSendHeaders.types
+                    'types': this.onBeforeSendHeaders.types || undefined
                 },
                 this.onBeforeSendHeaders.extra
             );

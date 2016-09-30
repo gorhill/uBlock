@@ -462,14 +462,14 @@
   // ADN: removing outgoing cookies, user-agent, set/hide referer, DNT header
   var onBeforeSendHeaders = function (details) {
 
-    //console.log('onBeforeSendHeaders', details.url, details);
 
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
 
     // ADN: Do we need to add a DNT header?
+   
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
-
+     
       if (!hasDNT(headers)) {
 
         adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
@@ -942,9 +942,6 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     urls: [
       'http://*/*',
       'https://*/*'
-    ],
-    types: [
-      'xmlhttprequest'
     ],
     extra: ['blocking', 'requestHeaders'],
     callback: onBeforeSendHeaders
