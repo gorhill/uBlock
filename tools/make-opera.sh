@@ -38,6 +38,9 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 cp LICENSE.txt $DES/
 
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+
 echo "*** adnauseam.opera: Package done."
 
 #head $DES/manifest.json

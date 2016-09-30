@@ -20,6 +20,8 @@ cp -R src/lib                           $DES/
 #cp -R src/_locales                      $DES/
 cp    src/*.html                        $DES/
 
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 # AMO review feedback: avoid "unnecessary files or folders" in package
 cat   src/background.html | sed -e '/vapi-polyfill\.js/d' > $DES/background.html
 
