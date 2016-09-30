@@ -531,25 +531,24 @@
       addHeader(headers, 'Upgrade-Insecure-Requests', '1');
     }
 
-    handleRefererForVisit(prefs, refererIdx);
+    handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
   };
 
-  var handleRefererForVisit = function (prefs, refIdx) {
+  var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
 
     // Referer cases (4):
     // noOutgoingReferer=true  / no refererIdx:     no-op
     // noOutgoingReferer=true  / have refererIdx:   setHeader('')
     // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
     // noOutgoingReferer=false / have refererIdx:   no-op
-
     if (refIdx > -1 && prefs.noOutgoingReferer) {
 
-      µb.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, details.url);
+      µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
       setHeader(headers[refererIdx], '');
 
     } else if (!prefs.noOutgoingReferer && refIdx < 0) {
 
-      µb.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, details.url);
+      µBlock.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, url);
       addHeader(headers, 'Referer', referer);
     }
   };
