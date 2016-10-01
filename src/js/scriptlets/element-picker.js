@@ -779,10 +779,11 @@ var filterToDOMInterface = (function() {
             } catch(ex) {
                 return;
             }
-            var out = [];
+            var out = [], elem;
             for ( var i = 0, n = elems.length; i < n; i++ ) {
-                if ( document.querySelector(arg) ) {
-                    out.push({ type: 'cosmetic', elem: elems[i] });
+                elem = elems[i];
+                if ( elem.querySelector(arg) ) {
+                    out.push({ type: 'cosmetic', elem: elem });
                 }
             }
             return out;
