@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"నెట్వర్క్ అభ్యర్దన వడపోతలు",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"కాస్మెటిక్ వడపోతలు",

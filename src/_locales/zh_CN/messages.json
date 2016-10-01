@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"URL 过滤规则",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"元素过滤规则",
@@ -532,7 +532,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"支持",
+    "message":"帮助",
     "description":"A link for where to get support"
   },
   "aboutCode":{

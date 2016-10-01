@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Elemintkiesmoadus iepenje",
+    "message":"Elemintkiesmodus iepenje",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Netfilters",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Kosmetyske filters",

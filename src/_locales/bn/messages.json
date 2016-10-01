@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"নেট ফিল্টার",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"প্রসাধনী ফিল্টার",
