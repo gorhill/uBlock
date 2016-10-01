@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"இணைய வடிகட்டிகள்",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"ஒப்பனை வடிகட்டி",

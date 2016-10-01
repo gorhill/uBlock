@@ -683,10 +683,6 @@
     "message": "bytes",
     "description": ""
   },
-  "genericBy": {
-    "message": "by",
-    "description": "to be used in sentences such as '{what} by {whom}, i.e. 'Font Awesome by Dave Gandy'"
-  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Temporarily allow large media elements",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
