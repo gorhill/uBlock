@@ -123,26 +123,24 @@ vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, extra) {
 
 /******************************************************************************/
 
-vAPI.shutdown = (function() {
-    var jobs = [];
-
-    var add = function(job) {
-        jobs.push(job);
-    };
-
-    var exec = function() {
-        //console.debug('Shutting down...');
+vAPI.shutdown = {
+    jobs: [],
+    add: function(job) {
+        this.jobs.push(job);
+    },
+    exec: function() {
         var job;
-        while ( (job = jobs.pop()) ) {
+        while ( (job = this.jobs.pop()) ) {
             job();
         }
-    };
-
-    return {
-        add: add,
-        exec: exec
-    };
-})();
+    },
+    remove: function(job) {
+        var pos;
+        while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
+            this.jobs.splice(pos, 1);
+        }
+    }
+};
 
 /******************************************************************************/
 
