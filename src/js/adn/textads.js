@@ -198,6 +198,36 @@
       return [ad];
     }
 
+    var baiduText = function (div) { 
+
+      if(!div.id.match(/\d{4}/g)) return;
+
+      var sections = div.childNodes;
+      var ad, title, text, site;
+      
+      if(sections.length == 3){
+          title = $find(sections[0], 'h3 a'),
+          text = $find(sections[1], 'a[hidefocus="hidefocus"]'),
+          site = $find(sections[2], 'a > span');
+      } 
+      else 
+        return;
+      
+      if (text.length && site.length && title.length) {
+
+        ad = vAPI.adParser.createAd('baidu', $attr(title, 'href'), {
+          title: $text(title),
+          text: $text(text),
+          site: $text(site)
+        });
+
+      } else {
+        console.warn('[TEXTADS] baiduTextHandler.fail: ', text, site, document.URL, document.title);
+      }
+
+      return [ad];
+    }
+
     // TODO: replace with core::domainFromURI
     var parseDomain = function (url, useLast) { // dup. in shared
 
@@ -288,6 +318,11 @@
       handler: bingText,
       name: 'bing',
       domain: /^.*\.bing\.com/i
+    }, {
+      selector: 'div[style*="important"]',
+      handler: baiduText,
+      name: 'baidu',
+      domain: /^.*\.baidu\.com/i
     }];
 
     var checkFilters = function (elem) {
@@ -300,9 +335,7 @@
       });
 
       for (var i = 0; i < active.length; i++) {
-
         if ($is(elem, active[i].selector)) {
-          // console.log("handle?");
           return active[i].handler(elem);
         }
       }
