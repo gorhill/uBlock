@@ -58,17 +58,20 @@ section {
     display: inline-block;
     width: 100%;
 }
-section > div {
+section > div:first-child {
+    border: 1px solid #aaa;
+    margin: 0;
     position: relative;
 }
 section > div > textarea {
     background-color: #fff;
-    border: 1px solid #aaa;
+    border: none;
     box-sizing: border-box;
     font: 11px monospace;
-    height: 6em;
+    height: 8em;
+    margin: 0;
     overflow: hidden;
-    padding: 0;
+    padding: 2px;
     resize: none;
     width: 100%;
 }
@@ -83,7 +86,7 @@ section > div > textarea + div {
     position: absolute;
     right: 0;
 }
-section > div + div {
+section > div:first-child + div {
     direction: ltr;
     margin: 2px 0;
     text-align: right;
