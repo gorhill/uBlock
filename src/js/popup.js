@@ -239,7 +239,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
         cell.toggleClass(action + 'Rule', true);
     }
 
-    // Use dark shade visual cue if the filter is specific to the cell.
+    // Use dark shade visual cue if the rule is specific to the cell.
     var ownRule = false;
     var matches = reSrcHostnameFromRule.exec(rule);
     if ( matches !== null ) {

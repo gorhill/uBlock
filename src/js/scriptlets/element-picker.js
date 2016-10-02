@@ -21,13 +21,13 @@
 
 /* global CSS */
 
+'use strict';
+
 /******************************************************************************/
 /******************************************************************************/
 
 /*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
 ;(function(root) {
-
-    'use strict';
 
     if (!root.CSS) {
         root.CSS = {};
@@ -116,8 +116,6 @@
 
 (function() {
 
-'use strict';
-
 /******************************************************************************/
 
 if ( typeof vAPI !== 'object' ) {
@@ -147,7 +145,6 @@ var cosmeticFilterCandidates = [];
 var targetElements = [];
 var candidateElements = [];
 var bestCandidateFilter = null;
-var previewedElements = [];
 
 var lastNetFilterSession = window.location.host + window.location.pathname;
 var lastNetFilterHostname = '';
@@ -264,65 +261,6 @@ var highlightElements = function(elems, force) {
     }
     svgOcean.setAttribute('d', ocean.join(''));
     svgIslands.setAttribute('d', islands.join('') || 'M0 0');
-};
-
-/******************************************************************************/
-
-var filterElements = function(filter) {
-    var htmlElem = document.documentElement;
-    var items = elementsFromFilter(filter);
-    var i = items.length, item, elem, style;
-    while ( i-- ) {
-        item = items[i];
-        elem = item.elem;
-        // https://github.com/gorhill/uBlock/issues/1629
-        if ( elem === pickerRoot ) {
-            continue;
-        }
-        style = elem.style;
-        if (
-            (elem !== htmlElem) &&
-            (item.type === 'cosmetic' ||
-             item.type === 'network' && item.src !== undefined)
-        ) {
-            previewedElements.push({
-                elem: elem,
-                prop: 'display',
-                value: style.getPropertyValue('display'),
-                priority: style.getPropertyPriority('display')
-            });
-            style.setProperty('display', 'none', 'important');
-        }
-        if ( item.type === 'network' && item.style === 'background-image' ) {
-            previewedElements.push({
-                elem: elem,
-                prop: 'background-image',
-                value: style.getPropertyValue('background-image'),
-                priority: style.getPropertyPriority('background-image')
-            });
-            style.setProperty('background-image', 'none', 'important');
-        }
-    }
-};
-
-/******************************************************************************/
-
-var preview = function(filter) {
-    filterElements(filter);
-    pickerBody.classList.add('preview');
-};
-
-/******************************************************************************/
-
-var unpreview = function() {
-    var items = previewedElements;
-    var i = items.length, item;
-    while ( i-- ) {
-        item = items[i];
-        item.elem.style.setProperty(item.prop, item.value, item.priority);
-    }
-    previewedElements.length = 0;
-    pickerBody.classList.remove('preview');
 };
 
 /******************************************************************************/
@@ -692,117 +630,374 @@ var filtersFrom = function(x, y) {
     return netFilterCandidates.length + cosmeticFilterCandidates.length;
 };
 
-/******************************************************************************/
+/*******************************************************************************
 
-var elementsFromFilter = function(filter) {
-    var out = [];
+    filterToDOMInterface.set
+    @desc   Look-up all the HTML elements matching the filter passed in
+            argument.
+    @param  string, a cosmetic of network filter.
+    @return array, or undefined if the filter is invalid.
 
-    filter = filter.trim();
-    if ( filter === '' ) {
-        return out;
-    }
+    filterToDOMInterface.preview
+    @desc   Apply/unapply filter to the DOM.
+    @param  string, a cosmetic of network filter, or literal false to remove
+            the effects of the filter on the DOM.
+    @return undefined.
 
-    // Cosmetic filters: these are straight CSS selectors
-    // TODO: This is still not working well for a[href], because there are
-    // many ways to compose a valid href to the same effective URL.
-    // One idea is to normalize all a[href] on the page, but for now I will
-    // wait and see, as I prefer to refrain from tampering with the page
-    // content if I can avoid it.
-    var elems, iElem, elem;
-    if ( filter.lastIndexOf('##', 0) === 0 ) {
+    TODO: need to be revised once I implement chained cosmetic operators.
+
+*/
+var filterToDOMInterface = (function() {
+    // Net filters: we need to lookup manually -- translating into a foolproof
+    // CSS selector is just not possible.
+    var fromNetworkFilter = function(filter) {
+        var out = [];
+        // https://github.com/chrisaljoudi/uBlock/issues/945
+        // Transform into a regular expression, this allows the user to edit and
+        // insert wildcard(s) into the proposed filter.
+        var reStr = '';
+        if ( filter.length > 1 && filter.charAt(0) === '/' && filter.slice(-1) === '/' ) {
+            reStr = filter.slice(1, -1);
+        }
+        else {
+            var rePrefix = '', reSuffix = '';
+            if ( filter.slice(0, 2) === '||' ) {
+                filter = filter.replace('||', '');
+            } else {
+                if ( filter.charAt(0) === '|' ) {
+                    rePrefix = '^';
+                    filter = filter.slice(1);
+                }
+            }
+            if ( filter.slice(-1) === '|' ) {
+                reSuffix = '$';
+                filter = filter.slice(0, -1);
+            }
+            reStr = rePrefix +
+                    filter.replace(/[.+?${}()|[\]\\]/g, '\\$&').replace(/[\*^]+/g, '.*') +
+                    reSuffix;
+        }
+        var reFilter = null;
         try {
-            elems = document.querySelectorAll(filter.slice(2));
+            reFilter = new RegExp(reStr);
         }
         catch (e) {
-            elems = [];
+            return out;
         }
-        iElem = elems.length;
+
+        // Lookup by tag names.
+        var src1stProps = netFilter1stSources;
+        var src2ndProps = netFilter2ndSources;
+        var srcProp, src;
+        var elems = document.querySelectorAll(Object.keys(src1stProps).join()),
+            iElem = elems.length,
+            elem;
         while ( iElem-- ) {
-            out.push({
-                type: 'cosmetic',
-                elem: elems[iElem],
-            });
-        }
-        return out;
-    }
-
-    // Net filters: we need to lookup manually -- translating into a
-    // foolproof CSS selector is just not possible
-
-    // https://github.com/chrisaljoudi/uBlock/issues/945
-    // Transform into a regular expression, this allows the user to edit and
-    // insert wildcard(s) into the proposed filter
-    var reStr = '';
-    if ( filter.length > 1 && filter.charAt(0) === '/' && filter.slice(-1) === '/' ) {
-        reStr = filter.slice(1, -1);
-    }
-    else {
-        var rePrefix = '', reSuffix = '';
-        if ( filter.slice(0, 2) === '||' ) {
-            filter = filter.replace('||', '');
-        } else {
-            if ( filter.charAt(0) === '|' ) {
-                rePrefix = '^';
-                filter = filter.slice(1);
+            elem = elems[iElem];
+            srcProp = src1stProps[elem.localName];
+            src = elem[srcProp];
+            if ( typeof src !== 'string' || src.length === 0 ) {
+                srcProp = src2ndProps[elem.localName];
+                src = elem[srcProp];
+            }
+            if ( src && reFilter.test(src) ) {
+                out.push({
+                    type: 'network',
+                    elem: elem,
+                    src: srcProp,
+                    opts: filterTypes[elem.localName],
+                });
             }
         }
-        if ( filter.slice(-1) === '|' ) {
-            reSuffix = '$';
-            filter = filter.slice(0, -1);
+
+        // Find matching background image in current set of candidate elements.
+        elems = candidateElements;
+        iElem = elems.length;
+        while ( iElem-- ) {
+            elem = elems[iElem];
+            if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
+                out.push({
+                    type: 'network',
+                    elem: elem,
+                    style: 'background-image',
+                    opts: 'image',
+                });
+            }
         }
-        reStr = rePrefix +
-                filter.replace(/[.+?${}()|[\]\\]/g, '\\$&').replace(/[\*^]+/g, '.*') +
-                reSuffix;
-    }
-    var reFilter = null;
-    try {
-        reFilter = new RegExp(reStr);
-    }
-    catch (e) {
+
         return out;
-    }
+    };
 
-    // Lookup by tag names.
-    var src1stProps = netFilter1stSources;
-    var src2ndProps = netFilter2ndSources;
-    var srcProp, src;
-    elems = document.querySelectorAll(Object.keys(src1stProps).join());
-    iElem = elems.length;
-    while ( iElem-- ) {
-        elem = elems[iElem];
-        srcProp = src1stProps[elem.localName];
-        src = elem[srcProp];
-        if ( typeof src !== 'string' || src.length === 0 ) {
-            srcProp = src2ndProps[elem.localName];
-            src = elem[srcProp];
+    // Cosmetic filters: these are straight CSS selectors.
+    // TODO: This is still not working well for a[href], because there are many
+    // ways to compose a valid href to the same effective URL. One idea is to
+    // normalize all a[href] on the page, but for now I will wait and see, as I
+    // prefer to refrain from tampering with the page content if I can avoid it.
+    var fromCosmeticFilter = function(filter) {
+        var elems;
+        try {
+            elems = document.querySelectorAll(filter);
         }
-        if ( src && reFilter.test(src) ) {
-            out.push({
-                type: 'network',
-                elem: elem,
-                src: srcProp,
-                opts: filterTypes[elem.localName],
-            });
+        catch (e) {
+            return fromProceduralCosmeticFilter(filter);
         }
-    }
+        var out = [],
+            iElem = elems.length;
+        while ( iElem-- ) {
+            out.push({ type: 'cosmetic', elem: elems[iElem]});
+        }
+        return out;
+    };
 
-    // Find matching background image in current set of candidate elements.
-    elems = candidateElements;
-    iElem = elems.length;
-    while ( iElem-- ) {
-        elem = elems[iElem];
-        if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
-            out.push({
-                type: 'network',
-                elem: elem,
-                style: 'background-image',
-                opts: 'image',
-            });
+    // https://github.com/gorhill/uBlock/issues/1772
+    // Handle procedural cosmetic filters.
+    var fromProceduralCosmeticFilter = function(filter) {
+        if ( filter.charCodeAt(filter.length - 1) === 0x29 /* ')' */ ) {
+            var parts = reProceduralCosmeticFilter.exec(filter);
+            if (
+                parts !== null &&
+                proceduralCosmeticFilterFunctions.hasOwnProperty(parts[2])
+            ) {
+                return proceduralCosmeticFilterFunctions[parts[2]](
+                    parts[1].trim(),
+                    parts[3].trim()
+                );
+            }
         }
-    }
+    };
 
-    return out;
-};
+    var reProceduralCosmeticFilter = /^(.*?):(matches-css|has|style|xpath)\((.+?)\)$/;
+
+    // Collection of handlers for procedural cosmetic filters.
+    var proceduralCosmeticFilterFunctions = {
+        'has': function(selector, arg) {
+            if ( selector === '' ) { return; }
+            var elems;
+            try {
+                elems = document.querySelectorAll(selector);
+                document.querySelector(arg);
+            } catch(ex) {
+                return;
+            }
+            var out = [], elem;
+            for ( var i = 0, n = elems.length; i < n; i++ ) {
+                elem = elems[i];
+                if ( elem.querySelector(arg) ) {
+                    out.push({ type: 'cosmetic', elem: elem });
+                }
+            }
+            return out;
+        },
+        'matches-css': function(selector, arg) {
+            if ( selector === '' ) { return; }
+            var elems;
+            try {
+                elems = document.querySelectorAll(selector);
+            } catch(ex) {
+                return;
+            }
+            var out = [], elem, style,
+                pos = arg.indexOf(':');
+            if ( pos === -1 ) { return; }
+            var prop = arg.slice(0, pos).trim(),
+                reText = arg.slice(pos + 1).trim();
+            if ( reText === '' ) { return; }
+            var re = reText !== '*' ?
+                new RegExp('^' + reText.replace(/[.+?${}()|[\]\\^]/g, '\\$&').replace(/\*+/g, '.*?') + '$') :
+                /./;
+            for ( var i = 0, n = elems.length; i < n; i++ ) {
+                elem = elems[i];
+                style = window.getComputedStyle(elem, null);
+                if ( re.test(style[prop]) ) {
+                    out.push({ type: 'cosmetic', elem: elem });
+                }
+            }
+            return out;
+        },
+        'style': function(selector, arg) {
+            if ( selector === '' || arg === '' ) { return; }
+            var elems;
+            try {
+                elems = document.querySelectorAll(selector);
+            } catch(ex) {
+                return;
+            }
+            var out = [];
+            for ( var i = 0, n = elems.length; i < n; i++ ) {
+                out.push({ type: 'cosmetic', elem: elems[i] });
+            }
+            lastAction = selector + ' { ' + arg + ' }';
+            return out;
+        },
+        'xpath': function(selector, arg) {
+            if ( selector !== '' ) { return []; }
+            var result;
+            try {
+                result = document.evaluate(
+                    arg,
+                    document,
+                    null,
+                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                    null
+                );
+            } catch(ex) {
+                return;
+            }
+            if ( result === undefined ) { return []; }
+            var out = [], elem, i = result.snapshotLength;
+            while ( i-- ) {
+                elem = result.snapshotItem(i);
+                if ( elem.nodeType === 1 ) {
+                    out.push({ type: 'cosmetic', elem: elem });
+                }
+            }
+            return out;
+        }
+    };
+
+    var lastFilter,
+        lastResultset,
+        lastAction,
+        appliedStyleTag,
+        applied = false,
+        previewing = false;
+
+    var queryAll = function(filter) {
+        filter = filter.trim();
+        if ( filter === lastFilter ) {
+            return lastResultset;
+        }
+        unapply();
+        if ( filter === '' ) {
+            lastFilter = '';
+            lastResultset = [];
+        } else {
+            lastFilter = filter;
+            lastAction = undefined;
+            lastResultset = filter.lastIndexOf('##', 0) === 0 ?
+                fromCosmeticFilter(filter.slice(2)) :
+                fromNetworkFilter(filter);
+            if ( previewing ) {
+                apply(filter);
+            }
+        }
+        return lastResultset;
+    };
+
+    var applyHide = function() {
+        var htmlElem = document.documentElement,
+            items = lastResultset,
+            item, elem, style;
+        for ( var i = 0, n = items.length; i < n; i++ ) {
+            item = items[i];
+            elem = item.elem;
+            // https://github.com/gorhill/uBlock/issues/1629
+            if ( elem === pickerRoot ) {
+                continue;
+            }
+            style = elem.style;
+            if (
+                (elem !== htmlElem) &&
+                (item.type === 'cosmetic' || item.type === 'network' && item.src !== undefined)
+            ) {
+                item.display = style.getPropertyValue('display');
+                item.displayPriority = style.getPropertyPriority('display');
+                style.setProperty('display', 'none', 'important');
+            }
+            if ( item.type === 'network' && item.style === 'background-image' ) {
+                item.backgroundImage = style.getPropertyValue('background-image');
+                item.backgroundImagePriority = style.getPropertyPriority('background-image');
+                style.setProperty('background-image', 'none', 'important');
+            }
+        }
+    };
+
+    var unapplyHide = function() {
+        var items = lastResultset, item;
+        for ( var i = 0, n = items.length; i < n; i++ ) {
+            item = items[i];
+            if ( item.hasOwnProperty('display') ) {
+                item.elem.style.setProperty(
+                    'display',
+                    item.display,
+                    item.displayPriority
+                );
+                delete item.display;
+            }
+            if ( item.hasOwnProperty('backgroundImage') ) {
+                item.elem.style.setProperty(
+                    'background-image',
+                    item.backgroundImage,
+                    item.backgroundImagePriority
+                );
+                delete item.backgroundImage;
+            }
+        }
+    };
+
+    var unapplyStyle = function() {
+        if ( !appliedStyleTag || appliedStyleTag.parentNode === null ) {
+            return;
+        }
+        appliedStyleTag.parentNode.removeChild(appliedStyleTag);
+    };
+
+    var applyStyle = function() {
+        if ( !appliedStyleTag ) {
+            appliedStyleTag = document.createElement('style');
+            appliedStyleTag.setAttribute('type', 'text/css');
+        }
+        appliedStyleTag.textContent = lastAction;
+        if ( appliedStyleTag.parentNode === null ) {
+            document.head.appendChild(appliedStyleTag);
+        }
+    };
+
+    var apply = function() {
+        if ( applied ) {
+            unapply();
+        }
+        if ( lastResultset === undefined ) {
+            return;
+        }
+        if ( typeof lastAction === 'string' ) {
+            applyStyle();
+        } else {
+            applyHide();
+        }
+        applied = true;
+    };
+
+    var unapply = function() {
+        if ( !applied ) {
+            return;
+        }
+        if ( typeof lastAction === 'string' ) {
+            unapplyStyle();
+        } else {
+            unapplyHide();
+        }
+        applied = false;
+    };
+
+    var preview = function(filter) {
+        previewing = filter !== false;
+        if ( previewing ) {
+            if ( queryAll(filter) !== undefined ) {
+                apply();
+            }
+        } else {
+            unapply();
+        }
+        pickerBody.classList.toggle('preview', previewing);
+    };
+
+    return {
+        previewing: function() { return previewing; },
+        preview: preview,
+        set: queryAll
+    };
+})();
 
 // https://www.youtube.com/watch?v=nuUXJ6RfIik
 
@@ -810,8 +1005,8 @@ var elementsFromFilter = function(filter) {
 
 var userFilterFromCandidate = function() {
     var v = taCandidate.value;
-    var items = elementsFromFilter(v);
-    if ( items.length === 0 ) {
+    var items = filterToDOMInterface.set(v);
+    if ( !items || items.length === 0 ) {
         return false;
     }
 
@@ -850,13 +1045,18 @@ var userFilterFromCandidate = function() {
 /******************************************************************************/
 
 var onCandidateChanged = function() {
-    unpreview();
-
-    var elems = [];
-    var items = elementsFromFilter(taCandidate.value);
-    for ( var i = 0; i < items.length; i++ ) {
-        elems.push(items[i].elem);
+    var elems = [],
+        items = filterToDOMInterface.set(taCandidate.value),
+        valid = items !== undefined;
+    if ( valid ) {
+        for ( var i = 0; i < items.length; i++ ) {
+            elems.push(items[i].elem);
+        }
     }
+    pickerBody.querySelector('body section textarea + div').textContent = valid ?
+        items.length.toLocaleString() :
+        '0';
+    taCandidate.classList.toggle('invalidFilter', !valid);
     dialog.querySelector('#create').disabled = elems.length === 0;
     highlightElements(elems, true);
 };
@@ -885,18 +1085,23 @@ var candidateFromFilterChoice = function(filterChoice) {
     if ( filterChoice.modifier ) {
         return filter.replace(/:nth-of-type\(\d+\)/, '');
     }
-    
+
     // Return path: the target element, then all siblings prepended
-    var selector = [];
+    var selector = '', joiner = '';
     for ( ; slot < filters.length; slot++ ) {
         filter = filters[slot];
-        selector.unshift(filter.replace(/^##/, ''));
+        selector = filter.slice(2) + joiner + selector;
         // Stop at any element with an id: these are unique in a web page
-        if ( filter.slice(0, 3) === '###' ) {
+        if ( filter.lastIndexOf('###', 0) === 0 ) {
             break;
         }
+        // Stop if current selector matches only one element on the page
+        if ( document.querySelectorAll(selector).length === 1 ) {
+            break;
+        }
+        joiner = ' > ';
     }
-    return '##' + selector.join(' > ');
+    return '##' + selector;
 };
 
 /******************************************************************************/
@@ -926,8 +1131,7 @@ var onDialogClicked = function(ev) {
     else if ( ev.target.id === 'create' ) {
         // We have to exit from preview mode: this guarantees matching elements
         // will be found for the candidate filter.
-        unpreview();
-
+        filterToDOMInterface.preview(false);
         var filter = userFilterFromCandidate();
         if ( filter ) {
             var d = new Date();
@@ -939,7 +1143,7 @@ var onDialogClicked = function(ev) {
                     pageDomain: window.location.hostname
                 }
             );
-            filterElements(taCandidate.value);
+            filterToDOMInterface.preview(taCandidate.value);
             stopPicker();
         }
     }
@@ -949,15 +1153,15 @@ var onDialogClicked = function(ev) {
     }
 
     else if ( ev.target.id === 'quit' ) {
-        unpreview();
+        filterToDOMInterface.preview(false);
         stopPicker();
     }
 
     else if ( ev.target.id === 'preview' ) {
-        if ( pickerBody.classList.contains('preview') ) {
-            unpreview();
+        if ( filterToDOMInterface.previewing() ) {
+            filterToDOMInterface.preview(false);
         } else {
-            preview(taCandidate.value);
+            filterToDOMInterface.preview(taCandidate.value);
         }
         highlightElements(targetElements, true);
     }
@@ -1068,9 +1272,13 @@ var onSvgHovered = (function() {
 
 var onSvgClicked = function(ev) {
     // https://github.com/chrisaljoudi/uBlock/issues/810#issuecomment-74600694
-    // Unpause picker if user click outside dialog
+    // Unpause picker if:
+    // - click outside dialog AND
+    // - not in preview mode
     if ( pickerBody.classList.contains('paused') ) {
-        unpausePicker();
+        if ( filterToDOMInterface.previewing() === false ) {
+            unpausePicker();
+        }
         return;
     }
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
@@ -1116,7 +1324,7 @@ var pausePicker = function() {
 /******************************************************************************/
 
 var unpausePicker = function() {
-    unpreview();
+    filterToDOMInterface.preview(false);
     pickerBody.classList.remove('paused');
     svgListening(true);
 };
@@ -1127,10 +1335,11 @@ var unpausePicker = function() {
 // in use: to ensure this, release all local references.
 
 var stopPicker = function() {
+    vAPI.shutdown.remove(stopPicker);
+
     targetElements = [];
     candidateElements = [];
     bestCandidateFilter = null;
-    previewedElements = [];
 
     if ( pickerRoot === null ) {
         return;
@@ -1262,24 +1471,25 @@ var startPicker = function(details) {
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
 pickerRoot.style.cssText = [
-    'display: block',
-    'visibility: visible',
-    'opacity: 1',
-    'position: fixed',
-    'top: 0',
-    'left: 0',
-    'width: 100%',
-    'height: 100%',
     'background: transparent',
-    'margin: 0',
-    'padding: 0',
     'border: 0',
     'border-radius: 0',
     'box-shadow: none',
+    'display: block',
+    'height: 100%',
+    'left: 0',
+    'margin: 0',
+    'max-height: none',
+    'opacity: 1',
     'outline: 0',
+    'padding: 0',
+    'position: fixed',
+    'top: 0',
+    'visibility: visible',
+    'width: 100%',
     'z-index: 2147483647',
     ''
-].join('!important;');
+].join(' !important;');
 
 // https://github.com/gorhill/uBlock/issues/1529
 // In addition to inline styles, harden the element picker styles by using
@@ -1306,8 +1516,6 @@ pickerRoot.onload = function() {
 };
 
 document.documentElement.appendChild(pickerRoot);
-
-/******************************************************************************/
 
 // https://www.youtube.com/watch?v=sociXdKnyr8
 
