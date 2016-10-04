@@ -244,7 +244,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // Return all settings if none specified.
     if ( name === undefined ) {
-        µBlock.adnauseam.verifySettings();
+        //µBlock.adnauseam.verifySettings();
         us = JSON.parse(JSON.stringify(us));
         us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
         us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;

@@ -14,6 +14,7 @@
   var µb = µBlock,
     production = 0,
     lastActivity = 0,
+    notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
@@ -275,6 +276,15 @@
 
       err("No Ad in updateAdOnFailure()", xhr, e);
     }
+  }
+
+  /* send to vault/menu/dashboard if open */
+  var sendNotifications = function(notes) {
+
+    vAPI.messaging.broadcast({
+       what: 'notifications',
+       notifications: notes
+     });
   }
 
   var parseTitle = function (xhr) {
@@ -709,7 +719,7 @@
       pageUrl: pageUrl,
       prefs: contentPrefs(),
       current: activeVisit(),
-      notifications: µb.userSettings.notifications
+      notifications: notifications
     };
   }
 
@@ -1084,8 +1094,9 @@
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
-      vAPI.storage.set( {'notifications': [] });
 
+      verifySettings(); // check settings/lists
+      verifyLists(µBlock.remoteBlacklists);
     });
 
     if (firstRun) {
@@ -1336,30 +1347,48 @@
   }
 
   var verifyList = exports.verifyList = function (note, lists) {
-    console.log('core::verifyList()', note);
-    //console.warn('Implement me');
+
+    var notes = notifications,
+      dirty = false,
+      path, entry;
+
+    for (path in lists) {
+      if (lists.hasOwnProperty(path) === false) {
+        continue;
+      }
+      entry = lists[path];
+      if (path === note.listUrl) {
+
+        if (entry.off === true && notes.indexOf(note) < 0) {
+
+          dirty = addNotification(notes, note);
+          //console.log('AddNotify', entry.title, 'dirty='+dirty);
+        }
+        else if (entry.off === false) {
+
+          dirty = removeNotification(notes, note);
+          //console.log('RemoveNotify', entry.title, 'dirty='+dirty);
+        }
+      }
+    }
+
+    if (dirty) sendNotifications(notes);
   }
 
   var verifySetting = exports.verifySetting = function (note, state) {
 
-    var notifications = µb.userSettings.notifications, dirty = false;
+    var notes = notifications, dirty = false;
 
-    if (state && notifications.indexOf(note) < 0) {
+    if (state && notes.indexOf(note) < 0) {
 
-      dirty = addNotification(notifications, note);
+      dirty = addNotification(notes, note);
     }
     else if (!state) {
 
-      dirty = removeNotification(notifications, note);
+      dirty = removeNotification(notes, note);
     }
 
-    //console.log('verifySetting:', note.name, state, dirty, notifications);
-
-    // if notifications were updated and vault/menu is open, send them
-    if (dirty) vAPI.messaging.broadcast({
-      what: 'notifications',
-      notifications: notifications
-    });
+    if (dirty) sendNotifications(notes);
   }
 
   var clearAds = exports.clearAds = function () {
@@ -1421,6 +1450,11 @@
       count: importedCount
     };
   };
+
+  exports.getNotifications = function () {
+    
+    return notifications;
+  }
 
   exports.exportAds = function (request) {
 

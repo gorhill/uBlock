@@ -90,7 +90,9 @@
     },
     function(details) {
 
-      renderNotifications(details.notifications);
+      // see #488
+      // renderNotifications(details.notifications);
+
       updateGroupState();
     });
   };
@@ -164,7 +166,8 @@
       window.open(location, '_self').close();
     });
 
-    renderNotifications(details.notifications);
+    // see #488
+    //renderNotifications(details.notifications);
     updateGroupState();
   };
 

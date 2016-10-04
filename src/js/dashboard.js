@@ -23,85 +23,86 @@
 
 /******************************************************************************/
 
-(function() {
+(function () {
 
-'use strict';
+  'use strict';
 
-/******************************************************************************/
+  /******************************************************************************/
 
-var resizeFrame = function() {
+  var resizeFrame = function () {
     var navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
     var viewRect = document.documentElement.getBoundingClientRect();
     var notiRect = document.getElementById('notifications').offsetHeight;
 
     document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height - notiRect) + 'px');
-};
+  };
 
-var loadDashboardPanel = function() {
+  var loadDashboardPanel = function () {
 
     var pane = window.location.hash.slice(1);
-    if ( pane === '' ) {
-        pane = 'options.html';
+    if (pane === '') {
+      pane = 'options.html';
     }
 
     var tabButton = uDom('[href="#' + pane + '"]');
-    if ( !tabButton || tabButton.hasClass('selected') ) {
-        return;
+    if (!tabButton || tabButton.hasClass('selected')) {
+      return;
     }
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
-};
+  };
 
-var onTabClickHandler = function(e) {
+  var onTabClickHandler = function (e) {
     var url = window.location.href,
-        pos = url.indexOf('#');
-    if ( pos !== -1 ) {
-        url = url.slice(0, pos);
+      pos = url.indexOf('#');
+    if (pos !== -1) {
+      url = url.slice(0, pos);
     }
     url += this.hash;
-    if ( url !== window.location.href ) {
-        window.location.replace(url);
-        loadDashboardPanel();
+    if (url !== window.location.href) {
+      window.location.replace(url);
+      loadDashboardPanel();
     }
     e.preventDefault();
-};
+  };
 
-var recalculateIframeHeight = function() {
-  //recalculate the height
-  var h = document.getElementById('notifications').offsetHeight;
-  var currenth = document.getElementById('ad-list').offsetHeight;
-  var newh = currenth - h;
-  uDom('#ad-list').css('height', newh + 'px');
-};
+  var recalculateIframeHeight = function () {
+    //recalculate the height
+    var h = document.getElementById('notifications').offsetHeight;
+    var currenth = document.getElementById('ad-list').offsetHeight;
+    var newh = currenth - h;
+    uDom('#ad-list').css('height', newh + 'px');
+  };
 
-var setBackBlockHeight = function() {
-uDom('#ad-list').css('height', '350px');
-};
+  var setBackBlockHeight = function () {
+    uDom('#ad-list').css('height', '350px');
+  };
 
-vAPI.messaging.addChannelListener('adnauseam', function (request) {
+  vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
-  //console.log("dashboard.js::GOT BROADCAST", request);
+    //console.log("dashboard.js::GOT BROADCAST", request);
 
-  switch (request.what) {
+    switch (request.what) {
 
-  case 'notifications':
-    renderNotifications(request.notifications);
-    resizeFrame();
-    break;
-  }
-});
+    case 'notifications':
+      // see #488
+      // renderNotifications(request.notifications);
+      // resizeFrame();
+      break;
+    }
+  });
 
-/******************************************************************************/
+  /******************************************************************************/
 
-uDom.onLoad(function() {
+  uDom.onLoad(function () {
     resizeFrame();
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
     loadDashboardPanel();
-});
+  });
 
-/******************************************************************************/
+  /******************************************************************************/
 
 })();
