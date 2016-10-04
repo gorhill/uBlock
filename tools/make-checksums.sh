@@ -11,7 +11,7 @@ if hash md5sum 2>/dev/null; then
 
  echo Copying ../uAssets/checksums/ublock0.txt to $DES/checksums.txt
  cp ../uAssets/checksums/ublock0.txt $DES/checksums.txt
- ENTRY=assets/ublock/adnauseam.txt
+ ENTRY=../uAssets/filters/adnauseam.txt
  CS="`md5sum -q $ENTRY` $ENTRY"
 
  echo Adding  \"$CS\" to $DES/checksums.txt
@@ -25,6 +25,7 @@ else
   exit
 fi
 
+# do we need this?
 echo Writing $DES/checksums.txt to ./assets/checksums/ublock0.txt
 cp $DES/checksums.txt ./assets/checksums/ublock0.txt  # for checking in adn repo
 

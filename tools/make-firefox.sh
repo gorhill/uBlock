@@ -22,6 +22,7 @@ cp    src/*.html                        $DES/
 
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+
 # AMO review feedback: avoid "unnecessary files or folders" in package
 cat   src/background.html | sed -e '/vapi-polyfill\.js/d' > $DES/background.html
 
@@ -35,8 +36,6 @@ cp    platform/firefox/chrome.manifest  $DES/
 cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
-
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 
 echo "*** adnauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"

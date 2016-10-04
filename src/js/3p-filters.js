@@ -287,8 +287,7 @@ var renderFilterLists = function() {
 
         // ADN: move these specific lists to 'essentials'
         var toDefault = [ 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
-            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt',
-            //'https://www.eff.org/files/effdntlist.txt'
+            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'
         ];
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
@@ -327,7 +326,9 @@ var renderFilterLists = function() {
 
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
-        renderNotifications(details.notifications);
+
+        // see #488
+        //renderNotifications(details.notifications);
     };
 
     messaging.send('dashboard', { what: 'getLists' }, onListsReceived);

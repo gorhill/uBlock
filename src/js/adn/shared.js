@@ -106,8 +106,8 @@ var renderNotifications = function (visibleNotes) {
 
   //console.log('renderNotifications', visibleNotes);
 
-  var origUdom = uDom; // this may be called from a frame or not ??
-  if (window.self != window.top) uDom = window.top.uDom;
+  //var origUdom = uDom; // this may be called from a frame or not ??
+  //if (window.self != window.top) uDom = window.top.uDom;
 
   var template = uDom('#notify-template');
 
@@ -138,7 +138,7 @@ var renderNotifications = function (visibleNotes) {
     }
   }
 
-  uDom = origUdom; // reset uDom
+  //uDom = origUdom; // reset uDom
 }
 
 var appendNotifyDiv = function (notify, template) {
@@ -154,14 +154,13 @@ var appendNotifyDiv = function (notify, template) {
   // add click handler to reactivate button (a better way to do this??)
   uDom(node.nodes[0]).on('click', "#notify-button", function (e) {
 
-    console.log('#notify-button:', e);
     notify.func.apply(this); // calls reactivateSetting or reactivateList
   });
 
   uDom('#notifications').append(node);
 }
 
-function udomFromIFrame(selector) {  // this may be called from a frame or not??
+function udomFromIFrame(selector) {  // may be called from a frame or not??
 
   var aDom = uDom, iframe = uDom('#iframe');
   if (iframe.length)
@@ -181,27 +180,10 @@ function reactivateSetting() {
 
 function reactivateList() {
 
-  //console.log('reactivateList', this);
-
-  var switches = [], li;
-  var lis = udomFromIFrame('#lists .listEntry'), i = lis.length;
-  while ( i-- ) {
-      li = lis.at(i);
-      var loc = li.descendants('a').attr('data-listkey');
-      var off = li.descendants('input').prop('checked') === false;
-      //console.log('Check: ', loc, off);
-      if (loc === this.listUrl) {
-        off = false;
-        li.descendants('input').prop('checked', true);
-        console.log('Toggling: ', li.descendants('a').text());
-      }
-      switches.push({ location: loc, off: off });
-  }
-
   vAPI.messaging.send(
     'dashboard', {
       what: 'selectFilterLists',
-      switches: switches
+      switches: [ { location: this.listUrl, off: false }]
     }, reloadPane);
 }
 
