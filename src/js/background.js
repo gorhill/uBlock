@@ -51,7 +51,7 @@ return {
     userSettings: {
 
         admap: {},          // ADN
-        notifications: [],
+        //notifications: [],
         parseTextAds: true,
 
         hidingAds: false,

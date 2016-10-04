@@ -174,7 +174,7 @@ var onMessage = function(request, sender, callback) {
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
         if (!response) { // return notifications either way
-          response = { notifications: µb.userSettings.notifications };
+          response = { notifications: µb.adnauseam.getNotifications() };
         }
         break;
 
@@ -872,7 +872,7 @@ var getLists = function(callback) {
     var appendNotifications = function(r) { // ADN
 
       var listKeys = Object.keys(r.available),
-        notes = µb.userSettings.notifications;
+        notes = µb.adnauseam.getNotifications();
 
       // check each list for an associated notification
       listKeys.forEach(function(url) {

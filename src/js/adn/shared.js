@@ -154,7 +154,6 @@ var appendNotifyDiv = function (notify, template) {
   // add click handler to reactivate button (a better way to do this??)
   uDom(node.nodes[0]).on('click', "#notify-button", function (e) {
 
-    console.log('#notify-button:', e);
     notify.func.apply(this); // calls reactivateSetting or reactivateList
   });
 
@@ -181,27 +180,10 @@ function reactivateSetting() {
 
 function reactivateList() {
 
-  //console.log('reactivateList', this);
-
-  var switches = [], li;
-  var lis = udomFromIFrame('#lists .listEntry'), i = lis.length;
-  while ( i-- ) {
-      li = lis.at(i);
-      var loc = li.descendants('a').attr('data-listkey');
-      var off = li.descendants('input').prop('checked') === false;
-      //console.log('Check: ', loc, off);
-      if (loc === this.listUrl) {
-        off = false;
-        li.descendants('input').prop('checked', true);
-        console.log('Toggling: ', li.descendants('a').text());
-      }
-      switches.push({ location: loc, off: off });
-  }
-
   vAPI.messaging.send(
     'dashboard', {
       what: 'selectFilterLists',
-      switches: switches
+      switches: [ { location: this.listUrl, off: false }]
     }, reloadPane);
 }
 
