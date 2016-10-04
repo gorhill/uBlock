@@ -106,8 +106,8 @@ var renderNotifications = function (visibleNotes) {
 
   //console.log('renderNotifications', visibleNotes);
 
-  var origUdom = uDom; // this may be called from a frame or not ??
-  if (window.self != window.top) uDom = window.top.uDom;
+  //var origUdom = uDom; // this may be called from a frame or not ??
+  //if (window.self != window.top) uDom = window.top.uDom;
 
   var template = uDom('#notify-template');
 
@@ -138,7 +138,7 @@ var renderNotifications = function (visibleNotes) {
     }
   }
 
-  uDom = origUdom; // reset uDom
+  //uDom = origUdom; // reset uDom
 }
 
 var appendNotifyDiv = function (notify, template) {
@@ -160,7 +160,7 @@ var appendNotifyDiv = function (notify, template) {
   uDom('#notifications').append(node);
 }
 
-function udomFromIFrame(selector) {  // this may be called from a frame or not??
+function udomFromIFrame(selector) {  // may be called from a frame or not??
 
   var aDom = uDom, iframe = uDom('#iframe');
   if (iframe.length)
