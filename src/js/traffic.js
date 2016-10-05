@@ -451,6 +451,14 @@ var processCSP = function(details, pageStore, context) {
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
+    // https://github.com/gorhill/uBlock/issues/2050
+    //   Blanket-blocking websockets is exceptional, so we test whether the
+    //   page is whitelisted if and only if there is a hit against a websocket
+    //   filter.
+    if ( blockWebsocket && pageStore.getNetFilteringSwitch() === false ) {
+        websocketResult = '';
+        blockWebsocket = false;
+    }
 
     var headersChanged = false;
     if ( blockInlineScript || blockWebsocket ) {
