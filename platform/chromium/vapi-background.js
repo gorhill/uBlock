@@ -72,6 +72,10 @@ vAPI.storage = chrome.storage.local;
 // uBlock in a bad, non-functional state -- because call to `chrome.privacy`
 // API threw an exception.
 
+// https://github.com/gorhill/uBlock/issues/2048
+//   Do not mess up with existing settings if not assigning them stricter
+//   values.
+
 vAPI.browserSettings = {
     webRTCSupported: undefined,
 
@@ -81,13 +85,14 @@ vAPI.browserSettings = {
         void chrome.runtime.lastError;
     },
 
+    // Calling with `true` means IP address leak is not prevented.
     // https://github.com/gorhill/uBlock/issues/533
-    // We must first check wether this Chromium-based browser was compiled
-    // with WebRTC support. To do this, we use an iframe, this way the
-    // empty RTCPeerConnection object we create to test for support will
-    // be properly garbage collected. This prevents issues such as
-    // a computer unable to enter into sleep mode, as reported in the
-    // Chrome store:
+    //   We must first check wether this Chromium-based browser was compiled
+    //   with WebRTC support. To do this, we use an iframe, this way the
+    //   empty RTCPeerConnection object we create to test for support will
+    //   be properly garbage collected. This prevents issues such as
+    //   a computer unable to enter into sleep mode, as reported in the
+    //   Chrome store:
     // https://github.com/gorhill/uBlock/issues/533#issuecomment-167931681
     setWebrtcIPAddress: function(setting) {
         // We don't know yet whether this browser supports WebRTC: find out.
@@ -127,16 +132,23 @@ vAPI.browserSettings = {
             return;
         }
 
-        var cp = chrome.privacy, cpi = cp.IPHandlingPolicy, cpn = cp.network;
+        var cp = chrome.privacy,
+            cpn = cp.network;
 
         // Older version of Chromium do not support this setting, and is
         // marked as "deprecated" since Chromium 48.
         if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) {
             try {
-                cpn.webRTCMultipleRoutesEnabled.set({
-                    value: !!setting,
-                    scope: 'regular'
-                }, this.noopCallback);
+                if ( setting ) {
+                    cpn.webRTCMultipleRoutesEnabled.clear({
+                        scope: 'regular'
+                    }, this.noopCallback);
+                } else {
+                    cpn.webRTCMultipleRoutesEnabled.set({
+                        value: false,
+                        scope: 'regular'
+                    }, this.noopCallback);
+                }
             } catch(ex) {
                 console.error(ex);
             }
@@ -145,10 +157,22 @@ vAPI.browserSettings = {
         // This setting became available in Chromium 48.
         if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) {
             try {
-                cpn.webRTCIPHandlingPolicy.set({
-                    value: !!setting ? cpi.DEFAULT : cpi.DEFAULT_PUBLIC_INTERFACE_ONLY,
-                    scope: 'regular'
-                }, this.noopCallback);
+                if ( setting ) {
+                    cpn.webRTCIPHandlingPolicy.clear({
+                        scope: 'regular'
+                    }, this.noopCallback);
+                } else {
+                    // Respect current stricter setting if any. 
+                    cpn.webRTCIPHandlingPolicy.get({}, function(details) {
+                        var value = details.value === 'disable_non_proxied_udp' ?
+                            'disable_non_proxied_udp' :
+                            'default_public_interface_only';
+                        cpn.webRTCIPHandlingPolicy.set({
+                            value: value,
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    }.bind(this));
+                }
             } catch(ex) {
                 console.error(ex);
             }
@@ -163,10 +187,16 @@ vAPI.browserSettings = {
             switch ( setting ) {
             case 'prefetching':
                 try {
-                    chrome.privacy.network.networkPredictionEnabled.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    }, this.noopCallback);
+                    if ( !!details[setting] ) {
+                        chrome.privacy.network.networkPredictionEnabled.clear({
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    } else {
+                        chrome.privacy.network.networkPredictionEnabled.set({
+                            value: false,
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    }
                 } catch(ex) {
                     console.error(ex);
                 }
@@ -174,17 +204,23 @@ vAPI.browserSettings = {
 
             case 'hyperlinkAuditing':
                 try {
-                    chrome.privacy.websites.hyperlinkAuditingEnabled.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    }, this.noopCallback);
+                    if ( !!details[setting] ) {
+                        chrome.privacy.websites.hyperlinkAuditingEnabled.clear({
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    } else {
+                        chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                            value: false,
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    }
                 } catch(ex) {
                     console.error(ex);
                 }
                 break;
 
             case 'webrtcIPAddress':
-                this.setWebrtcIPAddress(details[setting]);
+                this.setWebrtcIPAddress(!!details[setting]);
                 break;
 
             default:
