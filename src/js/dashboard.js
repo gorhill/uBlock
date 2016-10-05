@@ -37,7 +37,7 @@
     document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height - notiRect) + 'px');
   };
 
-  var loadDashboardPanel = function () {
+  var loadDashboardPanel = function (notifications) {
 
     var pane = window.location.hash.slice(1);
     if (pane === '') {
@@ -45,12 +45,14 @@
     }
 
     var tabButton = uDom('[href="#' + pane + '"]');
-    if (!tabButton || tabButton.hasClass('selected')) {
-      return;
-    }
+    if (!tabButton) return;
+
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
+
     tabButton.toggleClass('selected', true);
+
+    notifications && renderNotifications(notifications);
   };
 
   var onTabClickHandler = function (e) {
@@ -79,19 +81,24 @@
     uDom('#ad-list').css('height', '350px');
   };
 
+
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
-    //console.log("dashboard.js::GOT BROADCAST", request);
+    // console.log("dashboard.js::BROADCAST", request);
 
     switch (request.what) {
 
+
     case 'notifications':
+
       // see #488
-      // renderNotifications(request.notifications);
+      //renderNotifications(request.notifications);
+      loadDashboardPanel(request.notifications);
       // resizeFrame();
       break;
     }
   });
+
 
   /******************************************************************************/
 
@@ -100,7 +107,12 @@
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
-    loadDashboardPanel();
+
+     vAPI.messaging.send(
+        'adnauseam', {
+          what: 'getNotifications'
+        }, loadDashboardPanel);
+
   });
 
   /******************************************************************************/
