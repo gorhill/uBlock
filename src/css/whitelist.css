@@ -8,7 +8,7 @@ div > p:last-child {
     box-sizing: border-box;
     font-size: small;
     height: 45vh;
-    /*margin-top: 10vh;*/
+    
 	text-align: left;
     white-space: pre;
     width: 100%;
@@ -19,6 +19,8 @@ div > p:last-child {
 
 #lists {
     padding-left: 0px;
+    /*next line for space between two sections*/
+    margin-bottom: 10vh;
 }
 
 #lists > .groupEntry > .geName {
