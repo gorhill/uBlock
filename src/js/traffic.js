@@ -242,6 +242,9 @@
           }
       }
 
+      // ADN: Tell the core we have a new page
+      µb.adnauseam.onPageLoad(tabId, requestURL);
+
       // Log
       var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
       if ( pageStore ) {
@@ -467,9 +470,9 @@
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
 
     // ADN: Do we need to add a DNT header?
-   
+
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
-     
+
       if (!hasDNT(headers)) {
 
         adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);

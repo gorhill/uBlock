@@ -101,7 +101,7 @@
 
         if (request.what === 'getAdCount') {
           var url = request.pageURL,
-            count = adlist(url).length,
+            count = currentCount(),
             json = {
               url: url,
               count: count
@@ -1079,10 +1079,13 @@
   };
 
   // Called when new top-level page is loaded
-  exports.onPageLoad = function (tadId, requestURL) {
+  exports.onPageLoad = function (tabId, requestURL) {
 
-    // var ads = adlist(requestURL);
-    // console.log('PAGE: ', requestURL, ads.length);
+    var ads = adlist(requestURL); // all ads for url
+    //console.log('PAGE: ', requestURL, ads.length);
+    ads.forEach(function (ad) {
+      ad.current = false;
+    });
   };
 
   exports.onListsLoaded = function (firstRun) {
@@ -1164,6 +1167,7 @@
       pageUrl = pageStore.rawURL,
       ad = request.ad;
 
+    ad.current = true;
     ad.attemptedTs = 0;
     ad.pageUrl = pageUrl;
     ad.pageTitle = pageStore.title;
@@ -1303,11 +1307,13 @@
   };
 
   /*
-   Returns all ads for a page, or all pages, if page arg is null
-   Omits text-ads if specified in preferences
-   Called also from tab.js::µb.updateBadgeAsync()
+   * Returns all ads for a page, or all pages, if 'pageUrl' arg is null
+   * If 'currentOnly' is true, returns only current-marked ads
+   *
+   * Omits text-ads if specified in preferences
+   * Called also from tab.js::µb.updateBadgeAsync()
    */
-  var adlist = exports.adlist = function (pageUrl) {
+  var adlist = exports.adlist = function (pageUrl, currentOnly) {
 
     var result = [], pages = pageUrl ? [pageUrl]
       : Object.keys(admap || µb.userSettings.admap);
@@ -1324,7 +1330,9 @@
 
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-              result.push(ad);
+              if (!currentOnly || ad.current) {
+                result.push(ad);
+              }
           }
         }
       }
@@ -1389,6 +1397,13 @@
     }
 
     if (dirty) sendNotifications(notes);
+  }
+
+  // Rturns the count for current-marked ads for the url
+  // or if none exists, then all ads stored for the url
+  var currentCount = exports.currentCount = function (url) {
+
+    return adlist(url, true).length || adlist(url).length;
   }
 
   var clearAds = exports.clearAds = function () {
@@ -1476,7 +1491,7 @@
       µb.pageStoreFromTabId(request.tabId) || pageStore;
 
     if (!reqPageStore)
-      warn('Unexpected state: no pageStore', request, pageStore, tabId);
+      warn('No pageStore', request, pageStore, tabId);
 
     return adsForUI(reqPageStore.rawURL);
   };

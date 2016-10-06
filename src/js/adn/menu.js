@@ -91,7 +91,7 @@
 
     if (json.notifications && json.notifications.length){
       renderNotifications(json.notifications);
-      adjustBlockHeight();    
+      adjustBlockHeight();
     }
   }
 
@@ -222,11 +222,9 @@
     return false;
   }
 
-  var doRecent = function (data) {
+  var doRecent = function (data) { // return 6 newest ads
 
-    //$("#alert").removeClass('hide');
     uDom("#alert").removeClass('hide');
-    //$('#ad-list-items').addClass('recent-ads');
     uDom('#ad-list-items').addClass('recent-ads');
 
     return data.sort(byField('-foundTs')).slice(0, 6);
@@ -237,19 +235,19 @@
     var res = [];
 
     // first try current ads
-    // for (var i = 0; i < ads.length; i++) {
-    //   if (ads[i] && ads[i].pageUrl === pageUrl) {
-    //     res.push(ads[i]);
-    //   }
-    // }
+    for (var i = 0; i < ads.length; i++) {
+      if (ads[i] && ads[i].pageUrl === pageUrl && ads[i].current) {
+        res.push(ads[i]);
+      }
+    }
 
     // then all page ads
     if (res.length === 0) {
-        for (var i = 0; i < ads.length; i++) {
-          if (ads[i] && ads[i].pageUrl === pageUrl) {
-            res.push(ads[i]);
-          }
+      for (var i = 0; i < ads.length; i++) {
+        if (ads[i] && ads[i].pageUrl === pageUrl) {
+          res.push(ads[i]);
         }
+      }
     }
 
     return res.sort(byField('-foundTs'));

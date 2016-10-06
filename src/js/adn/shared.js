@@ -314,11 +314,14 @@ var computeHash = function (ad) { // DO NOT MODIFY
   }
 
   var hash = ad.pageDomain || ad.pageUrl, // change from pageUrl (4/3/16) ***
-    // fall back to pageUrl if pageDomain is undefined for backward compatibility
+    // fall back to pageUrl if no pageDomain, for backward compatibility
     keys = Object.keys(ad.contentData).sort();
 
   for (var i = 0; i < keys.length; i++) {
-    hash += '::' + ad.contentData[keys[i]];
+
+    // fix to #445  (10/7/16)
+    if (keys[i] != 'width' && keys[i] != 'height')
+      hash += '::' + ad.contentData[keys[i]];
   }
 
   return hash;
