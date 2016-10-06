@@ -78,8 +78,6 @@ if ( typeof vAPI !== 'object' ) {
 }
 vAPI.lock();
 
-vAPI.executionCost.start();
-
 vAPI.matchesProp = (function() {
     var docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
@@ -416,8 +414,6 @@ var domFilterer = {
     },
 
     commit_: function() {
-        vAPI.executionCost.start();
-
         commitTimer = null;
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
@@ -503,8 +499,6 @@ var domFilterer = {
                 503
             );
         }
-
-        vAPI.executionCost.stop('domFilterer.commit_');
     },
 
     commit: function(nodes, commitNow) {
@@ -700,8 +694,6 @@ return domFilterer;
             return;
         }
 
-        vAPI.executionCost.start();
-
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
@@ -761,8 +753,6 @@ return domFilterer;
         } else {
             document.addEventListener('DOMContentLoaded', vAPI.domIsLoaded);
         }
-
-        vAPI.executionCost.stop('domIsLoading/responseHandler');
     };
 
     var url = window.location.href;
@@ -793,8 +783,6 @@ vAPI.domWatcher = (function() {
         listeners = [];
 
     var safeObserverHandler = function() {
-        vAPI.executionCost.start();
-
         safeObserverHandlerTimer = null;
         var i = addedNodeLists.length,
             nodeList, iNode, node;
@@ -821,15 +809,11 @@ vAPI.domWatcher = (function() {
             addedNodes.length = 0;
             removedNodes = false;
         }
-
-        vAPI.executionCost.stop('domWatcher/safeObserverHandler');
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     var observerHandler = function(mutations) {
-        vAPI.executionCost.start();
-
         var nodeList, mutation,
             i = mutations.length;
         while ( i-- ) {
@@ -845,8 +829,6 @@ vAPI.domWatcher = (function() {
         if ( (addedNodeLists.length !== 0 || removedNodes) && safeObserverHandlerTimer === null ) {
             safeObserverHandlerTimer = window.requestAnimationFrame(safeObserverHandler);
         }
-
-        vAPI.executionCost.stop('domWatcher/observerHandler');
     };
 
     var addListener = function(listener) {
@@ -935,7 +917,6 @@ vAPI.domCollapser = (function() {
         if ( requests === null || Array.isArray(requests) === false ) {
             return;
         }
-        vAPI.executionCost.start();
         var selectors = [],
             netSelectorCacheCountMax = response.netSelectorCacheCountMax,
             aa = [ null ],
@@ -986,11 +967,9 @@ vAPI.domCollapser = (function() {
                 }
             );
         }
-        vAPI.executionCost.stop('domCollapser/onProcessed');
     };
 
     var send = function() {
-        vAPI.executionCost.start();
         timer = null;
         // https://github.com/gorhill/uBlock/issues/1927
         // Normalize hostname to avoid trailing dot of FQHN.
@@ -1011,7 +990,6 @@ vAPI.domCollapser = (function() {
             }, onProcessed
         );
         roundtripRequests = [];
-        vAPI.executionCost.stop('domCollapser/send');
     };
 
     var process = function(delay) {
@@ -1134,10 +1112,8 @@ vAPI.domCollapser = (function() {
     };
 
     var onResourceFailed = function(ev) {
-        vAPI.executionCost.start();
         vAPI.domCollapser.add(ev.target);
         vAPI.domCollapser.process();
-        vAPI.executionCost.stop('domCollapser/onResourceFailed');
     };
 
     var domChangedHandler = function(nodes) {
@@ -1212,13 +1188,12 @@ vAPI.domSurveyor = (function() {
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = Object.create(null);
+        queriedSelectors = Object.create(null),
+        surveyCost = 0;
 
     // Handle main process' response.
 
     var surveyPhase3 = function(response) {
-        vAPI.executionCost.start();
-
         var result = response && response.result,
             firstSurvey = highGenerics === null;
 
@@ -1232,6 +1207,7 @@ vAPI.domSurveyor = (function() {
         }
 
         if ( highGenerics ) {
+            var t0 = window.performance.now();
             if ( highGenerics.hideLowCount ) {
                 processHighLowGenerics(highGenerics.hideLow);
             }
@@ -1241,6 +1217,7 @@ vAPI.domSurveyor = (function() {
             if ( highGenerics.hideHighSimpleCount || highGenerics.hideHighComplexCount ) {
                 processHighHighGenerics();
             }
+            surveyCost += window.performance.now() - t0;
         }
 
         // Need to do this before committing DOM filterer, as needed info
@@ -1252,7 +1229,9 @@ vAPI.domSurveyor = (function() {
                     what: 'cosmeticFiltersInjected',
                     type: 'cosmetic',
                     hostname: window.location.hostname,
-                    selectors: domFilterer.job0._0
+                    selectors: domFilterer.job0._0,
+                    first: firstSurvey,
+                    cost: surveyCost
                 }
             );
         }
@@ -1266,8 +1245,6 @@ vAPI.domSurveyor = (function() {
 
         domFilterer.commit(surveyPhase3Nodes);
         surveyPhase3Nodes = [];
-
-        vAPI.executionCost.stop('domSurveyor/surveyPhase3');
     };
 
     // Query main process.
@@ -1460,11 +1437,12 @@ vAPI.domSurveyor = (function() {
     // http://jsperf.com/enumerate-classes/6
 
     var surveyPhase1 = function(addedNodes) {
-        var nodes = selectNodes('[class],[id]', addedNodes);
-        var qq = queriedSelectors;
-        var ll = lowGenericSelectors;
-        var node, v, vv, j;
-        var i = nodes.length;
+        var t0 = window.performance.now(),
+            nodes = selectNodes('[class],[id]', addedNodes),
+            qq = queriedSelectors,
+            ll = lowGenericSelectors,
+            node, v, vv, j,
+            i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
             if ( node.nodeType !== 1 ) { continue; }
@@ -1496,6 +1474,7 @@ vAPI.domSurveyor = (function() {
                 }
             }
         }
+        surveyCost += window.performance.now() - t0;
         surveyPhase2(addedNodes);
     };
 
@@ -1544,8 +1523,6 @@ vAPI.domIsLoaded = function(ev) {
         document.removeEventListener('DOMContentLoaded', vAPI.domIsLoaded);
     }
     vAPI.domIsLoaded = null;
-
-    vAPI.executionCost.start();
 
     vAPI.domWatcher.start();
     vAPI.domCollapser.start();
@@ -1604,12 +1581,8 @@ vAPI.domIsLoaded = function(ev) {
             document.removeEventListener('mousedown', onMouseClick, true);
         });
     })();
-
-    vAPI.executionCost.stop('domIsLoaded');
 };
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
-
-vAPI.executionCost.stop('contentscript.js');

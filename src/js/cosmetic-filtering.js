@@ -410,10 +410,15 @@ SelectorCacheEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.addCosmetic = function(selectors) {
-    var i = selectors.length || 0;
-    if ( i === 0 ) {
-        this.cosmeticSurveyingMissCount += 1;
+SelectorCacheEntry.prototype.addCosmetic = function(details) {
+    var selectors = details.selectors,
+        i = selectors.length || 0;
+    // https://github.com/gorhill/uBlock/issues/2011
+    //   Avoiding seemingly pointless surveys only if they appear costly.
+    if ( details.first && i === 0 ) {
+        if ( (details.cost || 0) >= 80 ) {
+            this.cosmeticSurveyingMissCount += 1;
+        }
         return;
     }
     this.cosmeticSurveyingMissCount = 0;
@@ -474,12 +479,12 @@ SelectorCacheEntry.prototype.addNetMany = function(selectors, now) {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.add = function(selectors, type) {
+SelectorCacheEntry.prototype.add = function(details) {
     this.lastAccessTime = Date.now();
-    if ( type === 'cosmetic' ) {
-        this.addCosmetic(selectors);
+    if ( details.type === 'cosmetic' ) {
+        this.addCosmetic(details);
     } else {
-        this.addNet(selectors);
+        this.addNet(details.selectors);
     }
 };
 
@@ -1526,7 +1531,7 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
         this.selectorCacheCount += 1;
         this.triggerSelectorCachePruner();
     }
-    entry.add(selectors, details.type);
+    entry.add(details);
 };
 
 /******************************************************************************/
