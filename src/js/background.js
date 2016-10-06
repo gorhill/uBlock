@@ -60,7 +60,7 @@ return {
         disableHidingForDNT: false,
         disableClickingForDNT: false,
 
-        noThirdPartyCookies: false,
+        noThirdPartyCookies: true,
 
         noIncomingCookies: true,
         noOutgoingCookies: true,

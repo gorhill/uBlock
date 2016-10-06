@@ -51,7 +51,6 @@ var whitelistChanged = function() {
 
 var renderWhitelist = function() {
     var onRead = function(response) {
-        console.log("renderWhitelist.onRead",whitelist);
         cachedWhitelist = response.whitelist.trim();
         uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
 

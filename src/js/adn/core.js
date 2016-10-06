@@ -1016,7 +1016,7 @@
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
-    //this for backwards compatibility
+    // this for backwards compatibility only
     var mapSz = Object.keys(settings.admap).length;
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
@@ -1309,8 +1309,8 @@
    */
   var adlist = exports.adlist = function (pageUrl) {
 
-    var result = [],
-      pages = pageUrl ? [pageUrl] : Object.keys(admap);
+    var result = [], pages = pageUrl ? [pageUrl]
+      : Object.keys(admap || µb.userSettings.admap);
 
     for (var i = 0; i < pages.length; i++) {
 
@@ -1452,7 +1452,7 @@
   };
 
   exports.getNotifications = function () {
-    
+
     return notifications;
   }
 
