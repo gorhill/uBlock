@@ -891,8 +891,8 @@ vAPI.tabs.registerListeners();
 
             if (state && this.userSettings.showIconBadge) {
 
-                var num = µb.adnauseam.adlist(pageStore.rawURL).length;
-                badge = this.formatCount(num);
+                var count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
+                badge = this.formatCount(count);
             }
         }
 
