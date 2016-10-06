@@ -194,14 +194,14 @@ vAPI.browserSettings = {
 
             case 'thirdPartyCookiesAllowed':
                 //console.log('vapi: thirdPartyCookiesAllowed', !!details[setting]);
-                try {
+                /*try {
                     chrome.privacy.websites.thirdPartyCookiesAllowed.set({
                         value: !!details[setting],
                         scope: 'regular'
                     }, callback);
                 } catch(ex) {
                     console.error(ex);
-                }
+                }*/
                 break;
 
             case 'webrtcIPAddress':

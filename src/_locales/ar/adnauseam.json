@@ -207,10 +207,6 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
-  "noThirdPartyCookiesPrompt":{
-    "message":"Disallow third-party cookies",
-    "description":"English: Disallow third-party cookies"
-  },
   "extName":{
     "message":"AdNauseam",
     "description":"extension name"

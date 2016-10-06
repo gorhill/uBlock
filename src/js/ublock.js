@@ -334,7 +334,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         adn.verifySetting(BlockingDisabled, !us.blockingMalware);
         break;
     case 'noThirdPartyCookies':
-        vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
+        //vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;
 
     /****************************************************************/
