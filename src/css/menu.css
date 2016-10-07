@@ -342,7 +342,7 @@ header{
 }
 
 .ad-item .thumb:hover img{
-  max-width:none;
+  max-width:380px;
   max-height: 300px;
   position:relative;
   z-index: 100;
