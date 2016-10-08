@@ -606,7 +606,7 @@ var filtersFrom = function(x, y) {
     // https://github.com/gorhill/uBlock/issues/1545
     // Network filter candidates from all other elements found at point (x, y).
     if ( typeof x === 'number' ) {
-        var attrName = vAPI.sessionId + '-clickblind';
+        var attrName = pickerRoot.id + '-clickblind';
         var previous;
         elem = first;
         while ( elem !== null ) {
@@ -1345,6 +1345,11 @@ var stopPicker = function() {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/2060
+    if ( vAPI.userCSS ) {
+        vAPI.userCSS.remove(pickerStyle.textContent);
+    }
+
     window.removeEventListener('scroll', onScrolled, true);
     pickerRoot.contentWindow.removeEventListener('keydown', onKeyPressed, true);
     taCandidate.removeEventListener('input', onCandidateChanged);
@@ -1496,15 +1501,23 @@ pickerRoot.style.cssText = [
 // a dedicated style tag.
 pickerStyle = document.createElement('style');
 pickerStyle.textContent = [
-    '#' + vAPI.sessionId + ' {',
+    '#' + pickerRoot.id + ' {',
         pickerRoot.style.cssText,
     '}',
-    '[' + vAPI.sessionId + '-clickblind] {',
+    '[' + pickerRoot.id + '-clickblind] {',
         'pointer-events: none !important;',
     '}',
     ''
 ].join('\n');
 document.documentElement.appendChild(pickerStyle);
+
+// https://github.com/gorhill/uBlock/issues/2060
+if ( vAPI.domFilterer ) {
+    pickerRoot[vAPI.domFilterer.getExcludeId()] = true;
+}
+if ( vAPI.userCSS ) {
+    vAPI.userCSS.add(pickerStyle.textContent);
+}
 
 pickerRoot.onload = function() {
     vAPI.shutdown.add(stopPicker);

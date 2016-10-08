@@ -292,6 +292,7 @@ var domFilterer = {
     removedNodesHandlerMissCount: 0,
     disabledId: vAPI.randomToken(),
     enabled: true,
+    excludeId: undefined,
     hiddenId: vAPI.randomToken(),
     hiddenNodeCount: 0,
     hiddenNodeEnforcer: false,
@@ -519,10 +520,16 @@ var domFilterer = {
         }
     },
 
-    hideNode: function(node) {
-        if ( node[this.hiddenId] !== undefined ) {
-            return;
+    getExcludeId: function() {
+        if ( this.excludeId === undefined ) {
+            this.excludeId = vAPI.randomToken();
         }
+        return this.excludeId;
+    },
+
+    hideNode: function(node) {
+        if ( node[this.hiddenId] !== undefined ) { return; }
+        if ( this.excludeId !== undefined && node[this.excludeId] ) { return; }
         node.setAttribute(this.hiddenId, '');
         this.hiddenNodeCount += 1;
         node.hidden = true;
@@ -535,9 +542,7 @@ var domFilterer = {
             if ( styleAttr !== '' ) { styleAttr += '; '; }
             node.setAttribute('style', styleAttr + 'display: none !important;');
         }
-        if ( shadowId === undefined ) {
-            return;
-        }
+        if ( shadowId === undefined ) { return; }
         var shadow = node.shadowRoot;
         if ( shadow ) {
             if ( shadow[shadowId] && shadow.firstElementChild !== null ) {

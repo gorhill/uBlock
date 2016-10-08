@@ -430,43 +430,42 @@ vAPI.messaging.start();
 
 /******************************************************************************/
 
-vAPI.userCSS = (function() {
-    if ( !self.injectCSS ) {
-        return;
-    }
-    var injectCSS = self.injectCSS,
-        removeCSS = self.removeCSS,
-        userCSS = '',
-        sheetURI = '';
-    var load = function() {
-        if ( userCSS === '' || sheetURI !== '' ) { return; }
-        sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(userCSS);
-        injectCSS(sheetURI);
-    };
-    var unload = function() {
-        if ( sheetURI === '' ) { return; }
-        removeCSS(sheetURI);
-        sheetURI = '';
-    };
-    var add = function(cssText) {
-        if ( cssText === '' ) { return; }
-        if ( userCSS !== '' ) { userCSS += '\n'; }
-        userCSS += cssText;
-        unload();
-        load();
-    };
-    var toggle = function(state) {
-        if ( userCSS === '' ) { return; }
-        if ( state === undefined ) {
-            state = sheetURI === '';
+if ( self.injectCSS ) {
+    vAPI.userCSS = {
+        _userCSS: '',
+        _sheetURI: '',
+        _load: function() {
+            if ( this._userCSS === '' || this._sheetURI !== '' ) { return; }
+            this._sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(this._userCSS);
+            self.injectCSS(this._sheetURI);
+        },
+        _unload: function() {
+            if ( this._sheetURI === '' ) { return; }
+            self.removeCSS(this._sheetURI);
+            this._sheetURI = '';
+        },
+        add: function(cssText) {
+            if ( cssText === '' ) { return; }
+            if ( this._userCSS !== '' ) { this._userCSS += '\n'; }
+            this._userCSS += cssText;
+            this._unload();
+            this._load();
+        },
+        remove: function(cssText) {
+            if ( cssText === '' || this._userCSS === '' ) { return; }
+            this._userCSS = this._userCSS.replace(cssText, '').trim();
+            this._unload();
+            this._load();
+        },
+        toggle: function(state) {
+            if ( this._userCSS === '' ) { return; }
+            if ( state === undefined ) {
+                state = this._sheetURI === '';
+            }
+            return state ? this._load() : this._unload();
         }
-        return state ? load() : unload();
     };
-    return {
-        add: add,
-        toggle: toggle
-    };
-})();
+}
 
 /******************************************************************************/
 
