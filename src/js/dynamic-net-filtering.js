@@ -217,9 +217,6 @@ Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
 
     // Specific destinations
     for ( var desHostname in desHostnames ) {
-        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
-            continue;
-        }
         ruleKey = '* ' + desHostname;
         if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
             return false;

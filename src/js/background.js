@@ -89,8 +89,8 @@ return {
         blockedRequestCount: 0,
         allowedRequestCount: 0
     },
-    localSettingsModifyTime: 0,
-    localSettingsSaveTime: 0,
+    localSettingsLastModified: 0,
+    localSettingsLastSaved: 0,
 
     // read-only
     systemSettings: {

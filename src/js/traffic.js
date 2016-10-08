@@ -89,9 +89,7 @@ var onBeforeRequest = function(details) {
 
     var result = pageStore.filterRequest(requestContext);
 
-    // Possible outcomes: blocked, allowed-passthru, allowed-mirror
-
-    pageStore.logRequest(requestContext, result);
+    pageStore.journalAddRequest(requestContext.requestHostname, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
@@ -116,12 +114,6 @@ var onBeforeRequest = function(details) {
     }
 
     // Blocked
-
-    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
-    // No point updating the badge if it's not being displayed.
-    if ( µb.userSettings.showIconBadge ) {
-        µb.updateBadgeAsync(tabId);
-    }
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
@@ -222,7 +214,8 @@ var onBeforeRootFrameRequest = function(details) {
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
-        pageStore.logRequest(context, result);
+        pageStore.journalAddRootFrame('uncommitted', requestURL);
+        pageStore.journalAddRequest(requestHostname, result);
     }
 
     if ( µb.logger.isEnabled() ) {
@@ -299,7 +292,7 @@ var onBeforeBeacon = function(details) {
     context.requestType = details.type;
     // "g" in "gb:" stands for "global setting"
     var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
-    pageStore.logRequest(context, result);
+    pageStore.journalAddRequest(context.requestHostname, result);
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
@@ -343,7 +336,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         result = pageStore.filterRequestNoCache(context);
     }
 
-    pageStore.logRequest(context, result);
+    pageStore.journalAddRequest(context.requestHostname, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(

@@ -50,13 +50,13 @@
     var saveAfter = 4 * 60 * 1000;
 
     var save = function() {
-        this.localSettingsSaveTime = Date.now();
+        this.localSettingsLastSaved = Date.now();
         vAPI.storage.set(this.localSettings);
     };
 
     var onTimeout = function() {
         var µb = µBlock;
-        if ( µb.localSettingsModifyTime > µb.localSettingsSaveTime ) {
+        if ( µb.localSettingsLastModified > µb.localSettingsLastSaved ) {
             save.call(µb);
         }
         vAPI.setTimeout(onTimeout, saveAfter);

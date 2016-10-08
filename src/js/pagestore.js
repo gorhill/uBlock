@@ -266,6 +266,10 @@ var pageStoreJunkyardMax = 10;
 
 var PageStore = function(tabId) {
     this.init(tabId);
+    this.journal = [];
+    this.journalTimer = null;
+    this.journalLastCommitted = this.journalLastUncommitted = undefined;
+    this.journalLastUncommittedURL = undefined;
 };
 
 /******************************************************************************/
@@ -298,7 +302,7 @@ PageStore.prototype.init = function(tabId) {
     this.tabHostname = tabContext.rootHostname;
     this.title = tabContext.rawURL;
     this.rawURL = tabContext.rawURL;
-    this.hostnameToCountMap = {};
+    this.hostnameToCountMap = new Map();
     this.contentLastModified = 0;
     this.frames = Object.create(null);
     this.perLoadBlockedRequestCount = 0;
@@ -388,10 +392,6 @@ PageStore.prototype.reuse = function(context) {
 /******************************************************************************/
 
 PageStore.prototype.dispose = function() {
-    // rhill 2013-11-07: Even though at init time these are reset, I still
-    // need to release the memory taken by these, which can amount to
-    // sizeable enough chunks (especially requests, through the request URL
-    // used as a key).
     this.tabHostname = '';
     this.title = '';
     this.rawURL = '';
@@ -403,6 +403,12 @@ PageStore.prototype.dispose = function() {
     }
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
+    if ( this.journalTimer !== null ) {
+        clearTimeout(this.journalTimer);
+        this.journalTimer = null;
+    }
+    this.journal = [];
+    this.journalLastUncommittedURL = undefined;
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
         pageStoreJunkyard.push(this);
     }
@@ -519,6 +525,92 @@ PageStore.prototype.temporarilyAllowLargeMediaElements = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2053
+//   There is no way around using journaling to ensure we deal properly with
+//   potentially out of order navigation events vs. network request events.
+
+PageStore.prototype.journalAddRequest = function(hostname, result) {
+    if ( hostname === '' ) { return; }
+    this.journal.push(
+        hostname,
+        result.charCodeAt(1) === 0x62 /* 'b' */ ? 0x00000001 : 0x00010000
+    );
+    if ( this.journalTimer === null ) {
+        this.journalTimer = vAPI.setTimeout(this.journalProcess.bind(this, true), 1000);
+    }
+};
+
+PageStore.prototype.journalAddRootFrame = function(type, url) {
+    if ( type === 'committed' ) {
+        this.journalLastCommitted = this.journal.length;
+        if (
+            this.journalLastUncommitted !== undefined &&
+            this.journalLastUncommitted < this.journalLastCommitted &&
+            this.journalLastUncommittedURL === url
+        ) {
+            this.journalLastCommitted = this.journalLastUncommitted;
+            this.journalLastUncommitted = undefined;
+        }
+    } else if ( type === 'uncommitted' ) {
+        this.journalLastUncommitted = this.journal.length;
+        this.journalLastUncommittedURL = url;
+    }
+    if ( this.journalTimer !== null ) {
+        clearTimeout(this.journalTimer);
+    }
+    this.journalTimer = vAPI.setTimeout(this.journalProcess.bind(this, true), 1000);
+};
+
+PageStore.prototype.journalProcess = function(fromTimer) {
+    if ( !fromTimer ) {
+        clearTimeout(this.journalTimer);
+    }
+    this.journalTimer = null;
+
+    var journal = this.journal,
+        i, n = journal.length,
+        hostname, count, hostnameCounts,
+        aggregateCounts = 0,
+        now = Date.now(),
+        pivot = this.journalLastCommitted || 0;
+
+    // Everything after pivot originates from current page.
+    for ( i = pivot; i < n; i += 2 ) {
+        hostname = journal[i];
+        hostnameCounts = this.hostnameToCountMap.get(hostname);
+        if ( hostnameCounts === undefined ) {
+            hostnameCounts = 0;
+            this.contentLastModified = now;
+        }
+        count = journal[i+1];
+        this.hostnameToCountMap.set(hostname, hostnameCounts + count);
+        aggregateCounts += count;
+    }
+    this.perLoadBlockedRequestCount += aggregateCounts & 0xFFFF;
+    this.perLoadAllowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
+    this.journalLastCommitted = undefined;
+
+    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
+    //   No point updating the badge if it's not being displayed.
+    if ( (aggregateCounts & 0xFFFF) && µb.userSettings.showIconBadge ) {
+        µb.updateBadgeAsync(this.tabId);
+    }
+
+    // Everything before pivot does not originate from current page -- we still
+    // need to bump global blocked/allowed counts.
+    for ( i = 0; i < pivot; i += 2 ) {
+        aggregateCounts += journal[i+1];
+    }
+    if ( aggregateCounts !== 0 ) {
+        µb.localSettings.blockedRequestCount += aggregateCounts & 0xFFFF;
+        µb.localSettings.allowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
+        µb.localSettingsLastModified = now;
+    }
+    journal.length = 0;
+};
+
+/******************************************************************************/
+
 PageStore.prototype.filterRequest = function(context) {
     var requestType = context.requestType;
 
@@ -623,34 +715,6 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     }
 
     return result;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.logRequest = function(context, result) {
-    var requestHostname = context.requestHostname;
-    // rhill 20150206:
-    // be prepared to handle invalid requestHostname, I've seen this
-    // happen: http://./
-    if ( requestHostname === '' ) {
-        requestHostname = context.rootHostname;
-    }
-    var now = Date.now();
-    if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
-        this.hostnameToCountMap[requestHostname] = 0;
-        this.contentLastModified = now;
-    }
-    var c = result.charAt(1);
-    if ( c === 'b' ) {
-        this.hostnameToCountMap[requestHostname] += 0x00000001;
-        this.perLoadBlockedRequestCount++;
-        µb.localSettings.blockedRequestCount++;
-    } else /* if ( c === '' || c === 'a' || c === 'n' ) */ {
-        this.hostnameToCountMap[requestHostname] += 0x00010000;
-        this.perLoadAllowedRequestCount++;
-        µb.localSettings.allowedRequestCount++;
-    }
-    µb.localSettingsModifyTime = now;
 };
 
 // https://www.youtube.com/watch?v=drW8p_dTLD4
