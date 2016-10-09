@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global createSet */
+
 'use strict';
 
 /*******************************************************************************
@@ -100,50 +102,6 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-if ( typeof self.Set !== 'function' ) {
-    self.Set = function() {
-        this._set = [];
-        this._i = 0;
-        this.value = undefined;
-    };
-    self.Set.prototype = {
-        polyfill: true,
-        clear: function() {
-            this._set = [];
-        },
-        add: function(k) {
-            if ( this._set.indexOf(k) === -1 ) {
-                this._set.push(k);
-            }
-        },
-        delete: function(k) {
-            var pos = this._set.indexOf(k);
-            if ( pos !== -1 ) {
-                this._set.splice(pos, 1);
-                return true;
-            }
-            return false;
-        },
-        has: function(k) {
-            return this._set.indexOf(k) !== -1;
-        },
-        values: function() {
-            this._i = 0;
-            return this;
-        },
-        next: function() {
-            this.value = this._set[this._i];
-            this._i += 1;
-            return this;
-        }
-    };
-    Object.defineProperty(self.Set.prototype, 'size', {
-        get: function() { return this._set.length; }
-    });
-}
-
-/******************************************************************************/
-
 var shadowId = document.documentElement.shadowRoot !== undefined ?
     vAPI.randomToken():
     undefined;
@@ -157,8 +115,8 @@ var jobQueue = [
 
 var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 
-var allExceptions = Object.create(null),
-    allSelectors = Object.create(null),
+var allExceptions = createSet(),
+    allSelectors = createSet(),
     commitTimer = null,
     stagedNodes = [],
     matchesProp = vAPI.matchesProp,
@@ -168,7 +126,7 @@ var allExceptions = Object.create(null),
 // Set() is used to implement this functionality.
 
 var complexSelectorsOldResultSet,
-    complexSelectorsCurrentResultSet = new Set();
+    complexSelectorsCurrentResultSet = createSet('object');
 
 /******************************************************************************/
 
@@ -308,7 +266,7 @@ var domFilterer = {
 
     addExceptions: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
-            allExceptions[aa[i]] = true;
+            allExceptions.add(aa[i]);
         }
     },
 
@@ -324,10 +282,10 @@ var domFilterer = {
     //     xpath/hide
 
     addSelector: function(s) {
-        if ( allSelectors[s] || allExceptions[s] ) {
+        if ( allSelectors.has(s) || allExceptions.has(s) ) {
             return;
         }
-        allSelectors[s] = true;
+        allSelectors.add(s);
         var sel0 = s, sel1 = '';
         if ( s.charCodeAt(s.length - 1) === 0x29 ) {
             var parts = reParserEx.exec(s);
@@ -445,7 +403,7 @@ var domFilterer = {
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
-        complexSelectorsCurrentResultSet = new Set();
+        complexSelectorsCurrentResultSet = createSet('object');
 
         // Stock job 3 = complex css selectors/hide
         // The handling of these can be considered optional, since they are
@@ -1193,7 +1151,7 @@ vAPI.domSurveyor = (function() {
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = Object.create(null),
+        queriedSelectors = createSet(),
         surveyCost = 0;
 
     // Handle main process' response.
@@ -1454,28 +1412,19 @@ vAPI.domSurveyor = (function() {
             v = node.id;
             if ( v !== '' && typeof v === 'string' ) {
                 v = '#' + v.trim();
-                if ( v !== '#' && qq[v] === undefined ) {
-                    ll.push(v);
-                    qq[v] = true;
-                }
+                if ( v !== '#' && !qq.has(v) ) { ll.push(v); qq.add(v); }
             }
             vv = node.className;
             if ( vv === '' || typeof vv !== 'string' ) { continue; }
             if ( /\s/.test(vv) === false ) {
                 v = '.' + vv;
-                if ( qq[v] === undefined ) {
-                    ll.push(v);
-                    qq[v] = true;
-                }
+                if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
             } else {
                 vv = node.classList;
                 j = vv.length;
                 while ( j-- ) {
                     v = '.' + vv[j];
-                    if ( qq[v] === undefined ) {
-                        ll.push(v);
-                        qq[v] = true;
-                    }
+                    if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
                 }
             }
         }
