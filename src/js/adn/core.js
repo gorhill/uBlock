@@ -45,7 +45,7 @@
     'CHN: CJX\'s Annoyance List‎', 'Spam404', 'Anti-Adblock Killer | Reek‎',
     'Fanboy’s Social Blocking List', 'Malware domains (long-lived)‎',
     'Adblock Warning Removal List', 'Malware filter list by Disconnect',
-    'Basic tracking list by Disconnect', 
+    'Basic tracking list by Disconnect'
   ];
 
   // targets on these domains are never internal (may need to be regexs)
