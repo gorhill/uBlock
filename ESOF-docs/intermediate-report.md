@@ -17,4 +17,16 @@ O uBlock Origin vem incluído com 4 modos:
 
 **Medium mode** - modo para utilizadores avançados, similar à utilização do [*AdBlock Plus*](https://adblockplus.org/) e [*NoScript*](https://noscript.net/). Este modo irá aumentar significativamente a *performance* do *browser* e diminuir drasticamente a exposição de privacidade do utilizador. Há a possibilidade de algumas paginas *web* não carregarem corretamente.
 
-**Hard mode** - 
+**Hard mode** - modo para utilizadores avançados que bloqueia todo o tipo de interação com terceiros e contém umas regras míninas para que a página carregue corretamente.
+
+O projeto está licenciado de acordo com a licença [GPLv3](../LICENSE.txt).
+
+## Processo de Desenvolvimento
+
+## Críticas e Opiniões
+
+## Grupo e Contribuição
+
+* Bernardo Belchior - up201405381 -
+* Edgar Passos - up201404131 -
+* José Pedro Monteiro - up201406458 - 
