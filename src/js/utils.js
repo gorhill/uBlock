@@ -43,6 +43,9 @@
     // Tokenize on demand.
     getTokens: function() {
         if ( this._tokenized === false ) {
+            if ( this._gcAfter === undefined ) {
+                this._gcAfter = Date.now() + 1499;
+            }
             this._tokenize();
             this._tokenized = true;
         }
@@ -55,7 +58,7 @@
 
     _Entry: function() {
         this.beg = 0;
-        this.token = '';
+        this.token = undefined;
     },
 
     // https://github.com/chrisaljoudi/uBlock/issues/1118
@@ -65,7 +68,6 @@
         for ( var i = 0; i < 2048; i++ ) {
             this._tokens[i] = new this._Entry();
         }
-
         this._init = null;
     },
 
@@ -75,24 +77,33 @@
             url = this._urlOut;
         var matches, entry;
         re.lastIndex = 0;
-
         for ( var i = 0; i < 2047; i++ ) {
             matches = re.exec(url);
-            if ( matches === null ) {
-                break;
-            }
+            if ( matches === null ) { break; }
             entry = tokens[i];
             entry.beg = matches.index;
             entry.token = matches[0];
         }
         tokens[i].token = ''; // Sentinel
+        // Could no-longer-used-but-still-referenced string fragments 
+        // contribute to memory fragmentation in the long-term? The code below
+        // is to address this: left over unused string fragments are removed at
+        // regular interval.
+        if ( Date.now() < this._gcAfter ) { return; }
+        this._gcAfter = undefined;
+        for ( i += 1; i < 2047; i++ ) {
+            entry = tokens[i];
+            if ( entry.token === undefined ) { break; }
+            entry.token = undefined;
+        }
     },
 
     _urlIn: '',
     _urlOut: '',
     _tokenized: false,
     _tokens: null,
-    _reAnyToken: /[%0-9a-z]+/g
+    _reAnyToken: /[%0-9a-z]+/g,
+    _gcAfter: undefined
 };
 
 µBlock.urlTokenizer._init();
