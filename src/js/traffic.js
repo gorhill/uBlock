@@ -510,15 +510,17 @@
         (prefs.noOutgoingCookies && name === 'cookie') ||
         (prefs.noOutgoingUserAgent && name === 'user-agent')) {
 
+        setHeader(headers[i], '');
+      
         // block outgoing cookies and user-agent here if specified
         if (prefs.noOutgoingCookies && name === 'cookie') {
           µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
         }
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-          µBlock.adnauseam.logNetEvent('[UAGENT]', 'Strip', headers[i].value, details.url);
+           headers[i] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36";
+           µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
-
-        setHeader(headers[i], '');
+        
       }
 
       if (name === 'referer') refererIdx = i;
