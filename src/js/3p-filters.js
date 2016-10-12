@@ -497,6 +497,10 @@ var selectFilterLists = function(callback) {
         //var name = li.descendants('a').text();
         var loc = li.descendants('a').attr('data-listkey');
         var off = li.descendants('input').prop('checked') === false;
+
+        // ADN: don't send data about hidden lists
+        if (hiddenLists.indexOf(loc) > -1) continue;
+
         switches.push({ location: loc, off: off });
     }
 

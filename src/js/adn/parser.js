@@ -195,10 +195,7 @@
 
     var normalizeUrl = function (proto, host, url) {
 
-      var dbg = proto==='https:'
-
-      if (url.indexOf('http') === 0) return url;
-
+      if (!url || url.indexOf('http') === 0) return url;
       if (url.indexOf('//') === 0) return proto + url;
       if (url.indexOf('/') !== 0) url = '/' + url;
 

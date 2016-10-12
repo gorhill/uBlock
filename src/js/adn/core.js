@@ -985,42 +985,65 @@
       return allowRequest('RuleOff', raw, url);
     }
 
-    // always allow redirect blocks from list
+    // always allow redirect blocks from list (TODO: not for DNT?, exceptions in MyRules?)
     if (µb.redirectEngine.toURL(context)) {
 
       return true;
     }
 
-    // check the rule is on at least one blockable list
+    /*
+      Check active rule(s) to see if we should block or allow
+      Cases:
+        A) no lists:      allow
+        B) exception hit: allow
+        C) block hit:     block
+        D) no valid hits: allow, but no cookies later
+
+        Note: not sure why case A) ever happens, but appears to
+        only soon after an update to MyRules, perhaps before rule is compiled
+     */
     var lists = listsForFilter(compiled);
-    for (var i = 0; i < lists.length; i++) { //
+
+    if (lists.length === 0) {                       // case A
+
+      logNetAllow('NoList', 'NoRule', url);
+      return false;
+    }
+
+    for (var i = 0; i < lists.length; i++) {
 
       var name = lists[0];
 
       if (activeBlockList(name)) {
 
-        logNetBlock(name, raw + ': ', url);
+        if (raw.indexOf('@@') === 0) {              // case B
 
+          logNetAllow(name, raw + ': ', url);
+          return false;
+        }
+
+        logNetBlock(name, raw + ': ', url);         // case C
         return true; // blocked, no need to continue
+      }
+      else {
+
+        if (!misses) var misses = [];
+        misses.push(name);
       }
     }
 
-    return allowRequest(lists.join(' '), raw, url); // no valid blocks
-  }
-
-  var allowRequest = function (msg, rule, requestUrl) {
-
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
-    allowedExceptions[requestUrl] = +new Date();
-    logNetAllow(msg, rule, requestUrl);
+    allowedExceptions[requestUrl] = +new Date();    // case D
+    logNetEvent('[ALLOW!]', misses.join(' '), raw + ': ', requestUrl);
+
     return false;
   }
 
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
-    // this for backwards compatibility only
+    // this for backwards compatibility only ---------------------
     var mapSz = Object.keys(settings.admap).length;
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
@@ -1029,7 +1052,7 @@
       setTimeout(function () {
         storeUserData(true);
       }, 2000);
-    }
+    } // ---------------------------------------------------------
 
     initialize(settings);
   });
@@ -1404,10 +1427,21 @@
       dirty = removeNotification(notes, note);
     }
 
-    if (dirty) sendNotifications(notes);
+    if (dirty) {
+
+      // check whether DNT list state needs updating
+      if (note === ClickingDisabled || note === HidingDisabled) { 
+
+        //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds
+        var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
+        µb.selectFilterLists({ location: 'https://www.eff.org/files/effdntlist.txt', off: off })
+      }
+
+      sendNotifications(notes);
+    }
   }
 
-  // Rturns the count for current-marked ads for the url
+  // Returns the count for current-marked ads for the url
   // or if none exists, then all ads stored for the url
   var currentCount = exports.currentCount = function (url) {
 

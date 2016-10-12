@@ -650,6 +650,8 @@
 µBlock.selectFilterLists = function(switches) {
     switches = switches || {};
 
+    console.log('storage.js::µBlock.selectFilterLists', switches);
+
     // Only the lists referenced by the switches are touched.
     var filterLists = this.remoteBlacklists;
     var entry, state, location;
@@ -670,7 +672,6 @@
         filterLists[location].off = state;
     }
 
-    //console.log('storage.js::µBlock.selectFilterLists->verifyLists');
     µBlock.adnauseam.verifyLists(filterLists);
 
     vAPI.storage.set({ 'remoteBlacklists': filterLists });

@@ -546,7 +546,7 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === '' ) {
         µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
         result = µb.sessionURLFiltering.toFilterString();
-        (result !== '') && console.log('[WARN] sessionURLFiltering hit!', context, result);
+        if (result !== '') console.log('[WARN] sessionURLFiltering hit!', context, result);
     }
 
     // ADN: now check our firewall (top precedence)
@@ -569,7 +569,7 @@ PageStore.prototype.filterRequest = function(context) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
 
-            if (µb.adnauseam.mustAllow(result, context)) {
+            if (result.length && µb.adnauseam.mustAllow(result, context)) {
                 result = ''; // ADN: cannot block
             }
         }
