@@ -45,11 +45,14 @@
     'CHN: CJX\'s Annoyance List‎', 'Spam404', 'Anti-Adblock Killer | Reek‎',
     'Fanboy’s Social Blocking List', 'Malware domains (long-lived)‎',
     'Adblock Warning Removal List', 'Malware filter list by Disconnect',
-    'Basic tracking list by Disconnect'
+    'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist'
   ];
 
   // targets on these domains are never internal (may need to be regexs)
-  var internalLinkDomains = [ 'google.com', 'asiaxpat.com', 'nytimes.com', 'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com', 'yahoo.com','facebook.com'];
+  var internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
+    'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
+    'yahoo.com','facebook.com'
+  ];
 
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
