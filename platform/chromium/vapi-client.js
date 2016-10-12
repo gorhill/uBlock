@@ -61,7 +61,7 @@ if ( vAPI.sessionId ) {
     return;
 }
 
-vAPI.debugAdParsing = 0; // ADN
+//vAPI.debugAdParsing = 0; // replaced by core.js::netLogging
 
 /******************************************************************************/
 

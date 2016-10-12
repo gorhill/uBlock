@@ -1058,14 +1058,15 @@
 
   var contentPrefs = exports.contentPrefs = function () {
 
-    // preferences relevant to our ui-scripts
-    return {
+    // preferences relevant to our ui/content-scripts
+    var r = {
+      logEvents: netLogging,
       production: production,
-      automated: automatedMode,
       hidingDisabled: !µb.userSettings.hidingAds,
-      clickingDisabled: !µb.userSettings.clickingAds,
       textAdsDisabled: !µb.userSettings.parseTextAds,
     };
+
+    return r;
   };
 
   exports.toggleEnabled = function (request, pageStore, tabId) {

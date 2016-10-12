@@ -114,7 +114,7 @@ vAPI.executionCost.start();
 /******************************************************************************/
 
 vAPI.firefox = true;
-vAPI.debugAdParsing = false; // ADN
+//vAPI.debugAdParsing = 0; // replaced by core.js::netLogging
 
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +

@@ -124,8 +124,7 @@
 
     var processImage = function (img, src) {
 
-      var target, targetUrl, ad, hits = 0, loc = window.location,
-        dbug = (vAPI.debugAdParsing && !vAPI.prefs.production);
+      var target, targetUrl, ad, hits = 0, loc = window.location;
 
       target = clickableParent(img);
       if (target) {
@@ -165,8 +164,7 @@
           warnP("Bail: No href for anchor", target, img);
         }
       } else {
-        logP("Bail: No ClickableParent", img, img.parentNode,
-        img.parentNode.parentNode, img.parentNode.parentNode.parentNode);
+        logP("Bail: No ClickableParent", img, img.parentNode, img.parentNode.parentNode);
       }
     }
 
@@ -209,7 +207,7 @@
 
     var logP = function () {
 
-      if (vAPI.debugAdParsing) {
+      if (vAPI.prefs.logEvent === true) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
         console.log.apply(console, args);
@@ -218,7 +216,7 @@
 
     var warnP = function () {
 
-      if (vAPI.debugAdParsing) {
+      if (vAPI.prefs.logEvent === true) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
         console.warn.apply(console, args);
