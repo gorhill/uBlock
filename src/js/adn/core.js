@@ -1140,9 +1140,10 @@
 
   var logNetEvent = exports.logNetEvent = function () {
 
-    var args = Array.prototype.slice.call(arguments);
-    var action = args.shift()
-    if (netLogging && args.length) {
+    if (netLogging && arguments.length) {
+
+      var args = Array.prototype.slice.call(arguments);
+      var action = args.shift();
       args[0] = action + ' (' + args[0] + ')';
       log.apply(this, args);
     }
