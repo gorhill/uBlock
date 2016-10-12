@@ -207,7 +207,7 @@
 
     var logP = function () {
 
-      if (vAPI.prefs.logEvent === true) {
+      if (vAPI.prefs.logEvents) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
         console.log.apply(console, args);
@@ -216,7 +216,7 @@
 
     var warnP = function () {
 
-      if (vAPI.prefs.logEvent === true) {
+      if (vAPI.prefs.logEvents) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
         console.warn.apply(console, args);

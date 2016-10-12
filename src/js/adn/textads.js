@@ -198,21 +198,21 @@
       return [ad];
     }
 
-    var baiduText = function (div) { 
+    var baiduText = function (div) {
 
       if(!div.id.match(/\d{4}/g)) return;
 
       var sections = div.childNodes;
       var ad, title, text, site;
-      
+
       if(sections.length == 3){
           title = $find(sections[0], 'h3 a'),
           text = $find(sections[1], 'a[hidefocus="hidefocus"]'),
           site = $find(sections[2], 'a > span');
-      } 
-      else 
+      }
+      else
         return;
-      
+
       if (text.length && site.length && title.length) {
 
         ad = vAPI.adParser.createAd('baidu', $attr(title, 'href'), {
@@ -350,14 +350,14 @@
           return;
         }
 
-        //console.log('TextAds.process()', elem);
-
         var ads = checkFilters(elem);
         if (ads) {
 
           for (var i = 0; i < ads.length; i++) {
-            if (!vAPI.prefs.production) console.log("[PARSED] TEXT-AD", ads[i]);
-            vAPI.adParser.notifyAddon(ads[i]);
+            if (typeof ads[i] !== 'undefined') {
+              if (!vAPI.prefs.production) console.log("[PARSED] TEXT-AD", ads[i]);
+                vAPI.adParser.notifyAddon(ads[i]);
+            }
           }
         }
       }

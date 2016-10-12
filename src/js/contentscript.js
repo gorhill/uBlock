@@ -698,8 +698,7 @@ return domFilterer;
 
     var responseHandler = function(response) {
 
-        if (response && response.prefs) vAPI.prefs = response;
-        //console.log('vAPI.prefs ', vAPI.prefs);
+        if (response && response.prefs) vAPI.prefs = response.prefs;
 
         // cosmetic filtering engine aka 'cfe'
         var cfeDetails = response && response.specificCosmeticFilters;

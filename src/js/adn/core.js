@@ -1169,6 +1169,8 @@
 
   exports.registerAd = function (request, pageStore, tabId) {
 
+    if (!request.ad) return;
+
     var json, adhash, msSinceFound, orig,
       pageUrl = pageStore.rawURL,
       ad = request.ad;
