@@ -474,7 +474,9 @@
 
       if (!hasDNT(headers)) {
 
-        adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+        if (details.type === 'main_frame') // minimize logging
+          adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+
         addHeader(headers, 'DNT', '1');
       }
     }
