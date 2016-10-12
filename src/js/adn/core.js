@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    netLogging = 0; // for debugging network event
+    netLogging = 1; // for debugging network event
 
   var µb = µBlock,
     production = 0,
@@ -1034,7 +1034,7 @@
 
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
-    allowedExceptions[requestUrl] = +new Date();    // case D
+    allowedExceptions[url] = +new Date();           // case D
     logNetEvent('[ALLOW!]', misses.join(' '), raw + ': ', requestUrl);
 
     return false;
@@ -1430,7 +1430,7 @@
     if (dirty) {
 
       // check whether DNT list state needs updating
-      if (note === ClickingDisabled || note === HidingDisabled) { 
+      if (note === ClickingDisabled || note === HidingDisabled) {
 
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
