@@ -7,7 +7,7 @@ uBlock Origin
 </h1>
 ## Descrição do Projeto
 
-uBlock Origin não é, especificamente, um *ad blocker*, é um bloqueador de *scripts* em geral. Isto é, o seu objetivo não é só bloquear anúncios, mas também pode ser usado de modo a não permitir a execução de programas que o utilizador não considere seguros. Além de bloquear *scripts*, este programa também permite que as páginas *web* carreguem mais rápido, uma vez que retira a necessidade do *browser* descarregar anúncios e outros ficheiros.
+uBlock Origin não é, especificamente, um *ad blocker*, é um bloqueador de *scripts* em geral. Isto é, o seu objetivo não é só bloquear anúncios, mas também pode ser usado de modo a não permitir a execução de programas que o utilizador não considere seguros. Além de bloquear *scripts*, este programa também permite que as páginas *web* carreguem mais rápido, uma vez que retira a necessidade do *browser* descarregar anúncios e outros ficheiros. O uBlock é bastante flexível uma vez que que as regras de filtros podem ser personalizados pelo utilizador. Foi desenvolvido com o principal objectivo de neutralizar a invasão de privacidade por parte de anúncios ("ads"). Este projeto (uBlock) teve origem de um "*spin off*" de outro projeto ( [*httpswitchboard*](https://github.com/gorhill/httpswitchboard) ) já antes criado e desenvolvido pelo mesmo utilizador, gorhill.
 
 O uBlock Origin vem incluído com 4 modos:
 
@@ -29,4 +29,4 @@ O projeto está licenciado de acordo com a licença [GPLv3](../LICENSE.txt).
 
 * Bernardo Belchior - up201405381 -
 * Edgar Passos - up201404131 -
-* José Pedro Monteiro - up201406458 - 
+* José Pedro Monteiro - up201406458 -
