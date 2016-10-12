@@ -27,11 +27,12 @@
 
 µBlock.webRequest = (function () {
 
-  var GoogleSearchPrefix = 'https://www.google.com.hk';
+  //var GoogleSearchPrefix = 'https://www.google.com.hk'; // what is this for?
   var AcceptHeaders = {
       chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
       firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
   }
+  var MostCommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
 
   /******************************************************************************/
 
@@ -465,12 +466,10 @@
   // ADN: removing outgoing cookies, user-agent, set/hide referer, DNT header
   var onBeforeSendHeaders = function (details) {
 
-
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
 
     // ADN: Do we need to add a DNT header?
-
     if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
 
       if (!hasDNT(headers)) {
@@ -495,10 +494,9 @@
 
     ad.requestId = details.requestId; // needed?
 
-    // Google-search case
-    if (referer.indexOf(GoogleSearchPrefix) === 0) {
-      referer = GoogleSearchPrefix;
-    }
+    // Google-search case - what is this for?
+    //if (referer.indexOf(GoogleSearchPrefix) === 0)
+      //referer = GoogleSearchPrefix;
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
@@ -508,19 +506,20 @@
       if ((name === 'http_x_requested_with') ||
         (name === 'x-devtools-emulate-network-conditions-client-id') ||
         (prefs.noOutgoingCookies && name === 'cookie') ||
-        (prefs.noOutgoingUserAgent && name === 'user-agent')) {
-
+        (prefs.noOutgoingUserAgent && name === 'user-agent'))
+      {
         setHeader(headers[i], '');
-      
+
         // block outgoing cookies and user-agent here if specified
         if (prefs.noOutgoingCookies && name === 'cookie') {
           µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
         }
+
+        // replace user-agent with most common string, if specified
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-           headers[i] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36";
+           headers[i] = MostCommonUserAgent;
            µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
-        
       }
 
       if (name === 'referer') refererIdx = i;
@@ -558,13 +557,6 @@
     }
   };
 
-  /*var isRedirect = (ad.requestId === details.requestId);
-  if (dbug) console.log("(pre)beforeRequest[Re" + (isRedirect ?
-      'direct' : 'quest') + ']: ' + details.url,
-      dumpHeaders(headers), JSON.stringify(details));*/
-  /*if (0&&dbug) console.log("(post)beforeRequest[Re" + (isRedirect ?
-      'direct' : 'quest') + ']: ', dumpHeaders(headers));*/
-
   function dumpHeaders(headers) {
 
     var s = '\n\n';
@@ -590,13 +582,10 @@
   var hasDNT = function (headers) {
 
     for (var i = headers.length - 1; i >= 0; i--) {
-      var name = headers[i].name;
-      if (name === 'DNT' && headers[i].value === '1') {
-        // console.log("DNT is already in the header!")
+      if (headers[i].name === 'DNT' && headers[i].value === '1') {
         return true;
       }
     }
-
     return false;
   }
 
@@ -615,41 +604,8 @@
     }
     // I can't think of how pageStore could be null at this point.
 
-// <<<<<<< HEAD
-//     var context = pageStore.createContextFromPage();
-//     context.requestURL = requestURL;
-//     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
-//     context.requestType = 'inline-script';
-//
-//     var result = pageStore.filterRequestNoCache(context);
-//
-//     pageStore.logRequest(context, result);
-//
-//     if (µb.logger.isEnabled()) {
-//       µb.logger.writeOne(
-//         tabId,
-//         'net',
-//         result,
-//         'inline-script',
-//         requestURL,
-//         context.rootHostname,
-//         context.pageHostname
-//       );
-//     }
-//
-//     // Don't block
-//     if (µb.isAllowResult(result)) {
-//       return;
-//     }
-//
-//     µb.updateBadgeAsync(tabId);
-//
-//     return { 'responseHeaders': foilInlineScripts(details.responseHeaders) };
-//   };
-//=======
     return processCSP(details, pageStore, pageStore.createContextFromPage());
 };
-//>>>>>>> upstream/master
 
   /******************************************************************************/
 
