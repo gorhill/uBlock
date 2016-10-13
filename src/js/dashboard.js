@@ -53,6 +53,7 @@
     tabButton.toggleClass('selected', true);
 
     notifications && renderNotifications(notifications);
+    resizeFrame();
   };
 
   var onTabClickHandler = function (e) {
