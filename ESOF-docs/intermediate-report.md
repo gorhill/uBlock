@@ -7,7 +7,7 @@ uBlock Origin
 </h1>
 ## Descrição do Projeto
 
-uBlock Origin não é, especificamente, um *ad blocker*, é um bloqueador de *scripts* em geral. Isto é, o seu objetivo não é só bloquear anúncios, mas também pode ser usado de modo a não permitir a execução de programas que o utilizador não considere seguros. Além de bloquear *scripts*, este programa também permite que as páginas *web* carreguem mais rápido, uma vez que retira a necessidade do *browser* descarregar anúncios e outros ficheiros. O uBlock é bastante flexível uma vez que que as regras de filtros podem ser personalizados pelo utilizador. Foi desenvolvido com o principal objectivo de neutralizar a invasão de privacidade por parte de anúncios ("ads"). Este projeto (uBlock) teve origem de um "*spin off*" de outro projeto ( [*httpswitchboard*](https://github.com/gorhill/httpswitchboard) ) já antes criado e desenvolvido pelo mesmo utilizador, gorhill.
+uBlock Origin não é, especificamente, um *ad blocker*, é um bloqueador de *scripts* em geral. Isto é, o seu objetivo não é só bloquear anúncios, mas também pode ser usado de modo a não permitir a execução de programas que o utilizador não considere seguros. Além de bloquear *scripts*, este programa também permite que as páginas *web* carreguem mais rápido, uma vez que retira a necessidade do *browser* descarregar anúncios e outros ficheiros. O uBlock é bastante flexível uma vez que que as regras de filtros podem ser personalizados pelo utilizador. Foi desenvolvido com o principal objectivo de neutralizar a invasão de privacidade por parte de anúncios ("ads"). O uBlock inicialmente pertencia ao [*httpswitchboard*](https://github.com/gorhill/httpswitchboard), do mesmo utilizador, mas este foi descontinuado e separado neste e noutro projeto.
 
 O uBlock Origin vem incluído com 4 modos:
 
@@ -22,6 +22,11 @@ O uBlock Origin vem incluído com 4 modos:
 O projeto está licenciado de acordo com a licença [GPLv3](../LICENSE.txt).
 
 ## Processo de Desenvolvimento
+
+<img alt="Waterfall model" src="./Waterfall_model.png" style="float: right; margin: 0 0.5em 0 0;">
+O projeto é um *spin-off* de [*httpswitchboard*](https://github.com/gorhill/httpswitchboard) e, como tal, herdou o processo de desenvolvimento que o projeto utilizava.
+O uBlock é desenvolvido segundo o processo Cascata, abaixo representado numa imagem.
+inicialmente, o programador reuniu os requisitos do que pretendia fazer e planeou o projeto. Após essa fase, desenhou e implementou as funcionalidades-chave da extensão. Utilizando a ferramenta [*Travis-CI*](https://travis-ci.org/), o desenvolvedor estabelece testes automáticos que são executados sempre que existe um *push* para o repositório do projeto, permitindo a verificação do programa. Atualmente, o projeto encontra-se na fase de manuntenção, em que o programador se limita a resolver problemas de compatibilidade entre navegadores e aumentar o espetro de anúncios bloqueados.
 
 ## Críticas e Opiniões
 
