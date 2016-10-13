@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    netLogging = 1; // for debugging network event
+    netLogging = 0; // for debugging network event
 
   var µb = µBlock,
     production = 0,
@@ -980,8 +980,7 @@
 
     if (ruleDisabled(raw)) {
 
-      // TODO: check that the rule hasn't been added in 'My filters'
-
+      // TODO: check that the rule hasn't been added in 'My filters' ?
       return allowRequest('RuleOff', raw, url);
     }
 
@@ -1004,7 +1003,7 @@
      */
     var lists = listsForFilter(compiled);
 
-    if (lists.length === 0) {                       // case A
+    if (lists.length === 0) {                                // case A
 
       logNetAllow('NoList', 'NoRule', url);
       return false;
@@ -1016,27 +1015,32 @@
 
       if (activeBlockList(name)) {
 
-        if (raw.indexOf('@@') === 0) {              // case B
+        if (raw.indexOf('@@') === 0) {                       // case B
 
           logNetAllow(name, raw + ': ', url);
           return false;
         }
 
-        logNetBlock(name, raw + ': ', url);         // case C
+        logNetBlock(name, raw + ': ', url);                  // case C
         return true; // blocked, no need to continue
       }
       else {
 
         if (!misses) var misses = [];
-        misses.push(name);
+        if (!misses.contains(name)) misses.push(name);
       }
     }
 
+    return allowRequest(misses.join(','), raw + ': ', url);  // case D
+  }
+
+  var allowRequest = function (msg, raw, url) {
+
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
-    allowedExceptions[url] = +new Date();           // case D
-    logNetEvent('[ALLOW!]', misses.join(' '), raw + ': ', requestUrl);
-
+    allowedExceptions[url] = +new Date();
+    if (msg !== 'EasyList')
+      logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     return false;
   }
 
