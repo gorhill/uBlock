@@ -36,8 +36,20 @@ O [ficheiro sobre contribuições](https://github.com/gorhill/uBlock/blob/master
 
 ## Críticas e Opiniões
 
+### Estrutura do repositório
+O projeto em análise, na nossa opinião, possuí uma estrutura relativamente boa, devendo de conter mais *branches*, uma vez que possuí vários *issues* a serem resolvidos, e devido a falta de *branches* não permite uma flexibilidade tão grande a nível da correção destes *issues* em paralelo.
+
+### Atividade
+O projeto encontra-se ativo e desde o seu inicio tem uma média de 3 a 4 commits por dia. Mais recentemente o número médio de commits permanece relativamente semelhante. Apesar da alta atividade por parte do responsável do projeto ([*Raymond Hill*](https://github.com/gorhill)), este não mostrou muito interesse em nos ajudar, por email, a cerca do desenvolvimento e história do seu projeto. Tentamos contacta-lo através do [*forum*](https://discourse.mozilla-community.org/t/support-ublock-origin/6746) fornecido por este, mas a nossa questão foi ignorada.
+
+Encontra-se com cerca de 156 *issues* abertas, sendo que algumas já destas já estão a ser resolvidas uma vez que quando um utilizador se encarrega da correção este dá um *label* (*accepted*) ao *issue* correspondente.
+
+### Desenvolvimento do projeto
+O projeto [*uBlock*](https://github.com/gorhill/uBlock) teve origem de um projeto ([*httpswitchboard*](https://github.com/gorhill/httpswitchboard)) pertencente ao utilizador, sendo que esse projeto anterior era um *Chromium browser extension* do qual o utilizador podia listar que pedidos da página em utilização podiam ser executados (*cookies, images, plug-in's, scripts, etc*).
+O projeto, inicialmente, desenvolveu no sentido de tranformar o [*httpswitchboard*](https://github.com/gorhill/httpswitchboard) num projeto mais eficiente, mais completo e com um design que fornecesse ao utilizador uma maior utilidade no dia-a-dia, sendo que as funcionalidades são muito semelhantes. Depois deste processo de desenvolvimento, passou-se ao processo de correção de erros (os quais, para nós, são relativamente bastantes), processo que ainda se mantém.
+
 ## Grupo e Contribuição
 
-* Bernardo Belchior - up201405381 -
-* Edgar Passos - up201404131 -
-* José Pedro Monteiro - up201406458 -
+* Bernardo Belchior - up201405381 - 33,33%
+* Edgar Passos - up201404131 - 33,33%
+* José Pedro Monteiro - up201406458 - 33,33%
