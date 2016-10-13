@@ -963,7 +963,7 @@
 
     if (µb.userSettings.blockingMalware === false) {
 
-      logNetAllow('NoBlocks', context.rootDomain + ' => ' + context.requestURL);
+      logNetAllow('NoBlock', context.rootDomain + ' => ' + context.requestURL);
       return false;
     }
 

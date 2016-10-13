@@ -19,7 +19,6 @@
     Home: https://github.com/dhowe/AdNauseam
 */
 
-
 (function () {
 
   'use strict';

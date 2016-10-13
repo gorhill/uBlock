@@ -406,12 +406,6 @@ var domFilterer = {
 
     commit_: function() {
 
-        if (vAPI.prefs.hidingDisabled) { // ADN: don't inject selectors
-
-          console.log('[CONTENT] Ad hiding disabled');
-          return;
-        }
-
         vAPI.executionCost.start();
 
         commitTimer = null;
@@ -419,17 +413,21 @@ var domFilterer = {
         var beforeHiddenNodeCount = this.hiddenNodeCount,
             styleText = '', i, n;
 
-        // Stock job 0 = css rules/hide
-        if ( this.job0._0.length ) {
-            styleText = '\n:root ' + this.job0._0.join(',\n:root ') + '\n{ display: none !important; }';
-            this.job0._0.length = 0;
-        }
+        if (!vAPI.prefs.hidingDisabled) { // ADN: don't append style tag if not hiding
 
-        // Stock job 1 = css rules/any css declaration
-        if ( this.job1._0.length ) {
-            styleText += '\n' + this.job1._0.join('\n');
-            this.job1._0.length = 0;
+          // Stock job 0 = css rules/hide
+          if ( this.job0._0.length ) {
+              styleText = '\n:root ' + this.job0._0.join(',\n:root ') + '\n{ display: none !important; }';
+              this.job0._0.length = 0;
+          }
+
+          // Stock job 1 = css rules/any css declaration
+          if ( this.job1._0.length ) {
+              styleText += '\n' + this.job1._0.join('\n');
+              this.job1._0.length = 0;
+          }
         }
+        //else console.log('[CONTENT] (NoHide) Not appending style tag');
 
         if ( styleText !== '' ) {
             var styleTag = document.createElement('style');
@@ -543,8 +541,12 @@ var domFilterer = {
               node.setAttribute('style', styleAttr + 'display: none !important;');
           }
         }
+        else if (vAPI.prefs.hidingDisabled) { // ADN: don't append style tag
 
-        vAPI.adParser && vAPI.adParser.process(node); // ADN: always parse Ads 
+          console.log('[CONTENT] (NoHide) Not appending display to style');
+        }
+
+        vAPI.adParser && vAPI.adParser.process(node); // ADN: always parse Ads
 
         if (shadowId === undefined || !vAPI.adParser.useShadowDOM()) {
             return;
