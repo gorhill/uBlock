@@ -44,7 +44,7 @@
 
       if (!imgSrc) {
 
-        logP("No ImgSrc(#" + i + ")!", img);
+        logP("Image without 'src' attribute!", img);
         img.addEventListener('load', processDelayedImage, false);
         return false;
       }

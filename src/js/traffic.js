@@ -519,7 +519,7 @@
 
         // replace user-agent with most common string, if specified
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-           headers[i] = MostCommonUserAgent;
+           headers[i].value = MostCommonUserAgent;
            µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
       }
