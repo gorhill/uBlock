@@ -9,7 +9,7 @@
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
     automatedMode = 0, // for automated testing
-    netLogging = 0; // for debugging network event
+    netLogging = 0; // for debugging events
 
   var µb = µBlock,
     production = 0,
@@ -961,9 +961,15 @@
    */
   var isBlockableRequest = function (context) {
 
-    if (!(strictBlockingDisabled && µb.userSettings.blockingMalware)) {
+    if (µb.userSettings.blockingMalware === false) {
 
-      netLogging && warn("[ALLOW] blocking-off or loading: ", context.requestURL);
+      logNetAllow('NoBlocks', context.rootDomain + ' => ' + context.requestURL);
+      return false;
+    }
+
+    if (strictBlockingDisabled) {
+
+      logNetAllow('Loading', context.rootDomain, context.requestURL);
       return false;
     }
 
@@ -984,7 +990,7 @@
       return allowRequest('RuleOff', raw, url);
     }
 
-    // always allow redirect blocks from list (TODO: not for DNT?, exceptions in MyRules?)
+    // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
 
       return true;
@@ -1005,7 +1011,7 @@
 
     if (lists.length === 0) {                                // case A
 
-      logNetAllow('NoList', 'NoRule', url);
+      logNetAllow('NoList', raw, url);
       return false;
     }
 

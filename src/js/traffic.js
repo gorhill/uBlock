@@ -319,8 +319,10 @@
   var onBeforeBeacon = function (details) {
 
     var µb = µBlock;
-    if (µb.userSettings.blockingMalware === false) // ADN
-        return;
+    if (µb.userSettings.blockingMalware === false) {// ADN
+      µb.adnauseam.logNetAllow('Beacon', details.url);
+      return;
+    }
 
     var tabId = details.tabId;
     var pageStore = µb.mustPageStoreFromTabId(tabId);
@@ -631,6 +633,7 @@
 
 var processCSP = function(details, pageStore, context) {
     var µb = µBlock,
+        adn = µb.adnauseam,
         tabId = details.tabId,
         requestURL = details.url,
         loggerEnabled = µb.logger.isEnabled();
@@ -646,6 +649,18 @@ var processCSP = function(details, pageStore, context) {
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
+
+    if (µb.userSettings.blockingMalware === false) { // ADN
+
+      if (blockInlineScript) {
+        adn.logNetAllow('InlineScript', requestURL);
+        return;
+      }
+      if (blockWebsocket) {
+        adn.logNetAllow('WebSocket', requestURL);
+        return;
+      }
+    }
 
     var headersChanged = false;
     if ( blockInlineScript || blockWebsocket ) {
@@ -680,8 +695,8 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
-    if (blockInlineScript || blockWebsocket)
-      µb.adnauseam.logNetBlock(context.requestType, requestURL);
+    if (blockInlineScript)adn.logNetBlock('InlineScript', requestURL); // ADN
+    if (blockWebsocket) adn.logNetBlock('WebSocket', requestURL);
 
     µb.updateBadgeAsync(tabId);
 
