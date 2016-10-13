@@ -745,9 +745,8 @@ var backupUserData = function(callback) {
     var onSelectedListsReady = function(filterLists) {
         userData.filterLists = filterLists;
 
-        var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', now.toLocaleString())
+            .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
 
         vAPI.download({
