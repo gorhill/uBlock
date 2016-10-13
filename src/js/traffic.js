@@ -680,10 +680,7 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
-    if (blockInlineScript)
-      µb.adnauseam.logNetBlock(context.requestType, requestURL);
-
-    if (blockWebsocket)
+    if (blockInlineScript || blockWebsocket)
       µb.adnauseam.logNetBlock(context.requestType, requestURL);
 
     µb.updateBadgeAsync(tabId);
