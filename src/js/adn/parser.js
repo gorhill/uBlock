@@ -24,11 +24,9 @@
 
   'use strict';
 
-  if ( typeof vAPI !== 'object' ) {
-      throw new Error('Aborting content-scripts for ' + window.location);
-  }
+  if ( typeof vAPI !== 'object' ) return; // injection failed
 
-  // no ad extraction in incognito windows (see #236), or parse already exists
+  // no ad extraction in incognito windows (see #236), or parser already exists
   if (vAPI.chrome && chrome.extension.inIncognitoContext || vAPI.adParser)
     return;
 

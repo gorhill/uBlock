@@ -405,6 +405,13 @@ var domFilterer = {
     },
 
     commit_: function() {
+
+        if (vAPI.prefs.hidingDisabled) { // ADN: don't inject selectors
+
+          console.log('[CONTENT] Ad hiding disabled');
+          return;
+        }
+
         vAPI.executionCost.start();
 
         commitTimer = null;
@@ -517,38 +524,33 @@ var domFilterer = {
 
     hideNode: function(node) {
 
-        if (vAPI.prefs.hidingDisabled) { // ADN
-          console.log('adn: hiding disabled');
-          return;
-        }
-
         if ( node[this.hiddenId] !== undefined ) {
             return;
         }
 
-        node.setAttribute(this.hiddenId, '');
-        this.hiddenNodeCount += 1;
-        node.hidden = true;
-        node[this.hiddenId] = null;
-        var style = window.getComputedStyle(node),
-            display = style.getPropertyValue('display');
-        if ( display !== '' && display !== 'none' ) {
-            var styleAttr = node.getAttribute('style') || '';
-            node[this.hiddenId] = node.hasAttribute('style') && styleAttr;
-            if ( styleAttr !== '' ) { styleAttr += '; '; }
-            node.setAttribute('style', styleAttr + 'display: none !important;');
+        if (!vAPI.prefs.hidingDisabled) { // ADN: only if hiding
+
+          node.setAttribute(this.hiddenId, '');
+          this.hiddenNodeCount += 1;
+          node.hidden = true;
+          node[this.hiddenId] = null;
+          var style = window.getComputedStyle(node),
+              display = style.getPropertyValue('display');
+          if ( display !== '' && display !== 'none' ) {
+              var styleAttr = node.getAttribute('style') || '';
+              node[this.hiddenId] = node.hasAttribute('style') && styleAttr;
+              if ( styleAttr !== '' ) { styleAttr += '; '; }
+              node.setAttribute('style', styleAttr + 'display: none !important;');
+          }
         }
 
-        if (vAPI.adParser) {
-          vAPI.adParser.process(node);
-          if (!vAPI.adParser.useShadowDOM())
+        vAPI.adParser && vAPI.adParser.process(node); // ADN: always parse Ads 
+
+        if (shadowId === undefined || !vAPI.adParser.useShadowDOM()) {
             return;
-          console.log("adn: shadowDOM allowed!");
         }
 
-        if (shadowId === undefined) {
-            return;
-        }
+        console.warn("[SHADOW] Unexpected state");
 
         var shadow = node.shadowRoot;
         if ( shadow ) {
