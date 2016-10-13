@@ -470,11 +470,13 @@
 
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
+    
+    // ADN: check whether clicking/hiding is enabled, check disable Clicking/Hiding For DNT
+    if((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)){
+      
+      var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
-    // ADN: Do we need to add a DNT header?
-    if (prefs.disableClickingForDNT || prefs.disableHidingForDNT) {
-
-      if (!hasDNT(headers)) {
+      if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
         if (details.type === 'main_frame') // minimize logging
           adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
