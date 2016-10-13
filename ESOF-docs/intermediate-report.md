@@ -28,6 +28,12 @@ O projeto é um *spin-off* de [*httpswitchboard*](https://github.com/gorhill/htt
 O uBlock é desenvolvido segundo o processo Cascata, abaixo representado numa imagem.
 inicialmente, o programador reuniu os requisitos do que pretendia fazer e planeou o projeto. Após essa fase, desenhou e implementou as funcionalidades-chave da extensão. Utilizando a ferramenta [*Travis-CI*](https://travis-ci.org/), o desenvolvedor estabelece testes automáticos que são executados sempre que existe um *push* para o repositório do projeto, permitindo a verificação do programa. Atualmente, o projeto encontra-se na fase de manuntenção, em que o programador se limita a resolver problemas de compatibilidade entre navegadores e aumentar o espetro de anúncios bloqueados.
 
+
+### Contribuição
+
+O projeto ainda se mantém ativo, com o seu criador a fazer alterações ao código quase diariamente. Contudo, não parece ser muito aberto a outros contribuidores, uma vez que 99% dos *commits* realizados são pelo desenvolvedor principal, além de que não respondeu ao nosso grupo quando lhe foram feitas perguntas, apesar de ter respondido a outras questões de outras pessoas.
+O [ficheiro sobre contribuições](https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md) informa que os utilizadores "não devem submeter *pull requests*".
+
 ## Críticas e Opiniões
 
 ## Grupo e Contribuição
