@@ -967,9 +967,9 @@
       return false;
     }
 
-    if (strictBlockingDisabled) {
+    if (!strictBlockingDisabled) {
 
-      logNetAllow('Loading', context.rootDomain, context.requestURL);
+      logNetAllow('Loading', context.rootDomain  + ' => ' + context.requestURL);
       return false;
     }
 
