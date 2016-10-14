@@ -45,12 +45,6 @@ var onBeforeRequest = function(details) {
         return onBeforeRootFrameRequest(details);
     }
 
-    // https://github.com/gorhill/uBlock/issues/870
-    // This work for Chromium 49+.
-    if ( requestType === 'beacon' ) {
-        return onBeforeBeacon(details);
-    }
-
     // Special treatment: behind-the-scene requests
     var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
@@ -58,8 +52,8 @@ var onBeforeRequest = function(details) {
     }
 
     // Lookup the page store associated with this tab id.
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
         var tabContext = µb.tabContextManager.mustLookup(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
@@ -119,6 +113,7 @@ var onBeforeRequest = function(details) {
     // Redirect blocked request?
     var url = µb.redirectEngine.toURL(requestContext);
     if ( url !== undefined ) {
+        pageStore.internalRedirectionCount += 1;
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 tabId,
@@ -277,62 +272,37 @@ var toBlockDocResult = function(url, hostname, result) {
 
 /******************************************************************************/
 
+// Intercept and filter behind-the-scene requests.
+
 // https://github.com/gorhill/uBlock/issues/870
 // Finally, Chromium 49+ gained the ability to report network request of type
 // `beacon`, so now we can block them according to the state of the
 // "Disable hyperlink auditing/beacon" setting.
 
-var onBeforeBeacon = function(details) {
-    var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.mustPageStoreFromTabId(tabId);
-    var context = pageStore.createContextFromPage();
-    context.requestURL = details.url;
-    context.requestHostname = µb.URI.hostnameFromURI(details.url);
-    context.requestType = details.type;
-    // "g" in "gb:" stands for "global setting"
-    var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
-    pageStore.journalAddRequest(context.requestHostname, result);
-    if ( µb.logger.isEnabled() ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            result,
-            details.type,
-            details.url,
-            context.rootHostname,
-            context.rootHostname
-        );
-    }
-    context.dispose();
-    if ( result !== '' ) {
-        return { cancel: true };
-    }
-};
-
-/******************************************************************************/
-
-// Intercept and filter behind-the-scene requests.
-
 var onBeforeBehindTheSceneRequest = function(details) {
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if ( !pageStore ) {
-        return;
-    }
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
+    if ( !pageStore ) { return; }
 
-    var context = pageStore.createContextFromPage();
-    var requestURL = details.url;
+    var result = '',
+        context = pageStore.createContextFromPage(),
+        requestType = details.type,
+        requestURL = details.url;
+
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
-    context.requestType = details.type;
+    context.requestType = requestType;
+
+    // "g" in "gb:" stands for "global setting"
+    if ( requestType === 'beacon' && µb.userSettings.hyperlinkAuditingDisabled ) {
+        result = 'gb:no-hyperlink-auditing';
+    }
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
-    var result = '';
-    if ( µb.userSettings.advancedUserEnabled ) {
+    if ( result === '' && µb.userSettings.advancedUserEnabled ) {
         result = pageStore.filterRequestNoCache(context);
     }
 
@@ -343,7 +313,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
             vAPI.noTabId,
             'net',
             result,
-            details.type,
+            requestType,
             requestURL,
             context.rootHostname,
             context.rootHostname

@@ -858,7 +858,8 @@ vAPI.net.registerListeners = function() {
     // https://bugs.chromium.org/p/chromium/issues/detail?id=410382
     // Between Chromium 38-48, plug-ins' network requests were reported as
     // type "other" instead of "object".
-    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent);
+    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent),
+        is_v49_55 = /\bChrom[a-z]+\/(?:49|5[012345])\b/.test(navigator.userAgent);
 
     // Chromium-based browsers understand only these network request types.
     var validTypes = {
@@ -1003,9 +1004,20 @@ vAPI.net.registerListeners = function() {
         return onBeforeRequestClient(details);
     };
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback;
-    var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
-    var onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+    // This is needed for Chromium 49-55.
+    var onBeforeSendHeaders = function(details) {
+        if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
+        var type = headerValue(details.requestHeaders, 'content-type');
+        if ( type === '' ) { return; }
+        if ( type.endsWith('/csp-report') ) {
+            details.type = 'csp_report';
+            return onBeforeRequestClient(details);
+        }
+    };
+
+    var onHeadersReceivedClient = this.onHeadersReceived.callback,
+        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         // Hack to work around Chromium API limitations, where requests of
@@ -1033,19 +1045,17 @@ vAPI.net.registerListeners = function() {
     };
 
     var installListeners = (function() {
-        var listener;
         var crapi = chrome.webRequest;
 
-        listener = onBeforeRequest;
         //listener = function(details) {
         //    quickProfiler.start('onBeforeRequest');
         //    var r = onBeforeRequest(details);
         //    quickProfiler.stop();
         //    return r;
         //};
-        if ( crapi.onBeforeRequest.hasListener(listener) === false ) {
+        if ( crapi.onBeforeRequest.hasListener(onBeforeRequest) === false ) {
             crapi.onBeforeRequest.addListener(
-                listener,
+                onBeforeRequest,
                 {
                     'urls': this.onBeforeRequest.urls || ['<all_urls>'],
                     'types': this.onBeforeRequest.types || undefined
@@ -1054,10 +1064,22 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        listener = onHeadersReceived;
-        if ( crapi.onHeadersReceived.hasListener(listener) === false ) {
+        // Chromium 48 and lower does not support `ping` type.
+        // Chromium 56 and higher does support `csp_report` stype.
+        if ( is_v49_55 && crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
+            crapi.onBeforeSendHeaders.addListener(
+                onBeforeSendHeaders,
+                {
+                    'urls': [ '<all_urls>' ],
+                    'types': [ 'ping' ]
+                },
+                [ 'blocking', 'requestHeaders' ]
+            );
+        }
+
+        if ( crapi.onHeadersReceived.hasListener(onHeadersReceived) === false ) {
             crapi.onHeadersReceived.addListener(
-                listener,
+                onHeadersReceived,
                 {
                     'urls': this.onHeadersReceived.urls || ['<all_urls>'],
                     'types': onHeadersReceivedTypes
