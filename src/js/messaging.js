@@ -653,6 +653,15 @@ var µb = µBlock;
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+    if (vAPI.cloud === undefined) {
+        switch ( request.what ) {
+        case 'cloudSupported':
+            return false;
+        default:
+            break;
+        }
+        return
+    }
     // Async
     switch ( request.what ) {
     case 'cloudGetOptions':
@@ -671,6 +680,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'cloudPush':
         return vAPI.cloud.push(request.datakey, request.data, callback);
+
+    case 'cloudSupported':
+        return true;
 
     default:
         break;

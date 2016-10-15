@@ -67,12 +67,14 @@ var onAllReady = function() {
     // for launch time.
     µb.assets.remoteFetchBarrier -= 1;
 
-    vAPI.cloud.start([
-        'tpFiltersPane',
-        'myFiltersPane',
-        'myRulesPane',
-        'whitelistPane'
-    ]);
+    if (vAPI.cloud !== undefined || !vAPI.cloud) {
+        vAPI.cloud.start([
+            'tpFiltersPane',
+            'myFiltersPane',
+            'myRulesPane',
+            'whitelistPane'
+        ]);
+    }
 
     //quickProfiler.stop(0);
 
