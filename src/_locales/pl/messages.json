@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Nie śledź kliknięć odnośników\/beaconów",
+    "message":"Nie śledź kliknięć odnośników",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

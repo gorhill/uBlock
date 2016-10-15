@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Hiperlink vizsgálat kikapcsolása",
+    "message":"Hivatkozás-vizsgálat kikapcsolása",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

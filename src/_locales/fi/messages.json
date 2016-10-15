@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Ota käyttöön suurien mediaelementtien estäminen tälle sivulle",
+    "message":"Ota käyttöön suurien mediaelementtien estäminen tälle sivustolle",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -100,11 +100,11 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Klikkaa tehdäksesi muutoksistasi pysyvät.",
+    "message":"Paina tehdäksesi muutoksesi pysyviksi.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Klikkaa kumotaksesi muutoksesi.",
+    "message":"Paina kumotaksesi muutoksesi.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Estä linkki-interaktioiden seuranta",
+    "message":"Estä linkkien seuranta",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>Yleiset kosmeettiset suotimet ovat ne kosmeettiset suotimet joiden on tarkoitus päteä kaikkiin web-sivustoihin.<p>Vaikka uBlock₀ käsittelee ne tehokkaasti, yleiset kosmeettiset suotimet voivat silti lisätä mitattavaa muisti- ja CPU-ylikuormitusta joillakin web-sivuilla, erityisesti suurilla ja pitkäikäisillä sivuilla.<p>Tämän valinnan salliminen karsii pois web-sivuille lisätyn muisti- ja CPU-ylikuormituksen joka aiheutuu yleisten kosmeettisten suotimien käsittelystä, ja alentaa myös uBlock₀ sovelluksen muisti-jalanjälkeä.<p>On suositeltavaa sallia tämä vaihtoehto vähemmän tehokkailla laitteilla.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

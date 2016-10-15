@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"חסום ניסיונות ל Hyperlink auditing\/beacon",
+    "message":"חסום Hyperlink auditing",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

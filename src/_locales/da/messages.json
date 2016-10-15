@@ -560,7 +560,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alle dine indstillinger vil blive overskrevet med sikkerhedskopierede data fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nOverskriv de nuværende indstillinger med data fra sikkerhedskopien?",
+    "message":"Alle indstillinger vil blive erstattet af sikkerhedskopien fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nErstat alle indstillinger med indstillingerne fra sikkerhedskopien?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{

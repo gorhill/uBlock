@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiviere Hyperlink-Auditing",
+    "message":"Hyperlink-Überwachung deaktivieren",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Dezactivează auditarea legăturilor\/trimiterea semnalizatoarelor",
+    "message":"Dezactivează auditarea hiperlinkurilor",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

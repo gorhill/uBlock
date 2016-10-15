@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Изключване на проверката за препратки\/предупреждения",
+    "message":"Изключване проверката на хипервръзки",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
