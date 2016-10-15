@@ -310,7 +310,6 @@ div.tooltip {
 /* SETUP */
 
 #container {
-	transition: margin 0.5s ease, transform 0.2s ease;
 
 	-ms-user-select: none;
 	-webkit-user-select: none;
