@@ -807,6 +807,12 @@
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = function(callback) {
+    // Support for vAPI.adminStorage is optional (webext).
+    if ( vAPI.adminStorage instanceof Object === false ) {
+        callback();
+        return;
+    }
+
     var onRead = function(json) {
         var µb = µBlock;
         var data;
