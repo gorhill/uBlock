@@ -63,10 +63,9 @@
       url = url.slice(0, pos);
     }
     url += this.hash;
-    if (url !== window.location.href) {
-      window.location.replace(url);
-      loadDashboardPanel();
-    }
+    window.location.replace(url);
+    loadDashboardPanel();
+      
     e.preventDefault();
   };
 
