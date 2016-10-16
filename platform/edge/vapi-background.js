@@ -926,7 +926,12 @@ vAPI.messaging.broadcast = function(message) {
         if ( this.ports.hasOwnProperty(portName) === false ) {
             continue;
         }
-        this.ports[portName].postMessage(messageWrapper);
+        // Do not stop broadcasting upon errors,
+        // workaround for Edge 'handle is invalid' error
+        try {
+            this.ports[portName].postMessage(messageWrapper);
+        } catch(e) {
+        }
     }
 };
 
