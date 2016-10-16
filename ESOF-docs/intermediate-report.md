@@ -25,7 +25,7 @@ O projeto está licenciado de acordo com a licença [GPLv3](../LICENSE.txt).
 
 ## Processo de Desenvolvimento
 
-<img alt="Waterfall model" src="./Waterfall_Model.png" style="float: right; margin: 0 0.5em 0 0;">
+<img alt="Waterfall model" src="./waterfall_model.png" style="float: right; margin: 0 0.5em 0 0;">
 O projeto é um *spin-off* de [*httpswitchboard*](https://github.com/gorhill/httpswitchboard) e, como tal, herdou o processo de desenvolvimento do seu antecessor - o modelo Cascata.
 Inicialmente, o programador reuniu os requisitos do que pretendia fazer e planeou o projeto. Após essa fase, desenhou e implementou as funcionalidades-chave da extensão. Utilizando a ferramenta [*Travis-CI*](https://travis-ci.org/), o desenvolvedor estabelece testes automáticos que são executados sempre que existe um *push* para o repositório do projeto, permitindo a verificação do programa. Atualmente, o projeto encontra-se na fase de manuntenção, em que o programador se limita a resolver problemas de compatibilidade entre navegadores e aumentar o espetro de anúncios bloqueados.
 
