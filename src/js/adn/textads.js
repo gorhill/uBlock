@@ -176,11 +176,12 @@
       return [ad];
     }
 
-    var ddgText = function (div) { // not-working, perhaps due to shadow dom
+    var ddgText = function (div) { 
+      
 
-      var ad, title = $find(div, 'h2.result__title'),
+      var ad, title = $find(div, 'h2.result__title > a.result__a'),
         text = $find(div, 'div.result__snippet > a'),
-        site = $find(div, 'a.result__a');
+        site = $find(div, 'a.result__url');
 
       if (text.length && site.length && title.length) {
 
@@ -304,7 +305,7 @@
       name: 'aol',
       domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
     }, {
-      selector: 'div#ads',
+      selector: 'div[class*="result__body"]',
       handler: ddgText,
       name: 'ddg',
       domain: /^(.*\.)?duckduckgo\.com/i
@@ -349,7 +350,6 @@
           console.log("adn: texts-ads disabled");
           return;
         }
-
         var ads = checkFilters(elem);
         if (ads) {
 
