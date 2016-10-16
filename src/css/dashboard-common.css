@@ -37,7 +37,9 @@ div > p:last-child {
 input[type="number"] {
     width: 5em;
     }
-
+input[type="checkbox"][disabled] + label {
+    opacity: 0.4;
+    }
 .para {
     width: 40em;
     }

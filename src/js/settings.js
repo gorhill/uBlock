@@ -138,6 +138,10 @@ var onLocalDataReceived = function(details) {
         uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
         uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
     }
+
+    if ( details.cloudStorageSupported === false ) {
+        uDom('#cloud-storage-enabled').attr('disabled', '');
+    }
 };
 
 /******************************************************************************/
