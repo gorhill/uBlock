@@ -2,7 +2,7 @@
 
 <h1>
 <img src="../doc/img/icon38@2x.png" alt="*uBlock*Origin Logo">
-*uBlock*Origin
+*uBlock Origin*
 
 </h1>
 ## Descrição do Projeto
