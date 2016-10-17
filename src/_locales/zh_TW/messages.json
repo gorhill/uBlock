@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"網址過濾規則",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"元素隱藏過濾規則",

@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"ネットフィルター",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"要素隠蔽フィルタ",
@@ -184,7 +184,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"ブロックされたリクエスト数をアイコンに表示",
+    "message":"ブロックされたリクエスト数をアイコンに表示する",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -192,7 +192,7 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"適切な場合コンテキストメニューを使用",
+    "message":"コンテキストメニューを適切な場合に使用する",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
@@ -208,7 +208,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"先読みを無効にする（塞がれたネットワークへの接続を防止するため）",
+    "message":"先読みを無効にする (ブロックされたネットワークへの接続を防止するため)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{

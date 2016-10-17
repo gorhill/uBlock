@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Nätfilter",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Kosmetiska filter",
@@ -188,7 +188,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Visa inte inforutor",
+    "message":"Visa inte tipsrutor",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -284,7 +284,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbsidor.<p>Även om de hanteras effektivt av uBlock₀ så använder de upp mätbart med minne- och processoranvändning på vissa webbsidor, särskilt stora samt sidor som är öppna en länge tid.<p>Aktiveringen av denna inställning eliminerar den extra minnes- och processoranvändningen på webbsidorna med allmänna kosmetiska filter och minskar minnesanvändningen för uBlock₀ i helhet.<p>Det är rekommenderat att aktivera denna inställning på mindre kraftfulla enheter.",
+    "message":"<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan de bidra mätbart till en högre minnes- och processoranvändning på vissa webbsidor, särskilt stora sidor och sidor som är öppna en länge tid.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för uBlock₀ som sådant.<p>Vi rekommenderar att du aktiverar inställningen på mindre kraftfulla enheter.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

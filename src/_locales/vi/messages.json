@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Các bộ lọc mạng",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Bộ lọc phần tử ẩn",

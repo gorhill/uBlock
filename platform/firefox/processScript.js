@@ -34,7 +34,14 @@
         null
     );
 
-    processObserver.start();
+    // https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Message_Manager/Frame_script_loading_and_lifetime#Unloading_frame_scripts
+    // There is no way to unload a frame script, so when the extension will
+    // update, it may happen `processObserver` is not available because of
+    // trying to import from an older module version.
+    // TODO: remove the test once everybody is updated to 1.9.10+.
+    if ( processObserver ) {
+        processObserver.start();
+    }
 })();
 
 /******************************************************************************/
