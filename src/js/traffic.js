@@ -293,16 +293,17 @@ var onBeforeBehindTheSceneRequest = function(details) {
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     context.requestType = requestType;
 
-    // "g" in "gb:" stands for "global setting"
-    if ( requestType === 'beacon' && µb.userSettings.hyperlinkAuditingDisabled ) {
-        result = 'gb:no-hyperlink-auditing';
-    }
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
+    //   Do not filter behind-the-scene network request of type `beacon`: there
+    //   is no point. In any case, this will become a non-issue once
+    //   <https://bugs.chromium.org/p/chromium/issues/detail?id=522129> is
+    //   fixed.
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
-    if ( result === '' && µb.userSettings.advancedUserEnabled ) {
+    if ( µb.userSettings.advancedUserEnabled ) {
         result = pageStore.filterRequestNoCache(context);
     }
 
