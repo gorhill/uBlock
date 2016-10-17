@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,21 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-µBlock.redirectEngine = (function(){
-
 'use strict';
 
 /******************************************************************************/
 
-var toBroaderHostname = function(hostname) {
-    var pos = hostname.indexOf('.');
-    if ( pos !== -1 ) {
-        return hostname.slice(pos + 1);
-    }
-    return hostname !== '*' && hostname !== '' ? '*' : '';
-};
+µBlock.redirectEngine = (function(){
 
 /******************************************************************************/
 /******************************************************************************/
@@ -92,15 +82,19 @@ RedirectEntry.fromSelfie = function(selfie) {
 /******************************************************************************/
 
 var RedirectEngine = function() {
-    this.resources = Object.create(null);
+    this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
+    this._desAll = []; // re-use better than re-allocate
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.reset = function() {
-    this.rules = Object.create(null);
+    this.rules = new Map();
+    this.ruleTypes = new Set();
+    this.ruleSources = new Set();
+    this.ruleDestinations = new Set();
 };
 
 /******************************************************************************/
@@ -110,41 +104,57 @@ RedirectEngine.prototype.freeze = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.lookup = function(context) {
-    var typeEntry = this.rules[context.requestType];
-    if ( typeEntry === undefined ) {
-        return;
+RedirectEngine.prototype.toBroaderHostname = function(hostname) {
+    var pos = hostname.indexOf('.');
+    if ( pos !== -1 ) {
+        return hostname.slice(pos + 1);
     }
-    var src, des = context.requestHostname,
-        srcHostname = context.pageHostname,
-        reqURL = context.requestURL,
-        desEntry, rules, rule, pattern;
+    return hostname !== '*' ? '*' : '';
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.lookup = function(context) {
+    var type = context.requestType;
+    if ( this.ruleTypes.has(type) === false ) { return; }
+    var src = context.pageHostname,
+        des = context.requestHostname,
+        desAll = this._desAll,
+        reqURL = context.requestURL;
+    var n = 0;
     for (;;) {
-        desEntry = typeEntry[des];
-        if ( desEntry !== undefined ) {
-            src = srcHostname;
-            for (;;) {
-                rules = desEntry[src];
-                if ( rules !== undefined ) {
-                    for ( rule in rules ) {
-                        pattern = rules[rule];
-                        if ( pattern instanceof RegExp === false ) {
-                            pattern = rules[rule] = new RegExp(pattern, 'i');
-                        }
-                        if ( pattern.test(reqURL) ) {
-                            return (this.resourceNameRegister = rule);
-                        }
-                    }
-                }
-                src = toBroaderHostname(src);
-                if ( src === '' ) {
-                    break;
+        if ( this.ruleDestinations.has(des) ) {
+            desAll[n] = des; n += 1;
+        }
+        des = this.toBroaderHostname(des);
+        if ( des === '' ) { break; }
+    }
+    if ( n === 0 ) { return; }
+    var entries;
+    for (;;) {
+        if ( this.ruleSources.has(src) ) {
+            for ( var i = 0; i < n; i++ ) {
+                entries = this.rules.get(src + ' ' + desAll[i] + ' ' + type);
+                if ( entries && this.lookupToken(entries, reqURL) ) {
+                    return this.resourceNameRegister;
                 }
             }
         }
-        des = toBroaderHostname(des);
-        if ( des === '' ) {
-            break;
+        src = this.toBroaderHostname(src);
+        if ( src === '' ) { break; }
+    }
+};
+
+RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
+    var j = entries.length, entry;
+    while ( j-- ) {
+        entry = entries[j];
+        if ( entry.pat instanceof RegExp === false ) {
+            entry.pat = new RegExp(entry.pat, 'i');
+        }
+        if ( entry.pat.test(reqURL) ) {
+            this.resourceNameRegister = entry.tok;
+            return true;
         }
     }
 };
@@ -156,7 +166,7 @@ RedirectEngine.prototype.toURL = function(context) {
     if ( token === undefined ) {
         return;
     }
-    var entry = this.resources[token];
+    var entry = this.resources.get(token);
     if ( entry !== undefined ) {
         return entry.toURL();
     }
@@ -166,29 +176,31 @@ RedirectEngine.prototype.toURL = function(context) {
 
 RedirectEngine.prototype.matches = function(context) {
     var token = this.lookup(context);
-    return token !== undefined && this.resources[token] !== undefined;
+    return token !== undefined && this.resources.has(token);
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
-    var typeEntry = this.rules[type];
-    if ( typeEntry === undefined ) {
-        typeEntry = this.rules[type] = Object.create(null);
-    }
-    var desEntry = typeEntry[des];
-    if ( desEntry === undefined ) {
-        desEntry = typeEntry[des] = Object.create(null);
-    }
-    var rules = desEntry[src];
-    if ( rules === undefined ) {
-        rules = desEntry[src] = Object.create(null);
-    }
-    var p = rules[redirect];
-    if ( p === undefined ) {
-        rules[redirect] = pattern;
+    this.ruleSources.add(src);
+    this.ruleDestinations.add(des);
+    this.ruleTypes.add(type);
+    var key = src + ' ' + des + ' ' + type,
+        entries = this.rules.get(key);
+    if ( entries === undefined ) {
+        this.rules.set(key, [ { tok: redirect, pat: pattern } ]);
         return;
     }
+    var entry;
+    for ( var i = 0, n = entries.length; i < n; i++ ) {
+        entry = entries[i];
+        if ( redirect === entry.tok ) { break; }
+    }
+    if ( i === n ) {
+        entries.push({ tok: redirect, pat: pattern });
+        return;
+    }
+    var p = entry.pat;
     if ( p instanceof RegExp ) {
         p = p.source;
     }
@@ -197,12 +209,10 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     if ( pos !== -1 ) {
         if ( pos === 0 || p.charAt(pos - 1) === '|' ) {
             pos += pattern.length;
-            if ( pos === p.length || p.charAt(pos) === '|' ) {
-                return;
-            }
+            if ( pos === p.length || p.charAt(pos) === '|' ) { return; }
         }
     }
-    rules[redirect] = p + '|' + pattern;
+    entry.pat = p + '|' + pattern;
 };
 
 /******************************************************************************/
@@ -308,56 +318,55 @@ RedirectEngine.prototype.supportedTypes = (function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.toSelfie = function() {
-    var r = {
-        resources: this.resources,
-        rules: []
-    };
-
-    var typeEntry, desEntry, rules, pattern;
-    for ( var type in this.rules ) {
-        typeEntry = this.rules[type];
-        for ( var des in typeEntry ) {
-            desEntry = typeEntry[des];
-            for ( var src in desEntry ) {
-                rules = desEntry[src];
-                for ( var rule in rules ) {
-                    pattern = rules[rule];
-                    if ( pattern instanceof RegExp ) {
-                        pattern = pattern.source;
-                    }
-                    r.rules.push(
-                        src + '\t' +
-                        des + '\t' +
-                        type + '\t' +
-                        pattern + '\t' +
-                        rule
-                    );
-                }
-            }
+    // Because rules may contains RegExp instances, we need to manually
+    // convert it to a serializable format. The serialized format must be
+    // suitable to be used as an argument to the Map() constructor.
+    var rules = [],
+        iter = this.rules.entries(),
+        item, rule, entries, i, entry;
+    for (;;) {
+        item = iter.next();
+        if ( item.done ) { break; }
+        rule = [ item.value[0], [] ];
+        entries = item.value[1];
+        i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            rule[1].push({
+                tok: entry.tok,
+                pat: entry.pat instanceof RegExp ? entry.pat.source : entry.pat
+            });
         }
+        rules.push(rule);
     }
-
-    return r;
+    var µb = µBlock;
+    return {
+        resources: µb.mapToArray(this.resources),
+        rules: rules,
+        ruleTypes: µb.setToArray(this.ruleTypes),
+        ruleSources: µb.setToArray(this.ruleSources),
+        ruleDestinations: µb.setToArray(this.ruleDestinations)
+    };
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.fromSelfie = function(selfie) {
     // Resources.
-    var resources = selfie.resources;
-    for ( var token in resources ) {
-        if ( resources.hasOwnProperty(token) === false ) {
-            continue;
-        }
-        this.resources[token] = RedirectEntry.fromSelfie(resources[token]);
+    this.resources = new Map();
+    var resources = selfie.resources,
+        item;
+    for ( var i = 0, n = resources.length; i < n; i++ ) {
+        item = resources[i];
+        this.resources.set(item[0], RedirectEntry.fromSelfie(item[1]));
     }
 
     // Rules.
-    var rules = selfie.rules;
-    var i = rules.length;
-    while ( i-- ) {
-        this.fromCompiledRule(rules[i]);
-    }
+    var µb = µBlock;
+    this.rules = µb.mapFromArray(selfie.rules);
+    this.ruleTypes = µb.setFromArray(selfie.ruleTypes);
+    this.ruleSources = µb.setFromArray(selfie.ruleSources);
+    this.ruleDestinations = µb.setFromArray(selfie.ruleDestinations);
 
     return true;
 };
@@ -365,7 +374,7 @@ RedirectEngine.prototype.fromSelfie = function(selfie) {
 /******************************************************************************/
 
 RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
-    var entry = this.resources[name];
+    var entry = this.resources.get(name);
     if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
         return entry.toURL();
     }
@@ -374,8 +383,16 @@ RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
 /******************************************************************************/
 
 RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
-    var entry = this.resources[name];
-    if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
+    var entry;
+    for (;;) {
+        entry = this.resources.get(name);
+        if ( entry === undefined ) { return; }
+        if ( entry.mime.startsWith('alias/') === false ) {
+            break;
+        }
+        name = entry.mime.slice(6);
+    }
+    if ( mime === undefined || entry.mime.startsWith(mime) ) {
         return entry.toContent();
     }
 };
@@ -390,7 +407,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     var line, fields, encoded;
     var reNonEmptyLine = /\S/;
 
-    this.resources = Object.create(null);
+    this.resources = new Map();
 
     while ( lineBeg < textEnd ) {
         lineEnd = text.indexOf('\n', lineBeg);
@@ -423,14 +440,14 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         // No more data, add the resource.
-        this.resources[fields[0]] = RedirectEntry.fromFields(fields[1], fields.slice(2));
+        this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
 
         fields = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        this.resources[fields[0]] = RedirectEntry.fromFields(fields[1], fields.slice(2));
+        this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
     }
 };
 

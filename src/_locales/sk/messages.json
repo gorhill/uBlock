@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Zakázať auditovanie\/signalizáciu hypertextových odkazov",
+    "message":"Zakázať auditovanie hypertextových odkazov",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

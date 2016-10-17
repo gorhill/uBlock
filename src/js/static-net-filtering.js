@@ -858,14 +858,15 @@ FilterGenericHostname.fromSelfie = function(s) {
 // whether the start of the match falls within the hostname part of the
 // URL.
 
-var FilterGenericHnAnchored = function(s) {
+var FilterGenericHnAnchored = function(s, anchor) {
     this.s = s;
+    this.anchor = anchor;
     this.re = null;
 };
 
 FilterGenericHnAnchored.prototype.match = function(url) {
     if ( this.re === null ) {
-        this.re = strToRegex('||' + this.s, 0);
+        this.re = strToRegex('||' + this.s, this.anchor);
     }
     var matchStart = url.search(this.re);
     return matchStart !== -1 && isHnAnchored(url, matchStart);
@@ -877,21 +878,22 @@ FilterGenericHnAnchored.prototype.rtfid = '||_';
 
 FilterGenericHnAnchored.prototype.toSelfie =
 FilterGenericHnAnchored.prototype.rtCompile = function() {
-    return this.s;
+    return this.s + '\t' + this.anchor;
 };
 
 FilterGenericHnAnchored.compile = function(details) {
-    return details.f;
+    return details.f + '\t' + details.anchor;
 };
 
 FilterGenericHnAnchored.fromSelfie = function(s) {
-    return new FilterGenericHnAnchored(s);
+    var pos = s.indexOf('\t');
+    return new FilterGenericHnAnchored(s.slice(0, pos), parseInt(s.slice(pos + 1), 10));
 };
 
 /******************************************************************************/
 
-var FilterGenericHnAnchoredHostname = function(s, domainOpt) {
-    FilterGenericHnAnchored.call(this, s);
+var FilterGenericHnAnchoredHostname = function(s, anchor, domainOpt) {
+    FilterGenericHnAnchored.call(this, s, anchor);
     this.domainOpt = domainOpt;
     this.hostnameTest = hostnameTestPicker(this);
 };
@@ -909,16 +911,16 @@ FilterGenericHnAnchoredHostname.prototype.rtfid = '||_h';
 
 FilterGenericHnAnchoredHostname.prototype.toSelfie =
 FilterGenericHnAnchoredHostname.prototype.rtCompile = function() {
-    return this.s + '\t' + this.domainOpt;
+    return this.s + '\t' + this.anchor + '\t' + this.domainOpt;
 };
 
 FilterGenericHnAnchoredHostname.compile = function(details) {
-    return details.f + '\t' + details.domainOpt;
+    return details.f + '\t' + details.anchor + '\t' + details.domainOpt;
 };
 
 FilterGenericHnAnchoredHostname.fromSelfie = function(s) {
-    var pos = s.indexOf('\t');
-    return new FilterGenericHnAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
+    var fields = s.split('\t');
+    return new FilterGenericHnAnchoredHostname(fields[0], parseInt(fields[1], 10), fields[2]);
 };
 
 /******************************************************************************/
@@ -1749,6 +1751,10 @@ FilterContainer.prototype.getFilterClass = function(details) {
             return FilterPlainLeftAnchoredHostname;
         }
         if ( details.anchor > 0 ) {
+            // https://github.com/gorhill/uBlock/issues/1669
+            if ( details.hostnameAnchored ) {
+                return FilterGenericHnAnchoredHostname;
+            }
             return FilterPlainRightAnchoredHostname;
         }
         if ( details.hostnameAnchored ) {
@@ -1776,6 +1782,10 @@ FilterContainer.prototype.getFilterClass = function(details) {
         return FilterPlainLeftAnchored;
     }
     if ( details.anchor > 0 ) {
+        // https://github.com/gorhill/uBlock/issues/1669
+        if ( details.hostnameAnchored ) {
+            return FilterGenericHnAnchored;
+        }
         return FilterPlainRightAnchored;
     }
     if ( details.hostnameAnchored ) {
@@ -2163,9 +2173,7 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
     for (;;) {
         tokenEntry = tokens[i++];
         token = tokenEntry.token;
-        if ( token === '' ) {
-            break;
-        }
+        if ( !token ) { break; }
         f = bucket.get(token);
         if ( f !== undefined && f.match(url, tokenEntry.beg) ) {
             this.tokenRegister = token;

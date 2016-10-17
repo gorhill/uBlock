@@ -260,15 +260,12 @@ vAPI.browserSettings = {
 
             case 'hyperlinkAuditing':
                 this.rememberOriginalValue('browser', 'send_pings');
-                this.rememberOriginalValue('beacon', 'enabled');
                 // https://github.com/gorhill/uBlock/issues/292
                 // "true" means "do not disable", i.e. leave entry alone
                 if ( settingVal ) {
                     this.clear('browser', 'send_pings');
-                    this.clear('beacon', 'enabled');
                 } else {
                     this.setValue('browser', 'send_pings', false);
-                    this.setValue('beacon', 'enabled', false);
                 }
                 break;
 
@@ -1892,6 +1889,7 @@ var httpObserver = {
         14: 'font',
         15: 'media',
         16: 'websocket',
+        17: 'csp_report',
         19: 'beacon',
         21: 'image'
     },
@@ -2156,8 +2154,8 @@ var httpObserver = {
 
         // 'Content-Security-Policy' MUST come last in the array. Need to
         // revised this eventually.
-        var responseHeaders = [];
-        var value = channel.contentLength;
+        var responseHeaders = [],
+            value = channel.contentLength;
         if ( value !== -1 ) {
             responseHeaders.push({ name: 'Content-Length', value: value });
         }
@@ -2339,9 +2337,6 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
-    // Since it's not used
-    this.onBeforeSendHeaders = null;
-
     if ( typeof this.onBeforeRequest.callback === 'function' ) {
         httpObserver.onBeforeRequest = this.onBeforeRequest.callback;
         httpObserver.onBeforeRequestTypes = this.onBeforeRequest.types ?

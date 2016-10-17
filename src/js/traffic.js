@@ -45,12 +45,6 @@ var onBeforeRequest = function(details) {
         return onBeforeRootFrameRequest(details);
     }
 
-    // https://github.com/gorhill/uBlock/issues/870
-    // This work for Chromium 49+.
-    if ( requestType === 'beacon' ) {
-        return onBeforeBeacon(details);
-    }
-
     // Special treatment: behind-the-scene requests
     var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
@@ -58,8 +52,8 @@ var onBeforeRequest = function(details) {
     }
 
     // Lookup the page store associated with this tab id.
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
         var tabContext = µb.tabContextManager.mustLookup(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
@@ -89,9 +83,7 @@ var onBeforeRequest = function(details) {
 
     var result = pageStore.filterRequest(requestContext);
 
-    // Possible outcomes: blocked, allowed-passthru, allowed-mirror
-
-    pageStore.logRequest(requestContext, result);
+    pageStore.journalAddRequest(requestContext.requestHostname, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
@@ -117,16 +109,11 @@ var onBeforeRequest = function(details) {
 
     // Blocked
 
-    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
-    // No point updating the badge if it's not being displayed.
-    if ( µb.userSettings.showIconBadge ) {
-        µb.updateBadgeAsync(tabId);
-    }
-
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
     var url = µb.redirectEngine.toURL(requestContext);
     if ( url !== undefined ) {
+        pageStore.internalRedirectionCount += 1;
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 tabId,
@@ -222,7 +209,8 @@ var onBeforeRootFrameRequest = function(details) {
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
-        pageStore.logRequest(context, result);
+        pageStore.journalAddRootFrame('uncommitted', requestURL);
+        pageStore.journalAddRequest(requestHostname, result);
     }
 
     if ( µb.logger.isEnabled() ) {
@@ -284,73 +272,49 @@ var toBlockDocResult = function(url, hostname, result) {
 
 /******************************************************************************/
 
+// Intercept and filter behind-the-scene requests.
+
 // https://github.com/gorhill/uBlock/issues/870
 // Finally, Chromium 49+ gained the ability to report network request of type
 // `beacon`, so now we can block them according to the state of the
 // "Disable hyperlink auditing/beacon" setting.
 
-var onBeforeBeacon = function(details) {
-    var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.mustPageStoreFromTabId(tabId);
-    var context = pageStore.createContextFromPage();
-    context.requestURL = details.url;
-    context.requestHostname = µb.URI.hostnameFromURI(details.url);
-    context.requestType = details.type;
-    // "g" in "gb:" stands for "global setting"
-    var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
-    pageStore.logRequest(context, result);
-    if ( µb.logger.isEnabled() ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            result,
-            details.type,
-            details.url,
-            context.rootHostname,
-            context.rootHostname
-        );
-    }
-    context.dispose();
-    if ( result !== '' ) {
-        return { cancel: true };
-    }
-};
-
-/******************************************************************************/
-
-// Intercept and filter behind-the-scene requests.
-
 var onBeforeBehindTheSceneRequest = function(details) {
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if ( !pageStore ) {
-        return;
-    }
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
+    if ( !pageStore ) { return; }
 
-    var context = pageStore.createContextFromPage();
-    var requestURL = details.url;
+    var result = '',
+        context = pageStore.createContextFromPage(),
+        requestType = details.type,
+        requestURL = details.url;
+
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
-    context.requestType = details.type;
+    context.requestType = requestType;
+
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
+    //   Do not filter behind-the-scene network request of type `beacon`: there
+    //   is no point. In any case, this will become a non-issue once
+    //   <https://bugs.chromium.org/p/chromium/issues/detail?id=522129> is
+    //   fixed.
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
-    var result = '';
     if ( µb.userSettings.advancedUserEnabled ) {
         result = pageStore.filterRequestNoCache(context);
     }
 
-    pageStore.logRequest(context, result);
+    pageStore.journalAddRequest(context.requestHostname, result);
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             vAPI.noTabId,
             'net',
             result,
-            details.type,
+            requestType,
             requestURL,
             context.rootHostname,
             context.rootHostname
@@ -451,6 +415,14 @@ var processCSP = function(details, pageStore, context) {
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
+    // https://github.com/gorhill/uBlock/issues/2050
+    //   Blanket-blocking websockets is exceptional, so we test whether the
+    //   page is whitelisted if and only if there is a hit against a websocket
+    //   filter.
+    if ( blockWebsocket && pageStore.getNetFilteringSwitch() === false ) {
+        websocketResult = '';
+        blockWebsocket = false;
+    }
 
     var headersChanged = false;
     if ( blockInlineScript || blockWebsocket ) {

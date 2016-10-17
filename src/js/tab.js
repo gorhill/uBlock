@@ -465,23 +465,10 @@ vAPI.tabs.onNavigation = function(details) {
     if ( details.frameId !== 0 ) {
         return;
     }
-
-    var tabContext = µb.tabContextManager.commit(details.tabId, details.url);
-    var pageStore = µb.bindTabToPageStats(details.tabId, 'tabChanged');
-
-    // https://github.com/chrisaljoudi/uBlock/issues/630
-    // The hostname of the bound document must always be present in the
-    // mini-matrix. That's the best place I could find for the fix, all other
-    // options had bad side-effects or complications.
-    // TODO: Eventually, we will have to use an API to check whether a scheme
-    //       is supported as I suspect we are going to start to see `ws`, `wss`
-    //       as well soon.
-    if (
-        pageStore &&
-        tabContext.rawURL.startsWith('http') &&
-        pageStore.hostnameToCountMap.hasOwnProperty(tabContext.rootHostname) === false
-    ) {
-        pageStore.hostnameToCountMap[tabContext.rootHostname] = 0x00010000;
+    µb.tabContextManager.commit(details.tabId, details.url);
+    var pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
+    if ( pageStore ) {
+        pageStore.journalAddRootFrame('committed', details.url);
     }
 };
 
@@ -778,7 +765,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         // filtering pane.
         var pageStore = µb.pageStoreFromTabId(openerTabId);
         if ( pageStore ) {
-            pageStore.logRequest(context, result);
+            pageStore.journalAddRequest(context.requestHostname, result);
             pageStore.popupBlockedCount += 1;
         }
 
@@ -827,13 +814,13 @@ vAPI.tabs.registerListeners();
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/516
-    // Never rebind behind-the-scene scope
+    //   Never rebind behind-the-scene scope.
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return pageStore;
     }
 
-    // https://github.com/gorhill/uBlock/issues/516
-    // If context if 'beforeRequest', do not rebind, wait for confirmation.
+    // https://github.com/chrisaljoudi/uBlock/issues/516
+    //   If context is 'beforeRequest', do not rebind, wait for confirmation.
     if ( context === 'beforeRequest' ) {
         return pageStore;
     }

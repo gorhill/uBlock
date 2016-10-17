@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Köprü denetimini\/İşaretçiyi devre dışı bırak",
+    "message":"Köprü denetimini devre dışı bırak",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{

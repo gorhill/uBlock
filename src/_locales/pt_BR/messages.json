@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Abrir Registro de Eventos",
+    "message":"Abrir registro de eventos",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar auditoria de hyperlink\/beacon",
+    "message":"Desativar auditoria em hyperlinks",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -608,7 +608,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar Registro",
+    "message":"Mostrar Registro de Eventos",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

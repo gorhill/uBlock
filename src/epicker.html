@@ -56,28 +56,40 @@ section {
     border: 0;
     box-sizing: border-box;
     display: inline-block;
-    position: relative;
     width: 100%;
 }
-section > textarea {
+section > div:first-child {
+    border: 1px solid #aaa;
+    margin: 0;
+    position: relative;
+}
+section > div > textarea {
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: none;
     box-sizing: border-box;
     font: 11px monospace;
-    height: 6em;
+    height: 8em;
+    margin: 0;
     overflow: hidden;
-    padding: 0;
+    padding: 2px;
     resize: none;
     width: 100%;
 }
-section > div {
+section > div > textarea.invalidFilter {
+    background-color: #fee;
+}
+section > div > textarea + div {
+    background-color: #aaa;
+    bottom: 0;
+    color: white;
+    padding: 2px 4px;
+    position: absolute;
+    right: 0;
+}
+section > div:first-child + div {
     direction: ltr;
     margin: 2px 0;
     text-align: right;
-}
-section > div > span:last-of-type {
-    position: absolute;
-    right: 0;
 }
 ul {
     padding: 0;
@@ -137,8 +149,12 @@ svg > path + path {
 body.preview svg > path {
     fill: rgba(0,0,0,0.10);
 }
+body.preview svg > path + path {
+    stroke: none;
+}
 aside {
     background-color: #eee;
+    border: 1px solid #aaa;
     bottom: 4px;
     box-sizing: border-box;
     visibility: hidden;
@@ -162,7 +178,10 @@ body.paused > aside:hover {
 <svg><path></path><path></path></svg>
 <aside>
 <section>
-    <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
+    <div>
+        <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
+        <div></div>
+    </div>
     <div><!--
     --><button id="preview" type="button">{{preview}}</button><!--
     --><button id="create" type="button" disabled>{{create}}</button><!--

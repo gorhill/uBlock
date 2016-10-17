@@ -67,6 +67,114 @@ if ( vAPI.sessionId ) {
 
 /******************************************************************************/
 
+// Support minimally working Set() for legacy Chromium.
+
+if ( self.Set instanceof Function ) {
+    self.createSet = function() {
+        return new Set();
+    };
+} else {
+    self.createSet = (function() {
+        //console.log('Polyfilling for ES6-like Set().');
+        var PrimitiveSet = function() {
+            this.clear();
+        };
+        PrimitiveSet.prototype = {
+            add: function(k) {
+                if ( this._set[k] === undefined ) {
+                    this._set[k] = true;
+                    this.size += 1;
+                }
+                return this;
+            },
+            clear: function() {
+                this._set = Object.create(null);
+                this.size = 0;
+                this._values = undefined;
+                this._i = undefined;
+                this.value = undefined;
+                this.done = true;
+            },
+            delete: function(k) {
+                if ( this._set[k] === undefined ) { return false; }
+                delete this._set[k];
+                this.size -= 1;
+                return true;
+            },
+            has: function(k) {
+                return this._set[k] !== undefined;
+            },
+            next: function() {
+                if ( this._i < this.size ) {
+                    this.value = this._values[this._i++];
+                } else {
+                    this._values = undefined;
+                    this.value = undefined;
+                    this.done = true;
+                }
+                return this;
+            },
+            polyfill: true,
+            values: function() {
+                this._values = Object.keys(this._set);
+                this._i = 0;
+                this.value = undefined;
+                this.done = false;
+                return this;
+            }
+        };
+        var ReferenceSet = function() {
+            this.clear();
+        };
+        ReferenceSet.prototype = {
+            add: function(k) {
+                if ( this._set.indexOf(k) === -1 ) {
+                    this._set.push(k);
+                }
+            },
+            clear: function() {
+                this._set = [];
+                this._i = 0;
+                this.value = undefined;
+                this.done = true;
+            },
+            delete: function(k) {
+                var pos = this._set.indexOf(k);
+                if ( pos === -1 ) { return false; }
+                this._set.splice(pos, 1);
+                return true;
+            },
+            has: function(k) {
+                return this._set.indexOf(k) !== -1;
+            },
+            next: function() {
+                if ( this._i === this._set.length ) {
+                    this.value = undefined;
+                    this.done = true;
+                } else {
+                    this.value = this._set[this._i];
+                    this._i += 1;
+                }
+                return this;
+            },
+            polyfill: true,
+            values: function() {
+                this._i = 0;
+                this.done = false;
+                return this;
+            }
+        };
+        Object.defineProperty(ReferenceSet.prototype, 'size', {
+            get: function() { return this._set.length; }
+        });
+        return function(type) {
+            return type === 'object' ? new ReferenceSet() : new PrimitiveSet();
+        };
+    })();
+}
+
+/******************************************************************************/
+
 var referenceCounter = 0; 
  
 vAPI.lock = function() { 
@@ -142,25 +250,24 @@ vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 /******************************************************************************/
 
-vAPI.shutdown = (function() {
-    var jobs = [];
-
-    var add = function(job) {
-        jobs.push(job);
-    };
-
-    var exec = function() {
+vAPI.shutdown = {
+    jobs: [],
+    add: function(job) {
+        this.jobs.push(job);
+    },
+    exec: function() {
         var job;
-        while ( (job = jobs.pop()) ) {
+        while ( (job = this.jobs.pop()) ) {
             job();
         }
-    };
-
-    return {
-        add: add,
-        exec: exec
-    };
-})();
+    },
+    remove: function(job) {
+        var pos;
+        while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
+            this.jobs.splice(pos, 1);
+        }
+    }
+};
 
 /******************************************************************************/
 /******************************************************************************/

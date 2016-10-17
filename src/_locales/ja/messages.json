@@ -84,7 +84,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"このサイトの要素隠蔽フィルタを切り替える",
+    "message":"このサイトの要素隠蔽フィルターを切り替える",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"ハイパーリンクの監査／指針を無効にする",
+    "message":"ハイパーリンクの監査を無効にする",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -228,7 +228,7 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"要素隠蔽フィルタを無効にする",
+    "message":"要素隠蔽フィルターを無効にする",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -276,15 +276,15 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の &ldquo;要素遮蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
+    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の&ldquo;要素隠蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"要素隠蔽フィルタを無視します",
+    "message":"要素隠蔽フィルターを無視する",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>要素隠蔽フィルタは、ほぼすべてのウェブサイトに適用することができるフィルタです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルタの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
+    "message":"<p>要素隠蔽フィルターは、ほぼすべてのウェブサイトに適用することができるフィルターです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルターの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -416,7 +416,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"uBlock₀が無効になるホスト名の一覧です。1行につき1つのエントリとなっており、無効なホスト名は無視されます。",
+    "message":"uBlock₀が無効になるホスト名の一覧です。1行につき1つのエントリで、無効なホスト名は無視されます。",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
