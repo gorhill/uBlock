@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiver lenkesporing\/sporingsbilde",
+    "message":"Deaktiver lenkesporing",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
