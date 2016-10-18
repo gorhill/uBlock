@@ -3,47 +3,47 @@
 ============================================================ */
 
 ul {
-    padding-left: 1em;
-    }
-ul#userSettings {
-    padding-left: 0;
-    margin: 50px;
-    }
-li {
-    margin-top: 0.25em;
-    }
-ul#userSettings,
-ul#userSettings ul {
-    list-style-type: none;
-    }
-ul#userSettings .subgroup {
-    margin: 1em 0 2em;
-    }
-ul#userSettings .subgroup p {
-    margin: 0 0 0 50px;
-    clear: both;
-    line-height: 1.5em;
+  padding-left: 1em;
 }
-div > p:last-child {
-    margin-bottom: 0;
-    }
-ul#userSettings .subgroup > span {
-    font-size: larger;
-    font-weight: bold;
-    font-family: 'bebas_neue';
-    }
-ul#userSettings .subgroup > ul {
+ul#userSettings {
+  padding-left: 0;
+  margin: 50px;
+  margin-top: 20px;
+}
+li {
+  margin-top: 0.25em;
+}
+ul#userSettings, ul#userSettings ul {
+  list-style-type: none;
+}
+ul#userSettings .subgroup {
+  margin: 1em 0 2em;
+}
+ul#userSettings .subgroup p {
+  margin: 0 0 0 50px;
+  clear: both;
+  line-height: 1.5em;
+}
+div> p:last-child {
+  margin-bottom: 0;
+}
+ul#userSettings .subgroup> span {
+  font-size: larger;
+  font-weight: bold;
+  font-family: 'bebas_neue';
+}
+ul#userSettings .subgroup> ul {
   padding: 10px 0 10px 44px;
 }
-ul#userSettings .subgroup > ul > li label {
+ul#userSettings .subgroup> ul> li label {
   margin-left: 5px;
 }
-#localData > ul > li {
-    margin-top: 1em;
-    }
-#localData > ul > li > ul > li:nth-of-type(2) {
-    font-family: monospace;
-    }
+#localData> ul> li {
+  margin-top: 1em;
+}
+#localData> ul> li> ul> li:nth-of-type(2) {
+  font-family: monospace;
+}
 #experimental-enabled {
-    margin-top: 1em;
-    }
+  margin-top: 1em;
+}
