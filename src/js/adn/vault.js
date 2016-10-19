@@ -1086,9 +1086,6 @@
     var offsetX = 0;
     var offsetY = 0;
     var container_div = document.getElementById('container');
-    var mouseIsDown = false;
-    var mouseDownAndDragging = false;
-    var itemListeners = 0;
 
     container_div.addEventListener('mousedown', mouseDown, false);
     window.addEventListener('mouseup', mouseUp, false);
@@ -1096,49 +1093,34 @@
     function mouseUp()
     {
         window.removeEventListener('mousemove', divMove, true);
-
-        mouseIsDown = false;
-        mouseDownAndDragging = false;
-        // var allAds = container_div.getElementsByClassName("item");
-        // for(var i = 0; i < allAds.length; i++){
-        //   console.log("removing event listener");
-        //   allAds[i].removeEventListener('mouseover', function(){
-        //     console.log("dragging on element");
-        //     draggingVault = true;
-        //   }, true);
-        // }
-        
     }
 
     function mouseDown(e){
       window.addEventListener('mousemove', divMove, true);
       offsetX = e.pageX;
       offsetY = e.pageY;
-      mouseIsDown = true;
+
     }
     
+    function mouseOnAd(mouseX, mouseY){
+      var ads = $(".ad")
+      for(var i = 0; i < ads.length; i++){
+        var itemTop = ads[i].getBoundingClientRect().top;
+        var itemRight = ads[i].getBoundingClientRect().left + $(".item")[i].getBoundingClientRect().width;
+        var itemBottom = ads[i].getBoundingClientRect().top + $(".item")[i].getBoundingClientRect().height;
+        var itemLeft = ads[i].getBoundingClientRect().left;
+        if(mouseX > itemLeft && mouseX < itemRight && mouseY > itemTop && mouseY < itemBottom) return true;
+      }
+      return false;
+    }
+
+
     var divMove = function(e){
-        var allAds = container_div.getElementsByClassName("ad");
-        // console.log(allAds);
-        if(mouseIsDown){
-          // console.log("mouseisdown and dragging");
-          mouseDownAndDragging = true;
-          
-          for(var i = itemListeners; i < allAds.length; i++){
-              console.log(allAds[i]);
-              allAds[i].addEventListener('mousedown', function(){
-                if(mouseDownAndDragging){
-                  console.log("dragging on element");
-                  draggingVault = true;
-                }
-              }, true);
-              itemListeners += 1;
-          }
-
-
+        draggingVault = false;
+        if(mouseOnAd(e.pageX, e.pageY)){
+          draggingVault = true;
         }
-        
-        
+
         var x_change = e.pageX - offsetX;
         var y_change = e.pageY - offsetY;
 
