@@ -26,6 +26,9 @@ cp platform/webext/polyfill.js   $DES/js/
 cp platform/webext/manifest.json $DES/
 cp LICENSE.txt                   $DES/
 
+echo "*** uBlock0.webext: Generating meta..."
+python tools/make-webext-meta.py $DES/
+
 if [ "$1" = all ]; then
     echo "*** uBlock0.webext: Creating package..."
     pushd $(dirname $DES/) > /dev/null

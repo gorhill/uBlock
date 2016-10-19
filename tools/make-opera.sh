@@ -26,6 +26,9 @@ cp -R platform/chromium/img $DES/
 cp platform/opera/manifest.json $DES/
 cp LICENSE.txt $DES/
 
+echo "*** uBlock0.opera: Generating meta..."
+python tools/make-webext-meta.py $DES/
+
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/mr
