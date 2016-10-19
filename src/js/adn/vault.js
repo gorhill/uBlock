@@ -1095,17 +1095,32 @@
         window.removeEventListener('mousemove', divMove, true);
     }
 
-
     function mouseDown(e){
-      // mouseJustDown = true;
       window.addEventListener('mousemove', divMove, true);
       offsetX = e.pageX;
       offsetY = e.pageY;
+
     }
     
+    function mouseOnAd(mouseX, mouseY){
+      var ads = $(".ad")
+      for(var i = 0; i < ads.length; i++){
+        var itemTop = ads[i].getBoundingClientRect().top;
+        var itemRight = ads[i].getBoundingClientRect().left + ads[i].getBoundingClientRect().width;
+        var itemBottom = ads[i].getBoundingClientRect().top + ads[i].getBoundingClientRect().height;
+        var itemLeft = ads[i].getBoundingClientRect().left;
+        if(mouseX > itemLeft && mouseX < itemRight && mouseY > itemTop && mouseY < itemBottom) return true;
+      }
+      return false;
+    }
+
+
     var divMove = function(e){
-        draggingVault = true;
-        
+        draggingVault = false;
+        if(mouseOnAd(e.pageX, e.pageY)){
+          draggingVault = true;
+        }
+
         var x_change = e.pageX - offsetX;
         var y_change = e.pageY - offsetY;
 
