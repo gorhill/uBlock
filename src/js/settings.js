@@ -142,6 +142,11 @@ var onLocalDataReceived = function(details) {
     if ( details.cloudStorageSupported === false ) {
         uDom('#cloud-storage-enabled').attr('disabled', '');
     }
+    if ( details.privacySettingsSupported === false ) {
+        uDom('#prefetching-disabled').attr('disabled', '');
+        uDom('#hyperlink-auditing-disabled').attr('disabled', '');
+        uDom('#webrtc-ipaddress-hidden').attr('disabled', '');
+    }
 };
 
 /******************************************************************************/

@@ -283,7 +283,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         this.contextMenu.update(null);
         break;
     case 'hyperlinkAuditingDisabled':
-        vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        }
         break;
     case 'noCosmeticFiltering':
         if ( this.hnSwitches.toggle('no-cosmetic-filtering', '*', value ? 1 : 0) ) {
@@ -301,10 +303,14 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         }
         break;
     case 'prefetchingDisabled':
-        vAPI.browserSettings.set({ 'prefetching': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'prefetching': !value });
+        }
         break;
     case 'webrtcIPAddressHidden':
-        vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
+        }
         break;
     default:
         break;

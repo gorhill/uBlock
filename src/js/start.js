@@ -68,7 +68,7 @@ var onAllReady = function() {
     µb.assets.remoteFetchBarrier -= 1;
 
     // vAPI.cloud is optional.
-    if ( vAPI.cloud instanceof Object ) {
+    if ( µb.cloudStorageSupported ) {
         vAPI.cloud.start([
             'tpFiltersPane',
             'myFiltersPane',
@@ -169,11 +169,13 @@ var onUserSettingsReady = function(fetched) {
     µb.assets.autoUpdate = userSettings.autoUpdate;
     µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
-    vAPI.browserSettings.set({
-        'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-        'prefetching': !userSettings.prefetchingDisabled,
-        'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
-    });
+    if ( µb.privacySettingsSupported ) {
+        vAPI.browserSettings.set({
+            'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
+            'prefetching': !userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+        });
+    }
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);

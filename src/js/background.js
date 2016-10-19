@@ -70,6 +70,10 @@ return {
         webrtcIPAddressHidden: false
     },
 
+    // Features detection.
+    privacySettingsSupported: vAPI.browserSettings instanceof Object,
+    cloudStorageSupported: vAPI.cloud instanceof Object,
+
     // https://github.com/chrisaljoudi/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
     netWhitelist: {},
