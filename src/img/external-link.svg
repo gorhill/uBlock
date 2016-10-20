@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="8px" height="8px" viewBox="0 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>external-link</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="external-link" fill="#0076FF">
+            <path d="M7.625,3.5 C7.524,3.5 7.434,3.459 7.366,3.395 C7.364,3.393 7.361,3.393 7.359,3.391 L6.427,2.458 L4.067,4.818 C3.823,5.061 3.427,5.061 3.183,4.818 C2.939,4.574 2.939,4.178 3.183,3.934 L5.542,1.575 L4.609,0.641 C4.607,0.639 4.607,0.636 4.605,0.634 C4.541,0.566 4.5,0.476 4.5,0.375 C4.5,0.168 4.668,0 4.875,0 L7.5,0 C7.776,0 8,0.224 8,0.5 L8,3.125 C8,3.332 7.832,3.5 7.625,3.5 L7.625,3.5 Z M1,2.25 L1,6.75 C1,6.888 1.112,7 1.25,7 L5.75,7 C5.888,7 6,6.888 6,6.75 L6,4 L7,5 L7,7 C7,7.553 6.553,8 6,8 L1,8 C0.448,8 0,7.553 0,7 L0,2 C0,1.448 0.448,1 1,1 L3,1 L4,2 L1.25,2 C1.112,2 1,2.112 1,2.25 L1,2.25 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

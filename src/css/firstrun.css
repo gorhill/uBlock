@@ -32,8 +32,12 @@ form a {
 #clicker {
   margin-top: 50px
 }
-#dnt-exception {
-  margin: 20px 5px 30px 50px;
+input[type="checkbox"]#dnt-exception + label::before {
+  margin: 26px 8px 29px 50px;
+}
+label[for="dnt-exception"] {
+  margin-top: -23px;
+  display: block;
 }
 #version-div {
   position: absolute;
