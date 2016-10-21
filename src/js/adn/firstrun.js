@@ -64,6 +64,11 @@
     return switchValue('hidingAds') || switchValue('clickingAds');
   }
 
+  function hasEnabledToggle() {
+
+    return switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware');
+  }
+
   function changeDNTexceptions(bool) {
 
     changeUserSettings("disableClickingForDNT", bool);
@@ -85,9 +90,8 @@
   }
 
   function toggleFirstRunButton(){
-    if(switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware')){
+    if(hasEnabledToggle()){
       //remove class "disable"
-      console.log("Enable");
       uDom('#confirm-close > button').removeClass("disabled")
     }
     else{
@@ -131,10 +135,10 @@
     });
 
     uDom('#confirm-close').on('click', function (e) {
-      if(!this.hasClassName('disabled')){
+      if(hasEnabledToggle()){
         e.preventDefault();
-      // handles #371
-      window.open(location, '_self').close();
+        // handles #371
+        window.open(location, '_self').close();
       }
     });
 
