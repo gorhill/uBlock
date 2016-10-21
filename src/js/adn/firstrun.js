@@ -84,6 +84,19 @@
     dntInput.parent().css('display', hideOrClick() ? 'block' : 'none');
   }
 
+  function toggleFirstRunButton(){
+    if(switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware')){
+      //remove class "disable"
+      console.log("Enable");
+      uDom('#confirm-close > button').removeClass("disabled")
+    }
+    else{
+      //add class disable
+      uDom('#confirm-close > button').addClass("disabled")
+    }
+
+  }
+
   /******************************************************************************/
 
   // TODO: use data-* to declare simple settings
@@ -107,7 +120,7 @@
 
             changeDNTexceptions(false);
           }
-
+          toggleFirstRunButton();
           toggleDNTException();
         });
     });
@@ -118,11 +131,11 @@
     });
 
     uDom('#confirm-close').on('click', function (e) {
-
-      e.preventDefault();
-
+      if(!this.hasClassName('disabled')){
+        e.preventDefault();
       // handles #371
       window.open(location, '_self').close();
+      }
     });
 
     toggleDNTException();
