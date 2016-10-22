@@ -61,8 +61,6 @@ if ( vAPI.sessionId ) {
     return;
 }
 
-//vAPI.debugAdParsing = 0; // replaced by core.js::netLogging
-
 /******************************************************************************/
 
 var referenceCounter = 0;

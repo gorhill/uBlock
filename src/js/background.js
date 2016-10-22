@@ -51,16 +51,14 @@ return {
     userSettings: {
 
         admap: {},          // ADN
-        //notifications: [],
         parseTextAds: true,
+        eventLogging: false,
 
         hidingAds: false,
         clickingAds: false,
         blockingMalware: false,
         disableHidingForDNT: false,
         disableClickingForDNT: false,
-
-        //noThirdPartyCookies: true,
 
         noIncomingCookies: true,
         noOutgoingCookies: true,

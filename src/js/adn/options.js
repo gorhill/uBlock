@@ -130,7 +130,7 @@
 
   var onUserSettingsReceived = function (details) {
 
-    //console.log('onUserSettingsReceived', details);
+    console.log('onUserSettingsReceived', details);
 
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
 

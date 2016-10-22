@@ -8,8 +8,8 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0, // for automated testing
-    netLogging = 0; // for debugging events
+    automatedMode = 0; // for automated testing
+    //eventLogging = 0; // for debugging events
 
   var µb = µBlock,
     production = 0,
@@ -1093,10 +1093,10 @@
 
     // preferences relevant to our ui/content-scripts
     var r = {
-      logEvents: netLogging,
       production: production,
       hidingDisabled: !µb.userSettings.hidingAds,
       textAdsDisabled: !µb.userSettings.parseTextAds,
+      logEvents: µb.userSettings.eventLogging
     };
 
     return r;
@@ -1168,13 +1168,13 @@
 
   var logRedirect = exports.logRedirect = function (from, to) {
 
-    if (netLogging && arguments.length)
+    if (µb.userSettings.eventLogging && arguments.length)
       log('[REDIRECT] ' + from + ' => ' + to);
   };
 
   var logNetEvent = exports.logNetEvent = function () {
 
-    if (netLogging && arguments.length) {
+    if (µb.userSettings.eventLogging && arguments.length) {
 
       var args = Array.prototype.slice.call(arguments);
       var action = args.shift();
@@ -1269,7 +1269,8 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    netLogging && log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
+    if (µb.userSettings.eventLogging)
+      log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);

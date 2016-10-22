@@ -114,8 +114,6 @@ vAPI.executionCost.start();
 /******************************************************************************/
 
 vAPI.firefox = true;
-//vAPI.debugAdParsing = 0; // replaced by core.js::netLogging
-
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +
            Math.floor(Math.random() * 982451653 + 982451653).toString(36);

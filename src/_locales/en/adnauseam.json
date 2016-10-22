@@ -249,5 +249,9 @@
   "whitelistPageName": {
     "message": "Whitelists",
     "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Log event to console",
+    "description": "prompt for toggle"
   }
 }
