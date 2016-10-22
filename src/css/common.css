@@ -184,7 +184,8 @@ button.custom {
     padding-top: 2px;
     }
 button.custom.disabled,
-button.custom[disabled],button.large.disabled {
+button.custom[disabled],
+button.large.disabled {
     border-color: #999;
     color: #999;
     opacity: 0.6;
