@@ -64,6 +64,11 @@
     return switchValue('hidingAds') || switchValue('clickingAds');
   }
 
+  function hasEnabledToggle() {
+
+    return switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware');
+  }
+
   function changeDNTexceptions(bool) {
 
     changeUserSettings("disableClickingForDNT", bool);
@@ -82,6 +87,18 @@
     }
 
     dntInput.parent().css('display', hideOrClick() ? 'block' : 'none');
+  }
+
+  function toggleFirstRunButton() {
+    if (hasEnabledToggle()) {
+      //remove class "disable"
+      uDom('#confirm-close > button').removeClass("disabled")
+    }
+    else {
+      //add class disable
+      uDom('#confirm-close > button').addClass("disabled")
+    }
+
   }
 
   /******************************************************************************/
@@ -104,10 +121,10 @@
           }
 
           if (!hideOrClick()) {
-
             changeDNTexceptions(false);
           }
-
+          
+          toggleFirstRunButton();
           toggleDNTException();
         });
     });
@@ -118,11 +135,11 @@
     });
 
     uDom('#confirm-close').on('click', function (e) {
-
-      e.preventDefault();
-
-      // handles #371
-      window.open(location, '_self').close();
+      if (hasEnabledToggle()) {
+        e.preventDefault();
+        // handles #371
+        window.open(location, '_self').close();
+      }
     });
 
     toggleDNTException();
