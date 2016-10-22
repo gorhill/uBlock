@@ -331,7 +331,7 @@ vAPI.tabs.registerListeners = function() {
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
-        onUpdatedClient(tabId, changeInfo, tab);
+        onUpdatedClient(tabId.toString(), changeInfo, tab);
     };
 
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
