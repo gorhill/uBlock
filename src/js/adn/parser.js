@@ -140,23 +140,28 @@
           }
         }
 
+       
         if (targetUrl) {
+          
+          img.onload = function() {
 
-          ad = createAd(document.domain, targetUrl, {
-            src: src,
-            width: img.naturalWidth || -1,
-            height: img.naturalHeight || -1
-          });
+            ad = createAd(document.domain, targetUrl, {
+              src: src,
+              width: img.naturalWidth || -1,
+              height: img.naturalHeight || -1
+            });
 
-          if (ad) {
+            if (ad) {
 
-            if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
-            notifyAddon(ad);
-            return true;
+              if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
+              notifyAddon(ad);
+              return true;
 
-          } else {
-            warnP("Bail: Unable to create Ad", document.domain, targetUrl, src);
+            } else {
+              warnP("Bail: Unable to create Ad", document.domain, targetUrl, src);
+            }
           }
+
         } else {
           warnP("Bail: No href for anchor", target, img);
         }
