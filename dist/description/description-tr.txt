@@ -1,9 +1,9 @@
-Etkili bir engelleyici: Belleği ve işlemciyi zorlamaz, yine de diğer popüler engelleyicilere göre binlerce daha çok süzgeci yükleyip uygulayabilir.
+Etkili bir engelleyici: Belleği ve işlemciyi yormaz, yine de diğer popüler engelleyicilere göre binlerce daha fazla süzgeci yükleyip uygulayabilir.
 
-Verimliliğinin resmedilen genel bakışı:
+Verimliliğine örneklendirilmiş genel bakış:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Kullanımı: Arayüzdeki büyük güç düğmesi mevcut web sitesinde uBlock'u kalıcı olarak devre dışı bırakır/etkinleştirir. Bu yalnızca mevcut web sitesine uygulanır, evrensel bir güç düğmesi değildir.
+Kullanımı: Arayüzdeki büyük güç düğmesi mevcut web sitesinde uBlock'u kalıcı olarak etkisiz/etkin kılmak içindir. Bu yalnızca mevcut web sitesine uygulanır, evrensel bir güç düğmesi değildir.
 
 ***
 

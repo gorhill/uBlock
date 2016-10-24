@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Išjungti saitų auditą\/signalizavimą",
+    "message":"Išjungti saitų auditą",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Padaryti atsarginę kopiją į failą",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"mano-ublock-atsarginė_kopija_{{datetime}}.txt",
