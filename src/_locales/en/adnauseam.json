@@ -251,7 +251,7 @@
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Log event to console",
+    "message": "Activate debugging mode",
     "description": "prompt for toggle"
   }
 }
