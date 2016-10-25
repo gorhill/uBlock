@@ -61,7 +61,22 @@ var safeTextToTagNode = function(text) {
         node.setAttribute('type', matches[2]);
         return node;
     }
-    return document.createElement(text);
+    // Firefox extension validator warns if using a variable as argument for
+    // document.createElement().
+    switch ( text ) {
+    case 'b':
+        return document.createElement('b');
+    case 'code':
+        return document.createElement('code');
+    case 'em':
+        return document.createElement('em');
+    case 'i':
+        return document.createElement('i');
+    case 'span':
+        return document.createElement('span');
+    default:
+        break;
+    }
 };
 
 var safeTextToTextNode = function(text) {
