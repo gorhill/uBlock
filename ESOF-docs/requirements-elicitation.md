@@ -27,6 +27,11 @@ Para incentivar a contribuição, existe um [ficheiro](../CONTRIBUTING.md) que e
 <a name="requisitos-especificos"/>
 ## Requisitos Específicos e Funcionalidades
 
+Os requisitos funcionais do projeto *uBlock Origin* são bastante simples: Permitir ao utilizador bloquear *scripts* e pedidos de comunicação de terceiros, como anúncios, trackers e sites de malware.
+
+No que toca aos requisitos não funcionais, é um dos objetivos do criador disponibilizar as funcionalidades do programa de uma forma que não seja proibitiva aos utilizadores que não tenham conhecimento técnico dos meios utilizados pela extensão, isto é, ser facilmente usado por um utilizador leigo.
+
+
 
 <a name="casos-de-uso"/>
 ## Casos de Uso
