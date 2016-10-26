@@ -229,6 +229,44 @@
       return [ad];
     }
 
+    var googleAdsText = function (div) {
+
+       var ads = [],
+        divs = $find(div, 'ul > li');
+
+        
+
+      for (var i = 0; i < divs.length; i++) {
+
+        var title, subs, site, text;
+
+          title = $find(divs[i], 'h4 > a');
+          subs = $find(divs[i], 'p');
+          if(subs.length > 1){
+          text = [subs[0]];
+          site = $find(subs[1], 'a');
+          }
+          
+        if (text.length && site.length && title.length) {
+
+          var ad = vAPI.adParser.createAd('Ads by google', $attr(title, 'href'), {
+            title: $text(title),
+            text: $text(text),
+            site: $text(site)
+          });
+          console.log("[TEXTAD]",ad);
+
+          ads.push(ad);
+
+        } else {
+
+          console.warn('[TEXTADS] googleAdsTextHandler.fail: ', divs[i]); //title, site, text);
+        }
+      }
+
+      return ads;
+    }
+
     // TODO: replace with core::domainFromURI
     var parseDomain = function (url, useLast) { // dup. in shared
 
@@ -324,6 +362,11 @@
       handler: baiduText,
       name: 'baidu',
       domain: /^.*\.baidu\.com/i
+    }, {
+      selector: '.bbccom_adsense_container',
+      handler: googleAdsText,
+      name: 'google - third party',
+      domain: /^.*\.bbc\.com/i
     }];
 
     var checkFilters = function (elem) {
@@ -331,10 +374,10 @@
       var active = filters.filter(function (f) {
         var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
         var matched = f.domain.test(domain);
-        //if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
+        // if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
         return matched;
       });
-
+      
       for (var i = 0; i < active.length; i++) {
         if ($is(elem, active[i].selector)) {
           return active[i].handler(elem);
