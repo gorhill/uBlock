@@ -12,7 +12,7 @@
     "lang": "is",
     "supportURL": "http://adblock.gardar.net/"
   },
-  "ttps://adblock.dk/block.csv": {
+  "https://adblock.dk/block.csv": {
     "off": true,
     "title": "DNK: Schacks Adblock Plus liste",
     "group": "regions",
