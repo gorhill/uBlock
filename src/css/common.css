@@ -126,9 +126,9 @@ a.external-link {
   border-radius: 3px;
 }
 .custom-check input[type="checkbox"]:checked + label::before {
-  background-color: #0076FF;
+  background: #0076FF url(../img/check.svg) center center no-repeat;
   color: black;
-  content: "✔";
+  content: "";
   font-size: 0.8em;
   text-align: center;
   line-height: 12px;
