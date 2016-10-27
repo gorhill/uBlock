@@ -1,7 +1,7 @@
 {
-  "https://www.eff.org/files/effdntlist.txt": {
+  "https://raw.githubusercontent.com/dhowe/Miscellaneous/master/testdntlist.txt": {
     "off": true,
-    "title": "EFF DNT Policy Whitelist",
+    "title": "TEST DNT Policy Whitelist",
     "group": "privacy",
     "supportURL": "https://www.eff.org/dnt-policy"
   },
