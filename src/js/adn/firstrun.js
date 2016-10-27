@@ -65,8 +65,16 @@
   }
 
   function hasEnabledToggle() {
-
     return switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware');
+  }
+
+  function toggleNum(){
+    var toggleNum = 0;
+    if(switchValue('hidingAds')) toggleNum++;
+    if(switchValue('clickingAds')) toggleNum++;
+    if(switchValue('blockingMalware')) toggleNum++;
+
+    return toggleNum;
   }
 
   function changeDNTexceptions(bool) {
@@ -90,14 +98,43 @@
   }
 
   function toggleFirstRunButton() {
+    var button = uDom('#confirm-close > button');
+
     if (hasEnabledToggle()) {
       //remove class "disable"
-      uDom('#confirm-close > button').removeClass("disabled")
+      button.removeClass("disabled");
     }
     else {
       //add class disable
-      uDom('#confirm-close > button').addClass("disabled")
+      button.addClass("disabled");
     }
+    
+    //change text according to toggle Numbers
+    switch(toggleNum()) {
+    case 0:
+        button.removeClass("toggled1");
+        button.attr("data-i18n", "adnFirstRunSwitchMeOn");
+        break;
+    case 1:
+        button.attr("data-i18n", "adnFirstRunThatsIt");
+        button.removeClass("toggled2");
+        button.addClass("toggled1");
+        break;
+    case 2:
+        button.attr("data-i18n", "adnFirstRunBetterButStill");
+        button.removeClass("toggled1");
+        button.removeClass("toggled3");
+        button.addClass("toggled2");
+        break;
+    case 3:
+        button.attr("data-i18n", "adnFirstRunLetsGo");
+        button.removeClass("toggled2");
+        button.addClass("toggled3");
+        break;
+
+    }
+    //reload the text
+    vAPI.i18n.render();
 
   }
 

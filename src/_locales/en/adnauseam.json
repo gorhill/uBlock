@@ -43,9 +43,21 @@
     "message": "Not Yet Visited",
     "description": "English: Not Yet Visited"
   },
-  "adnFirstRunOK": {
-    "message": "OK",
-    "description": "English: Firstrun.html -> OK"
+  "adnFirstRunSwitchMeOn": {
+    "message": "Switch me on",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "That's it? ok…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Better, but still…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Let's go!",
+    "description": "English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage": {
     "message": "AdNauseam is paused on this page",
