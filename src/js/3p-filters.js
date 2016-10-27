@@ -111,8 +111,12 @@ var renderFilterLists = function() {
             li.descendants('input').attr('checked', '');
         }
 
+        var elem = li.descendants('input');
+        elem.attr('id', listKey);
+
         var elem = li.descendants('label');
         elem.text(listNameFromListKey(listKey) + '\u200E');
+        elem.attr('for', listKey);
 
         var elem = li.descendants('a:nth-of-type(1)');
         elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
