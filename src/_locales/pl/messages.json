@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Utwórz kopię zapasową",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"ublock-kopia-zapasowa_{{datetime}}.txt",

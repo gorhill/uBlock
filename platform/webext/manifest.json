@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.9.15.3",
+    "version": "1.9.15.101",
 
     "applications": {
         "gecko": {

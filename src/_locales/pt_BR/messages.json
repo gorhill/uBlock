@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Backup para arquivo",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"meu-ublock-backup_{{datetime}}.txt",

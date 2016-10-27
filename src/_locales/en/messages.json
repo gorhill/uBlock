@@ -544,8 +544,8 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton" : {
-    "message": "Backup to file",
-    "description": "English: Backup to file"
+    "message": "Back up to file",
+    "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename" : {
     "message": "my-ublock-backup_{{datetime}}.txt",

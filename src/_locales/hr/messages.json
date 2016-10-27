@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Sigurnosno kopiranje u datoteku...",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"moja-ublock-sig_kopija_{{datetime}}.txt",

@@ -168,7 +168,7 @@
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"要素隠蔽フィルタ",
+    "message":"要素隠蔽フィルター",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -252,7 +252,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ネットワークフィルタ＋{{cosmeticFilterCount}} 要素隠蔽フィルタ：",
+    "message":"{{netFilterCount}} ネットワークフィルター＋{{cosmeticFilterCount}} 要素隠蔽フィルター：",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"ファイルにバックアップ...",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",

@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Copie de siguranță în fișier",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"salvarea-mea-ublock_{{datetime}}.txt",

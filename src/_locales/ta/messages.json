@@ -192,7 +192,7 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"தக்க இடங்களில் சூழல் மெனுவைக் காட்டு",
+    "message":"தக்க இடங்களில் சூழல் பட்டியலைக் காட்டு",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"கிளவுட் சேமிப்பு ஆதரவு இயக்கு",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"ஹைப்பர்லிங்க் தணிக்கை செயல்நீக்கவும்",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -280,7 +280,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"பொதுவான ஒப்பனை வடிகட்டிகளை புறக்கணி",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -532,7 +532,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"ஆதரவு",
     "description":"A link for where to get support"
   },
   "aboutCode":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"கோப்பிற்கு காப்பு பிரதி எடு",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -572,7 +572,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"{{url}} இணைக்க முடியவில்லை",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
@@ -620,7 +620,7 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"ஏனெனில் பின்வரும் வடிகட்டி",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{

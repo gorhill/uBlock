@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic : Désactiver\/Activer uBlock Origin pour ce site.\n\nCtrl+clic : Désactiver uBlock Origin uniquement sur cette page.",
+    "message":"Clic : Désactiver\/Activer uBlock₀ pour ce site.\n\nCtrl+clic : Désactiver uBlock₀ uniquement sur cette page.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Activer\/Désactiver le blocage d'éléments médias à grande taille de ce site",
+    "message":"Bloquer\/Autoriser le chargement d'éléments médias à taille plus importante pour ce site",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Activer\/Désactiver le blocage de polices d'écriture distantes pour ce site",
+    "message":"Autoriser\/Bloquer le téléchargement des polices d'écriture distantes pour ce site",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -200,7 +200,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Activer le support de stockage dans le nuage",
+    "message":"Activer le stockage des paramètres dans le nuage",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock Origin.<\/p>",
+    "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock₀.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Exporter vers un fichier",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"mes-donnees-ublock_{{datetime}}.txt",
@@ -560,7 +560,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis uBlock Origin redémarrera.\n\nProcéder à l'importation ?",
+    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis uBlock₀ redémarrera.\n\nProcéder à l'importation ?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -568,7 +568,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Vos paramètres seront effacés, puis uBlock Origin redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
+    "message":"Vos paramètres seront effacés, puis uBlock₀ redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -616,7 +616,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock Origin a empêché le chargement de la page suivante :",
+    "message":"uBlock₀ a empêché le chargement de la page suivante :",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -684,7 +684,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Autoriser temporairement les éléments médias à grande taille",
+    "message":"Autoriser temporairement le chargement d'éléments médias à taille plus importante",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

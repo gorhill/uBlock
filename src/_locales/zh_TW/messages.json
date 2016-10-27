@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"備份到檔案…",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"我的-ublock-備份_{{datetime}}.txt",

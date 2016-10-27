@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Naredi varnostno kopijo v datoteko",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"moja-ublock-varnostna-kopija_{{datetime}}.txt",
