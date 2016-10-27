@@ -94,7 +94,7 @@
       dntRespectAppeared = true;
     }
 
-    dntInput.parent().css('display', hideOrClick() ? 'block' : 'none');
+    dntInput.parent().css('opacity', hideOrClick() ? '1' : '0');
   }
 
   function toggleFirstRunButton() {
@@ -108,7 +108,7 @@
       //add class disable
       button.addClass("disabled");
     }
-    
+
     //change text according to toggle Numbers
     switch(toggleNum()) {
     case 0:
@@ -160,7 +160,7 @@
           if (!hideOrClick()) {
             changeDNTexceptions(false);
           }
-          
+
           toggleFirstRunButton();
           toggleDNTException();
         });
