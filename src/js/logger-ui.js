@@ -176,7 +176,7 @@ var filterDecompiler = (function() {
         10: 'other',
         11: 'popunder',
         12: 'document',
-        13: 'elemhide',
+        13: 'generichide',
         14: 'inline-script',
         15: 'popup'
     };
