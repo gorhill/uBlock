@@ -6,6 +6,7 @@
 1. [Casos de Uso](#casos-de-uso)
 1. [Modelo de Domínio](#modelo-de-dominio)
 
+***
 <a name="requisitos"/>
 ## Requisitos
 
@@ -25,6 +26,7 @@ Para incentivar a contribuição, existe um [ficheiro](../CONTRIBUTING.md) que e
 
 
 <a name="requisitos-especificos"/>
+***
 ## Requisitos Específicos e Funcionalidades
 
 Os requisitos funcionais do projeto *uBlock Origin* são bastante simples: Permitir ao utilizador bloquear *scripts* e pedidos de comunicação de terceiros, como anúncios, trackers e sites de malware.
@@ -33,36 +35,53 @@ No que toca aos requisitos não funcionais, é um dos objetivos do criador dispo
 
 
 
+***
 <a name="casos-de-uso"/>
 ## Casos de Uso
 É importante, o utilizador em geral, saiba as funções e utilidades do programa em uso. No diagrama seguinte podemos verificar, as funcionalidades do uBlock.
 
-<img alt="Uses Cases" src="./CasosDeUsos.png" style="float: right; margin: 0 0.5m 0 0;">
+![Use Cases](use_cases.png)
 
 De seguida vamos mencionar, as utilidades das principais funções ao qual o utilizador tem acesso.
 
-### Dashboard
+* ### Dashboard
 Painel de controlo do uBlock, onde o utilizador pode dar *enable* ou *disable* das permissões das páginas do qual visita.
 
-### Block mode
+* ### Block mode
 Local onde o utilizador indica o grau de *blocking* que quer aplicar. No diagrama seguinte, estão identificados os graus possíveis de selecionar pelo utilizador.
 
-<img alt="BlockMode Cases" src="./BlockModeCases.png" style="float: right; margin: 0 0.5m 0 0;">
+![Block Mode Cases](block_mode_cases.png)
 
-### Element picker
+
+
+* ### Element picker
 O utilizador pode remover ou criar filtros a nível consmético, de elementos do qual não quer que apareçam mais, ou que apareçam numa posição diferente, entre outras.
 
-### Strict blocking
+* ### Strict blocking
 A funcionalidade é restringir por completo uma página, de forma a que não seja establecida uma única conexão para o servidor onde se encontra a página.
 
-### The logger
+* ### The logger
 Permite ao utilizador inspecionar o que o uBlock está a fazer relativamente, aos pedidos de rede e elementos DOM.
 
-### Dynamic filtering
+* ### Dynamic filtering
 É uma filtragem de *URL*, sendo uma ferramenta de diagnóstico para corrigir situações de quebra de páginas web.
 
-### DOM inspector
+* ### DOM inspector
 Comparativamente à funcionalidade do *The logger*,o *DOM inspector* é especificamente para auxiliar na criação de filtros cosméticos.
 
 <a name="modelo-de-dominio"/>
+
+***
 ## Modelo de Domínio
+
+Todas as etiquetas devem ser lidas de cima para baixo.
+
+![domainModel](ublock_domain_model.png)
+
+
+***
+## Grupo e Contribuição
+
+* Bernardo Belchior - up201405381 - 33,33%
+* Edgar Passos - up201404131 - 33,33%
+* José Pedro Monteiro - up201406458 - 33,33%
