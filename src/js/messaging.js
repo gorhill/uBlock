@@ -813,10 +813,12 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
 };
 
 var resetUserData = function() {
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear();
 
     // Keep global counts, people can become quite attached to numbers
