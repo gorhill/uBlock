@@ -131,7 +131,7 @@ var onMessage = function(request, sender, callback) {
     case 'getWhitelist':
         response = {
           whitelist: µb.stringFromWhitelist(µb.netWhitelist),
-          effListEnabled: (µb.userSettings.disableHidingForDNT || µb.userSettings.disableClickingForDNT)
+          effListEnabled: ((µb.userSettings.hidingAds && µb.userSettings.disableHidingForDNT) || (µb.userSettings.clickingAds && µb.userSettings.disableClickingForDNT))
         };
         break;
 
