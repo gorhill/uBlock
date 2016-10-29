@@ -1046,7 +1046,13 @@ var readUserAsset = function(path, callback) {
 var saveUserAsset = function(path, content, callback) {
     var bin = {};
     bin[path] = content;
-    vAPI.storage.set(bin, callback);
+    var onSaved;
+    if ( callback instanceof Function ) {
+        onSaved = function() {
+            callback({ path: path, content: content });
+        };
+    }
+    vAPI.storage.set(bin, onSaved);
 };
 
 /******************************************************************************/
