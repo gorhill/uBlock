@@ -241,9 +241,14 @@ var filterDecompiler = (function() {
             break;
         case '||a':
         case '||ah':
+            filter += '||' + tfield0;
+            break;
         case '||_':
         case '||_h':
             filter += '||' + tfield0;
+            if ( tfields[1] === '1' ) { // left-anchored?
+                filter += '|';
+            }
             break;
         case '//':
         case '//h':
@@ -263,12 +268,12 @@ var filterDecompiler = (function() {
         case '|ah':
         case 'a|h':
         case '||ah':
-        case '||_h':
         case '//h':
             opts.push('domain=' + tfields[1]);
             break;
         case 'ah':
         case '_h':
+        case '||_h':
             opts.push('domain=' + tfields[2]);
             break;
         default:
