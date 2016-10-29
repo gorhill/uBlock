@@ -189,7 +189,7 @@
       var $ad = updateAdClasses(ad);
 
       // update the title
-      $ad.descendants('.title').text(decodeEntities(getTitle(ad));
+      $ad.descendants('.title').text(decodeEntities(getTitle(ad)));
 
       // update the url
       $ad.descendants('cite').text(targetDomain(ad));
