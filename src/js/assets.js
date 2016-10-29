@@ -63,6 +63,7 @@ var lastRepoMetaIsRemote = false;
 var refreshRepoMetaPeriod = 5 * oneHour;
 var errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
 var xhrTimeout = vAPI.localStorage.getItem('xhrTimeout') || 30000;
+var onAssetRemovedListener = null;
 
 var exports = {
     autoUpdate: true,
@@ -210,8 +211,8 @@ var cachedAssetsManager = (function() {
             }
             // Saving over an existing item must be seen as removing an
             // existing item and adding a new one.
-            if ( typeof exports.onRemovedListener === 'function' ) {
-                exports.onRemovedListener(removedItems);
+            if ( onAssetRemovedListener instanceof Function ) {
+                onAssetRemovedListener(removedItems);
             }
             cbSuccess(details);
         };
@@ -251,8 +252,8 @@ var cachedAssetsManager = (function() {
             if ( keystoRemove.length ) {
                 vAPI.cacheStorage.remove(keystoRemove);
                 vAPI.cacheStorage.set({ 'cached_asset_entries': entries });
-                if ( typeof exports.onRemovedListener === 'function' ) {
-                    exports.onRemovedListener(removedItems);
+                if ( onAssetRemovedListener instanceof Function ) {
+                    onAssetRemovedListener(removedItems);
                 }
             }
         };
@@ -280,8 +281,6 @@ var cachedAssetsManager = (function() {
     exports.exists = function(path) {
         return entries !== null && entries.hasOwnProperty(path);
     };
-
-    exports.onRemovedListener = null;
 
     getEntries(function(){});
 
@@ -1046,12 +1045,16 @@ var readUserAsset = function(path, callback) {
 var saveUserAsset = function(path, content, callback) {
     var bin = {};
     bin[path] = content;
-    var onSaved;
-    if ( callback instanceof Function ) {
-        onSaved = function() {
+    var onSaved = function() {
+        // Saving over an existing asset must be seen as removing an
+        // existing asset and adding a new one.
+        if ( onAssetRemovedListener instanceof Function ) {
+            onAssetRemovedListener([ path ]);
+        }
+        if ( callback instanceof Function ) {
             callback({ path: path, content: content });
-        };
-    }
+        }
+    };
     vAPI.storage.set(bin, onSaved);
 };
 
@@ -1292,9 +1295,9 @@ exports.purgeAll = function(callback) {
 
 /******************************************************************************/
 
-exports.onAssetCacheRemoved = {
-    addEventListener: function(callback) {
-        cachedAssetsManager.onRemovedListener = callback || null;
+exports.onAssetRemoved = {
+    addListener: function(callback) {
+        onAssetRemovedListener = callback instanceof Function ? callback : null;
     }
 };
 
