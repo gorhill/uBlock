@@ -57,128 +57,209 @@ vAPI.app.restart = function() {
 
 // browser.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
-vAPI.storage = (function() {
-    // Found through trial and error.
-    // Edge aparrently supports 1MB per value, but we get errors
-    // even with 400,000 chars.
-    const MAX_BYTES_PER_VALUE = 300000;
-    const storage = browser.storage.local;
+vAPI.storage = new PrefixedStorage('settings');
+
+vAPI.cacheStorage = (function() {
+    const STORAGE_NAME = 'uBlockStorage';
+    const db = getDb();
+
+    return {get, set, remove, clear, getBytesInUse};
 
     function get(key, callback) {
-        if (typeof key !== 'string') {
-            storage.get(key, callback);
+        let promise;
+
+        if (key === null) {
+            promise = getAllFromDb();
+        } else if (typeof key === 'string') {
+            promise = getFromDb(key).then(result => [result]);
+        } else if (typeof key === 'object') {
+            const keys = Array.isArray(key) ? [].concat(key) : Object.keys(key);
+            const requests = keys.map(key => getFromDb(key));
+            promise = Promise.all(requests);
         } else {
-           getValueAndJoinIfRequired(key, callback);
+            promise = Promise.resolve([]);
         }
+
+        promise.then(results => convertResultsToHash(results))
+            .then((converted) => {
+                if (typeof key === 'object' && !Array.isArray(key)) {
+                    callback(Object.assign({}, key, converted));
+                } else {
+                    callback(converted);
+                }
+            })
+            .catch((e) => {
+                browser.runtime.lastError = e;
+                callback(null);
+            });
     }
 
-    function getValueAndJoinIfRequired(key, callback) {
-        storage.get(key, (response) => {
-            if (!response[key]) {
-                getJoinedValue(key, callback);
+    function set(data, callback) {
+        const requests = Object.keys(data).map(
+            key => putToDb(key, data[key])
+        );
+
+        Promise.all(requests)
+            .then(() => callback && callback())
+            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+    }
+
+    function remove(key, callback) {
+        const keys = [].concat(key);
+        const requests = keys.map(key => deleteFromDb(key));
+
+        Promise.all(requests)
+            .then(() => callback && callback())
+            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+    }
+
+    function clear(callback) {
+        clearDb()
+            .then(() => callback && callback())
+            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+    }
+
+    function getBytesInUse(keys, callback) {
+        // TODO: implement this
+        callback(0);
+    }
+
+    function getDb() {
+        const openRequest = window.indexedDB.open(STORAGE_NAME, 1);
+        openRequest.onupgradeneeded = upgradeSchema;
+        return convertToPromise(openRequest).then((db) => {
+            db.onerror = console.error;
+            return db;
+        });
+    }
+
+    function upgradeSchema(event) {
+        const db = event.target.result;
+        db.onerror = (error) => console.error('[storage] Error updating IndexedDB schema:', error);
+
+        const objectStore = db.createObjectStore(STORAGE_NAME, {keyPath: 'key'});
+        objectStore.createIndex('value', 'value', {unique: false});
+    }
+
+    function getNewTransaction(mode = 'readonly') {
+        return db.then(db => db.transaction(STORAGE_NAME, mode).objectStore(STORAGE_NAME));
+    }
+
+    function getFromDb(key) {
+        return getNewTransaction()
+            .then(store => store.get(key))
+            .then(request => convertToPromise(request));
+    }
+
+    function getAllFromDb() {
+        return getNewTransaction()
+            .then((store) => {
+                return new Promise((resolve, reject) => {
+                    const request = store.openCursor();
+                    const output = [];
+
+                    request.onsuccess = (event) => {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            output.push(cursor.value);
+                            cursor.continue();
+                        } else {
+                            resolve(output);
+                        }
+                    };
+
+                    request.onerror = reject;
+                });
+            });
+    }
+
+    function putToDb(key, value) {
+        return getNewTransaction('readwrite')
+            .then(store => store.put({key, value}))
+            .then(request => convertToPromise(request));
+    }
+
+    function deleteFromDb(key) {
+        return getNewTransaction('readwrite')
+            .then(store => store.delete(key))
+            .then(request => convertToPromise(request));
+    }
+
+    function clearDb() {
+        return getNewTransaction('readwrite')
+            .then(store => store.clear())
+            .then(request => convertToPromise(request));
+    }
+
+    function convertToPromise(eventTarget) {
+        return new Promise((resolve, reject) => {
+            eventTarget.onsuccess = () => resolve(eventTarget.result);
+            eventTarget.onerror = reject;
+        });
+    }
+
+    function convertResultsToHash(results) {
+        return results.reduce((output, item) => {
+            if (item) {
+                output[item.key] = item.value;
+            }
+            return output;
+        }, {});
+    }
+}());
+
+function PrefixedStorage(prefix) {
+    const storage = browser.storage.local;
+    return {get, set, remove, clear: storage.clear, getBytesInUse: storage.getBytesInUse};
+
+    function get(key, callback) {
+        if (typeof key === 'string') {
+            key = prefixKey(key);
+        } else if (Array.isArray(key)) {
+            key = key.map(item => prefixKey(item));
+        } else if (typeof key === 'object') {
+            key = prefixKeysInObject(key);
+        }
+        return storage.get(key, (response) => {
+            if(typeof response === 'object') {
+                callback(removePrefixesFromObject(response));
             } else {
                 callback(response);
             }
         });
     }
 
-    function getJoinedValue(key, callback) {
-        const parts = [];
-        getNextValue();
-
-        function getNextValue(index = 0) {
-            const nextKey = `${key}__${index}`;
-            storage.get(nextKey, (response) => {
-                if (response[nextKey]) {
-                    storePartAndContinue(response[nextKey], index);
-                } else {
-                    joinAndRespond();
-                }
-            });
-        }
-
-        function storePartAndContinue(part, currentIndex) {
-            parts.push(part);
-            getNextValue(currentIndex + 1);
-        }
-
-        function joinAndRespond() {
-            const response = {};
-            let value;
-            try {
-                value = JSON.parse(parts.join(''));
-            } catch (e) {
-                value = null;
-            }
-            response[key] = value;
-            callback(response); 
-        }
-    }
-
     function set(data, callback) {
-        setWithSplitLargeValues(data, callback);
-    }   
+        data = prefixKeysInObject(data);
+        return storage.set(data, callback);
+    }
 
     function remove(key, callback) {
-        if (typeof key !== 'string') {
-            storage.remove(key, callback);
-        } else {
-            storage.get(key, removePartsIfRequired);
-        }
-
-        function removePartsIfRequired(response) {
-            if (response[key]) {
-                storage.remove(key);
-            } else {
-                removeNextPart();
-            }
-        }       
-
-        function removeNextPart(index = 0) {
-            storage.remove(`${key}__${index}`);
-            const nextKey = `${key}__${index + 1}`; 
-            storage.get(nextKey, (result) => {
-                if (result[nextKey]) {
-                    removeNextPart(index + 1);
-                }
-            });
-        }
+        key = [].concat(key).map(item => prefixKey(item));
+        return storage.remove(key, callback);
     }
 
-    function setWithSplitLargeValues(data, callback) {
-        const split = Object.keys(data).reduce((output, key) => {
-            const stringified = JSON.stringify(data[key]);
-            if (stringified.length > MAX_BYTES_PER_VALUE) {
-                storage.remove(key);
-                const parts = splitStringByLength(stringified, MAX_BYTES_PER_VALUE);
-                parts.forEach((part, index) => {
-                    output[`${key}__${index}`] = part;
-                });
-                output[`${key}__${parts.length}`] = null;
-            } else {
-                output[key] = data[key];
-            }
+    function prefixKey(key) {
+        return [prefix, key].join('/');
+    }
+
+    function prefixKeysInObject(obj) {
+        return Object.keys(obj).reduce((output, currentValue) => {
+            output[prefixKey(currentValue)] = obj[currentValue];
             return output;
         }, {});
-        storage.set(split, callback);
     }
 
-    function splitStringByLength(str, length) {
-        const output = [];
-        while(str.length > length) {
-            output.push(str.substr(0, length));
-            str = str.substr(length);
-        }
-        output.push(str);
-        return output;
+    function removePrefixesFromObject(obj) {
+        return Object.keys(obj).reduce((output, currentValue) => {
+            const prefix = prefixKey('');
+            const key = currentValue.indexOf(prefix) === 0 ?
+                currentValue.substr(prefix.length) : currentValue;
+            output[key] = obj[currentValue];
+            return output;
+        }, {});
     }
- 
-    return {
-        get, set, remove,
-        clear: storage.clear,
-        getBytesInUse: storage.getBytesInUse
-    }
-}());
+};
 
 /******************************************************************************/
 /******************************************************************************/
