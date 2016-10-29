@@ -55,7 +55,7 @@ vAPI.app.restart = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-// chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
+// browser.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = (function() {
     // Found through trial and error.
@@ -190,7 +190,7 @@ vAPI.storage = (function() {
 // event in which it appeared Chrome 46 decided to restart uBlock (for
 // unknown reasons) and again for unknown reasons the browser acted as if
 // uBlock did not declare the `privacy` permission in its manifest, putting
-// uBlock in a bad, non-functional state -- because call to `chrome.privacy`
+// uBlock in a bad, non-functional state -- because call to `browser.privacy`
 // API threw an exception.
 
 // https://github.com/gorhill/uBlock/issues/2048 
@@ -198,8 +198,8 @@ vAPI.storage = (function() {
 //   values. 
 
 vAPI.browserSettings = (function() {
-    // Not all platforms support `chrome.privacy`.
-    if ( chrome.privacy instanceof Object === false ) {
+    // Not all platforms support `browser.privacy`.
+    if ( browser.privacy instanceof Object === false ) {
         return;
     }
 
@@ -209,7 +209,7 @@ vAPI.browserSettings = (function() {
         // https://github.com/gorhill/uBlock/issues/875
         // Must not leave `lastError` unchecked.
         noopCallback: function() {
-            void chrome.runtime.lastError;
+            void browser.runtime.lastError;
         },
 
         // Calling with `true` means IP address leak is not prevented.
@@ -259,7 +259,7 @@ vAPI.browserSettings = (function() {
                 return;
             }
 
-            var cp = chrome.privacy,
+            var cp = browser.privacy,
                 cpn = cp.network;
 
             // Older version of Chromium do not support this setting, and is
@@ -315,11 +315,11 @@ vAPI.browserSettings = (function() {
                 case 'prefetching':
                     try {
                         if ( !!details[setting] ) {
-                            chrome.privacy.network.networkPredictionEnabled.clear({
+                            browser.privacy.network.networkPredictionEnabled.clear({
                                 scope: 'regular'
                             }, this.noopCallback);
                         } else {
-                            chrome.privacy.network.networkPredictionEnabled.set({
+                            browser.privacy.network.networkPredictionEnabled.set({
                                 value: false,
                                 scope: 'regular'
                             }, this.noopCallback);
@@ -332,11 +332,11 @@ vAPI.browserSettings = (function() {
                 case 'hyperlinkAuditing':
                     try {
                         if ( !!details[setting] ) {
-                            chrome.privacy.websites.hyperlinkAuditingEnabled.clear({
+                            browser.privacy.websites.hyperlinkAuditingEnabled.clear({
                                 scope: 'regular'
                             }, this.noopCallback);
                         } else {
-                            chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                            browser.privacy.websites.hyperlinkAuditingEnabled.set({
                                 value: false,
                                 scope: 'regular'
                             }, this.noopCallback);
@@ -396,7 +396,7 @@ vAPI.tabs.registerListeners = function() {
     //  onDOMContentLoaded ->
     //  onCompleted
 
-    // The chrome.webRequest.onBeforeRequest() won't be called for everything
+    // The browser.webRequest.onBeforeRequest() won't be called for everything
     // else than `http`/`https`. Thus, in such case, we will bind the tab as
     // early as possible in order to increase the likelihood of a context
     // properly setup if network requests are fired from within the tab.
@@ -458,8 +458,8 @@ vAPI.tabs.registerListeners = function() {
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     browser.webNavigation.onCommitted.addListener(onCommitted);
     // Not supported on Firefox WebExtensions yet.
-    if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    if ( browser.webNavigation.onCreatedNavigationTarget instanceof Object ) {
+        browser.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     }
     browser.tabs.onActivated.addListener(onActivated);
     browser.tabs.onUpdated.addListener(onUpdated);

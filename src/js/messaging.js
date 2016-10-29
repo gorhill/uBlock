@@ -309,6 +309,17 @@ var popupDataFromTabId = function(tabId, tabTitle) {
 
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
+        // https://github.com/gorhill/uBlock/issues/2105
+        //   Be sure to always include the current page's hostname -- it might
+        //   not be present when the page itself is pulled from the browser's
+        //   short-term memory cache. This needs to be done before calling
+        //   getHostnameDict().
+        if (
+            pageStore.hostnameToCountMap.has(rootHostname) === false &&
+            µb.URI.isNetworkURI(tabContext.rawURL)
+        ) {
+            pageStore.hostnameToCountMap.set(rootHostname, 0);
+        }
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
@@ -813,10 +824,12 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
 };
 
 var resetUserData = function() {
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear();
 
     // Keep global counts, people can become quite attached to numbers

@@ -68,7 +68,7 @@ var typeNameToTypeValue = {
              'other': 10 << 4,
           'popunder': 11 << 4,
         'main_frame': 12 << 4,
-          'elemhide': 13 << 4,
+       'generichide': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
@@ -87,7 +87,7 @@ var typeValueToTypeName = {
     10: 'other',
     11: 'popunder',
     12: 'document',
-    13: 'elemhide',
+    13: 'generichide',
     14: 'inline-script',
     15: 'popup'
 };
@@ -337,57 +337,42 @@ var hostnameMissTest = function(owner) {
 };
 
 var hostnameHitSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        pos;
     for (;;) {
-        if ( dict.has(needle) ) {
-            return true;
-        }
+        if ( dict.has(needle) ) { return true; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
     return false;
 };
 
 var hostnameMissSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        pos;
     for (;;) {
-        if ( dict.has(needle) ) {
-            return false;
-        }
+        if ( dict.has(needle) ) { return false; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
-
     return true;
 };
 
 var hostnameMixedSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var hit = false;
-    var v, pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        hit = false,
+        v, pos;
     for (;;) {
         v = dict.get(needle);
-        if ( v === false ) {
-            return false;
-        }
-        if ( v === true ) {
-            hit = true;
-        }
+        if ( v === false ) { return false; }
+        if ( v === true ) { hit = true; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
     return hit;
@@ -1180,7 +1165,8 @@ FilterParser.prototype.toNormalizedType = {
              'other': 'other',
           'popunder': 'popunder',
           'document': 'main_frame',
-          'elemhide': 'elemhide',
+       'generichide': 'generichide',
+          'elemhide': 'generichide',
      'inline-script': 'inline-script',
              'popup': 'popup'
 };
@@ -1272,7 +1258,7 @@ FilterParser.prototype.parseOptions = function(s) {
         // adding support for the new keyword.
         if ( opt === 'elemhide' || opt === 'generichide' ) {
             if ( this.action === AllowAction ) {
-                this.parseOptType('elemhide', false);
+                this.parseOptType('generichide', false);
                 continue;
             }
             this.unsupported = true;
@@ -2223,9 +2209,9 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     var key, bucket;
 
     // https://github.com/gorhill/uBlock/issues/1477
-    // Special case: blocking elemhide filter ALWAYS exists, it is implicit --
+    // Special case: blocking generichide filter ALWAYS exists, it is implicit --
     // thus we always and only check for exception filters.
-    if ( requestType === 'elemhide' ) {
+    if ( requestType === 'generichide' ) {
         key = AllowAnyParty | type;
         if (
             (bucket = categories.get(toHex(key))) &&

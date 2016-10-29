@@ -58,6 +58,7 @@ vAPI.app.restart = function() {
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = chrome.storage.local;
+vAPI.cacheStorage = chrome.storage.local;
 
 /******************************************************************************/
 /******************************************************************************/

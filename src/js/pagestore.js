@@ -334,16 +334,14 @@ PageStore.prototype.init = function(tabId) {
         this.noGenericCosmeticFiltering = µb.staticNetFilteringEngine.matchStringExactType(
             this.createContextFromPage(),
             tabContext.normalURL,
-            'elemhide'
+            'generichide'
         ) === false;
         if ( µb.logger.isEnabled() && this.noGenericCosmeticFiltering ) {
-            // https://github.com/gorhill/uBlock/issues/370
-            // Log using `cosmetic-filtering`, not `elemhide`.
             µb.logger.writeOne(
                 tabId,
                 'net',
                 µb.staticNetFilteringEngine.toResultString(true),
-                'elemhide',
+                'generichide',
                 tabContext.rawURL,
                 this.tabHostname,
                 this.tabHostname

@@ -61,7 +61,7 @@ var onAllReady = function() {
     µb.assetUpdater.onStart.addEventListener(µb.updateStartHandler.bind(µb));
     µb.assetUpdater.onCompleted.addEventListener(µb.updateCompleteHandler.bind(µb));
     µb.assetUpdater.onAssetUpdated.addEventListener(µb.assetUpdatedHandler.bind(µb));
-    µb.assets.onAssetCacheRemoved.addEventListener(µb.assetCacheRemovedHandler.bind(µb));
+    µb.assets.onAssetRemoved.addListener(µb.assetCacheRemovedHandler.bind(µb));
 
     // Important: remove barrier to remote fetching, this was useful only
     // for launch time.
@@ -98,24 +98,17 @@ var onPSLReady = function() {
 // To bring older versions up to date
 
 var onVersionReady = function(lastVersion) {
-    // Whitelist some key scopes by default
-    if ( lastVersion.localeCompare('0.8.6.0') < 0 ) {
-        µb.netWhitelist = µb.whitelistFromString(
-            µb.stringFromWhitelist(µb.netWhitelist) +
-            '\n' +
-            µb.netWhitelistDefault
-        );
-        µb.saveWhitelist();
-    }
-    // https://github.com/gorhill/uBlock/issues/135#issuecomment-96677379
-    // `about:loopconversation` is used by Firefox for its Hello service
-    if ( lastVersion.localeCompare('0.9.5.2') < 0 ) {
-        µb.netWhitelist = µb.whitelistFromString(
-            µb.stringFromWhitelist(µb.netWhitelist) +
-            '\n' +
-            'loopconversation.about-scheme'
-        );
-        µb.saveWhitelist();
+    // After 1.9.16, non-advanced users can have access to the dynamic
+    // filtering pane in read-only mode. Still, it should not be visible by
+    // default.
+    if ( lastVersion.localeCompare('1.9.18') < 0 ) {
+        if (
+            µb.userSettings.advancedUserEnabled === false &&
+            µb.userSettings.dynamicFilteringEnabled === true
+        ) {
+            µb.userSettings.dynamicFilteringEnabled = false;
+            µb.keyvalSetOne('dynamicFilteringEnabled', false);
+        }
     }
     if ( lastVersion !== vAPI.app.version ) {
         vAPI.storage.set({ version: vAPI.app.version });

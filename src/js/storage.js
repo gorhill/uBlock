@@ -767,7 +767,7 @@
             cosmeticFilteringEngine: µb.cosmeticFilteringEngine.toSelfie()
         };
 
-        vAPI.storage.set({ selfie: selfie });
+        vAPI.cacheStorage.set({ selfie: selfie });
     };
 
     var createAsync = function(after) {
@@ -788,7 +788,7 @@
             timer = null;
         }
 
-        vAPI.storage.remove('selfie');
+        vAPI.cacheStorage.remove('selfie');
     };
 
     return {
