@@ -232,15 +232,15 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     if ( matches === null || matches.length !== 4 ) {
         return;
     }
-
-    var des = matches[1] || '';
-    var pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
+    var µburi = µBlock.URI,
+        des = matches[1] || '',
+        pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
                                     .replace(/\^/g, '[^\\w\\d%-]')
-                                    .replace(/\*/g, '.*?');
-    var type;
-    var redirect = '';
-    var srcs = [];
-    var options = matches[3].split(','), option;
+                                    .replace(/\*/g, '.*?'),
+        type,
+        redirect = '',
+        srcs = [],
+        options = matches[3].split(','), option;
     while ( (option = options.pop()) ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
@@ -251,7 +251,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             continue;
         }
         if ( option === 'first-party' ) {
-            srcs.push(des);
+            srcs.push(µburi.domainFromHostname(des) || des);
             continue;
         }
         // One and only one type must be specified.
