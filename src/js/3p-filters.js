@@ -111,11 +111,17 @@ var renderFilterLists = function() {
             li.descendants('input').attr('checked', '');
         }
 
+        var elem = li.descendants('input');
+        elem.attr('id', listKey);
+
+        var elem = li.descendants('label');
+        elem.text(listNameFromListKey(listKey) + '\u200E');
+        elem.attr('for', listKey);
+
         var elem = li.descendants('a:nth-of-type(1)');
         elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
         elem.attr('type', 'text/html');
         elem.attr('data-listkey', listKey);
-        elem.text(listNameFromListKey(listKey) + '\u200E');
 
         if ( entry.instructionURL ) {
             elem = li.descendants('a:nth-of-type(2)');
