@@ -20,16 +20,36 @@
     "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"menyembunyikan semua iklan yang ditemukan menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
-    "description":"English: Firstrun.html -> hides all ads identified by filter lists"
+    "message":"hide Ads in your selected <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"mensimulasi klik semua iklan yang ditemukan menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
-    "description":"English: Firstrun.html -> silently registers visits on all pages linked to ads identified by filter lists"
+    "message":"register visits on Ads found via your <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"melindungi browser Anda dari malware dan pelacak bebas-visual lainnya menurut <a href='\/dashboard.html#3p-filters.html'> Daftar filter<\/a>",
-    "description":"English: Firstrun.html -> protects your browser from malware and other non-visual trackers according to filter lists"
+    "message":"optimize your settings to protect against malware and non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
+    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+  },
+  "adnNotificationActivateHiding":{
+    "message":"Activate Ad hiding",
+    "description":"English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking":{
+    "message":"Activate Ad clicking",
+    "description":"English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking":{
+    "message":"Activate malware blocking",
+    "description":"English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList":{
+    "message":"Activate the EasyList filter",
+    "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationDisableAdBlocker":{
+    "message":"Please disable other ad blocker",
+    "description":"English: Notifications -> Please disable other ad blocker"
   },
   "adnTarget":{
     "message":"TARGET",
@@ -43,9 +63,21 @@
     "message":"Not Yet Visited",
     "description":"English: Not Yet Visited"
   },
-  "adnFirstRunOK":{
-    "message":"OK",
-    "description":"English: Firstrun.html -> OK"
+  "adnFirstRunSwitchMeOn":{
+    "message":"Switch me on",
+    "description":"English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt":{
+    "message":"That's it? ok…",
+    "description":"English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill":{
+    "message":"Better, but still…",
+    "description":"English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo":{
+    "message":"Let's go!",
+    "description":"English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam is paused on this page",
@@ -207,9 +239,17 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
-  "noThirdPartyCookiesPrompt":{
-    "message":"Disallow third-party cookies",
-    "description":"English: Disallow third-party cookies"
+  "respectDNTPrompt":{
+    "message":"Make exceptions for non-tracking Ads",
+    "description":"English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt":{
+    "message":"Don't hide non-tracking Ads",
+    "description":"English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt":{
+    "message":"Don't click non-tracking Ads",
+    "description":"English: Don't click non-tracking Ads"
   },
   "extName":{
     "message":"AdNauseam",
@@ -234,5 +274,13 @@
   "3pGroupRegions":{
     "message":"Languages",
     "description":"English: Languages"
+  },
+  "whitelistPageName":{
+    "message":"Whitelists",
+    "description":"appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt":{
+    "message":"Activate debugging mode",
+    "description":"prompt for toggle"
   }
 }
