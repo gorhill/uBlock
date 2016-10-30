@@ -21,8 +21,17 @@ ul#userSettings .subgroup {
 }
 ul#userSettings .subgroup p {
   margin: 0 0 0 50px;
-  clear: both;
   line-height: 1.5em;
+  float:left;
+}
+ul#userSettings .subgroup .subgroupDescription {
+    clear: both;
+}
+ul#userSettings .subgroup .subgroupDescription p{
+    margin-right: 0.3em;
+}
+ul#userSettings .subgroup {
+  margin: 1em 0 2em;
 }
 div> p:last-child {
   margin-bottom: 0;
@@ -34,6 +43,7 @@ ul#userSettings .subgroup> span {
 }
 ul#userSettings .subgroup> ul {
   padding: 10px 0 10px 44px;
+  clear:both;
 }
 ul#userSettings .subgroup> ul> li label {
   margin-left: 5px;
