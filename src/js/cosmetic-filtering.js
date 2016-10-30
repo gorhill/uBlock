@@ -595,8 +595,10 @@ var FilterContainer = function() {
     this.selectorCacheTimer = null;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reClassOrIdSelector = /^[#.][\w-]+$/;
-    this.rePlainSelector = /^[#.][\w-]+/;
+    this.rePlainSelector = /^[#.][\w\\-]+/;
+    this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
     this.rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)/;
+    this.reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
     this.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
     this.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
     this.reScriptSelector = /^script:(contains|inject)\((.+)\)$/;
@@ -786,6 +788,40 @@ FilterContainer.prototype.isValidSelector = (function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1668
+//   The key must be literal: unescape escaped CSS before extracting key.
+//   It's an uncommon case, so it's best to unescape only when needed.
+
+FilterContainer.prototype.keyFromSelector = function(selector) {
+    var matches = this.rePlainSelector.exec(selector);
+    if ( matches === null ) { return; }
+    var key = matches[0];
+    if ( key.indexOf('\\') === -1 ) {
+        return key;
+    }
+    key = '';
+    matches = this.rePlainSelectorEscaped.exec(selector);
+    if ( matches === null ) { return; }
+    var escaped = matches[0],
+        beg = 0;
+    this.reEscapeSequence.lastIndex = 0;
+    for (;;) {
+        matches = this.reEscapeSequence.exec(escaped);
+        if ( matches === null ) {
+            return key + escaped.slice(beg);
+        }
+        key += escaped.slice(beg, matches.index);
+        beg = this.reEscapeSequence.lastIndex;
+        if ( matches[1].length === 1 ) {
+            key += matches[1];
+        } else {
+            key += String.fromCharCode(parseInt(matches[1], 16));
+        }
+    }
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.compile = function(s, out) {
     var parsed = this.parser.parse(s);
     if ( parsed.cosmetic === false ) {
@@ -846,23 +882,21 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
 FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
     var selector = parsed.suffix,
         type = selector.charAt(0),
-        matches;
+        key, matches;
 
     if ( type === '#' || type === '.' ) {
-        matches = this.rePlainSelector.exec(selector);
-        if ( matches === null ) {
-            return;
-        }
+        key = this.keyFromSelector(selector);
+        if ( key === undefined ) { return; }
         // Single-CSS rule: no need to test for whether the selector
         // is valid, the regex took care of this. Most generic selector falls
         // into that category.
-        if ( matches[0] === selector ) {
-            out.push('c\vlg\v' + matches[0]);
+        if ( key === selector ) {
+            out.push('c\vlg\v' + key);
             return;
         }
-        // Many-CSS rules
+        // Composite CSS rule.
         if ( this.isValidSelector(selector) ) {
-            out.push('c\vlg+\v' + matches[0] + '\v' + selector);
+            out.push('c\vlg+\v' + key + '\v' + selector);
         }
         return;
     }
