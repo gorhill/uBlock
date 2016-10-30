@@ -286,7 +286,7 @@
     $('<a/>', {
       class: 'inspected-title',
       href: ad.pageUrl,
-      text: ad.pageTitle,
+      text: decodeEntities(ad.pageTitle),
       target: '_blank'
 
     }).appendTo($detected);
@@ -315,7 +315,7 @@
       id: 'target-title',
       class: 'inspected-title',
       href: ad.targetUrl,
-      text: ad.title,
+      text: decodeEntities(ad.title),
       target: '_blank'
 
     }).appendTo($target);
@@ -1131,7 +1131,7 @@
         container_div.style.marginTop = (mt+=y_change) + 'px';
 
         offsetX = e.pageX;
-        offsetY = e.pageY;      
+        offsetY = e.pageY;
     }
 
     /////////// ZOOM-STAGE ///////////
@@ -1471,7 +1471,7 @@
 
       var filtered = dateFilter(gMin, gMax);
 
-      
+
       return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
         (gAdSets = createAdSets(filtered));
     }

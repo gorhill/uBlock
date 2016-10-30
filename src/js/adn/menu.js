@@ -189,7 +189,7 @@
       var $ad = updateAdClasses(ad);
 
       // update the title
-      $ad.descendants('.title').text(getTitle(ad));
+      $ad.descendants('.title').text(decodeEntities(getTitle(ad)));
 
       // update the url
       $ad.descendants('cite').text(targetDomain(ad));
@@ -336,7 +336,7 @@
 
     uDom(document.createElement('span'))
       .addClass('title')
-      .text(ad.title ? ad.title : "#" + ad.id)
+      .text(ad.title ? decodeEntities(ad.title) : "#" + ad.id)
       .appendTo($a);
 
     uDom(document.createElement('cite'))
@@ -363,7 +363,7 @@
       .attr('target', 'new')
       .attr('href', ad.targetUrl)
       .addClass('title')
-      .text(ad.title).appendTo($h3);
+      .text(decodeEntities(ad.title)).appendTo($h3);
 
     $h3.appendTo($li);
 
