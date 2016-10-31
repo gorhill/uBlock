@@ -29,6 +29,13 @@
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
 
+var AdBlockersEnabled = new Notification({
+  name: 'AdBlockersEnabled',
+  text: 'Please disable other ad blockers',
+  button: 'deactivate'
+});
+AdBlockersEnabled.func =  openExtensionsPage.bind(AdBlockersEnabled);
+
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
   text: 'Activate Ad hiding',
@@ -56,7 +63,7 @@ var EasyList = new Notification({
 EasyList.func = reactivateList.bind(EasyList);
 
 
-var Notifications = [ HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
+var Notifications = [ AdBlockersEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
 
 function Notification(m) {
 
@@ -102,23 +109,30 @@ var removeNotification = function (notes, note) {
   return false;
 };
 
-var renderNotifications = function (visibleNotes) {
+var renderAdBlockNotification = function (visibleNotes) {
+   renderNotifications(visibleNotes, "adBlockOnly");
+ }
 
-  //console.log('renderNotifications', visibleNotes);
+ var renderNotifications = function (visibleNotes, mode) {
+  
+
+  // console.log('renderNotifications', visibleNotes);
 
   //var origUdom = uDom; // this may be called from a frame or not ??
   //if (window.self != window.top) uDom = window.top.uDom;
-
+  
+  var notifications = (mode == 'adBlockOnly') ? [AdBlockersEnabled] : Notifications;
   var template = uDom('#notify-template');
 
   if (!template.length) throw Error('no template');
 
-  for (var i = 0; i < Notifications.length; i++) {
+  for (var i = 0; i < notifications.length; i++) {
 
-    var notify = Notifications[i];
+    var notify = notifications[i];
 
     //var showing = (notes.indexOf(notify) > -1);
     var match = visibleNotes && visibleNotes.filter(function (n) {
+      // console.log(notify.name, n.name);
       return notify.name === n.name;
     });
 
@@ -185,6 +199,10 @@ function reactivateList() {
       what: 'selectFilterLists',
       switches: [ { location: this.listUrl, off: false }]
     }, reloadPane);
+}
+
+function openExtensionsPage() {
+  chrome.tabs.create({ 'url': 'chrome://extensions/'});
 }
 
 function reloadPane() {
