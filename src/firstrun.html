@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+   <div id="notifications" class=""></div>
   <div id="version-div">
     <span id="app-version">v2.3.5</span>
   </div>
@@ -66,6 +66,16 @@
     </div>
 
   </form>
+
+  <div id="templates" style="display: none">
+      <!-- for notifications -->
+      <div id='notify-template' class="notification">
+        <span id='notify-text'></span>
+        <a id="notify-link" href="" target="_blank" class="help-mark">?</a>
+        <button id="notify-button" type="button"></button>
+      </div>
+
+  </div>
 
   <script src="js/vapi-common.js"></script>
   <script src="js/vapi-client.js"></script>

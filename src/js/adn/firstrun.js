@@ -31,6 +31,17 @@
 
   var messager = vAPI.messaging;
   var dntRespectAppeared = false;
+
+  //  messager.addChannelListener('adnauseam', function (request) {
+
+  //   switch (request.what) {
+
+  //   case 'notifications':
+  //     renderAdBlockNotification(request.notifications);
+  //     break;
+  //   }
+  // });
+
   /******************************************************************************/
   var changeUserSettings = function (name, value) {
 
@@ -148,21 +159,22 @@
       uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
         .on('change', function () {
 
-          if (this.getAttribute('data-setting-name') === "respectDNT") {
-            changeDNTexceptions(this.checked);
-          } else {
-            changeUserSettings(
-              this.getAttribute('data-setting-name'),
-              this.checked
-            );
-          }
+            if (this.getAttribute('data-setting-name') === "respectDNT") {
+              changeDNTexceptions(this.checked);
+            } else {
+              changeUserSettings(
+                this.getAttribute('data-setting-name'),
+                this.checked
+              );
+            }
 
-          if (!hideOrClick()) {
-            changeDNTexceptions(false);
-          }
+            if (!hideOrClick()) {
+              changeDNTexceptions(false);
+            }
 
-          toggleFirstRunButton();
-          toggleDNTException();
+            toggleFirstRunButton();
+            toggleDNTException();
+
         });
     });
 
@@ -187,6 +199,11 @@
     messager.send('dashboard', {
       what: 'userSettings'
     }, onUserSettingsReceived);
+
+     messager.send('adnauseam', {
+      what: 'getNotifications'
+    }, renderAdBlockNotification);
+
   });
 
   /******************************************************************************/

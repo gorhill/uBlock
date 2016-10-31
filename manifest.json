@@ -47,6 +47,7 @@
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
+    "management",
     "http://*/*",
     "https://*/*"
   ],

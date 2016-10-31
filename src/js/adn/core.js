@@ -284,7 +284,6 @@
 
   /* send to vault/menu/dashboard if open */
   var sendNotifications = function(notes) {
-
     vAPI.messaging.broadcast({
        what: 'notifications',
        notifications: notes
@@ -1135,7 +1134,7 @@
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
-
+      verifyAdBlockers();
       verifySettings(); // check settings/lists
       verifyLists(µBlock.remoteBlacklists);
     });
@@ -1382,6 +1381,40 @@
 
     return result;
   };
+  
+     /*
+   * Verify if other ad blockers are already installed & enabled
+   * If yes, we don't let the user turn on any features 
+   * (hide,click,block) until it is disabled
+   * TODO: Shall be handled differently on different browser
+   */
+  var verifyAdBlockers = exports.verifyAdBlockers = function(){
+    
+    // console.log("VerifyAdBLockers");
+    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
+    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+
+    var isEnabled = false;
+    var notes = notifications;
+    chrome.management.getAll(function(extensions) {
+      if (chrome.runtime.lastError) {
+       //
+      } else {
+        for(var i in extensions){
+          var extension = extensions[i];
+          if ((extension.id == uBlockId || extension.id == adBlockPlusId) && extension.enabled)
+             isEnabled = true;
+        }
+        if(isEnabled){
+         console.log("Warning: AdBlocker Enabled.");
+         addNotification(notes, AdBlockersEnabled);
+         sendNotifications(notes);
+       }
+
+      }
+    });
+
+  }
 
   var verifySettings = exports.verifySettings = function () {
 
@@ -1518,7 +1551,7 @@
       count: importedCount
     };
   };
-
+  
   exports.getNotifications = function () {
 
     return notifications;

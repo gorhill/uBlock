@@ -1,6 +1,8 @@
 body {
   background: url(../img/adn_clickbot_bg.jpg);
   background-size: cover;
+  height:100%;
+  margin:0;
 }
 form {
   position: absolute;
