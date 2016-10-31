@@ -1400,15 +1400,17 @@
       if (chrome.runtime.lastError) {
        //
       } else {
-        for(var i in extensions){
+        for(var i in extensions) {
           var extension = extensions[i];
           if ((extension.id == uBlockId || extension.id == adBlockPlusId) && extension.enabled)
              isEnabled = true;
         }
-        if(isEnabled){
+        if(isEnabled) {
          console.log("Warning: AdBlocker Enabled.");
          addNotification(notes, AdBlockersEnabled);
          sendNotifications(notes);
+       } else {
+        removeNotification(notes, AdBlockersEnabled);
        }
 
       }

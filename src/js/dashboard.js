@@ -38,6 +38,7 @@
   };
 
   var loadDashboardPanel = function (notifications) {
+    console.log(notifications);
 
     var pane = window.location.hash.slice(1);
     if (pane === '') {
@@ -107,11 +108,16 @@
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
-
+    
      vAPI.messaging.send(
-        'adnauseam', {
-          what: 'getNotifications'
-        }, loadDashboardPanel);
+      'adnauseam', {
+          what: 'verifyAdBlockers'
+        }, function() {
+          vAPI.messaging.send(
+          'adnauseam', {
+            what: 'getNotifications'
+          }, loadDashboardPanel);
+      });
 
   });
 
