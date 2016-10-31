@@ -1086,7 +1086,7 @@ vAPI.domCollapser = (function() {
             if ( node.localName === 'iframe' ) {
                 addIFrame(node);
             }
-            if ( node.children.length !== 0 ) {
+            if ( node.children && node.children.length !== 0 ) {
                 var iframes = node.getElementsByTagName('iframe');
                 if ( iframes.length !== 0 ) {
                     addIFrames(iframes);

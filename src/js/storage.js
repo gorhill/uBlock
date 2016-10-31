@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global YaMD5, µBlock, vAPI, punycode, publicSuffixList */
+/* global YaMD5, punycode, publicSuffixList */
 
 'use strict';
 
@@ -33,7 +33,12 @@
         µBlock.storageUsed = bytesInUse;
         callback(bytesInUse);
     };
-    vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
+    // Not all platforms implement this method.
+    if ( vAPI.storage.getBytesInUse instanceof Function ) {
+        vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
+    } else {
+        callback();
+    }
 };
 
 /******************************************************************************/

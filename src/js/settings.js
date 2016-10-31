@@ -109,7 +109,11 @@ var exportToFile = function() {
 
 var onLocalDataReceived = function(details) {
     uDom('#localData > ul > li:nth-of-type(1)').text(
-        vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
+        vAPI.i18n('settingsStorageUsed')
+            .replace(
+                '{{value}}',
+                typeof details.storageUsed === 'number' ? details.storageUsed.toLocaleString() : '?'
+            )
     );
 
     var elem, dt;
