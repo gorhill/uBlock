@@ -31,6 +31,26 @@
     "message": "optimize your settings to protect against malware and non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
     "description": "English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
+  "adnNotificationActivateHiding": {
+    "message": "Activate Ad hiding",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Activate Ad clicking",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Activate malware blocking",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Activate the EasyList filter",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Please disable other ad blocker",
+    "description": "English: Notifications -> Please disable other ad blocker"
+  },
   "adnTarget": {
     "message": "TARGET",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
