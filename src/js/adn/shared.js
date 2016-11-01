@@ -31,33 +31,33 @@ var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
 
 var AdBlockersEnabled = new Notification({
   name: 'AdBlockersEnabled',
-  text: 'Please disable other ad blockers',
+  text: 'adnNotificationDisableAdBlocker',
   button: 'deactivate'
 });
 AdBlockersEnabled.func =  openExtensionsPage.bind(AdBlockersEnabled);
 
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
-  text: 'Activate Ad hiding',
+  text: 'adnNotificationActivateHiding',
   prop: 'hidingAds'
 });
 
 var ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
-  text: 'Activate Ad clicking',
+  text: 'adnNotificationActivateClicking',
   prop: 'clickingAds'
 });
 
 var BlockingDisabled = new Notification({
   name: 'BlockingDisabled',
-  text: 'Activate malware blocking',
+  text: 'adnNotificationActivateBlocking',
   prop: 'blockingMalware',
   type: ERROR
 });
 
 var EasyList = new Notification({
   name: 'EasyListDisabled',
-  text: 'Activate the EasyList filter',
+  text: 'adnNotificationActivateEasyList',
   listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt'
 });
 EasyList.func = reactivateList.bind(EasyList);
@@ -161,7 +161,7 @@ var appendNotifyDiv = function (notify, template) {
 
   node.addClass(notify.type);
   node.attr('id', notify.name);
-  node.descendants('#notify-text').text(notify.text);
+  node.descendants('#notify-text').html("<span data-i18n='" + notify.text + "'></span>");
   node.descendants('#notify-button').text(notify.button);
   node.descendants('#notify-link').attr('href', notify.link);
 
@@ -170,8 +170,8 @@ var appendNotifyDiv = function (notify, template) {
 
     notify.func.apply(this); // calls reactivateSetting or reactivateList
   });
-
   uDom('#notifications').append(node);
+  vAPI.i18n.render();
 }
 
 function udomFromIFrame(selector) {  // may be called from a frame or not??
