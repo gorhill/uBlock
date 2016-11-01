@@ -1388,33 +1388,39 @@
    * (hide,click,block) until it is disabled
    * TODO: Shall be handled differently on different browser
    */
-  var verifyAdBlockers = exports.verifyAdBlockers = function(){
-    
-    // console.log("VerifyAdBLockers");
-    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
-    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+  var verifyAdBlockers = exports.verifyAdBlockers = function() {
 
     var isEnabled = false;
     var notes = notifications;
-    chrome.management.getAll(function(extensions) {
-      if (chrome.runtime.lastError) {
-       //
-      } else {
-        for(var i in extensions) {
-          var extension = extensions[i];
-          if ((extension.id == uBlockId || extension.id == adBlockPlusId) && extension.enabled)
-             isEnabled = true;
-        }
-        if(isEnabled) {
-         console.log("Warning: AdBlocker Enabled.");
-         addNotification(notes, AdBlockersEnabled);
-         sendNotifications(notes);
-       } else {
-        removeNotification(notes, AdBlockersEnabled);
-       }
 
-      }
-    });
+    if (vAPI.chrome && chrome.management){
+      
+      var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
+      var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+
+      chrome.management.getAll(function(extensions) {
+        if (chrome.runtime.lastError) {
+         //
+        } else {
+          for (var i in extensions) {
+            var extension = extensions[i];
+            if ((extension.id == uBlockId || extension.id == adBlockPlusId) && extension.enabled)
+               isEnabled = true;
+          }
+
+          if (isEnabled) {
+
+           addNotification(notes, AdBlockersEnabled);
+           sendNotifications(notes);
+          } else {
+
+            removeNotification(notes, AdBlockersEnabled);
+          }
+
+        }
+
+      });
+    }
 
   }
 
