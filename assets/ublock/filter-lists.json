@@ -236,12 +236,6 @@
 		"homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
 		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
-	"https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
-		"off": true,
-		"title": "ISR: EasyList Hebrew (obsolete, will be removed soon)",
-		"group": "regions",
-		"supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
-	},
 	"https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": {
 		"off": true,
 		"title": "ISR: EasyList Hebrew",
