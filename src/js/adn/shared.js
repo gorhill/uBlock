@@ -202,7 +202,8 @@ function reactivateList() {
 }
 
 function openExtensionsPage() {
-  chrome.tabs.create({ 'url': 'chrome://extensions/'});
+  if(vAPI.chrome)
+    chrome.tabs.create({ 'url': 'chrome://extensions/'});
 }
 
 function reloadPane() {
