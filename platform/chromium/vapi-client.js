@@ -159,6 +159,25 @@ vAPI.shutdown = (function() {
 })();
 
 /******************************************************************************/
+
+vAPI.openBrowserPage = function(URL) {
+  //update the tab if the page is already opened.
+  chrome.tabs.query({ currentWindow: true }, function(tabs) {
+   
+      for (var i = 0; i < tabs.length; i++) {
+
+          if (tabs[i].url && (tabs[i].url.indexOf(URL) != -1)) {
+              chrome.tabs.update(tabs[i].id, { url: URL, selected: true });
+              return;
+          }
+      }
+
+      //if not, create a new one.
+      chrome.tabs.create({ 'url': URL });
+  });
+
+}
+
 /******************************************************************************/
 
 vAPI.messaging = {
