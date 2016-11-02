@@ -62,7 +62,7 @@ var AdBlockPlusEnabled = new Notification({
   button: 'Disable',
   firstrun: true
 });
-AdBlockersEnabled.func =  openExtensionsPage.bind(AdBlockerPlusEnabled);
+AdBlockPlusEnabled.func =  openExtPage.bind(AdBlockPlusEnabled);
 
 var UBlockEnabled = new Notification({
   name: 'UBlockEnabled',
@@ -70,11 +70,11 @@ var UBlockEnabled = new Notification({
   button: 'Disable',
   firstrun: true
 });
-AdBlockersEnabled.func =  openExtensionsPage.bind(UBlockEnabled);
+UBlockEnabled.func =  openExtPage.bind(UBlockEnabled);
 
 /***************************************************************************/
 
-var Notifications = [ AdBlockersEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
+var Notifications = [ AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
 
 function Notification(m) {
 

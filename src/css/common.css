@@ -304,7 +304,10 @@ button.important {
   display: block;
   float: right;
 }
-button.info, button.success, button.warning, button.error {
+button.warning{
+  background: none !important;
+}
+.notification button.info, .notification button.success, .notification button.warning, .notification button.error {
   background: none !important;
   font-size: 18px;
   height: 28px;

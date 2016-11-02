@@ -51,7 +51,7 @@
     "message": "AdBlock Plus and AdNauseam may conflict!",
     "description": "English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
   },
-  "adnNotificationDisableAdBlocker": {
+  "adnNotificationDisableUBlock": {
     "message": "uBlock and AdNauseam may conflict!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },

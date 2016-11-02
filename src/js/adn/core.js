@@ -1414,28 +1414,31 @@
             if (extension.id === adBlockPlusId && extension.enabled) {
               AdBlockPlusConflict = true;
 
-            } else if ((extension.id === uBlockId && extension.enabled) {
-                UBlockConflict = true;
-              }
+            } else if (extension.id === uBlockId && extension.enabled) {
+              UBlockConflict = true;
             }
 
-            if (AdBlockPlusConflict) {
-
-              dirty = addNotification(notes, AdBlockPlusEnabled);
-            } else {
-              dirty = removeNotification(notes, AdBlockPlusEnabled);
-            }
-
-            if (AdBlockPlusConflict) {
-
-              dirty = dirty || addNotification(notes, UBlockPlusEnabled);
-            } else {
-              dirty = dirty || removeNotification(notes, UBlockPlusEnabled);
-            }
-
-            dirty && sendNotifications(notes);
           }
-        });
+          
+          // console.log(AdBlockPlusConflict,UBlockConflict);
+
+          if (AdBlockPlusConflict) {
+
+            dirty = addNotification(notes, AdBlockPlusEnabled);
+          } else {
+            dirty = removeNotification(notes, AdBlockPlusEnabled);
+          }
+
+          if (UBlockConflict) {
+
+            dirty = dirty || addNotification(notes, UBlockEnabled);
+          } else {
+            dirty = dirty || removeNotification(notes, UBlockEnabled);
+          }
+
+          dirty && sendNotifications(notes);
+        }
+      });
     }
   }
 
