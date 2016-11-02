@@ -32,16 +32,6 @@
   var messager = vAPI.messaging;
   var dntRespectAppeared = false;
 
-  //  messager.addChannelListener('adnauseam', function (request) {
-
-  //   switch (request.what) {
-
-  //   case 'notifications':
-  //     renderAdBlockNotification(request.notifications);
-  //     break;
-  //   }
-  // });
-
   /******************************************************************************/
   var changeUserSettings = function (name, value) {
 
@@ -202,7 +192,9 @@
 
      messager.send('adnauseam', {
       what: 'getNotifications'
-    }, renderAdBlockNotification);
+    }, function(n) {
+      renderNotifications(n, true);
+    });
 
   });
 

@@ -1381,47 +1381,62 @@
 
     return result;
   };
-  
+
      /*
    * Verify if other ad blockers are already installed & enabled
-   * If yes, we don't let the user turn on any features 
+   * If yes, we don't let the user turn on any features
    * (hide,click,block) until it is disabled
    * TODO: Shall be handled differently on different browser
    */
   var verifyAdBlockers = exports.verifyAdBlockers = function() {
+  var UBlockConflict = false,
+    AdBlockPlusConflict = false,
+    notes = notifications,
+    dirty = false;
 
-    var isEnabled = false;
-    var notes = notifications;
+  if (vAPI.chrome && chrome.management) {
 
-    if (vAPI.chrome && chrome.management){
-      
-      var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
-      var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
+    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
 
-      chrome.management.getAll(function(extensions) {
+    chrome.management.getAll(function (extensions) {
+
         if (chrome.runtime.lastError) {
-         //
+
+          //
+
         } else {
+
           for (var i in extensions) {
+
             var extension = extensions[i];
-            if ((extension.id == uBlockId || extension.id == adBlockPlusId) && extension.enabled)
-               isEnabled = true;
+
+            if (extension.id === adBlockPlusId && extension.enabled) {
+              AdBlockPlusConflict = true;
+
+            } else if ((extension.id === uBlockId && extension.enabled) {
+                UBlockConflict = true;
+              }
+            }
+
+            if (AdBlockPlusConflict) {
+
+              dirty = addNotification(notes, AdBlockPlusEnabled);
+            } else {
+              dirty = removeNotification(notes, AdBlockPlusEnabled);
+            }
+
+            if (AdBlockPlusConflict) {
+
+              dirty = dirty || addNotification(notes, UBlockPlusEnabled);
+            } else {
+              dirty = dirty || removeNotification(notes, UBlockPlusEnabled);
+            }
+
+            dirty && sendNotifications(notes);
           }
-
-          if (isEnabled) {
-
-           addNotification(notes, AdBlockersEnabled);
-           sendNotifications(notes);
-          } else {
-
-            removeNotification(notes, AdBlockersEnabled);
-          }
-
-        }
-
-      });
+        });
     }
-
   }
 
   var verifySettings = exports.verifySettings = function () {
@@ -1559,7 +1574,7 @@
       count: importedCount
     };
   };
-  
+
   exports.getNotifications = function () {
 
     return notifications;

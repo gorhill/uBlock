@@ -29,12 +29,6 @@
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
 
-var AdBlockersEnabled = new Notification({
-  name: 'AdBlockersEnabled',
-  text: 'adnNotificationDisableAdBlocker',
-  button: 'deactivate'
-});
-AdBlockersEnabled.func =  openExtensionsPage.bind(AdBlockersEnabled);
 
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
@@ -62,6 +56,23 @@ var EasyList = new Notification({
 });
 EasyList.func = reactivateList.bind(EasyList);
 
+var AdBlockPlusEnabled = new Notification({
+  name: 'AdBlockPlusEnabled',
+  text: 'adnNotificationDisableAdBlockPlus',
+  button: 'Disable',
+  firstrun: true
+});
+AdBlockersEnabled.func =  openExtensionsPage.bind(AdBlockerPlusEnabled);
+
+var UBlockEnabled = new Notification({
+  name: 'UBlockEnabled',
+  text: 'adnNotificationDisableUBlock',
+  button: 'Disable',
+  firstrun: true
+});
+AdBlockersEnabled.func =  openExtensionsPage.bind(UBlockEnabled);
+
+/***************************************************************************/
 
 var Notifications = [ AdBlockersEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
 
@@ -75,6 +86,7 @@ function Notification(m) {
   this.listUrl = opt(m, 'listUrl', '');
   this.expected = opt(m, 'expected', true);
   this.button = opt(m, 'button', 'Reactivate');
+  this.firstrun = opt(m, 'firstrun', false);
 
   // default function to be called on click
   this.func = opt(m, 'func', reactivateSetting.bind(this));
@@ -109,19 +121,12 @@ var removeNotification = function (notes, note) {
   return false;
 };
 
-var renderAdBlockNotification = function (visibleNotes) {
-   renderNotifications(visibleNotes, "adBlockOnly");
- }
-
- var renderNotifications = function (visibleNotes, mode) {
-  
+var renderNotifications = function (visibleNotes, isFirstRun) {
 
   // console.log('renderNotifications', visibleNotes);
 
-  //var origUdom = uDom; // this may be called from a frame or not ??
-  //if (window.self != window.top) uDom = window.top.uDom;
-  
-  var notifications = (mode == 'adBlockOnly') ? [AdBlockersEnabled] : Notifications;
+  var notifications = (isFirstRun) ? [ AdBlockPlusEnabled, UBlockEnabled ] : Notifications;
+
   var template = uDom('#notify-template');
 
   if (!template.length) throw Error('no template');
@@ -151,8 +156,6 @@ var renderAdBlockNotification = function (visibleNotes) {
       exists && note.toggleClass('hide', true);
     }
   }
-
-  //uDom = origUdom; // reset uDom
 }
 
 var appendNotifyDiv = function (notify, template) {
@@ -201,9 +204,11 @@ function reactivateList() {
     }, reloadPane);
 }
 
-function openExtensionsPage() {
-  if(vAPI.chrome)
+function openExtPage() {
+  if (vAPI.chrome) { // TODO: move to vAPI and create new function
     chrome.tabs.create({ 'url': 'chrome://extensions/'});
+    //TODO: vAPI.openBrowserPage('chrome://extensions/');
+  }
 }
 
 function reloadPane() {

@@ -47,9 +47,13 @@
     "message": "Activate the EasyList filter",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
+  "adnNotificationDisableAdBlockPlus": {
+    "message": "AdBlock Plus and AdNauseam may conflict!",
+    "description": "English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  },
   "adnNotificationDisableAdBlocker": {
-    "message": "Please disable other ad blocker",
-    "description": "English: Notifications -> Please disable other ad blocker"
+    "message": "uBlock and AdNauseam may conflict!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnTarget": {
     "message": "TARGET",
@@ -203,7 +207,6 @@
     "message": "cost",
     "description": "appears on vault page"
   },
-
   "hidingAdsPrompt": {
     "message": "Hide Ads identified by your chosen filter lists",
     "description": "English: Hide Ads identified by your chosen filter lists"
