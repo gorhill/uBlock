@@ -269,7 +269,7 @@ var onAdminSettingsRestored = function() {
         'lastRestoreTime': 0,
         'lastBackupFile': '',
         'lastBackupTime': 0,
-        'netWhitelist': '',
+        'netWhitelist': µb.netWhitelistDefault,
         'selfie': null,
         'selfieMagic': '',
         'version': '0.0.0.0'
