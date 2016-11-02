@@ -114,11 +114,16 @@
     switch(toggleNum()) {
     case 0:
         button.removeClass("toggled1");
-        button.attr("data-i18n", "adnFirstRunSwitchMeOn");
+        button.removeClass("large");
+
+        button.addClass("toggled0");
         break;
     case 1:
         button.attr("data-i18n", "adnFirstRunThatsIt");
+        button.removeClass("toggled0");
+        
         button.removeClass("toggled2");
+        button.addClass("large");
         button.addClass("toggled1");
         break;
     case 2:
