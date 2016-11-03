@@ -70,6 +70,14 @@ return {
         webrtcIPAddressHidden: false
     },
 
+    hiddenSettingsDefault: {
+        ignoreRedirectFilters: false,
+        ignoreScriptInjectFilters: false,
+        suspendTabsUntilReady: false
+    },
+    // This will be filled ASAP:
+    hiddenSettings: {},
+
     // Features detection.
     privacySettingsSupported: vAPI.browserSettings instanceof Object,
     cloudStorageSupported: vAPI.cloud instanceof Object,

@@ -111,22 +111,24 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
-    var url = µb.redirectEngine.toURL(requestContext);
-    if ( url !== undefined ) {
-        pageStore.internalRedirectionCount += 1;
-        if ( µb.logger.isEnabled() ) {
-            µb.logger.writeOne(
-                tabId,
-                'redirect',
-                'rr:' + µb.redirectEngine.resourceNameRegister,
-                requestType,
-                requestURL,
-                requestContext.rootHostname,
-                requestContext.pageHostname
-            );
+    if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+        var url = µb.redirectEngine.toURL(requestContext);
+        if ( url !== undefined ) {
+            pageStore.internalRedirectionCount += 1;
+            if ( µb.logger.isEnabled() ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'redirect',
+                    'rr:' + µb.redirectEngine.resourceNameRegister,
+                    requestType,
+                    requestURL,
+                    requestContext.rootHostname,
+                    requestContext.pageHostname
+                );
+            }
+            requestContext.dispose();
+            return { redirectUrl: url };
         }
-        requestContext.dispose();
-        return { redirectUrl: url };
     }
 
     requestContext.dispose();
@@ -136,9 +138,16 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
-    var tabId = details.tabId;
-    var requestURL = details.url;
-    var µb = µBlock;
+    if (
+        vAPI.net.onBeforeReady instanceof Function &&
+        vAPI.net.onBeforeReady(details) === true
+    ) {
+        return { cancel: true };
+    }
+
+    var tabId = details.tabId,
+        requestURL = details.url,
+        µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -146,9 +155,10 @@ var onBeforeRootFrameRequest = function(details) {
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    var µburi = µb.URI;
-    var requestHostname = µburi.hostnameFromURI(requestURL);
-    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+    var µburi = µb.URI,
+        requestHostname = µburi.hostnameFromURI(requestURL),
+        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname,
+        result = '';
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -158,8 +168,6 @@ var onBeforeRootFrameRequest = function(details) {
         requestHostname: requestHostname,
         requestType: 'main_frame'
     };
-
-    var result = '';
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {
@@ -630,6 +638,33 @@ var headerIndexFromName = function(headerName, headers) {
         }
     }
     return -1;
+};
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Suspend tabs until uBO is fully ready.
+
+vAPI.net.onBeforeReady = function(details) {
+    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+        return;
+    }
+    var pageURL = details.url;
+    if ( /^https?:\/\//.test(pageURL) === false ) {
+        return;
+    }
+    if (
+        details.tabId === -1 ||
+        details.type !== 'main_frame' ||
+        details.frameId !== 0
+    ) {
+        return;
+    }
+    vAPI.tabs.replace(
+        details.tabId,
+        vAPI.getURL('document-suspended.html?url=') + encodeURIComponent(pageURL)
+    );
+    return true;
 };
 
 /******************************************************************************/

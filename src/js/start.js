@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global publicSuffixList */
+/* global objectAssign, publicSuffixList */
 
 'use strict';
 
@@ -82,6 +82,9 @@ var onAllReady = function() {
     vAPI.onLoadAllCompleted();
     µb.contextMenu.update(null);
     µb.firstInstall = false;
+
+    vAPI.net.onBeforeReady = null;
+    vAPI.messaging.broadcast({ what: 'ublockOrigin-readyState-complete' });
 };
 
 /******************************************************************************/
@@ -182,10 +185,6 @@ var onUserSettingsReady = function(fetched) {
     if ( µb.firstInstall && vAPI.battery ) {
         userSettings.ignoreGenericCosmeticFilters = true;
     }
-
-    // Remove obsolete setting
-    delete userSettings.logRequests;
-    vAPI.storage.remove('logRequests');
 };
 
 /******************************************************************************/
@@ -281,6 +280,23 @@ var onAdminSettingsRestored = function() {
 
     vAPI.storage.get(fetchableProps, onFirstFetchReady);
 };
+
+/******************************************************************************/
+
+µb.hiddenSettings = (function() {
+    var json = vAPI.localStorage.getItem('hiddenSettings');
+    if ( typeof json === 'string' ) {
+        try {
+            var out = JSON.parse(json);
+            if ( out instanceof Object ) {
+                return out;
+            }
+        }
+        catch(ex) {
+        }
+    }
+    return objectAssign({}, µb.hiddenSettingsDefault);
+})();
 
 /******************************************************************************/
 

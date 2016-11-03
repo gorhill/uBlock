@@ -1344,6 +1344,7 @@ FilterContainer.prototype.createUserScriptRule = function(hash, hostname, select
 
 FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     if ( this.userScriptCount === 0 ) { return; }
+    if ( µb.hiddenSettings.ignoreScriptInjectFilters === true ) { return; }
 
     var reng = µb.redirectEngine;
     if ( !reng ) { return; }
