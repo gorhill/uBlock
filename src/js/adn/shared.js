@@ -205,10 +205,7 @@ function reactivateList() {
 }
 
 function openExtPage() {
-  if (vAPI.chrome) { // TODO: move to vAPI and create new function
-    chrome.tabs.create({ 'url': 'chrome://extensions/'});
-    //TODO: vAPI.openBrowserPage('chrome://extensions/');
-  }
+    vAPI.openBrowserPage('chrome://extensions/');
 }
 
 function reloadPane() {
