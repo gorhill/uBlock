@@ -163,12 +163,12 @@
               );
             }
 
-            if (!hideOrClick()) {
-              changeDNTexceptions(false);
-            }
+            // if (!hideOrClick()) {
+            //   changeDNTexceptions(false);
+            // }
 
             toggleFirstRunButton();
-            toggleDNTException();
+            // toggleDNTException();
 
         });
     });
