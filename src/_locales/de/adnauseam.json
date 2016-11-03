@@ -31,6 +31,14 @@
     "message":"optimieren Deine Einstellungen um dich vor Malware und nicht-visuellen Trackern zu schützen (<a href='\/dashboard.html#security'> anpassen<\/a>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
+  "adnNotificationButtonReactivate":{
+    "message":"Reaktivieren",
+    "description":"English: Notifications -> Reactivate"
+  },
+  "adnNotificationButtonDisable":{
+    "message":"Deaktivieren",
+    "description":"English: Notifications -> Disable"
+  },
   "adnNotificationActivateHiding":{
     "message":"Aktiviere das Verstecken von Anzeigen",
     "description":"English: Notifications -> Activate Ad hiding"
@@ -47,9 +55,13 @@
     "message":"Aktiviere den Easylist Filter",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Bitte deaktiviere andere Ad Blocker",
-    "description":"English: Notifications -> Please disable other ad blocker"
+  "adnNotificationDisableAdBlockPlus":{
+    "message":"AdBlock Plus and AdNauseam may conflict!",
+    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock":{
+    "message":"uBlock and AdNauseam may conflict!",
+    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnTarget":{
     "message":"Ziel",
