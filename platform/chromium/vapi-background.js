@@ -1180,12 +1180,13 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // TODO: this needs post-merge checking (adn)
     var scriptEnd = function(tabId, frameId) {
         var err = vAPI.lastError();
-        // these errors happen on startup (tmp: remove)
+        
+        /* these errors happen on startup (tmp: remove)
         if (err && !err.message.startsWith('Cannot access a chrome') &&
           (!err.message.startsWith('Cannot access contents of url "chrome'))) {
             console.warn('ERROR', err);
             return;
-        }
+        }*/
     };
     var scriptStart = function(tabId, frameId) {
       var scripts = ['js/vapi-client.js', 'js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript.js'];

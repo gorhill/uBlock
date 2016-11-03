@@ -11,7 +11,7 @@
   "browser_action": {
     "default_icon": {
       "19": "img/browsericons/icon19.png",
-      "38": "img/browsericons/icon19.png"
+      "38": "img/browsericons/icon38.png"
     },
     "default_title": "AdNauseam",
     "default_popup": "menu.html"
@@ -44,7 +44,11 @@
     "webRequest",
     "webRequestBlocking",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "management"
   ],
-  "short_name": "AdNauseam"
+  "short_name": "AdNauseam",
+  "storage": {
+    "managed_schema": "managed_storage.json"
+  }
 }

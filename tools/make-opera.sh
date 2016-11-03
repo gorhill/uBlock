@@ -43,4 +43,12 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 echo "*** adnauseam.opera: Package done."
 
+if [ "$1" = all ]; then
+    echo "*** adnauseam.opera: Creating package..."
+    pushd $(dirname $DES/) > /dev/null
+    zip artifacts/adnauseam.opera.zip -qr $(basename $DES/)/*
+    popd > /dev/null
+fi
+
+
 #head $DES/manifest.json
