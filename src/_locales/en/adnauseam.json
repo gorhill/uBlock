@@ -31,6 +31,14 @@
     "message": "optimize your settings to protect against malware and non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
     "description": "English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
+  "adnNotificationButtonReactivate": {
+    "message": "Reactivate",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationButtonDisable": {
+    "message": "Disable",
+    "description": "English: Notifications -> Disable"
+  },
   "adnNotificationActivateHiding": {
     "message": "Activate Ad hiding",
     "description": "English: Notifications -> Activate Ad hiding"

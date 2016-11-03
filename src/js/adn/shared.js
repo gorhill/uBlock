@@ -59,7 +59,7 @@ EasyList.func = reactivateList.bind(EasyList);
 var AdBlockPlusEnabled = new Notification({
   name: 'AdBlockPlusEnabled',
   text: 'adnNotificationDisableAdBlockPlus',
-  button: 'Disable',
+  button: 'adnNotificationButtonDisable',
   firstrun: true
 });
 AdBlockPlusEnabled.func =  openExtPage.bind(AdBlockPlusEnabled);
@@ -67,7 +67,7 @@ AdBlockPlusEnabled.func =  openExtPage.bind(AdBlockPlusEnabled);
 var UBlockEnabled = new Notification({
   name: 'UBlockEnabled',
   text: 'adnNotificationDisableUBlock',
-  button: 'Disable',
+  button: 'adnNotificationButtonDisable',
   firstrun: true
 });
 UBlockEnabled.func =  openExtPage.bind(UBlockEnabled);
@@ -85,7 +85,7 @@ function Notification(m) {
   this.type = opt(m, 'type', WARNING);
   this.listUrl = opt(m, 'listUrl', '');
   this.expected = opt(m, 'expected', true);
-  this.button = opt(m, 'button', 'Reactivate');
+  this.button = opt(m, 'button', 'adnNotificationButtonReactivate');
   this.firstrun = opt(m, 'firstrun', false);
 
   // default function to be called on click
@@ -165,7 +165,7 @@ var appendNotifyDiv = function (notify, template) {
   node.addClass(notify.type);
   node.attr('id', notify.name);
   node.descendants('#notify-text').html("<span data-i18n='" + notify.text + "'></span>");
-  node.descendants('#notify-button').text(notify.button);
+  node.descendants('#notify-button').attr('data-i18n', notify.button);
   node.descendants('#notify-link').attr('href', notify.link);
 
   // add click handler to reactivate button (a better way to do this??)
