@@ -28,17 +28,20 @@ form a {
   color: inherit;
   text-decoration: underline;
 }
+.toggled0{
+    display:none;
+}
 .toggled1,.toggled2,.toggled3{
   color:white;
 }
 .toggled1, .toggled1:hover:enabled{
   background: linear-gradient(left, #0076FF, #0076FF 35%, transparent 35%, transparent 100%) !important;
-  background: -webkit-linear-gradient(left, #0076FF, #0076FF 35%, transparent 35%, transparent 100%) !important; 
+  background: -webkit-linear-gradient(left, #0076FF, #0076FF 35%, transparent 35%, transparent 100%) !important;
 }
 
 .toggled2, .toggled2:hover:enabled{
   background: linear-gradient(left, #0076FF, #0076FF 70%, transparent 70%, transparent 100%) !important;
-  background: -webkit-linear-gradient(left, #0076FF, #0076FF 70%, transparent 70%, transparent 100%) !important; 
+  background: -webkit-linear-gradient(left, #0076FF, #0076FF 70%, transparent 70%, transparent 100%) !important;
 }
 .toggled3{
   background: #0076FF;
