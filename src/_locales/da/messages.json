@@ -80,7 +80,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"Aktiver\/Deaktiver blokering af store medie-elementer på denne side",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -88,23 +88,23 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Aktiver\/deaktiver blokering af 3. parts skrifttyper på denne side",
+    "message":"Aktiver\/deaktiver blokering af fjerntliggende 3. parts skrifttyper på denne side",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Global rules: this column is for rules which apply to all sites.",
+    "message":"Globale regler: denne søjle viser de regler der gælder på alle sider.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message":"Lokale regler: denne søjle viser de regler der gælder kun på denne side.\nLokale regler overskriver globale regler.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Click to make your changes permanent.",
+    "message":"Klik her for at anvende dine ændringer.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Click to revert your changes.",
+    "message":"Klik her for at fortryde dine ændringer.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Forhåndsvisning",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -188,7 +188,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Disable tooltips",
+    "message":"Deaktiver forklaring af knappers funktioner",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -208,7 +208,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Deaktiver pre-fetching (for at sikre at alle sortlistede netværksanmodninger bliver blokeret)",
+    "message":"Deaktiver forudindlæsning (for at sikre at alle sortlistede netværksanmodninger bliver blokeret)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -220,23 +220,23 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"Standard opførsel",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"These default behaviors can be overridden on a per-site basis",
+    "message":"Disse standardindstillinger kan overskrives på en per-side basis",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Disable cosmetic filtering",
+    "message":"Deaktiver kosmetisk filtrering",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Block media elements larger than {{input:number}} kB",
+    "message":"Bloker medieelementer større end {{input: nummer}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Block remote fonts",
+    "message":"Bloker fjerntliggende skrifttyper",
     "description":""
   },
   "settingsStorageUsed":{
@@ -276,15 +276,15 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Denne indstilling gør det muligt at parse og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Ablock Plus kompatible &ldquo;element skjulnings&rdquo; filtre<\/a>. Disse filtre har hovedsageligt et kosmetisk formål, da de skjuler irriterende visualle elementer på diverse web-sider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
+    "message":"<p>Denne indstilling gør det muligt at analysere og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Ablock Plus kompatible &ldquo;element skjuldende&rdquo; filtre<\/a>. Disse filtre er essentielt set kosmetiske og har til formål at skjule irriterende visuelle elementer på diverse websider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"Ignorer fælles kosmetiske filtre",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message":"<p>Fælles kosmetiske filtre er de kosmetiske filtre der er ment til anvendelse på alle websider. \n<p>Selvom uBlock₀ behandler dem effektivt, kan de fælles kosmetiske filtre medføre forøget brug af hukommelse og CPU på nogle websider, specielt de store og længe-åbnede websider.\n<p>Aktiveres denne funktion vil uBlock₀ ikke længere benytte de fælles kosmetiske filtre, hvilket medfører lavere hukommelses- og CPU-forbrug på hver side, samt mindre overordnet hukommelsesforbrug.\n<p>Det anbefales at aktivere denne funktion på mindre kraftfulde enheder.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -660,7 +660,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Import from cloud storage and merge with current settings",
+    "message":"Importer fra skyopbevaring og sammenflet med de aktuelle indstillinger",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -684,7 +684,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Temporarily allow large media elements",
+    "message":"Tillad store medie-elementer midlertidigt",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

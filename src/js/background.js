@@ -64,8 +64,9 @@ return {
         noOutgoingCookies: true,
         noOutgoingReferer: true,
         noOutgoingUserAgent: true,
-
         advancedUserEnabled: true,
+
+        alwaysDetachLogger: false,
         autoUpdate: true,
         cloudStorageEnabled: false,
         collapseBlocked: true,
@@ -109,8 +110,8 @@ return {
 
     // read-only
     systemSettings: {
-        compiledMagic: 'splsmclwnvoj',
-        selfieMagic: 'rkzqonintytj'
+        compiledMagic: 'ryegxvatkfxe',
+        selfieMagic: 'ryegxvatkfxe'
     },
 
     restoreBackupSettings: {

@@ -43,6 +43,9 @@ if ( document instanceof HTMLDocument === false ) {
     }
 }
 
+// https://github.com/gorhill/uBlock/issues/1124
+// Looks like `contentType` is on track to be standardized:
+//   https://dom.spec.whatwg.org/#concept-document-content-type
 // https://forums.lanik.us/viewtopic.php?f=64&t=31522
 //   Skip text/plain documents.
 var contentType = document.contentType || '';
@@ -163,7 +166,7 @@ vAPI.shutdown = (function() {
 vAPI.openBrowserPage = function(URL) {
   //update the tab if the page is already opened.
   chrome.tabs.query({ currentWindow: true }, function(tabs) {
-   
+
       for (var i = 0; i < tabs.length; i++) {
 
           if (tabs[i].url && (tabs[i].url.indexOf(URL) != -1)) {
@@ -421,6 +424,8 @@ vAPI.shutdown.add(function() {
 });
 
 vAPI.prefs = {}; // ADN, for content-scripts
+
+vAPI.executionCost.stop('vapi-client.js');
 
 vAPI.executionCost.stop('vapi-client.js');
 

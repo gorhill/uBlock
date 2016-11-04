@@ -261,10 +261,25 @@ vAPI.tabs.registerListeners = function() {
     //          http://raymondhill.net/ublock/popup.html
     var reGoodForWebRequestAPI = /^https?:\/\//;
 
+    // https://forums.lanik.us/viewtopic.php?f=62&t=32826
+    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
+    //   newline characters in standard fields, possibly as a way of evading
+    //   filters. As per spec, there should be no whitespaces in a data: URI's
+    //   standard fields.
+    var sanitizeURL = function(url) {
+        if ( url.startsWith('data:') === false ) { return url; }
+        var pos = url.indexOf(',');
+        if ( pos === -1 ) { return url; }
+        var s = url.slice(0, pos);
+        if ( s.search(/\s/) === -1 ) { return url; }
+        return s.replace(/\s+/, '') + url.slice(pos);
+    };
+
     var onCreatedNavigationTarget = function(details) {
         //console.debug('onCreatedNavigationTarget: popup candidate tab id %d = "%s"', details.tabId, details.url);
         if ( reGoodForWebRequestAPI.test(details.url) === false ) {
             details.frameId = 0;
+            details.url = sanitizeURL(details.url);
             onNavigationClient(details);
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
@@ -282,6 +297,7 @@ vAPI.tabs.registerListeners = function() {
         if ( details.frameId !== 0 ) {
             return;
         }
+        details.url = sanitizeURL(details.url);
         onNavigationClient(details);
     };
 
@@ -290,6 +306,9 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onUpdated = function(tabId, changeInfo, tab) {
+        if ( changeInfo.url ) {
+            changeInfo.url = sanitizeURL(changeInfo.url);
+        }
         onUpdatedClient(tabId, changeInfo, tab);
     };
 
@@ -1180,7 +1199,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // TODO: this needs post-merge checking (adn)
     var scriptEnd = function(tabId, frameId) {
         var err = vAPI.lastError();
-        
+
         /* these errors happen on startup (tmp: remove)
         if (err && !err.message.startsWith('Cannot access a chrome') &&
           (!err.message.startsWith('Cannot access contents of url "chrome'))) {

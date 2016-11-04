@@ -33,6 +33,7 @@
   }],
   "incognito": "split",
   "minimum_chrome_version": "22.0",
+  "optional_permissions": [ "file:///*" ],
   "options_page": "dashboard.html",
   "permissions": [
     "contextMenus",
