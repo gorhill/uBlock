@@ -68,6 +68,7 @@ var objectAssign = Object.assign || function(target, source) {
         key = keys[i];
         target[key] = source[key];
     }
+    return target;
 };
 
 /******************************************************************************/
