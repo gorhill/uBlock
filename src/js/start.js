@@ -79,12 +79,10 @@ var onAllReady = function() {
 
     //quickProfiler.stop(0);
 
-    vAPI.onLoadAllCompleted();
     µb.contextMenu.update(null);
     µb.firstInstall = false;
 
-    vAPI.net.onBeforeReady = null;
-    vAPI.messaging.broadcast({ what: 'ublockOrigin-readyState-complete' });
+    vAPI.net.onReady();
 };
 
 /******************************************************************************/

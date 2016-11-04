@@ -33,9 +33,59 @@ var exports = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Suspend tabs until uBO is fully ready.
+
+vAPI.net.onReady = function() {
+    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+        vAPI.onLoadAllCompleted();
+    }
+    var fn = onBeforeReady;
+    onBeforeReady = null;
+    if ( fn !== null ) {
+        fn('ready');
+    }
+};
+
+var onBeforeReady = (function() {
+    var suspendedTabs = new Set();
+
+    var forceReloadSuspendedTabs = function() {
+        var iter = suspendedTabs.values(),
+            entry;
+        for (;;) {
+            entry = iter.next();
+            if ( entry.done ) { break; }
+            vAPI.tabs.reload(entry.value);
+        }
+    };
+
+    return function(tabId) {
+        if (
+            vAPI.isBehindTheSceneTabId(tabId) ||
+            µBlock.hiddenSettings.suspendTabsUntilReady !== true
+        ) {
+            return;
+        }
+        if ( tabId === 'ready' ) {
+            forceReloadSuspendedTabs();
+            return;
+        }
+        suspendedTabs.add(tabId);
+        return true;
+    };
+})();
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
+    var tabId = details.tabId;
+    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+        return { cancel: true };
+    }
+
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -46,7 +96,6 @@ var onBeforeRequest = function(details) {
     }
 
     // Special treatment: behind-the-scene requests
-    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
@@ -138,13 +187,6 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
-    if (
-        vAPI.net.onBeforeReady instanceof Function &&
-        vAPI.net.onBeforeReady(details) === true
-    ) {
-        return { cancel: true };
-    }
-
     var tabId = details.tabId,
         requestURL = details.url,
         µb = µBlock;
@@ -638,33 +680,6 @@ var headerIndexFromName = function(headerName, headers) {
         }
     }
     return -1;
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/2067
-//   Experimental: Suspend tabs until uBO is fully ready.
-
-vAPI.net.onBeforeReady = function(details) {
-    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
-        return;
-    }
-    var pageURL = details.url;
-    if ( /^https?:\/\//.test(pageURL) === false ) {
-        return;
-    }
-    if (
-        details.tabId === -1 ||
-        details.type !== 'main_frame' ||
-        details.frameId !== 0
-    ) {
-        return;
-    }
-    vAPI.tabs.replace(
-        details.tabId,
-        vAPI.getURL('document-suspended.html?url=') + encodeURIComponent(pageURL)
-    );
-    return true;
 };
 
 /******************************************************************************/
