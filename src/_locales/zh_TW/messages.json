@@ -39,6 +39,10 @@
     "message":"關於",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"進階設定",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"點擊：對此網站 停用\/啟用 uBlock₀ 。\n\nCtrl + 點擊：僅在此頁面停用 uBlock₀ 。",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"我是進階的使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
-    "description":"English: "
+    "message":"我是進階使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"進階設定",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"關閉預讀功能（用以避免已經阻擋的網域的任何連線）",
@@ -671,13 +679,21 @@
     "message":"此裝置的名稱：",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"警告！修改進階設定時請自負風險。",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"送出",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"套用變更",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"還原",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"位元組",

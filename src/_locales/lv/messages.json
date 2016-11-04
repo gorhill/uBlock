@@ -39,6 +39,10 @@
     "message":"Par",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klikšķis: atslēgt\/ieslēgt uBlock₀ šajā vietnē.\n\nCtrl+klikšķis: atslēgt uBlock₀ tikai šai lapai.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vēlams izlasīt<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Atslēgt pirmsielādi (lai novērstu bloķētus tīkla pieprasījumus)",
@@ -671,13 +679,21 @@
     "message":"Šīs ierīces nosaukums:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Iesniegt",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Atgriezt",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"baiti",

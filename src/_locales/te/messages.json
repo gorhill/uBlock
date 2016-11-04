@@ -39,6 +39,10 @@
     "message":"మా గురించి",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"ఈ సైట్లో uBlock₀ను చేతనపరచడానికి లేదా అచేతనపరచడానికి క్లిక్ చేయండి.\n\nకేవలం ఈ పేజిలో uBlock₀ను అచేతనపరచడానికి Ctrl కీ వొత్తి పట్టుకొని క్లిక్ చేయండి.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"అంశాలను ముందుగానే తీసుకురావడాన్ని నిషేధించు (ఎవైనా అవాంఛనీయ అనుసంధానాలను నివారించడానికి)",
@@ -671,13 +679,21 @@
     "message":"ఈ పరికరం పేరు:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"పంపించు",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"మార్పులను తిరస్కరించు",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"బైట్లు",

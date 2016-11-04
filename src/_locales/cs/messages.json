@@ -39,6 +39,10 @@
     "message":"O rozšíření",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Pokročilá nastavení",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Kliknutí: trvale zakázat uBlock₀ pro celý tento web.\n\nCtrl+kliknutí: zakázat uBlock₀ pouze pro tuto stránku.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jsem pokročilý uživatel (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nutno přečíst<\/a>)",
-    "description":"English: "
+    "message":"Jsem pokročilý uživatel (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>nutno přečíst<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"pokročilá nastavení",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Zakázat přednačítání (zakáže jakékoliv spojení pro zablokované síťové požadavky)",
@@ -671,13 +679,21 @@
     "message":"Název tohoto zařízení:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Pozor! Tato pokročilá nastavení měníte na vlastní nebezpečí.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Odeslat",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Použít změny",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Vrátit",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bajtů",

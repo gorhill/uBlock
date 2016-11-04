@@ -39,6 +39,10 @@
     "message":"Despre",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clic: dezactivează\/activează uBlock₀ pentru acest sait.\n\nCtrl+clic: dezactivează uBlock₀ doar pe această pagină.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Sunt un utilizator avansat (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lectură obligatorie<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Dezactivează preluarea în avans (pentru a preveni orice conexiune ce s-ar încadra în cereri de rețea blocate)",
@@ -671,13 +679,21 @@
     "message":"Numele acestui dispozitiv:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Trimite",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Înlătură",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"octeți",
