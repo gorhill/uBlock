@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Pokročilé nastavenia",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -208,11 +208,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Som pokročilý používateľ (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Povinne prečítať<\/a>)",
+    "message":"Som pokročilý používateľ (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>povinne prečítať<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"pokročilé nastavenia",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"Upozornenie! Zmenu pokročilých nastavení vykonávate na vlastné nebezpečenstvo.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Použiť zmeny",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

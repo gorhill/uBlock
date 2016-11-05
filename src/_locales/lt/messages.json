@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Sudėtingesni nustatymai",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -208,11 +208,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Aš esu patyręs naudotojas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Privaloma perskaityti<\/a>)",
+    "message":"Aš esu patyręs naudotojas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>privaloma perskaityti<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"sudėtingesni nustatymai",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"Įspėjimas! Keiskite šiuos sudėtingesnius nustatymus savo rizika.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Taikyti pakeitimus",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
