@@ -574,8 +574,6 @@ var gotoURL = function(ev) {
 
     ev.preventDefault();
 
-    var rel = this.getAttribute('rel') || '';
-
     messaging.send(
         'popupPanel',
         {
@@ -584,7 +582,7 @@ var gotoURL = function(ev) {
                 url: this.getAttribute('href'),
                 select: true,
                 index: -1,
-                popup: rel === 'popup' && ev.shiftKey
+                shiftKey: ev.shiftKey
             }
         }
     );

@@ -405,7 +405,6 @@ var domFilterer = {
     },
 
     commit_: function() {
-
         vAPI.executionCost.start();
 
         commitTimer = null;

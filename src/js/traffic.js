@@ -333,16 +333,16 @@
     // "g" in "gb:" stands for "global setting"
     var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
     pageStore.logRequest(context, result);
-    if (µb.logger.isEnabled()) {
-      µb.logger.writeOne(
-        tabId,
-        'net',
-        result,
-        details.type,
-        details.url,
-        context.rootHostname,
-        context.rootHostname
-      );
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            details.type,
+            details.url,
+            context.rootHostname,
+            context.rootHostname
+        );
     }
     context.dispose();
     if ( result !== '' ) {
@@ -470,10 +470,10 @@
 
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
-    
+
     // ADN: check whether clicking/hiding is enabled, check disable Clicking/Hiding For DNT
     if((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)){
-      
+
       var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
       if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
@@ -763,6 +763,57 @@ var processCSP = function(details, pageStore, context) {
   };
 
   /******************************************************************************/
+
+var foilWithCSP = function(headers, noInlineScript, noWebsocket) {
+    var i = headerIndexFromName('content-security-policy', headers),
+        before = i === -1 ? '' : headers[i].value.trim(),
+        after = before;
+
+    if ( noInlineScript ) {
+        after = foilWithCSPDirective(
+            after,
+            /script-src[^;]*;?\s*/,
+            "script-src 'unsafe-eval' *",
+            /'unsafe-inline'\s*|'nonce-[^']+'\s*/g
+        );
+    }
+
+    if ( noWebsocket ) {
+        after = foilWithCSPDirective(
+            after,
+            /connect-src[^;]*;?\s*/,
+            'connect-src http:',
+            /wss?:[^\s]*\s*/g
+        );
+    }
+
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=513860
+    //   Bad Chromium bug: web pages can work around CSP directives by
+    //   creating data:- or blob:-based URI. So if we must restrict using CSP,
+    //   we have no choice but to also prevent the creation of nested browsing
+    //   contexts based on data:- or blob:-based URIs.
+    if ( vAPI.chrome && (noInlineScript || noWebsocket) ) {
+        // https://w3c.github.io/webappsec-csp/#directive-frame-src
+        after = foilWithCSPDirective(
+            after,
+            /frame-src[^;]*;?\s*/,
+            'frame-src http:',
+            /data:[^\s]*\s*|blob:[^\s]*\s*/g
+        );
+    }
+
+    var changed = after !== before;
+    if ( changed ) {
+        if ( i !== -1 ) {
+            headers.splice(i, 1);
+        }
+        headers.push({ name: 'Content-Security-Policy', value: after });
+    }
+
+    return changed;
+};
+
+/******************************************************************************/
 
 var foilWithCSP = function(headers, noInlineScript, noWebsocket) {
     var i = headerIndexFromName('content-security-policy', headers),

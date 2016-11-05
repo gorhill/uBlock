@@ -87,6 +87,15 @@ if match:
         builttype = 'rc' + str(buildtype - 100)
     manifest['version'] = match.group(1) + builttype
 
+match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
+if match:
+    buildtype = int(match.group(2)[1:])
+    if buildtype < 100:
+        builttype = 'b' + str(buildtype)
+    else:
+        builttype = 'rc' + str(buildtype - 100)
+    manifest['version'] = match.group(1) + builttype
+
 manifest['homepage'] = 'http://adnauseam.io'
 manifest['description'] = descriptions['en']
 del descriptions['en']
