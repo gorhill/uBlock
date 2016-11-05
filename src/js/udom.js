@@ -22,6 +22,8 @@
 /* global DOMTokenList */
 /* exported uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 // It's just a silly, minimalist DOM framework: this allows me to not rely
@@ -31,8 +33,6 @@
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
 var uDom = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -493,6 +493,16 @@ DOMList.prototype.attr = function(attr, value) {
         while ( i-- ) {
             this.nodes[i].setAttribute(attr, value);
         }
+    }
+    return this;
+};
+
+/******************************************************************************/
+
+DOMList.prototype.removeAttr = function(attr) {
+    var i = this.nodes.length;
+    while ( i-- ) {
+        this.nodes[i].removeAttribute(attr);
     }
     return this;
 };

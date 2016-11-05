@@ -6,7 +6,6 @@ div > p:last-child {
     }
 textarea {
     box-sizing: border-box;
-    font-size: smaller;
     height: 60vh;
     text-align: left;
     white-space: pre;

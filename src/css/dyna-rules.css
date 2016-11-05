@@ -15,13 +15,12 @@ code {
     margin: 0;
     padding: 0.5em 0 0 0;
     white-space: nowrap;
-    font-size: 0; /* otherwise spaces between inline-blocks will be rendered */
 }
 #diff .pane {
     border: 0;
     box-sizing: border-box;
     display: inline-block;
-    font: 12px/1.8 monospace;
+    font: 90%/180% "Noto Mono",monospace;
     margin: 0;
     padding: 0;
     position: relative;
@@ -143,27 +142,26 @@ body[dir="rtl"] #commitButton:before {
 #diff textarea {
     background-color: #f8f8ff;
     border: 0;
-    color: black;
-    margin: 0;
     border-top: 1px solid #eee;
+    box-sizing: border-box;
+    color: black;
     direction: ltr;
-    font: 12px monospace;
-    line-height: 1.8;
+    font: inherit;
+    height: 100%;
+    left: 0;
+    margin: 0;
     overflow: hidden;
     overflow-y: auto;
     padding: 1em 0 0 3px; /* same left and top padding as ul/li */
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
     resize: none;
+    top: 0;
     visibility: hidden;
     white-space: pre; /* this implies nowrap; break only on \n and <br>.
                          nowrap doesn't consistently
                          respect \n's (example: Safari) per the CSS spec:
                          http://www.w3.org/wiki/CSS/Properties/white-space */
+    width: 100%;
     word-wrap: normal;
     }
 #diff.edit textarea {

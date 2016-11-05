@@ -19,11 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
+/******************************************************************************/
 /******************************************************************************/
 
 (function(){
-
-'use strict';
 
 /******************************************************************************/
 
@@ -153,6 +154,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 µBlock.stringFromWhitelist = function(whitelist) {
     var r = {};
     var i, bucket;
@@ -266,14 +272,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     }
 
     // Change -- but only if the user setting actually exists.
-    var mustSave = us.hasOwnProperty(name) &&
-                   value !== us[name];
+    var mustSave = us.hasOwnProperty(name) && value !== us[name];
     if ( mustSave ) {
         us[name] = value;
     }
 
     // Post-change
     switch ( name ) {
+    case 'advancedUserEnabled':
+        if ( value === true ) {
+            us.dynamicFilteringEnabled = true;
+        }
+        break;
     case 'collapseBlocked':
         if ( value === false ) {
             this.cosmeticFilteringEngine.removeFromSelectorCache('*', 'net');
@@ -533,5 +543,3 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 })();
 
 /******************************************************************************/
-
-})();

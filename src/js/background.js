@@ -56,7 +56,7 @@ return {
         collapseBlocked: true,
         colorBlindFriendly: false,
         contextMenuEnabled: true,
-        dynamicFilteringEnabled: true,
+        dynamicFilteringEnabled: false,
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
         hyperlinkAuditingDisabled: true,
