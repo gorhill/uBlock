@@ -1394,10 +1394,13 @@
     notes = notifications,
     dirty = false;
 
+  var adblockers = vAPI.getAdBlockersID(),
+  uBlockId = adblockers[0],
+  adBlockPlusId = adblockers[1];
+
+  console.log(uBlockId, adBlockPlusId);
   if (vAPI.chrome && chrome.management) {
 
-    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
-    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
 
     chrome.management.getAll(function (extensions) {
 
@@ -1407,10 +1410,11 @@
 
         } else {
 
+
           for (var i in extensions) {
 
             var extension = extensions[i];
-
+            
             if (extension.id === adBlockPlusId && extension.enabled) {
               AdBlockPlusConflict = true;
 
@@ -1438,6 +1442,7 @@
 
           dirty && sendNotifications(notes);
         }
+
       });
     }
   }
