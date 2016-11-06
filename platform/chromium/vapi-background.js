@@ -1478,6 +1478,15 @@ vAPI.cloud = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
+
+vAPI.getAdBlockersID = function(callback) {
+
+    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
+    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+
+    return [uBlockId, adBlockPlusId];
+};
+
 })();
 
 /******************************************************************************/
