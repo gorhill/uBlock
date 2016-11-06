@@ -46,6 +46,7 @@
 
     case 'notifications':
       renderNotifications(request.notifications);
+      adjustBlockHeight();
       break;
     }
   });
@@ -89,10 +90,15 @@
       setAttempting(json.current);
     }
 
-    if (json.notifications && json.notifications.length){
-      renderNotifications(json.notifications);
-      adjustBlockHeight();
-    }
+     vAPI.messaging.send(
+         'adnauseam', {
+             what: 'verifyAdBlockers'
+         },
+         function() {
+             if (json.notifications && json.notifications.length) {
+                 renderNotifications(json.notifications);       
+             }
+         });
   }
 
   var updateMenuState = function () {

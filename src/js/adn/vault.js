@@ -97,9 +97,15 @@
     addInterfaceHandlers();
     createSlider(true);
     setCurrent(json.current);
-    if (json.notifications && json.notifications.length)
-      renderNotifications(json.notifications);
-      adjustHeight();
+
+    vAPI.messaging.send(
+        'adnauseam', {
+            what: 'verifyAdBlockers'
+        },function(){
+        if (json.notifications && json.notifications.length)
+            renderNotifications(json.notifications); adjustHeight();
+    });
+
   };
 
   var updateAd = function (json) {
