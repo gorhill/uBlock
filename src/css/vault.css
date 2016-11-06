@@ -231,9 +231,10 @@ div.tooltip {
 }
 
 .session-sum {
-	position: absolute;
+	/*position: absolute;
 	bottom: 82px;
-	left: 24px;
+	left: 24px;*/
+	display: inline-block;
 	z-index: 100;
 	font-size: 16px;
 	font-family: bebas_neue;
@@ -259,10 +260,19 @@ div.tooltip {
 }
 
 #actions {
-	position: absolute;
+	/*position: absolute;*/
 	z-index: 100;
-	bottom: 81px;
-	right: 136px;
+	float:right;
+	height:17px;
+	/*bottom: 81px;
+	right: 136px;*/
+}
+
+#bottom-text{
+	position: absolute;
+	bottom: 82px;
+	left: 24px;
+	width: 100%;
 }
 
 #logo{
