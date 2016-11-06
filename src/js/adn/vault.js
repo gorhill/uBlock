@@ -71,6 +71,7 @@
 
     case 'notifications':
       renderNotifications(request.notifications);
+      adjustHeight();
       break;
     }
   });
@@ -98,6 +99,7 @@
     setCurrent(json.current);
     if (json.notifications && json.notifications.length)
       renderNotifications(json.notifications);
+      adjustHeight();
   };
 
   var updateAd = function (json) {
@@ -1101,7 +1103,7 @@
       offsetY = e.pageY;
 
     }
-    
+
     function mouseOnAd(mouseX, mouseY){
       var ads = $(".ad")
       for(var i = 0; i < ads.length; i++){
@@ -1154,6 +1156,7 @@
       resizeId = setTimeout(function () {
         createSlider(true);
       }, 100);
+      adjustHeight();
     });
 
     if (EnableContextMenu) {
@@ -1657,6 +1660,14 @@
       hash = hash & hash; // Convert to 32bit integer
     }
     return hash;
+  }
+
+  function adjustHeight(){
+      console.log("adjustingheight");
+
+      console.log( $("#notifications").height() );
+      console.log( $(window).height()  );
+      $("#stage").css('height', String($(window).height() - $("#notifications").height()) + "px" );
   }
 
   /*
