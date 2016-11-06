@@ -37,56 +37,71 @@ var whitelistDirectiveEscape = /[-\/\\^$+?.()|[\]{}]/g;
 // All `*` will be expanded into `.*`
 var whitelistDirectiveEscapeAsterisk = /\*/g;
 
+// Remember encountered regexps for reuse.
+var directiveToRegexpMap = new Map();
+
 // Probably manually entered whitelist directive
 var isHandcraftedWhitelistDirective = function(directive) {
-    return directive.indexOf('/') !== -1 &&
-           directive.indexOf('*') !== -1;
+    return directive.startsWith('/') && directive.endsWith('/') ||
+           directive.indexOf('/') !== -1 && directive.indexOf('*') !== -1;
 };
 
-var matchWhitelistDirective = function(url, hostname, directive) {
-    // Directive is a plain hostname
+var matchDirective = function(url, hostname, directive) {
+    // Directive is a plain hostname.
     if ( directive.indexOf('/') === -1 ) {
         return hostname.endsWith(directive) &&
               (hostname.length === directive.length ||
                hostname.charAt(hostname.length - directive.length - 1) === '.');
     }
-    // Match URL exactly
-    if ( directive.indexOf('*') === -1 ) {
+    // Match URL exactly.
+    if ( directive.startsWith('/') === false && directive.indexOf('*') === -1 ) {
         return url === directive;
     }
-    // TODO: Revisit implementation to avoid creating a regex each time.
-    // Regex escape code inspired from:
-    //   "Is there a RegExp.escape function in Javascript?"
-    //   http://stackoverflow.com/a/3561711
-    var reStr = directive.replace(whitelistDirectiveEscape, '\\$&')
-                         .replace(whitelistDirectiveEscapeAsterisk, '.*');
-    var re = new RegExp(reStr);
+    // Transpose into a regular expression.
+    var re = directiveToRegexpMap.get(directive);
+    if ( re === undefined ) {
+        var reStr;
+        if ( directive.startsWith('/') && directive.endsWith('/') ) {
+            reStr = directive.slice(1, -1);
+        } else {
+            reStr = directive.replace(whitelistDirectiveEscape, '\\$&')
+                             .replace(whitelistDirectiveEscapeAsterisk, '.*');
+        }
+        re = new RegExp(reStr);
+        directiveToRegexpMap.set(directive, re);
+    }
     return re.test(url);
 };
+
+var matchBucket = function(url, hostname, bucket, start) {
+    if ( bucket ) {
+        for ( var i = start || 0, n = bucket.length; i < n; i++ ) {
+            if ( matchDirective(url, hostname, bucket[i]) ) {
+                return i;
+            }
+        }
+    }
+    return -1;
+};
+
+// https://www.youtube.com/watch?v=RL2W_XK-UJ4&list=PLhPp-QAUKF_hRMjWsYvvdazGw0qIjtSXJ
 
 /******************************************************************************/
 
 µBlock.getNetFilteringSwitch = function(url) {
-    var netWhitelist = this.netWhitelist;
-    var buckets, i, pos;
-    var targetHostname = this.URI.hostnameFromURI(url);
-    var key = targetHostname;
+    var targetHostname = this.URI.hostnameFromURI(url),
+        key = targetHostname,
+        pos;
     for (;;) {
-        if ( netWhitelist.hasOwnProperty(key) ) {
-            buckets = netWhitelist[key];
-            i = buckets.length;
-            while ( i-- ) {
-                if ( matchWhitelistDirective(url, targetHostname, buckets[i]) ) {
-                    // console.log('"%s" matche url "%s"', buckets[i], url);
-                    return false;
-                }
-            }
+        if ( matchBucket(url, targetHostname, this.netWhitelist[key]) !== -1 ) {
+            return false;
         }
         pos = key.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         key = key.slice(pos + 1);
+    }
+    if ( matchBucket(url, targetHostname, this.netWhitelist['//']) !== -1 ) {
+        return false;
     }
     return true;
 };
@@ -102,16 +117,16 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         return currentState;
     }
 
-    var netWhitelist = this.netWhitelist;
-    var pos = url.indexOf('#');
-    var targetURL = pos !== -1 ? url.slice(0, pos) : url;
-    var targetHostname = this.URI.hostnameFromURI(targetURL);
-    var key = targetHostname;
-    var directive = scope === 'page' ? targetURL : targetHostname;
+    var netWhitelist = this.netWhitelist,
+        pos = url.indexOf('#'),
+        targetURL = pos !== -1 ? url.slice(0, pos) : url,
+        targetHostname = this.URI.hostnameFromURI(targetURL),
+        key = targetHostname,
+        directive = scope === 'page' ? targetURL : targetHostname;
 
     // Add to directive list
     if ( newState === false ) {
-        if ( netWhitelist.hasOwnProperty(key) === false ) {
+        if ( netWhitelist[key] === undefined ) {
             netWhitelist[key] = [];
         }
         netWhitelist[key].push(directive);
@@ -120,33 +135,41 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     }
 
     // Remove from directive list whatever causes current URL to be whitelisted
-    var buckets, i;
+    var bucket, i;
     for (;;) {
-        if ( netWhitelist.hasOwnProperty(key) ) {
-            buckets = netWhitelist[key];
-            i = buckets.length;
-            while ( i-- ) {
-                directive = buckets[i];
-                if ( !matchWhitelistDirective(targetURL, targetHostname, directive) ) {
-                    continue;
-                }
-                buckets.splice(i, 1);
-                // If it is a directive which can't be created easily through
-                // the user interface, keep it around as a commented out
-                // directive
+        bucket = netWhitelist[key];
+        if ( bucket !== undefined ) {
+            i = undefined;
+            for (;;) {
+                i = matchBucket(targetURL, targetHostname, bucket, i);
+                if ( i === -1 ) { break; }
+                directive = bucket.splice(i, 1)[0];
                 if ( isHandcraftedWhitelistDirective(directive) ) {
                     netWhitelist['#'].push('# ' + directive);
                 }
             }
-            if ( buckets.length === 0 ) {
+            if ( bucket.length === 0 ) {
                 delete netWhitelist[key];
             }
         }
         pos = key.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         key = key.slice(pos + 1);
+    }
+    bucket = netWhitelist['//'];
+    if ( bucket !== undefined ) {
+        i = undefined;
+        for (;;) {
+            i = matchBucket(targetURL, targetHostname, bucket, i);
+            if ( i === -1 ) { break; }
+            directive = bucket.splice(i, 1)[0];
+            if ( isHandcraftedWhitelistDirective(directive) ) {
+                netWhitelist['#'].push('# ' + directive);
+            }
+        }
+        if ( bucket.length === 0 ) {
+            delete netWhitelist['//'];
+        }
     }
     this.saveWhitelist();
     return true;
@@ -154,18 +177,10 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
 µBlock.stringFromWhitelist = function(whitelist) {
     var r = {};
     var i, bucket;
     for ( var key in whitelist ) {
-        if ( whitelist.hasOwnProperty(key) === false ) {
-            continue;
-        }
         bucket = whitelist[key];
         i = bucket.length;
         while ( i-- ) {
@@ -178,13 +193,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.whitelistFromString = function(s) {
-    var whitelist = {
-        '#': []
-    };
-    var reInvalidHostname = /[^a-z0-9.\-\[\]:]/;
-    var reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
-    var lines = s.split(/[\n\r]+/);
-    var line, matches, key, directive;
+    var whitelist = Object.create(null),
+        reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
+        reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/,
+        lines = s.split(/[\n\r]+/),
+        line, matches, key, directive, re;
+
+    // Comment bucket must always be ready to be used.
+    whitelist['#'] = [];
+
+    // New set of directives, scrap cached data.
+    directiveToRegexpMap.clear();
+
     for ( var i = 0; i < lines.length; i++ ) {
         line = lines[i].trim();
         // https://github.com/gorhill/uBlock/issues/171
@@ -207,6 +227,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
                 key = directive = line;
             }
         }
+        // Regex-based (ensure it is valid)
+        else if ( line.startsWith('/') && line.endsWith('/') ) {
+            key = '//';
+            directive = line;
+            try {
+                re = new RegExp(directive.slice(1, -1));
+                directiveToRegexpMap.set(directive, re);
+            } catch(ex) {
+                key = '#';
+                directive = '# ' + line;
+            }
+        }
         // URL, possibly wildcarded: there MUST be at least one hostname
         // label (or else it would be just impossible to make an efficient
         // dict.
@@ -223,13 +255,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
         // https://github.com/gorhill/uBlock/issues/171
         // Skip empty keys
-        if ( key === '' ) {
-            continue;
-        }
+        if ( key === '' ) { continue; }
 
         // Be sure this stays fixed:
         // https://github.com/chrisaljoudi/uBlock/issues/185
-        if ( whitelist.hasOwnProperty(key) === false ) {
+        if ( whitelist[key] === undefined ) {
             whitelist[key] = [];
         }
         whitelist[key].push(directive);
@@ -237,6 +267,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     return whitelist;
 };
 
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
 /******************************************************************************/
 
 µBlock.changeUserSettings = function(name, value) {
@@ -541,5 +576,3 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         report: report
     };
 })();
-
-/******************************************************************************/
