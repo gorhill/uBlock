@@ -1151,6 +1151,9 @@ var FilterParser = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1493
+//   Transpose `ping` into `other` for now.
+
 FilterParser.prototype.toNormalizedType = {
         'stylesheet': 'stylesheet',
              'image': 'image',
@@ -1163,6 +1166,8 @@ FilterParser.prototype.toNormalizedType = {
              'media': 'media',
          'websocket': 'websocket',
              'other': 'other',
+            'beacon': 'other',
+              'ping': 'other',
           'popunder': 'popunder',
           'document': 'main_frame',
        'generichide': 'generichide',
