@@ -1398,7 +1398,6 @@
   uBlockId = adblockers[0],
   adBlockPlusId = adblockers[1];
 
-  console.log(uBlockId, adBlockPlusId);
   if (vAPI.chrome && chrome.management) {
 
 
