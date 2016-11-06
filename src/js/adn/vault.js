@@ -1663,10 +1663,6 @@
   }
 
   function adjustHeight(){
-      console.log("adjustingheight");
-
-      console.log( $("#notifications").height() );
-      console.log( $(window).height()  );
       $("#stage").css('height', String($(window).height() - $("#notifications").height()) + "px" );
   }
 
