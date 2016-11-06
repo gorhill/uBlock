@@ -46,6 +46,7 @@
 
     case 'notifications':
       renderNotifications(request.notifications);
+      adjustBlockHeight();
       break;
     }
   });
@@ -89,10 +90,15 @@
       setAttempting(json.current);
     }
 
-    if (json.notifications && json.notifications.length){
-      renderNotifications(json.notifications);
-      adjustBlockHeight();
-    }
+     vAPI.messaging.send(
+         'adnauseam', {
+             what: 'verifyAdBlockers'
+         },
+         function() {
+             if (json.notifications && json.notifications.length) {
+                 renderNotifications(json.notifications);       
+             }
+         });
   }
 
   var updateMenuState = function () {
@@ -578,11 +584,13 @@
 
   var adjustBlockHeight = function() {
       //recalculate the height of ad-list
+
       var h = document.getElementById('notifications').offsetHeight;
       var newh = 350 - h;
       uDom('#ad-list').css('height', newh + 'px');
       //adjust the starting point of paused-menu
       var newTop = 100 + h;
+      console.log(newh, newTop);
       uDom('#paused-menu').css('top', newTop + 'px');
   };
 
