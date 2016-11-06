@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Pengaturan lanjut",
+    "message":"Pengaturan lanjutan",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -208,11 +208,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Wajib dibaca<\/a>)",
+    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>bacaan wajib<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"pengaturan lanjut",
+    "message":"pengaturan lanjutan",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Peringatan! Ubah pengaturan lanjut berikut dengan resiko Anda sendiri.",
+    "message":"Peringatan! Ubah pengaturan lanjutan berikut dengan resiko Anda sendiri.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

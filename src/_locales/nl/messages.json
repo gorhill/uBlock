@@ -556,7 +556,7 @@
     "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
-    "message":"mijn-ublock-backup_{{datetime}}.txt",
+    "message":"mijn-ublock-back-up_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

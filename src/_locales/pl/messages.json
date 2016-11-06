@@ -208,11 +208,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Wymagana lektura<\/a>)",
+    "message":"Funkcje dla zaawansowanych użytkowników (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Przeczytaj instrukcje<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"ustawienia zaawansowane",
+    "message":"Ustawienia zaawansowane",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Uwaga! Zmieniaj te ustawienia zaawansowane na własne ryzyko.",
+    "message":"Uwaga! Te ustawienia zmieniasz na własne ryzyko.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
