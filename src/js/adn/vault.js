@@ -101,7 +101,7 @@
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        },function(){
+        },function() {
         if (json.notifications && json.notifications.length)
             renderNotifications(json.notifications); adjustHeight();
     });

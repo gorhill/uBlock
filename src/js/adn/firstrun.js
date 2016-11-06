@@ -195,11 +195,19 @@
       what: 'userSettings'
     }, onUserSettingsReceived);
 
-     messager.send('adnauseam', {
-      what: 'getNotifications'
-    }, function(n) {
-      renderNotifications(n, true);
-    });
+    messager.send(
+        'adnauseam', {
+            what: 'verifyAdBlockers'
+        },
+        function() {
+            vAPI.messaging.send(
+                'adnauseam', {
+                    what: 'getNotifications'
+                },
+                function(n) {
+                    renderNotifications(n, true);
+                });
+        });
 
   });
 
