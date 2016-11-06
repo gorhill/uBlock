@@ -263,6 +263,7 @@ div.tooltip {
 	/*position: absolute;*/
 	z-index: 100;
 	float:right;
+	height:17px;
 	/*bottom: 81px;
 	right: 136px;*/
 }
