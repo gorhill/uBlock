@@ -282,8 +282,8 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var popupDataFromTabId = function(tabId, tabTitle) {
-    var tabContext = µb.tabContextManager.mustLookup(tabId);
-    var rootHostname = tabContext.rootHostname;
+    var tabContext = µb.tabContextManager.mustLookup(tabId),
+        rootHostname = tabContext.rootHostname;
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -294,6 +294,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
+        fontSize: µb.hiddenSettings.popupFontSize,
         netFilteringSwitch: false,
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,

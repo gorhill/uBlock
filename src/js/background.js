@@ -73,6 +73,7 @@ return {
     hiddenSettingsDefault: {
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
+        popupFontSize: 'unset',
         suspendTabsUntilReady: false
     },
     // This will be filled ASAP:

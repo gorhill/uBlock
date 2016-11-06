@@ -29,6 +29,11 @@
 
 /******************************************************************************/
 
+var popupFontSize = vAPI.localStorage.getItem('popupFontSize');
+if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
+    document.body.style.setProperty('font-size', popupFontSize);
+}
+
 // Ensure the popup is properly sized as soon as possible. It is assume the DOM
 // content is ready at this point, which should be the case given where this
 // script file is included in the HTML file.
@@ -100,7 +105,6 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
-var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
@@ -386,6 +390,17 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
+    if ( popupData.fontSize !== popupFontSize ) {
+        popupFontSize = popupData.fontSize;
+        if ( popupFontSize !== 'unset' ) {
+            document.body.style.setProperty('font-size', popupFontSize);
+            vAPI.localStorage.setItem('popupFontSize', popupFontSize);
+        } else {
+            document.body.style.removeProperty('font-size');
+            vAPI.localStorage.removeItem('popupFontSize');
+        }
+    }
+
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }

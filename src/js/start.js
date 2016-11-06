@@ -282,18 +282,23 @@ var onAdminSettingsRestored = function() {
 /******************************************************************************/
 
 µb.hiddenSettings = (function() {
-    var json = vAPI.localStorage.getItem('hiddenSettings');
+    var out = objectAssign({}, µb.hiddenSettingsDefault),
+        json = vAPI.localStorage.getItem('hiddenSettings');
     if ( typeof json === 'string' ) {
         try {
-            var out = JSON.parse(json);
-            if ( out instanceof Object ) {
-                return out;
+            var o = JSON.parse(json);
+            if ( o instanceof Object ) {
+                for ( var k in o ) {
+                    if ( out.hasOwnProperty(k) ) {
+                        out[k] = o[k];
+                    }
+                }
             }
         }
         catch(ex) {
         }
     }
-    return objectAssign({}, µb.hiddenSettingsDefault);
+    return out;
 })();
 
 /******************************************************************************/

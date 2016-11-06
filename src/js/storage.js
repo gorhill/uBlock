@@ -101,6 +101,9 @@
                 out[name] = false;
             }
             break;
+        case 'string':
+            out[name] = value;
+            break;
         default:
             break;
         }
