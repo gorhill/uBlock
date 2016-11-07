@@ -95,6 +95,7 @@ body[dir="rtl"] #panes > div {
     direction: rtl;
     }
 #panes > div:nth-of-type(2) {
+    font-family: Noto Sans;
     overflow-y: auto;
     overflow-x: hidden;
     width: 24em;

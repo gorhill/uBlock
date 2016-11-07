@@ -99,10 +99,10 @@ var onPSLReady = function() {
 // To bring older versions up to date
 
 var onVersionReady = function(lastVersion) {
-    // After 1.9.16, non-advanced users can have access to the dynamic
+    // Starting with 1.9.17, non-advanced users can have access to the dynamic
     // filtering pane in read-only mode. Still, it should not be visible by
     // default.
-    if ( lastVersion.localeCompare('1.9.18') < 0 ) {
+    if ( lastVersion.localeCompare('1.9.17') < 0 ) {
         if (
             µb.userSettings.advancedUserEnabled === false &&
             µb.userSettings.dynamicFilteringEnabled === true
