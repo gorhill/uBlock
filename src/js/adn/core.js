@@ -6,8 +6,8 @@
 
   // for debugging only
   var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 1, // start with zero ads
-    clearVisitData = 0, // reset all ad visit data
+    clearAdsOnInit = 0, // start with zero ads
+    clearVisitData = 1, // reset all ad visit data
     automatedMode = 0; // for automated testing
     //eventLogging = 0; // for debugging events
 
@@ -1281,12 +1281,17 @@
       blockIncomingCookies(headers);
   };
 
-  var blockIncomingCookies = exports.blockIncomingCookies = function (headers, dir) {
+  var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
+
+    var dbug = 1;
+
+    dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
       var name = headers[i].name.toLowerCase();
-      // console.log(i+") "+name);
+
+      dbug && console.log(i + ') '+name, headers[i].value);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 

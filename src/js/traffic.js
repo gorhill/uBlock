@@ -422,19 +422,19 @@
   // - media elements larger than n kB
   var onHeadersReceived = function (details) {
 
-      var tabId = details.tabId, requestType = details.type, dbug = 0;
+      var ad, tabId = details.tabId, requestType = details.type, dbug = 0;
 
       if (vAPI.isBehindTheSceneTabId(tabId)) {
 
         // ADN: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('onHeadersReceived: ',  requestType, details.url, details);
+            dbug && console.log('onHeadersReceived: ', requestType, details.url);
 
             // ADN
-            if (µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
+            if (ad = µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-              µBlock.adnauseam.blockIncomingCookies(details.responseHeaders);
+              µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
             }
             else if (dbug && vAPI.chrome) {
 
@@ -497,7 +497,7 @@
 
   var beforeAdVisit = function (details, headers, prefs, ad) {
 
-    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1;
+    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
 
     ad.requestId = details.requestId; // needed?
 
@@ -505,9 +505,11 @@
     //if (referer.indexOf(GoogleSearchPrefix) === 0)
       //referer = GoogleSearchPrefix;
 
+    dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
+
     for (var i = headers.length - 1; i >= 0; i--) {
 
-      // console.log(i + ") " + headers[i].name);
+      dbug && console.log(i + ") " + headers[i].name, headers[i].value);
       var name = headers[i].name.toLowerCase();
 
       if ((name === 'http_x_requested_with') ||
@@ -525,7 +527,7 @@
 
         // replace user-agent with most common string, if specified
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-          
+
            headers[i].value = MostCommonUserAgent;
            µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
