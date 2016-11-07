@@ -1283,17 +1283,14 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, dir) {
 
-    var pre = headers.length,
-      dbug = 0;
     for (var i = headers.length - 1; i >= 0; i--) {
 
       var name = headers[i].name.toLowerCase();
-
-      //dbug && console.log(i+") "+name);
+      // console.log(i+") "+name);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        dbug && console.log('[COOKIE] (Block)', headers[i].value);
+        log('[COOKIE] (Block)', headers[i].value);
         headers.splice(i, 1);
       }
     }
@@ -1413,7 +1410,7 @@
           for (var i in extensions) {
 
             var extension = extensions[i];
-            
+
             if (extension.id === adBlockPlusId && extension.enabled) {
               AdBlockPlusConflict = true;
 
@@ -1422,7 +1419,7 @@
             }
 
           }
-          
+
           // console.log(AdBlockPlusConflict,UBlockConflict);
 
           if (AdBlockPlusConflict) {
