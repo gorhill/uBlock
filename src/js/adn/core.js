@@ -7,7 +7,7 @@
   // for debugging only
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
-    clearVisitData = 1, // reset all ad visit data
+    clearVisitData = 0, // reset all ad visit data
     automatedMode = 0; // for automated testing
     //eventLogging = 0; // for debugging events
 
@@ -1283,7 +1283,7 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var dbug = 1;
+    var dbug = 0;
 
     dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
