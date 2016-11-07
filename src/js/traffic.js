@@ -465,17 +465,18 @@
 
   /******************************************************************************/
 
-  // ADN: removing outgoing cookies, user-agent, set/hide referer, DNT header
+  // ADN: removing outgoing cookies, user-agent, set referer, DNT header
   var onBeforeSendHeaders = function (details) {
 
     var headers = details.requestHeaders, prefs = µBlock.userSettings,
       adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
 
-    // ADN: check whether clicking/hiding is enabled, check disable Clicking/Hiding For DNT
-    if((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)){
+    // ADN: if clicking/hiding is enabled with DNT, then send the DNT header
+    if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
 
       var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
+      // add it only if the browser is not sending it already
       if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
         if (details.type === 'main_frame') // minimize logging
@@ -506,7 +507,7 @@
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
-      //console.log(i + ") " + headers[i].name);
+      // console.log(i + ") " + headers[i].name);
       var name = headers[i].name.toLowerCase();
 
       if ((name === 'http_x_requested_with') ||
@@ -518,11 +519,13 @@
 
         // block outgoing cookies and user-agent here if specified
         if (prefs.noOutgoingCookies && name === 'cookie') {
+
           µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
         }
 
         // replace user-agent with most common string, if specified
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
+          
            headers[i].value = MostCommonUserAgent;
            µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
@@ -546,6 +549,8 @@
 
   var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
 
+    // console.log('handleRefererForVisit()', arguments);
+
     // Referer cases (4):
     // noOutgoingReferer=true  / no refererIdx:     no-op
     // noOutgoingReferer=true  / have refererIdx:   setHeader('')
@@ -553,6 +558,7 @@
     // noOutgoingReferer=false / have refererIdx:   no-op
     if (refIdx > -1 && prefs.noOutgoingReferer) {
 
+      // will never happen when using XMLHttpRequest
       µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
       setHeader(headers[refererIdx], '');
 
