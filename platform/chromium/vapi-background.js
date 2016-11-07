@@ -1483,6 +1483,11 @@ vAPI.getAdBlockersID = function(callback) {
 
     var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
     var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
+   
+    if (navigator.userAgent.indexOf(' OPR/') >= 0) {
+      uBlockId = "kccohkcpppjjkkjppopfnflnebibpida";
+      adBlockPlusId = "oidhhegpmlfpoeialbgcdocjalghfpkp";
+    }
 
     return [uBlockId, adBlockPlusId];
 };
