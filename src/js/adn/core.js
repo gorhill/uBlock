@@ -1394,10 +1394,6 @@
     notes = notifications,
     dirty = false;
 
-  var adblockers = vAPI.getAdBlockersID(),
-  uBlockId = adblockers[0],
-  adBlockPlusId = adblockers[1];
-
   if (vAPI.chrome && chrome.management) {
 
 
@@ -1408,6 +1404,10 @@
           //
 
         } else {
+
+            var adblockers = vAPI.getAdBlockersID(),
+            uBlockId = adblockers[0],
+            adBlockPlusId = adblockers[1];
 
 
           for (var i in extensions) {
