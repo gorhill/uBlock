@@ -37,31 +37,17 @@
       'http://choice.microsoft.com'
     ];
 
-    var findImageAd = function (img) {
-
-      var imgSrc = img.src || img.getAttribute("src");
-
-      if (!imgSrc) {
-
-        logP("Image without 'src' attribute!", img);
-        img.addEventListener('load', processDelayedImage, false);
-        return false;
-      }
-
-      return processImage(img, imgSrc);
-    }
-
     var findImageAds = function (imgs) {
 
       var hits = 0;
       for (var i = 0; i < imgs.length; i++) {
 
-        if (findImageAd(imgs[i])) hits++;
+        if (processImage(imgs[i])) hits++;
       }
 
-      (hits < 1) && logP('No Ads found in', imgs);
-
-      return hits > 0;
+      if (hits < 1) {
+        logP('No (loaded) Image Ads found in', imgs);
+      }
     }
 
     var pageCount = function (ads, pageUrl) {
@@ -108,65 +94,81 @@
       this.errors = null;
     };
 
-    var processDelayedImage = function () { // this=img
+    var processImage = function (img) {
 
-      //console.log('processDelayedImage Size:', this.naturalWidth, this.naturalHeight, this);
-      var src = this.src || this.getAttribute('src');
-      if (src) {
-        if (processImage(this, src))
-          console.log("[PARSER] HIT from processDelayedImage!");
+      var target, targetUrl, loc = window.location,
+        src = img.src || img.getAttribute("src");
+
+      if (!src) { // no image src
+
+        logP("Fail: no image src", img);
+        return;
       }
-      this.removeEventListener('load', processDelayedImage, false);
-    }
-
-    var processImage = function (img, src) {
-
-      var target, targetUrl, ad, hits = 0, loc = window.location;
 
       target = clickableParent(img);
-      if (target) {
 
-        if (target.hasAttribute('href')) {
+      if (!target) { // no clickable parent
 
-          targetUrl = target.getAttribute("href");
+        logP("Fail: no ClickableParent", img, img.parentNode);
+        return;
+      }
+
+      if (target.hasAttribute('href')) {
+
+        targetUrl = target.getAttribute("href");
+      }
+      else if (target.hasAttribute('onclick')) {
+
+        // handle onclick
+        var onclickInfo = target.getAttribute("onclick");
+        if (onclickInfo && onclickInfo.length) {
+
+          targetUrl = parseOnClick(onclickInfo, loc.hostname, loc.protocol);
         }
-        else if (target.hasAttribute('onclick')) {
+      }
 
-          // handle onclick
-          var onclickInfo = target.getAttribute("onclick");
-          if (onclickInfo && onclickInfo.length) {
+      if (!targetUrl) { // no clickable tag in our target
 
-            targetUrl = parseOnClick(onclickInfo, loc.hostname, loc.protocol);
-          }
-        }
+        warnP("Fail: no href for anchor", target, img);
+        return;
+      }
 
-       
-        if (targetUrl) {
-          
-          img.onload = function() {
+      // we have an image and a click-target now
+      if (img.complete) {
 
-            ad = createAd(document.domain, targetUrl, {
-              src: src,
-              width: img.naturalWidth || -1,
-              height: img.naturalHeight || -1
-            });
+        // process the image now
+        return createImageAd(img, src, targetUrl);
 
-            if (ad) {
-
-              if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
-              notifyAddon(ad);
-              return true;
-
-            } else {
-              warnP("Bail: Unable to create Ad", document.domain, targetUrl, src);
-            }
-          }
-
-        } else {
-          warnP("Bail: No href for anchor", target, img);
-        }
       } else {
-        logP("Bail: No ClickableParent", img, img.parentNode, img.parentNode.parentNode);
+
+        // wait for loading to finish
+        img.onload = function() {
+
+          // can't return true here, so findImageAds() will still report
+          // 'No Ads found' for the image, but a hit will be still be logged
+          // in createImageAd() below
+          createImageAd(img, src, targetUrl);
+        }
+      }
+    }
+
+    var createImageAd = function (img, src, targetUrl) {
+
+      var ad = createAd(document.domain, targetUrl, {
+        src: src,
+        width: img.naturalWidth || -1,
+        height: img.naturalHeight || -1
+      });
+
+      if (ad) {
+
+        if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
+        notifyAddon(ad);
+        return true;
+
+      } else {
+
+        warnP("Fail: Unable to create Ad", document.domain, targetUrl, src);
       }
     }
 
