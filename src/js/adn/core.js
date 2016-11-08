@@ -1395,7 +1395,7 @@
           dirty = false;
 
       vAPI.getAddonInfo(function(UBlockConflict, AdBlockPlusConflict) {
-          console.log(UBlockConflict, AdBlockPlusConflict);
+          // console.log(UBlockConflict, AdBlockPlusConflict);
           if (AdBlockPlusConflict) {
 
               dirty = addNotification(notes, AdBlockPlusEnabled);

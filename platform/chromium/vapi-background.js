@@ -1489,10 +1489,11 @@ vAPI.getAddonInfo = function(callback) {
         } else {
 
             extensions.forEach(function(extension) {
+                // console.log(extension.name);
                 if (extension.name === "Adblock Plus" && extension.enabled) {
                     AdBlockPlusConflict = true;
 
-                } else if (extension.name === "uBlock Origin" && extension.enabled) {
+                } else if (extension.name.startsWith("uBlock") && extension.enabled) {
                     UBlockConflict = true;
                 }
 

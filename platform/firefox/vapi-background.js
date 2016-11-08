@@ -3773,7 +3773,7 @@ vAPI.getAddonInfo = function(callback) {
 
         addons.forEach(function(addon) {
             // console.log(addon.name, addon.isActive, addon.userDisabled);
-            if(addon.name == "uBlock" && addon.isActive)  UBlockConflict = true;
+            if(addon.name.startsWith("uBlock") && addon.isActive)  UBlockConflict = true;
             if(addon.name == "Adblock Plus" && addon.isActive) AdBlockPlusConflict = true;
                
         });
