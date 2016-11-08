@@ -205,7 +205,7 @@ function reactivateList() {
 }
 
 function openExtPage() {
-    vAPI.openBrowserPage('chrome://extensions/');
+    vAPI.openExtensionsPage();
 }
 
 function reloadPane() {

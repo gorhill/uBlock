@@ -38,7 +38,7 @@
   };
 
   var loadDashboardPanel = function (notifications) {
-    console.log(notifications);
+    // console.log(notifications);
 
     var pane = window.location.hash.slice(1);
     if (pane === '') {

@@ -1391,62 +1391,30 @@
    * TODO: Shall be handled differently on different browser
    */
   var verifyAdBlockers = exports.verifyAdBlockers = function() {
-  var UBlockConflict = false,
-    AdBlockPlusConflict = false,
-    notes = notifications,
-    dirty = false;
+      var notes = notifications,
+          dirty = false;
 
-  if (vAPI.chrome && chrome.management) {
-
-
-    chrome.management.getAll(function (extensions) {
-
-        if (chrome.runtime.lastError) {
-
-          //
-
-        } else {
-
-            var adblockers = vAPI.getAdBlockersID(),
-            uBlockId = adblockers[0],
-            adBlockPlusId = adblockers[1];
-
-
-          for (var i in extensions) {
-
-            var extension = extensions[i];
-
-            if (extension.id === adBlockPlusId && extension.enabled) {
-              AdBlockPlusConflict = true;
-
-            } else if (extension.id === uBlockId && extension.enabled) {
-              UBlockConflict = true;
-            }
-
-          }
-
-          // console.log(AdBlockPlusConflict,UBlockConflict);
-
+      vAPI.getAddonInfo(function(UBlockConflict, AdBlockPlusConflict) {
+          // console.log(UBlockConflict, AdBlockPlusConflict);
           if (AdBlockPlusConflict) {
 
-            dirty = addNotification(notes, AdBlockPlusEnabled);
+              dirty = addNotification(notes, AdBlockPlusEnabled);
           } else {
-            dirty = removeNotification(notes, AdBlockPlusEnabled);
+              dirty = removeNotification(notes, AdBlockPlusEnabled);
           }
 
           if (UBlockConflict) {
 
-            dirty = dirty || addNotification(notes, UBlockEnabled);
+              dirty = dirty || addNotification(notes, UBlockEnabled);
           } else {
-            dirty = dirty || removeNotification(notes, UBlockEnabled);
+              dirty = dirty || removeNotification(notes, UBlockEnabled);
           }
 
           dirty && sendNotifications(notes);
-        }
 
       });
-    }
   }
+
 
   var verifySettings = exports.verifySettings = function () {
 

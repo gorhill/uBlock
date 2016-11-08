@@ -214,6 +214,18 @@ vAPI.shutdown = (function() {
     });
 })();*/
 
+vAPI.openExtensionsPage = function() {
+    vAPI.messaging.send(
+        'default', {
+            what: 'gotoURL',
+            details: {
+                url: "about:addons",
+                select: true,
+                index: -1
+            }
+        }
+    )
+}
 /******************************************************************************/
 
 vAPI.prefs = {}; // ADN, for content-scripts
