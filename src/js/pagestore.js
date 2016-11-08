@@ -316,7 +316,7 @@ PageStore.prototype.init = function(tabId) {
     this.internalRedirectionCount = 0;
 
     this.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname) === true;
-    if ( µb.logger.isEnabled() && this.noCosmeticFiltering ) {
+    if ( this.noCosmeticFiltering && µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'cosmetic',
@@ -331,12 +331,13 @@ PageStore.prototype.init = function(tabId) {
     // Support `generichide` filter option.
     this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
     if ( this.noGenericCosmeticFiltering !== true ) {
-        this.noGenericCosmeticFiltering = µb.staticNetFilteringEngine.matchStringExactType(
+        var result = µb.staticNetFilteringEngine.matchStringExactType(
             this.createContextFromPage(),
             tabContext.normalURL,
             'generichide'
-        ) === false;
-        if ( µb.logger.isEnabled() && this.noGenericCosmeticFiltering ) {
+        );
+        this.noGenericCosmeticFiltering = result === false;
+        if ( result !== undefined && µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 tabId,
                 'net',

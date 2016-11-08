@@ -106,6 +106,9 @@ var AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 var AllowAnyType = AllowAction | AnyType;
 var AllowAnyParty = AllowAction | AnyParty;
 
+var genericHideException = AllowAction | AnyParty | typeNameToTypeValue.generichide,
+    genericHideImportant = BlockAction | AnyParty | typeNameToTypeValue.generichide | Important;
+
 // ABP filters: https://adblockplus.org/en/filters
 // regex tester: http://regex101.com/
 
@@ -1262,7 +1265,7 @@ FilterParser.prototype.parseOptions = function(s) {
         // `generichide` concept already supported, just a matter of
         // adding support for the new keyword.
         if ( opt === 'elemhide' || opt === 'generichide' ) {
-            if ( this.action === AllowAction ) {
+            if ( not === false ) {
                 this.parseOptType('generichide', false);
                 continue;
             }
@@ -2188,11 +2191,43 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 
 // Specialized handlers
 
+// https://github.com/gorhill/uBlock/issues/1477
+//   Special case: blocking-generichide filter ALWAYS exists, it is implicit --
+//   thus we always first check for exception filters, then for important block
+//   filter if and only if there was a hit on an exception filter.
+// https://github.com/gorhill/uBlock/issues/2103
+//   User may want to override `generichide` exception filters.
+
+FilterContainer.prototype.matchStringGenericHide = function(context, requestURL) {
+    var url = this.urlTokenizer.setURL(requestURL);
+
+    var bucket = this.categories.get(toHex(genericHideException));
+    if ( !bucket || this.matchTokens(bucket, url) === false ) {
+        this.fRegister = null;
+        return;
+    }
+
+    bucket = this.categories.get(toHex(genericHideImportant));
+    if ( bucket && this.matchTokens(bucket, url) ) {
+        this.keyRegister = genericHideImportant;
+        return true;
+    }
+
+    this.keyRegister = genericHideException;
+    return false;
+};
+
+/******************************************************************************/
+
 // https://github.com/chrisaljoudi/uBlock/issues/116
-// Some type of requests are exceptional, they need custom handling,
-// not the generic handling.
+//   Some type of requests are exceptional, they need custom handling,
+//   not the generic handling.
 
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
+    // Special case.
+    if ( requestType === 'generichide' ) {
+        return this.matchStringGenericHide(context, requestURL);
+    }
     // Be prepared to support unknown types
     var type = typeNameToTypeValue[requestType];
     if ( type === undefined ) {
@@ -2206,30 +2241,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     pageHostnameRegister = context.pageHostname || '';
     requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
-    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty;
+    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty,
+        categories = this.categories,
+        key, bucket;
 
     this.fRegister = null;
 
-    var categories = this.categories;
-    var key, bucket;
-
-    // https://github.com/gorhill/uBlock/issues/1477
-    // Special case: blocking generichide filter ALWAYS exists, it is implicit --
-    // thus we always and only check for exception filters.
-    if ( requestType === 'generichide' ) {
-        key = AllowAnyParty | type;
-        if (
-            (bucket = categories.get(toHex(key))) &&
-            this.matchTokens(bucket, url)
-        ) {
-            this.keyRegister = key;
-            return false;
-        }
-        return undefined;
-    }
-
     // https://github.com/chrisaljoudi/uBlock/issues/139
-    // Test against important block filters
+    //   Test against important block filters
     key = BlockAnyParty | Important | type;
     if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
