@@ -163,21 +163,6 @@ vAPI.shutdown = (function() {
 
 /******************************************************************************/
 
-vAPI.openExtensionsPage = function() {
-    vAPI.messaging.send(
-        'default', {
-            what: 'gotoURL',
-            details: {
-                url: "chrome://extensions/",
-                select: true,
-                index: -1
-            }
-        }
-    )
-}
-
-/******************************************************************************/
-
 vAPI.messaging = {
     port: null,
     portTimer: null,
@@ -419,6 +404,7 @@ vAPI.shutdown.add(function() {
 });
 
 vAPI.prefs = {}; // ADN, for content-scripts
+vAPI.extensionsPage = 'chrome://extensions/';
 
 vAPI.executionCost.stop('vapi-client.js');
 
