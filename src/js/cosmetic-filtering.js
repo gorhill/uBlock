@@ -1419,11 +1419,14 @@ FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
     var content = reng.resourceContentFromName(token, 'application/javascript');
     if ( !content ) { return; }
     if ( args ) {
-        var i = 1;
+        var i = 1, arg;
         while ( args !== '' ) {
             pos = args.indexOf(',');
             if ( pos === -1 ) { pos = args.length; }
-            content = content.replace('{{' + i + '}}', args.slice(0, pos).trim());
+            arg = args.slice(0, pos).trim();
+            if ( reArgValidator.test(arg) ) {
+                content = content.replace('{{' + i + '}}', arg);
+            }
             args = args.slice(pos + 1).trim();
             i++;
         }
@@ -1431,6 +1434,9 @@ FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
     dict.set(raw, out.length);
     out.push(content);
 };
+
+// Only accept plain word characters for now.
+var reArgValidator = /^\w*$/;
 
 /******************************************************************************/
 
