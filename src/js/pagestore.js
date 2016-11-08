@@ -499,22 +499,14 @@ PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
 
 /******************************************************************************/
 
-PageStore.prototype.logLargeMedia = (function() {
-    var injectScript = function() {
-        this.largeMediaTimer = null;
-        µb.scriptlets.injectDeep(
-            this.tabId,
-            'load-large-media-interactive'
-        );
-        µb.contextMenu.update(this.tabId);
-    };
-    return function() {
-        this.largeMediaCount += 1;
-        if ( this.largeMediaTimer === null ) {
-            this.largeMediaTimer = vAPI.setTimeout(injectScript.bind(this), 500);
-        }
-    };
-})();
+PageStore.prototype.injectLargeMediaElementScriptlet = function() {
+    this.largeMediaTimer = null;
+    µb.scriptlets.injectDeep(
+        this.tabId,
+        'load-large-media-interactive'
+    );
+    µb.contextMenu.update(this.tabId);
+};
 
 PageStore.prototype.temporarilyAllowLargeMediaElements = function() {
     this.largeMediaCount = 0;
@@ -617,7 +609,7 @@ PageStore.prototype.filterRequest = function(context) {
     // We want to short-term cache filtering results of collapsible types,
     // because they are likely to be reused, from network request handler and
     // from content script handler.
-    if ( 'image sub_frame object'.indexOf(requestType) === -1 ) {
+    if ( 'image media object sub_frame'.indexOf(requestType) === -1 ) {
         return this.filterRequestNoCache(context);
     }
 
@@ -628,17 +620,12 @@ PageStore.prototype.filterRequest = function(context) {
 
     var entry = this.netFilteringCache.lookup(context);
     if ( entry !== undefined ) {
-        //console.debug('cache HIT: PageStore.filterRequest("%s")', context.requestURL);
         return entry.result;
     }
 
-    var result = '';
-
     // Dynamic URL filtering.
-    if ( result === '' ) {
-        µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
-        result = µb.sessionURLFiltering.toFilterString();
-    }
+    µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
+    var result = µb.sessionURLFiltering.toFilterString();
 
     // Dynamic hostname/type filtering.
     if ( result === '' && µb.userSettings.advancedUserEnabled ) {
@@ -648,17 +635,42 @@ PageStore.prototype.filterRequest = function(context) {
         }
     }
 
-    // Static filtering has lowest precedence.
-    if ( result === '' || result.charAt(1) === 'n' ) {
+    // Static filtering: lowest filtering precedence.
+    if ( result === '' || result.charCodeAt(1) === 110 /* 'n' */ ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
         }
     }
 
-    //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
     this.netFilteringCache.add(context, result);
 
     return result;
+};
+
+/******************************************************************************/
+
+// The caller is responsible to check whether filtering is enabled or not.
+
+PageStore.prototype.filterLargeMediaElement = function(size) {
+    if ( Date.now() < this.allowLargeMediaElementsUntil ) {
+        return;
+    }
+    if ( µb.hnSwitches.evaluateZ('no-large-media', this.tabHostname) !== true ) {
+        return;
+    }
+    if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
+        return;
+    }
+
+    this.largeMediaCount += 1;
+    if ( this.largeMediaTimer === null ) {
+        this.largeMediaTimer = vAPI.setTimeout(
+            this.injectLargeMediaElementScriptlet.bind(this),
+            500
+        );
+    }
+
+    return µb.hnSwitches.toResultString();
 };
 
 /******************************************************************************/
@@ -697,7 +709,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     }
 
     // Static filtering has lowest precedence.
-    if ( result === '' || result.charAt(1) === 'n' ) {
+    if ( result === '' || result.charCodeAt(1) === 110 /* 'n' */ ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
         }

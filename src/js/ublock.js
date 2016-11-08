@@ -455,13 +455,13 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.isBlockResult = function(result) {
-    return typeof result === 'string' && result.charAt(1) === 'b';
+    return typeof result === 'string' && result.charCodeAt(1) === 98 /* 'b' */;
 };
 
 /******************************************************************************/
 
 µBlock.isAllowResult = function(result) {
-    return typeof result !== 'string' || result.charAt(1) !== 'b';
+    return typeof result !== 'string' || result.charCodeAt(1) !== 98 /* 'b' */;
 };
 
 /******************************************************************************/

@@ -1338,9 +1338,9 @@ FilterContainer.prototype.createUserScriptRule = function(hash, hostname, select
 // https://github.com/gorhill/uBlock/issues/1954
 
 // 01234567890123456789
-// script:inject(token)
-//               ^   ^
-//              14   -1
+// script:inject(token[, arg[, ...]])
+//               ^                 ^
+//              14                 -1
 
 FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     if ( this.userScriptCount === 0 ) { return; }
@@ -1377,7 +1377,7 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     }
     var i = selectors.length;
     while ( i-- ) {
-        this._lookupUserScript(scripts, selectors[i].slice(14, -1), reng, out);
+        this._lookupUserScript(scripts, selectors[i].slice(14, -1).trim(), reng, out);
     }
 
     if ( out.length === 0 ) {
@@ -1404,13 +1404,32 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     return out.join('\n');
 };
 
-FilterContainer.prototype._lookupUserScript = function(dict, token, reng, out) {
-    if ( dict.has(token) ) { return; }
-    var content = reng.resourceContentFromName(token, 'application/javascript');
-    if ( content ) {
-        dict.set(token, out.length);
-        out.push(content);
+/******************************************************************************/
+
+FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
+    if ( dict.has(raw) ) { return; }
+    var token, args,
+        pos = raw.indexOf(',');
+    if ( pos === -1 ) {
+        token = raw;
+    } else {
+        token = raw.slice(0, pos).trim();
+        args = raw.slice(pos + 1).trim();
     }
+    var content = reng.resourceContentFromName(token, 'application/javascript');
+    if ( !content ) { return; }
+    if ( args ) {
+        var i = 1;
+        while ( args !== '' ) {
+            pos = args.indexOf(',');
+            if ( pos === -1 ) { pos = args.length; }
+            content = content.replace('{{' + i + '}}', args.slice(0, pos).trim());
+            args = args.slice(pos + 1).trim();
+            i++;
+        }
+    }
+    dict.set(raw, out.length);
+    out.push(content);
 };
 
 /******************************************************************************/

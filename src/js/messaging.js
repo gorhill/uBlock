@@ -481,22 +481,21 @@ var filterRequests = function(pageStore, details) {
 
     //console.debug('messaging.js/contentscript-end.js: processing %d requests', requests.length);
 
-    var hostnameFromURI = µb.URI.hostnameFromURI;
-    var redirectEngine = µb.redirectEngine;
-    var punycodeURL = vAPI.punycodeURL;
+    var hostnameFromURI = µb.URI.hostnameFromURI,
+        redirectEngine = µb.redirectEngine,
+        punycodeURL = vAPI.punycodeURL;
 
     // Create evaluation context
-    var context = pageStore.createContextFromFrameHostname(details.pageHostname);
-
-    var request, r;
-    var i = requests.length;
+    var context = pageStore.createContextFromFrameHostname(details.pageHostname),
+        request, r,
+        i = requests.length;
     while ( i-- ) {
         request = requests[i];
         context.requestURL = punycodeURL(request.url);
         context.requestHostname = hostnameFromURI(context.requestURL);
         context.requestType = tagNameToRequestTypeMap[request.tag];
         r = pageStore.filterRequest(context);
-        if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
+        if ( typeof r !== 'string' || r.charCodeAt(1) !== 98 /* 'b' */ ) {
             continue;
         }
         // Redirected? (We do not hide redirected resources.)
