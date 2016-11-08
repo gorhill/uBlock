@@ -1424,9 +1424,11 @@ FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
             pos = args.indexOf(',');
             if ( pos === -1 ) { pos = args.length; }
             arg = args.slice(0, pos).trim();
-            if ( reArgValidator.test(arg) ) {
-                content = content.replace('{{' + i + '}}', arg);
+            // Abort on invalid arguments.
+            if ( reArgValidator.test(arg) === false ) {
+                return;
             }
+            content = content.replace('{{' + i + '}}', arg);
             args = args.slice(pos + 1).trim();
             i++;
         }
@@ -1436,7 +1438,7 @@ FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
 };
 
 // Only accept plain word characters for now.
-var reArgValidator = /^\w*$/;
+var reArgValidator = /^[\w\.]*$/;
 
 /******************************************************************************/
 
