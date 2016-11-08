@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global YaMD5, punycode, publicSuffixList */
+/* global YaMD5, objectAssign, punycode, publicSuffixList */
 
 'use strict';
 
@@ -76,6 +76,54 @@
 
 µBlock.saveUserSettings = function() {
     vAPI.storage.set(this.userSettings);
+};
+
+/******************************************************************************/
+
+// For now, only boolean type is supported.
+
+µBlock.hiddenSettingsFromString = function(raw) {
+    var out = objectAssign({}, this.hiddenSettingsDefault),
+        lineIter = new this.LineIterator(raw),
+        line, matches, name, value;
+    while ( lineIter.eot() === false ) {
+        line = lineIter.next();
+        matches = /^\s*(\S+)\s+(.+)$/.exec(line);
+        if ( matches === null || matches.length !== 3 ) { continue; }
+        name = matches[1];
+        if ( out.hasOwnProperty(name) === false ) { continue; }
+        value = matches[2];
+        switch ( typeof out[name] ) {
+        case 'boolean':
+            if ( value === 'true' ) {
+                out[name] = true;
+            } else if ( value === 'false' ) {
+                out[name] = false;
+            }
+            break;
+        case 'string':
+            out[name] = value;
+            break;
+        default:
+            break;
+        }
+    }
+    this.hiddenSettings = out;
+    vAPI.localStorage.setItem('hiddenSettings', JSON.stringify(out));
+    vAPI.storage.set({ hiddenSettingsString: this.stringFromHiddenSettings() });
+};
+
+/******************************************************************************/
+
+µBlock.stringFromHiddenSettings = function() {
+    var out = [],
+        keys = Object.keys(this.hiddenSettings).sort(),
+        key;
+    for ( var i = 0; i < keys.length; i++ ) {
+        key = keys[i];
+        out.push(key + ' ' + this.hiddenSettings[key]);
+    }
+    return out.join('\n');
 };
 
 /******************************************************************************/

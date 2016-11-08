@@ -39,6 +39,10 @@
     "message":"Om",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klikk: Deaktiver\/aktiver uBlock₀ for dette nettstedet.\n\nCtrl+klikk: Deaktiver uBlock₀ bare på denne siden.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Deaktiver forhåndshenting (for å hindre enhver tilkobling for blokkerte nettverksforespørsler)",
@@ -671,13 +679,21 @@
     "message":"Denne enhets navn:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Send",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Tilbakestill",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

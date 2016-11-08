@@ -39,6 +39,10 @@
     "message":"Sobre",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Configurações avançadas",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
-    "description":"English: "
+    "message":"Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"configurações avançadas",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Desativar pré-chamadas (para impedir qualquer conexão de pedidos de rede bloqueados)",
@@ -671,13 +679,21 @@
     "message":"Nome deste dispositivo:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Atenção! Altere essas configurações avançadas por sua conta e risco.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Enviar",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Aplicar alterações",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Reverter",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

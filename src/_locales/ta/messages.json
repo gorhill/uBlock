@@ -39,6 +39,10 @@
     "message":"எம்மைப் பற்றி",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"இந்த தளத்தில் ‍‍‍uBlock₀ ஐ முடக்கவோ\/இயக்கவோ: இங்கே சுட்டு.\nCtrl+click: என்ற குறுக்குவிசையின் மூலம் uBlock₀ ஐ இந்தப் பக்கத்தில் மட்டும் முடக்கு.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,14 +209,18 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"நான் ஒரு மேம்பட்ட பயனர் (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>அவசியம் படிக்க வேண்டியவை<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"ஹைப்பர்லிங்க் தணிக்கை செயல்நீக்கவும்",
+    "message":"உரலியிணைப்புத் தணிக்கையை முடக்கவும்",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -671,13 +679,21 @@
     "message":"இந்தச் சாதனத்தின் பெயர்:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"சமர்ப்பி",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"முன்நிலையாக்கு",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"பைட்டுகள்",

@@ -9,7 +9,6 @@ html, body {
     }
 #dashboard-nav {
     border: 0;
-    font-size: 16px;
     margin: 0;
     padding: 0;
     top: 0;
@@ -36,7 +35,7 @@ html, body {
     color: black;
     cursor: pointer;
     display: inline-block;
-    font: inherit;
+    font-size: 110%;
     margin: 0;
     padding: 4px;
     position: relative;

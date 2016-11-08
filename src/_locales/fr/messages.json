@@ -39,6 +39,10 @@
     "message":"À propos",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Paramètres avancés",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clic : Désactiver\/Activer uBlock₀ pour ce site.\n\nCtrl+clic : Désactiver uBlock₀ uniquement sur cette page.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Activer le mode pour personnes expérimentées (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>, page en Anglais)",
-    "description":"English: "
+    "message":"Activer les fonctionnalités avancées (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>, page en Anglais)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"paramètres avancés",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Désactiver la prédiction des actions sur le réseau (afin d'empêcher toute connexion pour les requêtes réseau bloquées)",
@@ -671,13 +679,21 @@
     "message":"Nom de ce périphérique :",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Attention, modifiez ces paramètres avancés à vos risques et périls.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Appliquer",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Appliquer",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Rétablir",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"octets",

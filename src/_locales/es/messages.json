@@ -39,6 +39,10 @@
     "message":"Acerca de",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Ajustes avanzados",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clic: desactivar\/activar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura obligatoria<\/a>)",
-    "description":"English: "
+    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura Obligatoria - Inglés<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"ajustes avanzados",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Deshabilitar pre-carga de sitios (previene cualquier conexión para peticiones de red bloqueadas)",
@@ -671,13 +679,21 @@
     "message":"Nombre de este dispositivo:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"¡Alerta! Cambie estos ajustes avanzados bajo su propio riesgo.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Enviar",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Aplicar cambios",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Revertir",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

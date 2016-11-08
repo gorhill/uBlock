@@ -165,6 +165,15 @@ var resetUserData = function() {
 
 /******************************************************************************/
 
+var synchronizeDOM = function() {
+    document.body.classList.toggle(
+        'advancedUser',
+        uDom.nodeFromId('advanced-user-enabled').checked === true
+    );
+};
+
+/******************************************************************************/
+
 var changeUserSettings = function(name, value) {
     messaging.send(
         'dashboard',
@@ -213,6 +222,7 @@ var onUserSettingsReceived = function(details) {
                         this.getAttribute('data-setting-name'),
                         this.checked
                     );
+                    synchronizeDOM();
                 });
     });
 
@@ -230,6 +240,8 @@ var onUserSettingsReceived = function(details) {
     uDom('#import').on('click', startImportFilePicker);
     uDom('#reset').on('click', resetUserData);
     uDom('#restoreFilePicker').on('change', handleImportFilePicker);
+
+    synchronizeDOM();
 };
 
 /******************************************************************************/

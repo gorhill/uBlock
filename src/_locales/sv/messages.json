@@ -39,6 +39,10 @@
     "message":"Om",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Avancerade inställningar",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klick: avaktivera\/aktivera uBlock₀ för denna hemsida permanent.\n\nCtrl+klick: avaktivera uBlock₀ endast för denna sida.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jag är en avancerad användare (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>obligatorisk läsning<\/a>)",
-    "description":"English: "
+    "message":"Jag är en avancerad användare (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> obligatorisk läsning<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"avancerade inställningar",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Stäng av hämtning i förhand (för att motverka anslutningar av blockerade förfrågningar)",
@@ -671,13 +679,21 @@
     "message":"Enhetens namn:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Varning! Ändra de avancerade inställningarna på egen risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Skicka",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Verkställ ändringarna",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Ångra",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"byte",

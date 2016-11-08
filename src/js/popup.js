@@ -29,6 +29,11 @@
 
 /******************************************************************************/
 
+var popupFontSize = vAPI.localStorage.getItem('popupFontSize');
+if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
+    document.body.style.setProperty('font-size', popupFontSize);
+}
+
 // Ensure the popup is properly sized as soon as possible. It is assume the DOM
 // content is ready at this point, which should be the case given where this
 // script file is included in the HTML file.
@@ -90,9 +95,6 @@ var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
 };
-var threePlus = '+++';
-var threeMinus = '−−−';
-var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
 var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
 var allDomains = {};
@@ -103,7 +105,6 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
-var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
@@ -226,17 +227,15 @@ var addFirewallRow = function(des) {
 
 var updateFirewallCell = function(scope, des, type, rule) {
     var selector = '#firewallContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
-    var cell = uDom(selector);
-
-    // This should not happen
-    if ( cell.length === 0 ) {
+    var cells = uDom(selector);
+    if ( cells.length === 0 ) {
         return;
     }
 
-    cell.removeClass();
+    cells.removeClass();
     var action = rule.charAt(1);
     if ( action !== '' ) {
-        cell.toggleClass(action + 'Rule', true);
+        cells.toggleClass(action + 'Rule', true);
     }
 
     // Use dark shade visual cue if the rule is specific to the cell.
@@ -247,54 +246,47 @@ var updateFirewallCell = function(scope, des, type, rule) {
                   (matches[2] === des) &&
                   (matches[1] === scopeToSrcHostnameMap[scope]);
     }
-    cell.toggleClass('ownRule', ownRule);
+    cells.toggleClass('ownRule', ownRule);
 
     if ( scope !== '.' || des === '*' ) {
         return;
     }
 
-    // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
-    //            ensure this in the HTML file counterpart when you make
-    //            changes
-    var textNode = cell.nodeAt(0).firstChild;
-
     // Remember this may be a cell from a reused row, we need to clear text
     // content if we can't compute request counts.
     if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
-        textNode.nodeValue = ' ';
+        cells.removeAttr('data-acount');
+        cells.removeAttr('data-acount');
         return;
     }
 
-    var hnDetails = popupData.hostnameDict[des];
-    var aCount = hnDetails.allowCount;
-    var bCount = hnDetails.blockCount;
-    if ( aCount !== 0 || bCount !== 0 ) {
-        // https://github.com/chrisaljoudi/uBlock/issues/471
-        aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
-        bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
-        textNode.nodeValue = threePlus.slice(0, aCount) +
-                             sixSpace.slice(aCount + bCount) +
-                             threeMinus.slice(0, bCount);
+    var hnDetails = popupData.hostnameDict[des],
+        cell = cells.nodeAt(0);
+    if ( hnDetails.allowCount !== 0 ) {
+        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
     } else {
-        textNode.nodeValue = ' ';
+        cell.removeAttribute('data-acount');
+    }
+    if ( hnDetails.blockCount !== 0 ) {
+        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.blockCount + 1) / Math.LN10), 3));
+    } else {
+        cell.removeAttribute('data-bcount');
     }
 
     if ( hnDetails.domain !== des ) {
         return;
     }
 
-    textNode = cell.nodeAt(1).firstChild;
-    aCount = hnDetails.totalAllowCount;
-    bCount = hnDetails.totalBlockCount;
-    if ( aCount !== 0 || bCount !== 0 ) {
-        // https://github.com/chrisaljoudi/uBlock/issues/471
-        aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
-        bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
-        textNode.nodeValue = threePlus.slice(0, aCount) +
-                             sixSpace.slice(aCount + bCount) +
-                             threeMinus.slice(0, bCount);
+    cell = cells.nodeAt(1);
+    if ( hnDetails.totalAllowCount !== 0 ) {
+        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
     } else {
-        textNode.nodeValue = ' ';
+        cell.removeAttribute('data-acount');
+    }
+    if ( hnDetails.totalBlockCount !== 0 ) {
+        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.totalBlockCount + 1) / Math.LN10), 3));
+    } else {
+        cell.removeAttribute('data-bcount');
     }
 };
 
@@ -342,7 +334,7 @@ var buildAllFirewallRows = function() {
         addFirewallRow(allHostnameRows[i]);
     }
 
-    if ( dfPaneBuilt !== true ) {
+    if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
         uDom('#firewallContainer')
             .on('click', 'span[data-src]', unsetFirewallRuleHandler)
             .on('mouseenter', '[data-src]', mouseenterCellHandler)
@@ -388,16 +380,6 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
-    // Domain of the page must always be included (if there is one)
-    if (
-        allDomains.hasOwnProperty(popupData.pageDomain) === false &&
-        reNetworkRelatedURL.test(popupData.rawURL)
-    ) {
-        allHostnameRows.push(popupData.pageDomain);
-        allDomains[popupData.pageDomain] = false;
-        allDomainCount += 1;
-    }
-
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());
     uDom.nodeFromId('popupHitDomainCount').textContent = summary;
@@ -408,6 +390,17 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
+    if ( popupData.fontSize !== popupFontSize ) {
+        popupFontSize = popupData.fontSize;
+        if ( popupFontSize !== 'unset' ) {
+            document.body.style.setProperty('font-size', popupFontSize);
+            vAPI.localStorage.setItem('popupFontSize', popupFontSize);
+        } else {
+            document.body.style.removeProperty('font-size');
+            vAPI.localStorage.removeItem('popupFontSize');
+        }
+    }
+
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
@@ -482,7 +475,7 @@ var renderPopup = function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
-    var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
+    var dfPaneVisible = popupData.dfEnabled;
 
     // https://github.com/chrisaljoudi/uBlock/issues/1068
     // Remember the last state of the firewall pane. This allows to
@@ -590,9 +583,6 @@ var gotoURL = function(ev) {
 /******************************************************************************/
 
 var toggleFirewallPane = function() {
-    if ( popupData.advancedUserEnabled === false ) {
-        return;
-    }
     popupData.dfEnabled = !popupData.dfEnabled;
 
     messaging.send(

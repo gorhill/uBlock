@@ -39,6 +39,10 @@
     "message":"Про програму",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Розширені налаштування",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Натиснення: вимикає\/умикає µBlock для поточного сайту.\n\nCtrl+натиснення: вимикає µBlock тільки для цієї сторінки.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Я досвідчений користувач (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обов’язково для прочитання<\/a>)",
-    "description":"English: "
+    "message":"Я досвідчений користувач (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обов’язково до прочитання<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"розширені налаштування",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Вимкнути передзавантаження (щоб унеможливити будь-які з’єднання для заблокованих мережевих запитів)",
@@ -671,13 +679,21 @@
     "message":"Назва цього пристрою:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Увага! Змінюйте ці налаштування на свій страх та ризик.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Надіслати",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Застосувати зміни",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Скасувати зміни",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"байтів",

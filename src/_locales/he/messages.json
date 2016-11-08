@@ -39,6 +39,10 @@
     "message":"אודות",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"הגדרות מתקדמות",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"לחיצה: כבה\/הפעל את uBlock₀ לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"אני משתמש מתקדם (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"הגדרות מתקדמות",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"כבה אחזור מוקדם של משאבים (על מנת למנוע מחיבורים של בקשות רשת חסומות להישלח)",
@@ -671,13 +679,21 @@
     "message":"שם המכשיר:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"אזהרה! שינוי הגדרות אלו על אחריותך בלבד.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"שלח",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"החל שינויים",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"החזר למצב הקודם",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"בתים",

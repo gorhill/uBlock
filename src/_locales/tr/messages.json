@@ -39,6 +39,10 @@
     "message":"Hakkında",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Gelişmiş ayarlar",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Tıklama: uBlock₀'i bu site için devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: uBlock₀'i sadece bu sayfa için devre dışı bırak.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Deneyimli bir kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekli<\/a>)",
-    "description":"English: "
+    "message":"Deneyimli kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekir<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"gelişmiş ayarlar",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Kaynak ön getirimini devre dışı bırak (engellenmiş ağ isteklerine herhangi bir bağlantı kurulmasını engellemek için)",
@@ -671,13 +679,21 @@
     "message":"Bu cihazın adı:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Uyarı! Bu ayarları değiştirme sorumluluğu size aittir.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Gönder",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Değişiklikleri uygula",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Geri al",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"byte",

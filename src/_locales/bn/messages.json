@@ -39,6 +39,10 @@
     "message":"সম্পর্কে",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Advanced settings",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"ক্লিক: এই সাইটের জন্য uBlock₀ নিষ্ক্রিয়\/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য uBlock₀ নিষ্ক্রিয় করবে।",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"আমি একজন উন্নত ব্যবহারকারী (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>পড়া আবশ্যক<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"অগ্রিম নিয়ে আসা নিষ্ক্রিয় করুন (অবরুদ্ধ নেটওয়ার্ক অনুরোধের জন্য যে কোনো সংযোগ প্রতিরোধ করতে)",
@@ -671,13 +679,21 @@
     "message":"এই ডিভাইসের নাম:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"জমা দিন",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"প্রত্যাবর্তন",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"বাইট",

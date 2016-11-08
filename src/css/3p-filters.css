@@ -41,7 +41,6 @@ body[dir=rtl] #lists {
     display: none;
     }
 li.listEntry {
-    font-size: 14px;
     margin: 0 auto 0 auto;
     margin-left: 3em;
     margin-right: 0em;
@@ -67,7 +66,7 @@ li.listEntry > a:nth-of-type(2):hover {
     opacity: 1;
     }
 li.listEntry > a:nth-of-type(3) {
-    font-size: 13px;
+    font-size: smaller;
     opacity: 0.5;
     }
 .dim {
@@ -121,7 +120,6 @@ body[dir=rtl] #externalListsDiv {
     }
 #externalLists {
     box-sizing: border-box;
-    font-size: smaller;
     height: 10em;
     white-space: pre;
     width: 100%;

@@ -39,6 +39,10 @@
     "message":"このプロジェクトについて",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"詳細設定",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"uBlock₀ の有効 \/ 無効を切り替えます。\n\nクリック: サイト全体  \nCtrl+クリック: このページのみ",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"私は上級者です (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>※必ず読んでください<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"詳細設定",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"先読みを無効にする (ブロックされたネットワークへの接続を防止するため)",
@@ -671,13 +679,21 @@
     "message":"このデバイスの名前:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"詳細設定での変更は、細心の注意を払って行ってください。",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"適用",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"変更を適用",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"元に戻す",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"バイト",

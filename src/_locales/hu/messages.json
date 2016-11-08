@@ -39,6 +39,10 @@
     "message":"Névjegy",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Haladó beállítások",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klikk: uBlock₀ tiltása\/engedélyezése ezen a webhelyen.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Haladó felhasználó vagyok (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>További tudnivalók<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"haladó beállítások",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Előtöltés kikapcsolása (kapcsolódás megakadályozása blokkolt hálózati lekérésekhez)",
@@ -671,13 +679,21 @@
     "message":"Ennek az eszköznek a neve:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Figyelem! Haladó beállítások, megváltoztatásuk csak saját felelősségre.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Küldés",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Módosítások alkalmazása",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Visszaállítás",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bájt",

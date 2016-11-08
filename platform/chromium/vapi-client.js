@@ -468,7 +468,7 @@ vAPI.messaging = {
         if ( listeners === undefined ) {
             return;
         }
-        var pos = this.listeners.indexOf(callback);
+        var pos = listeners.indexOf(callback);
         if ( pos === -1 ) {
             console.error('Listener not found on channel "%s"', channelName);
             return;

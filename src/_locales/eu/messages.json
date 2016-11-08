@@ -39,6 +39,10 @@
     "message":"Honi buruz",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Ezarpen aurreratuak",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klik: gaitu\/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: ezgaitu uBlock₀ orri honetan soilik.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Erabiltzaile aurreratua naiz (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Irakurri beharrekoa<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"ezarpen aurreratuak",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Desgaitu aurrez-kargatzea (blokeatutako sare eskaeretako edozein konexio galarazteko)",
@@ -671,13 +679,21 @@
     "message":"Gailu honen izena:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Abisua! Ez aldatu ezarpen aurreratu hauek zertan ari zaren ez badakizu.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Bidali",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Aplikatu aldaketak",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Baztertu",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"byte",

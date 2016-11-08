@@ -39,6 +39,10 @@
     "message":"Σχετικά",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Ρυθμίσεις για προχωρημένους",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν την σελίδα.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Είμαι προχωρημένος χρήστης (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Aπαραίτητη ανάγνωση<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"ρυθμίσεις για προχωρημένους",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Απενεργοποίηση πρόωρης φόρτωσης (για να αποτραπεί κάθε σύνδεση σε μπλοκαρισμένες αιτήσεις δικτύου)",
@@ -280,7 +288,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"Παράβλεψη γενικών κοσμητικών φίλτρων",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -671,13 +679,21 @@
     "message":"Το όνομα της συσκευής:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Προειδοποίηση! Αλλάξτε αυτές τις ρυθμίσεις για προχωρημένους με δική σας ευθύνη.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Υποβολή",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Εφαρμογή αλλαγών",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Επαναφορά",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

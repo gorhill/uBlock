@@ -39,6 +39,10 @@
     "message":"Over",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Geavanceerde instellingen",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klikken: uBlock₀ voor deze website in- of uitschakelen.\n\nCtrl+klikken: uBlock₀ alleen voor deze pagina uitschakelen.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,7 +209,11 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lees dit eerst<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"geavanceerde instellingen",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Vooraf ophalen uitschakelen (om verbindingen voor geblokkeerde netwerkaanvragen te voorkomen)",
@@ -548,7 +556,7 @@
     "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
-    "message":"mijn-ublock-backup_{{datetime}}.txt",
+    "message":"mijn-ublock-back-up_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -671,13 +679,21 @@
     "message":"Apparaatnaam:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Waarschuwing! Wijzig deze geavanceerde instellingen op eigen risico.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Verzenden",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Wijzigingen toepassen",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Ongedaan maken",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

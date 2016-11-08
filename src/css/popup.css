@@ -23,10 +23,11 @@ h2 {
     background-color: #eee;
     border: 0;
     color: #666;
-    font-size: 14px;
+    cursor: pointer;
+    font-size: 100%;
     font-weight: normal;
-    margin:  1em 0 0.5em 0;
-    padding: 2px 0;
+    margin: 1em 0 0.8em 0;
+    padding: 0.2em;
     text-align: center;
     }
 h2:nth-of-type(1) {
@@ -45,20 +46,22 @@ a {
     color: #bbb;
     cursor: pointer;
     display: block;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 85%;
+    line-height: 1.2;
     margin: 0;
-    padding: 3px 0;
+    padding: calc(0.1em + 1px) 0;
     position: relative;
     text-align: center;
     }
 #version {
-    font-size: 10px;
+    font-size: 90%;
     font-weight: normal;
     }
 #gotoPrefs > span:nth-of-type(3) {
     opacity: 0.5;
     position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
     }
 body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
     left: 3px;
@@ -94,7 +97,7 @@ body[dir="rtl"] #panes > div {
 #panes > div:nth-of-type(2) {
     overflow-y: auto;
     overflow-x: hidden;
-    width: 320px;
+    width: 24em;
     }
 /**
  Scroll bar to the left.
@@ -118,12 +121,15 @@ body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
     display: none;
     }
 #panes > div:nth-of-type(1) {
-    min-width: 160px;
+    min-width: 11em;
     padding: 0;
     }
 p {
     text-align: center;
     white-space: nowrap;
+    }
+.fa {
+    font-size: 120%;
     }
 #switch {
     margin: 8px 0;
@@ -131,7 +137,7 @@ p {
 #switch .fa {
     color: #0046ff;
     cursor: pointer;
-    font-size: 96px;
+    font-size: 700%;
     margin: 0;
     }
 #switch .fa:hover {
@@ -141,16 +147,15 @@ body.off #switch .fa {
     color: #ccc;
     }
 #page-blocked {
-    font-size: 20px;
+    font-size: 1.25em;
     }
 .statName {
     color: #888;
-    font-size: small;
-    margin: 1em 0.2em 0.2em 0.2em;
+    font-size: 85%;
+    margin: 0.8em 0.2em 0.1em 0.2em;
     text-align: center;
     }
 .statValue {
-    font-size: 14px;
     margin: 0;
     text-align: center;
     }
@@ -158,7 +163,6 @@ body.off #switch .fa {
     color: #aaa;
     cursor: pointer;
     display: none;
-    font-size: 14px;
     unicode-bidi: embed;
     }
 .tool.enabled {
@@ -171,21 +175,20 @@ body.off #switch .fa {
     background-color: #eee;
     border: 0;
     color: #aaa;
-    font-weight: normal;
-    margin:  1em 0 0 0;
-    padding: 4px 0 2px 0;
+    margin: 0.8em 0 0 0;
+    padding: 4px 0;
     text-align: center;
     }
 #extraTools > span {
     cursor: pointer;
-    font-size: 18px;
-    margin: 0 0.45em;
+    font-size: 1.2em;
+    margin: 0 0.4em;
     position: relative;
     }
 #extraTools > span > span.badge {
     color: #222;
     bottom: -1px;
-    font: 10.5px sans-serif;
+    font: x-small sans-serif;
     position: absolute;
     }
 body[dir="ltr"] #extraTools > span > span.badge {
@@ -196,7 +199,7 @@ body[dir="rtl"] #extraTools > span > span.badge {
     }
 #extraTools > span.on > span:last-of-type {
     color: #e00;
-    font-size: 20px;
+    font-size: 1.1em;
     left: 0;
     position: absolute;
     text-align: center;
@@ -208,17 +211,6 @@ body[dir="rtl"] #extraTools > span > span.badge {
     }
 #extraTools > span:hover {
     color: #444;
-    }
-
-body.advancedUser h2 {
-    cursor: pointer;
-    }
-body.advancedUser h2:before {
-    color: #aaa;
-    content: '+ ';
-    }
-body.advancedUser #panes.dfEnabled h2:before {
-    content: '\2212  ';
     }
 
 #refresh {
@@ -278,7 +270,7 @@ body[dir="rtl"] #tooltip {
 
 #firewallContainer {
     border: 0;
-    font-size: 13px;
+    font-size: 85%;
     margin: 0;
     padding: 0;
     text-align: right;
@@ -286,7 +278,6 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div {
     background-color: #e6e6e6;
     border: 0;
-    border-bottom: 1px solid white;
     direction: ltr;
     margin: 0;
     padding: 0;
@@ -294,54 +285,46 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div:hover {
     background-color: #f0f0f0;
     }
+#firewallContainer > div:first-child ~ div:not([class]) {
+    display: none;
+    }
 #firewallContainer.minimized > div.isSubDomain {
     display: none;
     }
 #firewallContainer > div > span {
     background-color: transparent;
     border: none;
+    border-bottom: 1px solid white;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     color: #000;
     display: inline-block;
-    height: 22px;
-    line-height: 22px;
+    height: 1.9em;
+    line-height: 1.9em;
     overflow: hidden;
     position: relative;
-    vertical-align: middle;
-    }
-#firewallContainer > div:nth-of-type(1) > span {
-    height: 18px;
-    line-height: 20px;
+    vertical-align: top;
     }
 #firewallContainer > div:nth-of-type(1) > span:nth-of-type(1) {
     cursor: pointer;
     }
 #firewallContainer > div > span:nth-of-type(1) {
-    border-right: 1px solid white;
     padding-right: 2px;
     position: relative;
     text-overflow: ellipsis;
-    width: 70%;
+    width: calc(100% - 4em);
     }
-#firewallContainer > div > span:nth-of-type(2),
-#firewallContainer > div > span:nth-of-type(3),
-#firewallContainer > div > span:nth-of-type(4) {
-    cursor: pointer;
-    width: 15%;
+#firewallContainer > div > span:nth-of-type(2) {
+    display: none;
     }
-#firewallContainer > div > span:nth-of-type(3),
-#firewallContainer > div > span:nth-of-type(4) {
+#firewallContainer > div > span:nth-of-type(1) ~ span {
     border-left: 1px solid white;
-    color: #444;
-    font-family: monospace;
-    font-size: 11.5px;
-    text-align: center;
+    width: 4em;
     }
-body.portrait #firewallContainer > div > span:nth-of-type(3),
-body.portrait #firewallContainer > div > span:nth-of-type(4) {
-    font-family: monospace;
-    font-size: 9px;
+#firewallContainer > div > span:nth-of-type(3),
+#firewallContainer > div > span:nth-of-type(4) {
+    color: #444;
+    text-align: center;
     }
 #firewallContainer > div > span:nth-of-type(4) {
     display: none;
@@ -362,6 +345,50 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
     }
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(4) {
     display: inline-block;
+    }
+#firewallContainer > div > span[data-acount]:before,
+#firewallContainer > div > span[data-bcount]:after {
+    font-family: "Noto Mono",monospace;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    }
+#firewallContainer > div > span[data-acount]:before {
+    left: 0.1em;
+    }
+#firewallContainer > div > span[data-acount="1"]:before {
+    content: '+';
+    }
+#firewallContainer > div > span[data-acount="2"]:before {
+    content: '++';
+    }
+#firewallContainer > div > span[data-acount="3"]:before {
+    content: '+++';
+    }
+#firewallContainer > div > span[data-bcount]:after {
+    right: 0.1em;
+    }
+#firewallContainer > div > span[data-bcount="1"]:after {
+    content: '\2212';
+    }
+#firewallContainer > div > span[data-bcount="2"]:after {
+    content: '\2212\2212';
+    }
+#firewallContainer > div > span[data-bcount="3"]:after {
+    content: '\2212\2212\2212';
+    }
+
+body.advancedUser #firewallContainer > div > span:nth-of-type(1) {
+    width: calc(100% - 8em);
+    }
+body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
+    display: inline-block;
+    }
+body.advancedUser #firewallContainer > div:first-child ~ div:not([class]) {
+    display: block;
+    }
+body.advancedUser #firewallContainer > div > span:nth-of-type(1) ~ span {
+    cursor: pointer;
     }
 
 /**
@@ -405,40 +432,40 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
     background-color: rgb(192, 160, 0);
     }
 /* Rule cells */
-#firewallContainer > div > span.aRule {
+body.advancedUser #firewallContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
-#firewallContainer.colorBlind > div > span.aRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.aRule {
     background-color: rgba(255, 194, 57, 0.4);
     }
-#firewallContainer > div > span.bRule {
+body.advancedUser #firewallContainer > div > span.bRule {
     background-color: rgba(192, 0, 0, 0.3);
     }
-#firewallContainer.colorBlind > div > span.bRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.bRule {
     background-color: rgba(0, 19, 110, 0.4);
     }
-#firewallContainer > div > span.nRule {
+body.advancedUser #firewallContainer > div > span.nRule {
     background-color: rgba(108, 108, 108, 0.3);
     }
-#firewallContainer.colorBlind > div > span.nRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.4);
     }
-#firewallContainer > div > span.ownRule {
+body.advancedUser #firewallContainer > div > span.ownRule {
     color: white;
     }
-#firewallContainer > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     }
-#firewallContainer.colorBlind > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.aRule.ownRule {
     background-color: rgba(255, 194, 57, 1);
     }
-#firewallContainer > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer > div > span.bRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
     }
-#firewallContainer.colorBlind > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.bRule.ownRule {
     background-color: rgba(0, 19, 110, 1);
     }
-#firewallContainer > div > span.nRule.ownRule {
+body.advancedUser #firewallContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     }
 
@@ -446,14 +473,23 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
     bottom: 0;
     left: 0;
     position: absolute;
-    right: 0;
     top: 0;
+    width: 4em;
+    z-index: 1;
     }
 #actionSelector > span {
     display: inline-block;
-    height: 22px;
+    height: 100%;
     opacity: 0.2;
-    width: 33.33%;
+    }
+#actionSelector > span:nth-of-type(1) {
+    width: 33%;
+    }
+#actionSelector > span:nth-of-type(2) {
+    width: 33.5%;
+    }
+#actionSelector > span:nth-of-type(3) {
+    width: 33.5%;
     }
 #actionSelector > span:hover {
     opacity: 0.75;
@@ -490,7 +526,7 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
     border-radius: 4px;
     cursor: pointer;
     display: inline-block;
-    font-size: 1.7em;
+    font-size: 1.8em;
     line-height: 1.0;
     margin: 0;
     margin-right: 0.1em;

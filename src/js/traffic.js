@@ -33,9 +33,59 @@ var exports = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Suspend tabs until uBO is fully ready.
+
+vAPI.net.onReady = function() {
+    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+        vAPI.onLoadAllCompleted();
+    }
+    var fn = onBeforeReady;
+    onBeforeReady = null;
+    if ( fn !== null ) {
+        fn('ready');
+    }
+};
+
+var onBeforeReady = (function() {
+    var suspendedTabs = new Set();
+
+    var forceReloadSuspendedTabs = function() {
+        var iter = suspendedTabs.values(),
+            entry;
+        for (;;) {
+            entry = iter.next();
+            if ( entry.done ) { break; }
+            vAPI.tabs.reload(entry.value);
+        }
+    };
+
+    return function(tabId) {
+        if (
+            vAPI.isBehindTheSceneTabId(tabId) ||
+            µBlock.hiddenSettings.suspendTabsUntilReady !== true
+        ) {
+            return;
+        }
+        if ( tabId === 'ready' ) {
+            forceReloadSuspendedTabs();
+            return;
+        }
+        suspendedTabs.add(tabId);
+        return true;
+    };
+})();
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
+    var tabId = details.tabId;
+    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+        return { cancel: true };
+    }
+
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -46,7 +96,6 @@ var onBeforeRequest = function(details) {
     }
 
     // Special treatment: behind-the-scene requests
-    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
@@ -111,22 +160,24 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
-    var url = µb.redirectEngine.toURL(requestContext);
-    if ( url !== undefined ) {
-        pageStore.internalRedirectionCount += 1;
-        if ( µb.logger.isEnabled() ) {
-            µb.logger.writeOne(
-                tabId,
-                'redirect',
-                'rr:' + µb.redirectEngine.resourceNameRegister,
-                requestType,
-                requestURL,
-                requestContext.rootHostname,
-                requestContext.pageHostname
-            );
+    if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+        var url = µb.redirectEngine.toURL(requestContext);
+        if ( url !== undefined ) {
+            pageStore.internalRedirectionCount += 1;
+            if ( µb.logger.isEnabled() ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'redirect',
+                    'rr:' + µb.redirectEngine.resourceNameRegister,
+                    requestType,
+                    requestURL,
+                    requestContext.rootHostname,
+                    requestContext.pageHostname
+                );
+            }
+            requestContext.dispose();
+            return { redirectUrl: url };
         }
-        requestContext.dispose();
-        return { redirectUrl: url };
     }
 
     requestContext.dispose();
@@ -136,9 +187,9 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
-    var tabId = details.tabId;
-    var requestURL = details.url;
-    var µb = µBlock;
+    var tabId = details.tabId,
+        requestURL = details.url,
+        µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -146,9 +197,10 @@ var onBeforeRootFrameRequest = function(details) {
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    var µburi = µb.URI;
-    var requestHostname = µburi.hostnameFromURI(requestURL);
-    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+    var µburi = µb.URI,
+        requestHostname = µburi.hostnameFromURI(requestURL),
+        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname,
+        result = '';
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -158,8 +210,6 @@ var onBeforeRootFrameRequest = function(details) {
         requestHostname: requestHostname,
         requestType: 'main_frame'
     };
-
-    var result = '';
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {

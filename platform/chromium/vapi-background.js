@@ -1196,7 +1196,9 @@ vAPI.onLoadAllCompleted = function() {
             µb.tabContextManager.commit(tab.id, tab.url);
             µb.bindTabToPageStats(tab.id);
             // https://github.com/chrisaljoudi/uBlock/issues/129
-            scriptStart(tab.id);
+            if ( /^https?:\/\//.test(tab.url) ) {
+                scriptStart(tab.id);
+            }
         }
     };
 

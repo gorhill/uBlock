@@ -39,6 +39,10 @@
     "message":"Über",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Erweiterte Einstellungen",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klick: uBlock₀ für alle Seiten dieser Domain aktivieren\/deaktivieren.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Webseite deaktivieren.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ich bin ein erfahrener Benutzer (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Pflichtlektüre<\/a>)",
-    "description":"English: "
+    "message":"Ich bin ein erfahrener Anwender (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Pflichtlektüre<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"Erweiterte Einstellungen",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Deaktiviere Prefetching (um jede Verbindung für blockierte Netzwerkanfragen zu verhindern)",
@@ -671,13 +679,21 @@
     "message":"Dieser Gerätename:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warnung! Veränderungen dieser erweiterten Einstellungen auf eigenes Risiko.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Absenden",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Änderungen anwenden",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Rückgängig machen",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"Bytes",
