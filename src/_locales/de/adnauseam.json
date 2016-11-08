@@ -56,11 +56,11 @@
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus and AdNauseam may conflict!",
+    "message":"AdBlock Plus und AdNauseam könnten sich gegenseitig behindern!",
     "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock und AdNauseam könnten sich gegenseitig behindern!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnTarget":{
