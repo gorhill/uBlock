@@ -181,6 +181,9 @@ vAPI.openBrowserPage = function(URL) {
 
 }
 
+vAPI.openExtensionsPage = function() {
+    vAPI.openBrowserPage('chrome://extensions/');
+}
 /******************************************************************************/
 
 vAPI.messaging = {

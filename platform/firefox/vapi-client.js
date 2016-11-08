@@ -214,6 +214,13 @@ vAPI.shutdown = (function() {
     });
 })();*/
 
+vAPI.openBrowserPage = function(URL) {
+   //TODO, or try to use vAPI.tabs in vapi-background.js?
+}
+
+vAPI.openExtensionsPage = function() {
+    vAPI.openBrowserPage('about:addons');
+}
 /******************************************************************************/
 
 vAPI.prefs = {}; // ADN, for content-scripts

@@ -1478,19 +1478,34 @@ vAPI.cloud = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.getAddonInfo = function(callback) {
+    var UBlockConflict = false,
+        AdBlockPlusConflict = false;
 
-vAPI.getAdBlockersID = function(callback) {
+    chrome.management.getAll(function(extensions) {
 
-    var uBlockId = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
-    var adBlockPlusId = "cfhdojbkjhnklbpkdaibdccddilifddb";
-   
-    if (navigator.userAgent.indexOf(' OPR/') >= 0) {
-      uBlockId = "kccohkcpppjjkkjppopfnflnebibpida";
-      adBlockPlusId = "oidhhegpmlfpoeialbgcdocjalghfpkp";
-    }
+        if (chrome.runtime.lastError) {
+            //
+        } else {
 
-    return [uBlockId, adBlockPlusId];
-};
+            extensions.forEach(function(extension) {
+                if (extension.name === "Adblock Plus" && extension.enabled) {
+                    AdBlockPlusConflict = true;
+
+                } else if (extension.name === "uBlock Origin" && extension.enabled) {
+                    UBlockConflict = true;
+                }
+
+            });
+
+            callback(UBlockConflict, AdBlockPlusConflict);
+
+        }
+
+    });
+
+}
+
 
 })();
 
