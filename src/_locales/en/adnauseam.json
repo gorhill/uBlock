@@ -3,6 +3,14 @@
     "message": "AdNauseam — About",
     "description": "English: Firstrun.html page title"
   },
+  "aboutSupport": {
+    "message": "Support",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Built on",
+    "description": "English: links.html Built on"
+  },
   "adnFirstRunPlease": {
     "message": "Please:",
     "description": "English: Firstrun.html -> Please:"
@@ -195,6 +203,22 @@
     "message": "Jan 1 1970 0:00am",
     "description": "appears on vault page"
   },
+  "adnVaultExpor": {
+    "message": "Export",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Import",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Clear",
+    "description": "appears on vault page"
+  },
+  "adnMenuImportAds": {
+    "message": "Import Ads",
+    "description": "appears in ADN popup menu"
+  },
   "adnVaultAdsClicked": {
     "message": "Ads clicked",
     "description": "appears on vault page"
@@ -236,7 +260,14 @@
     "message": "Display the number of Ads on the icon",
     "description": "English: Show the number of found Ads on the icon"
   },
-
+  "settingsExtraPrivacyPrompt": {
+    "message": "Extra Privacy",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Interface",
+    "description": "English: Interface"
+  },
   "noIncomingCookiesPrompt": {
     "message": "Ignore cookies returned with clicks",
     "description": "English: Ignore cookies returned with clicks"

@@ -8,7 +8,8 @@ uDom.onLoad(function () {
 
   var onAppDataReady = function (appData) {
     uDom('#aboutNameVer').text(appData.name +' v' + appData.version);
-    uDom('#builtOn').text('built on'); //TODO: intl
+    uDom('#builtOn').attr('data-i18n', 'aboutBuiltOn');
+    vAPI.i18n.render();
   };
 
   vAPI.messaging.send('dashboard', {
