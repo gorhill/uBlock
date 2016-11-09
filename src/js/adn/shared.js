@@ -205,7 +205,16 @@ function reactivateList() {
 }
 
 function openExtPage() {
-    vAPI.openExtensionsPage();
+  vAPI.messaging.send(
+    'default', {
+      what: 'gotoURL',
+      details: {
+        url: vAPI.extensionsPage,
+        select: true,
+        index: -1
+      }
+    }
+  );
 }
 
 function reloadPane() {
