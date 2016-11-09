@@ -1404,8 +1404,6 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     return out.join('\n');
 };
 
-/******************************************************************************/
-
 FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
     if ( dict.has(raw) ) { return; }
     var token, args,
@@ -1419,26 +1417,32 @@ FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
     var content = reng.resourceContentFromName(token, 'application/javascript');
     if ( !content ) { return; }
     if ( args ) {
-        var i = 1, arg;
-        while ( args !== '' ) {
-            pos = args.indexOf(',');
-            if ( pos === -1 ) { pos = args.length; }
-            arg = args.slice(0, pos).trim();
-            // Abort on invalid arguments.
-            if ( reArgValidator.test(arg) === false ) {
-                return;
-            }
-            content = content.replace('{{' + i + '}}', arg);
-            args = args.slice(pos + 1).trim();
-            i++;
-        }
+        content = this._fillupUserScript(content, args);
+        if ( !content ) { return; }
     }
     dict.set(raw, out.length);
     out.push(content);
 };
 
-// Only accept plain word characters for now.
-var reArgValidator = /^[\w\.]*$/;
+// Fill template placeholders. Return falsy if:
+// - At least one argument contains anything else than /\w/ and `.`
+
+FilterContainer.prototype._fillupUserScript = function(content, args) {
+    var i = 1,
+        pos, arg;
+    while ( args !== '' ) {
+        pos = args.indexOf(',');
+        if ( pos === -1 ) { pos = args.length; }
+        arg = args.slice(0, pos).trim();
+        if ( this._reUserScriptBadArg.test(arg) ) { return; }
+        content = content.replace('{{' + i + '}}', arg);
+        args = args.slice(pos + 1).trim();
+        i++;
+    }
+    return content;
+};
+
+FilterContainer.prototype._reUserScriptBadArg = /[^\w\.]/;
 
 /******************************************************************************/
 
