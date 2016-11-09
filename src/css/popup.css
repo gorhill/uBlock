@@ -153,7 +153,7 @@ body.off #switch .fa {
 .statName {
     color: #888;
     font-size: 85%;
-    margin: 0.8em 0.2em 0.1em 0.2em;
+    margin: 0.8em 0.2em 0.4em 0.2em;
     text-align: center;
     }
 .statValue {
