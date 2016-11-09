@@ -38,12 +38,8 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var hiddenLists = [ 'https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt',
-  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
+var hiddenLists = [
   "https://www.eff.org/files/effdntlist.txt",
-  "http://someonewhocares.org/hosts/hosts",
-  "http://hosts-file.net/.%5Cad_servers.txt",
-  "http://winhelp2002.mvps.org/hosts.txt",
   "assets/thirdparties/pgl.yoyo.org/as/serverlist",
   "assets/ublock/experimental.txt"
 ]; // ADN
