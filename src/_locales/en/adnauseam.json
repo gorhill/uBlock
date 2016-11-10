@@ -203,7 +203,7 @@
     "message": "Jan 1 1970 0:00am",
     "description": "appears on vault page"
   },
-  "adnVaultExpor": {
+  "adnVaultExport": {
     "message": "Export",
     "description": "appears on vault page"
   },
