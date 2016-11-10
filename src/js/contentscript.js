@@ -99,6 +99,8 @@ vAPI.matchesProp = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.useShadowDOM = false; // ADN
+
 // The DOM filterer is the heart of uBO's cosmetic filtering.
 
 vAPI.domFilterer = (function() {
@@ -545,9 +547,9 @@ var domFilterer = {
           console.log('[CONTENT] (NoHide) Not appending display to style');
         }
 
-        vAPI.adParser && vAPI.adParser.process(node); // ADN: always parse Ads
+        vAPI.adCheck && vAPI.adCheck(node); // ADN: always parse Ads
 
-        if (shadowId === undefined || !vAPI.adParser.useShadowDOM()) {
+        if (shadowId === undefined || vAPI.useShadowDOM !== true) {
             return;
         }
 
@@ -1099,14 +1101,23 @@ vAPI.domCollapser = (function() {
 
         // ADN: inject our content-scripts into dynamically-created iframes
         iframe.onload = function () {
+
           if (vAPI.chrome) { // ff-already handles this case correctly
-            this.contentWindow.chrome.runtime.connect().postMessage({
-              channelName: "adnauseam",
-              msg: {
-                what: "injectContentScripts",
-                parentUrl: location.href
-              }
-            });
+
+            try { // may not be allowed in cross-domain frames
+
+              this.contentWindow.chrome.runtime.connect().postMessage({
+                channelName: "adnauseam",
+                msg: {
+                  what: "injectContentScripts",
+                  parentUrl: location.href
+                }
+              });
+            }
+            catch(e) {
+              logP('Forced to ignore [dynamic] cross-domain iframe', iframe);
+              //console.warn(e);
+            }
           }
         };
 

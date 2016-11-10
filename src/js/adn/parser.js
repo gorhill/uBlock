@@ -29,10 +29,18 @@
   if (vAPI.chrome && chrome.extension.inIncognitoContext || vAPI.adParser)
     return;
 
-  vAPI.adParser = (function () {
+  vAPI.adCheck = function (elem) {
+      if (typeof vAPI.adParser === 'undefined') {
+        vAPI.adParser = createParser();
+      }
+      vAPI.adParser.process(elem);
+  }
+
+  var createParser = function () {
 
     // we ignore the tiny ad-choice ads from google, ms, etc.
     var ignoreTargets = [
+      /^https:\/\/www.google.com\/ads\/preferences\/whythisad\/.*/,
       'http://www.google.com/settings/ads/anonymous',
       'http://choice.microsoft.com'
     ];
@@ -228,8 +236,9 @@
 
     var process = function (elem) {
 
-      logP('Process('+elem.tagName+')', elem.tagName === 'IFRAME'
-        ? elem.getAttribute('src') : elem);
+      logP('Process('+elem.tagName+')',
+        elem.tagName === 'IFRAME' && elem.hasAttribute('src')
+          ? elem.getAttribute('src') : elem);
 
       switch (elem.tagName) {
 
@@ -290,6 +299,17 @@
       return true;
     };
 
+    var isIgnorableTarget = function (target) {
+
+      for (var i = 0; i < ignoreTargets.length; i++) {
+        if ((ignoreTargets[i] instanceof RegExp && ignoreTargets[i].test(target)) ||
+          (typeof myVar === 'string' && ignoreTargets[i] === target)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     var createAd = function (network, target, data) {
 
       var domain = (parent !== window) ?
@@ -306,9 +326,9 @@
         return;
       }
 
-      if (ignoreTargets.indexOf(target) > -1) {
+      if (isIgnorableTarget(target)) {
 
-        logP("Ignoring choices-image: ", arguments);
+        logP("Ignoring ad-info-image: ", arguments);
         return;
       }
 
@@ -351,6 +371,6 @@
       parseOnClick: parseOnClick
     };
 
-  })();
+  };
 
 })();
