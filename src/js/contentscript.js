@@ -1115,7 +1115,8 @@ vAPI.domCollapser = (function() {
               });
             }
             catch(e) {
-              logP('Forced to ignore [dynamic] cross-domain iframe', iframe);
+
+              logP('Ignored cross-domain [dynamic] iFrame', iframe);
               //console.warn(e);
             }
           }

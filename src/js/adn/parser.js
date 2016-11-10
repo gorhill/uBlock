@@ -26,7 +26,7 @@
   if ( typeof vAPI !== 'object' ) return; // injection failed
 
   // no ad extraction in incognito windows (see #236), or parser already exists
-  if (vAPI.chrome && chrome.extension.inIncognitoContext || vAPI.adParser)
+  if (vAPI.chrome && chrome.extension.inIncognitoContext || typeof vAPI.adCheck === 'function')
     return;
 
   vAPI.adCheck = function (elem) {
@@ -54,7 +54,7 @@
       }
 
       if (hits < 1) {
-        logP('No (loaded) Image Ads found in', imgs);
+        logP('No (loaded) image Ads found in', imgs);
       }
     }
 
@@ -68,7 +68,7 @@
       return num;
     }
 
-     var clickableParent = function (node) {
+    var clickableParent = function (node) {
 
       var checkNode = node;
 
@@ -275,7 +275,7 @@
         var doc = this.contentDocument || this.contentWindow.document;
       }
       catch(e) {
-        logP('Forced to ignore cross-domain iframe', this.getAttribute('src'));
+        logP('Ignored cross-domain iFrame', this.getAttribute('src'));
         return;
       }
 
@@ -285,7 +285,7 @@
         findImageAds(imgs);
       }
       else {
-        logP('no images in iFrame');
+        logP('No images in iFrame');
       }
     };
 
