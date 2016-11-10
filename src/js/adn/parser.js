@@ -26,13 +26,21 @@
   if ( typeof vAPI !== 'object' ) return; // injection failed
 
   // no ad extraction in incognito windows (see #236), or parser already exists
-  if (vAPI.chrome && chrome.extension.inIncognitoContext || vAPI.adParser)
+  if (vAPI.chrome && chrome.extension.inIncognitoContext || typeof vAPI.adCheck === 'function')
     return;
 
-  vAPI.adParser = (function () {
+  vAPI.adCheck = function (elem) {
+      if (typeof vAPI.adParser === 'undefined') {
+        vAPI.adParser = createParser();
+      }
+      vAPI.adParser.process(elem);
+  }
+
+  var createParser = function () {
 
     // we ignore the tiny ad-choice ads from google, ms, etc.
     var ignoreTargets = [
+      /^https:\/\/www.google.com\/ads\/preferences\/whythisad\/.*/,
       'http://www.google.com/settings/ads/anonymous',
       'http://choice.microsoft.com'
     ];
@@ -46,7 +54,7 @@
       }
 
       if (hits < 1) {
-        logP('No (loaded) Image Ads found in', imgs);
+        logP('No (loaded) image Ads found in', imgs);
       }
     }
 
@@ -60,7 +68,7 @@
       return num;
     }
 
-     var clickableParent = function (node) {
+    var clickableParent = function (node) {
 
       var checkNode = node;
 
@@ -228,8 +236,9 @@
 
     var process = function (elem) {
 
-      logP('Process('+elem.tagName+')', elem.tagName === 'IFRAME'
-        ? elem.getAttribute('src') : elem);
+      logP('Process('+elem.tagName+')',
+        elem.tagName === 'IFRAME' && elem.hasAttribute('src')
+          ? elem.getAttribute('src') : elem);
 
       switch (elem.tagName) {
 
@@ -266,7 +275,7 @@
         var doc = this.contentDocument || this.contentWindow.document;
       }
       catch(e) {
-        logP('Forced to ignore cross-domain iframe', this.getAttribute('src'));
+        logP('Ignored cross-domain iFrame', this.getAttribute('src'));
         return;
       }
 
@@ -276,7 +285,7 @@
         findImageAds(imgs);
       }
       else {
-        logP('no images in iFrame');
+        logP('No images in iFrame');
       }
     };
 
@@ -289,6 +298,17 @@
 
       return true;
     };
+
+    var isIgnorableTarget = function (target) {
+
+      for (var i = 0; i < ignoreTargets.length; i++) {
+        if ((ignoreTargets[i] instanceof RegExp && ignoreTargets[i].test(target)) ||
+          (typeof myVar === 'string' && ignoreTargets[i] === target)) {
+          return true;
+        }
+      }
+      return false;
+    }
 
     var createAd = function (network, target, data) {
 
@@ -306,9 +326,9 @@
         return;
       }
 
-      if (ignoreTargets.indexOf(target) > -1) {
+      if (isIgnorableTarget(target)) {
 
-        logP("Ignoring choices-image: ", arguments);
+        logP("Ignoring ad-info-image: ", arguments);
         return;
       }
 
@@ -351,6 +371,6 @@
       parseOnClick: parseOnClick
     };
 
-  })();
+  };
 
 })();
