@@ -38,13 +38,6 @@
 
   var createParser = function () {
 
-    // we ignore the tiny ad-choice ads from google, ms, etc.
-    var ignoreTargets = [
-      /^https:\/\/www.google.com\/ads\/preferences\/whythisad\/.*/,
-      'http://www.google.com/settings/ads/anonymous',
-      'http://choice.microsoft.com'
-    ];
-
     var findImageAds = function (imgs) {
 
       var hits = 0;
@@ -162,11 +155,17 @@
 
     var createImageAd = function (img, src, targetUrl) {
 
-      var ad = createAd(document.domain, targetUrl, {
-        src: src,
-        width: img.naturalWidth || -1,
-        height: img.naturalHeight || -1
-      });
+      var ad, iw = img.naturalWidth || -1, ih = img.naturalHeight || -1,
+        minDim = Math.min(iw, ih), maxDim = Math.max(iw, ih);
+
+      // Check size: require a min-size of 4x20, if we got a size
+      if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 20)) {
+
+        warnP("Ignoring Ad with size " + iw + "x" + ih, src, targetUrl);
+        return;
+      }
+
+      ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih });
 
       if (ad) {
 
@@ -299,17 +298,6 @@
       return true;
     };
 
-    var isIgnorableTarget = function (target) {
-
-      for (var i = 0; i < ignoreTargets.length; i++) {
-        if ((ignoreTargets[i] instanceof RegExp && ignoreTargets[i].test(target)) ||
-          (typeof myVar === 'string' && ignoreTargets[i] === target)) {
-          return true;
-        }
-      }
-      return false;
-    }
-
     var createAd = function (network, target, data) {
 
       var domain = (parent !== window) ?
@@ -323,12 +311,6 @@
       if (target.indexOf('http') < 0) {
 
         warnP("Ignoring Ad with targetUrl=" + target, arguments);
-        return;
-      }
-
-      if (isIgnorableTarget(target)) {
-
-        logP("Ignoring ad-info-image: ", arguments);
         return;
       }
 
