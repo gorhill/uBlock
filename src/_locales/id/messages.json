@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Daftar nama host yang mana uBlock₀ akan dinonfungsikan. Satu entri per baris. Nama host yang tidak valid akan diabaikan tanpa peringatan.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Impor dan tambahkan",

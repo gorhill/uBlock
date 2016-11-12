@@ -424,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista nazw hostów, na których uBlock₀ zostanie wyłączony. W jednym wierszu może być tylko jeden wpis. Błędne nazwy hostów zostaną pominięte.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Twoja lista nazw hostów, na których uBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importuj i dołącz",
