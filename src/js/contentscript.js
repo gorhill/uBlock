@@ -96,6 +96,30 @@ vAPI.matchesProp = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2147
+
+vAPI.SafeAnimationFrame = function(callback) {
+    this.fid = this.tid = null;
+    this.callback = callback;
+};
+
+vAPI.SafeAnimationFrame.prototype.start = function() {
+    if ( this.fid !== null ) { return; }
+    this.fid = requestAnimationFrame(this.callback);
+    this.tid = vAPI.setTimeout(this.callback, 1200000);
+};
+
+vAPI.SafeAnimationFrame.prototype.clear = function() {
+    if ( this.fid === null ) { return; }
+    cancelAnimationFrame(this.fid);
+    clearTimeout(this.tid);
+    this.fid = this.tid = null;
+};
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
 // The DOM filterer is the heart of uBO's cosmetic filtering.
 
 vAPI.domFilterer = (function() {
@@ -117,7 +141,6 @@ var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 
 var allExceptions = createSet(),
     allSelectors = createSet(),
-    commitTimer = null,
     stagedNodes = [],
     matchesProp = vAPI.matchesProp,
     userCSS = vAPI.userCSS;
@@ -248,6 +271,7 @@ var runXpathJob = function(job, fn) {
 var domFilterer = {
     addedNodesHandlerMissCount: 0,
     removedNodesHandlerMissCount: 0,
+    commitTimer: null,
     disabledId: vAPI.randomToken(),
     enabled: true,
     excludeId: undefined,
@@ -373,7 +397,7 @@ var domFilterer = {
     },
 
     commit_: function() {
-        commitTimer = null;
+        this.commitTimer.clear();
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
             styleText = '', i, n;
@@ -467,15 +491,11 @@ var domFilterer = {
             stagedNodes = stagedNodes.concat(nodes);
         }
         if ( commitNow ) {
-            if ( commitTimer !== null ) {
-                window.cancelAnimationFrame(commitTimer);
-            }
+            this.commitTimer.clear();
             this.commit_();
             return;
         }
-        if ( commitTimer === null ) {
-            commitTimer = window.requestAnimationFrame(this.commit_.bind(this));
-        }
+        this.commitTimer.start();
     },
 
     getExcludeId: function() {
@@ -516,6 +536,10 @@ var domFilterer = {
             shadow[shadowId] = true;
         } catch (ex) {
         }
+    },
+
+    init: function() {
+        this.commitTimer = new vAPI.SafeAnimationFrame(this.commit_.bind(this));
     },
 
     runJob: function(job, fn) {
@@ -626,9 +650,9 @@ var complexHideNode = function(node) {
     }
 };
 
-/******************************************************************************/
-
 var cssNotHiddenId = ':not([' + domFilterer.hiddenId + '])';
+
+domFilterer.init();
 
 /******************************************************************************/
 
@@ -712,7 +736,7 @@ return domFilterer;
         // uBlock's process was fully initialized. When this happens, pages
         // won't be cleaned right after browser launch.
         if ( document.readyState !== 'loading' ) {
-            window.requestAnimationFrame(vAPI.domIsLoaded);
+            (new vAPI.SafeAnimationFrame(vAPI.domIsLoaded)).start();
         } else {
             document.addEventListener('DOMContentLoaded', vAPI.domIsLoaded);
         }
@@ -742,11 +766,10 @@ vAPI.domWatcher = (function() {
         addedNodeLists = [],
         addedNodes = [],
         removedNodes = false,
-        safeObserverHandlerTimer = null,
         listeners = [];
 
     var safeObserverHandler = function() {
-        safeObserverHandlerTimer = null;
+        safeObserverHandlerTimer.clear();
         var i = addedNodeLists.length,
             nodeList, iNode, node;
         while ( i-- ) {
@@ -774,6 +797,8 @@ vAPI.domWatcher = (function() {
         }
     };
 
+    var safeObserverHandlerTimer = new vAPI.SafeAnimationFrame(safeObserverHandler);
+
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     var observerHandler = function(mutations) {
@@ -789,8 +814,8 @@ vAPI.domWatcher = (function() {
                 removedNodes = true;
             }
         }
-        if ( (addedNodeLists.length !== 0 || removedNodes) && safeObserverHandlerTimer === null ) {
-            safeObserverHandlerTimer = window.requestAnimationFrame(safeObserverHandler);
+        if ( addedNodeLists.length !== 0 || removedNodes ) {
+            safeObserverHandlerTimer.start();
         }
     };
 
@@ -830,9 +855,7 @@ vAPI.domWatcher = (function() {
                 domLayoutObserver.disconnect();
                 domLayoutObserver = null;
             }
-            if ( safeObserverHandlerTimer !== null ) {
-                window.cancelAnimationFrame(safeObserverHandlerTimer);
-            }
+            safeObserverHandlerTimer.clear();
         });
     };
 
