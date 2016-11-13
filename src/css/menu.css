@@ -580,6 +580,7 @@ footer {
   height: 50px;
   bottom: 0;
   position: absolute;
+  width:100%;
 }
 button.pause,
 button.resume,
