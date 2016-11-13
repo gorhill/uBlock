@@ -349,10 +349,7 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span[data-acount]:before,
 #firewallContainer > div > span[data-bcount]:after {
-    font-family: "Noto Mono", monospace;
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
     }
 #firewallContainer > div > span[data-acount]:before {
     left: 0.1em;
