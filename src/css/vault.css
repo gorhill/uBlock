@@ -262,6 +262,7 @@ div.tooltip {
 	z-index: 100;
 	float:right;
 	height:17px;
+	width:300px;
 }
 
 #bottom-text{

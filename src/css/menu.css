@@ -578,6 +578,8 @@ footer {
   padding: 10px;
   background: #000;
   height: 50px;
+  bottom: 0;
+  position: absolute;
 }
 button.pause,
 button.resume,
