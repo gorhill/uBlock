@@ -8,7 +8,7 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0; // automated testing ['selenium' or 'sessbench']
+    automatedMode = 'selenium'; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
     production = 0,
@@ -1125,7 +1125,8 @@
       ad.current = false;
     });
 
-    if (automatedMode === 'selenium') exportAds();
+    if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export')
+      exportAds();
   };
 
   exports.onListsLoaded = function (firstRun) {
