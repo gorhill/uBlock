@@ -31,8 +31,8 @@
   var AcceptHeaders = {
       chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
       firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-  }
-  var MostCommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
+  };
+  var CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
 
   /******************************************************************************/
 
@@ -448,19 +448,28 @@
       }
 
       // ADN: check if this was an allowed exception and, if so, block cookies
-      µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
+      var result = null,
+        modified = µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
 
       if (requestType === 'main_frame') {
-        return onRootFrameHeadersReceived(details);
+        result = onRootFrameHeadersReceived(details);
       }
 
       if (requestType === 'sub_frame') {
-        return onFrameHeadersReceived(details);
+        result = onFrameHeadersReceived(details);
       }
 
       if (requestType === 'image' || requestType === 'media') {
-        return foilLargeMediaElement(details);
+        result = foilLargeMediaElement(details);
       }
+
+      // ADN: if we're not blocking and we've modified headers, tell the caller (#601)
+      if (modified && !result) {
+        return details.responseHeaders.length ?
+          { 'responseHeaders': details.responseHeaders } : null;
+      }
+
+      return result;
   };
 
   /******************************************************************************/
@@ -528,7 +537,7 @@
         // replace user-agent with most common string, if specified
         if (prefs.noOutgoingUserAgent && name === 'user-agent') {
 
-           headers[i].value = MostCommonUserAgent;
+           headers[i].value = CommonUserAgent;
            µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
         }
       }

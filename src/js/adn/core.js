@@ -1278,12 +1278,13 @@
   exports.checkAllowedException = function (url, headers) {
 
     if (typeof allowedExceptions[url] !== 'undefined')
-      blockIncomingCookies(headers);
+      return blockIncomingCookies(headers, url);
+    return false;
   };
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var dbug = 0;
+    var modified = false, dbug = 0;
 
     dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
@@ -1297,8 +1298,11 @@
 
         log('[COOKIE] (Block)', headers[i].value);
         headers.splice(i, 1);
+        modified = true;
       }
     }
+
+    return modified;
   };
 
   exports.shutdown = function () {
