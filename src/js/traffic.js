@@ -963,13 +963,14 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
       'http://*/*',
       'https://*/*'
     ],
-    types: [
+    /*types: [
       'xmlhttprequest', // ADN
+      'script', // ADN
       'main_frame',
       'sub_frame',
       'image',
       'media'
-    ],
+    ],*/
     extra: ['blocking', 'responseHeaders'],
     callback: onHeadersReceived
   };
