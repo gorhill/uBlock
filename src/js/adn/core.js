@@ -8,8 +8,7 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0; // for automated testing
-    //eventLogging = 0; // for debugging events
+    automatedMode = 0; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
     production = 0,
@@ -90,7 +89,7 @@
 
       failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
 
-    } else if (automatedMode && vAPI.chrome) { // using sessbench
+    } else if (automatedMode === 'sessbench') { // using sessbench
 
       setupTesting();
     }
@@ -98,7 +97,7 @@
 
   var setupTesting = function () {
 
-    warn('AdNauseam automated: eid=' + chrome.runtime.id);
+    warn('AdNauseam/sessbench: eid=' + chrome.runtime.id);
 
     chrome.runtime.onMessageExternal.addListener(
       function (request, sender, sendResponse) {
@@ -202,7 +201,7 @@
     var next, pending = pendingAds(),
       settings = µb.userSettings;
 
-    if (pending.length && settings.clickingAds && !automatedMode) {
+    if (pending.length && settings.clickingAds && !automatedMode) { // no visits if automated
 
       // if an unvisited ad is being inspected, visit it next
       if (visitPending(inspected)) {
@@ -866,7 +865,7 @@
     json.what = 'adDetected';
     json.ad = ad;
 
-    if (automatedMode) json.automated = true;
+    //if (automatedMode) json.automated = true; // not used ?
 
     vAPI.messaging.broadcast(json);
 
@@ -1119,10 +1118,14 @@
   exports.onPageLoad = function (tabId, requestURL) {
 
     var ads = adlist(requestURL); // all ads for url
+
     //console.log('PAGE: ', requestURL, ads.length);
+
     ads.forEach(function (ad) {
       ad.current = false;
     });
+
+    if (automatedMode === 'selenium') exportAds();
   };
 
   exports.onListsLoaded = function (firstRun) {
@@ -1561,7 +1564,7 @@
     return notifications;
   }
 
-  exports.exportAds = function (request) {
+  var exportAds = exports.exportAds = function (request) {
 
     var count = adlist().length,
       filename = (request && request.filename) || getExportFileName();
