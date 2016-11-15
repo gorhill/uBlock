@@ -1143,7 +1143,7 @@
       verifyLists(µBlock.remoteBlacklists);
     });
 
-    if (firstRun) {
+    if (firstRun && !automatedMode) {
 
       vAPI.tabs.open({
         url: 'firstrun.html',
