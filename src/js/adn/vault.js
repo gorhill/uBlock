@@ -72,6 +72,7 @@
     case 'notifications':
       renderNotifications(request.notifications);
       adjustHeight();
+      createSlider(true);
       break;
     }
   });
@@ -103,7 +104,8 @@
             what: 'verifyAdBlockers'
         },function() {
         if (json.notifications && json.notifications.length)
-            renderNotifications(json.notifications); adjustHeight();
+            renderNotifications(json.notifications);
+            adjustHeight();
     });
 
   };
@@ -682,7 +684,6 @@
   }
 
   function itemPosition($ele) {
-
     // first set zoom back to 100%
     setZoom(Zooms.indexOf(100), true);
 
@@ -1486,7 +1487,6 @@
     }
 
     function centerContainer() {
-
       $('#container').addClass('notransition')
         .css({
           marginLeft: '-5000px',
