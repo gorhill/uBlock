@@ -109,7 +109,11 @@ var exportToFile = function() {
 
 var onLocalDataReceived = function(details) {
     uDom('#localData > ul > li:nth-of-type(1)').text(
-        vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
+        vAPI.i18n('settingsStorageUsed')
+            .replace(
+                '{{value}}',
+                typeof details.storageUsed === 'number' ? details.storageUsed.toLocaleString() : '?'
+            )
     );
 
     var elem, dt;
@@ -138,6 +142,15 @@ var onLocalDataReceived = function(details) {
         uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
         uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
     }
+
+    if ( details.cloudStorageSupported === false ) {
+        uDom('#cloud-storage-enabled').attr('disabled', '');
+    }
+    if ( details.privacySettingsSupported === false ) {
+        uDom('#prefetching-disabled').attr('disabled', '');
+        uDom('#hyperlink-auditing-disabled').attr('disabled', '');
+        uDom('#webrtc-ipaddress-hidden').attr('disabled', '');
+    }
 };
 
 /******************************************************************************/
@@ -148,6 +161,15 @@ var resetUserData = function() {
     if ( proceed ) {
         messaging.send('dashboard', { what: 'resetUserData' });
     }
+};
+
+/******************************************************************************/
+
+var synchronizeDOM = function() {
+    document.body.classList.toggle(
+        'advancedUser',
+        uDom.nodeFromId('advanced-user-enabled').checked === true
+    );
 };
 
 /******************************************************************************/
@@ -200,6 +222,7 @@ var onUserSettingsReceived = function(details) {
                         this.getAttribute('data-setting-name'),
                         this.checked
                     );
+                    synchronizeDOM();
                 });
     });
 
@@ -217,6 +240,8 @@ var onUserSettingsReceived = function(details) {
     uDom('#import').on('click', startImportFilePicker);
     uDom('#reset').on('click', resetUserData);
     uDom('#restoreFilePicker').on('change', handleImportFilePicker);
+
+    synchronizeDOM();
 };
 
 /******************************************************************************/

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014-2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global YaMD5, µBlock, vAPI, punycode, publicSuffixList */
+/* global YaMD5, objectAssign, punycode, publicSuffixList */
 
 'use strict';
 
@@ -33,7 +33,12 @@
         µBlock.storageUsed = bytesInUse;
         callback(bytesInUse);
     };
-    vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
+    // Not all platforms implement this method.
+    if ( vAPI.storage.getBytesInUse instanceof Function ) {
+        vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
+    } else {
+        callback();
+    }
 };
 
 /******************************************************************************/
@@ -71,6 +76,54 @@
 
 µBlock.saveUserSettings = function() {
     vAPI.storage.set(this.userSettings);
+};
+
+/******************************************************************************/
+
+// For now, only boolean type is supported.
+
+µBlock.hiddenSettingsFromString = function(raw) {
+    var out = objectAssign({}, this.hiddenSettingsDefault),
+        lineIter = new this.LineIterator(raw),
+        line, matches, name, value;
+    while ( lineIter.eot() === false ) {
+        line = lineIter.next();
+        matches = /^\s*(\S+)\s+(.+)$/.exec(line);
+        if ( matches === null || matches.length !== 3 ) { continue; }
+        name = matches[1];
+        if ( out.hasOwnProperty(name) === false ) { continue; }
+        value = matches[2];
+        switch ( typeof out[name] ) {
+        case 'boolean':
+            if ( value === 'true' ) {
+                out[name] = true;
+            } else if ( value === 'false' ) {
+                out[name] = false;
+            }
+            break;
+        case 'string':
+            out[name] = value;
+            break;
+        default:
+            break;
+        }
+    }
+    this.hiddenSettings = out;
+    vAPI.localStorage.setItem('hiddenSettings', JSON.stringify(out));
+    vAPI.storage.set({ hiddenSettingsString: this.stringFromHiddenSettings() });
+};
+
+/******************************************************************************/
+
+µBlock.stringFromHiddenSettings = function() {
+    var out = [],
+        keys = Object.keys(this.hiddenSettings).sort(),
+        key;
+    for ( var i = 0; i < keys.length; i++ ) {
+        key = keys[i];
+        out.push(key + ' ' + this.hiddenSettings[key]);
+    }
+    return out.join('\n');
 };
 
 /******************************************************************************/
@@ -767,7 +820,7 @@
             cosmeticFilteringEngine: µb.cosmeticFilteringEngine.toSelfie()
         };
 
-        vAPI.storage.set({ selfie: selfie });
+        vAPI.cacheStorage.set({ selfie: selfie });
     };
 
     var createAsync = function(after) {
@@ -788,7 +841,7 @@
             timer = null;
         }
 
-        vAPI.storage.remove('selfie');
+        vAPI.cacheStorage.remove('selfie');
     };
 
     return {
@@ -807,6 +860,12 @@
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = function(callback) {
+    // Support for vAPI.adminStorage is optional (webext).
+    if ( vAPI.adminStorage instanceof Object === false ) {
+        callback();
+        return;
+    }
+
     var onRead = function(json) {
         var µb = µBlock;
         var data;

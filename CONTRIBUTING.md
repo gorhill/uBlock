@@ -2,7 +2,7 @@
 
 For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746).
 
-For **filter-related issues**, report on the respective filter list support site, or at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues).
+For **filter-related issues**, report on the respective filter list support site, or at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues). Use [the logger](https://github.com/gorhill/uBlock/wiki/The-logger) to diagnose/confirm filter-related issues. If something does not work properly with uBO enabled, the **first step** is to rule out filter-related issues.
 
 Ignorance of the above rules is no excuse: **Opening an issue for purpose of support or discussion, or opening a filter-related issue will result in the user being immediately blocked.** Given the [amount of invalid issues being opened](https://github.com/gorhill/uBlock/issues?q=is%3Aissue+label%3Ainvalid+is%3Aclosed), I have no choice but to resort to such a drastic measure.
 

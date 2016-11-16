@@ -39,6 +39,10 @@
     "message":"정보",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"고급 설정",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"클릭: 이 사이트에서 uBlock₀을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서 uBlock₀을 끕니다.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"고급 사용자 모드 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>필수로 읽어보세요.<\/a>)",
-    "description":"English: "
+    "message":"고급 사용자 모드 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>필수로 읽어야 할 내용<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"고급 설정",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"프리-페칭 비활성화 (차단된 네트워크 요청에 대해 모든 접속요청 방지)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"하이퍼링크 검사\/비콘 비활성화",
+    "message":"하이퍼링크 검사 비활성화",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"목록에 있는 호스트들은 uBlock₀에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"가져오기 및 추가하기",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"파일로 백업하기",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"ublock-백업_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"현재 기기의 이름:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"경고! 고급 옵션을 변경하여 발생하는 문제는 사용자에게 있습니다.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"제출",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"변경사항 적용",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"되돌리기",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"바이트",

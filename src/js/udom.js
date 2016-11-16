@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 /* global DOMTokenList */
 /* exported uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 // It's just a silly, minimalist DOM framework: this allows me to not rely
@@ -31,8 +33,6 @@
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
 var uDom = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -499,6 +499,16 @@ DOMList.prototype.attr = function(attr, value) {
 
 /******************************************************************************/
 
+DOMList.prototype.removeAttr = function(attr) {
+    var i = this.nodes.length;
+    while ( i-- ) {
+        this.nodes[i].removeAttribute(attr);
+    }
+    return this;
+};
+
+/******************************************************************************/
+
 DOMList.prototype.prop = function(prop, value) {
     var i = this.nodes.length;
     if ( value === undefined ) {
@@ -533,19 +543,6 @@ DOMList.prototype.css = function(prop, value) {
 
 DOMList.prototype.val = function(value) {
     return this.prop('value', value);
-};
-
-/******************************************************************************/
-
-DOMList.prototype.html = function(html) {
-    var i = this.nodes.length;
-    if ( html === undefined ) {
-        return i ? this.nodes[0].innerHTML : '';
-    }
-    while ( i-- ) {
-        vAPI.insertHTML(this.nodes[i], html);
-    }
-    return this;
 };
 
 /******************************************************************************/

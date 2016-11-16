@@ -6,7 +6,6 @@ div > p:last-child {
     }
 .userFilters {
     box-sizing: border-box;
-    font-size: small;
     height: 60vh;
     text-align: left;
     white-space: pre;

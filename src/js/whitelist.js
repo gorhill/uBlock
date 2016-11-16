@@ -33,7 +33,7 @@ var messaging = vAPI.messaging;
 var cachedWhitelist = '';
 
 // Could make it more fancy if needed. But speed... It's a compromise.
-var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"$'()<>{}|\\^\[\]`~]/;
+var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"'()<>{}|`~]/;
 
 /******************************************************************************/
 
@@ -96,9 +96,8 @@ var exportWhitelistToFile = function() {
     if ( val === '' ) {
         return;
     }
-    var now = new Date();
     var filename = vAPI.i18n('whitelistExportFilename')
-        .replace('{{datetime}}', now.toLocaleString())
+        .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
     vAPI.download({
         'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),

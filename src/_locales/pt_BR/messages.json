@@ -39,6 +39,10 @@
     "message":"Sobre",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Configurações avançadas",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -72,7 +76,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Abrir Registro de Eventos",
+    "message":"Abrir registro de eventos",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
-    "description":"English: "
+    "message":"Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"configurações avançadas",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Desativar pré-chamadas (para impedir qualquer conexão de pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar auditoria de hyperlink\/beacon",
+    "message":"Desativar auditoria em hyperlinks",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Sua lista de exceções de servidores para qual o uBlock₀ será desativado. Uma entrada por linha. Servidores inválidos serão silenciosamente ignorados.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importar e adicionar",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Backup para arquivo",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"meu-ublock-backup_{{datetime}}.txt",
@@ -608,7 +616,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar Registro",
+    "message":"Mostrar Registro de Eventos",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -671,13 +679,21 @@
     "message":"Nome deste dispositivo:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Atenção! Altere essas configurações avançadas por sua conta e risco.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Enviar",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Aplicar alterações",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Reverter",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

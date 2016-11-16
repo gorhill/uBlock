@@ -39,6 +39,10 @@
     "message":"このプロジェクトについて",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"詳細設定",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"uBlock₀ の有効 \/ 無効を切り替えます。\n\nクリック: サイト全体  \nCtrl+クリック: このページのみ",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -84,7 +88,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"このサイトの要素隠蔽フィルタを切り替える",
+    "message":"このサイトの要素隠蔽フィルターを切り替える",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -168,7 +172,7 @@
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"要素隠蔽フィルタ",
+    "message":"要素隠蔽フィルター",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -205,14 +209,18 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"私は上級者です (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>※必ず読んでください<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"詳細設定",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"先読みを無効にする (ブロックされたネットワークへの接続を防止するため)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"ハイパーリンクの監査／指針を無効にする",
+    "message":"ハイパーリンクの監査を無効にする",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -228,7 +236,7 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"要素隠蔽フィルタを無効にする",
+    "message":"要素隠蔽フィルターを無効にする",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -252,7 +260,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ネットワークフィルタ＋{{cosmeticFilterCount}} 要素隠蔽フィルタ：",
+    "message":"{{netFilterCount}} ネットワークフィルター＋{{cosmeticFilterCount}} 要素隠蔽フィルター：",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -276,15 +284,15 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の &ldquo;要素遮蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
+    "message":"<p>このオプションは<a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus適合の&ldquo;要素隠蔽&rdquo;フィルター<\/a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。<\/p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"要素隠蔽フィルタを無視します",
+    "message":"要素隠蔽フィルターを無視する",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>要素隠蔽フィルタは、ほぼすべてのウェブサイトに適用することができるフィルタです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルタの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
+    "message":"<p>要素隠蔽フィルターは、ほぼすべてのウェブサイトに適用することができるフィルターです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルターの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -416,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"uBlock₀が無効になるホスト名の一覧です。1行につき1つのエントリとなっており、無効なホスト名は無視されます。",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"uBlock₀が無効になるホスト名の一覧です。1行につき1つのエントリで、無効なホスト名は無視されます。",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"インポートと追加",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"ファイルにバックアップ...",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"このデバイスの名前:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"詳細設定での変更は、細心の注意を払って行ってください。",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"適用",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"変更を適用",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"元に戻す",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"バイト",

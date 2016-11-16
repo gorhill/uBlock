@@ -127,9 +127,8 @@ var exportUserFiltersToFile = function() {
     if ( val === '' ) {
         return;
     }
-    var now = new Date();
     var filename = vAPI.i18n('1pExportFilename')
-        .replace('{{datetime}}', now.toLocaleString())
+        .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
     vAPI.download({
         'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),

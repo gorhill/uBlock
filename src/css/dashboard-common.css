@@ -37,7 +37,9 @@ div > p:last-child {
 input[type="number"] {
     width: 5em;
     }
-
+input[type="checkbox"][disabled] + label {
+    opacity: 0.4;
+    }
 .para {
     width: 40em;
     }
@@ -66,6 +68,7 @@ input[type="number"] {
     border: 1px dotted black;
     background-color: #F8F8F8;
     font-size: 13px;
+    white-space: pre-line;
     }
 .whatisthis-expandable > p {
     margin-top: 1em;

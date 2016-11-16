@@ -1,0 +1,14 @@
+div > p:first-child {
+    margin-top: 0;
+    }
+div > p:last-child {
+    margin-bottom: 0;
+    }
+textarea {
+    box-sizing: border-box;
+    height: 60vh;
+    text-align: left;
+    white-space: pre;
+    width: 100%;
+    word-wrap: normal;
+    }

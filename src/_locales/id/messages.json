@@ -39,6 +39,10 @@
     "message":"Tentang",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Pengaturan lanjutan",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klik: nonfungsi\/fungsikan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonfungsikan uBlock₀ hanya di halaman ini.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Wajib dibaca<\/a>)",
-    "description":"English: "
+    "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>bacaan wajib<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"pengaturan lanjutan",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Nonfungsikan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Nonfungsikan pengauditan\/suar pranala",
+    "message":"Nonfungsikan pengauditan pranala",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Daftar nama host yang mana uBlock₀ akan dinonfungsikan. Satu entri per baris. Nama host yang tidak valid akan diabaikan tanpa peringatan.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Impor dan tambahkan",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Cadangkan ke berkas",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Nama perangkat ini:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Peringatan! Ubah pengaturan lanjutan berikut dengan resiko Anda sendiri.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Kirim",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Terapkan perubahan",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Urungkan",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"byte",

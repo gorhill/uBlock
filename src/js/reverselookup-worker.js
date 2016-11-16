@@ -141,7 +141,7 @@ var fromCosmeticFilter = function(details) {
     if ( hostname !== '' ) {
         for ( ;; ) {
             candidates[hostname + '##' + filter] = new RegExp(
-                ['c', 'h', '\\w+', reEscape(hostname), reEscape(filter)].join('\\v') +
+                ['c', 'h', '[^\\v]+', reEscape(hostname), reEscape(filter)].join('\\v') +
                 '(?:\\n|$)'
             );
             pos = hostname.indexOf('.');
@@ -159,7 +159,7 @@ var fromCosmeticFilter = function(details) {
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos) + '.*';
         candidates[entity + '##' + filter] = new RegExp(
-            ['c', 'h', '\\w+', reEscape(entity), reEscape(filter)].join('\\v') +
+            ['c', 'h', '[^\\v]+', reEscape(entity), reEscape(filter)].join('\\v') +
             '(?:\\n|$)'
         );
     }

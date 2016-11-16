@@ -135,6 +135,15 @@
 
 /******************************************************************************/
 
+µBlock.dateNowToSensibleString = function() {
+    var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
+    return now.toISOString().replace(/\.\d+Z$/, '')
+                            .replace(/:/g, '.')
+                            .replace('T', '_');
+};
+
+/******************************************************************************/
+
 µBlock.LineIterator = function(text, offset) {
     this.text = text;
     this.textLen = this.text.length;

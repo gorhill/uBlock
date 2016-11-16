@@ -21,6 +21,8 @@
 
 /* global YaMD5 */
 
+'use strict';
+
 /*******************************************************************************
 
 File system structure:
@@ -40,8 +42,6 @@ File system structure:
 // Low-level asset files manager
 
 µBlock.assets = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -63,6 +63,7 @@ var lastRepoMetaIsRemote = false;
 var refreshRepoMetaPeriod = 5 * oneHour;
 var errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
 var xhrTimeout = vAPI.localStorage.getItem('xhrTimeout') || 30000;
+var onAssetRemovedListener = null;
 
 var exports = {
     autoUpdate: true,
@@ -120,7 +121,7 @@ var cachedAssetsManager = (function() {
             var currentVersion = vAPI.app.version;
             var lastVersion = store.extensionLastVersion || '0.0.0.0';
             if ( currentVersion !== lastVersion ) {
-                vAPI.storage.set({ 'extensionLastVersion': currentVersion });
+                vAPI.cacheStorage.set({ 'extensionLastVersion': currentVersion });
             }
             callback(entries);
         };
@@ -138,9 +139,9 @@ var cachedAssetsManager = (function() {
                 }
                 entries = bin.cached_asset_entries || {};
             }
-            vAPI.storage.get('extensionLastVersion', onLastVersionRead);
+            vAPI.cacheStorage.get('extensionLastVersion', onLastVersionRead);
         };
-        vAPI.storage.get('cached_asset_entries', onLoaded);
+        vAPI.cacheStorage.get('cached_asset_entries', onLoaded);
     };
     exports.entries = getEntries;
 
@@ -179,7 +180,7 @@ var cachedAssetsManager = (function() {
                 cbError(details);
                 return;
             }
-            vAPI.storage.get(cachedContentPath, onLoaded);
+            vAPI.cacheStorage.get(cachedContentPath, onLoaded);
         };
         getEntries(onEntries);
     };
@@ -210,8 +211,8 @@ var cachedAssetsManager = (function() {
             }
             // Saving over an existing item must be seen as removing an
             // existing item and adding a new one.
-            if ( typeof exports.onRemovedListener === 'function' ) {
-                exports.onRemovedListener(removedItems);
+            if ( onAssetRemovedListener instanceof Function ) {
+                onAssetRemovedListener(removedItems);
             }
             cbSuccess(details);
         };
@@ -221,7 +222,7 @@ var cachedAssetsManager = (function() {
             }
             entries[path] = Date.now();
             bin.cached_asset_entries = entries;
-            vAPI.storage.set(bin, onSaved);
+            vAPI.cacheStorage.set(bin, onSaved);
         };
         getEntries(onEntries);
     };
@@ -249,10 +250,10 @@ var cachedAssetsManager = (function() {
                 delete entries[path];
             }
             if ( keystoRemove.length ) {
-                vAPI.storage.remove(keystoRemove);
-                vAPI.storage.set({ 'cached_asset_entries': entries });
-                if ( typeof exports.onRemovedListener === 'function' ) {
-                    exports.onRemovedListener(removedItems);
+                vAPI.cacheStorage.remove(keystoRemove);
+                vAPI.cacheStorage.set({ 'cached_asset_entries': entries });
+                if ( onAssetRemovedListener instanceof Function ) {
+                    onAssetRemovedListener(removedItems);
                 }
             }
         };
@@ -280,8 +281,6 @@ var cachedAssetsManager = (function() {
     exports.exists = function(path) {
         return entries !== null && entries.hasOwnProperty(path);
     };
-
-    exports.onRemovedListener = null;
 
     getEntries(function(){});
 
@@ -1017,17 +1016,46 @@ var readExternalAsset = function(path, callback) {
 //      Cache --> whatever user saved
 
 var readUserAsset = function(path, callback) {
+    // TODO: remove when confident all users no longer have their custom
+    // filters saved into vAPI.cacheStorage.
     var onCachedContentLoaded = function(details) {
+        saveUserAsset(path, details.content);
         //console.log('µBlock.assets/readUserAsset("%s")/onCachedContentLoaded()', path);
         callback({ 'path': path, 'content': details.content });
     };
 
     var onCachedContentError = function() {
+        saveUserAsset(path, '');
         //console.log('µBlock.assets/readUserAsset("%s")/onCachedContentError()', path);
         callback({ 'path': path, 'content': '' });
     };
 
-    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    var onLoaded = function(bin) {
+        var content = bin && bin[path];
+        if ( typeof content === 'string' ) {
+            callback({ 'path': path, 'content': content });
+            return;
+        }
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    };
+
+    vAPI.storage.get(path, onLoaded);
+};
+
+var saveUserAsset = function(path, content, callback) {
+    var bin = {};
+    bin[path] = content;
+    var onSaved = function() {
+        // Saving over an existing asset must be seen as removing an
+        // existing asset and adding a new one.
+        if ( onAssetRemovedListener instanceof Function ) {
+            onAssetRemovedListener([ path ]);
+        }
+        if ( callback instanceof Function ) {
+            callback({ path: path, content: content });
+        }
+    };
+    vAPI.storage.set(bin, onSaved);
 };
 
 /******************************************************************************/
@@ -1136,6 +1164,11 @@ exports.getLocal = readLocalFile;
 /******************************************************************************/
 
 exports.put = function(path, content, callback) {
+    if ( reIsUserPath.test(path) ) {
+        saveUserAsset(path, content, callback);
+        return;
+    }
+
     cachedAssetsManager.save(path, content, callback);
 };
 
@@ -1262,9 +1295,9 @@ exports.purgeAll = function(callback) {
 
 /******************************************************************************/
 
-exports.onAssetCacheRemoved = {
-    addEventListener: function(callback) {
-        cachedAssetsManager.onRemovedListener = callback || null;
+exports.onAssetRemoved = {
+    addListener: function(callback) {
+        onAssetRemovedListener = callback instanceof Function ? callback : null;
     }
 };
 
@@ -1278,8 +1311,6 @@ return exports;
 /******************************************************************************/
 
 µBlock.assetUpdater = (function() {
-
-'use strict';
 
 /******************************************************************************/
 

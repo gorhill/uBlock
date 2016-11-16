@@ -33,9 +33,59 @@ var exports = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Suspend tabs until uBO is fully ready.
+
+vAPI.net.onReady = function() {
+    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+        vAPI.onLoadAllCompleted();
+    }
+    var fn = onBeforeReady;
+    onBeforeReady = null;
+    if ( fn !== null ) {
+        fn('ready');
+    }
+};
+
+var onBeforeReady = (function() {
+    var suspendedTabs = new Set();
+
+    var forceReloadSuspendedTabs = function() {
+        var iter = suspendedTabs.values(),
+            entry;
+        for (;;) {
+            entry = iter.next();
+            if ( entry.done ) { break; }
+            vAPI.tabs.reload(entry.value);
+        }
+    };
+
+    return function(tabId) {
+        if (
+            vAPI.isBehindTheSceneTabId(tabId) ||
+            µBlock.hiddenSettings.suspendTabsUntilReady !== true
+        ) {
+            return;
+        }
+        if ( tabId === 'ready' ) {
+            forceReloadSuspendedTabs();
+            return;
+        }
+        suspendedTabs.add(tabId);
+        return true;
+    };
+})();
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
+    var tabId = details.tabId;
+    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+        return { cancel: true };
+    }
+
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -45,21 +95,14 @@ var onBeforeRequest = function(details) {
         return onBeforeRootFrameRequest(details);
     }
 
-    // https://github.com/gorhill/uBlock/issues/870
-    // This work for Chromium 49+.
-    if ( requestType === 'beacon' ) {
-        return onBeforeBeacon(details);
-    }
-
     // Special treatment: behind-the-scene requests
-    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
 
     // Lookup the page store associated with this tab id.
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
         var tabContext = µb.tabContextManager.mustLookup(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
@@ -117,21 +160,24 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
-    var url = µb.redirectEngine.toURL(requestContext);
-    if ( url !== undefined ) {
-        if ( µb.logger.isEnabled() ) {
-            µb.logger.writeOne(
-                tabId,
-                'redirect',
-                'rr:' + µb.redirectEngine.resourceNameRegister,
-                requestType,
-                requestURL,
-                requestContext.rootHostname,
-                requestContext.pageHostname
-            );
+    if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+        var url = µb.redirectEngine.toURL(requestContext);
+        if ( url !== undefined ) {
+            pageStore.internalRedirectionCount += 1;
+            if ( µb.logger.isEnabled() ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'redirect',
+                    'rr:' + µb.redirectEngine.resourceNameRegister,
+                    requestType,
+                    requestURL,
+                    requestContext.rootHostname,
+                    requestContext.pageHostname
+                );
+            }
+            requestContext.dispose();
+            return { redirectUrl: url };
         }
-        requestContext.dispose();
-        return { redirectUrl: url };
     }
 
     requestContext.dispose();
@@ -141,9 +187,9 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
-    var tabId = details.tabId;
-    var requestURL = details.url;
-    var µb = µBlock;
+    var tabId = details.tabId,
+        requestURL = details.url,
+        µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -151,9 +197,10 @@ var onBeforeRootFrameRequest = function(details) {
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    var µburi = µb.URI;
-    var requestHostname = µburi.hostnameFromURI(requestURL);
-    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+    var µburi = µb.URI,
+        requestHostname = µburi.hostnameFromURI(requestURL),
+        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname,
+        result = '';
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -163,8 +210,6 @@ var onBeforeRootFrameRequest = function(details) {
         requestHostname: requestHostname,
         requestType: 'main_frame'
     };
-
-    var result = '';
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {
@@ -277,61 +322,37 @@ var toBlockDocResult = function(url, hostname, result) {
 
 /******************************************************************************/
 
+// Intercept and filter behind-the-scene requests.
+
 // https://github.com/gorhill/uBlock/issues/870
 // Finally, Chromium 49+ gained the ability to report network request of type
 // `beacon`, so now we can block them according to the state of the
 // "Disable hyperlink auditing/beacon" setting.
 
-var onBeforeBeacon = function(details) {
-    var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.mustPageStoreFromTabId(tabId);
-    var context = pageStore.createContextFromPage();
-    context.requestURL = details.url;
-    context.requestHostname = µb.URI.hostnameFromURI(details.url);
-    context.requestType = details.type;
-    // "g" in "gb:" stands for "global setting"
-    var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
-    pageStore.journalAddRequest(context.requestHostname, result);
-    if ( µb.logger.isEnabled() ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            result,
-            details.type,
-            details.url,
-            context.rootHostname,
-            context.rootHostname
-        );
-    }
-    context.dispose();
-    if ( result !== '' ) {
-        return { cancel: true };
-    }
-};
-
-/******************************************************************************/
-
-// Intercept and filter behind-the-scene requests.
-
 var onBeforeBehindTheSceneRequest = function(details) {
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if ( !pageStore ) {
-        return;
-    }
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
+    if ( !pageStore ) { return; }
 
-    var context = pageStore.createContextFromPage();
-    var requestURL = details.url;
+    var result = '',
+        context = pageStore.createContextFromPage(),
+        requestType = details.type,
+        requestURL = details.url;
+
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
-    context.requestType = details.type;
+    context.requestType = requestType;
+
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
+    //   Do not filter behind-the-scene network request of type `beacon`: there
+    //   is no point. In any case, this will become a non-issue once
+    //   <https://bugs.chromium.org/p/chromium/issues/detail?id=522129> is
+    //   fixed.
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
-    var result = '';
     if ( µb.userSettings.advancedUserEnabled ) {
         result = pageStore.filterRequestNoCache(context);
     }
@@ -343,7 +364,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
             vAPI.noTabId,
             'net',
             result,
-            details.type,
+            requestType,
             requestURL,
             context.rootHostname,
             context.rootHostname
@@ -500,40 +521,29 @@ var processCSP = function(details, pageStore, context) {
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1163
-// "Block elements by size"
+//   "Block elements by size"
 
 var foilLargeMediaElement = function(details) {
     var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null ) {
-        return;
-    }
-    if ( pageStore.getNetFilteringSwitch() !== true ) {
-        return;
-    }
-    if ( Date.now() < pageStore.allowLargeMediaElementsUntil ) {
-        return;
-    }
-    if ( µb.hnSwitches.evaluateZ('no-large-media', pageStore.tabHostname) !== true ) {
-        return;
-    }
+
     var i = headerIndexFromName('content-length', details.responseHeaders);
-    if ( i === -1 ) {
-        return;
-    }
-    var contentLength = parseInt(details.responseHeaders[i].value, 10) || 0;
-    if ( (contentLength >>> 10) < µb.userSettings.largeMediaSize ) {
+    if ( i === -1 ) { return; }
+
+    var tabId = details.tabId,
+        pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
         return;
     }
 
-    pageStore.logLargeMedia();
+    var size = parseInt(details.responseHeaders[i].value, 10) || 0,
+        result = pageStore.filterLargeMediaElement(size);
+    if ( result === undefined ) { return; }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            µb.hnSwitches.toResultString(),
+            result,
             details.type,
             details.url,
             pageStore.tabHostname,

@@ -56,7 +56,7 @@ return {
         collapseBlocked: true,
         colorBlindFriendly: false,
         contextMenuEnabled: true,
-        dynamicFilteringEnabled: true,
+        dynamicFilteringEnabled: false,
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
         hyperlinkAuditingDisabled: true,
@@ -70,6 +70,19 @@ return {
         webrtcIPAddressHidden: false
     },
 
+    hiddenSettingsDefault: {
+        ignoreRedirectFilters: false,
+        ignoreScriptInjectFilters: false,
+        popupFontSize: 'unset',
+        suspendTabsUntilReady: false
+    },
+    // This will be filled ASAP:
+    hiddenSettings: {},
+
+    // Features detection.
+    privacySettingsSupported: vAPI.browserSettings instanceof Object,
+    cloudStorageSupported: vAPI.cloud instanceof Object,
+
     // https://github.com/chrisaljoudi/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
     netWhitelist: {},
@@ -80,10 +93,11 @@ return {
         'chrome-extension-scheme',
         'chrome-scheme',
         'loopconversation.about-scheme',
+        'moz-extension-scheme',
         'opera-scheme',
         'vivaldi-scheme',
         ''
-    ].join('\n').trim(),
+    ].join('\n'),
 
     localSettings: {
         blockedRequestCount: 0,

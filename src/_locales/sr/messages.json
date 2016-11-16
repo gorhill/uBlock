@@ -39,6 +39,10 @@
     "message":"О програму",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Напредна подешавања",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Клик: онемогући\/омогући µBlock₀ за овај сајт.\n\nCtrl+клик: онемогући\/омогући µBlock₀ само за ову страницу.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ја сам напредни корисник (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обавезна литература<\/a>)",
-    "description":"English: "
+    "message":"Ја сам напредни корисник (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>обавезна литература<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"напредна подешавања",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Онемогући оптимизацију учитавања (да би се спречила свака веза блокираних мрежних захтева)",
@@ -416,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Списак хост назива за које ће uBlock₀ бити онемогућен. Једна ставка по реду. Неисправни хост називи ће бити занемарени.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Смернице дозвољених домена диктирају на којим веб страницама би uBlock Origin требало бити онемогућен. Један унос по реду. Неисправне смернице ће бити тихо занемарене.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Увези и додај",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Сачувај резервну копију у датотеку",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Назив овог уређаја:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Упозорење! Мењате ова напредна подешавања на сопствени ризик.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Пошаљи",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Примени измене",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Врати",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"бајтови",

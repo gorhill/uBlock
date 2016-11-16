@@ -39,6 +39,10 @@
     "message":"O programu",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Napredne postavke",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klik: trajno onemogućiti\/omogućiti uBlock₀  za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock₀  samo za ovu stranicu.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,8 +208,12 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Obavezna literatura<\/a>)",
-    "description":"English: "
+    "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>obavezna literatura<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"napredne postavke",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Onemogući pretpreuzimanje (za sprečavanje bilo koje veze blokiranih mrežnih zahtjeva)",
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Popis host naziva za koje će uBlock₀ biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi će tiho biti ignorirani.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Uvesti i dodati",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Sigurnosno kopiranje u datoteku...",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"moja-ublock-sig_kopija_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Naziv ovog uređaja:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Upozorenje! Mijenjate ove napredne postavke na vlastitu odgovornost.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Pošalji",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Primijeni promjene",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Vratiti",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bajtovi",

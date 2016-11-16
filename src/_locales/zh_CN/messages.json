@@ -39,6 +39,10 @@
     "message":"关于",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"高级设置",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"单击：对此网站禁用\/启用 uBlock₀。\n\nCtrl + 单击：在此页面上禁用 uBlock₀。",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"我是高级用户（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必读<\/a>）",
-    "description":"English: "
+    "message":"我是高级用户 （<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必读<\/a>）",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"高级设置",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"禁止预读取（拦截对已屏蔽网络请求的任何连接）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"禁用超链接审核",
+    "message":"禁用超链接审计（hyperlink auditing）",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"您的列表中针对 uBlock₀ 的主机名将被禁用。一行一条规则。无效的主机名将直接被忽略。",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"导入并添加",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"备份到文件",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"此设备名称：",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"警告！更改这些高级设置可能造成问题，请自担风险。",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"提交",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"应用更改",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"还原",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"字节",

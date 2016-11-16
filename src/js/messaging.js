@@ -282,8 +282,8 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var popupDataFromTabId = function(tabId, tabTitle) {
-    var tabContext = µb.tabContextManager.mustLookup(tabId);
-    var rootHostname = tabContext.rootHostname;
+    var tabContext = µb.tabContextManager.mustLookup(tabId),
+        rootHostname = tabContext.rootHostname;
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -294,6 +294,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
+        fontSize: µb.hiddenSettings.popupFontSize,
         netFilteringSwitch: false,
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,
@@ -309,6 +310,17 @@ var popupDataFromTabId = function(tabId, tabTitle) {
 
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
+        // https://github.com/gorhill/uBlock/issues/2105
+        //   Be sure to always include the current page's hostname -- it might
+        //   not be present when the page itself is pulled from the browser's
+        //   short-term memory cache. This needs to be done before calling
+        //   getHostnameDict().
+        if (
+            pageStore.hostnameToCountMap.has(rootHostname) === false &&
+            µb.URI.isNetworkURI(tabContext.rawURL)
+        ) {
+            pageStore.hostnameToCountMap.set(rootHostname, 0);
+        }
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
@@ -469,22 +481,21 @@ var filterRequests = function(pageStore, details) {
 
     //console.debug('messaging.js/contentscript-end.js: processing %d requests', requests.length);
 
-    var hostnameFromURI = µb.URI.hostnameFromURI;
-    var redirectEngine = µb.redirectEngine;
-    var punycodeURL = vAPI.punycodeURL;
+    var hostnameFromURI = µb.URI.hostnameFromURI,
+        redirectEngine = µb.redirectEngine,
+        punycodeURL = vAPI.punycodeURL;
 
     // Create evaluation context
-    var context = pageStore.createContextFromFrameHostname(details.pageHostname);
-
-    var request, r;
-    var i = requests.length;
+    var context = pageStore.createContextFromFrameHostname(details.pageHostname),
+        request, r,
+        i = requests.length;
     while ( i-- ) {
         request = requests[i];
         context.requestURL = punycodeURL(request.url);
         context.requestHostname = hostnameFromURI(context.requestURL);
         context.requestType = tagNameToRequestTypeMap[request.tag];
         r = pageStore.filterRequest(context);
-        if ( typeof r !== 'string' || r.charAt(1) !== 'b' ) {
+        if ( typeof r !== 'string' || r.charCodeAt(1) !== 98 /* 'b' */ ) {
             continue;
         }
         // Redirected? (We do not hide redirected resources.)
@@ -648,16 +659,18 @@ vAPI.messaging.listen('elementPicker', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
-
-/******************************************************************************/
-
 var onMessage = function(request, sender, callback) {
+    // Cloud storage support is optional.
+    if ( µBlock.cloudStorageSupported !== true ) {
+        callback();
+        return;
+    }
+
     // Async
     switch ( request.what ) {
     case 'cloudGetOptions':
         vAPI.cloud.getOptions(function(options) {
-            options.enabled = µb.userSettings.cloudStorageEnabled === true;
+            options.enabled = µBlock.userSettings.cloudStorageEnabled === true;
             callback(options);
         });
         return;
@@ -722,7 +735,9 @@ var getLocalData = function(callback) {
             lastRestoreFile: o.lastRestoreFile,
             lastRestoreTime: o.lastRestoreTime,
             lastBackupFile: o.lastBackupFile,
-            lastBackupTime: o.lastBackupTime
+            lastBackupTime: o.lastBackupTime,
+            cloudStorageSupported: µb.cloudStorageSupported,
+            privacySettingsSupported: µb.privacySettingsSupported
         });
     };
 
@@ -735,6 +750,7 @@ var backupUserData = function(callback) {
         version: vAPI.app.version,
         userSettings: µb.userSettings,
         filterLists: {},
+        hiddenSettingsString: µb.stringFromHiddenSettings(),
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
@@ -745,9 +761,8 @@ var backupUserData = function(callback) {
     var onSelectedListsReady = function(filterLists) {
         userData.filterLists = filterLists;
 
-        var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', now.toLocaleString())
+            .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
 
         vAPI.download({
@@ -786,13 +801,9 @@ var restoreUserData = function(request) {
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings, onCountdown);
         µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.hiddenSettingsFromString(userData.hiddenSettingsString || '');
         µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
-
-        // With versions 0.9.2.4-, dynamic rules were saved within the
-        // `userSettings` object. No longer the case.
-        var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
-        µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
-
+        µb.keyvalSetOne('dynamicFilteringString', userData.dynamicFilteringString || '', onCountdown);
         µb.keyvalSetOne('urlFilteringString', userData.urlFilteringString || '', onCountdown);
         µb.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
         µb.assets.put(µb.userFiltersPath, userData.userFilters, onCountdown);
@@ -810,11 +821,14 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
 };
 
 var resetUserData = function() {
+    vAPI.cacheStorage.clear();
     vAPI.storage.clear();
+    vAPI.localStorage.removeItem('hiddenSettings');
 
     // Keep global counts, people can become quite attached to numbers
     µb.saveLocalSettings();
@@ -959,6 +973,10 @@ var onMessage = function(request, sender, callback) {
         µb.assets.purgeCacheableAsset(request.path);
         break;
 
+    case 'readHiddenSettings':
+        response = µb.stringFromHiddenSettings();
+        break;
+
     case 'restoreUserData':
         restoreUserData(request);
         break;
@@ -987,6 +1005,10 @@ var onMessage = function(request, sender, callback) {
         µb.hnSwitches.fromString(response.switches);
         µb.saveHostnameSwitches();
         response = getRules();
+        break;
+
+    case 'writeHiddenSettings':
+        µb.hiddenSettingsFromString(request.content);
         break;
 
     default:

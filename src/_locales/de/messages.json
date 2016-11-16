@@ -39,6 +39,10 @@
     "message":"Über",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Erweiterte Einstellungen",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klick: uBlock₀ für alle Seiten dieser Domain aktivieren\/deaktivieren.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Webseite deaktivieren.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -64,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicke um das Dashboard zu öffnen",
+    "message":"Klicke, um das Dashboard zu öffnen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -100,11 +104,11 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Klick, um deine Änderungen permanent zu übernehmen.",
+    "message":"Hier klicken, um deine Änderungen dauerhaft zu übernehmen.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Klick, um deine Änderungen rückgängig zu machen.",
+    "message":"Hier klicken, um deine Änderungen rückgängig zu machen.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -192,7 +196,7 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"Verwende das Kontextmenü, falls möglich",
+    "message":"Kontextmenü verwenden, falls verfügbar",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
@@ -200,23 +204,27 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Aktiviere die Unterstützung der Speicherung in der Cloud",
+    "message":"Unterstützung für Speicherung in der Cloud aktivieren",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Ich bin ein erfahrener Benutzer (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Pflichtlektüre<\/a>)",
-    "description":"English: "
+    "message":"Ich bin ein erfahrener Anwender (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Pflichtlektüre<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"Erweiterte Einstellungen",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Deaktiviere Prefetching (um jede Verbindung für blockierte Netzwerkanfragen zu verhindern)",
+    "message":"Prefetching (Vorabrufen von Webseiten) deaktivieren (um jede Verbindung für blockierte Netzwerkanfragen zu verhindern)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiviere Hyperlink-Auditing",
+    "message":"Hyperlink-Überwachung deaktivieren",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Verhindere die Freigabe der lokalen IP-Adresse via WebRTC",
+    "message":"Freigabe der lokalen IP-Adresse via WebRTC verhindern",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -272,7 +280,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Kosmetische Filter zum Verstecken von Elementen analysieren und anwenden.",
+    "message":"Kosmetische Filter auswerten und deren Anwendung erzwingen",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -332,7 +340,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Leere den Cache",
+    "message":"Cache leeren",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -396,7 +404,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Aus Datei importieren …",
+    "message":"Aus einer Datei importieren …",
     "description":""
   },
   "rulesExport":{
@@ -404,7 +412,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -416,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Deine Liste von Hostnamen, für die uBlock₀ deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Hostnamen werden stillschweigend ignoriert.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Whitelist-Regeln schreiben vor, auf welchen Webseiten uBlock₀ nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden stillschweigend ignoriert und auskommentiert.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importieren und anfügen",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Backup in eine Datei",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -640,7 +648,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Deaktiviere striktes Blockieren für {{hostname}}",
+    "message":"Kein striktes Blockieren für {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -652,11 +660,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Export in den Cloud-Speicher",
+    "message":"In den Cloud-Speicher exportieren",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import aus dem Cloud-Speicher",
+    "message":"Aus dem Cloud-Speicher importieren",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
@@ -671,13 +679,21 @@
     "message":"Dieser Gerätename:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warnung! Veränderungen dieser erweiterten Einstellungen auf eigenes Risiko.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Absenden",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Änderungen anwenden",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Rückgängig machen",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"Bytes",

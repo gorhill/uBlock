@@ -39,6 +39,10 @@
     "message":"Teave",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Täpsemad seaded",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Klõps: keela\/luba uBlock₀ sellel saidil.\n\nCtrl+klõps: keela uBlock₀ ainult sellel lehel.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,18 +209,22 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Olen kogenud kasutaja (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vajalik lugemus<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"täpsemad seaded",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Keela eellaadimine (et vältida ühendusi blokeeritud võrgutaotlustele)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Keela hüperlingi auditeerimine\/majakas",
+    "message":"Keela hüperlingi auditeerimine",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Tõkesta WebRTC'l IP-aadressi nägemist",
+    "message":"Tõkesta WebRTC'l kohalike IP-aadresside lekitamist",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Nimekiri domeenidest, millel uBlock₀ keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Impordi ja lisa",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Varunda faili",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"minu-ublocki-varundus_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Selle seadme nimi:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Hoiatus! Muuda täpsemaid seadeid oma vastutusel.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Saada",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Kinnita muudatused",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Ennista",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"baiti",

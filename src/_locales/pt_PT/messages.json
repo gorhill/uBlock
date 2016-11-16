@@ -39,6 +39,10 @@
     "message":"Acerca",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Definições avançadas",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,14 +209,18 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Sou um utilizador avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"definições avançadas",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Desativar 'pre-fetching' (para impedir qualquer ligação para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar auditoria de hiperligações\/'beacon'",
+    "message":"Desativar auditoria de hiperligações",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -416,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista pessoal de servidores para os quais o uBlock₀ será desativado. Uma entrada por linha. Servidores inválidos serão ignorados silenciosamente.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Lista pessoal de servidores para os quais o uBlock Origin será desativado. Uma entrada por linha. Servidores inválidos serão ignorados silenciosamente.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importar e anexar",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Cópia para ficheiro",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Nome deste dispositivo:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Atenção! Altere estas definições avançadas por sua conta e risco.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Submeter",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Aplicar alterações",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Reverter",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

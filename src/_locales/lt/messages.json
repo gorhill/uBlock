@@ -39,6 +39,10 @@
     "message":"Apie",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Sudėtingesni nustatymai",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Spustelėjimas: įjungti\/išjungti uBlock₀ šiam puslapiui.\n\nVald+spustelėjimas: išjungti uBlock₀ tik šiam puslapiui.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Aš esu patyręs naudotojas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Privaloma perskaityti<\/a>)",
-    "description":"English: "
+    "message":"Aš esu patyręs naudotojas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>privaloma perskaityti<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"sudėtingesni nustatymai",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Išjungti išankstinį gavimą (visiems blokuotų tinklo užklausų prisijungimams išvengti)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Išjungti saitų auditą\/signalizavimą",
+    "message":"Išjungti saitų auditą",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Serverių sąrašas, kuriems uBlock₀ bus išjungtas. Vienas įrašas eilutėje. Neteisingi serverių vardai bus tyliai ignoruoti.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importuoti ir papildyti",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Padaryti atsarginę kopiją į failą",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"mano-ublock-atsarginė_kopija_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Šio įrenginio vardas:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Įspėjimas! Keiskite šiuos sudėtingesnius nustatymus savo rizika.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Pateikti",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Taikyti pakeitimus",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Atstatyti",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"baitai",

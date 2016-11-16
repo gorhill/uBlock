@@ -18,12 +18,15 @@ ul#userSettings .subgroup > span {
     font-size: larger;
     font-weight: bold;
     }
+#advanced-user-enabled ~ a.fa {
+    display: none;
+    }
+body.advancedUser #advanced-user-enabled ~ a.fa {
+    display: inline;
+    }
 #localData > ul > li {
     margin-top: 1em;
     }
 #localData > ul > li > ul > li:nth-of-type(2) {
     font-family: monospace;
-    }
-#experimental-enabled {
-    margin-top: 1em;
     }

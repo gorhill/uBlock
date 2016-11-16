@@ -15,7 +15,10 @@
 body {
     background-color: white;
     color: black;
-    font: 14px/1.3 sans-serif;
+    font: 14px sans-serif;
+    }
+textarea {
+    font-size: 90%;
     }
 /* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
 button.custom {

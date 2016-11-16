@@ -39,6 +39,10 @@
     "message":"Относно",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"Разширени настройки",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"Щракване: изключва\/включва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -205,14 +209,18 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Аз съм опитен потребител (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Допълнително четиво<\/a>)",
-    "description":"English: "
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"разширени настройки",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Изключване на предварителното извличане (за избягване на всяка връзка за блокираните мрежови заявки)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Изключване на проверката за препратки\/предупреждения",
+    "message":"Изключване на проверката за препратки",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -417,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Списък на вашите адреси, за които uBlock₀ ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Внасяне от файл...",
@@ -545,7 +553,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Изнасяне във файл",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"моето-ublock-резервно-копие_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"Име на това устройство:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Внимание! Промяната на тези разширени настройки е на ваш риск.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Изпращане",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Прилагане на промените",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Връщане",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"байта",
