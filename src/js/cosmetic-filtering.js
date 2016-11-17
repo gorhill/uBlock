@@ -1433,8 +1433,7 @@ FilterContainer.prototype._fillupUserScript = function(content, args) {
     while ( args !== '' ) {
         pos = args.indexOf(',');
         if ( pos === -1 ) { pos = args.length; }
-        arg = args.slice(0, pos).trim();
-        if ( this._reUserScriptBadArg.test(arg) ) { return; }
+        arg = args.slice(0, pos).trim().replace(this._reEscapeScriptArg, '\\$&');
         content = content.replace('{{' + i + '}}', arg);
         args = args.slice(pos + 1).trim();
         i++;
@@ -1442,7 +1441,7 @@ FilterContainer.prototype._fillupUserScript = function(content, args) {
     return content;
 };
 
-FilterContainer.prototype._reUserScriptBadArg = /[^\w\.]/;
+FilterContainer.prototype._reEscapeScriptArg = /[\\'"]/g;
 
 /******************************************************************************/
 
