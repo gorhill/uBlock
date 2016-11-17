@@ -11,7 +11,7 @@
     automatedMode = 0; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     notifications = [],
     allowedExceptions = [],
