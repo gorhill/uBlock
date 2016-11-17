@@ -169,7 +169,7 @@
 
       if (ad) {
 
-        if (!vAPI.prefs.production) console.log('[PARSED] IMG-AD', ad);
+        if (vAPI.prefs.logEvents) console.log('[PARSED] IMG-AD', ad);
         notifyAddon(ad);
         return true;
 

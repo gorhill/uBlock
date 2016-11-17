@@ -8,7 +8,7 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 'selenium'; // automated testing ['selenium' or 'sessbench']
+    automatedMode = 0; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
     production = 0,
@@ -47,7 +47,7 @@
     'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist'
   ];
 
-  // targets on these domains are never internal (may need to be regexs)
+  // targets on these domains are never internal (may need to be regex)
   var internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
     'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
     'yahoo.com','facebook.com'
@@ -698,12 +698,14 @@
   }
 
   var log = function () {
-    !production && console.log.apply(console, arguments);
+    if (µb.userSettings.eventLogging || !production)
+      console.log.apply(console, arguments);
     return true;
   }
 
   var warn = function () {
-    !production && console.warn.apply(console, arguments);
+    if (µb.userSettings.eventLogging || !production)
+      console.warn.apply(console, arguments);
     return false;
   }
 
@@ -1091,7 +1093,7 @@
 
     // preferences relevant to our ui/content-scripts
     var r = {
-      production: production,
+      //production: production, // not needed
       hidingDisabled: !µb.userSettings.hidingAds,
       textAdsDisabled: !µb.userSettings.parseTextAds,
       logEvents: µb.userSettings.eventLogging

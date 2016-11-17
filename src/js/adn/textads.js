@@ -176,8 +176,8 @@
       return [ad];
     }
 
-    var ddgText = function (div) { 
-      
+    var ddgText = function (div) {
+
 
       var ad, title = $find(div, 'h2.result__title > a.result__a'),
         text = $find(div, 'div.result__snippet > a'),
@@ -234,7 +234,7 @@
        var ads = [],
         divs = $find(div, 'ul > li');
 
-        
+
 
       for (var i = 0; i < divs.length; i++) {
 
@@ -246,7 +246,7 @@
           text = [subs[0]];
           site = $find(subs[1], 'a');
           }
-          
+
         if (text.length && site.length && title.length) {
 
           var ad = vAPI.adParser.createAd('Ads by google', $attr(title, 'href'), {
@@ -377,7 +377,7 @@
         // if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
         return matched;
       });
-      
+
       for (var i = 0; i < active.length; i++) {
         if ($is(elem, active[i].selector)) {
           return active[i].handler(elem);
@@ -398,7 +398,7 @@
 
           for (var i = 0; i < ads.length; i++) {
             if (typeof ads[i] !== 'undefined') {
-              if (!vAPI.prefs.production) console.log("[PARSED] TEXT-AD", ads[i]);
+              if (vAPI.prefs.logEvents) console.log("[PARSED] TEXT-AD", ads[i]);
                 vAPI.adParser.notifyAddon(ads[i]);
             }
           }
