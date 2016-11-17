@@ -232,7 +232,7 @@
 	},
 	"pgl.yoyo.org/as/serverlist": {
 		"title": "Peter Lowe’s Ad server list",
-		"group": "ads",
+		"group": "multipurpose",
 		"homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
 		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
