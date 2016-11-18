@@ -11,7 +11,7 @@
     automatedMode = 0; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     notifications = [],
     allowedExceptions = [],
@@ -201,7 +201,7 @@
     var next, pending = pendingAds(),
       settings = µb.userSettings;
 
-    if (pending.length && settings.clickingAds && !automatedMode) { // no visits if automated
+    if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
 
       // if an unvisited ad is being inspected, visit it next
       if (visitPending(inspected)) {
@@ -1145,7 +1145,7 @@
       verifyLists(µBlock.remoteBlacklists);
     });
 
-    if (firstRun && !automatedMode) {
+    if (firstRun && !isAutomated()) {
 
       vAPI.tabs.open({
         url: 'firstrun.html',
@@ -1156,6 +1156,10 @@
       vAPI.localStorage.setItem('collapseGroup5', 'y');
     }
   };
+
+  var isAutomated = function () {
+    return (automatedMode && automatedMode.length);
+  }
 
   var logNetAllow = exports.logNetAllow = function () {
 
