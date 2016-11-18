@@ -3,6 +3,14 @@
     "message":"AdNauseam – Info",
     "description":"English: Firstrun.html page title"
   },
+  "aboutSupport":{
+    "message":"Unterstützung",
+    "description":"English: links.html Support"
+  },
+  "aboutBuiltOn":{
+    "message":"Gebaut mit",
+    "description":"English: links.html Built on"
+  },
   "adnFirstRunPlease":{
     "message":"Bitte:",
     "description":"English: Firstrun.html -> Please:"
@@ -195,6 +203,18 @@
     "message":"1. Januar 1970 0:00 Uhr",
     "description":"appears on vault page"
   },
+  "adnVaultExpor":{
+    "message":"Exportiere",
+    "description":"appears on vault page"
+  },
+  "adnVaultImport":{
+    "message":"Importiere",
+    "description":"appears on vault page"
+  },
+  "adnVaultClear":{
+    "message":"Lösche",
+    "description":"appears on vault page"
+  },
   "adnVaultAdsClicked":{
     "message":"Werbungen geklickt",
     "description":"appears on vault page"
@@ -234,6 +254,14 @@
   "settingsIconBadgePrompt":{
     "message":"Werbungszähler auf Icon anzeigen",
     "description":"English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt":{
+    "message":"Mehr Privatsphäre",
+    "description":"English: Interface"
+  },
+  "settingsInterfacePrompt":{
+    "message":"Benuzeroberfläche",
+    "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
     "message":"Von Klicks zurückkommende Cookies ignorieren",
