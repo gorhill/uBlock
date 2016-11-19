@@ -121,7 +121,7 @@
     case 1:
         button.attr("data-i18n", "adnFirstRunThatsIt");
         button.removeClass("toggled0");
-        
+
         button.removeClass("toggled2");
         button.addClass("large");
         button.addClass("toggled1");
@@ -143,7 +143,7 @@
     vAPI.i18n.render();
 
   }
-  
+
   /******************************************************************************/
 
   // TODO: use data-* to declare simple settings
@@ -177,7 +177,7 @@
       uNode.val(details[uNode.attr('data-setting-name')])
         .on('change', onInputChanged);
     });
-    
+
     uDom(document).on('click', '#To3pfilter', function() {
         openPage('/dashboard.html#3p-filters.html');
     });
@@ -193,6 +193,8 @@
       }
     });
 
+    uDom('#app-version').text(details.appVersion);
+
     toggleDNTException();
   };
   /******************************************************************************/
@@ -202,20 +204,17 @@
       what: 'userSettings'
     }, onUserSettingsReceived);
 
-    messager.send(
-        'adnauseam', {
-            what: 'verifyAdBlockers'
-        },
+    messager.send('adnauseam', {
+      what: 'verifyAdBlockers' },
         function() {
-            vAPI.messaging.send(
-                'adnauseam', {
-                    what: 'getNotifications'
-                },
-                function(n) {
-                    renderNotifications(n, true);
-                });
+          vAPI.messaging.send(
+              'adnauseam', {
+                  what: 'getNotifications'
+              },
+              function(n) {
+                  renderNotifications(n, true);
+              });
         });
-
   });
 
   /******************************************************************************/
