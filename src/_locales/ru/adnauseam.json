@@ -3,6 +3,14 @@
     "message":"AdNauseam — о дополнении",
     "description":"English: Firstrun.html page title"
   },
+  "aboutSupport":{
+    "message":"Support",
+    "description":"English: links.html Support"
+  },
+  "aboutBuiltOn":{
+    "message":"Built on",
+    "description":"English: links.html Built on"
+  },
   "adnFirstRunPlease":{
     "message":"Пожалуйста:",
     "description":"English: Firstrun.html -> Please:"
@@ -20,15 +28,15 @@
     "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide Ads in your selected <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
     "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register visits on Ads found via your <a href='\/dashboard.html#3p-filters.html'>filter lists<\/a>",
+    "message":"register visits on Ads found via your <span class='link' id='To3pfilter'>filter lists<\/span>",
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malware and non-visual trackers (<a href='\/dashboard.html#security'>customize<\/a>)",
+    "message":"optimize your settings to protect against malware and non-visual trackers (<span class='link' id='ToOptions'>customize<\/span>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
   "adnNotificationButtonReactivate":{
@@ -195,6 +203,18 @@
     "message":"1 января 1970 года 0:00",
     "description":"appears on vault page"
   },
+  "adnVaultExport":{
+    "message":"Export",
+    "description":"appears on vault page"
+  },
+  "adnVaultImport":{
+    "message":"Import",
+    "description":"appears on vault page"
+  },
+  "adnVaultClear":{
+    "message":"Clear",
+    "description":"appears on vault page"
+  },
   "adnVaultAdsClicked":{
     "message":"Рекламы кликнуто",
     "description":"appears on vault page"
@@ -234,6 +254,14 @@
   "settingsIconBadgePrompt":{
     "message":"Показывать количество рекламы на значке",
     "description":"English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt":{
+    "message":"Extra Privacy",
+    "description":"English: Interface"
+  },
+  "settingsInterfacePrompt":{
+    "message":"Interface",
+    "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
     "message":"Игнорировать куки, возвращаемые по кликам",

@@ -3,6 +3,14 @@
     "message":"AdNauseam — 關於",
     "description":"English: Firstrun.html page title"
   },
+  "aboutSupport":{
+    "message":"支援",
+    "description":"English: links.html Support"
+  },
+  "aboutBuiltOn":{
+    "message":"基於",
+    "description":"English: links.html Built on"
+  },
   "adnFirstRunPlease":{
     "message":"請:",
     "description":"English: Firstrun.html -> Please:"
@@ -20,15 +28,15 @@
     "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"隱藏由你的<a href='\/dashboard.html#3p-filters.html'>篩選器列表<\/a>標記的廣告",
+    "message":"隱藏由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
     "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"訪問由你的<a href='\/dashboard.html#3p-filters.html'>篩選器列表<\/a>標記的廣告",
+    "message":"訪問由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"優化設定以屏蔽惡意軟件和隱形的用戶追蹤 (<a href='\/dashboard.html#security'>更改<\/a>)",
+    "message":"優化設定以屏蔽惡意軟件和隱形的用戶追蹤 (<span class='link' id='ToOptions'>更改<\/span>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
   "adnNotificationButtonReactivate":{
@@ -164,11 +172,11 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer":{
-    "message":"關閉對外來源",
+    "message":"禁止發送參照位址",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAds":{
-    "message":"與瀏覽器記錄清除廣告",
+    "message":"清除廣告與瀏覽器記錄",
     "description":"appears in ADN popup menu"
   },
   "adnMenuHideBadge":{
@@ -193,6 +201,18 @@
   },
   "adnVaultDefaultDate":{
     "message":"1970 年 1 月 1 日 0:00",
+    "description":"appears on vault page"
+  },
+  "adnVaultExport":{
+    "message":"導出",
+    "description":"appears on vault page"
+  },
+  "adnVaultImport":{
+    "message":"導入",
+    "description":"appears on vault page"
+  },
+  "adnVaultClear":{
+    "message":"清空",
     "description":"appears on vault page"
   },
   "adnVaultAdsClicked":{
@@ -234,6 +254,14 @@
   "settingsIconBadgePrompt":{
     "message":"在圖標上顯示已找到的廣告數目",
     "description":"English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt":{
+    "message":"其它隱私選項",
+    "description":"English: Interface"
+  },
+  "settingsInterfacePrompt":{
+    "message":"用戶介面",
+    "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
     "message":"忽略由點擊廣告產生的 cookie",
