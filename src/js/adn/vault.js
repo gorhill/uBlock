@@ -893,6 +893,7 @@
       centerZoom(false);
 
       $('#container').removeClass('lightbox');
+      createSlider(true);
     }
   }
 
@@ -1158,21 +1159,20 @@
     });
 
     $(window).resize(function () {
+
         adjustHeight();
         if ($('#container').hasClass('lightbox')) {
-            // centerZoom($selected);
-            console.log($('.inspected')[0]);
-            var inspected = $('.inspected')[0];
-            centerZoom(inspected);
-        // lightboxMode(false);
-        return;
+            centerZoom($('.inspected')[0]);
+            return;
         }
 
-      clearTimeout(resizeId); // only when done
-      resizeId = setTimeout(function () {
-        createSlider(true);
-      }, 100);
-      
+        clearTimeout(resizeId); // only when done
+        resizeId = setTimeout(function () {
+          createSlider(true);
+        }, 100);
+
+
+
     });
 
     if (EnableContextMenu) {
