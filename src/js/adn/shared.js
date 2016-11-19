@@ -204,17 +204,21 @@ function reactivateList() {
     }, reloadPane);
 }
 
-function openExtPage() {
-  vAPI.messaging.send(
+function openPage(url){
+    vAPI.messaging.send(
     'default', {
       what: 'gotoURL',
       details: {
-        url: vAPI.extensionsPage,
+        url: url,
         select: true,
         index: -1
       }
     }
   );
+}
+
+function openExtPage() {
+  openPage(vAPI.extensionsPage);
 }
 
 function reloadPane() {

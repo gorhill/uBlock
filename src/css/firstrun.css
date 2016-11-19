@@ -28,6 +28,12 @@ form a {
   color: inherit;
   text-decoration: underline;
 }
+.link{
+  text-decoration: underline;
+}
+.link:hover{
+ color: #3B96FF;
+}
 .toggled0{
     display:none;
 }
