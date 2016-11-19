@@ -1158,12 +1158,21 @@
     });
 
     $(window).resize(function () {
+        adjustHeight();
+        if ($('#container').hasClass('lightbox')) {
+            // centerZoom($selected);
+            console.log($('.inspected')[0]);
+            var inspected = $('.inspected')[0];
+            centerZoom(inspected);
+        // lightboxMode(false);
+        return;
+        }
 
       clearTimeout(resizeId); // only when done
       resizeId = setTimeout(function () {
         createSlider(true);
       }, 100);
-      adjustHeight();
+      
     });
 
     if (EnableContextMenu) {
