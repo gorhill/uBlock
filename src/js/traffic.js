@@ -44,11 +44,6 @@
 
   var onBeforeRequest = function (details) {
 
-    // ADN: return here if prefs say not to block
-    if (µBlock.userSettings.blockingMalware === false) {
-        return;
-    }
-
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -56,6 +51,11 @@
     var requestType = details.type;
     if (requestType === 'main_frame') {
       return onBeforeRootFrameRequest(details);
+    }
+
+    // ADN: return here (AFTER onPageLoad) if prefs say not to block
+    if (µBlock.userSettings.blockingMalware === false) {
+        return;
     }
 
     // https://github.com/gorhill/uBlock/issues/870
@@ -245,6 +245,11 @@
 
       // ADN: Tell the core we have a new page
       µb.adnauseam.onPageLoad(tabId, requestURL);
+
+      // ADN: return here if prefs say not to block
+      if (µBlock.userSettings.blockingMalware === false) {
+          return;
+      }
 
       // Log
       var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
