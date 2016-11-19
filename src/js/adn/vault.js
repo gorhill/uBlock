@@ -893,6 +893,7 @@
       centerZoom(false);
 
       $('#container').removeClass('lightbox');
+      createSlider(true);
     }
   }
 
@@ -1159,11 +1160,19 @@
 
     $(window).resize(function () {
 
-      clearTimeout(resizeId); // only when done
-      resizeId = setTimeout(function () {
-        createSlider(true);
-      }, 100);
-      adjustHeight();
+        adjustHeight();
+        if ($('#container').hasClass('lightbox')) {
+            centerZoom($('.inspected')[0]);
+            return;
+        }
+
+        clearTimeout(resizeId); // only when done
+        resizeId = setTimeout(function () {
+          createSlider(true);
+        }, 100);
+
+
+
     });
 
     if (EnableContextMenu) {
