@@ -777,7 +777,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         // It is a popup, block and remove the tab.
         if ( popupType === 'popup' ) {
             µb.unbindTabFromPageStats(targetTabId);
-            vAPI.tabs.remove(targetTabId, true);
+            vAPI.tabs.remove(targetTabId, false);
         } else {
             µb.unbindTabFromPageStats(openerTabId);
             vAPI.tabs.remove(openerTabId, true);
