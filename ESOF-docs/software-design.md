@@ -71,3 +71,11 @@ Em ambas as ocasiões, o programa pesquisa pela área da página selecionada e f
 
 No caso de registo de pedidos é possível inspecionar os pedidos de rede, quer sejam bloqueados ou permitidos.
 O programa gere por ordem de chegada e mostra, individualmente, cada acontecimento com que a extensão tenha interagido. É possível verificar, em cada linha, o filtro que executou a ação, o elemento filtrado ou permitido e o *URL* correspondente.
+
+
+***
+## Grupo e Contribuição
+
+* Bernardo Belchior - up201405381 - 33,33%
+* Edgar Passos - up201404131 - 33,33%
+* José Pedro Monteiro - up201406458 - 33,33%
