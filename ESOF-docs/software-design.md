@@ -19,7 +19,6 @@ O *uBlock Origin* apresenta-se com os seguintes pacotes, de modo a organizar o c
 
 ![Diagrama da Vista Lógica](logical-view.png)
 
-
 O programa baseia-se no *redirect engine*, que é o motor que decide que conteúdos serão ou não apresentados. Para isto, é necessário um mecanismo de filtragem de *scripts* considerados malignos ou indesejados.
 
 Este mecanismo precisa de saber que *URLs* bloquear. Como tal, são necessárias regras que, dependendo se estão ou não na *whitelist* ou *blacklist*, permitirão ou bloquearão a transferências de conteúdo de *websites*. De modo a criar uma aplicação personalizável, além das regras estáticas, existem as regras dinâmicas, que permitem bloquear certos *downloads* indesejados, com base nas condições fornecidas pelo utilizador.
@@ -49,4 +48,26 @@ Também é usado para o processo inverso, quando se pode mostrar um elemento pre
 
 ## Vista de Distribuição
 
+Abaixo está apresentado o diagrama da vista de distribuição.
+![Diagrama da Vista de Distribuição](deployment.png)
+
+A partir desta imagem, é possível perceber que a extensão é obtida através da *Chrome Web Store* ou da loja de Extras do *Firefox*. O programa corre unicamente no sistema do utilizador, não tendo qualquer outra ligação externa.
+
+
 ## Vista de Processo
+Para serem mais percetíveis as interações entre processos do sistema, de acordo com as ações que são pedidas/realizadas, foi criado o seguinte diagrama da vista de processo.
+
+![Diagrama da Vista de Processo](process-view.png)
+
+O início do programa é a interface deste e, partir deste estado podem ser tomadas três decisões distintas.
+
+Na situação do painel de controlo, existem várias atividades possíveis de se realizar, desde aceder às definições, até à gestão de filtros e *whitelist*.
+Na situação das definições, o programa guarda as alterações que o utilizador deseja e, de seguida, despoleta uma sincronização do DOM (*Document Object Model*), forçando uma atualização da página.
+Quando existe uma alteração na lista de filtros, o programa espera pela confirmação do utilizador. Quando as mudanças forem validadas, a extensão atualiza a lista de *URLs* a bloquear.
+Relativamente à *whitelist* (lista de servidores para os quais o *uBlock* será desativado), quando lhe é adicionado um *URL* novo e as alterações confirmadas, a aplicação atualiza a sua lista de permissões internamente.  
+
+A atividade de seleção de elementos permite ao utilizador criar filtros baseados em *tags HTML* (cosméticos) ou focados em *URLs*(de rede).
+Em ambas as ocasiões, o programa pesquisa pela área da página selecionada e fá-la sobressair. Simultaneamente, é aberta uma caixa no canto inferior direito que permite selecionar que tipo de filtros serão adicionados ao já existentes.
+
+No caso de registo de pedidos é possível inspecionar os pedidos de rede, quer sejam bloqueados ou permitidos.
+O programa gere por ordem de chegada e mostra, individualmente, cada acontecimento com que a extensão tenha interagido. É possível verificar, em cada linha, o filtro que executou a ação, o elemento filtrado ou permitido e o *URL* correspondente.
