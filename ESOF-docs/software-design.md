@@ -30,6 +30,23 @@ A interface do programa é representada pelo pacote *dashboard* que é o código
 
 ## Vista de Desenvolvimento
 
+Na vista de desenvolvimento estão representados os diversos componentes do programa e as suas relações e interdependências.
+As extensões de browser têm o seu funcionamento condensado no *content script*, no caso do *uBlock Origin*, este descreve o seguinte comportamento:
+
+![Diagrama da Vista de Desenvolvimento](development-view.png)
+
+Ao ser executado numa página web, o programa vai dividir as suas responsabilidades por diferentes componentes que analisam e atuam sobre o *DOM* da página.
+* **DOM Watcher**:
+Responsável por percorrer o DOM e notificar os outros componentes se ocorrer alguma alteração, detetada através de *listeners* (verificam, por exemplo, se o número de *nodes* foi modificado).
+* **DOM Surveyor**:
+Procura elementos cosméticos da página, agregando uma lista de *nodes* a remover que são passados ao *DOM Filterer*.
+* **DOM Filterer**:
+Acede aos elementos que se deve filtrar e modifica as suas propriedades *CSS* de forma a esconder o elemento da página.
+Também é usado para o processo inverso, quando se pode mostrar um elemento previamente escondido.
+* **DOM Collapser**: Responsável pela filtragem dos elementos escondidos ao nível do bloqueamento dos pedidos de rede.
+* **vAPI**: API usada para injeção de *HTML* nas páginas de forma a bloquear ou esconder elementos. Também é usada para comunicar entre componentes, por meio de mensagens que têm *handlers* definidos em cada componente.
+
+
 ## Vista de Distribuição
 
 ## Vista de Processo
