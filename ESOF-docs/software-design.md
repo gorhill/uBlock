@@ -39,6 +39,7 @@ A partir desta imagem, é possível perceber que a extensão é obtida através 
 
 ## Vista de Processo
 Para serem mais percetíveis as interações entre processos do sistema, de acordo com as ações que são pedidas/realizadas, foi criado o seguinte diagrama da vista de processo.
+
 ![Diagrama da Vista de Processo](process-view.png)
 
 O início do programa é a interface deste e, partir deste estado podem ser tomadas três decisões distintas.
