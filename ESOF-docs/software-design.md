@@ -19,7 +19,6 @@ O *uBlock Origin* apresenta-se com os seguintes pacotes, de modo a organizar o c
 
 ![Diagrama da Vista Lógica](logical-view.png)
 
-
 O programa baseia-se no *redirect engine*, que é o motor que decide que conteúdos serão ou não apresentados. Para isto, é necessário um mecanismo de filtragem de *scripts* considerados malignos ou indesejados.
 
 Este mecanismo precisa de saber que *URLs* bloquear. Como tal, são necessárias regras que, dependendo se estão ou não na *whitelist* ou *blacklist*, permitirão ou bloquearão a transferências de conteúdo de *websites*. De modo a criar uma aplicação personalizável, além das regras estáticas, existem as regras dinâmicas, que permitem bloquear certos *downloads* indesejados, com base nas condições fornecidas pelo utilizador.
@@ -32,9 +31,16 @@ A interface do programa é representada pelo pacote *dashboard* que é o código
 
 ## Vista de Distribuição
 
+Abaixo está apresentado o diagrama da vista de distribuição.
+![Diagrama da Vista de Distribuição](deployment.png)
+
+A partir desta imagem, é possível perceber que a extensão é obtida através da *Chrome Web Store* ou da loja de Extras do *Firefox*. O programa corre unicamente no sistema do utilizador, não tendo qualquer outra ligação externa.
+
+
 ## Vista de Processo
 Para percebermos melhor as interações dos processos do sistema de acordo com as ações que são pedidas/realizadas, foi criado um diagrama de forma a percebermos melhor a esta interação.
 ![Diagrama da Vista Lógica](process-view.png)
+
 Como podemos verificar pelo diagrama, inicialmente, encontrando-se na interface do *uBlock* pode-se tomar três decisões diferentes.
 
 Na situação do painel de controlo, existem várias atividades possíveis de se realizar, desde as definições,à gestão de filtros e à lista branca. Na situação das definições, o programa guarda as alterações que o utilizador está a indicar, e à recebida do *input* para a realização das alterações este atualiza as definições fazendo de seguida uma nova sincronização do DOM (*Document Object Model*) quando é realizado o *load* da página, sendo que este è feito de seguida ao *input* para as alterações. Quando è realizado a adição ou remoção de um filtro, o programa ou adiciona, fazendo a leitura do ficheiro com os filtros novos e aplica as alterações ou revertendo as alterações no caso de remoção de filtros. Relativamente à lista branca (local onde são indicados os servidores para os quais o uBlock será desativado), quando é dado o *input* para a adição, è retirado em *string* os servidores indicados e aplicadas as alterações.
