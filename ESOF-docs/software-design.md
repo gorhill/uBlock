@@ -6,6 +6,7 @@
 1. [Vista de Desenvolvimento](#desenvolvimento)
 1. [Vista de Distribuição](#deployment)
 1. [Vista de Processo](#processo)
+1. [Grupo e Contribuição](#grupo)
 
 ## Introdução à Arquitetura de Software e ao Modelo de Arquitetura 4 + 1
 
