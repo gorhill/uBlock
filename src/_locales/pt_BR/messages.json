@@ -208,7 +208,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "message":"Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Sua lista de exceções de servidores para qual o uBlock₀ será desativado. Uma entrada por linha. Servidores inválidos serão silenciosamente ignorados.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importar e adicionar",

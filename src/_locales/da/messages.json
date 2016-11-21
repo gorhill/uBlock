@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Avancerede indstillinger",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -212,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"avancerede indstillinger",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Brugerdefineret liste over værtsnavne hvor uBlock₀ vil være deaktiveret. Kun et værtsnavn pr. linje. Ugyldige værtsnavne ignoreres.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importer og tilføj",
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"Advarsel! Ændr disse avancerede indstillinger på eget ansvar.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Anvend ændringer",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

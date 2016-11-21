@@ -521,40 +521,29 @@ var processCSP = function(details, pageStore, context) {
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1163
-// "Block elements by size"
+//   "Block elements by size"
 
 var foilLargeMediaElement = function(details) {
     var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null ) {
-        return;
-    }
-    if ( pageStore.getNetFilteringSwitch() !== true ) {
-        return;
-    }
-    if ( Date.now() < pageStore.allowLargeMediaElementsUntil ) {
-        return;
-    }
-    if ( µb.hnSwitches.evaluateZ('no-large-media', pageStore.tabHostname) !== true ) {
-        return;
-    }
+
     var i = headerIndexFromName('content-length', details.responseHeaders);
-    if ( i === -1 ) {
-        return;
-    }
-    var contentLength = parseInt(details.responseHeaders[i].value, 10) || 0;
-    if ( (contentLength >>> 10) < µb.userSettings.largeMediaSize ) {
+    if ( i === -1 ) { return; }
+
+    var tabId = details.tabId,
+        pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
         return;
     }
 
-    pageStore.logLargeMedia();
+    var size = parseInt(details.responseHeaders[i].value, 10) || 0,
+        result = pageStore.filterLargeMediaElement(size);
+    if ( result === undefined ) { return; }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            µb.hnSwitches.toResultString(),
+            result,
             details.type,
             details.url,
             pageStore.tabHostname,

@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Din liste over vertsnavn hvor uBlock₀ blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importer og legg til",

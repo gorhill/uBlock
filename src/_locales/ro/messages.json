@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Setări avansate",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -212,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"setări avansate",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -424,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista ta de nume de gazde unde uBlock₀ va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importă și adaugă",
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"Avertisment: schimbă aceste setări avansate pe propriul risc.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Aplică modificările",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

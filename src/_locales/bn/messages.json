@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"উন্নত সেটিংস",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -212,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"উন্নত সেটিংস",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"আপনার হোস্টের তালিকা যাদের জন্য uBlock₀ নিষ্ক্রিয় করা হবে। লাইন প্রতি একটি ভুক্তি। অবৈধ হোস্ট নাম নিশব্দে উপেক্ষা করা হবে।",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"আমদানি ও পরিশেষে যোগ করুন",
@@ -540,7 +540,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"সমর্থন",
     "description":"A link for where to get support"
   },
   "aboutCode":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"সতর্কবাণী! আপনার নিজ ঝুঁকিতে এই উন্নত সেটিংগুলি পরিবর্তন করুন।",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"পরিবর্তনগুলি প্রয়োগ",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"لیست شما از هاست هایی که uBlock₀ در آنها غیرفعال خواهد شد. یک ورودی در هر خط. هاست های نامعتبر بدون اشاره ای نادیده گرفته می شوند.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"وارد کردن و الحاق",

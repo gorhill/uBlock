@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"Lista de nombres de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores no válidos.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Importar y anexar",

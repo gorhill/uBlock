@@ -95,6 +95,7 @@ body[dir="rtl"] #panes > div {
     direction: rtl;
     }
 #panes > div:nth-of-type(2) {
+    font-family: "Noto Sans", sans-serif;
     overflow-y: auto;
     overflow-x: hidden;
     width: 24em;
@@ -152,7 +153,7 @@ body.off #switch .fa {
 .statName {
     color: #888;
     font-size: 85%;
-    margin: 0.8em 0.2em 0.1em 0.2em;
+    margin: 0.8em 0.2em 0.4em 0.2em;
     text-align: center;
     }
 .statValue {
@@ -348,10 +349,7 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span[data-acount]:before,
 #firewallContainer > div > span[data-bcount]:after {
-    font-family: "Noto Mono",monospace;
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
     }
 #firewallContainer > div > span[data-acount]:before {
     left: 0.1em;

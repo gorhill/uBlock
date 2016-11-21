@@ -425,7 +425,7 @@
   },
   "whitelistPrompt":{
     "message":"목록에 있는 호스트들은 uBlock₀에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"가져오기 및 추가하기",

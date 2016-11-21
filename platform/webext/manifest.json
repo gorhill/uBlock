@@ -7,8 +7,7 @@
     "applications": {
         "gecko": {
             "id": "uBlock0@raymondhill.net",
-            "strict_min_version": "51.0",
-            "strict_max_version": "52.*"
+            "strict_min_version": "52.0a1"
         }
     },
 
@@ -20,6 +19,7 @@
     },
 
     "browser_action": {
+        "browser_style": false,
         "default_icon": {
             "19": "img/browsericons/icon19.png",
             "38": "img/browsericons/icon38.png"
@@ -47,8 +47,6 @@
         }
     ],
     "minimum_chrome_version": "26.0",
-    "optional_permissions": [ "file:///*" ],
-    "options_page": "dashboard.html",
     "options_ui": {
         "page": "options_ui.html"
     },
@@ -56,15 +54,11 @@
         "contextMenus",
         "storage",
         "tabs",
-        "unlimitedStorage",
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock₀",
-    "storage": {
-        "managed_schema": "managed_storage.json"
-    }
+    "short_name": "uBlock₀"
 }
