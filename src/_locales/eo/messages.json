@@ -540,7 +540,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Helpo",
     "description":"A link for where to get support"
   },
   "aboutCode":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Apliki ŝanĝojn",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

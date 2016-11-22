@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"اعمال تغییرات",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

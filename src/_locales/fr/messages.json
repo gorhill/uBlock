@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Aller au sélecteur d'élément",
+    "message":"Activer le sélecteur d'élément",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -212,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"paramètres avancés",
+    "message":"Paramètres avancés",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Renseignez ici votre liste d'hôtes à autoriser. Un nom d'hôte par ligne. Les noms d'hôte invalides seront ignorés et vous n'en serez pas averti(e).",
+    "message":"La liste blanche indique à uBlock Origin sur quels sites Web il ne doit pas opérer de filtrage. Renseignez une exception par ligne. Toute entrée invalide sera ignorée et vous n'en serez pas averti(e).",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
