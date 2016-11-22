@@ -11,7 +11,7 @@
     automatedMode = 0; // automated testing ['selenium' or 'sessbench']
 
   var µb = µBlock,
-    production = 1,
+    production = 0,
     lastActivity = 0,
     notifications = [],
     allowedExceptions = [],
@@ -1582,7 +1582,22 @@
       'filename': filename
     });
 
+    if (request.includeImages) saveVaultImages();
+
     log('[EXPORT] ' + count + ' ads to ' + filename);
+  };
+
+  var saveVaultImages = function () {
+
+    var images = []; // extract image urls
+
+    adlist().forEach(function (ad) {
+      if (ad.contentType === 'img')
+        images.push(ad.contentData.src);
+    });
+
+    // download them to a folder next to the export file (with same name -json)
+    // handle #639 here
   };
 
   exports.adsForPage = function (request, pageStore, tabId) {
