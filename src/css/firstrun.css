@@ -39,6 +39,7 @@ form a {
 }
 .toggled1,.toggled2,.toggled3{
   color:white;
+  cursor: pointer;
 }
 .toggled1, .toggled1:hover:enabled{
   background: linear-gradient(left, #0076FF, #0076FF 35%, transparent 35%, transparent 100%) !important;
