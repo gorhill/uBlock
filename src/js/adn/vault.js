@@ -893,7 +893,7 @@
       centerZoom(false);
 
       $('#container').removeClass('lightbox');
-      createSlider(true);
+      createSlider(false);
     }
   }
 
