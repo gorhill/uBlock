@@ -956,7 +956,7 @@ vAPI.net.registerListeners = function() {
             // Still need this because often behind-the-scene requests are wrongly
             // categorized as 'other'
             var imageExtensions = /\.(?:ico|png|gif|jpg|jpeg|webp)$/;
-            if ( mediaExtensions.test(needle) ) {
+            if ( imageExtensions.test(needle) ) {
                 details.type = 'image';
                 return;
             }
