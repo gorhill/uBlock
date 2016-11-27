@@ -101,7 +101,7 @@ var handleImportFilePicker = function() {
     if ( file === undefined || file.name === '' ) {
         return;
     }
-    if ( file.type.indexOf('text') !== 0 ) {
+    if ( !file.type.startsWith("test") ) {
         return;
     }
     var fr = new FileReader();

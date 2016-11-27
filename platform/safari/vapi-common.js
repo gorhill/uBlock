@@ -34,9 +34,10 @@ var vAPI = self.vAPI = self.vAPI || {};
 // http://www.w3.org/International/questions/qa-scripts#directions
 
 var setScriptDirection = function(language) {
+    var rtlLanguages = /(?:ar|he|fa|ps|ur)/;
     document.body.setAttribute(
         'dir',
-        ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) !== -1 ? 'rtl' : 'ltr'
+        rtlLanguages.test(language) ? 'rtl' : 'ltr'
     );
 };
 

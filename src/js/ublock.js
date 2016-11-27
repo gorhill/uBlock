@@ -48,13 +48,13 @@ var isHandcraftedWhitelistDirective = function(directive) {
 
 var matchDirective = function(url, hostname, directive) {
     // Directive is a plain hostname.
-    if ( directive.indexOf('/') === -1 ) {
+    if ( !/\//.test(directive) ) {
         return hostname.endsWith(directive) &&
               (hostname.length === directive.length ||
                hostname.charAt(hostname.length - directive.length - 1) === '.');
     }
     // Match URL exactly.
-    if ( directive.startsWith('/') === false && directive.indexOf('*') === -1 ) {
+    if ( directive.startsWith('/') === false && !/\*/.test(directive) ) {
         return url === directive;
     }
     // Transpose into a regular expression.
@@ -219,7 +219,7 @@ var matchBucket = function(url, hostname, bucket, start) {
             directive = line;
         }
         // Plain hostname
-        else if ( line.indexOf('/') === -1 ) {
+        else if ( !/\//.test(line) ) {
             if ( reInvalidHostname.test(line) ) {
                 key = '#';
                 directive = '# ' + line;

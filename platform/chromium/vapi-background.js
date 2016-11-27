@@ -294,7 +294,7 @@ vAPI.tabs.registerListeners = function() {
         var pos = url.indexOf(',');
         if ( pos === -1 ) { return url; }
         var s = url.slice(0, pos);
-        if ( s.search(/\s/) === -1 ) { return url; }
+        if ( !/\s/.test(s) ) { return url; }
         return s.replace(/\s+/, '') + url.slice(pos);
     };
 
@@ -940,20 +940,23 @@ vAPI.net.registerListeners = function() {
         // If no transposition possible, transpose to `object` as per
         // Chromium bug 410382 (see below)
         if ( pos !== -1 ) {
-            var needle = path.slice(pos) + '.';
-            if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(needle) !== -1 ) {
+            var needle = path.slice(pos);
+            var fontExtensions = /\.(?:eot|ttf|otf|svg|woff|woff2)$/;
+            if ( fontExtensions.test(needle) ) {
                 details.type = 'font';
                 return;
             }
 
-            if ( '.mp3.mp4.webm.'.indexOf(needle) !== -1 ) {
+            var mediaExtensions = /\.(?:mp3|mp4|webm)$/;
+            if ( mediaExtensions.test(needle) ) {
                 details.type = 'media';
                 return;
             }
 
             // Still need this because often behind-the-scene requests are wrongly
             // categorized as 'other'
-            if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(needle) !== -1 ) {
+            var imageExtensions = /\.(?:ico|png|gif|jpg|jpeg|webp)$/;
+            if ( mediaExtensions.test(needle) ) {
                 details.type = 'image';
                 return;
             }

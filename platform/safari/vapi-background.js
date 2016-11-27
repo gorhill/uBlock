@@ -44,7 +44,7 @@
 
     /******************************************************************************/
 
-    if(navigator.userAgent.indexOf("Safari/6") === -1) { // If we're not on at least Safari 8
+    if ( !/Safari\/6/.test(navigator.userAgent) ) { // If we're not on at least Safari 8
         var _open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function(m, u) {
             if(u.lastIndexOf("safari-extension:", 0) === 0) {

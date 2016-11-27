@@ -606,7 +606,7 @@ DOMList.prototype.removeClass = function(className) {
 /******************************************************************************/
 
 DOMList.prototype.toggleClass = function(className, targetState) {
-    if ( className.indexOf(' ') !== -1 ) {
+    if ( / /.test(className) ) {
         return this.toggleClasses(className, targetState);
     }
     var i = this.nodes.length;

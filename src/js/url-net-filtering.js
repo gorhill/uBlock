@@ -396,7 +396,7 @@ URLNetFiltering.prototype.fromString = function(text) {
         }
 
         // Coarse test
-        if ( line.indexOf('://') === -1 ) {
+        if ( !/:\/\//.test(line) ) {
             continue;
         }
 
@@ -406,7 +406,7 @@ URLNetFiltering.prototype.fromString = function(text) {
         }
 
         // Finer test
-        if ( fields[1].indexOf('://') === -1 ) {
+        if ( !/:\/\//.test(fields[1]) ) {
             continue;
         }
 

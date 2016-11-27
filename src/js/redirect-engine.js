@@ -37,10 +37,10 @@ var RedirectEntry = function() {
 
 RedirectEntry.prototype.toURL = function() {
     if ( this.data.startsWith('data:') === false ) {
-        if ( this.mime.indexOf(';') === -1 ) {
-            this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
-        } else {
+        if ( /;/.test(this.mime) ) {
             this.data = 'data:' + this.mime + ',' + this.data;
+        } else {
+            this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
         }
     }
     return this.data;

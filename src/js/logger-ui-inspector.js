@@ -265,7 +265,7 @@ var selectorFromNode = function(node) {
             code = node.querySelector('code');
             if ( code !== null ) {
                 selector = code.textContent + ' > ' + selector;
-                if ( selector.indexOf('#') !== -1 ) {
+                if ( /#/.test(selector) ) {
                     break;
                 }
             }
