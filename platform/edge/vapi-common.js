@@ -53,13 +53,15 @@ vAPI.download = function(details) {
         return;
     }
 
-    var contentMatches = details.url.match('data:([^;,]+).*,(.*)$');
+    const contentMatches = details.url.match('data:([^;,]+).*,(.*)$');
     if(contentMatches && contentMatches.length === 3) {
-        var contentType = contentMatches && contentMatches[1] || 'text/plain';
-        var content = decodeURIComponent(contentMatches[2]);
-        var blob = new Blob([content], {type: contentType});
-        // Currently not working; Edge doesn't allow downloads from background
-        // pages
+        const contentType = contentMatches && contentMatches[1] || 'text/plain';
+        let content = decodeURIComponent(contentMatches[2]);
+        if ( contentType === 'text/plain' ) {
+            content = content.replace(/\r?\n/g, '\r\n');
+        }
+        const blob = new Blob([content], {type: contentType});
+        // Currently not working from background pages
         window.navigator.msSaveBlob(blob, details.filename);
     }
 };
