@@ -37,6 +37,12 @@
             "js": ["js/scriptlets/subscriber.js"],
             "run_at": "document_idle",
             "all_frames": false
+        },
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["js/window-onload-workaround.js"],
+            "run_at": "document_start",
+            "all_frames": false
         }
     ],
     "incognito": "split",
