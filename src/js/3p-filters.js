@@ -84,11 +84,10 @@ var renderFilterLists = function() {
             return userListName;
         }
         var list = listDetails.current[listKey] || listDetails.available[listKey];
-        var listTitle = list ? list.title : '';
-        if ( listTitle === '' ) {
-            return listKey;
+        if ( list ) {
+            return list.title;
         }
-        return listTitle;
+        return '';
     };
 
     var liFromListEntry = function(listKey) {
@@ -319,7 +318,7 @@ var listsSelectionChanged = function() {
     var availableLists = listDetails.available;
     var currentLists = listDetails.current;
     var location, availableOff, currentOff;
-    
+
     // This check existing entries
     for ( location in availableLists ) {
         if ( availableLists.hasOwnProperty(location) === false ) {
@@ -642,4 +641,3 @@ renderExternalLists();
 /******************************************************************************/
 
 })();
-
