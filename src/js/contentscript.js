@@ -137,7 +137,7 @@ var jobQueue = [
     { t: 'css-csel',  _0: [] }  // to manually hide (not incremental)
 ];
 
-var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
+var reParserEx = /:(?:has|matches-css|matches-css-before|matches-css-after|style|xpath)\(.+?\)$/;
 
 var allExceptions = createSet(),
     allSelectors = createSet(),
@@ -201,48 +201,45 @@ var runHasJob = function(job, fn) {
     }
 };
 
-var csspropDictFromString = function(s) {
-    var aa = s.split(/;\s+|;$/),
-        i = aa.length,
-        dict = Object.create(null),
-        prop, pos;
-    while ( i-- ) {
-        prop = aa[i].trim();
-        if ( prop === '' ) { continue; }
-        pos = prop.indexOf(':');
-        if ( pos === -1 ) { continue; }
-        dict[prop.slice(0, pos).trim()] = prop.slice(pos + 1).trim();
+// '/' = ascii 0x2F */
+
+var parseMatchesCSSJob = function(raw) {
+    var prop = raw.trim();
+    if ( prop === '' ) { return null; }
+    var pos = prop.indexOf(':'),
+        v = pos !== -1 ? prop.slice(pos + 1).trim() : '',
+        vlen = v.length;
+    if (
+        vlen > 1 &&
+        v.charCodeAt(0) === 0x2F &&
+        v.charCodeAt(vlen-1) === 0x2F
+    ) {
+        try { v = new RegExp(v.slice(1, -1)); } catch(ex) { return null; }
     }
-    return dict;
+    return { k: prop.slice(0, pos).trim(), v: v };
 };
 
 var runMatchesCSSJob = function(job, fn) {
-    if ( job._2 === undefined ) {
-        if ( job._0.indexOf(':after', job._0.length - 6) !== -1 ) {
-            job._0 = job._0.slice(0, -6);
-            job._2 = ':after';
-        } else {
-            job._2 = null;
-        }
-    }
     var nodes = document.querySelectorAll(job._0),
         i = nodes.length;
     if ( i === 0 ) { return; }
     if ( typeof job._1 === 'string' ) {
-        job._1 = csspropDictFromString(job._1);
+        job._1 = parseMatchesCSSJob(job._1);
     }
-    var node, match, style;
+    if ( job._1 === null ) { return; }
+    var k = job._1.k,
+        v = job._1.v,
+        node, style, match;
     while ( i-- ) {
         node = nodes[i];
         style = window.getComputedStyle(node, job._2);
-        match = undefined;
-        for ( var prop in job._1 ) {
-            match = style[prop] === job._1[prop];
-            if ( match === false ) {
-                break;
-            }
+        if ( style === null ) { continue; } /* FF */
+        if ( v instanceof RegExp ) {
+            match = v.test(style[k]);
+        } else {
+            match = style[k] === v;
         }
-        if ( match === true ) {
+        if ( match ) {
             fn(node, job);
         }
     }
@@ -332,7 +329,13 @@ var domFilterer = {
         if ( sel1.lastIndexOf(':has', 0) === 0 ) {
             this.jobQueue.push({ t: 'has-hide', raw: s, _0: sel0, _1: sel1.slice(5, -1) });
         } else if ( sel1.lastIndexOf(':matches-css', 0) === 0 ) {
-            this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(13, -1) });
+            if ( sel1.lastIndexOf(':matches-css-before', 0) === 0 ) {
+                this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(20, -1), _2: ':before' });
+            } else if ( sel1.lastIndexOf(':matches-css-after', 0) === 0 ) {
+                this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(19, -1), _2: ':after' });
+            } else {
+                this.jobQueue.push({ t: 'matches-css-hide', raw: s, _0: sel0, _1: sel1.slice(13, -1), _2: null });
+            }
         } else if ( sel1.lastIndexOf(':style', 0) === 0 ) {
             this.job1._0.push(sel0 + ' { ' + sel1.slice(7, -1) + ' }');
             this.job1._1 = undefined;
