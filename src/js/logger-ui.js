@@ -98,18 +98,6 @@ var staticFilterTypes = {
     'xhr': 'xmlhttprequest'
 };
 
-var timeOptions = {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-};
-
-var dateOptions = {
-    month: 'short',
-    day: '2-digit'
-};
-
 /******************************************************************************/
 
 var classNameFromTabId = function(tabId) {
@@ -434,6 +422,12 @@ var createHiddenTextNode = function(text) {
 
 /******************************************************************************/
 
+var padTo2 = function(v) {
+    return v < 10 ? '0' + v : v;
+};
+
+/******************************************************************************/
+
 var createGap = function(tabId, url) {
     var tr = createRow('1');
     tr.classList.add('tab');
@@ -547,8 +541,9 @@ var renderLogEntry = function(entry) {
 
     // Fields common to all rows.
     var time = new Date(entry.tstamp);
-    tr.cells[0].textContent = time.toLocaleTimeString('fullwide', timeOptions);
-    tr.cells[0].title = time.toLocaleDateString('fullwide', dateOptions);
+    tr.cells[0].textContent = padTo2(time.getHours()) + ':' +
+                              padTo2(time.getMinutes()) + ':' +
+                              padTo2(time.getSeconds());
 
     if ( entry.tab ) {
         tr.classList.add('tab');
