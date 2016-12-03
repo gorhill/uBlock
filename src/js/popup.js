@@ -124,7 +124,7 @@ var cachePopupData = function(data) {
     }
     var domain, prefix;
     for ( var hostname in hostnameDict ) {
-        if ( hostnameDict.hasOwnProperty(hostname) === false ) {
+        if ( Object.prototype.hasOwnProperty.call(hostnameDict, hostname) === false ) {
             continue;
         }
         domain = hostnameDict[hostname].domain;

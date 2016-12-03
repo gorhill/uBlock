@@ -698,9 +698,9 @@
             var listener = messaging.listeners[message.channelName];
             if ( typeof listener === 'function' ) {
                 r = listener(message.msg, sender, callback);
-            }
-            if ( r !== messaging.UNHANDLED ) {
-                return;
+                if ( r !== messaging.UNHANDLED ) {
+                    return;
+                }
             }
 
             // Auxiliary process to main process: default handler

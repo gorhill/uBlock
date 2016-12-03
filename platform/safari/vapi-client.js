@@ -331,7 +331,7 @@
                     return;
                 }
                 safari.extension.globalPage.contentWindow.vAPI.messaging.onMessage({
-                    name: auxProcessId,
+                    name: vAPI.sessionId,
                     message: message,
                     target: {
                         page: {
@@ -343,7 +343,7 @@
                     }
                 });
             } else {
-                safari.self.tab.dispatchMessage(auxProcessId, message);
+                safari.self.tab.dispatchMessage(vAPI.sessionId, message);
             }
         },
 
