@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock - a browser extension to block requests.
-    Copyright (C) 2015 The uBlock authors
+    Copyright (C) 2014-2016 The uBlock authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,82 +19,102 @@
     Home: https://github.com/gorhill/uBlock
 */
 /******************************************************************************/
+
+'use strict';
 // For non background pages
 
 (function(self) {
-    'use strict';
     var vAPI = self.vAPI = self.vAPI || {};
-    if(vAPI.vapiClientInjected) {
+
+    // https://github.com/chrisaljoudi/uBlock/issues/464
+    if ( document instanceof HTMLDocument === false ) {
+        // https://github.com/chrisaljoudi/uBlock/issues/1528
+        // A XMLDocument can be a valid HTML document.
+        if (
+            document instanceof XMLDocument === false ||
+            document.createElement('div') instanceof HTMLDivElement === false
+        ) {
+            return;
+        }
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1124
+    // Looks like `contentType` is on track to be standardized:
+    //   https://dom.spec.whatwg.org/#concept-document-content-type
+    // https://forums.lanik.us/viewtopic.php?f=64&t=31522
+    //   Skip text/plain documents.
+    var contentType = document.contentType || '';
+    if ( /^image\/|^text\/plain/.test(contentType) ) {
         return;
     }
+
     var safari;
     if(typeof self.safari === "undefined") {
         safari = self.top.safari;
-    }
-    else {
+    } else {
         safari = self.safari;
     }
-    vAPI.vapiClientInjected = true;
-    vAPI.safari = true;
-    vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
-        Math.random().toString(36).slice(2);
+
+    // https://github.com/chrisaljoudi/uBlock/issues/456
+    // Already injected?
+    if ( vAPI.sessionId ) {
+        return;
+    }
+
+
     /******************************************************************************/
-    vAPI.shutdown = (function() {
-        var jobs = [];
 
-        var add = function(job) {
-            jobs.push(job);
-        };
+    var referenceCounter = 0;
 
-        var exec = function() {
-            //console.debug('Shutting down...');
-            var job;
-            while ( job = jobs.pop() ) {
-                job();
-            }
-        };
+    vAPI.lock = function() {
+        referenceCounter += 1;
+    };
 
-        return {
-            add: add,
-            exec: exec
-        };
-    })();
-    /******************************************************************************/
-    var messagingConnector = function(response) {
-        if(!response) {
-            return;
-        }
-        var channels = vAPI.messaging.channels;
-        var channel, listener;
-        if(response.broadcast === true && !response.channelName) {
-            for(channel in channels) {
-                if(channels.hasOwnProperty(channel) === false) {
-                    continue;
-                }
-                listener = channels[channel].listener;
-                if(typeof listener === 'function') {
-                    listener(response.msg);
-                }
-            }
-            return;
-        }
-        if(response.requestId) {
-            listener = vAPI.messaging.listeners[response.requestId];
-            delete vAPI.messaging.listeners[response.requestId];
-            delete response.requestId;
-        }
-        if(!listener) {
-            channel = channels[response.channelName];
-            listener = channel && channel.listener;
-        }
-        if(typeof listener === 'function') {
-            listener(response.msg);
+    vAPI.unlock = function() {
+        referenceCounter -= 1;
+        if ( referenceCounter === 0 ) {
+            // Eventually there will be code here to flush the javascript code
+            // from this file out of memory when it ends up unused.
+
         }
     };
+
+    /******************************************************************************/
+
+	vAPI.randomToken = function() {
+        return String.fromCharCode(Date.now() % 26 + 97) +
+            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    };
+    vAPI.sessionId = vAPI.randomToken();
+    vAPI.safari = true;
+	vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+
+    /******************************************************************************/
+
+    vAPI.shutdown = {
+        jobs: [],
+        add: function(job) {
+            this.jobs.push(job);
+        },
+        exec: function() {
+            var job;
+            while ( (job = this.jobs.pop()) ) {
+                job();
+            }
+        },
+        remove: function(job) {
+            var pos;
+            while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
+                this.jobs.splice(pos, 1);
+            }
+        }
+    };
+
+    /******************************************************************************/
     /******************************************************************************/
     // Relevant?
     // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
-    vAPI.messaging = {
+    var deleteme = {
         channels: {},
         listeners: {},
         requestId: 1,
@@ -111,7 +131,7 @@
             this.channels['vAPI'] = {
                 listener: function(msg) {
                     if(msg.cmd === 'injectScript' && msg.details.code) {
-                         Function(msg.details.code).call(self);
+                        Function(msg.details.code).call(self);
                     }
                 }
             };
@@ -169,6 +189,225 @@
             };
             return this.channels[channelName];
         }
+    };
+
+    vAPI.messaging = {
+	    channels: Object.create(null),
+	    channelCount: 0,
+	    pending: Object.create(null),
+	    pendingCount: 0,
+	    auxProcessId: 1,
+	    shuttingDown: false,
+
+	    shutdown: function() {
+		    this.shuttingDown = true;
+		    this.removeListener();
+	    },
+
+	    disconnectListener: function() {
+		    vAPI.shutdown.exec();
+	    },
+	    disconnectListenerCallback: null,
+
+	    messageListener: function(details) {
+		    if ( !details ) {
+			    return;
+		    }
+
+		    // Sent to all channels
+		    if ( details.broadcast === true && !details.channelName ) {
+			    for ( var channelName in this.channels ) {
+				    this.sendToChannelListeners(channelName, details.msg);
+			    }
+			    return;
+		    }
+
+		    // Response to specific message previously sent
+		    if ( details.auxProcessId ) {
+			    var listener = this.pending[details.auxProcessId];
+			    delete this.pending[details.auxProcessId];
+			    delete details.auxProcessId; // TODO: why?
+			    if ( listener ) {
+				    this.pendingCount -= 1;
+				    listener(details.msg);
+				    return;
+			    }
+		    }
+
+		    // Sent to a specific channel
+		    var response = this.sendToChannelListeners(details.channelName, details.msg);
+
+		    // Respond back if required
+		    if ( details.mainProcessId === undefined ) {
+			    return;
+		    }
+            this.postMessage(details.mainProcessId, {
+                mainProcessId: details.mainProcessId,
+                msg: response
+            });
+	    },
+	    messageListenerCallback: null,
+
+	    removeListener: function() {
+		    if ( this.channelCount !== 0 ) {
+			    this.channels = Object.create(null);
+			    this.channelCount = 0;
+		    }
+		    // service pending callbacks
+		    if ( this.pendingCount !== 0 ) {
+			    var pending = this.pending, callback;
+			    this.pending = Object.create(null);
+			    this.pendingCount = 0;
+			    for ( var auxId in pending ) {
+				    callback = pending[auxId];
+				    if ( typeof callback === 'function' ) {
+					    callback(null);
+				    }
+			    }
+		    }
+            if (this.connector) {
+                safari.self.removeEventListener('message', this.connector, false);
+                this.connector = null;
+                this.channels = {};
+                this.listeners = {};
+            }
+	    },
+
+	    connect: function() {
+	        // this.createPort();
+            this.connector = function(msg) {
+                // messages from the background script are sent to every frame,
+                // so we need to check the vAPI.sessionId to accept only
+                // what is meant for the current context
+                if (msg.name === vAPI.sessionId || msg.name === 'broadcast') {
+                    vAPI.messaging.messageListener(msg.message);
+                }
+            };
+            safari.self.addEventListener('message', this.connector, false);
+            // this.channels['vAPI'] = {
+            //     listener: function(msg) {
+            //         if(msg.cmd === 'injectScript' && msg.details.code) {
+            //             Function(msg.details.code).call(self);
+            //         }
+            //     }
+            // };
+	    },
+
+	    send: function(channelName, message, callback) {
+		    this.sendTo(channelName, message, undefined, undefined, callback);
+	    },
+
+	    sendTo: function(channelName, message, toTabId, toChannel, callback) {
+		    // Too large a gap between the last request and the last response means
+		    // the main process is no longer reachable: memory leaks and bad
+		    // performance become a risk -- especially for long-lived, dynamic
+		    // pages. Guard against this.
+		    if ( this.pendingCount > 25 ) {
+			    vAPI.shutdown.exec();
+		    }
+		    var auxProcessId;
+		    if ( callback ) {
+			    auxProcessId = this.auxProcessId++;
+			    this.pending[auxProcessId] = callback;
+			    this.pendingCount += 1;
+		    }
+            if (!this.connector) {
+                this.connect();
+            }
+            this.postMessage(auxProcessId, {
+                channelName: channelName,
+                auxProcessId: auxProcessId,
+                toTabId: toTabId,
+                toChannel: toChannel,
+                msg: message
+            });
+
+	    },
+
+        postMessage: function(auxProcessId, message) {
+            // popover content doesn't know messaging...
+            if (safari.extension.globalPage) {
+                if(!safari.self.visible) {
+                    return;
+                }
+                safari.extension.globalPage.contentWindow.vAPI.messaging.onMessage({
+                    name: auxProcessId,
+                    message: message,
+                    target: {
+                        page: {
+                            dispatchMessage: function(name, msg) {
+                                // Handle callbacks
+                                vAPI.messaging.messageListener(msg);
+                            }
+                        }
+                    }
+                });
+            } else {
+                safari.self.tab.dispatchMessage(auxProcessId, message);
+            }
+        },
+
+	    addChannelListener: function(channelName, callback) {
+		    if ( typeof callback !== 'function' ) {
+			    return;
+		    }
+		    var listeners = this.channels[channelName];
+		    if ( listeners !== undefined && listeners.indexOf(callback) !== -1 ) {
+			    console.error('Duplicate listener on channel "%s"', channelName);
+			    return;
+		    }
+		    if ( listeners === undefined ) {
+			    this.channels[channelName] = [callback];
+			    this.channelCount += 1;
+		    } else {
+			    listeners.push(callback);
+		    }
+		    this.connect();
+	    },
+
+	    removeChannelListener: function(channelName, callback) {
+		    if ( typeof callback !== 'function' ) {
+			    return;
+		    }
+		    var listeners = this.channels[channelName];
+		    if ( listeners === undefined ) {
+			    return;
+		    }
+		    var pos = listeners.indexOf(callback);
+		    if ( pos === -1 ) {
+			    console.error('Listener not found on channel "%s"', channelName);
+			    return;
+		    }
+		    listeners.splice(pos, 1);
+		    if ( listeners.length === 0 ) {
+			    delete this.channels[channelName];
+			    this.channelCount -= 1;
+		    }
+	    },
+
+	    removeAllChannelListeners: function(channelName) {
+		    var listeners = this.channels[channelName];
+		    if ( listeners === undefined ) {
+			    return;
+		    }
+		    delete this.channels[channelName];
+		    this.channelCount -= 1;
+	    },
+
+	    sendToChannelListeners: function(channelName, msg) {
+		    var listeners = this.channels[channelName];
+		    if ( listeners === undefined ) {
+			    return;
+		    }
+		    var response;
+		    for ( var i = 0, n = listeners.length; i < n; i++ ) {
+			    response = listeners[i](msg);
+			    if ( response !== undefined ) {
+				    break;
+			    }
+		    }
+		    return response;
+	    }
     };
 
     // The following code should run only in content pages
@@ -338,6 +577,7 @@ return r;\
         safari.self.tab.setContextMenuEventUserInfo(e, details);
     };
     self.addEventListener("contextmenu", onContextMenu, true);
+
 })(this);
 
 /******************************************************************************/

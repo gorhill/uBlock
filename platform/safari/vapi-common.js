@@ -31,6 +31,10 @@ var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
 
+vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+
+/******************************************************************************/
+
 // http://www.w3.org/International/questions/qa-scripts#directions
 
 var setScriptDirection = function(language) {
