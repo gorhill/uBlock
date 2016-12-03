@@ -55,12 +55,12 @@
         <dict>
             <key>End</key>
             <array>
-                <string>js/contentscript-end.js</string>
+                <string>js/scriptlets/subscriber.js</string>
             </array>
             <key>Start</key>
             <array>
                 <string>js/vapi-client.js</string>
-                <string>js/contentscript-start.js</string>
+                <string>js/contentscript.js</string>
             </array>
         </dict>
         <key>Whitelist</key>
