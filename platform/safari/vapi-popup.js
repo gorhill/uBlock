@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock - a browser extension to block requests.
-    Copyright (C) 2015 The uBlock authors
+    Copyright (C) 2014-2016 The uBlock authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ var onLoaded = function() {
         }
     };
     var body = document.body, popover = safari.self;
-    
+
     var panes = document.getElementById("panes"),
         powerAndStatsPane = panes.children[0],
         dfPane = panes.children[1];
