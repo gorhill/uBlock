@@ -786,7 +786,7 @@ var elementsFromSelector = function(selector, context) {
         context = document;
     }
     var out;
-    if ( selector.indexOf(':') !== -1 ) {
+    if ( /:/.test(selector) ) {
         out = elementsFromSpecialSelector(selector);
         if ( out !== undefined ) {
             return out;

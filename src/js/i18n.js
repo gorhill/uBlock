@@ -81,7 +81,7 @@ var safeTextToTagNode = function(text) {
 
 var safeTextToTextNode = function(text) {
     // TODO: remove once no more HTML entities in translation files.
-    if ( text.indexOf('&') !== -1 ) {
+    if ( /&/.test(text) ) {
         text = text.replace(/&ldquo;/g, '“')
                    .replace(/&rdquo;/g, '”')
                    .replace(/&lsquo;/g, '‘')
@@ -93,7 +93,7 @@ var safeTextToTextNode = function(text) {
 var safeTextToDOM = function(text, parent) {
     if ( text === '' ) { return; }
     // Fast path (most common).
-    if ( text.indexOf('<') === -1 ) {
+    if ( !/</.test(text) ) {
         return parent.appendChild(safeTextToTextNode(text));
     }
     // Slow path.
@@ -137,7 +137,7 @@ vAPI.i18n.render = function(context) {
             continue;
         }
         // TODO: remove once it's all replaced with <input type="...">
-        if ( text.indexOf('{') !== -1 ) {
+        if ( /{/.test(text) ) {
             text = text.replace(/\{\{input:([^}]+)\}\}/g, '<input type="$1">');
         }
         safeTextToDOM(text, elem);

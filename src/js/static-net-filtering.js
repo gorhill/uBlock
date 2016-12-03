@@ -266,7 +266,7 @@ var hostnameTestPicker = function(owner) {
     var domainOpt = owner.domainOpt;
 
     // Only one hostname
-    if ( domainOpt.indexOf('|') === -1 ) {
+    if ( !/|/.test(domainOpt) ) {
         if ( domainOpt.startsWith('~') ) {
             owner._notHostname = domainOpt.slice(1);
             return hostnameMissTest;
@@ -1361,7 +1361,7 @@ FilterParser.prototype.parse = function(raw) {
         if ( pos !== -1 ) {
             // https://github.com/gorhill/uBlock/issues/952
             // Discard Adguard-specific `$$` filters.
-            if ( s.indexOf('$$') !== -1 ) {
+            if ( /\$\$/.test(s) ) {
                 this.unsupported = true;
                 return this;
             }

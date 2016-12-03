@@ -40,7 +40,7 @@ var getDomainNames = function(targets) {
     var target, domain;
     for ( var i = 0; i < targets.length; i++ ) {
         target = targets[i];
-        if ( target.indexOf('/') !== -1 ) {
+        if ( /\//.test(target) ) {
             domain = µburi.domainFromURI(target) || '';
         } else {
             domain = µburi.domainFromHostname(target) || target;
@@ -918,9 +918,9 @@ var untangleRules = function(s) {
         line = s.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
 
-        if ( line.indexOf('://') !== -1 ) {
+        if ( /:\/\//.test(line) ) {
             urlRules.push(line);
-        } else if ( line.indexOf(':') === -1 ) {
+        } else if ( !/:/.test(line) ) {
             firewallRules.push(line);
         } else {
             switches.push(line);

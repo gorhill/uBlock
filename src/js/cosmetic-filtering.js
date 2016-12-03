@@ -311,7 +311,7 @@ FilterParser.prototype.parse = function(raw) {
     // https://github.com/gorhill/httpswitchboard/issues/260
     // Any sequence of `#` longer than one means the line is not a valid
     // cosmetic filter.
-    if ( this.suffix.indexOf('##') !== -1 ) {
+    if ( /##/.test(this.suffix) ) {
         this.cosmetic = false;
         return this;
     }
@@ -796,7 +796,7 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
     var matches = this.rePlainSelector.exec(selector);
     if ( matches === null ) { return; }
     var key = matches[0];
-    if ( key.indexOf('\\') === -1 ) {
+    if ( !/\\/.test(key) ) {
         return key;
     }
     key = '';
@@ -936,10 +936,10 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
 
     // All else: high-high generics.
     // Distinguish simple vs complex selectors.
-    if ( selector.indexOf(' ') === -1 ) {
-        out.push('c\vhhsg0\v' + selector);
-    } else {
+    if ( / /.test(selector) ) {
         out.push('c\vhhcg0\v' + selector);
+    } else {
+        out.push('c\vhhsg0\v' + selector);
     }
 };
 
