@@ -1,5 +1,6 @@
 ﻿#uBlock0-legacy-button {
     list-style-image: url('../img/browsericons/icon24.svg');
+    -moz-box-orient: inherit;
 }
 #uBlock0-legacy-button.off {
     list-style-image: url('../img/browsericons/icon24-off.svg');
@@ -43,4 +44,24 @@ toolbarpaletteitem #uBlock0-legacy-button[badge]::before {
 #uBlock0-legacy-button .toolbarbutton-menu-dropmarker {
     display: none;
     -moz-box-orient: horizontal;
+}
+
+/* Align the nav-bar button more nicely in Pale Moon */
+#nav-bar #uBlock0-legacy-button .toolbarbutton-menu-dropmarker {
+    display: inline;
+    visibility: hidden;
+    margin-left: -10px;
+}
+#nav-bar #uBlock0-legacy-button[badge]::before {
+    display: none;
+}
+#nav-bar #uBlock0-legacy-button[badge]::after {
+    background: #555;
+    color: #fff;
+    content: attr(badge);
+    font: bold 10px sans-serif;
+    margin-top: -2px;
+    margin-left: -18px;
+    padding: 0 2px;
+    position: fixed;
 }
