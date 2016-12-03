@@ -540,8 +540,9 @@ var renderLogEntry = function(entry) {
     }
 
     // Fields common to all rows.
-    var time = new Date(entry.tstamp);
-    tr.cells[0].textContent = padTo2(time.getHours()) + ':' +
+    var time = logDate;
+    time.setTime(entry.tstamp - logDateTimezoneOffset);
+    tr.cells[0].textContent = padTo2(time.getUTCHours()) + ':' +
                               padTo2(time.getMinutes()) + ':' +
                               padTo2(time.getSeconds());
 
@@ -560,6 +561,10 @@ var renderLogEntry = function(entry) {
     tbody.insertBefore(tr, tbody.firstChild);
     return tr;
 };
+
+// Reuse date objects.
+var logDate = new Date(),
+    logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 
 /******************************************************************************/
 
