@@ -219,12 +219,12 @@ var domLayout = (function() {
         return selector;
     };
 
-    var DomRoot = function() {
-        this.nid = newNodeId(document.body);
+    var DomRoot = function(node) {
+        this.nid = newNodeId(document.documentElement);
         this.lvl = 0;
-        this.sel = 'body';
+        this.sel = selectorFromNode(node);
         this.cnt = 0;
-        this.filter = nodeToCosmeticFilterMap.get(document.body);
+        this.filter = nodeToCosmeticFilterMap.get(document.documentElement);
     };
 
     var DomNode = function(node, level) {
@@ -244,8 +244,8 @@ var domLayout = (function() {
         if ( node.classList.contains(sessionId) ) {
             return null;
         }
-        if ( level === 0 && localName === 'body' ) {
-            return new DomRoot();
+        if ( level === 0 && localName === 'html' ) {
+            return new DomRoot(node);
         }
         return new DomNode(node, level);
     };
@@ -255,7 +255,7 @@ var domLayout = (function() {
     var getLayoutData = function() {
         var layout = [];
         var stack = [];
-        var node = document.body;
+        var node = document.documentElement;
         var domNode;
         var lvl = 0;
 
@@ -478,7 +478,7 @@ var domLayout = (function() {
         if ( mutationObserver === null ) {
             cosmeticFilterMapper.reset();
             mutationObserver = new MutationObserver(onMutationObserved);
-            mutationObserver.observe(document.body, {
+            mutationObserver.observe(document.documentElement, {
                 childList: true,
                 subtree: true
             });
@@ -655,7 +655,7 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
     // Find the most concise selector from the target node
     var segments = [], segment;
     var node = target;
-    while ( node !== document.body ) {
+    while ( node !== document.documentElement ) {
         segment = cosmeticFilterFromNode(node);
         segments.unshift(segment);
         if ( segment.charAt(0) === '#' ) {
@@ -670,7 +670,7 @@ var cosmeticFilterFromTarget = function(nid, coarseSelector) {
     if ( fineSelector.charAt(0) === '.' && elementsFromSelector(fineSelector).length === 1 ) {
         return fineSelector;
     }
-    return 'body > ' + fineSelector;
+    return 'html > ' + fineSelector;
 };
 
 /******************************************************************************/
