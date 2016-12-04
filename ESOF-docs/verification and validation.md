@@ -63,19 +63,47 @@ O *uBlock* não usa casos de teste em específico, sendo que utiliza o [*Travis 
 
  Sendo que a isolabilidade tem uma relação de porporcionalidade inversa com o grau de dependência das componentes, a compreensibilidade tem um relação contrária a esta, tendo uma relação de porporcionalidade direta uma vez que quanto maior for o grau de dependência das componentes maior é o grau de compreensibilidade. Mais concretamente, tendo uma componente algumas depêndencias significa que esta se torna mais legível e fácil de compreender uma vez que possuí menos responsabilidades a nível do processamento de informação.
 
- Para além disso, todos os ficheiros do tipo *javascript* possuem comentários ao longo do codígo. Podemos obter também informação em relação ao *uBlock* e a sua estrutura bem como ao seu desenvolvimento, na [*Wiki*](https://github.com/gorhill/uBlock/wiki) do projeto.
+ Para além disso, todos os ficheiros de *Javascript* possuem comentários ao longo do codígo. Podemos obter também informação em relação ao *uBlock* e a sua estrutura bem como ao seu desenvolvimento, na [*Wiki*](https://github.com/gorhill/uBlock/wiki) do projeto.
 
 
 * ### Heterogenidade
  * Determina o grau em que o uso de diversas tecnologias requer diversos casos de teste.
 
- O *uBlock* não uma elevada heterogenidade uma vez que apenas realiza testes do tipo, teste funcional e teste de configuração. Os testes realizados têm aproximadamente a mesma estrutura em que o objetivo é testar as funcionalidades do *uBlock* em diferentes browsers (*Chrome, Firefox, Opera, entre outros*).
+ O *uBlock* não tem uma elevada heterogenidade uma vez que apenas realiza testes do tipo, teste funcional e teste de configuração. Os testes realizados têm aproximadamente a mesma estrutura em que o objetivo é testar as funcionalidades do *uBlock* em diferentes browsers (*Chrome, Firefox, Opera, entre outros*).
 
- No entanto, apesar da pouca heterogenidade dos testes, queremos que que são suficientes para garantir a boa consistência do *uBlock*.
+ No entanto, apesar da pouca heterogenidade dos testes, cremos que são suficientes para garantir a boa consistência do *uBlock*.
 
 <a name="estatisticas"/>
 ## Estatísticas e análise de teste
 
+Como indicado antes, os testes efetuados ao *uBlock Origin*, através da ferramenta *Travis-CI*, visam apenas assegurar que a distribuição da extensão não contém erros, estando funcional para qualquer *browser* utilizado.
+
+A última versão presente no repositório passa nos testes (ver imagem abaixo).
+
+![Resultado dos Testes do Travis-CI](travis_results.png)
+
+
+De forma a obter mais informações sobre a qualidade do projeto, o grupo utilizou os serviços do [*Codacy*](https://www.codacy.com/), que faz uma revisão do código do projeto avaliando-o de A a F segundo algumas componentes.
+
+
+![Resultado dos Testes do Codacy](codacy_results.png)
+
+Nestes testes, o *uBlock Origin* foi avaliado com B, tendo os resultados sido muito bons relativamente à compatibilidade com diferentes *browsers*, ao desempenho do código, à segurança e à utilização do código.
+
+Por outro lado, obteve um resultado péssimo no que toca ao estilo do código, e um resultado mau na propensidade a erros.
+
+A ferramenta não foi capaz de efetuar testes à complexidade e à documentação do código.
+
+![Problemas Encontrados pelo Codacy](codacy_breakdown.png)
+
+Convém notar que, em muitos casos, a avaliação da propensidade a erros do *Codacy* não é devida ao código original da extensão, grande parte dos problemas encontrados no projeto estão em ficheiros de bibliotecas utilizadas pela extensão, nomeadamente as bibliotecas *Punycode* e *vAPI*.
+Dito isto, em muitos ficheiros "originais" da extensão, a ferramenta utilizada queixa-se de uma alta complexidade ciclomática (uma métrica de teste que avalia a quantidade de lógica de decisão numa função) de muitas das funções escritas. Em 330 *issues* relacionados com a propensidade a erros, 159 (48%, aproximadamente) estão relacionados com esta métrica.
+
+Já no que toca ao estilo de código, em 2191 *issues* encontrados pela ferramenta, 1510 deles (69%, aproximadamente), estão relacionados com o uso de plicas em vez de aspas para strings, neste caso, no código escrito pelo responsável pelo projeto.
+
+O *Codacy* também avalia a severidade dos problemas encontrados como sendo bastante baixa, sendo que 71% dos *issues* obtém uma classificação de *Info*, querendo isto dizer que estão relacionados com o estilo de código, identação e legibilidade.
+
+![Severidade dos Problemas Encontrados pelo Codacy](codacy_severity.png)
 
 <a name="correcao"/>
 ## Correção de Bug
