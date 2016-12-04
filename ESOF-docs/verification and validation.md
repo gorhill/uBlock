@@ -41,7 +41,7 @@ O *uBlock* não usa casos de teste em específico, sendo que utiliza o [*Travis 
 * ### Controlabilidade
  * Possibilidade de controlar o estado de uma componente sob teste (*CUT*).
 
-Uma vez que o *uBlock* apenas usa o *Travis CI* para a relização de testes ao programa, o controlo em relação a estes torna-se um pouco baixo visto que apenas podemos dar especificações e/ou alterar a componente, antes do inicio da realização dos testes uma vez que estes realizam-se a cada *commit* seguido de um *push*, realizado. No entanto podemos controlar os testes do programa, em que, no ficheiro *.travis.yml* podemos personalizar a compilação do programa (indicar qual ficheiro de testes queremos verificar), instalar dependências ou até configurar uma base de dados. Quando realizado então o *commit* seguido do *push*, o *Travis CI* trata de verificar se os testes que se encontram no ficheiro indicado no ficheiro *.travis.yml* passaram ou não.
+ Uma vez que o *uBlock* apenas usa o *Travis CI* para a relização de testes ao programa, o controlo em relação a estes torna-se um pouco baixo visto que apenas podemos dar especificações e/ou alterar a componente, antes do inicio da realização dos testes uma vez que estes realizam-se a cada *commit* seguido de um *push*, realizado. No entanto podemos controlar os testes do programa, em que, no ficheiro *.travis.yml* podemos personalizar a compilação do programa (indicar qual ficheiro de testes queremos verificar), instalar dependências ou até configurar uma base de dados. Quando realizado então o *commit* seguido do *push*, o *Travis CI* trata de verificar se os testes que se encontram no ficheiro indicado no ficheiro *.travis.yml* passaram ou não.
 
 * ### Observabilidade
  * Observação dos resultados dos testes, intermédios e finais.
@@ -51,11 +51,20 @@ Uma vez que o *uBlock* apenas usa o *Travis CI* para a relização de testes ao 
 * ### Isolabilidade
  * Possibilidade de uma *CUT* ser testada isoladamente.
 
-O programa de testes (*Travis CI*) usado pelo *uBlock*, permite testar componentes isoladamente, no entanto, a isolabilidade das *CUT* no *uBlock* decresce de acordo com o grau de dependência de outras componentes. Uma vez que o *uBlock* é um projeto do tipo *web*, em que por exemplo, todos a
+ O programa de testes (*Travis CI*) usado pelo *uBlock*, permite testar componentes isoladamente, no entanto, a isolabilidade das *CUT* no *uBlock* decresce de acordo com o grau de dependência de outras componentes. Um exemplo de dependências é a componente dos *settings* para com o *dashboard* (interface do *uBlock*). Em análise, a isolabilidade dos testes no *uBlock* não é muito elevada, uma vez que quase todas as componentes do tipo *javascript* têm como dependência a componente *dashboard*.
 
 * ### Separação de preocupações
+ * Grau de separação de responsabilidades das CUTs - se têm uma única responsabilidade, bem definida.
+
+ Apesar de haver pouca isolabilidade em determinadas componentes, isso não é sinónimo de uma não boa separação de responsabilidades. No caso do *uBlock*, todas as ações estão dividas em componentes diferentes, havendo uma boa separação. Cada componente tem uma responsabilidade principal, sendo que a ligação entre componentes em relação à troca de informação é eficaz e bem construída.
 
 * ### Compreensibilidade
+ * Legibilidade da *CUT*, por clareza intrínseca ou documentação disponível.
+
+ Sendo que a isolabilidade tem uma relação de porporcionalidade inversa com o grau de dependência das componentes, a compreensibilidade tem um relação contrária a esta, tendo uma relação de porporcionalidade direta uma vez que quanto maior for o grau de dependência das componentes maior é o grau de compreensibilidade. Mais concretamente, tendo uma componente algumas depêndencias significa que esta se torna mais legível e fácil de compreender uma vez que possuí menos responsabilidades a nível do processamento de informação.
+
+ Para além disso, todos os ficheiros do tipo *javascript* possuem comentários ao longo do codígo. Podemos obter também informação em relação ao *uBlock* e a sua estrutura bem como ao seu desenvolvimento, na [*Wiki*](https://github.com/gorhill/uBlock/wiki) do projeto.
+
 
 * ### Heterogenidade
  * Determina o grau em que o uso de diversas tecnologias requer diversos casos de teste.
