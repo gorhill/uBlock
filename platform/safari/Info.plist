@@ -9,7 +9,7 @@
     <key>CFBundleDisplayName</key>
     <string>{name}</string>
     <key>CFBundleIdentifier</key>
-    <string>net.gorhill.uBlock</string>
+    <string>com.el1t.uBlock</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleShortVersionString</key>
@@ -18,6 +18,15 @@
     <string>{buildNumber}</string>
     <key>Chrome</key>
     <dict>
+        <key>Context Menu Items</key>
+        <array>
+            <dict>
+                <key>Identifier</key>
+                <string>uBlock0-blockElement</string>
+                <key>Title</key>
+                <string>Block Element</string>
+            </dict>
+        </array>
         <key>Database Quota</key>
         <real>104857600</real>
         <key>Global Page</key>
@@ -83,9 +92,7 @@
             <string>All</string>
         </dict>
     </dict>
-    <key>Update Manifest URL</key>
-    <string>https://chrismatic.io/ublock/Update.plist</string>
     <key>Website</key>
-    <string>https://chrismatic.io/</string>
+    <string>https://www.github.com/el1t/uBlock-Safari</string>
 </dict>
 </plist>

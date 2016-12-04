@@ -852,90 +852,16 @@
     /******************************************************************************/
 
     vAPI.contextMenu = {
-        contextMap: {
-            frame: 'insideFrame',
-            link: 'linkHref',
-            image: 'srcUrl',
-            editable: 'editable'
-        }
+        _callback: null,
+        _entries: [],
+        onMustUpdate: function() {},
+        setEntries: function(entries, callback) {}
     };
 
-    /******************************************************************************/
-
-    vAPI.contextMenu.create = function(details, callback) {
-        var contexts = details.contexts;
-        var menuItemId = details.id;
-        var menuTitle = details.title;
-
-        if(Array.isArray(contexts) && contexts.length) {
-            contexts = contexts.indexOf('all') === -1 ? contexts : null;
-        } else {
-            // default in Chrome
-            contexts = ['page'];
-        }
-
-        this.onContextMenu = function(e) {
-            var uI = e.userInfo;
-
-            if(!uI || /^https?:\/\//i.test(uI.pageUrl) === false) {
-                return;
-            }
-
-            if(contexts) {
-                var invalidContext = true;
-                var ctxMap = vAPI.contextMenu.contextMap;
-
-                for(var i = 0; i < contexts.length; i++) {
-                    var ctx = contexts[i];
-
-                    if(ctx === 'audio' || ctx === 'video') {
-                        if(uI[ctxMap['image']] && uI.tagName === ctx) {
-                            invalidContext = false;
-                            break;
-                        }
-                    } else if(uI[ctxMap[ctx]]) {
-                        invalidContext = false;
-                        break;
-                    } else if(ctx === 'page') {
-                        if(!(uI.insideFrame || uI.linkHref || uI.mediaType || uI.editable)) {
-                            invalidContext = false;
-                            break;
-                        }
-                    }
-                }
-
-                if(invalidContext) {
-                    return;
-                }
-            }
-
-            e.contextMenu.appendContextMenuItem(menuItemId, menuTitle);
-        };
-
-        this.onContextMenuCmd = function(e) {
-            if(e.command === menuItemId) {
-                var tab = e.currentTarget.activeBrowserWindow.activeTab;
-                e.userInfo.menuItemId = menuItemId;
-                callback(e.userInfo, tab ? {
-                    id: vAPI.tabs.getTabId(tab),
-                    url: tab.url
-                } : undefined);
-            }
-        };
-
-        safari.application.addEventListener('contextmenu', this.onContextMenu);
-        safari.application.addEventListener('command', this.onContextMenuCmd);
-    };
-
-    /******************************************************************************/
-
-    vAPI.contextMenu.remove = function() {
-        safari.application.removeEventListener('contextmenu', this.onContextMenu);
-        safari.application.removeEventListener('command', this.onContextMenuCmd);
-        this.onContextMenu = null;
-        this.onContextMenuCmd = null;
-    };
-
+    safari.application.addEventListener('command', function(e) {
+        var details = e.userInfo;
+        µBlock.elementPickerExec(vAPI.tabs.getTabId(safari.application.activeBrowserWindow.activeTab), details.tagName + '\t' + details.frameUrl || details.srcUrl || details.linkUrl || '');
+    });
     /******************************************************************************/
 
     vAPI.lastError = function() {
