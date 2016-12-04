@@ -802,7 +802,7 @@
     }
   }
 
-  var ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom'];
+  var ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom', '#bottom-text'];
 
   function toggleInterface() {
 
