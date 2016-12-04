@@ -18,7 +18,7 @@ A parte *View* do programa é implementado utilizando *HTML* e *CSS*, que permit
 
 O *uBlock Origin* apresenta-se com os seguintes pacotes, de modo a organizar o código de maneira lógica:
 
-![Diagrama da Vista Lógica](logical-view.png)
+![Diagrama da Vista Lógica](images/logical-view.png)
 
 O programa baseia-se no *redirect engine*, que é o motor que decide que conteúdos serão ou não apresentados. Para isto, é necessário um mecanismo de filtragem de *scripts* considerados malignos ou indesejados.
 
@@ -33,7 +33,7 @@ A interface do programa é representada pelo pacote *dashboard* que é o código
 Na vista de desenvolvimento estão representados os diversos componentes do programa e as suas relações e interdependências.
 As extensões de browser têm o seu funcionamento condensado no *content script*, no caso do *uBlock Origin*, este descreve o seguinte comportamento:
 
-![Diagrama da Vista de Desenvolvimento](development-view.png)
+![Diagrama da Vista de Desenvolvimento](images/development-view.png)
 
 Ao ser executado numa página web, o programa vai dividir as suas responsabilidades por diferentes componentes que analisam e atuam sobre o *DOM* da página.
 * **DOM Watcher**:
@@ -50,7 +50,7 @@ Também é usado para o processo inverso, quando se pode mostrar um elemento pre
 ## Vista de Distribuição
 
 Abaixo está apresentado o diagrama da vista de distribuição.
-![Diagrama da Vista de Distribuição](deployment.png)
+![Diagrama da Vista de Distribuição](images/deployment.png)
 
 A partir desta imagem, é possível perceber que a extensão é obtida através da *Chrome Web Store* ou da loja de Extras do *Firefox*. O programa corre unicamente no sistema do utilizador, não tendo qualquer outra ligação externa.
 
@@ -58,7 +58,7 @@ A partir desta imagem, é possível perceber que a extensão é obtida através 
 ## Vista de Processo
 Para serem mais percetíveis as interações entre processos do sistema, de acordo com as ações que são pedidas/realizadas, foi criado o seguinte diagrama da vista de processo.
 
-![Diagrama da Vista de Processo](process-view.png)
+![Diagrama da Vista de Processo](images/process-view.png)
 
 O início do programa é a interface deste e, partir deste estado podem ser tomadas três decisões distintas.
 

@@ -40,7 +40,7 @@ No que toca aos requisitos não funcionais, é um dos objetivos do criador dispo
 ## Casos de Uso
 É importante, o utilizador em geral, saiba as funções e utilidades do programa em uso. No diagrama seguinte podemos verificar, as funcionalidades do uBlock.
 
-![Use Cases](use_cases.png)
+![Use Cases](images/use_cases.png)
 
 De seguida vamos mencionar, as utilidades das principais funções ao qual o utilizador tem acesso.
 
@@ -50,7 +50,7 @@ Painel de controlo do uBlock, onde o utilizador pode dar *enable* ou *disable* d
 * ### Block mode
 Local onde o utilizador indica o grau de *blocking* que quer aplicar. No diagrama seguinte, estão identificados os graus possíveis de selecionar pelo utilizador.
 
-![Block Mode Cases](block_mode_cases.png)
+![Block Mode Cases](images/block_mode_cases.png)
 
 
 
@@ -76,7 +76,7 @@ Comparativamente à funcionalidade do *The logger*,o *DOM inspector* é especifi
 
 Todas as etiquetas devem ser lidas de cima para baixo.
 
-![domainModel](ublock_domain_model.png)
+![domainModel](images/ublock_domain_model.png)
 
 
 ***

@@ -20,7 +20,7 @@ Na *Engenharia de Software*, a **verificação e validação (V&V)** é um proce
 
 No diagrama seguinte podemos, compreender melhor o ciclo de vida das atividades segundo este processo:
 
-![Verificação e Validação-exemplo](VVexample.jpg)
+![Verificação e Validação-exemplo](images/VVexample.jpg)
 
 Neste processo de **verificação e validação** são usadas alguma técnicas como as indicadas a seguir:
 
@@ -80,13 +80,13 @@ Como indicado antes, os testes efetuados ao *uBlock Origin*, através da ferrame
 
 A última versão presente no repositório passa nos testes (ver imagem abaixo).
 
-![Resultado dos Testes do Travis-CI](travis_results.png)
+![Resultado dos Testes do Travis-CI](images/travis_results.png)
 
 
 De forma a obter mais informações sobre a qualidade do projeto, o grupo utilizou os serviços do [*Codacy*](https://www.codacy.com/), que faz uma revisão do código do projeto avaliando-o de A a F segundo algumas componentes.
 
 
-![Resultado dos Testes do Codacy](codacy_results.png)
+![Resultado dos Testes do Codacy](images/codacy_results.png)
 
 Nestes testes, o *uBlock Origin* foi avaliado com B, tendo os resultados sido muito bons relativamente à compatibilidade com diferentes *browsers*, ao desempenho do código, à segurança e à utilização do código.
 
@@ -94,7 +94,7 @@ Por outro lado, obteve um resultado péssimo no que toca ao estilo do código, e
 
 A ferramenta não foi capaz de efetuar testes à complexidade e à documentação do código.
 
-![Problemas Encontrados pelo Codacy](codacy_breakdown.png)
+![Problemas Encontrados pelo Codacy](images/codacy_breakdown.png)
 
 Convém notar que, em muitos casos, a avaliação da propensidade a erros do *Codacy* não é devida ao código original da extensão, grande parte dos problemas encontrados no projeto estão em ficheiros de bibliotecas utilizadas pela extensão, nomeadamente as bibliotecas *Punycode* e *vAPI*.
 Dito isto, em muitos ficheiros "originais" da extensão, a ferramenta utilizada queixa-se de uma alta complexidade ciclomática (uma métrica de teste que avalia a quantidade de lógica de decisão numa função) de muitas das funções escritas. Em 330 *issues* relacionados com a propensidade a erros, 159 (48%, aproximadamente) estão relacionados com esta métrica.
@@ -103,10 +103,10 @@ Já no que toca ao estilo de código, em 2191 *issues* encontrados pela ferramen
 
 O *Codacy* também avalia a severidade dos problemas encontrados como sendo bastante baixa, sendo que 71% dos *issues* obtém uma classificação de *Info*, querendo isto dizer que estão relacionados com o estilo de código, identação e legibilidade.
 
-![Severidade dos Problemas Encontrados pelo Codacy](codacy_severity.png)
+![Severidade dos Problemas Encontrados pelo Codacy](images/codacy_severity.png)
 
 <a name="correcao"/>
-## Identificação de *Bug*
+## Correção de Bug
 
 O grupo conseguiu identificar um problema com o *uBlock Origin* no site do ["Jornal de Notícias"](www.jn.pt) com as galerias utilizadas pelo jornal.
 
