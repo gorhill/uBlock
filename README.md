@@ -30,7 +30,7 @@ Much of the platform shim from the original uBlock Safari version is still being
 
 ## Installation
 
-Until relatively stable, this extension must be installed [manually](https://github.com/el1t/uBlock-Safari/tree/master/dist#install).
+Until relatively stable, this extension must be installed [manually](https://github.com/el1t/uBlock-Safari/tree/safari/dist#install).
 
 Compatible with Safari 10, untested on older versions.
 
