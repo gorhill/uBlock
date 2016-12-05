@@ -591,6 +591,7 @@ footer {
   bottom: 0;
   position: absolute;
   width:100%;
+  z-index:2;
 }
 button.pause,
 button.resume,
