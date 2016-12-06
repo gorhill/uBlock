@@ -742,15 +742,16 @@
     /******************************************************************************/
 
     vAPI.messaging.broadcast = function(message) {
+        message = {
+            broadcast: true,
+            msg: message
+        };
         var page;
         for(var tabId in vAPI.tabs.stack) {
             if (vAPI.tabs.stack.hasOwnProperty(tabId)) {
-                page = vAPI.tabs.stack[tabId];
+                page = vAPI.tabs.stack[tabId].page;
                 if (page && typeof page.dispatchMessage === 'function') {
-                    page.dispatchMessage('broadcast', {
-                        broadcast: true,
-                        msg: message
-                    });
+                    page.dispatchMessage('broadcast', message);
                 }
             }
         }
