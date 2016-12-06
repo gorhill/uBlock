@@ -19,10 +19,12 @@ uBlock Origin<br>
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
 ## Regarding this Safari port
+
 The majority of this code is shared with [upstream](https://github.com/gorhill/uBlock). Platform specific portions are under development.
 Much of the platform shim from the original uBlock Safari version is still being used.
 
 * [Installation](#installation)
+* [Building](#building)
 * [Release History](#release-history)
 * [Further Documentation](#further-documentation)
 * [About](#about)
@@ -38,11 +40,29 @@ Compatible with Safari 10, untested on older versions.
 
 To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
 
+## Building
+
+To build and load an unpacked extension for development:
+
+1. Clone `uBlock-Safari` and [`uAssets`](https://github.com/uBlockOrigin/uAssets) into the same parent directory
+1. Run `./tools/make-safari.sh` in `uBlock-Safari`'s directory
+1. Install the unpacked extension through Safari's Extension Builder
+    1. In Safari, load the Extension Builder (Develop > Show Extension Builder)
+    1. Click the `+` button in the bottom left corner and "Add Extension"
+    1. Select `dist/build/uBlock.safariextension`
+    1. Click install and enter your password
+    1. You will have to reinstall from this panel every time you restart Safari
+
+> If you don't see a Develop menu in Safari, you can run
+> `defaults write com.apple.Safari IncludeDevelopMenu -bool true`
+> or go to Preferences > Advanced > Show Develop menu in menu bar.
+
 ## Release History
 
 See the [releases pages](https://github.com/el1t/uBlock-Safari/releases) for a history of releases and highlights for each release.
 
 ## Further Documentation
+
 Visit the upstream [uBlock Origin wiki](https://github.com/gorhill/uBlock/wiki) for further documentation.
 
 ## About
