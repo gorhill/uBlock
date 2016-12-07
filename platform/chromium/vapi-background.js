@@ -21,11 +21,11 @@
 
 // For background page
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -873,20 +873,26 @@ vAPI.net.registerListeners = function() {
         is_v49_55 = /\bChrom[a-z]+\/(?:49|5[012345])\b/.test(navigator.userAgent);
 
     // Chromium-based browsers understand only these network request types.
-    var validTypes = {
-        'main_frame': true,
-        'sub_frame': true,
-        'stylesheet': true,
-        'script': true,
-        'image': true,
-        'object': true,
-        'xmlhttprequest': true,
-        'other': true
-    };
+    var validTypes = [
+        'main_frame',
+        'sub_frame',
+        'stylesheet',
+        'script',
+        'image',
+        'object',
+        'xmlhttprequest',
+        'other'
+    ];
+
+    var extToTypeMap = new Map([
+        ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
+        ['mp3','media'],['mp4','media'],['webm','media'],
+        ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['webp','image']
+    ]);
 
     var denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
-            return Object.keys(validTypes);
+            return validTypes;
         }
         var out = [];
         var i = aa.length,
@@ -894,7 +900,7 @@ vAPI.net.registerListeners = function() {
             needOther = true;
         while ( i-- ) {
             type = aa[i];
-            if ( validTypes.hasOwnProperty(type) ) {
+            if ( validTypes.indexOf(type) !== -1 ) {
                 out.push(type);
             }
             if ( type === 'other' ) {
@@ -933,49 +939,35 @@ vAPI.net.registerListeners = function() {
             return;
         }
 
-        var path = µburi.pathFromURI(details.url);
-        var pos = path.indexOf('.', path.length - 6);
-
-        // https://github.com/chrisaljoudi/uBlock/issues/862
-        // If no transposition possible, transpose to `object` as per
-        // Chromium bug 410382 (see below)
-        if ( pos !== -1 ) {
-            var needle = path.slice(pos) + '.';
-            if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(needle) !== -1 ) {
-                details.type = 'font';
-                return;
-            }
-
-            if ( '.mp3.mp4.webm.'.indexOf(needle) !== -1 ) {
-                details.type = 'media';
-                return;
-            }
-
-            // Still need this because often behind-the-scene requests are wrongly
-            // categorized as 'other'
-            if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(needle) !== -1 ) {
-                details.type = 'image';
-                return;
-            }
+        // Try to map known "extension" part of URL to request type.
+        var path = µburi.pathFromURI(details.url),
+            pos = path.indexOf('.', path.length - 6),
+            type;
+        if ( pos !== -1 && (type = extToTypeMap.get(path.slice(pos + 1))) ) {
+            details.type = type;
+            return;
         }
 
         // Try to extract type from response headers if present.
         if ( details.responseHeaders ) {
-            var contentType = headerValue(details.responseHeaders, 'content-type');
-            if ( contentType.startsWith('font/') ) {
+            type = headerValue(details.responseHeaders, 'content-type');
+            if ( type.startsWith('font/') ) {
                 details.type = 'font';
                 return;
             }
-            if ( contentType.startsWith('image/') ) {
+            if ( type.startsWith('image/') ) {
                 details.type = 'image';
                 return;
             }
-            if ( contentType.startsWith('audio/') || contentType.startsWith('video/') ) {
+            if ( type.startsWith('audio/') || type.startsWith('video/') ) {
                 details.type = 'media';
                 return;
             }
         }
 
+        // https://github.com/chrisaljoudi/uBlock/issues/862
+        //   If no transposition possible, transpose to `object` as per
+        //   Chromium bug 410382
         // https://code.google.com/p/chromium/issues/detail?id=410382
         if ( is_v38_48 ) {
             details.type = 'object';
