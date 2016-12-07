@@ -44,9 +44,9 @@ To benefit from uBlock Origin's higher efficiency, it's advised that you don't u
 
 To build and load an unpacked extension for development:
 
-1. Clone `uBlock-Safari` and [`uAssets`](https://github.com/uBlockOrigin/uAssets) into the same parent directory
-1. Run `./tools/make-safari.sh` in `uBlock-Safari`'s directory
-1. Install the unpacked extension through Safari's Extension Builder
+1. **Clone** `uBlock-Safari` and [`uAssets`](https://github.com/uBlockOrigin/uAssets) into the same parent directory
+1. **Build** by running `./tools/make-safari.sh` in `uBlock-Safari`'s directory
+1. **Install** the unpacked extension through Safari's Extension Builder
     1. In Safari, load the Extension Builder (Develop > Show Extension Builder)
     1. Click the `+` button in the bottom left corner and "Add Extension"
     1. Select `dist/build/uBlock.safariextension`
@@ -55,7 +55,19 @@ To build and load an unpacked extension for development:
 
 > If you don't see a Develop menu in Safari, you can run
 > `defaults write com.apple.Safari IncludeDevelopMenu -bool true`
-> or go to Preferences > Advanced > Show Develop menu in menu bar.
+> or go to `Preferences > Advanced > Show Develop menu in menu bar`.
+
+Example clone and build:
+
+```bash
+# Clone
+git clone https://github.com/uBlockOrigin/uAssets.git
+git clone https://github.com/el1t/uBlock-Safari.git
+# Build
+cd uBlock-Safari
+./tools/make-safari.sh
+echo 'Output is in dist/build/uBlock.safariextension'
+```
 
 ## Release History
 
