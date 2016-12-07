@@ -143,7 +143,7 @@ Early development version by [@nikrolls](https://github.com/nikrolls): <https://
 
 #### Safari (macOS)
 
-Early development versionby [@el1t](https://github.com/el1t): <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
+Early development version by [@el1t](https://github.com/el1t): <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
 
 #### Note for all browsers
 
