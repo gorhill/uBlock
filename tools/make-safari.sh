@@ -23,8 +23,12 @@ cp platform/safari/Info.plist     $DES/
 cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt                    $DES/
 
+# https://github.com/el1t/uBlock-Safari/issues/4
+echo '*** uBlock.safariextension: Adding extensions to extensionless assets...'
+find $DES/assets/thirdparties -type f -regex '.*\/[^.]*' -exec mv {} {}.txt \;
+
 echo "*** uBlock.safariextension: Generating Info.plist..."
-python3 tools/make-safari-meta.py $DES/
+python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."

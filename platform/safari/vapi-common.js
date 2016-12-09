@@ -86,6 +86,11 @@ vAPI.insertHTML = function(node, html) {
 /******************************************************************************/
 
 vAPI.getURL = function(path) {
+    // https://github.com/el1t/uBlock-Safari/issues/4
+    // Add extensions to extensionless assets
+    if (path.match(/^assets\/thirdparties\/.*\/[^\/.]*$/)) {
+        path += '.txt';
+    }
     return safari.extension.baseURI + path;
 };
 
