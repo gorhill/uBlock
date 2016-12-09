@@ -114,19 +114,20 @@
                     callback(result);
                     return;
                 }
+                var key;
                 for(var i = 0; i < n; i++) {
-                    var key = keys[i];
-                    var func = function(err, value) {
-                        toSatisfy--;
-                        if(typeof value === "string") {
-                            result[arguments.callee.myKey] = JSON.parse(value);
+                    key = keys[i];
+                    localforage.getItem(key, (function(key) {
+                        return function(err, value) {
+                            toSatisfy--;
+                            if(typeof value === "string") {
+                                result[key] = JSON.parse(value);
+                            }
+                            if(toSatisfy === 0) {
+                                callback(result);
+                            }
                         }
-                        if(toSatisfy === 0) {
-                            callback(result);
-                        }
-                    };
-                    func.myKey = key;
-                    localforage.getItem(key, func);
+                    })(key));
                 }
             }
             else if(typeof keys === "object") {
