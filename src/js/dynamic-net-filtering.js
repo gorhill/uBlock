@@ -168,9 +168,6 @@ Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
 
     // Specific destinations
     for ( var desHostname in desHostnames ) {
-        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
-            continue;
-        }
         ruleKey = '* ' + desHostname;
         ruleValue = otherRules[ruleKey] || 0;
         if ( ruleValue !== 0 ) {
