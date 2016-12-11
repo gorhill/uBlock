@@ -369,6 +369,9 @@
         // onClosed handled in the main tab-close event
         // onUpdated handled via monitoring the history.pushState on web-pages
         // onPopup is handled in window.open on web-pages
+        safari.application.addEventListener('activate', function(e) {
+            vAPI.contextMenu.onMustUpdate(vAPI.tabs.getTabId(e.target));
+        }, true);
     };
 
     /******************************************************************************/
@@ -661,6 +664,7 @@
         state.badge = badge || 0;
         state.img = (iconStatus === "on" ? "" : "-off");
         vAPI.updateIcon(vAPI.toolbarItem);
+        vAPI.contextMenu.onMustUpdate(tabId);
     };
 
     /******************************************************************************/
@@ -991,14 +995,86 @@
     vAPI.contextMenu = {
         _callback: null,
         _entries: [],
+        _contextMap: {
+            frame: 'insideFrame',
+            link: 'linkHref',
+            image: 'srcUrl',
+            editable: 'editable'
+        },
+        onContextMenu: function(e) {
+            var uI = e.userInfo;
+
+            if (!uI || /^https?:\/\//i.test(uI.pageUrl) === false) {
+                return;
+            }
+
+            var invalidContext, entry, ctx;
+            var entries = vAPI.contextMenu._entries,
+                ctxMap = vAPI.contextMenu._contextMap;
+            for (var i = 0; i < entries.length; i++) {
+                entry = entries[i];
+                invalidContext = true;
+
+                for (var j = 0; j < entry.contexts.length; j++) {
+                    ctx = entry.contexts[j];
+
+                    if (uI[ctxMap[ctx]] || ctx === 'all') {
+                        invalidContext = false;
+                        break;
+                    } else if (ctx === 'audio' || ctx === 'video') {
+                        if (uI[ctxMap['image']] && uI.tagName === ctx) {
+                            invalidContext = false;
+                            break;
+                        }
+                    } else if (ctx === 'page') {
+                        if (!(uI.insideFrame || uI.linkHref || uI.mediaType || uI.editable)) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (invalidContext) {
+                    continue;
+                }
+                e.contextMenu.appendContextMenuItem(entry.id, entry.title);
+            }
+        },
+        onContextMenuCmd: function(e) {
+            var entryId;
+            var entries = vAPI.contextMenu._entries;
+            for (var i = 0; i < entries.length; i ++) {
+                entryId = entries[i].id;
+                if (e.command === entryId) {
+                    var tab = e.currentTarget.activeBrowserWindow.activeTab;
+                    e.userInfo.menuItemId = entryId;
+                    vAPI.contextMenu._callback(e.userInfo, tab ? {
+                        id: vAPI.tabs.getTabId(tab),
+                        url: tab.url
+                    } : undefined);
+                }
+            }
+        },
         onMustUpdate: function() {},
-        setEntries: function(entries, callback) {}
+        setEntries: function(entries, callback) {
+            entries = entries || [];
+            this._entries = entries;
+            callback = callback || null;
+            if ( callback === this._callback ) {
+                return;
+            }
+            if ( entries.length !== 0 && callback !== null ) {
+                safari.application.addEventListener('contextmenu', this.onContextMenu);
+                safari.application.addEventListener('command', this.onContextMenuCmd);
+                this._callback = callback;
+            } else if ( entries.length === 0 && this._callback !== null ) {
+                safari.application.removeEventListener('contextmenu', this.onContextMenu);
+                safari.application.removeEventListener('command', this.onContextMenuCmd);
+                this._callback = null;
+            }
+        }
     };
 
-    safari.application.addEventListener('command', function(e) {
-        var details = e.userInfo;
-        µBlock.elementPickerExec(vAPI.tabs.getTabId(safari.application.activeBrowserWindow.activeTab), details.tagName + '\t' + details.frameUrl || details.srcUrl || details.linkUrl || '');
-    });
     /******************************************************************************/
 
     vAPI.lastError = function() {
