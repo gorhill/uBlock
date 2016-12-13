@@ -134,6 +134,7 @@ p {
     }
 #switch {
     margin: 8px 0;
+    user-select: none;
     }
 #switch .fa {
     color: #0046ff;
