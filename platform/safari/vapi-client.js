@@ -63,7 +63,24 @@
 
     /******************************************************************************/
 
-// Support minimally working Set() for legacy Chromium.
+    if (navigator.userAgent.indexOf('Safari/6') === -1) { // If we're not on at least Safari 8
+        // Polyfill performance.now()
+        var startTime = Date.now();
+
+        if (window.performance === undefined) {
+            window.performance = {};
+        }
+
+        if (window.performance.now === undefined) {
+            window.performance.now = function() {
+                return Date.now() - startTime;
+            };
+        }
+    }
+
+    /******************************************************************************/
+
+    // Support minimally working Set() for legacy Chromium.
 
     if ( self.Set instanceof Function ) {
         self.createSet = function() {
