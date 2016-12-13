@@ -74,7 +74,7 @@
 
     /******************************************************************************/
 
-    safari.extension.addContentScriptFromURL(vAPI.getURL("js/subscriber.js"), [
+    safari.extension.addContentScriptFromURL(vAPI.getURL("js/scriptlets/subscriber.js"), [
         "https://*.adblockplus.org/*",
         "https://*.adblockplus.me/*",
         "https://www.fanboy.co.nz/*",

@@ -62,10 +62,6 @@
     <dict>
         <key>Scripts</key>
         <dict>
-            <key>End</key>
-            <array>
-                <string>js/scriptlets/subscriber.js</string>
-            </array>
             <key>Start</key>
             <array>
                 <string>js/vapi-client.js</string>
