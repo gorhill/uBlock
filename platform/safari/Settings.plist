@@ -6,7 +6,7 @@
         <key>DefaultValue</key>
         <false/>
         <key>FalseValue</key>
-        <false/>
+        <string>false</string>
         <key>Key</key>
         <string>open_prefs</string>
         <key>Secure</key>
@@ -14,7 +14,7 @@
         <key>Title</key>
         <string>Click to see the Preferences</string>
         <key>TrueValue</key>
-        <true/>
+        <string>true</string>
         <key>Type</key>
         <string>CheckBox</string>
     </dict>

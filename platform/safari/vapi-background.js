@@ -300,18 +300,23 @@
             if(typeof callback !== "function") {
                 return;
             }
-            var i, size = 0;
-            for (i in this._storage) {
-                if (!this._storage.hasOwnProperty(i)) continue;
-                size += (this._storage[i] || '').length;
-            }
-            callback(size);
+            callback(0);
+            // Too slow:
+            var getBytesInUseHandler = function(cacheSize) {
+                var i, storage = settingsStorage._storage;
+                for (i in storage) {
+                    if (!storage.hasOwnProperty(i)) continue;
+                    cacheSize += (storage[i] || '').length;
+                }
+                callback(cacheSize);
+            };
+            vAPI.cacheStorage.getBytesInUse(null, getBytesInUseHandler);
         }
     };
 
     vAPI.storage = settingsStorage;
 
-    if(!safari.extension.settings.migratedStorage) {
+    if(!settingsStorage.get('migratedStorage')) {
         var migrationMap = {
             "cached_asset_content://assets/user/filters.txt": "userFilters"
         };
@@ -354,7 +359,7 @@
             delayed = null;
             vAPI.storage = settingsStorage;
         });
-        safari.extension.settings.migratedStorage = true;
+        settingsStorage.set({ 'migratedStorage': true });
     }
 
     /******************************************************************************/
