@@ -100,17 +100,20 @@ vAPI.getURL = function(path) {
 // First language is the default
 
 vAPI.i18nData = [
-    'en', 'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'es', 'et', 'fa', 'fi',
-    'fil', 'fr', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv',
-    'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sl', 'sq', 'sr',
-    'sv', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
+    'en', 'ar', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'eo', 'es', 'et', 'eu',
+    'fa', 'fi', 'fil', 'fr', 'fy', 'gl', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko',
+    'lt', 'lv', 'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sk', 'sl', 'sq',
+    'sr', 'sv', 'ta', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
 ];
 
-vAPI.i18n = navigator.language;
+// Force uppercase after hyphen
+vAPI.i18n = navigator.language.slice(0, 2) + navigator.language.slice(2).toUpperCase();
 
+// Attempt removing hyphen
 if ( vAPI.i18nData.indexOf(vAPI.i18n) === -1 ) {
     vAPI.i18n = vAPI.i18n.slice(0, 2);
 
+    // Default to first
     if ( vAPI.i18nData.indexOf(vAPI.i18n) === -1 ) {
         vAPI.i18n = vAPI.i18nData[0];
     }
