@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"您的列表中针对 uBlock₀ 的主机名将被禁用。一行一条规则。无效的主机名将直接被忽略。",
+    "message":"uBlock₀ 在列表里的城名将会停用。一行一条规则。无效的城名将直接被忽略。",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
