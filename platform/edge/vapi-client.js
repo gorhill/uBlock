@@ -505,6 +505,14 @@ vAPI.messaging = {
     }
 };
 
+// Downloads don't currently work from background pages
+// so we listen for forwarded downloads here
+vAPI.messaging.addChannelListener('foregroundDownload', (message) => {
+    if (message.what === 'foregroundDownload') {
+        vAPI.download(message.details);
+    }
+});
+
 /******************************************************************************/
 
 vAPI.shutdown.add(function() {

@@ -49,7 +49,14 @@ var setScriptDirection = function(language) {
 /******************************************************************************/
 
 vAPI.download = function(details) {
-    if ( !details.url ) {
+    if (!details.url) {
+        return;
+    }
+
+    if (window.location.pathname.endsWith('background.html')) {
+        // Downloads don't currently work from background pages
+        // so we send it to the foreground for download
+        vAPI.messaging.broadcast({what:'foregroundDownload', details});
         return;
     }
 
@@ -61,7 +68,6 @@ vAPI.download = function(details) {
             content = content.replace(/\r?\n/g, '\r\n');
         }
         const blob = new Blob([content], {type: contentType});
-        // Currently not working from background pages
         window.navigator.msSaveBlob(blob, details.filename);
     }
 };
