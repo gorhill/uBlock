@@ -454,7 +454,7 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
-var toChromiumTabId = function(tabId) {
+var toEdgeTabId = function(tabId) {
     if ( typeof tabId === 'string' ) {
         tabId = parseInt(tabId, 10);
     }
@@ -564,7 +564,7 @@ vAPI.tabs.get = function(tabId, callback) {
     };
 
     if ( tabId !== null ) {
-        tabId = toChromiumTabId(tabId);
+        tabId = toEdgeTabId(tabId);
         if ( tabId === 0 ) {
             onTabReady(null);
         } else {
@@ -632,7 +632,7 @@ vAPI.tabs.open = function(details) {
             }
 
             // update doesn't accept index, must use move
-            browser.tabs.update(toChromiumTabId(details.tabId), _details, function(tab) {
+            browser.tabs.update(toEdgeTabId(details.tabId), _details, function(tab) {
                 // if the tab doesn't exist
                 if ( vAPI.lastError() ) {
                     browser.tabs.create(_details, focusWindow);
@@ -705,7 +705,7 @@ vAPI.tabs.open = function(details) {
 // Replace the URL of a tab. Noop if the tab does not exist.
 
 vAPI.tabs.replace = function(tabId, url) {
-    tabId = toChromiumTabId(tabId);
+    tabId = toEdgeTabId(tabId);
     if ( tabId === 0 ) {
         return;
     }
@@ -728,7 +728,7 @@ vAPI.tabs.replace = function(tabId, url) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabId) {
-    tabId = toChromiumTabId(tabId);
+    tabId = toEdgeTabId(tabId);
     if ( tabId === 0 ) {
         return;
     }
@@ -746,7 +746,7 @@ vAPI.tabs.remove = function(tabId) {
 /******************************************************************************/
 
 vAPI.tabs.reload = function(tabId /*, flags*/) {
-    tabId = toChromiumTabId(tabId);
+    tabId = toEdgeTabId(tabId);
     if ( tabId === 0 ) {
         return;
     }
@@ -767,7 +767,7 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
 // Select a specific tab.
 
 vAPI.tabs.select = function(tabId) {
-    tabId = toChromiumTabId(tabId);
+    tabId = toEdgeTabId(tabId);
     if ( tabId === 0 ) {
         return;
     }
@@ -796,7 +796,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         }
     };
     if ( tabId ) {
-        browser.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
+        browser.tabs.executeScript(toEdgeTabId(tabId), details, onScriptExecuted);
     } else {
         browser.tabs.executeScript(details, onScriptExecuted);
     }
@@ -813,7 +813,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // anymore, so this ensures it does still exist.
 
 vAPI.setIcon = function(tabId, iconStatus, badge) {
-    tabId = toChromiumTabId(tabId);
+    tabId = toEdgeTabId(tabId);
     if ( tabId === 0 ) {
         return;
     }
@@ -908,7 +908,7 @@ vAPI.messaging.onPortMessage = (function() {
 
     var toAux = function(details, portFrom) {
         var port, portTo;
-        var chromiumTabId = toChromiumTabId(details.toTabId);
+        var edgeTabId = toEdgeTabId(details.toTabId);
 
         // TODO: This could be an issue with a lot of tabs: easy to address
         //       with a port name to tab id map.
@@ -919,7 +919,7 @@ vAPI.messaging.onPortMessage = (function() {
             // When sending to an auxiliary process, the target is always the
             // port associated with the root frame.
             port = messaging.ports[portName];
-            if ( port.sender.frameId === 0 && port.sender.tab.id === chromiumTabId ) {
+            if ( port.sender && port.sender.tab.id === edgeTabId ) {
                 portTo = port;
                 break;
             }
