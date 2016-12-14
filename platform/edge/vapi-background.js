@@ -1285,14 +1285,16 @@ vAPI.net.registerListeners = function() {
         // Chromium 48 and lower does not support `ping` type.
         // Chromium 56 and higher does support `csp_report` stype.
         if ( is_v49_55 && crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
-            crapi.onBeforeSendHeaders.addListener(
+            try {
+              crapi.onBeforeSendHeaders.addListener(
                 onBeforeSendHeaders,
                 {
-                    'urls': [ '<all_urls>' ],
-                    'types': [ 'ping' ]
+                  'urls': ['<all_urls>'],
+                  'types': ['ping']
                 },
-                [ 'blocking', 'requestHeaders' ]
-            );
+                ['blocking', 'requestHeaders']
+              );
+            } catch (e) {}
         }
  
         if ( crapi.onHeadersReceived.hasListener(onHeadersReceived) === false ) {
