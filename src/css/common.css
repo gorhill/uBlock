@@ -10,6 +10,9 @@
     font-style: normal;
     font-weight: normal;
     line-height: 1;
+    user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
     vertical-align: middle;
     }
 body {

@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Внимание! Промяната на тези разширени настройки е на ваш риск.",
+    "message":"Внимание! Променяте тези настройки на свой собствен риск.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

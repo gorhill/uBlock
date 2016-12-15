@@ -44,7 +44,7 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν την σελίδα.",
+    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο για αυτήν την σελίδα.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -100,7 +100,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Τοπικοί κανόνες: αυτή η στήλη είναι για κανόνες με εφαρμογή στην τρέχουσα τοποθεσία μόνον.\nΟι τοπικοί κανόνες παραμερίζουν τους καθολικούς κανόνες.",
+    "message":"Τοπικοί κανόνες: αυτή η στήλη είναι για κανόνες με εφαρμογή στην τρέχουσα τοποθεσία μόνο.\nΟι τοπικοί κανόνες παραμερίζουν τους καθολικούς κανόνες.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -124,7 +124,7 @@
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"Css\/Εικόνες τρίτου μέρους",
+    "message":"3ου μέρους css\/Εικόνες",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Λειτουργία φιλική πρως χρήστες με αχρωματοψία",
+    "message":"Λειτουργία φιλική προς χρήστες με αχρωματοψία",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Φραγή στοιχείων πολυμέσων μεγαλύτερων από {{εισαγωγή:αριθμός}} kB",
+    "message":"Φραγή στοιχείων πολυμέσων μεγαλύτερων από {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
@@ -492,7 +492,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} το δήκτυο αιτεί {{type}} {{br}} του οποίου η διεύθηνση ταιριάζει {{url}} {{br}} και το οποίο προέρχεται {{origin}},{{br}}{{importance}} υπάρχει ένα ταιριαστό φίλτρο εξαίρεση.",
+    "message":"{{action}} τα δικτυακά αιτήματα {{type}} {{br}} των οποίων η διεύθυνση ταιριάζει με {{url}} {{br}} και προέρχεται από {{origin}},{{br}}{{importance}} υπάρχει ένα ταιριαστό φίλτρο για εξαίρεση.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -520,7 +520,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"εκτός εάν",
+    "message":"εκτός όταν",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
@@ -676,7 +676,7 @@
     "description":""
   },
   "cloudDeviceNamePrompt":{
-    "message":"Το όνομα της συσκευής:",
+    "message":"Το όνομα αυτής της συσκευής:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
