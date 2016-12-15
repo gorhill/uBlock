@@ -139,11 +139,16 @@ Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton)
 
 #### Microsoft Edge
 
-Early development version by [@nikrolls](https://github.com/nikrolls): <https://github.com/nikrolls/uBlock-Edge#edge>.
+Developer: [@nikrolls](https://github.com/nikrolls).
+
+Stable version available in [Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4).
+Development version available at <https://github.com/nikrolls/uBlock-Edge#edge>.
 
 #### Safari (macOS)
 
-Early development version by [@el1t](https://github.com/el1t): <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
+Developer: [@el1t](https://github.com/el1t).
+
+Development version available at <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
 
 #### Note for all browsers
 
