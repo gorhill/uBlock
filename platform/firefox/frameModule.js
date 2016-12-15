@@ -384,23 +384,34 @@ var contentObserver = {
                 svc.scriptloader.loadSubScript(script, sandbox);
             };
 
-            sandbox.injectCSS = function(sheetURI) {
+            let canUserStyles = (function() {
                 try {
-                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                                .getInterface(Ci.nsIDOMWindowUtils);
-                    wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    return win.QueryInterface(Ci.nsIInterfaceRequestor)
+                              .getInterface(Ci.nsIDOMWindowUtils)
+                              .loadSheetUsingURIString instanceof Function;
                 } catch(ex) {
                 }
-            };
+                return false;
+            })();
 
-            sandbox.removeCSS = function(sheetURI) {
-                try {
-                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                                .getInterface(Ci.nsIDOMWindowUtils);
-                    wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
-                } catch (ex) {
-                }
-            };
+            if ( canUserStyles ) {
+                sandbox.injectCSS = function(sheetURI) {
+                    try {
+                        let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                    .getInterface(Ci.nsIDOMWindowUtils);
+                        wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    } catch(ex) {
+                    }
+                };
+                sandbox.removeCSS = function(sheetURI) {
+                    try {
+                        let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                    .getInterface(Ci.nsIDOMWindowUtils);
+                        wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    } catch (ex) {
+                    }
+                };
+            }
 
             sandbox.topContentScript = win === win.top;
 

@@ -126,10 +126,6 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-var shadowId = document.documentElement.shadowRoot !== undefined ?
-    vAPI.randomToken():
-    undefined;
-
 var jobQueue = [
     { t: 'css-hide',  _0: [] }, // to inject in style tag
     { t: 'css-style', _0: [] }, // to inject in style tag
@@ -162,6 +158,87 @@ var cosmeticFiltersActivated = function() {
         { what: 'cosmeticFiltersActivated' }
     );
 };
+
+/******************************************************************************/
+
+// If a platform does not provide its own (improved) vAPI.hideNode, we assign
+// a default one to try to override author styles as best as can be.
+
+var platformHideNode = vAPI.hideNode,
+    platformUnhideNode = vAPI.unhideNode;
+
+(function() {
+    if ( platformHideNode instanceof Function ) {
+        return;
+    }
+
+    var uid,
+        timerId,
+        observer,
+        changedNodes = [];
+    var observerOptions = {
+        attributes: true,
+        attributeFilter: [ 'style' ]
+    };
+
+    var overrideInlineStyle = function(node) {
+        var style = window.getComputedStyle(node),
+            display = style.getPropertyValue('display'),
+            attr = node.getAttribute('style') || '';
+        if ( node[uid] === undefined ) {
+            node[uid] = node.hasAttribute('style') && attr;
+        }
+        if ( display !== '' && display !== 'none' ) {
+            if ( attr !== '' ) { attr += '; '; }
+            node.setAttribute('style', attr + 'display: none !important;');
+        }
+    };
+
+    var timerHandler = function() {
+        timerId = undefined;
+        var nodes = changedNodes,
+            i = nodes.length, node;
+        while ( i-- ) {
+            node = nodes[i];
+            if ( node[uid] !== undefined ) {
+                overrideInlineStyle(node);
+            }
+        }
+        nodes.length = 0;
+    };
+
+    var observerHandler = function(mutations) {
+        var i = mutations.length;
+        while ( i-- ) {
+            changedNodes.push(mutations[i].target);
+        }
+        if ( timerId === undefined ) {
+            timerId = vAPI.setTimeout(timerHandler, 1);
+        }
+    };
+
+    platformHideNode = function(node) {
+        if ( uid === undefined ) {
+            uid = vAPI.randomToken();
+        }
+        overrideInlineStyle(node);
+        if ( observer === undefined ) {
+            observer = new MutationObserver(observerHandler);
+        }
+        observer.observe(node, observerOptions);
+    };
+
+    platformUnhideNode = function(node) {
+        if ( uid === undefined ) { return; }
+        var attr = node[uid];
+        if ( attr === false ) {
+            node.removeAttribute('style');
+        } else if ( typeof attr === 'string' ) {
+            node.setAttribute('style', attr);
+        }
+        delete node[uid];
+    };
+})();
 
 /******************************************************************************/
 
@@ -515,30 +592,7 @@ var domFilterer = {
         this.hiddenNodeCount += 1;
         node.hidden = true;
         node[this.hiddenId] = null;
-        var style = window.getComputedStyle(node),
-            display = style.getPropertyValue('display');
-        if ( display !== '' && display !== 'none' ) {
-            var styleAttr = node.getAttribute('style') || '';
-            node[this.hiddenId] = node.hasAttribute('style') && styleAttr;
-            if ( styleAttr !== '' ) { styleAttr += '; '; }
-            node.setAttribute('style', styleAttr + 'display: none !important;');
-        }
-        if ( shadowId === undefined ) { return; }
-        var shadow = node.shadowRoot;
-        if ( shadow ) {
-            if ( shadow[shadowId] && shadow.firstElementChild !== null ) {
-                shadow.removeChild(shadow.firstElementChild);
-            }
-            return;
-        }
-        // https://github.com/gorhill/uBlock/pull/555
-        // Not all nodes can be shadowed:
-        //   https://github.com/w3c/webcomponents/issues/102
-        try {
-            shadow = node.createShadowRoot();
-            shadow[shadowId] = true;
-        } catch (ex) {
-        }
+        platformHideNode(node);
     },
 
     init: function() {
@@ -561,19 +615,7 @@ var domFilterer = {
 
     showNode: function(node) {
         node.hidden = false;
-        var styleAttr = node[this.hiddenId];
-        if ( styleAttr === false ) {
-            node.removeAttribute('style');
-        } else if ( typeof styleAttr === 'string' ) {
-            node.setAttribute('style', node[this.hiddenId]);
-        }
-        var shadow = node.shadowRoot;
-        if ( shadow && shadow[shadowId] ) {
-            if ( shadow.firstElementChild !== null ) {
-                shadow.removeChild(shadow.firstElementChild);
-            }
-            shadow.appendChild(document.createElement('content'));
-        }
+        platformUnhideNode(node);
     },
 
     toggleLogging: function(state) {
@@ -601,27 +643,12 @@ var domFilterer = {
         node.removeAttribute(this.hiddenId);
         node[this.hiddenId] = undefined;
         node.hidden = false;
-        var shadow = node.shadowRoot;
-        if ( shadow && shadow[shadowId] ) {
-            if ( shadow.firstElementChild !== null ) {
-                shadow.removeChild(shadow.firstElementChild);
-            }
-            shadow.appendChild(document.createElement('content'));
-        }
+        platformUnhideNode(node);
     },
 
     unshowNode: function(node) {
         node.hidden = true;
-        var styleAttr = node[this.hiddenId];
-        if ( styleAttr === false ) {
-            node.setAttribute('style', 'display: none !important;');
-        } else if ( typeof styleAttr === 'string' ) {
-            node.setAttribute('style', node[this.hiddenId] + '; display: none !important;');
-        }
-        var shadow = node.shadowRoot;
-        if ( shadow && shadow[shadowId] && shadow.firstElementChild !== null ) {
-            shadow.removeChild(shadow.firstElementChild);
-        }
+        platformHideNode(node);
     },
 
     domChangedHandler: function(addedNodes, removedNodes) {
