@@ -142,6 +142,7 @@ Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton)
 Developer: [@nikrolls](https://github.com/nikrolls).
 
 Stable version available in [Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4).
+
 Development version available at <https://github.com/nikrolls/uBlock-Edge#edge>.
 
 #### Safari (macOS)
