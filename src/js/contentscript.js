@@ -66,6 +66,17 @@
   Additionally, the domSurveyor can turn itself off once it decides that
   it has become pointless (repeatedly not finding new cosmetic filters).
 
+  The domFilterer makes use of platform-dependent user styles[1] code, or
+  provide a default generic implementation if none is present.
+  At time of writing, only modern Firefox provides a custom implementation,
+  which makes for solid, reliable and low overhead cosmetic filtering on
+  Firefox.
+  The generic implementation[2] performs as best as can be, but won't ever be
+  as reliable as real user styles.
+  [1] "user styles" refer to local CSS rules which have priority over, and
+      can't be overriden by a web page's own CSS rules.
+  [2] below, see platformUserCSS / platformHideNode / platformUnhideNode
+
 */
 
 /******************************************************************************/
@@ -138,8 +149,7 @@ var reParserEx = /:(?:has|matches-css|matches-css-before|matches-css-after|style
 var allExceptions = createSet(),
     allSelectors = createSet(),
     stagedNodes = [],
-    matchesProp = vAPI.matchesProp,
-    userCSS = vAPI.userCSS;
+    matchesProp = vAPI.matchesProp;
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
@@ -160,6 +170,62 @@ var cosmeticFiltersActivated = function() {
 };
 
 /******************************************************************************/
+
+// If a platform does not support its own vAPI.userCSS (user styles), we
+// provide a default (imperfect) implementation.
+
+// Probably no longer need to watch for style tags removal/tampering with fix
+// to https://github.com/gorhill/uBlock/issues/963
+
+var platformUserCSS = (function() {
+    if ( vAPI.userCSS instanceof Object ) {
+        return vAPI.userCSS;
+    }
+
+    return {
+        enabled: true,
+        styles: [],
+        add: function(css) {
+            var style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            style.textContent = css;
+            if ( document.head ) {
+                document.head.appendChild(style);
+            }
+            this.styles.push(style);
+            if ( style.sheet ) {
+                style.sheet.disabled = !this.enabled;
+            }
+        },
+        remove: function(css) {
+            var i = this.styles.length,
+                style, parent;
+            while ( i-- ) {
+                style = this.styles[i];
+                if ( style.textContent !== css ) { continue; }
+                parent = style.parentNode;
+                if ( parent !== null ) {
+                    parent.removeChild(style);
+                }
+                this.styles.splice(i, 1);
+            }
+        },
+        toggle: function(state) {
+            if ( this.styles.length === '' ) { return; }
+            if ( state === undefined ) {
+                state = !this.enabled;
+            }
+            var i = this.styles.length, style;
+            while ( i-- ) {
+                style = this.styles[i];
+                if ( style.sheet !== null ) {
+                    style.sheet.disabled = !state;
+                }
+            }
+            this.enabled = state;
+        }
+    };
+})();
 
 // If a platform does not provide its own (improved) vAPI.hideNode, we assign
 // a default one to try to override author styles as best as can be.
@@ -344,7 +410,6 @@ var runXpathJob = function(job, fn) {
 
 var domFilterer = {
     addedNodesHandlerMissCount: 0,
-    removedNodesHandlerMissCount: 0,
     commitTimer: null,
     disabledId: vAPI.randomToken(),
     enabled: true,
@@ -428,54 +493,6 @@ var domFilterer = {
         }
     },
 
-    addStyleTag: function(text) {
-        var styleTag = document.createElement('style');
-        styleTag.setAttribute('type', 'text/css');
-        styleTag.textContent = text;
-        if ( document.head ) {
-            document.head.appendChild(styleTag);
-        }
-        this.styleTags.push(styleTag);
-        if ( userCSS ) {
-            userCSS.add(text);
-        }
-    },
-
-    checkStyleTags_: function() {
-        var doc = document,
-            html = doc.documentElement,
-            head = doc.head,
-            newParent = head || html;
-        if ( newParent === null ) { return; }
-        this.removedNodesHandlerMissCount += 1;
-        var styles = this.styleTags,
-            style, oldParent;
-        for ( var i = 0; i < styles.length; i++ ) {
-            style = styles[i];
-            oldParent = style.parentNode;
-            // https://github.com/gorhill/uBlock/issues/1031
-            // If our style tag was disabled, re-insert into the page.
-            if (
-                style.disabled &&
-                oldParent !== null &&
-                style.hasAttribute(this.disabledId) === false
-            ) {
-                oldParent.removeChild(style);
-                oldParent = null;
-            }
-            if ( oldParent === head || oldParent === html ) { continue; }
-            style.disabled = false;
-            newParent.appendChild(style);
-            this.removedNodesHandlerMissCount = 0;
-        }
-    },
-
-    checkStyleTags: function() {
-        if ( this.removedNodesHandlerMissCount < 16 ) {
-            this.checkStyleTags_();
-        }
-    },
-
     commit_: function() {
         this.commitTimer.clear();
 
@@ -538,7 +555,7 @@ var domFilterer = {
         }
 
         if ( styleText !== '' ) {
-            this.addStyleTag(styleText);
+            platformUserCSS.add(styleText);
         }
 
         // Un-hide nodes previously hidden.
@@ -623,18 +640,16 @@ var domFilterer = {
     },
 
     toggleOff: function() {
-        if ( userCSS ) {
-            userCSS.toggle(false);
-        }
+        platformUserCSS.toggle(false);
         this.enabled = false;
     },
 
     toggleOn: function() {
-        if ( userCSS ) {
-            userCSS.toggle(true);
-        }
+        platformUserCSS.toggle(true);
         this.enabled = true;
     },
+
+    userCSS: platformUserCSS,
 
     unhideNode: function(node) {
         if ( node[this.hiddenId] !== undefined ) {
@@ -651,13 +666,8 @@ var domFilterer = {
         platformHideNode(node);
     },
 
-    domChangedHandler: function(addedNodes, removedNodes) {
+    domChangedHandler: function(addedNodes) {
         this.commit(addedNodes);
-        // https://github.com/gorhill/uBlock/issues/873
-        // This will ensure our style elements will stay in the DOM.
-        if ( removedNodes ) {
-            domFilterer.checkStyleTags();
-        }
     },
 
     start: function() {
@@ -818,9 +828,9 @@ vAPI.domWatcher = (function() {
         }
         addedNodeLists.length = 0;
         if ( addedNodes.length !== 0 || removedNodes ) {
-            listeners[0](addedNodes, removedNodes);
+            listeners[0](addedNodes);
             if ( listeners[1] ) {
-                listeners[1](addedNodes, removedNodes);
+                listeners[1](addedNodes);
             }
             addedNodes.length = 0;
             removedNodes = false;
@@ -1485,19 +1495,16 @@ vAPI.domSurveyor = (function() {
         surveyPhase2(addedNodes);
     };
 
-    var domChangedHandler = function(addedNodes, removedNodes) {
+    var domChangedHandler = function(addedNodes) {
         if ( cosmeticSurveyingMissCount > 255 ) {
             vAPI.domWatcher.removeListener(domChangedHandler);
             vAPI.domSurveyor = null;
-            domFilterer.domChangedHandler(addedNodes, removedNodes);
+            domFilterer.domChangedHandler(addedNodes);
             domFilterer.start();
             return;
         }
 
         surveyPhase1(addedNodes);
-        if ( removedNodes ) {
-            domFilterer.checkStyleTags();
-        }
     };
 
     var start = function() {
@@ -1535,11 +1542,6 @@ vAPI.domIsLoaded = function(ev) {
     vAPI.domCollapser.start();
 
     if ( vAPI.domFilterer ) {
-        // https://github.com/chrisaljoudi/uBlock/issues/789
-        // https://github.com/gorhill/uBlock/issues/873
-        // Be sure our style tags used for cosmetic filtering are still
-        // applied.
-        vAPI.domFilterer.checkStyleTags();
         // To avoid neddless CPU overhead, we commit existing cosmetic filters
         // only if the page loaded "slowly", i.e. if the code here had to wait
         // for a DOMContentLoaded event -- in which case the DOM may have
