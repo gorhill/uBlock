@@ -36,7 +36,9 @@ Early tests of performance of this extension on the Microsoft Edge browser are p
 
 ## Installation
 
-While in pre-release, you will need to side-load the extension. You need to have the Windows 10 Anniversary Update to use extensions in Edge.
+You can download a [Preview Release from the Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4);
+
+To install beta releases directly from GitHub, you will need to side-load the extension:
 
 1. Download the latest release from [the Releases page](https://github.com/nikrolls/uBlock-Edge/releases)
 2. Extract the zip file somewhere safe (it will need to remain there as long as you use the extension)

@@ -505,6 +505,7 @@ if ( self.injectCSS ) {
             return state ? this._load() : this._unload();
         }
     };
+    vAPI.hideNode = vAPI.unhideNode = function(){};
 }
 
 /******************************************************************************/
