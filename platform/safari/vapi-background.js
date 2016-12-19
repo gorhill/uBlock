@@ -372,7 +372,7 @@
     /******************************************************************************/
 
     vAPI.isBehindTheSceneTabId = function(tabId) {
-        return tabId.toString() === this.noTabId;
+        return tabId.toString() === '-1';
     };
 
     vAPI.noTabId = '-1';
@@ -709,7 +709,7 @@
         if(iconState.dirty & 2) {
             icon.badge = iconState.badge;
         }
-        if(iconState.dirty & 1 && icon.image !== ICON_URLS[iconState.img]) {
+        if((iconState.dirty & 1) && icon.image !== ICON_URLS[iconState.img]) {
             icon.image = ICON_URLS[iconState.img];
         }
         iconState.dirty = 0;
@@ -905,8 +905,8 @@
             //     channelName: details.toChannel,
             //     msg: details.msg
             // });
-            portTo.dispatchMessage(wrapper && wraper.timerId, {
-                mainProcessId: wrapper && wraper.timerId,
+            portTo.dispatchMessage(wrapper && wrapper.timerId, {
+                mainProcessId: wrapper && wrapper.timerId,
                 channelName: details.toChannel,
                 msg: details.msg
             });

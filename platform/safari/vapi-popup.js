@@ -39,7 +39,7 @@ var onLoaded = function() {
             }
             _toggle.apply(this, arguments);
             pane2.style.setProperty("display", "inline-block", "important");
-            unchainPane2Timeout = setTimeout(unchainPane2, 700);
+            unchainPane2Timeout = setTimeout(unchainPane2, 400);
             updateSize(enabled);
         }
         else {
