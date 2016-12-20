@@ -828,7 +828,7 @@
 
         CallbackWrapper.prototype.init = function(port, request, timeout) {
             this.port = port;
-            this.request = request;
+            this.request = request || port;
             this.timerId = timeout !== undefined ?
                 vAPI.setTimeout(this.callback, timeout) :
                 null;
@@ -841,7 +841,7 @@
                 delete toAuxPending[this.timerId];
                 this.timerId = null;
             }
-            this.port.dispatchMessage(this.request.name, {
+            this.port.target.page.dispatchMessage(this.request.name, {
                 auxProcessId: this.request.message.auxProcessId,
                 channelName: this.request.message.channelName,
                 msg: response !== undefined ? response : null
@@ -931,7 +931,7 @@
             // Auxiliary process to auxiliary process
             if ( message.toTabId !== undefined ) {
                 // TODO: this doesn't work.
-                toAux(message, request.target.page);
+                toAux(message, request);
                 return;
             }
 
@@ -944,7 +944,7 @@
             // Auxiliary process to main process: prepare response
             var callback = messaging.NOOPFUNC;
             if ( message.auxProcessId !== undefined ) {
-                callback = callbackWrapperFactory(request.target.page, request).callback;
+                callback = callbackWrapperFactory(request).callback;
             }
 
             var sender = {

@@ -319,8 +319,11 @@
     vAPI.messaging = {
 	    channels: Object.create(null),
 	    channelCount: 0,
+        // Waiting for response
 	    pending: Object.create(null),
 	    pendingCount: 0,
+        // Waiting to send
+        queued: [],
 	    auxProcessId: 1,
 	    shuttingDown: false,
 
@@ -414,6 +417,16 @@
                     Function(msg.details.code).call(self);
                 }
             });
+            // Handle queued messages when page becomes visible
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden === true) return;
+                var message;
+                for (var i = 0; i < this.queued.length; i++) {
+                    message = this.queued[i];
+                    this.postMessage(message.auxProcessId, message);
+                }
+                this.queued.length = 0;
+            }.bind(this));
 	    },
 
 	    send: function(channelName, message, callback) {
@@ -437,14 +450,19 @@
             if (!this.connector) {
                 this.connect();
             }
-            this.postMessage(auxProcessId, {
+            message = {
                 channelName: channelName,
                 auxProcessId: auxProcessId,
                 toTabId: toTabId,
                 toChannel: toChannel,
                 msg: message
-            });
-
+            };
+            if (document.hidden === true) {
+                // Wait for visibility change
+                this.queued.push(message);
+            } else {
+                this.postMessage(auxProcessId, message);
+            }
 	    },
 
         postMessage: function(auxProcessId, message) {
