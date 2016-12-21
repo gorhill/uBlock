@@ -947,6 +947,8 @@ vAPI.domCollapser = (function() {
             netSelectorCacheCountMax = response.netSelectorCacheCountMax,
             aa = [ null ],
             request, key, entry, target, value;
+        // https://github.com/gorhill/uBlock/issues/2256
+        var iframeLoadEventPatch = vAPI.iframeLoadEventPatch;
         // Important: process in chronological order -- this ensures the
         // cached selectors are the most useful ones.
         for ( var i = 0, ni = requests.length; i < ni; i++ ) {
@@ -980,6 +982,7 @@ vAPI.domCollapser = (function() {
                     selectors.push(request.tag + '[' + request.attr + '="' + value + '"]');
                     netSelectorCacheCount += 1;
                 }
+                if ( iframeLoadEventPatch ) { iframeLoadEventPatch(target); }
             }
         }
         if ( selectors.length !== 0 ) {
@@ -1029,9 +1032,6 @@ vAPI.domCollapser = (function() {
             timer = vAPI.setTimeout(send, delay || 20);
         }
     };
-
-    // If needed eventually, we could listen to `src` attribute changes
-    // for iframes.
 
     var add = function(target) {
         var tag = target.localName;

@@ -510,6 +510,20 @@ if ( self.injectCSS ) {
 
 /******************************************************************************/
 
+// https://bugzilla.mozilla.org/show_bug.cgi?id=444165
+// https://github.com/gorhill/uBlock/issues/2256
+//   Not the prettiest solution, but that's the safest/simplest I can think
+//   of at this point. If/when bugzilla issue above is solved, we will need
+//   version detection to decide whether the patch needs to be applied.
+
+vAPI.iframeLoadEventPatch = function(target) {
+    if ( target.localName === 'iframe' ) {
+        target.dispatchEvent(new Event('load'));
+    }
+};
+
+/******************************************************************************/
+
 // No need to have vAPI client linger around after shutdown if
 // we are not a top window (because element picker can still
 // be injected in top window).
