@@ -204,7 +204,7 @@
       settings = µb.userSettings;
 
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
-        whiteListDNT();
+        
       // check whether an idle timeout has been specified
       var idleMs = settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastPageLoad > idleMs)) {
