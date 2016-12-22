@@ -13,6 +13,7 @@
   var µb = µBlock,
     production = 0,
     lastActivity = 0,
+    lastPageLoad = 0,
     notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
@@ -201,20 +202,33 @@
     var next, pending = pendingAds(),
       settings = µb.userSettings;
 
+    console.log("[IDLE] checking..." + settings.clickOnlyWhenIdleFor);
+
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
 
-      // if an unvisited ad is being inspected, visit it next
-      if (visitPending(inspected)) {
+      // check whether an idle timeout has been specified
+      var idleMs = settings.clickOnlyWhenIdleFor;
+      if (!idleMs || (millis() - lastPageLoad > idleMs)) {
 
-        next = inspected;
+        if (idleMs)
+          console.log("[IDLE]"+(millis() - lastPageLoad)+"ms, clicking resumed...");
 
-      } else {
+        // if an unvisited ad is being inspected, visit it next
+        if (visitPending(inspected)) {
 
-        // else take the most recent ad needing a visit
-        next = pending.sort(byField('-foundTs'))[0];
+          next = inspected;
+
+        } else {
+
+          // else take the most recent ad needing a visit
+          next = pending.sort(byField('-foundTs'))[0];
+        }
+
+        visitAd(next);
       }
-
-      visitAd(next);
+      else {
+        console.log("[IDLE] "+(millis() - lastPageLoad)+"ms waiting...");
+      }
     }
 
     // next poll
@@ -1129,6 +1143,8 @@
 
     if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export')
       exportAds();
+
+    lastPageLoad = millis();
   };
 
   exports.onListsLoaded = function (firstRun) {
