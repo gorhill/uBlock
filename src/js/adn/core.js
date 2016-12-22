@@ -202,16 +202,13 @@
     var next, pending = pendingAds(),
       settings = µb.userSettings;
 
-    console.log("[IDLE] checking..." + settings.clickOnlyWhenIdleFor);
-
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
 
       // check whether an idle timeout has been specified
       var idleMs = settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastPageLoad > idleMs)) {
 
-        if (idleMs)
-          console.log("[IDLE]"+(millis() - lastPageLoad)+"ms, clicking resumed...");
+        //idleMs && log("[IDLE] "+(millis() - lastPageLoad)+"ms, clicking resumed...");
 
         // if an unvisited ad is being inspected, visit it next
         if (visitPending(inspected)) {
@@ -226,9 +223,7 @@
 
         visitAd(next);
       }
-      else {
-        console.log("[IDLE] "+(millis() - lastPageLoad)+"ms waiting...");
-      }
+      //else log("[IDLE] "+(millis() - lastPageLoad)+"ms, waiting...");
     }
 
     // next poll
