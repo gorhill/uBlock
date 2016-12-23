@@ -75,7 +75,7 @@
     };
 
     initializeState(settings);
-
+    // whiteListDNT();
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
@@ -94,6 +94,7 @@
 
       setupTesting();
     }
+
   }
 
   var setupTesting = function () {
@@ -1082,6 +1083,33 @@
     return false;
   }
 
+  var getDNTurls = function(callback){
+      µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function(d){
+          var content = d.content;
+          var DNTurls = [];
+          while(content.indexOf("@@||") != -1){
+              var start = content.indexOf("@@||");
+              var end = content.indexOf("^$", start);
+              var domain = content.substring(start+4,end);
+              DNTurls.push(domain);
+              content = content.substring(end)
+          }
+          callback(DNTurls);
+      });
+  }
+
+  var whiteListDNT = function(){
+    getDNTurls(function(DNTurls){
+        for(var i in DNTurls){
+            // seems to not work without the "http://"
+            µb.toggleNetFilteringSwitch("http://" + DNTurls[i], "site", false);
+        }
+    });
+  }
+
+
+
+
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1638,6 +1666,8 @@
     // download them to a folder next to the export file (with same name -json)
     // handle #639 here
   };
+
+
 
   exports.adsForPage = function (request, pageStore, tabId) {
 
