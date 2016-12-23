@@ -155,7 +155,7 @@
         continue;
       }
 
-      if (ads[i].visitedTs === 0 && ads[i].attempts) {
+      if (ads[i].visitedTs === 0 && ads[i].attempts > 0) {
 
         warn('Invalid visitTs/attempts pair', ads[i]);
         ads[i].attempts = 0; // this shouldn't happen
@@ -224,7 +224,8 @@
 
         visitAd(next);
       }
-      //else log("[IDLE] "+(millis() - lastPageLoad)+"ms, waiting...");
+
+      // else log("[IDLE] "+(millis() - lastPageLoad)+"ms, waiting...");
     }
 
     // next poll
@@ -434,7 +435,11 @@
     }
 
     try {
-      updateAdOnSuccess(this, ad, parseTitle(this));
+
+      if (!isFacebookExternal(this, ad)) {
+
+        updateAdOnSuccess(this, ad, parseTitle(this));
+      }
 
     } catch (e) {
 
@@ -442,6 +447,20 @@
     }
 
     xhr = null; // end the visit
+  };
+
+  // Checks for external FB link and if so, parses the true link
+  var isFacebookExternal = function (xhr, ad) {
+
+    if (/facebook\.com\/l\.php/.test(xhr.requestUrl)) {
+
+      var url = decodeURIComponent(xhr.responseURL);
+      ad.parsedTargetUrl = url.substring(url.lastIndexOf('http'));
+
+      log("[FB-EXT] Parsed: ", ad.parsedTargetUrl);
+
+      return true;
+    }
   };
 
   var visitAd = function (ad) {
@@ -480,13 +499,16 @@
 
   var sendXhr = function (ad) {
 
+    // if we've parsed an obfuscated target, use it
+    var target = ad.parsedTargetUrl || ad.targetUrl;
+
     log('[TRYING] ' + adinfo(ad), ad.targetUrl);
 
     xhr = new XMLHttpRequest();
 
     try {
 
-      xhr.open('get', ad.targetUrl, true);
+      xhr.open('get', target, true);
       xhr.withCredentials = true;
       xhr.delegate = ad;
       xhr.timeout = visitTimeout;
@@ -729,6 +751,7 @@
 
     //console.log('adsForUI.notes: ',notifications);
     return {
+
       data: adlist(),
       pageUrl: pageUrl,
       prefs: contentPrefs(),
@@ -1440,35 +1463,40 @@
     return result;
   };
 
-     /*
-   * Verify if other ad blockers are already installed & enabled
-   * If yes, we don't let the user turn on any features
-   * (hide,click,block) until it is disabled
-   * TODO: Shall be handled differently on different browser
+  /*
+   * Verify if other ad blockers are already installed/enabled
+   * If yes, don't enable our features(hide,click,block) until disabled
+   *
+   * TODO: Shall be handled differently on different browser (?)
    */
-  var verifyAdBlockers = exports.verifyAdBlockers = function() {
-      var notes = notifications,
-          dirty = false;
+  var verifyAdBlockers = exports.verifyAdBlockers = function () {
 
-      vAPI.getAddonInfo(function(UBlockConflict, AdBlockPlusConflict) {
-          // console.log(UBlockConflict, AdBlockPlusConflict);
-          if (AdBlockPlusConflict) {
+    var notes = notifications,
+      dirty = false;
 
-              dirty = addNotification(notes, AdBlockPlusEnabled);
-          } else {
-              dirty = removeNotification(notes, AdBlockPlusEnabled);
-          }
+    vAPI.getAddonInfo(function (UBlockConflict, AdBlockPlusConflict) {
 
-          if (UBlockConflict) {
+      // console.log(UBlockConflict, AdBlockPlusConflict);
+      if (AdBlockPlusConflict) {
 
-              dirty = dirty || addNotification(notes, UBlockEnabled);
-          } else {
-              dirty = dirty || removeNotification(notes, UBlockEnabled);
-          }
+        dirty = addNotification(notes, AdBlockPlusEnabled);
 
-          dirty && sendNotifications(notes);
+      } else {
 
-      });
+        dirty = removeNotification(notes, AdBlockPlusEnabled);
+      }
+
+      if (UBlockConflict) {
+
+        dirty = dirty || addNotification(notes, UBlockEnabled);
+
+      } else {
+
+        dirty = dirty || removeNotification(notes, UBlockEnabled);
+      }
+
+      dirty && sendNotifications(notes);
+    });
   }
 
 
@@ -1599,7 +1627,7 @@
     storeUserData();
 
     importedCount = adlist().length - count;
-    log('[IMPORT]: ' + importedCount + ' ads from ' + request.file);
+    log('[IMPORT] ' + importedCount + ' ads from ' + request.file);
     reloadExtPage('vault.html'); // reload Vault page if open
 
     return {
