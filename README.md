@@ -36,7 +36,7 @@ Early tests of performance of this extension on the Microsoft Edge browser are p
 
 ## Installation
 
-You can download a [Preview Release from the Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4);
+You can download a [Preview Release from the Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4).
 
 To install beta releases directly from GitHub, you will need to side-load the extension:
 
