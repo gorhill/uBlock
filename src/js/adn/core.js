@@ -75,7 +75,7 @@
     };
 
     initializeState(settings);
-    whiteListDNT();
+    // whiteListDNT();
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
@@ -204,7 +204,7 @@
       settings = µb.userSettings;
 
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
-        
+
       // check whether an idle timeout has been specified
       var idleMs = settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastPageLoad > idleMs)) {
@@ -1098,13 +1098,10 @@
       });
   }
 
-
   var whiteListDNT = function(){
-    // µb.toggleNetFilteringSwitch("http://leoneckert.com", "site", false); //http://www.w3schools.com/jsref/jsref_indexof.asp site false
     getDNTurls(function(DNTurls){
-        // console.log("got dnt domains", DNTurls);
         for(var i in DNTurls){
-            // seems to not wotk without the "http://"
+            // seems to not work without the "http://"
             µb.toggleNetFilteringSwitch("http://" + DNTurls[i], "site", false);
         }
     });
