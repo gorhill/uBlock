@@ -451,7 +451,7 @@
   // Checks for external FB link and if so, parses the true link
   var isFacebookExternal = function (xhr, ad) {
 
-    if (/^https:\/\/www.facebook.com\/l.php/.test(xhr.requestUrl)) {
+    if (/facebook\.com\/l\.php/.test(xhr.requestUrl)) {
 
       var url = decodeURIComponent(xhr.responseURL);
       ad.parsedTargetUrl = url.substring(url.lastIndexOf('http'));
