@@ -21,7 +21,8 @@
     pollQueueInterval = 5000,
     profiler = +new Date(),
     strictBlockingDisabled = false,
-    repeatVisitInterval = Number.MAX_VALUE;
+    repeatVisitInterval = Number.MAX_VALUE,
+    previousDNTlist = [];
 
   var xhr, idgen, admap, inspected, listEntries, firewall;
 
@@ -74,15 +75,21 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
+
     initializeState(settings);
-    // whiteListDNT();
+
+    // setInterval(function(){
+    //     updateDNTwhitelist();
+    // }, 86400000); //every day
+
+
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
 
   var initializeState = function (settings) {
 
     admap = (settings && settings.admap) || {};
-    (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
+    // (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
 
     validateAdStorage();
 
@@ -1083,7 +1090,9 @@
     return false;
   }
 
-  var getDNTurls = function(callback){
+  var getUpdatedDNTlist = function(callback){
+      // this function get the 'updated DNT list' assuming the local copy of it
+      // at assets/thirdparties/www.eff.org/files/effdntlist.txt gets updated regularly.
       µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function(d){
           var content = d.content;
           var DNTurls = [];
@@ -1098,12 +1107,39 @@
       });
   }
 
-  var whiteListDNT = function(){
-    getDNTurls(function(DNTurls){
-        for(var i in DNTurls){
-            // seems to not work without the "http://"
-            µb.toggleNetFilteringSwitch("http://" + DNTurls[i], "site", false);
-        }
+  var clearOutOldDNTlist = function(callback){
+      defaultDynamicFilters = [];
+      if(previousDNTlist.length > 0){
+          for(var i = 0; i < previousDNTlist.length; i++){
+              µb.toggleNetFilteringSwitch("http://" + previousDNTlist[i], "site", true);
+          }
+      }
+      callback();
+  }
+
+  var setDNTwhitelist = function(callback){
+
+    clearOutOldDNTlist(function(){
+
+        getUpdatedDNTlist(function(updatedDNTlist){
+
+            for(var i = 0; i < updatedDNTlist.length; i++){
+                defaultDynamicFilters.push("* " + updatedDNTlist[i] + " * allow");
+                µb.toggleNetFilteringSwitch("http://" + updatedDNTlist[i], "site", false);
+            }
+            previousDNTlist = updatedDNTlist;
+
+            callback(); //after this dymanic filter rules will be activated
+
+        });
+    });
+  }
+
+  // clears old DNT lists and calls new Whitelist and dynamic filter rules into action.
+  var updateDNTwhitelist = function(){
+    setDNTwhitelist(function(){
+        // activating the dynamic filter rules that have been added to the defaultDynamicFilters array:
+        (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
     });
   }
 
