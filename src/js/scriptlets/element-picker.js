@@ -177,6 +177,14 @@ var safeQuerySelectorAll = function(node, selector) {
 
 /******************************************************************************/
 
+var rawFilterFromTextarea = function() {
+    var s = taCandidate.value,
+        pos = s.indexOf('\n');
+    return pos === -1 ? s.trim() : s.slice(0, pos).trim();
+};
+
+/******************************************************************************/
+
 var getElementBoundingClientRect = function(elem) {
     var rect = typeof elem.getBoundingClientRect === 'function' ?
         elem.getBoundingClientRect() :
@@ -635,7 +643,9 @@ var filtersFrom = function(x, y) {
     filterToDOMInterface.set
     @desc   Look-up all the HTML elements matching the filter passed in
             argument.
-    @param  string, a cosmetic of network filter.
+    @param  string, a cosmetic or network filter.
+    @param  function, called once all items matching the filter have been
+            collected.
     @return array, or undefined if the filter is invalid.
 
     filterToDOMInterface.preview
@@ -733,16 +743,15 @@ var filterToDOMInterface = (function() {
     // ways to compose a valid href to the same effective URL. One idea is to
     // normalize all a[href] on the page, but for now I will wait and see, as I
     // prefer to refrain from tampering with the page content if I can avoid it.
-    var fromCosmeticFilter = function(filter) {
+    var fromPlainCosmeticFilter = function(filter) {
         var elems;
         try {
             elems = document.querySelectorAll(filter);
         }
         catch (e) {
-            return fromProceduralCosmeticFilter(filter);
+            return;
         }
-        var out = [],
-            iElem = elems.length;
+        var out = [], iElem = elems.length;
         while ( iElem-- ) {
             out.push({ type: 'cosmetic', elem: elems[iElem]});
         }
@@ -751,108 +760,27 @@ var filterToDOMInterface = (function() {
 
     // https://github.com/gorhill/uBlock/issues/1772
     // Handle procedural cosmetic filters.
-    var fromProceduralCosmeticFilter = function(filter) {
-        if ( filter.charCodeAt(filter.length - 1) === 0x29 /* ')' */ ) {
-            var parts = reProceduralCosmeticFilter.exec(filter);
-            if (
-                parts !== null &&
-                proceduralCosmeticFilterFunctions.hasOwnProperty(parts[2])
-            ) {
-                return proceduralCosmeticFilterFunctions[parts[2]](
-                    parts[1].trim(),
-                    parts[3].trim()
-                );
-            }
+    var fromCompiledCosmeticFilter = function(raw) {
+        if ( typeof raw !== 'string' ) { return; }
+        var o;
+        try {
+            o = JSON.parse(raw);
+        } catch(ex) {
+            return;
         }
-    };
-
-    var reProceduralCosmeticFilter = /^(.*?):(matches-css|has|style|xpath)\((.+?)\)$/;
-
-    // Collection of handlers for procedural cosmetic filters.
-    var proceduralCosmeticFilterFunctions = {
-        'has': function(selector, arg) {
-            if ( selector === '' ) { return; }
-            var elems;
-            try {
-                elems = document.querySelectorAll(selector);
-                document.querySelector(arg);
-            } catch(ex) {
-                return;
-            }
-            var out = [], elem;
-            for ( var i = 0, n = elems.length; i < n; i++ ) {
-                elem = elems[i];
-                if ( elem.querySelector(arg) ) {
-                    out.push({ type: 'cosmetic', elem: elem });
-                }
-            }
-            return out;
-        },
-        'matches-css': function(selector, arg) {
-            if ( selector === '' ) { return; }
-            var elems;
-            try {
-                elems = document.querySelectorAll(selector);
-            } catch(ex) {
-                return;
-            }
-            var out = [], elem, style,
-                pos = arg.indexOf(':');
-            if ( pos === -1 ) { return; }
-            var prop = arg.slice(0, pos).trim(),
-                reText = arg.slice(pos + 1).trim();
-            if ( reText === '' ) { return; }
-            var re = reText !== '*' ?
-                new RegExp('^' + reText.replace(/[.+?${}()|[\]\\^]/g, '\\$&').replace(/\*+/g, '.*?') + '$') :
-                /./;
-            for ( var i = 0, n = elems.length; i < n; i++ ) {
-                elem = elems[i];
-                style = window.getComputedStyle(elem, null);
-                if ( re.test(style[prop]) ) {
-                    out.push({ type: 'cosmetic', elem: elem });
-                }
-            }
-            return out;
-        },
-        'style': function(selector, arg) {
-            if ( selector === '' || arg === '' ) { return; }
-            var elems;
-            try {
-                elems = document.querySelectorAll(selector);
-            } catch(ex) {
-                return;
-            }
-            var out = [];
-            for ( var i = 0, n = elems.length; i < n; i++ ) {
-                out.push({ type: 'cosmetic', elem: elems[i] });
-            }
-            lastAction = selector + ' { ' + arg + ' }';
-            return out;
-        },
-        'xpath': function(selector, arg) {
-            if ( selector !== '' ) { return []; }
-            var result;
-            try {
-                result = document.evaluate(
-                    arg,
-                    document,
-                    null,
-                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                    null
-                );
-            } catch(ex) {
-                return;
-            }
-            if ( result === undefined ) { return []; }
-            var out = [], elem, i = result.snapshotLength;
-            while ( i-- ) {
-                elem = result.snapshotItem(i);
-                if ( elem.nodeType === 1 ) {
-                    out.push({ type: 'cosmetic', elem: elem });
-                }
-            }
-            return out;
+        var elems;
+        if ( o.style ) {
+            elems = document.querySelectorAll(o.parts[0]);
+            lastAction = o.parts.join(' ');
+        } else if ( o.procedural ) {
+            elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
+        if ( !elems ) { return; }
+        var out = [];
+        for ( var i = 0, n = elems.length; i < n; i++ ) {
+            out.push({ type: 'cosmetic', elem: elems[i] });
+        }
+        return out;
     };
 
     var lastFilter,
@@ -862,26 +790,44 @@ var filterToDOMInterface = (function() {
         applied = false,
         previewing = false;
 
-    var queryAll = function(filter) {
+    var queryAll = function(filter, callback) {
         filter = filter.trim();
         if ( filter === lastFilter ) {
-            return lastResultset;
+            callback(lastResultset);
+            return;
         }
         unapply();
         if ( filter === '' ) {
             lastFilter = '';
             lastResultset = [];
-        } else {
-            lastFilter = filter;
-            lastAction = undefined;
-            lastResultset = filter.lastIndexOf('##', 0) === 0 ?
-                fromCosmeticFilter(filter.slice(2)) :
-                fromNetworkFilter(filter);
-            if ( previewing ) {
-                apply(filter);
-            }
+            callback(lastResultset);
+            return;
         }
-        return lastResultset;
+        lastFilter = filter;
+        lastAction = undefined;
+        if ( filter.lastIndexOf('##', 0) === -1 ) {
+            lastResultset = fromNetworkFilter(filter);
+            if ( previewing ) { apply(); }
+            callback(lastResultset);
+            return;
+        }
+        var selector = filter.slice(2);
+        lastResultset = fromPlainCosmeticFilter(selector);
+        if ( lastResultset ) {
+            if ( previewing ) { apply(); }
+            callback(lastResultset);
+            return;
+        }
+        // Procedural cosmetic filter
+        vAPI.messaging.send(
+            'elementPicker',
+            { what: 'compileCosmeticFilterSelector', selector: selector },
+            function(response) {
+                lastResultset = fromCompiledCosmeticFilter(response);
+                if ( previewing ) { apply(); }
+                callback(lastResultset);
+            }
+        );
     };
 
     var applyHide = function() {
@@ -983,9 +929,11 @@ var filterToDOMInterface = (function() {
     var preview = function(filter) {
         previewing = filter !== false;
         if ( previewing ) {
-            if ( queryAll(filter) !== undefined ) {
-                apply();
-            }
+            queryAll(filter, function(items) {
+                if ( items !== undefined ) {
+                    apply();
+                }
+            });
         } else {
             unapply();
         }
@@ -999,67 +947,72 @@ var filterToDOMInterface = (function() {
     };
 })();
 
-// https://www.youtube.com/watch?v=nuUXJ6RfIik
-
 /******************************************************************************/
 
-var userFilterFromCandidate = function() {
-    var v = taCandidate.value;
-    var items = filterToDOMInterface.set(v);
-    if ( !items || items.length === 0 ) {
-        return false;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/738
-    // Trim dots.
-    var hostname = window.location.hostname;
-    if ( hostname.slice(-1) === '.' ) {
-        hostname = hostname.slice(0, -1);
-    }
-
-    // Cosmetic filter?
-    if ( v.lastIndexOf('##', 0) === 0 ) {
-        return hostname + v;
-    }
-
-    // Assume net filter
-    var opts = [];
-
-    // If no domain included in filter, we need domain option
-    if ( v.lastIndexOf('||', 0) === -1 ) {
-        opts.push('domain=' + hostname);
-    }
-
-    var item = items[0];
-    if ( item.opts ) {
-        opts.push(item.opts);
-    }
-
-    if ( opts.length ) {
-        v += '$' + opts.join(',');
-    }
-
-    return v;
-};
-
-/******************************************************************************/
-
-var onCandidateChanged = function() {
-    var elems = [],
-        items = filterToDOMInterface.set(taCandidate.value),
-        valid = items !== undefined;
-    if ( valid ) {
-        for ( var i = 0; i < items.length; i++ ) {
-            elems.push(items[i].elem);
+var userFilterFromCandidate = function(callback) {
+    var v = rawFilterFromTextarea();
+    filterToDOMInterface.set(v, function(items) {
+        if ( !items || items.length === 0 ) {
+            callback();
+            return;
         }
-    }
-    pickerBody.querySelector('body section textarea + div').textContent = valid ?
-        items.length.toLocaleString() :
-        '0';
-    taCandidate.classList.toggle('invalidFilter', !valid);
-    dialog.querySelector('#create').disabled = elems.length === 0;
-    highlightElements(elems, true);
+
+        // https://github.com/gorhill/uBlock/issues/738
+        // Trim dots.
+        var hostname = window.location.hostname;
+        if ( hostname.slice(-1) === '.' ) {
+            hostname = hostname.slice(0, -1);
+        }
+
+        // Cosmetic filter?
+        if ( v.lastIndexOf('##', 0) === 0 ) {
+            callback(hostname + v);
+            return;
+        }
+
+        // Assume net filter
+        var opts = [];
+
+        // If no domain included in filter, we need domain option
+        if ( v.lastIndexOf('||', 0) === -1 ) {
+            opts.push('domain=' + hostname);
+        }
+
+        var item = items[0];
+        if ( item.opts ) {
+            opts.push(item.opts);
+        }
+
+        if ( opts.length ) {
+            v += '$' + opts.join(',');
+        }
+
+        callback(v);
+    });
 };
+
+/******************************************************************************/
+
+var onCandidateChanged = (function() {
+    var process = function(items) {
+        var elems = [], valid = items !== undefined;
+        if ( valid ) {
+            for ( var i = 0; i < items.length; i++ ) {
+                elems.push(items[i].elem);
+            }
+        }
+        pickerBody.querySelector('body section textarea + div').textContent = valid ?
+            items.length.toLocaleString() :
+            'ε';
+        dialog.querySelector('section').classList.toggle('invalidFilter', !valid);
+        dialog.querySelector('#create').disabled = elems.length === 0;
+        highlightElements(elems, true);
+    };
+
+    return function() {
+        filterToDOMInterface.set(rawFilterFromTextarea(), process);
+    };
+})();
 
 /******************************************************************************/
 
@@ -1132,8 +1085,8 @@ var onDialogClicked = function(ev) {
         // We have to exit from preview mode: this guarantees matching elements
         // will be found for the candidate filter.
         filterToDOMInterface.preview(false);
-        var filter = userFilterFromCandidate();
-        if ( filter ) {
+        userFilterFromCandidate(function(filter) {
+            if ( !filter ) { return; }
             var d = new Date();
             vAPI.messaging.send(
                 'elementPicker',
@@ -1143,9 +1096,9 @@ var onDialogClicked = function(ev) {
                     pageDomain: window.location.hostname
                 }
             );
-            filterToDOMInterface.preview(taCandidate.value);
+            filterToDOMInterface.preview(rawFilterFromTextarea());
             stopPicker();
-        }
+        });
     }
 
     else if ( ev.target.id === 'pick' ) {
@@ -1161,7 +1114,7 @@ var onDialogClicked = function(ev) {
         if ( filterToDOMInterface.previewing() ) {
             filterToDOMInterface.preview(false);
         } else {
-            filterToDOMInterface.preview(taCandidate.value);
+            filterToDOMInterface.preview(rawFilterFromTextarea());
         }
         highlightElements(targetElements, true);
     }
@@ -1300,6 +1253,7 @@ var onKeyPressed = function(ev) {
     if ( ev.which === 27 ) {
         ev.stopPropagation();
         ev.preventDefault();
+        filterToDOMInterface.preview(false);
         stopPicker();
     }
 };

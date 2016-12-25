@@ -134,14 +134,23 @@ var fromCosmeticFilter = function(details) {
     }
     candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
 
+    // Procedural filters, which are pre-compiled, make thing sort of
+    // complicated. We are going to also search for one portion of the
+    // compiled form of a filter.
+    var filterEx = '(' +
+                   reEscape(filter) +
+                   '|[^\\v]+' +
+                   reEscape(JSON.stringify({ raw: filter }).slice(1,-1)) +
+                   '[^\\v]+)';
+
     // Second step: find hostname-based versions.
     // Reference: FilterContainer.compileHostnameSelector().
-    var pos;
-    var hostname = details.hostname;
+    var pos,
+        hostname = details.hostname;
     if ( hostname !== '' ) {
         for ( ;; ) {
             candidates[hostname + '##' + filter] = new RegExp(
-                ['c', 'h', '[^\\v]+', reEscape(hostname), reEscape(filter)].join('\\v') +
+                ['c', 'h', '[^\\v]+', reEscape(hostname), filterEx].join('\\v') +
                 '(?:\\n|$)'
             );
             pos = hostname.indexOf('.');
@@ -159,7 +168,7 @@ var fromCosmeticFilter = function(details) {
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos) + '.*';
         candidates[entity + '##' + filter] = new RegExp(
-            ['c', 'h', '[^\\v]+', reEscape(entity), reEscape(filter)].join('\\v') +
+            ['c', 'h', '[^\\v]+', reEscape(entity), filterEx].join('\\v') +
             '(?:\\n|$)'
         );
     }

@@ -31,38 +31,36 @@ if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) {
     return;
 }
 
-var df = vAPI.domFilterer,
-    loggedSelectors = vAPI.loggedSelectors || {},
-    matchedSelectors = [],
-    selectors, i, selector;
+var loggedSelectors = vAPI.loggedSelectors || {},
+    matchedSelectors = [];
 
 
-// CSS selectors.
-selectors = df.jobQueue[2]._0.concat(df.jobQueue[3]._0);
-i = selectors.length;
-while ( i-- ) {
-    selector = selectors[i];
-    if ( loggedSelectors.hasOwnProperty(selector) ) {
-        continue;
+var evaluateSelector = function(selector) {
+    if (
+        loggedSelectors.hasOwnProperty(selector) === false &&
+        document.querySelector(selector) !== null
+    ) {
+        loggedSelectors[selector] = true;
+        matchedSelectors.push(selector);
     }
-    if ( document.querySelector(selector) === null ) {
-        continue;
-    }
-    loggedSelectors[selector] = true;
-    matchedSelectors.push(selector);
-}
-
-// Non-CSS selectors.
-var logHit = function(node, job) {
-    if ( !job.raw || loggedSelectors.hasOwnProperty(job.raw) ) {
-        return;
-    }
-    loggedSelectors[job.raw] = true;
-    matchedSelectors.push(job.raw);
 };
-for ( i = 4; i < df.jobQueue.length; i++ ) {
-    df.runJob(df.jobQueue[i], logHit);
-}
+
+// Simple CSS selector-based cosmetic filters.
+vAPI.domFilterer.simpleHideSelectors.entries.forEach(evaluateSelector);
+
+// Complex CSS selector-based cosmetic filters.
+vAPI.domFilterer.complexHideSelectors.entries.forEach(evaluateSelector);
+
+// Procedural cosmetic filters.
+vAPI.domFilterer.proceduralSelectors.entries.forEach(function(pfilter) {
+    if (
+        loggedSelectors.hasOwnProperty(pfilter.raw) === false &&
+        pfilter.exec().length !== 0
+    ) {
+        loggedSelectors[pfilter.raw] = true;
+        matchedSelectors.push(pfilter.raw);
+    }
+});
 
 vAPI.loggedSelectors = loggedSelectors;
 

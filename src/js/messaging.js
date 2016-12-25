@@ -100,6 +100,10 @@ var onMessage = function(request, sender, callback) {
         µb.mouseURL = request.url;
         break;
 
+    case 'compileCosmeticFilterSelector':
+        response = µb.cosmeticFilteringEngine.compileSelector(request.selector);
+        break;
+
     case 'cosmeticFiltersInjected':
         µb.cosmeticFilteringEngine.addToSelectorCache(request);
         /* falls through */
