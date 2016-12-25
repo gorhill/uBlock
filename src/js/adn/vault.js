@@ -1458,7 +1458,7 @@
       .attr("y2", function (d) {
         return d.y * -3 - 2;
       })
-      .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 2,1; stroke: #999");
+      .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 1,0.5; stroke: #999");
 
     // setup the brush
     var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
