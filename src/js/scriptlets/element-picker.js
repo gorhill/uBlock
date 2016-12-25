@@ -1003,7 +1003,7 @@ var onCandidateChanged = (function() {
         }
         pickerBody.querySelector('body section textarea + div').textContent = valid ?
             items.length.toLocaleString() :
-            'ε';
+            'E';
         dialog.querySelector('section').classList.toggle('invalidFilter', !valid);
         dialog.querySelector('#create').disabled = elems.length === 0;
         highlightElements(elems, true);
