@@ -263,6 +263,7 @@ div.tooltip {
 	float:right;
 	height:17px;
 	width:300px;
+	margin-top: -3px;
 }
 
 #bottom-text{
