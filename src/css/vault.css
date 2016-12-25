@@ -963,9 +963,14 @@ svg {
 }
 
 .brush .extent {
-  fill-opacity: .5;
+  fill-opacity: .25;
   shape-rendering: crispEdges;
 	cursor: move;
+}
+.brush .resize {
+  background: url(img/timeline-handle.svg);
+	width: 5px;
+	height: 62px;
 }
 
 .axis text {

@@ -1431,6 +1431,14 @@
       .attr("class", "x axis")
       .call(xAxis);
 
+    svg.append("rect") // [ONCE]
+      .attr("class", "chart-bg")
+      .attr("height", 50)
+      .attr("width", width)
+      .attr("y", -50)
+      .attr("fill", "#000")
+      .attr("fill-opacity", ".5");
+
     var barw = histogram[0].dx - 1; //relative width
 
     // Create groups for the bars
@@ -1450,7 +1458,7 @@
       .attr("y2", function (d) {
         return d.y * -3 - 2;
       })
-      .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 2,1; stroke: #ccc");
+      .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 2,1; stroke: #999");
 
     // setup the brush
     var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
@@ -1465,9 +1473,24 @@
       .call(brush);
 
     // set the height of the brush to that of the chart
-    gBrush.selectAll("rect")
+    gBrush.selectAll(".brush .extent")
       .attr("height", 49)
-      .attr("y", -50);
+      .attr("y", -50)
+      .attr("fill", "#0076FF")
+      .attr("fill-opacity", ".25");
+
+    // set the height of the brush to that of the chart
+    // gBrush.selectAll("rect")
+    //   .attr("y", -50);
+
+
+    // attach handle image
+    gBrush.selectAll(".resize").append("image")
+      .attr("xlink:href","img/timeline-handle.svg")
+      .attr("width", 5)
+      .attr("height", 50)
+      .attr("y", -50)
+      .attr("x", -3);
 
     // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
 

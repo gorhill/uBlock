@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="5px" height="62px" viewBox="0 0 5 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="5px" height="50px" viewBox="0 0 5 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
     <title>timeline-handle</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="advault" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-981.000000, -721.000000)">
-            <g id="timeline-handle" transform="translate(981.000000, 721.000000)">
-                <path d="M2.5,0.5 L2.5,61.5" id="Line" stroke="#0071FF" stroke-width="1" stroke-linecap="square"></path>
-                <rect id="Rectangle" fill="#0071FF" fill-rule="evenodd" x="0" y="19" width="5" height="28" rx="2.5"></rect>
-                <path d="M1.5,27.5 L1.5,39.5" id="Line" stroke="#094992" stroke-width="1" stroke-linecap="square"></path>
-                <path d="M3.5,27.5 L3.5,39.5" id="Line-Copy-2" stroke="#094992" stroke-width="1" stroke-linecap="square"></path>
+        <g id="Artboard" transform="translate(-981.000000, -727.000000)">
+            <g id="timeline-handle" transform="translate(981.000000, 727.000000)">
+                <path d="M2.5,0 L2.5,50" id="Line" stroke="#0071FF" stroke-width="1"></path>
+                <rect id="Rectangle" fill="#0071FF" fill-rule="evenodd" x="0" y="11" width="5" height="28" rx="2.5"></rect>
+                <path d="M1.5,19.5 L1.5,31.5" id="Line" stroke="#094992" stroke-width="1" stroke-linecap="square"></path>
+                <path d="M3.5,19.5 L3.5,31.5" id="Line-Copy-2" stroke="#094992" stroke-width="1" stroke-linecap="square"></path>
             </g>
         </g>
     </g>
