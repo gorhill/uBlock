@@ -384,18 +384,14 @@
             if(!vAPI.tabs.popupCandidate || !e.target || e.url === "about:blank") {
                 return;
             }
-            var url = e.url,
-                tabId = vAPI.tabs.getTabId(e.target);
-            var details = {
-                targetURL: url,
-                targetTabId: tabId.toString(),
-                openerTabId: vAPI.tabs.popupCandidate
-            };
+            var targetUrl = e.url,
+                targetTabId = vAPI.tabs.getTabId(e.target).toString(),
+                openerTabId = vAPI.tabs.popupCandidate;
             vAPI.tabs.popupCandidate = false;
-            if(vAPI.tabs.onPopup(details)) {
+            if(vAPI.tabs.onPopupUpdated(targetTabId, openerTabId, targetUrl)) {
                 e.preventDefault();
-                if(vAPI.tabs.stack[details.openerTabId]) {
-                    vAPI.tabs.stack[details.openerTabId].activate();
+                if(vAPI.tabs.stack[openerTabId]) {
+                    vAPI.tabs.stack[openerTabId].activate();
                 }
             }
         }, true);
@@ -1067,8 +1063,7 @@
                 var blockVerdict = onHeadersReceivedClient(e.message);
                 if(blockVerdict && blockVerdict.responseHeaders) {
                     e.message = false;
-                }
-                else {
+                } else {
                     e.message = true;
                 }
                 return;
@@ -1076,15 +1071,10 @@
             switch(e.message.type) {
                 case "popup":
                     var openerTabId = vAPI.tabs.getTabId(e.target).toString();
-                    var shouldBlock = !!vAPI.tabs.onPopup({
-                        targetURL: e.message.url,
-                        targetTabId: "preempt",
-                        openerTabId: openerTabId
-                    });
-                    if(shouldBlock) {
+                    var shouldBlock = !!vAPI.tabs.onPopupUpdated("preempt", openerTabId, e.message.url);
+                    if (shouldBlock) {
                         e.message = false;
-                    }
-                    else {
+                    } else {
                         vAPI.tabs.popupCandidate = openerTabId;
                         e.message = true;
                     }
@@ -1103,13 +1093,11 @@
                     if(blockVerdict && blockVerdict.cancel) {
                         e.message = false;
                         return;
-                    }
-                    else {
+                    } else {
                         e.message = true;
                         return;
                     }
             }
-            return;
         };
         safari.application.addEventListener("message", onBeforeRequestAdapter, true);
     };

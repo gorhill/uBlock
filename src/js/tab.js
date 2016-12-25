@@ -698,7 +698,9 @@ vAPI.tabs.onPopupUpdated = (function() {
         );
     };
 
-    return function(targetTabId, openerTabId) {
+    return function(targetTabId, openerTabId, targetURL) {
+        var preempt = targetTabId === 'preempt';
+
         // Opener details.
         var tabContext = µb.tabContextManager.lookup(openerTabId);
         if ( tabContext === null ) { return; }
@@ -706,10 +708,12 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( openerURL === '' ) { return; }
 
         // Popup details.
-        tabContext = µb.tabContextManager.lookup(targetTabId);
-        if ( tabContext === null ) { return; }
-        var targetURL = tabContext.rawURL;
-        if ( targetURL === '' ) { return; }
+        if ( targetURL === undefined ) {
+            tabContext = µb.tabContextManager.lookup(targetTabId);
+            if ( tabContext === null ) { return; }
+            targetURL = tabContext.rawURL;
+            if ( targetURL === '' ) { return; }
+        }
 
         // https://github.com/gorhill/uBlock/issues/341
         // Allow popups if uBlock is turned off in opener's context.
@@ -772,6 +776,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
             µb.updateBadgeAsync(openerTabId);
+        }
+
+        if ( preempt ) {
+            // Block before tab is created
+            return true;
         }
 
         // It is a popup, block and remove the tab.
