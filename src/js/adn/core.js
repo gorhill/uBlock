@@ -21,8 +21,7 @@
     pollQueueInterval = 5000,
     profiler = +new Date(),
     strictBlockingDisabled = false,
-    repeatVisitInterval = Number.MAX_VALUE,
-    previousDNTlist = [];
+    repeatVisitInterval = Number.MAX_VALUE;
 
   var xhr, idgen, admap, inspected, listEntries, firewall;
 
@@ -75,13 +74,7 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-
     initializeState(settings);
-
-    // setInterval(function(){
-    //     updateDNTwhitelist();
-    // }, 86400000); //every day
-
 
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
@@ -406,9 +399,6 @@
   };
 
   var onVisitResponse = function () {
-
-    /*if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
-        log('onVisitResponseHeaders\n', this.responseText);*/
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -1089,62 +1079,6 @@
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     return false;
   }
-
-  var getUpdatedDNTlist = function(callback){
-      // this function get the 'updated DNT list' assuming the local copy of it
-      // at assets/thirdparties/www.eff.org/files/effdntlist.txt gets updated regularly.
-      µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function(d){
-          var content = d.content;
-          var DNTurls = [];
-          while(content.indexOf("@@||") != -1){
-              var start = content.indexOf("@@||");
-              var end = content.indexOf("^$", start);
-              var domain = content.substring(start+4,end);
-              DNTurls.push(domain);
-              content = content.substring(end)
-          }
-          callback(DNTurls);
-      });
-  }
-
-  var clearOutOldDNTlist = function(callback){
-      defaultDynamicFilters = [];
-      if(previousDNTlist.length > 0){
-          for(var i = 0; i < previousDNTlist.length; i++){
-              µb.toggleNetFilteringSwitch("http://" + previousDNTlist[i], "site", true);
-          }
-      }
-      callback();
-  }
-
-  var setDNTwhitelist = function(callback){
-
-    clearOutOldDNTlist(function(){
-
-        getUpdatedDNTlist(function(updatedDNTlist){
-
-            for(var i = 0; i < updatedDNTlist.length; i++){
-                defaultDynamicFilters.push("* " + updatedDNTlist[i] + " * allow");
-                µb.toggleNetFilteringSwitch("http://" + updatedDNTlist[i], "site", false);
-            }
-            previousDNTlist = updatedDNTlist;
-
-            callback(); //after this dymanic filter rules will be activated
-
-        });
-    });
-  }
-
-  // clears old DNT lists and calls new Whitelist and dynamic filter rules into action.
-  var updateDNTwhitelist = function(){
-    setDNTwhitelist(function(){
-        // activating the dynamic filter rules that have been added to the defaultDynamicFilters array:
-        (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
-    });
-  }
-
-
-
 
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
