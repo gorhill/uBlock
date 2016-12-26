@@ -3,7 +3,7 @@
 
   'use strict';
 
-  var effList = 'https://www.eff.org/files/effdntlist.txt', µb = µBlock,
+  var effList = 'https://www.eff.org/files/effdntlist.txt', µb = µBlock;
 
   var clearFiltersDNT = function () {
 
@@ -13,7 +13,7 @@
 
       // clear the net-filtering switches
       for (var i = 0; i < dnts.length; i++)
-        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", true);
+        µb.toggleNetFilteringSwitch('http://' + dnts[i], 'site', true);
     }
 
     // clear the dynamic filter rules
