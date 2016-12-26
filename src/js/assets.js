@@ -979,6 +979,12 @@ var readExternalAsset = function(path, callback) {
             onExternalFileError();
             return;
         }
+        
+        // If we've loaded a DNT list, we need to parse it
+        if (µBlock.adnauseam.isDoNotTrackUrl(path)) { // ADN
+          µBlock.adnauseam.processEntriesDNT(this.responseText);
+        }
+
         //console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
         cachedAssetsManager.save(path, this.responseText);
         reportBack(this.responseText);
