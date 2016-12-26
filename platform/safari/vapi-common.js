@@ -157,4 +157,16 @@ Number.prototype.toLocaleString = function() {
 
 vAPI.localStorage = self.localStorage;
 
+// Disable localStorage.setItem in Private Browsing mode (throws error)
+// https://gist.github.com/philfreo/68ea3cd980d72383c951
+if (typeof self.localStorage === 'object') {
+    try {
+        self.localStorage.setItem('localStorage', 1);
+        self.localStorage.removeItem('localStorage');
+    } catch (e) {
+        Storage.prototype._setItem = Storage.prototype.setItem;
+        Storage.prototype.setItem = function() {};
+    }
+}
+
 })();
