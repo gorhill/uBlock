@@ -40,7 +40,9 @@ var resizeFrame = function() {
 var loadDashboardPanel = function() {
     var pane = window.location.hash.slice(1);
     if ( pane === '' ) {
-        pane = 'settings.html';
+        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane') || 'settings.html';
+    } else {
+        vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     }
     var tabButton = uDom('[href="#' + pane + '"]');
     if ( !tabButton || tabButton.hasClass('selected') ) {
