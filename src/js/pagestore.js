@@ -550,7 +550,7 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // ADN: now check our firewall (top precedence)
-    if ( result === '' ) result = µb.adnauseam.checkFirewall(context);
+    if ( result === '' ) result = µb.adnauseam.dnt.checkFirewall(context);
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -611,7 +611,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     }
 
     // ADN: now check our firewall (top precendence)
-    if ( result === '' ) result = µb.adnauseam.checkFirewall(context);
+    if ( result === '' ) result = µb.adnauseam.dnt.checkFirewall(context);
 
     // Given that:
     // - Dynamic filtering override static filtering

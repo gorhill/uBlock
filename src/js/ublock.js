@@ -325,14 +325,22 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         adn.updateBadges();
         break;
     case 'hidingAds':
-        adn.verifySetting(HidingDisabled,   !us.hidingAds);
+        adn.verifySetting(HidingDisabled, !us.hidingAds);
+        adn.dnt.updateFilters();
         break;
     case 'clickingAds':
         adn.verifySetting(ClickingDisabled, !us.clickingAds);
+        adn.dnt.updateFilters();
         break;
     case 'blockingMalware':
         adn.verifySetting(BlockingDisabled, !us.blockingMalware);
         break;
+    case 'disableHidingForDNT':
+      adn.dnt.updateFilters();
+      break;
+    case 'disableClickingForDNT':
+      adn.dnt.updateFilters();
+      break;
     case 'noThirdPartyCookies':
         //vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;

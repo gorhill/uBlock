@@ -42,7 +42,7 @@ var hiddenLists = [
   "https://www.eff.org/files/effdntlist.txt",
   "assets/thirdparties/pgl.yoyo.org/as/serverlist",
   "assets/ublock/experimental.txt"
-]; // ADN
+]; // ADN TODO: remove non-dnt entries from filter-lists.json?
 
 /******************************************************************************/
 

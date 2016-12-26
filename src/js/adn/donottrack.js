@@ -1,38 +1,25 @@
-
 µBlock.adnauseam.dnt = (function () {
 
   'use strict';
 
-  var effList = 'https://www.eff.org/files/effdntlist.txt', µb = µBlock;
+  var µb = µBlock, adn = µb.adnauseam, log = adn.log;
+  var effList = 'https://www.eff.org/files/effdntlist.txt';
+  var firewall = new µb.Firewall();
 
-  var clearFiltersDNT = function () {
+  var exports = {};
 
-    var dnts = µb.userSettings.dntDomains;
+  exports.shutdown = function () {
 
-    if (dnts && dnts.length) {
-
-      // clear the net-filtering switches
-      for (var i = 0; i < dnts.length; i++)
-        µb.toggleNetFilteringSwitch('http://' + dnts[i], 'site', true);
-    }
-
-    // clear the dynamic filter rules
-    dntDynamicFilters = [];
-
-    // reset the dntFirewall
-    dntFirewall.reset();
+    this.firewall.reset();
   }
 
-  // NEXT: Finish DNT parsing on load
-  // -- Consider when clearing needs to happen
-  // -- Call toggleDntFilters when µb.userSettings.disableHidingForDNT is changed
-  // -- Add check for any ad clicks (when µb.userSettings.disableClickingForDNT is enabled)
-  // -- Re-parse DNT list whenever it is updated
+  exports.mustBlock = function (ad) {
 
-  exports.processEntriesDNT = function (content) {
+    return this.enabled() && µb.userSettings.dntDomains.indexOf(ad.targetDomain) > -1;
+  }
 
-    // this function get the 'original DNT list' installed with the addon
-    //µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function (d) {
+  exports.processEntries = function (content) {
+
     var domains = [];
 
     while (content.indexOf("@@||") != -1) {
@@ -45,9 +32,9 @@
       content = content.substring(end);
     }
 
-    //log('[DNT] Parsed ' + domains.length + ' domains'); //, dntDomains);
+    log('[DNT] Parsed ' + domains.length + ' domains'); //, dntDomains);
 
-     var current = µb.userSettings.dntDomains,
+    var current = µb.userSettings.dntDomains,
       needsUpdate = current.length != domains.length;
 
     if (!needsUpdate) {
@@ -64,55 +51,98 @@
 
     if (needsUpdate) { // data has changed
 
-      console.log("[DNT] Updated domains: ", domains);
-      clearFiltersDNT(); // clear old data first before resetting
+      log("[DNT] Updated domains: ", domains);
+      clearFiltersDNT(); // clear old data first
 
       µb.userSettings.dntDomains = domains; // store domain data
       vAPI.storage.set(µb.userSettings);
 
-      updateFiltersDNT();
+      updateFilters();
     }
     else
-      console.log("[DNT] No new domains, ignoring...");
+      log("[DNT] No new domains, ignoring...");
   }
 
   exports.isDoNotTrackUrl = function (url) {
 
-    return (url === dntListUrl);
+    return (url === effList);
   }
 
-  var dntEnabled = function () {
+  var enabled = exports.enabled = function () {
 
-    return µb.userSettings.disableHidingForDNT || µb.userSettings.disableClickingForDNT;
+    var prefs = µb.userSettings;
+    return (prefs.hidingAds && prefs.disableHidingForDNT)
+      || (prefs.clickingAds && prefs.disableClickingForDNT);
   }
 
-  var updateFiltersDNT = exports.updateFiltersDNT = function () {
+  var updateFilters = exports.updateFilters = function () {
 
-    console.log(dntFirewall);
+    var ruleCount = Object.keys(firewall.rules).length,
+      enabled = µb.adnauseam.dnt.enabled(),
+      dnts = µb.userSettings.dntDomains;
 
-    clearFiltersDNT(); // clear first whenever we toggle
+    //log('[DNT] updateFilters', "current="+ruleCount);
 
-    var dnts = µb.userSettings.dntDomains;
+    // Only clear and possibly update if actually have a change
+    if ((enabled && ruleCount > 0) || (!enabled && ruleCount < 1)  ) {
 
-    if (dnts.length && dntEnabled()) {
+      //log("[DNT] Ignoring update, enabled = "+enabled+" "+dnts.length);
+      return;
+    }
 
-      console.log("[DNT] Enabling "+dnts.length+" net filters");
+    if (enabled) { // no current-rules
 
+      var firewallRules = []; // dynamic filters
       for (var i = 0; i < dnts.length; i++) {
 
-        dntDynamicFilters.push("* " + dnts[i] + " * allow");
+        firewallRules.push("* " + dnts[i] + " * allow");
         µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
       }
 
-      // TODO: use reset ? if dntFirewall exists?
-      dntFirewall.fromString(dntDynamicFilters.join('\n'), false);
+      firewall.fromString(firewallRules.join('\n'), false);
 
-      log('[DNT] Loaded firewall with ' + dnts.length + ' dynamic rules');
-    }
-    else {
+      log('[DNT] Firewall enabled with ' + Object.keys(firewall.rules).length + ' rules');
 
-      console.log("[DNT] Disabling DNT...");
+    } else {
+
+      firewall.reset();
+      log("[DNT] Firewall disabled");
     }
   };
 
-});
+  exports.checkFirewall = function (context) {
+
+    var action, result = '';
+
+    firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+
+    if (firewall.mustBlockOrAllow()) {
+
+      result = firewall.toFilterString();
+      action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
+
+      µb.adnauseam.logNetEvent('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
+        context.requestHostname, '(' + context.requestType + ') ', context.requestURL
+      ]);
+    }
+
+    return result;
+  };
+
+  var clearFiltersDNT = function () {
+
+    var dnts = µb.userSettings.dntDomains;
+
+    if (dnts && dnts.length) {
+
+      // clear the net-filtering switches
+      for (var i = 0; i < dnts.length; i++)
+        µb.toggleNetFilteringSwitch('http://' + dnts[i], 'site', true);
+    }
+
+    firewall.reset();
+  }
+
+  return exports;
+
+})();
