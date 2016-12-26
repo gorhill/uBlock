@@ -55,7 +55,7 @@ var renderWhitelist = function() {
         uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
 
         // update state of the dnt list based on prefs
-        uDom.nodeFromId('effListInput').checked = response.effListEnabled;
+        uDom.nodeFromId('effListInput').checked = response.dntEnabled;
 
         whitelistChanged();
     };

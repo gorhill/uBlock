@@ -23,10 +23,7 @@
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
-  var xhr, idgen, admap, inspected, listEntries, firewall;
-
-  // default rules for adnauseam's firewall
-  var defaultDynamicFilters = [ ];
+  var xhr, idgen, admap, inspected, listEntries;
 
   // allow all blocks on requests to/from these domains
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com'];
@@ -82,7 +79,6 @@
   var initializeState = function (settings) {
 
     admap = (settings && settings.admap) || {};
-    // (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
 
     validateAdStorage();
 
@@ -246,7 +242,16 @@
 
   var visitPending = function (ad) {
 
-    return ad && ad.attempts < maxAttemptsPerAd && ad.visitedTs <= 0;
+    var pending = ad && ad.attempts < maxAttemptsPerAd
+      && ad.visitedTs <= 0 && !ad.dntAllowed;
+
+    if (pending && µb.adnauseam.dnt.mustBlock(ad)) {
+
+      log('[DNT] Ignoring ad from '+ad.targetDomain, ad);
+      ad.dntAllowed = true; // so we don't recheck it
+      pending = false;
+    }
+    return pending;
   }
 
   var getExtPageTabId = function (htmlPage) {
@@ -979,7 +984,7 @@
   };
 
   /**
-   *  NOTE: this is called AFTER our firewall rules, and checks the following:
+   *  NOTE: this is called AFTER our dnt rules, and checks the following:
    *  1) whether we are blocking at all
    *  		if not, return false
    *  2) whether domain is blockable (allowAnyBlockOnDomains)
@@ -1097,28 +1102,9 @@
     initialize(settings);
   });
 
-
-  var clearFiltersDNT = function () {
-
-    var dnts = µb.userSettings.dntDomains;
-
-    if (dnts && dnts.length) {
-
-      // clear the net-filtering switches
-      for (var i = 0; i < dnts.length; i++)
-        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", true);
-    }
-
-    // clear the dynamic filter rules
-    dntDynamicFilters = [];
-
-    // reset the dntFirewall
-    dntFirewall.reset();
-  }
-
   /********************************** API *************************************/
 
-  var exports = {};
+  var exports = { log: log };
 
   exports.adsForVault = function (request, pageStore, tabId) {
 
@@ -1165,98 +1151,6 @@
     }
   };
 
-
-  // NEXT: Finish DNT parsing on load
-  // -- Consider when clearing needs to happen
-  // -- Call toggleDntFilters when µb.userSettings.disableHidingForDNT is changed
-  // -- Add check for any ad clicks (when µb.userSettings.disableClickingForDNT is enabled)
-  // -- Re-parse DNT list whenever it is updated
-
-  exports.processEntriesDNT = function (content) {
-
-    // this function get the 'original DNT list' installed with the addon
-    //µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function (d) {
-    var domains = [];
-
-    while (content.indexOf("@@||") != -1) {
-
-      var start = content.indexOf("@@||"),
-        end = content.indexOf("^$", start),
-        domain = content.substring(start + 4, end);
-
-      domains.push(domain);
-      content = content.substring(end);
-    }
-
-    //log('[DNT] Parsed ' + domains.length + ' domains'); //, dntDomains);
-
-    var current = µb.userSettings.dntDomains,
-      needsUpdate = current.length != domains.length;
-
-    if (!needsUpdate) {
-
-      current.sort();
-      domains.sort();
-      for (var i = 0; i < domains.length; ++i) {
-        if (domains[i] !== current[i]) {
-          needsUpdate = true;
-          break;
-        }
-      }
-    }
-
-    if (needsUpdate) { // data has changed
-
-      console.log("[DNT] Updated domains: ", domains);
-      clearFiltersDNT(); // clear old data first before resetting
-
-      µb.userSettings.dntDomains = domains; // store domain data
-      vAPI.storage.set(µb.userSettings);
-
-      updateFiltersDNT();
-    } else
-      console.log("[DNT] No new domains, ignoring...");
-  }
-
-  exports.isDoNotTrackUrl = function (url) {
-
-    return (url === dntListUrl);
-  }
-
-  var dntEnabled = function () {
-
-    return µb.userSettings.disableHidingForDNT || µb.userSettings.disableClickingForDNT;
-  }
-
-  var updateFiltersDNT = exports.updateFiltersDNT = function () {
-
-    console.log(dntFirewall);
-
-    clearFiltersDNT(); // clear first whenever we toggle
-
-    var dnts = µb.userSettings.dntDomains;
-
-    if (dnts.length && dntEnabled()) {
-
-      console.log("[DNT] Enabling " + dnts.length + " net filters");
-
-      for (var i = 0; i < dnts.length; i++) {
-
-        dntDynamicFilters.push("* " + dnts[i] + " * allow");
-        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
-      }
-
-      // TODO: use reset ? if dntFirewall exists?
-      dntFirewall.fromString(dntDynamicFilters.join('\n'), false);
-
-      log('[DNT] Loaded firewall with ' + dnts.length + ' dynamic rules');
-      
-    } else {
-
-      console.log("[DNT] Disabling DNT...");
-    }
-  };
-
   // Called when new top-level page is loaded
   exports.onPageLoad = function (tabId, requestURL) {
 
@@ -1285,7 +1179,8 @@
       strictBlockingDisabled = true;
       verifyAdBlockers();
       verifySettings(); // check settings/lists
-      verifyLists(µBlock.remoteBlacklists);
+      verifyLists(µb.remoteBlacklists);
+      µb.adnauseam.dnt.updateFilters();
     });
 
     if (firstRun && !isAutomated()) {
@@ -1460,25 +1355,7 @@
 
   exports.shutdown = function () {
 
-    firewall.reset();
-  };
-
-  exports.checkFirewall = function (context) {
-
-    firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
-
-    var result = '';
-    if (firewall.mustBlockOrAllow()) {
-
-      result = firewall.toFilterString();
-      var action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
-
-      logNetEvent('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
-        context.requestHostname, '(' + context.requestType + ') ', context.requestURL
-      ]);
-    }
-
-    return result;
+    this.dnt.shutdown();
   };
 
   exports.deleteAdSet = function (request, pageStore, tabId) {
@@ -1640,7 +1517,7 @@
 
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
-        µb.selectFilterLists({ location: 'https://www.eff.org/files/effdntlist.txt', off: off })
+        µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
       }
 
       sendNotifications(notes);
