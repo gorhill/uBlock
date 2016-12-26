@@ -29,30 +29,68 @@
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
-var cachedWhitelist = '';
-
-// Could make it more fancy if needed. But speed... It's a compromise.
-var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"'()<>{}|`~]/;
+var messaging = vAPI.messaging,
+    cachedWhitelist = '';
 
 /******************************************************************************/
 
-var whitelistChanged = function() {
-    var textarea = uDom.nodeFromId('whitelist');
-    var s = textarea.value.trim();
-    var changed = s === cachedWhitelist;
-    var bad = reUnwantedChars.test(s);
-    uDom.nodeFromId('whitelistApply').disabled = changed || bad;
-    uDom.nodeFromId('whitelistRevert').disabled = changed;
-    textarea.classList.toggle('bad', bad);
+var getTextareaNode = function() {
+    var me = getTextareaNode,
+        node = me.theNode;
+    if ( node === undefined ) {
+        node = me.theNode = uDom.nodeFromSelector('#whitelist textarea');
+    }
+    return node;
 };
+
+var setErrorNodeHorizontalOffset = function(px) {
+    var me = setErrorNodeHorizontalOffset,
+        offset = me.theOffset || 0;
+    if ( px === offset ) { return; }
+    var node = me.theNode;
+    if ( node === undefined ) {
+        node = me.theNode = uDom.nodeFromSelector('#whitelist textarea + div');
+    }
+    node.style.right = px + 'px';
+    me.theOffset = px;
+};
+
+/******************************************************************************/
+
+var whitelistChanged = (function() {
+    var changedWhitelist, changed, timer;
+
+    var updateUI = function(good) {
+        uDom.nodeFromId('whitelistApply').disabled = changed || !good;
+        uDom.nodeFromId('whitelistRevert').disabled = changed;
+        uDom.nodeFromId('whitelist').classList.toggle('invalid', !good);
+    };
+
+    var validate = function() {
+        timer = undefined;
+        messaging.send(
+            'dashboard',
+            { what: 'validateWhitelistString', raw: changedWhitelist },
+            updateUI
+        );
+    };
+
+    return function() {
+        changedWhitelist = getTextareaNode().value.trim();
+        changed = changedWhitelist === cachedWhitelist;
+        if ( timer !== undefined ) { clearTimeout(timer); }
+        timer = vAPI.setTimeout(validate, 251);
+        var textarea = getTextareaNode();
+        setErrorNodeHorizontalOffset(textarea.offsetWidth - textarea.clientWidth);
+    };
+})();
 
 /******************************************************************************/
 
 var renderWhitelist = function() {
     var onRead = function(whitelist) {
         cachedWhitelist = whitelist.trim();
-        uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
+        getTextareaNode().value = cachedWhitelist + '\n';
         whitelistChanged();
     };
     messaging.send('dashboard', { what: 'getWhitelist' }, onRead);
@@ -62,8 +100,8 @@ var renderWhitelist = function() {
 
 var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
-        var textarea = uDom('#whitelist');
-        textarea.val([textarea.val(), this.result].join('\n').trim());
+        var textarea = getTextareaNode();
+        textarea.value = [textarea.value.trim(), this.result.trim()].join('\n').trim();
         whitelistChanged();
     };
     var file = this.files[0];
@@ -92,10 +130,8 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 var exportWhitelistToFile = function() {
-    var val = uDom('#whitelist').val().trim();
-    if ( val === '' ) {
-        return;
-    }
+    var val = getTextareaNode().value.trim();
+    if ( val === '' ) { return; }
     var filename = vAPI.i18n('whitelistExportFilename')
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
@@ -108,7 +144,7 @@ var exportWhitelistToFile = function() {
 /******************************************************************************/
 
 var applyChanges = function() {
-    cachedWhitelist = uDom.nodeFromId('whitelist').value.trim();
+    cachedWhitelist = getTextareaNode().value.trim();
     var request = {
         what: 'setWhitelist',
         whitelist: cachedWhitelist
@@ -117,21 +153,21 @@ var applyChanges = function() {
 };
 
 var revertChanges = function() {
-    uDom.nodeFromId('whitelist').value = cachedWhitelist + '\n';
+    getTextareaNode().value = cachedWhitelist + '\n';
     whitelistChanged();
 };
 
 /******************************************************************************/
 
 var getCloudData = function() {
-    return uDom.nodeFromId('whitelist').value;
+    return getTextareaNode().value;
 };
 
 var setCloudData = function(data, append) {
     if ( typeof data !== 'string' ) {
         return;
     }
-    var textarea = uDom.nodeFromId('whitelist');
+    var textarea = getTextareaNode();
     if ( append ) {
         data = uBlockDashboard.mergeNewLines(textarea.value.trim(), data);
     }
@@ -147,7 +183,7 @@ self.cloud.onPull = setCloudData;
 uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
-uDom('#whitelist').on('input', whitelistChanged);
+uDom('#whitelist textarea').on('input', whitelistChanged);
 uDom('#whitelistApply').on('click', applyChanges);
 uDom('#whitelistRevert').on('click', revertChanges);
 

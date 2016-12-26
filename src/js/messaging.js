@@ -1011,6 +1011,10 @@ var onMessage = function(request, sender, callback) {
         response = getRules();
         break;
 
+    case 'validateWhitelistString':
+        response = µb.validateWhitelistString(request.raw);
+        break;
+
     case 'writeHiddenSettings':
         µb.hiddenSettingsFromString(request.content);
         break;
