@@ -21,8 +21,7 @@
     pollQueueInterval = 5000,
     profiler = +new Date(),
     strictBlockingDisabled = false,
-    repeatVisitInterval = Number.MAX_VALUE,
-    previousDNTlist = [];
+    repeatVisitInterval = Number.MAX_VALUE;
 
   var xhr, idgen, admap, inspected, listEntries, firewall;
 
@@ -75,13 +74,7 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-
     initializeState(settings);
-
-    // setInterval(function(){
-    //     updateDNTwhitelist();
-    // }, 86400000); //every day
-
 
     setTimeout(pollQueue, pollQueueInterval * 2);
   }
@@ -406,9 +399,6 @@
   };
 
   var onVisitResponse = function () {
-
-    /*if (this.responseURL==='http://rednoise.org/adntest/headers.php') // tmp
-        log('onVisitResponseHeaders\n', this.responseText);*/
 
     this.onload = this.onerror = this.ontimeout = null;
 
@@ -1090,62 +1080,6 @@
     return false;
   }
 
-  var getUpdatedDNTlist = function(callback){
-      // this function get the 'updated DNT list' assuming the local copy of it
-      // at assets/thirdparties/www.eff.org/files/effdntlist.txt gets updated regularly.
-      µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function(d){
-          var content = d.content;
-          var DNTurls = [];
-          while(content.indexOf("@@||") != -1){
-              var start = content.indexOf("@@||");
-              var end = content.indexOf("^$", start);
-              var domain = content.substring(start+4,end);
-              DNTurls.push(domain);
-              content = content.substring(end)
-          }
-          callback(DNTurls);
-      });
-  }
-
-  var clearOutOldDNTlist = function(callback){
-      defaultDynamicFilters = [];
-      if(previousDNTlist.length > 0){
-          for(var i = 0; i < previousDNTlist.length; i++){
-              µb.toggleNetFilteringSwitch("http://" + previousDNTlist[i], "site", true);
-          }
-      }
-      callback();
-  }
-
-  var setDNTwhitelist = function(callback){
-
-    clearOutOldDNTlist(function(){
-
-        getUpdatedDNTlist(function(updatedDNTlist){
-
-            for(var i = 0; i < updatedDNTlist.length; i++){
-                defaultDynamicFilters.push("* " + updatedDNTlist[i] + " * allow");
-                µb.toggleNetFilteringSwitch("http://" + updatedDNTlist[i], "site", false);
-            }
-            previousDNTlist = updatedDNTlist;
-
-            callback(); //after this dymanic filter rules will be activated
-
-        });
-    });
-  }
-
-  // clears old DNT lists and calls new Whitelist and dynamic filter rules into action.
-  var updateDNTwhitelist = function(){
-    setDNTwhitelist(function(){
-        // activating the dynamic filter rules that have been added to the defaultDynamicFilters array:
-        (firewall = new µb.Firewall()).fromString(defaultDynamicFilters.join('\n'));
-    });
-  }
-
-
-
-
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1162,6 +1096,25 @@
 
     initialize(settings);
   });
+
+
+  var clearFiltersDNT = function () {
+
+    var dnts = µb.userSettings.dntDomains;
+
+    if (dnts && dnts.length) {
+
+      // clear the net-filtering switches
+      for (var i = 0; i < dnts.length; i++)
+        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", true);
+    }
+
+    // clear the dynamic filter rules
+    dntDynamicFilters = [];
+
+    // reset the dntFirewall
+    dntFirewall.reset();
+  }
 
   /********************************** API *************************************/
 
@@ -1209,6 +1162,98 @@
       // close whitelist if open (see gh #113)
       var wlId = getExtPageTabId("dashboard.html#whitelist.html")
       wlId && vAPI.tabs.replace(wlId, vAPI.getURL("dashboard.html"));
+    }
+  };
+
+
+  // NEXT: Finish DNT parsing on load
+  // -- Consider when clearing needs to happen
+  // -- Call toggleDntFilters when µb.userSettings.disableHidingForDNT is changed
+  // -- Add check for any ad clicks (when µb.userSettings.disableClickingForDNT is enabled)
+  // -- Re-parse DNT list whenever it is updated
+
+  exports.processEntriesDNT = function (content) {
+
+    // this function get the 'original DNT list' installed with the addon
+    //µb.assets.get("assets/thirdparties/www.eff.org/files/effdntlist.txt", function (d) {
+    var domains = [];
+
+    while (content.indexOf("@@||") != -1) {
+
+      var start = content.indexOf("@@||"),
+        end = content.indexOf("^$", start),
+        domain = content.substring(start + 4, end);
+
+      domains.push(domain);
+      content = content.substring(end);
+    }
+
+    //log('[DNT] Parsed ' + domains.length + ' domains'); //, dntDomains);
+
+    var current = µb.userSettings.dntDomains,
+      needsUpdate = current.length != domains.length;
+
+    if (!needsUpdate) {
+
+      current.sort();
+      domains.sort();
+      for (var i = 0; i < domains.length; ++i) {
+        if (domains[i] !== current[i]) {
+          needsUpdate = true;
+          break;
+        }
+      }
+    }
+
+    if (needsUpdate) { // data has changed
+
+      console.log("[DNT] Updated domains: ", domains);
+      clearFiltersDNT(); // clear old data first before resetting
+
+      µb.userSettings.dntDomains = domains; // store domain data
+      vAPI.storage.set(µb.userSettings);
+
+      updateFiltersDNT();
+    } else
+      console.log("[DNT] No new domains, ignoring...");
+  }
+
+  exports.isDoNotTrackUrl = function (url) {
+
+    return (url === dntListUrl);
+  }
+
+  var dntEnabled = function () {
+
+    return µb.userSettings.disableHidingForDNT || µb.userSettings.disableClickingForDNT;
+  }
+
+  var updateFiltersDNT = exports.updateFiltersDNT = function () {
+
+    console.log(dntFirewall);
+
+    clearFiltersDNT(); // clear first whenever we toggle
+
+    var dnts = µb.userSettings.dntDomains;
+
+    if (dnts.length && dntEnabled()) {
+
+      console.log("[DNT] Enabling " + dnts.length + " net filters");
+
+      for (var i = 0; i < dnts.length; i++) {
+
+        dntDynamicFilters.push("* " + dnts[i] + " * allow");
+        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
+      }
+
+      // TODO: use reset ? if dntFirewall exists?
+      dntFirewall.fromString(dntDynamicFilters.join('\n'), false);
+
+      log('[DNT] Loaded firewall with ' + dnts.length + ' dynamic rules');
+      
+    } else {
+
+      console.log("[DNT] Disabling DNT...");
     }
   };
 
