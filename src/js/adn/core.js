@@ -1097,6 +1097,25 @@
     initialize(settings);
   });
 
+
+  var clearFiltersDNT = function () {
+
+    var dnts = µb.userSettings.dntDomains;
+
+    if (dnts && dnts.length) {
+
+      // clear the net-filtering switches
+      for (var i = 0; i < dnts.length; i++)
+        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", true);
+    }
+
+    // clear the dynamic filter rules
+    dntDynamicFilters = [];
+
+    // reset the dntFirewall
+    dntFirewall.reset();
+  }
+
   /********************************** API *************************************/
 
   var exports = {};

@@ -51,6 +51,7 @@ return {
     userSettings: {
 
         admap: {},          // ADN
+        dntDomains: [],
         parseTextAds: true,
         eventLogging: false,
 
