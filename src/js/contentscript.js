@@ -443,11 +443,11 @@ PSelector.prototype.exec = function(input) {
 };
 PSelector.prototype.test = function(input) {
     //var t0 = window.performance.now();
-    var tasks = this.tasks, nodes = this.prime(input), aa0 = [ null ], aa;
+    var tasks = this.tasks, nodes = this.prime(input), AA = [ null ], aa;
     for ( var i = 0, ni = nodes.length; i < ni; i++ ) {
-        aa0[0] = nodes[i]; aa = aa0;
+        AA[0] = nodes[i]; aa = AA;
         for ( var j = 0, nj = tasks.length; j < nj && aa.length !== 0; j++ ) {
-            aa = tasks[i].exec(aa);
+            aa = tasks[j].exec(aa);
         }
         if ( aa.length !== 0 ) { return true; }
     }
