@@ -23,12 +23,11 @@
 
 // For background page
 
+'use strict';
+
 /******************************************************************************/
 
-
 (function() {
-
-    'use strict';
 
     var vAPI = self.vAPI = self.vAPI || {};
 

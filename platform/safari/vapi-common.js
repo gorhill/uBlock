@@ -21,11 +21,11 @@
 
 // For background page or non-background pages
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 var vAPI = self.vAPI = self.vAPI || {};
 
