@@ -850,7 +850,12 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
 
     var compile = function(raw) {
         var matches = reParserEx.exec(raw);
-        if ( matches === null ) { return; }
+        if ( matches === null ) {
+            if ( isValidCSSSelector(raw) ) {
+                return { selector: raw, tasks: [] };
+            }
+            return;
+        }
         var tasks = [],
             firstOperand = raw.slice(0, matches.index),
             currentOperator = matches[1],
