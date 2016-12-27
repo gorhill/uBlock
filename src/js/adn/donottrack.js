@@ -105,8 +105,8 @@
 
     } else {
 
-      firewall.reset();
-      log("[DNT] Firewall disabled");
+      clearFiltersDNT();
+      log("[DNT] Clearing all rules");
     }
   };
 
@@ -133,7 +133,7 @@
 
     var dnts = µb.userSettings.dntDomains;
 
-    if (dnts && dnts.length) {
+    if (dnts && dnts.length >= 0) {
 
       // clear the net-filtering switches
       for (var i = 0; i < dnts.length; i++)
