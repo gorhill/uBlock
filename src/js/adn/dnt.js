@@ -15,7 +15,15 @@
 
   exports.mustBlock = function (ad) {
 
-    return this.enabled() && µb.userSettings.dntDomains.indexOf(ad.targetDomain) > -1;
+    // Here we check whether either page or target are in DNT (?)
+    var val = µb.userSettings.disableClickingForDNT &&
+      µb.userSettings.dntDomains.indexOf(ad.pageDomain) > -1 ||
+      µb.userSettings.dntDomains.indexOf(ad.targetDomain) > -1;
+
+    //console.log('mustBlock: ',val,µb.userSettings.disableClickingForDNT,
+      //ad.targetDomain,µb.userSettings.dntDomains.indexOf(ad.targetDomain), ad);
+
+    return val;
   }
 
   exports.processEntries = function (content) {

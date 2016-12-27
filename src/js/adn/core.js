@@ -247,10 +247,11 @@
 
     if (pending && µb.adnauseam.dnt.mustBlock(ad)) {
 
-      log('[DNT] Ignoring ad from '+ad.targetDomain, ad);
+      log('[DNT] Ignoring Ad('+ad.pageDomain+'->'+ad.targetDomain+')', ad);
       ad.dntAllowed = true; // so we don't recheck it
       pending = false;
     }
+
     return pending;
   }
 
