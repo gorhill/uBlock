@@ -107,7 +107,7 @@
 
         firewallRules.push("* " + dnts[i] + " * allow");
         //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
-        disableCosmeticFiltersFor(dnts[i], true);
+        //disableCosmeticFiltersFor(dnts[i], true);
       }
 
       firewall.fromString(firewallRules.join('\n'), false);
@@ -142,17 +142,17 @@
 
   var clearFiltersDNT = function () {
 
-    var dnts = µb.userSettings.dntDomains;
+    /*var dnts = µb.userSettings.dntDomains;
 
     if (dnts && dnts.length >= 0) {
 
       // clear the net-filtering switches
       for (var i = 0; i < dnts.length; i++) {
-        
+
         //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
         disableCosmeticFiltersFor(dnts[i], false);
       }
-    }
+    }*/
 
     firewall.reset();
   }

@@ -532,7 +532,7 @@ var onMessage = function(request, sender, callback) {
                 request,
                 response.noCosmeticFiltering
             );
-            response.prefs = µb.adnauseam.contentPrefs(); // ADN
+            response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
         }
         break;
 

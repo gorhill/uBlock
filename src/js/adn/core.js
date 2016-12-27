@@ -1124,17 +1124,17 @@
     }
   };
 
-  var contentPrefs = exports.contentPrefs = function () {
+  var contentPrefs = exports.contentPrefs = function (hostname) {
 
     // preferences relevant to our ui/content-scripts
-    var r = {
-      //production: production, // not needed
-      hidingDisabled: !µb.userSettings.hidingAds,
-      textAdsDisabled: !µb.userSettings.parseTextAds,
-      logEvents: µb.userSettings.eventLogging
-    };
-
-    return r;
+    var us = µb.userSettings;
+    var showDnt = hostname && (us.disableHidingForDNT && us.dntDomains.indexOf(hostname) > -1);
+    //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt, );
+    return {
+        hidingDisabled: !us.hidingAds || showDnt,
+        textAdsDisabled: !us.parseTextAds,
+        logEvents: us.eventLogging
+      };
   };
 
   exports.toggleEnabled = function (request, pageStore, tabId) {
