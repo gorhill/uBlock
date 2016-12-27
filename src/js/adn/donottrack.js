@@ -75,6 +75,16 @@
       || (prefs.clickingAds && prefs.disableClickingForDNT);
   }
 
+  var disableCosmeticFiltersFor = function (hostname, state) {
+
+    µb.toggleHostnameSwitch({
+
+      name: "no-cosmetic-filtering",
+      hostname: hostname,
+      state: state
+    });
+  }
+
   var updateFilters = exports.updateFilters = function () {
 
     var ruleCount = Object.keys(firewall.rules).length,
@@ -96,7 +106,8 @@
       for (var i = 0; i < dnts.length; i++) {
 
         firewallRules.push("* " + dnts[i] + " * allow");
-        µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
+        //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
+        disableCosmeticFiltersFor(dnts[i], true);
       }
 
       firewall.fromString(firewallRules.join('\n'), false);
@@ -136,8 +147,11 @@
     if (dnts && dnts.length >= 0) {
 
       // clear the net-filtering switches
-      for (var i = 0; i < dnts.length; i++)
-        µb.toggleNetFilteringSwitch('http://' + dnts[i], 'site', true);
+      for (var i = 0; i < dnts.length; i++) {
+        
+        //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
+        disableCosmeticFiltersFor(dnts[i], false);
+      }
     }
 
     firewall.reset();
