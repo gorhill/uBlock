@@ -308,6 +308,7 @@ button.important {
   border-bottom: 1px solid;
   background-position: 3px center;
   background-repeat: no-repeat;
+  position: relative;
 }
 .notification button{
   background-image: none !important;
@@ -315,7 +316,15 @@ button.important {
   height: 28px;
   line-height: 1.3em;
   display: block;
-  float: right;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.notification.long button{
+  display: none;
+}
+.notification.long:hover button{
+  display: block;
 }
 button.warning{
   background: none !important;
@@ -334,6 +343,9 @@ button.info{
   background-image: url(../img/icon_info@2x.png);
   border-color: #00529B;
 }
+.notification.info button {
+  box-shadow: -7px 0 10px 0 #DFF2BF;
+}
 .notification.info button:hover:enabled,
 .notification.info a.help-mark,
 button.info:hover:enabled{
@@ -347,6 +359,14 @@ button.success{
   background-color: #DFF2BF;
   background-image: url(../img/icon_success@2x.png);
   border-color: #4F8A10;
+}
+.notification.success button {
+  box-shadow: -7px 0 10px 0 #DFF2BF;
+}
+.notification.success.dnt,
+.notification.success.dnt button,
+button.success.dnt{
+  background-image: url(../img/icon_dnt@2x.png);
 }
 .notification.success button:hover:enabled,
 .notification.success a.help-mark,
@@ -362,6 +382,9 @@ button.warning{
   background-image: url(../img/icon_warning@2x.png);
   border-color: #9F6000;
 }
+.notification.warning button {
+  box-shadow: -7px 0 10px 0 #FEEFB3;
+}
 .notification.warning button:hover:enabled,
 .notification.warning a.help-mark,
 button.warning:hover:enabled {
@@ -375,6 +398,9 @@ button.error{
   background-color: #FFBABA;
   background-image: url(../img/icon_error@2x.png);
   border-color: #D8000C;
+}
+.notification.error button {
+  box-shadow: -7px 0 10px 0 #FFBABA;
 }
 .notification.error button:hover:enabled,
 .notification.error a.help-mark,

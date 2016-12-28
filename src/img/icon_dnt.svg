@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="31px" height="30px" viewBox="0 0 31 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_dnt</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="4" y="5" width="24" height="24" rx="12"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="24" height="24" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="popup" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="popup-notifications-dnt" transform="translate(-19.000000, -134.000000)">
+            <g id="dnt" transform="translate(11.000000, 128.000000)">
+                <g id="icon_dnt" transform="translate(8.000000, 1.000000)">
+                    <g>
+                        <text id="DNT-SITE" font-family="BebasNeueBold, Bebas Neue" font-size="11" font-weight="bold" letter-spacing="0.300000012" fill="#4F8A10">
+                            <tspan x="0.312999952" y="34">DNT SITE</tspan>
+                        </text>
+                        <use id="Rectangle-88" stroke="#4F8A10" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+                        <path d="M8,14 C8,14 12.2863675,16 16,16 C19.7136325,16 24,14 24,14 C24,14 19.75,14.7330566 16,14.7330566 C12.25,14.7330566 8,14 8,14 Z" id="Line" stroke="#4F8A10" stroke-width="0.5" stroke-linecap="square" fill="#4F8A10"></path>
+                        <circle id="Oval-2" fill="#4F8A10" cx="20" cy="11" r="1"></circle>
+                        <circle id="Oval-2-Copy" fill="#4F8A10" cx="12" cy="11" r="1"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
