@@ -556,6 +556,7 @@
 
     ad.targetUrl = trimChar(ad.targetUrl, '/');
     ad.targetDomain = domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
+    ad.targetHostname = µb.URI.hostnameFromURI(ad.resolvedTargetUrl || ad.targetUrl);
 
     return true;
   }
