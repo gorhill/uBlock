@@ -350,7 +350,7 @@ header{
   max-width:380px;
   max-height: 300px;
   z-index: 100;
-   
+
   -webkit-transition:z-index 1s step-start, max-height 1s linear, max-width 1s linear;
   -moz-transition:z-index 1s step-start, max-height 1s linear, max-width 1s linear;
   -ms-transition:z-index 1s step-start, max-height 1s linear, max-width 1s linear;
@@ -480,6 +480,8 @@ header{
   margin: 2px 0;
   color: #666;
   font-size: 0.8em;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #log-button a {
