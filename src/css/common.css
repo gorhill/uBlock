@@ -133,6 +133,9 @@ a.external-link {
   text-align: center;
   line-height: 12px;
 }
+.custom-check input[type="checkbox"] + label::before {
+  background-image: none;
+}
 .custom-check input[type="checkbox"]:disabled + label::before {
   border-color: #999;
   border-width: 2px;
@@ -141,9 +144,19 @@ a.external-link {
   font-size: 0.6em;
   text-align: left;
   line-height: 1em;
+  cursor: not-allowed;
 }
 .custom-check input[type="checkbox"]:disabled:checked + label::before {
   background-color: #999;
+}
+
+.custom-check input[type="checkbox"]:disabled + label a {
+  color: #999;
+  text-decoration: underline;
+}
+
+.custom-check input[type="checkbox"]:disabled + label a:hover {
+  color: #3B96FF;
 }
 
 /* ============================================================
