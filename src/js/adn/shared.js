@@ -26,7 +26,7 @@
 /**************************** Notifications *********************************/
 
 
-var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success',
+var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success', DNT = 'dnt',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
 
 
@@ -91,7 +91,7 @@ function Notification(m) {
   // default function to be called on click
   this.func = opt(m, 'func', reactivateSetting.bind(this));
 
-  if ([WARNING, ERROR, INFO, SUCCESS].indexOf(this.type) < 0)
+  if ([WARNING, ERROR, INFO, SUCCESS, DNT].indexOf(this.type) < 0)
     throw Error('Bad type: ' + m.type);
 }
 

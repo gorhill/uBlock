@@ -61,6 +61,9 @@
   /* called when the addon is first loaded */
   var initialize = function (settings) {
 
+    // TMP: testing this feature (30 sec)
+    settings.clickOnlyWhenIdleFor = production ? 0 : 30000;
+
     // modify XMLHttpRequest to store original request/ad
     var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
 
