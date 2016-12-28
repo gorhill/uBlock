@@ -560,6 +560,9 @@
       addHeader(headers, 'Upgrade-Insecure-Requests', '1');
     }
 
+    if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
+      addHeader(headers, 'DNT', '1');
+
     handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
   };
 
