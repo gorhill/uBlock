@@ -809,23 +809,32 @@
 
     for (var j = 0; j < ads.length; j++) {
 
-      var ad = updateLegacyAd(ads[j]),
-        hash = computeHash(ad);
-
-      if (!validateFields(ad)) {
-
-        warn('Unable to validate legacy ad', ad);
-        continue;
-      }
-
-      var page = ad.pageUrl;
-      if (!map[page]) map[page] = {};
-      map[page][hash] = ad;
-
-      //console.log('converted ad', map[page][hash]);
+      var ad = updateLegacyAd(ads[j]);
+      createAdmapEntry(ad, map);
     }
 
     return map;
+  }
+
+  var createAdmapEntry = function (ad, map) {
+
+    map = map || {};
+
+    var hash = computeHash(ad);
+
+    if (!validateFields(ad)) {
+
+      warn('Unable to validate legacy ad', ad);
+      return false;
+    }
+
+    var page = ad.pageUrl;
+    if (!map[page]) map[page] = {};
+    map[page][hash] = ad;
+
+    //console.log('converted ad', map[page][hash]);
+
+    return true;
   }
 
   var validateLegacyImport = function (map) {
@@ -851,7 +860,7 @@
 
       if (type(ads) !== 'array') {
 
-        warn('not array', type(ads), ads);
+        //warn('not array', type(ads), ads);
         return false;
       }
 
@@ -1551,14 +1560,15 @@
 
   exports.importAds = function (request) {
 
+
     // try to parse imported ads in current format
     var importedCount = 0,
       count = adlist().length,
       map = validateImport(request.data);
 
+    // no good, try to parse in legacy-format
     if (!map) {
 
-      // no good, try to parse in legacy-format
       map = validateLegacyImport(request.data);
 
       if (map) {
@@ -1570,15 +1580,32 @@
           // ok, legacy ads converted and verified
           log('[IMPORT] Updating legacy ads');
         }
-
-      } else {
-
-        warn('[IMPORT] Unable to parse legacy-format:', request.data);
-        return { // give up and show 0 ads imported
-          what: 'importConfirm',
-          count: 0
-        };
+        else
+          warn('[IMPORT] Unable to parse as legacy-ads:', request.data);
       }
+    }
+
+    // no good, try to parse as a single-ad
+    if (!map) {
+
+      if (type(request.data) === 'object' && type(request.data.contentData) === 'object') {
+
+        if (createAdmapEntry(request.data, map = {})) {
+          importedCount = 1;
+          log('[IMPORT] Found single Ad', request.data, map);
+        }
+        else
+          warn('[IMPORT] Unable to parse as single-ad:', request.data);
+      }
+    }
+
+    if (!map) {
+
+      warn('[IMPORT] Unable to parse import-format:', request.data);
+      return { // give up and show 0 ads imported
+        what: 'importConfirm',
+        count: 0
+      };
     }
 
     admap = map;
@@ -1594,7 +1621,7 @@
       what: 'importConfirm',
       count: importedCount
     };
-  };
+  }
 
   exports.getNotifications = function () {
 
