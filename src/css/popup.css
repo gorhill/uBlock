@@ -11,6 +11,9 @@ body {
 body.fullsize {
     overflow: auto;
     }
+body.mobile {
+    overflow-y: auto;
+    }
 /**
  https://github.com/gorhill/uBlock/issues/83
  .portrait = portrait mode = width is constrained = optimize layout accordingly.

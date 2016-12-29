@@ -2563,7 +2563,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'popup.html?tabId=' + curTabId,
+            url: 'popup.html?tabId=' + curTabId + '&mobile=1',
             index: -1,
             select: true
         });
