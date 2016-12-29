@@ -478,6 +478,8 @@ var renderPopup = function() {
 // All rendering code which need to be executed only once.
 
 var renderOnce = function() {
+    renderOnce = function(){};
+
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
@@ -492,27 +494,35 @@ var renderOnce = function() {
     uDom.nodeFromId('appname').textContent = popupData.appName;
     uDom.nodeFromId('version').textContent = popupData.appVersion;
 
+    // For large displays: we do not want the left pane -- optional and
+    // hidden by defaut -- to dictate the height of the popup. The right pane
+    // dictates the height of the popup, and the left pane will have a
+    // scrollbar if ever its height is more than what is available.
+    // For small displays: we use the whole viewport.
+
     var rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
         lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
 
-    // I do not want the left pane -- optional and hidden by defaut -- to
-    // dictate the height of the popup. The right pane dictates the height
-    // of the popup, and the left pane will have a scrollbar if ever its
-    // height is more than what is available.
-    var lpaneHeight = rpane.offsetHeight;
+    var fillViewport = function() {
+        lpane.style.setProperty(
+            'height',
+            Math.max(
+                window.innerHeight - uDom.nodeFromSelector('#gotoPrefs').offsetHeight,
+                rpane.offsetHeight
+            ) + 'px'
+        );
+        lpane.style.setProperty('width', (window.innerWidth - rpane.offsetWidth) + 'px');
+    };
 
     // https://github.com/gorhill/uBlock/issues/2274
     //   Make use of the whole viewport on mobile devices.
     if ( document.body.classList.contains('mobile') ) {
-        lpaneHeight = Math.max(
-            window.innerHeight - uDom.nodeFromSelector('#gotoPrefs').offsetHeight,
-            lpaneHeight
-        );
-        lpane.style.setProperty('width', (window.innerWidth - rpane.offsetWidth) + 'px');
+        fillViewport();
+        window.addEventListener('resize', fillViewport);
+        return;
     }
-    lpane.style.setProperty('height', lpaneHeight + 'px');
 
-    renderOnce = function(){};
+    lpane.style.setProperty('height', rpane.offsetHeight + 'px');
 };
 
 /******************************************************************************/
