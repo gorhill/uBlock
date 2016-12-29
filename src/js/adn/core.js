@@ -13,7 +13,7 @@
   var µb = µBlock,
     production = 0,
     lastActivity = 0,
-    lastPageLoad = 0,
+    lastUserActivity = 0,
     notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
@@ -60,9 +60,6 @@
 
   /* called when the addon is first loaded */
   var initialize = function (settings) {
-
-    // TMP: testing this feature (30 sec)
-    settings.clickOnlyWhenIdleFor = production ? 0 : 30000;
 
     // modify XMLHttpRequest to store original request/ad
     var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
@@ -128,8 +125,7 @@
   /* make sure we have no bad data in ad storage */
   var validateAdStorage = function () {
 
-    var ads = adlist(),
-      i = ads.length;
+    var ads = adlist(), i = ads.length;
 
     if (clearAdsOnInit) {
 
@@ -139,8 +135,6 @@
         clearAds();
 
       }, 2000);
-
-      return ads;
     }
 
     clearVisitData && clearAdVisits(ads);
@@ -164,8 +158,6 @@
     computeNextId(ads);
 
     log('[INIT] Initialized with ' + ads.length + ' ads');
-
-    return ads;
   }
 
   var clearAdVisits = function (ads) {
@@ -206,9 +198,9 @@
 
       // check whether an idle timeout has been specified
       var idleMs = settings.clickOnlyWhenIdleFor;
-      if (!idleMs || (millis() - lastPageLoad > idleMs)) {
+      if (!idleMs || (millis() - lastUserActivity > idleMs)) {
 
-        //idleMs && log("[IDLE] "+(millis() - lastPageLoad)+"ms, clicking resumed...");
+        //idleMs && log("[IDLER] "+(millis() - lastUserActivity)+"ms, clicking resumed...");
 
         // if an unvisited ad is being inspected, visit it next
         if (visitPending(inspected)) {
@@ -223,8 +215,10 @@
 
         visitAd(next);
       }
+      else if (idleMs) {
 
-      // else log("[IDLE] "+(millis() - lastPageLoad)+"ms, waiting...");
+        log('[IDLER] '+(millis() - lastUserActivity)+'ms, waiting until '+ idleMs +'ms...'); // TMP
+      }
     }
 
     // next poll
@@ -250,7 +244,7 @@
 
     if (pending && µb.adnauseam.dnt.mustBlock(ad)) {
 
-      log('[DNT] Ignoring Ad('+ad.pageDomain+'->'+ad.targetDomain+')', ad);
+      log('[DNT] Not visiting '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
       ad.dntAllowed = true; // so we don't recheck it
       pending = false;
     }
@@ -1090,6 +1084,11 @@
     return false;
   }
 
+  var isAutomated = function () {
+
+    return (automatedMode && automatedMode.length);
+  }
+
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1170,7 +1169,7 @@
     if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export')
       exportAds();
 
-    lastPageLoad = millis();
+    markUserAction();
   };
 
   exports.onListsLoaded = function (firstRun) {
@@ -1200,8 +1199,9 @@
     }
   };
 
-  var isAutomated = function () {
-    return (automatedMode && automatedMode.length);
+  var markUserAction = exports.markUserAction = function () {
+    //console.log('markUserAction:', millis());
+    return (lastUserActivity = millis());
   }
 
   var logNetAllow = exports.logNetAllow = function () {
@@ -1674,6 +1674,7 @@
 
       request.url && (request.url = trimChar(request.url, '/')); // no trailing slash
       callback(µb.adnauseam[request.what](request, pageStore, tabId, frameId));
+      µb.adnauseam.markUserAction(); // assume user-initiated and thus no longer 'idle'
 
     } else {
 

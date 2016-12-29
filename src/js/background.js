@@ -61,7 +61,7 @@ return {
         disableHidingForDNT: false,
         disableClickingForDNT: false,
 
-        clickOnlyWhenIdleFor: 0,
+        clickOnlyWhenIdleFor: 30000, // TMP-remove
         noIncomingCookies: true,
         noOutgoingCookies: true,
         noOutgoingReferer: true,
