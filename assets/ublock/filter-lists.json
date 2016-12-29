@@ -219,13 +219,6 @@
     "homeURL": "https://mirror.cedia.org.ec/malwaredomains/justdomains",
     "supportURL": "http://www.malwaredomains.com/"
   },
-  "pgl.yoyo.org/as/serverlist": {
-    "off": true,
-    "title": "Peter Lowe’s Ad server list",
-    "group": "ads",
-    "homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
-    "supportURL": "https://pgl.yoyo.org/adservers/"
-  },
   "https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
     "off": true,
     "title": "ISR: EasyList Hebrew (obsolete, will be removed soon)",

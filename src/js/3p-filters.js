@@ -38,11 +38,7 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var hiddenLists = [
-  "https://www.eff.org/files/effdntlist.txt",
-  "assets/thirdparties/pgl.yoyo.org/as/serverlist",
-  "assets/ublock/experimental.txt"
-]; // ADN TODO: remove non-dnt entries from filter-lists.json?
+var hiddenLists = [ "https://www.eff.org/files/effdntlist.txt" ]; // ADN
 
 /******************************************************************************/
 
