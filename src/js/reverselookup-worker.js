@@ -139,9 +139,9 @@ var fromCosmeticFilter = function(details) {
     // compiled form of a filter.
     var filterEx = '(' +
                    reEscape(filter) +
-                   '|[^\\v]+' +
+                   '|\{[^\\v]*' +
                    reEscape(JSON.stringify({ raw: filter }).slice(1,-1)) +
-                   '[^\\v]+)';
+                   '[^\\v]*\})';
 
     // Second step: find hostname-based versions.
     // Reference: FilterContainer.compileHostnameSelector().

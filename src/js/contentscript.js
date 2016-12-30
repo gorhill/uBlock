@@ -417,8 +417,9 @@ var PSelector = function(o) {
     this.raw = o.raw;
     this.selector = o.selector;
     this.tasks = [];
-    var tasks = o.tasks, task, ctor;
-    for ( var i = 0; i < tasks.length; i++ ) {
+    var tasks = o.tasks;
+    if ( !tasks ) { return; }
+    for ( var i = 0, task, ctor; i < tasks.length; i++ ) {
         task = tasks[i];
         ctor = this.operatorToTaskMap.get(task[0]);
         this.tasks.push(new ctor(task));
@@ -455,26 +456,6 @@ PSelector.prototype.test = function(input) {
     return false;
 };
 
-var PSelectors = function() {
-    this.entries = [];
-};
-PSelectors.prototype.add = function(o) {
-    this.entries.push(new PSelector(o));
-};
-PSelectors.prototype.forEachNode = function(callback) {
-    var pfilters = this.entries,
-        i = pfilters.length,
-        pfilter, nodes, j;
-    while ( i-- ) {
-        pfilter = pfilters[i];
-        nodes = pfilter.exec();
-        j = nodes.length;
-        while ( j-- ) {
-            callback(nodes[j], pfilter);
-        }
-    }
-};
-
 /******************************************************************************/
 
 var domFilterer = {
@@ -497,8 +478,6 @@ var domFilterer = {
         add: function(selector) {
             this.entries.push(selector);
             this.selector = undefined;
-        },
-        forEachNodeOfSelector: function(/*callback, root, extra*/) {
         },
         forEachNode: function(callback, root, extra) {
             if ( this.selector === undefined ) {
@@ -532,7 +511,29 @@ var domFilterer = {
             }
         }
     },
-    proceduralSelectors: new PSelectors(),           // Hiding filters: procedural
+    styleSelectors: {                           // Style filters
+        entries: [],
+        add: function(o) {
+            this.entries.push(o);
+        }
+    },
+    proceduralSelectors: {                      // Hiding filters: procedural
+        entries: [],
+        add: function(o) {
+            this.entries.push(new PSelector(o));
+        },
+        forEachNode: function(callback) {
+            var pfilters = this.entries, i = pfilters.length, pfilter, nodes, j;
+            while ( i-- ) {
+                pfilter = pfilters[i];
+                nodes = pfilter.exec();
+                j = nodes.length;
+                while ( j-- ) {
+                    callback(nodes[j], pfilter);
+                }
+            }
+        }
+    },
 
     addExceptions: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
@@ -556,11 +557,13 @@ var domFilterer = {
         }
         var o = JSON.parse(selector);
         if ( o.style ) {
-            this.newStyleRuleBuffer.push(o.parts.join(' '));
+            this.newStyleRuleBuffer.push(o.style.join(' '));
+            this.styleSelectors.add(o);
             return;
         }
-        if ( o.procedural ) {
+        if ( o.tasks ) {
             this.proceduralSelectors.add(o);
+            return;
         }
     },
 

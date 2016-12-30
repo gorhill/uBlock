@@ -770,9 +770,9 @@ var filterToDOMInterface = (function() {
         }
         var elems;
         if ( o.style ) {
-            elems = document.querySelectorAll(o.parts[0]);
-            lastAction = o.parts.join(' ');
-        } else if ( o.procedural ) {
+            elems = document.querySelectorAll(o.style[0]);
+            lastAction = o.style.join(' ');
+        } else if ( o.tasks ) {
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
         if ( !elems ) { return; }

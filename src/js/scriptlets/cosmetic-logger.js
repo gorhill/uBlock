@@ -51,6 +51,17 @@ vAPI.domFilterer.simpleHideSelectors.entries.forEach(evaluateSelector);
 // Complex CSS selector-based cosmetic filters.
 vAPI.domFilterer.complexHideSelectors.entries.forEach(evaluateSelector);
 
+// Style cosmetic filters.
+vAPI.domFilterer.styleSelectors.entries.forEach(function(filter) {
+    if (
+        loggedSelectors.hasOwnProperty(filter.raw) === false &&
+        document.querySelector(filter.style[0]) !== null
+    ) {
+        loggedSelectors[filter.raw] = true;
+        matchedSelectors.push(filter.raw);
+    }
+});
+
 // Procedural cosmetic filters.
 vAPI.domFilterer.proceduralSelectors.entries.forEach(function(pfilter) {
     if (
