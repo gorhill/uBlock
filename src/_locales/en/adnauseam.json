@@ -72,20 +72,20 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
-    "message": "This page respect do not track, ads are allowed.",
-    "description": "English: Notifications -> This page respect do not track, ads are allowed."
+    "message": "This page respects Do Not Track, Ads are allowed.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respect do not track, clicking not hiding.",
-    "description": "English: Notifications -> This page respect do not track, clicking not hiding."
+    "message": "This page rrespects Do Not Track, clicking not hiding.",
+    "description": "English: Notifications -> This page rrespects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respect do not track, hiding not clicking",
-    "description": "English: Notifications -> This page respect do not track, hiding not clicking."
+    "message": "This page rrespects Do Not Track, hiding not clicking",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respect do not track, just so you know.",
-    "description": "English: Notifications -> This page respect do not track, just so you know."
+    "message": "This page rrespects Do Not Track, just so you know.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
     "message": "TARGET",
