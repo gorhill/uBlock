@@ -45,7 +45,7 @@
       break;
 
     case 'notifications':
-      renderNotifications(request.notifications, "menu");
+      renderNotifications(request.notifications);
       adjustBlockHeight();
       break;
     }
@@ -63,6 +63,7 @@
       page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
       page.indexOf("chrome://") === 0 ||
       page.indexOf("about:") === 0) {
+
       uDom.nodeFromId('pause-button').disabled = true;
       uDom.nodeFromId('resume-button').disabled = true;
     }
@@ -87,22 +88,21 @@
 
       setAttempting(json.current);
     }
-    
 
     vAPI.messaging.send(
-         'adnauseam', {
-             what: 'verifyAdBlockersAndDNT',
-             url: page
-         },
-         function() {
-            vAPI.messaging.send(
-                'adnauseam', {
-                    what: 'getNotifications'
-                },
-                function(notifications) {
-                    renderNotifications(notifications, "menu");
-                });
-         });
+      'adnauseam', {
+        what: 'verifyAdBlockersAndDNT',
+        url: page
+      },
+      function () {
+        vAPI.messaging.send(
+          'adnauseam', {
+            what: 'getNotifications'
+          },
+          function (notifications) {
+            renderNotifications(notifications);
+          });
+      });
   }
 
   var updateMenuState = function () {
@@ -332,9 +332,12 @@
       .addClass('ad-item-img')
       .on('click', "this.onerror=null; this.width=50; this.height=45; this.src='img/placeholder.svg'");
 
-    $img.on("error", function() {
+    $img.on("error", function () {
 
-      $img.css({ width: 80, height: 40 });
+      $img.css({
+        width: 80,
+        height: 40
+      });
       $img.attr('src', 'img/placeholder.svg');
       $img.attr('alt', 'Unable to load image');
       $img.off("error");
@@ -342,7 +345,7 @@
 
     $img.appendTo($span);
 
-//    $span.appendTo($a);
+    //    $span.appendTo($a);
 
     uDom(document.createElement('span'))
       .addClass('title')
@@ -586,26 +589,26 @@
     //hashFromPopupData();
   };
 
-  var adjustBlockHeight = function() {
-      //recalculate the height of ad-list
-      var h = document.getElementById('notifications').offsetHeight;
-      var newh = 350 - h;
-      uDom('#ad-list').css('height', newh + 'px');
-      //adjust the starting point of paused-menu
-      var newTop = 100 + h;
-      uDom('#paused-menu').css('top', newTop + 'px');
+  var adjustBlockHeight = function () {
+    //recalculate the height of ad-list
+    var h = document.getElementById('notifications').offsetHeight;
+    var newh = 350 - h;
+    uDom('#ad-list').css('height', newh + 'px');
+    //adjust the starting point of paused-menu
+    var newTop = 100 + h;
+    uDom('#paused-menu').css('top', newTop + 'px');
   };
 
-  var setBackBlockHeight = function() {
+  var setBackBlockHeight = function () {
     var height = document.getElementById('ad-list').offsetHeight;
-    var top =  parseInt(uDom('#paused-menu').css('top'));
+    var top = parseInt(uDom('#paused-menu').css('top'));
 
     var unit = 39;
     height += unit;
     top -= unit;
 
     uDom('#ad-list').css('height', height + 'px');
-    uDom('#paused-menu').css('top', top +'px');
+    uDom('#paused-menu').css('top', top + 'px');
   };
   /********************************************************************/
 

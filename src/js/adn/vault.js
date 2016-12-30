@@ -70,7 +70,7 @@
       break;
 
     case 'notifications':
-      renderNotifications(request.notifications);
+      renderNotifications(request.notifications, 'vault');
       adjustHeight();
       createSlider(true);
       break;
@@ -104,7 +104,7 @@
             what: 'verifyAdBlockers'
         },function() {
         if (json.notifications && json.notifications.length)
-            renderNotifications(json.notifications);
+            renderNotifications(json.notifications, 'vault');
             adjustHeight();
     });
 

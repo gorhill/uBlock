@@ -331,9 +331,6 @@ var renderFilterLists = function() {
 
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
-
-        // see #488
-        //renderNotifications(details.notifications);
     };
 
     messaging.send('dashboard', { what: 'getLists' }, onListsReceived);

@@ -53,7 +53,7 @@
 
     tabButton.toggleClass('selected', true);
 
-    notifications && renderNotifications(notifications);
+    notifications && renderNotifications(notifications, "dashboard");
     resizeFrame();
   };
 
@@ -66,7 +66,7 @@
     url += this.hash;
     window.location.replace(url);
     loadDashboardPanel();
-      
+
     e.preventDefault();
   };
 
@@ -92,10 +92,7 @@
 
     case 'notifications':
 
-      // see #488
-      //renderNotifications(request.notifications);
       loadDashboardPanel(request.notifications);
-      // resizeFrame();
       break;
     }
   });
@@ -108,7 +105,7 @@
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
-    
+
      vAPI.messaging.send(
       'adnauseam', {
           what: 'verifyAdBlockers'

@@ -1516,20 +1516,19 @@
   }
 
   var verifyDNT = exports.verifyDNT = function (request) {
-    
-    var notes = notifications, 
-        note = false,
+
+    var notes = notifications,
         prefs = µb.userSettings,
-        url = request.url,
-        domain = getLocation(url).hostname,
+        domain = µb.URI.hostnameFromURI(request.url), //getLocation(url).hostname,
         list = [DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify],
         target = hasDNTNotification(notes, list);
 
     // console.log("verifyDNT" + url);
-    
-    //if the domain is not in the EFF DNT list, remove DNT notification and return
+
+    // if the domain is not in the EFF DNT list, remove DNT notification and return
     if (!domain || prefs.dntDomains.indexOf(domain) < 0) {
-        //if notes contains any DNT notification, remove
+
+        // if notes contains any DNT notification, remove
         if (target) {
             removeNotification(notes, target);
             sendNotifications(notes);
@@ -1537,23 +1536,24 @@
         return;
     }
 
-    //continue if the domain is in EFF DNT list   
+    // continue if the domain is in EFF DNT list
 
     var disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT),
         disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
-    
+
     // console.log(disableClicking, disableHiding);
-    
+
+    var note = DNTNotify; // neither clicking nor hiding
+
     if (disableClicking && disableHiding)
        note = DNTAllowed;
     else if (disableClicking && !disableHiding)
        note = DNTHideNotClick;
     else if(!disableClicking && disableHiding)
        note = DNTClickNotHide;
-    else
-       note = DNTNotify;
-    
-    if (note && notes.indexOf(note) < 0) {
+
+    if (notes.indexOf(note) < 0) {
+
       addNotification(notes, note);
       if (target && target != note) {;
           removeNotification(notes, target);
