@@ -152,7 +152,7 @@ var renderNotifications = function (visibleNotes, thePage) {
 
   var page = thePage || 'menu', notifications = Notifications;
 
-  if (page !== "menu" && page !== "dashboard")
+  if (page !== "menu")
     notifications = notifications.filter(function(n){ return !n.isDNT });
 
   if (page === "firstrun")
