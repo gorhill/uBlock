@@ -1438,6 +1438,7 @@
    *
    * TODO: Shall be handled differently on different browser (?)
    */
+
   var verifyAdBlockers = exports.verifyAdBlockers = function () {
 
     var notes = notifications,
@@ -1468,6 +1469,10 @@
     });
   }
 
+  var verifyAdBlockersAndDNT = exports.verifyAdBlockersAndDNT = function(request){
+     verifyDNT(request);
+      verifyAdBlockers();
+  }
 
   var verifySettings = exports.verifySettings = function () {
 
@@ -1478,7 +1483,6 @@
   }
 
   var verifyLists = exports.verifyLists = function (lists) {
-
     verifyList(EasyList, lists);
   }
 
@@ -1509,6 +1513,53 @@
     }
 
     if (dirty) sendNotifications(notes);
+  }
+
+  var verifyDNT = exports.verifyDNT = function (request) {
+    
+    var notes = notifications, 
+        note = false,
+        prefs = µb.userSettings,
+        url = request.url,
+        domain = getLocation(url).hostname,
+        list = [DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify],
+        target = hasDNTNotification(notes, list);
+
+    // console.log("verifyDNT" + url);
+    
+    //if the domain is not in the EFF DNT list, remove DNT notification and return
+    if (!domain || prefs.dntDomains.indexOf(domain) < 0) {
+        //if notes contains any DNT notification, remove
+        if (target) {
+            removeNotification(notes, target);
+            sendNotifications(notes);
+        }
+        return;
+    }
+
+    //continue if the domain is in EFF DNT list   
+
+    var disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT),
+        disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
+    
+    // console.log(disableClicking, disableHiding);
+    
+    if (disableClicking && disableHiding)
+       note = DNTAllowed;
+    else if (disableClicking && !disableHiding)
+       note = DNTHideNotClick;
+    else if(!disableClicking && disableHiding)
+       note = DNTClickNotHide;
+    else
+       note = DNTNotify;
+    
+    if (note && notes.indexOf(note) < 0) {
+      addNotification(notes, note);
+      if (target && target != note) {;
+          removeNotification(notes, target);
+      }
+      sendNotifications(notes);
+    }
   }
 
   var verifySetting = exports.verifySetting = function (note, state) {

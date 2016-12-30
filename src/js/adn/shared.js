@@ -29,6 +29,33 @@
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success', DNT = 'dnt',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
 
+var DNTAllowed = new Notification({
+  name: 'DNTAllowed',
+  text: 'adnNotificationDNTAllowed',
+  button: 'adnMenuSettings',
+  type: DNT
+});
+
+var DNTHideNotClick = new Notification({
+  name: 'DNTHideNotClick',
+  text: 'adnNotificationDNTHidingNotClicking',
+  button: 'adnMenuSettings',
+  type: DNT
+});
+
+var DNTClickNotHide = new Notification({
+  name: 'DNTClickNotHide',
+  text: 'adnNotificationDNTClickingNotHiding',
+  button: 'adnMenuSettings',
+  type: WARNING
+});
+
+var DNTNotify = new Notification({
+  name: 'DNTNotify',
+  text: 'adnNotificationDNTJustSoYouKnow',
+  button: 'adnMenuSettings',
+  type: DNT
+});
 
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
@@ -74,7 +101,8 @@ UBlockEnabled.func =  openExtPage.bind(UBlockEnabled);
 
 /***************************************************************************/
 
-var Notifications = [ AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList ];
+var Notifications = [ AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
+var NotificationsWithoutDNT = [ AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
 
 function Notification(m) {
 
@@ -111,7 +139,6 @@ var addNotification = function (notes, note) {
 };
 
 var removeNotification = function (notes, note) {
-
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].name === note.name) {
       notes.splice(i, 1);
@@ -121,11 +148,18 @@ var removeNotification = function (notes, note) {
   return false;
 };
 
-var renderNotifications = function (visibleNotes, isFirstRun) {
+var renderNotifications = function (visibleNotes, page) {
 
   // console.log('renderNotifications', visibleNotes);
 
-  var notifications = (isFirstRun) ? [ AdBlockPlusEnabled, UBlockEnabled ] : Notifications;
+  var notifications;
+
+  if( page === "firstrun")
+    notifications = [ AdBlockPlusEnabled, UBlockEnabled ];
+  else if( page === "menu")
+    notifications = Notifications;
+  else
+    notifications = NotificationsWithoutDNT;
 
   var template = uDom('#notify-template');
 
@@ -158,6 +192,27 @@ var renderNotifications = function (visibleNotes, isFirstRun) {
   }
 }
 
+var hasNotification = function(notes, note){
+   for (var i = 0; i < notes.length; i++) {
+    if (notes[i].name === note.name) {
+      return note;
+    }
+  }
+  return false;
+}
+
+var hasDNTNotification = function(notes, DNTlist){
+
+   for (var i = 0; i < DNTlist.length; i++) {
+      var target = hasNotification(notes,DNTlist[i])
+      if(target) return target;
+   }
+   
+   return false
+}
+
+
+
 var appendNotifyDiv = function (notify, template) {
 
   var node = template.clone(false);
@@ -177,6 +232,11 @@ var appendNotifyDiv = function (notify, template) {
   vAPI.i18n.render();
 }
 
+function getLocation(href){
+    var l = document.createElement("a");
+    l.href = href;
+    return l;
+}
 function udomFromIFrame(selector) {  // may be called from a frame or not??
 
   var aDom = uDom, iframe = uDom('#iframe');

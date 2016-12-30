@@ -326,6 +326,14 @@ button.important {
 .notification.long:hover button{
   display: block;
 }
+.notification.dnt button,#DNTClickNotHide.notification button{
+  right:-70px;
+}
+.notification.dnt:hover > button,#DNTClickNotHide.notification:hover > button{
+  right:10px;
+  animation-duration: .5s;
+  animation-name: slidefromRight;
+}
 button.warning{
   background: none !important;
 }
@@ -363,17 +371,33 @@ button.success{
 .notification.success button {
   box-shadow: -7px 0 10px 0 #DFF2BF;
 }
-.notification.success.dnt,
-.notification.success.dnt button,
-button.success.dnt{
+.notification.dnt,.notification.dnt button,
+.notification.success.dnt button{
   background-image: url(../img/icon_dnt@2x.png);
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  border-color: #4F8A10;
 }
 .notification.success button:hover:enabled,
 .notification.success a.help-mark,
-button.success:hover:enabled {
+button.success:hover:enabled,
+.notification.dnt button:hover:enabled,
+.notification.dnt a.help-mark,
+button.dnt:hover:enabled {
   color: #DFF2BF;
   background-color: #4F8A10 !important;
 }
+
+@keyframes slidefromRight {
+  from {
+    right:-70px;
+  }
+
+  to {
+    right:10px;
+  }
+}
+
 .notification.warning,
 .notification.warning button,
 button.warning{
