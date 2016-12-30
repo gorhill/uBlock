@@ -212,7 +212,7 @@
                   what: 'getNotifications'
               },
               function(n) {
-                  renderNotifications(n, true);
+                  renderNotifications(n, "firstrun");
               });
         });
   });

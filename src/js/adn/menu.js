@@ -45,7 +45,7 @@
       break;
 
     case 'notifications':
-      renderNotifications(request.notifications);
+      renderNotifications(request.notifications, "menu");
       adjustBlockHeight();
       break;
     }
@@ -54,8 +54,6 @@
   /******************************************************************************/
 
   var renderPage = function (json) {
-
-    //console.log('renderPage', json);
 
     page = json.pageUrl;
     ads = onPage(json.data, page);
@@ -89,15 +87,21 @@
 
       setAttempting(json.current);
     }
+    
 
-     vAPI.messaging.send(
+    vAPI.messaging.send(
          'adnauseam', {
-             what: 'verifyAdBlockers'
+             what: 'verifyAdBlockersAndDNT',
+             url: page
          },
          function() {
-             if (json.notifications && json.notifications.length) {
-                 renderNotifications(json.notifications);       
-             }
+            vAPI.messaging.send(
+                'adnauseam', {
+                    what: 'getNotifications'
+                },
+                function(notifications) {
+                    renderNotifications(notifications, "menu");
+                });
          });
   }
 
