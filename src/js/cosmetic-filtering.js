@@ -754,14 +754,15 @@ FilterContainer.prototype.compileSelector = (function() {
         var matches;
 
         // `:style` selector?
-        if ( (matches = reStyleSelector.exec(raw)) !== null ) {
-            if ( isValidCSSSelector(matches[1]) && isValidStyleProperty(matches[2]) ) {
-                return JSON.stringify({
-                    raw: raw,
-                    style: [ matches[1], '{' + matches[2] + '}' ]
-                });
-            }
-            return;
+        if (
+            (matches = reStyleSelector.exec(raw)) !== null &&
+            isValidCSSSelector(matches[1]) &&
+            isValidStyleProperty(matches[2])
+        ) {
+            return JSON.stringify({
+                raw: raw,
+                style: [ matches[1], '{' + matches[2] + '}' ]
+            });
         }
 
         // `script:` filter?
@@ -774,7 +775,6 @@ FilterContainer.prototype.compileSelector = (function() {
             if ( reIsRegexLiteral.test(matches[2]) === false || isBadRegex(matches[2].slice(1, -1)) === false ) {
                 return raw;
             }
-            return;
         }
 
         // Procedural selector?
@@ -784,7 +784,6 @@ FilterContainer.prototype.compileSelector = (function() {
         }
 
         µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + raw);
-        return;
     };
 })();
 
