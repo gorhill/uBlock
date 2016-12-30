@@ -39,11 +39,11 @@
     "message":"优化设定以屏蔽恶意软件和隐形的用户追踪 (<span class='link' id='ToOptions'>更改<\/span>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
-  "adnNotificationButtonReactivate":{
+  "adnNotificationReactivate":{
     "message":"启用",
     "description":"English: Notifications -> Reactivate"
   },
-  "adnNotificationButtonDisable":{
+  "adnNotificationDisable":{
     "message":"停用",
     "description":"English: Notifications -> Disable"
   },

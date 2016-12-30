@@ -39,11 +39,11 @@
     "message": "optimize your settings to protect against malware and non-visual trackers (<span class='link' id='ToOptions'>customize<\/span>)",
     "description": "English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
   },
-  "adnNotificationButtonReactivate": {
+  "adnNotificationReactivate": {
     "message": "Reactivate",
     "description": "English: Notifications -> Reactivate"
   },
-  "adnNotificationButtonDisable": {
+  "adnNotificationDisable": {
     "message": "Disable",
     "description": "English: Notifications -> Disable"
   },
