@@ -57,6 +57,18 @@ if (String.prototype.endsWith instanceof Function === false) {
   };
 }
 
+if (String.prototype.includes instanceof Function === false) {
+  String.prototype.includes = function (needle, pos) {
+    if (typeof pos !== 'number') {
+      pos = 0;
+    }
+    if (start + search.length > this.length)
+      return false;
+    return this.indexOf(needle, pos) > -1;
+  };
+}
+
+
 /**************************** Notifications *********************************/
 
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success', DNT = 'dnt',

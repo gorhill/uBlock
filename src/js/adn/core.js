@@ -147,8 +147,8 @@
       }
     }
 
-    obfuscateHashes();
-    computeNextId(ads);
+    validateHashes();
+    computeNextId(ads = adlist());
 
     log('[INIT] Initialized with ' + ads.length + ' ads');
   }
@@ -158,68 +158,72 @@
     return remd5.test(s);
   }
 
-  var obfuscateHashes = function() {
+  var validateHashes = function () {
 
-    console.log('START', JSON.stringify(admap,null,2));
+    var hashes, ad, pages = Object.keys(admap),
+      unhashed = [], orphans = [];
 
-    var pages = Object.keys(admap), dirty = false;
+    /* ForEach pageKey in admap
+      if (pageKey is not hashed)
+        add pageKey to unhashed
+        add all its ads to orpans
+      if (pageKey is hashed)
+        add any non-hashed ads to orphans
+    }*/
+    var checkHashes = function () {
 
-    for (var i = 0; i < pages.length; i++) {
+      for (var i = 0; i < pages.length; i++) {
 
-      log("PAGE: "+pages[i]);
+        var isHashed = validMD5(pages[i]);
 
-      if (validMD5(pages[i])) continue;
+        if (!isHashed) {
 
-      var pageHash = YaMD5.hashStr(pages[i]);
+          unhashed.push(pages[i]);
+          hashes = Object.keys(admap[pages[i]]);
+          for (var j = 0; j < hashes.length; j++) {
 
-      log('FOUND UNHASHED PAGE-KEY: '+pages[i]);
+            ad = admap[pages[i]][hashes[j]];
+            orphans.push(ad);
+          }
 
-      var hashes = Object.keys(admap[pages[i]]);
+        } else {
 
-      for (var j = 0; j < hashes.length; j++) {
+          hashes = Object.keys(admap[pages[i]]);
+          for (var j = hashes.length - 1; j >= 0; j--) {
 
-        var adhash = hashes[j];
-        var ad = admap[pages[i]][adhash];
+            if (!validMD5(hashes[j])) {
 
-        if (!validMD5(adhash) && adhash.indexOf('::') >= 0) {
-
-          admap[pageHash] = admap[pageHash] || {};
-          admap[pageHash][computeHash(ad)] = ad; // create new safe hash
-          console.log(adhash+' rehashed to '+computeHash(ad));
-          delete admap[pages[i]][adhash];
-          console.log('DELETE: admap['+pages[i]+']['+adhash+']');
-          dirty = true;
+              ad = admap[pages[i]][hashes[j]];
+              delete admap[pages[i]][hashes[j]];
+              orphans.push(ad);
+            }
+          }
         }
-
-        /*console.log(Object.keys(admap[pages[i]]).length + "entries remaining");
-        if (j === Object.keys(admap[pages[i]]).length-1) {
-          console.log("HIT LAST!" +hashes.length);
-          delete admap[pages[i]];
-        }*/
       }
-    }
-    console.log(Object.keys(admap).length + "pages found (pre)");
 
-    // remove any pages with no ad keys
-    pages = Object.keys(admap);
-    for (i = pages.length-1; i >= 0; i--) {
-      console.log(i+") ", pages[i]);
-      console.log(i+") ", admap[pages[i]]);
-      hashes = Object.keys(admap[pages[i]]);
-      console.log(i+") "+pages[i]+" -> "+hashes.length);
-      if (hashes && !hashes.length) {
-        console.log('DELETE: admap['+pages[i]+']');
-        delete admap[pages[i]];
-        dirty = true;
+      /* if (found unhashed or orphans)
+        Delete unhashed entries from admap
+        Add each orphan back to admap
+      */
+      var repairHashes = function () {
+
+        orphans.forEach(function(ad) {
+          createAdmapEntry(ad, admap)
+        });
+
+        unhashed.forEach(function (k) {
+          delete admap[k]
+        });
+
+        storeUserData();
       }
+
+      if (unhashed.length || orphans.length) repairHashes();
     }
 
-    console.log(Object.keys(admap).length + "pages found (post)");
-
-    if (dirty) storeUserData();
-
-    console.log('DONE',JSON.stringify(admap,null,2));
-  };
+    checkHashes();
+    //log('[CRYPT] '+adCount()+ ' ads hash-verified');
+  }
 
   var clearAdVisits = function (ads) {
 
@@ -771,7 +775,7 @@
   var deleteAd = function (arg) {
 
     var ad = type(arg) === 'object' ? arg : adById(arg),
-      count = adlist().length;
+      count = adCount();
 
     if (!ad) warn("No Ad to delete", id, admap);
 
@@ -782,12 +786,14 @@
       if (admap[ad.pageUrl][hash]) {
 
         delete admap[ad.pageUrl][hash];
+
       } else {
+
         warn('Unable to find ad: ', ad, admap);
       }
     }
 
-    if (adlist().length < count) {
+    if (adCount() < count) {
 
       log('[DELETE] ' + adinfo(ad));
       updateBadges();
@@ -848,19 +854,20 @@
       var hashes = Object.keys(map[pages[i]]);
       for (var j = 0; j < hashes.length; j++) {
 
-        if (type(hashes[j]) !== 'string' || hashes[j].indexOf('::') < 0) {
+        var hash = hashes[j];
+        if (type(hash) !== 'string' || !(validMD5(hash) || hash.includes('::'))) {
 
-          warn('Bad hash in import: ', hashes[j], ad); // tmp
+          warn('Bad hash in import: ', hash, ad); // tmp
           return false;
         }
 
-        var ad = map[pages[i]][hashes[j]];
+        var ad = map[pages[i]][hash];
         if (validateFields(ad)) {
 
           validateTarget(ad); // accept either way
 
           if (!newmap[pages[i]]) newmap[pages[i]] = {};
-          newmap[pages[i]][hashes[j]] = ad;
+          newmap[pages[i]][hash] = ad;
           pass++;
 
         } else {
@@ -880,7 +887,7 @@
     for (var j = 0; j < ads.length; j++) {
 
       var ad = updateLegacyAd(ads[j]);
-      createAdmapEntry(ad, map);
+      createAdmapEntry(ad, map)
     }
 
     return map;
@@ -888,23 +895,15 @@
 
   var createAdmapEntry = function (ad, map) {
 
-    map = map || {};
+    if (validateFields(ad)) {
 
-    var hash = computeHash(ad);
-
-    if (!validateFields(ad)) {
-
-      warn('Unable to validate legacy ad', ad);
-      return false;
+      var pagehash = YaMD5.hashStr(ad.pageUrl);
+      if (!map[pagehash]) map[pagehash] = {};
+      map[pagehash][computeHash(ad)] = ad;
+      return true;
     }
 
-    var page = ad.pageUrl;
-    if (!map[page]) map[page] = {};
-    map[page][hash] = ad;
-
-    //console.log('converted ad', map[page][hash]);
-
-    return true;
+    warn('Unable to validate ad', ad);
   }
 
   var validateLegacyImport = function (map) {
@@ -971,12 +970,12 @@
     return ad;
   }
 
-  var postRegister = function (ad, pageUrl, tabId) {
+  var postRegister = function (ad, tabId) {
 
     log('[FOUND] ' + adinfo(ad), ad);
 
     // if vault/menu is open, send the new ad
-    var json = adsForUI(pageUrl);
+    var json = adsForUI(ad.pageUrl);
     json.what = 'adDetected';
     json.ad = ad;
 
@@ -1151,6 +1150,11 @@
     }
 
     return allowRequest(misses.join(','), raw + ': ', url);  // case D
+  }
+
+  var adCount = function () {
+
+    return adlist().length;
   }
 
   var allowRequest = function (msg, raw, url) {
@@ -1335,13 +1339,11 @@
 
     if (!request.ad) return;
 
-    var json, adhash, msSinceFound, orig,
-      pageUrl = pageStore.rawURL,
-      ad = request.ad;
+    var json, adhash, pageHash, msSinceFound, orig, ad = request.ad;
 
     ad.current = true;
     ad.attemptedTs = 0;
-    ad.pageUrl = pageUrl;
+    ad.pageUrl = pageStore.rawURL;
     ad.pageTitle = pageStore.title;
     ad.pageDomain = µb.URI.domainFromHostname(pageStore.tabHostname); // DCH: 8/10
     ad.version = vAPI.app.version;
@@ -1360,13 +1362,15 @@
       return; // testing this
     }
 
-    if (!admap[pageUrl]) admap[pageUrl] = {};
+    pageHash = YaMD5.hashStr(ad.pageUrl);
+
+    if (!admap[pageHash]) admap[pageHash] = {};
 
     adhash = computeHash(ad);
 
-    if (admap[pageUrl][adhash]) { // may be a duplicate
+    if (admap[pageHash][adhash]) { // may be a duplicate
 
-      orig = admap[pageUrl][adhash];
+      orig = admap[pageHash][adhash];
       msSinceFound = millis() - orig.foundTs;
 
       if (msSinceFound < repeatVisitInterval) {
@@ -1379,9 +1383,10 @@
     ad.id = ++idgen; // gets an id only if its not a duplicate
 
     // this will overwrite an older ad with the same key
-    admap[pageUrl][adhash] = ad;
+    // admap[pageStore.rawURL][adhash] = ad;
+    admap[pageHash][adhash] = ad;
 
-    postRegister(ad, pageUrl, tabId);
+    postRegister(ad, tabId);
   };
 
   // update tab badges if we're showing them
@@ -1668,7 +1673,7 @@
 
   var clearAds = exports.clearAds = function () {
 
-    var pre = adlist().length;
+    var pre = adCount();
 
     clearAdmap();
     reloadExtPage('vault.html');
@@ -1683,7 +1688,7 @@
 
     // try to parse imported ads in current format
     var importedCount = 0,
-      count = adlist().length,
+      count = adCount(),
       map = validateImport(request.data);
 
     // no good, try to parse in legacy-format
@@ -1732,11 +1737,12 @@
     computeNextId();
     clearVisitData && clearAdVisits();
     storeUserData();
-    //validateAdStorage();
 
-    importedCount = adlist().length - count;
+    importedCount = adCount() - count;
     log('[IMPORT] ' + importedCount + ' ads from ' + request.file);
     reloadExtPage('vault.html'); // reload Vault page if open
+
+    validateHashes();
 
     return {
       what: 'importConfirm',
@@ -1751,7 +1757,7 @@
 
   var exportAds = exports.exportAds = function (request) {
 
-    var count = adlist().length,
+    var count = adCount(),
       filename = (request && request.filename) || getExportFileName();
 
     vAPI.download({
