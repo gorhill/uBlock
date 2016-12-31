@@ -23,8 +23,41 @@
 
 'use strict';
 
-/**************************** Notifications *********************************/
+/******************************* Polyfill ***********************************/
 
+if (Array.prototype.contains instanceof Function === false) {
+
+  Array.prototype.contains = function (a) {
+    var b = this.length;
+    while (b--) {
+      if (this[b] === a) {
+        return true;
+      }
+    }
+    return false;
+  };
+}
+
+if (String.prototype.startsWith instanceof Function === false) {
+  String.prototype.startsWith = function (needle, pos) {
+    if (typeof pos !== 'number') {
+      pos = 0;
+    }
+    return this.lastIndexOf(needle, pos) === pos;
+  };
+}
+
+if (String.prototype.endsWith instanceof Function === false) {
+  String.prototype.endsWith = function (needle, pos) {
+    if (typeof pos !== 'number') {
+      pos = this.length;
+    }
+    pos -= needle.length;
+    return this.indexOf(needle, pos) === pos;
+  };
+}
+
+/**************************** Notifications *********************************/
 
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success', DNT = 'dnt',
   FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
@@ -117,9 +150,6 @@ function Notification(m) {
 
   // default function to be called on click
   this.func = opt(m, 'func', (this.isDNT ? openSettings : reactivateSetting).bind(this));
-
-  if ([WARNING, ERROR, INFO, SUCCESS, DNT].indexOf(this.type) < 0)
-    throw Error('Bad type: ' + m.type);
 }
 
 function opt(opts, name, def) {
@@ -166,8 +196,8 @@ var renderNotifications = function (visibleNotes, thePage) {
 
     var notify = notifications[i];
 
-    //var showing = (notes.indexOf(notify) > -1);
     var match = visibleNotes && visibleNotes.filter(function (n) {
+
       // console.log(notify.name, n.name);
       return notify.name === n.name;
     });
@@ -286,40 +316,6 @@ function reloadPane() {
   }
 }
 
-/******************************* Polyfill ***********************************/
-
-if (Array.prototype.contains instanceof Function === false) {
-
-  Array.prototype.contains = function (a) {
-    var b = this.length;
-    while (b--) {
-      if (this[b] === a) {
-        return true;
-      }
-    }
-    return false;
-  };
-}
-
-if (String.prototype.startsWith instanceof Function === false) {
-  String.prototype.startsWith = function (needle, pos) {
-    if (typeof pos !== 'number') {
-      pos = 0;
-    }
-    return this.lastIndexOf(needle, pos) === pos;
-  };
-}
-
-if (String.prototype.endsWith instanceof Function === false) {
-  String.prototype.endsWith = function (needle, pos) {
-    if (typeof pos !== 'number') {
-      pos = this.length;
-    }
-    pos -= needle.length;
-    return this.indexOf(needle, pos) === pos;
-  };
-}
-
 /****************************************************************************/
 
 var rand = function (min, max) {
@@ -414,7 +410,7 @@ var computeHash = function (ad) { // DO NOT MODIFY
       hash += '::' + ad.contentData[keys[i]];
   }
 
-  return hash;
+  return YaMD5.hashStr(hash);
 }
 
 var byField = function (prop) {

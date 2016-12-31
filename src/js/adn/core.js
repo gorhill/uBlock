@@ -54,7 +54,7 @@
   // mark ad visits as failure if any of these are included in title
   var errorStrings = ['file not found', 'website is currently unavailable'];
 
-  var reSpecialChars = /[\*\^\t\v\n]/;
+  var reSpecialChars = /[\*\^\t\v\n]/, remd5 = /[a-fA-F0-9]{32}/;
 
   /**************************** functions ******************************/
 
@@ -90,7 +90,6 @@
 
       setupTesting();
     }
-
   }
 
   var setupTesting = function () {
@@ -145,20 +144,82 @@
 
         warn('Invalid ad in storage', ads[i]);
         ads.splice(i, 1);
-        continue;
-      }
-
-      if (ads[i].visitedTs === 0 && ads[i].attempts > 0) {
-
-        warn('Invalid visitTs/attempts pair', ads[i]);
-        ads[i].attempts = 0; // this shouldn't happen
       }
     }
 
+    obfuscateHashes();
     computeNextId(ads);
 
     log('[INIT] Initialized with ' + ads.length + ' ads');
   }
+
+  var validMD5 = function(s) {
+
+    return remd5.test(s);
+  }
+
+  var obfuscateHashes = function() {
+
+    console.log('START', JSON.stringify(admap,null,2));
+
+    var pages = Object.keys(admap), dirty = false;
+
+    for (var i = 0; i < pages.length; i++) {
+
+      log("PAGE: "+pages[i]);
+
+      if (validMD5(pages[i])) continue;
+
+      var pageHash = YaMD5.hashStr(pages[i]);
+
+      log('FOUND UNHASHED PAGE-KEY: '+pages[i]);
+
+      var hashes = Object.keys(admap[pages[i]]);
+
+      for (var j = 0; j < hashes.length; j++) {
+
+        var adhash = hashes[j];
+        var ad = admap[pages[i]][adhash];
+
+        if (!validMD5(adhash) && adhash.indexOf('::') >= 0) {
+
+          admap[pageHash] = admap[pageHash] || {};
+          admap[pageHash][computeHash(ad)] = ad; // create new safe hash
+          console.log(adhash+' rehashed to '+computeHash(ad));
+          delete admap[pages[i]][adhash];
+          console.log('DELETE: admap['+pages[i]+']['+adhash+']');
+          dirty = true;
+        }
+
+        /*console.log(Object.keys(admap[pages[i]]).length + "entries remaining");
+        if (j === Object.keys(admap[pages[i]]).length-1) {
+          console.log("HIT LAST!" +hashes.length);
+          delete admap[pages[i]];
+        }*/
+      }
+    }
+    console.log(Object.keys(admap).length + "pages found (pre)");
+
+    // remove any pages with no ad keys
+    pages = Object.keys(admap);
+    for (i = pages.length-1; i >= 0; i--) {
+      console.log(i+") ", pages[i]);
+      console.log(i+") ", admap[pages[i]]);
+      hashes = Object.keys(admap[pages[i]]);
+      console.log(i+") "+pages[i]+" -> "+hashes.length);
+      if (hashes && !hashes.length) {
+        console.log('DELETE: admap['+pages[i]+']');
+        delete admap[pages[i]];
+        dirty = true;
+      }
+    }
+
+    console.log(Object.keys(admap).length + "pages found (post)");
+
+    if (dirty) storeUserData();
+
+    console.log('DONE',JSON.stringify(admap,null,2));
+  };
 
   var clearAdVisits = function (ads) {
 
@@ -565,6 +626,15 @@
 
   var validateFields = function (ad) { // no side-effects
 
+    if (ad.visitedTs === 0 && ad.attempts > 0) {
+
+      warn('Invalid visitTs/attempts pair', ad);
+      ad.attempts = 0; // shouldn't happen
+    }
+
+    if (!ad.pageUrl.startsWith('http'))
+      warn('Possbly Invalid PageURL! '+ad.pageUrl);
+
     return ad && type(ad) === 'object' &&
       type(ad.pageUrl) === 'string' &&
       type(ad.contentType) === 'string' &&
@@ -922,13 +992,13 @@
 
   var activeBlockList = function (test) {
 
-    return enabledBlockLists.indexOf(test) > -1;
+    return !enabledBlockLists.contains(test);
   }
 
   // check that the rule is not disabled in 'disabledBlockingRules'
   var ruleDisabled = function (test) {
 
-    return disabledBlockingRules.indexOf(test) > -1;
+    return !disabledBlockingRules.contains(test);
   };
 
   // check target domain against page-domain #337
@@ -1141,7 +1211,7 @@
 
     // preferences relevant to our ui/content-scripts
     var us = µb.userSettings;
-    var showDnt = hostname && (us.disableHidingForDNT && us.dntDomains.indexOf(hostname) > -1);
+    var showDnt = hostname && (us.disableHidingForDNT && !us.dntDomains.contains(hostname));
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt, );
     return {
         hidingDisabled: !us.hidingAds || showDnt,
@@ -1284,7 +1354,7 @@
       return;
     }
 
-    if (internalLinkDomains.indexOf(ad.pageDomain) < 0 && internalTarget(ad)) {
+    if (internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
 
       warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
       return; // testing this
@@ -1499,7 +1569,7 @@
       entry = lists[path];
       if (path === note.listUrl) {
 
-        if (entry.off === true && notes.indexOf(note) < 0) {
+        if (entry.off === true && notes.contains(note)) {
 
           dirty = addNotification(notes, note);
           //console.log('AddNotify', entry.title, 'dirty='+dirty);
@@ -1526,7 +1596,7 @@
     // console.log("verifyDNT" + url);
 
     // if the domain is not in the EFF DNT list, remove DNT notification and return
-    if (!domain || prefs.dntDomains.indexOf(domain) < 0) {
+    if (!domain || prefs.dntDomains.contains(domain)) {
 
         // if notes contains any DNT notification, remove
         if (target) {
@@ -1552,7 +1622,7 @@
     else if(!disableClicking && disableHiding)
        note = DNTClickNotHide;
 
-    if (notes.indexOf(note) < 0) {
+    if (notes.contains(note)) {
 
       addNotification(notes, note);
       if (target && target != note) {;
@@ -1566,7 +1636,7 @@
 
     var notes = notifications, dirty = false;
 
-    if (state && notes.indexOf(note) < 0) {
+    if (state && notes.contains(note)) {
 
       dirty = addNotification(notes, note);
     }
@@ -1610,7 +1680,6 @@
   };
 
   exports.importAds = function (request) {
-
 
     // try to parse imported ads in current format
     var importedCount = 0,
@@ -1663,6 +1732,7 @@
     computeNextId();
     clearVisitData && clearAdVisits();
     storeUserData();
+    //validateAdStorage();
 
     importedCount = adlist().length - count;
     log('[IMPORT] ' + importedCount + ' ads from ' + request.file);
