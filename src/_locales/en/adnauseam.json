@@ -24,8 +24,8 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
-    "description": "English: Firstrun.html -> Block Malware"
+    "message": "Block Malicious Ads",
+    "description": "English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription": {
     "message": "hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
