@@ -614,7 +614,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
             iconPaths = {  '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
             break;
         default://on
-            iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/icon19.png', '38': 'img/browsericons/icon38.png' };
+            iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };
     }
 
     chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
