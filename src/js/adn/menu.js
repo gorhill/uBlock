@@ -46,7 +46,6 @@
 
     case 'notifications':
       renderNotifications(request.notifications);
-      modifyDNTNotifications();
       adjustBlockHeight();
       break;
     }
@@ -102,7 +101,6 @@
           },
           function (notifications) {
             renderNotifications(notifications);
-            modifyDNTNotifications();
           });
       });
   }
@@ -613,20 +611,6 @@
     uDom('#paused-menu').css('top', top + 'px');
   };
 
-  var modifyDNTNotifications = function () {
-     var text = uDom('.notification.dnt #notify-text').nodes,
-         link = uDom('.notification.dnt #notify-link').nodes,
-         newlink = uDom('span>#notify-link').nodes;
-
-     // console.log(text, link, newlink);
-     if (text.length > 0 && link.length > 0 && newlink.length === 0) {
-     var sections = text[0].innerHTML.split(',')
-         newText = sections[0] + link[0].outerHTML + "," + sections[1];
-
-     uDom('.notification.dnt #notify-text').html(newText);
-     uDom('.notification.dnt>#notify-link').css('display', 'none');
-   }
-  };
   /********************************************************************/
 
   (function () {
