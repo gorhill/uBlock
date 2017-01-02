@@ -889,10 +889,14 @@ vAPI.tabs.registerListeners();
     var updateBadge = function(tabId) {
         delete tabIdToTimer[tabId];
 
+
         var state = false;
         var badge = '';
 
-        var pageStore = this.pageStoreFromTabId(tabId);
+        var pageStore = this.pageStoreFromTabId(tabId),
+            isDNT = µb.userSettings.dntDomains.contains(pageStore.tabHostname);
+
+        
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch();
 
@@ -903,7 +907,8 @@ vAPI.tabs.registerListeners();
             }
         }
 
-        vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
+
+        vAPI.setIcon(tabId, state ? (isDNT ? 'dnt': 'on') : 'off', badge);
     };
 
     return function(tabId) {
