@@ -1265,7 +1265,7 @@
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       strictBlockingDisabled = true;
       verifyAdBlockers();
-      verifySettings(); // check settings/lists
+      verifySettings();
       verifyLists(µb.remoteBlacklists);
       µb.adnauseam.dnt.updateFilters();
     });
@@ -1283,7 +1283,7 @@
   };
 
   var markUserAction = exports.markUserAction = function () {
-    //console.log('markUserAction:', millis());
+
     return (lastUserActivity = millis());
   }
 
@@ -1496,9 +1496,10 @@
 
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-              if (!currentOnly || ad.current) {
-                result.push(ad);
-              }
+
+            if (!currentOnly || ad.current) {
+              result.push(ad);
+            }
           }
         }
       }
@@ -1544,20 +1545,21 @@
     });
   }
 
-  var verifyAdBlockersAndDNT = exports.verifyAdBlockersAndDNT = function(request){
-     verifyDNT(request);
-      verifyAdBlockers();
+  exports.verifyAdBlockersAndDNT = function (request) {
+
+    verifyDNT(request);
+    verifyAdBlockers();
   }
 
   var verifySettings = exports.verifySettings = function () {
 
-    verifySetting(HidingDisabled,   !µb.userSettings.hidingAds);
+    verifySetting(HidingDisabled, !µb.userSettings.hidingAds);
     verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
     verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
-    //verifyList(EasyList, µb.userSettings.remoteBlacklists);
   }
 
   var verifyLists = exports.verifyLists = function (lists) {
+
     verifyList(EasyList, lists);
   }
 
@@ -1594,20 +1596,20 @@
 
     var notes = notifications,
         prefs = µb.userSettings,
-        domain = µb.URI.hostnameFromURI(request.url), //getLocation(url).hostname,
-        list = [DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify],
-        target = hasDNTNotification(notes, list);
+        domain = µb.URI.hostnameFromURI(request.url),
+        target = hasDNTNotification(notes, [ DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify ]);
 
-    // console.log("verifyDNT" + url);
+    //console.log("verifyDNT: " + domain, request.url, prefs.dntDomains);
 
     // if the domain is not in the EFF DNT list, remove DNT notification and return
-    if (!domain || prefs.dntDomains.contains(domain)) {
+    if (!domain || !prefs.dntDomains.contains(domain)) {
 
         // if notes contains any DNT notification, remove
         if (target) {
             removeNotification(notes, target);
             sendNotifications(notes);
         }
+
         return;
     }
 
@@ -1627,21 +1629,26 @@
     else if(!disableClicking && disableHiding)
        note = DNTClickNotHide;
 
-    if (notes.contains(note)) {
+    if (!notes.contains(note)) {
 
       addNotification(notes, note);
-      if (target && target != note) {;
-          removeNotification(notes, target);
+
+      if (target && target != note) {
+
+        removeNotification(notes, target);
       }
+
       sendNotifications(notes);
     }
   }
 
   var verifySetting = exports.verifySetting = function (note, state) {
 
+    //console.log('verifySetting', note, state, notifications);
+
     var notes = notifications, dirty = false;
 
-    if (state && notes.contains(note)) {
+    if (state && !notes.contains(note)) {
 
       dirty = addNotification(notes, note);
     }
