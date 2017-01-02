@@ -515,10 +515,6 @@
 
     ad.requestId = details.requestId; // needed?
 
-    // Google-search case - what is this for?
-    //if (referer.indexOf(GoogleSearchPrefix) === 0)
-      //referer = GoogleSearchPrefix;
-
     dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
 
     for (var i = headers.length - 1; i >= 0; i--) {

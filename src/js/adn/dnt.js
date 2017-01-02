@@ -13,7 +13,7 @@
     this.firewall.reset();
   }
 
-  exports.mustBlock = function (ad) {
+  exports.mustNotVisit = function (ad) {
 
     // Here we check whether either page or target are in DNT (?)
     var val = µb.userSettings.disableClickingForDNT &&
@@ -61,7 +61,7 @@
     if (needsUpdate) { // data has changed
 
       log("[DNT] Updated domains: ", domains);
-      clearFiltersDNT(); // clear old data first
+      firewall.reset(); // clear old data first
 
       µb.userSettings.dntDomains = domains; // store domain data
       vAPI.storage.set(µb.userSettings);
@@ -100,9 +100,7 @@
       enabled = µb.adnauseam.dnt.enabled(),
       dnts = µb.userSettings.dntDomains;
 
-    //log('[DNT] updateFilters', "current="+ruleCount);
-
-    // Only clear and possibly update if actually have a change
+    // Only clear and possibly update if we actually find a change
     if ((enabled && ruleCount > 0) || (!enabled && ruleCount < 1)  ) {
 
       //log("[DNT] Ignoring update, enabled = "+enabled+" "+dnts.length);
@@ -115,8 +113,6 @@
       for (var i = 0; i < dnts.length; i++) {
 
         firewallRules.push("* " + dnts[i] + " * allow");
-        //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
-        //disableCosmeticFiltersFor(dnts[i], true);
       }
 
       firewall.fromString(firewallRules.join('\n'), false);
@@ -125,12 +121,12 @@
 
     } else {
 
-      clearFiltersDNT();
+      firewall.reset();
       log("[DNT] Clearing all rules");
     }
   };
 
-  exports.checkFirewall = function (context) {
+  exports.mustAllowRequest = function (context) {
 
     var action, result = '';
 
@@ -139,32 +135,17 @@
     if (firewall.mustBlockOrAllow()) {
 
       result = firewall.toFilterString();
-      action = firewall.mustBlock() ? 'BLOCK' : 'ALLOW';
+      //action = firewall.mustBlock() ? 'Block' : 'Allow'; // ADN: we only allow here
 
-      µb.adnauseam.logNetEvent('[' + action + ']', ['Firewall', ' ' + context.rootHostname + ' => ' +
-        context.requestHostname, '(' + context.requestType + ') ', context.requestURL
-      ]);
+      if (firewall.mustBlock())
+        throw Error('Invalid Firewall State');
+
+      µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.rootHostname + ' => ' +
+        context.requestHostname, context.requestType, context.requestURL ]);
     }
 
     return result;
   };
-
-  var clearFiltersDNT = function () {
-
-    /*var dnts = µb.userSettings.dntDomains;
-
-    if (dnts && dnts.length >= 0) {
-
-      // clear the net-filtering switches
-      for (var i = 0; i < dnts.length; i++) {
-
-        //µb.toggleNetFilteringSwitch("http://" + dnts[i], "site", false);
-        disableCosmeticFiltersFor(dnts[i], false);
-      }
-    }*/
-
-    firewall.reset();
-  }
 
   return exports;
 

@@ -550,7 +550,7 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // ADN: now check our firewall (top precedence)
-    if ( result === '' ) result = µb.adnauseam.dnt.checkFirewall(context);
+    if ( result === '' ) result = µb.adnauseam.dnt.mustAllowRequest(context);
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -569,7 +569,7 @@ PageStore.prototype.filterRequest = function(context) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
 
-            if (result.length && µb.adnauseam.mustAllow(result, context)) {
+            if (result.length && µb.adnauseam.mustAllowRequest(result, context)) {
                 result = ''; // ADN: cannot block
             }
         }
@@ -611,7 +611,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     }
 
     // ADN: now check our firewall (top precendence)
-    if ( result === '' ) result = µb.adnauseam.dnt.checkFirewall(context);
+    if ( result === '' ) result = µb.adnauseam.dnt.mustAllowRequest(context);
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -630,7 +630,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
 
-            if (µb.adnauseam.mustAllow(result, context)) {
+            if (µb.adnauseam.mustAllowRequest(result, context)) {
                 console.warn("*** Blocking filterRequestNoCache ***"); // when?
                 result = ''; // not-blocking
             }

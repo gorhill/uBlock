@@ -894,9 +894,8 @@ vAPI.tabs.registerListeners();
         var badge = '';
 
         var pageStore = this.pageStoreFromTabId(tabId),
-            isDNT = µb.userSettings.dntDomains.contains(pageStore.tabHostname);
+            isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageStore.tabHostname) : false; // ADN
 
-        
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch();
 
@@ -907,7 +906,6 @@ vAPI.tabs.registerListeners();
             }
         }
 
-        // console.log("DNT", pageStore);
         vAPI.setIcon(tabId, state ? (isDNT ? 'dnt': 'on') : 'off', badge);
     };
 

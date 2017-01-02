@@ -8,7 +8,8 @@
   var failAllVisits = 0, // all visits will fail
     clearAdsOnInit = 0, // start with zero ads
     clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0; // automated testing ['selenium' or 'sessbench']
+    automatedMode = 0, // testing ['selenium' or 'sessbench']
+    disableIdler = 0; // don't wait for user to be idle
 
   var µb = µBlock,
     production = 0,
@@ -26,7 +27,7 @@
   var xhr, idgen, admap, inspected, listEntries;
 
   // allow all blocks on requests to/from these domains
-  var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com'];
+  var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
 
   // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
@@ -84,7 +85,7 @@
 
     if (production) { // disable all test-modes if production
 
-      failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = 0;
+      failAllVisits = clearVisitData = automatedMode = clearAdsOnInit = disableIdler = 0;
 
     } else if (automatedMode === 'sessbench') { // using sessbench
 
@@ -262,7 +263,7 @@
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
 
       // check whether an idle timeout has been specified
-      var idleMs = settings.clickOnlyWhenIdleFor;
+      var idleMs = disableIdler ? 0 : settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastUserActivity > idleMs)) {
 
         //idleMs && log("[IDLER] "+(millis() - lastUserActivity)+"ms, clicking resumed...");
@@ -307,7 +308,7 @@
     var pending = ad && ad.attempts < maxAttemptsPerAd
       && ad.visitedTs <= 0 && !ad.dntAllowed;
 
-    if (pending && µb.adnauseam.dnt.mustBlock(ad)) {
+    if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
       log('[DNT] Not visiting '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
       ad.dntAllowed = true; // so we don't recheck it
@@ -1099,6 +1100,7 @@
     if (ruleDisabled(raw)) {
 
       // TODO: check that the rule hasn't been added in 'My filters' ?
+      //console.log(JSON.stringify(context,null,2));
       return allowRequest('RuleOff', raw, url);
     }
 
@@ -1180,11 +1182,13 @@
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
       settings.admap = µb.adnSettings.admap;
+
       log("[IMPORT] Using legacy admap...");
+
       setTimeout(function () {
         storeUserData(true);
       }, 2000);
-    } // ---------------------------------------------------------
+    }
 
     initialize(settings);
   });
@@ -1198,7 +1202,7 @@
     return adsForUI();
   }
 
-  exports.mustAllow = function (result, context) {
+  exports.mustAllowRequest = function (result, context) {
 
     return result && result.length && !isBlockableRequest(context);
   }
@@ -1215,8 +1219,10 @@
 
     // preferences relevant to our ui/content-scripts
     var us = µb.userSettings;
-    var showDnt = hostname && (us.disableHidingForDNT && !us.dntDomains.contains(hostname));
-    //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt, );
+    var showDnt = /*hostname &&*/ (us.disableHidingForDNT && us.dntDomains.contains(hostname));
+
+    //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
+
     return {
         hidingDisabled: !us.hidingAds || showDnt,
         textAdsDisabled: !us.parseTextAds,
@@ -1421,9 +1427,33 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var modified = false, dbug = 0;
+    var modified = false, dbug = 0, hostname, us = µb.userSettings;
+
+    var cookieAttr = function(cookie, name) {
+      var parts = cookie.split(';');
+      for (var i = 0; i < parts.length; i++) {
+        var keyval = parts[i].trim().split('=');
+        var key = keyval[0]
+        if (keyval[0].toLowerCase() === name)
+          return keyval[1];
+      }
+    }
 
     dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
+
+    var dntEnabled = (us.clickingAds && us.disableClickingForDNT) || (us.hidingAds && us.disableHidingForDNT);
+    if (dntEnabled) {
+
+      var originalHostname = µb.URI.hostnameFromURI(originalUrl);
+      if (us.dntDomains.contains(originalHostname)) { // 1st-party: only check original-request per EFF spec
+
+        log('[DNT] (AllowCookie1p)', originalUrl);
+        return false;
+      }
+    }
+
+    //console.log("1pDomain: '"+µb.URI.hostnameFromURI(originalUrl)+"' / '" +
+      //µb.URI.hostnameFromURI(requestUrl)+"'", " original='"+originalUrl+"'");
 
     for (var i = headers.length - 1; i >= 0; i--) {
 
@@ -1433,7 +1463,23 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        log('[COOKIE] (Block)', headers[i].value);
+        if (0) { // TODO: do we block 3rd party-requests to DNT-domains? disabled for now
+
+          var cval = headers[i].value.trim();
+          var domain = cookieAttr(cval, 'domain');
+
+          if (domain && us.dntDomains.contains(domain)) {
+            log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: '+domain);
+            continue;
+          }
+        }
+
+        var requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
+
+        log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
+          (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
+          (domain ? " 3pDomain: " + domain : ''));
+
         headers.splice(i, 1);
         modified = true;
       }
@@ -1481,7 +1527,7 @@
    */
   var adlist = exports.adlist = function (pageUrl, currentOnly) {
 
-    var result = [], pages = pageUrl ? [pageUrl]
+    var result = [], pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
       : Object.keys(admap || µb.userSettings.admap);
 
     for (var i = 0; i < pages.length; i++) {
