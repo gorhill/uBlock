@@ -482,6 +482,7 @@ header{
   font-size: 0.8em;
   text-overflow: ellipsis;
   overflow: hidden;
+  height: 1.5em;
 }
 
 #log-button a {
