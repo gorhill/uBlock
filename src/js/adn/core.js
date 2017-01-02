@@ -1518,30 +1518,30 @@
   var verifyAdBlockers = exports.verifyAdBlockers = function () {
 
     var notes = notifications,
-      dirty = false;
+      modified = false;
 
     vAPI.getAddonInfo(function (UBlockConflict, AdBlockPlusConflict) {
 
       // console.log(UBlockConflict, AdBlockPlusConflict);
       if (AdBlockPlusConflict) {
 
-        dirty = addNotification(notes, AdBlockPlusEnabled);
+        modified = addNotification(notes, AdBlockPlusEnabled);
 
       } else {
 
-        dirty = removeNotification(notes, AdBlockPlusEnabled);
+        modified = removeNotification(notes, AdBlockPlusEnabled);
       }
 
       if (UBlockConflict) {
 
-        dirty = dirty || addNotification(notes, UBlockEnabled);
+        modified = modified || addNotification(notes, UBlockEnabled);
 
       } else {
 
-        dirty = dirty || removeNotification(notes, UBlockEnabled);
+        modified = modified || removeNotification(notes, UBlockEnabled);
       }
 
-      dirty && sendNotifications(notes);
+      modified && sendNotifications(notes);
     });
   }
 
@@ -1566,7 +1566,7 @@
   var verifyList = exports.verifyList = function (note, lists) {
 
     var notes = notifications,
-      dirty = false,
+      modified = false,
       path, entry;
 
     for (path in lists) {
@@ -1578,86 +1578,81 @@
 
         if (entry.off === true && notes.contains(note)) {
 
-          dirty = addNotification(notes, note);
-          //console.log('AddNotify', entry.title, 'dirty='+dirty);
+          modified = addNotification(notes, note);
         }
         else if (entry.off === false) {
 
-          dirty = removeNotification(notes, note);
-          //console.log('RemoveNotify', entry.title, 'dirty='+dirty);
+          modified = removeNotification(notes, note);
         }
       }
     }
 
-    if (dirty) sendNotifications(notes);
+    if (modified) sendNotifications(notes);
   }
 
   var verifyDNT = exports.verifyDNT = function (request) {
 
     var notes = notifications,
-        prefs = µb.userSettings,
-        domain = µb.URI.hostnameFromURI(request.url),
-        target = hasDNTNotification(notes, [ DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify ]);
+      prefs = µb.userSettings,
+      domain = µb.URI.hostnameFromURI(request.url),
+      target = hasDNTNotification(notifications);
 
     //console.log("verifyDNT: " + domain, request.url, prefs.dntDomains);
 
     // if the domain is not in the EFF DNT list, remove DNT notification and return
     if (!domain || !prefs.dntDomains.contains(domain)) {
 
-        // if notes contains any DNT notification, remove
-        if (target) {
-            removeNotification(notes, target);
-            sendNotifications(notes);
-        }
+      // if notifications contains any DNT notification, remove
+      if (target) {
 
-        return;
+        removeNotification(notifications, target);
+        sendNotifications(notifications);
+      }
+
+      return;
     }
 
     // continue if the domain is in EFF DNT list
 
     var disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT),
-        disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
-
-    // console.log(disableClicking, disableHiding);
+      disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
 
     var note = DNTNotify; // neither clicking nor hiding
-
     if (disableClicking && disableHiding)
-       note = DNTAllowed;
+      note = DNTAllowed;
     else if (disableClicking && !disableHiding)
-       note = DNTHideNotClick;
-    else if(!disableClicking && disableHiding)
-       note = DNTClickNotHide;
+      note = DNTHideNotClick;
+    else if (!disableClicking && disableHiding)
+      note = DNTClickNotHide;
 
-    if (!notes.contains(note)) {
+    if (!notifications.contains(note)) {
 
-      addNotification(notes, note);
+      addNotification(notifications, note);
 
       if (target && target != note) {
 
-        removeNotification(notes, target);
+        removeNotification(notifications, target);
       }
 
-      sendNotifications(notes);
+      sendNotifications(notifications);
     }
   }
-
   var verifySetting = exports.verifySetting = function (note, state) {
 
     //console.log('verifySetting', note, state, notifications);
 
-    var notes = notifications, dirty = false;
+    var notes = notifications, modified = false;
 
     if (state && !notes.contains(note)) {
 
-      dirty = addNotification(notes, note);
+      modified = addNotification(notes, note);
     }
     else if (!state) {
 
-      dirty = removeNotification(notes, note);
+      modified = removeNotification(notes, note);
     }
 
-    if (dirty) {
+    if (modified) {
 
       // check whether DNT list state needs updating
       if (note === ClickingDisabled || note === HidingDisabled) {

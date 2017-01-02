@@ -453,6 +453,7 @@
     if (typeof hostnameDict !== 'object') {
       return popupData;
     }
+
     var domain, prefix;
     for (var hostname in hostnameDict) {
       if (hostnameDict.hasOwnProperty(hostname) === false) {
@@ -523,6 +524,7 @@
   });
 
   var onHideTooltip = function () {
+
     uDom.nodeFromId('tooltip').classList.remove('show');
   };
 
@@ -550,8 +552,7 @@
     var targetRect = target.getBoundingClientRect();
 
     // Default is "over"
-    var pos;
-    var over = target.getAttribute('data-tip-position') !== 'under';
+    var pos, over = target.getAttribute('data-tip-position') !== 'under';
     if (over) {
       pos = ttcRect.height - targetRect.top + ttcRect.top;
       tip.style.setProperty('bottom', pos + 'px');
@@ -590,6 +591,7 @@
   };
 
   var adjustBlockHeight = function () {
+
     //recalculate the height of ad-list
     var h = document.getElementById('notifications').offsetHeight;
     var newh = 350 - h;
@@ -600,6 +602,7 @@
   };
 
   var setBackBlockHeight = function () {
+
     var height = document.getElementById('ad-list').offsetHeight;
     var top = parseInt(uDom('#paused-menu').css('top'));
 

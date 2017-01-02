@@ -192,13 +192,18 @@ var removeNotification = function (notes, note) {
 
 var renderNotifications = function (visibleNotes, thePage) {
 
-  var page = thePage || 'menu', notifications = Notifications;
+  var page = thePage || 'menu',
+    notifications = Notifications;
 
   if (page !== "menu")
-    notifications = notifications.filter(function(n){ return !n.isDNT });
+    notifications = notifications.filter(function (n) {
+      return !n.isDNT
+    });
 
   if (page === "firstrun")
-    notifications = notifications.filter(function(n){ return n.firstRun });
+    notifications = notifications.filter(function (n) {
+      return n.firstRun
+    });
 
   var template = uDom('#notify-template');
 
@@ -218,14 +223,15 @@ var renderNotifications = function (visibleNotes, thePage) {
       exists = note.length;
 
     if (match && match.length) {
+
       //console.log("MATCH: "+notify.name, match);
       if (exists)
         note.toggleClass('hide', false);
       else
         appendNotifyDiv(notify, template, uDom);
 
-     if (notify.name.indexOf("DNT" === 0))
-         modifyDNTNotifications()
+      if (notify.isDNT)
+        modifyDNTNotifications()
 
     } else {
 
@@ -244,14 +250,14 @@ var hasNotification = function(notes, note){
   return false;
 }
 
-var hasDNTNotification = function(notes, DNTlist){
+var hasDNTNotification = function(notes) {
 
-   for (var i = 0; i < DNTlist.length; i++) {
-      var target = hasNotification(notes,DNTlist[i])
-      if(target) return target;
-   }
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].isDNT)
+      return notes[i];
+  }
 
-   return false
+  return false;
 }
 
 
@@ -276,6 +282,7 @@ var appendNotifyDiv = function (notify, template) {
 
 
 var modifyDNTNotifications = function () {
+
    var text = uDom('.notification.dnt #notify-text').nodes,
        link = uDom('.notification.dnt #notify-link').nodes,
        newlink = uDom('span>#notify-link').nodes;
@@ -289,14 +296,6 @@ var modifyDNTNotifications = function () {
    uDom('.notification.dnt>#notify-link').css('display', 'none');
  }
 };
-
-function udomFromIFrame(selector) {  // may be called from a frame or not??
-
-  var aDom = uDom, iframe = uDom('#iframe');
-  if (iframe.length)
-    aDom = iframe.nodes[0].contentDocument.defaultView.uDom || uDom;
-  return aDom(selector);
-}
 
 function reactivateSetting() {
 
