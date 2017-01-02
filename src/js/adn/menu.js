@@ -46,6 +46,7 @@
 
     case 'notifications':
       renderNotifications(request.notifications);
+      modifyDNTNotifications();
       adjustBlockHeight();
       break;
     }
@@ -101,6 +102,7 @@
           },
           function (notifications) {
             renderNotifications(notifications);
+            modifyDNTNotifications();
           });
       });
   }
@@ -610,6 +612,21 @@
     uDom('#ad-list').css('height', height + 'px');
     uDom('#paused-menu').css('top', top + 'px');
   };
+
+  var modifyDNTNotifications = function () {
+     var text = uDom('.notification.dnt #notify-text').nodes,
+         link = uDom('.notification.dnt #notify-link').nodes,
+         newlink = uDom('span>#notify-link').nodes;
+
+     // console.log(text, link, newlink);
+     if (text.length > 0 && link.length > 0 && newlink.length === 0) {
+     var sections = text[0].innerHTML.split(',')
+         newText = sections[0] + link[0].outerHTML + "," + sections[1];
+
+     uDom('.notification.dnt #notify-text').html(newText);
+     uDom('.notification.dnt>#notify-link').css('display', 'none');
+   }
+  };
   /********************************************************************/
 
   (function () {
@@ -629,19 +646,6 @@
       .on('mouseleave', '[data-tip]', onHideTooltip);
 
   })();
-
-  document.getElementById("notifications").addEventListener("DOMSubtreeModified", function() {
-     if (uDom('.notification.dnt #notify-text b').length > 0 && uDom('.notification.dnt #notify-text>span>a').length === 0) {
-     var text = uDom('.notification.dnt #notify-text').nodes[0].innerHTML;
-     var link = uDom('.notification.dnt #notify-link').nodes[0].outerHTML;
-
-     var sections = text.split(',');
-     var newText = sections[0] + link + "," + sections[1];
-
-     uDom('.notification.dnt #notify-text').html(newText);
-     uDom('.notification.dnt>#notify-link').css('display', 'none');
-     }
-});
 
   /********************************************************************/
 
