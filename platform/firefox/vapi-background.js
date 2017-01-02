@@ -2361,9 +2361,27 @@ vAPI.net.registerListeners = function() {
             null;
     }
 
-    var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
-    var shouldLoadPopupListener = function(openerURL, popupTabId) {
-        var uri, openerTabId;
+    var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup',
+        shouldLoadPopupListenerMap = new Map(),
+        shouldLoadPopupListenerMapToD = 0;
+    var shouldLoadPopupListener = function(openerURL, target) {
+        var popupTabId = tabWatcher.tabIdFromTarget(target),
+            popupURL = target.currentURI && target.currentURI.asciiSpec || '',
+            openerTabId,
+            uri;
+        if ( shouldLoadPopupListenerMapToD > Date.now() ) {
+            openerTabId = shouldLoadPopupListenerMap.get(popupURL);
+        }
+
+        // https://github.com/uBlockOrigin/uAssets/issues/255
+        //   Handle chained popups.
+        if ( openerTabId !== undefined ) {
+            shouldLoadPopupListenerMap.set(target.currentURI.asciiSpec, openerTabId);
+            shouldLoadPopupListenerMapToD = Date.now() + 10000;
+            vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
+            return;
+        }
+
         for ( var browser of tabWatcher.browsers() ) {
             uri = browser.currentURI;
 
@@ -2375,15 +2393,16 @@ vAPI.net.registerListeners = function() {
             // believe this may have to do with those very temporary
             // browser objects created when opening a new tab, i.e. related
             // to https://github.com/gorhill/uBlock/issues/212
-            if ( !uri || uri.spec !== openerURL ) {
-                continue;
-            }
+            if ( !uri || uri.spec !== openerURL ) { continue; }
 
             openerTabId = tabWatcher.tabIdFromTarget(browser);
-            if ( openerTabId !== popupTabId ) {
-                vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
-                break;
-            }
+            if ( openerTabId === popupTabId ) { continue; }
+
+            shouldLoadPopupListenerMap = new Map();
+            shouldLoadPopupListenerMapToD = Date.now() + 10000;
+            shouldLoadPopupListenerMap.set(popupURL, openerTabId);
+            vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
+            break;
         }
     };
     var shouldLoadPopupListenerAsync = function(e) {
@@ -2391,10 +2410,7 @@ vAPI.net.registerListeners = function() {
             return;
         }
         // We are handling a synchronous message: do not block.
-        vAPI.setTimeout(
-            shouldLoadPopupListener.bind(null, e.data, tabWatcher.tabIdFromTarget(e.target)),
-            1
-        );
+        vAPI.setTimeout(shouldLoadPopupListener.bind(null, e.data, e.target), 1);
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(

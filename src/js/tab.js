@@ -568,22 +568,25 @@ vAPI.tabs.onPopupUpdated = (function() {
         //   URL.
         // https://github.com/gorhill/uBlock/issues/1735
         //   Do not bail out on `data:` URI, they are commonly used for popups.
+        // https://github.com/uBlockOrigin/uAssets/issues/255
+        //   Do not bail out on `about:blank`: an `about:blank` popup can be
+        //   opened, with the sole purpose to serve as an intermediary in
+        //   a sequence of chained popups.
         if (
             context.requestHostname === '' &&
-            targetURL.startsWith('data:') === false
+            targetURL.startsWith('data:') === false &&
+            targetURL !== 'about:blank'
         ) {
             return '';
         }
 
         // Dynamic filtering makes sense only when we have a valid hostname.
         if ( openerHostname !== '' ) {
-            // Check user switch first
-            if (
-                typeof clickedURL === 'string' &&
-                areDifferentURLs(targetURL, clickedURL) &&
-                µb.hnSwitches.evaluateZ('no-popups', openerHostname)
-            ) {
-                return 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
+            // Check per-site switch first
+            if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
+                if ( typeof clickedURL !== 'string' || areDifferentURLs(targetURL, clickedURL) ) {
+                    return 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
+                }
             }
 
             // https://github.com/gorhill/uBlock/issues/581
