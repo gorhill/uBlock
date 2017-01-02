@@ -8,6 +8,9 @@
 toolbar[iconsize="small"] #uBlock0-legacy-button {
     list-style-image: url('../img/browsericons/icon16.svg');
 }
+toolbar[iconsize="small"] #uBlock0-legacy-button.dnt {
+    list-style-image: url('../img/adn_dnt_on.svg');
+}
 toolbar[iconsize="small"] #uBlock0-legacy-button.off {
     list-style-image: url('../img/browsericons/icon16-off.svg');
 }
