@@ -907,7 +907,7 @@ vAPI.tabs.registerListeners();
             }
         }
 
-
+        // console.log("DNT", pageStore);
         vAPI.setIcon(tabId, state ? (isDNT ? 'dnt': 'on') : 'off', badge);
     };
 

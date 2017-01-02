@@ -327,7 +327,7 @@ button.important {
   display: block;
 }
 .notification.dnt button,#DNTClickNotHide.notification button{
-  right:-70px;
+  right:-75px;
 }
 .notification.dnt:hover > button,#DNTClickNotHide.notification:hover > button{
   right:10px;
@@ -390,7 +390,7 @@ button.dnt:hover:enabled {
 
 @keyframes slidefromRight {
   from {
-    right:-70px;
+    right:-75px;
   }
 
   to {

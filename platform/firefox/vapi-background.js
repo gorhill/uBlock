@@ -1529,7 +1529,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         curTabId = tabWatcher.tabIdFromTarget(tabBrowser.selectedTab);
     }
     var tb = vAPI.toolbarButton;
-
+    
     // from 'TabSelect' event
     if ( tabId === undefined ) {
         tabId = curTabId;
@@ -1538,7 +1538,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     }
 
     if ( curTabId && tabId === curTabId ) {
-        tb.updateState(win, tabId);
+        tb.updateState(win, tabId, iconStatus);
         vAPI.contextMenu.onMustUpdate(tabId);
     }
 };
@@ -2758,17 +2758,20 @@ vAPI.toolbarButton = {
         target.firstChild.setAttribute('src', 'about:blank');
     };
 
-    tbb.updateState = function(win, tabId) {
+    tbb.updateState = function(win, tabId, iconStatus) {
+        
         var button = win.document.getElementById(this.id);
 
         if ( !button ) {
             return;
         }
 
-        var icon = this.tabs[tabId];
-
+        var icon = this.tabs[tabId], isOff = !icon || !icon.img;
+        // console.log("updateState",isOff, iconStatus);
         button.setAttribute('badge', icon && icon.badge || '');
-        button.classList.toggle('off', !icon || !icon.img);
+
+        button.classList.toggle('off', isOff);
+        button.classList.toggle('dnt', iconStatus === 'dnt');
     };
 
     tbb.populatePanel = function(doc, panel) {
@@ -3230,6 +3233,11 @@ vAPI.toolbarButton = {
             '#' + this.id + ' {',
                 'list-style-image: url(',
                     vAPI.getURL('img/browsericons/icon16.svg'),
+                ');',
+            '}',
+            '#' + this.id + '.dnt {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/adn_dnt_on.svg'),
                 ');',
             '}',
             '#' + this.viewId + ',',
