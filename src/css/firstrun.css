@@ -53,10 +53,6 @@ form a {
 .toggled3{
   background: #0076FF;
 }
-
-.help-mark {
-  background-color: #0076FF;
-}
 #clicker {
   margin-top: 50px
 }
@@ -65,7 +61,7 @@ input[type="checkbox"]#dnt-exception + label::before {
 }
 label[for="dnt-exception"] {
   margin-top: -23px;
-  display: block;
+  display: inline-block;
 }
 #version-div {
   position: absolute;

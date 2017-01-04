@@ -695,6 +695,17 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 	margin-left: 2px;
 }
 
+.help-mark.sml{
+  font-size: 10px;
+  height: 10px;
+  padding: 0 1px;
+  background-color: #999;
+}
+.help-mark.sml:hover {
+  color: #000;
+  background-color: #0076FF;
+}
+
 ul {
     padding: 0;
     list-style-type: none;
