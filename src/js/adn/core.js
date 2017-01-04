@@ -12,7 +12,7 @@
     disableIdler = 0; // don't wait for user to be idle
 
   var µb = µBlock,
-    production = 0,
+    production = 1,
     lastActivity = 0,
     lastUserActivity = 0,
     notifications = [],
@@ -1810,11 +1810,11 @@
 
     vAPI.download({
       'url': 'data:text/plain;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(admap, null, '  ')),
+        encodeURIComponent(JSON.stringify(admap)),
       'filename': filename
     });
 
-    if (request.includeImages) saveVaultImages();
+    if (!production && request.includeImages) saveVaultImages();
 
     log('[EXPORT] ' + count + ' ads to ' + filename);
   };
