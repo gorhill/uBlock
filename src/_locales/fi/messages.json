@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Painallus: poista käytöstä\/ota käyttöön uBlock₀ tällä sivustolla.\n\nCtrl+painallus: poista uBlock₀ käytöstä vain tällä sivulla.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Painallus: poista käytöstä\/ota käyttöön uBlock₀ tällä sivustolla.\n\n⌘+painallus: poista uBlock₀ käytöstä vain tällä sivulla.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pyyntöjä estetty",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Painallus, Ctrl-painallus",
-    "description":"English: Click, Ctrl-click"
+    "message":"Painallus, ⌘-painallus",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Estä elementti",

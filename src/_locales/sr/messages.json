@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Клик: онемогући\/омогући µBlock₀ за овај сајт.\n\nCtrl+клик: онемогући\/омогући µBlock₀ само за ову страницу.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Клик: онемогући\/омогући µBlock₀ за овај сајт.\n\n⌘+клик: онемогући\/омогући µBlock₀ само за ову страницу.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"блокирани захтеви",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Клик, Ctrl-клик",
-    "description":"English: Click, Ctrl-click"
+    "message":"Клик, ⌘-клик",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Блокирај елемент",

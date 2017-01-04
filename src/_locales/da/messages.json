@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra kun på den nuværende side.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\n⌘+Klik: Slå uBlock₀ fra kun på den nuværende side.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"forespørgsler blokeret",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klik. Ctrl-klik",
-    "description":"English: Click, Ctrl-click"
+    "message":"Klik. ⌘-klik",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Blokér element",

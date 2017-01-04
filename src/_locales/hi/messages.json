@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"दबाए : uBlock को इस साईट में बंद\/चालु करने के लिए।\n\nCtrl के साथ दबाए : uBlock को सिर्फ इस पेज में बंद करने के लिए।",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"दबाए : uBlock को इस साईट में बंद\/चालु करने के लिए।\n\n⌘ के साथ दबाए : uBlock को सिर्फ इस पेज में बंद करने के लिए।",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"रुके हुए अनुरोध",
@@ -177,7 +177,7 @@
   },
   "pickerCosmeticFiltersHint":{
     "message":"क्लिक, कंट्रोल - क्लिक",
-    "description":"English: Click, Ctrl-click"
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"इस को ब्लॉक करो",

@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKlikoj+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKlikoj+⌘: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"kërkesa të refuzuara",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klikoj, Klikoj me Ctrl",
-    "description":"English: Click, Ctrl-click"
+    "message":"Klikoj, Klikoj me ⌘",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Bllokoj elementin",
