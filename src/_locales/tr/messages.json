@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Tıklama: uBlock₀'i bu site için devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: uBlock₀'i sadece bu sayfa için devre dışı bırak.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Tıklama: uBlock₀'i bu site için devre dışı bırak\/etkinleştir.\n\n⌘+tıklama: uBlock₀'i sadece bu sayfa için devre dışı bırak.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"engellenen istekler",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Tıkla, Ctrl-tıkla",
-    "description":"English: Click, Ctrl-click"
+    "message":"Tıkla, ⌘-tıkla",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Ögeyi engelle",

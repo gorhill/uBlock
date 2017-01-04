@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"ক্লিক: এই সাইটের জন্য uBlock₀ নিষ্ক্রিয়\/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য uBlock₀ নিষ্ক্রিয় করবে।",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"ক্লিক: এই সাইটের জন্য uBlock₀ নিষ্ক্রিয়\/সক্রিয় করবে।\n\n⌘+ক্লিক: শুধু এই পাতার জন্য uBlock₀ নিষ্ক্রিয় করবে।",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"অবরোধের অনুরোধ",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"ক্লিক, Ctrl-ক্লিক",
-    "description":"English: Click, Ctrl-click"
+    "message":"ক্লিক, ⌘-ক্লিক",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"উপাদান অবরুদ্ধ করুন",

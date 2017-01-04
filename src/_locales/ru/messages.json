@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ только на этой странице.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\n⌘+ЛКМ: отключить uBlock₀ только на этой странице.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"запросов заблокировано",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Щелчок, Ctrl+щелчок",
-    "description":"English: Click, Ctrl-click"
+    "message":"Щелчок, ⌘+щелчок",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Заблокировать элемент",

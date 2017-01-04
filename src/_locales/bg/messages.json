@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Щракване: изключва\/включва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Щракване: изключва\/включва uBlock₀ за този сайт.\n\n⌘ + щракване: изключва uBlock₀ само за тази страница.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"блокирани заявки",
@@ -176,8 +176,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Щракване, Ctrl + щракване",
-    "description":"English: Click, Ctrl-click"
+    "message":"Щракване, ⌘ + щракване",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Блокиране на елемент",
