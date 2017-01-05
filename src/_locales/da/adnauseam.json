@@ -16,16 +16,16 @@
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Skjul annoncer",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"Klik på annoncer",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
-    "description":"English: Firstrun.html -> Block Malware"
+    "message":"Bloker Malware",
+    "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
@@ -36,8 +36,8 @@
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malware and non-visual trackers (<span class='link' id='ToOptions'>customize<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+    "message":"optimize your settings to protect against malicious Ads (<span class='link' id='ToOptions'>customize<\/span>)",
+    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reactivate",
@@ -48,7 +48,7 @@
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Skjul annoncer",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
@@ -56,8 +56,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate malware blocking",
-    "description":"English: Notifications -> Activate malware blocking"
+    "message":"Activate blocking of malicious ads",
+    "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
     "message":"Activate the EasyList filter",
@@ -70,6 +70,22 @@
   "adnNotificationDisableUBlock":{
     "message":"uBlock and AdNauseam may conflict!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed":{
+    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking":{
+    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding":{
+    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow":{
+    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
     "message":"TARGET",

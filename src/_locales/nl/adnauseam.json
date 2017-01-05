@@ -1,43 +1,43 @@
 {
   "adnAboutPageName":{
-    "message":"AdNauseam — About",
+    "message":"AdNauseam - Over ons",
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Ondersteuning",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"Gebouwd op",
     "description":"English: links.html Built on"
   },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"Alstublieft:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Verberg advertenties",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"Klik advertenties",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
-    "description":"English: Firstrun.html -> Block Malware"
+    "message":"Blokkeer schadelijke software",
+    "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
+    "message":"verberg advertenties in uw geselecteerde <span class='link' id='To3pfilter'> filter lijst <\/span>",
     "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register visits on Ads found via your <span class='link' id='To3pfilter'>filter lists<\/span>",
+    "message":"register bezoeken op advertenties gevonden via uw <span class='link' id='To3pfilter'>filter lijst<\/span>",
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malware and non-visual trackers (<span class='link' id='ToOptions'>customize<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+    "message":"optimaliseren van uw instellingen ter bescherming tegen malware en niet-visuele trackers (<span class='link' id='ToOptions'> aanpassen<\/span>)",
+    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reactivate",
@@ -48,63 +48,79 @@
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Activeren van advertenties verbergen",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
-    "message":"Activate Ad clicking",
+    "message":"Activeren van advertentie klikken",
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate malware blocking",
-    "description":"English: Notifications -> Activate malware blocking"
+    "message":"Activeren malware blokkeren",
+    "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"Activeren van de EasyList filter",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus and AdNauseam may conflict!",
+    "message":"AdBlock Plus en AdNauseam kunnen conflicteren!",
     "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock en AdNauseam kunnen conflicteren!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationDNTAllowed":{
+    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking":{
+    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding":{
+    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow":{
+    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
+  },
   "adnTarget":{
-    "message":"TARGET",
+    "message":"DOEL",
     "description":"English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn":{
-    "message":"FOUND ON",
+    "message":"GEVONDEN OP",
     "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
-    "message":"Not Yet Visited",
+    "message":"Nog niet bezocht",
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
-    "message":"Switch me on",
+    "message":"Zet mij aan",
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
-    "message":"That's it? ok…",
+    "message":"Is dat het? oke…",
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"Beter, maar toch…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
-    "message":"Let's go!",
+    "message":"Laten we starten!",
     "description":"English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"AdNauseam is onderbroken op deze pagina",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
-    "message":"AdNauseam is not currently hiding Ads",
+    "message":"AdNauseam verbergt momenteel geen advertenties",
     "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
@@ -112,7 +128,7 @@
     "description":"English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds":{
-    "message":"No Ads collected on this page (showing recent)",
+    "message":"Geen advertenties verzameld op deze pagina (met recente)",
     "description":"shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename":{
@@ -120,27 +136,27 @@
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}} Ads were imported",
+    "message":"{{count}} advertenties zijn geïmporteerd",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
-    "message":"This action will permanently remove ALL of your Ads",
+    "message":"Deze actie zal AL uw advertenties permanent verwijderen",
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Logboek weergeven",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
-    "message":"clicked",
+    "message":"geklikt",
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
-    "message":"of the",
+    "message":"van de",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
-    "message":"Ads detected",
+    "message":"Advertenties gevonden",
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{

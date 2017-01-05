@@ -25,7 +25,7 @@
   },
   "adnFirstRunBlockingMalware":{
     "message":"屏蔽惡意軟件",
-    "description":"English: Firstrun.html -> Block Malware"
+    "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"隱藏由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
@@ -36,8 +36,8 @@
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"優化設定以屏蔽惡意軟件和隱形的用戶追蹤 (<span class='link' id='ToOptions'>更改<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+    "message":"優化設定以屏蔽惡意廣告 (<span class='link' id='ToOptions'>更改<\/span>)",
+    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
     "message":"啟用",
@@ -56,8 +56,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"請啟用“屏蔽惡意軟件“功能",
-    "description":"English: Notifications -> Activate malware blocking"
+    "message":"請啟用“遮蔽惡意軟體“功能",
+    "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
     "message":"請停用其它廣告屏蔽軟件",
@@ -70,6 +70,22 @@
   "adnNotificationDisableUBlock":{
     "message":"uBlock 同 AdNauseam 可能會衝突！",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed":{
+    "message":"此頁尊重 <b>不跟蹤<\/b>準則，允許廣告。",
+    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking":{
+    "message":"此頁尊重 <b>不跟蹤<\/b>準則，隱藏但不點擊廣告。",
+    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding":{
+    "message":"此頁尊重 <b>不跟蹤<\/b>準則，點擊但顯示廣告。",
+    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow":{
+    "message":"此頁尊重 <b>不跟蹤<\/b>準則。",
+    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
     "message":"目標",

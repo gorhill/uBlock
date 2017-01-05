@@ -25,7 +25,7 @@
   },
   "adnFirstRunBlockingMalware":{
     "message":"Schadsoftware blockieren",
-    "description":"English: Firstrun.html -> Block Malware"
+    "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"verstecke Anzeigen in Deinen ausgewählten <span class='link' id='ToOptions'>Filterlisten<\/span>",
@@ -37,7 +37,7 @@
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"optimieren Deine Einstellungen um dich vor Malware und nicht-visuellen Trackern zu schützen (<span class='link' id='ToOptions'> anpassen<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reaktivieren",
@@ -57,7 +57,7 @@
   },
   "adnNotificationActivateBlocking":{
     "message":"Aktiviere das Blocken von Malware",
-    "description":"English: Notifications -> Activate malware blocking"
+    "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
     "message":"Aktiviere den Easylist Filter",
@@ -70,6 +70,22 @@
   "adnNotificationDisableUBlock":{
     "message":"uBlock und AdNauseam könnten sich gegenseitig behindern!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed":{
+    "message":"Diese Seite <b>Do Not Track<\/b>, Werbungen sind erlaubt.",
+    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking":{
+    "message":"Diese Seite <b>Do Not Track<\/b>, Werbungen ausblenden, nicht klicken.",
+    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding":{
+    "message":"Diese Seite respektiert <b>Do Not Track<\/b>, Werbungen klicken, nicht ausblenden.",
+    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow":{
+    "message":"Diese Seite respektiert <b>Do Not Track<\/b>, nur damit du weisst.",
+    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
     "message":"Ziel",
