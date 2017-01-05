@@ -205,7 +205,7 @@ var renderNotifications = function (visibleNotes, thePage) {
 
   if (page === "firstrun")
     notifications = notifications.filter(function (n) {
-      return n.firstRun
+      return n.firstrun
     });
 
   var template = uDom('#notify-template');
