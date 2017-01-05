@@ -72,7 +72,7 @@ if (String.prototype.includes instanceof Function === false) {
 /**************************** Notifications *********************************/
 
 var WARNING = 'warning', ERROR = 'error', INFO = 'info', SUCCESS = 'success', DNT = 'dnt',
-  FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ';
+  FAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ', DNTFAQ = 'https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam';
 
 var DNTAllowed = new Notification({
   isDNT: true,
@@ -102,19 +102,22 @@ var DNTNotify = new Notification({
 var HidingDisabled = new Notification({
   name: 'HidingDisabled',
   text: 'adnNotificationActivateHiding',
-  prop: 'hidingAds'
+  prop: 'hidingAds',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-hide-ads'
 });
 
 var ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
   text: 'adnNotificationActivateClicking',
-  prop: 'clickingAds'
+  prop: 'clickingAds',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-click-ads'
 });
 
 var BlockingDisabled = new Notification({
   name: 'BlockingDisabled',
   text: 'adnNotificationActivateBlocking',
   prop: 'blockingMalware',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-block-malicious-ads',
   type: ERROR
 });
 
@@ -150,7 +153,7 @@ function Notification(m) {
   this.prop = opt(m, 'prop', '');
   this.name = opt(m, 'name', '');
   this.text = opt(m, 'text', '');
-  this.link = opt(m, 'link', FAQ);
+  this.link = opt(m, 'link', this.isDNT ? DNTFAQ : FAQ);
 
   this.isDNT = opt(m, 'isDNT', '');
   this.listUrl = opt(m, 'listUrl', '');

@@ -56,8 +56,8 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malicious ads blocking",
-    "description": "English: Notifications -> Activate malicious ads blocking"
+    "message": "Activate blocking of malicious ads",
+    "description": "English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList": {
     "message": "Activate the EasyList filter",
