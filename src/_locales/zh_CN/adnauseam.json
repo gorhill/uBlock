@@ -24,8 +24,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"屏蔽恶意软件",
-    "description":"English: Firstrun.html -> Block Malware"
+    "message":"屏蔽恶意广告",
+    "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"隐藏由你的<span class='link' id='To3pfilter'>筛选器列表<\/span>标记的广告",
@@ -36,8 +36,8 @@
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"优化设定以屏蔽恶意软件和隐形的用户追踪 (<span class='link' id='ToOptions'>更改<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malware and non-visual trackers (customize)"
+    "message":"优化设定以屏蔽恶意广告 (<span class='link' id='ToOptions'>更改<\/span>)",
+    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
     "message":"启用",
@@ -57,7 +57,7 @@
   },
   "adnNotificationActivateBlocking":{
     "message":"请启用“屏蔽恶意软件”功能",
-    "description":"English: Notifications -> Activate malware blocking"
+    "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
     "message":"请启用Easy List 筛选列表",
@@ -70,6 +70,22 @@
   "adnNotificationDisableUBlock":{
     "message":"uBlock 和 AdNauseam 可能会冲突！",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed":{
+    "message":"此页尊重 <b>Do Not Track<\/b>原则，允许广告。",
+    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking":{
+    "message":"此页尊重 <b>Do Not Track<\/b>原则，隐藏但不点击广告。",
+    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding":{
+    "message":"此页尊重 <b>Do Not Track<\/b>原则，点击但显示广告。",
+    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow":{
+    "message":"此页尊重 <b>Do Not Track<\/b>原则。",
+    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
     "message":"目标",

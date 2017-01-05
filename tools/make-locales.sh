@@ -11,7 +11,7 @@ hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https:/
 
 printf "*** Generating locale files in $DES... "
 
-LANGS=(en zh_TW zh_CN de)
+LANGS=(en zh_TW zh_CN de id sv cs)
 FILES=src/_locales/**/adnauseam.json
 # echo "Languages:" ${LANGS[*]}
 
