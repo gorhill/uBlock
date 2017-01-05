@@ -6,5 +6,6 @@ artifacts
 /bin/build/
 /tmp/
 misc
+artifacts/*
 
 assets/checksums/ublock0.txt
