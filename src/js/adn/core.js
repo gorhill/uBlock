@@ -1568,7 +1568,6 @@
 
     vAPI.getAddonInfo(function (UBlockConflict, AdBlockPlusConflict) {
 
-      // console.log(UBlockConflict, AdBlockPlusConflict);
       if (AdBlockPlusConflict) {
 
         modified = addNotification(notes, AdBlockPlusEnabled);
@@ -1580,11 +1579,11 @@
 
       if (UBlockConflict) {
 
-        modified = modified || addNotification(notes, UBlockEnabled);
+        modified = addNotification(notes, UBlockEnabled);
 
       } else {
 
-        modified = modified || removeNotification(notes, UBlockEnabled);
+        modified = removeNotification(notes, UBlockEnabled);
       }
 
       modified && sendNotifications(notes);
