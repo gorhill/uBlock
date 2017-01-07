@@ -522,7 +522,9 @@ var renderOnce = function() {
         return;
     }
 
-    lpane.style.setProperty('height', rpane.offsetHeight + 'px');
+    if ( document.body.classList.contains('fullsize') === false ) {
+        lpane.style.setProperty('height', rpane.offsetHeight + 'px');
+    }
 };
 
 /******************************************************************************/
