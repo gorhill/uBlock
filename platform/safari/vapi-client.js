@@ -208,13 +208,13 @@
 
     /******************************************************************************/
 
-	vAPI.randomToken = function() {
+    vAPI.randomToken = function() {
         return String.fromCharCode(Date.now() % 26 + 97) +
             Math.floor(Math.random() * 982451653 + 982451653).toString(36);
     };
     vAPI.sessionId = vAPI.randomToken();
     vAPI.safari = true;
-	vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+    vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
     /******************************************************************************/
 
@@ -319,92 +319,92 @@
     };
 
     vAPI.messaging = {
-	    channels: Object.create(null),
-	    channelCount: 0,
+        channels: Object.create(null),
+        channelCount: 0,
         // Waiting for response
-	    pending: Object.create(null),
-	    pendingCount: 0,
+        pending: Object.create(null),
+        pendingCount: 0,
         // Waiting to send
         queued: [],
-	    auxProcessId: 1,
-	    shuttingDown: false,
+        auxProcessId: 1,
+        shuttingDown: false,
 
-	    shutdown: function() {
-		    this.shuttingDown = true;
-		    this.removeListener();
-	    },
+        shutdown: function() {
+            this.shuttingDown = true;
+            this.removeListener();
+        },
 
-	    disconnectListener: function() {
-		    vAPI.shutdown.exec();
-	    },
-	    disconnectListenerCallback: null,
+        disconnectListener: function() {
+            vAPI.shutdown.exec();
+        },
+        disconnectListenerCallback: null,
 
-	    messageListener: function(details) {
-		    if ( !details ) {
-			    return;
-		    }
+        messageListener: function(details) {
+            if ( !details ) {
+                return;
+            }
 
-		    // Sent to all channels
-		    if ( details.broadcast === true && !details.channelName ) {
-			    for ( var channelName in this.channels ) {
-				    this.sendToChannelListeners(channelName, details.msg);
-			    }
-			    return;
-		    }
+            // Sent to all channels
+            if ( details.broadcast === true && !details.channelName ) {
+                for ( var channelName in this.channels ) {
+                    this.sendToChannelListeners(channelName, details.msg);
+                }
+                return;
+            }
 
-		    // Response to specific message previously sent
-		    if ( details.auxProcessId ) {
-			    var listener = this.pending[details.auxProcessId];
-			    delete this.pending[details.auxProcessId];
-			    delete details.auxProcessId; // TODO: why?
-			    if ( listener ) {
-				    this.pendingCount -= 1;
-				    listener(details.msg);
-				    return;
-			    }
-		    }
+            // Response to specific message previously sent
+            if ( details.auxProcessId ) {
+                var listener = this.pending[details.auxProcessId];
+                delete this.pending[details.auxProcessId];
+                delete details.auxProcessId; // TODO: why?
+                if ( listener ) {
+                    this.pendingCount -= 1;
+                    listener(details.msg);
+                    return;
+                }
+            }
 
-		    // Sent to a specific channel
-		    var response = this.sendToChannelListeners(details.channelName, details.msg);
+            // Sent to a specific channel
+            var response = this.sendToChannelListeners(details.channelName, details.msg);
 
-		    // Respond back if required
-		    if ( details.mainProcessId === undefined ) {
-			    return;
-		    }
+            // Respond back if required
+            if ( details.mainProcessId === undefined ) {
+                return;
+            }
             this.postMessage(details.mainProcessId, {
                 mainProcessId: details.mainProcessId,
                 msg: response
             });
-	    },
-	    messageListenerCallback: null,
+        },
+        messageListenerCallback: null,
 
-	    removeListener: function() {
-		    if ( this.channelCount !== 0 ) {
-			    this.channels = Object.create(null);
-			    this.channelCount = 0;
-		    }
-		    // service pending callbacks
-		    if ( this.pendingCount !== 0 ) {
-			    var pending = this.pending, callback;
-			    this.pending = Object.create(null);
-			    this.pendingCount = 0;
-			    for ( var auxId in pending ) {
-				    callback = pending[auxId];
-				    if ( typeof callback === 'function' ) {
-					    callback(null);
-				    }
-			    }
-		    }
+        removeListener: function() {
+            if ( this.channelCount !== 0 ) {
+                this.channels = Object.create(null);
+                this.channelCount = 0;
+            }
+            // service pending callbacks
+            if ( this.pendingCount !== 0 ) {
+                var pending = this.pending, callback;
+                this.pending = Object.create(null);
+                this.pendingCount = 0;
+                for ( var auxId in pending ) {
+                    callback = pending[auxId];
+                    if ( typeof callback === 'function' ) {
+                        callback(null);
+                    }
+                }
+            }
             if (this.connector) {
                 safari.self.removeEventListener('message', this.connector, false);
                 this.connector = null;
                 this.channels = {};
                 this.listeners = {};
             }
-	    },
+        },
 
-	    connect: function() {
-	        // this.createPort();
+        connect: function() {
+            // this.createPort();
             this.connector = function(msg) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the vAPI.sessionId to accept only
@@ -429,26 +429,26 @@
                 }
                 this.queued.length = 0;
             }.bind(this));
-	    },
+        },
 
-	    send: function(channelName, message, callback) {
-		    this.sendTo(channelName, message, undefined, undefined, callback);
-	    },
+        send: function(channelName, message, callback) {
+            this.sendTo(channelName, message, undefined, undefined, callback);
+        },
 
-	    sendTo: function(channelName, message, toTabId, toChannel, callback) {
-		    // Too large a gap between the last request and the last response means
-		    // the main process is no longer reachable: memory leaks and bad
-		    // performance become a risk -- especially for long-lived, dynamic
-		    // pages. Guard against this.
-		    if ( this.pendingCount > 25 ) {
-			    vAPI.shutdown.exec();
-		    }
-		    var auxProcessId;
-		    if ( callback ) {
-			    auxProcessId = this.auxProcessId++;
-			    this.pending[auxProcessId] = callback;
-			    this.pendingCount += 1;
-		    }
+        sendTo: function(channelName, message, toTabId, toChannel, callback) {
+            // Too large a gap between the last request and the last response means
+            // the main process is no longer reachable: memory leaks and bad
+            // performance become a risk -- especially for long-lived, dynamic
+            // pages. Guard against this.
+            if ( this.pendingCount > 25 ) {
+                vAPI.shutdown.exec();
+            }
+            var auxProcessId;
+            if ( callback ) {
+                auxProcessId = this.auxProcessId++;
+                this.pending[auxProcessId] = callback;
+                this.pendingCount += 1;
+            }
             if (!this.connector) {
                 this.connect();
             }
@@ -465,7 +465,7 @@
             } else {
                 this.postMessage(auxProcessId, message);
             }
-	    },
+        },
 
         postMessage: function(auxProcessId, message) {
             // popover content doesn't know messaging...
@@ -490,68 +490,68 @@
             }
         },
 
-	    addChannelListener: function(channelName, callback) {
-		    if ( typeof callback !== 'function' ) {
-			    return;
-		    }
-		    var listeners = this.channels[channelName];
-		    if ( listeners !== undefined && listeners.indexOf(callback) !== -1 ) {
-			    console.error('Duplicate listener on channel "%s"', channelName);
-			    return;
-		    }
-		    if ( listeners === undefined ) {
-			    this.channels[channelName] = [callback];
-			    this.channelCount += 1;
-		    } else {
-			    listeners.push(callback);
-		    }
-		    if (!this.connector)
-		        this.connect();
-	    },
+        addChannelListener: function(channelName, callback) {
+            if ( typeof callback !== 'function' ) {
+                return;
+            }
+            var listeners = this.channels[channelName];
+            if ( listeners !== undefined && listeners.indexOf(callback) !== -1 ) {
+                console.error('Duplicate listener on channel "%s"', channelName);
+                return;
+            }
+            if ( listeners === undefined ) {
+                this.channels[channelName] = [callback];
+                this.channelCount += 1;
+            } else {
+                listeners.push(callback);
+            }
+            if (!this.connector)
+                this.connect();
+        },
 
-	    removeChannelListener: function(channelName, callback) {
-		    if ( typeof callback !== 'function' ) {
-			    return;
-		    }
-		    var listeners = this.channels[channelName];
-		    if ( listeners === undefined ) {
-			    return;
-		    }
-		    var pos = listeners.indexOf(callback);
-		    if ( pos === -1 ) {
-			    console.error('Listener not found on channel "%s"', channelName);
-			    return;
-		    }
-		    listeners.splice(pos, 1);
-		    if ( listeners.length === 0 ) {
-			    delete this.channels[channelName];
-			    this.channelCount -= 1;
-		    }
-	    },
+        removeChannelListener: function(channelName, callback) {
+            if ( typeof callback !== 'function' ) {
+                return;
+            }
+            var listeners = this.channels[channelName];
+            if ( listeners === undefined ) {
+                return;
+            }
+            var pos = listeners.indexOf(callback);
+            if ( pos === -1 ) {
+                console.error('Listener not found on channel "%s"', channelName);
+                return;
+            }
+            listeners.splice(pos, 1);
+            if ( listeners.length === 0 ) {
+                delete this.channels[channelName];
+                this.channelCount -= 1;
+            }
+        },
 
-	    removeAllChannelListeners: function(channelName) {
-		    var listeners = this.channels[channelName];
-		    if ( listeners === undefined ) {
-			    return;
-		    }
-		    delete this.channels[channelName];
-		    this.channelCount -= 1;
-	    },
+        removeAllChannelListeners: function(channelName) {
+            var listeners = this.channels[channelName];
+            if ( listeners === undefined ) {
+                return;
+            }
+            delete this.channels[channelName];
+            this.channelCount -= 1;
+        },
 
-	    sendToChannelListeners: function(channelName, msg) {
-		    var listeners = this.channels[channelName];
-		    if ( listeners === undefined ) {
-			    return;
-		    }
-		    var response;
-		    for ( var i = 0, n = listeners.length; i < n; i++ ) {
-			    response = listeners[i](msg);
-			    if ( response !== undefined ) {
-				    break;
-			    }
-		    }
-		    return response;
-	    }
+        sendToChannelListeners: function(channelName, msg) {
+            var listeners = this.channels[channelName];
+            if ( listeners === undefined ) {
+                return;
+            }
+            var response;
+            for ( var i = 0, n = listeners.length; i < n; i++ ) {
+                response = listeners[i](msg);
+                if ( response !== undefined ) {
+                    break;
+                }
+            }
+            return response;
+        }
     };
 
     // The following code should run only in content pages
