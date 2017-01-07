@@ -1066,13 +1066,13 @@ var FilterBucket = function(a, b) {
             this.filters[1] = b;
         }
     }
-
-    Object.defineProperty(this, 'rtfid', {
-        get: function() {
-            return this.f.rtfid;
-        }
-    });
 };
+
+Object.defineProperty(FilterBucket.prototype, 'rtfid', {
+    get: function() {
+        return this.f.rtfid;
+    }
+});
 
 FilterBucket.prototype.add = function(a) {
     this.filters.push(a);
