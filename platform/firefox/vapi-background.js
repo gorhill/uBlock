@@ -2376,7 +2376,7 @@ vAPI.net.registerListeners = function() {
         // https://github.com/uBlockOrigin/uAssets/issues/255
         //   Handle chained popups.
         if ( openerTabId !== undefined ) {
-            shouldLoadPopupListenerMap.set(target.currentURI.asciiSpec, openerTabId);
+            shouldLoadPopupListenerMap.set(popupURL, openerTabId);
             shouldLoadPopupListenerMapToD = Date.now() + 10000;
             vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
             return;
