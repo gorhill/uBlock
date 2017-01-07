@@ -584,7 +584,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( openerHostname !== '' ) {
             // Check per-site switch first
             if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
-                if ( typeof clickedURL !== 'string' || areDifferentURLs(targetURL, clickedURL) ) {
+                if ( typeof clickedURL === 'string' && areDifferentURLs(targetURL, clickedURL) ) {
                     return 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
                 }
             }
