@@ -60,5 +60,13 @@
     "short_name": "uBlock₀",
     "storage": {
         "managed_schema": "managed_storage.json"
+    },
+    "commands": {
+        "toggle-element-picker": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K"
+            },
+            "description": "Toggle element picker"
+        }
     }
 }

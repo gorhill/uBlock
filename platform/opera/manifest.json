@@ -54,5 +54,13 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock₀"
+    "short_name": "uBlock₀",
+    "commands": {
+        "toggle-element-picker": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K"
+            },
+            "description": "Toggle element picker"
+        }
+    }
 }
