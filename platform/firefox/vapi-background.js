@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2106 The uBlock Origin authors
+    Copyright (C) 2014-2107 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2361,26 +2361,14 @@ vAPI.net.registerListeners = function() {
             null;
     }
 
-    var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup',
-        shouldLoadPopupListenerMap = new Map(),
-        shouldLoadPopupListenerMapToD = 0;
-    var shouldLoadPopupListener = function(openerURL, target) {
-        var popupTabId = tabWatcher.tabIdFromTarget(target),
-            popupURL = target.currentURI && target.currentURI.asciiSpec || '',
+    var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
+    var shouldLoadPopupListener = function(e) {
+        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) { return; }
+        var target = e.target,
+            openerURL = e.data,
+            popupTabId = tabWatcher.tabIdFromTarget(target),
             openerTabId,
             uri;
-        if ( shouldLoadPopupListenerMapToD > Date.now() ) {
-            openerTabId = shouldLoadPopupListenerMap.get(popupURL);
-        }
-
-        // https://github.com/uBlockOrigin/uAssets/issues/255
-        //   Handle chained popups.
-        if ( openerTabId !== undefined ) {
-            shouldLoadPopupListenerMap.set(popupURL, openerTabId);
-            shouldLoadPopupListenerMapToD = Date.now() + 10000;
-            vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
-            return;
-        }
 
         for ( var browser of tabWatcher.browsers() ) {
             uri = browser.currentURI;
@@ -2398,24 +2386,14 @@ vAPI.net.registerListeners = function() {
             openerTabId = tabWatcher.tabIdFromTarget(browser);
             if ( openerTabId === popupTabId ) { continue; }
 
-            shouldLoadPopupListenerMap = new Map();
-            shouldLoadPopupListenerMapToD = Date.now() + 10000;
-            shouldLoadPopupListenerMap.set(popupURL, openerTabId);
             vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
             break;
         }
     };
-    var shouldLoadPopupListenerAsync = function(e) {
-        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
-            return;
-        }
-        // We are handling a synchronous message: do not block.
-        vAPI.setTimeout(shouldLoadPopupListener.bind(null, e.data, e.target), 1);
-    };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
         shouldLoadPopupListenerMessageName,
-        shouldLoadPopupListenerAsync
+        shouldLoadPopupListener
     );
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
@@ -2501,7 +2479,7 @@ vAPI.net.registerListeners = function() {
     cleanupTasks.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadPopupListenerMessageName,
-            shouldLoadPopupListenerAsync
+            shouldLoadPopupListener
         );
 
         vAPI.messaging.globalMessageManager.removeMessageListener(

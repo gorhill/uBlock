@@ -174,10 +174,9 @@ housekeep itself.
 
     vAPI.tabs.onPopupCreated = function(targetTabId, openerTabId) {
         var popup = popupCandidates[targetTabId];
-        if ( popup !== undefined ) {
-            return;
+        if ( popup === undefined ) {
+            popupCandidates[targetTabId] = new PopupCandidate(targetTabId, openerTabId);
         }
-        popupCandidates[targetTabId] = new PopupCandidate(targetTabId, openerTabId);
         popupCandidateTest(targetTabId);
     };
 

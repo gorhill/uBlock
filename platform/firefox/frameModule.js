@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 The uBlock Origin authors
+    Copyright (C) 2014-2017 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ var contentObserver = {
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
-    canE10S: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
+    modernFirefox: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -189,31 +189,40 @@ var contentObserver = {
 
     register: function() {
         Services.obs.addObserver(this, 'document-element-inserted', true);
+        Services.obs.addObserver(this, 'content-document-global-created', true);
 
-        this.componentRegistrar.registerFactory(
-            this.classID,
-            this.classDescription,
-            this.contractID,
-            this
-        );
-        this.categoryManager.addCategoryEntry(
-            'content-policy',
-            this.contractID,
-            this.contractID,
-            false,
-            true
-        );
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // For modern versions of Firefox, the frameId/parentFrameId
+        // information can be found in channel.loadInfo of the HTTP observer.
+        if ( this.modernFirefox !== true ) {
+            this.componentRegistrar.registerFactory(
+                this.classID,
+                this.classDescription,
+                this.contractID,
+                this
+            );
+            this.categoryManager.addCategoryEntry(
+                'content-policy',
+                this.contractID,
+                this.contractID,
+                false,
+                true
+            );
+        }
     },
 
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
+        Services.obs.removeObserver(this, 'content-document-global-created');
 
-        this.componentRegistrar.unregisterFactory(this.classID, this);
-        this.categoryManager.deleteCategoryEntry(
-            'content-policy',
-            this.contractID,
-            false
-        );
+        if ( this.modernFirefox !== true ) {
+            this.componentRegistrar.unregisterFactory(this.classID, this);
+            this.categoryManager.deleteCategoryEntry(
+                'content-policy',
+                this.contractID,
+                false
+            );
+        }
     },
 
     getFrameId: function(win) {
@@ -221,48 +230,6 @@ var contentObserver = {
             .QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsIDOMWindowUtils)
             .outerWindowID;
-    },
-
-    handlePopup: function(location, origin, context) {
-        let openeeContext = context.contentWindow || context;
-        if (
-            typeof openeeContext.opener !== 'object' ||
-            openeeContext.opener === null ||
-            openeeContext.opener === context ||
-            this.ignoredPopups.has(openeeContext)
-        ) {
-            return;
-        }
-        // https://github.com/gorhill/uBlock/issues/452
-        // Use location of top window, not that of a frame, as this
-        // would cause tab id lookup (necessary for popup blocking) to
-        // always fail.
-        // https://github.com/gorhill/uBlock/issues/1305
-        //   Opener could be a dead object, using it would cause a throw.
-        //   Repro case:
-        //   - Open http://delishows.to/show/chicago-med/season/1/episode/6
-        //   - Click anywhere in the background
-        let openerURL = null;
-        try {
-            let opener = openeeContext.opener.top || openeeContext.opener;
-            openerURL = opener.location && opener.location.href;
-        } catch(ex) {
-        }
-        // If no valid opener URL found, use the origin URL.
-        if ( openerURL === null ) {
-            openerURL = origin.asciiSpec;
-        }
-        let messageManager = getMessageManager(openeeContext);
-        if ( messageManager === null ) {
-            return;
-        }
-        if ( typeof messageManager.sendRpcMessage === 'function' ) {
-            // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.popupMessageName, openerURL);
-        } else {
-            // Compatibility for older versions
-            messageManager.sendSyncMessage(this.popupMessageName, openerURL);
-        }
     },
 
     // https://bugzil.la/612921
@@ -275,17 +242,6 @@ var contentObserver = {
         // - Services and all other global variables are undefined
         // Hopefully will eventually understand why this happens.
         if ( Services === undefined || !context ) {
-            return this.ACCEPT;
-        }
-
-        if ( type === this.MAIN_FRAME ) {
-            this.handlePopup(location, origin, context);
-        }
-
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
-        // For modern versions of Firefox, the frameId/parentFrameId
-        // information can be found in channel.loadInfo of the HTTP observer.
-        if ( this.canE10S ) {
             return this.ACCEPT;
         }
 
@@ -504,17 +460,44 @@ var contentObserver = {
     },
 
     ignorePopup: function(e) {
-        if ( e.isTrusted === false ) {
-            return;
-        }
-
+        if ( e.isTrusted === false ) { return; }
         let contObs = contentObserver;
         contObs.ignoredPopups.set(this, true);
         this.removeEventListener('keydown', contObs.ignorePopup, true);
         this.removeEventListener('mousedown', contObs.ignorePopup, true);
     },
+    lookupPopupOpenerURL: function(popup) {
+        var opener, openerURL;
+        for (;;) {
+            opener = popup.opener;
+            if ( !opener ) { break; }
+            if ( opener.top ) { opener = opener.top; }
+            if ( opener === popup ) { break; }
+            if ( !opener.location ) { break; }
+            if ( !this.reGoodPopupURLs.test(opener.location.href) ) { break; }
+            openerURL = opener.location.href;
+            // https://github.com/uBlockOrigin/uAssets/issues/255
+            // - Mind chained about:blank popups.
+            if ( openerURL !== 'about:blank' ) { break; }
+            popup = opener;
+        }
+        return openerURL;
+    },
+    reGoodPopupURLs: /^(?:about:blank|blob:|data:|https?:|javascript:)/,
 
-    observe: function(doc) {
+    observe: function(subject, topic) {
+        // https://github.com/gorhill/uBlock/issues/2290
+        if ( topic === 'content-document-global-created' ) {
+            if ( subject !== subject.top ) { return; }
+            if ( this.ignoredPopups.has(subject) ) { return; }
+            let openerURL = this.lookupPopupOpenerURL(subject);
+            if ( !openerURL ) { return; }
+            let messager = getMessageManager(subject);
+            if ( !messager ) { return; }
+            messager.sendAsyncMessage(this.popupMessageName, openerURL);
+            return;
+        }
+
         // For whatever reason, sometimes the global scope is completely
         // uninitialized at this point. Repro steps:
         // - Launch FF with uBlock enabled
@@ -522,14 +505,11 @@ var contentObserver = {
         // - Enable uBlock
         // - Services and all other global variables are undefined
         // Hopefully will eventually understand why this happens.
-        if ( Services === undefined ) {
-            return;
-        }
+        if ( Services === undefined ) { return; }
 
+        let doc = subject;
         let win = doc.defaultView || null;
-        if ( win === null ) {
-            return;
-        }
+        if ( win === null ) { return; }
 
         if ( win.opener && this.ignoredPopups.has(win) === false ) {
             win.addEventListener('keydown', this.ignorePopup, true);
@@ -543,17 +523,13 @@ var contentObserver = {
         // TODO: We may have to exclude more types, for now let's be
         //   conservative and focus only on the one issue reported, i.e. let's
         //   not test against 'text/html'.
-        if ( doc.contentType.startsWith('image/') ) {
-            return;
-        }
+        if ( doc.contentType.startsWith('image/') ) { return; }
 
         let loc = win.location;
-
         if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' && loc.protocol !== 'file:' ) {
             if ( loc.protocol === 'chrome:' && loc.host === hostName ) {
                 this.initContentScripts(win);
             }
-
             // What about data: and about:blank?
             return;
         }
