@@ -2362,32 +2362,45 @@ vAPI.net.registerListeners = function() {
     }
 
     var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
+    var shouldLoadPopupListenerEntries = [];
     var shouldLoadPopupListener = function(e) {
         if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) { return; }
+
         var target = e.target,
-            openerURL = e.data,
-            popupTabId = tabWatcher.tabIdFromTarget(target),
-            openerTabId,
-            uri;
+            data = e.data,
+            now = Date.now(),
+            entries = shouldLoadPopupListenerEntries,
+            entry;
 
-        for ( var browser of tabWatcher.browsers() ) {
-            uri = browser.currentURI;
-
-            // Probably isn't the best method to identify the source tab.
-
-            // https://github.com/gorhill/uBlock/issues/450
-            // Skip entry if no valid URI available.
-            // Apparently URI can be undefined under some circumstances: I
-            // believe this may have to do with those very temporary
-            // browser objects created when opening a new tab, i.e. related
-            // to https://github.com/gorhill/uBlock/issues/212
-            if ( !uri || uri.spec !== openerURL ) { continue; }
-
-            openerTabId = tabWatcher.tabIdFromTarget(browser);
-            if ( openerTabId === popupTabId ) { continue; }
-
-            vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
-            break;
+        var i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            if ( entry.id === data.id ) {
+                entries.splice(i, 1);
+                break;
+            }
+            if ( entry.expire <= now ) {
+                entries.splice(i, 1);
+            }
+            entry = undefined;
+        }
+        if ( !entry ) {
+            entry = {
+                id: data.id,
+                popupTabId: undefined,
+                openerTabId: undefined,
+                expire: now + 10000
+            };
+            entries.push(entry);
+        }
+        var tabId = tabWatcher.tabIdFromTarget(target);
+        if ( data.popup ) {
+            entry.popupTabId = tabId;
+        } else /* if ( data.opener ) */ {
+            entry.openerTabId = tabId;
+        }
+        if ( entry.popupTabId && entry.openerTabId ) {
+            vAPI.tabs.onPopupCreated(entry.popupTabId, entry.openerTabId);
         }
     };
 

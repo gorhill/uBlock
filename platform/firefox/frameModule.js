@@ -160,6 +160,7 @@ var contentObserver = {
     cpMessageName: hostName + ':shouldLoad',
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
+    uniquePopupEventId: 1,
     uniqueSandboxId: 1,
     modernFirefox: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
@@ -466,35 +467,44 @@ var contentObserver = {
         this.removeEventListener('keydown', contObs.ignorePopup, true);
         this.removeEventListener('mousedown', contObs.ignorePopup, true);
     },
-    lookupPopupOpenerURL: function(popup) {
-        var opener, openerURL;
+    lookupPopupOpener: function(popup) {
         for (;;) {
-            opener = popup.opener;
-            if ( !opener ) { break; }
+            let opener = popup.opener;
+            if ( !opener ) { return; }
             if ( opener.top ) { opener = opener.top; }
-            if ( opener === popup ) { break; }
-            if ( !opener.location ) { break; }
-            if ( !this.reGoodPopupURLs.test(opener.location.href) ) { break; }
-            openerURL = opener.location.href;
+            if ( opener === popup ) { return; }
+            if ( !opener.location ) { return; }
+            if ( this.reValidPopups.test(opener.location.protocol) ) {
+                return opener;
+            }
             // https://github.com/uBlockOrigin/uAssets/issues/255
             // - Mind chained about:blank popups.
-            if ( openerURL !== 'about:blank' ) { break; }
+            if ( opener.location.href !== 'about:blank' ) { return; }
             popup = opener;
         }
-        return openerURL;
     },
-    reGoodPopupURLs: /^(?:about:blank|blob:|data:|https?:|javascript:)/,
+    reValidPopups: /^(?:blob|data|https?|javascript):/,
 
     observe: function(subject, topic) {
         // https://github.com/gorhill/uBlock/issues/2290
         if ( topic === 'content-document-global-created' ) {
             if ( subject !== subject.top ) { return; }
             if ( this.ignoredPopups.has(subject) ) { return; }
-            let openerURL = this.lookupPopupOpenerURL(subject);
-            if ( !openerURL ) { return; }
-            let messager = getMessageManager(subject);
-            if ( !messager ) { return; }
-            messager.sendAsyncMessage(this.popupMessageName, openerURL);
+            let opener = this.lookupPopupOpener(subject);
+            if ( !opener ) { return; }
+            let popupMessager = getMessageManager(subject);
+            if ( !popupMessager ) { return; }
+            let openerMessager = getMessageManager(opener);
+            if ( !openerMessager ) { return; }
+            popupMessager.sendAsyncMessage(this.popupMessageName, {
+                id: this.uniquePopupEventId,
+                popup: true
+            });
+            openerMessager.sendAsyncMessage(this.popupMessageName, {
+                id: this.uniquePopupEventId,
+                opener: true
+            });
+            this.uniquePopupEventId += 1;
             return;
         }
 
