@@ -404,10 +404,11 @@
   }
 
   var updateAdOnSuccess = function (xhr, ad, title) {
-
+   
     var ad = xhr.delegate;
 
     if (ad) {
+     
 
       if (title) ad.title = title;
 
@@ -416,6 +417,27 @@
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
+      
+      //this should goes to vAPI, get the current active page
+       chrome.tabs.getSelected(null, function(tab) {
+        var tabId = tab.id,
+        tabUrl = tab.url;
+
+        console.log(tabId,tabUrl);
+
+        if(tabUrl === ad.pageUrl){
+           µb.updateBadgeAsync(tabId, true); //click Icon
+           setTimeout(function(){
+            console.log("back");
+            µb.updateBadgeAsync(tabId);
+           },600);
+        }
+          
+
+      });
+
+      console.log("updateAdOnSuccess", ad);
+     
 
       vAPI.messaging.broadcast({
         what: 'adVisited',
@@ -424,7 +446,7 @@
 
       if (ad === inspected) inspected = null;
 
-      log('[VISIT] ' + adinfo(ad), ad.title);
+      console.log('[VISIT] ' + adinfo(ad), ad.title);
     }
 
     storeUserData();

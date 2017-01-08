@@ -54,6 +54,7 @@
   /******************************************************************************/
 
   var renderPage = function (json) {
+    console.log(json);
 
     page = json.pageUrl;
     ads = onPage(json.data, page);
