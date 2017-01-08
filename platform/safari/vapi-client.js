@@ -26,8 +26,6 @@
 // For non background pages
 
 (function(self) {
-    var vAPI = self.vAPI = self.vAPI || {};
-
     // https://github.com/chrisaljoudi/uBlock/issues/464
     if ( document instanceof HTMLDocument === false ) {
         // https://github.com/chrisaljoudi/uBlock/issues/1528
@@ -50,6 +48,8 @@
         return;
     }
 
+    var vAPI = self.vAPI = self.vAPI || {};
+
     var safari;
     if(typeof self.safari === "undefined") {
         safari = self.top.safari;
@@ -62,6 +62,16 @@
     if ( vAPI.sessionId ) {
         return;
     }
+
+    /******************************************************************************/
+
+    vAPI.randomToken = function() {
+        return String.fromCharCode(Date.now() % 26 + 97) +
+            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    };
+    vAPI.sessionId = vAPI.randomToken();
+    vAPI.safari = true;
+    vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
     /******************************************************************************/
 
@@ -82,7 +92,7 @@
 
     /******************************************************************************/
 
-    // Support minimally working Set() for legacy Chromium.
+    // Support minimally working Set() for legacy Safari.
 
     if ( self.Set instanceof Function ) {
         self.createSet = function() {
@@ -208,16 +218,6 @@
 
     /******************************************************************************/
 
-    vAPI.randomToken = function() {
-        return String.fromCharCode(Date.now() % 26 + 97) +
-            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-    };
-    vAPI.sessionId = vAPI.randomToken();
-    vAPI.safari = true;
-    vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
-
-    /******************************************************************************/
-
     vAPI.shutdown = {
         jobs: [],
         add: function(job) {
@@ -239,84 +239,6 @@
 
     /******************************************************************************/
     /******************************************************************************/
-    // Relevant?
-    // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
-    var deleteme = {
-        channels: {},
-        listeners: {},
-        requestId: 1,
-        setup: function() {
-            this.connector = function(msg) {
-                // messages from the background script are sent to every frame,
-                // so we need to check the vAPI.sessionId to accept only
-                // what is meant for the current context
-                if(msg.name === vAPI.sessionId || msg.name === 'broadcast') {
-                    messagingConnector(msg.message);
-                }
-            };
-            safari.self.addEventListener('message', this.connector, false);
-            this.channels['vAPI'] = {
-                listener: function(msg) {
-                    if(msg.cmd === 'injectScript' && msg.details.code) {
-                        Function(msg.details.code).call(self);
-                    }
-                }
-            };
-        },
-        close: function() {
-            if(this.connector) {
-                safari.self.removeEventListener('message', this.connector, false);
-                this.connector = null;
-                this.channels = {};
-                this.listeners = {};
-            }
-        },
-        channel: function(channelName, callback) {
-            if(!channelName) {
-                return;
-            }
-            this.channels[channelName] = {
-                channelName: channelName,
-                listener: typeof callback === 'function' ? callback : null,
-                send: function(message, callback) {
-                    if(!vAPI.messaging.connector) {
-                        vAPI.messaging.setup();
-                    }
-                    message = {
-                        channelName: this.channelName,
-                        msg: message
-                    };
-                    if(callback) {
-                        message.requestId = vAPI.messaging.requestId++;
-                        vAPI.messaging.listeners[message.requestId] = callback;
-                    }
-                    // popover content doesn't know messaging...
-                    if(safari.extension.globalPage) {
-                        if(!safari.self.visible) {
-                            return;
-                        }
-                        safari.extension.globalPage.contentWindow.vAPI.messaging.onMessage({
-                            name: vAPI.sessionId,
-                            message: message,
-                            target: {
-                                page: {
-                                    dispatchMessage: function(name, msg) {
-                                        messagingConnector(msg);
-                                    }
-                                }
-                            }
-                        });
-                    } else {
-                        safari.self.tab.dispatchMessage(vAPI.sessionId, message);
-                    }
-                },
-                close: function() {
-                    delete vAPI.messaging.channels[this.channelName];
-                }
-            };
-            return this.channels[channelName];
-        }
-    };
 
     vAPI.messaging = {
         channels: Object.create(null),
@@ -419,16 +341,6 @@
                     Function(msg.details.code).call(self);
                 }
             });
-            // Handle queued messages when page becomes visible
-            document.addEventListener('visibilitychange', function() {
-                if (document.hidden === true) return;
-                var message;
-                for (var i = 0; i < this.queued.length; i++) {
-                    message = this.queued[i];
-                    this.postMessage(message.auxProcessId, message);
-                }
-                this.queued.length = 0;
-            }.bind(this));
         },
 
         send: function(channelName, message, callback) {
@@ -553,6 +465,20 @@
             return response;
         }
     };
+
+    // Post queued messages when page becomes visible
+    var queueDispatchListener = function() {
+        if (document.hidden === true || this.queued.length === 0) {
+            return;
+        }
+        var message;
+        for (var i = 0; i < this.queued.length; i++) {
+            message = this.queued[i];
+            this.postMessage(message.auxProcessId, message);
+        }
+        this.queued.length = 0;
+    }.bind(vAPI.messaging);
+    document.addEventListener('visibilitychange', queueDispatchListener);
 
     // The following code should run only in content pages
     if(location.protocol === "safari-extension:" || typeof safari !== "object") {

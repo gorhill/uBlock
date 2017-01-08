@@ -823,6 +823,8 @@
 
         CallbackWrapper.prototype.init = function(port, request, timeout) {
             this.port = port;
+            // port.target.page could be undefined at this point, but be valid later
+            // e.g. when preloading a page on a new tab
             this.request = request || port;
             this.timerId = timeout !== undefined ?
                 vAPI.setTimeout(this.callback, timeout) :
@@ -836,11 +838,15 @@
                 delete toAuxPending[this.timerId];
                 this.timerId = null;
             }
-            this.port.target.page.dispatchMessage(this.request.name, {
-                auxProcessId: this.request.message.auxProcessId,
-                channelName: this.request.message.channelName,
-                msg: response !== undefined ? response : null
-            });
+            // If page is undefined, we cannot send a message to it (and probably don't want to)
+            var page = this.port.target.page;
+            if ( page && typeof page.dispatchMessage === 'function' ) {
+                page.dispatchMessage(this.request.name, {
+                    auxProcessId: this.request.message.auxProcessId,
+                    channelName: this.request.message.channelName,
+                    msg: response !== undefined ? response : null
+                });
+            }
             // Mark for reuse
             this.port = this.request = null;
             callbackWrapperJunkyard.push(this);
@@ -1005,6 +1011,7 @@
         for(var tabId in vAPI.tabs.stack) {
             if (vAPI.tabs.stack.hasOwnProperty(tabId)) {
                 page = vAPI.tabs.stack[tabId].page;
+                // page is undefined on new tabs
                 if (page && typeof page.dispatchMessage === 'function') {
                     page.dispatchMessage('broadcast', message);
                 }

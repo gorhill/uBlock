@@ -72,9 +72,9 @@ vAPI.download = function(details) {
         return;
     }
 
-    var messager = vAPI.messaging.channel('_download');
-    messager.send(request);
-    messager.close();
+    var messenger = vAPI.messaging.channel('_download');
+    messenger.send(request);
+    messenger.close();
 };
 
 /******************************************************************************/
