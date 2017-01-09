@@ -2771,7 +2771,10 @@ vAPI.toolbarButton = {
         button.setAttribute('badge', icon && icon.badge || '');
 
         button.classList.toggle('off', isOff);
+        button.classList.toggle('active', iconStatus === 'onactive');
         button.classList.toggle('dnt', iconStatus === 'dnt');
+        button.classList.toggle('dntactive', iconStatus === 'dntactive');
+
     };
 
     tbb.populatePanel = function(doc, panel) {
@@ -3235,9 +3238,19 @@ vAPI.toolbarButton = {
                     vAPI.getURL('img/browsericons/icon16.svg'),
                 ');',
             '}',
+            '#' + this.id + '.active {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/adn_active.svg'),
+                ');',
+            '}',
             '#' + this.id + '.dnt {',
                 'list-style-image: url(',
                     vAPI.getURL('img/adn_dnt_on.svg'),
+                ');',
+            '}',
+            '#' + this.id + '.dntactive {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/adn_dnt_active.svg'),
                 ');',
             '}',
             '#' + this.viewId + ',',
