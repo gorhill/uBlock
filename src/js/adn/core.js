@@ -1805,11 +1805,12 @@
   var exportAds = exports.exportAds = function (request) {
 
     var count = adCount(),
-      filename = (request && request.filename) || getExportFileName();
-
+        filename = (request && request.filename) || getExportFileName(),
+        blob = new Blob([JSON.stringify(admap)], {type : "text/plain"}),
+        url = URL.createObjectURL(blob);
+    
     vAPI.download({
-      'url': 'data:text/plain;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(admap)),
+      'url': url,
       'filename': filename
     });
 
