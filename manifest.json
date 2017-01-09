@@ -49,7 +49,8 @@
     "webRequestBlocking",
     "management",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "downloads"
   ],
   "short_name": "AdNauseam",
   "storage": {

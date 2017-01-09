@@ -1719,9 +1719,7 @@
 
     return failed ? 'failed' : 'pending';
   };
-
-  /********************************************************************/
-
+  
   messager.send('adnauseam', {
     what: 'adsForVault'
   }, renderAds);
