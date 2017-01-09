@@ -1882,7 +1882,7 @@
 
   var check = setInterval(function(){
 
-    console.log("checking", files.length, imgURLs.length, lastFilesLength);
+    log("checking", files.length, imgURLs.length, lastFilesLength);
 
     if (files.length === imgURLs.length || files.length === lastFilesLength) {
             

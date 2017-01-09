@@ -502,7 +502,7 @@ var exportToFile = function () {
   vAPI.messaging.send('adnauseam', {
     what: 'exportAds',
     filename: getExportFileName(),
-    includeImages: true
+    includeImages: true //tmp
   });
 };
 
