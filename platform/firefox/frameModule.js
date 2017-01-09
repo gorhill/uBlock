@@ -460,6 +460,21 @@ var contentObserver = {
         return sandbox;
     },
 
+    injectOtherContentScripts: function(doc, sandbox) {
+        let docReady = (e) => {
+            let doc = e.target;
+            doc.removeEventListener(e.type, docReady, true);
+            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
+                Services.scriptloader.loadSubScript(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
+            }
+        };
+        if ( doc.readyState === 'loading') {
+            doc.addEventListener('DOMContentLoaded', docReady, true);
+        } else {
+            docReady({ target: doc, type: 'DOMContentLoaded' });
+        }
+    },
+
     ignorePopup: function(e) {
         if ( e.isTrusted === false ) { return; }
         let contObs = contentObserver;
@@ -467,6 +482,7 @@ var contentObserver = {
         this.removeEventListener('keydown', contObs.ignorePopup, true);
         this.removeEventListener('mousedown', contObs.ignorePopup, true);
     },
+
     lookupPopupOpener: function(popup) {
         for (;;) {
             let opener = popup.opener;
@@ -483,15 +499,28 @@ var contentObserver = {
             popup = opener;
         }
     },
+
     reValidPopups: /^(?:blob|data|https?|javascript):/,
+    reMustInjectScript: /^(?:file|https?):/,
 
     observe: function(subject, topic) {
+        // For whatever reason, sometimes the global scope is completely
+        // uninitialized at this point. Repro steps:
+        // - Launch FF with uBlock enabled
+        // - Disable uBlock
+        // - Enable uBlock
+        // - Services and all other global variables are undefined
+        // Hopefully will eventually understand why this happens.
+        if ( Services === undefined ) { return; }
+
         // https://github.com/gorhill/uBlock/issues/2290
         if ( topic === 'content-document-global-created' ) {
-            if ( subject !== subject.top ) { return; }
+            if ( subject !== subject.top || !subject.opener ) { return; }
             if ( this.ignoredPopups.has(subject) ) { return; }
             let opener = this.lookupPopupOpener(subject);
             if ( !opener ) { return; }
+            subject.addEventListener('keydown', this.ignorePopup, true);
+            subject.addEventListener('mousedown', this.ignorePopup, true);
             let popupMessager = getMessageManager(subject);
             if ( !popupMessager ) { return; }
             let openerMessager = getMessageManager(opener);
@@ -508,23 +537,11 @@ var contentObserver = {
             return;
         }
 
-        // For whatever reason, sometimes the global scope is completely
-        // uninitialized at this point. Repro steps:
-        // - Launch FF with uBlock enabled
-        // - Disable uBlock
-        // - Enable uBlock
-        // - Services and all other global variables are undefined
-        // Hopefully will eventually understand why this happens.
-        if ( Services === undefined ) { return; }
+        // topic === 'document-element-inserted'
 
         let doc = subject;
         let win = doc.defaultView || null;
         if ( win === null ) { return; }
-
-        if ( win.opener && this.ignoredPopups.has(win) === false ) {
-            win.addEventListener('keydown', this.ignorePopup, true);
-            win.addEventListener('mousedown', this.ignorePopup, true);
-        }
 
         // https://github.com/gorhill/uBlock/issues/260
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/contentType
@@ -536,7 +553,7 @@ var contentObserver = {
         if ( doc.contentType.startsWith('image/') ) { return; }
 
         let loc = win.location;
-        if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' && loc.protocol !== 'file:' ) {
+        if ( this.reMustInjectScript.test(loc.protocol) === false ) {
             if ( loc.protocol === 'chrome:' && loc.host === hostName ) {
                 this.initContentScripts(win);
             }
@@ -544,9 +561,9 @@ var contentObserver = {
             return;
         }
 
+        // Content scripts injection.
         let lss = Services.scriptloader.loadSubScript;
         let sandbox = this.initContentScripts(win, true);
-
         try {
             lss(this.contentBaseURI + 'vapi-client.js', sandbox);
             lss(this.contentBaseURI + 'contentscript.js', sandbox);
@@ -554,20 +571,10 @@ var contentObserver = {
             //console.exception(ex.msg, ex.stack);
             return;
         }
-
-        let docReady = (e) => {
-            let doc = e.target;
-            doc.removeEventListener(e.type, docReady, true);
-
-            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
-                lss(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
-            }
-        };
-
-        if ( doc.readyState === 'loading') {
-            doc.addEventListener('DOMContentLoaded', docReady, true);
-        } else {
-            docReady({ target: doc, type: 'DOMContentLoaded' });
+        // The remaining scripts are worth injecting only on a top-level window
+        // and at document_idle time.
+        if ( win === win.top ) {
+            this.injectOtherContentScripts(doc, sandbox);
         }
     }
 };
