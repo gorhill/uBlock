@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "AdNauseam",
-  "version": "3.1.10",
+  "version": "3.0.4",
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
@@ -49,7 +49,8 @@
     "webRequestBlocking",
     "management",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "downloads"
   ],
   "short_name": "AdNauseam",
   "storage": {

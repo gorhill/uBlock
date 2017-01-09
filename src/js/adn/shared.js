@@ -501,7 +501,8 @@ var exportToFile = function () {
 
   vAPI.messaging.send('adnauseam', {
     what: 'exportAds',
-    filename: getExportFileName()
+    filename: getExportFileName(),
+    includeImages: true
   });
 };
 
