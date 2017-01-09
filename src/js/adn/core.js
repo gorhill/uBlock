@@ -421,7 +421,6 @@
            var tabId = tab.id;
            µb.updateBadgeAsync(tabId, true); //click Icon
            setTimeout(function() {
-               console.log("back");
                µb.updateBadgeAsync(tabId);
            }, 600);//back to normal
        });
@@ -433,7 +432,7 @@
 
       if (ad === inspected) inspected = null;
 
-      console.log('[VISIT] ' + adinfo(ad), ad.title);
+      log('[VISIT] ' + adinfo(ad), ad.title);
     }
 
     storeUserData();

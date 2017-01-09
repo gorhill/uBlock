@@ -907,8 +907,6 @@ vAPI.tabs.registerListeners();
 
         var iconStatus = state ? (isDNT ? 'dnt': 'on') : 'off';
         iconStatus +=  (isClick? 'active': '');
-        console.log("[ICON] " + iconStatus, isClick,badge);
-
         vAPI.setIcon(tabId, iconStatus, badge);
     };
 
