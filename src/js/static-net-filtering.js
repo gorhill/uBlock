@@ -1134,6 +1134,7 @@ FilterBucket.fromSelfie = function() {
 
 var FilterParser = function() {
     this.cantWebsocket = vAPI.cantWebsocket;
+    this.reBadDomainOptChars = /[*+?^${}()[\]\\]/;
     this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
     this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
     this.reCleanupHostnameRule2 = /^\**|\^$/g;
@@ -1285,8 +1286,15 @@ FilterParser.prototype.parseOptions = function(s) {
             }
             continue;
         }
+        // https://github.com/gorhill/uBlock/issues/2294
+        // Detect and discard filter if domain option contains nonsensical
+        // characters.
         if ( opt.startsWith('domain=') ) {
             this.domainOpt = opt.slice(7);
+            if ( this.reBadDomainOptChars.test(this.domainOpt) ) {
+                this.unsupported = true;
+                break;
+            }
             continue;
         }
         if ( opt === 'important' ) {
@@ -1824,7 +1832,7 @@ FilterContainer.prototype.compile = function(raw, out) {
 
     // Ignore filters with unsupported options
     if ( parsed.unsupported ) {
-        //console.log('static-net-filtering.js > FilterContainer.add(): unsupported filter "%s"', raw);
+        µb.logger.writeOne('', 'error', 'Network filtering – invalid filter: ' + raw);
         return false;
     }
 
