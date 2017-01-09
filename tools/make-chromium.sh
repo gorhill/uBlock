@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# This script assumes a linux environment
+# This script assumes an OS X environment
 
 echo "*** adnauseam.chromium: Creating chrome package"
 echo "*** adnauseam.chromium: Copying files"
