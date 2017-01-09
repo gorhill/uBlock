@@ -1211,7 +1211,7 @@ FilterParser.prototype.bitFromType = function(type) {
 // https://github.com/chrisaljoudi/uBlock/issues/589
 // Be ready to handle multiple negated types
 
-FilterParser.prototype.parseOptType = function(raw, not) {
+FilterParser.prototype.parseTypeOption = function(raw, not) {
     var typeBit = this.bitFromType(this.toNormalizedType[raw]);
 
     if ( !not ) {
@@ -1231,7 +1231,7 @@ FilterParser.prototype.parseOptType = function(raw, not) {
 
 /******************************************************************************/
 
-FilterParser.prototype.parseOptParty = function(firstParty, not) {
+FilterParser.prototype.parsePartyOption = function(firstParty, not) {
     if ( firstParty ) {
         not = !not;
     }
@@ -1240,6 +1240,23 @@ FilterParser.prototype.parseOptParty = function(firstParty, not) {
     } else {
         this.thirdParty = true;
     }
+};
+
+/******************************************************************************/
+
+FilterParser.prototype.parseDomainOption = function(s) {
+    if ( this.reHasUnicode.test(s) ) {
+        var hostnames = s.split('|'),
+            i = hostnames.length;
+        while ( i-- ) {
+            hostnames[i] = punycode.toASCII(hostnames[i]);
+        }
+        s = hostnames.join('|');
+    }
+    if ( this.reBadDomainOptChars.test(s) ) {
+        return '';
+    }
+    return s;
 };
 
 /******************************************************************************/
@@ -1255,7 +1272,7 @@ FilterParser.prototype.parseOptions = function(s) {
             opt = opt.slice(1);
         }
         if ( opt === 'third-party' ) {
-            this.parseOptParty(false, not);
+            this.parsePartyOption(false, not);
             continue;
         }
         // https://issues.adblockplus.org/ticket/616
@@ -1263,7 +1280,7 @@ FilterParser.prototype.parseOptions = function(s) {
         // adding support for the new keyword.
         if ( opt === 'elemhide' || opt === 'generichide' ) {
             if ( not === false ) {
-                this.parseOptType('generichide', false);
+                this.parseTypeOption('generichide', false);
                 continue;
             }
             this.unsupported = true;
@@ -1271,18 +1288,18 @@ FilterParser.prototype.parseOptions = function(s) {
         }
         if ( opt === 'document' ) {
             if ( this.action === BlockAction ) {
-                this.parseOptType('document', not);
+                this.parseTypeOption('document', not);
                 continue;
             }
             this.unsupported = true;
             break;
         }
         if ( this.toNormalizedType.hasOwnProperty(opt) ) {
-            this.parseOptType(opt, not);
+            this.parseTypeOption(opt, not);
             // Due to ABP categorizing `websocket` requests as `other`, we need
             // to add `websocket` for when `other` is used.
             if ( opt === 'other' ) {
-                this.parseOptType('websocket', not);
+                this.parseTypeOption('websocket', not);
             }
             continue;
         }
@@ -1290,8 +1307,8 @@ FilterParser.prototype.parseOptions = function(s) {
         // Detect and discard filter if domain option contains nonsensical
         // characters.
         if ( opt.startsWith('domain=') ) {
-            this.domainOpt = opt.slice(7);
-            if ( this.reBadDomainOptChars.test(this.domainOpt) ) {
+            this.domainOpt = this.parseDomainOption(opt.slice(7));
+            if ( this.domainOpt === '' ) {
                 this.unsupported = true;
                 break;
             }
@@ -1302,7 +1319,7 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         if ( opt === 'first-party' ) {
-            this.parseOptParty(true, not);
+            this.parsePartyOption(true, not);
             continue;
         }
         if ( opt.startsWith('redirect=') ) {
