@@ -606,12 +606,18 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
 
     var iconPaths;
 
-        switch(iconStatus) {
+    switch(iconStatus) {
         case 'dnt':
             iconPaths = { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' };
             break;
+        case 'dntactive':
+            iconPaths = { '16': 'img/adn_dnt_active_16.png', '32': 'img/adn_dnt_active_32.png' };
+            break;
+        case 'onactive':
+            iconPaths = { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png'};
+            break;
         case 'off':
-            iconPaths = {  '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
+            iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
             break;
         default://on
             iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };

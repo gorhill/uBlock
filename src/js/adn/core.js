@@ -404,7 +404,7 @@
   }
 
   var updateAdOnSuccess = function (xhr, ad, title) {
-
+   
     var ad = xhr.delegate;
 
     if (ad) {
@@ -416,7 +416,15 @@
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
-
+  
+       vAPI.tabs.get(null, function(tab) {
+           var tabId = tab.id;
+           µb.updateBadgeAsync(tabId, true); //click Icon
+           setTimeout(function() {
+               µb.updateBadgeAsync(tabId);
+           }, 600);//back to normal
+       });
+      
       vAPI.messaging.broadcast({
         what: 'adVisited',
         ad: ad
