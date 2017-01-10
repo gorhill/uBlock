@@ -1370,7 +1370,7 @@
       return;
     }
 
-    if (internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
+    if (!internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
 
       warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
       return; // testing this
