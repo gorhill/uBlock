@@ -1000,7 +1000,7 @@
 
   var activeBlockList = function (test) {
 
-    return !enabledBlockLists.contains(test);
+    return enabledBlockLists.contains(test);
   }
 
   // check that the rule is not disabled in 'disabledBlockingRules'
