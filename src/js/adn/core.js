@@ -404,7 +404,7 @@
   }
 
   var updateAdOnSuccess = function (xhr, ad, title) {
-   
+
     var ad = xhr.delegate;
 
     if (ad) {
@@ -416,7 +416,7 @@
 
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
-  
+
        vAPI.tabs.get(null, function(tab) {
            var tabId = tab.id;
            µb.updateBadgeAsync(tabId, true); //click Icon
@@ -424,7 +424,7 @@
                µb.updateBadgeAsync(tabId);
            }, 600);//back to normal
        });
-      
+
       vAPI.messaging.broadcast({
         what: 'adVisited',
         ad: ad
@@ -1006,7 +1006,7 @@
   // check that the rule is not disabled in 'disabledBlockingRules'
   var ruleDisabled = function (test) {
 
-    return !disabledBlockingRules.contains(test);
+    return disabledBlockingRules.contains(test);
   };
 
   // check target domain against page-domain #337
@@ -1816,7 +1816,7 @@
         filename = (request && request.filename) || getExportFileName(),
         blob = new Blob([JSON.stringify(admap)], {type : "text/plain"}),
         url = URL.createObjectURL(blob);
-    
+
     vAPI.download({
       'url': url,
       'filename': filename
@@ -1826,7 +1826,7 @@
 
     log('[EXPORT] ' + count + ' ads to ' + filename);
   };
-   
+
    //Crashes over approx. 725 image/70MB
    var saveVaultImages = function (jsonName) {
 
@@ -1893,7 +1893,7 @@
     log("checking", files.length, imgURLs.length, lastFilesLength);
 
     if (files.length === imgURLs.length || files.length === lastFilesLength) {
-            
+
             clearInterval(check);
 
             var zip = new JSZip(),
@@ -1909,13 +1909,13 @@
             }).then(function(content) {
               var blob = b64toBlob(content, 'image'),
                   blobUrl = URL.createObjectURL(blob);
-                
+
                 //use vAPI.download, convert base64 to blob
                 vAPI.download({
                   'url': blobUrl,
                   'filename': zipName + ".zip"
                 });
-                
+
             });
 
     }
