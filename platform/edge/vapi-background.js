@@ -753,12 +753,13 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
 
     // Workaround for Edge tab reloading
     // see: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/reload#Browser_compatibility
+    // and: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/9107382/
     browser.tabs.get(tabId, function(tab){
-        if (browser.tabs.lastError || !tab) {
+        if ( browser.tabs.lastError || !tab ) {
             /* noop */
             return;
         }
-        vAPI.tabs.replace(tabId, tab.url);
+        vAPI.tabs.injectScript(tabId, { code: 'window.location.reload()' });
     });
 };
 
