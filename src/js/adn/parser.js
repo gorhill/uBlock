@@ -158,8 +158,8 @@
       var ad, iw = img.naturalWidth || -1, ih = img.naturalHeight || -1,
         minDim = Math.min(iw, ih), maxDim = Math.max(iw, ih);
 
-      // Check size: require a min-size of 4x20, if we got a size
-      if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 20)) {
+      // Check size: require a min-size of 4x31, if we got a size
+      if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 31)) {
 
         warnP("Ignoring Ad with size " + iw + "x" + ih, src, targetUrl);
         return;
