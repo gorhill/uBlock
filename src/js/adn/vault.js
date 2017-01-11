@@ -686,7 +686,6 @@
   function itemPosition($ele) {
     // first set zoom back to 100%
     setZoom(Zooms.indexOf(100), true);
-
     var off = $ele.offset(), // relative to container
       cx = $(window).width() / 2,
       cy = $(window).height() / 2,
@@ -1162,7 +1161,7 @@
 
         adjustHeight();
         if ($('#container').hasClass('lightbox')) {
-            centerZoom($('.inspected')[0]);
+            centerZoom($('.inspected'));
             return;
         }
 
@@ -1486,7 +1485,7 @@
 
     // attach handle image
     gBrush.selectAll(".resize").append("image")
-      .attr("xlink:href","img/timeline-handle.svg")
+      .attr("xlink:href","../img/timeline-handle.svg")
       .attr("width", 5)
       .attr("height", 50)
       .attr("y", -50)
