@@ -969,7 +969,7 @@ svg {
 	cursor: move;
 }
 .brush .resize {
-  background: url(img/timeline-handle.svg);
+  background: url(../img/timeline-handle.svg);
 	width: 5px;
 	height: 62px;
 }
