@@ -644,11 +644,7 @@ vAPI.tabs.open = function(details) {
 
         // Open in a standalone window
         if ( details.popup === true ) {
-            browser.windows.create({
-                url: details.url,
-                focused: details.active,
-                type: 'popup'
-            });
+            browser.windows.create({ url: details.url, type: 'popup' });
             return;
         }
 

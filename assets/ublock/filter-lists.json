@@ -21,9 +21,15 @@
 	},
 	"https://adguard.com/en/filter-rules.html?id=1": {
 		"off": true,
+		"title": "RUS: Adguard Russian Filter (obsolete, will be removed)",
+		"group": "regions",
+		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+	},
+	"https://filters.adtidy.org/extension/chromium/filters/1.txt": {
+		"off": true,
 		"title": "RUS: Adguard Russian Filter",
 		"group": "regions",
-		"supportURL": "http://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
 	},
 	"https://easylist-downloads.adblockplus.org/advblock.txt": {
 		"off": true,
@@ -329,10 +335,16 @@
 	},
 	"https://adguard.com/filter-rules.html?id=13": {
 		"off": true,
+		"title": "TUR: Adguard Turkish Filter (obsolete, will be removed)",
+		"group": "regions",
+		"supportURL": "http://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+	},
+	"https://filters.adtidy.org/extension/chromium/filters/13.txt": {
+		"off": true,
 		"title": "TUR: Adguard Turkish Filter",
 		"group": "regions",
 		"lang": "tr",
-		"supportURL": "http://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+		"supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
 	},
 	"https://www.fanboy.co.nz/fanboy-vietnam.txt": {
 		"off": true,

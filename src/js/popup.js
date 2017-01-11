@@ -40,26 +40,15 @@ if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
 
 var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'true';
 
-// Hacky? I couldn't figure a CSS recipe for this problem.
-// I do not want the left pane -- optional and hidden by defaut -- to
-// dictate the height of the popup. The right pane dictates the height
-// of the popup, and the left pane will have a scrollbar if ever its
-// height is more than what is available.
-(function() {
-    // No restriction on vertical size?
-    if ( /[\?&]fullsize=1/.test(window.location.search) ) {
-        document.body.classList.add('fullsize');
-        return;
-    }
+// No restriction on vertical size?
+if ( /[\?&]fullsize=1/.test(window.location.search) ) {
+    document.body.classList.add('fullsize');
+}
 
-    var rpane = document.querySelector('#panes > div:nth-of-type(1)');
-    if ( typeof rpane.offsetHeight === 'number' ) {
-        document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
-            'height',
-            rpane.offsetHeight + 'px'
-        );
-    }
-})();
+// Mobile device?
+if ( /[\?&]mobile=1/.test(window.location.search) ) {
+    document.body.classList.add('mobile');
+}
 
 // The padlock/eraser must be manually positioned:
 // - Its vertical position depends on the height of the popup title bar
@@ -390,23 +379,10 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
-    if ( popupData.fontSize !== popupFontSize ) {
-        popupFontSize = popupData.fontSize;
-        if ( popupFontSize !== 'unset' ) {
-            document.body.style.setProperty('font-size', popupFontSize);
-            vAPI.localStorage.setItem('popupFontSize', popupFontSize);
-        } else {
-            document.body.style.removeProperty('font-size');
-            vAPI.localStorage.removeItem('popupFontSize');
-        }
-    }
-
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    uDom.nodeFromId('appname').textContent = popupData.appName;
-    uDom.nodeFromId('version').textContent = popupData.appVersion;
     uDom('body')
         .toggleClass('advancedUser', popupData.advancedUserEnabled)
         .toggleClass(
@@ -419,9 +395,9 @@ var renderPopup = function() {
     // If you think the `=== true` is pointless, you are mistaken
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
 
-    var text;
-    var blocked = popupData.pageBlockedRequestCount;
-    var total = popupData.pageAllowedRequestCount + blocked;
+    var text,
+        blocked = popupData.pageBlockedRequestCount,
+        total = popupData.pageAllowedRequestCount + blocked;
     if ( total === 0 ) {
         text = formatNumber(0);
     } else {
@@ -494,6 +470,60 @@ var renderPopup = function() {
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
         buildAllFirewallRows();
+    }
+};
+
+/******************************************************************************/
+
+// All rendering code which need to be executed only once.
+
+var renderOnce = function() {
+    renderOnce = function(){};
+
+    if ( popupData.fontSize !== popupFontSize ) {
+        popupFontSize = popupData.fontSize;
+        if ( popupFontSize !== 'unset' ) {
+            document.body.style.setProperty('font-size', popupFontSize);
+            vAPI.localStorage.setItem('popupFontSize', popupFontSize);
+        } else {
+            document.body.style.removeProperty('font-size');
+            vAPI.localStorage.removeItem('popupFontSize');
+        }
+    }
+
+    uDom.nodeFromId('appname').textContent = popupData.appName;
+    uDom.nodeFromId('version').textContent = popupData.appVersion;
+
+    // For large displays: we do not want the left pane -- optional and
+    // hidden by defaut -- to dictate the height of the popup. The right pane
+    // dictates the height of the popup, and the left pane will have a
+    // scrollbar if ever its height is more than what is available.
+    // For small displays: we use the whole viewport.
+
+    var rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
+        lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
+
+    var fillViewport = function() {
+        lpane.style.setProperty(
+            'height',
+            Math.max(
+                window.innerHeight - uDom.nodeFromSelector('#gotoPrefs').offsetHeight,
+                rpane.offsetHeight
+            ) + 'px'
+        );
+        lpane.style.setProperty('width', (window.innerWidth - rpane.offsetWidth) + 'px');
+    };
+
+    // https://github.com/gorhill/uBlock/issues/2274
+    //   Make use of the whole viewport on mobile devices.
+    if ( document.body.classList.contains('mobile') ) {
+        fillViewport();
+        window.addEventListener('resize', fillViewport);
+        return;
+    }
+
+    if ( document.body.classList.contains('fullsize') === false ) {
+        lpane.style.setProperty('height', rpane.offsetHeight + 'px');
     }
 };
 
@@ -864,6 +894,7 @@ var pollForContentChange = (function() {
 var getPopupData = function(tabId) {
     var onDataReceived = function(response) {
         cachePopupData(response);
+        renderOnce();
         renderPopup();
         renderPopupLazy(); // low priority rendering
         hashFromPopupData(true);

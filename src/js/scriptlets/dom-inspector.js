@@ -693,7 +693,7 @@ var cosmeticFilterMapper = (function() {
             i, j;
 
         // CSS-based selectors: simple one.
-        selectors = vAPI.domFilterer.job2._0;
+        selectors = vAPI.domFilterer.simpleHideSelectors.entries;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -709,9 +709,9 @@ var cosmeticFilterMapper = (function() {
                 }
             }
         }
-    
+
         // CSS-based selectors: complex one (must query from doc root).
-        selectors = vAPI.domFilterer.job3._0;
+        selectors = vAPI.domFilterer.complexHideSelectors.entries;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -726,14 +726,12 @@ var cosmeticFilterMapper = (function() {
         }
 
         // Non-CSS selectors.
-        var runJobCallback = function(node, job) {
+        var runJobCallback = function(node, pfilter) {
             if ( filterMap.has(node) === false ) {
-                filterMap.set(node, job.raw);
+                filterMap.set(node, pfilter.raw);
             }
         };
-        for ( i = 4; i < vAPI.domFilterer.jobQueue.length; i++ ) {
-            vAPI.domFilterer.runJob(vAPI.domFilterer.jobQueue[i], runJobCallback);
-        }
+        vAPI.domFilterer.proceduralSelectors.forEachNode(runJobCallback);
     };
 
     var incremental = function(rootNode) {
