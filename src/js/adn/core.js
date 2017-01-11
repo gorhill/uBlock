@@ -816,13 +816,13 @@
   }
 
   var log = function () {
-    if (µb.userSettings.eventLogging || !production)
+    if (µb.userSettings.eventLogging)
       console.log.apply(console, arguments);
     return true;
   }
 
   var warn = function () {
-    if (µb.userSettings.eventLogging || !production)
+    if (µb.userSettings.eventLogging)
       console.warn.apply(console, arguments);
     return false;
   }
@@ -1811,7 +1811,7 @@
   }
 
   var exportAds = exports.exportAds = function (request) {
-    log("exportAds:", request, production);
+
     var count = adCount(),
         filename = (request && request.filename) || getExportFileName(),
         blob = new Blob([JSON.stringify(admap)], {type : "text/plain"}),
