@@ -543,7 +543,7 @@ var renderLogEntry = function(entry) {
     var time = logDate;
     time.setTime(entry.tstamp - logDateTimezoneOffset);
     tr.cells[0].textContent = padTo2(time.getUTCHours()) + ':' +
-                              padTo2(time.getMinutes()) + ':' +
+                              padTo2(time.getUTCMinutes()) + ':' +
                               padTo2(time.getSeconds());
 
     if ( entry.tab ) {
