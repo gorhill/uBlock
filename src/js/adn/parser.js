@@ -113,13 +113,16 @@
         logP("Fail: no ClickableParent", img, img.parentNode);
         return;
       }
+      if (target.hasAttribute("data-original-click-url")) {
 
-      if (target.hasAttribute('href')) {
+         targetUrl = target.getAttribute("data-original-click-url");
 
+      }else if (target.hasAttribute('href')) {
+        
         targetUrl = target.getAttribute("href");
+       
       }
       else if (target.hasAttribute('onclick')) {
-
         // handle onclick
         var onclickInfo = target.getAttribute("onclick");
         if (onclickInfo && onclickInfo.length) {
@@ -214,7 +217,7 @@
     };
 
     var logP = function () {
-
+  
       if (vAPI.prefs.logEvents) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
@@ -252,7 +255,6 @@
       default: // other tag-types
 
         logP('Checking children of', elem);
-
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
 
