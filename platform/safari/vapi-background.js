@@ -205,8 +205,8 @@
         },
 
         clear: function(callback) {
-            localforage.clear(function() {
-                callback();
+            localforage.clear().then(function() {
+                typeof callback === "function" && callback();
             });
         },
 
@@ -292,8 +292,12 @@
                 this._storage.removeItem(keys[i]);
             }
         },
-        clear: function() {
+        clear: function(callback) {
             this._storage.clear();
+            // Assuming callback will be called after clear
+            if(typeof callback === "function") {
+                callback();
+            }
         },
         getBytesInUse: function(keys, callback) {
             if(typeof callback !== "function") {
@@ -313,9 +317,10 @@
         }
     };
 
-    vAPI.storage = settingsStorage;
-
-    if(!settingsStorage.get('migratedStorage')) {
+    // Check if storage is migrated
+    if(settingsStorage.get('migratedStorage')) {
+        vAPI.storage = settingsStorage;
+    } else {
         var migrationMap = {
             "cached_asset_content://assets/user/filters.txt": "userFilters"
         };
@@ -332,8 +337,8 @@
             remove: function(a, b) {
                 delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
             },
-            clear: function() {
-                delayed.push(settingsStorage.clear.bind(settingsStorage));
+            clear: function(a) {
+                delayed.push(settingsStorage.clear.bind(settingsStorage, a));
             },
             getBytesInUse: function(a, b) {
                 delayed.push(settingsStorage.getBytesInUse.bind(settingsStorage, a, b));
@@ -822,6 +827,7 @@
         };
 
         CallbackWrapper.prototype.init = function(port, request, timeout) {
+            console.log('callbackwrapper:', port, request, timeout);
             this.port = port;
             // port.target.page could be undefined at this point, but be valid later
             // e.g. when preloading a page on a new tab
