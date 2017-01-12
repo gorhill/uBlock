@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 The uBlock Origin authors
+    Copyright (C) 2014-2017 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -160,8 +160,9 @@ var contentObserver = {
     cpMessageName: hostName + ':shouldLoad',
     popupMessageName: hostName + ':shouldLoadPopup',
     ignoredPopups: new WeakMap(),
+    uniquePopupEventId: 1,
     uniqueSandboxId: 1,
-    canE10S: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
+    modernFirefox: Services.vc.compare(Services.appinfo.platformVersion, '44') > 0,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -189,31 +190,40 @@ var contentObserver = {
 
     register: function() {
         Services.obs.addObserver(this, 'document-element-inserted', true);
+        Services.obs.addObserver(this, 'content-document-global-created', true);
 
-        this.componentRegistrar.registerFactory(
-            this.classID,
-            this.classDescription,
-            this.contractID,
-            this
-        );
-        this.categoryManager.addCategoryEntry(
-            'content-policy',
-            this.contractID,
-            this.contractID,
-            false,
-            true
-        );
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
+        // For modern versions of Firefox, the frameId/parentFrameId
+        // information can be found in channel.loadInfo of the HTTP observer.
+        if ( this.modernFirefox !== true ) {
+            this.componentRegistrar.registerFactory(
+                this.classID,
+                this.classDescription,
+                this.contractID,
+                this
+            );
+            this.categoryManager.addCategoryEntry(
+                'content-policy',
+                this.contractID,
+                this.contractID,
+                false,
+                true
+            );
+        }
     },
 
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
+        Services.obs.removeObserver(this, 'content-document-global-created');
 
-        this.componentRegistrar.unregisterFactory(this.classID, this);
-        this.categoryManager.deleteCategoryEntry(
-            'content-policy',
-            this.contractID,
-            false
-        );
+        if ( this.modernFirefox !== true ) {
+            this.componentRegistrar.unregisterFactory(this.classID, this);
+            this.categoryManager.deleteCategoryEntry(
+                'content-policy',
+                this.contractID,
+                false
+            );
+        }
     },
 
     getFrameId: function(win) {
@@ -221,48 +231,6 @@ var contentObserver = {
             .QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsIDOMWindowUtils)
             .outerWindowID;
-    },
-
-    handlePopup: function(location, origin, context) {
-        let openeeContext = context.contentWindow || context;
-        if (
-            typeof openeeContext.opener !== 'object' ||
-            openeeContext.opener === null ||
-            openeeContext.opener === context ||
-            this.ignoredPopups.has(openeeContext)
-        ) {
-            return;
-        }
-        // https://github.com/gorhill/uBlock/issues/452
-        // Use location of top window, not that of a frame, as this
-        // would cause tab id lookup (necessary for popup blocking) to
-        // always fail.
-        // https://github.com/gorhill/uBlock/issues/1305
-        //   Opener could be a dead object, using it would cause a throw.
-        //   Repro case:
-        //   - Open http://delishows.to/show/chicago-med/season/1/episode/6
-        //   - Click anywhere in the background
-        let openerURL = null;
-        try {
-            let opener = openeeContext.opener.top || openeeContext.opener;
-            openerURL = opener.location && opener.location.href;
-        } catch(ex) {
-        }
-        // If no valid opener URL found, use the origin URL.
-        if ( openerURL === null ) {
-            openerURL = origin.asciiSpec;
-        }
-        let messageManager = getMessageManager(openeeContext);
-        if ( messageManager === null ) {
-            return;
-        }
-        if ( typeof messageManager.sendRpcMessage === 'function' ) {
-            // https://bugzil.la/1092216
-            messageManager.sendRpcMessage(this.popupMessageName, openerURL);
-        } else {
-            // Compatibility for older versions
-            messageManager.sendSyncMessage(this.popupMessageName, openerURL);
-        }
     },
 
     // https://bugzil.la/612921
@@ -275,17 +243,6 @@ var contentObserver = {
         // - Services and all other global variables are undefined
         // Hopefully will eventually understand why this happens.
         if ( Services === undefined || !context ) {
-            return this.ACCEPT;
-        }
-
-        if ( type === this.MAIN_FRAME ) {
-            this.handlePopup(location, origin, context);
-        }
-
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1232354
-        // For modern versions of Firefox, the frameId/parentFrameId
-        // information can be found in channel.loadInfo of the HTTP observer.
-        if ( this.canE10S ) {
             return this.ACCEPT;
         }
 
@@ -384,23 +341,34 @@ var contentObserver = {
                 svc.scriptloader.loadSubScript(script, sandbox);
             };
 
-            sandbox.injectCSS = function(sheetURI) {
+            let canUserStyles = (function() {
                 try {
-                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                                .getInterface(Ci.nsIDOMWindowUtils);
-                    wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    return win.QueryInterface(Ci.nsIInterfaceRequestor)
+                              .getInterface(Ci.nsIDOMWindowUtils)
+                              .loadSheetUsingURIString instanceof Function;
                 } catch(ex) {
                 }
-            };
+                return false;
+            })();
 
-            sandbox.removeCSS = function(sheetURI) {
-                try {
-                    let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                                .getInterface(Ci.nsIDOMWindowUtils);
-                    wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
-                } catch (ex) {
-                }
-            };
+            if ( canUserStyles ) {
+                sandbox.injectCSS = function(sheetURI) {
+                    try {
+                        let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                    .getInterface(Ci.nsIDOMWindowUtils);
+                        wu.loadSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    } catch(ex) {
+                    }
+                };
+                sandbox.removeCSS = function(sheetURI) {
+                    try {
+                        let wu = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                                    .getInterface(Ci.nsIDOMWindowUtils);
+                        wu.removeSheetUsingURIString(sheetURI, wu.USER_SHEET);
+                    } catch (ex) {
+                    }
+                };
+            }
 
             sandbox.topContentScript = win === win.top;
 
@@ -492,18 +460,50 @@ var contentObserver = {
         return sandbox;
     },
 
-    ignorePopup: function(e) {
-        if ( e.isTrusted === false ) {
-            return;
+    injectOtherContentScripts: function(doc, sandbox) {
+        let docReady = (e) => {
+            let doc = e.target;
+            doc.removeEventListener(e.type, docReady, true);
+            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
+                Services.scriptloader.loadSubScript(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
+            }
+        };
+        if ( doc.readyState === 'loading') {
+            doc.addEventListener('DOMContentLoaded', docReady, true);
+        } else {
+            docReady({ target: doc, type: 'DOMContentLoaded' });
         }
+    },
 
+    ignorePopup: function(e) {
+        if ( e.isTrusted === false ) { return; }
         let contObs = contentObserver;
         contObs.ignoredPopups.set(this, true);
         this.removeEventListener('keydown', contObs.ignorePopup, true);
         this.removeEventListener('mousedown', contObs.ignorePopup, true);
     },
 
-    observe: function(doc) {
+    lookupPopupOpener: function(popup) {
+        for (;;) {
+            let opener = popup.opener;
+            if ( !opener ) { return; }
+            if ( opener.top ) { opener = opener.top; }
+            if ( opener === popup ) { return; }
+            if ( !opener.location ) { return; }
+            if ( this.reValidPopups.test(opener.location.protocol) ) {
+                return opener;
+            }
+            // https://github.com/uBlockOrigin/uAssets/issues/255
+            // - Mind chained about:blank popups.
+            if ( opener.location.href !== 'about:blank' ) { return; }
+            popup = opener;
+        }
+    },
+
+    reValidPopups: /^(?:blob|data|https?|javascript):/,
+    reMustInjectScript: /^(?:file|https?):/,
+
+    observe: function(subject, topic) {
         // For whatever reason, sometimes the global scope is completely
         // uninitialized at this point. Repro steps:
         // - Launch FF with uBlock enabled
@@ -511,19 +511,37 @@ var contentObserver = {
         // - Enable uBlock
         // - Services and all other global variables are undefined
         // Hopefully will eventually understand why this happens.
-        if ( Services === undefined ) {
+        if ( Services === undefined ) { return; }
+
+        // https://github.com/gorhill/uBlock/issues/2290
+        if ( topic === 'content-document-global-created' ) {
+            if ( subject !== subject.top || !subject.opener ) { return; }
+            if ( this.ignoredPopups.has(subject) ) { return; }
+            let opener = this.lookupPopupOpener(subject);
+            if ( !opener ) { return; }
+            subject.addEventListener('keydown', this.ignorePopup, true);
+            subject.addEventListener('mousedown', this.ignorePopup, true);
+            let popupMessager = getMessageManager(subject);
+            if ( !popupMessager ) { return; }
+            let openerMessager = getMessageManager(opener);
+            if ( !openerMessager ) { return; }
+            popupMessager.sendAsyncMessage(this.popupMessageName, {
+                id: this.uniquePopupEventId,
+                popup: true
+            });
+            openerMessager.sendAsyncMessage(this.popupMessageName, {
+                id: this.uniquePopupEventId,
+                opener: true
+            });
+            this.uniquePopupEventId += 1;
             return;
         }
 
+        // topic === 'document-element-inserted'
+
+        let doc = subject;
         let win = doc.defaultView || null;
-        if ( win === null ) {
-            return;
-        }
-
-        if ( win.opener && this.ignoredPopups.has(win) === false ) {
-            win.addEventListener('keydown', this.ignorePopup, true);
-            win.addEventListener('mousedown', this.ignorePopup, true);
-        }
+        if ( win === null ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/260
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/contentType
@@ -532,24 +550,20 @@ var contentObserver = {
         // TODO: We may have to exclude more types, for now let's be
         //   conservative and focus only on the one issue reported, i.e. let's
         //   not test against 'text/html'.
-        if ( doc.contentType.startsWith('image/') ) {
-            return;
-        }
+        if ( doc.contentType.startsWith('image/') ) { return; }
 
         let loc = win.location;
-
-        if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' && loc.protocol !== 'file:' ) {
+        if ( this.reMustInjectScript.test(loc.protocol) === false ) {
             if ( loc.protocol === 'chrome:' && loc.host === hostName ) {
                 this.initContentScripts(win);
             }
-
             // What about data: and about:blank?
             return;
         }
 
+        // Content scripts injection.
         let lss = Services.scriptloader.loadSubScript;
         let sandbox = this.initContentScripts(win, true);
-
         try {
             lss(this.contentBaseURI + 'vapi-client.js', sandbox);
             lss(this.contentBaseURI + 'contentscript.js', sandbox);
@@ -557,20 +571,10 @@ var contentObserver = {
             //console.exception(ex.msg, ex.stack);
             return;
         }
-
-        let docReady = (e) => {
-            let doc = e.target;
-            doc.removeEventListener(e.type, docReady, true);
-
-            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
-                lss(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
-            }
-        };
-
-        if ( doc.readyState === 'loading') {
-            doc.addEventListener('DOMContentLoaded', docReady, true);
-        } else {
-            docReady({ target: doc, type: 'DOMContentLoaded' });
+        // The remaining scripts are worth injecting only on a top-level window
+        // and at document_idle time.
+        if ( win === win.top ) {
+            this.injectOtherContentScripts(doc, sandbox);
         }
     }
 };

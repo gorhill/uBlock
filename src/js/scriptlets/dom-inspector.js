@@ -686,10 +686,6 @@ var cosmeticFilterMapper = (function() {
         matchesFnName = 'webkitMatchesSelector';
     }
 
-    // Why the call to hideNode()?
-    //   Not all target nodes have necessarily been force-hidden,
-    //   do it now so that the inspector does not unhide these
-    //   nodes when disabling style tags.
     var nodesFromStyleTag = function(rootNode) {
         var filterMap = nodeToCosmeticFilterMap,
             selectors, selector,
@@ -697,7 +693,7 @@ var cosmeticFilterMapper = (function() {
             i, j;
 
         // CSS-based selectors: simple one.
-        selectors = vAPI.domFilterer.job2._0;
+        selectors = vAPI.domFilterer.simpleHideSelectors.entries;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -713,9 +709,9 @@ var cosmeticFilterMapper = (function() {
                 }
             }
         }
-    
+
         // CSS-based selectors: complex one (must query from doc root).
-        selectors = vAPI.domFilterer.job3._0;
+        selectors = vAPI.domFilterer.complexHideSelectors.entries;
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
@@ -730,27 +726,16 @@ var cosmeticFilterMapper = (function() {
         }
 
         // Non-CSS selectors.
-        var runJobCallback = function(node, job) {
+        var runJobCallback = function(node, pfilter) {
             if ( filterMap.has(node) === false ) {
-                filterMap.set(node, job.raw);
+                filterMap.set(node, pfilter.raw);
             }
         };
-        for ( i = 4; i < vAPI.domFilterer.jobQueue.length; i++ ) {
-            vAPI.domFilterer.runJob(vAPI.domFilterer.jobQueue[i], runJobCallback);
-        }
+        vAPI.domFilterer.proceduralSelectors.forEachNode(runJobCallback);
     };
 
     var incremental = function(rootNode) {
-        var styleTags = vAPI.domFilterer.styleTags || [];
-        var styleTag;
-        var i = styleTags.length;
-        while ( i-- ) {
-            styleTag = styleTags[i];
-            if ( styleTag.sheet !== null ) {
-                styleTag.sheet.disabled = true;
-                styleTag[vAPI.sessionId] = true;
-            }
-        }
+        vAPI.domFilterer.userCSS.toggle(false);
         nodesFromStyleTag(rootNode);
     };
 
@@ -760,16 +745,7 @@ var cosmeticFilterMapper = (function() {
     };
 
     var shutdown = function() {
-        var styleTags = vAPI.domFilterer.styleTags || [];
-        var styleTag;
-        var i = styleTags.length;
-        while ( i-- ) {
-            styleTag = styleTags[i];
-            if ( styleTag.sheet !== null ) {
-                styleTag.sheet.disabled = false;
-                styleTag[vAPI.sessionId] = undefined;
-            }
-        }
+        vAPI.domFilterer.userCSS.toggle(true);
     };
 
     return {
