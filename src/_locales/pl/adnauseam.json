@@ -1,6 +1,6 @@
 {
   "adnAboutPageName":{
-    "message":"AdNauseam — About",
+    "message":"O AdNauseam",
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
@@ -8,7 +8,7 @@
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"Zbudowane na podstawie",
     "description":"English: links.html Built on"
   },
   "adnFirstRunPlease":{
@@ -16,59 +16,59 @@
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Ukryj reklamy",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"Klikaj w reklamy",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
+    "message":"Blokuj złośliwe reklamy",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
+    "message":"ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów<\/span>",
     "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register visits on Ads found via your <span class='link' id='To3pfilter'>filter lists<\/span>",
+    "message":"rejestruj wizyty w reklamach znalezionych na <span class='link' id='To3pfilter'>listach filtrów<\/span>",
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malicious Ads (<span class='link' id='ToOptions'>customize<\/span>)",
+    "message":"zoptymalizuj ustawienia ochrony przed złośliwymi reklamami (<span class='link' id='ToOptions'> dostosuj<\/span>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Reaktywuj",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Wyłacz",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Włącz ukrywanie reklam",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
-    "message":"Activate Ad clicking",
+    "message":"Włącz klikanie w reklamy",
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate blocking of malicious ads",
+    "message":"Włącz blokowanie złośliwych reklam",
     "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"Aktywuj filtr EasyList",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus and AdNauseam may conflict!",
+    "message":"AdBlock i AdNauseam mogą ze sobą konfliktować!",
     "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock i AdNauseam mogą ze sobą konfliktować!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
@@ -96,7 +96,7 @@
     "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
-    "message":"Not Yet Visited",
+    "message":"Jeszcze nie odwiedzone",
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
@@ -104,11 +104,11 @@
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
-    "message":"That's it? ok…",
+    "message":"To wszystko? Ok…",
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"Lepiej, ale…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
@@ -116,7 +116,7 @@
     "description":"English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"AdNauseam jest wstrzymane na tej stronie",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
@@ -136,27 +136,27 @@
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}} Ads were imported",
+    "message":"{{count}} reklam zostało zaimportowanych",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
-    "message":"This action will permanently remove ALL of your Ads",
+    "message":"Ta akcja trwale usunie WSZYSTKIE reklamy",
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Pokaż dziennik",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
-    "message":"clicked",
+    "message":"kliknięto",
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
     "message":"of the",
-    "description":"appears in ADN popup menu"
+    "description":"English: Vault.html"
   },
   "adnMenuAdsDetected":{
-    "message":"Ads detected",
+    "message":"Reklam wykrytych",
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{
@@ -164,11 +164,11 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuPause":{
-    "message":"Pause AdNauseam",
+    "message":"Wstrzymaj AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{
-    "message":"Resume AdNauseam",
+    "message":"Wznów AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
@@ -176,11 +176,11 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
-    "message":"Export Ads",
+    "message":"Eksportuj reklamy",
     "description":"appears in ADN popup menu"
   },
   "adnMenuImportAds":{
-    "message":"Import Ads",
+    "message":"Importuj reklamy",
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging":{
@@ -212,7 +212,7 @@
     "description":"appears in ADN log page"
   },
   "adnVaultSince":{
-    "message":"Since",
+    "message":"Od",
     "description":"appears on vault page"
   },
   "adnVaultDefaultDate":{
@@ -240,7 +240,7 @@
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
-    "message":"delete this Ad",
+    "message":"usuń tę reklamę",
     "description":"appears on vault page"
   },
   "adnVaultTotalEstimated":{
@@ -284,11 +284,11 @@
     "description":"English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt":{
-    "message":"Don't send cookies on visits",
+    "message":"Nie wysyłaj plików cookies podczas wizyt",
     "description":"English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt":{
-    "message":"Hide user-agent header on visits",
+    "message":"Ukryj nagłówek user-agent podczas wizyt",
     "description":"English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt":{
@@ -300,11 +300,11 @@
     "description":"English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt":{
-    "message":"Don't hide non-tracking Ads",
+    "message":"Nie ukrywaj nieśledzących reklam",
     "description":"English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt":{
-    "message":"Don't click non-tracking Ads",
+    "message":"Nie klikaj w nieśledzące reklamy",
     "description":"English: Don't click non-tracking Ads"
   },
   "extName":{
@@ -324,7 +324,7 @@
     "description":"English: Other"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Złośliwe oprogramowanie",
     "description":"English: Malware"
   },
   "3pGroupRegions":{
@@ -336,7 +336,7 @@
     "description":"appears as tab name in dashboard"
   },
   "eventLoggingPrompt":{
-    "message":"Activate debugging mode",
+    "message":"Włącz tryb debugowania",
     "description":"prompt for toggle"
   }
 }

@@ -24,7 +24,7 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"屏蔽惡意軟件",
+    "message":"遮蔽惡意廣告",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
@@ -36,7 +36,7 @@
     "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"優化設定以屏蔽惡意廣告 (<span class='link' id='ToOptions'>更改<\/span>)",
+    "message":"最佳化設定以遮蔽惡意軟體和隱形的使用者追蹤 (<span class='link' id='ToOptions'>更改<\/span>)",
     "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
   },
   "adnNotificationReactivate":{
@@ -56,7 +56,7 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"請啟用“遮蔽惡意軟體“功能",
+    "message":"請啟用“遮蔽惡意廣告“功能",
     "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
@@ -153,7 +153,7 @@
   },
   "adnMenuOfThe":{
     "message":"總共",
-    "description":"appears in ADN popup menu"
+    "description":"English: Vault.html"
   },
   "adnMenuAdsDetected":{
     "message":"已偵測廣告",
