@@ -500,7 +500,7 @@
     var status = this.status || 200,
       html = this.responseText;
 
-    if (failAllVisits || status < 200 || status >= 300 || !stringNotEmpty(html)) {
+    if (failAllVisits || status < 200 || status >= 300 || !html) {
 
       return onVisitError.call(this, {
         status: status,
