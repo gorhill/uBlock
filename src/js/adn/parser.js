@@ -113,16 +113,16 @@
         logP("Fail: no ClickableParent", img, img.parentNode);
         return;
       }
+
       if (target.hasAttribute("data-original-click-url")) {
 
-         targetUrl = target.getAttribute("data-original-click-url");
+        targetUrl = target.getAttribute("data-original-click-url");
 
-      }else if (target.hasAttribute('href')) {
-        
+      } else if (target.hasAttribute('href')) {
+
         targetUrl = target.getAttribute("href");
-       
-      }
-      else if (target.hasAttribute('onclick')) {
+
+      } else if (target.hasAttribute('onclick')) {
         // handle onclick
         var onclickInfo = target.getAttribute("onclick");
         if (onclickInfo && onclickInfo.length) {
