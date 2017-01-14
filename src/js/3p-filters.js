@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,38 +21,29 @@
 
 /* global uDom */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-var userListName = vAPI.i18n('1pPageName');
+(function() {
+
+/******************************************************************************/
+
 var listDetails = {};
 var parseCosmeticFilters = true;
 var ignoreGenericCosmeticFilters = false;
 var externalLists = '';
-var cacheWasPurged = false;
-var needUpdate = false;
-var hasCachedContent = false;
 
 /******************************************************************************/
 
 var onMessage = function(msg) {
     switch ( msg.what ) {
+    case 'assetUpdated':
+        updateAssetStatus(msg);
+        break;
     case 'staticFilteringDataChanged':
         renderFilterLists();
         break;
-
-    case 'forceUpdateAssetsProgress':
-        renderBusyOverlay(true, msg.progress);
-        if ( msg.done ) {
-            messaging.send('dashboard', { what: 'reloadAllFilters' });
-        }
-        break;
-
     default:
         break;
     }
@@ -69,8 +60,6 @@ var renderNumber = function(value) {
 
 /******************************************************************************/
 
-// TODO: get rid of background page dependencies
-
 var renderFilterLists = function() {
     var listGroupTemplate = uDom('#templates .groupEntry');
     var listEntryTemplate = uDom('#templates .listEntry');
@@ -80,9 +69,6 @@ var renderFilterLists = function() {
 
     // Assemble a pretty blacklist name if possible
     var listNameFromListKey = function(listKey) {
-        if ( listKey === listDetails.userFiltersPath ) {
-            return userListName;
-        }
         var list = listDetails.current[listKey] || listDetails.available[listKey];
         var listTitle = list ? list.title : '';
         if ( listTitle === '' ) {
@@ -124,39 +110,28 @@ var renderFilterLists = function() {
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
         elem.text(text);
 
-        // https://github.com/gorhill/uBlock/issues/78
-        // Badge for non-secure connection
-        var remoteURL = listKey;
-        if ( remoteURL.lastIndexOf('http:', 0) !== 0 ) {
-            remoteURL = entry.homeURL || '';
-        }
-        if ( remoteURL.lastIndexOf('http:', 0) === 0 ) {
-            li.descendants('span.status.unsecure').css('display', '');
-        }
-
         // https://github.com/chrisaljoudi/uBlock/issues/104
         var asset = listDetails.cache[listKey] || {};
 
-        // Badge for update status
-        if ( entry.off !== true ) {
-            if ( asset.repoObsolete ) {
-                li.descendants('span.status.new').css('display', '');
-                needUpdate = true;
-            } else if ( asset.cacheObsolete ) {
-                li.descendants('span.status.obsolete').css('display', '');
-                needUpdate = true;
-            } else if ( entry.external && !asset.cached ) {
-                li.descendants('span.status.obsolete').css('display', '');
-                needUpdate = true;
-            }
-        }
+        // https://github.com/gorhill/uBlock/issues/78
+        // Badge for non-secure connection
+        var remoteURL = asset.remoteURL;
+        li.toggleClass(
+            'unsecure',
+            typeof remoteURL === 'string' && remoteURL.lastIndexOf('http:', 0) === 0
+        );
 
-        // In cache
+        // Badge for update status
+        li.toggleClass('obsolete', entry.off !== true && asset.obsolete === true);
+
+        // Badge for cache status
+        li.toggleClass('cached', asset.cached === true && asset.writeTime > 0);
+
         if ( asset.cached ) {
-            elem = li.descendants('span.status.purge');
-            elem.css('display', '');
-            elem.attr('title', lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.lastModified)));
-            hasCachedContent = true;
+            elem = li.descendants('.status.purge').attr(
+                'title',
+                lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.writeTime))
+            );
         }
         return li;
     };
@@ -219,8 +194,6 @@ var renderFilterLists = function() {
         listDetails = details;
         parseCosmeticFilters = details.parseCosmeticFilters;
         ignoreGenericCosmeticFilters = details.ignoreGenericCosmeticFilters;
-        needUpdate = false;
-        hasCachedContent = false;
 
         // Visually split the filter lists in purpose-based groups
         var ulLists = uDom('#lists').empty(), liGroup;
@@ -253,41 +226,20 @@ var renderFilterLists = function() {
             ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
         }
 
+        uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('#lists .listEntry.obsolete') === null);
+        uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
+        uDom('#parseCosmeticFilters').prop('checked', listDetails.parseCosmeticFilters === true);
+        uDom('#ignoreGenericCosmeticFilters').prop('checked', listDetails.ignoreGenericCosmeticFilters === true);
         uDom('#listsOfBlockedHostsPrompt').text(
             vAPI.i18n('3pListsOfBlockedHostsPrompt')
                 .replace('{{netFilterCount}}', renderNumber(details.netFilterCount))
                 .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
         );
-        uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
-        uDom('#parseCosmeticFilters').prop('checked', listDetails.parseCosmeticFilters === true);
-        uDom('#ignoreGenericCosmeticFilters').prop('checked', listDetails.ignoreGenericCosmeticFilters === true);
 
         renderWidgets();
-        renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
     };
 
     messaging.send('dashboard', { what: 'getLists' }, onListsReceived);
-};
-
-/******************************************************************************/
-
-// Progress must be normalized to [0, 1], or can be undefined.
-
-var renderBusyOverlay = function(state, progress) {
-    progress = progress || {};
-    var showProgress = typeof progress.value === 'number';
-    if ( showProgress ) {
-        uDom('#busyOverlay > div:nth-of-type(2) > div:first-child').css(
-            'width',
-            (progress.value * 100).toFixed(1) + '%'
-        );
-        var text = progress.text || '';
-        if ( text !== '' ) {
-            uDom('#busyOverlay > div:nth-of-type(2) > div:last-child').text(text);
-        }
-    }
-    uDom('#busyOverlay > div:nth-of-type(2)').css('display', showProgress ? '' : 'none');
-    uDom('body').toggleClass('busy', !!state);
 };
 
 /******************************************************************************/
@@ -296,8 +248,15 @@ var renderBusyOverlay = function(state, progress) {
 
 var renderWidgets = function() {
     uDom('#buttonApply').toggleClass('disabled', !listsSelectionChanged());
-    uDom('#buttonUpdate').toggleClass('disabled', !listsContentChanged());
-    uDom('#buttonPurgeAll').toggleClass('disabled', !hasCachedContent);
+    uDom('#buttonPurgeAll').toggleClass('disabled', document.querySelector('#lists .listEntry.cached') === null);
+};
+
+/******************************************************************************/
+
+var updateAssetStatus = function(details) {
+    var li = uDom('#lists .listEntry a[data-listkey="' + details.key + '"]').ancestors('.listEntry');
+    li.toggleClass('obsolete', !details.cached);
+    li.toggleClass('cached', details.cached);
 };
 
 /******************************************************************************/
@@ -307,41 +266,30 @@ var renderWidgets = function() {
 var listsSelectionChanged = function() {
     if (
         listDetails.parseCosmeticFilters !== parseCosmeticFilters ||
-        listDetails.parseCosmeticFilters && listDetails.ignoreGenericCosmeticFilters !== ignoreGenericCosmeticFilters
+        listDetails.parseCosmeticFilters &&
+        listDetails.ignoreGenericCosmeticFilters !== ignoreGenericCosmeticFilters
     ) {
         return true;
     }
 
-    if ( cacheWasPurged ) {
-        return true;
-    }
-
-    var availableLists = listDetails.available;
-    var currentLists = listDetails.current;
-    var location, availableOff, currentOff;
+    var availableLists = listDetails.available,
+        currentLists = listDetails.current,
+        listKey, availableOff, currentOff;
     
-    // This check existing entries
-    for ( location in availableLists ) {
-        if ( availableLists.hasOwnProperty(location) === false ) {
-            continue;
-        }
-        availableOff = availableLists[location].off === true;
-        currentOff = currentLists[location] === undefined || currentLists[location].off === true;
-        if ( availableOff !== currentOff ) {
-            return true;
-        }
+    // This checks existing entries
+    for ( listKey in availableLists ) {
+        if ( availableLists.hasOwnProperty(listKey) === false ) { continue; }
+        availableOff = availableLists[listKey].off === true;
+        currentOff = currentLists[listKey] === undefined || currentLists[listKey].off === true;
+        if ( availableOff !== currentOff ) { return true; }
     }
 
-    // This check removed entries
-    for ( location in currentLists ) {
-        if ( currentLists.hasOwnProperty(location) === false ) {
-            continue;
-        }
-        currentOff = currentLists[location].off === true;
-        availableOff = availableLists[location] === undefined || availableLists[location].off === true;
-        if ( availableOff !== currentOff ) {
-            return true;
-        }
+    // This checks removed entries
+    for ( listKey in currentLists ) {
+        if ( currentLists.hasOwnProperty(listKey) === false ) { continue; }
+        currentOff = currentLists[listKey].off === true;
+        availableOff = availableLists[listKey] === undefined || availableLists[listKey].off === true;
+        if ( availableOff !== currentOff ) { return true; }
     }
 
     return false;
@@ -349,22 +297,10 @@ var listsSelectionChanged = function() {
 
 /******************************************************************************/
 
-// Return whether content need update.
-
-var listsContentChanged = function() {
-    return needUpdate;
-};
-
-/******************************************************************************/
-
 var onListCheckboxChanged = function() {
     var href = uDom(this).parent().descendants('a').first().attr('data-listkey');
-    if ( typeof href !== 'string' ) {
-        return;
-    }
-    if ( listDetails.available[href] === undefined ) {
-        return;
-    }
+    if ( typeof href !== 'string' ) { return; }
+    if ( listDetails.available[href] === undefined ) { return; }
     listDetails.available[href].off = !this.checked;
     renderWidgets();
 };
@@ -374,12 +310,10 @@ var onListCheckboxChanged = function() {
 var onPurgeClicked = function() {
     var button = uDom(this);
     var li = button.parent();
-    var href = li.descendants('a').first().attr('data-listkey');
-    if ( !href ) {
-        return;
-    }
+    var listKey = li.descendants('a').first().attr('data-listkey');
+    if ( !listKey ) { return; }
 
-    messaging.send('dashboard', { what: 'purgeCache', path: href });
+    messaging.send('dashboard', { what: 'purgeCache', path: listKey });
     button.remove();
 
     // If the cached version is purged, the installed version must be assumed
@@ -387,18 +321,14 @@ var onPurgeClicked = function() {
     // https://github.com/gorhill/uBlock/issues/1733
     // An external filter list must not be marked as obsolete, they will always
     // be fetched anyways if there is no cached copy.
-    var entry = listDetails.current && listDetails.current[href];
-    if ( entry && entry.off !== true && /^[a-z]+:\/\//.test(href) === false ) {
-        if ( typeof entry.homeURL !== 'string' || entry.homeURL === '' ) {
-            li.descendants('span.status.new').css('display', '');
-        } else {
-            li.descendants('span.status.obsolete').css('display', '');
-        }
-        needUpdate = true;
+    var entry = listDetails.current && listDetails.current[listKey];
+    if ( entry && entry.off !== true ) {
+        li.addClass('obsolete');
+        uDom('#buttonUpdate').removeClass('disabled');
     }
+    li.removeClass('cached');
 
     if ( li.descendants('input').first().prop('checked') ) {
-        cacheWasPurged = true;
         renderWidgets();
     }
 };
@@ -419,22 +349,21 @@ var selectFilterLists = function(callback) {
     });
 
     // Filter lists
-    var switches = [];
-    var lis = uDom('#lists .listEntry'), li;
-    var i = lis.length;
+    var listKeys = [],
+        lis = uDom('#lists .listEntry'), li,
+        i = lis.length;
     while ( i-- ) {
         li = lis.at(i);
-        switches.push({
-            location: li.descendants('a').attr('data-listkey'),
-            off: li.descendants('input').prop('checked') === false
-        });
+        if ( li.descendants('input').prop('checked') ) {
+            listKeys.push(li.descendants('a').attr('data-listkey'));
+        }
     }
 
     messaging.send(
         'dashboard',
         {
             what: 'selectFilterLists',
-            switches: switches
+            keys: listKeys
         },
         callback
     );
@@ -444,49 +373,38 @@ var selectFilterLists = function(callback) {
 
 var buttonApplyHandler = function() {
     uDom('#buttonApply').removeClass('enabled');
-
-    renderBusyOverlay(true);
-
     var onSelectionDone = function() {
         messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
-
     selectFilterLists(onSelectionDone);
-
-    cacheWasPurged = false;
 };
 
 /******************************************************************************/
 
-var buttonUpdateHandler = function() {
+var buttonUpdateHandler = function(ev) {
     uDom('#buttonUpdate').removeClass('enabled');
-
-    if ( needUpdate ) {
-        renderBusyOverlay(true);
-
-        var onSelectionDone = function() {
-            messaging.send('dashboard', { what: 'forceUpdateAssets' });
-        };
-
-        selectFilterLists(onSelectionDone);
-
-        cacheWasPurged = false;
-    }
+    var onSelectionDone = function() {
+        messaging.send('dashboard', {
+            what: 'forceUpdateAssets',
+            fast: ev.ctrlKey
+        });
+        uDom('#buttonUpdate').addClass('disabled');
+    };
+    selectFilterLists(onSelectionDone);
 };
 
 /******************************************************************************/
 
-var buttonPurgeAllHandler = function() {
+var buttonPurgeAllHandler = function(ev) {
     uDom('#buttonPurgeAll').removeClass('enabled');
-
-    renderBusyOverlay(true);
-
-    var onCompleted = function() {
-        cacheWasPurged = true;
-        renderFilterLists();
-    };
-
-    messaging.send('dashboard', { what: 'purgeAllCaches' }, onCompleted);
+    messaging.send(
+        'dashboard',
+        {
+            what: 'purgeAllCaches',
+            hard: ev.ctrlKey && ev.shiftKey
+        },
+        renderFilterLists   
+    );
 };
 
 /******************************************************************************/

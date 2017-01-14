@@ -495,7 +495,7 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
-    if ( loggerEnabled && blockWebsocket ) {
+    if ( loggerEnabled && websocketResult !== '' ) {
         µb.logger.writeOne(
             tabId,
             'net',

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ var onMessage = function(request, sender, callback) {
         return;
 
     case 'reloadAllFilters':
-        µb.reloadAllFilters(callback);
+        µb.loadFilterLists();
         return;
 
     case 'scriptlet':
@@ -121,7 +121,8 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'forceUpdateAssets':
-        µb.assetUpdater.force();
+        µb.scheduleAssetUpdater(0);
+        µb.assets.updateStart({ delay: request.fast ? 1 : 3 * 1000 });
         break;
 
     case 'getAppData':
@@ -160,7 +161,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'selectFilterLists':
-        µb.selectFilterLists(request.switches);
+        µb.saveSelectedFilterLists(request.keys, request.append);
         break;
 
     case 'setWhitelist':
@@ -753,7 +754,7 @@ var backupUserData = function(callback) {
         timeStamp: Date.now(),
         version: vAPI.app.version,
         userSettings: µb.userSettings,
-        filterLists: {},
+        selectedFilterLists: [],
         hiddenSettingsString: µb.stringFromHiddenSettings(),
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
@@ -762,8 +763,8 @@ var backupUserData = function(callback) {
         userFilters: ''
     };
 
-    var onSelectedListsReady = function(filterLists) {
-        userData.filterLists = filterLists;
+    var onSelectedListsReady = function(selectedFilterLists) {
+        userData.selectedFilterLists = selectedFilterLists;
 
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
@@ -783,7 +784,7 @@ var backupUserData = function(callback) {
 
     var onUserFiltersReady = function(details) {
         userData.userFilters = details.content;
-        µb.extractSelectedFilterLists(onSelectedListsReady);
+        µb.loadSelectedFilterLists(onSelectedListsReady);
     };
 
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
@@ -804,7 +805,7 @@ var restoreUserData = function(request) {
         µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings, onCountdown);
-        µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.keyvalSetOne('filterLists', userData.filterLists, onCountdown);
         µb.hiddenSettingsFromString(userData.hiddenSettingsString || '');
         µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
         µb.keyvalSetOne('dynamicFilteringString', userData.dynamicFilteringString || '', onCountdown);
@@ -869,16 +870,13 @@ var getLists = function(callback) {
         cache: null,
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
-        current: µb.remoteBlacklists,
+        current: µb.availableFilterLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
-        manualUpdate: false,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         userFiltersPath: µb.userFiltersPath
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
-        r.manualUpdate = µb.assetUpdater.manualUpdate;
-        r.manualUpdateProgress = µb.assetUpdater.manualUpdateProgress;
         prepListEntries(r.cache);
         callback(r);
     };
@@ -953,7 +951,10 @@ var onMessage = function(request, sender, callback) {
         return getLocalData(callback);
 
     case 'purgeAllCaches':
-        return µb.assets.purgeAll(callback);
+        if ( request.hard ) {
+            return µb.assets.remove(/./, callback);
+        }
+        return µb.assets.purge(/./, callback);
 
     case 'readUserFilters':
         return µb.loadUserFilters(callback);
@@ -974,7 +975,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'purgeCache':
-        µb.assets.purgeCacheableAsset(request.path);
+        µb.assets.purge(request.path);
         break;
 
     case 'readHiddenSettings':
