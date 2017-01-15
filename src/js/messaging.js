@@ -792,32 +792,32 @@ var backupUserData = function(callback) {
 
 var restoreUserData = function(request) {
     var userData = request.userData;
-    var countdown = 8;
-    var onCountdown = function() {
-        countdown -= 1;
-        if ( countdown === 0 ) {
-            vAPI.app.restart();
-        }
-    };
 
     var onAllRemoved = function() {
-        // Be sure to adjust `countdown` if adding/removing anything below
-        µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings();
-        vAPI.storage.set(userData.userSettings, onCountdown);
-        µb.keyvalSetOne('filterLists', userData.filterLists, onCountdown);
+        vAPI.storage.set(userData.userSettings);
         µb.hiddenSettingsFromString(userData.hiddenSettingsString || '');
-        µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
-        µb.keyvalSetOne('dynamicFilteringString', userData.dynamicFilteringString || '', onCountdown);
-        µb.keyvalSetOne('urlFilteringString', userData.urlFilteringString || '', onCountdown);
-        µb.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
-        µb.assets.put(µb.userFiltersPath, userData.userFilters, onCountdown);
         vAPI.storage.set({
+            netWhitelist: userData.netWhitelist || '',
+            dynamicFilteringString: userData.dynamicFilteringString || '',
+            urlFilteringString: userData.urlFilteringString || '',
+            hostnameSwitchesString: userData.hostnameSwitchesString || '',
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
             lastBackupTime: 0
-        }, onCountdown);
+        });
+        µb.assets.put(µb.userFiltersPath, userData.userFilters);
+
+        // 'filterLists' is available up to uBO v1.10.4, not beyond.
+        // 'selectedFilterLists' is available from uBO v1.11 and beyond.
+        if ( Array.isArray(userData.selectedFilterLists) ) {
+            µb.saveSelectedFilterLists(userData.selectedFilterLists);
+        } else if ( userData.filterLists instanceof Object ) {
+            µb.saveSelectedFilterLists(µb.newListKeysFromOldData(userData.filterLists));
+        }
+
+        vAPI.app.restart();
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1102
@@ -849,9 +849,7 @@ var prepListEntries = function(entries) {
     var µburi = µb.URI;
     var entry, hn;
     for ( var k in entries ) {
-        if ( entries.hasOwnProperty(k) === false ) {
-            continue;
-        }
+        if ( entries.hasOwnProperty(k) === false ) { continue; }
         entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = µburi.hostnameFromURI(entry.supportURL);
@@ -873,7 +871,8 @@ var getLists = function(callback) {
         current: µb.availableFilterLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
-        userFiltersPath: µb.userFiltersPath
+        userFiltersPath: µb.userFiltersPath,
+        aliases: µb.assets.listKeyAliases
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;

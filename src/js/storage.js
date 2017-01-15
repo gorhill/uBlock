@@ -151,11 +151,27 @@
     this.netWhitelistModifyTime = Date.now();
 };
 
-/******************************************************************************/
+/*******************************************************************************
+
+    TODO(seamless migration):
+    The code related to 'remoteBlacklist' can be removed when I am confident
+    all users have moved to a version of uBO which no longer depends on
+    the property 'remoteBlacklists, i.e. v1.11 and beyond.
+
+**/
 
 µBlock.loadSelectedFilterLists = function(callback) {
-    vAPI.storage.get('selectedFilterLists', function(bin) {
-        callback(bin && bin.selectedFilterLists || undefined);
+    var µb = this;
+    vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists'], function(bin) {
+        if ( !bin ) { return callback(); }
+        if ( bin.selectedFilterLists ) {
+            return callback(bin.selectedFilterLists);
+        }
+        if ( !bin.remoteBlacklists ) { return callback(); }
+        var listKeys = µb.newListKeysFromOldData(bin.remoteBlacklists);
+        µb.saveSelectedFilterLists(listKeys);
+        vAPI.storage.remove('remoteBlacklists');
+        callback(listKeys);
     });
 };
 
@@ -167,6 +183,18 @@
     } else {
         vAPI.storage.set({ selectedFilterLists: listKeys });
     }
+};
+
+µBlock.newListKeysFromOldData = function(oldLists) {
+    var aliases = this.assets.listKeyAliases,
+        listKeys = [], newKey;
+    for ( var oldKey in oldLists ) {
+        if ( oldLists[oldKey].off !== true ) {
+            newKey = aliases[oldKey];
+            listKeys.push(newKey ? newKey : oldKey);
+        }
+    }
+    return listKeys;
 };
 
 /******************************************************************************/
@@ -187,9 +215,7 @@
 /******************************************************************************/
 
 µBlock.appendUserFilters = function(filters) {
-    if ( filters.length === 0 ) {
-        return;
-    }
+    if ( filters.length === 0 ) { return; }
 
     var µb = this;
 
@@ -213,9 +239,7 @@
     };
 
     var onLoaded = function(details) {
-        if ( details.error ) {
-            return;
-        }
+        if ( details.error ) { return; }
         // https://github.com/chrisaljoudi/uBlock/issues/976
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
@@ -311,13 +335,13 @@
     };
 
     // Custom filter lists.
-    var listKeys = this.listKeysFromCustomFilterLists(µb.userSettings.externalLists),
-        i = listKeys.length, listKey, entry;
+    var importedListKeys = this.listKeysFromCustomFilterLists(µb.userSettings.externalLists),
+        i = importedListKeys.length, listKey, entry;
     while ( i-- ) {
-        listKey = listKeys[i];
+        listKey = importedListKeys[i];
         entry = {
             content: 'filters',
-            contentURL: listKeys[i],
+            contentURL: importedListKeys[i],
             external: true,
             group: 'custom',
             submitter: 'user',
@@ -327,12 +351,14 @@
         this.assets.registerAssetSource(listKey, entry);
     }
 
-    // Reuse existing list metadata if any.
-    var reuseMetadata = function() {
-        var assetKeys = Object.keys(oldAvailableLists),
-            assetKey, newEntry, oldEntry;
+    // Final steps:
+    // - reuse existing list metadata if any;
+    // - unregister unreferenced imported filter lists if any.
+    var finalize = function() {
+        var assetKey, newEntry, oldEntry;
 
-        while ( (assetKey = assetKeys.pop()) ) {
+        // Reuse existing metadata.
+        for ( assetKey in oldAvailableLists ) {
             oldEntry = oldAvailableLists[assetKey];
             newEntry = newAvailableLists[assetKey];
             if ( newEntry === undefined ) {
@@ -358,6 +384,17 @@
                 newEntry.title = oldEntry.title;
             }
         }
+
+        // Remove unreferenced imported filter lists.
+        var dict = new Set(importedListKeys);
+        for ( assetKey in newAvailableLists ) {
+            newEntry = newAvailableLists[assetKey];
+            if ( newEntry.submitter !== 'user' ) { continue; }
+            if ( dict.has(assetKey) ) { continue; }
+            delete newAvailableLists[assetKey];
+            µb.assets.unregisterAssetSource(assetKey);
+            µb.removeFilterList(assetKey);
+        }
     };
 
     // Selected lists.
@@ -375,18 +412,12 @@
             µb.saveSelectedFilterLists(µb.autoSelectRegionalFilterLists(newAvailableLists));
         }
 
-        reuseMetadata();
+        finalize();
         callback(newAvailableLists);
     };
 
     // Built-in filter lists.
-    var onBuiltinListsLoaded = function(details) {
-        var entries, entry;
-        try {
-            entries = JSON.parse(details.content);
-        } catch (e) {
-            entries = {};
-        }
+    var onBuiltinListsLoaded = function(entries) {
         for ( var assetKey in entries ) {
             if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
             entry = entries[assetKey];
@@ -401,7 +432,7 @@
     // Available lists previously computed.
     var onOldAvailableListsLoaded = function(bin) {
         oldAvailableLists = bin && bin.availableFilterLists || {};
-        µb.assets.get('assets.json', onBuiltinListsLoaded);
+        µb.assets.metadata(onBuiltinListsLoaded);
     };
 
     // Load previously saved available lists -- these contains data
@@ -548,12 +579,11 @@
         }
     }
     // Extract update frequency information
-    matches = head.match(/(?:^|\n)![\t ]*?Expires:[\t ]*?([\d]+)/i);
+    matches = head.match(/(?:^|\n)![\t ]*Expires:[\t ]*([\d]+)[\t ]*days?/i);
     if ( matches !== null ) {
         v = Math.max(parseInt(matches[1], 10), 2);
         if ( v !== listEntry.updateAfter ) {
-            listEntry.updateAfter = v;
-            this.assets.registerAssetSource(assetKey, listEntry);
+            this.assets.registerAssetSource(assetKey, { updateAfter: v });
         }
     }
 };
@@ -817,8 +847,11 @@
             }
         }
 
-        if ( typeof data.filterLists === 'object' ) {
-            bin.filterLists = data.filterLists;
+        if ( Array.isArray(data.selectedFilterLists) ) {
+            bin.selectedFilterLists = data.selectedFilterLists;
+            binNotEmpty = true;
+        } else if ( typeof data.filterLists === 'object' ) {
+            bin.selectedFilterLists = µb.newListKeysFromOldData(data.filterLists);
             binNotEmpty = true;
         }
 

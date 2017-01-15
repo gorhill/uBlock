@@ -253,8 +253,8 @@
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
 		"group": "multipurpose",
-		"contentURL": "http://hosts-file.net/.%5Cad_servers.txt",
-		"supportURL": "http://hosts-file.net/"
+		"contentURL": "https://hosts-file.net/.%5Cad_servers.txt",
+		"supportURL": "https://hosts-file.net/"
 	},
 	"EST-0": {
 		"content": "filters",
@@ -405,7 +405,8 @@
 		"group": "malware",
 		"contentURL": [
 			"https://mirror.cedia.org.ec/malwaredomains/justdomains",
-			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains"
+			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains",
+			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains.txt"
 		],
 		"supportURL": "http://www.malwaredomains.com/"
 	},
@@ -415,7 +416,8 @@
 		"group": "multipurpose",
 		"contentURL": [
 			"https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
-			"assets/thirdparties/pgl.yoyo.org/as/serverlist"
+			"assets/thirdparties/pgl.yoyo.org/as/serverlist",
+			"assets/thirdparties/pgl.yoyo.org/as/serverlist.txt"
 		],
 		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
