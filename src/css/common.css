@@ -263,6 +263,10 @@ button.important {
     position: relative;
 }
 
+#proceed {
+  margin-bottom: 2em;
+}
+
 .recent-ads {
 	margin: 125px 0px 0px 0px;
 }

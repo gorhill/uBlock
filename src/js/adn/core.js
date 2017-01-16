@@ -499,7 +499,7 @@
 
     var status = this.status || 200,
       html = this.responseText;
-      
+
     if (failAllVisits || status < 200 || status >= 300 ) {
       return onVisitError.call(this, {
         status: status,
@@ -971,7 +971,7 @@
     ad.attempts = ad.attempts || 0;
     ad.pageDomain = domainFromURI(ad.pageUrl) || ad.pageUrl; // DCH: 8/10
     if (!ad.errors || !ad.errors.length)
-      ad.errors = null;
+      delete ad.errors;
     delete ad.hashkey;
     delete ad.path;
 

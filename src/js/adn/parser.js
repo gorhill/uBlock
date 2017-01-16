@@ -87,12 +87,10 @@
       this.contentData = data;
       this.contentType = data.src ? 'img' : 'text';
       this.title = data.title || 'Pending';
-      this.resolvedTargetUrl = null;
       this.foundTs = +new Date();
       this.targetUrl = targetUrl;
       this.pageTitle = null;
       this.pageUrl = null;
-      this.errors = null;
     };
 
     var processImage = function (img) {
@@ -217,7 +215,7 @@
     };
 
     var logP = function () {
-  
+
       if (vAPI.prefs.logEvents) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
