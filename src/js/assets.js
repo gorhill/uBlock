@@ -313,6 +313,7 @@ var registerAssetSource = function(assetKey, dict) {
 };
 
 var unregisterAssetSource = function(assetKey) {
+    assetCacheRemove(assetKey);
     delete assetSourceRegistry[assetKey];
 };
 
@@ -333,6 +334,30 @@ var saveAssetSourceRegistry = (function() {
         }
     };
 })();
+
+var updateAssetSourceRegistry = function(json) {
+    var newDict;
+    try {
+        newDict = JSON.parse(json);
+    } catch (ex) {
+    }
+    if ( newDict instanceof Object === false ) { return; }
+
+    getAssetSourceRegistry(function(oldDict) {
+        var assetKey;
+        // Remove obsolete entries
+        for ( assetKey in oldDict ) {
+            if ( newDict[assetKey] === undefined ) {
+                unregisterAssetSource(assetKey);
+            }
+        }
+        // Add/update existing entries
+        for ( assetKey in newDict ) {
+            registerAssetSource(assetKey, newDict[assetKey]);
+        }
+        saveAssetSourceRegistry();
+    });
+};
 
 var getAssetSourceRegistry = function(callback) {
     // Already loaded.
@@ -362,15 +387,7 @@ var getAssetSourceRegistry = function(callback) {
     // First-install case.
     var createRegistry = function() {
         getTextFileFromURL(vAPI.getURL('assets/assets.json'), function() {
-            var assetDict;
-            try {
-                assetDict = JSON.parse(this.responseText);
-            } catch (ex) {
-            }
-            for ( var assetKey in assetDict ) {
-                registerAssetSource(assetKey, assetDict[assetKey]);
-            }
-            saveAssetSourceRegistry();
+            updateAssetSourceRegistry(this.responseText);
             registryReady();
         });
     };
@@ -409,6 +426,7 @@ api.unregisterAssetSource = function(assetKey) {
 **/
 
 var assetCacheRegistryStatus,
+    assetCacheRegistryStartTime = Date.now(),
     assetCacheRegistry = {};
 
 var getAssetCacheRegistry = function(callback) {
@@ -856,20 +874,18 @@ api.rmrf = function() {
 
 var updateStatus;
 var updateTimer;
-var updateAssetDelay = 4000;
+var updateAssetDelayDefault = 2 * 60 * 1000;
+var updateAssetDelay = updateAssetDelayDefault;
 var updated = [];
 
 var updateFirst = function() {
     updateStatus = 'updating';
     updated = [];
-
     fireNotification('before-assets-updated');
-
     updateNext();
 };
 
 var updateNext = function() {
-
     var assetDict, cacheDict;
 
     var findOne = function() {
@@ -882,13 +898,15 @@ var updateNext = function() {
             if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
                 continue;
             }
-            if ( assetEntry.error ) {
-                if ( assetEntry.error.time + 3600000 > now ) {
-                    continue;
-                }
+            if ( assetEntry.error && assetEntry.error.time + 3600000 > now ) {
+                continue;
             }
             if ( fireNotification('before-asset-updated', { assetKey: assetKey }) !== false ) {
                 return assetKey;
+            }
+            // This will remove the cached asset if it's no longer in use.
+            if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
+                assetCacheRemove(assetKey);
             }
         }
     };
@@ -896,6 +914,9 @@ var updateNext = function() {
     var updatedOne = function(details) {
         if ( details.content !== '' ) {
             updated.push(details.assetKey);
+            if ( details.assetKey === 'assets.json' ) {
+                updateAssetSourceRegistry(details.content);
+            }
         }
         if ( findOne() !== undefined ) {
             vAPI.setTimeout(updateNext, updateAssetDelay);
@@ -929,14 +950,19 @@ var updateDone = function() {
     var assetKeys = updated.slice(0);
     updated = [];
     updateStatus = undefined;
+    updateAssetDelay = updateAssetDelayDefault;
     fireNotification('after-assets-updated', { assetKeys: assetKeys });
 };
 
 api.updateStart = function(details) {
-    updateAssetDelay = details.delay;
+    var oldUpdateDelay = updateAssetDelay,
+        newUpdateDelay = details.delay || updateAssetDelayDefault;
+    updateAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
     if ( updateStatus !== undefined ) {
-        clearTimeout(updateTimer);
-        updateTimer = vAPI.setTimeout(updateNext, updateAssetDelay);
+        if ( newUpdateDelay < oldUpdateDelay ) {
+            clearTimeout(updateTimer);
+            updateTimer = vAPI.setTimeout(updateNext, updateAssetDelay);
+        }
         return;
     }
     updateFirst();

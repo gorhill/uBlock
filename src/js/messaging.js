@@ -122,7 +122,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'forceUpdateAssets':
         µb.scheduleAssetUpdater(0);
-        µb.assets.updateStart({ delay: request.fast ? 1 : 3 * 1000 });
+        µb.assets.updateStart({ delay: request.fast ? 1 : 2000 });
         break;
 
     case 'getAppData':
@@ -766,6 +766,42 @@ var backupUserData = function(callback) {
     var onSelectedListsReady = function(selectedFilterLists) {
         userData.selectedFilterLists = selectedFilterLists;
 
+        // TODO(seamless migration):
+        // The following is strictly for convenience, to be minimally
+        // forward-compatible. This will definitely be removed in the
+        // short term, as I do not expect the need to install an older
+        // version of uBO to ever be needed beyond the short term.
+        // >>>>>>>>
+        var reverseAliases = Object.keys(µb.assets.listKeyAliases).reduce(
+            function(a, b) {
+                a[µb.assets.listKeyAliases[b]] = b; return a;
+            },
+            {}
+        );
+        userData.filterLists = selectedFilterLists.reduce(
+            function(a, b) {
+                a[reverseAliases[b] || b] = { off: false };
+                return a;
+            },
+            {}
+        );
+        userData.filterLists = Object.keys(µb.assets.listKeyAliases).reduce(
+            function(a, b) {
+                var aliases = µb.assets.listKeyAliases;
+                if (
+                    b.startsWith('assets/') &&
+                    aliases[b] !== 'public_suffix_list.dat' &&
+                    aliases[b] !== 'ublock-resources' &&
+                    !a[b]
+                ) {
+                    a[b] = { off: true };
+                }
+                return a;
+            },
+            userData.filterLists
+        );
+        // <<<<<<<<
+
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
@@ -774,11 +810,9 @@ var backupUserData = function(callback) {
             'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
             'filename': filename
         });
-
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
         vAPI.storage.set(µb.restoreBackupSettings);
-
         getLocalData(callback);
     };
 

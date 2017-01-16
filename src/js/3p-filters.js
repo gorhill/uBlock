@@ -78,38 +78,40 @@ var renderFilterLists = function() {
         return listTitle;
     };
 
-    var liFromListEntry = function(listKey) {
+    var liFromListEntry = function(listKey, li) {
         var entry = listDetails.available[listKey];
-        var li = listEntryTemplate.clone();
-
-        li.attr('data-listkey', listKey);
+        li = li ? li : listEntryTemplate.clone().nodeAt(0);
+        li.setAttribute('data-listkey', listKey);
+        var elem = li.querySelector('input[type="checkbox"]');
         if ( entry.off !== true ) {
-            li.descendants('input').attr('checked', '');
+            elem.setAttribute('checked', '');
+        } else {
+            elem.removeAttribute('checked');
         }
-
-        var elem = li.descendants('a:nth-of-type(1)');
-        elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
-        elem.attr('type', 'text/html');
-        elem.text(listNameFromListKey(listKey) + '\u200E');
-
+        elem = li.querySelector('a:nth-of-type(1)');
+        elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
+        elem.setAttribute('type', 'text/html');
+        elem.textContent = listNameFromListKey(listKey) + '\u200E';
+        elem = li.querySelector('a:nth-of-type(2)');
         if ( entry.instructionURL ) {
-            elem = li.descendants('a:nth-of-type(2)');
-            elem.attr('href', entry.instructionURL);
-            elem.css('display', '');
+            elem.setAttribute('href', entry.instructionURL);
+            elem.style.setProperty('display', '');
+        } else {
+            elem.style.setProperty('display', 'none');
         }
-
+        elem = li.querySelector('a:nth-of-type(3)');
         if ( entry.supportName ) {
-            elem = li.descendants('a:nth-of-type(3)');
-            elem.attr('href', entry.supportURL);
-            elem.text('(' + entry.supportName + ')');
-            elem.css('display', '');
+            elem.setAttribute('href', entry.supportURL);
+            elem.textContent = '(' + entry.supportName + ')';
+            elem.style.setProperty('display', '');
+        } else {
+            elem.style.setProperty('display', 'none');
         }
-
-        elem = li.descendants('span.counts');
+        elem = li.querySelector('span.counts');
         var text = listStatsTemplate
             .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
-        elem.text(text);
+        elem.textContent = text;
 
         // https://github.com/chrisaljoudi/uBlock/issues/104
         var asset = listDetails.cache[listKey] || {};
@@ -117,23 +119,27 @@ var renderFilterLists = function() {
         // https://github.com/gorhill/uBlock/issues/78
         // Badge for non-secure connection
         var remoteURL = asset.remoteURL;
-        li.toggleClass(
+        li.classList.toggle(
             'unsecure',
             typeof remoteURL === 'string' && remoteURL.lastIndexOf('http:', 0) === 0
         );
-
         // Badge for update status
-        li.toggleClass('obsolete', entry.off !== true && asset.obsolete === true);
-
+        li.classList.toggle(
+            'obsolete',
+            entry.off !== true && asset.obsolete === true
+        );
         // Badge for cache status
-        li.toggleClass('cached', asset.cached === true && asset.writeTime > 0);
-
+        li.classList.toggle(
+            'cached',
+            asset.cached === true && asset.writeTime > 0
+        );
         if ( asset.cached ) {
-            elem = li.descendants('.status.purge').attr(
+            li.querySelector('.status.purge').setAttribute(
                 'title',
                 lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.writeTime))
             );
         }
+        li.classList.remove('discard');
         return li;
     };
 
@@ -152,26 +158,28 @@ var renderFilterLists = function() {
     };
 
     var liFromListGroup = function(groupKey, listKeys) {
-        var liGroup = listGroupTemplate.clone();
-        var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
-        if ( groupName !== '' ) {
-            liGroup.descendants('span.geName').text(groupName);
-            liGroup.descendants('span.geCount').text(listEntryCountFromGroup(listKeys));
+        var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
+        if ( liGroup === null ) {
+            liGroup = listGroupTemplate.clone().nodeAt(0);
+            var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+            if ( groupName !== '' ) {
+                liGroup.querySelector('.geName').textContent = groupName;
+                liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
+            }
         }
-        var ulGroup = liGroup.descendants('ul');
-        if ( !listKeys ) {
-            return liGroup;
-        }
+        var ulGroup = liGroup.querySelector('.listEntries');
+        if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
-            ulGroup.append(liFromListEntry(listKeys[i]));
+            var liEntry = liFromListEntry(listKeys[i], ulGroup.children[i]);
+            if ( liEntry.parentElement === null ) {
+                ulGroup.appendChild(liEntry);
+            }
         }
         return liGroup;
     };
-
-    // https://www.youtube.com/watch?v=unCVi4hYRlY#t=30m18s
 
     var groupsFromLists = function(lists) {
         var groups = {};
@@ -196,11 +204,15 @@ var renderFilterLists = function() {
         parseCosmeticFilters = details.parseCosmeticFilters;
         ignoreGenericCosmeticFilters = details.ignoreGenericCosmeticFilters;
 
+        // Incremental rendering: this will allow us to easily discard unused
+        // DOM list entries.
+        uDom('#lists .listEntries .listEntry').addClass('discard');
+
         // Visually split the filter lists in purpose-based groups
-        var ulLists = uDom('#lists').empty(), liGroup;
-        var groups = groupsFromLists(details.available);
-        var groupKey, i;
-        var groupKeys = [
+        var ulLists = document.querySelector('#lists'),
+            groups = groupsFromLists(details.available),
+            liGroup, i, groupKey,
+            groupKeys = [
             'default',
             'ads',
             'privacy',
@@ -213,20 +225,24 @@ var renderFilterLists = function() {
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
             liGroup = liFromListGroup(groupKey, groups[groupKey]);
-            liGroup.toggleClass(
+            liGroup.setAttribute('data-groupkey', groupKey);
+            liGroup.classList.toggle(
                 'collapsed',
                 vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
             );
-            ulLists.append(liGroup);
+            if ( liGroup.parentElement === null ) {
+                ulLists.appendChild(liGroup);
+            }
             delete groups[groupKey];
         }
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
+            ulLists.appendChild(liFromListGroup(groupKey, groups[groupKey]));
         }
 
+        uDom('#lists .listEntries .listEntry.discard').remove();
         uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('#lists .listEntry.obsolete') === null);
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.parseCosmeticFilters === true);
@@ -259,6 +275,7 @@ var renderFilterLists = function() {
 var renderWidgets = function() {
     uDom('#buttonApply').toggleClass('disabled', !listsSelectionChanged());
     uDom('#buttonPurgeAll').toggleClass('disabled', document.querySelector('#lists .listEntry.cached') === null);
+    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('#lists .listEntry.obsolete') === null);
 };
 
 /******************************************************************************/
@@ -267,6 +284,8 @@ var updateAssetStatus = function(details) {
     var li = uDom('#lists .listEntry[data-listkey="' + details.key + '"]');
     li.toggleClass('obsolete', !details.cached);
     li.toggleClass('cached', details.cached);
+    li.removeClass('updating');
+    renderWidgets();
 };
 
 /******************************************************************************/
@@ -305,7 +324,6 @@ var onPurgeClicked = function() {
     if ( !listKey ) { return; }
 
     messaging.send('dashboard', { what: 'purgeCache', path: listKey });
-    button.remove();
 
     // If the cached version is purged, the installed version must be assumed
     // to be obsolete.
@@ -373,13 +391,12 @@ var buttonApplyHandler = function() {
 /******************************************************************************/
 
 var buttonUpdateHandler = function(ev) {
-    uDom('#buttonUpdate').removeClass('enabled');
     var onSelectionDone = function() {
+        uDom('#lists .listEntry.obsolete').addClass('updating');
         messaging.send('dashboard', {
             what: 'forceUpdateAssets',
             fast: ev.ctrlKey
         });
-        uDom('#buttonUpdate').addClass('disabled');
     };
     selectFilterLists(onSelectionDone);
 };

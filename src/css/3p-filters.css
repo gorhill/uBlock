@@ -1,3 +1,7 @@
+@keyframes spin {
+    100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
+    }
+
 ul {
     padding: 0;
     list-style-type: none;
@@ -88,7 +92,7 @@ body[dir=rtl] #buttonApply {
 span.status {
     border: 1px solid transparent;
     color: #444;
-    display: inline-block;
+    display: none;
     font-size: smaller;
     line-height: 1;
     margin: 0 0 0 0.5em;
@@ -98,30 +102,35 @@ span.status {
 span.unsecure {
     background-color: hsl(0, 100%, 88%);
     border-color: hsl(0, 100%, 83%);
-    display: none;
     }
 li.listEntry.unsecure span.unsecure {
-    display: unset;
+    display: inline;
+    }
+span.obsolete {
+    background-color: hsl(36, 100%, 80%);
+    border-color: hsl(36, 100%, 75%);
+    }
+li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
+    display: inline;
     }
 span.purge {
     border-color: #ddd;
     background-color: #eee;
     cursor: pointer;
-    display: none;
     }
 span.purge:hover {
     opacity: 1;
     }
 li.listEntry.cached span.purge {
-    display: unset;
+    display: inline;
     }
-span.obsolete {
-    background-color: hsl(36, 100%, 80%);
-    border-color: hsl(36, 100%, 75%);
-    display: none;
+span.updating {
+    border: none;
+    padding: 0;
     }
-li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
-    display: unset;
+li.listEntry.updating span.updating {
+    animation: spin 2s linear infinite;
+    display: inline-block;
     }
 #externalListsDiv {
     margin: 2em auto 0 2em;
