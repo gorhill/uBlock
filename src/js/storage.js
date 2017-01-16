@@ -897,14 +897,16 @@
         if ( timer ) {
             clearTimeout(timer);
             timer = undefined;
-            next = 0;
         }
-        if ( updateDelay === 0 ) { return; }
+        if ( updateDelay === 0 ) {
+            next = 0;
+            return;
+        }
         var now = Date.now();
         // Use the new schedule if and only if it is earlier than the previous
         // one.
         if ( next !== 0 ) {
-            updateDelay = Math.min(updateDelay, next - now);
+            updateDelay = Math.min(updateDelay, Math.max(next - now, 0));
         }
         next = now + updateDelay;
         timer = vAPI.setTimeout(function() {
@@ -970,7 +972,7 @@
         if ( details.assetKeys.length !== 0 ) {
             this.loadFilterLists();
         }
-        this.scheduleAssetUpdater(this.userSettings.autoUpdate ? 11 * 60 * 60 * 1000 : -1);
+        this.scheduleAssetUpdater(this.userSettings.autoUpdate ? 11 * 60 * 60 * 1000 : 0);
         return;
     }
 };
