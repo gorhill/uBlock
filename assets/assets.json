@@ -202,7 +202,7 @@
 		"off": true,
 		"title": "ITA: ABP X Files",
 		"group": "regions",
-		"contentURL": "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt",
+		"contentURL": "https://raw.githubusercontent.com/gioxx/xfiles/master/filtri.txt",
 		"supportURL": "http://noads.it/"
 	},
 	"RUS-0": {
