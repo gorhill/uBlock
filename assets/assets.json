@@ -292,8 +292,8 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"group": "regions",
 		"lang": "pl",
-		"contentURL": "https://www.certyficate.it/adblock/adblock.txt",
-		"supportURL": "http://www.certyficate.it/adblock-ublock-polish-filters/"
+		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
+		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
 	},
 	"awrl-0": {
 		"content": "filters",
