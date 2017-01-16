@@ -479,8 +479,8 @@
 		"title": "BGR: Bulgarian Adblock list",
 		"group": "regions",
 		"lang": "bg",
-		"contentURL": "http://stanev.org/abp/adblock_bg.txt",
-		"supportURL": "http://stanev.org/abp/"
+		"contentURL": "https://stanev.org/abp/adblock_bg.txt",
+		"supportURL": "https://stanev.org/abp/"
 	},
 	"mvps-0": {
 		"content": "filters",
