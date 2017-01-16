@@ -344,8 +344,11 @@
 		"title": "IDN: ABPindo",
 		"group": "regions",
 		"lang": "id",
-		"contentURL": "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt",
-		"supportURL": "https://github.com/heradhis/indonesianadblockrules"
+		"contentURL": [
+			"https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
+			"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt"
+		],
+		"supportURL": "https://github.com/ABPindo/indonesianadblockrules"
 	},
 	"JPN-0": {
 		"content": "filters",
