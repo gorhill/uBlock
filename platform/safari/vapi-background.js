@@ -456,7 +456,8 @@
     //   tabId: 1, // the tab is used if set, instead of creating a new one
     //   index: -1, // undefined: end of the list, -1: following tab, or after index
     //   active: false, // opens the tab in background - true and undefined: foreground
-    //   select: true // if a tab is already opened with that url, then select it instead of opening a new one
+    //   select: true, // if a tab is already opened with that url, then select it instead of opening a new one
+    //   popup: true // open in a new window
 
     vAPI.tabs.open = function(details) {
         if(!details.url) {
@@ -469,24 +470,45 @@
 
         var curWin, tab;
 
-        if(details.select) {
-            tab = safari.application.browserWindows.some(function(win) {
-                var rgxHash = /#.*/;
-                // this is questionable
-                var url = details.url.replace(rgxHash, '');
+        // Open in a standalone window
+        if (details.popup === true) {
+            tab = safari.application.openBrowserWindow().activeTab;
+            tab.url = details.url;
+            return tab;
+        }
 
-                for(var i = 0; i < win.tabs.length; i++) {
-                    // Some tabs don't have a URL
-                    if(win.tabs[i].url &&
-                       win.tabs[i].url.replace(rgxHash, '') === url) {
-                        win.tabs[i].activate();
-                        return true;
+        if(details.select) {
+            var findTab;
+            var pos = details.url.indexOf('#');
+            var url = details.url;
+            if (pos === -1) {
+                findTab = function(win) {
+                    for (var i = 0; i < win.tabs.length; i++) {
+                        if (win.tabs[i].url === url) {
+                            win.tabs[i].activate();
+                            tab = win.tabs[i];
+                            return true;
+                        }
                     }
                 }
-            });
+            } else {
+                // Remove fragment identifiers
+                url = url.slice(0, pos);
+                findTab = function(win) {
+                    for (var i = 0; i < win.tabs.length; i++) {
+                        // Some tabs don't have a URL
+                        if (win.tabs[i].url &&
+                            win.tabs[i].url.slice(0, pos) === url) {
+                            win.tabs[i].activate();
+                            tab = win.tabs[i];
+                            return true;
+                        }
+                    }
+                }
+            }
 
-            if(tab) {
-                return;
+            if (safari.application.browserWindows.some(findTab)) {
+                return tab;
             }
         }
 
@@ -509,6 +531,7 @@
         }
 
         tab.url = details.url;
+        return tab;
     };
 
     /******************************************************************************/
@@ -827,7 +850,6 @@
         };
 
         CallbackWrapper.prototype.init = function(port, request, timeout) {
-            console.log('callbackwrapper:', port, request, timeout);
             this.port = port;
             // port.target.page could be undefined at this point, but be valid later
             // e.g. when preloading a page on a new tab
