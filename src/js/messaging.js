@@ -984,8 +984,8 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'purgeCache':
-        µb.assets.purge(request.path);
-        µb.assets.remove('compiled/' + request.path);
+        µb.assets.purge(request.assetKey);
+        µb.assets.remove('compiled/' + request.assetKey);
         break;
 
     case 'readHiddenSettings':

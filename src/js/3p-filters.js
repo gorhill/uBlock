@@ -323,7 +323,7 @@ var onPurgeClicked = function() {
         listKey = liEntry.attr('data-listkey');
     if ( !listKey ) { return; }
 
-    messaging.send('dashboard', { what: 'purgeCache', path: listKey });
+    messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });
 
     // If the cached version is purged, the installed version must be assumed
     // to be obsolete.

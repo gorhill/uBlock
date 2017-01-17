@@ -75,16 +75,16 @@ var initWorker = function(callback) {
     var countdown = 0;
 
     var onListLoaded = function(details) {
-        var entry = entries[details.path];
+        var entry = entries[details.assetKey];
 
         // https://github.com/gorhill/uBlock/issues/536
-        // Use path string when there is no filter list title.
+        // Use assetKey when there is no filter list title.
 
         worker.postMessage({
             what: 'setList',
             details: {
-                path: details.path,
-                title: entry.title || details.path,
+                assetKey: details.assetKey,
+                title: entry.title || details.assetKey,
                 supportURL: entry.supportURL,
                 content: details.content
             }
