@@ -164,9 +164,9 @@ var renderFilterLists = function() {
             var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
             if ( groupName !== '' ) {
                 liGroup.querySelector('.geName').textContent = groupName;
-                liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
             }
         }
+        liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
         var ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
