@@ -236,6 +236,9 @@ var migrate = function(callback) {
     var onEntries = function(bin) {
         entries = bin && bin['cached_asset_entries'];
         if ( !entries ) { return callback(); }
+        if ( bin && bin['assetCacheRegistry'] ) {
+            assetCacheRegistry = bin['assetCacheRegistry'];
+        }
         var aliases = api.listKeyAliases;
         for ( var oldKey in entries ) {
             if ( oldKey.endsWith('assets/user/filters.txt') ) { continue; }
@@ -256,7 +259,10 @@ var migrate = function(callback) {
         countdown();
     };
 
-    vAPI.cacheStorage.get('cached_asset_entries', onEntries);
+    vAPI.cacheStorage.get(
+        [ 'cached_asset_entries', 'assetCacheRegistry' ],
+        onEntries
+    );
 };
 
 /*******************************************************************************
@@ -304,7 +310,7 @@ var registerAssetSource = function(assetKey, dict) {
         entry.contentURL = [];
     }
     if ( typeof entry.updateAfter !== 'number' ) {
-        entry.updateAfter = 13;
+        entry.updateAfter = 5;
     }
     if ( entry.submitter ) {
         entry.submitTime = Date.now(); // To detect stale entries
@@ -454,14 +460,16 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
-        if ( bin && bin.assetCacheRegistry ) {
-            assetCacheRegistry = bin.assetCacheRegistry;
+    var migrationDone = function() {
+        vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+            if ( bin && bin.assetCacheRegistry ) {
+                assetCacheRegistry = bin.assetCacheRegistry;
+            }
             registryReady();
-        } else {
-            migrate(registryReady);
-        }
-    });
+        });
+    };
+
+    migrate(migrationDone);
 };
 
 var saveAssetCacheRegistry = (function() {
@@ -639,14 +647,18 @@ var readUserAsset = function(assetKey, callback) {
         }
         if ( typeof bin['assets/user/filters.txt'] === 'string' ) {
             content = bin['assets/user/filters.txt'];
-            vAPI.storage.remove('assets/user/filters.txt');
+            // TODO(seamless migration):
+            // Uncomment once all moved to v1.11+.
+            //vAPI.storage.remove('assets/user/filters.txt');
         }
         if ( typeof bin[assetKey] === 'string' ) {
-            content = bin[assetKey];
+            // TODO(seamless migration):
+            // Replace conditional with assignment once all moved to v1.11+
+            if ( content !== bin[assetKey] ) {
+                saveUserAsset(assetKey, content);
+            }
         } else if ( content !== '' ) {
-            bin = {};
-            bin[assetKey] = content;
-            vAPI.storage.set(bin);
+            saveUserAsset(assetKey, content);
         }
         return reportBack(content);
     };
@@ -664,6 +676,14 @@ var readUserAsset = function(assetKey, callback) {
 var saveUserAsset = function(assetKey, content, callback) {
     var bin = {};
     bin[assetKey] = content;
+    // TODO(seamless migration):
+    // This is for forward compatibility. Only for a limited time. Remove when
+    // everybody moved to 1.11.0 and beyond.
+    // >>>>>>>>
+    if ( assetKey === µBlock.userFiltersPath ) {
+        bin['assets/user/filters.txt'] = content;
+    }
+    // <<<<<<<<
     var onSaved = function() {
         if ( callback instanceof Function ) {
             callback({ assetKey: assetKey, content: content });

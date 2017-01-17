@@ -162,29 +162,48 @@
 
 µBlock.loadSelectedFilterLists = function(callback) {
     var µb = this;
-    vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists'], function(bin) {
+    vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists' ], function(bin) {
         if ( !bin ) { return callback(); }
+        var listKeys = [];
         if ( bin.selectedFilterLists ) {
-            return callback(bin.selectedFilterLists);
+            listKeys = bin.selectedFilterLists;
         }
-        if ( !bin.remoteBlacklists ) { return callback(); }
-        var listKeys = µb.newListKeysFromOldData(bin.remoteBlacklists);
-        µb.saveSelectedFilterLists(listKeys);
-        vAPI.storage.remove('remoteBlacklists');
+        if ( bin.remoteBlacklists ) {
+            var oldListKeys = µb.newListKeysFromOldData(bin.remoteBlacklists);
+            if ( oldListKeys.sort().join() !== listKeys.sort().join() ) {
+                listKeys = oldListKeys;
+                µb.saveSelectedFilterLists(listKeys);
+            }
+            // TODO(seamless migration):
+            // Uncomment when all have moved to v1.11 and beyond.
+            //vAPI.storage.remove('remoteBlacklists');
+        }
         callback(listKeys);
     });
 };
 
 µBlock.saveSelectedFilterLists = function(listKeys, append) {
+    var µb = this;
+    var save = function(keys) {
+        var bin = {
+            selectedFilterLists: keys,
+            remoteBlacklists: µb.oldDataFromNewListKeys(keys)
+        };
+        vAPI.storage.set(bin);
+    };
     if ( append ) {
         this.loadSelectedFilterLists(function(keys) {
-            vAPI.storage.set({ selectedFilterLists: listKeys.concat(keys || []) });
+            listKeys = listKeys.concat(keys || []);
+            save(listKeys);
         });
     } else {
-        vAPI.storage.set({ selectedFilterLists: listKeys });
+        save(listKeys);
     }
 };
 
+// TODO(seamless migration):
+// Remove when all have moved to v1.11 and beyond.
+// >>>>>>>>
 µBlock.newListKeysFromOldData = function(oldLists) {
     var aliases = this.assets.listKeyAliases,
         listKeys = [], newKey;
@@ -196,6 +215,41 @@
     }
     return listKeys;
 };
+
+µBlock.oldDataFromNewListKeys = function(selectedFilterLists) {
+    var µb = this,
+        remoteBlacklists = {};
+    var reverseAliases = Object.keys(this.assets.listKeyAliases).reduce(
+        function(a, b) {
+            a[µb.assets.listKeyAliases[b]] = b; return a;
+        },
+        {}
+    );
+    remoteBlacklists = selectedFilterLists.reduce(
+        function(a, b) {
+            a[reverseAliases[b] || b] = { off: false };
+            return a;
+        },
+        {}
+    );
+    remoteBlacklists = Object.keys(µb.assets.listKeyAliases).reduce(
+        function(a, b) {
+            var aliases = µb.assets.listKeyAliases;
+            if (
+                b.startsWith('assets/') &&
+                aliases[b] !== 'public_suffix_list.dat' &&
+                aliases[b] !== 'ublock-resources' &&
+                !a[b]
+            ) {
+                a[b] = { off: true };
+            }
+            return a;
+        },
+        remoteBlacklists
+    );
+    return remoteBlacklists;
+};
+// <<<<<<<<
 
 /******************************************************************************/
 

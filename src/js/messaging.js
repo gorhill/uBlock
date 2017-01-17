@@ -772,34 +772,7 @@ var backupUserData = function(callback) {
         // short term, as I do not expect the need to install an older
         // version of uBO to ever be needed beyond the short term.
         // >>>>>>>>
-        var reverseAliases = Object.keys(µb.assets.listKeyAliases).reduce(
-            function(a, b) {
-                a[µb.assets.listKeyAliases[b]] = b; return a;
-            },
-            {}
-        );
-        userData.filterLists = selectedFilterLists.reduce(
-            function(a, b) {
-                a[reverseAliases[b] || b] = { off: false };
-                return a;
-            },
-            {}
-        );
-        userData.filterLists = Object.keys(µb.assets.listKeyAliases).reduce(
-            function(a, b) {
-                var aliases = µb.assets.listKeyAliases;
-                if (
-                    b.startsWith('assets/') &&
-                    aliases[b] !== 'public_suffix_list.dat' &&
-                    aliases[b] !== 'ublock-resources' &&
-                    !a[b]
-                ) {
-                    a[b] = { off: true };
-                }
-                return a;
-            },
-            userData.filterLists
-        );
+        userData.filterLists = µb.oldDataFromNewListKeys(selectedFilterLists);
         // <<<<<<<<
 
         var filename = vAPI.i18n('aboutBackupFilename')
@@ -983,12 +956,6 @@ var onMessage = function(request, sender, callback) {
     case 'getLocalData':
         return getLocalData(callback);
 
-    case 'purgeAllCaches':
-        if ( request.hard ) {
-            return µb.assets.remove(/./, callback);
-        }
-        return µb.assets.purge(/./, callback);
-
     case 'readUserFilters':
         return µb.loadUserFilters(callback);
 
@@ -1007,8 +974,18 @@ var onMessage = function(request, sender, callback) {
         response = getRules();
         break;
 
+    case 'purgeAllCaches':
+        if ( request.hard ) {
+            µb.assets.remove(/./);
+        } else {
+            µb.assets.remove(/compiled\//);
+            µb.assets.purge(/./);
+        }
+        break;
+
     case 'purgeCache':
         µb.assets.purge(request.path);
+        µb.assets.remove('compiled/' + request.path);
         break;
 
     case 'readHiddenSettings':
