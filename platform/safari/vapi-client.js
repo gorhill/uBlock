@@ -506,10 +506,10 @@
     // Inform that we've navigated
     var shouldBlockScript = false;
     if(frameId === 0) {
-        shouldBlockScript = !safari.self.tab.canLoad(beforeLoadEvent, {
+        shouldBlockScript = safari.self.tab.canLoad(beforeLoadEvent, {
             url: location.href,
             type: "main_frame"
-        });
+        }).shouldBlock;
     }
     var nodeTypes = {
         "frame": "sub_frame",
@@ -527,7 +527,10 @@
         details.frameId = frameId;
         details.parentFrameId = parentFrameId;
         details.timeStamp = Date.now();
-        return !(safari.self.tab.canLoad(beforeLoadEvent, details));
+        return safari.self.tab.canLoad(beforeLoadEvent, details).shouldBlock;
+    };
+    var redirectSrc = function(element, url) {
+        element.src = url;
     };
     var onBeforeLoad = function(e) {
         if(firstMutation !== false) {
@@ -537,16 +540,30 @@
         if(linkHelper.protocol.charCodeAt(0) !== 104) { // h = 104
             return;
         }
+        var type = nodeTypes[e.target.nodeName.toLowerCase()] || "other";
         var details = {
             url: linkHelper.href,
-            type: nodeTypes[e.target.nodeName.toLowerCase()] || "other",
+            type: type,
             // tabId is determined in the background script
             frameId: frameId,
             parentFrameId: parentFrameId,
             timeStamp: Date.now()
         };
         var response = safari.self.tab.canLoad(e, details);
-        if(response === false) {
+        // sometimes response = details, so check for that
+        if (response.shouldBlock) {
+            response = response.response.redirectUrl;
+            if (response) {
+                switch (type) {
+                    case 'style':
+                        e.target.href = response;
+                        break;
+                    case 'script':
+                    default:
+                        setTimeout(redirectSrc.bind(undefined, e.target, response), 1);
+                        break;
+                }
+            }
             e.preventDefault();
         }
     };
@@ -599,7 +616,8 @@ set: function(val) {\
 x.setAttribute('src', block(val, 'image') ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=' : val);\
 }\
 });\
-}\catch(e){}\
+}\
+catch(e){}\
 return x;\
 };\
 open = function(u) {\

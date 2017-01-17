@@ -1088,18 +1088,14 @@
                 vAPI.tabs.onNavigation({
                     url: e.message.url,
                     frameId: 0,
-                    tabId: vAPI.tabs.getTabId(e.target)
+                    tabId: vAPI.tabs.getTabId(e.target).toString()
                 });
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
                 e.message.responseHeaders = [];
                 onBeforeRequestClient(e.message);
                 var blockVerdict = onHeadersReceivedClient(e.message);
-                if(blockVerdict && blockVerdict.responseHeaders) {
-                    e.message = false;
-                } else {
-                    e.message = true;
-                }
+                e.message.shouldBlock = blockVerdict && blockVerdict.responseHeaders;
                 return;
             }
             switch(e.message.type) {
@@ -1107,13 +1103,14 @@
                     var openerTabId = vAPI.tabs.getTabId(e.target).toString();
                     var shouldBlock = !!vAPI.tabs.onPopupUpdated("preempt", openerTabId, e.message.url);
                     if (shouldBlock) {
-                        e.message = false;
+                        e.message.shouldBlock = true;
                     } else {
                         vAPI.tabs.popupCandidate = openerTabId;
-                        e.message = true;
+                        e.message.shouldBlock = false;
                     }
                     break;
                 case "popstate":
+                    // No return value/message
                     vAPI.tabs.onUpdated(vAPI.tabs.getTabId(e.target), {
                         url: e.message.url
                     }, {
@@ -1124,13 +1121,9 @@
                     e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                     e.message.tabId = vAPI.tabs.getTabId(e.target);
                     var blockVerdict = onBeforeRequestClient(e.message);
-                    if(blockVerdict && blockVerdict.cancel) {
-                        e.message = false;
-                        return;
-                    } else {
-                        e.message = true;
-                        return;
-                    }
+                    e.message.response = blockVerdict;
+                    e.message.shouldBlock = blockVerdict && (blockVerdict.cancel === true || blockVerdict.redirectUrl !== undefined);
+                    return;
             }
         };
         safari.application.addEventListener("message", onBeforeRequestAdapter, true);
