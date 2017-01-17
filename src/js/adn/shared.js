@@ -128,6 +128,13 @@ var EasyList = new Notification({
 });
 EasyList.func = reactivateList.bind(EasyList);
 
+var AdNauseamTxt = new Notification({
+  name: 'AdNauseamTxtDisabled',
+  text: 'adnNotificationActivateAdNauseamList',
+  listUrl: 'assets/ublock/adnauseam.txt'
+});
+AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
+
 var AdBlockPlusEnabled = new Notification({
   name: 'AdBlockPlusEnabled',
   text: 'adnNotificationDisableAdBlockPlus',
@@ -146,7 +153,7 @@ UBlockEnabled.func = openExtPage.bind(UBlockEnabled);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
+var Notifications = [AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
 
 function Notification(m) {
 

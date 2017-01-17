@@ -1613,6 +1613,7 @@
   var verifyLists = exports.verifyLists = function (lists) {
 
     verifyList(EasyList, lists);
+    verifyList(AdNauseamTxt, lists);
   }
 
   var verifyList = exports.verifyList = function (note, lists) {

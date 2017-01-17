@@ -63,6 +63,10 @@
     "message": "Activate the EasyList filter",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
+   "adnNotificationActivateAdNauseamList": {
+    "message": "Activate the AdNauseam filter",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
   "adnNotificationDisableAdBlockPlus": {
     "message": "AdBlock Plus and AdNauseam may conflict!",
     "description": "English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
