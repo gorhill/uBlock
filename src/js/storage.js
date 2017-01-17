@@ -163,7 +163,9 @@
 µBlock.loadSelectedFilterLists = function(callback) {
     var µb = this;
     vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists' ], function(bin) {
-        if ( !bin ) { return callback(); }
+        if ( !bin || !bin.selectedFilterLists && !bin.remoteBlacklists ) {
+            return callback();
+        }
         var listKeys = [];
         if ( bin.selectedFilterLists ) {
             listKeys = bin.selectedFilterLists;
@@ -888,6 +890,13 @@
         var bin = {};
         var binNotEmpty = false;
 
+        // Allows an admin to set their own 'assets.json' file, with their own
+        // set of stock assets.
+        if ( typeof data.assetsBootstrapLocation === 'string' ) {
+            bin.assetsBootstrapLocation = data.assetsBootstrapLocation;
+            binNotEmpty = true;
+        }
+
         if ( typeof data.userSettings === 'object' ) {
             for ( var name in µb.userSettings ) {
                 if ( µb.userSettings.hasOwnProperty(name) === false ) {
@@ -901,6 +910,8 @@
             }
         }
 
+        // 'selectedFilterLists' is an array of filter list tokens. Each token
+        // is a reference to an asset in 'assets.json'.
         if ( Array.isArray(data.selectedFilterLists) ) {
             bin.selectedFilterLists = data.selectedFilterLists;
             binNotEmpty = true;

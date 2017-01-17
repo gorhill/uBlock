@@ -65,7 +65,9 @@ var fireNotification = function(topic, details) {
 /******************************************************************************/
 
 var getTextFileFromURL = function(url, onLoad, onError) {
-    // console.log('µBlock.assets/getTextFileFromURL("%s"):', url);
+    if ( reIsExternalPath.test(url) === false ) {
+        url = vAPI.getURL(url);
+    }
 
     if ( typeof onError !== 'function' ) {
         onError = onLoad;
@@ -392,10 +394,13 @@ var getAssetSourceRegistry = function(callback) {
 
     // First-install case.
     var createRegistry = function() {
-        getTextFileFromURL(vAPI.getURL('assets/assets.json'), function() {
-            updateAssetSourceRegistry(this.responseText);
-            registryReady();
-        });
+        getTextFileFromURL(
+            µBlock.assetsBootstrapLocation || 'assets/assets.json',
+            function() {
+                updateAssetSourceRegistry(this.responseText);
+                registryReady();
+            }
+        );
     };
 
     vAPI.cacheStorage.get('assetSourceRegistry', function(bin) {
@@ -407,8 +412,6 @@ var getAssetSourceRegistry = function(callback) {
         registryReady();
     });
 };
-
-//var updateAssetSourceRegistry = function(raw) {};
 
 api.registerAssetSource = function(assetKey, details) {
     getAssetSourceRegistry(function() {
@@ -725,11 +728,7 @@ api.get = function(assetKey, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        getTextFileFromURL(
-            isExternal ? contentURL : vAPI.getURL(contentURL),
-            onContentLoaded,
-            onContentNotLoaded
-        );
+        getTextFileFromURL(contentURL, onContentLoaded, onContentNotLoaded);
     };
 
     var onContentLoaded = function() {
@@ -892,15 +891,17 @@ api.rmrf = function() {
 
 // Asset updater area.
 
-var updateStatus;
-var updateTimer;
-var updateAssetDelayDefault = 2 * 60 * 1000;
-var updateAssetDelay = updateAssetDelayDefault;
-var updated = [];
+var updaterStatus;
+var updaterTimer;
+var updaterAssetDelayDefault = 2 * 60 * 1000;
+var updaterAssetDelay = updaterAssetDelayDefault;
+var updaterUpdated = [];
+var updaterFetched = new Set();
 
 var updateFirst = function() {
-    updateStatus = 'updating';
-    updated = [];
+    updaterStatus = 'updating';
+    updaterFetched.clear();
+    updaterUpdated = [];
     fireNotification('before-assets-updated');
     updateNext();
 };
@@ -908,38 +909,41 @@ var updateFirst = function() {
 var updateNext = function() {
     var assetDict, cacheDict;
 
+    // This will remove a cached asset when it's no longer in use.
+    var garbageCollectOne = function(assetKey) {
+        var cacheEntry = cacheDict[assetKey];
+        if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
+            assetCacheRemove(assetKey);
+        }
+    };
+
     var findOne = function() {
         var now = Date.now(),
             assetEntry, cacheEntry;
         for ( var assetKey in assetDict ) {
             assetEntry = assetDict[assetKey];
             if ( assetEntry.hasRemoteURL !== true ) { continue; }
+            if ( updaterFetched.has(assetKey) ) { continue; }
             cacheEntry = cacheDict[assetKey];
             if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
-                continue;
-            }
-            if ( assetEntry.error && assetEntry.error.time + 3600000 > now ) {
                 continue;
             }
             if ( fireNotification('before-asset-updated', { assetKey: assetKey }) !== false ) {
                 return assetKey;
             }
-            // This will remove the cached asset if it's no longer in use.
-            if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
-                assetCacheRemove(assetKey);
-            }
+            garbageCollectOne(assetKey);
         }
     };
 
     var updatedOne = function(details) {
         if ( details.content !== '' ) {
-            updated.push(details.assetKey);
+            updaterUpdated.push(details.assetKey);
             if ( details.assetKey === 'assets.json' ) {
                 updateAssetSourceRegistry(details.content);
             }
         }
         if ( findOne() !== undefined ) {
-            vAPI.setTimeout(updateNext, updateAssetDelay);
+            vAPI.setTimeout(updateNext, updaterAssetDelay);
         } else {
             updateDone();
         }
@@ -950,6 +954,7 @@ var updateNext = function() {
         if ( assetKey === undefined ) {
             return updateDone();
         }
+        updaterFetched.add(assetKey);
         getRemote(assetKey, updatedOne);
     };
 
@@ -967,21 +972,22 @@ var updateNext = function() {
 };
 
 var updateDone = function() {
-    var assetKeys = updated.slice(0);
-    updated = [];
-    updateStatus = undefined;
-    updateAssetDelay = updateAssetDelayDefault;
+    var assetKeys = updaterUpdated.slice(0);
+    updaterFetched.clear();
+    updaterUpdated = [];
+    updaterStatus = undefined;
+    updaterAssetDelay = updaterAssetDelayDefault;
     fireNotification('after-assets-updated', { assetKeys: assetKeys });
 };
 
 api.updateStart = function(details) {
-    var oldUpdateDelay = updateAssetDelay,
-        newUpdateDelay = details.delay || updateAssetDelayDefault;
-    updateAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
-    if ( updateStatus !== undefined ) {
+    var oldUpdateDelay = updaterAssetDelay,
+        newUpdateDelay = details.delay || updaterAssetDelayDefault;
+    updaterAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
+    if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {
-            clearTimeout(updateTimer);
-            updateTimer = vAPI.setTimeout(updateNext, updateAssetDelay);
+            clearTimeout(updaterTimer);
+            updaterTimer = vAPI.setTimeout(updateNext, updaterAssetDelay);
         }
         return;
     }
@@ -989,11 +995,11 @@ api.updateStart = function(details) {
 };
 
 api.updateStop = function() {
-    if ( updateTimer ) {
-        clearTimeout(updateTimer);
-        updateTimer = undefined;
+    if ( updaterTimer ) {
+        clearTimeout(updaterTimer);
+        updaterTimer = undefined;
     }
-    if ( updateStatus !== undefined ) {
+    if ( updaterStatus !== undefined ) {
         updateDone();
     }
 };

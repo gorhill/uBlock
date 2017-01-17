@@ -29,8 +29,6 @@ var µBlock = (function() { // jshint ignore:line
 
 var oneSecond = 1000;
 var oneMinute = 60 * oneSecond;
-var oneHour = 60 * oneMinute;
-// var oneDay = 24 * oneHour;
 
 /******************************************************************************/
 
@@ -117,14 +115,14 @@ return {
         lastBackupTime: 0
     },
 
-    // EasyList, EasyPrivacy and many others have an 4-day update period,
-    // as per list headers.
-    updateAssetsEvery: 97 * oneHour,
-    projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
+    // Allows to fully customize uBO's assets, typically set through admin
+    // settings. The content of 'assets.json' will also tell which filter
+    // lists to enable by default when uBO is first installed.
+    assetsBootstrapLocation: 'assets/assets.json',
+
     userFiltersPath: 'user-filters',
     pslAssetKey: 'public_suffix_list.dat',
 
-    // current lists
     availableFilterLists: {},
 
     selfieAfter: 23 * oneMinute,
