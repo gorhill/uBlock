@@ -130,7 +130,7 @@ EasyList.func = reactivateList.bind(EasyList);
 
 var AdNauseamTxt = new Notification({
   name: 'AdNauseamTxtDisabled',
-  text: 'adnNotificationActivateAdNauseamTxt',
+  text: 'adnNotificationActivateAdNauseamList',
   listUrl: 'assets/ublock/adnauseam.txt'
 });
 AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
