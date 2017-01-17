@@ -53,7 +53,6 @@ var oneDay = 24 * oneHour;
 /******************************************************************************/
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
-var adnauseamListPath = 'assets/ublock/adnauseam.txt';
 var assetsRepositoryRoot = 'https://raw.githubusercontent.com/dhowe/uAssets/master/'; // ADN
 var nullFunc = function() {};
 var reIsExternalPath = /^(file|ftps?|https?|resource):\/\//;
@@ -1114,13 +1113,6 @@ exports.get = function(path, callback) {
 
     var onRepoMetaReady = function(meta) {
         var assetEntry = meta.entries[path];
-
-        // ADN: fix for #258 (no longer needed)
-        // if ( assetEntry === undefined && path === adnauseamListPath) {
-        //     //console.log('Creating new ADN asset: '+adnauseamListPath);
-        //     assetEntry= new AssetEntry();
-        //     meta.entries[path] = assetEntry;
-        // }
 
         // Asset doesn't exist
         if ( assetEntry === undefined ) {
