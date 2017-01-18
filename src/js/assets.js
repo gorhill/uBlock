@@ -356,7 +356,7 @@ var updateAssetSourceRegistry = function(json) {
         for ( assetKey in oldDict ) {
             if (
                 newDict[assetKey] === undefined &&
-                newDict[assetKey].submitter === oldDict[assetKey].submitter
+                oldDict[assetKey].submitter === undefined
             ) {
                 unregisterAssetSource(assetKey);
             }
