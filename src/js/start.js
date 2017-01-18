@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ var µb = µBlock;
 
 vAPI.app.onShutdown = function() {
     µb.staticFilteringReverseLookup.shutdown();
-    µb.assetUpdater.shutdown();
+    µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
     µb.cosmeticFilteringEngine.reset();
     µb.sessionFirewall.reset();
@@ -58,14 +58,8 @@ vAPI.app.onShutdown = function() {
 var onAllReady = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/184
     // Check for updates not too far in the future.
-    µb.assetUpdater.onStart.addEventListener(µb.updateStartHandler.bind(µb));
-    µb.assetUpdater.onCompleted.addEventListener(µb.updateCompleteHandler.bind(µb));
-    µb.assetUpdater.onAssetUpdated.addEventListener(µb.assetUpdatedHandler.bind(µb));
-    µb.assets.onAssetRemoved.addListener(µb.assetCacheRemovedHandler.bind(µb));
-
-    // Important: remove barrier to remote fetching, this was useful only
-    // for launch time.
-    µb.assets.remoteFetchBarrier -= 1;
+    µb.assets.addObserver(µb.assetObserver.bind(µb));
+    µb.scheduleAssetUpdater(µb.userSettings.autoUpdate ? 7 * 60 * 1000 : 0);
 
     // vAPI.cloud is optional.
     if ( µb.cloudStorageSupported ) {
@@ -129,7 +123,7 @@ var onSelfieReady = function(selfie) {
         return false;
     }
 
-    µb.remoteBlacklists = selfie.filterLists;
+    µb.availableFilterLists = selfie.availableFilterLists;
     µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
     µb.redirectEngine.fromSelfie(selfie.redirectEngine);
     µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
@@ -156,12 +150,6 @@ var onUserSettingsReady = function(fetched) {
     var userSettings = µb.userSettings;
 
     fromFetch(userSettings, fetched);
-
-    // https://github.com/chrisaljoudi/uBlock/issues/426
-    // Important: block remote fetching for when loading assets at launch
-    // time.
-    µb.assets.autoUpdate = userSettings.autoUpdate;
-    µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
     if ( µb.privacySettingsSupported ) {
         vAPI.browserSettings.set({
@@ -192,7 +180,7 @@ var onUserSettingsReady = function(fetched) {
 var onSystemSettingsReady = function(fetched) {
     var mustSaveSystemSettings = false;
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
-        µb.assets.purge(/^cache:\/\/compiled-/);
+        µb.assets.remove(/^compiled\//);
         mustSaveSystemSettings = true;
     }
     if ( fetched.selfieMagic !== µb.systemSettings.selfieMagic ) {
@@ -254,9 +242,6 @@ var fromFetch = function(to, fetched) {
 /******************************************************************************/
 
 var onAdminSettingsRestored = function() {
-    // Forbid remote fetching of assets
-    µb.assets.remoteFetchBarrier += 1;
-
     var fetchableProps = {
         'compiledMagic': '',
         'dynamicFilteringString': 'behind-the-scene * 3p noop\nbehind-the-scene * 3p-frame noop',
