@@ -180,9 +180,9 @@ api.listKeyAliases = {
 	"https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": "EU-prebake",
 	"https://easylist-downloads.adblockplus.org/Liste_AR.txt": "ara-0",
 	"http://margevicius.lt/easylistlithuania.txt": "LTU-0",
-	"http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-0",
-	"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-1",
-	"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-2",
+	"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-0",
+	"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-1",
+	"http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-2",
 	"assets/thirdparties/pgl.yoyo.org/as/serverlist": "plowe-0",
 	"https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": "ISR-0",
 	"https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "reek-0",
@@ -356,7 +356,7 @@ var updateAssetSourceRegistry = function(json) {
         for ( assetKey in oldDict ) {
             if (
                 newDict[assetKey] === undefined &&
-                oldDict[assetKey].submitter === undefined
+                newDict[assetKey].submitter === oldDict[assetKey].submitter
             ) {
                 unregisterAssetSource(assetKey);
             }
