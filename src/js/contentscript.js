@@ -1116,7 +1116,7 @@ vAPI.domCollapser = (function() {
             }
             catch(e) {
 
-              logP('Ignored cross-domain [dynamic] iFrame', iframe);
+              console.log('Ignored cross-domain [dynamic] iFrame', iframe);
               //console.warn(e);
             }
           }

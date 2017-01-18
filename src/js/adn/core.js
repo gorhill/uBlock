@@ -26,13 +26,13 @@
 
   var xhr, idgen, admap, inspected, listEntries;
 
-  // allow all blocks on requests to/from these domains
+  // blocks requests to/from these domains even if the list is not in enabledBlockLists
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
 
-  // rules from EasyPrivacy we need to ignore (TODO: strip in load?)
+  // rules from EasyPrivacy we need to ignore (TODO: move to adnauseam.txt as exceptions)
   var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
     '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
-    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party',
+    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party'
   ];
 
   // allow blocks only from this set of lists
@@ -1024,10 +1024,11 @@
     for (var path in listEntries) {
 
       entry = listEntries[path];
-      //console.log(entry);
+
       if (entry === undefined) {
         continue;
       }
+
       content = entry.content;
       pos = content.indexOf(compiledFilter);
       if (pos === -1) {
@@ -1114,6 +1115,7 @@
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
 
+      logNetBlock('*Redirect*', context.rootDomain + ' => ' + context.requestURL, context);
       return true;
     }
 
@@ -1270,9 +1272,11 @@
 
   exports.onListsLoaded = function (firstRun) {
 
+    console.log('onListsLoaded:', firstRun);
     µb.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
+      //console.log('listEntries:', listEntries);
       var keys = Object.keys(entries);
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
