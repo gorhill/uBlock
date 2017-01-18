@@ -104,6 +104,12 @@
         case 'string':
             out[name] = value;
             break;
+        case 'number':
+            out[name] = parseInt(value, 10);
+            if ( isNaN(out[name]) ) {
+                out[name] = this.hiddenSettingsDefault[name];
+            }
+            break;
         default:
             break;
         }
@@ -977,7 +983,10 @@
         timer = vAPI.setTimeout(function() {
             timer = undefined;
             next = 0;
-            µBlock.assets.updateStart({ delay: 2 * 60 * 1000 });
+            var µb = µBlock;
+            µb.assets.updateStart({
+                delay: µb.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 || 120000
+            });
         }, updateDelay);
     };
 })();
@@ -1037,7 +1046,11 @@
         if ( details.assetKeys.length !== 0 ) {
             this.loadFilterLists();
         }
-        this.scheduleAssetUpdater(this.userSettings.autoUpdate ? 11 * 60 * 60 * 1000 : 0);
+        if ( this.userSettings.autoUpdate ) {
+            this.scheduleAssetUpdater(this.hiddenSettings.assetAutoUpdatePeriod * 3600000 || 25200000);
+        } else {
+            this.scheduleAssetUpdater(0);
+        }
         return;
     }
 };

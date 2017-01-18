@@ -67,8 +67,12 @@ return {
     },
 
     hiddenSettingsDefault: {
+        assetFetchTimeout: 30,
+        autoUpdateAssetFetchPeriod: 120,
+        autoUpdatePeriod: 7,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
+        manualUpdateAssetFetchPeriod: 2000,
         popupFontSize: 'unset',
         suspendTabsUntilReady: false
     },

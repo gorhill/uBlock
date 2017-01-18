@@ -166,7 +166,9 @@ var renderFilterLists = function() {
                 liGroup.querySelector('.geName').textContent = groupName;
             }
         }
-        liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
+        if ( liGroup.querySelector('.geName:empty') === null ) {
+            liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
+        }
         var ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
@@ -390,13 +392,10 @@ var buttonApplyHandler = function() {
 
 /******************************************************************************/
 
-var buttonUpdateHandler = function(ev) {
+var buttonUpdateHandler = function() {
     var onSelectionDone = function() {
         uDom('#lists .listEntry.obsolete').addClass('updating');
-        messaging.send('dashboard', {
-            what: 'forceUpdateAssets',
-            fast: ev.ctrlKey
-        });
+        messaging.send('dashboard', { what: 'forceUpdateAssets' });
     };
     selectFilterLists(onSelectionDone);
 };

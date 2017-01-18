@@ -27,10 +27,9 @@
 
 /******************************************************************************/
 
-var reIsExternalPath = /^(?:file|ftps?|https?|resource):\/\//;
-var reIsUserAsset = /^user-/;
-var errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
-var xhrTimeout = vAPI.localStorage.getItem('xhrTimeout') || 30000;
+var reIsExternalPath = /^(?:[a-z-]+):\/\//,
+    reIsUserAsset = /^user-/,
+    errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
 
 var api = {
 };
@@ -107,7 +106,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     try {
         xhr.open('get', url, true);
-        xhr.timeout = xhrTimeout;
+        xhr.timeout = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
         xhr.onload = onResponseReceived;
         xhr.onerror = onErrorReceived;
         xhr.ontimeout = onErrorReceived;
@@ -890,13 +889,12 @@ api.rmrf = function() {
 /******************************************************************************/
 
 // Asset updater area.
-
-var updaterStatus;
-var updaterTimer;
-var updaterAssetDelayDefault = 2 * 60 * 1000;
-var updaterAssetDelay = updaterAssetDelayDefault;
-var updaterUpdated = [];
-var updaterFetched = new Set();
+var updaterStatus,
+    updaterTimer,
+    updaterAssetDelayDefault = 120000,
+    updaterAssetDelay = updaterAssetDelayDefault,
+    updaterUpdated = [],
+    updaterFetched = new Set();
 
 var updateFirst = function() {
     updaterStatus = 'updating';
