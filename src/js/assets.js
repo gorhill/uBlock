@@ -352,9 +352,12 @@ var updateAssetSourceRegistry = function(json) {
 
     getAssetSourceRegistry(function(oldDict) {
         var assetKey;
-        // Remove obsolete entries
+        // Remove obsolete entries (only those which were built-in).
         for ( assetKey in oldDict ) {
-            if ( newDict[assetKey] === undefined ) {
+            if (
+                newDict[assetKey] === undefined &&
+                oldDict[assetKey].submitter === undefined
+            ) {
                 unregisterAssetSource(assetKey);
             }
         }
