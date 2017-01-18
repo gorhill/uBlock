@@ -1647,7 +1647,7 @@
 
     var notes = notifications,
       prefs = µb.userSettings,
-      domain = µb.URI.hostnameFromURI(request.url),
+      domain = µb.URI.domainFromHostname(µb.URI.hostnameFromURI(request.url)),
       target = hasDNTNotification(notifications);
 
     //console.log("verifyDNT: " + domain, request.url, prefs.dntDomains);
