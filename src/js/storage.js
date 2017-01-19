@@ -916,11 +916,13 @@
         return;
     }
     // Compile the list while we have the raw version in memory
-    //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
-    this.assets.put(
-        this.getCompiledFilterListPath(path),
-        this.compileFilters(details.content)
-    );
+    var compiledPath =  this.getCompiledFilterListPath(path);
+    var compiled = this.compileFilters(details.content);
+
+    // ADN: Need to tell core that are lists have updated
+    µBlock.adnauseam.onListUpdated(path, compiled);
+
+    this.assets.put(compiledPath, compiled);
 };
 
 /******************************************************************************/

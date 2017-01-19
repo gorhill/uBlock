@@ -1020,11 +1020,9 @@
   var listsForFilter = function (compiledFilter) {
 
     var entry, content, pos, c, lists = [];
-
     for (var path in listEntries) {
 
       entry = listEntries[path];
-
       if (entry === undefined) {
         continue;
       }
@@ -1048,7 +1046,6 @@
       /*{ title: entry.title
       supportURL: entry.supportURL }*/
     }
-
     return lists;
   };
 
@@ -1270,9 +1267,14 @@
     markUserAction();
   };
 
+  // called each time a single list is updated
+  exports.onListUpdated = function (path, content) {
+
+    listEntries[path].content = content;
+  }
+
   exports.onListsLoaded = function (firstRun) {
 
-    console.log('onListsLoaded:', firstRun);
     µb.staticFilteringReverseLookup.initWorker(function (entries) {
 
       listEntries = entries;
