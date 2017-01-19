@@ -139,6 +139,7 @@ var renderFilterLists = function() {
                 lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.writeTime))
             );
         }
+        li.classList.remove('updating');
         li.classList.remove('discard');
         return li;
     };
