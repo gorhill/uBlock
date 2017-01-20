@@ -624,7 +624,7 @@
       }
     }
 
-    ad.targetUrl = trimChar(ad.targetUrl, '/');
+    // ad.targetUrl = trimChar(ad.targetUrl, '/'); #751
     ad.targetDomain = domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
     ad.targetHostname = µb.URI.hostnameFromURI(ad.resolvedTargetUrl || ad.targetUrl);
 
