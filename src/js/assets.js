@@ -361,8 +361,14 @@ var updateAssetSourceRegistry = function(json) {
                 unregisterAssetSource(assetKey);
             }
         }
-        // Add/update existing entries
+        // Add/update existing entries. Notify of new asset sources.
         for ( assetKey in newDict ) {
+            if ( oldDict[assetKey] === undefined ) {
+                fireNotification(
+                    'builtin-asset-source-added',
+                    { assetKey: assetKey, entry: newDict[assetKey] }
+                );
+            }
             registerAssetSource(assetKey, newDict[assetKey]);
         }
         saveAssetSourceRegistry();

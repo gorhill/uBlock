@@ -193,9 +193,10 @@
 µBlock.saveSelectedFilterLists = function(listKeys, append) {
     var µb = this;
     var save = function(keys) {
+        var uniqueKeys = µb.setToArray(new Set(keys));
         var bin = {
-            selectedFilterLists: keys,
-            remoteBlacklists: µb.oldDataFromNewListKeys(keys)
+            selectedFilterLists: uniqueKeys,
+            remoteBlacklists: µb.oldDataFromNewListKeys(uniqueKeys)
         };
         vAPI.storage.set(bin);
     };
@@ -516,8 +517,9 @@
 
     //quickProfiler.start('µBlock.loadFilterLists()');
 
-    var µb = this;
-    var filterlistsCount = 0;
+    var µb = this,
+        filterlistsCount = 0,
+        loadedListKeys = [];
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
@@ -531,7 +533,12 @@
 
         //quickProfiler.stop(0);
 
-        vAPI.messaging.broadcast({ what: 'staticFilteringDataChanged' });
+        vAPI.messaging.broadcast({
+            what: 'staticFilteringDataChanged',
+            parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
+            ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
+            listKeys: loadedListKeys
+        });
 
         callback();
 
@@ -539,17 +546,18 @@
         µb.loadingFilterLists = false;
     };
 
-    var applyCompiledFilters = function(path, compiled) {
-        var snfe = µb.staticNetFilteringEngine;
-        var cfe = µb.cosmeticFilteringEngine;
-        var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
-        var discardedCount = snfe.discardedCount + cfe.discardedCount;
-        µb.applyCompiledFilters(compiled, path === µb.userFiltersPath);
-        if ( µb.availableFilterLists.hasOwnProperty(path) ) {
-            var entry = µb.availableFilterLists[path];
+    var applyCompiledFilters = function(assetKey, compiled) {
+        var snfe = µb.staticNetFilteringEngine,
+            cfe = µb.cosmeticFilteringEngine,
+            acceptedCount = snfe.acceptedCount + cfe.acceptedCount,
+            discardedCount = snfe.discardedCount + cfe.discardedCount;
+        µb.applyCompiledFilters(compiled, assetKey === µb.userFiltersPath);
+        if ( µb.availableFilterLists.hasOwnProperty(assetKey) ) {
+            var entry = µb.availableFilterLists[assetKey];
             entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
             entry.entryUsedCount = entry.entryCount - (snfe.discardedCount + cfe.discardedCount - discardedCount);
         }
+        loadedListKeys.push(assetKey);
     };
 
     var onCompiledListLoaded = function(details) {
@@ -1050,6 +1058,20 @@
             this.scheduleAssetUpdater(this.hiddenSettings.assetAutoUpdatePeriod * 3600000 || 25200000);
         } else {
             this.scheduleAssetUpdater(0);
+        }
+        return;
+    }
+
+    // New asset source became available, if it's a filter list, should we
+    // auto-select it?
+    if ( topic === 'builtin-asset-source-added' ) {
+        if ( details.entry.content === 'filters' ) {
+            if (
+                details.entry.off !== true ||
+                self.navigator.language.startsWith(details.entry.lang)
+            ) {
+                this.saveSelectedFilterLists([ details.assetKey ], true);
+            }
         }
         return;
     }

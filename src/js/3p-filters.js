@@ -29,9 +29,9 @@
 
 /******************************************************************************/
 
-var listDetails = {};
-var filteringSettingsHash = '';
-var externalLists = '';
+var listDetails = {},
+    filteringSettingsHash = '',
+    externalLists = '';
 
 /******************************************************************************/
 
@@ -41,6 +41,10 @@ var onMessage = function(msg) {
         updateAssetStatus(msg);
         break;
     case 'staticFilteringDataChanged':
+        filteringSettingsHash = [
+            msg.parseCosmeticFilters,
+            msg.ignoreGenericCosmeticFilters
+        ].concat(msg.listKeys.sort()).join();
         renderFilterLists();
         break;
     default:
