@@ -313,7 +313,7 @@
      
       if (targetDomain != undefined)
         domain = targetDomain;
-      target = normalizeUrl(proto, domain, target);T
+      target = normalizeUrl(proto, domain, target);
 
       if (target.indexOf('http') < 0) {
 
