@@ -95,7 +95,7 @@
 
     var processImage = function (img) {
 
-      var target, targetUrl, loc = window.location,
+      var target, targetUrl, loc = window.location, targetDomain,
         src = img.src || img.getAttribute("src");
 
       if (!src) { // no image src
@@ -112,13 +112,18 @@
         return;
       }
 
-      if (target.hasAttribute("data-original-click-url")) {
-
-        targetUrl = target.getAttribute("data-original-click-url");
-
-      } else if (target.hasAttribute('href')) {
+      if (target.hasAttribute('href')) {
 
         targetUrl = target.getAttribute("href");
+        
+        //relative url
+        if(targetUrl.indexOf("/") === 0 ){
+           //incase the ad is from an iframe
+           if(target.hasAttribute('data-original-click-url'))
+              targetDomain = parseDomain(target.getAttribute("data-original-click-url"));
+           
+           //Other cases?
+        }
 
       } else if (target.hasAttribute('onclick')) {
         // handle onclick
@@ -139,7 +144,7 @@
       if (img.complete) {
 
         // process the image now
-        return createImageAd(img, src, targetUrl);
+        return createImageAd(img, src, targetUrl, targetDomain);
 
       } else {
 
@@ -149,12 +154,12 @@
           // can't return true here, so findImageAds() will still report
           // 'No Ads found' for the image, but a hit will be still be logged
           // in createImageAd() below
-          createImageAd(img, src, targetUrl);
+          createImageAd(img, src, targetUrl, targetDomain);
         }
       }
     }
 
-    var createImageAd = function (img, src, targetUrl) {
+    var createImageAd = function (img, src, targetUrl, targetDomain) {
 
       var ad, iw = img.naturalWidth || -1, ih = img.naturalHeight || -1,
         minDim = Math.min(iw, ih), maxDim = Math.max(iw, ih);
@@ -166,7 +171,7 @@
         return;
       }
 
-      ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih });
+      ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih }, targetDomain);
 
       if (ad) {
 
@@ -298,15 +303,17 @@
       return true;
     };
 
-    var createAd = function (network, target, data) {
+    var createAd = function (network, target, data, targetDomain) {
 
       var domain = (parent !== window) ?
         parseDomain(document.referrer) : document.domain,
         proto = window.location.protocol || 'http';
 
       //logP('createAd:', domain, target, typeof target);
-
-      target = normalizeUrl(proto, domain, target);
+     
+      if (targetDomain != undefined)
+        domain = targetDomain;
+      target = normalizeUrl(proto, domain, target);T
 
       if (target.indexOf('http') < 0) {
 
