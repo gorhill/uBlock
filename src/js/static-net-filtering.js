@@ -1977,7 +1977,7 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter) {
         if ( token === '.' ) {
             if ( entry === undefined ) {
                 entry = new FilterHostnameDict();
-                bucket.set('.', new FilterHostnameDict());
+                bucket.set('.', entry);
             }
             // 'fclass' is hostname
             if ( entry.add(fclass) === false ) {
