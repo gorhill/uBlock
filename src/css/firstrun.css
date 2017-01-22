@@ -34,6 +34,12 @@ form a {
 .link:hover{
  color: #3B96FF;
 }
+.option-meta span{
+  text-decoration: underline;
+}
+.option-meta span:hover{
+  color: #3B96FF;
+}
 .toggled0{
     display:none;
 }
@@ -73,3 +79,4 @@ label[for="dnt-exception"] {
   font-family: bebas_neue;
   font-size: 12px;
 }
+

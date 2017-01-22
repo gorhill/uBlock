@@ -277,8 +277,12 @@ var appendNotifyDiv = function (notify, template) {
 
   node.addClass(notify.type);
   node.attr('id', notify.name);
-  node.descendants('#notify-text').html("<span data-i18n='" + notify.text + "'></span>");
-  node.descendants('#notify-button').attr('data-i18n', notify.button);
+  var text = document.querySelectorAll('span[data-i18n=' + notify.text + ']');
+  node.descendants('#notify-text').text(text[0].innerHTML);
+
+   var button = document.querySelectorAll('span[data-i18n=' + notify.button + ']');
+   node.descendants('#notify-button').text(button[0].innerHTML);
+
   node.descendants('#notify-link').attr('href', notify.link);
 
   // add click handler to reactivate button (a better way to do this??)
@@ -287,24 +291,23 @@ var appendNotifyDiv = function (notify, template) {
     notify.func.apply(this); // calls reactivateSetting or reactivateList
   });
   uDom('#notifications').append(node);
-  vAPI.i18n.render();
+  // vAPI.i18n.render();
 }
 
 
 var modifyDNTNotifications = function () {
 
-   var text = uDom('.notification.dnt #notify-text').nodes,
+   var text = document.querySelectorAll('.notification.dnt #notify-text'),
        link = uDom('.notification.dnt #notify-link').nodes,
        newlink = uDom('span>#notify-link').nodes;
 
-   // console.log(text, link, newlink);
    if (text.length > 0 && link.length > 0 && newlink.length === 0) {
-   var sections = text[0].innerHTML.split(','),
-       newText = sections[0] + link[0].outerHTML + "," + sections[1];
-
-   uDom('.notification.dnt #notify-text').html(newText);
-   uDom('.notification.dnt>#notify-link').css('display', 'none');
- }
+       var sections = text[0].innerText.split(','),
+           newText = sections[0] + link[0].outerHTML + "," + sections[1];
+           
+       text[0].innerHTML = newText;
+       uDom('.notification.dnt>#notify-link').css('display', 'none');
+   }
 };
 
 function reactivateSetting() {
