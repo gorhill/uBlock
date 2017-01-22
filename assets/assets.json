@@ -197,11 +197,7 @@
 		"group": "social",
 		"off": true,
 		"title": "Anti-ThirdpartySocial (see warning inside list)",
-		"contentURL": [
-			"https://easylist.to/easylist/fanboy-social.txt",
-			"https://fanboy.co.nz/fanboy-antifacebook.txt",
-			"https://easylist-downloads.adblockplus.org/fanboy-social.txt"
-		],
+		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"fanboy-annoyance": {
