@@ -696,7 +696,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         result = µb.sessionURLFiltering.toFilterString();
     }
 
-    // ADN: now check our firewall (top precendence)
+    // ADN: now check our DNT firewall (top precendence)
     if ( result === '' ) result = µb.adnauseam.dnt.mustAllowRequest(context);
 
     // Dynamic hostname/type filtering.
@@ -713,8 +713,8 @@ PageStore.prototype.filterRequestNoCache = function(context) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
 
             if (µb.adnauseam.mustAllowRequest(result, context)) {
-                console.warn("*** Blocking filterRequestNoCache ***"); // when?
-                result = ''; // not-blocking
+                //console.warn("*** Blocking filterRequestNoCache ***"); // when?
+                result = ''; // ADN: cannot block
             }
         }
     }
