@@ -12,7 +12,7 @@ DES=bin/build/adnauseam.opera
 rm -r $DES
 mkdir -p $DES
 
-VERSION=`jq .version manifest.json` # new-manifest
+VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
 bash ./tools/make-assets.sh $DES
@@ -33,22 +33,20 @@ cp platform/chromium/*.html $DES/
 cp platform/chromium/*.js   $DES/js/
 cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
+
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
-sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 cp LICENSE.txt $DES/
 
+sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 echo "*** adnauseam.opera: Generating meta..."
-python tools/make-webext-meta.py $DES/
+# python tools/make-webext-meta.py $DES/  ADN: user our own version
 
-rm -r $DES/_locales/cv
-rm -r $DES/_locales/hi
-rm -r $DES/_locales/mr
-rm -r $DES/_locales/ta
+#rm -r $DES/_locales/cv
+#rm -r $DES/_locales/hi
+#rm -r $DES/_locales/mr
+#rm -r $DES/_locales/ta
 
-
-
-#head $DES/manifest.json
+grep version $DES/manifest.json

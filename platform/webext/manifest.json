@@ -1,12 +1,12 @@
 {
     "manifest_version": 2,
 
-    "name": "uBlock Origin",
-    "version": "1.9.15.101",
+    "name": "AdNauseam",
+    "version": "{version}",
 
     "applications": {
         "gecko": {
-            "id": "uBlock0@raymondhill.net",
+            "id": "adnauseam@rednoise.org",
             "strict_min_version": "51.0",
             "strict_max_version": "52.*"
         }
@@ -24,18 +24,18 @@
             "19": "img/browsericons/icon19.png",
             "38": "img/browsericons/icon38.png"
         },
-        "default_title": "uBlock Origin",
+        "default_title": "AdNauseam",
         "default_popup": "popup.html"
     },
 
-    "author": "All uBlock Origin contributors",
+    "author": "Daniel C. Howe",
     "background": {
         "page": "background.html"
     },
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi-client.js", "js/contentscript.js"],
+            "js": ["js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
             "run_at": "document_start",
             "all_frames": true
         },
@@ -63,7 +63,7 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock₀",
+    "short_name": "AdNauseam",
     "storage": {
         "managed_schema": "managed_storage.json"
     }

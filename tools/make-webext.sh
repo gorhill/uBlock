@@ -9,6 +9,9 @@ DES=dist/build/uBlock0.webext
 rm -rf $DES
 mkdir -p $DES
 
+VERSION=`jq .version manifest.json` # top-level adnauseam manifest
+UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
+
 bash ./tools/make-assets.sh $DES
 
 cp -R src/css                    $DES/
@@ -27,13 +30,18 @@ cp platform/webext/manifest.json $DES/
 cp LICENSE.txt                   $DES/
 
 echo "*** uBlock0.webext: Generating meta..."
-python tools/make-webext-meta.py $DES/
+# python tools/make-webext-meta.py $DES/     ADN: use our own version
+#
+
+sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 if [ "$1" = all ]; then
-    echo "*** uBlock0.webext: Creating package..."
+    echo "*** adnauseam.webext: Creating package..."
     pushd $(dirname $DES/) > /dev/null
-    zip uBlock0.webext.zip -qr $(basename $DES/)/*
+    zip adnauseam.webext.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
-echo "*** uBlock0.webext: Package done."
+echo "*** adnauseam.webext: Package done."

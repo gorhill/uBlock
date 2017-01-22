@@ -8,7 +8,8 @@ DES=bin/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES
 
-UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version
+#VERSION=`jq .version manifest.json` # top-level adnauseam manifest
+UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
 bash ./tools/make-assets.sh $DES
 bash ./tools/make-locales.sh $DES  # locale
