@@ -115,18 +115,21 @@
       if (target.hasAttribute('href')) {
 
         targetUrl = target.getAttribute("href");
-        
-        //relative url
-        if(targetUrl.indexOf("/") === 0 ){
-           //incase the ad is from an iframe
-           if(target.hasAttribute('data-original-click-url'))
+
+        // do we have a relative url
+        if (targetUrl.indexOf("/") === 0 ) {
+
+           // in case the ad is from an iframe
+           if (target.hasAttribute('data-original-click-url')) {
+
               targetDomain = parseDomain(target.getAttribute("data-original-click-url"));
-           
-           //Other cases?
+           }
+
+           // TODO: do we want to use the pageDomain here?
         }
 
       } else if (target.hasAttribute('onclick')) {
-        // handle onclick
+
         var onclickInfo = target.getAttribute("onclick");
         if (onclickInfo && onclickInfo.length) {
 
@@ -310,7 +313,7 @@
         proto = window.location.protocol || 'http';
 
       //logP('createAd:', domain, target, typeof target);
-     
+
       if (targetDomain != undefined)
         domain = targetDomain;
       target = normalizeUrl(proto, domain, target);
@@ -329,6 +332,8 @@
         return false; // for now
     }
 
+    var ocRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi
+
     // parse the target link from a js onclick handler
     var parseOnClick = function (str, hostname, proto) {
 
@@ -338,8 +343,7 @@
       if (!(matches && matches.length)) {
 
         // if failed try generic regex to extract any URLs
-        var re = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi
-        matches = re.exec(str);
+        matches = ocRegex.exec(str);
       }
 
       if (matches && matches.length > 0) {
@@ -348,8 +352,6 @@
         return normalizeUrl(proto, hostname, result);
       }
     }
-
-    /**********************************************************************/
 
     return {
 
