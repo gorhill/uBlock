@@ -1035,7 +1035,7 @@ vAPI.net.registerListeners = function() {
     };
 
     // This is needed for Chromium 49-55.
-    var onBeforeSendHeaders = function(details) {
+    /*var onBeforeSendHeaders = function(details) {
         if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
         var type = headerValue(details.requestHeaders, 'content-type');
         if ( type === '' ) { return; }
@@ -1043,7 +1043,7 @@ vAPI.net.registerListeners = function() {
             details.type = 'csp_report';
             return onBeforeRequestClient(details);
         }
-    };
+    };*/
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
@@ -1077,6 +1077,16 @@ vAPI.net.registerListeners = function() {
     // ADN
     var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback;
     var onBeforeSendHeaders = function(details) {
+
+        // This is needed for Chromium 49-55
+        if (details.type === 'ping' && details.method === 'POST') {
+
+          var type = headerValue(details.requestHeaders, 'content-type');
+          if (type.endsWith('/csp-report')) {
+            details.type = 'csp_report';
+            return onBeforeRequestClient(details);
+          }
+        }
 
         normalizeRequestDetails(details);
         var result = onBeforeSendHeadersClient(details);
@@ -1127,7 +1137,7 @@ vAPI.net.registerListeners = function() {
 
         // Chromium 48 and lower does not support `ping` type.
         // Chromium 56 and higher does support `csp_report` stype.
-        if ( is_v49_55 && crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
+        /*if ( is_v49_55 && crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
             crapi.onBeforeSendHeaders.addListener(
                 onBeforeSendHeaders,
                 {
@@ -1136,7 +1146,7 @@ vAPI.net.registerListeners = function() {
                 },
                 [ 'blocking', 'requestHeaders' ]
             );
-        }
+        }*/
 
         if ( crapi.onHeadersReceived.hasListener(onHeadersReceived) === false ) {
             crapi.onHeadersReceived.addListener(

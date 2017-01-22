@@ -28,16 +28,16 @@
     "description": "English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "hide Ads in your selected <span>filter lists<\/span>",
-    "description": "English: Firstrun.html -> hide Ads in your selected filter lists"
+    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "register visits on Ads found via your <span>filter lists<\/span>",
-    "description": "English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "message": "Register visits on Ads found via your <span>filter lists<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "optimize your settings to protect against malicious Ads (<span>customize<\/span>)",
-    "description": "English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "message": "Protect against malicious Ads and trackers (<span>customize<\/span>)",
+    "description": "English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate": {
     "message": "Reactivate",
