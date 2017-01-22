@@ -2473,12 +2473,12 @@ vAPI.net.registerListeners = function() {
     }
 
     // ADN
-    if (typeof this.onBeforeRedirect.callback === 'function') {
+    /*if (typeof this.onBeforeRedirect.callback === 'function') {
       httpObserver.onBeforeRedirect = this.onBeforeRedirect.callback;
       httpObserver.onBeforeRedirectTypes = this.onBeforeRedirect.types ?
         new Set(this.onBeforeRedirect.types) :
         null;
-    }
+    }*/
 
     if ( typeof this.onBeforeRequest.callback === 'function' ) {
         httpObserver.onBeforeRequest = this.onBeforeRequest.callback;
