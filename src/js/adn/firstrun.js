@@ -35,8 +35,6 @@
   /******************************************************************************/
   var changeUserSettings = function (name, value) {
 
-    //console.log("changing", name, value);
-
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -104,11 +102,14 @@
     if (hasEnabledToggle()) {
       //remove class "disable"
       button.removeClass("disabled");
-    }
+    } 
     else {
       //add class disable
       button.addClass("disabled");
     }
+    
+    //hide all
+    uDom('#confirm-close button span').css("display", "none");
 
     //change text according to toggle Numbers
     switch(toggleNum()) {
@@ -118,30 +119,26 @@
 
         button.addClass("toggled0");
         break;
-    case 1:
-        button.attr("data-i18n", "adnFirstRunThatsIt");
+    case 1: 
+        uDom('span[data-i18n="adnFirstRunThatsIt"]').css("display", "inline-block");
         button.removeClass("toggled0");
-
         button.removeClass("toggled2");
         button.addClass("large");
         button.addClass("toggled1");
         break;
     case 2:
-        button.attr("data-i18n", "adnFirstRunBetterButStill");
+        uDom('span[data-i18n="adnFirstRunBetterButStill"]').css("display", "inline-block");
         button.removeClass("toggled1");
         button.removeClass("toggled3");
         button.addClass("toggled2");
         break;
     case 3:
-        button.attr("data-i18n", "adnFirstRunLetsGo");
+        uDom('span[data-i18n="adnFirstRunLetsGo"]').css("display", "inline-block");
         button.removeClass("toggled2");
         button.addClass("toggled3");
         break;
 
     }
-    //reload the text
-    vAPI.i18n.render();
-
   }
 
   /******************************************************************************/
@@ -178,11 +175,11 @@
         .on('change', onInputChanged);
     });
 
-    uDom(document).on('click', '#To3pfilter', function() {
+    uDom(document).on('click', 'p[data-i18n="adnFirstRunHideAllAdsDescription"] span, p[data-i18n="adnFirstRunClickingAdsDescription"] span', function() {
         openPage('/dashboard.html#3p-filters.html');
     });
 
-    uDom(document).on('click', '#ToOptions',function (e) {
+    uDom(document).on('click', 'p[data-i18n="adnFirstRunBlockingMalwareDescription"] span',function (e) {
        openPage('/dashboard.html#options.html');
     });
 
