@@ -25,42 +25,37 @@
 
 // Start isolation from global scope
 
-µBlock.webRequest = (function () {
+µBlock.webRequest = (function() {
 
-  //var GoogleSearchPrefix = 'https://www.google.com.hk'; // what is this for?
-  var AcceptHeaders = {
-      chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-  };
-  var CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
+var AcceptHeaders = {
+    chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+};
+var CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
 
-  /******************************************************************************/
+var exports = {};
 
-  var exports = {};
+/******************************************************************************/
 
-  /******************************************************************************/
+// Intercept and filter web requests.
 
-  // Intercept and filter web requests.
-
-  var onBeforeRequest = function (details) {
-
+var onBeforeRequest = function(details) {
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
     var requestType = details.type;
-    if (requestType === 'main_frame') {
-      return onBeforeRootFrameRequest(details);
+    if ( requestType === 'main_frame' ) {
+        return onBeforeRootFrameRequest(details);
     }
 
     // ADN: return here (AFTER onPageLoad) if prefs say not to block
-    if (µBlock.userSettings.blockingMalware === false) {
-        return;
-    }
+    if (µBlock.userSettings.blockingMalware === false) return;
+
     // Special treatment: behind-the-scene requests
     var tabId = details.tabId;
-    if (vAPI.isBehindTheSceneTabId(tabId)) {
-      return onBeforeBehindTheSceneRequest(details);
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+        return onBeforeBehindTheSceneRequest(details);
     }
 
     // Lookup the page store associated with this tab id.
@@ -93,23 +88,23 @@
     requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
     requestContext.requestType = requestType;
 
-    // ADN: note: blocking checked in this function
     var result = pageStore.filterRequest(requestContext);
 
     pageStore.journalAddRequest(requestContext.requestHostname, result);
 
-    if (µb.logger.isEnabled()) {
-      µb.logger.writeOne(
-        tabId,
-        'net',
-        result,
-        requestType,
-        requestURL,
-        requestContext.rootHostname,
-        requestContext.pageHostname
-      );
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            requestType,
+            requestURL,
+            requestContext.rootHostname,
+            requestContext.pageHostname
+        );
     }
 
+    // Not blocked
     if ( µb.isAllowResult(result) ) {
         // https://github.com/chrisaljoudi/uBlock/issues/114
         if ( details.parentFrameId !== -1 && isFrame ) {
@@ -121,21 +116,13 @@
 
     // Blocked
 
-    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
-    // No point updating the badge if it's not being displayed.
-    if (µb.userSettings.showIconBadge) {
-      µb.updateBadgeAsync(tabId);
-    }
-
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
     var url = µb.redirectEngine.toURL(requestContext);
-
     if ( url !== undefined ) {
 
-        µb.adnauseam.logRedirect(requestURL, url);
+        µb.adnauseam.logRedirect(requestURL, url); // ADN, log redirects
         pageStore.internalRedirectionCount += 1;
-
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 tabId,
@@ -152,9 +139,33 @@
     }
 
     requestContext.dispose();
+    return { cancel: true };
+};
 
-    return {
-      cancel: true
+/******************************************************************************/
+
+var onBeforeRootFrameRequest = function(details) {
+    var tabId = details.tabId;
+    var requestURL = details.url;
+    var µb = µBlock;
+
+    µb.tabContextManager.push(tabId, requestURL);
+
+    // Special handling for root document.
+    // https://github.com/chrisaljoudi/uBlock/issues/1001
+    // This must be executed regardless of whether the request is
+    // behind-the-scene
+    var µburi = µb.URI;
+    var requestHostname = µburi.hostnameFromURI(requestURL);
+    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+    var context = {
+        rootHostname: requestHostname,
+        rootDomain: requestDomain,
+        pageHostname: requestHostname,
+        pageDomain: requestDomain,
+        requestURL: requestURL,
+        requestHostname: requestHostname,
+        requestType: 'main_frame'
     };
 
     var result = '';
@@ -208,9 +219,7 @@
     µb.adnauseam.onPageLoad(tabId, requestURL);
 
     // ADN: return here if prefs say not to block
-    if (µBlock.userSettings.blockingMalware === false) {
-        return;
-    }
+    if (µBlock.userSettings.blockingMalware === false) return;
 
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
@@ -257,26 +266,26 @@
 var toBlockDocResult = function(url, hostname, result) {
     // Make a regex out of the result
     var re = µBlock.staticNetFilteringEngine
-      .filterRegexFromCompiled(result.slice(3), 'gi');
-    if (re === null) {
-      return '';
+                   .filterRegexFromCompiled(result.slice(3), 'gi');
+    if ( re === null ) {
+        return '';
     }
     var matches = re.exec(url);
-    if (matches === null) {
-      return '';
+    if ( matches === null ) {
+        return '';
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
     // Relax the rule: verify that the match is completely before the path part
-    if (re.lastIndex <= url.indexOf(hostname) + hostname.length + 1) {
-      return result;
+    if ( re.lastIndex <= url.indexOf(hostname) + hostname.length + 1 ) {
+        return result;
     }
 
     return '';
-  };
+};
 
-  /******************************************************************************/
+/******************************************************************************/
 
 // Intercept and filter behind-the-scene requests.
 
@@ -333,78 +342,75 @@ var onBeforeBehindTheSceneRequest = function(details) {
     context.dispose();
 
     // Not blocked
-    if (µb.isAllowResult(result)) {
-      return;
+    if ( µb.isAllowResult(result) ) {
+        return;
     }
 
     // Blocked xhr
     µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
 
-    return {
-      'cancel': true
-    };
-  };
+    // Blocked
+    return { 'cancel': true };
+};
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  var onBeforeRedirect = function (details) {
-    //log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
-  };
+// To handle:
+// - inline script tags
+// - media elements larger than n kB
 
-  // To handle:
-  // - inline script tags
-  // - media elements larger than n kB
-  var onHeadersReceived = function (details) {
+var onHeadersReceived = function (details) {
 
-      var ad, tabId = details.tabId, requestType = details.type, dbug = 0;
+    var ad, tabId = details.tabId, requestType = details.type, dbug = 0;
 
-      if (vAPI.isBehindTheSceneTabId(tabId)) {
+    if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-        // ADN: handle incoming cookies for our visits (ignore in ff for now)
-        if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
+      // ADN: handle incoming cookies for our visits (ignore in ff for now)
+      if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            dbug && console.log('onHeadersReceived: ', requestType, details.url);
+          dbug && console.log('onHeadersReceived: ', requestType, details.url);
 
-            // ADN
-            if (ad = µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
+          // ADN
+          if (ad = µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
 
-              µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
-            }
-            else if (dbug && vAPI.chrome) {
+            µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+          }
+          else if (dbug && vAPI.chrome) {
 
-              console.log('Ignoring non-ADN response', requestType, details.url);
-            }
-        }
-
-        // don't return an empty headers array
-        return details.responseHeaders.length ?
-          { 'responseHeaders': details.responseHeaders } : null;
+            console.log('Ignoring non-ADN response', requestType, details.url);
+          }
       }
 
-      // ADN: check if this was an allowed exception and, if so, block cookies
-      var result = null,
-        modified = µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
+      // don't return an empty headers array
+      return details.responseHeaders.length ?
+        { 'responseHeaders': details.responseHeaders } : null;
+    }
 
-      if (requestType === 'main_frame') {
-        result = onRootFrameHeadersReceived(details);
-      }
+    // ADN: check if this was an allowed exception and, if so, block cookies
+    var result = null,
+      modified = µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
 
-      if (requestType === 'sub_frame') {
-        result = onFrameHeadersReceived(details);
-      }
+    if (requestType === 'main_frame') {
+      result = onRootFrameHeadersReceived(details);
+    }
 
-      if (requestType === 'image' || requestType === 'media') {
-        result = foilLargeMediaElement(details);
-      }
+    if (requestType === 'sub_frame') {
+      result = onFrameHeadersReceived(details);
+    }
 
-      // ADN: if we're not blocking and we've modified headers, tell the caller (#601)
-      if (modified && !result) {
-        return details.responseHeaders.length ?
-          { 'responseHeaders': details.responseHeaders } : null;
-      }
+    if (requestType === 'image' || requestType === 'media') {
+      result = foilLargeMediaElement(details);
+    }
 
-      return result;
-  };
+    // ADN: if we're not blocking and we've modified headers, tell the caller (#601)
+    if (modified && !result) {
+      return details.responseHeaders.length ?
+        { 'responseHeaders': details.responseHeaders } : null;
+    }
+
+    return result;
+};
+
 
   /******************************************************************************/
 
@@ -916,13 +922,17 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
     callback: onHeadersReceived
   };
 
-  vAPI.net.onBeforeRedirect = { // ADN
-    urls: [
-      'http://*/*',
-      'https://*/*'
-    ],
-    callback: onBeforeRedirect
-  };
+  // var onBeforeRedirect = function (details) {
+  //    //log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
+  // };
+  //
+  // vAPI.net.onBeforeRedirect = { // ADN: not used now
+  //   urls: [
+  //     'http://*/*',
+  //     'https://*/*'
+  //   ],
+  //   callback: onBeforeRedirect
+  // };
 
   vAPI.net.onBeforeSendHeaders = {   // ADN
     urls: [

@@ -417,13 +417,19 @@
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
 
-       vAPI.tabs.get(null, function(tab) {
-           var tabId = tab.id;
-           µb.updateBadgeAsync(tabId, true); //click Icon
-           setTimeout(function() {
-               µb.updateBadgeAsync(tabId);
-           }, 600);//back to normal
-       });
+      vAPI.tabs.get(null, function (tab) {
+
+        if (tab && tab.id) { // do click animation
+          var tabId = tab.id;
+          µb.updateBadgeAsync(tabId, true); // click icon
+          setTimeout(function () {
+            µb.updateBadgeAsync(tabId);
+          }, 600); // back to normal icon
+        }
+        else {
+          warn('Null tab in click animation: ', tab);
+        }
+      });
 
       vAPI.messaging.broadcast({
         what: 'adVisited',

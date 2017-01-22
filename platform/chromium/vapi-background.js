@@ -1046,7 +1046,6 @@ vAPI.net.registerListeners = function() {
     };
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
@@ -1098,13 +1097,13 @@ vAPI.net.registerListeners = function() {
         return result;
     };
 
-    // ADN
-    var onBeforeRedirectClient = this.onBeforeRedirect.callback;
+    // ADN -- not used
+    /*var onBeforeRedirectClient = this.onBeforeRedirect.callback;
     var onBeforeRedirect = function(details) {
 
       normalizeRequestDetails(details);
       return onBeforeRedirectClient(details);
-    };
+    };*/
 
     var installListeners = (function() {
         var crapi = chrome.webRequest;
@@ -1151,10 +1150,9 @@ vAPI.net.registerListeners = function() {
         }
 
         // ADN
-        listener = onBeforeSendHeaders;
-        if ( crapi.onBeforeSendHeaders.hasListener(listener) === false ) {
+        if ( crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
             crapi.onBeforeSendHeaders.addListener(
-                listener,
+                onBeforeSendHeaders,
                 {
                     'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
                     'types': this.onBeforeSendHeaders.types || undefined
@@ -1164,10 +1162,9 @@ vAPI.net.registerListeners = function() {
         }
 
         // ADN
-        /*listener = onBeforeRedirect;
-        if ( crapi.onBeforeRedirect.hasListener(listener) === false ) {
+        /*if ( crapi.onBeforeRedirect.hasListener(onBeforeRedirect) === false ) {
             crapi.onBeforeRedirect.addListener(
-                listener,
+                onBeforeRedirect,
                 {
                     'urls': this.onBeforeRedirect.urls || ['<all_urls>'],
                     'types': this.onBeforeRedirect.types
