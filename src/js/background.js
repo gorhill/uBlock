@@ -127,6 +127,7 @@ return {
     userFiltersPath: 'user-filters',
     pslAssetKey: 'public_suffix_list.dat',
 
+    selectedFilterLists: [],
     availableFilterLists: {},
 
     selfieAfter: 23 * oneMinute,

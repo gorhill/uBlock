@@ -186,28 +186,33 @@
             // Uncomment when all have moved to v1.11 and beyond.
             //vAPI.storage.remove('remoteBlacklists');
         }
+        µb.selectedFilterLists = listKeys.slice();
         callback(listKeys);
     });
 };
 
-µBlock.saveSelectedFilterLists = function(listKeys, append) {
+µBlock.saveSelectedFilterLists = function(newKeys, append) {
     var µb = this;
-    var save = function(keys) {
-        var uniqueKeys = µb.setToArray(new Set(keys));
+    this.loadSelectedFilterLists(function(oldKeys) {
+        oldKeys = oldKeys || [];
+        if ( append ) {
+            newKeys = newKeys.concat(oldKeys);
+        }
+        var newSet = new Set(newKeys);
+        // Purge unused filter lists from cache.
+        for ( var i = 0, n = oldKeys.length; i < n; i++ ) {
+            if ( newSet.has(oldKeys[i]) === false ) {
+                µb.removeFilterList(oldKeys[i]);
+            }
+        }
+        newKeys = µb.setToArray(newSet);
         var bin = {
-            selectedFilterLists: uniqueKeys,
-            remoteBlacklists: µb.oldDataFromNewListKeys(uniqueKeys)
+            selectedFilterLists: newKeys,
+            remoteBlacklists: µb.oldDataFromNewListKeys(newKeys)
         };
+        µb.selectedFilterLists = newKeys;
         vAPI.storage.set(bin);
-    };
-    if ( append ) {
-        this.loadSelectedFilterLists(function(keys) {
-            listKeys = listKeys.concat(keys || []);
-            save(listKeys);
-        });
-    } else {
-        save(listKeys);
-    }
+    });
 };
 
 // TODO(seamless migration):
@@ -259,6 +264,113 @@
     return remoteBlacklists;
 };
 // <<<<<<<<
+
+/******************************************************************************/
+
+µBlock.applyFilterListSelection = function(details, callback) {
+    var µb = this,
+        selectedListKeySet = new Set(this.selectedFilterLists),
+        externalLists = this.userSettings.externalLists,
+        i, n, assetKey;
+
+    // Filter lists to select
+    if ( Array.isArray(details.toSelect) ) {
+        if ( details.merge ) {
+            for ( i = 0, n = details.toSelect.length; i < n; i++ ) {
+                selectedListKeySet.add(details.toSelect[i]);
+            }
+        } else {
+            selectedListKeySet = new Set(details.toSelect);
+        }
+    }
+
+    // Imported filter lists to remove
+    if ( Array.isArray(details.toRemove) ) {
+        var removeURLFromHaystack = function(haystack, needle) {
+            return haystack.replace(
+                new RegExp(
+                    '(^|\\n)' +
+                    needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+                    '(\\n|$)', 'g'),
+                '\n'
+            ).trim();
+        };
+        for ( i = 0, n = details.toRemove.length; i < n; i++ ) {
+            assetKey = details.toRemove[i];
+            selectedListKeySet.delete(assetKey);
+            externalLists = removeURLFromHaystack(externalLists, assetKey);
+            this.removeFilterList(assetKey);
+        }
+    }
+
+    // Filter lists to import
+    if ( typeof details.toImport === 'string' ) {
+        // https://github.com/gorhill/uBlock/issues/1181
+        //   Try mapping the URL of an imported filter list to the assetKey of an
+        //   existing stock list.
+        var assetKeyFromURL = function(url) {
+            var needle = url.replace(/^https?:/, '');
+            var assets = µb.availableFilterLists, asset;
+            for ( var assetKey in assets ) {
+                asset = assets[assetKey];
+                if ( asset.content !== 'filters' ) { continue; }
+                if ( typeof asset.contentURL === 'string' ) {
+                    if ( asset.contentURL.endsWith(needle) ) { return assetKey; }
+                    continue;
+                }
+                if ( Array.isArray(asset.contentURL) === false ) { continue; }
+                for ( i = 0, n = asset.contentURL.length; i < n; i++ ) {
+                    if ( asset.contentURL[i].endsWith(needle) ) {
+                        return assetKey;
+                    }
+                }
+            }
+            return url;
+        };
+        var importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists)),
+            toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport)),
+            iter = toImportSet.values();
+        for (;;) {
+            var entry = iter.next();
+            if ( entry.done ) { break; }
+            if ( importedSet.has(entry.value) ) { continue; }
+            assetKey = assetKeyFromURL(entry.value);
+            if ( assetKey === entry.value ) {
+                importedSet.add(entry.value);
+            }
+            selectedListKeySet.add(assetKey);
+        }
+        externalLists = this.setToArray(importedSet).sort().join('\n');
+    }
+
+    var result = this.setToArray(selectedListKeySet);
+    if ( externalLists !== this.userSettings.externalLists ) {
+        this.userSettings.externalLists = externalLists;
+        vAPI.storage.set({ externalLists: externalLists });
+    }
+    this.saveSelectedFilterLists(result);
+    if ( typeof callback === 'function' ) {
+        callback(result);
+    }
+};
+
+/******************************************************************************/
+
+µBlock.listKeysFromCustomFilterLists = function(raw) {
+    var out = new Set(),
+        reIgnore = /^[!#]/,
+        reValid = /^[a-z-]+:\/\/\S+/,
+        lineIter = new this.LineIterator(raw),
+        location;
+    while ( lineIter.eot() === false ) {
+        location = lineIter.next().trim();
+        if ( reIgnore.test(location) || !reValid.test(location) ) {
+            continue;
+        }
+        out.add(location);
+    }
+    return this.setToArray(out);
+};
 
 /******************************************************************************/
 
@@ -315,21 +427,6 @@
 
 /******************************************************************************/
 
-µBlock.listKeysFromCustomFilterLists = function(raw) {
-    var out = {};
-    var reIgnore = /^[!#]|[^0-9A-Za-z!*'();:@&=+$,\/?%#\[\]_.~-]/,
-        lineIter = new this.LineIterator(raw),
-        location;
-    while ( lineIter.eot() === false ) {
-        location = lineIter.next().trim();
-        if ( location === '' || reIgnore.test(location) ) { continue; }
-        out[location] = true;
-    }
-    return Object.keys(out);
-};
-
-/******************************************************************************/
-
 µBlock.autoSelectRegionalFilterLists = function(lists) {
     var lang = self.navigator.language.slice(0, 2),
         selectedListKeys = [],
@@ -347,41 +444,6 @@
         }
     }
     return selectedListKeys;
-};
-
-/******************************************************************************/
-
-µBlock.changeExternalFilterLists = function(before, after) {
-    var µb = µBlock;
-    var onLoaded = function(keys) {
-        var fullDict = new Set(keys || []),
-            mustSave = false,
-            oldKeys = µb.listKeysFromCustomFilterLists(before),
-            oldDict = new Set(oldKeys),
-            newKeys = µb.listKeysFromCustomFilterLists(after),
-            newDict = new Set(newKeys),
-            i, key;
-        i = oldKeys.length;
-        while ( i-- ) {
-            key = oldKeys[i];
-            if ( fullDict.has(key) && !newDict.has(key) ) {
-                fullDict.delete(key);
-                mustSave = true;
-            }
-        }
-        i = newKeys.length;
-        while ( i-- ) {
-            key = newKeys[i];
-            if ( !fullDict.has(key) && !oldDict.has(key) ) {
-                fullDict.add(key);
-                mustSave = true;
-            }
-        }
-        if ( mustSave ) {
-            µb.saveSelectedFilterLists(µb.setToArray(fullDict));
-        }
-    };
-    this.loadSelectedFilterLists(onLoaded);
 };
 
 /******************************************************************************/
@@ -1006,7 +1068,7 @@
     if ( topic === 'before-asset-updated' ) {
         if (
             this.availableFilterLists.hasOwnProperty(details.assetKey) &&
-            this.availableFilterLists[details.assetKey].off === true
+            this.selectedFilterLists.indexOf(details.assetKey) === -1
         ) {
             return false;
         }
@@ -1018,7 +1080,7 @@
         var cached = typeof details.content === 'string' && details.content !== '';
         if ( this.availableFilterLists.hasOwnProperty(details.assetKey) ) {
             if ( cached ) {
-                if ( this.availableFilterLists[details.assetKey].off !== true ) {
+                if ( this.selectedFilterLists.indexOf(details.assetKey) !== -1 ) {
                     this.extractFilterListMetadata(
                         details.assetKey,
                         details.content
@@ -1045,6 +1107,16 @@
             key: details.assetKey,
             cached: cached
             
+        });
+        return;
+    }
+
+    // Update failed.
+    if ( topic === 'asset-update-failed' ) {
+        vAPI.messaging.broadcast({
+            what: 'assetUpdated',
+            key: details.assetKey,
+            failed: true
         });
         return;
     }

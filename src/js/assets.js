@@ -96,7 +96,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 
     var onErrorReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
-        µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', ''));
+        µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', url));
         onError.call(this);
     };
 
@@ -805,7 +805,11 @@ var getRemote = function(assetKey, callback) {
     };
 
     var onRemoteContentError = function() {
-        registerAssetSource(assetKey, { error: { time: Date.now(), error: this.statusText } });
+        var text = this.statusText;
+        if ( this.status === 0 ) {
+            text = 'network error';
+        }
+        registerAssetSource(assetKey, { error: { time: Date.now(), error: text } });
         tryLoading();
     };
 
@@ -948,6 +952,8 @@ var updateNext = function() {
             if ( details.assetKey === 'assets.json' ) {
                 updateAssetSourceRegistry(details.content);
             }
+        } else {
+            fireNotification('asset-update-failed', { assetKey: details.assetKey });
         }
         if ( findOne() !== undefined ) {
             vAPI.setTimeout(updateNext, updaterAssetDelay);

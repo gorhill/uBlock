@@ -30,7 +30,8 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
 			"assets/ublock/filters.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
 	"ublock-badware": {
 		"content": "filters",
@@ -196,7 +197,11 @@
 		"group": "social",
 		"off": true,
 		"title": "Anti-ThirdpartySocial (see warning inside list)",
-		"contentURL": "https://www.fanboy.co.nz/fanboy-antifacebook.txt",
+		"contentURL": [
+			"https://easylist.to/easylist/fanboy-social.txt",
+			"https://fanboy.co.nz/fanboy-antifacebook.txt",
+			"https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+		],
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"fanboy-annoyance": {
@@ -206,6 +211,7 @@
 		"title": "Fanboy’s Annoyance List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
+			"https://fanboy.co.nz/fanboy-annoyance.txt",
 			"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
@@ -217,6 +223,7 @@
 		"title": "Fanboy’s Social Blocking List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
+			"https://fanboy.co.nz/fanboy-social.txt",
 			"https://easylist-downloads.adblockplus.org/fanboy-social.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"

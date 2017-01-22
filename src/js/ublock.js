@@ -317,9 +317,6 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
     // Pre-change
     switch ( name ) {
-    case 'externalLists':
-        this.changeExternalFilterLists(us.externalLists, value);
-        break;
     case 'largeMediaSize':
         if ( typeof value !== 'number' ) {
             value = parseInt(value, 10) || 0;

@@ -94,10 +94,8 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'mouseClick':
-        µb.mouseX = request.x;
-        µb.mouseY = request.y;
-        µb.mouseURL = request.url;
+    case 'applyFilterListSelection':
+        response = µb.applyFilterListSelection(request);
         break;
 
     case 'compileCosmeticFilterSelector':
@@ -147,6 +145,12 @@ var onMessage = function(request, sender, callback) {
         µb.openNewTab(request.details);
         break;
 
+    case 'mouseClick':
+        µb.mouseX = request.x;
+        µb.mouseY = request.y;
+        µb.mouseURL = request.url;
+        break;
+
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
             vAPI.tabs.reload(request.tabId);
@@ -158,10 +162,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'scriptletResponse':
         µb.scriptlets.report(tabId, request.scriptlet, request.response);
-        break;
-
-    case 'selectFilterLists':
-        µb.saveSelectedFilterLists(request.keys, request.append);
         break;
 
     case 'setWhitelist':
@@ -873,11 +873,12 @@ var getLists = function(callback) {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
         cache: null,
-        parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         current: µb.availableFilterLists,
+        externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
+        parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         userFiltersPath: µb.userFiltersPath,
         aliases: µb.assets.listKeyAliases
     };
@@ -1287,8 +1288,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'subscriberData':
         response = {
-            confirmStr: vAPI.i18n('subscriberConfirm'),
-            externalLists: µBlock.userSettings.externalLists
+            confirmStr: vAPI.i18n('subscriberConfirm')
         };
         break;
 

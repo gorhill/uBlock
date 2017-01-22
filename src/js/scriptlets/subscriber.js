@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, HTMLDocument */
+/* global HTMLDocument */
 
 'use strict';
 
@@ -79,9 +79,7 @@ var onAbpLinkClicked = function(ev) {
     var matches = /^abp:\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
     if ( matches === null ) {
         matches = /^https?:\/\/.*?[&?]location=([^&]+).*?&title=([^&]+)/.exec(href);
-        if ( matches === null ) {
-            return;
-        }
+        if ( matches === null ) { return; }
     }
 
     var location = decodeURIComponent(matches[1]);
@@ -95,44 +93,18 @@ var onAbpLinkClicked = function(ev) {
         messaging.send('scriptlets', { what: 'reloadAllFilters' });
     };
 
-    var onExternalListsSaved = function() {
-        messaging.send(
-            'scriptlets',
-            {
-                what: 'selectFilterLists',
-                keys: [ location ],
-                append: true
-            },
-            onListsSelectionDone
-        );
-    };
-
     var onSubscriberDataReady = function(details) {
         var confirmStr = details.confirmStr
                             .replace('{{url}}', location)
                             .replace('{{title}}', title);
-        if ( !window.confirm(confirmStr) ) {
-            return;
-        }
-
-        // List already subscribed to?
-        // https://github.com/chrisaljoudi/uBlock/issues/1033
-        // Split on line separators, not whitespaces.
-        var text = details.externalLists.trim();
-        var lines = text !== '' ? text.split(/\s*[\n\r]+\s*/) : [];
-        if ( lines.indexOf(location) !== -1 ) {
-            return;
-        }
-        lines.push(location, '');
-
+        if ( !window.confirm(confirmStr) ) { return; }
         messaging.send(
             'scriptlets',
             {
-                what: 'userSettings',
-                name: 'externalLists',
-                value: lines.join('\n')
+                what: 'applyFilterListSelection',
+                toImport: location
             },
-            onExternalListsSaved
+            onListsSelectionDone
         );
     };
 
