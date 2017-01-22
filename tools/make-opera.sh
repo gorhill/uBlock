@@ -41,14 +41,14 @@ cp LICENSE.txt $DES/
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-echo "*** adnauseam.opera: Package done."
+echo "*** adnauseam.opera: Generating meta..."
+python tools/make-webext-meta.py $DES/
 
-if [ "$1" = all ]; then
-    echo "*** adnauseam.opera: Creating package..."
-    pushd $(dirname $DES/) > /dev/null
-    zip artifacts/adnauseam.opera.zip -qr $(basename $DES/)/*
-    popd > /dev/null
-fi
+rm -r $DES/_locales/cv
+rm -r $DES/_locales/hi
+rm -r $DES/_locales/mr
+rm -r $DES/_locales/ta
+
 
 
 #head $DES/manifest.json

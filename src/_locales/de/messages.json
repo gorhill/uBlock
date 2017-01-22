@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Netzwerkfilter",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Kosmetische Filter",
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiviere Hyperlink-Auditing",
+    "message":"Hyperlink-Überwachung deaktivieren",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Backup in eine Datei",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",

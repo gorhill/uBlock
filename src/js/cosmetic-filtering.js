@@ -410,10 +410,15 @@ SelectorCacheEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.addCosmetic = function(selectors) {
-    var i = selectors.length || 0;
-    if ( i === 0 ) {
-        this.cosmeticSurveyingMissCount += 1;
+SelectorCacheEntry.prototype.addCosmetic = function(details) {
+    var selectors = details.selectors,
+        i = selectors.length || 0;
+    // https://github.com/gorhill/uBlock/issues/2011
+    //   Avoiding seemingly pointless surveys only if they appear costly.
+    if ( details.first && i === 0 ) {
+        if ( (details.cost || 0) >= 80 ) {
+            this.cosmeticSurveyingMissCount += 1;
+        }
         return;
     }
     this.cosmeticSurveyingMissCount = 0;
@@ -474,12 +479,12 @@ SelectorCacheEntry.prototype.addNetMany = function(selectors, now) {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.add = function(selectors, type) {
+SelectorCacheEntry.prototype.add = function(details) {
     this.lastAccessTime = Date.now();
-    if ( type === 'cosmetic' ) {
-        this.addCosmetic(selectors);
+    if ( details.type === 'cosmetic' ) {
+        this.addCosmetic(details);
     } else {
-        this.addNet(selectors);
+        this.addNet(details.selectors);
     }
 };
 
@@ -1237,6 +1242,12 @@ FilterContainer.prototype.createScriptTagFilter = function(hash, hostname, selec
 
 /******************************************************************************/
 
+FilterContainer.prototype.retrieveScriptTagHostnames = function() {
+    return Object.keys(this.scriptTagFilters);
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
     if ( this.scriptTagFilterCount === 0 ) {
         return;
@@ -1298,41 +1309,31 @@ FilterContainer.prototype.createUserScriptRule = function(hash, hostname, select
 //              14   -1
 
 FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
-    if ( this.userScriptCount === 0 ) {
-        return;
-    }
+    if ( this.userScriptCount === 0 ) { return; }
 
     var reng = µb.redirectEngine;
-    if ( !reng ) {
-        return;
-    }
+    if ( !reng ) { return; }
 
     var out = [],
-        scripts = Object.create(null),
+        scripts = new Map(),
         pos = domain.indexOf('.'),
-        entity = pos !== -1 ? domain.slice(0, pos) + '.*' : '',
-        token, content;
+        entity = pos !== -1 ? domain.slice(0, pos) + '.*' : '';
 
     // Implicit
     var hn = hostname;
     for (;;) {
-        token = hn + '.js';
-        if (
-            (scripts[token] === undefined) &&
-            (content = reng.resourceContentFromName(token, 'application/javascript'))
-        ) {
-            scripts[token] = out.length;
-            out.push(content);
-        }
+        this._lookupUserScript(scripts, hn + '.js', reng, out);
         if ( hn === domain ) { break; }
         pos = hn.indexOf('.');
         if ( pos === -1 ) { break; }
         hn = hn.slice(pos + 1);
     }
+    if ( entity !== '' ) {
+        this._lookupUserScript(scripts, entity + '.js', reng, out);
+    }
 
     // Explicit (hash is domain).
-    var selectors = [],
-        selector, bucket;
+    var selectors = [], bucket;
     if ( (bucket = this.userScripts.get(domain)) ) {
         bucket.retrieve(hostname, selectors);
     }
@@ -1341,15 +1342,7 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     }
     var i = selectors.length;
     while ( i-- ) {
-        selector = selectors[i];
-        token = selector.slice(14, -1);
-        if (
-            (scripts[token] === undefined) &&
-            (content = reng.resourceContentFromName(token, 'application/javascript'))
-        ) {
-            scripts[token] = out.length;
-            out.push(content);
-        }
+        this._lookupUserScript(scripts, selectors[i].slice(14, -1), reng, out);
     }
 
     if ( out.length === 0 ) {
@@ -1358,7 +1351,7 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
 
     // Exceptions should be rare, so we check for exception only if there are
     // scriptlets returned.
-    var exceptions = [], j;
+    var exceptions = [], j, token;
     if ( (bucket = this.userScripts.get('!' + domain)) ) {
         bucket.retrieve(hostname, exceptions);
     }
@@ -1368,12 +1361,21 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     i = exceptions.length;
     while ( i-- ) {
         token = exceptions[i].slice(14, -1);
-        if ( (j = scripts[token]) !== undefined ) {
+        if ( (j = scripts.get(token)) !== undefined ) {
             out[j] = '// User script "' + token + '" excepted.\n';
         }
     }
 
     return out.join('\n');
+};
+
+FilterContainer.prototype._lookupUserScript = function(dict, token, reng, out) {
+    if ( dict.has(token) ) { return; }
+    var content = reng.resourceContentFromName(token, 'application/javascript');
+    if ( content ) {
+        dict.set(token, out.length);
+        out.push(content);
+    }
 };
 
 /******************************************************************************/
@@ -1529,7 +1531,7 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
         this.selectorCacheCount += 1;
         this.triggerSelectorCachePruner();
     }
-    entry.add(selectors, details.type);
+    entry.add(details);
 };
 
 /******************************************************************************/

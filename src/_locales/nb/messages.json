@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Nettfiltre",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Kosmetiske filtre",
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiver lenkesporing\/sporingsbilde",
+    "message":"Deaktiver lenkesporing",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Sikkerhetskopier til fil",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"min-ublock-sikkerhetskopi_{{datetime}}.txt",

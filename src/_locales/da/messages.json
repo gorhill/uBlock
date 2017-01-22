@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra på den nuværende side.",
+    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra kun på den nuværende side.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Netfiltre",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Kosmetiske filtre",
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiver hyperlink overvågning",
+    "message":"Deaktiver hyperlink revision",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Backup til fil",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"min-ublock-sikkerhedskopi_{{datetime}}.txt",
@@ -568,7 +568,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alle personlige indstillinger vil blive nulstillet, hvorefter uBlock₀ vil genstarte.\n\nGendan alle indstillinger i uBlock₀ til standard?",
+    "message":"Alle dine indstillinger vil blive nulstillet, hvorefter uBlock₀ vil genstarte.\n\nGendan alle indstillinger i uBlock₀ til standard?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -604,7 +604,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Vis Dashboard",
+    "message":"Vis Instrumentpanel",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{

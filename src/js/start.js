@@ -68,12 +68,15 @@ var onAllReady = function() {
     // for launch time.
     µb.assets.remoteFetchBarrier -= 1;
 
-    vAPI.cloud.start([
-        'tpFiltersPane',
-        'myFiltersPane',
-        'myRulesPane',
-        'whitelistPane'
-    ]);
+    // vAPI.cloud is optional.
+    if ( µb.cloudStorageSupported ) {
+        vAPI.cloud.start([
+            'tpFiltersPane',
+            'myFiltersPane',
+            'myRulesPane',
+            'whitelistPane'
+        ]);
+    }
 
     //quickProfiler.stop(0);
 
@@ -170,12 +173,13 @@ var onUserSettingsReady = function(fetched) {
     µb.assets.autoUpdate = userSettings.autoUpdate;
     µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
-    vAPI.browserSettings.set({
-        'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-        'prefetching': !userSettings.prefetchingDisabled,
-        'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
-        //'thirdPartyCookiesAllowed': !userSettings.noThirdPartyCookies // ADN
-    });
+    if ( µb.privacySettingsSupported ) {
+        vAPI.browserSettings.set({
+            'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
+            'prefetching': !userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+        });
+    }
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);

@@ -57,13 +57,6 @@
     if (µBlock.userSettings.blockingMalware === false) {
         return;
     }
-
-    // https://github.com/gorhill/uBlock/issues/870
-    // This work for Chromium 49+.
-    if (requestType === 'beacon') {
-      return onBeforeBeacon(details);
-    }
-
     // Special treatment: behind-the-scene requests
     var tabId = details.tabId;
     if (vAPI.isBehindTheSceneTabId(tabId)) {
@@ -71,19 +64,15 @@
     }
 
     // Lookup the page store associated with this tab id.
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if (!pageStore) {
-      var tabContext = µb.tabContextManager.mustLookup(tabId);
-      if (vAPI.isBehindTheSceneTabId(tabContext.tabId)) {
-        return onBeforeBehindTheSceneRequest(details);
-      }
-      vAPI.tabs.onNavigation({
-        tabId: tabId,
-        frameId: 0,
-        url: tabContext.rawURL
-      });
-      pageStore = µb.pageStoreFromTabId(tabId);
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        var tabContext = µb.tabContextManager.mustLookup(tabId);
+        if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
+            return onBeforeBehindTheSceneRequest(details);
+        }
+        vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: tabContext.rawURL });
+        pageStore = µb.pageStoreFromTabId(tabId);
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/886
@@ -107,9 +96,7 @@
     // ADN: note: blocking checked in this function
     var result = pageStore.filterRequest(requestContext);
 
-    // Possible outcomes: blocked, allowed-passthru, allowed-mirror
-
-    pageStore.logRequest(requestContext, result);
+    pageStore.journalAddRequest(requestContext.requestHostname, result);
 
     if (µb.logger.isEnabled()) {
       µb.logger.writeOne(
@@ -147,6 +134,7 @@
     if ( url !== undefined ) {
 
         µb.adnauseam.logRedirect(requestURL, url);
+        pageStore.internalRedirectionCount += 1;
 
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
@@ -168,131 +156,105 @@
     return {
       cancel: true
     };
-  };
 
-  /******************************************************************************/
+    var result = '';
 
-  var onBeforeRootFrameRequest = function(details) {
-      var tabId = details.tabId;
-      var requestURL = details.url;
-      var µb = µBlock;
+    // If the site is whitelisted, disregard strict blocking
+    if ( µb.getNetFilteringSwitch(requestURL) === false ) {
+        result = 'ua:whitelisted';
+    }
 
-      µb.tabContextManager.push(tabId, requestURL);
+    // Permanently unrestricted?
+    if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+        result = 'ua:no-strict-blocking: ' + µb.hnSwitches.z + ' true';
+    }
 
-      // Special handling for root document.
-      // https://github.com/chrisaljoudi/uBlock/issues/1001
-      // This must be executed regardless of whether the request is
-      // behind-the-scene
-      var µburi = µb.URI;
-      var requestHostname = µburi.hostnameFromURI(requestURL);
-      var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
-      var context = {
-          rootHostname: requestHostname,
-          rootDomain: requestDomain,
-          pageHostname: requestHostname,
-          pageDomain: requestDomain,
-          requestURL: requestURL,
-          requestHostname: requestHostname,
-          requestType: 'main_frame'
-      };
+    // Temporarily whitelisted?
+    if ( result === '' ) {
+        result = isTemporarilyWhitelisted(result, requestHostname);
+        if ( result.charAt(1) === 'a' ) {
+            result = 'ua:no-strict-blocking true (temporary)';
+        }
+    }
 
-      var result = '';
+    // Static filtering: We always need the long-form result here.
+    var snfe = µb.staticNetFilteringEngine;
 
-      // If the site is whitelisted, disregard strict blocking
-      if ( µb.getNetFilteringSwitch(requestURL) === false ) {
-          result = 'ua:whitelisted';
-      }
+    // Check for specific block
+    if (
+        result === '' &&
+        snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
+    ) {
+        result = snfe.toResultString(true);
+    }
 
-      // Permanently unrestricted?
-      if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
-          result = 'ua:no-strict-blocking: ' + µb.hnSwitches.z + ' true';
-      }
+    // Check for generic block
+    if (
+        result === '' &&
+        snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
+    ) {
+        result = snfe.toResultString(true);
+        // https://github.com/chrisaljoudi/uBlock/issues/1128
+        // Do not block if the match begins after the hostname, except when
+        // the filter is specifically of type `other`.
+        // https://github.com/gorhill/uBlock/issues/490
+        // Removing this for the time being, will need a new, dedicated type.
+        if ( result.charAt(1) === 'b' ) {
+            result = toBlockDocResult(requestURL, requestHostname, result);
+        }
+    }
 
-      // Temporarily whitelisted?
-      if ( result === '' ) {
-          result = isTemporarilyWhitelisted(result, requestHostname);
-          if ( result.charAt(1) === 'a' ) {
-              result = 'ua:no-strict-blocking true (temporary)';
-          }
-      }
+    // ADN: Tell the core we have a new page
+    µb.adnauseam.onPageLoad(tabId, requestURL);
 
-      // Static filtering: We always need the long-form result here.
-      var snfe = µb.staticNetFilteringEngine;
+    // ADN: return here if prefs say not to block
+    if (µBlock.userSettings.blockingMalware === false) {
+        return;
+    }
 
-      // Check for specific block
-      if (
-          result === '' &&
-          snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
-      ) {
-          result = snfe.toResultString(true);
-      }
+    // Log
+    var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+    if ( pageStore ) {
+        pageStore.journalAddRootFrame('uncommitted', requestURL);
+        pageStore.journalAddRequest(requestHostname, result);
+    }
 
-      // Check for generic block
-      if (
-          result === '' &&
-          snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
-      ) {
-          result = snfe.toResultString(true);
-          // https://github.com/chrisaljoudi/uBlock/issues/1128
-          // Do not block if the match begins after the hostname, except when
-          // the filter is specifically of type `other`.
-          // https://github.com/gorhill/uBlock/issues/490
-          // Removing this for the time being, will need a new, dedicated type.
-          if ( result.charAt(1) === 'b' ) {
-              result = toBlockDocResult(requestURL, requestHostname, result);
-          }
-      }
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            'main_frame',
+            requestURL,
+            requestHostname,
+            requestHostname
+        );
+    }
 
-      // ADN: Tell the core we have a new page
-      µb.adnauseam.onPageLoad(tabId, requestURL);
+    // Not blocked
+    if ( µb.isAllowResult(result) ) {
+        return;
+    }
 
-      // ADN: return here if prefs say not to block
-      if (µBlock.userSettings.blockingMalware === false) {
-          return;
-      }
+    var compiled = result.slice(3);
 
-      // Log
-      var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
-      if ( pageStore ) {
-          pageStore.logRequest(context, result);
-      }
+    // Blocked
+    var query = btoa(JSON.stringify({
+        url: requestURL,
+        hn: requestHostname,
+        dn: requestDomain,
+        fc: compiled,
+        fs: snfe.filterStringFromCompiled(compiled)
+    }));
 
-      if ( µb.logger.isEnabled() ) {
-          µb.logger.writeOne(
-              tabId,
-              'net',
-              result,
-              'main_frame',
-              requestURL,
-              requestHostname,
-              requestHostname
-          );
-      }
+    vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
-      // Not blocked
-      if ( µb.isAllowResult(result) ) {
-          return;
-      }
+    return { cancel: true };
+};
 
-      var compiled = result.slice(3);
+/******************************************************************************/
 
-      // Blocked
-      var query = btoa(JSON.stringify({
-          url: requestURL,
-          hn: requestHostname,
-          dn: requestDomain,
-          fc: compiled,
-          fs: snfe.filterStringFromCompiled(compiled)
-      }));
-
-      vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
-
-      return { cancel: true };
-  };
-
-  /******************************************************************************/
-
-  var toBlockDocResult = function (url, hostname, result) {
+var toBlockDocResult = function(url, hostname, result) {
     // Make a regex out of the result
     var re = µBlock.staticNetFilteringEngine
       .filterRegexFromCompiled(result.slice(3), 'gi');
@@ -316,89 +278,56 @@
 
   /******************************************************************************/
 
-  // https://github.com/gorhill/uBlock/issues/870
-  // Finally, Chromium 49+ gained the ability to report network request of type
-  // `beacon`, so now we can block them according to the state of the
-  // "Disable hyperlink auditing/beacon" setting.
+// Intercept and filter behind-the-scene requests.
 
-  var onBeforeBeacon = function (details) {
+// https://github.com/gorhill/uBlock/issues/870
+// Finally, Chromium 49+ gained the ability to report network request of type
+// `beacon`, so now we can block them according to the state of the
+// "Disable hyperlink auditing/beacon" setting.
 
-    var µb = µBlock;
-    if (µb.userSettings.blockingMalware === false) {// ADN
-      µb.adnauseam.logNetAllow('Beacon', details.url);
-      return;
-    }
+var onBeforeBehindTheSceneRequest = function(details) {
 
-    var tabId = details.tabId;
-    var pageStore = µb.mustPageStoreFromTabId(tabId);
-    var context = pageStore.createContextFromPage();
-    context.requestURL = details.url;
-    context.requestHostname = µb.URI.hostnameFromURI(details.url);
-    context.requestType = details.type;
-    // "g" in "gb:" stands for "global setting"
-    var result = µb.userSettings.hyperlinkAuditingDisabled ? 'gb:' : '';
-    pageStore.logRequest(context, result);
-    if ( µb.logger.isEnabled() ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            result,
-            details.type,
-            details.url,
-            context.rootHostname,
-            context.rootHostname
-        );
-    }
-    context.dispose();
-    if ( result !== '' ) {
+    if (µBlock.userSettings.blockingMalware === false) return; // ADN
 
-        // ADN: no need to ever allow beacons, just log...
-        µb.adnauseam.logNetBlock('Beacon', context.rootHostname, details.url);
-        return { cancel: true };
-    }
-  };
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
+    if ( !pageStore ) { return; }
 
-  /******************************************************************************/
+    var result = '',
+        context = pageStore.createContextFromPage(),
+        requestType = details.type,
+        requestURL = details.url;
 
-  // Intercept and filter behind-the-scene requests.
-  //
-  var onBeforeBehindTheSceneRequest = function (details) {
-
-    if (µBlock.userSettings.blockingMalware === false) return;
-
-    var µb = µBlock;
-    var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if (!pageStore) {
-      return;
-    }
-
-    var context = pageStore.createContextFromPage();
-    var requestURL = details.url;
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
-    context.requestType = details.type;
+    context.requestType = requestType;
+
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
+    //   Do not filter behind-the-scene network request of type `beacon`: there
+    //   is no point. In any case, this will become a non-issue once
+    //   <https://bugs.chromium.org/p/chromium/issues/detail?id=522129> is
+    //   fixed.
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
-    var result = '';
-    if (µb.userSettings.advancedUserEnabled) {
-      result = pageStore.filterRequestNoCache(context);
+    if ( µb.userSettings.advancedUserEnabled ) {
+        result = pageStore.filterRequestNoCache(context);
     }
 
-    pageStore.logRequest(context, result);
+    pageStore.journalAddRequest(context.requestHostname, result);
 
-    if (µb.logger.isEnabled()) {
-      µb.logger.writeOne(
-        vAPI.noTabId,
-        'net',
-        result,
-        details.type,
-        requestURL,
-        context.rootHostname,
-        context.rootHostname
-      );
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            vAPI.noTabId,
+            'net',
+            result,
+            requestType,
+            requestURL,
+            context.rootHostname,
+            context.rootHostname
+        );
     }
 
     context.dispose();
@@ -672,6 +601,14 @@ var processCSP = function(details, pageStore, context) {
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
+    // https://github.com/gorhill/uBlock/issues/2050
+    //   Blanket-blocking websockets is exceptional, so we test whether the
+    //   page is whitelisted if and only if there is a hit against a websocket
+    //   filter.
+    if ( blockWebsocket && pageStore.getNetFilteringSwitch() === false ) {
+        websocketResult = '';
+        blockWebsocket = false;
+    }
 
     if (µb.userSettings.blockingMalware === false) { // ADN
 

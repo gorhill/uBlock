@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Мрежни филтери",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Естетски филтери",
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Сачувај резервну копију у датотеку",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",

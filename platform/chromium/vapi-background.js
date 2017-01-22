@@ -72,148 +72,170 @@ vAPI.storage = chrome.storage.local;
 // uBlock in a bad, non-functional state -- because call to `chrome.privacy`
 // API threw an exception.
 
-vAPI.browserSettings = {
-    webRTCSupported: undefined,
+// https://github.com/gorhill/uBlock/issues/2048
+//   Do not mess up with existing settings if not assigning them stricter
+//   values.
 
-    // https://github.com/gorhill/uBlock/issues/875
-    // Must not leave `lastError` unchecked.
-    noopCallback: function() {
-        void chrome.runtime.lastError;
-    },
+vAPI.browserSettings = (function() {
+    // Not all platforms support `chrome.privacy`.
+    if ( chrome.privacy instanceof Object === false ) {
+        return;
+    }
 
-    // https://github.com/gorhill/uBlock/issues/533
-    // We must first check wether this Chromium-based browser was compiled
-    // with WebRTC support. To do this, we use an iframe, this way the
-    // empty RTCPeerConnection object we create to test for support will
-    // be properly garbage collected. This prevents issues such as
-    // a computer unable to enter into sleep mode, as reported in the
-    // Chrome store:
-    // https://github.com/gorhill/uBlock/issues/533#issuecomment-167931681
-    setWebrtcIPAddress: function(setting) {
-        // We don't know yet whether this browser supports WebRTC: find out.
-        if ( this.webRTCSupported === undefined ) {
-            this.webRTCSupported = { setting: setting };
-            var iframe = document.createElement('iframe');
-            var me = this;
-            var messageHandler = function(ev) {
-                if ( ev.origin !== self.location.origin ) {
-                    return;
-                }
-                window.removeEventListener('message', messageHandler);
-                var setting = me.webRTCSupported.setting;
-                me.webRTCSupported = ev.data === 'webRTCSupported';
-                me.setWebrtcIPAddress(setting);
-                iframe.parentNode.removeChild(iframe);
-                iframe = null;
-            };
-            window.addEventListener('message', messageHandler);
-            iframe.src = 'is-webrtc-supported.html';
-            document.body.appendChild(iframe);
-            return;
-        }
-
-        // We are waiting for a response from our iframe. This makes the code
-        // safe to re-entrancy.
-        if ( typeof this.webRTCSupported === 'object' ) {
-            this.webRTCSupported.setting = setting;
-            return;
-        }
-
-        // https://github.com/gorhill/uBlock/issues/533
-        // WebRTC not supported: `webRTCMultipleRoutesEnabled` can NOT be
-        // safely accessed. Accessing the property will cause full browser
-        // crash.
-        if ( this.webRTCSupported !== true ) {
-            return;
-        }
-
-        var cp = chrome.privacy, cpi = cp.IPHandlingPolicy, cpn = cp.network;
-
-        // Older version of Chromium do not support this setting, and is
-        // marked as "deprecated" since Chromium 48.
-        if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) {
-            try {
-                cpn.webRTCMultipleRoutesEnabled.set({
-                    value: !!setting,
-                    scope: 'regular'
-                }, this.noopCallback);
-            } catch(ex) {
-                console.error(ex);
-            }
-        }
-
-        // This setting became available in Chromium 48.
-        if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) {
-            try {
-                cpn.webRTCIPHandlingPolicy.set({
-                    value: !!setting ? cpi.DEFAULT : cpi.DEFAULT_PUBLIC_INTERFACE_ONLY,
-                    scope: 'regular'
-                }, this.noopCallback);
-            } catch(ex) {
-                console.error(ex);
-            }
-        }
-    },
-
-    set: function(details) {
-
-        //console.log('vAPI.browserSettings.set: ',details);
+    return {
+        webRTCSupported: undefined,
 
         // https://github.com/gorhill/uBlock/issues/875
         // Must not leave `lastError` unchecked.
-        var callback = function() {
+        noopCallback: function() {
             void chrome.runtime.lastError;
-        };
+        },
 
-        for ( var setting in details ) {
-            if ( details.hasOwnProperty(setting) === false ) {
-                continue;
+        // Calling with `true` means IP address leak is not prevented.
+        // https://github.com/gorhill/uBlock/issues/533
+        //   We must first check wether this Chromium-based browser was compiled
+        //   with WebRTC support. To do this, we use an iframe, this way the
+        //   empty RTCPeerConnection object we create to test for support will
+        //   be properly garbage collected. This prevents issues such as
+        //   a computer unable to enter into sleep mode, as reported in the
+        //   Chrome store:
+        // https://github.com/gorhill/uBlock/issues/533#issuecomment-167931681
+        setWebrtcIPAddress: function(setting) {
+            // We don't know yet whether this browser supports WebRTC: find out.
+            if ( this.webRTCSupported === undefined ) {
+                this.webRTCSupported = { setting: setting };
+                var iframe = document.createElement('iframe');
+                var me = this;
+                var messageHandler = function(ev) {
+                    if ( ev.origin !== self.location.origin ) {
+                        return;
+                    }
+                    window.removeEventListener('message', messageHandler);
+                    var setting = me.webRTCSupported.setting;
+                    me.webRTCSupported = ev.data === 'webRTCSupported';
+                    me.setWebrtcIPAddress(setting);
+                    iframe.parentNode.removeChild(iframe);
+                    iframe = null;
+                };
+                window.addEventListener('message', messageHandler);
+                iframe.src = 'is-webrtc-supported.html';
+                document.body.appendChild(iframe);
+                return;
             }
-            switch ( setting ) {
-            case 'prefetching':
+
+            // We are waiting for a response from our iframe. This makes the code
+            // safe to re-entrancy.
+            if ( typeof this.webRTCSupported === 'object' ) {
+                this.webRTCSupported.setting = setting;
+                return;
+            }
+
+            // https://github.com/gorhill/uBlock/issues/533
+            // WebRTC not supported: `webRTCMultipleRoutesEnabled` can NOT be
+            // safely accessed. Accessing the property will cause full browser
+            // crash.
+            if ( this.webRTCSupported !== true ) {
+                return;
+            }
+
+            var cp = chrome.privacy,
+                cpn = cp.network;
+
+            // Older version of Chromium do not support this setting, and is
+            // marked as "deprecated" since Chromium 48.
+            if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) {
                 try {
-                    chrome.privacy.network.networkPredictionEnabled.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    }, this.noopCallback);
+                    if ( setting ) {
+                        cpn.webRTCMultipleRoutesEnabled.clear({
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    } else {
+                        cpn.webRTCMultipleRoutesEnabled.set({
+                            value: false,
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    }
                 } catch(ex) {
                     console.error(ex);
                 }
-                break;
+            }
 
-            case 'hyperlinkAuditing':
+            // This setting became available in Chromium 48.
+            if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) {
                 try {
-                    chrome.privacy.websites.hyperlinkAuditingEnabled.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    }, this.noopCallback);
+                    if ( setting ) {
+                        cpn.webRTCIPHandlingPolicy.clear({
+                            scope: 'regular'
+                        }, this.noopCallback);
+                    } else {
+                        // Respect current stricter setting if any.
+                        cpn.webRTCIPHandlingPolicy.get({}, function(details) {
+                            var value = details.value === 'disable_non_proxied_udp' ?
+                                'disable_non_proxied_udp' :
+                                'default_public_interface_only';
+                            cpn.webRTCIPHandlingPolicy.set({
+                                value: value,
+                                scope: 'regular'
+                            }, this.noopCallback);
+                        }.bind(this));
+                    }
                 } catch(ex) {
                     console.error(ex);
                 }
-                break;
+            }
+        },
 
-            case 'thirdPartyCookiesAllowed':
-                //console.log('vapi: thirdPartyCookiesAllowed', !!details[setting]);
-                /*try {
-                    chrome.privacy.websites.thirdPartyCookiesAllowed.set({
-                        value: !!details[setting],
-                        scope: 'regular'
-                    }, callback);
-                } catch(ex) {
-                    console.error(ex);
-                }*/
-                break;
+        set: function(details) {
+            for ( var setting in details ) {
+                if ( details.hasOwnProperty(setting) === false ) {
+                    continue;
+                }
+                switch ( setting ) {
+                case 'prefetching':
+                    try {
+                        if ( !!details[setting] ) {
+                            chrome.privacy.network.networkPredictionEnabled.clear({
+                                scope: 'regular'
+                            }, this.noopCallback);
+                        } else {
+                            chrome.privacy.network.networkPredictionEnabled.set({
+                                value: false,
+                                scope: 'regular'
+                            }, this.noopCallback);
+                        }
+                    } catch(ex) {
+                        console.error(ex);
+                    }
+                    break;
 
-            case 'webrtcIPAddress':
-                this.setWebrtcIPAddress(details[setting]);
-                break;
+                case 'hyperlinkAuditing':
+                    try {
+                        if ( !!details[setting] ) {
+                            chrome.privacy.websites.hyperlinkAuditingEnabled.clear({
+                                scope: 'regular'
+                            }, this.noopCallback);
+                        } else {
+                            chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                                value: false,
+                                scope: 'regular'
+                            }, this.noopCallback);
+                        }
+                    } catch(ex) {
+                        console.error(ex);
+                    }
+                    break;
 
-            default:
-                break;
+                case 'webrtcIPAddress':
+                    this.setWebrtcIPAddress(!!details[setting]);
+                    break;
+
+                default:
+                    break;
+                }
             }
         }
-    }
-};
+    };
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -309,12 +331,15 @@ vAPI.tabs.registerListeners = function() {
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
-        onUpdatedClient(tabId, changeInfo, tab);
+        onUpdatedClient(tabId.toString(), changeInfo, tab);
     };
 
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
-    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    // Not supported on Firefox WebExtensions yet.
+    if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    }
     chrome.tabs.onActivated.addListener(onActivated);
     chrome.tabs.onUpdated.addListener(onUpdated);
 
@@ -863,7 +888,8 @@ vAPI.net.registerListeners = function() {
     // https://bugs.chromium.org/p/chromium/issues/detail?id=410382
     // Between Chromium 38-48, plug-ins' network requests were reported as
     // type "other" instead of "object".
-    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent);
+    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent),
+        is_v49_55 = /\bChrom[a-z]+\/(?:49|5[012345])\b/.test(navigator.userAgent);
 
     // Chromium-based browsers understand only these network request types.
     var validTypes = {
@@ -1008,9 +1034,21 @@ vAPI.net.registerListeners = function() {
         return onBeforeRequestClient(details);
     };
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback;
-    var onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [];
-    var onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+    // This is needed for Chromium 49-55.
+    var onBeforeSendHeaders = function(details) {
+        if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
+        var type = headerValue(details.requestHeaders, 'content-type');
+        if ( type === '' ) { return; }
+        if ( type.endsWith('/csp-report') ) {
+            details.type = 'csp_report';
+            return onBeforeRequestClient(details);
+        }
+    };
+
+    var onHeadersReceivedClient = this.onHeadersReceived.callback,
+        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
+        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         // Hack to work around Chromium API limitations, where requests of
@@ -1069,19 +1107,17 @@ vAPI.net.registerListeners = function() {
     };
 
     var installListeners = (function() {
-        var listener;
         var crapi = chrome.webRequest;
 
-        listener = onBeforeRequest;
         //listener = function(details) {
         //    quickProfiler.start('onBeforeRequest');
         //    var r = onBeforeRequest(details);
         //    quickProfiler.stop();
         //    return r;
         //};
-        if ( crapi.onBeforeRequest.hasListener(listener) === false ) {
+        if ( crapi.onBeforeRequest.hasListener(onBeforeRequest) === false ) {
             crapi.onBeforeRequest.addListener(
-                listener,
+                onBeforeRequest,
                 {
                     'urls': this.onBeforeRequest.urls || ['<all_urls>'],
                     'types': this.onBeforeRequest.types || undefined
@@ -1090,10 +1126,22 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        listener = onHeadersReceived;
-        if ( crapi.onHeadersReceived.hasListener(listener) === false ) {
+        // Chromium 48 and lower does not support `ping` type.
+        // Chromium 56 and higher does support `csp_report` stype.
+        if ( is_v49_55 && crapi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false ) {
+            crapi.onBeforeSendHeaders.addListener(
+                onBeforeSendHeaders,
+                {
+                    'urls': [ '<all_urls>' ],
+                    'types': [ 'ping' ]
+                },
+                [ 'blocking', 'requestHeaders' ]
+            );
+        }
+
+        if ( crapi.onHeadersReceived.hasListener(onHeadersReceived) === false ) {
             crapi.onHeadersReceived.addListener(
-                listener,
+                onHeadersReceived,
                 {
                     'urls': this.onHeadersReceived.urls || ['<all_urls>'],
                     'types': onHeadersReceivedTypes || undefined
@@ -1317,6 +1365,11 @@ vAPI.adminStorage = {
 /******************************************************************************/
 
 vAPI.cloud = (function() {
+    // Not all platforms support `chrome.storage.sync`.
+    if ( chrome.storage.sync instanceof Object === false ) {
+        return;
+    }
+
     var chunkCountPerFetch = 16; // Must be a power of 2
 
     // Mind chrome.storage.sync.MAX_ITEMS (512 at time of writing)

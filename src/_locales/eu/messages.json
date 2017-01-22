@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Sare iragazkiak",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Iragazki kosmetikoak",
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desgaitu loturen auditoretza\/baliza",
+    "message":"Desgaitu loturen auditoretza",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Egin babeskopia fitxategian",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"nire-ublock-babeskopia_{{datetime}}.txt",

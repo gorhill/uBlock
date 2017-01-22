@@ -292,7 +292,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         this.contextMenu.update(null);
         break;
     case 'hyperlinkAuditingDisabled':
-        vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        }
         break;
     case 'noCosmeticFiltering':
         if ( this.hnSwitches.toggle('no-cosmetic-filtering', '*', value ? 1 : 0) ) {
@@ -310,10 +312,14 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         }
         break;
     case 'prefetchingDisabled':
-        vAPI.browserSettings.set({ 'prefetching': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'prefetching': !value });
+        }
         break;
     case 'webrtcIPAddressHidden':
-        vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
+        if ( this.privacySettingsSupported ) {
+            vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
+        }
         break;
 
     /***************************** ADN *******************************/
@@ -371,11 +377,15 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2033
+// Always set own rules, trying to be fancy to avoid setting seemingly
+// (but not really) redundant rules led to this issue.
+
 µBlock.toggleFirewallRule = function(details) {
     var requestType = details.requestType;
 
     if ( details.action !== 0 ) {
-        this.sessionFirewall.setCellZ(details.srcHostname, details.desHostname, requestType, details.action);
+        this.sessionFirewall.setCell(details.srcHostname, details.desHostname, requestType, details.action);
     } else {
         this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, requestType);
     }
@@ -383,7 +393,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     // https://github.com/chrisaljoudi/uBlock/issues/731#issuecomment-73937469
     if ( details.persist ) {
         if ( details.action !== 0 ) {
-            this.permanentFirewall.setCellZ(details.srcHostname, details.desHostname, requestType, details.action);
+            this.permanentFirewall.setCell(details.srcHostname, details.desHostname, requestType, details.action);
         } else {
             this.permanentFirewall.unsetCell(details.srcHostname, details.desHostname, requestType, details.action);
         }

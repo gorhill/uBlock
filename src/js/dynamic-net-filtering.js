@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2014  Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2016  Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,14 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode, µBlock */
+/* global punycode */
 /* jshint bitwise: false */
+
+'use strict';
 
 /******************************************************************************/
 
 µBlock.Firewall = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -93,6 +93,10 @@ var isIPAddress = function(hostname) {
 };
 
 /******************************************************************************/
+
+// TODO: Rearrange the code so as to avoid calling isIPAddress() from within
+// toBroaderHostname(). A hostname will never magically become an IP address
+// when broadened -- so no need to test for this condition each call.
 
 var toBroaderHostname = function(hostname) {
     if ( isIPAddress(hostname) ) {
@@ -213,9 +217,6 @@ Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
 
     // Specific destinations
     for ( var desHostname in desHostnames ) {
-        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
-            continue;
-        }
         ruleKey = '* ' + desHostname;
         if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
             return false;
@@ -261,35 +262,7 @@ Matrix.prototype.unsetCell = function(srcHostname, desHostname, type) {
     return true;
 };
 
-/******************************************************************************/
-
-Matrix.prototype.setCellZ = function(srcHostname, desHostname, type, action) {
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === action ) {
-        return false;
-    }
-    this.setCell(srcHostname, desHostname, type, 0);
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === action ) {
-        return true;
-    }
-    this.setCell(srcHostname, desHostname, type, action);
-    return true;
-};
-
-/******************************************************************************/
-
-Matrix.prototype.blockCell = function(srcHostname, desHostname, type) {
-    return this.setCellZ(srcHostname, desHostname, type, 1);
-};
-
 // https://www.youtube.com/watch?v=Csewb_eIStY
-
-/******************************************************************************/
-
-Matrix.prototype.allowCell = function(srcHostname, desHostname, type) {
-    return this.setCellZ(srcHostname, desHostname, type, 2);
-};
 
 /******************************************************************************/
 

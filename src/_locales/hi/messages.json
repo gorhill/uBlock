@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"नेट फिलटर्स",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"सुंदरता के लिए फिलटरें",
@@ -544,8 +544,8 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
-    "description":"English: Backup to file"
+    "message":"Back up to file",
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",

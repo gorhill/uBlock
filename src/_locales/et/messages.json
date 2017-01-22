@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Võrgufiltrid",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Ilufiltrid",
@@ -212,7 +212,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Keela hüperlingi auditeerimine\/majakas",
+    "message":"Keela hüperlingi auditeerimine",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Varunda faili",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"minu-ublocki-varundus_{{datetime}}.txt",

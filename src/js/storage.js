@@ -50,13 +50,13 @@
     var saveAfter = 4 * 60 * 1000;
 
     var save = function() {
-        this.localSettingsSaveTime = Date.now();
+        this.localSettingsLastSaved = Date.now();
         vAPI.storage.set(this.localSettings);
     };
 
     var onTimeout = function() {
         var µb = µBlock;
-        if ( µb.localSettingsModifyTime > µb.localSettingsSaveTime ) {
+        if ( µb.localSettingsLastModified > µb.localSettingsLastSaved ) {
             save.call(µb);
         }
         vAPI.setTimeout(onTimeout, saveAfter);
@@ -406,7 +406,8 @@
 
         //quickProfiler.stop(0);
 
-        vAPI.messaging.broadcast({ what: 'allFilterListsReloaded' });
+        vAPI.messaging.broadcast({ what: 'staticFilteringDataChanged' });
+
         callback();
 
         µb.selfieManager.create();
@@ -810,6 +811,12 @@
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = function(callback) {
+    // Support for vAPI.adminStorage is optional (webext).
+    if ( vAPI.adminStorage instanceof Object === false ) {
+        callback();
+        return;
+    }
+
     var onRead = function(json) {
         var µb = µBlock;
         var data;

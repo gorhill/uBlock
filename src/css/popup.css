@@ -473,11 +473,6 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
 #actionSelector.colorBlind > span:nth-of-type(3) {
     background-color: rgb(0, 19, 110);
     }
-#firewallContainer span.aRule #actionSelector > span:nth-of-type(1),
-#firewallContainer span.nRule #actionSelector > span:nth-of-type(2),
-#firewallContainer span.bRule #actionSelector > span:nth-of-type(3) {
-    visibility: hidden;
-    }
 
 #rulesetTools {
     background-color: transparent;

@@ -45,14 +45,47 @@ if ( document instanceof HTMLDocument === false ) {
 
 /******************************************************************************/
 
-// Not all sandboxes are given an rpc function, so assign a dummy one if it is
-// missing -- this avoids the need for testing before use.
-
-self.rpc = self.rpc || function(){};
+var vAPI = self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
 
-var vAPI = self.vAPI = self.vAPI || {};
+// Support minimally working Set() for legacy Firefox: iterator for legacy
+// Set() does not work like the one for standard ES6 Set().
+
+if ( self.Set.prototype.iterator instanceof Function === false ) {
+    self.createSet = function() {
+        return new Set();
+    };
+} else {
+    self.createSet = (function() {
+        //console.log('Patching non-ES6 Set() to be more ES6-like.');
+        var values = function() {
+            this._valueIter = this.prototype.values();
+            this.value = undefined;
+            this.done = false;
+            return this;
+        };
+        var next = function() {
+            try {
+                this.value = this._valueIter.next();
+            } catch (ex) {
+                this._valueIter = undefined;
+                this.value = undefined;
+                this.done = true;
+            }
+            return this;
+        };
+        return function() {
+            var r = new Set();
+            r._valueIter = undefined;
+            r.value = undefined;
+            r.done = false;
+            r.values = values.bind(r);
+            r.next = next.bind(r);
+            return r;
+        };
+    })();
+}
 
 /******************************************************************************/
 
@@ -130,36 +163,36 @@ vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, extra) {
 
 /******************************************************************************/
 
-vAPI.shutdown = (function() {
-    var jobs = [];
-
-    var add = function(job) {
-        jobs.push(job);
-    };
-
-    var exec = function() {
-        //console.debug('Shutting down...');
+vAPI.shutdown = {
+    jobs: [],
+    add: function(job) {
+        this.jobs.push(job);
+    },
+    exec: function() {
         var job;
-        while ( (job = jobs.pop()) ) {
+        while ( (job = this.jobs.pop()) ) {
             job();
         }
-    };
-
-    return {
-        add: add,
-        exec: exec
-    };
-})();
+    },
+    remove: function(job) {
+        var pos;
+        while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
+            this.jobs.splice(pos, 1);
+        }
+    }
+};
 
 /******************************************************************************/
 
 (function() {
+    if ( !self.getScriptTagFilters ) {
+        return;
+    }
     var hostname = location.hostname;
     if ( !hostname ) {
         return;
     }
-    var filters = self.rpc({
-        fnName: 'getScriptTagFilters',
+    var filters = self.getScriptTagFilters({
         rootURL: self.location.href,
         frameURL: self.location.href,
         frameHostname: hostname
@@ -478,43 +511,42 @@ vAPI.messaging.start();
 
 /******************************************************************************/
 
-vAPI.userCSS = (function() {
-    if ( !self.injectCSS ) {
-        return;
-    }
-    var injectCSS = self.injectCSS,
-        removeCSS = self.removeCSS,
-        userCSS = '',
-        sheetURI = '';
-    var load = function() {
-        if ( userCSS === '' || sheetURI !== '' ) { return; }
-        sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(userCSS);
-        injectCSS(sheetURI);
-    };
-    var unload = function() {
-        if ( sheetURI === '' ) { return; }
-        removeCSS(sheetURI);
-        sheetURI = '';
-    };
-    var add = function(cssText) {
-        if ( cssText === '' ) { return; }
-        if ( userCSS !== '' ) { userCSS += '\n'; }
-        userCSS += cssText;
-        unload();
-        load();
-    };
-    var toggle = function(state) {
-        if ( userCSS === '' ) { return; }
-        if ( state === undefined ) {
-            state = sheetURI === '';
+if ( self.injectCSS ) {
+    vAPI.userCSS = {
+        _userCSS: '',
+        _sheetURI: '',
+        _load: function() {
+            if ( this._userCSS === '' || this._sheetURI !== '' ) { return; }
+            this._sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(this._userCSS);
+            self.injectCSS(this._sheetURI);
+        },
+        _unload: function() {
+            if ( this._sheetURI === '' ) { return; }
+            self.removeCSS(this._sheetURI);
+            this._sheetURI = '';
+        },
+        add: function(cssText) {
+            if ( cssText === '' ) { return; }
+            if ( this._userCSS !== '' ) { this._userCSS += '\n'; }
+            this._userCSS += cssText;
+            this._unload();
+            this._load();
+        },
+        remove: function(cssText) {
+            if ( cssText === '' || this._userCSS === '' ) { return; }
+            this._userCSS = this._userCSS.replace(cssText, '').trim();
+            this._unload();
+            this._load();
+        },
+        toggle: function(state) {
+            if ( this._userCSS === '' ) { return; }
+            if ( state === undefined ) {
+                state = this._sheetURI === '';
+            }
+            return state ? this._load() : this._unload();
         }
-        return state ? load() : unload();
     };
-    return {
-        add: add,
-        toggle: toggle
-    };
-})();
+}
 
 /******************************************************************************/
 

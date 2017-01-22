@@ -2,7 +2,15 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.9.16",
+    "version": "1.9.15.101",
+
+    "applications": {
+        "gecko": {
+            "id": "uBlock0@raymondhill.net",
+            "strict_min_version": "51.0",
+            "strict_max_version": "52.*"
+        }
+    },
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -38,7 +46,6 @@
             "all_frames": false
         }
     ],
-    "incognito": "split",
     "minimum_chrome_version": "26.0",
     "optional_permissions": [ "file:///*" ],
     "options_page": "dashboard.html",
@@ -47,7 +54,6 @@
     },
     "permissions": [
         "contextMenus",
-        "privacy",
         "storage",
         "tabs",
         "unlimitedStorage",

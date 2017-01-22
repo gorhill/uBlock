@@ -88,6 +88,10 @@ return {
         webrtcIPAddressHidden: false
     },
 
+    // Features detection.
+    privacySettingsSupported: vAPI.browserSettings instanceof Object,
+    cloudStorageSupported: vAPI.cloud instanceof Object,
+
     // https://github.com/chrisaljoudi/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
     netWhitelist: {},
@@ -107,13 +111,13 @@ return {
         blockedRequestCount: 0,
         allowedRequestCount: 0
     },
-    localSettingsModifyTime: 0,
-    localSettingsSaveTime: 0,
+    localSettingsLastModified: 0,
+    localSettingsLastSaved: 0,
 
     // read-only
     systemSettings: {
-        compiledMagic: 'ryegxvatkfxe',
-        selfieMagic: 'ryegxvatkfxe'
+        compiledMagic: 'lbmqiweqbvha',
+        selfieMagic: 'mhirtyetynnf'
     },
 
     restoreBackupSettings: {

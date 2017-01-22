@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global createSet */
+
 'use strict';
 
 //if (window.self !== window.top)
@@ -81,8 +83,6 @@ if ( typeof vAPI !== 'object' ) {
 }
 vAPI.lock();
 
-vAPI.executionCost.start();
-
 vAPI.matchesProp = (function() {
     var docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
@@ -107,50 +107,6 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-if ( typeof self.Set !== 'function' ) {
-    self.Set = function() {
-        this._set = [];
-        this._i = 0;
-        this.value = undefined;
-    };
-    self.Set.prototype = {
-        polyfill: true,
-        clear: function() {
-            this._set = [];
-        },
-        add: function(k) {
-            if ( this._set.indexOf(k) === -1 ) {
-                this._set.push(k);
-            }
-        },
-        delete: function(k) {
-            var pos = this._set.indexOf(k);
-            if ( pos !== -1 ) {
-                this._set.splice(pos, 1);
-                return true;
-            }
-            return false;
-        },
-        has: function(k) {
-            return this._set.indexOf(k) !== -1;
-        },
-        values: function() {
-            this._i = 0;
-            return this;
-        },
-        next: function() {
-            this.value = this._set[this._i];
-            this._i += 1;
-            return this;
-        }
-    };
-    Object.defineProperty(self.Set.prototype, 'size', {
-        get: function() { return this._set.length; }
-    });
-}
-
-/******************************************************************************/
-
 var shadowId = document.documentElement.shadowRoot !== undefined ?
     vAPI.randomToken():
     undefined;
@@ -164,8 +120,8 @@ var jobQueue = [
 
 var reParserEx = /:(?:matches-css|has|style|xpath)\(.+?\)$/;
 
-var allExceptions = Object.create(null),
-    allSelectors = Object.create(null),
+var allExceptions = createSet(),
+    allSelectors = createSet(),
     commitTimer = null,
     stagedNodes = [],
     matchesProp = vAPI.matchesProp,
@@ -175,7 +131,7 @@ var allExceptions = Object.create(null),
 // Set() is used to implement this functionality.
 
 var complexSelectorsOldResultSet,
-    complexSelectorsCurrentResultSet = new Set();
+    complexSelectorsCurrentResultSet = createSet('object');
 
 /******************************************************************************/
 
@@ -299,8 +255,10 @@ var domFilterer = {
     removedNodesHandlerMissCount: 0,
     disabledId: vAPI.randomToken(),
     enabled: true,
+    excludeId: undefined,
     hiddenId: vAPI.randomToken(),
     hiddenNodeCount: 0,
+    hiddenNodeEnforcer: false,
     loggerEnabled: undefined,
     styleTags: [],
 
@@ -313,7 +271,7 @@ var domFilterer = {
 
     addExceptions: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
-            allExceptions[aa[i]] = true;
+            allExceptions.add(aa[i]);
         }
     },
 
@@ -329,10 +287,10 @@ var domFilterer = {
     //     xpath/hide
 
     addSelector: function(s) {
-        if ( allSelectors[s] || allExceptions[s] ) {
+        if ( allSelectors.has(s) || allExceptions.has(s) ) {
             return;
         }
-        allSelectors[s] = true;
+        allSelectors.add(s);
         var sel0 = s, sel1 = '';
         if ( s.charCodeAt(s.length - 1) === 0x29 ) {
             var parts = reParserEx.exec(s);
@@ -368,6 +326,19 @@ var domFilterer = {
     addSelectors: function(aa) {
         for ( var i = 0, n = aa.length; i < n; i++ ) {
             this.addSelector(aa[i]);
+        }
+    },
+
+    addStyleTag: function(text) {
+        var styleTag = document.createElement('style');
+        styleTag.setAttribute('type', 'text/css');
+        styleTag.textContent = text;
+        if ( document.head ) {
+            document.head.appendChild(styleTag);
+        }
+        this.styleTags.push(styleTag);
+        if ( userCSS ) {
+            userCSS.add(text);
         }
     },
 
@@ -407,8 +378,6 @@ var domFilterer = {
     },
 
     commit_: function() {
-        vAPI.executionCost.start();
-
         commitTimer = null;
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
@@ -430,19 +399,6 @@ var domFilterer = {
         }
         //else console.log('[CONTENT] (NoHide) Not appending style tag');
 
-        if ( styleText !== '' ) {
-            var styleTag = document.createElement('style');
-            styleTag.setAttribute('type', 'text/css');
-            styleTag.textContent = styleText;
-            if ( document.head ) {
-                document.head.appendChild(styleTag);
-            }
-            this.styleTags.push(styleTag);
-            if ( userCSS ) {
-                userCSS.add(styleText);
-            }
-        }
-
         // Simple selectors: incremental.
 
         // Stock job 2 = simple css selectors/hide
@@ -456,7 +412,7 @@ var domFilterer = {
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
-        complexSelectorsCurrentResultSet = new Set();
+        complexSelectorsCurrentResultSet = createSet('object');
 
         // Stock job 3 = complex css selectors/hide
         // The handling of these can be considered optional, since they are
@@ -471,11 +427,23 @@ var domFilterer = {
             this.runJob(this.jobQueue[i], complexHideNode);
         }
 
+        // https://github.com/gorhill/uBlock/issues/1912
+        //   If one or more nodes have been manually hidden, insert a style tag
+        //   targeting these manually hidden nodes. For browsers supporting
+        //   user styles, this allows uBO to win.
         var commitHit = this.hiddenNodeCount !== beforeHiddenNodeCount;
         if ( commitHit ) {
+            if ( this.hiddenNodeEnforcer === false ) {
+                styleText += '\n:root *[' + this.hiddenId + '][hidden] { display: none !important; }';
+                this.hiddenNodeEnforcer = true;
+            }
             this.addedNodesHandlerMissCount = 0;
         } else {
             this.addedNodesHandlerMissCount += 1;
+        }
+
+        if ( styleText !== '' ) {
+            this.addStyleTag(styleText);
         }
 
         // Un-hide nodes previously hidden.
@@ -499,8 +467,6 @@ var domFilterer = {
                 503
             );
         }
-
-        vAPI.executionCost.stop('domFilterer.commit_');
     },
 
     commit: function(nodes, commitNow) {
@@ -521,9 +487,13 @@ var domFilterer = {
         }
     },
 
+
     hideNode: function(node) {
 
         if ( node[this.hiddenId] !== undefined ) {
+            return;
+        }
+        if ( this.excludeId !== undefined && node[this.excludeId] ) {
             return;
         }
 
@@ -714,8 +684,6 @@ return domFilterer;
             return;
         }
 
-        vAPI.executionCost.start();
-
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
@@ -775,8 +743,6 @@ return domFilterer;
         } else {
             document.addEventListener('DOMContentLoaded', vAPI.domIsLoaded);
         }
-
-        vAPI.executionCost.stop('domIsLoading/responseHandler');
     };
 
     var url = window.location.href;
@@ -807,8 +773,6 @@ vAPI.domWatcher = (function() {
         listeners = [];
 
     var safeObserverHandler = function() {
-        vAPI.executionCost.start();
-
         safeObserverHandlerTimer = null;
         var i = addedNodeLists.length,
             nodeList, iNode, node;
@@ -835,15 +799,11 @@ vAPI.domWatcher = (function() {
             addedNodes.length = 0;
             removedNodes = false;
         }
-
-        vAPI.executionCost.stop('domWatcher/safeObserverHandler');
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     var observerHandler = function(mutations) {
-        vAPI.executionCost.start();
-
         var nodeList, mutation,
             i = mutations.length;
         while ( i-- ) {
@@ -859,8 +819,6 @@ vAPI.domWatcher = (function() {
         if ( (addedNodeLists.length !== 0 || removedNodes) && safeObserverHandlerTimer === null ) {
             safeObserverHandlerTimer = window.requestAnimationFrame(safeObserverHandler);
         }
-
-        vAPI.executionCost.stop('domWatcher/observerHandler');
     };
 
     var addListener = function(listener) {
@@ -949,7 +907,6 @@ vAPI.domCollapser = (function() {
         if ( requests === null || Array.isArray(requests) === false ) {
             return;
         }
-        vAPI.executionCost.start();
         var selectors = [],
             netSelectorCacheCountMax = response.netSelectorCacheCountMax,
             aa = [ null ],
@@ -1000,11 +957,9 @@ vAPI.domCollapser = (function() {
                 }
             );
         }
-        vAPI.executionCost.stop('domCollapser/onProcessed');
     };
 
     var send = function() {
-        vAPI.executionCost.start();
         timer = null;
         // https://github.com/gorhill/uBlock/issues/1927
         // Normalize hostname to avoid trailing dot of FQHN.
@@ -1025,7 +980,6 @@ vAPI.domCollapser = (function() {
             }, onProcessed
         );
         roundtripRequests = [];
-        vAPI.executionCost.stop('domCollapser/send');
     };
 
     var process = function(delay) {
@@ -1172,10 +1126,8 @@ vAPI.domCollapser = (function() {
     };
 
     var onResourceFailed = function(ev) {
-        vAPI.executionCost.start();
         vAPI.domCollapser.add(ev.target);
         vAPI.domCollapser.process();
-        vAPI.executionCost.stop('domCollapser/onResourceFailed');
     };
 
     var domChangedHandler = function(nodes) {
@@ -1250,13 +1202,12 @@ vAPI.domSurveyor = (function() {
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = Object.create(null);
+        queriedSelectors = createSet(),
+        surveyCost = 0;
 
     // Handle main process' response.
 
     var surveyPhase3 = function(response) {
-        vAPI.executionCost.start();
-
         var result = response && response.result,
             firstSurvey = highGenerics === null;
 
@@ -1270,6 +1221,7 @@ vAPI.domSurveyor = (function() {
         }
 
         if ( highGenerics ) {
+            var t0 = window.performance.now();
             if ( highGenerics.hideLowCount ) {
                 processHighLowGenerics(highGenerics.hideLow);
             }
@@ -1279,6 +1231,7 @@ vAPI.domSurveyor = (function() {
             if ( highGenerics.hideHighSimpleCount || highGenerics.hideHighComplexCount ) {
                 processHighHighGenerics();
             }
+            surveyCost += window.performance.now() - t0;
         }
 
         // Need to do this before committing DOM filterer, as needed info
@@ -1290,7 +1243,9 @@ vAPI.domSurveyor = (function() {
                     what: 'cosmeticFiltersInjected',
                     type: 'cosmetic',
                     hostname: window.location.hostname,
-                    selectors: domFilterer.job0._0
+                    selectors: domFilterer.job0._0,
+                    first: firstSurvey,
+                    cost: surveyCost
                 }
             );
         }
@@ -1304,8 +1259,6 @@ vAPI.domSurveyor = (function() {
 
         domFilterer.commit(surveyPhase3Nodes);
         surveyPhase3Nodes = [];
-
-        vAPI.executionCost.stop('domSurveyor/surveyPhase3');
     };
 
     // Query main process.
@@ -1498,42 +1451,35 @@ vAPI.domSurveyor = (function() {
     // http://jsperf.com/enumerate-classes/6
 
     var surveyPhase1 = function(addedNodes) {
-        var nodes = selectNodes('[class],[id]', addedNodes);
-        var qq = queriedSelectors;
-        var ll = lowGenericSelectors;
-        var node, v, vv, j;
-        var i = nodes.length;
+        var t0 = window.performance.now(),
+            nodes = selectNodes('[class],[id]', addedNodes),
+            qq = queriedSelectors,
+            ll = lowGenericSelectors,
+            node, v, vv, j,
+            i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
             if ( node.nodeType !== 1 ) { continue; }
             v = node.id;
             if ( v !== '' && typeof v === 'string' ) {
                 v = '#' + v.trim();
-                if ( v !== '#' && qq[v] === undefined ) {
-                    ll.push(v);
-                    qq[v] = true;
-                }
+                if ( v !== '#' && !qq.has(v) ) { ll.push(v); qq.add(v); }
             }
             vv = node.className;
             if ( vv === '' || typeof vv !== 'string' ) { continue; }
             if ( /\s/.test(vv) === false ) {
                 v = '.' + vv;
-                if ( qq[v] === undefined ) {
-                    ll.push(v);
-                    qq[v] = true;
-                }
+                if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
             } else {
                 vv = node.classList;
                 j = vv.length;
                 while ( j-- ) {
                     v = '.' + vv[j];
-                    if ( qq[v] === undefined ) {
-                        ll.push(v);
-                        qq[v] = true;
-                    }
+                    if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
                 }
             }
         }
+        surveyCost += window.performance.now() - t0;
         surveyPhase2(addedNodes);
     };
 
@@ -1582,8 +1528,6 @@ vAPI.domIsLoaded = function(ev) {
         document.removeEventListener('DOMContentLoaded', vAPI.domIsLoaded);
     }
     vAPI.domIsLoaded = null;
-
-    vAPI.executionCost.start();
 
     vAPI.domWatcher.start();
     vAPI.domCollapser.start();
@@ -1642,12 +1586,8 @@ vAPI.domIsLoaded = function(ev) {
             document.removeEventListener('mousedown', onMouseClick, true);
         });
     })();
-
-    vAPI.executionCost.stop('domIsLoaded');
 };
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
-
-vAPI.executionCost.stop('contentscript.js');

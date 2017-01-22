@@ -165,7 +165,7 @@
   },
   "pickerNetFilters":{
     "message":"Các bộ lọc mạng",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"Bộ lọc phần tử ẩn",
@@ -545,7 +545,7 @@
   },
   "aboutBackupDataButton":{
     "message":"Sao lưu vào tập tin...",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",

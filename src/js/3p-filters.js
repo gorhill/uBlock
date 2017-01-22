@@ -47,7 +47,7 @@ var hiddenLists = [
 
 var onMessage = function(msg) {
     switch ( msg.what ) {
-    case 'allFilterListsReloaded':
+    case 'staticFilteringDataChanged':
         renderFilterLists();
         break;
 

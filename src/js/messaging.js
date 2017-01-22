@@ -205,22 +205,27 @@ var µb = µBlock;
 /******************************************************************************/
 
 var getHostnameDict = function(hostnameToCountMap) {
-    var r = {}, de;
-    var domainFromHostname = µb.URI.domainFromHostname;
-    var domain, counts, blockCount, allowCount;
-    for ( var hostname in hostnameToCountMap ) {
-        if ( hostnameToCountMap.hasOwnProperty(hostname) === false ) {
-            continue;
+    var r = Object.create(null),
+        domainEntry,
+        domainFromHostname = µb.URI.domainFromHostname,
+        domain, blockCount, allowCount,
+        iter = hostnameToCountMap.entries(),
+        entry, hostname, counts;
+    for (;;) {
+        entry = iter.next();
+        if ( entry.done ) {
+            break;
         }
-        if ( r.hasOwnProperty(hostname) ) {
+        hostname = entry.value[0];
+        if ( r[hostname] !== undefined ) {
             continue;
         }
         domain = domainFromHostname(hostname) || hostname;
-        counts = hostnameToCountMap[domain] || 0;
+        counts = hostnameToCountMap.get(domain) || 0;
         blockCount = counts & 0xFFFF;
         allowCount = counts >>> 16 & 0xFFFF;
-        if ( r.hasOwnProperty(domain) === false ) {
-            de = r[domain] = {
+        if ( r[domain] === undefined ) {
+            domainEntry = r[domain] = {
                 domain: domain,
                 blockCount: blockCount,
                 allowCount: allowCount,
@@ -228,13 +233,13 @@ var getHostnameDict = function(hostnameToCountMap) {
                 totalAllowCount: allowCount
             };
         } else {
-            de = r[domain];
+            domainEntry = r[domain];
         }
-        counts = hostnameToCountMap[hostname] || 0;
+        counts = entry.value[1];
         blockCount = counts & 0xFFFF;
         allowCount = counts >>> 16 & 0xFFFF;
-        de.totalBlockCount += blockCount;
-        de.totalAllowCount += allowCount;
+        domainEntry.totalBlockCount += blockCount;
+        domainEntry.totalAllowCount += allowCount;
         if ( hostname === domain ) {
             continue;
         }
@@ -274,10 +279,8 @@ var getFirewallRules = function(srcHostname, desHostnames) {
     r['. * 3p-frame'] = df.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
 
     for ( var desHostname in desHostnames ) {
-        if ( desHostnames.hasOwnProperty(desHostname) ) {
-            r['/ ' + desHostname + ' *'] = df.evaluateCellZY('*', desHostname, '*').toFilterString();
-            r['. ' + desHostname + ' *'] = df.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
-        }
+        r['/ ' + desHostname + ' *'] = df.evaluateCellZY('*', desHostname, '*').toFilterString();
+        r['. ' + desHostname + ' *'] = df.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
     }
     return r;
 };
@@ -653,16 +656,18 @@ vAPI.messaging.listen('elementPicker', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
-
-/******************************************************************************/
-
 var onMessage = function(request, sender, callback) {
+    // Cloud storage support is optional.
+    if ( µBlock.cloudStorageSupported !== true ) {
+        callback();
+        return;
+    }
+
     // Async
     switch ( request.what ) {
     case 'cloudGetOptions':
         vAPI.cloud.getOptions(function(options) {
-            options.enabled = µb.userSettings.cloudStorageEnabled === true;
+            options.enabled = µBlock.userSettings.cloudStorageEnabled === true;
             callback(options);
         });
         return;
@@ -727,7 +732,9 @@ var getLocalData = function(callback) {
             lastRestoreFile: o.lastRestoreFile,
             lastRestoreTime: o.lastRestoreTime,
             lastBackupFile: o.lastBackupFile,
-            lastBackupTime: o.lastBackupTime
+            lastBackupTime: o.lastBackupTime,
+            cloudStorageSupported: µb.cloudStorageSupported,
+            privacySettingsSupported: µb.privacySettingsSupported
         });
     };
 
@@ -750,9 +757,8 @@ var backupUserData = function(callback) {
     var onSelectedListsReady = function(filterLists) {
         userData.filterLists = filterLists;
 
-        var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', now.toLocaleString())
+            .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
 
         vAPI.download({
