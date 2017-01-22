@@ -259,7 +259,7 @@ var toChromiumTabId = function(tabId) {
     if ( typeof tabId !== 'number' || isNaN(tabId) || tabId === -1 ) {
         return 0;
     }
-    return tabId;
+    return tabId || 0;
 };
 
 /******************************************************************************/

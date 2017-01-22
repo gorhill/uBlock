@@ -19,8 +19,9 @@
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
     visitTimeout = 20000,
-    pollQueueInterval = 5000,
     profiler = +new Date(),
+    pollQueueInterval = 5000,
+    redactMarker = '********',
     strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
@@ -642,7 +643,7 @@
     return µb.URI.domainFromHostname(µb.URI.hostnameFromURI(url));
   }
 
-  var validateFields = function (ad) { // no side-effects
+  var validateFields = function (ad) {
 
     if (ad.visitedTs === 0 && ad.attempts > 0) {
 
@@ -650,8 +651,13 @@
       ad.attempts = 0; // shouldn't happen
     }
 
-    if (!ad.pageUrl.startsWith('http'))
-      warn('Possbly Invalid PageURL! '+ad.pageUrl);
+    if (!(ad.pageUrl.startsWith('http') || ad.pageUrl === redactMarker))
+      warn('Possibly Invalid PageUrl: ', ad.pageUrl);
+
+    // re-add if stripped in export
+    ad.pageDomain = ad.pageDomain || domainFromURI(ad.pageUrl) || ad.pageUrl;
+    ad.targetDomain = ad.targetDomain || domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
+    ad.targetHostname = ad.targetHostname || µb.URI.hostnameFromURI(ad.resolvedTargetUrl || ad.targetUrl);
 
     return ad && type(ad) === 'object' &&
       type(ad.pageUrl) === 'string' &&
@@ -1186,6 +1192,133 @@
     return (automatedMode && automatedMode.length);
   }
 
+
+  var saveVaultImages = function (jsonName) {
+
+    // Note(not-in-use): crashes over approx. 725 image or 70MB
+
+    var imgURLs = [];
+    adlist().forEach(function (ad) {
+      if (ad.contentType === 'img')
+        imgURLs.push(ad.contentData.src);
+    });
+
+    // #639: download to a folder next to the export file (with same name -json)
+
+    var files = [], lastFilesLength = 0, zipNameParts = jsonName.split("."),
+      zipName = zipNameParts.splice(0, zipNameParts.length - 2).join('_');
+
+    var processUrl = function (url) {
+
+      var parts = url.split("/"),
+        filename = parts[parts.length - 1];
+
+      filename = "image_" + i + ".jpg"; // tmp
+
+      var img = new Image();
+      img.onload = function () {
+
+        //better image handling
+        if ('naturalHeight' in this) {
+          if (this.naturalHeight + this.naturalWidth === 0) {
+            this.onerror();
+            return;
+          }
+        } else if (this.width + this.height === 0) {
+          this.onerror();
+          return;
+        }
+
+        var a = document.createElement('a');
+        a.href = this.src;
+        files.push({
+          name: filename,
+          data: toBase64Image(img)
+        });
+      }
+
+      img.onerror = function () {
+        log("Error");
+        var index = imgURLs.indexOf(url);
+        if (index > -1) {
+          imgURLs.splice(index, 1);
+        }
+      }
+
+      img.src = url;
+    }
+
+    imgURLs.forEach(processUrl);
+
+    var check = setInterval(function () {
+
+      log("checking", files.length, imgURLs.length, lastFilesLength);
+
+      if (files.length === imgURLs.length || files.length === lastFilesLength) {
+
+        clearInterval(check);
+
+        var zip = new JSZip(),
+          img = zip.folder(zipName),
+          zipcount = 0;
+
+        for (var i = 0; i < files.length; i++) {
+          img.file(files[i].name, files[i].data, {
+            base64: true
+          });
+        }
+
+        // type base64 or blob???
+        zip.generateAsync({
+          type: "base64"
+        }).then(function (content) {
+
+          var blob = b64toBlob(content, 'image'),
+            blobUrl = URL.createObjectURL(blob);
+
+          //use vAPI.download, convert base64 to blob
+          vAPI.download({
+            'url': blobUrl,
+            'filename': zipName + ".zip"
+          });
+        });
+      }
+      lastFilesLength = files.length;
+    }, 1000);
+  };
+
+  var admapToJSON = function(sanitize) {
+
+    var map = JSON.parse(JSON.stringify(admap)), // deep clone
+      pages = Object.keys(map);
+
+    for (var i = 0; i < pages.length; i++) {
+
+      if (map[pages[i]]) {
+        var hashes = Object.keys(map[pages[i]]);
+        for (var j = 0; j < hashes.length; j++) {
+
+          var ad = map[pages[i]][hashes[j]];
+
+          delete ad.current;
+          delete ad.pageDomain;
+          delete ad.targetDomain;
+          delete ad.targetHostname;
+
+          if (ad.resolvedTargetUrl === ad.targetUrl)
+            delete ad.resolvedTargetUrl;
+
+          if (sanitize) { // #643: remove page info for privacy
+
+            ad.pageUrl = redactMarker;  // YaMD5.hashStr(ad.pageUrl);
+            ad.pageTitle = redactMarker; // YaMD5.hashStr(ad.pageTitle);
+          }
+        }
+      }
+    }
+    return JSON.stringify(map, null, 2);
+  }
+
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
@@ -1204,6 +1337,7 @@
 
     initialize(settings);
   });
+
 
   /********************************** API *************************************/
 
@@ -1267,8 +1401,9 @@
       ad.current = false;
     });
 
-    if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export')
+    if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export') {
       exportAds();
+    }
 
     markUserAction();
   };
@@ -1430,7 +1565,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    if (µb.userSettings.eventLogging)
+    if (0 && µb.userSettings.eventLogging) // disabled
       log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
@@ -1522,9 +1657,8 @@
   exports.logAdSet = function (request, pageStore, tabId) {
 
     var data = '';
-
     request.ids.forEach(function (id) {
-      data += JSON.stringify(adById(id));
+      data += JSON.stringify(adById(id), null, 2);
     });
 
     log('ADSET #' + request.gid + '\n', data);
@@ -1579,7 +1713,6 @@
    *
    * TODO: Shall be handled differently on different browser (?)
    */
-
   var verifyAdBlockers = exports.verifyAdBlockers = function () {
 
     var notes = notifications,
@@ -1825,168 +1958,16 @@
   var exportAds = exports.exportAds = function (request) {
 
     var count = adCount(),
-        filename = (request && request.filename) || getExportFileName(),
-        blob = new Blob([JSON.stringify(admap)], {type : "text/plain"}),
-        url = URL.createObjectURL(blob);
+      jsonData = admapToJSON(request.sanitize || 1),
+      filename = (request && request.filename) || getExportFileName(),
+      url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
 
-    vAPI.download({
-      'url': url,
-      'filename': filename
-    });
+    vAPI.download({ 'url': url, 'filename': filename });
 
     if (!production && request.includeImages) saveVaultImages();
 
     log('[EXPORT] ' + count + ' ads to ' + filename);
   };
-
-   //Crashes over approx. 725 image/70MB
-   var saveVaultImages = function (jsonName) {
-
-    var imgURLs = []; // extract image urls
-    adlist().forEach(function (ad) {
-      if (ad.contentType === 'img')
-        imgURLs.push(ad.contentData.src);
-    });
-
-    // download them to a folder next to the export file (with same name -json)
-    // handle #639 here
-
-    var zipNameParts = jsonName.split(".");
-    var zipName = zipNameParts.splice(0, zipNameParts.length - 2).join('_');
-
-
-    var files = [], lastFilesLength = 0;
-
-    for (var i = 0; i < imgURLs.length; i++) {
-        var url = imgURLs[i];
-
-    (function(url){
-            var parts = url.split("/"),
-                filename = parts[parts.length - 1];
-
-            // for now:
-            filename = "image_"+i+".jpg"
-
-            var img = new Image();
-            img.onload = function() {
-                 //better image handling
-                 if ('naturalHeight' in this) {
-                     if (this.naturalHeight + this.naturalWidth === 0) {
-                         this.onerror();
-                         return;
-                     }
-                 } else if (this.width + this.height === 0) {
-                     this.onerror();
-                     return;
-                 }
-
-                var a = document.createElement('a');
-                a.href = this.src;
-
-                // Add to file array [{name, data}]
-                files.push({ name: filename, data: getBase64Image(img) });
-            }
-
-            img.onerror = function() {
-                log("Error");
-                var index = imgURLs.indexOf(url);
-                if (index > -1) {
-                    imgURLs.splice(index, 1);
-                }
-            }
-      img.src = url;
-    })(url);
-
-  }
-
-
-  var check = setInterval(function(){
-
-    log("checking", files.length, imgURLs.length, lastFilesLength);
-
-    if (files.length === imgURLs.length || files.length === lastFilesLength) {
-
-            clearInterval(check);
-
-            var zip = new JSZip(),
-                img = zip.folder(zipName),
-                zipcount = 0;
-
-            for (var i = 0; i < files.length; i++) {
-                img.file(files[i].name, files[i].data, {base64: true});
-            }
-            //type base64 or blob???
-            zip.generateAsync({
-                type:"base64"
-            }).then(function(content) {
-              var blob = b64toBlob(content, 'image'),
-                  blobUrl = URL.createObjectURL(blob);
-
-                //use vAPI.download, convert base64 to blob
-                vAPI.download({
-                  'url': blobUrl,
-                  'filename': zipName + ".zip"
-                });
-
-            });
-
-    }
-
-    lastFilesLength = files.length;
-  }, 1000);
-
-  };
-
-  function getBase64Image(img) {
-
-     // Create an empty canvas element
-     var canvas = document.createElement("canvas");
-     canvas.width = img.width;
-     canvas.height = img.height;
-
-     // Copy the image contents to the canvas
-     var ctx = canvas.getContext("2d");
-     ctx.drawImage(img, 0, 0);
-
-     // Get the data-URL formatted image
-     // Firefox supports PNG and JPEG. You could check img.src to
-     // guess the original format, but be aware the using "image/jpg"
-     // will re-encode the image.
-     try {
-         var dataURL = canvas.toDataURL("image/png");
-         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-     } catch (err) {
-         log(err);
-         return '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';
-     }
-
- }
-
-
-//Src: http://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
- function b64toBlob(b64Data, contentType, sliceSize) {
-     contentType = contentType || '';
-     sliceSize = sliceSize || 512;
-
-     var byteCharacters = atob(b64Data);
-     var byteArrays = [];
-
-     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-         var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-         var byteNumbers = new Array(slice.length);
-         for (var i = 0; i < slice.length; i++) {
-             byteNumbers[i] = slice.charCodeAt(i);
-         }
-
-         var byteArray = new Uint8Array(byteNumbers);
-
-         byteArrays.push(byteArray);
-     }
-
-     var blob = new Blob(byteArrays, { type: contentType });
-     return blob;
- }
 
   exports.adsForPage = function (request, pageStore, tabId) {
 
