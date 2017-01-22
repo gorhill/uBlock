@@ -297,16 +297,16 @@ var appendNotifyDiv = function (notify, template) {
 
 var modifyDNTNotifications = function () {
 
-   var text = document.querySelectorAll('.notification.dnt #notify-text'),
-       link = uDom('.notification.dnt #notify-link').nodes,
+   var text = document.querySelectorAll('div[id^="DNT"] #notify-text'),
+       link = uDom('div[id^="DNT"] #notify-link').nodes,
        newlink = uDom('span>#notify-link').nodes;
-
+   
    if (text.length > 0 && link.length > 0 && newlink.length === 0) {
        var sections = text[0].innerText.split(','),
            newText = sections[0] + link[0].outerHTML + "," + sections[1];
-           
+
        text[0].innerHTML = newText;
-       uDom('.notification.dnt>#notify-link').css('display', 'none');
+       uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
    }
 };
 
