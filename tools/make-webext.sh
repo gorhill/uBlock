@@ -13,6 +13,7 @@ VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
 bash ./tools/make-assets.sh $DES
+bash ./tools/make-locales.sh $DES
 
 cp -R src/css                    $DES/
 cp -R src/img                    $DES/
