@@ -1958,7 +1958,7 @@
   var exportAds = exports.exportAds = function (request) {
 
     var count = adCount(),
-      jsonData = admapToJSON(request.sanitize || 1),
+      jsonData = admapToJSON(request.sanitize),
       filename = (request && request.filename) || getExportFileName(),
       url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
 
