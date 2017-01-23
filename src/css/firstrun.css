@@ -39,6 +39,7 @@ form a {
 }
 .option-meta span:hover{
   color: #3B96FF;
+  cursor:pointer;
 }
 .toggled0{
     display:none;
