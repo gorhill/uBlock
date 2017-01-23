@@ -31,7 +31,8 @@
 
 var listDetails = {},
     filteringSettingsHash = '',
-    lastUpdateTemplateString = vAPI.i18n('3pLastUpdate');
+    lastUpdateTemplateString = vAPI.i18n('3pLastUpdate'),
+    reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
 
 /******************************************************************************/
 
@@ -111,6 +112,7 @@ var renderFilterLists = function(soft) {
             } else {
                 li.classList.remove('mustread');
             }
+            li.classList.remove('toRemove');
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {
@@ -314,8 +316,11 @@ var hashFromCurrentFromSettings = function() {
             listHash.push(liEntry.getAttribute('data-listkey'));
         }
     }
-    hash.push(listHash.sort().join());
-    hash.push(document.getElementById('externalLists').value.trim());
+    hash.push(
+        listHash.sort().join(),
+        reValidExternalList.test(document.getElementById('externalLists').value),
+        document.querySelector('#lists .listEntry.toRemove') !== null
+    );
     return hash.join();
 };
 
