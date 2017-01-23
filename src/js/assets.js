@@ -29,7 +29,8 @@
 
 var reIsExternalPath = /^(?:[a-z-]+):\/\//,
     reIsUserAsset = /^user-/,
-    errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
+    errorCantConnectTo = vAPI.i18n('errorCantConnectTo'),
+    noopfunc = function(){};
 
 var api = {
 };
@@ -716,7 +717,14 @@ var saveUserAsset = function(assetKey, content, callback) {
 
 /******************************************************************************/
 
-api.get = function(assetKey, callback) {
+api.get = function(assetKey, options, callback) {
+    if ( typeof options === 'function' ) {
+        callback = options;
+        options = {};
+    } else if ( typeof callback !== 'function' ) {
+        callback = noopfunc;
+    }
+
     if ( assetKey === µBlock.userFiltersPath ) {
         readUserAsset(assetKey, callback);
         return;
@@ -755,7 +763,7 @@ api.get = function(assetKey, callback) {
             onContentNotLoaded();
             return;
         }
-        if ( reIsExternalPath.test(contentURL) ) {
+        if ( reIsExternalPath.test(contentURL) && options.dontCache !== true ) {
             assetCacheWrite(assetKey, {
                 content: this.responseText,
                 url: contentURL
