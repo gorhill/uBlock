@@ -83,6 +83,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
+  color: #0076FF;
 }
 
 a:hover {
@@ -512,9 +513,11 @@ button.error{
     line-height: 1;
     vertical-align: middle;
     }
-a {
-    text-decoration: none;
-    color: #0076FF;
+body {
+    font: 14px sans-serif;
+    }
+textarea {
+    font-size: 90%;
     }
 a:hover {
     color: #3B96FF;

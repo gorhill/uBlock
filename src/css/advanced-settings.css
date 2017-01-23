@@ -4,7 +4,7 @@ div > p:first-child {
 div > p:last-child {
     margin-bottom: 0;
     }
-.userFilters {
+textarea {
     box-sizing: border-box;
     height: 60vh;
     text-align: left;

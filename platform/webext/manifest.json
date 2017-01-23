@@ -7,7 +7,7 @@
     "applications": {
         "gecko": {
             "id": "adnauseam@rednoise.org",
-            "strict_min_version": "50.0",
+            "strict_min_version": "52.0a1",
             "strict_max_version": "52.*"
         }
     },
@@ -20,6 +20,7 @@
     },
 
     "browser_action": {
+        "browser_style": false,
         "default_icon": {
             "19": "img/browsericons/icon19.png",
             "38": "img/browsericons/icon38.png"
@@ -47,8 +48,6 @@
         }
     ],
     "minimum_chrome_version": "26.0",
-    "optional_permissions": [ "file:///*" ],
-    "options_page": "dashboard.html",
     "options_ui": {
         "page": "options_ui.html"
     },
@@ -56,7 +55,6 @@
         "contextMenus",
         "storage",
         "tabs",
-        "unlimitedStorage",
         "webNavigation",
         "webRequest",
         "webRequestBlocking",

@@ -37,9 +37,59 @@ var exports = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Suspend tabs until uBO is fully ready.
+
+vAPI.net.onReady = function() {
+    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+        vAPI.onLoadAllCompleted();
+    }
+    var fn = onBeforeReady;
+    onBeforeReady = null;
+    if ( fn !== null ) {
+        fn('ready');
+    }
+};
+
+var onBeforeReady = (function() {
+    var suspendedTabs = new Set();
+
+    var forceReloadSuspendedTabs = function() {
+        var iter = suspendedTabs.values(),
+            entry;
+        for (;;) {
+            entry = iter.next();
+            if ( entry.done ) { break; }
+            vAPI.tabs.reload(entry.value);
+        }
+    };
+
+    return function(tabId) {
+        if (
+            vAPI.isBehindTheSceneTabId(tabId) ||
+            µBlock.hiddenSettings.suspendTabsUntilReady !== true
+        ) {
+            return;
+        }
+        if ( tabId === 'ready' ) {
+            forceReloadSuspendedTabs();
+            return;
+        }
+        suspendedTabs.add(tabId);
+        return true;
+    };
+})();
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
+    var tabId = details.tabId;
+    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+        return { cancel: true };
+    }
+
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -53,7 +103,6 @@ var onBeforeRequest = function(details) {
     if (µBlock.userSettings.blockingMalware === false) return;
 
     // Special treatment: behind-the-scene requests
-    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
@@ -118,24 +167,25 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/949
     // Redirect blocked request?
-    var url = µb.redirectEngine.toURL(requestContext);
-    if ( url !== undefined ) {
-
-        µb.adnauseam.logRedirect(requestURL, url); // ADN, log redirects
-        pageStore.internalRedirectionCount += 1;
-        if ( µb.logger.isEnabled() ) {
-            µb.logger.writeOne(
-                tabId,
-                'redirect',
-                'rr:' + µb.redirectEngine.resourceNameRegister,
-                requestType,
-                requestURL,
-                requestContext.rootHostname,
-                requestContext.pageHostname
-            );
+    if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+        var url = µb.redirectEngine.toURL(requestContext);
+        if ( url !== undefined ) {
+            µb.adnauseam.logRedirect(requestURL, url); // ADN, log redirects
+            pageStore.internalRedirectionCount += 1;
+            if ( µb.logger.isEnabled() ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'redirect',
+                    'rr:' + µb.redirectEngine.resourceNameRegister,
+                    requestType,
+                    requestURL,
+                    requestContext.rootHostname,
+                    requestContext.pageHostname
+                );
+            }
+            requestContext.dispose();
+            return { redirectUrl: url };
         }
-        requestContext.dispose();
-        return { redirectUrl: url };
     }
 
     requestContext.dispose();
@@ -145,9 +195,9 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
-    var tabId = details.tabId;
-    var requestURL = details.url;
-    var µb = µBlock;
+    var tabId = details.tabId,
+        requestURL = details.url,
+        µb = µBlock;
 
     µb.tabContextManager.push(tabId, requestURL);
 
@@ -155,9 +205,10 @@ var onBeforeRootFrameRequest = function(details) {
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    var µburi = µb.URI;
-    var requestHostname = µburi.hostnameFromURI(requestURL);
-    var requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
+    var µburi = µb.URI,
+        requestHostname = µburi.hostnameFromURI(requestURL),
+        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname,
+        result = '';
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -167,8 +218,6 @@ var onBeforeRootFrameRequest = function(details) {
         requestHostname: requestHostname,
         requestType: 'main_frame'
     };
-
-    var result = '';
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {
@@ -677,68 +726,36 @@ var processCSP = function(details, pageStore, context) {
 
   /******************************************************************************/
 
-  // https://github.com/gorhill/uBlock/issues/1163
-  // "Block elements by size"
+// https://github.com/gorhill/uBlock/issues/1163
+//   "Block elements by size"
 
   var foilLargeMediaElement = function (details) {
     var µb = µBlock;
-    var tabId = details.tabId;
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if (pageStore === null) {
-      return;
-    }
-    if (pageStore.getNetFilteringSwitch() !== true) {
-      return;
-    }
-    if (Date.now() < pageStore.allowLargeMediaElementsUntil) {
-      return;
-    }
-    if (µb.hnSwitches.evaluateZ('no-large-media', pageStore.tabHostname) !== true) {
-      return;
-    }
+
     var i = headerIndexFromName('content-length', details.responseHeaders);
-    if (i === -1) {
-      return;
-    }
-    var contentLength = parseInt(details.responseHeaders[i].value, 10) || 0;
-    if ((contentLength >>> 10) < µb.userSettings.largeMediaSize) {
-      return;
+    if ( i === -1 ) { return; }
+
+    var tabId = details.tabId,
+        pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
+        return;
     }
 
-    pageStore.logLargeMedia();
+    var size = parseInt(details.responseHeaders[i].value, 10) || 0,
+        result = pageStore.filterLargeMediaElement(size);
+    if ( result === undefined ) { return; }
+
     µb.adnauseam.logNetBlock('net.largeMedia', details);
 
-    if (µb.logger.isEnabled()) {
-
-      µb.logger.writeOne(
-        tabId,
-        'net',
-        µb.hnSwitches.toResultString(),
-        details.type,
-        details.url,
-        pageStore.tabHostname,
-        pageStore.tabHostname
-      );
-    }
-
-    return {
-      cancel: true
-    };
-  };
-
-  /******************************************************************************/
-
-var foilWithCSP = function(headers, noInlineScript, noWebsocket) {
-    var i = headerIndexFromName('content-security-policy', headers),
-        before = i === -1 ? '' : headers[i].value.trim(),
-        after = before;
-
-    if ( noInlineScript ) {
-        after = foilWithCSPDirective(
-            after,
-            /script-src[^;]*;?\s*/,
-            "script-src 'unsafe-eval' *",
-            /'unsafe-inline'\s*|'nonce-[^']+'\s*/g
+    if ( µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            result,
+            details.type,
+            details.url,
+            pageStore.tabHostname,
+            pageStore.tabHostname
         );
     }
 

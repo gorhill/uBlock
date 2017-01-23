@@ -43,7 +43,7 @@ html, body {
     color: #ccc;
     cursor: pointer;
     display: inline-block;
-    /*font: inherit;*/
+    font-size: 110%;
     margin: 0;
     padding: 2px 10px;
     position: relative;

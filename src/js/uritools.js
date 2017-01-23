@@ -21,6 +21,8 @@
 
 /* global publicSuffixList */
 
+'use strict';
+
 /*******************************************************************************
 
 RFC 3986 as reference: http://tools.ietf.org/html/rfc3986#appendix-A
@@ -32,8 +34,6 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 /******************************************************************************/
 
 µBlock.URI = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -398,6 +398,18 @@ URI.domainFromURI = function(uri) {
         return '';
     }
     return this.domainFromHostname(this.hostnameFromURI(uri));
+};
+
+/******************************************************************************/
+
+URI.isNetworkURI = function(uri) {
+    return /^(?:ftps?|https?|wss?):\/\//.test(uri);
+};
+
+/******************************************************************************/
+
+URI.isNetworkScheme = function(scheme) {
+    return /^(?:ftps?|https?|wss?)$/.test(scheme);
 };
 
 /******************************************************************************/

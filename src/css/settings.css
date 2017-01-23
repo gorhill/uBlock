@@ -30,9 +30,6 @@ ul#userSettings .subgroup .subgroupDescription {
 ul#userSettings .subgroup .subgroupDescription p{
     margin-right: 0.3em;
 }
-ul#userSettings .subgroup {
-  margin: 1em 0 2em;
-}
 div> p:last-child {
   margin-bottom: 0;
 }
@@ -56,4 +53,10 @@ ul#userSettings .subgroup> ul> li label {
 }
 #experimental-enabled {
   margin-top: 1em;
+}
+#advanced-user-enabled ~ a.fa {
+  display: none;
+}
+body.advancedUser #advanced-user-enabled ~ a.fa {
+  display: inline;
 }

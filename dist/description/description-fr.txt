@@ -43,7 +43,5 @@ Contributeurs sur Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Il s'agit d'une version relativement préliminaire, veuillez garder ça à l'esprit lors de votre évaluation de l'extension.
-
 Consultez ici en Anglais le Journal des changements concernant le projet :
 https://github.com/gorhill/uBlock/releases

@@ -633,6 +633,8 @@ vAPI.storage = (function() {
     return api;
 })();
 
+vAPI.cacheStorage = vAPI.storage;
+
 /******************************************************************************/
 
 // This must be executed/setup early.
@@ -1077,36 +1079,43 @@ vAPI.tabs._remove = (function() {
             tabBrowser.closeTab(tab);
         };
     }
-    return function(tab, tabBrowser, nuke) {
-        if ( !tabBrowser ) {
-            return;
-        }
-        if ( tabBrowser.tabs.length === 1 && nuke ) {
-            getOwnerWindow(tab).close();
-        } else {
-            tabBrowser.removeTab(tab);
-        }
+    return function(tab, tabBrowser) {
+        if ( !tabBrowser ) { return; }
+        tabBrowser.removeTab(tab);
     };
 })();
 
 /******************************************************************************/
 
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1317173
+//   Work around FF45 (and earlier) timing issue by delaying the closing
+//   of tabs. The picked delay is just what seemed to work for the test case
+//   reported in the issue above.
+
 vAPI.tabs.remove = (function() {
-    var remove = function(tabId, nuke) {
-        var browser = tabWatcher.browserFromTabId(tabId);
-        if ( !browser ) {
-            return;
+    var timer = null,
+        queue = [];
+
+    var remove = function() {
+        timer = null;
+        var tabId, browser, tab;
+        while ( (tabId = queue.pop()) ) {
+            browser = tabWatcher.browserFromTabId(tabId);
+            if ( !browser ) { continue; }
+            tab = tabWatcher.tabFromBrowser(browser);
+            if ( !tab ) { continue; }
+            this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
         }
-        var tab = tabWatcher.tabFromBrowser(browser);
-        if ( !tab ) {
-            return;
-        }
-        this._remove(tab, getTabBrowser(getOwnerWindow(browser)), nuke);
     };
 
     // Do this asynchronously
-    return function(tabId, nuke) {
-        vAPI.setTimeout(remove.bind(this, tabId, nuke), 1);
+    return function(tabId, delay) {
+        queue.push(tabId);
+        if ( timer !== null ) {
+            if ( !delay ) { return; }
+            clearTimeout(timer);
+        }
+        timer = vAPI.setTimeout(remove.bind(this), delay ? 250 : 25);
     };
 })();
 

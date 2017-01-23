@@ -58,6 +58,7 @@ vAPI.app.restart = function() {
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = chrome.storage.local;
+vAPI.cacheStorage = chrome.storage.local;
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1289,7 +1290,9 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         µb.tabContextManager.commit(tab.id, tab.url);
         µb.bindTabToPageStats(tab.id);
         // https://github.com/chrisaljoudi/uBlock/issues/129
-        scriptStart(tab.id, frameId);
+        if ( /^https?:\/\//.test(tab.url) ) { // added in ub/1.10.0
+          scriptStart(tab.id, frameId);
+        }
     };
     var injectOne = function(tabId, frameId, script, cb)  {
 

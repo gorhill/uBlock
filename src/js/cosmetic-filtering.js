@@ -595,8 +595,10 @@ var FilterContainer = function() {
     this.selectorCacheTimer = null;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reClassOrIdSelector = /^[#.][\w-]+$/;
-    this.rePlainSelector = /^[#.][\w-]+/;
+    this.rePlainSelector = /^[#.][\w\\-]+/;
+    this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
     this.rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)/;
+    this.reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
     this.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
     this.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
     this.reScriptSelector = /^script:(contains|inject)\((.+)\)$/;
@@ -786,6 +788,40 @@ FilterContainer.prototype.isValidSelector = (function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1668
+//   The key must be literal: unescape escaped CSS before extracting key.
+//   It's an uncommon case, so it's best to unescape only when needed.
+
+FilterContainer.prototype.keyFromSelector = function(selector) {
+    var matches = this.rePlainSelector.exec(selector);
+    if ( matches === null ) { return; }
+    var key = matches[0];
+    if ( key.indexOf('\\') === -1 ) {
+        return key;
+    }
+    key = '';
+    matches = this.rePlainSelectorEscaped.exec(selector);
+    if ( matches === null ) { return; }
+    var escaped = matches[0],
+        beg = 0;
+    this.reEscapeSequence.lastIndex = 0;
+    for (;;) {
+        matches = this.reEscapeSequence.exec(escaped);
+        if ( matches === null ) {
+            return key + escaped.slice(beg);
+        }
+        key += escaped.slice(beg, matches.index);
+        beg = this.reEscapeSequence.lastIndex;
+        if ( matches[1].length === 1 ) {
+            key += matches[1];
+        } else {
+            key += String.fromCharCode(parseInt(matches[1], 16));
+        }
+    }
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.compile = function(s, out) {
     var parsed = this.parser.parse(s);
     if ( parsed.cosmetic === false ) {
@@ -846,23 +882,21 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
 FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
     var selector = parsed.suffix,
         type = selector.charAt(0),
-        matches;
+        key, matches;
 
     if ( type === '#' || type === '.' ) {
-        matches = this.rePlainSelector.exec(selector);
-        if ( matches === null ) {
-            return;
-        }
+        key = this.keyFromSelector(selector);
+        if ( key === undefined ) { return; }
         // Single-CSS rule: no need to test for whether the selector
         // is valid, the regex took care of this. Most generic selector falls
         // into that category.
-        if ( matches[0] === selector ) {
-            out.push('c\vlg\v' + matches[0]);
+        if ( key === selector ) {
+            out.push('c\vlg\v' + key);
             return;
         }
-        // Many-CSS rules
+        // Composite CSS rule.
         if ( this.isValidSelector(selector) ) {
-            out.push('c\vlg+\v' + matches[0] + '\v' + selector);
+            out.push('c\vlg+\v' + key + '\v' + selector);
         }
         return;
     }
@@ -1304,12 +1338,13 @@ FilterContainer.prototype.createUserScriptRule = function(hash, hostname, select
 // https://github.com/gorhill/uBlock/issues/1954
 
 // 01234567890123456789
-// script:inject(token)
-//               ^   ^
-//              14   -1
+// script:inject(token[, arg[, ...]])
+//               ^                 ^
+//              14                 -1
 
 FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     if ( this.userScriptCount === 0 ) { return; }
+    if ( µb.hiddenSettings.ignoreScriptInjectFilters === true ) { return; }
 
     var reng = µb.redirectEngine;
     if ( !reng ) { return; }
@@ -1342,7 +1377,7 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     }
     var i = selectors.length;
     while ( i-- ) {
-        this._lookupUserScript(scripts, selectors[i].slice(14, -1), reng, out);
+        this._lookupUserScript(scripts, selectors[i].slice(14, -1).trim(), reng, out);
     }
 
     if ( out.length === 0 ) {
@@ -1369,14 +1404,44 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
     return out.join('\n');
 };
 
-FilterContainer.prototype._lookupUserScript = function(dict, token, reng, out) {
-    if ( dict.has(token) ) { return; }
-    var content = reng.resourceContentFromName(token, 'application/javascript');
-    if ( content ) {
-        dict.set(token, out.length);
-        out.push(content);
+FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
+    if ( dict.has(raw) ) { return; }
+    var token, args,
+        pos = raw.indexOf(',');
+    if ( pos === -1 ) {
+        token = raw;
+    } else {
+        token = raw.slice(0, pos).trim();
+        args = raw.slice(pos + 1).trim();
     }
+    var content = reng.resourceContentFromName(token, 'application/javascript');
+    if ( !content ) { return; }
+    if ( args ) {
+        content = this._fillupUserScript(content, args);
+        if ( !content ) { return; }
+    }
+    dict.set(raw, out.length);
+    out.push(content);
 };
+
+// Fill template placeholders. Return falsy if:
+// - At least one argument contains anything else than /\w/ and `.`
+
+FilterContainer.prototype._fillupUserScript = function(content, args) {
+    var i = 1,
+        pos, arg;
+    while ( args !== '' ) {
+        pos = args.indexOf(',');
+        if ( pos === -1 ) { pos = args.length; }
+        arg = args.slice(0, pos).trim().replace(this._reEscapeScriptArg, '\\$&');
+        content = content.replace('{{' + i + '}}', arg);
+        args = args.slice(pos + 1).trim();
+        i++;
+    }
+    return content;
+};
+
+FilterContainer.prototype._reEscapeScriptArg = /[\\'"]/g;
 
 /******************************************************************************/
 

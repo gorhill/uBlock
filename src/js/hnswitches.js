@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a Chromium browser extension to black/white list requests.
-    Copyright (C) 2015  Raymond Hill
+    uBlock Origin - a Chromium browser extension to black/white list requests.
+    Copyright (C) 2015-2016 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,14 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode, µBlock */
+/* global punycode */
 /* jshint bitwise: false */
+
+'use strict';
 
 /******************************************************************************/
 
 µBlock.HnSwitches = (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -84,12 +84,7 @@ var isIPAddress = function(hostname) {
     return hostname.startsWith('[');
 };
 
-/******************************************************************************/
-
 var toBroaderHostname = function(hostname) {
-    if ( isIPAddress(hostname) ) {
-        return '*';
-    }
     var pos = hostname.indexOf('.');
     if ( pos !== -1 ) {
         return hostname.slice(pos + 1);
@@ -97,7 +92,13 @@ var toBroaderHostname = function(hostname) {
     return hostname !== '*' && hostname !== '' ? '*' : '';
 };
 
-HnSwitches.toBroaderHostname = toBroaderHostname;
+var toBroaderIPAddress = function(ipaddress) {
+    return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
+};
+
+var selectHostnameBroadener = function(hostname) {
+    return isIPAddress(hostname) ? toBroaderIPAddress : toBroaderHostname;
+};
 
 /******************************************************************************/
 
@@ -214,7 +215,7 @@ HnSwitches.prototype.evaluate = function(switchName, hostname) {
     if ( bitOffset === undefined ) {
         return 0;
     }
-    return (bits >> bitOffset) & 3;
+    return (bits >>> bitOffset) & 3;
 };
 
 /******************************************************************************/
@@ -226,22 +227,21 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
         return false;
     }
     this.n = switchName;
-    var bits;
-    var s = hostname;
+    var bits,
+        hn = hostname,
+        broadenSource = selectHostnameBroadener(hn);
     for (;;) {
-        bits = this.switches[s] || 0;
+        bits = this.switches[hn] || 0;
         if ( bits !== 0 ) {
-            bits = bits >> bitOffset & 3;
+            bits = bits >>> bitOffset & 3;
             if ( bits !== 0 ) {
-                this.z = s;
+                this.z = hn;
                 this.r = bits;
                 return bits === 1;
             }
         }
-        s = toBroaderHostname(s);
-        if ( s === '' ) {
-            break;
-        }
+        hn = broadenSource(hn);
+        if ( hn === '' ) { break; }
     }
     this.r = 0;
     return false;

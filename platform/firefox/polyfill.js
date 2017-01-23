@@ -21,7 +21,24 @@
 
 // For background page or non-background pages
 
+/* exported objectAssign */
+
 'use strict';
+
+/******************************************************************************/
+/******************************************************************************/
+
+// As per MDN, Object.assign appeared first in Firefox 34.
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Browser_compatibility
+
+var objectAssign = Object.assign || function(target, source) {
+    var keys = Object.keys(source);
+    for ( var i = 0, n = keys.length, key; i < n; i++ ) {
+        key = keys[i];
+        target[key] = source[key];
+    }
+    return target;
+};
 
 /******************************************************************************/
 

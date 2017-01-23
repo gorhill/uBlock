@@ -68,7 +68,7 @@ var typeNameToTypeValue = {
              'other': 10 << 4,
           'popunder': 11 << 4,
         'main_frame': 12 << 4,
-          'elemhide': 13 << 4,
+       'generichide': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
@@ -87,7 +87,7 @@ var typeValueToTypeName = {
     10: 'other',
     11: 'popunder',
     12: 'document',
-    13: 'elemhide',
+    13: 'generichide',
     14: 'inline-script',
     15: 'popup'
 };
@@ -105,6 +105,9 @@ var BlockAnyParty = BlockAction | AnyParty;
 var AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 var AllowAnyType = AllowAction | AnyType;
 var AllowAnyParty = AllowAction | AnyParty;
+
+var genericHideException = AllowAction | AnyParty | typeNameToTypeValue.generichide,
+    genericHideImportant = BlockAction | AnyParty | typeNameToTypeValue.generichide | Important;
 
 // ABP filters: https://adblockplus.org/en/filters
 // regex tester: http://regex101.com/
@@ -337,57 +340,42 @@ var hostnameMissTest = function(owner) {
 };
 
 var hostnameHitSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        pos;
     for (;;) {
-        if ( dict.has(needle) ) {
-            return true;
-        }
+        if ( dict.has(needle) ) { return true; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
     return false;
 };
 
 var hostnameMissSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        pos;
     for (;;) {
-        if ( dict.has(needle) ) {
-            return false;
-        }
+        if ( dict.has(needle) ) { return false; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
-
     return true;
 };
 
 var hostnameMixedSetTest = function(owner) {
-    var dict = owner._hostnameDict;
-    var needle = pageHostnameRegister;
-    var hit = false;
-    var v, pos;
+    var dict = owner._hostnameDict,
+        needle = pageHostnameRegister,
+        hit = false,
+        v, pos;
     for (;;) {
         v = dict.get(needle);
-        if ( v === false ) {
-            return false;
-        }
-        if ( v === true ) {
-            hit = true;
-        }
+        if ( v === false ) { return false; }
+        if ( v === true ) { hit = true; }
         pos = needle.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         needle = needle.slice(pos + 1);
     }
     return hit;
@@ -1166,6 +1154,9 @@ var FilterParser = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1493
+//   Transpose `ping` into `other` for now.
+
 FilterParser.prototype.toNormalizedType = {
         'stylesheet': 'stylesheet',
              'image': 'image',
@@ -1178,9 +1169,12 @@ FilterParser.prototype.toNormalizedType = {
              'media': 'media',
          'websocket': 'websocket',
              'other': 'other',
+            'beacon': 'other',
+              'ping': 'other',
           'popunder': 'popunder',
           'document': 'main_frame',
-          'elemhide': 'elemhide',
+       'generichide': 'generichide',
+          'elemhide': 'generichide',
      'inline-script': 'inline-script',
              'popup': 'popup'
 };
@@ -1271,8 +1265,8 @@ FilterParser.prototype.parseOptions = function(s) {
         // `generichide` concept already supported, just a matter of
         // adding support for the new keyword.
         if ( opt === 'elemhide' || opt === 'generichide' ) {
-            if ( this.action === AllowAction ) {
-                this.parseOptType('elemhide', false);
+            if ( not === false ) {
+                this.parseOptType('generichide', false);
                 continue;
             }
             this.unsupported = true;
@@ -2197,11 +2191,43 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 
 // Specialized handlers
 
+// https://github.com/gorhill/uBlock/issues/1477
+//   Special case: blocking-generichide filter ALWAYS exists, it is implicit --
+//   thus we always first check for exception filters, then for important block
+//   filter if and only if there was a hit on an exception filter.
+// https://github.com/gorhill/uBlock/issues/2103
+//   User may want to override `generichide` exception filters.
+
+FilterContainer.prototype.matchStringGenericHide = function(context, requestURL) {
+    var url = this.urlTokenizer.setURL(requestURL);
+
+    var bucket = this.categories.get(toHex(genericHideException));
+    if ( !bucket || this.matchTokens(bucket, url) === false ) {
+        this.fRegister = null;
+        return;
+    }
+
+    bucket = this.categories.get(toHex(genericHideImportant));
+    if ( bucket && this.matchTokens(bucket, url) ) {
+        this.keyRegister = genericHideImportant;
+        return true;
+    }
+
+    this.keyRegister = genericHideException;
+    return false;
+};
+
+/******************************************************************************/
+
 // https://github.com/chrisaljoudi/uBlock/issues/116
-// Some type of requests are exceptional, they need custom handling,
-// not the generic handling.
+//   Some type of requests are exceptional, they need custom handling,
+//   not the generic handling.
 
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
+    // Special case.
+    if ( requestType === 'generichide' ) {
+        return this.matchStringGenericHide(context, requestURL);
+    }
     // Be prepared to support unknown types
     var type = typeNameToTypeValue[requestType];
     if ( type === undefined ) {
@@ -2215,30 +2241,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     pageHostnameRegister = context.pageHostname || '';
     requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
-    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty;
+    var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty,
+        categories = this.categories,
+        key, bucket;
 
     this.fRegister = null;
 
-    var categories = this.categories;
-    var key, bucket;
-
-    // https://github.com/gorhill/uBlock/issues/1477
-    // Special case: blocking elemhide filter ALWAYS exists, it is implicit --
-    // thus we always and only check for exception filters.
-    if ( requestType === 'elemhide' ) {
-        key = AllowAnyParty | type;
-        if (
-            (bucket = categories.get(toHex(key))) &&
-            this.matchTokens(bucket, url)
-        ) {
-            this.keyRegister = key;
-            return false;
-        }
-        return undefined;
-    }
-
     // https://github.com/chrisaljoudi/uBlock/issues/139
-    // Test against important block filters
+    //   Test against important block filters
     key = BlockAnyParty | Important | type;
     if ( (bucket = categories.get(toHex(key))) ) {
         if ( this.matchTokens(bucket, url) ) {
