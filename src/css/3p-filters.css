@@ -160,7 +160,7 @@ body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ spa
 li.listEntry span.updating {
     transform-origin: 50% 46%;
     }
-body.updating li.listEntry.obsolete span.updating {
+body.updating li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.updating {
     animation: spin 2s linear infinite;
     display: inline-block;
     }
