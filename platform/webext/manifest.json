@@ -7,7 +7,7 @@
     "applications": {
         "gecko": {
             "id": "adnauseam@rednoise.org",
-            "strict_min_version": "51.0",
+            "strict_min_version": "50.0",
             "strict_max_version": "52.*"
         }
     },

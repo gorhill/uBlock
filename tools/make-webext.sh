@@ -2,10 +2,10 @@
 #
 # This script assumes a linux environment
 
-echo "*** uBlock0.webext: Creating web store package"
-echo "*** uBlock0.webext: Copying files"
+echo "*** adnauseam.webext: Creating web store package"
+echo "*** adnauseam.webext: Copying files"
 
-DES=dist/build/uBlock0.webext
+DES=bin/build/adnauseam.webext
 rm -rf $DES
 mkdir -p $DES
 
@@ -29,7 +29,7 @@ cp platform/webext/polyfill.js   $DES/js/
 cp platform/webext/manifest.json $DES/
 cp LICENSE.txt                   $DES/
 
-echo "*** uBlock0.webext: Generating meta..."
+echo "*** adnauseam.webext: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version
 #
 
