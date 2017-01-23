@@ -3799,24 +3799,21 @@ vAPI.cloud = (function() {
 /******************************************************************************/
 
 vAPI.getAddonInfo = function(callback) {
-    var UBlockConflict = false,
-    AdBlockPlusConflict = false;
+
+    var uBlockConflict = false, adBlockConflict = false;
 
     Components.utils.import("resource://gre/modules/AddonManager.jsm");
 
     AddonManager.getAllAddons(function(addons) {
-
         addons.forEach(function(addon) {
-            // console.log(addon.name, addon.isActive, addon.userDisabled);
-            if(addon.name.startsWith("uBlock") && addon.isActive)  UBlockConflict = true;
-            if(addon.name === "Adblock Plus" && addon.isActive) AdBlockPlusConflict = true;
-
+            if(addon.name.startsWith("uBlock") && addon.isActive)
+                uBlockConflict = true;
+            if(addon.name.startsWith("Adblock") && addon.isActive)
+                adBlockConflict = true;
         });
 
-        callback(UBlockConflict, AdBlockPlusConflict);
-
+        callback(uBlockConflict, adBlockConflict);
     });
-
 }
 
 })();
