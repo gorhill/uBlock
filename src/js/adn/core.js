@@ -473,8 +473,7 @@
 
     if (!this.delegate) {
 
-      err('Request received without Ad: ' + this.responseURL);
-      return;
+      return err('Request received without Ad: ' + this.responseURL);
     }
 
     updateAdOnFailure(this, e);
@@ -492,14 +491,12 @@
 
     if (!ad) {
 
-      err('Request received without Ad: ' + this.responseURL);
-      return;
+      return err('Request received without Ad: ' + this.responseURL);
     }
 
     if (!ad.id) {
 
-      warn("Visit response from deleted ad! ", ad);
-      return;
+      return warn("Visit response from deleted ad! ", ad);
     }
 
     ad.attemptedTs = 0; // reset as visit no longer in progress
@@ -626,8 +623,7 @@
 
       } else {
 
-        warn("Invalid TargetUrl: " + url);
-        return false;
+        return warn("Invalid TargetUrl: " + url);
       }
     }
 
@@ -669,8 +665,7 @@
 
     if (!validateFields(ad)) {
 
-      warn('Invalid ad-fields: ', ad);
-      return false;
+      return warn('Invalid ad-fields: ', ad);
     }
 
     var cd = ad.contentData,
@@ -719,8 +714,7 @@
         var hashes = Object.keys(admap[pages[i]]);
 
         for (var j = 0; j < hashes.length; j++) {
-          var ad = admap[pages[i]][hashes[j]];
-          //ad.id = null; // null the id from deleted ads (?)
+
           delete admap[pages[i]][hashes[j]];
         }
       }
@@ -797,20 +791,26 @@
     var ad = type(arg) === 'object' ? arg : adById(arg),
       count = adCount();
 
-    if (!ad) warn("No Ad to delete", id, admap);
+    if (!ad) {
+      return warn("No Ad to delete", id, admap);
+    }
 
-    if (admap[ad.pageUrl]) {
+    var pageHash = YaMD5.hashStr(ad.pageUrl);
+    if (admap[pageHash]) {
 
       var hash = computeHash(ad);
 
-      if (admap[ad.pageUrl][hash]) {
+      if (admap[pageHash][hash]) {
 
-        delete admap[ad.pageUrl][hash];
+        delete admap[pageHash][hash];
 
       } else {
 
-        warn('Unable to find ad: ', ad, admap);
+        return warn('Delete failed, no ad: ', ad, admap);
       }
+    }
+    else {
+      return warn('Delete failed, no page key: ', ad, admap);
     }
 
     if (adCount() < count) {
@@ -820,7 +820,7 @@
 
     } else {
 
-      warn('Unable to delete: ', ad);
+      return warn('Unable to delete: ', ad);
     }
 
     storeUserData();
@@ -871,23 +871,25 @@
       if (type(map[pages[i]]) !== 'object')
         return false;
 
+      computeNextId();
       var hashes = Object.keys(map[pages[i]]);
       for (var j = 0; j < hashes.length; j++) {
 
         var hash = hashes[j];
         if (type(hash) !== 'string' || !(validMD5(hash) || hash.includes('::'))) {
 
-          warn('Bad hash in import: ', hash, ad); // tmp
-          return false;
+          return warn('Bad hash in import: ', hash, ad); // tmp
         }
 
         var ad = map[pages[i]][hash];
         if (validateFields(ad)) {
 
           validateTarget(ad); // accept either way
+          ad.id = ++idgen; // increment the id so as not to collide
 
           if (!newmap[pages[i]]) newmap[pages[i]] = {};
           newmap[pages[i]][hash] = ad;
+
           pass++;
 
         } else {
@@ -939,8 +941,7 @@
 
     if (!pages || !pages.length) {
 
-      warn('no pages: ', pages);
-      return false;
+      return warn('no pages: ', pages);
     }
 
     for (var i = 0; i < pages.length; i++) {
@@ -1512,14 +1513,12 @@
 
     if (!validate(ad)) {
 
-      warn("Invalid Ad: ", ad);
-      return;
+      return warn("Invalid Ad: ", ad);
     }
 
     if (!internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
 
-      warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
-      return; // testing this
+      return warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
     }
 
     pageHash = YaMD5.hashStr(ad.pageUrl);
