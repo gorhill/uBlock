@@ -133,9 +133,6 @@ li.listEntry span.status {
 li.listEntry span.status:hover {
     opacity: 1;
     }
-li.listEntry span.status.fa {
-    /* font-size: 110%; */
-    }
 li.listEntry span.unsecure {
     color: darkred;
     }
@@ -151,20 +148,19 @@ li.listEntry.failed span.failed {
 li.listEntry span.cache {
     cursor: pointer;
     }
-li.listEntry.cached:not(.updating):not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
+li.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
     display: inline-block;
     }
 li.listEntry span.obsolete {
     color: hsl(36, 100%, 40%);
     }
-li.listEntry.obsolete:not(.updating) > input[type="checkbox"]:checked ~ span.obsolete {
+body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
     display: inline-block;
     }
 li.listEntry span.updating {
-    border: none;
-    padding: 0;
+    transform-origin: 50% 46%;
     }
-li.listEntry.updating span.updating {
+body.updating li.listEntry.obsolete span.updating {
     animation: spin 2s linear infinite;
     display: inline-block;
     }

@@ -598,17 +598,25 @@ var assetCacheRemove = function(pattern, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheMarkAsDirty = function(pattern, callback) {
+var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
     var onReady = function() {
         var cacheDict = assetCacheRegistry,
             cacheEntry,
             mustSave = false;
         for ( var assetKey in cacheDict ) {
-            if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
-                continue;
+            if ( pattern instanceof RegExp ) {
+                if ( pattern.test(assetKey) === false ) { continue; }
+            } else if ( typeof pattern === 'string' ) {
+                if ( assetKey !== pattern ) { continue; }
+            } else if ( Array.isArray(pattern) ) {
+                if ( pattern.indexOf(assetKey) === -1 ) { continue; }
             }
-            if ( typeof pattern === 'string' && assetKey !== pattern ) {
-                continue;
+            if ( exclude instanceof RegExp ) {
+                if ( exclude.test(assetKey) ) { continue; }
+            } else if ( typeof exclude === 'string' ) {
+                if ( assetKey === exclude ) { continue; }
+            } else if ( Array.isArray(exclude) ) {
+                if ( exclude.indexOf(assetKey) !== -1 ) { continue; }
             }
             cacheEntry = cacheDict[assetKey];
             if ( !cacheEntry.writeTime ) { continue; }
@@ -623,7 +631,10 @@ var assetCacheMarkAsDirty = function(pattern, callback) {
             callback();
         }
     };
-
+    if ( typeof exclude === 'function' ) {
+        callback = exclude;
+        exclude = undefined;
+    }
     getAssetCacheRegistry(onReady);
 };
 
@@ -887,9 +898,7 @@ api.metadata = function(callback) {
 
 /******************************************************************************/
 
-api.purge = function(pattern, callback) {
-    assetCacheMarkAsDirty(pattern, callback);
-};
+api.purge = assetCacheMarkAsDirty;
 
 api.remove = function(pattern, callback) {
     assetCacheRemove(pattern, callback);

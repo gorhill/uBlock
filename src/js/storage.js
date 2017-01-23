@@ -1131,6 +1131,10 @@
         } else {
             this.scheduleAssetUpdater(0);
         }
+        vAPI.messaging.broadcast({
+            what: 'assetsUpdated',
+            assetKeys: details.assetKeys
+        });
         return;
     }
 

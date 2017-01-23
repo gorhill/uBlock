@@ -979,8 +979,7 @@ var onMessage = function(request, sender, callback) {
         if ( request.hard ) {
             µb.assets.remove(/./);
         } else {
-            µb.assets.remove(/compiled\//);
-            µb.assets.purge(/./);
+            µb.assets.purge(/./, 'public_suffix_list.dat');
         }
         break;
 

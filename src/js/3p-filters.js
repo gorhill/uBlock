@@ -40,6 +40,9 @@ var onMessage = function(msg) {
     case 'assetUpdated':
         updateAssetStatus(msg);
         break;
+    case 'assetsUpdated':
+        document.body.classList.remove('updating');
+        break;
     case 'staticFilteringDataChanged':
         renderFilterLists();
         break;
@@ -139,7 +142,6 @@ var renderFilterLists = function(soft) {
                 lastUpdateTemplateString.replace('{{ago}}', renderElapsedTimeToString(asset.writeTime))
             );
         }
-        li.classList.remove('updating');
         li.classList.remove('discard');
         return li;
     };
@@ -264,12 +266,10 @@ var renderFilterLists = function(soft) {
 
 /******************************************************************************/
 
-// This is to give a visual hint that the selection of blacklists has changed.
-
 var renderWidgets = function() {
     uDom('#buttonApply').toggleClass('disabled', filteringSettingsHash === hashFromCurrentFromSettings());
     uDom('#buttonPurgeAll').toggleClass('disabled', document.querySelector('#lists .listEntry.cached') === null);
-    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('#lists .listEntry.obsolete:not(.updating) > input[type="checkbox"]:checked') === null);
+    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null);
 };
 
 /******************************************************************************/
@@ -280,7 +280,6 @@ var updateAssetStatus = function(details) {
     li.classList.toggle('failed', !!details.failed);
     li.classList.toggle('obsolete', !details.cached);
     li.classList.toggle('cached', !!details.cached);
-    li.classList.remove('updating');
     if ( details.cached ) {
         li.querySelector('.status.cache').setAttribute(
             'title',
@@ -429,9 +428,7 @@ var buttonApplyHandler = function() {
 
 var buttonUpdateHandler = function() {
     var onSelectionDone = function() {
-        uDom('#lists .listEntry.obsolete > input[type="checkbox"]:checked')
-            .ancestors('.listEntry[data-listkey]')
-            .addClass('updating');
+        document.body.classList.add('updating');
         messaging.send('dashboard', { what: 'forceUpdateAssets' });
         renderWidgets();
     };
