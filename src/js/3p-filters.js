@@ -92,6 +92,7 @@ var renderFilterLists = function(soft) {
             elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
             elem.setAttribute('type', 'text/html');
             elem.textContent = listNameFromListKey(listKey) + '\u200E';
+            li.classList.remove('toRemove');
             if ( entry.supportName ) {
                 li.classList.add('support');
                 elem = li.querySelector('a.support');
@@ -112,7 +113,6 @@ var renderFilterLists = function(soft) {
             } else {
                 li.classList.remove('mustread');
             }
-            li.classList.remove('toRemove');
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {

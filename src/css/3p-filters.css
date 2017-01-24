@@ -1,7 +1,6 @@
 @keyframes spin {
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
-
 ul {
     padding: 0;
     list-style-type: none;
