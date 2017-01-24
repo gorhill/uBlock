@@ -23,7 +23,7 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     padding-left: 0.5em;
     padding-right: 0em;
     }
-body[dir=rtl] #lists {
+body[dir="rtl"] #lists {
     padding-left: 0em;
     padding-right: 0.5em;
     }
@@ -57,12 +57,12 @@ li.listEntry {
     line-height: 150%;
     margin: 0 auto 0 auto;
     margin-left: 2.5em;
-    margin-right: 0em;
+    margin-right: 0;
     text-indent: -2em;
     }
-body[dir=rtl] li.listEntry {
+body[dir="rtl"] li.listEntry {
     margin-left: 0em;
-    margin-right: 1em;
+    margin-right: 2.5em;
     }
 li.listEntry > * {
     margin-right: 0.5em;

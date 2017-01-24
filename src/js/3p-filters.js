@@ -91,7 +91,7 @@ var renderFilterLists = function(soft) {
             elem = li.querySelector('a:nth-of-type(1)');
             elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
             elem.setAttribute('type', 'text/html');
-            elem.textContent = listNameFromListKey(listKey) + '\u200E';
+            elem.textContent = listNameFromListKey(listKey);
             li.classList.remove('toRemove');
             if ( entry.supportName ) {
                 li.classList.add('support');
