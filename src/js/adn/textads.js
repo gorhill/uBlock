@@ -72,7 +72,7 @@
     var yahooText = function (e) {
 
       var ads = [],
-        divs = $find(e, 'div.dd');
+        divs = $find(e, 'div.dd .layoutMiddle');
 
       for (var i = 0; i < divs.length; i++) {
 
