@@ -1975,6 +1975,9 @@
     if (!reqPageStore)
       warn('No pageStore', request, pageStore, tabId);
 
+    if (!reqPageStore.hasOwnProperty('rawURL'))
+      warn('No rawURL', reqPageStore, request, tabId);
+
     return adsForUI(reqPageStore.rawURL);
   };
 

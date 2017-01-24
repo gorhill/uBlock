@@ -55,27 +55,28 @@
 
   var renderPage = function (json) {
 
-    page = json.pageUrl;
-    ads = onPage(json.data, page);
+    if (json) {
+      page = json.pageUrl;
+      ads = onPage(json.data, page);
 
-    // disable pause & resume buttons for options, vault, about/chrome
-    if (page === vAPI.getURL("vault.html") ||
-      page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
-      page.indexOf("chrome://") === 0 ||
-      page.indexOf("about:") === 0) {
+      // disable pause & resume buttons for options, vault, about/chrome
+      if (page === vAPI.getURL("vault.html") ||
+        page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
+        page.indexOf("chrome://") === 0 ||
+        page.indexOf("about:") === 0) {
 
-      uDom.nodeFromId('pause-button').disabled = true;
-      uDom.nodeFromId('resume-button').disabled = true;
+        uDom.nodeFromId('pause-button').disabled = true;
+        uDom.nodeFromId('resume-button').disabled = true;
+      }
     }
 
     uDom("#alert").addClass('hide'); // reset state
     uDom('#main').toggleClass('disabled', dval());
 
     updateMenuState();
-    setCounts(ads, json.data.length);
+    setCounts(ads, json && json.data && json.data.length);
 
     var $items = uDom('#ad-list-items'); //$('#ad-list-items');
-
     $items.removeClass().empty();
 
     if (ads) {
@@ -121,10 +122,10 @@
 
   var setCounts = function (ads, total) {
 
-    var numVisits = visitedCount(ads);
-    uDom('#vault-count').text(total);
-    uDom('#visited-count').text(numVisits);
-    uDom('#found-count').text(ads.length);
+    var numVisits = visitedCount(ads) || 0;
+    uDom('#vault-count').text(total || 0);
+    uDom('#visited-count').text(numVisits || 0);
+    uDom('#found-count').text(ads ? ads.length : 0);
     setCost(numVisits);
   }
 

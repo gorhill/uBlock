@@ -880,9 +880,9 @@ vAPI.tabs.registerListeners();
         var badge = '';
 
         var pageStore = this.pageStoreFromTabId(tabId),
-            pageDomain = µb.URI.domainFromHostname(pageStore.tabHostname),
+            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
             isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageDomain) : false; // ADN
-            
+
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch();
 
