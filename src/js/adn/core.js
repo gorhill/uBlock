@@ -532,8 +532,7 @@
     if (/facebook\.com\/l\.php/.test(xhr.requestUrl)) {
 
       var url = decodeURIComponent(xhr.responseURL);
-      ad.parsedTargetUrl = url.substring(url.lastIndexOf('http'));
-
+      ad.parsedTargetUrl = decodeURIComponent(url.substring(url.lastIndexOf('http')));
       log("[FB-EXT] Parsed: ", ad.parsedTargetUrl);
 
       return true;
