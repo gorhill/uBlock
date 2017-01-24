@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Papildu iestatījumi",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -212,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"papildu iestatījumi",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -288,7 +288,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignore generic cosmetic filters",
+    "message":"Ignorēt vispārīgos kosmētiskos filtrus",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -540,7 +540,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Atbalsts",
     "description":"A link for where to get support"
   },
   "aboutCode":{

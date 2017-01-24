@@ -84,7 +84,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Alternar o bloqueio de grandes elementos multimédia para este site",
+    "message":"Alternar o bloqueio de elementos multimédia grandes para este site",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -144,7 +144,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domínios conectados",
+    "message":"domínios ligados",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -640,7 +640,7 @@
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
-    "message":"Recuar",
+    "message":"Retroceder",
     "description":"English: Go back"
   },
   "docblockedClose":{
@@ -700,7 +700,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Permitir temporariamente grandes elementos multimédia",
+    "message":"Permitir temporariamente elementos multimédia grandes",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{
