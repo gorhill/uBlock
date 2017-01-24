@@ -58,10 +58,10 @@ li.listEntry > a:nth-of-type(2) {
     font-size: 16px;
     opacity: 0.7;
     }
-li.listEntry > a:nth-of-type(2),
+/*li.listEntry > a:nth-of-type(2),
 li.listEntry > a:nth-of-type(2):visited {
     color: mediumblue;
-    }
+    }*/
 li.listEntry > a:nth-of-type(2):hover {
     opacity: 1;
     }
