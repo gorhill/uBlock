@@ -88,7 +88,7 @@ vAPI.insertHTML = function(node, html) {
 vAPI.getURL = function(path) {
     // https://github.com/el1t/uBlock-Safari/issues/4
     // Add extensions to extensionless assets
-    if (path.match(/^assets\/thirdparties\/.*\/[^\/.]*$/)) {
+    if ( path.match(/^assets\/thirdparties\/.*\/[^\/.]*$/) ) {
         path += '.txt';
     }
     return safari.extension.baseURI + path;
@@ -159,11 +159,11 @@ vAPI.localStorage = self.localStorage;
 
 // Disable localStorage.setItem in Private Browsing mode (throws error)
 // https://gist.github.com/philfreo/68ea3cd980d72383c951
-if (typeof self.localStorage === 'object') {
+if ( typeof self.localStorage === 'object' ) {
     try {
         self.localStorage.setItem('localStorage', 1);
         self.localStorage.removeItem('localStorage');
-    } catch (e) {
+    } catch ( e ) {
         Storage.prototype._setItem = Storage.prototype.setItem;
         Storage.prototype.setItem = function() {};
     }
