@@ -532,10 +532,9 @@ var domFilterer = {
               node.setAttribute('style', styleAttr + 'display: none !important;');
           }
         }
-        else if (vAPI.prefs.hidingDisabled) { // ADN: don't append style tag
-
+        /*else if (vAPI.prefs.hidingDisabled) { // ADN: don't append style tag
           console.log('[CONTENT] (NoHide) Not appending display to style');
-        }
+        }*/
 
         vAPI.adCheck && vAPI.adCheck(node); // ADN: always parse Ads
 
