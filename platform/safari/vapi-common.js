@@ -164,8 +164,14 @@ if ( typeof self.localStorage === 'object' ) {
         self.localStorage.setItem('localStorage', 1);
         self.localStorage.removeItem('localStorage');
     } catch ( e ) {
-        Storage.prototype._setItem = Storage.prototype.setItem;
-        Storage.prototype.setItem = function() {};
+        var storage = self.localStorage;
+        vAPI.localStorage = {
+            getItem: function(key) { return storage.getItem(key) },
+            key: function(index) { return storage.key(index) },
+            setItem: function() {}, // throws error
+            length: storage.length, // 0
+            removeItem: function(key) { return storage.removeItem(key) } // ignored by Safari
+        }
     }
 }
 
