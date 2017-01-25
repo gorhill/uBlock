@@ -274,7 +274,11 @@ vAPI.browserSettings = {
             // has a `media.peerconnection.ice.default_address_only` pref which
             // purpose is to prevent local IP address leakage.
             case 'webrtcIPAddress':
-                if ( this.getValue('media.peerconnection', 'ice.default_address_only') !== undefined ) {
+                // https://github.com/gorhill/uBlock/issues/2337
+                if ( this.getValue('media.peerconnection', 'ice.no_host') !== undefined ) {
+                    prefName = 'ice.no_host';
+                    prefVal = true;
+                } else if ( this.getValue('media.peerconnection', 'ice.default_address_only') !== undefined ) {
                     prefName = 'ice.default_address_only';
                     prefVal = true;
                 } else {
