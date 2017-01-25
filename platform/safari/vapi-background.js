@@ -1087,7 +1087,9 @@ vAPI.net.registerListeners = function() {
             e.message.responseHeaders = [];
             onBeforeRequestClient(e.message);
             var blockVerdict = onHeadersReceivedClient(e.message);
-            e.message.shouldBlock = blockVerdict && blockVerdict.responseHeaders;
+            e.message = {
+                shouldBlock: blockVerdict && blockVerdict.responseHeaders
+            };
             return;
         }
         switch ( e.message.type ) {
@@ -1112,9 +1114,9 @@ vAPI.net.registerListeners = function() {
             default:
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
-                var blockVerdict = onBeforeRequestClient(e.message);
-                e.message.response = blockVerdict;
-                e.message.shouldBlock = blockVerdict && (blockVerdict.cancel === true || blockVerdict.redirectUrl !== undefined);
+                var blockVerdict = onBeforeRequestClient(e.message) || {};
+                blockVerdict.shouldBlock = blockVerdict && (blockVerdict.cancel === true || blockVerdict.redirectUrl !== undefined);
+                e.message = blockVerdict;
                 return;
         }
     };

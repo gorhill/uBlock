@@ -557,7 +557,7 @@ var onBeforeLoad = function(e) {
     var response = safari.self.tab.canLoad(e, details);
     // sometimes response = details, so check for that
     if ( response.shouldBlock ) {
-        response = response.response.redirectUrl;
+        response = response.redirectUrl;
         if ( response ) {
             switch ( type ) {
                 case 'style':
