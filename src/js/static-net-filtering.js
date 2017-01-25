@@ -1339,7 +1339,7 @@ FilterParser.prototype.parse = function(raw) {
     if ( pos !== -1 ) {
         var c = s.charAt(pos + 1);
         if ( c === '#' || c === '@' ) {
-            console.error('static-net-filtering.js > unexpected cosmetic filters');
+            console.error('static-net-filtering.js > unexpected cosmetic filters', s);
             this.elemHiding = true;
             return this;
         }
