@@ -754,27 +754,25 @@ var backupUserData = function(callback) {
         timeStamp: Date.now(),
         version: vAPI.app.version,
         userSettings: µb.userSettings,
-        selectedFilterLists: [],
+        selectedFilterLists: µb.selectedFilterLists,
         hiddenSettingsString: µb.stringFromHiddenSettings(),
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.hnSwitches.toString(),
-        userFilters: ''
-    };
-
-    var onSelectedListsReady = function(selectedFilterLists) {
-        userData.selectedFilterLists = selectedFilterLists;
-
+        userFilters: '',
         // TODO(seamless migration):
         // The following is strictly for convenience, to be minimally
         // forward-compatible. This will definitely be removed in the
         // short term, as I do not expect the need to install an older
         // version of uBO to ever be needed beyond the short term.
         // >>>>>>>>
-        userData.filterLists = µb.oldDataFromNewListKeys(selectedFilterLists);
+        filterLists: µb.oldDataFromNewListKeys(µb.selectedFilterLists)
         // <<<<<<<<
+    };
 
+    var onUserFiltersReady = function(details) {
+        userData.userFilters = details.content;
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
@@ -787,11 +785,6 @@ var backupUserData = function(callback) {
         µb.restoreBackupSettings.lastBackupTime = Date.now();
         vAPI.storage.set(µb.restoreBackupSettings);
         getLocalData(callback);
-    };
-
-    var onUserFiltersReady = function(details) {
-        userData.userFilters = details.content;
-        µb.loadSelectedFilterLists(onSelectedListsReady);
     };
 
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);

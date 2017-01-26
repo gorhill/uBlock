@@ -137,72 +137,74 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 **/
 
 api.listKeyAliases = {
-	"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
-	"assets/user/filters.txt": "user-filters",
-	"assets/ublock/resources.txt": "ublock-resources",
-	"assets/ublock/filters.txt": "ublock-filters",
-	"assets/ublock/privacy.txt": "ublock-privacy",
-	"assets/ublock/unbreak.txt": "ublock-unbreak",
-	"assets/ublock/badware.txt": "ublock-badware",
-	"assets/ublock/experimental.txt": "ublock-experimental",
-	"https://easylist-downloads.adblockplus.org/easylistchina.txt": "CHN-0",
-	"https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "CHN-1",
-	"https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt": "CHN-2",
-	"https://easylist-downloads.adblockplus.org/easylistgermany.txt": "DEU-0",
-	"https://adblock.dk/block.csv": "DNK-0",
-	"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt": "easylist",
-	"https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": "easylist-nocosmetic",
-	"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt": "easyprivacy",
-	"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": "fanboy-annoyance",
-	"https://easylist-downloads.adblockplus.org/fanboy-social.txt": "fanboy-social",
-	"https://easylist-downloads.adblockplus.org/liste_fr.txt": "FRA-0",
-	"http://adblock.gardar.net/is.abp.txt": "ISL-0",
-	"https://easylist-downloads.adblockplus.org/easylistitaly.txt": "ITA-0",
-	"https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "ITA-1",
-	"https://easylist-downloads.adblockplus.org/advblock.txt": "RUS-0",
-	"https://easylist-downloads.adblockplus.org/bitblock.txt": "RUS-1",
-	"https://filters.adtidy.org/extension/chromium/filters/1.txt": "RUS-2",
-	"https://adguard.com/en/filter-rules.html?id=1": "RUS-2",
-	"https://easylist-downloads.adblockplus.org/easylistdutch.txt": "NLD-0",
-	"https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": "LVA-0",
-	"http://hosts-file.net/.%5Cad_servers.txt": "hphosts",
-	"http://adblock.ee/list.php": "EST-0",
-	"https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": "disconnect-malvertising",
-	"https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": "disconnect-malware",
-	"https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": "disconnect-tracking",
-	"https://www.certyficate.it/adblock/adblock.txt": "POL-0",
-	"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": "awrl-0",
-	"http://adb.juvander.net/Finland_adb.txt": "FIN-0",
-	"https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": "KOR-0",
-	"https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": "KOR-1",
-	"https://www.fanboy.co.nz/fanboy-korean.txt": "KOR-2",
-	"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
-	"https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": "JPN-0",
-	"https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": "EU-prebake",
-	"https://easylist-downloads.adblockplus.org/Liste_AR.txt": "ara-0",
-	"http://margevicius.lt/easylistlithuania.txt": "LTU-0",
-	"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-0",
-	"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-1",
-	"http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-2",
-	"assets/thirdparties/pgl.yoyo.org/as/serverlist": "plowe-0",
-	"https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": "ISR-0",
-	"https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "reek-0",
-	"https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": "HUN-0",
-	"https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": "CZE-0",
-	"http://someonewhocares.org/hosts/hosts": "dpollock-0",
-	"https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": "spam404-0",
-	"http://stanev.org/abp/adblock_bg.txt": "BGR-0",
-	"http://winhelp2002.mvps.org/hosts.txt": "mvps-0",
-	"https://www.fanboy.co.nz/enhancedstats.txt": "fanboy-enhanced",
-	"https://www.fanboy.co.nz/fanboy-antifacebook.txt": "fanboy-thirdparty_social",
-	"https://easylist-downloads.adblockplus.org/easylistspanish.txt": "spa-0",
-	"https://www.fanboy.co.nz/fanboy-swedish.txt": "SWE-0",
-	"https://www.fanboy.co.nz/r/fanboy-ultimate.txt": "fanboy-ultimate",
-	"https://filters.adtidy.org/extension/chromium/filters/13.txt": "TUR-0",
-	"https://adguard.com/filter-rules.html?id=13": "TUR-0",
-	"https://www.fanboy.co.nz/fanboy-vietnam.txt": "VIE-0",
-	"https://www.void.gr/kargig/void-gr-filters.txt": "GRC-0",
-	"https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt": "SVN-0"
+    "assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
+    "assets/user/filters.txt": "user-filters",
+    "assets/ublock/resources.txt": "ublock-resources",
+    "assets/ublock/filters.txt": "ublock-filters",
+    "assets/ublock/privacy.txt": "ublock-privacy",
+    "assets/ublock/unbreak.txt": "ublock-unbreak",
+    "assets/ublock/badware.txt": "ublock-badware",
+    "assets/ublock/experimental.txt": "ublock-experimental",
+    "https://easylist-downloads.adblockplus.org/easylistchina.txt": "CHN-0",
+    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "CHN-1",
+    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt": "CHN-2",
+    "https://easylist-downloads.adblockplus.org/easylistgermany.txt": "DEU-0",
+    "https://adblock.dk/block.csv": "DNK-0",
+    "assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt": "easylist",
+    "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": "easylist-nocosmetic",
+    "assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt": "easyprivacy",
+    "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": "fanboy-annoyance",
+    "https://easylist-downloads.adblockplus.org/fanboy-social.txt": "fanboy-social",
+    "https://easylist-downloads.adblockplus.org/liste_fr.txt": "FRA-0",
+    "http://adblock.gardar.net/is.abp.txt": "ISL-0",
+    "https://easylist-downloads.adblockplus.org/easylistitaly.txt": "ITA-0",
+    "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "ITA-1",
+    "https://easylist-downloads.adblockplus.org/advblock.txt": "RUS-0",
+    "https://easylist-downloads.adblockplus.org/bitblock.txt": "RUS-1",
+    "https://filters.adtidy.org/extension/chromium/filters/1.txt": "RUS-2",
+    "https://adguard.com/en/filter-rules.html?id=1": "RUS-2",
+    "https://easylist-downloads.adblockplus.org/easylistdutch.txt": "NLD-0",
+    "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": "LVA-0",
+    "http://hosts-file.net/.%5Cad_servers.txt": "hphosts",
+    "http://adblock.ee/list.php": "EST-0",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": "disconnect-malvertising",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": "disconnect-malware",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": "disconnect-tracking",
+    "https://www.certyficate.it/adblock/adblock.txt": "POL-0",
+    "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt": "POL-0",
+    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": "awrl-0",
+    "http://adb.juvander.net/Finland_adb.txt": "FIN-0",
+    "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": "KOR-0",
+    "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": "KOR-1",
+    "https://www.fanboy.co.nz/fanboy-korean.txt": "KOR-2",
+    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
+    "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
+    "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": "JPN-0",
+    "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": "EU-prebake",
+    "https://easylist-downloads.adblockplus.org/Liste_AR.txt": "ara-0",
+    "http://margevicius.lt/easylistlithuania.txt": "LTU-0",
+    "assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-0",
+    "assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-1",
+    "http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-2",
+    "assets/thirdparties/pgl.yoyo.org/as/serverlist": "plowe-0",
+    "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": "ISR-0",
+    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "reek-0",
+    "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": "HUN-0",
+    "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": "CZE-0",
+    "http://someonewhocares.org/hosts/hosts": "dpollock-0",
+    "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": "spam404-0",
+    "http://stanev.org/abp/adblock_bg.txt": "BGR-0",
+    "http://winhelp2002.mvps.org/hosts.txt": "mvps-0",
+    "https://www.fanboy.co.nz/enhancedstats.txt": "fanboy-enhanced",
+    "https://www.fanboy.co.nz/fanboy-antifacebook.txt": "fanboy-thirdparty_social",
+    "https://easylist-downloads.adblockplus.org/easylistspanish.txt": "spa-0",
+    "https://www.fanboy.co.nz/fanboy-swedish.txt": "SWE-0",
+    "https://www.fanboy.co.nz/r/fanboy-ultimate.txt": "fanboy-ultimate",
+    "https://filters.adtidy.org/extension/chromium/filters/13.txt": "TUR-0",
+    "https://adguard.com/filter-rules.html?id=13": "TUR-0",
+    "https://www.fanboy.co.nz/fanboy-vietnam.txt": "VIE-0",
+    "https://www.void.gr/kargig/void-gr-filters.txt": "GRC-0",
+    "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt": "SVN-0"
 };
 
 var migrate = function(callback) {
@@ -343,7 +345,7 @@ var saveAssetSourceRegistry = (function() {
     };
 })();
 
-var updateAssetSourceRegistry = function(json) {
+var updateAssetSourceRegistry = function(json, silent) {
     var newDict;
     try {
         newDict = JSON.parse(json);
@@ -351,29 +353,29 @@ var updateAssetSourceRegistry = function(json) {
     }
     if ( newDict instanceof Object === false ) { return; }
 
-    getAssetSourceRegistry(function(oldDict) {
-        var assetKey;
-        // Remove obsolete entries (only those which were built-in).
-        for ( assetKey in oldDict ) {
-            if (
-                newDict[assetKey] === undefined &&
-                oldDict[assetKey].submitter === undefined
-            ) {
-                unregisterAssetSource(assetKey);
-            }
+    var oldDict = assetSourceRegistry,
+        assetKey;
+
+    // Remove obsolete entries (only those which were built-in).
+    for ( assetKey in oldDict ) {
+        if (
+            newDict[assetKey] === undefined &&
+            oldDict[assetKey].submitter === undefined
+        ) {
+            unregisterAssetSource(assetKey);
         }
-        // Add/update existing entries. Notify of new asset sources.
-        for ( assetKey in newDict ) {
-            if ( oldDict[assetKey] === undefined ) {
-                fireNotification(
-                    'builtin-asset-source-added',
-                    { assetKey: assetKey, entry: newDict[assetKey] }
-                );
-            }
-            registerAssetSource(assetKey, newDict[assetKey]);
+    }
+    // Add/update existing entries. Notify of new asset sources.
+    for ( assetKey in newDict ) {
+        if ( oldDict[assetKey] === undefined && !silent ) {
+            fireNotification(
+                'builtin-asset-source-added',
+                { assetKey: assetKey, entry: newDict[assetKey] }
+            );
         }
-        saveAssetSourceRegistry();
-    });
+        registerAssetSource(assetKey, newDict[assetKey]);
+    }
+    saveAssetSourceRegistry();
 };
 
 var getAssetSourceRegistry = function(callback) {
@@ -406,7 +408,7 @@ var getAssetSourceRegistry = function(callback) {
         getTextFileFromURL(
             µBlock.assetsBootstrapLocation || 'assets/assets.json',
             function() {
-                updateAssetSourceRegistry(this.responseText);
+                updateAssetSourceRegistry(this.responseText, true);
                 registryReady();
             }
         );
@@ -899,7 +901,7 @@ api.metadata = function(callback) {
     });
 
     getAssetCacheRegistry(function() {
-        cacheRegistryReady = assetCacheRegistry;
+        cacheRegistryReady = true;
         if ( assetRegistryReady ) { onReady(); }
     });
 };

@@ -170,7 +170,12 @@
     var µb = this;
     vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists' ], function(bin) {
         if ( !bin || !bin.selectedFilterLists && !bin.remoteBlacklists ) {
-            return callback();
+            // Select default filter lists if first-time launch.
+            µb.assets.metadata(function(availableLists) {
+                µb.saveSelectedFilterLists(µb.autoSelectRegionalFilterLists(availableLists));
+                callback();
+            });
+            return;
         }
         var listKeys = [];
         if ( bin.selectedFilterLists ) {
@@ -186,33 +191,30 @@
             // Uncomment when all have moved to v1.11 and beyond.
             //vAPI.storage.remove('remoteBlacklists');
         }
-        µb.selectedFilterLists = listKeys.slice();
-        callback(listKeys);
+        µb.selectedFilterLists = listKeys;
+        callback();
     });
 };
 
 µBlock.saveSelectedFilterLists = function(newKeys, append) {
-    var µb = this;
-    this.loadSelectedFilterLists(function(oldKeys) {
-        oldKeys = oldKeys || [];
-        if ( append ) {
-            newKeys = newKeys.concat(oldKeys);
+    var oldKeys = this.selectedFilterLists.slice();
+    if ( append ) {
+        newKeys = newKeys.concat(oldKeys);
+    }
+    var newSet = new Set(newKeys);
+    // Purge unused filter lists from cache.
+    for ( var i = 0, n = oldKeys.length; i < n; i++ ) {
+        if ( newSet.has(oldKeys[i]) === false ) {
+            this.removeFilterList(oldKeys[i]);
         }
-        var newSet = new Set(newKeys);
-        // Purge unused filter lists from cache.
-        for ( var i = 0, n = oldKeys.length; i < n; i++ ) {
-            if ( newSet.has(oldKeys[i]) === false ) {
-                µb.removeFilterList(oldKeys[i]);
-            }
-        }
-        newKeys = µb.setToArray(newSet);
-        var bin = {
-            selectedFilterLists: newKeys,
-            remoteBlacklists: µb.oldDataFromNewListKeys(newKeys)
-        };
-        µb.selectedFilterLists = newKeys;
-        vAPI.storage.set(bin);
-    });
+    }
+    newKeys = this.setToArray(newSet);
+    var bin = {
+        selectedFilterLists: newKeys,
+        remoteBlacklists: this.oldDataFromNewListKeys(newKeys)
+    };
+    this.selectedFilterLists = newKeys;
+    vAPI.storage.set(bin);
 };
 
 // TODO(seamless migration):
@@ -429,7 +431,7 @@
 
 µBlock.autoSelectRegionalFilterLists = function(lists) {
     var lang = self.navigator.language.slice(0, 2),
-        selectedListKeys = [],
+        selectedListKeys = [ this.userFiltersPath ],
         list;
     for ( var key in lists ) {
         if ( lists.hasOwnProperty(key) === false ) { continue; }
@@ -522,26 +524,7 @@
         }
     };
 
-    // Selected lists.
-    var onSelectedListsLoaded = function(keys) {
-        var listKey;
-        // No user lists data means use default settings.
-        if ( Array.isArray(keys) ) {
-            var listKeySet = new Set(keys);
-            for ( listKey in newAvailableLists ) {
-                if ( newAvailableLists.hasOwnProperty(listKey) ) {
-                    newAvailableLists[listKey].off = !listKeySet.has(listKey);
-                }
-            }
-        } else if ( µb.firstInstall ) {
-            µb.saveSelectedFilterLists(µb.autoSelectRegionalFilterLists(newAvailableLists));
-        }
-
-        finalize();
-        callback(newAvailableLists);
-    };
-
-    // Built-in filter lists.
+    // Built-in filter lists loaded.
     var onBuiltinListsLoaded = function(entries) {
         for ( var assetKey in entries ) {
             if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
@@ -551,7 +534,15 @@
         }
 
         // Load set of currently selected filter lists.
-        µb.loadSelectedFilterLists(onSelectedListsLoaded);
+        var listKeySet = new Set(µb.selectedFilterLists);
+        for ( listKey in newAvailableLists ) {
+            if ( newAvailableLists.hasOwnProperty(listKey) ) {
+                newAvailableLists[listKey].off = !listKeySet.has(listKey);
+            }
+        }
+
+        finalize();
+        callback(newAvailableLists);
     };
 
     // Available lists previously computed.
