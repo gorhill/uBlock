@@ -430,8 +430,7 @@
 /******************************************************************************/
 
 µBlock.autoSelectRegionalFilterLists = function(lists) {
-    var lang = self.navigator.language.slice(0, 2),
-        selectedListKeys = [ this.userFiltersPath ],
+    var selectedListKeys = [ this.userFiltersPath ],
         list;
     for ( var key in lists ) {
         if ( lists.hasOwnProperty(key) === false ) { continue; }
@@ -440,7 +439,7 @@
             selectedListKeys.push(key);
             continue;
         }
-        if ( list.lang === lang ) {
+        if ( this.matchCurrentLanguage(list.lang) ) {
             selectedListKeys.push(key);
             list.off = false;
         }
@@ -1135,7 +1134,7 @@
         if ( details.entry.content === 'filters' ) {
             if (
                 details.entry.off !== true ||
-                self.navigator.language.startsWith(details.entry.lang)
+                this.matchCurrentLanguage(details.entry.lang)
             ) {
                 this.saveSelectedFilterLists([ details.assetKey ], true);
             }
