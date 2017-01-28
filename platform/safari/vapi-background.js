@@ -1068,8 +1068,7 @@ vAPI.net.registerListeners = function() {
 
     var onBeforeRequest = vAPI.net.onBeforeRequest,
         onBeforeRequestClient = onBeforeRequest.callback,
-        onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback,
-        blockableTypes = onBeforeRequest.types;
+        onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback;
 
     var onBeforeRequestAdapter = function(e) {
         if ( e.name !== 'canLoad' ) {
@@ -1115,7 +1114,7 @@ vAPI.net.registerListeners = function() {
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
                 var blockVerdict = onBeforeRequestClient(e.message) || {};
-                blockVerdict.shouldBlock = blockVerdict && (blockVerdict.cancel === true || blockVerdict.redirectUrl !== undefined);
+                blockVerdict.shouldBlock = blockVerdict.cancel === true || blockVerdict.redirectUrl !== undefined;
                 e.message = blockVerdict;
                 return;
         }

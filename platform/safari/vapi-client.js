@@ -555,7 +555,6 @@ var onBeforeLoad = function(e) {
         timeStamp: Date.now()
     };
     var response = safari.self.tab.canLoad(e, details);
-    // sometimes response = details, so check for that
     if ( response.shouldBlock ) {
         response = response.redirectUrl;
         if ( response ) {
@@ -563,7 +562,7 @@ var onBeforeLoad = function(e) {
                 case 'style':
                     e.target.href = response;
                     break;
-                case 'script':
+                // case 'script':
                 default:
                     setTimeout(redirectSrc.bind(undefined, e.target, response), 1);
                     break;
