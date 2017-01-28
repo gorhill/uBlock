@@ -50,17 +50,19 @@ if ( /^image\/|^text\/plain/.test(contentType) ) {
 
 var vAPI = self.vAPI = self.vAPI || {};
 
-var safari;
-if ( typeof self.safari === 'undefined' ) {
-    safari = self.top.safari;
-} else {
-    safari = self.safari;
-}
-
 // https://github.com/chrisaljoudi/uBlock/issues/456
 // Already injected?
 if ( vAPI.sessionId ) {
     return;
+}
+
+var safari;
+if ( typeof self.safari === 'undefined' ) {
+    safari = self.top.safari;
+    // https://github.com/el1t/uBlock-Safari/issues/23
+    self.safari = safari;
+} else {
+    safari = self.safari;
 }
 
 /******************************************************************************/
