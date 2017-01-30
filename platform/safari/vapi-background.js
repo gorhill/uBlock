@@ -1095,12 +1095,12 @@ vAPI.net.registerListeners = function() {
             case 'popup':
                 var openerTabId = vAPI.tabs.getTabId(e.target).toString();
                 var shouldBlock = !!vAPI.tabs.onPopupUpdated('preempt', openerTabId, e.message.url);
-                if ( shouldBlock ) {
-                    e.message.shouldBlock = true;
-                } else {
+                if ( !shouldBlock ) {
                     vAPI.tabs.popupCandidate = openerTabId;
-                    e.message.shouldBlock = false;
                 }
+                e.message = {
+                    shouldBlock: shouldBlock
+                };
                 break;
             case 'popstate':
                 // No return value/message
