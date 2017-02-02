@@ -5,7 +5,11 @@
 echo "*** uBlock0.chromium: Creating web store package"
 echo "*** uBlock0.chromium: Copying files"
 
-DES=dist/build/uBlock0.chromium
+if [ "$1" = experimental ]; then
+    DES=dist/build/experimental/uBlock0.chromium
+else
+    DES=dist/build/uBlock0.chromium
+fi
 rm -rf $DES
 mkdir -p $DES
 

@@ -580,8 +580,8 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Network error: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",

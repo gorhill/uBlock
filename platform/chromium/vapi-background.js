@@ -978,15 +978,20 @@ vAPI.net.registerListeners = function() {
     // search for "https://github.com/gorhill/uBlock/issues/1497".
     var onBeforeWebsocketRequest = function(details) {
         details.type = 'websocket';
-        var matches = /url=([^&]+)/.exec(details.url);
+        var requestURL = details.url;
+        var matches = /[?&]url=([^&]+)/.exec(requestURL);
         details.url = decodeURIComponent(matches[1]);
         var r = onBeforeRequestClient(details);
         // Blocked?
-        if ( r && r.cancel ) {
-            return r;
-        }
-        // Returning a 1x1 transparent pixel means "not blocked".
-        return { redirectUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' };
+        if ( r && r.cancel ) { return r; }
+        // Try to redirect to the URL of an image already present in the
+        // document, or a 1x1 data: URL if none is present.
+        matches = /[?&]r=([^&]+)/.exec(requestURL);
+        return {
+            redirectUrl: matches !== null ?
+                decodeURIComponent(matches[1]) :
+                'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+        };
     };
 
     var onBeforeRequestClient = this.onBeforeRequest.callback;

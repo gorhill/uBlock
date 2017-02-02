@@ -1,3 +1,6 @@
+@keyframes spin {
+    100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
+    }
 ul {
     padding: 0;
     list-style-type: none;
@@ -5,14 +8,24 @@ ul {
 #options li {
     margin-bottom: 0.5em;
     }
+#listsOfBlockedHostsPrompt {
+    cursor: pointer;
+    }
+#listsOfBlockedHostsPrompt:before {
+    color: #aaa;
+    content: '\2212  ';
+    }
+body.hideUnused #listsOfBlockedHostsPrompt:before {
+    content: '+  ';
+    }
 #lists {
     margin: 0.5em 0 0 0;
-    padding-left: 1em;
+    padding-left: 0.5em;
     padding-right: 0em;
     }
-body[dir=rtl] #lists {
+body[dir="rtl"] #lists {
     padding-left: 0em;
-    padding-right: 1em;
+    padding-right: 0.5em;
     }
 #lists > li {
     margin: 0.5em 0 0 0;
@@ -41,36 +54,62 @@ body[dir=rtl] #lists {
     display: none;
     }
 li.listEntry {
+    line-height: 150%;
     margin: 0 auto 0 auto;
-    margin-left: 3em;
-    margin-right: 0em;
+    margin-left: 2.5em;
+    margin-right: 0;
     text-indent: -2em;
     }
-body[dir=rtl] li.listEntry {
+body[dir="rtl"] li.listEntry {
     margin-left: 0em;
-    margin-right: 1em;
+    margin-right: 2.5em;
     }
 li.listEntry > * {
+    margin-right: 0.5em;
     text-indent: 0;
     unicode-bidi: embed;
     }
-li.listEntry > a:nth-of-type(2) {
-    font-size: 16px;
-    opacity: 0.7;
+li.listEntry.toRemove > input[type="checkbox"] {
+    visibility: hidden;
     }
-li.listEntry > a:nth-of-type(2),
-li.listEntry > a:nth-of-type(2):visited {
-    color: mediumblue;
+li.listEntry.toRemove > a.content {
+    text-decoration: line-through;
     }
-li.listEntry > a:nth-of-type(2):hover {
+li.listEntry > .fa {
+    color: inherit;
+    display: none;
+    font-size: 110%;
+    opacity: 0.5;
+    vertical-align: baseline;
+    }
+li.listEntry > a.fa:hover {
     opacity: 1;
     }
-li.listEntry > a:nth-of-type(3) {
-    font-size: smaller;
-    opacity: 0.5;
+li.listEntry.support > a.support {
+    display: inline-block;
     }
+li.listEntry > a.remove,
+li.listEntry > a.remove:visited {
+    color: darkred;
+    }
+li.listEntry.external > a.remove {
+    display: inline-block;
+    }
+li.listEntry.mustread > a.mustread {
+    display: inline-block;
+    }
+li.listEntry.mustread > a.mustread:hover {
+    color: mediumblue;
+    }
+li.listEntry > .counts {
+    display: none;
+    font-size: smaller;
+}
+li.listEntry > input[type="checkbox"]:checked ~ .counts {
+    display: inline;
+}
 .dim {
-    opacity: 0.5;
+    opacity: 0.6;
     }
 #buttonApply {
     display: initial;
@@ -85,104 +124,56 @@ body[dir=rtl] #buttonApply {
 #buttonApply.disabled {
     display: none;
     }
-span.status {
-    border: 1px solid transparent;
+li.listEntry span.status {
     color: #444;
-    display: inline-block;
-    font-size: smaller;
-    line-height: 1;
-    margin: 0 0 0 0.5em;
-    opacity: 0.8;
-    padding: 1px 2px;
+    cursor: default;
+    display: none;
 }
-span.unsecure {
-    background-color: hsl(0, 100%, 88%);
-    border-color: hsl(0, 100%, 83%);
-    }
-span.purge {
-    border-color: #ddd;
-    background-color: #eee;
-    cursor: pointer;
-    }
-span.purge:hover {
+li.listEntry span.status:hover {
     opacity: 1;
     }
-span.obsolete,
-span.new {
-    background-color: hsl(36, 100%, 80%);
-    border-color: hsl(36, 100%, 75%);
+li.listEntry span.unsecure {
+    color: darkred;
+    }
+li.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure {
+    display: inline-block;
+    }
+li.listEntry span.failed {
+    color: darkred;
+    }
+li.listEntry.failed span.failed {
+    display: inline-block;
+    }
+li.listEntry span.cache {
+    cursor: pointer;
+    }
+li.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
+    display: inline-block;
+    }
+li.listEntry span.obsolete {
+    color: hsl(36, 100%, 40%);
+    }
+body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
+    display: inline-block;
+    }
+li.listEntry span.updating {
+    transform-origin: 50% 46%;
+    }
+body.updating li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.updating {
+    animation: spin 2s linear infinite;
+    display: inline-block;
     }
 #externalListsDiv {
-    margin: 2em auto 0 2em;
+    margin: 1.5em auto 0 1.5em;
     }
 body[dir=rtl] #externalListsDiv {
-    margin: 2em 2em 0;
+    margin: 1.5em 1.5em 0 auto;
     }
 #externalLists {
     box-sizing: border-box;
-    height: 10em;
+    height: 8em;
+    margin-top: 0.25em;
     white-space: pre;
     width: 100%;
     word-wrap: normal;
-    }
-body #busyOverlay {
-    background-color: transparent;
-    bottom: 0;
-    cursor: wait;
-    display: none;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-    }
-body.busy #busyOverlay {
-    display: block;
-    }
-#busyOverlay > div:nth-of-type(1) {
-    background-color: white;
-    bottom: 0;
-    left: 0;
-    opacity: 0.75;
-    position: absolute;
-    right: 0;
-    top: 0;
-    }
-#busyOverlay > div:nth-of-type(2) {
-    background-color: #eee;
-    border: 1px solid transparent;
-    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
-    border-radius: 3px;
-    box-sizing: border-box;
-    height: 3em;
-    left: 10%;
-    position: absolute;
-    bottom: 75%;
-    width: 80%;
-    }
-#busyOverlay > div:nth-of-type(2) > div:nth-of-type(1) {
-    background-color: hsl(216, 100%, 75%);
-    background-image: linear-gradient(#a8cbff, #80b3ff);
-    background-repeat: repeat-x;
-    border: 0;
-    box-sizing: border-box;
-    color: #222;
-    height: 100%;
-    left: 0;
-    padding: 0;
-    position: absolute;
-    width: 25%;
-    }
-#busyOverlay > div:nth-of-type(2) > div:nth-of-type(2) {
-    background-color: transparent;
-    border: 0;
-    box-sizing: border-box;
-    height: 100%;
-    left: 0;
-    line-height: 3em;
-    overflow: hidden;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 100%;
     }
