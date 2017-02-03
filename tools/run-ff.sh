@@ -6,7 +6,7 @@ set -e
 
 tools/make-firefox.sh
 
-cd bin/build/adnauseam.firefox
+cd dist/build/adnauseam.firefox
 
 jpm -b ${FIREFOX_BIN} run --profile "${1:-default}"
 

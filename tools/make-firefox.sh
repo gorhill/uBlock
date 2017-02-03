@@ -2,9 +2,9 @@
 #
 # This script assumes a linux environment
 
-echo "*** adnauseam.firefox: Copying files"
+echo "*** AdNauseam::Firefox: Copying files"
 
-DES=bin/build/adnauseam.firefox
+DES=dist/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES
 
@@ -40,17 +40,18 @@ cp    platform/firefox/install.rdf      $DES/
 cp    platform/firefox/*.xul            $DES/
 cp    LICENSE.txt                       $DES/
 
-echo "*** adnauseam.firefox: Generating meta..."
+echo "*** AdNauseam::Firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
 
 
 if [ "$1" = all ]; then
-    echo "*** adnauseam.firefox: Creating package..."
+    echo "*** AdNauseam::Firefox: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip artifacts/adnauseam.firefox.xpi -qr *
     popd > /dev/null
 fi
 
-echo "*** adnauseam.firefox: Package done."
+echo "*** AdNauseam::Firefox: Package done."
+echo
 
 #cat $DES/popup.html | less

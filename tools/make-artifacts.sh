@@ -1,23 +1,56 @@
 #!/bin/sh
 
-# must first use browser to 'pack' extension for chrome & opera
+CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+FIREFOX=/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin
+OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
-rm -rf artifacts/*
+DES=dist/build
+ARTS=artifacts
 
+CHROME_OPTS=--pack-extension=${DES}/adnauseam.chromium
+OPERA_OPTS=--pack-extension=${DES}/adnauseam.opera
+
+VERSION=`jq .version manifest.json | tr -d '"'`
+
+
+# CLEAN
+rm -rf ${ARTS}/*
+rm -rf ${DES}/*
+
+
+# CHROME
 ./tools/make-chromium.sh
+"${CHROME}" "${CHROME_OPTS}"
+mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
+
+
+# OPERA
 ./tools/make-opera.sh
-./tools/make-firefox.sh all
+"${OPERA}" "${OPERA_OPTS}"
+mv ${DES}/adnauseam.opera.nex ${ARTS}/adnauseam-${VERSION}.opera.nex
 
-cd bin/build/adnauseam.firefox
+
+# FIREFOX
+./tools/make-firefox.sh
+pushd ${DES}/adnauseam.firefox
 jpm xpi
-cp null.xpi ../../../artifacts/adnauseam.firefox.xpi
+popd
+cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox.xpi
+
+
+# WEBEXT
+./tools/make-webext.sh all
+web-ext build -s ${DES}/adnauseam.webext -a ${ARTS}
+mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.webext.zip
+
+
+# CHROME-RAW
+cd dist/build
+zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
 cd -
 
-cp bin/build/*.crx artifacts/
-cp bin/build/*.nex artifacts/
+# NO PEMS
+mv ${DES}/*.pem /tmp
 
-cd bin/build
-zip -9 -r --exclude=*.DS_Store* ../../artifacts/adnauseam.chromium.zip adnauseam.chromium 
-cd -
-
+ls -l artifacts
 open artifacts

@@ -2,10 +2,10 @@
 #
 # This script assumes a linux environment
 
-echo "*** adnauseam.webext: Creating web store package"
-echo "*** adnauseam.webext: Copying files"
+echo "*** AdNauseam::WebExt: Creating web store package"
+echo "*** AdNauseam::WebExt: Copying files"
 
-DES=bin/build/adnauseam.webext
+DES=dist/build/adnauseam.webext
 rm -rf $DES
 mkdir -p $DES
 
@@ -30,7 +30,7 @@ cp platform/webext/polyfill.js   $DES/js/
 cp platform/webext/manifest.json $DES/
 cp LICENSE.txt                   $DES/
 
-echo "*** adnauseam.webext: Generating meta..."
+echo "*** AdNauseam::WebExt: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version
 #
 
@@ -39,10 +39,11 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 if [ "$1" = all ]; then
-    echo "*** adnauseam.webext: Creating package..."
+    echo "*** AdNauseam::WebExt: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip adnauseam.webext.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
-echo "*** adnauseam.webext: Package done."
+echo "*** AdNauseam::WebExt: Package done."
+echo

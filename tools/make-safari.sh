@@ -4,7 +4,7 @@
 
 echo "*** adnauseam.safari: Copying files..."
 
-DES=bin/build/adnauseam.safari
+DES=dist/build/adnauseam.safari
 rm -rf $DES
 mkdir -p $DES
 

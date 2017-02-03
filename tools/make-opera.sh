@@ -4,10 +4,10 @@
 
 hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
 
-echo "*** adnauseam.opera: Creating opera package"
-echo "*** adnauseam.opera: Copying files"
+echo "*** AdNauseam::Opera: Creating opera package"
+echo "*** AdNauseam::Opera: Copying files"
 
-DES=bin/build/adnauseam.opera
+DES=dist/build/adnauseam.opera
 
 rm -r $DES
 mkdir -p $DES
@@ -41,7 +41,8 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-echo "*** adnauseam.opera: Generating meta..."
+echo "*** AdNauseam::Opera: Package Done."
+echo
 # python tools/make-webext-meta.py $DES/  ADN: user our own version
 
 #rm -r $DES/_locales/cv
@@ -49,4 +50,4 @@ echo "*** adnauseam.opera: Generating meta..."
 #rm -r $DES/_locales/mr
 #rm -r $DES/_locales/ta
 
-grep version $DES/manifest.json
+# grep version $DES/manifest.json

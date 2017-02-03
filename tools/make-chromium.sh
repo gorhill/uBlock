@@ -2,10 +2,10 @@
 #
 # This script assumes an OS X environment
 
-echo "*** adnauseam.chromium: Creating chrome package"
-echo "*** adnauseam.chromium: Copying files"
+echo "*** AdNauseam::Chromium: Creating chrome package"
+echo "*** AdNauseam::Chromium: Copying files"
 
-DES=bin/build/adnauseam.chromium
+DES=dist/build/adnauseam.chromium
 rm -rf $DES
 mkdir -p $DES
 
@@ -32,13 +32,14 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 if [ "$1" = all ]; then
-    echo "*** adnauseam.chromium: Creating package..."
+    echo "*** AdNauseam::Chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip artifacts/adnauseam.chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
-echo "*** adnauseam.chromium: Package done."
+echo "*** AdNauseam::Chromium: Package done."
+echo
 
 #ls -lR $DES
 #cat $DES/popup.html | less
