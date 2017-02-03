@@ -21,7 +21,7 @@ rm -rf ${DES}/*
 # CHROME
 ./tools/make-chromium.sh
 "${CHROME}" "${CHROME_OPTS}"
-mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
+mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chrome.crx
 
 
 # OPERA
