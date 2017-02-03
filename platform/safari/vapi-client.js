@@ -58,12 +58,12 @@ if ( vAPI.sessionId ) {
 
 var safari;
 if ( typeof self.safari === 'undefined' ) {
-    safari = self.top.safari;
-    // https://github.com/el1t/uBlock-Safari/issues/23
-    self.safari = safari;
-} else {
-    safari = self.safari;
+    try {
+        // https://github.com/el1t/uBlock-Safari/issues/23
+        self.safari = self.top.safari;
+    } catch(e) {}
 }
+safari = self.safari;
 
 /******************************************************************************/
 
