@@ -54,7 +54,7 @@
   ];
 
   // mark ad visits as failure if any of these are included in title
-  var errorStrings = ['file not found', 'website is currently unavailable'];
+  var errorStrings = ['file not found', 'website is currently unavailable', 'not found on this server'];
 
   var reSpecialChars = /[\*\^\t\v\n]/, remd5 = /[a-fA-F0-9]{32}/;
 
@@ -427,9 +427,7 @@
             µb.updateBadgeAsync(tabId);
           }, 600); // back to normal icon
         }
-        else {
-          warn('Null tab in click animation: ', tab);
-        }
+        // else warn('Null tab in click animation: ', tab); // not a problem
       });
 
       vAPI.messaging.broadcast({

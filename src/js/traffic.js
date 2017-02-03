@@ -477,7 +477,7 @@ var onHeadersReceived = function (details) {
       // add it only if the browser is not sending it already
       if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
-        if (details.type === 'main_frame') // minimize logging
+        if (false && details.type === 'main_frame') // minimize logging
           adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
 
         addHeader(headers, 'DNT', '1');
