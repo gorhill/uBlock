@@ -13,7 +13,7 @@ deploy:
     branch: releases-fix
   api_key:
     secure: EnAMNsPbnS2I0JDkCWiY/6WLERsUbE2Ni5j9ap8YbZt4+sJv7aSoufWZ+0TZvSwr/w5MKCCDKhwXaPfbUwvqrI+eZv6LBXhwajK9Zla25FVjtdGCwKXQ3ZU85PHgL+5FYtuSGACmQj/ruAdSgrI7PgS08e5lqSgEk6lY4y3/6fE=
-  file: bin/build/adnauseam.${BROWSER}.${EXT}
+  file: dist/build/adnauseam.${BROWSER}.${EXT}
   skip_cleanup: true
   on:
     repo: dhowe/AdNauseam

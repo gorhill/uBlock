@@ -420,7 +420,8 @@ var onHeadersReceived = function (details) {
           dbug && console.log('onHeadersReceived: ', requestType, details.url);
 
           // ADN
-          if (ad = µBlock.adnauseam.lookupAd(details.url, details.requestId)) {
+          ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
+          if (ad) {
 
             µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
           }

@@ -4,14 +4,6 @@
     "name": "AdNauseam",
     "version": "{version}",
 
-    "applications": {
-        "gecko": {
-            "id": "adnauseam@rednoise.org",
-            "strict_min_version": "52.0a1",
-            "strict_max_version": "52.*"
-        }
-    },
-
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {
