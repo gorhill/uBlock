@@ -793,6 +793,10 @@ var backupUserData = function(callback) {
 var restoreUserData = function(request) {
     var userData = request.userData;
 
+    var restart = function() {
+        vAPI.app.restart();
+    };
+
     var onAllRemoved = function() {
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings);
@@ -811,13 +815,17 @@ var restoreUserData = function(request) {
 
         // 'filterLists' is available up to uBO v1.10.4, not beyond.
         // 'selectedFilterLists' is available from uBO v1.11 and beyond.
+        var listKeys;
         if ( Array.isArray(userData.selectedFilterLists) ) {
-            µb.saveSelectedFilterLists(userData.selectedFilterLists);
+            listKeys = userData.selectedFilterLists;
         } else if ( userData.filterLists instanceof Object ) {
-            µb.saveSelectedFilterLists(µb.newListKeysFromOldData(userData.filterLists));
+            listKeys = µb.newListKeysFromOldData(userData.filterLists);
         }
-
-        vAPI.app.restart();
+        if ( listKeys !== undefined ) {
+            µb.saveSelectedFilterLists(listKeys, restart);
+        } else {
+            restart();
+        }
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1102
