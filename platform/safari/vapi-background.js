@@ -170,8 +170,8 @@ vAPI.cacheStorage = {
     },
 
     set: function(details, callback) {
-        var toSatisfy = 0;
-        for ( var key in details ) {
+        var key, toSatisfy = 0;
+        for ( key in details ) {
             if ( !details.hasOwnProperty(key) ) {
                 continue;
             }
@@ -182,7 +182,7 @@ vAPI.cacheStorage = {
                 callback && callback();
             }
         };
-        for ( var key in details ) {
+        for ( key in details ) {
             if ( !details.hasOwnProperty(key) ) {
                 continue;
             }
@@ -243,7 +243,7 @@ var settingsStorage = {
             }
         } else if ( Array.isArray(keys) ) {
             for ( i = 0; i < keys.length; i++ ) {
-                value = this._storage[i];
+                value = this._storage[keys[i]];
 
                 if ( typeof value === 'string' ) {
                     result[keys[i]] = JSON.parse(value);
@@ -326,8 +326,8 @@ if ( settingsStorage.get('migratedStorage') ) {
         set: function(a, b) {
             delayed.push(settingsStorage.set.bind(settingsStorage, a, b));
         },
-        remove: function(a, b) {
-            delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
+        remove: function(a) {
+            delayed.push(settingsStorage.remove.bind(settingsStorage, a));
         },
         clear: function(a) {
             delayed.push(settingsStorage.clear.bind(settingsStorage, a));
@@ -1239,19 +1239,13 @@ vAPI.punycodeURL = function(url) {
 // https://github.com/gorhill/uBlock/issues/531
 // Storage area dedicated to admin settings. Read-only.
 
-// https://github.com/gorhill/uBlock/commit/43a5ed735b95a575a9339b6e71a1fcb27a99663b#commitcomment-13965030
-// Not all Chromium-based browsers support managed storage. Merely testing or
-// exception handling in this case does NOT work: I don't know why. The
-// extension on Opera ends up in a non-sensical state, whereas vAPI become
-// undefined out of nowhere. So only solution left is to test explicitly for
-// Opera.
-// https://github.com/gorhill/uBlock/issues/900
-// Also, UC Browser: http://www.upsieutoc.com/image/WXuH
-
 vAPI.adminStorage = {
     getItem: function(key, callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
+        }
         // skip functionality
-        callback();
+        callback(vAPI.localStorage.getItem(key));
     }
 };
 
