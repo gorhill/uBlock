@@ -512,7 +512,7 @@ var domFilterer = {
             this.excludeId = vAPI.randomToken();
         }
         return this.excludeId;
-    }
+    },
 
     hideNode: function(node) {
 
