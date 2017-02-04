@@ -1140,9 +1140,9 @@
     var lists = listsForFilter(compiled);
 
     if (lists.length === 0) {                                // case A
-
-      logNetAllow('NoList', raw, url);
-      return false;
+console.warn("***************************************");
+      logNetBlock('UserList', raw + ': ', url); // always block
+      return true;
     }
 
     for (var i = 0; i < lists.length; i++) {
@@ -1180,7 +1180,7 @@
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
     allowedExceptions[url] = +new Date();
-    if (msg !== 'EasyList')
+    if (µb.userSettings.easyListLogging || msg !== 'EasyList')
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     return false;
   }
@@ -1626,9 +1626,11 @@
 
         var requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
 
-        log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
-          (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
-          (domain ? " 3pDomain: " + domain : ''));
+        if (us.cookieLogging) {
+          log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
+            (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
+            (domain ? " 3pDomain: " + domain : ''));
+        }
 
         headers.splice(i, 1);
         modified = true;
