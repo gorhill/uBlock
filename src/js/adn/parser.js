@@ -139,8 +139,7 @@
 
       if (!targetUrl) { // no clickable tag in our target
 
-        warnP("Fail: no href for anchor", target, img);
-        return;
+        return warnP("Fail: no href for anchor", target, img);
       }
 
       // we have an image and a click-target now
@@ -170,8 +169,7 @@
       // Check size: require a min-size of 4x31, if we got a size
       if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 31)) {
 
-        warnP("Ignoring Ad with size " + iw + "x" + ih, src, targetUrl);
-        return;
+        return warnP("Ignoring Ad with size " + iw + "x" + ih, src, targetUrl);
       }
 
       ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih }, targetDomain);
@@ -238,6 +236,7 @@
         args.unshift('[PARSER]');
         console.warn.apply(console, args);
       }
+      return false;
     }
 
     /******************************** API *********************************/
@@ -320,8 +319,7 @@
 
       if (target.indexOf('http') < 0) {
 
-        warnP("Ignoring Ad with targetUrl=" + target, arguments);
-        return;
+        return warnP("Ignoring Ad with targetUrl=" + target, arguments);
       }
 
       return new Ad(network, target, data);
