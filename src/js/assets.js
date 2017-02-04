@@ -133,7 +133,7 @@ var cachedAssetsManager = (function() {
                 var lastError = vAPI.lastError();
                 if ( lastError ) {
                     console.error(
-                        'µBlock> cachedAssetsManager> getEntries():',
+                        'AdNauseam> cachedAssetsManager> getEntries():',
                         lastError.message
                     );
                 }
@@ -157,7 +157,7 @@ var cachedAssetsManager = (function() {
             var lastError = vAPI.lastError();
             if ( lastError ) {
                 details.error = 'Error: ' + lastError.message;
-                console.error('µBlock> cachedAssetsManager.load():', details.error);
+                console.error('AdNauseam> cachedAssetsManager.load():', details.error);
                 cbError(details);
                 return;
             }
@@ -205,7 +205,7 @@ var cachedAssetsManager = (function() {
             var lastError = vAPI.lastError();
             if ( lastError ) {
                 details.error = 'Error: ' + lastError.message;
-                console.error('µBlock> cachedAssetsManager.save():', details.error);
+                console.error('AdNauseam> cachedAssetsManager.save():', details.error);
                 cbError(details);
                 return;
             }
@@ -605,7 +605,7 @@ var readLocalFile = function(path, callback) {
     };
 
     var onInstallFileError = function() {
-        console.error('µBlock> readLocalFile("%s") / onInstallFileError()', path);
+        console.error('AdNauseam> readLocalFile("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
     };
 
@@ -715,7 +715,7 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onInstallFileError = function() {
-        console.error('µBlock> readRepoCopyAsset("%s") / onInstallFileError():', path, this.statusText);
+        console.error('AdNauseam> readRepoCopyAsset("%s") / onInstallFileError():', path, this.statusText);
         reportBack('', 'Error');
     };
 
@@ -734,7 +734,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         if ( stringIsNotEmpty(this.responseText) === false ) {
-            console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
+            console.error('AdNauseam> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
@@ -750,7 +750,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onHomeFileLoaded = function() {
         if ( stringIsNotEmpty(this.responseText) === false ) {
-            console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
+            console.error('AdNauseam> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
             // Fetch from repo only if obsolescence was due to repo checksum
             if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
                 getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
@@ -863,7 +863,7 @@ var readRepoOnlyAsset = function(path, callback) {
     };
 
     var onInstallFileError = function() {
-        console.error('µBlock> readRepoOnlyAsset("%s") / onInstallFileError()', path);
+        console.warn('AdNauseam> readRepoOnlyAsset("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
     };
 
@@ -881,12 +881,12 @@ var readRepoOnlyAsset = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         if ( typeof this.responseText !== 'string' ) {
-            console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
+            console.error('AdNauseam> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
         if ( YaMD5.hashStr(this.responseText) !== assetEntry.repoChecksum ) {
-            console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): bad md5 checksum', path, repositoryURL);
+            console.error('AdNauseam> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): bad md5 checksum', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
