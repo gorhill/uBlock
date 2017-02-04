@@ -507,6 +507,12 @@ var domFilterer = {
         this.commitTimer.start();
     },
 
+    getExcludeId: function() {
+        if ( this.excludeId === undefined ) {
+            this.excludeId = vAPI.randomToken();
+        }
+        return this.excludeId;
+    }
 
     hideNode: function(node) {
 
