@@ -268,13 +268,6 @@
         else {
 
           logP('No images in children of', elem);
-
-          var ifs = elem.querySelectorAll('iframe');
-          logP('Checking children for iframes, found ', ifs.length, elem);
-
-          for (var i = 0; i < ifs.length; i++) {
-            ifs[i].addEventListener('load', processIFrame, false);
-          }
         }
 
         // and finally check for text ads
@@ -283,7 +276,7 @@
     };
 
     var processIFrame = function () {
-console.log("ProcessIFrame: ",this);
+
       try {
         var doc = this.contentDocument || this.contentWindow.document;
       }
@@ -299,12 +292,6 @@ console.log("ProcessIFrame: ",this);
       }
       else {
         logP('No images in iFrame');
-      }
-      var ifs = doc.querySelectorAll('iframe');
-      logP('Checking sub-children for iframes, found ', ifs.length, doc);
-      for (var i = 0; i < ifs.length; i++) {
-        ifs[i].addEventListener('load', processIFrame, false);
-        processIFrame.bind(ifs[i])();
       }
     };
 
