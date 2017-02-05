@@ -1082,27 +1082,37 @@ vAPI.domCollapser = (function() {
     var primeLocalIFrame = function(iframe) {
 
         // ADN: inject our content-scripts into dynamically-created iframes
-        iframe.onload = function () {
 
-          if (vAPI.chrome) { // ff-already handles this case correctly
+        var sendInjectScripts = function (f) {
 
-            try { // may not be allowed in cross-domain frames
-
-              this.contentWindow.chrome.runtime.connect().postMessage({
-                channelName: "adnauseam",
-                msg: {
-                  what: "injectContentScripts",
-                  parentUrl: location.href
-                }
-              });
-            }
-            catch(e) {
-
-              console.log('Ignored cross-domain [dynamic] iFrame', iframe);
-              //console.warn(e);
-            }
+          if (!f.contentWindow) {
+            console.log('Ignored cross-domain [dynamic] iFrame1', f);
+            return;
           }
-        };
+
+          try { // may not be allowed in cross-domain frames
+
+            f.contentWindow.chrome.runtime.connect().postMessage({
+              channelName: "adnauseam",
+              msg: {
+                what: "injectContentScripts",
+                parentUrl: location.href
+              }
+            });
+          } catch (e) {
+
+            console.log('Ignored cross-domain [dynamic] iFrame2', f);
+            //console.warn(e);
+          }
+        }
+
+        if (vAPI.chrome) {
+
+          sendInjectScripts(iframe);
+          iframe.onload = function () {
+            sendInjectScripts(iframe);
+          }
+        }
 
         // Should probably also copy injected styles.
         // The injected scripts are those which were injected in the current

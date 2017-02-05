@@ -1561,8 +1561,8 @@ console.warn("***************************************");
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    if (0 && µb.userSettings.eventLogging) // disabled
-      log('[INJECT] Dynamic-iFrame: ' + request.parentUrl, request, tabId + '/' + frameId);
+    if (µb.userSettings.eventLogging)
+      log('[INJECT] iFrame: ' + request.parentUrl, tabId + '/' + frameId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
