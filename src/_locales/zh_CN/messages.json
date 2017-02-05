@@ -224,7 +224,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"防止 WebRTC 泄露本地IP地址",
+    "message":"避免 WebRTC 泄露本地IP地址",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
