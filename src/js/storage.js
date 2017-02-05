@@ -1121,7 +1121,7 @@
             this.loadFilterLists();
         }
         if ( this.userSettings.autoUpdate ) {
-            this.scheduleAssetUpdater(this.hiddenSettings.assetAutoUpdatePeriod * 3600000 || 25200000);
+            this.scheduleAssetUpdater(this.hiddenSettings.autoUpdatePeriod * 3600000 || 25200000);
         } else {
             this.scheduleAssetUpdater(0);
         }
