@@ -23,8 +23,7 @@
 
 'use strict';
 
-//if (window.self !== window.top)
-  //console.log('contentscript.js::iframe: '+location.href);
+//console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
 
 /*******************************************************************************
 
@@ -1081,39 +1080,6 @@ vAPI.domCollapser = (function() {
 
     var primeLocalIFrame = function(iframe) {
 
-        // ADN: inject our content-scripts into dynamically-created iframes
-
-        var sendInjectScripts = function (f) {
-
-          if (!f.contentWindow) {
-            console.log('Ignored cross-domain [dynamic] iFrame1', f);
-            return;
-          }
-
-          try { // may not be allowed in cross-domain frames
-
-            f.contentWindow.chrome.runtime.connect().postMessage({
-              channelName: "adnauseam",
-              msg: {
-                what: "injectContentScripts",
-                parentUrl: location.href
-              }
-            });
-          } catch (e) {
-
-            console.log('Ignored cross-domain [dynamic] iFrame2', f);
-            //console.warn(e);
-          }
-        }
-
-        if (vAPI.chrome) {
-
-          sendInjectScripts(iframe);
-          iframe.onload = function () {
-            sendInjectScripts(iframe);
-          }
-        }
-
         // Should probably also copy injected styles.
         // The injected scripts are those which were injected in the current
         // document, from within the `contentscript-start.js / injectScripts`,
@@ -1127,6 +1093,35 @@ vAPI.domCollapser = (function() {
                 parent.appendChild(scriptTag);
             }
         }
+
+        if (vAPI.chrome) { // ADN: inject content-scripts into dynamically-created iframes (ok in ff)
+
+            var sendInjectScripts = function (f) {
+
+                f = f || this;
+
+                if (f.contentWindow) {  // may not be allowed in cross-domain frames
+
+                    //console.log('injecting: ', iframe,  f.contentDocument.readyState);
+
+                    if (typeof f.contentWindow.chrome.runtime.connect === 'function') {
+                        f.contentWindow.chrome.runtime.connect().postMessage({
+                            channelName: "adnauseam",
+                            msg: {
+                                what: "injectContentScripts",
+                                parentUrl: location.href
+                            }
+                          });
+                    }
+                }
+                else {
+                    console.log('Ignored cross-domain [dynamic] iFrame', f);
+                }
+            }
+
+            sendInjectScripts(iframe);
+            // iframe.onload = sendInjectScripts; // ADN: may still need this but I can't find a case
+        }
     };
 
     var addIFrame = function(iframe, dontObserve) {
@@ -1137,11 +1132,13 @@ vAPI.domCollapser = (function() {
         }
 
         var src = iframe.src;
+        //console.log("iframe.src=\""+src+"\"");
         if ( src === '' || typeof src !== 'string' ) {
             primeLocalIFrame(iframe);
             return;
         }
         if ( src.lastIndexOf('http', 0) !== 0 ) {
+            primeLocalIFrame(iframe); // ADN: handle cases where src is 'about:blank'
             return;
         }
         var key = 'iframe' + ' ' + 'src' + ' ' + src,
