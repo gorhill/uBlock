@@ -1562,7 +1562,7 @@ console.warn("***************************************");
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
     if (µb.userSettings.eventLogging)
-      log('[INJECT] iFrame: ' + request.parentUrl, frameId + '/' + tabId);
+      log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
