@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Attenzione! Cambia queste impostazioni avanzate a tuo rischio e pericolo.",
+    "message":"Attenzione! Modifica queste impostazioni avanzate a tuo rischio e pericolo.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

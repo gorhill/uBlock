@@ -8,6 +8,7 @@ env:
 script: ./tools/make-${BROWSER}.sh all
 deploy:
   provider: releases
+  prerelease: true
   # https://github.com/travis-ci/travis-ci/issues/6772
   edge:
     branch: releases-fix
