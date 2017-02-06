@@ -598,7 +598,8 @@ var firstMutation = function() {
     var tmpJS = document.createElement('script');
     var tmpScript = '\
 (function() {\
-var block = function(u, t) {' +
+var block = function(u, t) {\
+if ( typeof u !== "string" ) return false;' +
 (legacyMode ?
 'var e = document.createEvent("CustomEvent");\
 e.initCustomEvent("' + vAPI.sessionId + '", false, false, {url: u, type: t});'
@@ -612,14 +613,21 @@ wo = open,\
 xo = XMLHttpRequest.prototype.open,\
 img = Image;\
 Image = function() {\
-var x = new img();\
+var x = new img(),\
+src = "";\
 try {\
 Object.defineProperty(x, "src", {\
 get: function() {\
-return x.getAttribute("src");\
+return src;\
 },\
 set: function(val) {\
-x.setAttribute("src", block(val, "image") ? "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" : val);\
+src = val;\
+if ( block(val, "image") ) {\
+val = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";\
+if ( x.width === 1 ) x.width=0;\
+if ( x.height === 1 ) x.height=0;\
+}\
+x.setAttribute("src", val);\
 }\
 });\
 } catch ( e ) {}\
