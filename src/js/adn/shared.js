@@ -124,14 +124,16 @@ var BlockingDisabled = new Notification({
 var EasyList = new Notification({
   name: 'EasyListDisabled',
   text: 'adnNotificationActivateEasyList',
-  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt'
+  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-easylist-filter-and-why-do-i-get-a-warning-when-it-is-disabled'
 });
 EasyList.func = reactivateList.bind(EasyList);
 
 var AdNauseamTxt = new Notification({
   name: 'AdNauseamTxtDisabled',
   text: 'adnNotificationActivateAdNauseamList',
-  listUrl: 'assets/ublock/adnauseam.txt'
+  listUrl: 'assets/ublock/adnauseam.txt',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-adnauseam-filter-list'
 });
 AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
 
