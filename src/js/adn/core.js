@@ -1626,11 +1626,9 @@ console.warn("***************************************");
 
         var requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
 
-        if (us.cookieLogging) {
-          log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
+        log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
             (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
             (domain ? " 3pDomain: " + domain : ''));
-        }
 
         headers.splice(i, 1);
         modified = true;
