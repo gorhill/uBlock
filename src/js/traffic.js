@@ -462,166 +462,172 @@ var onHeadersReceived = function (details) {
 };
 
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  // ADN: removing outgoing cookies, user-agent, set referer, DNT header
-  var onBeforeSendHeaders = function (details) {
+// Called before each outgoing request (ADN:)
+var onBeforeSendHeaders = function (details) {
 
-    var headers = details.requestHeaders, prefs = µBlock.userSettings,
-      adn = µBlock.adnauseam, ad = adn.lookupAd(details.url, details.requestId);
+  var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 
-    // ADN: if clicking/hiding is enabled with DNT, then send the DNT header
-    if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
+  // if clicking/hiding is enabled with DNT, then send the DNT header
+  if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
 
-      var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
+    var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
-      // add it only if the browser is not sending it already
-      if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
+    // add it only if the browser is not sending it already
+    if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
-        if (false && details.type === 'main_frame') // minimize logging
-          adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+      if (false && details.type === 'main_frame') // minimize logging
+        adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
 
-        addHeader(headers, 'DNT', '1');
-      }
-    }
-
-    // ADN: Is this a (behind-the-scenes) Ad visit?
-    if (vAPI.isBehindTheSceneTabId(details.tabId) && ad) {
-
-      beforeAdVisit(details, headers, prefs, ad);
-    }
-
-    return { requestHeaders: headers };
-  };
-
-  var beforeAdVisit = function (details, headers, prefs, ad) {
-
-    var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
-
-    ad.requestId = details.requestId; // needed?
-
-    dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
-
-    for (var i = headers.length - 1; i >= 0; i--) {
-
-      dbug && console.log(i + ") " + headers[i].name, headers[i].value);
-      var name = headers[i].name.toLowerCase();
-
-      if ((name === 'http_x_requested_with') ||
-        (name === 'x-devtools-emulate-network-conditions-client-id') ||
-        (prefs.noOutgoingCookies && name === 'cookie') ||
-        (prefs.noOutgoingUserAgent && name === 'user-agent'))
-      {
-        setHeader(headers[i], '');
-
-        // block outgoing cookies and user-agent here if specified
-        if (prefs.noOutgoingCookies && name === 'cookie') {
-
-          µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
-        }
-
-        // replace user-agent with most common string, if specified
-        if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-
-           headers[i].value = CommonUserAgent;
-           µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
-        }
-      }
-
-      if (name === 'referer') refererIdx = i;
-
-      if (vAPI.chrome && name === 'upgrade-insecure-requests') uirIdx = i;
-
-      if (name === 'accept') { // set browser-specific accept header
-        setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
-      }
-    }
-
-    if (vAPI.chrome && uirIdx < 0) { // add UIR header if chrome
-      addHeader(headers, 'Upgrade-Insecure-Requests', '1');
-    }
-
-    if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
       addHeader(headers, 'DNT', '1');
-
-    handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
-  };
-
-  var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
-
-    // console.log('handleRefererForVisit()', arguments);
-
-    // Referer cases (4):
-    // noOutgoingReferer=true  / no refererIdx:     no-op
-    // noOutgoingReferer=true  / have refererIdx:   setHeader('')
-    // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
-    // noOutgoingReferer=false / have refererIdx:   no-op
-    if (refIdx > -1 && prefs.noOutgoingReferer) {
-
-      // will never happen when using XMLHttpRequest
-      µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
-      setHeader(headers[refererIdx], '');
-
-    } else if (!prefs.noOutgoingReferer && refIdx < 0) {
-
-      µBlock.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, url);
-      addHeader(headers, 'Referer', referer);
     }
-  };
-
-  function dumpHeaders(headers) {
-
-    var s = '\n\n';
-    for (var i = headers.length - 1; i >= 0; i--) {
-      s += headers[i].name + ': ' + headers[i].value + '\n';
-    }
-    return s;
   }
 
-  var setHeader = function (header, value) {
+  // Is this an XMLHttpRequest ?
+  if (vAPI.isBehindTheSceneTabId(details.tabId)) {
 
-    if (header) header.value = value;
-  };
+    // If so, is it one of our Ad visits ?
+    var ad = adn.lookupAd(details.url, details.requestId);
 
-  var addHeader = function (headers, name, value) {
+    // if so, handle the headers (cookies, ua, referer)
+    ad && beforeAdVisit(details, headers, prefs, ad);
+  }
 
-    headers.push({
-      name: name,
-      value: value
-    });
-  };
+  // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
 
-  var hasDNT = function (headers) {
+  return { requestHeaders: headers };
+};
 
-    for (var i = headers.length - 1; i >= 0; i--) {
-      if (headers[i].name === 'DNT' && headers[i].value === '1') {
-        return true;
+// ADN: remove outgoing cookies, reset user-agent, strip referer
+var beforeAdVisit = function (details, headers, prefs, ad) {
+
+  var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
+
+  ad.requestId = details.requestId; // needed?
+
+  dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
+
+  for (var i = headers.length - 1; i >= 0; i--) {
+
+    dbug && console.log(i + ") " + headers[i].name, headers[i].value);
+    var name = headers[i].name.toLowerCase();
+
+    if ((name === 'http_x_requested_with') ||
+      (name === 'x-devtools-emulate-network-conditions-client-id') ||
+      (prefs.noOutgoingCookies && name === 'cookie') ||
+      (prefs.noOutgoingUserAgent && name === 'user-agent'))
+    {
+      setHeader(headers[i], '');
+
+      // Block outgoing cookies and user-agent here if specified
+      if (prefs.noOutgoingCookies && name === 'cookie') {
+
+        µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
+      }
+
+      // Replace user-agent with most common string, if specified
+      if (prefs.noOutgoingUserAgent && name === 'user-agent') {
+
+         headers[i].value = CommonUserAgent;
+         µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
       }
     }
-    return false;
+
+    if (name === 'referer') refererIdx = i;
+
+    if (vAPI.chrome && name === 'upgrade-insecure-requests') uirIdx = i;
+
+    if (name === 'accept') { // Set browser-specific accept header
+      setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
+    }
   }
 
-  /******************************************************************************/
-  var onRootFrameHeadersReceived = function (details) {
+  if (vAPI.chrome && uirIdx < 0) { // Add UIR header if chrome
+    addHeader(headers, 'Upgrade-Insecure-Requests', '1');
+  }
 
-    var µb = µBlock,
-        tabId = details.tabId;
+  if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
+    addHeader(headers, 'DNT', '1');
+
+  handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
+};
+
+var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
+
+  // console.log('handleRefererForVisit()', arguments);
+
+  // Referer cases (4):
+  // noOutgoingReferer=true  / no refererIdx:     no-op
+  // noOutgoingReferer=true  / have refererIdx:   setHeader('')
+  // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
+  // noOutgoingReferer=false / have refererIdx:   no-op
+  if (refIdx > -1 && prefs.noOutgoingReferer) {
+
+    // will never happen when using XMLHttpRequest
+    µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
+    setHeader(headers[refererIdx], '');
+
+  } else if (!prefs.noOutgoingReferer && refIdx < 0) {
+
+    µBlock.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, url);
+    addHeader(headers, 'Referer', referer);
+  }
+};
+
+function dumpHeaders(headers) {
+
+  var s = '\n\n';
+  for (var i = headers.length - 1; i >= 0; i--) {
+    s += headers[i].name + ': ' + headers[i].value + '\n';
+  }
+  return s;
+}
+
+var setHeader = function (header, value) {
+
+  if (header) header.value = value;
+};
+
+var addHeader = function (headers, name, value) {
+
+  headers.push({
+    name: name,
+    value: value
+  });
+};
+
+var hasDNT = function (headers) {
+
+  for (var i = headers.length - 1; i >= 0; i--) {
+    if (headers[i].name === 'DNT' && headers[i].value === '1') {
+      return true;
+    }
+  }
+  return false;
+}
+
+/******************************************************************************/
+
+var onRootFrameHeadersReceived = function (details) {
+
+    var µb = µBlock, tabId = details.tabId;
 
     µb.tabContextManager.push(tabId, details.url);
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
     if (!pageStore) {
-      pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+        pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
     // I can't think of how pageStore could be null at this point.
 
     return processCSP(details, pageStore, pageStore.createContextFromPage());
 };
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  var onFrameHeadersReceived = function(details) {
+var onFrameHeadersReceived = function(details) {
     // Lookup the page store associated with this tab id.
     var pageStore = µBlock.pageStoreFromTabId(details.tabId);
     if ( !pageStore ) {
