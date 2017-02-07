@@ -1180,7 +1180,7 @@ console.warn("***************************************");
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
     allowedExceptions[url] = +new Date();
-    if (µb.userSettings.easyListLogging || msg !== 'EasyList')
+    if (msg !== 'EasyList')
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     return false;
   }
