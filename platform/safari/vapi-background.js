@@ -177,6 +177,11 @@ vAPI.cacheStorage = {
             }
             toSatisfy++;
         }
+        if ( toSatisfy === 0 ) {
+            // Nothing to set
+            callback && callback();
+            return;
+        }
         var callbackCaller = function() {
             if ( --toSatisfy === 0 ) {
                 callback && callback();
@@ -201,7 +206,7 @@ vAPI.cacheStorage = {
     },
 
     clear: function(callback) {
-        localforage.clear().then(function() {
+        localforage.clear(function() {
             typeof callback === 'function' && callback();
         });
     },
@@ -211,11 +216,28 @@ vAPI.cacheStorage = {
             return;
         }
         var size = 0;
-        localforage.iterate(function(value, key) {
-            size += (value || '').length;
-        }, function() {
-            callback(size);
-        });
+        if ( Array.isArray(keys) ) {
+            var toSatisfy = keys.length, n = toSatisfy;
+            if ( n === 0 ) {
+                callback(0);
+                return;
+            }
+            var callbackCaller = function(err, value) {
+                size += (value || '').length;
+                if ( --toSatisfy === 0 ) {
+                    callback(size);
+                }
+            };
+            for ( var i = 0; i < n; i++ ) {
+                localforage.getItem(keys[i], callbackCaller);
+            }
+        } else {
+            localforage.iterate(function(value, key) {
+                size += (value || '').length;
+            }, function() {
+                callback(size);
+            });
+        }
     }
 };
 
@@ -290,23 +312,8 @@ vAPI.storage = {
         if ( typeof callback === 'function' ) {
             callback();
         }
-    },
-    getBytesInUse: function(keys, callback) {
-        if ( typeof callback !== 'function' ) {
-            return;
-        }
-        callback(0);
-        // Too slow:
-        var getBytesInUseHandler = function(cacheSize) {
-            var i, storage = settingsStorage._storage;
-            for ( i in storage ) {
-                if ( !storage.hasOwnProperty(i) ) continue;
-                cacheSize += (storage[i] || '').length;
-            }
-            callback(cacheSize);
-        };
-        vAPI.cacheStorage.getBytesInUse(null, getBytesInUseHandler);
     }
+    // No getBytesInUse; too slow
 };
 
 /******************************************************************************/
