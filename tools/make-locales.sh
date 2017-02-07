@@ -31,6 +31,7 @@ do
     #echo Writing $outfile
     jq -s '.[0] * .[1]' $messages $adnfile > $outfile
     sed -i '' "s/uBlock₀/AdNauseam/g" $outfile
+    sed -i '' "s/uBlock Origin/AdNauseam/g" $outfile
   fi
 
 done
