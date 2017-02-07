@@ -141,6 +141,7 @@ var AdBlockPlusEnabled = new Notification({
   name: 'AdBlockPlusEnabled',
   text: 'adnNotificationDisableAdBlockPlus',
   button: 'adnNotificationDisable',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
 AdBlockPlusEnabled.func = openExtPage.bind(AdBlockPlusEnabled);
@@ -149,6 +150,7 @@ var UBlockEnabled = new Notification({
   name: 'UBlockEnabled',
   text: 'adnNotificationDisableUBlock',
   button: 'adnNotificationDisable',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
 UBlockEnabled.func = openExtPage.bind(UBlockEnabled);
