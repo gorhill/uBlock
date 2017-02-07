@@ -430,27 +430,28 @@ var processCSP = function(pageStore, details) {
         loggerEnabled = µb.logger.isEnabled();
 
     var context = pageStore.createContextFromPage();
-    context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     if ( details.type !== 'main_frame' ) {
         context.pageHostname = context.pageDomain = context.requestHostname;
     }
 
-    var inlineScriptResult, blockInlineScript;
+    var inlineScriptResult, blockInlineScript,
+        workerResult, blockWorker;
     if ( details.type !== 'script' ) {
         context.requestType = 'inline-script';
+        context.requestURL = requestURL;
         inlineScriptResult = pageStore.filterRequestNoCache(context);
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
+        // https://github.com/gorhill/uBlock/issues/2360
+        context.requestType = 'script';
+        context.requestURL = 'blob:';
+        workerResult = pageStore.filterRequestNoCache(context);
+        blockWorker = µb.isBlockResult(workerResult);
     }
 
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
-
-    // https://github.com/gorhill/uBlock/issues/2360
-    µb.staticNetFilteringEngine.matchStringExactType(context, 'blob:', 'script');
-    var workerResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
-        blockWorker = µb.isBlockResult(workerResult);
 
     var headersChanged;
     if ( blockInlineScript || blockWebsocket || blockWorker ) {
