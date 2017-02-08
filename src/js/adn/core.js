@@ -15,6 +15,7 @@
     production = 1,
     lastActivity = 0,
     lastUserActivity = 0,
+    listsLoaded = false,
     notifications = [],
     allowedExceptions = [],
     maxAttemptsPerAd = 3,
@@ -22,19 +23,12 @@
     profiler = +new Date(),
     pollQueueInterval = 5000,
     redactMarker = '********',
-    strictBlockingDisabled = false,
     repeatVisitInterval = Number.MAX_VALUE;
 
   var xhr, idgen, admap, inspected, listEntries;
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
-
-  // rules from EasyPrivacy we need to ignore (TODO: move to adnauseam.txt as exceptions)
-  var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
-    '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
-    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party'
-  ];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
@@ -1012,12 +1006,6 @@
     return enabledBlockLists.contains(test);
   }
 
-  // check that the rule is not disabled in 'disabledBlockingRules'
-  var ruleDisabled = function (test) {
-
-    return disabledBlockingRules.contains(test);
-  };
-
   // check target domain against page-domain #337
   var internalTarget = function (ad) {
 
@@ -1077,14 +1065,18 @@
   };
 
   /**
-   *  NOTE: this is called AFTER our dnt rules, and checks the following:
-   *  1) whether we are blocking at all
+   *  This is called AFTER our DNT rules, and checks the following cases:
+   *
+   *  1) whether we are blocking at all (blockingMalware == false)
    *  		if not, return false
-   *  2) whether domain is blockable (allowAnyBlockOnDomains)
+   *
+   *  2) Whether we are have finished loading rules (listsLoaded == true)
+   *      if not, return false
+   *
+   *  3) whether *any* block on the domain is valid (domain in allowAnyBlockOnDomains)
    *  		if so, return true;
-   *  3) if it is in the globally disabled rules (disabledBlockingRules)
-   *  		if so return false
-   *  4) if any list it was found on allows blocks
+   *
+   *  4) if any list that it was found on allows blocks
    *  		if so, return true;
    */
   var isBlockableRequest = function (context) {
@@ -1095,7 +1087,7 @@
       return false;
     }
 
-    if (!strictBlockingDisabled) {
+    if (!listsLoaded) {
 
       logNetAllow('Loading', context.rootDomain  + ' => ' + context.requestURL);
       return false;
@@ -1107,18 +1099,6 @@
       return true;
     }
 
-    var snfe = µb.staticNetFilteringEngine,
-      compiled = snfe.toResultString(1).slice(3),
-      raw = snfe.filterStringFromCompiled(compiled),
-      url = context.requestURL;
-
-    if (ruleDisabled(raw)) {
-
-      // TODO: check that the rule hasn't been added in 'My filters' ?
-      //console.log(JSON.stringify(context,null,2));
-      return allowRequest('RuleOff', raw, url);
-    }
-
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
 
@@ -1126,22 +1106,24 @@
       return true;
     }
 
+    var snfe = µb.staticNetFilteringEngine,
+      compiled = snfe.toResultString(1).slice(3),
+      raw = snfe.filterStringFromCompiled(compiled),
+      url = context.requestURL;
+
     /*
       Check active rule(s) to see if we should block or allow
+      
       Cases:
-        A) no lists:      allow
-        B) exception hit: allow
-        C) block hit:     block
-        D) no valid hits: allow, but no cookies later
-
-        Note: not sure why case A) ever happens, but appears to
-        only soon after an update to MyRules, perhaps before rule is compiled
+        A) user list:      allow
+        B) exception hit:  allow
+        C) block hit:      block
+        D) no valid hits:  allow, but no cookies later
      */
     var lists = listsForFilter(compiled);
 
     if (lists.length === 0) {                                // case A
-console.warn("***************************************");
-      logNetBlock('UserList', raw + ': ', url); // always block
+      logNetBlock('User List', raw + ': ', url); // always block
       return true;
     }
 
@@ -1421,7 +1403,7 @@ console.warn("***************************************");
       var keys = Object.keys(entries);
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
-      strictBlockingDisabled = true;
+      listsLoaded = true;
       verifyAdBlockers();
       verifySettings();
       verifyLists(µb.remoteBlacklists);
