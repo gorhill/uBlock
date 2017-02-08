@@ -324,13 +324,22 @@ function reactivateSetting() {
     }, reloadPane);
 }
 
+function onSelectionDone() {
+
+    vAPI.messaging.send('dashboard', { 
+      what: 'reloadAllFilters' 
+    }, reloadPane);
+
+};
+
 function reactivateList() {
 
   vAPI.messaging.send(
     'dashboard', {
       what: 'selectFilterLists',
       switches: [ { location: this.listUrl, off: false }]
-    }, reloadPane);
+    }, onSelectionDone);
+
 }
 
 function openPage(url){
