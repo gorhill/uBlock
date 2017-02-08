@@ -30,11 +30,8 @@
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
 
-  // rules from EasyPrivacy we need to ignore (TODO: move to adnauseam.txt as exceptions)
-  var disabledBlockingRules = ['||googletagservices.com/tag/js/gpt.js$script',
-    '||amazon-adsystem.com/aax2/amzn_ads.js$script', '||stats.g.doubleclick.net^',
-    '||googleadservices.com^$third-party', '||pixanalytics.com^$third-party'
-  ];
+  // rules from EasyPrivacy we need to ignore (Moved to adnauseam.txt as exceptions)
+  var disabledBlockingRules = [];
 
   // allow blocks only from this set of lists
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
