@@ -208,7 +208,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"أنا مستخدم متقدم (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>قراءة إجبارية<\/a>)",
+    "message":"أنا مستخدم ذو خبرة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>قراءة إجبارية<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
