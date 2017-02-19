@@ -560,7 +560,7 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restaurar por um ficheiro...",
+    "message":"Restaurar a partir de um ficheiro...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
@@ -568,7 +568,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Todas as suas definições serão substituídas utilizando os dados da cópia de segurança de {{time}}, e uBlock₀ irá reiniciar.\n\nSubstituir todas as definições existentes utilizando os dados da cópia de segurança?",
+    "message":"Todas as suas definições serão substituídas utilizando os dados da cópia de segurança de {{time}}, e o uBlock₀ irá reiniciar.\n\nSubstituir todas as definições existentes utilizando os dados da cópia de segurança?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{

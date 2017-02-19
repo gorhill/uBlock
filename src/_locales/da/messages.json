@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Bloker medieelementer større end {{input: number}} kB",
+    "message":"Bloker medieelementer større end {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
