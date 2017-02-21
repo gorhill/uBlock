@@ -38,7 +38,7 @@ do
     #Notification when English locale has changes 
     if [[ "$length" -ne "$refLength" || "$refDes" != "$curDes" ]]
        then 
-         echo "There are new changes in the English locale file. Please update the locale folder."
+         echo -e "\nThere are new changes in the English locale file. Please update the locale folder"
          break
     fi
 
