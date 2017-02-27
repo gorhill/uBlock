@@ -999,7 +999,7 @@ var onCandidateChanged = (function() {
                 elems.push(items[i].elem);
             }
         }
-        pickerBody.querySelector('body section textarea + div').textContent = valid ?
+        pickerBody.querySelector('#resultsetCount').textContent = valid ?
             items.length.toLocaleString() :
             'E';
         dialog.querySelector('section').classList.toggle('invalidFilter', !valid);
