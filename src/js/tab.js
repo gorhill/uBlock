@@ -561,26 +561,23 @@ vAPI.tabs.onPopupUpdated = (function() {
         context.requestHostname = µb.URI.hostnameFromURI(targetURL);
         context.requestType = 'popup';
 
-        // https://github.com/gorhill/uBlock/commit/1d448b85b2931412508aa01bf899e0b6f0033626#commitcomment-14944764
-        //   Ignore bad target URL. On Firefox, an `about:blank` tab may be
-        //   opened for a new tab before it is filled in with the real target
-        //   URL.
         // https://github.com/gorhill/uBlock/issues/1735
         //   Do not bail out on `data:` URI, they are commonly used for popups.
         // https://github.com/uBlockOrigin/uAssets/issues/255
         //   Do not bail out on `about:blank`: an `about:blank` popup can be
         //   opened, with the sole purpose to serve as an intermediary in
         //   a sequence of chained popups.
-        if (
-            context.requestHostname === '' &&
-            targetURL.startsWith('data:') === false &&
-            targetURL !== 'about:blank'
-        ) {
-            return '';
-        }
+        // https://github.com/uBlockOrigin/uAssets/issues/263#issuecomment-272615772
+        //   Do not bail out, period: the static filtering engine must be
+        //   able to examine all sorts of URLs for popup filtering purpose.
 
-        // Dynamic filtering makes sense only when we have a valid hostname.
-        if ( openerHostname !== '' ) {
+        // Dynamic filtering makes sense only when we have a valid opener
+        // hostname.
+        // https://github.com/gorhill/uBlock/commit/1d448b85b2931412508aa01bf899e0b6f0033626#commitcomment-14944764
+        //   Ignore bad target URL. On Firefox, an `about:blank` tab may be
+        //   opened for a new tab before it is filled in with the real target
+        //   URL.
+        if ( openerHostname !== '' && targetURL !== 'about:blank' ) {
             // Check per-site switch first
             if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
                 if ( typeof clickedURL === 'string' && areDifferentURLs(targetURL, clickedURL) ) {

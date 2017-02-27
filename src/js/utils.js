@@ -245,3 +245,15 @@
 };
 
 /******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/2344
+
+µBlock.matchCurrentLanguage = function(s) {
+    if ( typeof s !== 'string' ) { return false; }
+    if ( this.matchCurrentLanguage.reLang === undefined ) {
+        this.matchCurrentLanguage.reLang = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
+    }
+    return this.matchCurrentLanguage.reLang.test(s);
+};
+
+/******************************************************************************/

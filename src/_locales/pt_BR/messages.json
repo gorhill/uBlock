@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Painel",
+    "message":"uBlock₀ — Painel de controle",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -200,7 +200,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Cores amigáveis para daltônicos",
+    "message":"Modo Daltonismo",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Sua lista de exceções de servidores para qual o uBlock₀ será desativado. Uma entrada por linha. Servidores inválidos serão silenciosamente ignorados.",
+    "message":"Sua lista branca de servidores para qual o uBlock Origin será desativado. Uma regra por linha. Servidores inválidos serão silenciosamente ignorados.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -612,7 +612,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Mostrar Painel",
+    "message":"Mostrar Painel de Controle",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{

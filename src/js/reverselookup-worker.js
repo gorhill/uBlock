@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ var fromNetFilter = function(details) {
     var lists = [];
     var compiledFilter = details.compiledFilter;
     var entry, content, pos, c;
-    for ( var path in listEntries ) {
-        entry = listEntries[path];
+    for ( var assetKey in listEntries ) {
+        entry = listEntries[assetKey];
         if ( entry === undefined ) {
             continue;
         }
@@ -173,11 +173,11 @@ var fromCosmeticFilter = function(details) {
         );
     }
 
-    var re, path, entry;
+    var re, assetKey, entry;
     for ( var candidate in candidates ) {
         re = candidates[candidate];
-        for ( path in listEntries ) {
-            entry = listEntries[path];
+        for ( assetKey in listEntries ) {
+            entry = listEntries[assetKey];
             if ( entry === undefined ) {
                 continue;
             }
@@ -206,7 +206,7 @@ var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
 /******************************************************************************/
 
-onmessage = function(e) {
+onmessage = function(e) { // jshint ignore:line
     var msg = e.data;
 
     switch ( msg.what ) {
@@ -215,7 +215,7 @@ onmessage = function(e) {
         break;
 
     case 'setList':
-        listEntries[msg.details.path] = msg.details;
+        listEntries[msg.details.assetKey] = msg.details;
         break;
 
     case 'fromNetFilter':

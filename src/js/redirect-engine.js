@@ -402,27 +402,15 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 // TODO: combine same key-redirect pairs into a single regex.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    var textEnd = text.length;
-    var lineBeg = 0, lineEnd;
-    var line, fields, encoded;
-    var reNonEmptyLine = /\S/;
+    var line, fields, encoded,
+        reNonEmptyLine = /\S/,
+        lineIter = new µBlock.LineIterator(text);
 
     this.resources = new Map();
 
-    while ( lineBeg < textEnd ) {
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd < 0 ) {
-            lineEnd = text.indexOf('\r', lineBeg);
-            if ( lineEnd < 0 ) {
-                lineEnd = textEnd;
-            }
-        }
-        line = text.slice(lineBeg, lineEnd);
-        lineBeg = lineEnd + 1;
-
-        if ( line.startsWith('#') ) {
-            continue;
-        }
+    while ( lineIter.eot() === false ) {
+        line = lineIter.next();
+        if ( line.startsWith('#') ) { continue; }
 
         if ( fields === undefined ) {
             fields = line.trim().split(/\s+/);

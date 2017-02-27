@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(request.url, callback);
+        µb.assets.get(request.url, { dontCache: true }, callback);
         return;
 
     case 'listsFromNetFilter':
@@ -77,7 +77,7 @@ var onMessage = function(request, sender, callback) {
         return;
 
     case 'reloadAllFilters':
-        µb.reloadAllFilters(callback);
+        µb.loadFilterLists();
         return;
 
     case 'scriptlet':
@@ -94,10 +94,8 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'mouseClick':
-        µb.mouseX = request.x;
-        µb.mouseY = request.y;
-        µb.mouseURL = request.url;
+    case 'applyFilterListSelection':
+        response = µb.applyFilterListSelection(request);
         break;
 
     case 'compileCosmeticFilterSelector':
@@ -121,7 +119,8 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'forceUpdateAssets':
-        µb.assetUpdater.force();
+        µb.scheduleAssetUpdater(0);
+        µb.assets.updateStart({ delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod || 2000 });
         break;
 
     case 'getAppData':
@@ -146,6 +145,12 @@ var onMessage = function(request, sender, callback) {
         µb.openNewTab(request.details);
         break;
 
+    case 'mouseClick':
+        µb.mouseX = request.x;
+        µb.mouseY = request.y;
+        µb.mouseURL = request.url;
+        break;
+
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
             vAPI.tabs.reload(request.tabId);
@@ -157,10 +162,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'scriptletResponse':
         µb.scriptlets.report(tabId, request.scriptlet, request.response);
-        break;
-
-    case 'selectFilterLists':
-        µb.selectFilterLists(request.switches);
         break;
 
     case 'setWhitelist':
@@ -753,18 +754,25 @@ var backupUserData = function(callback) {
         timeStamp: Date.now(),
         version: vAPI.app.version,
         userSettings: µb.userSettings,
-        filterLists: {},
+        selectedFilterLists: µb.selectedFilterLists,
         hiddenSettingsString: µb.stringFromHiddenSettings(),
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.hnSwitches.toString(),
-        userFilters: ''
+        userFilters: '',
+        // TODO(seamless migration):
+        // The following is strictly for convenience, to be minimally
+        // forward-compatible. This will definitely be removed in the
+        // short term, as I do not expect the need to install an older
+        // version of uBO to ever be needed beyond the short term.
+        // >>>>>>>>
+        filterLists: µb.oldDataFromNewListKeys(µb.selectedFilterLists)
+        // <<<<<<<<
     };
 
-    var onSelectedListsReady = function(filterLists) {
-        userData.filterLists = filterLists;
-
+    var onUserFiltersReady = function(details) {
+        userData.userFilters = details.content;
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
@@ -773,17 +781,10 @@ var backupUserData = function(callback) {
             'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
             'filename': filename
         });
-
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
         vAPI.storage.set(µb.restoreBackupSettings);
-
         getLocalData(callback);
-    };
-
-    var onUserFiltersReady = function(details) {
-        userData.userFilters = details.content;
-        µb.extractSelectedFilterLists(onSelectedListsReady);
     };
 
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
@@ -791,32 +792,40 @@ var backupUserData = function(callback) {
 
 var restoreUserData = function(request) {
     var userData = request.userData;
-    var countdown = 8;
-    var onCountdown = function() {
-        countdown -= 1;
-        if ( countdown === 0 ) {
-            vAPI.app.restart();
-        }
+
+    var restart = function() {
+        vAPI.app.restart();
     };
 
     var onAllRemoved = function() {
-        // Be sure to adjust `countdown` if adding/removing anything below
-        µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings();
-        vAPI.storage.set(userData.userSettings, onCountdown);
-        µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        vAPI.storage.set(userData.userSettings);
         µb.hiddenSettingsFromString(userData.hiddenSettingsString || '');
-        µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
-        µb.keyvalSetOne('dynamicFilteringString', userData.dynamicFilteringString || '', onCountdown);
-        µb.keyvalSetOne('urlFilteringString', userData.urlFilteringString || '', onCountdown);
-        µb.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
-        µb.assets.put(µb.userFiltersPath, userData.userFilters, onCountdown);
         vAPI.storage.set({
+            netWhitelist: userData.netWhitelist || '',
+            dynamicFilteringString: userData.dynamicFilteringString || '',
+            urlFilteringString: userData.urlFilteringString || '',
+            hostnameSwitchesString: userData.hostnameSwitchesString || '',
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
             lastBackupTime: 0
-        }, onCountdown);
+        });
+        µb.assets.put(µb.userFiltersPath, userData.userFilters);
+
+        // 'filterLists' is available up to uBO v1.10.4, not beyond.
+        // 'selectedFilterLists' is available from uBO v1.11 and beyond.
+        var listKeys;
+        if ( Array.isArray(userData.selectedFilterLists) ) {
+            listKeys = userData.selectedFilterLists;
+        } else if ( userData.filterLists instanceof Object ) {
+            listKeys = µb.newListKeysFromOldData(userData.filterLists);
+        }
+        if ( listKeys !== undefined ) {
+            µb.saveSelectedFilterLists(listKeys, restart);
+        } else {
+            restart();
+        }
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1102
@@ -848,9 +857,7 @@ var prepListEntries = function(entries) {
     var µburi = µb.URI;
     var entry, hn;
     for ( var k in entries ) {
-        if ( entries.hasOwnProperty(k) === false ) {
-            continue;
-        }
+        if ( entries.hasOwnProperty(k) === false ) { continue; }
         entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = µburi.hostnameFromURI(entry.supportURL);
@@ -867,18 +874,17 @@ var getLists = function(callback) {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
         cache: null,
-        parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
-        current: µb.remoteBlacklists,
+        current: µb.availableFilterLists,
+        externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
-        manualUpdate: false,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
-        userFiltersPath: µb.userFiltersPath
+        parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
+        userFiltersPath: µb.userFiltersPath,
+        aliases: µb.assets.listKeyAliases
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
-        r.manualUpdate = µb.assetUpdater.manualUpdate;
-        r.manualUpdateProgress = µb.assetUpdater.manualUpdateProgress;
         prepListEntries(r.cache);
         callback(r);
     };
@@ -952,9 +958,6 @@ var onMessage = function(request, sender, callback) {
     case 'getLocalData':
         return getLocalData(callback);
 
-    case 'purgeAllCaches':
-        return µb.assets.purgeAll(callback);
-
     case 'readUserFilters':
         return µb.loadUserFilters(callback);
 
@@ -973,8 +976,17 @@ var onMessage = function(request, sender, callback) {
         response = getRules();
         break;
 
+    case 'purgeAllCaches':
+        if ( request.hard ) {
+            µb.assets.remove(/./);
+        } else {
+            µb.assets.purge(/./, 'public_suffix_list.dat');
+        }
+        break;
+
     case 'purgeCache':
-        µb.assets.purgeCacheableAsset(request.path);
+        µb.assets.purge(request.assetKey);
+        µb.assets.remove('compiled/' + request.assetKey);
         break;
 
     case 'readHiddenSettings':
@@ -1276,8 +1288,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'subscriberData':
         response = {
-            confirmStr: vAPI.i18n('subscriberConfirm'),
-            externalLists: µBlock.userSettings.externalLists
+            confirmStr: vAPI.i18n('subscriberConfirm')
         };
         break;
 
