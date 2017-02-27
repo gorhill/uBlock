@@ -11,6 +11,10 @@
     "message": "Built on",
     "description": "English: links.html Built on"
   },
+  "aboutFaq": {
+    "message": "Frequently asked question",
+    "description": "English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease": {
     "message": "Please:",
     "description": "English: Firstrun.html -> Please:"

@@ -16,7 +16,6 @@ FILES=src/_locales/**/adnauseam.json
 reference=src/_locales/en/adnauseam.json
 refLength=`jq '. | length' $reference`
 refDes=`jq 'map(.description)' $reference`
-
 # echo "Languages:" ${LANGS[*]}
 
 for adnfile in $FILES
@@ -38,8 +37,8 @@ do
     #Notification when English locale has changes 
     if [[ "$length" -ne "$refLength" || "$refDes" != "$curDes" ]]
        then 
-         echo -e "\nThere are new changes in the English locale file. Please update the locale folder"
-         break
+          echo -e "\nThere are new changes in the English locale file. Please update the locale folder"
+         # break
     fi
 
     jq -s '.[0] * .[1]' $messages $adnfile > $outfile
