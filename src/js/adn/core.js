@@ -25,7 +25,7 @@
     redactMarker = '********',
     repeatVisitInterval = Number.MAX_VALUE;
 
-  var xhr, idgen, admap, inspected, listEntries;
+  var xhr, idgen, admap, inspected, listEntries, visitedURLs = new Set();
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
@@ -301,13 +301,20 @@
   var visitPending = function (ad) {
 
     var pending = ad && ad.attempts < maxAttemptsPerAd
-      && ad.visitedTs <= 0 && !ad.dntAllowed;
-
+      && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
+    
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
       log('[DNT] Not visiting '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
       ad.dntAllowed = true; // so we don't recheck it
       pending = false;
+    }
+
+    if (pending && visitedURLs.has(ad.targetUrl)) {
+
+     console.log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
+     ad.noVisit = true; // so we don't recheck it
+     pending = false;
     }
 
     return pending;
@@ -1376,6 +1383,8 @@
     var ads = adlist(requestURL); // all ads for url
 
     //console.log('PAGE: ', requestURL, ads.length);
+    visitedURLs.add(requestURL);
+    console.log(visitedURLs);
 
     ads.forEach(function (ad) {
       ad.current = false;
