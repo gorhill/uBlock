@@ -282,7 +282,7 @@ open = function(u) {\
 return block(u, 'popup') ? null : wo.apply(this, arguments);\
 };\
 XMLHttpRequest.prototype.open = function(m, u) {\
-if(block(u, 'xmlhttprequest')) {throw 'InvalidAccessError'; return;}\
+if(block(u, 'xmlhttprequest')) {throw new Error('InvalidAccessError'); return;}\
 else {xo.apply(this, arguments); return;}\
 };";
         if(frameId === 0) {
