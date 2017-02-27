@@ -312,7 +312,7 @@
 
     if (pending && visitedURLs.has(ad.targetUrl)) {
 
-     console.log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
+     log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
      ad.noVisit = true; // so we don't recheck it
      pending = false;
     }
@@ -1384,7 +1384,6 @@
 
     //console.log('PAGE: ', requestURL, ads.length);
     visitedURLs.add(requestURL);
-    console.log(visitedURLs);
 
     ads.forEach(function (ad) {
       ad.current = false;
