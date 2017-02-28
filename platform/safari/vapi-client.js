@@ -639,7 +639,7 @@ else return wo.apply(this, arguments);\
 };\
 XMLHttpRequest.prototype.open = function(m, u) {\
 if ( block(u, "xmlhttprequest") ) {\
-throw "InvalidAccessError"; return;\
+throw new Error("InvalidAccessError"); return;\
 } else {\
 xo.apply(this, arguments); return;}\
 };';
