@@ -410,6 +410,8 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 var onHeadersReceived = function (details) {
 
+//console.log('traffic.onHeadersReceived',details);
+
     var ad, tabId = details.tabId, requestType = details.type, dbug = 0;
 
     if (vAPI.isBehindTheSceneTabId(tabId)) {
@@ -423,6 +425,7 @@ var onHeadersReceived = function (details) {
           ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
           if (ad) {
 
+            // this is an ADN request
             µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
           }
           else if (dbug && vAPI.chrome) {
@@ -437,8 +440,10 @@ var onHeadersReceived = function (details) {
     }
 
     // ADN: check if this was an allowed exception and, if so, block cookies
-    var result = null,
-      modified = µBlock.adnauseam.checkAllowedException(details.url, details.responseHeaders);
+    var result = null,   // Q: Do we really need to pass originalUrl here? 
+      pageStore = µBlock.pageStoreFromTabId(details.tabId),
+      modified = pageStore && µBlock.adnauseam.checkAllowedException
+        (details.responseHeaders, details.url, pageStore.rawURL);
 
     if (requestType === 'main_frame') {
       result = onRootFrameHeadersReceived(details);
@@ -454,9 +459,11 @@ var onHeadersReceived = function (details) {
 
     // ADN: if we're not blocking and we've modified headers, tell the caller (#601)
     if (modified && !result) {
-      return details.responseHeaders.length ?
-        { 'responseHeaders': details.responseHeaders } : null;
+
+      if (details.responseHeaders.length)
+        result = { 'responseHeaders': details.responseHeaders };
     }
+    //Prev: if (modified && !result) return details.responseHeaders.length ? { 'responseHeaders': details.responseHeaders } : null;
 
     return result;
 };

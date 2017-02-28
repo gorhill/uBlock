@@ -2238,13 +2238,20 @@ var httpObserver = {
             return;
         }
 
+        // ADN: add all the incoming headers (only for xmlhttprequests?)
+        var responseHeaders = [];
+        channel.visitResponseHeaders(function(name, value) {
+            responseHeaders.push({ name: name, value: value });
+        });
+
         // 'Content-Security-Policy' MUST come last in the array. Need to
         // revised this eventually.
-        var responseHeaders = [],
-            value = channel.contentLength;
-        if ( value !== -1 ) {
-            responseHeaders.push({ name: 'Content-Length', value: value });
-        }
+        var value = channel.contentLength;
+
+        // if ( value !== -1 ) { // ADN
+        //     responseHeaders.push({ name: 'Content-Length', value: value });
+        // }
+
         if ( requestType.endsWith('_frame') ) {
             value = this.getResponseHeader(channel, 'Content-Security-Policy');
             if ( value !== undefined ) {
@@ -2272,21 +2279,34 @@ var httpObserver = {
             return;
         }
 
-        // ADN: (ugly-hack-for-firefox) we only deal with cookies here
-        // and just ignore whatever is returned from onHeadersReceived()
-        if (µBlock.userSettings.noIncomingCookies &&
-          µBlock.adnauseam.lookupAd(URI.asciiSpec, requestId))
-        {
-            //console.log('Blocking COOKIE',URI.asciiSpec);
-            channel.setResponseHeader('Set-Cookie', '', false);
-        }
-
         if ( result.responseHeaders && result.responseHeaders.length ) {
+
+            // ADN: (ugly-hack-for-firefox, pending webext) we only deal with cookies here
+            // and just ignore whatever is returned from onHeadersReceived()
+            var adn = µBlock.adnauseam;
+
+            // ADN(FF): blocking of incoming cookies for ad visits
+            if (µBlock.userSettings.noIncomingCookies && adn.lookupAd(URI.asciiSpec, requestId))
+            {
+                channel.setResponseHeader('Set-Cookie', '', false);
+                channel.setResponseHeader('Set-Cookie2', '', false);
+            }
+
+            // ADN(FF): blocking of incoming cookies for requests to allowed-exceptions
+            else if (adn.isBlockableException(URI.asciiSpec, channel.originalURI.asciiSpec)) {
+
+              adn.logNetEvent('[COOKIE]', 'Block', "FF: " + URI.asciiHost + "/" + channel.originalURI.asciiHost);
+
+              channel.setResponseHeader('Set-Cookie', '', false);
+              channel.setResponseHeader('Set-Cookie2', '', false);
+            }
+
             channel.setResponseHeader(
                 'Content-Security-Policy',
                 result.responseHeaders.pop().value,
                 true
             );
+
             return;
         }
     },

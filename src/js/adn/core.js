@@ -302,7 +302,7 @@
 
     var pending = ad && ad.attempts < maxAttemptsPerAd
       && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
-    
+
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
       log('[DNT] Not visiting '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
@@ -1120,7 +1120,7 @@
 
     /*
       Check active rule(s) to see if we should block or allow
-      
+
       Cases:
         A) user list:      allow
         B) exception hit:  allow
@@ -1164,13 +1164,28 @@
     return adlist().length;
   }
 
+  var dntAllowsRequest = function(url, hostname) {
+
+    //if (!url) throw Error("No URL!",hostname);
+
+    var us = µb.userSettings,
+      dntHides = us.hidingAds && us.disableHidingForDNT,
+      dntClicks = us.clickingAds && us.disableClickingForDNT;
+
+    // 1st-party: only check original-request per EFF spec
+    return ((dntHides || dntClicks) && us.dntDomains.contains(hostname));
+  }
+
   var allowRequest = function (msg, raw, url) {
 
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
     allowedExceptions[url] = +new Date();
-    if (msg !== 'EasyList')
+
+    if (msg !== 'EasyList') {  // avoid excessive logging
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
+    }
+
     return false;
   }
 
@@ -1558,10 +1573,20 @@
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
-  exports.checkAllowedException = function (url, headers) {
+  exports.isBlockableException = function (requestUrl, originalUrl) {
 
-    if (typeof allowedExceptions[url] !== 'undefined')
-      return blockIncomingCookies(headers, url);
+    if (typeof allowedExceptions[requestUrl] !== 'undefined') {
+
+      var originalHostname = µb.URI.hostnameFromURI(originalUrl);
+      return !dntAllowsRequest(requestUrl, originalUrl);
+    }
+  };
+
+  exports.checkAllowedException = function (headers, requestUrl, originalUrl) {
+
+    if (typeof allowedExceptions[requestUrl] !== 'undefined')
+      return blockIncomingCookies(headers, requestUrl, originalUrl);
+
     return false;
   };
 
@@ -1570,6 +1595,7 @@
     var modified = false, dbug = 0, hostname, us = µb.userSettings;
 
     var cookieAttr = function(cookie, name) {
+
       var parts = cookie.split(';');
       for (var i = 0; i < parts.length; i++) {
         var keyval = parts[i].trim().split('=');
@@ -1581,15 +1607,12 @@
 
     dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
-    var dntEnabled = (us.clickingAds && us.disableClickingForDNT) || (us.hidingAds && us.disableHidingForDNT);
-    if (dntEnabled) {
+    var originalHostname = µb.URI.hostnameFromURI(originalUrl);
 
-      var originalHostname = µb.URI.hostnameFromURI(originalUrl);
-      if (us.dntDomains.contains(originalHostname)) { // 1st-party: only check original-request per EFF spec
+    if (dntAllowsRequest(originalUrl, originalHostname)) {
 
-        log('[DNT] (AllowCookie1p)', originalUrl);
-        return false;
-      }
+      log('[DNT] (AllowCookie1p)', originalUrl);
+      return false;
     }
 
     //console.log("1pDomain: '"+µb.URI.hostnameFromURI(originalUrl)+"' / '" +
