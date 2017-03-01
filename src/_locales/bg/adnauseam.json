@@ -4,19 +4,23 @@
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Поддръжка",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"Разработен чрез",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Frequently asked question",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"Моля:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Скриване на рекламите",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
@@ -24,27 +28,27 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
+    "message":"Блокиране на злонамерени реклами",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "message":"скриване на реклами във вашите избрани <span class='link' id='To3pfilter'> списъци за филтриране<\/span>",
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register visits on Ads found via your <span class='link' id='To3pfilter'>filter lists<\/span>",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "message":"Register visits on Ads found via your <span>filter lists<\/span>",
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malicious Ads (<span class='link' id='ToOptions'>customize<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "message":"Protect against malicious Ads and trackers (<span>customize<\/span>)",
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Повторно активиране",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Деактивиране",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"Activate the EasyList filter",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Activate the AdNauseam filter",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus and AdNauseam may conflict!",
@@ -136,7 +144,7 @@
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}} Ads were imported",
+    "message":"{{count}} реклами са внесени",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
@@ -144,7 +152,7 @@
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Преглед на журнал",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"of the",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"Ads detected",
@@ -172,7 +180,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"Settings",
+    "message":"Настройки",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
