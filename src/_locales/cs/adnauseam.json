@@ -11,6 +11,10 @@
     "message":"Základ Aplikace",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Frequently asked question",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"Prosím:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů<\/span>",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"registrace návštěv na reklamy nalezené prostřednictvím vašich<span class='link' id='To3pfilter'> seznamů filtrů<\/span>",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"optimalizujte nastavení na ochranu proti malwaru a jiným skrytým trackerům (<span class='link' id='ToOptions'> nastavit<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reactivate",
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"Aktivuj EasyList filtr",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Activate the AdNauseam filter",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus a AdNauseam mohou být v rozporu!",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"ze",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"Zjištěné Reklamy",
