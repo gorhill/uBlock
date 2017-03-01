@@ -11,6 +11,10 @@
     "message":"基於",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"常見問題",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"請:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"隱藏由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"訪問由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"最佳化設定以遮蔽惡意軟體和隱形的使用者追蹤 (<span class='link' id='ToOptions'>更改<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"啟用",
@@ -60,8 +64,12 @@
     "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
-    "message":"請停用其它廣告屏蔽軟件",
+    "message":"請啟用 Easy List 篩選列表",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"請啟用 AdNauseam 篩選列表",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus 同 AdNauseam 可能會衝突！",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"總共",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"已偵測廣告",

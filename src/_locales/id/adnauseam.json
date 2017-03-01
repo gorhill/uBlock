@@ -11,6 +11,10 @@
     "message":"Built on",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Frequently asked question",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"Mohon:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span class='link' id='ToOptions'> Sesuaikan<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reactivate",
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"Aktivasi EasyList filter",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Activate the AdNauseam filter",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus and AdNauseam may conflict!",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"dari",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"Iklan terdeteksi",

@@ -1,106 +1,114 @@
 {
   "adnAboutPageName":{
-    "message":"AdNauseam — About",
+    "message":"أدنوسيام-حول",
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"الدعم",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"مبني على",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Frequently asked question",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"الرجاء:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"إخفاء الإعلانات",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"انقر فوق الإعلانات",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
+    "message":"منع الإعلانات الخبيثة",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"hide Ads in your selected <span class='link' id='To3pfilter'>filter lists<\/span>",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "message":"إخفاء الإعلانات في <span class='link' id='To3pfilter'> قوائم التصفية<\/span> المحددة",
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register visits on Ads found via your <span class='link' id='To3pfilter'>filter lists<\/span>",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "message":"تسجيل الزيارات على الإعلانات التي وجدت عبر <span class='link' id='To3pfilter'> قوائم التصفية<\/span> الخاصة بك",
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimize your settings to protect against malicious Ads (<span class='link' id='ToOptions'>customize<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "message":"تحسين الإعدادات الخاصة بك للحماية من الإعلانات الخبيثة (<span class='link' id='ToOptions'> تعديل<\/span>)",
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"اعادة تفعيل",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"إيقاف",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"تفعيل إخفاء الإعلانات",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
-    "message":"Activate Ad clicking",
+    "message":"تفعيل النقر فوق الإعلان",
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate blocking of malicious ads",
+    "message":"تفعيل منع الإعلانات الخبيثة",
     "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"تفعيل قائمة التصفية EasyList",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"تفعيل قائمة التصفية أدنوسيام",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
+  },
   "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus and AdNauseam may conflict!",
+    "message":"احتمال تعارض بين اد بلوك و ادنوسيام!",
     "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"احتمال تعارض بين يوبلوك و ادنوسيام!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
-    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message":"هذه الصفحة تحترم<b>لا تتبع<\/b>، الإعلانات مسموحة.",
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
-    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message":"هذه الصفحة تحترم<b>لا تتبع<\/b>، إخفاء الاعلانات بدون النقر.",
     "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding":{
-    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message":"هذه الصفحة تحترم<b>لا تتبع<\/b>، يتم النقر دون اخفاء الاعلانات.",
     "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow":{
-    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message":"هذه الصفحة تحترم<b>لا تتبع<\/b>، للاعلام فقط.",
     "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
-    "message":"TARGET",
+    "message":"هدف",
     "description":"English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn":{
-    "message":"FOUND ON",
+    "message":"وجد في",
     "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
-    "message":"Not Yet Visited",
+    "message":"لم تتم الزيارة مسبقا",
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
-    "message":"Switch me on",
+    "message":"فعِّلني",
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
@@ -108,11 +116,11 @@
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"أفضل، ولكن…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
-    "message":"Let's go!",
+    "message":"لنبدأ!",
     "description":"English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage":{
@@ -148,15 +156,15 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
-    "message":"clicked",
+    "message":"تم النقر",
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
     "message":"of the",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
-    "message":"Ads detected",
+    "message":"تم الكشف عن إعلانات",
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{
@@ -168,11 +176,11 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{
-    "message":"Resume AdNauseam",
+    "message":"استئناف أدنوسيام",
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"Settings",
+    "message":"الإعدادات",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
@@ -196,7 +204,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuHideBadge":{
-    "message":"Hide Ad count on icon",
+    "message":"إخفاء عدد الإعلانات على الأيقونة",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAdsNow":{
@@ -204,51 +212,51 @@
     "description":"appears in ADN popup menu"
   },
   "adnLogNoLog":{
-    "message":"No log available",
+    "message":"لا يوجد سجل",
     "description":"appears in ADN log page"
   },
   "adnLogViewFullLog":{
-    "message":"View full log",
+    "message":"عرض سجل كامل",
     "description":"appears in ADN log page"
   },
   "adnVaultSince":{
-    "message":"Since",
+    "message":"منذ",
     "description":"appears on vault page"
   },
   "adnVaultDefaultDate":{
-    "message":"Jan 1 1970 0:00am",
+    "message":"1 يناير 1970 0:00 ص",
     "description":"appears on vault page"
   },
   "adnVaultExport":{
-    "message":"Export",
+    "message":"تصدير",
     "description":"appears on vault page"
   },
   "adnVaultImport":{
-    "message":"Import",
+    "message":"إستيراد",
     "description":"appears on vault page"
   },
   "adnVaultClear":{
-    "message":"Clear",
+    "message":"تنظيف",
     "description":"appears on vault page"
   },
   "adnVaultAdsClicked":{
-    "message":"Ads clicked",
+    "message":"تم النقر على الإعلان",
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"shown",
+    "message":"ظاهر",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
-    "message":"delete this Ad",
+    "message":"حذف هذا الإعلان",
     "description":"appears on vault page"
   },
   "adnVaultTotalEstimated":{
-    "message":"total estimated",
+    "message":"المجموع المقدر",
     "description":"appears on vault page"
   },
   "adnVaultAdsCost":{
-    "message":"cost",
+    "message":"التكلفة",
     "description":"appears on vault page"
   },
   "hidingAdsPrompt":{
@@ -308,31 +316,31 @@
     "description":"English: Don't click non-tracking Ads"
   },
   "extName":{
-    "message":"AdNauseam",
+    "message":"أدنوسيام",
     "description":"extension name"
   },
   "extShortDesc":{
-    "message":"Fight back against advertising surveillance",
+    "message":"مكافحة الدعاية المراقبة",
     "description":"for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials":{
-    "message":"Essentials",
+    "message":"أساسيات",
     "description":"English: Essentials"
   },
   "3pGroupOther":{
-    "message":"Other",
+    "message":"أخرى",
     "description":"English: Other"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"برمجيات خبيثة",
     "description":"English: Malware"
   },
   "3pGroupRegions":{
-    "message":"Languages",
+    "message":"لغات",
     "description":"English: Languages"
   },
   "whitelistPageName":{
-    "message":"Whitelists",
+    "message":"القوائم البيضاء",
     "description":"appears as tab name in dashboard"
   },
   "eventLoggingPrompt":{

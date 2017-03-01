@@ -11,6 +11,10 @@
     "message":"基于",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"常见问题",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"请:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"隐藏由你的<span class='link' id='To3pfilter'>筛选器列表<\/span>标记的广告",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"访问由你的<span class='link' id='To3pfilter'>筛选器列表<\/span>标记的广告",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"优化设定以屏蔽恶意广告 (<span class='link' id='ToOptions'>更改<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"启用",
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"请启用Easy List 筛选列表",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"请启用 AdNauseam 筛选列表",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus 和 AdNauseam 可能会冲突！",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"总共",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"已侦测广告",

@@ -11,6 +11,10 @@
     "message":"Construído em cima do",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Perguntas frequentes",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"Por favor:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"ocultar anúncios nas suas <span class='link' id='To3pfilter'>listas de filtros<\/span> selecionadas",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"registar visitas em anúncios encontrados via as suas <span class='link' id='To3pfilter'>listas de filtros<\/span>",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"otimizar as suas definições para proteger contra anúncios maliciosos (<span class='link' id='ToOptions'>personalizar<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reativar",
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"Ativar o filtro da EasyList",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Ativar o filtro da AdNauseam",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"O AdBlock Plus e o AdNauseam podem entrar em conflito!",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"dos",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"anúncios detetados",

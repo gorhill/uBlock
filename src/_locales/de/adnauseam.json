@@ -11,6 +11,10 @@
     "message":"Gebaut mit",
     "description":"English: links.html Built on"
   },
+  "aboutFaq":{
+    "message":"Häufig gestellte Fragen",
+    "description":"English: links.html -> Frequently asked question"
+  },
   "adnFirstRunPlease":{
     "message":"Bitte:",
     "description":"English: Firstrun.html -> Please:"
@@ -29,15 +33,15 @@
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"verstecke Anzeigen in Deinen ausgewählten <span class='link' id='ToOptions'>Filterlisten<\/span>",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
     "message":"registriere Seitenbesuche, die von Deinen <span class='link' id='To3pfilter'>Filterlisten<\/span> gefunden wurden",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"optimieren Deine Einstellungen um dich vor Malware und nicht-visuellen Trackern zu schützen (<span class='link' id='ToOptions'> anpassen<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reaktivieren",
@@ -62,6 +66,10 @@
   "adnNotificationActivateEasyList":{
     "message":"Aktiviere den Easylist Filter",
     "description":"English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Aktiviere den AdNauseam Filter",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus und AdNauseam könnten sich gegenseitig behindern!",
@@ -153,7 +161,7 @@
   },
   "adnMenuOfThe":{
     "message":"von der",
-    "description":"English: Vault.html"
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"Gefundene Werbungen",

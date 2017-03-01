@@ -8,8 +8,12 @@
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Construit",
+    "message":"Basé sur",
     "description":"English: links.html Built on"
+  },
+  "aboutFaq":{
+    "message":"Foire aux questions",
+    "description":"English: links.html -> Frequently asked question"
   },
   "adnFirstRunPlease":{
     "message":"S'il vous plaît:",
@@ -24,20 +28,20 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Bloquer les malwares",
+    "message":"Bloquer les publicités malicieuses",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"cacher les publicités dans vos <span class='link' id='To3pfilter'> listes de filtres<\/span> sélectionnés",
-    "description":"English: Firstrun.html -> hide Ads in your selected filter lists"
+    "message":"cacher les publicités depuis vos <span class='link' id='To3pfilter'> listes de filtres<\/span> sélectionnés",
+    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"registre des visites sur les publicités trouvés via vos <span class='link' id='To3pfilter'> listes de filtres<\/span>",
-    "description":"English: Firstrun.html -> register visits on Ads found via your filter lists"
+    "message":"Enregistrer les visites des publicités trouvées depuis vos <span class='link' id='To3pfilter'>listes de filtres<\/span>",
+    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
     "message":"optimiser vos paramètres de protection contre les malveillants publicités (<span class='link' id='ToOptions'> personnaliser<\/span>)",
-    "description":"English: Firstrun.html -> optimize your settings to protect against malicious Ads (customize)"
+    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Réactiver",
@@ -63,6 +67,10 @@
     "message":"Activer le filtre EasyList",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
+  "adnNotificationActivateAdNauseamList":{
+    "message":"Activer le filtre AdNauseam",
+    "description":"English: Notifications -> Activate the AdNauseam filter"
+  },
   "adnNotificationDisableAdBlockPlus":{
     "message":"AdBlock Plus et AdNauseam peuvent entrer en conflit !",
     "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
@@ -76,15 +84,15 @@
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
-    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message":"Cette page respecte <b>Ne pas suivre<\/b>, cacher sans cliquer.",
     "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding":{
-    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message":"Cette page respecte <b>Ne pas suivre<\/b>, clique sans cacher",
     "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow":{
-    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message":"Cette page respecte le <b>Do Not Track (Ne pas Traquer)<\/b>, pour votre information.",
     "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
@@ -100,7 +108,7 @@
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
-    "message":"Switch me on",
+    "message":"M'activer",
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
@@ -108,7 +116,7 @@
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"Mieux, mais tout de même…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
@@ -152,15 +160,15 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
-    "message":"of the",
-    "description":"English: Vault.html"
+    "message":"du",
+    "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
     "message":"Publicité détectés",
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{
-    "message":"View Ad Vault",
+    "message":"Consulter le AdVault",
     "description":"appears in ADN popup menu"
   },
   "adnMenuPause":{
@@ -188,15 +196,15 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer":{
-    "message":"Disable outgoing referrer",
+    "message":"Désactiver le parrain sortant",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAds":{
-    "message":"Clear Ads with browser history",
+    "message":"Effacer les publicités en même temps que l'historique de navigation",
     "description":"appears in ADN popup menu"
   },
   "adnMenuHideBadge":{
-    "message":"Hide Ad count on icon",
+    "message":"Cacher le nombre de publicités sur l'icône",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAdsNow":{
@@ -256,23 +264,23 @@
     "description":"English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt":{
-    "message":"Click Ads identified by your chosen filter lists",
+    "message":"Cliquer les publicités identifiées par votre liste de filtre",
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Block malware and non-visual trackers",
+    "message":"Bloquer les publicités malveillantes et les traqueurs invisibles",
     "description":"English: Protect your browser from malware and non-visual trackers"
   },
   "parseTextAdsPrompt":{
-    "message":"Capture text-only Ads when possible",
+    "message":"Capturer les textes publicitaires si possible",
     "description":"English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt":{
-    "message":"Display the number of Ads on the icon",
+    "message":"Afficher le nombre de publicités sur l'icône",
     "description":"English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt":{
-    "message":"Extra Privacy",
+    "message":"Plus d'intimité",
     "description":"English: Interface"
   },
   "settingsInterfacePrompt":{
@@ -280,31 +288,31 @@
     "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
-    "message":"Ignore cookies returned with clicks",
+    "message":"Ignorer les cookies crées avec les clics",
     "description":"English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt":{
-    "message":"Don't send cookies on visits",
+    "message":"Ne pas envoyer de cookies lors de visites",
     "description":"English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt":{
-    "message":"Hide user-agent header on visits",
+    "message":"Cacher l'en-tête d'utilisateur lors de visites",
     "description":"English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt":{
-    "message":"Hide referring page on visits",
+    "message":"Cacher la page d'où vous venez lors de visites",
     "description":"English: Hide referring page on visits"
   },
   "respectDNTPrompt":{
-    "message":"Make exceptions for non-tracking Ads",
+    "message":"Faire une exception pour les publicités qui ne traquent pas",
     "description":"English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt":{
-    "message":"Don't hide non-tracking Ads",
+    "message":"Ne pas cacher les publicités qui ne traquent pas",
     "description":"English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt":{
-    "message":"Don't click non-tracking Ads",
+    "message":"Ne pas simuler de clics sur les publicités qui ne traquent pas",
     "description":"English: Don't click non-tracking Ads"
   },
   "extName":{
@@ -316,7 +324,7 @@
     "description":"for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials":{
-    "message":"Essentials",
+    "message":"Essentiels",
     "description":"English: Essentials"
   },
   "3pGroupOther":{
@@ -324,7 +332,7 @@
     "description":"English: Other"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Publicité malveillante",
     "description":"English: Malware"
   },
   "3pGroupRegions":{
@@ -332,7 +340,7 @@
     "description":"English: Languages"
   },
   "whitelistPageName":{
-    "message":"Whitelists",
+    "message":"Listes blanches",
     "description":"appears as tab name in dashboard"
   },
   "eventLoggingPrompt":{
