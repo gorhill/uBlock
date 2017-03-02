@@ -894,7 +894,7 @@ vAPI.tabs.registerListeners();
         }
 
         var iconStatus = state ? (isDNT ? 'dnt': 'on') : 'off';
-        iconStatus +=  (isClick? 'active': '');
+        if(iconStatus != 'off') iconStatus += (isClick? 'active': '');
         vAPI.setIcon(tabId, iconStatus, badge);
     };
 
