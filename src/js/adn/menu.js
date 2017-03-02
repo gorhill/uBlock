@@ -597,9 +597,10 @@
     var h = document.getElementById('notifications').offsetHeight;
     var newh = 350 - h;
     uDom('#ad-list').css('height', newh + 'px');
+    //*** Paused-menu always goes above the notifications
     //adjust the starting point of paused-menu
-    var newTop = 100 + h;
-    uDom('#paused-menu').css('top', newTop + 'px');
+    // var newTop = 100 + h;
+    // uDom('#paused-menu').css('top', newTop + 'px');
   };
 
   var setBackBlockHeight = function () {
