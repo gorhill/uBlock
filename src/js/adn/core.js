@@ -1825,11 +1825,11 @@
       disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
 
     var note = DNTNotify; // neither clicking nor hiding
-    if (disableClicking && disableHiding)
+    if ((disableClicking && disableHiding) || (!prefs.clickingAds && disableHiding) || (!prefs.hidingAds && disableClicking))
       note = DNTAllowed;
-    else if (disableClicking && !disableHiding)
+    else if (disableClicking && prefs.hidingAds && !prefs.disableHidingForDNT)
       note = DNTHideNotClick;
-    else if (!disableClicking && disableHiding)
+    else if (prefs.clickingAds && !prefs.disableClickingForDNT && disableHiding)
       note = DNTClickNotHide;
 
     if (!notifications.contains(note)) {
