@@ -43,8 +43,10 @@
     // console.log(notifications);
 
     var pane = window.location.hash.slice(1);
-    if (pane === '') {
-      pane = 'options.html';
+    if ( pane === '' ) {
+        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane') || 'options.html';
+    } else {
+        vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     }
 
     var tabButton = uDom('[href="#' + pane + '"]');

@@ -218,7 +218,7 @@ var FilterParser = function() {
     this.hostnames = [];
     this.invalid = false;
     this.cosmetic = true;
-    this.reNeedHostname = /^(?:script:contains|script:inject|.+?:has|.+?:matches-css|:xpath)\(.+?\)$/;
+    this.reNeedHostname = /^(?:script:contains|script:inject|.+?:has|.+?:matches-css(?:-before|-after)?|:xpath)\(.+?\)$/;
 };
 
 /******************************************************************************/
@@ -721,7 +721,7 @@ FilterContainer.prototype.isValidSelector = (function() {
     }
 
     var reHasSelector = /^(.+?):has\((.+?)\)$/,
-        reMatchesCSSSelector = /^(.+?):matches-css\((.+?)\)$/,
+        reMatchesCSSSelector = /^(.+?):matches-css(?:-before|-after)?\((.+?)\)$/,
         reXpathSelector = /^:xpath\((.+?)\)$/,
         reStyleSelector = /^(.+?):style\((.+?)\)$/,
         reStyleBad = /url\([^)]+\)/,

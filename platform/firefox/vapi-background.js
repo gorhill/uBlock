@@ -1915,6 +1915,7 @@ var httpObserver = {
         16: 'websocket',
         17: 'csp_report',
         19: 'beacon',
+        20: 'xmlhttprequest',
         21: 'image'
     },
     onBeforeRequest: function(){},
