@@ -787,7 +787,7 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
       'https://*/*'
     ],
     extra: ['blocking', 'requestHeaders'],
-    callback: onBeforeSendHeaders
+    callback: onHeadersReceived //onBeforeSendHeaders
   };
 
   vAPI.net.registerListeners();

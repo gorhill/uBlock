@@ -852,7 +852,7 @@
 /******************************************************************************/
 
 // Plain reload of all filters.
-
+/*
 µBlock.reloadAllFilters = function() {
     var µb = this;
 

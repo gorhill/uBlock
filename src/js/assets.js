@@ -569,16 +569,16 @@ var assetCacheWrite = function(assetKey, details, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-<<<<<<< HEAD
-    var onHomeFileLoaded = function() {
-        if ( stringIsNotEmpty(this.responseText) === false ) {
-            console.error('AdNauseam> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
-            // Fetch from repo only if obsolescence was due to repo checksum
-            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-                getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
-            } else {
-                cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
-=======
+// <<<<<<< HEAD
+//     var onHomeFileLoaded = function() {
+//         if ( stringIsNotEmpty(this.responseText) === false ) {
+//             console.error('AdNauseam> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
+//             // Fetch from repo only if obsolescence was due to repo checksum
+//             if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+//                 getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
+//             } else {
+//                 cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+// =======
 var assetCacheRemove = function(pattern, callback) {
     var onReady = function() {
         var cacheDict = assetCacheRegistry,
@@ -587,7 +587,6 @@ var assetCacheRemove = function(pattern, callback) {
         for ( var assetKey in cacheDict ) {
             if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
                 continue;
->>>>>>> upstream1.11.0
             }
             if ( typeof pattern === 'string' && assetKey !== pattern ) {
                 continue;
@@ -757,40 +756,6 @@ api.get = function(assetKey, options, callback) {
         callback(details);
     };
 
-<<<<<<< HEAD
-    var onInstallFileLoaded = function() {
-        //console.log('µBlock> readRepoOnlyAsset("%s") / onInstallFileLoaded()', path);
-        reportBack(this.responseText);
-    };
-
-    var onInstallFileError = function() {
-        console.warn('AdNauseam> readRepoOnlyAsset("%s") / onInstallFileError()', path);
-        reportBack('', 'Error');
-    };
-
-    var onCachedContentLoaded = function(details) {
-        //console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentLoaded()', path);
-        reportBack(details.content);
-    };
-
-    var onCachedContentError = function() {
-        //console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentError()', path);
-        getTextFileFromURL(vAPI.getURL(path), onInstallFileLoaded, onInstallFileError);
-    };
-
-    var repositoryURL = toRepoURL(path + '?_=' + Date.now());
-
-    var onRepoFileLoaded = function() {
-        if ( typeof this.responseText !== 'string' ) {
-            console.error('AdNauseam> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
-            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
-            return;
-        }
-        if ( YaMD5.hashStr(this.responseText) !== assetEntry.repoChecksum ) {
-            console.error('AdNauseam> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): bad md5 checksum', path, repositoryURL);
-            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
-            return;
-=======
     var onContentNotLoaded = function() {
         var isExternal;
         while ( (contentURL = contentURLs.shift()) ) {
@@ -801,7 +766,7 @@ api.get = function(assetKey, options, callback) {
         }
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
->>>>>>> upstream1.11.0
+
         }
         getTextFileFromURL(contentURL, onContentLoaded, onContentNotLoaded);
     };
@@ -863,22 +828,18 @@ var getRemote = function(assetKey, callback) {
             tryLoading();
             return;
         }
-<<<<<<< HEAD
 
         // If we've loaded a DNT list, we need to parse it
         if (µBlock.adnauseam.dnt.isDoNotTrackUrl(path)) { // ADN
           µBlock.adnauseam.dnt.processEntries(this.responseText);
         }
 
-        //console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
-        cachedAssetsManager.save(path, this.responseText);
-=======
         assetCacheWrite(assetKey, {
             content: this.responseText,
             url: contentURL
         });
+
         registerAssetSource(assetKey, { error: undefined });
->>>>>>> upstream1.11.0
         reportBack(this.responseText);
     };
 

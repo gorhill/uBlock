@@ -108,6 +108,7 @@ var renderFilterLists = function(soft) {
             elem = li.descendants('a:nth-of-type(2)');
             elem.attr('href', entry.instructionURL);
             elem.css('display', '');*/
+            
     var liFromListEntry = function(listKey, li) {
         var entry = listDetails.available[listKey],
             elem;
@@ -213,7 +214,6 @@ var renderFilterLists = function(soft) {
     };
 
     var liFromListGroup = function(groupKey, listKeys) {
-<<<<<<< HEAD
 
         var liGroup = listGroupTemplate.clone();
 
@@ -223,7 +223,7 @@ var renderFilterLists = function(soft) {
 
         var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
 
-//console.log('NAME: '+groupKey,  groupName, listKeys ? listKeys.length : 0);
+        //console.log('NAME: '+groupKey,  groupName, listKeys ? listKeys.length : 0);
 
         if ( groupName !== '' ) {
             liGroup.descendants('span.geName').text(groupName);
