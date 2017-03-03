@@ -1,10 +1,4 @@
 {
-  "https://www.eff.org/files/effdntlist.txt": {
-    "off": false,
-    "title": "DNT Policy Whitelist",
-    "group": "privacy",
-    "supportURL": "https://www.eff.org/dnt-policy"
-  },
   "http://adblock.gardar.net/is.abp.txt": {
     "off": true,
     "title": "ISL: Icelandic ABP List",
@@ -336,5 +330,11 @@
     "group": "regions",
     "lang": "sl",
     "supportURL": "https://github.com/betterwebleon/slovenian-list"
+  },
+  "https://www.eff.org/files/effdntlist.txt": {
+    "off": false,
+    "title": "DNT Policy Whitelist",
+    "group": "privacy",
+    "supportURL": "https://www.eff.org/dnt-policy"
   }
 }
