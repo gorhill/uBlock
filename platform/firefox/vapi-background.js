@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2106 The uBlock Origin authors
+    Copyright (C) 2014-2107 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2529,44 +2529,51 @@ vAPI.net.registerListeners = function() {
     }
 
     var shouldLoadPopupListenerMessageName = location.host + ':shouldLoadPopup';
-    var shouldLoadPopupListener = function(openerURL, popupTabId) {
-        var uri, openerTabId;
-        for ( var browser of tabWatcher.browsers() ) {
-            uri = browser.currentURI;
+    var shouldLoadPopupListenerEntries = [];
+    var shouldLoadPopupListener = function(e) {
+        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) { return; }
 
-            // Probably isn't the best method to identify the source tab.
+        var target = e.target,
+            data = e.data,
+            now = Date.now(),
+            entries = shouldLoadPopupListenerEntries,
+            entry;
 
-            // https://github.com/gorhill/uBlock/issues/450
-            // Skip entry if no valid URI available.
-            // Apparently URI can be undefined under some circumstances: I
-            // believe this may have to do with those very temporary
-            // browser objects created when opening a new tab, i.e. related
-            // to https://github.com/gorhill/uBlock/issues/212
-            if ( !uri || uri.spec !== openerURL ) {
-                continue;
-            }
-
-            openerTabId = tabWatcher.tabIdFromTarget(browser);
-            if ( openerTabId !== popupTabId ) {
-                vAPI.tabs.onPopupCreated(popupTabId, openerTabId);
+        var i = entries.length;
+        while ( i-- ) {
+            entry = entries[i];
+            if ( entry.id === data.id ) {
+                entries.splice(i, 1);
                 break;
             }
+            if ( entry.expire <= now ) {
+                entries.splice(i, 1);
+            }
+            entry = undefined;
         }
-    };
-    var shouldLoadPopupListenerAsync = function(e) {
-        if ( typeof vAPI.tabs.onPopupCreated !== 'function' ) {
-            return;
+        if ( !entry ) {
+            entry = {
+                id: data.id,
+                popupTabId: undefined,
+                openerTabId: undefined,
+                expire: now + 10000
+            };
+            entries.push(entry);
         }
-        // We are handling a synchronous message: do not block.
-        vAPI.setTimeout(
-            shouldLoadPopupListener.bind(null, e.data, tabWatcher.tabIdFromTarget(e.target)),
-            1
-        );
+        var tabId = tabWatcher.tabIdFromTarget(target);
+        if ( data.popup ) {
+            entry.popupTabId = tabId;
+        } else /* if ( data.opener ) */ {
+            entry.openerTabId = tabId;
+        }
+        if ( entry.popupTabId && entry.openerTabId ) {
+            vAPI.tabs.onPopupCreated(entry.popupTabId, entry.openerTabId);
+        }
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
         shouldLoadPopupListenerMessageName,
-        shouldLoadPopupListenerAsync
+        shouldLoadPopupListener
     );
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
@@ -2652,7 +2659,7 @@ vAPI.net.registerListeners = function() {
     cleanupTasks.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadPopupListenerMessageName,
-            shouldLoadPopupListenerAsync
+            shouldLoadPopupListener
         );
 
         vAPI.messaging.globalMessageManager.removeMessageListener(
@@ -2730,7 +2737,7 @@ vAPI.toolbarButton = {
         var win = winWatcher.getCurrentWindow();
         var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
         vAPI.tabs.open({
-            url: 'menu.html?tabId=' + curTabId,
+            url: 'menu.html?tabId=' + curTabId + '&mobile=1',
             index: -1,
             select: true
         });

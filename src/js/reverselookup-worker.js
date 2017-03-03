@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ var fromNetFilter = function(details) {
     var lists = [];
     var compiledFilter = details.compiledFilter;
     var entry, content, pos, c;
-    for ( var path in listEntries ) {
-        entry = listEntries[path];
+    for ( var assetKey in listEntries ) {
+        entry = listEntries[assetKey];
         if ( entry === undefined ) {
             continue;
         }
@@ -134,14 +134,23 @@ var fromCosmeticFilter = function(details) {
     }
     candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
 
+    // Procedural filters, which are pre-compiled, make thing sort of
+    // complicated. We are going to also search for one portion of the
+    // compiled form of a filter.
+    var filterEx = '(' +
+                   reEscape(filter) +
+                   '|\{[^\\v]*' +
+                   reEscape(JSON.stringify({ raw: filter }).slice(1,-1)) +
+                   '[^\\v]*\})';
+
     // Second step: find hostname-based versions.
     // Reference: FilterContainer.compileHostnameSelector().
-    var pos;
-    var hostname = details.hostname;
+    var pos,
+        hostname = details.hostname;
     if ( hostname !== '' ) {
         for ( ;; ) {
             candidates[hostname + '##' + filter] = new RegExp(
-                ['c', 'h', '[^\\v]+', reEscape(hostname), reEscape(filter)].join('\\v') +
+                ['c', 'h', '[^\\v]+', reEscape(hostname), filterEx].join('\\v') +
                 '(?:\\n|$)'
             );
             pos = hostname.indexOf('.');
@@ -159,16 +168,16 @@ var fromCosmeticFilter = function(details) {
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos) + '.*';
         candidates[entity + '##' + filter] = new RegExp(
-            ['c', 'h', '[^\\v]+', reEscape(entity), reEscape(filter)].join('\\v') +
+            ['c', 'h', '[^\\v]+', reEscape(entity), filterEx].join('\\v') +
             '(?:\\n|$)'
         );
     }
 
-    var re, path, entry;
+    var re, assetKey, entry;
     for ( var candidate in candidates ) {
         re = candidates[candidate];
-        for ( path in listEntries ) {
-            entry = listEntries[path];
+        for ( assetKey in listEntries ) {
+            entry = listEntries[assetKey];
             if ( entry === undefined ) {
                 continue;
             }
@@ -197,7 +206,7 @@ var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
 /******************************************************************************/
 
-onmessage = function(e) {
+onmessage = function(e) { // jshint ignore:line
     var msg = e.data;
 
     switch ( msg.what ) {
@@ -206,7 +215,7 @@ onmessage = function(e) {
         break;
 
     case 'setList':
-        listEntries[msg.details.path] = msg.details;
+        listEntries[msg.details.assetKey] = msg.details;
         break;
 
     case 'fromNetFilter':

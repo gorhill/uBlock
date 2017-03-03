@@ -20,6 +20,7 @@ fi
 
 rm -rf $DES
 mkdir $DES
+cp    ./assets/assets.json                                       $DES/
 
 mkdir $DES/thirdparties
 cp -R ../uAssets/thirdparties/easylist-downloads.adblockplus.org $DES/thirdparties/
@@ -36,7 +37,7 @@ cp -R ./assets/ublock/filter-lists.json                          $DES/ublock/
 # comment out when moved adnauseam.txt to uAssets
 # cp assets/ublock/adnauseam.txt                                   $DES/ublock/   # adn
 
-cp ../uAssets/checksums/ublock0.txt                              $DES/checksums.txt
+# cp ../uAssets/checksums/ublock0.txt                              $DES/checksums.txt
 
 # append our checksum to the uBlock checksum list
 # cat assets/checksum-adn.txt >> $DES/checksums.txt

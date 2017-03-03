@@ -63,7 +63,10 @@ section > div:first-child {
     margin: 0;
     position: relative;
 }
-section > div > textarea {
+section.invalidFilter > div:first-child {
+    border-color: red;
+}
+section > div:first-child > textarea {
     background-color: #fff;
     border: none;
     box-sizing: border-box;
@@ -75,16 +78,16 @@ section > div > textarea {
     resize: none;
     width: 100%;
 }
-section > div > textarea.invalidFilter {
-    background-color: #fee;
-}
-section > div > textarea + div {
+section > div:first-child > textarea + div {
     background-color: #aaa;
     bottom: 0;
     color: white;
     padding: 2px 4px;
     position: absolute;
     right: 0;
+}
+section.invalidFilter > div:first-child > textarea + div {
+    background-color: red;
 }
 section > div:first-child + div {
     direction: ltr;

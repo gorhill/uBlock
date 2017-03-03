@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>uBlock — Whitelist</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
@@ -35,7 +36,10 @@
 <p>
     <button id="whitelistApply" class="custom important" type="button" disabled="true" data-i18n="whitelistApply"></button>&ensp;
     <button id="whitelistRevert" class="custom" type="button" disabled="true" data-i18n="genericRevert"></button>
-<p><textarea id="whitelist" dir="auto" spellcheck="false"></textarea>
+<p><section id="whitelist">
+    <textarea dir="auto" spellcheck="false"></textarea>
+    <div>E</div>
+    </section>
 <p>
     <button id="importWhitelistFromFile" class="custom" data-i18n="whitelistImport"></button>&ensp;
     <button id="exportWhitelistToFile" class="custom" data-i18n="whitelistExport"></button>

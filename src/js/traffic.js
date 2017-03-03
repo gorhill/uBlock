@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -406,17 +406,16 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 // To handle:
 // - inline script tags
+// - websockets
 // - media elements larger than n kB
 
-var onHeadersReceived = function (details) {
+var onHeadersReceived = function(details) {
+    // Do not interfere with behind-the-scene requests.
+    var  ad, tabId = details.tabId, dbug = 0, µb = µBlock, requestType = details.type;
 
-//console.log('traffic.onHeadersReceived',details);
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
 
-    var ad, tabId = details.tabId, requestType = details.type, dbug = 0;
-
-    if (vAPI.isBehindTheSceneTabId(tabId)) {
-
-      // ADN: handle incoming cookies for our visits (ignore in ff for now)
+      // ADN: ----------------------------------
       if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
           dbug && console.log('onHeadersReceived: ', requestType, details.url);
@@ -437,247 +436,69 @@ var onHeadersReceived = function (details) {
       // don't return an empty headers array
       return details.responseHeaders.length ?
         { 'responseHeaders': details.responseHeaders } : null;
+
+      // END ADN: ----------------------------------
     }
 
-    // ADN: check if this was an allowed exception and, if so, block cookies
-    var result = null,   // Q: Do we really need to pass originalUrl here? 
-      pageStore = µBlock.pageStoreFromTabId(details.tabId),
-      modified = pageStore && µBlock.adnauseam.checkAllowedException
-        (details.responseHeaders, details.url, pageStore.rawURL);
-
-    if (requestType === 'main_frame') {
-      result = onRootFrameHeadersReceived(details);
+    if ( requestType === 'main_frame' ) {
+        µb.tabContextManager.push(tabId, details.url);
     }
 
-    if (requestType === 'sub_frame') {
-      result = onFrameHeadersReceived(details);
-    }
-
-    if (requestType === 'image' || requestType === 'media') {
-      result = foilLargeMediaElement(details);
-    }
-
-    // ADN: if we're not blocking and we've modified headers, tell the caller (#601)
-    if (modified && !result) {
-
-      if (details.responseHeaders.length)
-        result = { 'responseHeaders': details.responseHeaders };
-    }
-    //Prev: if (modified && !result) return details.responseHeaders.length ? { 'responseHeaders': details.responseHeaders } : null;
-
-    return result;
-};
-
-
-/******************************************************************************/
-
-// Called before each outgoing request (ADN:)
-var onBeforeSendHeaders = function (details) {
-
-  var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
-
-  // if clicking/hiding is enabled with DNT, then send the DNT header
-  if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
-
-    var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
-
-    // add it only if the browser is not sending it already
-    if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
-
-      if (false && details.type === 'main_frame') // minimize logging
-        adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
-
-      addHeader(headers, 'DNT', '1');
-    }
-  }
-
-  // Is this an XMLHttpRequest ?
-  if (vAPI.isBehindTheSceneTabId(details.tabId)) {
-
-    // If so, is it one of our Ad visits ?
-    var ad = adn.lookupAd(details.url, details.requestId);
-
-    // if so, handle the headers (cookies, ua, referer)
-    ad && beforeAdVisit(details, headers, prefs, ad);
-  }
-
-  // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
-
-  return { requestHeaders: headers };
-};
-
-// ADN: remove outgoing cookies, reset user-agent, strip referer
-var beforeAdVisit = function (details, headers, prefs, ad) {
-
-  var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
-
-  ad.requestId = details.requestId; // needed?
-
-  dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
-
-  for (var i = headers.length - 1; i >= 0; i--) {
-
-    dbug && console.log(i + ") " + headers[i].name, headers[i].value);
-    var name = headers[i].name.toLowerCase();
-
-    if ((name === 'http_x_requested_with') ||
-      (name === 'x-devtools-emulate-network-conditions-client-id') ||
-      (prefs.noOutgoingCookies && name === 'cookie') ||
-      (prefs.noOutgoingUserAgent && name === 'user-agent'))
-    {
-      setHeader(headers[i], '');
-
-      // Block outgoing cookies and user-agent here if specified
-      if (prefs.noOutgoingCookies && name === 'cookie') {
-
-        µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
-      }
-
-      // Replace user-agent with most common string, if specified
-      if (prefs.noOutgoingUserAgent && name === 'user-agent') {
-
-         headers[i].value = CommonUserAgent;
-         µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
-      }
-    }
-
-    if (name === 'referer') refererIdx = i;
-
-    if (vAPI.chrome && name === 'upgrade-insecure-requests') uirIdx = i;
-
-    if (name === 'accept') { // Set browser-specific accept header
-      setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
-    }
-  }
-
-  if (vAPI.chrome && uirIdx < 0) { // Add UIR header if chrome
-    addHeader(headers, 'Upgrade-Insecure-Requests', '1');
-  }
-
-  if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
-    addHeader(headers, 'DNT', '1');
-
-  handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
-};
-
-var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
-
-  // console.log('handleRefererForVisit()', arguments);
-
-  // Referer cases (4):
-  // noOutgoingReferer=true  / no refererIdx:     no-op
-  // noOutgoingReferer=true  / have refererIdx:   setHeader('')
-  // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
-  // noOutgoingReferer=false / have refererIdx:   no-op
-  if (refIdx > -1 && prefs.noOutgoingReferer) {
-
-    // will never happen when using XMLHttpRequest
-    µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
-    setHeader(headers[refererIdx], '');
-
-  } else if (!prefs.noOutgoingReferer && refIdx < 0) {
-
-    µBlock.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, url);
-    addHeader(headers, 'Referer', referer);
-  }
-};
-
-function dumpHeaders(headers) {
-
-  var s = '\n\n';
-  for (var i = headers.length - 1; i >= 0; i--) {
-    s += headers[i].name + ': ' + headers[i].value + '\n';
-  }
-  return s;
-}
-
-var setHeader = function (header, value) {
-
-  if (header) header.value = value;
-};
-
-var addHeader = function (headers, name, value) {
-
-  headers.push({
-    name: name,
-    value: value
-  });
-};
-
-var hasDNT = function (headers) {
-
-  for (var i = headers.length - 1; i >= 0; i--) {
-    if (headers[i].name === 'DNT' && headers[i].value === '1') {
-      return true;
-    }
-  }
-  return false;
-}
-
-/******************************************************************************/
-
-var onRootFrameHeadersReceived = function (details) {
-
-    var µb = µBlock, tabId = details.tabId;
-
-    µb.tabContextManager.push(tabId, details.url);
-
-    // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
-    if (!pageStore) {
+    if ( pageStore === null ) {
+        if ( requestType !== 'main_frame' ) { return; }
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
-    // I can't think of how pageStore could be null at this point.
+    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
 
-    return processCSP(details, pageStore, pageStore.createContextFromPage());
-};
-
-/******************************************************************************/
-
-var onFrameHeadersReceived = function(details) {
-    // Lookup the page store associated with this tab id.
-    var pageStore = µBlock.pageStoreFromTabId(details.tabId);
-    if ( !pageStore ) {
-        return;
+    if ( requestType === 'image' || requestType === 'media' ) {
+        return foilLargeMediaElement(pageStore, details);
     }
 
-    // Frame id of frame request is their own id, while the request is made
-    // in the context of the parent.
-    return processCSP(
-        details,
-        pageStore,
-        pageStore.createContextFromFrameId(details.frameId)
-    );
+    // https://github.com/gorhill/uBO-Extra/issues/19
+    //   Turns out scripts must also be considered as potential embedded
+    //   contexts (as workers) and as such we may need to inject content
+    //   security policy directives.
+    if ( requestType === 'script' || requestType === 'main_frame' || requestType === 'sub_frame' ) {
+        return processCSP(pageStore, details);
+    }
+
+    // ADN: ----------------------------------
+    var modified = µBlock.adnauseam.checkAllowedException
+      (details.responseHeaders, details.url, pageStore.rawURL);
+
+    if (modified && details.responseHeaders.length) {
+      return { 'responseHeaders': details.responseHeaders };
+    }
 };
 
 /******************************************************************************/
 
-var processCSP = function(details, pageStore, context) {
+var processCSP = function(pageStore, details) {
     var µb = µBlock,
         adn = µb.adnauseam,
         tabId = details.tabId,
         requestURL = details.url,
         loggerEnabled = µb.logger.isEnabled();
 
+    var context = pageStore.createContextFromPage();
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
+    if ( details.type !== 'main_frame' ) {
+        context.pageHostname = context.pageDomain = context.requestHostname;
+    }
 
-    context.requestType = 'inline-script';
-    var inlineScriptResult = pageStore.filterRequestNoCache(context),
+    var inlineScriptResult, blockInlineScript;
+    if ( details.type !== 'script' ) {
+        context.requestType = 'inline-script';
+        inlineScriptResult = pageStore.filterRequestNoCache(context);
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
+    }
 
     context.requestType = 'websocket';
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
-    // https://github.com/gorhill/uBlock/issues/2050
-    //   Blanket-blocking websockets is exceptional, so we test whether the
-    //   page is whitelisted if and only if there is a hit against a websocket
-    //   filter.
-    if ( blockWebsocket && pageStore.getNetFilteringSwitch() === false ) {
-        websocketResult = '';
-        blockWebsocket = false;
-    }
 
     if (µb.userSettings.blockingMalware === false) { // ADN
 
@@ -691,7 +512,7 @@ var processCSP = function(details, pageStore, context) {
       }
     }
 
-    var headersChanged = false;
+    var headersChanged;
     if ( blockInlineScript || blockWebsocket ) {
         headersChanged = foilWithCSP(
             details.responseHeaders,
@@ -700,28 +521,29 @@ var processCSP = function(details, pageStore, context) {
         );
     }
 
-    if ( loggerEnabled ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            inlineScriptResult,
-            'inline-script',
-            requestURL,
-            context.rootHostname,
-            context.pageHostname
-        );
-    }
-
-    if ( loggerEnabled && blockWebsocket ) {
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            websocketResult,
-            'websocket',
-            requestURL,
-            context.rootHostname,
-            context.pageHostname
-        );
+    if ( loggerEnabled && details.type !== 'script' ) {
+        if ( blockInlineScript !== undefined ) {
+            µb.logger.writeOne(
+                tabId,
+                'net',
+                inlineScriptResult,
+                'inline-script',
+                requestURL,
+                context.rootHostname,
+                context.pageHostname
+            );
+        }
+        if ( websocketResult !== '' ) {
+            µb.logger.writeOne(
+                tabId,
+                'net',
+                websocketResult,
+                'websocket',
+                requestURL,
+                context.rootHostname,
+                context.pageHostname
+            );
+        }
     }
 
     if (blockInlineScript)adn.logNetBlock('InlineScript', requestURL); // ADN
@@ -731,9 +553,7 @@ var processCSP = function(details, pageStore, context) {
 
     context.dispose();
 
-    if ( headersChanged !== true ) {
-        return;
-    }
+    if ( headersChanged !== true ) { return; }
 
     return { 'responseHeaders': details.responseHeaders };
 };
@@ -743,19 +563,14 @@ var processCSP = function(details, pageStore, context) {
 // https://github.com/gorhill/uBlock/issues/1163
 //   "Block elements by size"
 
-  var foilLargeMediaElement = function (details) {
+var foilLargeMediaElement = function(pageStore, details) {
     var µb = µBlock;
 
     var i = headerIndexFromName('content-length', details.responseHeaders);
     if ( i === -1 ) { return; }
 
     var tabId = details.tabId,
-        pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
-        return;
-    }
-
-    var size = parseInt(details.responseHeaders[i].value, 10) || 0,
+        size = parseInt(details.responseHeaders[i].value, 10) || 0,
         result = pageStore.filterLargeMediaElement(size);
     if ( result === undefined ) { return; }
 
@@ -941,15 +756,16 @@ var reEmptyDirective = /^([a-z-]+)\s*;/;
       'http://*/*',
       'https://*/*'
     ],
-    /*types: [
-      'xmlhttprequest', // ADN
-      'script', // ADN
-      'main_frame',
-      'sub_frame',
-      'image',
-      'media'
-    ],*/
-    extra: ['blocking', 'responseHeaders'],
+    types: [
+        'xmlhttprequest', // ADN
+        'script', // ADN
+        'main_frame',
+        'sub_frame',
+        'image',
+        'media',
+        'script'
+    ],
+    extra: [ 'blocking', 'responseHeaders' ],
     callback: onHeadersReceived
   };
 

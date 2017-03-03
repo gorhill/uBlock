@@ -1,4 +1,10 @@
 {
+  "https://www.eff.org/files/effdntlist.txt": {
+    "off": false,
+    "title": "DNT Policy Whitelist",
+    "group": "privacy",
+    "supportURL": "https://www.eff.org/dnt-policy"
+  },
   "http://adblock.gardar.net/is.abp.txt": {
     "off": true,
     "title": "ISL: Icelandic ABP List",
@@ -21,9 +27,15 @@
   },
   "https://adguard.com/en/filter-rules.html?id=1": {
     "off": true,
+    "title": "RUS: Adguard Russian Filter (obsolete, will be removed)",
+    "group": "regions",
+    "supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+  },
+  "https://filters.adtidy.org/extension/chromium/filters/1.txt": {
+    "off": true,
     "title": "RUS: Adguard Russian Filter",
     "group": "regions",
-    "supportURL": "http://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+    "supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
   },
   "https://easylist-downloads.adblockplus.org/advblock.txt": {
     "off": true,
@@ -42,6 +54,12 @@
     "title": "EasyList",
     "group": "ads",
     "homeURL": "https://easylist.to/easylist/easylist.txt",
+    "supportURL": "https://forums.lanik.us/"
+  },
+  "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": {
+    "off": true,
+    "title": "EasyList without element hiding rules",
+    "group": "ads",
     "supportURL": "https://forums.lanik.us/"
   },
   "https://easylist-downloads.adblockplus.org/easylistchina.txt": {
@@ -116,12 +134,23 @@
     "lang": "lv",
     "supportURL": "https://notabug.org/latvian-list/adblock-latvian"
   },
+  "http://hosts-file.net/.%5Cad_servers.txt": {
+    "off": true,
+    "title": "hpHosts’ Ad and tracking servers",
+    "group": "multipurpose",
+    "supportURL": "http://hosts-file.net/"
+  },
   "http://adblock.ee/list.php": {
     "off": true,
     "title": "EST: Eesti saitidele kohandatud filter",
     "group": "regions",
     "lang": "et",
     "supportURL": "http://adblock.ee/"
+  },
+  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": {
+    "off": true,
+    "title": "Malvertising filter list by Disconnect",
+    "group": "malware"
   },
   "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": {
     "off": true,
@@ -213,11 +242,11 @@
     "homeURL": "https://mirror.cedia.org.ec/malwaredomains/justdomains",
     "supportURL": "http://www.malwaredomains.com/"
   },
-  "https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt": {
-    "off": true,
-    "title": "ISR: EasyList Hebrew (obsolete, will be removed soon)",
-    "group": "regions",
-    "supportURL": "https://github.com/AdBlockPlusIsrael/EasyListHebrew"
+  "pgl.yoyo.org/as/serverlist": {
+    "title": "Peter Lowe’s Ad and tracking server list",
+    "group": "multipurpose",
+    "homeURL": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
+    "supportURL": "https://pgl.yoyo.org/adservers/"
   },
   "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": {
     "off": true,
@@ -247,6 +276,12 @@
     "lang": "cs",
     "supportURL": "https://github.com/tomasko126/easylistczechandslovak"
   },
+  "http://someonewhocares.org/hosts/hosts": {
+    "off": true,
+    "title": "Dan Pollock’s hosts file",
+    "group": "multipurpose",
+    "supportURL": "http://someonewhocares.org/hosts/"
+  },
   "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": {
     "off": true,
     "title": "Spam404",
@@ -259,6 +294,12 @@
     "group": "regions",
     "lang": "bg",
     "supportURL": "http://stanev.org/abp/"
+  },
+  "http://winhelp2002.mvps.org/hosts.txt": {
+    "off": true,
+    "title": "MVPS HOSTS",
+    "group": "multipurpose",
+    "supportURL": "http://winhelp2002.mvps.org/"
   },
   "https://www.fanboy.co.nz/enhancedstats.txt": {
     "off": true,
@@ -300,10 +341,16 @@
   },
   "https://adguard.com/filter-rules.html?id=13": {
     "off": true,
+    "title": "TUR: Adguard Turkish Filter (obsolete, will be removed)",
+    "group": "regions",
+    "supportURL": "http://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+  },
+  "https://filters.adtidy.org/extension/chromium/filters/13.txt": {
+    "off": true,
     "title": "TUR: Adguard Turkish Filter",
     "group": "regions",
     "lang": "tr",
-    "supportURL": "http://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+    "supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
   },
   "https://www.fanboy.co.nz/fanboy-vietnam.txt": {
     "off": true,
@@ -330,11 +377,5 @@
     "group": "regions",
     "lang": "sl",
     "supportURL": "https://github.com/betterwebleon/slovenian-list"
-  },
-  "https://www.eff.org/files/effdntlist.txt": {
-    "off": false,
-    "title": "DNT Policy Whitelist",
-    "group": "privacy",
-    "supportURL": "https://www.eff.org/dnt-policy"
   }
 }

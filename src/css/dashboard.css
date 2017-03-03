@@ -7,6 +7,11 @@ html, body {
     height: 100%;
     overflow: hidden;
     }
+@media screen and (max-device-width: 960px) {
+    #dashboard-nav {
+        zoom: 1.2;
+        }
+    }
 #dashboard-nav {
     border: 0;
     font-size: 20px;

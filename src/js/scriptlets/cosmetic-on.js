@@ -28,24 +28,12 @@
         return;
     }
 
-    // Insert all cosmetic filtering-related style tags in the DOM
-
-    var styles = vAPI.domFilterer.styleTags;
-    var i = styles.length, style;
-    while ( i-- ) {
-        style = styles[i];
-        if ( style.sheet !== null ) {
-            style.sheet.disabled = false;
-            style[vAPI.sessionId] = undefined;
-        }
-    }
-
     var elems = [];
     try {
         elems = document.querySelectorAll('[' + vAPI.domFilterer.hiddenId + ']');
     } catch (e) {
     }
-    i = elems.length;
+    var i = elems.length;
     while ( i-- ) {
         vAPI.domFilterer.unshowNode(elems[i]);
     }

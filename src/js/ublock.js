@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -197,9 +197,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 µBlock.whitelistFromString = function(s) {
     var whitelist = Object.create(null),
-        reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
-        reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/,
-        lines = s.split(/[\n\r]+/),
+        lineIter = new this.LineIterator(s),
         line, matches, key, directive, re;
 
     // Comment bucket must always be ready to be used.
@@ -208,8 +206,9 @@ var matchBucket = function(url, hostname, bucket, start) {
     // New set of directives, scrap cached data.
     directiveToRegexpMap.clear();
 
-    for ( var i = 0; i < lines.length; i++ ) {
-        line = lines[i].trim();
+    while ( !lineIter.eot() ) {
+        line = lineIter.next().trim();
+
         // https://github.com/gorhill/uBlock/issues/171
         // Skip empty lines
         if ( line === '' ) {
@@ -231,7 +230,7 @@ var matchBucket = function(url, hostname, bucket, start) {
             }
         }
         // Regex-based (ensure it is valid)
-        else if ( line.startsWith('/') && line.endsWith('/') ) {
+        else if ( line.length > 2 && line.startsWith('/') && line.endsWith('/') ) {
             key = '//';
             directive = line;
             try {
@@ -269,6 +268,28 @@ var matchBucket = function(url, hostname, bucket, start) {
     }
     return whitelist;
 };
+
+µBlock.validateWhitelistString = function(s) {
+    var lineIter = new this.LineIterator(s), line;
+    while ( !lineIter.eot() ) {
+        line = lineIter.next().trim();
+        if ( line === '' ) { continue; }
+        if ( line.startsWith('#') ) { continue; } // Comment
+        if ( line.indexOf('/') === -1 ) { // Plain hostname
+            if ( reInvalidHostname.test(line) ) { return false; }
+            continue;
+        }
+        if ( line.length > 2 && line.startsWith('/') && line.endsWith('/') ) { // Regex-based
+            try { new RegExp(line.slice(1, -1)); } catch(ex) { return false; }
+            continue;
+        }
+        if ( reHostnameExtractor.test(line) === false ) { return false; } // URL
+    }
+    return true;
+};
+
+var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
+    reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
 /******************************************************************************/
 
@@ -327,6 +348,9 @@ var matchBucket = function(url, hostname, bucket, start) {
         if ( value === true ) {
             us.dynamicFilteringEnabled = true;
         }
+        break;
+    case 'autoUpdate':
+        this.scheduleAssetUpdater(value ? 7 * 60 * 1000 : 0);
         break;
     case 'collapseBlocked':
         if ( value === false ) {

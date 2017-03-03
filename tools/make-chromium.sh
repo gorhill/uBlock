@@ -5,7 +5,11 @@
 echo "*** AdNauseam::Chromium: Creating chrome package"
 echo "*** AdNauseam::Chromium: Copying files"
 
-DES=dist/build/adnauseam.chromium
+if [ "$1" = experimental ]; then
+    DES=dist/build/experimental/adnauseam.chromium
+else
+    DES=dist/build/adnauseam.chromium
+fi
 rm -rf $DES
 mkdir -p $DES
 
