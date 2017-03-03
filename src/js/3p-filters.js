@@ -108,7 +108,7 @@ var renderFilterLists = function(soft) {
             elem = li.descendants('a:nth-of-type(2)');
             elem.attr('href', entry.instructionURL);
             elem.css('display', '');*/
-            
+
     var liFromListEntry = function(listKey, li) {
         var entry = listDetails.available[listKey],
             elem;
@@ -146,19 +146,50 @@ var renderFilterLists = function(soft) {
             }
         }
 
-        elem = li.descendants('span.counts');
-        var text = listStatsTemplate
-            .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
-            .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
+        // elem = li.descendants('span.counts');
+        // var text = listStatsTemplate
+        //     .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
+        //     .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
 
-        // ADN: only show counts if entry is on
-        elem.text(entry.off ? '' : text);
+        // // ADN: only show counts if entry is on
+        // elem.text(entry.off ? '' : text);
 
-        // https://github.com/gorhill/uBlock/issues/78
-        // Badge for non-secure connection
-        var remoteURL = listKey;
-        if ( remoteURL.lastIndexOf('http:', 0) !== 0 ) {
-            remoteURL = entry.homeURL || '';
+        // // https://github.com/gorhill/uBlock/issues/78
+        // // Badge for non-secure connection
+        // var remoteURL = listKey;
+        // if ( remoteURL.lastIndexOf('http:', 0) !== 0 )
+        //     remoteURL = entry.homeURL || '';
+
+        if ( li.getAttribute('data-listkey') !== listKey ) {
+            li.setAttribute('data-listkey', listKey);
+            elem = li.querySelector('input[type="checkbox"]');
+            elem.checked = entry.off !== true;
+            elem = li.querySelector('a:nth-of-type(1)');
+            elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
+            elem.setAttribute('type', 'text/html');
+            elem.textContent = listNameFromListKey(listKey);
+            li.classList.remove('toRemove');
+            if ( entry.supportName ) {
+                li.classList.add('support');
+                elem = li.querySelector('a.support');
+                elem.setAttribute('href', entry.supportURL);
+                elem.setAttribute('title', entry.supportName);
+            } else {
+                li.classList.remove('support');
+            }
+            if ( entry.external ) {
+                li.classList.add('external');
+            } else {
+                li.classList.remove('external');
+            }
+            if ( entry.instructionURL ) {
+                li.classList.add('mustread');
+                elem = li.querySelector('a.mustread');
+                elem.setAttribute('href', entry.instructionURL);
+            } else {
+                li.classList.remove('mustread');
+            }
+        }
 
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {
