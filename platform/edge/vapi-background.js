@@ -1178,22 +1178,27 @@ vAPI.net.registerListeners = function() {
         }
     };
 
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=129353
-    // https://github.com/gorhill/uBlock/issues/1497
     // Expose websocket-based network requests to uBO's filtering engine,
     // logger, etc.
     // Counterpart of following block of code is found in "vapi-client.js" --
     // search for "https://github.com/gorhill/uBlock/issues/1497".
+    //
+    // Once uBO 1.11.1 and uBO-Extra 2.12 are widespread, the image-based
+    // handling code can be removed.
     var onBeforeWebsocketRequest = function(details) {
+        if ( (details.type !== 'image') &&
+            (details.method !== 'HEAD' || details.type !== 'xmlhttprequest')
+        ) {
+            return;
+        }
+        var requestURL = details.url,
+            matches = /[?&]u(?:rl)?=([^&]+)/.exec(requestURL);
+        if ( matches === null ) { return; }
         details.type = 'websocket';
-        var requestURL = details.url;
-        var matches = /[?&]url=([^&]+)/.exec(requestURL);
         details.url = decodeURIComponent(matches[1]);
         var r = onBeforeRequestClient(details);
-        // Blocked?
         if ( r && r.cancel ) { return r; }
-        // Try to redirect to the URL of an image already present in the
-        // document, or a 1x1 data: URL if none is present.
+        // Redirect to the provided URL, or a 1x1 data: URI if none provided.
         matches = /[?&]r=([^&]+)/.exec(requestURL);
         return {
             redirectUrl: matches !== null ?
@@ -1205,11 +1210,9 @@ vAPI.net.registerListeners = function() {
     var onBeforeRequestClient = this.onBeforeRequest.callback;
     var onBeforeRequest = function(details) {
         // https://github.com/gorhill/uBlock/issues/1497
-        if (
-            details.type === 'image' &&
-            details.url.endsWith('ubofix=f41665f3028c7fd10eecf573336216d3')
-        ) {
-            return onBeforeWebsocketRequest(details);
+        if ( details.url.endsWith('ubofix=f41665f3028c7fd10eecf573336216d3') ) {
+            var r = onBeforeWebsocketRequest(details);
+            if ( r !== undefined ) { return r; }
         }
 
         normalizeRequestDetails(details);

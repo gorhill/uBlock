@@ -28,7 +28,7 @@ While most of the code in this extension is shared with [upstream](https://githu
 
 ## Issues
 
-Known issues, bugs and missing features are listed on the [Issues page](https://github.com/nikrolls/uBlock-Edge/issues) for this repo. Features documented in the upstream extension and not listed on the Issues page are assumed to be working. If you run into an issue not listed, please [create a new issue](https://github.com/nikrolls/uBlock-Edge/issues) and complete the provided template.
+In the first instance, issues should be reported in [uBlock’s section of the Feedback Hub](feedback-hub://?tabid=2&appid=37833NikRolls.uBlockOrigin_f8jsg5mm64m62!App). If this is not working for you, please [create a new GitHub issue](https://github.com/nikrolls/uBlock-Edge/issues) and complete the provided template.
 
 ## Performance and Efficiency
 
