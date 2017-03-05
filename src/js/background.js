@@ -39,7 +39,8 @@ var µBlock = (function() { // jshint ignore:line
         ignoreScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 2000,
         popupFontSize: 'unset',
-        suspendTabsUntilReady: false
+        suspendTabsUntilReady: false,
+        userResourcesLocation: 'unset'
     };
 
     return {
