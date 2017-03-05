@@ -1312,10 +1312,13 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75);
+    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 6144);
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
-    var maxStorageSize = chrome.storage.sync.QUOTA_BYTES;
+    // Firefox:
+    // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
+    // > You can store up to 100KB of data using this API/
+    var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
 
     var options = {
         defaultDeviceName: window.navigator.platform,
