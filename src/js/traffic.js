@@ -34,47 +34,41 @@ var exports = {};
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/2067
-//   Experimental: Suspend tabs until uBO is fully ready.
+//   Experimental: Block everything until uBO is fully ready.
+// TODO: re-work vAPI code to match more closely how listeners are
+//       registered with the webRequest API. This will simplify implementing
+//       the feature here: we could have a temporary onBeforeRequest listener
+//       which blocks everything until all is ready.
+//       This would allow to avoid the permanent special test at the top of
+//       the main onBeforeRequest just to implement this.
+var onBeforeReady = null;
 
-vAPI.net.onReady = function() {
-    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
+    onBeforeReady = (function() {
+        var suspendedTabs = new Set();
+        µBlock.onStartCompletedQueue.push(function(callback) {
+            onBeforeReady = null;
+            var iter = suspendedTabs.values(),
+                entry;
+            for (;;) {
+                entry = iter.next();
+                if ( entry.done ) { break; }
+                vAPI.tabs.reload(entry.value);
+            }
+            callback();
+        });
+        return function(tabId) {
+            if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+            suspendedTabs.add(tabId);
+            return true;
+        };
+    })();
+} else {
+    µBlock.onStartCompletedQueue.push(function(callback) {
         vAPI.onLoadAllCompleted();
-    }
-    var fn = onBeforeReady;
-    onBeforeReady = null;
-    if ( fn !== null ) {
-        fn('ready');
-    }
-};
-
-var onBeforeReady = (function() {
-    var suspendedTabs = new Set();
-
-    var forceReloadSuspendedTabs = function() {
-        var iter = suspendedTabs.values(),
-            entry;
-        for (;;) {
-            entry = iter.next();
-            if ( entry.done ) { break; }
-            vAPI.tabs.reload(entry.value);
-        }
-    };
-
-    return function(tabId) {
-        if (
-            vAPI.isBehindTheSceneTabId(tabId) ||
-            µBlock.hiddenSettings.suspendTabsUntilReady !== true
-        ) {
-            return;
-        }
-        if ( tabId === 'ready' ) {
-            forceReloadSuspendedTabs();
-            return;
-        }
-        suspendedTabs.add(tabId);
-        return true;
-    };
-})();
+        callback();
+    });
+}
 
 /******************************************************************************/
 

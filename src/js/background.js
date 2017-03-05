@@ -19,54 +19,19 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+
+/* global objectAssign */
+
 'use strict';
 
 /******************************************************************************/
 
 var µBlock = (function() { // jshint ignore:line
 
-/******************************************************************************/
+    var oneSecond = 1000,
+        oneMinute = 60 * oneSecond;
 
-var oneSecond = 1000;
-var oneMinute = 60 * oneSecond;
-
-/******************************************************************************/
-
-var defaultExternalLists = [
-    '! Examples:',
-    '! https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt',
-    '! https://easylist-downloads.adblockplus.org/yt_annoyances_full.txt',
-    ''
-].join('\n');
-
-/******************************************************************************/
-
-return {
-    firstInstall: false,
-
-    userSettings: {
-        advancedUserEnabled: false,
-        alwaysDetachLogger: false,
-        autoUpdate: true,
-        cloudStorageEnabled: false,
-        collapseBlocked: true,
-        colorBlindFriendly: false,
-        contextMenuEnabled: true,
-        dynamicFilteringEnabled: false,
-        externalLists: defaultExternalLists,
-        firewallPaneMinimized: true,
-        hyperlinkAuditingDisabled: true,
-        ignoreGenericCosmeticFilters: false,
-        largeMediaSize: 50,
-        parseAllABPHideFilters: true,
-        prefetchingDisabled: true,
-        requestLogMaxEntries: 1000,
-        showIconBadge: true,
-        tooltipsDisabled: false,
-        webrtcIPAddressHidden: false
-    },
-
-    hiddenSettingsDefault: {
+    var hiddenSettingsDefault = {
         assetFetchTimeout: 30,
         autoUpdateAssetFetchPeriod: 120,
         autoUpdatePeriod: 7,
@@ -75,86 +40,131 @@ return {
         manualUpdateAssetFetchPeriod: 2000,
         popupFontSize: 'unset',
         suspendTabsUntilReady: false
-    },
-    // This will be filled ASAP:
-    hiddenSettings: {},
+    };
 
-    // Features detection.
-    privacySettingsSupported: vAPI.browserSettings instanceof Object,
-    cloudStorageSupported: vAPI.cloud instanceof Object,
+    return {
+        firstInstall: false,
 
-    // https://github.com/chrisaljoudi/uBlock/issues/180
-    // Whitelist directives need to be loaded once the PSL is available
-    netWhitelist: {},
-    netWhitelistModifyTime: 0,
-    netWhitelistDefault: [
-        'about-scheme',
-        'behind-the-scene',
-        'chrome-extension-scheme',
-        'chrome-scheme',
-        'loopconversation.about-scheme',
-        'moz-extension-scheme',
-        'opera-scheme',
-        'vivaldi-scheme',
-        ''
-    ].join('\n'),
+        onBeforeStartQueue: [],
+        onStartCompletedQueue: [],
 
-    localSettings: {
-        blockedRequestCount: 0,
-        allowedRequestCount: 0
-    },
-    localSettingsLastModified: 0,
-    localSettingsLastSaved: 0,
+        userSettings: {
+            advancedUserEnabled: false,
+            alwaysDetachLogger: false,
+            autoUpdate: true,
+            cloudStorageEnabled: false,
+            collapseBlocked: true,
+            colorBlindFriendly: false,
+            contextMenuEnabled: true,
+            dynamicFilteringEnabled: false,
+            externalLists: [],
+            firewallPaneMinimized: true,
+            hyperlinkAuditingDisabled: true,
+            ignoreGenericCosmeticFilters: false,
+            largeMediaSize: 50,
+            parseAllABPHideFilters: true,
+            prefetchingDisabled: true,
+            requestLogMaxEntries: 1000,
+            showIconBadge: true,
+            tooltipsDisabled: false,
+            webrtcIPAddressHidden: false
+        },
 
-    // read-only
-    systemSettings: {
-        compiledMagic: 'fxtcjjhbhyiw',
-        selfieMagic: 'fxtcjjhbhyiw'
-    },
+        hiddenSettingsDefault: hiddenSettingsDefault,
+        hiddenSettings: (function() {
+            var out = objectAssign({}, hiddenSettingsDefault),
+                json = vAPI.localStorage.getItem('hiddenSettings');
+            if ( typeof json === 'string' ) {
+                try {
+                    var o = JSON.parse(json);
+                    if ( o instanceof Object ) {
+                        for ( var k in o ) {
+                            if ( out.hasOwnProperty(k) ) {
+                                out[k] = o[k];
+                            }
+                        }
+                    }
+                }
+                catch(ex) {
+                }
+            }
+            return out;
+        })(),
 
-    restoreBackupSettings: {
-        lastRestoreFile: '',
-        lastRestoreTime: 0,
-        lastBackupFile: '',
-        lastBackupTime: 0
-    },
+        // Features detection.
+        privacySettingsSupported: vAPI.browserSettings instanceof Object,
+        cloudStorageSupported: vAPI.cloud instanceof Object,
 
-    // Allows to fully customize uBO's assets, typically set through admin
-    // settings. The content of 'assets.json' will also tell which filter
-    // lists to enable by default when uBO is first installed.
-    assetsBootstrapLocation: 'assets/assets.json',
+        // https://github.com/chrisaljoudi/uBlock/issues/180
+        // Whitelist directives need to be loaded once the PSL is available
+        netWhitelist: {},
+        netWhitelistModifyTime: 0,
+        netWhitelistDefault: [
+            'about-scheme',
+            'behind-the-scene',
+            'chrome-extension-scheme',
+            'chrome-scheme',
+            'loopconversation.about-scheme',
+            'moz-extension-scheme',
+            'opera-scheme',
+            'vivaldi-scheme',
+            ''
+        ].join('\n'),
 
-    userFiltersPath: 'user-filters',
-    pslAssetKey: 'public_suffix_list.dat',
+        localSettings: {
+            blockedRequestCount: 0,
+            allowedRequestCount: 0
+        },
+        localSettingsLastModified: 0,
+        localSettingsLastSaved: 0,
 
-    selectedFilterLists: [],
-    availableFilterLists: {},
+        // read-only
+        systemSettings: {
+            compiledMagic: 'fxtcjjhbhyiw',
+            selfieMagic: 'fxtcjjhbhyiw'
+        },
 
-    selfieAfter: 23 * oneMinute,
+        restoreBackupSettings: {
+            lastRestoreFile: '',
+            lastRestoreTime: 0,
+            lastBackupFile: '',
+            lastBackupTime: 0
+        },
 
-    pageStores: {},
-    pageStoresToken: 0,
+        // Allows to fully customize uBO's assets, typically set through admin
+        // settings. The content of 'assets.json' will also tell which filter
+        // lists to enable by default when uBO is first installed.
+        assetsBootstrapLocation: 'assets/assets.json',
 
-    storageQuota: vAPI.storage.QUOTA_BYTES,
-    storageUsed: 0,
+        userFiltersPath: 'user-filters',
+        pslAssetKey: 'public_suffix_list.dat',
 
-    noopFunc: function(){},
+        selectedFilterLists: [],
+        availableFilterLists: {},
 
-    apiErrorCount: 0,
-    mouseX: -1,
-    mouseY: -1,
-    mouseURL: '',
-    epickerTarget: '',
-    epickerEprom: null,
+        selfieAfter: 23 * oneMinute,
 
-    scriptlets: {
-    },
+        pageStores: {},
+        pageStoresToken: 0,
 
-    // so that I don't have to care for last comma
-    dummy: 0
-};
+        storageQuota: vAPI.storage.QUOTA_BYTES,
+        storageUsed: 0,
 
-/******************************************************************************/
+        noopFunc: function(){},
+
+        apiErrorCount: 0,
+        mouseX: -1,
+        mouseY: -1,
+        mouseURL: '',
+        epickerTarget: '',
+        epickerEprom: null,
+
+        scriptlets: {
+        },
+
+        // so that I don't have to care for last comma
+        dummy: 0
+    };
 
 })();
 
