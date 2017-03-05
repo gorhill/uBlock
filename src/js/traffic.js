@@ -564,7 +564,7 @@ var onHeadersReceived = function(details) {
         // ADN: handle incoming cookies for our visits (ignore in ff for now)
         if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-            console.log('onHeadersReceived: ', requestType, details.url);
+            //console.log('onHeadersReceived: ', requestType, details.url);
 
             ad = µb.adnauseam.lookupAd(details.url, details.requestId);
             if (ad) {
@@ -576,7 +576,7 @@ var onHeadersReceived = function(details) {
                     return { 'responseHeaders': details.responseHeaders };
                 }
             }
-            else if (vAPI.chrome) console.log('Ignoring non-ADN response', requestType, details.url);
+            //else console.log('Ignoring non-ADN response', requestType, details.url);
       }
       return;
     }
