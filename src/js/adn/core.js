@@ -1483,7 +1483,7 @@
 
   exports.lookupAd = function (url, requestId) {
 
-    url = trimChar(url, '/'); // no trailing slash
+    //url = trimChar(url, '/'); // no trailing slash
 
     var ads = adlist();
 

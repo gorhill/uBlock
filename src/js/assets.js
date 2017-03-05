@@ -830,7 +830,7 @@ var getRemote = function(assetKey, callback) {
         }
 
         // If we've loaded a DNT list, we need to parse it
-        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(path)) { // ADN
+        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) { // ADN (was 'path')
           µBlock.adnauseam.dnt.processEntries(this.responseText);
         }
 

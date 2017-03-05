@@ -27,6 +27,8 @@
 
 µBlock.webRequest = (function() {
 
+/******************************************************************************/
+
 var AcceptHeaders = {
     chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
@@ -34,6 +36,151 @@ var AcceptHeaders = {
 var CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
 
 var exports = {};
+
+/********************************* ADN ****************************************/
+
+// Called before each outgoing request (ADN:)
+var onBeforeSendHeaders = function (details) {
+
+  var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
+
+  // if clicking/hiding is enabled with DNT, then send the DNT header
+  if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
+
+    var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
+
+    // add it only if the browser is not sending it already
+    if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
+
+      if (false && details.type === 'main_frame') // minimize logging
+        adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+
+      addHeader(headers, 'DNT', '1');
+    }
+  }
+
+  // Is this an XMLHttpRequest ?
+  if (vAPI.isBehindTheSceneTabId(details.tabId)) {
+
+    // If so, is it one of our Ad visits ?
+    var ad = adn.lookupAd(details.url, details.requestId);
+
+    // if so, handle the headers (cookies, ua, referer)
+    ad && beforeAdVisit(details, headers, prefs, ad);
+  }
+
+  // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
+
+  return { requestHeaders: headers };
+};
+
+// ADN: remove outgoing cookies, reset user-agent, strip referer
+var beforeAdVisit = function (details, headers, prefs, ad) {
+
+  var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
+
+  ad.requestId = details.requestId; // needed?
+
+  dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
+
+  for (var i = headers.length - 1; i >= 0; i--) {
+
+    dbug && console.log(i + ") " + headers[i].name, headers[i].value);
+    var name = headers[i].name.toLowerCase();
+
+    if ((name === 'http_x_requested_with') ||
+      (name === 'x-devtools-emulate-network-conditions-client-id') ||
+      (prefs.noOutgoingCookies && name === 'cookie') ||
+      (prefs.noOutgoingUserAgent && name === 'user-agent'))
+    {
+      setHeader(headers[i], '');
+
+      // Block outgoing cookies and user-agent here if specified
+      if (prefs.noOutgoingCookies && name === 'cookie') {
+
+        µBlock.adnauseam.logNetEvent('[COOKIE]', 'Strip', headers[i].value, details.url);
+      }
+
+      // Replace user-agent with most common string, if specified
+      if (prefs.noOutgoingUserAgent && name === 'user-agent') {
+
+         headers[i].value = CommonUserAgent;
+         µBlock.adnauseam.logNetEvent('[UAGENT]', 'Default', headers[i].value, details.url);
+      }
+    }
+
+    if (name === 'referer') refererIdx = i;
+
+    if (vAPI.chrome && name === 'upgrade-insecure-requests') uirIdx = i;
+
+    if (name === 'accept') { // Set browser-specific accept header
+      setHeader(headers[i], vAPI.firefox ? AcceptHeaders.firefox : AcceptHeaders.chrome);
+    }
+  }
+
+  if (vAPI.chrome && uirIdx < 0) { // Add UIR header if chrome
+    addHeader(headers, 'Upgrade-Insecure-Requests', '1');
+  }
+
+  if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
+    addHeader(headers, 'DNT', '1');
+
+  handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
+};
+
+var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
+
+  // console.log('handleRefererForVisit()', arguments);
+
+  // Referer cases (4):
+  // noOutgoingReferer=true  / no refererIdx:     no-op
+  // noOutgoingReferer=true  / have refererIdx:   setHeader('')
+  // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
+  // noOutgoingReferer=false / have refererIdx:   no-op
+  if (refIdx > -1 && prefs.noOutgoingReferer) {
+
+    // will never happen when using XMLHttpRequest
+    µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
+    setHeader(headers[refererIdx], '');
+
+  } else if (!prefs.noOutgoingReferer && refIdx < 0) {
+
+    µBlock.adnauseam.logNetEvent('[REFERER]', 'Allow', referer, url);
+    addHeader(headers, 'Referer', referer);
+  }
+};
+
+function dumpHeaders(headers) {
+
+  var s = '\n\n';
+  for (var i = headers.length - 1; i >= 0; i--) {
+    s += headers[i].name + ': ' + headers[i].value + '\n';
+  }
+  return s;
+}
+
+var setHeader = function (header, value) {
+
+  if (header) header.value = value;
+};
+
+var addHeader = function (headers, name, value) {
+
+  headers.push({
+    name: name,
+    value: value
+  });
+};
+
+var hasDNT = function (headers) {
+
+  for (var i = headers.length - 1; i >= 0; i--) {
+    if (headers[i].name === 'DNT' && headers[i].value === '1') {
+      return true;
+    }
+  }
+  return false;
+}
 
 /******************************************************************************/
 
@@ -268,7 +415,7 @@ var onBeforeRootFrameRequest = function(details) {
     µb.adnauseam.onPageLoad(tabId, requestURL);
 
     // ADN: return here if prefs say not to block
-    if (µBlock.userSettings.blockingMalware === false) return;
+    if (µb.userSettings.blockingMalware === false) return;
 
     // Log
     var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
@@ -395,7 +542,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         return;
     }
 
-    // Blocked xhr
+    // ADN: Blocked xhr
     µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
 
     // Blocked
@@ -411,33 +558,27 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
-    var  ad, tabId = details.tabId, dbug = 0, µb = µBlock, requestType = details.type;
-
+    var tabId = details.tabId, ad, result, µb = µBlock, requestType = details.type; // ADN
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
 
-      // ADN: ----------------------------------
-      if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
+        // ADN: handle incoming cookies for our visits (ignore in ff for now)
+        if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
 
-          dbug && console.log('onHeadersReceived: ', requestType, details.url);
+            console.log('onHeadersReceived: ', requestType, details.url);
 
-          // ADN
-          ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
-          if (ad) {
+            ad = µb.adnauseam.lookupAd(details.url, details.requestId);
+            if (ad) {
 
-            // this is an ADN request
-            µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
-          }
-          else if (dbug && vAPI.chrome) {
+                // this is an ADN request
+                µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
 
-            console.log('Ignoring non-ADN response', requestType, details.url);
-          }
+                if (details.responseHeaders.length) {
+                    return { 'responseHeaders': details.responseHeaders };
+                }
+            }
+            else if (vAPI.chrome) console.log('Ignoring non-ADN response', requestType, details.url);
       }
-
-      // don't return an empty headers array
-      return details.responseHeaders.length ?
-        { 'responseHeaders': details.responseHeaders } : null;
-
-      // END ADN: ----------------------------------
+      return;
     }
 
     if ( requestType === 'main_frame' ) {
@@ -452,31 +593,35 @@ var onHeadersReceived = function(details) {
     if ( pageStore.getNetFilteringSwitch() === false ) { return; }
 
     if ( requestType === 'image' || requestType === 'media' ) {
-        return foilLargeMediaElement(pageStore, details);
+        result = foilLargeMediaElement(pageStore, details);
     }
 
     // https://github.com/gorhill/uBO-Extra/issues/19
     //   Turns out scripts must also be considered as potential embedded
     //   contexts (as workers) and as such we may need to inject content
     //   security policy directives.
-    if ( requestType === 'script' || requestType === 'main_frame' || requestType === 'sub_frame' ) {
-        return processCSP(pageStore, details);
+    if (!result && requestType === 'script' || requestType === 'main_frame' || requestType === 'sub_frame' ) {
+        result = processCSP(pageStore, details);
     }
 
-    // ADN: ----------------------------------
-    var modified = µBlock.adnauseam.checkAllowedException
-      (details.responseHeaders, details.url, pageStore.rawURL);
+    if (!result) { // ADN
 
-    if (modified && details.responseHeaders.length) {
-      return { 'responseHeaders': details.responseHeaders };
+      // ADN: check if this was an allowed exception and, if so, block cookies
+      var pageStore = µBlock.pageStoreFromTabId(details.tabId),
+          modified = pageStore && µBlock.adnauseam.checkAllowedException
+              (details.responseHeaders, details.url, pageStore.rawURL);
+
+      if (modified && details.responseHeaders.length)
+          result = { 'responseHeaders': details.responseHeaders };
     }
+
+    return result; // ADN
 };
 
 /******************************************************************************/
 
 var processCSP = function(pageStore, details) {
     var µb = µBlock,
-        adn = µb.adnauseam,
         tabId = details.tabId,
         requestURL = details.url,
         loggerEnabled = µb.logger.isEnabled();
@@ -499,18 +644,6 @@ var processCSP = function(pageStore, details) {
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
-
-    if (µb.userSettings.blockingMalware === false) { // ADN
-
-      if (blockInlineScript) {
-        adn.logNetAllow('InlineScript', requestURL);
-        return;
-      }
-      if (blockWebsocket) {
-        adn.logNetAllow('WebSocket', requestURL);
-        return;
-      }
-    }
 
     var headersChanged;
     if ( blockInlineScript || blockWebsocket ) {
@@ -546,19 +679,16 @@ var processCSP = function(pageStore, details) {
         }
     }
 
-    if (blockInlineScript)adn.logNetBlock('InlineScript', requestURL); // ADN
-    if (blockWebsocket) adn.logNetBlock('WebSocket', requestURL);
-
-    µb.updateBadgeAsync(tabId);
-
     context.dispose();
 
     if ( headersChanged !== true ) { return; }
 
+    µb.updateBadgeAsync(tabId);
+
     return { 'responseHeaders': details.responseHeaders };
 };
 
-  /******************************************************************************/
+/******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1163
 //   "Block elements by size"
@@ -574,8 +704,6 @@ var foilLargeMediaElement = function(pageStore, details) {
         result = pageStore.filterLargeMediaElement(size);
     if ( result === undefined ) { return; }
 
-    µb.adnauseam.logNetBlock('net.largeMedia', details);
-
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
@@ -588,39 +716,7 @@ var foilLargeMediaElement = function(pageStore, details) {
         );
     }
 
-    if ( noWebsocket ) {
-        after = foilWithCSPDirective(
-            after,
-            /connect-src[^;]*;?\s*/,
-            'connect-src http:',
-            /wss?:[^\s]*\s*/g
-        );
-    }
-
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=513860
-    //   Bad Chromium bug: web pages can work around CSP directives by
-    //   creating data:- or blob:-based URI. So if we must restrict using CSP,
-    //   we have no choice but to also prevent the creation of nested browsing
-    //   contexts based on data:- or blob:-based URIs.
-    if ( vAPI.chrome && (noInlineScript || noWebsocket) ) {
-        // https://w3c.github.io/webappsec-csp/#directive-frame-src
-        after = foilWithCSPDirective(
-            after,
-            /frame-src[^;]*;?\s*/,
-            'frame-src http:',
-            /data:[^\s]*\s*|blob:[^\s]*\s*/g
-        );
-    }
-
-    var changed = after !== before;
-    if ( changed ) {
-        if ( i !== -1 ) {
-            headers.splice(i, 1);
-        }
-        headers.push({ name: 'Content-Security-Policy', value: after });
-    }
-
-    return changed;
+    return { cancel: true };
 };
 
 /******************************************************************************/
@@ -726,116 +822,102 @@ var foilWithCSPDirective = function(csp, toExtract, toAdd, toRemove) {
 var reReportDirective = /report-(?:to|uri)[^;]*;?\s*/;
 var reEmptyDirective = /^([a-z-]+)\s*;/;
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  // Caller must ensure headerName is normalized to lower case.
+// Caller must ensure headerName is normalized to lower case.
 
-  var headerIndexFromName = function (headerName, headers) {
+var headerIndexFromName = function(headerName, headers) {
     var i = headers.length;
-    while (i--) {
-      if (headers[i].name.toLowerCase() === headerName) {
-        return i;
-      }
+    while ( i-- ) {
+        if ( headers[i].name.toLowerCase() === headerName ) {
+            return i;
+        }
     }
     return -1;
-  };
+};
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  vAPI.net.onBeforeRequest = {
+vAPI.net.onBeforeRequest = {
     urls: [
-      'http://*/*',
-      'https://*/*'
+        'http://*/*',
+        'https://*/*'
     ],
-    extra: ['blocking'],
+    extra: [ 'blocking' ],
     callback: onBeforeRequest
-  };
+};
 
-  vAPI.net.onHeadersReceived = {
+vAPI.net.onHeadersReceived = {
     urls: [
-      'http://*/*',
-      'https://*/*'
+        'http://*/*',
+        'https://*/*'
     ],
-    types: [
-        'xmlhttprequest', // ADN
-        'script', // ADN
+    /*types: [ // ADN
         'main_frame',
         'sub_frame',
         'image',
         'media',
         'script'
-    ],
+    ],*/
     extra: [ 'blocking', 'responseHeaders' ],
     callback: onHeadersReceived
-  };
+};
 
-  // var onBeforeRedirect = function (details) {
-  //    //log('[REDIRECT]', details.url + ' -> ' + details.redirectUrl);
-  // };
-  //
-  // vAPI.net.onBeforeRedirect = { // ADN: not used now
-  //   urls: [
-  //     'http://*/*',
-  //     'https://*/*'
-  //   ],
-  //   callback: onBeforeRedirect
-  // };
+vAPI.net.onBeforeSendHeaders = {   // ADN
+  urls: [
+    'http://*/*',
+    'https://*/*'
+  ],
+  extra: ['blocking', 'requestHeaders'],
+  callback: onBeforeSendHeaders
+};
 
-  vAPI.net.onBeforeSendHeaders = {   // ADN
-    urls: [
-      'http://*/*',
-      'https://*/*'
-    ],
-    extra: ['blocking', 'requestHeaders'],
-    callback: onHeadersReceived //onBeforeSendHeaders
-  };
+vAPI.net.registerListeners();
 
-  vAPI.net.registerListeners();
+//console.log('traffic.js > Beginning to intercept net requests at %s', (new Date()).toISOString());
 
-  //console.log('traffic.js > Beginning to intercept net requests at %s', (new Date()).toISOString());
+/******************************************************************************/
 
-  /******************************************************************************/
-
-  var isTemporarilyWhitelisted = function (result, hostname) {
+var isTemporarilyWhitelisted = function(result, hostname) {
     var obsolete, pos;
 
     for (;;) {
-      obsolete = documentWhitelists[hostname];
-      if (obsolete !== undefined) {
-        if (obsolete > Date.now()) {
-          if (result === '') {
-            return 'ua:*' + ' ' + hostname + ' doc allow';
-          }
-        } else {
-          delete documentWhitelists[hostname];
+        obsolete = documentWhitelists[hostname];
+        if ( obsolete !== undefined ) {
+            if ( obsolete > Date.now() ) {
+                if ( result === '' ) {
+                    return 'ua:*' + ' ' + hostname + ' doc allow';
+                }
+            } else {
+                delete documentWhitelists[hostname];
+            }
         }
-      }
-      pos = hostname.indexOf('.');
-      if (pos === -1) {
-        break;
-      }
-      hostname = hostname.slice(pos + 1);
+        pos = hostname.indexOf('.');
+        if ( pos === -1 ) {
+            break;
+        }
+        hostname = hostname.slice(pos + 1);
     }
     return result;
-  };
+};
 
-  var documentWhitelists = Object.create(null);
+var documentWhitelists = Object.create(null);
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  exports.temporarilyWhitelistDocument = function (hostname) {
-    if (typeof hostname !== 'string' || hostname === '') {
-      return;
+exports.temporarilyWhitelistDocument = function(hostname) {
+    if ( typeof hostname !== 'string' || hostname === '' ) {
+        return;
     }
 
     documentWhitelists[hostname] = Date.now() + 60 * 1000;
-  };
+};
 
-  /******************************************************************************/
+/******************************************************************************/
 
-  return exports;
+return exports;
 
-  /******************************************************************************/
+/******************************************************************************/
 
 })();
 
