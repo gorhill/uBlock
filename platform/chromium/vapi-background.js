@@ -1092,64 +1092,40 @@ vAPI.net.registerListeners = function() {
             return onHeadersReceivedClient(details);
         };
 
+    var urls, types;
 
-    var installListeners = (function() {
-        //listener = function(details) {
-        //    quickProfiler.start('onBeforeRequest');
-        //    var r = onBeforeRequest(details);
-        //    quickProfiler.stop();
-        //    return r;
-        //};
-        var urls, types;
+    if ( onBeforeRequest ) {
+        urls = this.onBeforeRequest.urls || ['<all_urls>'];
+        types = this.onBeforeRequest.types || undefined;
+        wrApi.onBeforeRequest.addListener(
+            onBeforeRequest,
+            { urls: urls, types: types },
+            this.onBeforeRequest.extra
+        );
+    }
 
-        if (
-            onBeforeRequest &&
-            wrApi.onBeforeRequest.hasListener(onBeforeRequest) === false
-        ) {
-            urls = this.onBeforeRequest.urls || ['<all_urls>'];
-            types = this.onBeforeRequest.types || undefined;
-            wrApi.onBeforeRequest.addListener(
-                onBeforeRequest,
-                { urls: urls, types: types },
-                this.onBeforeRequest.extra
-            );
-        }
+    // Chromium 48 and lower does not support `ping` type.
+    // Chromium 56 and higher does support `csp_report` stype.
+    if ( onBeforeSendHeaders ) {
+        wrApi.onBeforeSendHeaders.addListener(
+            onBeforeSendHeaders,
+            {
+                'urls': [ '<all_urls>' ],
+                'types': [ 'ping' ]
+            },
+            [ 'blocking', 'requestHeaders' ]
+        );
+    }
 
-        // Chromium 48 and lower does not support `ping` type.
-        // Chromium 56 and higher does support `csp_report` stype.
-        if (
-            onBeforeSendHeaders &&
-            wrApi.onBeforeSendHeaders.hasListener(onBeforeSendHeaders) === false
-        ) {
-            wrApi.onBeforeSendHeaders.addListener(
-                onBeforeSendHeaders,
-                {
-                    'urls': [ '<all_urls>' ],
-                    'types': [ 'ping' ]
-                },
-                [ 'blocking', 'requestHeaders' ]
-            );
-        }
-
-        if (
-            onHeadersReceived &&
-            wrApi.onHeadersReceived.hasListener(onHeadersReceived) === false
-        ) {
-            urls = this.onHeadersReceived.urls || ['<all_urls>'];
-            types = onHeadersReceivedTypes;
-            wrApi.onHeadersReceived.addListener(
-                onHeadersReceived,
-                { urls: urls, types: types },
-                this.onHeadersReceived.extra
-            );
-        }
-
-        // https://github.com/gorhill/uBlock/issues/675
-        // Experimental: keep polling to be sure our listeners are still installed.
-        //setTimeout(installListeners, 20000);
-    }).bind(this);
-
-    installListeners();
+    if ( onHeadersReceived ) {
+        urls = this.onHeadersReceived.urls || ['<all_urls>'];
+        types = onHeadersReceivedTypes;
+        wrApi.onHeadersReceived.addListener(
+            onHeadersReceived,
+            { urls: urls, types: types },
+            this.onHeadersReceived.extra
+        );
+    }
 };
 
 /******************************************************************************/
