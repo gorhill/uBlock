@@ -55,7 +55,9 @@
         "webRequest",
         "webRequestBlocking",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "ws://*/*",
+        "wss://*/*"
     ],
     "short_name": "uBlock₀",
     "storage": {
