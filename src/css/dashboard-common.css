@@ -65,8 +65,9 @@ input[type="checkbox"][disabled] + label {
     opacity: 0.5;
     vertical-align: middle;
     }
-.whatisthis:hover {
+button.whatisthis:hover {
     opacity: 1.0;
+    background: url('../img/help16.png') no-repeat;
     }
 .whatisthis-expandable {
     margin: 0.5em 0 1em 1.25em;
