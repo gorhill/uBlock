@@ -92,6 +92,12 @@ var getTextFileFromURL = function(url, onLoad, onError) {
         if ( text.startsWith('<') && text.endsWith('>') ) {
             return onError.call(this);
         }
+
+        // ADN: If we've loaded a DNT list, we need to parse it
+        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(url)) {
+            µBlock.adnauseam.dnt.processEntries(this.responseText);
+        }
+
         return onLoad.call(this);
     };
 
