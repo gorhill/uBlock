@@ -137,6 +137,8 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 **/
 
 api.listKeyAliases = {
+    "assets/ublock/adnauseam.txt": "adnauseam-filters",
+    "assets/thirdparties/www.eff.org/files/effdntlist.txt": "effdntlist",
     "assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
     "assets/user/filters.txt": "user-filters",
     "assets/ublock/resources.txt": "ublock-resources",
