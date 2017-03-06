@@ -248,39 +248,30 @@ var renderFilterLists = function(soft) {
 
     var liFromListGroup = function(groupKey, listKeys) {
 
-        var liGroup = listGroupTemplate.clone();
 
-        // ADN: change some group key names
-        if (groupKey === 'default') groupKey = 'essentials';
-        if (groupKey === 'multipurpose') groupKey = 'other';
 
-        var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+      var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
+      
+       // ADN: change some group key names
+      if (groupKey === 'default') groupKey = 'Essentials';
+      if (groupKey === 'multipurpose') groupKey = 'Other';
 
-        //console.log('NAME: '+groupKey,  groupName, listKeys ? listKeys.length : 0);
+      var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
 
-        if ( groupName !== '' ) {
-            liGroup.descendants('span.geName').text(groupName);
-            liGroup.descendants('span.geCount').text(listEntryCountFromGroup(listKeys));
-        }
-
-        var ulGroup = liGroup.descendants('ul');
-        if ( !listKeys ) {
-            return liGroup;
-        }
-
-        if (groupKey === 'default') groupKey = 'essentials'; //ADN
-        if (groupKey === 'multipurpose') groupKey = 'other'; //ADN
-        var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
-            var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
-            if ( groupName !== '' ) {
-                liGroup.querySelector('.geName').textContent = groupName;
-            }
+            console.log(liGroup);
         }
+
+        if ( groupName !== '' ) {
+            liGroup.querySelector('.geName').textContent = groupName;
+        }
+
+        //update Count
         if ( liGroup.querySelector('.geName:empty') === null ) {
             liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
         }
+
         var ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
 
@@ -301,7 +292,6 @@ var renderFilterLists = function(soft) {
                 ulGroup.appendChild(liEntry);
             }
         }
-
         return liGroup;
     };
 
@@ -374,17 +364,21 @@ var renderFilterLists = function(soft) {
                 vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
             );
             if ( liGroup.parentElement === null ) {
+                console.log("1append", groupKey, liGroup.parentElement === null);
                 ulLists.appendChild(liGroup);
+
             }
             delete groups[groupKey];
         }
 
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
+
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
             ulLists.appendChild(liFromListGroup(groupKey, groups[groupKey]));
         }
+        console.log(ulLists);
 
         uDom('#lists .listEntries .listEntry.discard').remove();
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
@@ -635,7 +629,7 @@ var autoUpdateCheckboxChanged = function() {
 var toggleUnusedLists = function() {
     document.body.classList.toggle('hideUnused');
     var hide = document.body.classList.contains('hideUnused');
-    uDom('#lists li.listEntry > input[type="checkbox"]:not(:checked)')
+    uDom('#lists li.listEntry input[type="checkbox"]:not(:checked)')
         .ancestors('li.listEntry[data-listkey]')
         .css('display', hide ? 'none' : '');
     vAPI.localStorage.setItem('hideUnusedFilterLists', hide ? '1' : '0');
@@ -732,7 +726,7 @@ uDom('#buttonUpdate').on('click', buttonUpdateHandler);
 uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
 uDom('#listsOfBlockedHostsPrompt').on('click', toggleUnusedLists);
 uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
-uDom('#lists').on('change', '.listEntry > input', onFilteringSettingsChanged);
+uDom('#lists').on('change', '.listEntry input', onFilteringSettingsChanged);
 uDom('#lists').on('change', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);
 uDom('#externalLists').on('input', onFilteringSettingsChanged);
