@@ -679,9 +679,7 @@ var headerIndexFromName = function(headerName, headers) {
 vAPI.net.onBeforeRequest = {
     urls: [
         'http://*/*',
-        'https://*/*',
-        'ws://*/*',
-        'wss://*/*'
+        'https://*/*'
     ],
     extra: [ 'blocking' ],
     callback: onBeforeRequest
