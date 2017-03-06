@@ -192,7 +192,9 @@ var renderFilterLists = function(soft) {
         }
 
         // https://github.com/gorhill/uBlock/issues/1429
+
         if ( !soft ) {
+
             elem = li.querySelector('input[type="checkbox"]');
             elem.checked = entry.off !== true;
         }
@@ -337,11 +339,12 @@ var renderFilterLists = function(soft) {
             liGroup, i, groupKey,
             groupKeys = [
             'default',
+            'ads',
+            'privacy',
             'malware',
             'social',
             'multipurpose',
-            'regions',
-            'custom'
+            'regions'
         ];
 
         // ADN: move the lists in these groups to 'other'
@@ -349,12 +352,14 @@ var renderFilterLists = function(soft) {
         for (i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups['multipurpose'], groups[toOther[i]]);
             delete groups[toOther[i]];
+            var index = groupKeys.indexOf(toOther[i]);
+            groupKeys.splice(index,1);
         }
 
+
         // ADN: move these specific lists to 'essentials'
-        var toDefault = [ 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
-            'assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'
-        ];
+        var toDefault = [ 'easylist','easyprivacy'];
+
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
             idx > -1 && groups['default'].push(groups['multipurpose'].splice(idx, 1));
@@ -430,9 +435,9 @@ var updateAssetStatus = function(details) {
     renderWidgets();
 };
 
-/*******************************************************************************
+/*******************************************************************************/
 
-/*ADN
+// ADN
 var availableLists = listDetails.available;
 var currentLists = listDetails.current;
 var location, availableOff, currentOff;
@@ -448,7 +453,7 @@ for ( location in availableLists ) {
         return true;
     }
 }
-*/
+
 
 /**
     Compute a hash from all the settings affecting how filter lists are loaded
@@ -728,7 +733,7 @@ uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
 uDom('#listsOfBlockedHostsPrompt').on('click', toggleUnusedLists);
 uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 uDom('#lists').on('change', '.listEntry > input', onFilteringSettingsChanged);
-uDom('#lists').on('click', '.listEntry > a.remove', onRemoveExternalList);
+uDom('#lists').on('change', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);
 uDom('#externalLists').on('input', onFilteringSettingsChanged);
 

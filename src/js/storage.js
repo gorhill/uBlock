@@ -816,7 +816,7 @@
 };
 
 /******************************************************************************/
-/*
+
 // `switches` contains the filter lists for which the switch must be revisited.
 
 µBlock.selectFilterLists = function(switches) {
@@ -849,7 +849,7 @@
     vAPI.storage.set({ 'remoteBlacklists': filterLists });
 };
 
-/******************************************************************************/
+/*****************************************************************************
 
 // Plain reload of all filters.
 /*
