@@ -1748,26 +1748,26 @@
 
       modified && sendNotifications(notes);
     });
-  }
+  };
 
   exports.verifyAdBlockersAndDNT = function (request) {
 
     verifyDNT(request);
     verifyAdBlockers();
-  }
+  };
 
   var verifySettings = exports.verifySettings = function () {
 
     verifySetting(HidingDisabled, !µb.userSettings.hidingAds);
     verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
     verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
-  }
+  };
 
   var verifyLists = exports.verifyLists = function () {
     var lists = µb.selectedFilterLists;
     verifyList(EasyList, lists);
     verifyList(AdNauseamTxt, lists);
-  }
+  };
 
   var verifyList = exports.verifyList = function (note, lists) {
 
@@ -1787,8 +1787,9 @@
     else {
       modified = addNotification(notes, note);
     }
+
     if (modified) sendNotifications(notes);
-  }
+  };
 
   var verifyDNT = exports.verifyDNT = function (request) {
 
@@ -1836,7 +1837,8 @@
 
       sendNotifications(notifications);
     }
-  }
+  };
+
   var verifySetting = exports.verifySetting = function (note, state) {
 
     //console.log('verifySetting', note, state, notifications);
@@ -1857,21 +1859,21 @@
       // check whether DNT list state needs updating
       if (note === ClickingDisabled || note === HidingDisabled) {
 
-        //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds
+        //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
         µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
       }
 
       sendNotifications(notes);
     }
-  }
+  };
 
   // Returns the count for current-marked ads for the url
   // or if none exists, then all ads stored for the url
   var currentCount = exports.currentCount = function (url) {
 
     return adlist(url, true).length || adlist(url).length;
-  }
+  };
 
   var clearAds = exports.clearAds = function () {
 
@@ -1950,12 +1952,12 @@
       what: 'importConfirm',
       count: importedCount
     };
-  }
+  };
 
   exports.getNotifications = function () {
 
     return notifications;
-  }
+  };
 
   var exportAds = exports.exportAds = function (request) {
 

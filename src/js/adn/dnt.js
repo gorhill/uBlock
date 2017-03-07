@@ -3,7 +3,8 @@
   'use strict';
 
   var µb = µBlock, adn = µb.adnauseam, log = adn.log;
-  var effList = 'https://www.eff.org/files/effdntlist.txt';
+  //var effList = 'https://www.eff.org/files/effdntlist.txt'; // old-list-key
+  var effList = 'eff-dnt-whitelist';
   var firewall = new µb.Firewall();
 
   var exports = {};
@@ -74,7 +75,7 @@
 
   exports.isDoNotTrackUrl = function (url) {
 
-    return (url === effList);
+    return url.endsWith('effdntlist.txt');
   }
 
   var enabled = exports.enabled = function () {

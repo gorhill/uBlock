@@ -283,10 +283,8 @@ var renderFilterLists = function(soft) {
             }
         }
 
-        if (groupKey === 'hidden') {
-          liGroup.classList.toggle('hidden', true);
-          console.log('HIDING');
-        }
+        // ADN: Hide the 'hidden' group
+        if (groupKey === 'hidden') liGroup.classList.toggle('hidden', true);
 
         return liGroup;
     };

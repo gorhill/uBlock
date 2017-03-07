@@ -65,6 +65,7 @@ var fireNotification = function(topic, details) {
 /******************************************************************************/
 
 var getTextFileFromURL = function(url, onLoad, onError) {
+    //console.log('[LOAD]',url);
     if ( reIsExternalPath.test(url) === false ) {
         url = vAPI.getURL(url);
     }
@@ -837,9 +838,9 @@ var getRemote = function(assetKey, callback) {
             return;
         }
 
-        // If we've loaded a DNT list, we need to parse it
-        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) { // ADN (was 'path')
-          µBlock.adnauseam.dnt.processEntries(this.responseText);
+        // ADN: If we've loaded a DNT list, we need to parse it
+        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) {
+            µBlock.adnauseam.dnt.processEntries(this.responseText);
         }
 
         assetCacheWrite(assetKey, {
