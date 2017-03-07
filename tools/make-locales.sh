@@ -35,9 +35,9 @@ do
     mkdir -p $dir && touch $outfile
     #echo Writing $outfile
 
-    #Notification when English locale has changes 
+    #Notification when English locale has changes
     if [[ "$length" -ne "$refLength" || "$refDes" != "$curDes" ]]
-       then 
+       then
           [ "$report" -eq "0" ] && echo -e "\nThere are new changes in the English locale file. Please update the locale folder"
           let "report++"
     fi
@@ -45,6 +45,7 @@ do
     jq -s '.[0] * .[1]' $messages $adnfile > $outfile
     sed -i '' "s/uBlock₀/AdNauseam/g" $outfile
     sed -i '' "s/uBlock Origin/AdNauseam/g" $outfile
+    sed -i '' "s/ ＋ / - /g" $outfile
   fi
 
 done

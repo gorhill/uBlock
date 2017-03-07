@@ -117,6 +117,9 @@ a.external-link {
 .custom-check #lists input[type="checkbox"]{
   display: inline-block;
 }
+.custom-check #lists input + label {
+  display: none;
+}
 
 .custom-check #lists input[type="checkbox"]::before{
   margin: 0px 4px 0 0!important;
@@ -849,7 +852,6 @@ span.purge {
 span.purge:hover {
     opacity: 1;
     }
-span.obsolete,
 span.new {
     background-color: hsl(36, 100%, 80%);
     border-color: hsl(36, 100%, 75%);
