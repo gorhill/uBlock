@@ -124,7 +124,7 @@ var BlockingDisabled = new Notification({
 var EasyList = new Notification({
   name: 'EasyListDisabled',
   text: 'adnNotificationActivateEasyList',
-  listUrl: 'assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt',
+  listName: 'easylist',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-easylist-filter-and-why-do-i-get-a-warning-when-it-is-disabled'
 });
 EasyList.func = reactivateList.bind(EasyList);
@@ -132,7 +132,7 @@ EasyList.func = reactivateList.bind(EasyList);
 var AdNauseamTxt = new Notification({
   name: 'AdNauseamTxtDisabled',
   text: 'adnNotificationActivateAdNauseamList',
-  listUrl: 'assets/ublock/adnauseam.txt',
+  listName: 'adnauseam-filters',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-adnauseam-filter-list'
 });
 AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
@@ -167,7 +167,7 @@ function Notification(m) {
   this.link = opt(m, 'link', this.isDNT ? DNTFAQ : FAQ);
 
   this.isDNT = opt(m, 'isDNT', '');
-  this.listUrl = opt(m, 'listUrl', '');
+  this.listName = opt(m, 'listName', '');
   this.expected = opt(m, 'expected', true);
   this.firstrun = opt(m, 'firstrun', false);
 
@@ -326,20 +326,18 @@ function reactivateSetting() {
 
 function onSelectionDone() {
 
-    vAPI.messaging.send('dashboard', { 
-      what: 'reloadAllFilters' 
+    vAPI.messaging.send('dashboard', {
+      what: 'reloadAllFilters'
     }, reloadPane);
 
 };
 
 function reactivateList() {
-
   vAPI.messaging.send(
-    'dashboard', {
-      what: 'selectFilterLists',
-      switches: [ { location: this.listUrl, off: false }]
-    }, onSelectionDone);
-
+  'dashboard', {
+    what: 'selectFilterLists',
+    switches: [ { list: this.listName, off: false }]
+  }, reloadPane);
 }
 
 function openPage(url){

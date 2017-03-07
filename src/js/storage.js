@@ -846,7 +846,7 @@
 
     µBlock.adnauseam.verifyLists(filterLists);
 
-    vAPI.storage.set({ 'remoteBlacklists': filterLists });
+    vAPI.storage.set({ 'availableFilterLists': filterLists });
 };
 
 /*****************************************************************************

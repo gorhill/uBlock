@@ -251,7 +251,7 @@ var renderFilterLists = function(soft) {
 
 
       var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
-      
+
        // ADN: change some group key names
       if (groupKey === 'default') groupKey = 'Essentials';
       if (groupKey === 'multipurpose') groupKey = 'Other';
@@ -406,7 +406,7 @@ var renderFilterLists = function(soft) {
 var renderWidgets = function() {
     uDom('#buttonApply').toggleClass('disabled', filteringSettingsHash === hashFromCurrentFromSettings());
     uDom('#buttonPurgeAll').toggleClass('disabled', document.querySelector('#lists .listEntry.cached') === null);
-    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null);
+    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete input[type="checkbox"]:checked') === null);
 };
 
 /******************************************************************************/
@@ -579,6 +579,7 @@ var selectFilterLists = function(callback) {
 var buttonApplyHandler = function() {
     uDom('#buttonApply').removeClass('enabled');
     var onSelectionDone = function() {
+        messaging.send('adnauseam', { what: 'verifyLists' });
         messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
     selectFilterLists(onSelectionDone);
