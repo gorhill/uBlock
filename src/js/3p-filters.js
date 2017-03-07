@@ -579,6 +579,7 @@ var selectFilterLists = function(callback) {
 var buttonApplyHandler = function() {
     uDom('#buttonApply').removeClass('enabled');
     var onSelectionDone = function() {
+        messaging.send('adnauseam', { what: 'verifyLists' });
         messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
     selectFilterLists(onSelectionDone);
