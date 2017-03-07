@@ -823,7 +823,7 @@
 µBlock.selectFilterLists = function(switches) {
     switches = switches || {};
 
-    console.log('storage.js::µBlock.selectFilterLists', switches);
+    // console.log('storage.js::µBlock.selectFilterLists', switches);
 
     // Only the lists referenced by the switches are touched.
     var filterLists = this.availableFilterLists;
