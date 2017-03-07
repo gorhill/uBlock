@@ -305,7 +305,7 @@
 
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
-      log('[DNT] Not visiting '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
+      log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
       ad.dntAllowed = true; // so we don't recheck it
       pending = false;
     }

@@ -34,9 +34,9 @@
 		],
 		"supportURL": "https://github.com/dhowe/adnauseam/issues"
 	},
-	"EFF Do Not Track List": {
+	"eff-dnt-whitelist": {
 		"content": "filters",
-		"group": "privacy",
+		"group": "hidden",
 		"title": "DNT Policy Whitelist",
 		"contentURL": "https://www.eff.org/files/effdntlist.txt",
 		"supportURL": "https://www.eff.org/dnt-policy"
@@ -61,18 +61,6 @@
 		],
 		"supportURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks",
 		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks"
-	},
-	"ublock-experimental": {
-		"content": "filters",
-		"group": "default",
-		"title": "uBlock filters – Experimental",
-		"off": true,
-		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/experimental.txt",
-			"assets/ublock/experimental.txt"
-		],
-		"supportURL": "https://github.com/gorhill/uBlock/wiki/Experimental-filters",
-		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Experimental-filters"
 	},
 	"ublock-privacy": {
 		"content": "filters",
@@ -121,14 +109,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"easylist-nocosmetic": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "EasyList without element hiding rules",
-		"contentURL": "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"disconnect-tracking": {
 		"content": "filters",
 		"group": "privacy",
@@ -155,13 +135,6 @@
 		"title": "Fanboy’s Enhanced Tracking List",
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
 		"supportURL": "https://forums.lanik.us/"
-	},
-	"disconnect-malvertising": {
-		"content": "filters",
-		"group": "malware",
-		"off": true,
-		"title": "Malvertising filter list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
 	},
 	"malware-0": {
 		"content": "filters",
@@ -242,15 +215,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"dpollock-0": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"title": "Dan Pollock’s hosts file",
-		"contentURL": "http://someonewhocares.org/hosts/hosts",
-		"supportURL": "http://someonewhocares.org/hosts/"
-	},
 	"fanboy-ultimate": {
 		"content": "filters",
 		"group": "multipurpose",
@@ -276,18 +240,6 @@
 		"title": "MVPS HOSTS",
 		"contentURL": "http://winhelp2002.mvps.org/hosts.txt",
 		"supportURL": "http://winhelp2002.mvps.org/"
-	},
-	"plowe-0": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 13,
-		"title": "Peter Lowe’s Ad and tracking server list",
-		"contentURL": [
-			"https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
-			"assets/thirdparties/pgl.yoyo.org/as/serverlist",
-			"assets/thirdparties/pgl.yoyo.org/as/serverlist.txt"
-		],
-		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
 	"ara-0": {
 		"content": "filters",
