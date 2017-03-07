@@ -34,10 +34,7 @@ var listDetails = {},
     lastUpdateTemplateString = vAPI.i18n('3pLastUpdate'),
     reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
 
-var hiddenLists = [
-  "https://www.eff.org/files/effdntlist.txt",
-  "assets/thirdparties/pgl.yoyo.org/as/serverlist"
-]; // ADN
+var hiddenLists = [ "https://www.eff.org/files/effdntlist.txt" ]; // ADN
 
 /******************************************************************************/
 
