@@ -1,6 +1,10 @@
 @keyframes spin {
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
+/*ADN*/
+#options li:nth-child(3), #options li:nth-child(2){
+  display: none;
+}
 ul {
     padding: 0;
     list-style-type: none;
