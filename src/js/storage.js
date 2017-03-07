@@ -625,7 +625,6 @@
     };
 
     var onFilterListsReady = function(lists) {
-        console.log(lists);
         µb.availableFilterLists = lists;
 
         µb.redirectEngine.reset();
