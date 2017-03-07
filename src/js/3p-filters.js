@@ -34,8 +34,6 @@ var listDetails = {},
     lastUpdateTemplateString = vAPI.i18n('3pLastUpdate'),
     reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
 
-var hiddenLists = [ "https://www.eff.org/files/effdntlist.txt" ]; // ADN
-
 /******************************************************************************/
 
 var onMessage = function(msg) {
@@ -221,12 +219,8 @@ var renderFilterLists = function(soft) {
             );
         }
 
-        // ADN: hide entries from hiddenLists
-        if (hiddenLists.indexOf(listKey) > -1) {
-            li.css('display', 'none');
-        }
-        //checkListNotify(listKey, entry.off);
-        //
+        //if (entry.hidden) li.classList.toggle('hidden', true); // ADN
+
         li.classList.remove('discard');
         return li;
     };
@@ -269,7 +263,7 @@ var renderFilterLists = function(soft) {
         }
 
         var ulGroup = liGroup.querySelector('.listEntries');
-        if ( !listKeys ) { return liGroup; }
+        if ( !listKeys) { return liGroup; }
 
         listKeys.sort(function(a, b) {
             var aTitle = listDetails.available[a].title || '',
@@ -288,6 +282,12 @@ var renderFilterLists = function(soft) {
                 ulGroup.appendChild(liEntry);
             }
         }
+
+        if (groupKey === 'hidden') {
+          liGroup.classList.toggle('hidden', true);
+          console.log('HIDING');
+        }
+
         return liGroup;
     };
 
@@ -536,10 +536,7 @@ var selectFilterLists = function(callback) {
     while ( i-- ) {
         liEntry = liEntries[i];
         if ( liEntry.querySelector('input[type="checkbox"]:checked') !== null ) {
-            var loc = liEntry.getAttribute('data-listkey');
-            if (hiddenLists.indexOf(loc) > -1) continue;
-            toSelect.push(loc);
-            //switches.push({ location: loc, off: off });
+            toSelect.push(liEntry.getAttribute('data-listkey'));
         }
     }
 

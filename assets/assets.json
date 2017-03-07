@@ -38,7 +38,10 @@
 		"content": "filters",
 		"group": "hidden",
 		"title": "DNT Policy Whitelist",
-		"contentURL": "https://www.eff.org/files/effdntlist.txt",
+		"contentURL": [
+			"https://www.eff.org/files/effdntlist.txt",
+			"assets/thirdparties/www.eff.org/files/effdntlist.txt"
+		],
 		"supportURL": "https://www.eff.org/dnt-policy"
 	},
 	"ublock-filters": {
