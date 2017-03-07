@@ -260,7 +260,6 @@ var renderFilterLists = function(soft) {
 
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
-            console.log(liGroup);
         }
 
         if ( groupName !== '' ) {
@@ -364,7 +363,7 @@ var renderFilterLists = function(soft) {
                 vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
             );
             if ( liGroup.parentElement === null ) {
-                console.log("1append", groupKey, liGroup.parentElement === null);
+                // console.log("1append", groupKey, liGroup.parentElement === null);
                 ulLists.appendChild(liGroup);
 
             }
@@ -378,7 +377,6 @@ var renderFilterLists = function(soft) {
             groupKey = groupKeys[i];
             ulLists.appendChild(liFromListGroup(groupKey, groups[groupKey]));
         }
-        console.log(ulLists);
 
         uDom('#lists .listEntries .listEntry.discard').remove();
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
