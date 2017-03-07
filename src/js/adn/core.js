@@ -1428,7 +1428,7 @@
       listsLoaded = true;
       verifyAdBlockers();
       verifySettings();
-      verifyLists(µb.remoteBlacklists);
+      verifyLists();
       µb.adnauseam.dnt.updateFilters();
     });
 
@@ -1763,8 +1763,9 @@
     verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
   }
 
-  var verifyLists = exports.verifyLists = function (lists) {
-
+  var verifyLists = exports.verifyLists = function () {
+    var lists = µb.availableFilterLists;//?
+    // console.log(lists);
     verifyList(EasyList, lists);
     verifyList(AdNauseamTxt, lists);
   }
