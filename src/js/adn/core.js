@@ -1348,12 +1348,12 @@
   exports.adsForVault = function (request, pageStore, tabId) {
 
     return adsForUI();
-  }
+  };
 
   exports.mustAllowRequest = function (result, context) {
 
     return result && result.length && !isBlockableRequest(context);
-  }
+  };
 
   exports.itemInspected = function (request, pageStore, tabId) {
 
@@ -1366,16 +1366,15 @@
   var contentPrefs = exports.contentPrefs = function (hostname) {
 
     // preferences relevant to our ui/content-scripts
-    var us = µb.userSettings;
-    var showDnt = /*hostname &&*/ (us.disableHidingForDNT && us.dntDomains.contains(hostname));
+    var us = µb.userSettings,
+      showDnt = (!us.disableHidingForDNT && us.dntDomains.contains(hostname));
 
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
-
     return {
-        hidingDisabled: !us.hidingAds || showDnt,
-        textAdsDisabled: !us.parseTextAds,
-        logEvents: us.eventLogging
-      };
+      hidingDisabled: !us.hidingAds || showDnt,
+      textAdsDisabled: !us.parseTextAds,
+      logEvents: us.eventLogging
+    };
   };
 
   exports.toggleEnabled = function (request, pageStore, tabId) {

@@ -597,7 +597,6 @@ var domFilterer = {
               this.newStyleRuleBuffer.length = 0;
           }
         }
-        //else console.log('[CONTENT] (NoHide) Not appending style tag');
 
         // Simple selectors: incremental.
 
@@ -696,12 +695,15 @@ var domFilterer = {
     hideNode: function(node) {
         if ( node[this.hiddenId] !== undefined ) { return; }
         if ( this.excludeId !== undefined && node[this.excludeId] ) { return; }
-        node.setAttribute(this.hiddenId, '');
-        this.hiddenNodeCount += 1;
-        node.hidden = true;
-        node[this.hiddenId] = null;
-        vAPI.adCheck && vAPI.adCheck(node); // ADN: parse
-        if (!vAPI.prefs.hidingDisabled) { // ADN: only if hiding
+
+        vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
+
+        if (!vAPI.prefs.hidingDisabled) { // ADN: only if we are hiding
+
+          node.setAttribute(this.hiddenId, '');
+          this.hiddenNodeCount += 1;
+          node.hidden = true;
+          node[this.hiddenId] = null;
           platformHideNode(node);
         }
     },
