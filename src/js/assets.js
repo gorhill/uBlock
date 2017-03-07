@@ -1013,7 +1013,6 @@ var updateNext = function() {
             return updateDone();
         }
         updaterFetched.add(assetKey);
-        console.log("getRemote", assetKey);
         getRemote(assetKey, updatedOne);
     };
 
