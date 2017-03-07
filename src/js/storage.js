@@ -625,6 +625,7 @@
     };
 
     var onFilterListsReady = function(lists) {
+        console.log(lists);
         µb.availableFilterLists = lists;
 
         µb.redirectEngine.reset();
@@ -822,10 +823,10 @@
 µBlock.selectFilterLists = function(switches) {
     switches = switches || {};
 
-    //console.log('storage.js::µBlock.selectFilterLists', switches);
+    // console.log('storage.js::µBlock.selectFilterLists', switches);
 
     // Only the lists referenced by the switches are touched.
-    var filterLists = this.remoteBlacklists;
+    var filterLists = this.availableFilterLists;
     var entry, state, location;
     var i = switches.length;
     while ( i-- ) {
@@ -844,10 +845,16 @@
         filterLists[location].off = state;
     }
 
-    µBlock.adnauseam.verifyLists(filterLists);
-
     vAPI.storage.set({ 'availableFilterLists': filterLists });
 };
+
+µBlock.reactivateList = function(list, callback) {
+  var lists = this.selectedFilterLists;
+  lists.push(list);
+  µBlock.selectFilterLists([{location:list, off:false}]);//change availableFilterLists
+  vAPI.storage.set({ 'selectedFilterLists': lists }, callback);
+  µBlock.loadFilterLists();
+}
 
 /*****************************************************************************
 

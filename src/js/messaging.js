@@ -172,6 +172,10 @@ var onMessage = function(request, sender, callback) {
         µb.saveWhitelist();
         break;
 
+    case 'reactivateList':
+        µb.reactivateList(request.list);
+        break;
+
     case 'toggleHostnameSwitch':
         µb.toggleHostnameSwitch(request);
         break;

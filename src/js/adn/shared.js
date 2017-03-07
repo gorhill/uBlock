@@ -335,9 +335,13 @@ function onSelectionDone() {
 function reactivateList() {
   vAPI.messaging.send(
   'dashboard', {
-    what: 'selectFilterLists',
-    switches: [ { list: this.listName, off: false }]
-  }, reloadPane);
+    what: 'reactivateList',
+    list: this.listName
+  }, function(){
+    vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
+    messaging.send('dashboard', { what: 'reloadAllFilters' });
+    reloadPane();
+  });
 }
 
 function openPage(url){

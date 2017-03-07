@@ -1764,8 +1764,7 @@
   }
 
   var verifyLists = exports.verifyLists = function () {
-    var lists = µb.availableFilterLists;//?
-    // console.log(lists);
+    var lists = µb.selectedFilterLists;
     verifyList(EasyList, lists);
     verifyList(AdNauseamTxt, lists);
   }
@@ -1776,24 +1775,18 @@
       modified = false,
       path, entry;
 
-    for (path in lists) {
-      if (lists.hasOwnProperty(path) === false) {
-        continue;
-      }
-      entry = lists[path];
-      if (path === note.listUrl) {
-
-        if (entry.off === true && notes.contains(note)) {
-
-          modified = addNotification(notes, note);
-        }
-        else if (entry.off === false) {
-
-          modified = removeNotification(notes, note);
+      for (var i = 0; i < lists.length; i++) {
+        if (lists[i] === note.listName) {
+            entry = lists[i];
         }
       }
+
+    if (entry) {
+      modified = removeNotification(notes, note);
     }
-
+    else {
+      modified = addNotification(notes, note);
+    }
     if (modified) sendNotifications(notes);
   }
 
