@@ -1766,7 +1766,7 @@
 
   var verifyLists = exports.verifyLists = function () {
     var lists = µb.availableFilterLists;//?
-    console.log(lists);
+    // console.log(lists);
     verifyList(EasyList, lists);
     verifyList(AdNauseamTxt, lists);
   }
