@@ -63,14 +63,14 @@ for alpha2 in descriptions:
     if alpha2 == 'en':
         continue
     webext_manifest['localized'].append(
-        '\n' + t*2 + '<localized><r:Description>\n' +
-        t3 + '<locale>' + alpha2 + '</locale>\n' +
-        t3 + '<name>' + webext_manifest['name'] + '</name>\n' +
-        t3 + '<description>' + descriptions[alpha2] + '</description>\n' +
-        t3 + '<creator>' + webext_manifest['author'] + '</creator>\n' +
+        '\n' + t*2 + '<em:localized><Description>\n' +
+        t3 + '<em:locale>' + alpha2 + '</em:locale>\n' +
+        t3 + '<em:name>' + webext_manifest['name'] + '</em:name>\n' +
+        t3 + '<em:description>' + descriptions[alpha2] + '</em:description>\n' +
+        t3 + '<em:creator>' + webext_manifest['author'] + '</em:creator>\n' +
         # t3 + '<translator>' + ??? + '</translator>\n' +
-        t3 + '<homepageURL>' + webext_manifest['homepage'] + '</homepageURL>\n' +
-        t*2 + '</r:Description></localized>'
+        t3 + '<em:homepageURL>' + webext_manifest['homepage'] + '</em:homepageURL>\n' +
+        t*2 + '</Description></em:localized>'
     )
 webext_manifest['localized'] = '\n'.join(webext_manifest['localized'])
 
