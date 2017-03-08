@@ -1,64 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
-    <r:Description about="urn:mozilla:install-manifest">
-        <id>uBlock0@raymondhill.net</id>
-        <version>{version}</version>
-        <name>{name}</name>
-        <description>{description}</description>
-        <homepageURL>{homepage}</homepageURL>
-        <creator>{author}</creator>
-        <developer>Deathamns</developer>
-        <developer>Alex Vallat</developer>
-        <developer>Manuel Reimer</developer>
-        <type>2</type>
-        <bootstrap>true</bootstrap>
-        <multiprocessCompatible>true</multiprocessCompatible>
-        <optionsType>2</optionsType>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <Description about="urn:mozilla:install-manifest">
+        <em:id>uBlock0@raymondhill.net</em:id>
+        <em:version>{version}</em:version>
+        <em:name>{name}</em:name>
+        <em:description>{description}</em:description>
+        <em:homepageURL>{homepage}</em:homepageURL>
+        <em:creator>{author}</em:creator>
+        <em:developer>Deathamns</em:developer>
+        <em:developer>Alex Vallat</em:developer>
+        <em:developer>Manuel Reimer</em:developer>
+        <em:type>2</em:type>
+        <em:bootstrap>true</em:bootstrap>
+        <em:multiprocessCompatible>true</em:multiprocessCompatible>
+        <em:optionsType>2</em:optionsType>
 {localized}
 
         <!-- Firefox -->
-        <targetApplication>
-            <r:Description>
-                <id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</id>
-                <minVersion>24.0</minVersion>
-                <maxVersion>*</maxVersion>
-            </r:Description>
-        </targetApplication>
+        <em:targetApplication>
+            <Description>
+                <em:id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</em:id>
+                <em:minVersion>24.0</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
 
         <!-- Fennec -->
-        <targetApplication>
-            <r:Description>
-                <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
-                <minVersion>24.0</minVersion>
-                <maxVersion>*</maxVersion>
-            </r:Description>
-        </targetApplication>
+        <em:targetApplication>
+            <Description>
+                <em:id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</em:id>
+                <em:minVersion>24.0</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
 
         <!-- SeaMonkey -->
-        <targetApplication>
-            <r:Description>
-                <id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</id>
-                <minVersion>2.21</minVersion>
-                <maxVersion>*</maxVersion>
-            </r:Description>
-        </targetApplication>
+        <em:targetApplication>
+            <Description>
+                <em:id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</em:id>
+                <em:minVersion>2.21</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
 
         <!-- Pale Moon -->
-        <targetApplication>
-            <r:Description>
-                <id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</id>
-                <minVersion>25.0</minVersion>
-                <maxVersion>27.*</maxVersion>
-            </r:Description>
-        </targetApplication>
+        <em:targetApplication>
+            <Description>
+                <em:id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</em:id>
+                <em:minVersion>25.0</em:minVersion>
+                <em:maxVersion>27.*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
 
         <!-- Thunderbird -->
-        <targetApplication>
-            <r:Description>
-                <id>{{3550f703-e582-4d05-9a08-453d09bdfdc6}}</id>
-                <minVersion>31.0</minVersion>
-                <maxVersion>45.*</maxVersion>
-            </r:Description>
-        </targetApplication>
-    </r:Description>
-</r:RDF>
+        <em:targetApplication>
+            <Description>
+                <em:id>{{3550f703-e582-4d05-9a08-453d09bdfdc6}}</em:id>
+                <em:minVersion>31.0</em:minVersion>
+                <em:maxVersion>45.*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+    </Description>
+</RDF>
