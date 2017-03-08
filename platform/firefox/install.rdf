@@ -14,8 +14,6 @@
         <em:developer>Manuel Reimer</em:developer>
         <em:type>2</em:type>
         <em:bootstrap>true</em:bootstrap>
-        <em:multiprocessCompatible>true</em:multiprocessCompatible>
-        <em:optionsType>2</em:optionsType>
 {localized}
 
         <!-- Firefox -->
