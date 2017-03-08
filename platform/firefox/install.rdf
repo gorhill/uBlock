@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
         <em:id>uBlock0@raymondhill.net</em:id>
         <em:version>{version}</em:version>
@@ -14,6 +12,8 @@
         <em:developer>Manuel Reimer</em:developer>
         <em:type>2</em:type>
         <em:bootstrap>true</em:bootstrap>
+        <em:multiprocessCompatible>true</em:multiprocessCompatible>
+        <em:optionsType>2</em:optionsType>
 {localized}
 
         <!-- Firefox -->
