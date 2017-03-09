@@ -1010,6 +1010,10 @@ var updateNext = function() {
 
     var updateOne = function() {
         var assetKey = findOne();
+
+        if (µBlock.userSettings.eventLogging)
+          console.log("Update", assetKey);
+
         if ( assetKey === undefined ) {
             return updateDone();
         }
