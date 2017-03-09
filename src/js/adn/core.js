@@ -1367,7 +1367,7 @@
 
     // preferences relevant to our ui/content-scripts
     var us = µb.userSettings,
-      showDnt = (!us.disableHidingForDNT && us.dntDomains.contains(hostname));
+      showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
 
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
     return {
