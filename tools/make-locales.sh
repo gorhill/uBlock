@@ -45,7 +45,7 @@ do
     jq -s '.[0] * .[1]' $messages $adnfile > $outfile
     sed -i '' "s/uBlock₀/AdNauseam/g" $outfile
     sed -i '' "s/uBlock Origin/AdNauseam/g" $outfile
-    sed -i '' "s/ ＋ / - /g" $outfile
+    sed -i '' "s/ ＋ / \/ /g" $outfile
   fi
 
 done

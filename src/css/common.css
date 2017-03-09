@@ -120,7 +120,9 @@ a.external-link {
 .custom-check #lists input + label {
   display: none;
 }
-
+.custom-check #lists input#effListInput + label {
+    display: inline-block!important;
+}
 .custom-check #lists input[type="checkbox"]::before{
   margin: 0px 4px 0 0!important;
   vertical-align: baseline!important;
