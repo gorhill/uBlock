@@ -17,9 +17,6 @@ cp -R src/lib                           $DES/
 cp -R src/_locales                      $DES/
 cp    src/*.html                        $DES/
 
-# AMO review feedback: avoid "unnecessary files or folders" in package
-cat   src/background.html | sed -e '/vapi-polyfill\.js/d' > $DES/background.html
-
 mv    $DES/img/icon_128.png             $DES/icon.png
 cp    platform/firefox/css/*            $DES/css/
 cp    platform/firefox/polyfill.js      $DES/js/

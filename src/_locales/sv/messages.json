@@ -76,7 +76,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Öppna loggaren",
+    "message":"Öppna loggen",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{

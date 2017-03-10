@@ -34,47 +34,41 @@ var exports = {};
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/2067
-//   Experimental: Suspend tabs until uBO is fully ready.
+//   Experimental: Block everything until uBO is fully ready.
+// TODO: re-work vAPI code to match more closely how listeners are
+//       registered with the webRequest API. This will simplify implementing
+//       the feature here: we could have a temporary onBeforeRequest listener
+//       which blocks everything until all is ready.
+//       This would allow to avoid the permanent special test at the top of
+//       the main onBeforeRequest just to implement this.
+var onBeforeReady = null;
 
-vAPI.net.onReady = function() {
-    if ( µBlock.hiddenSettings.suspendTabsUntilReady !== true ) {
+if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
+    onBeforeReady = (function() {
+        var suspendedTabs = new Set();
+        µBlock.onStartCompletedQueue.push(function(callback) {
+            onBeforeReady = null;
+            var iter = suspendedTabs.values(),
+                entry;
+            for (;;) {
+                entry = iter.next();
+                if ( entry.done ) { break; }
+                vAPI.tabs.reload(entry.value);
+            }
+            callback();
+        });
+        return function(tabId) {
+            if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+            suspendedTabs.add(tabId);
+            return true;
+        };
+    })();
+} else {
+    µBlock.onStartCompletedQueue.push(function(callback) {
         vAPI.onLoadAllCompleted();
-    }
-    var fn = onBeforeReady;
-    onBeforeReady = null;
-    if ( fn !== null ) {
-        fn('ready');
-    }
-};
-
-var onBeforeReady = (function() {
-    var suspendedTabs = new Set();
-
-    var forceReloadSuspendedTabs = function() {
-        var iter = suspendedTabs.values(),
-            entry;
-        for (;;) {
-            entry = iter.next();
-            if ( entry.done ) { break; }
-            vAPI.tabs.reload(entry.value);
-        }
-    };
-
-    return function(tabId) {
-        if (
-            vAPI.isBehindTheSceneTabId(tabId) ||
-            µBlock.hiddenSettings.suspendTabsUntilReady !== true
-        ) {
-            return;
-        }
-        if ( tabId === 'ready' ) {
-            forceReloadSuspendedTabs();
-            return;
-        }
-        suspendedTabs.add(tabId);
-        return true;
-    };
-})();
+        callback();
+    });
+}
 
 /******************************************************************************/
 
@@ -430,27 +424,28 @@ var processCSP = function(pageStore, details) {
         loggerEnabled = µb.logger.isEnabled();
 
     var context = pageStore.createContextFromPage();
-    context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     if ( details.type !== 'main_frame' ) {
         context.pageHostname = context.pageDomain = context.requestHostname;
     }
 
-    var inlineScriptResult, blockInlineScript;
+    var inlineScriptResult, blockInlineScript,
+        workerResult, blockWorker;
     if ( details.type !== 'script' ) {
         context.requestType = 'inline-script';
+        context.requestURL = requestURL;
         inlineScriptResult = pageStore.filterRequestNoCache(context);
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
+        // https://github.com/gorhill/uBlock/issues/2360
+        context.requestType = 'script';
+        context.requestURL = 'blob:';
+        workerResult = pageStore.filterRequestNoCache(context);
+        blockWorker = µb.isBlockResult(workerResult);
     }
 
     µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
     var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
         blockWebsocket = µb.isBlockResult(websocketResult);
-
-    // https://github.com/gorhill/uBlock/issues/2360
-    µb.staticNetFilteringEngine.matchStringExactType(context, 'blob:', 'script');
-    var workerResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
-        blockWorker = µb.isBlockResult(workerResult);
 
     var headersChanged;
     if ( blockInlineScript || blockWebsocket || blockWorker ) {

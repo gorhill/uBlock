@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
+    <r:Description about="urn:mozilla:install-manifest">
+        <id>uBlock0@raymondhill.net</id>
+        <version>{version}</version>
+        <name>{name}</name>
+        <description>{description}</description>
+        <homepageURL>https://github.com/gorhill/uBlock</homepageURL>
+        <creator>{author}</creator>
+        <developer>Deathamns</developer>
+        <developer>Alex Vallat</developer>
+        <developer>Manuel Reimer</developer>
+        <type>2</type>
+        <bootstrap>true</bootstrap>
+        <multiprocessCompatible>true</multiprocessCompatible>
+        <hasEmbeddedWebExtension>true</hasEmbeddedWebExtension>
+{localized}
+
+        <!-- Firefox -->
+        <targetApplication>
+            <r:Description>
+                <id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</id>
+                <minVersion>52.0a1</minVersion>
+                <maxVersion>*</maxVersion>
+            </r:Description>
+        </targetApplication>
+    </r:Description>
+</r:RDF>
