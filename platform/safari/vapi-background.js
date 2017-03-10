@@ -37,7 +37,7 @@ vAPI.safari = true;
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'uBlock',
+    name: 'uBlock Origin',
     version: safari.extension.displayVersion
 };
 
