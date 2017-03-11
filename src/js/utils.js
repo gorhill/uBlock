@@ -163,6 +163,20 @@
     return line;
 };
 
+µBlock.LineIterator.prototype.rewind = function() {
+    if ( this.offset <= 1 ) {
+        this.offset = 0;
+        return;
+    }
+    var lineEnd = this.text.lastIndexOf('\n', this.offset - 2);
+    if ( lineEnd !== -1 ) {
+        this.offset = lineEnd + 1;
+    } else {
+        lineEnd = this.text.lastIndexOf('\r', this.offset - 2);
+        this.offset = lineEnd !== -1 ? lineEnd + 1 : 0;
+    }
+};
+
 µBlock.LineIterator.prototype.eot = function() {
     return this.offset >= this.textLen;
 };
@@ -197,33 +211,37 @@
 
 /******************************************************************************/
 
-µBlock.mapToArray = function(map) {
-    var out = [],
-        entries = map.entries(),
-        entry;
-    for (;;) {
-        entry = entries.next();
-        if ( entry.done ) { break; }
-        out.push([ entry.value[0], entry.value[1] ]);
-    }
-    return out;
-};
+µBlock.mapToArray = typeof Array.from === 'function'
+    ? Array.from
+    : function(map) {
+        var out = [],
+            entries = map.entries(),
+            entry;
+        for (;;) {
+            entry = entries.next();
+            if ( entry.done ) { break; }
+            out.push([ entry.value[0], entry.value[1] ]);
+        }
+        return out;
+    };
 
 µBlock.mapFromArray = function(arr) {
     return new Map(arr);
 };
 
-µBlock.setToArray = function(dict) {
-    var out = [],
-        entries = dict.values(),
-        entry;
-    for (;;) {
-        entry = entries.next();
-        if ( entry.done ) { break; }
-        out.push(entry.value);
-    }
-    return out;
-};
+µBlock.setToArray = typeof Array.from === 'function'
+    ? Array.from
+    : function(dict) {
+        var out = [],
+            entries = dict.values(),
+            entry;
+        for (;;) {
+            entry = entries.next();
+            if ( entry.done ) { break; }
+            out.push(entry.value);
+        }
+        return out;
+    };
 
 µBlock.setFromArray = function(arr) {
     return new Set(arr);

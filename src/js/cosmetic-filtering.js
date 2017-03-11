@@ -1148,10 +1148,11 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCo
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
@@ -1274,10 +1275,11 @@ FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
@@ -1336,10 +1338,11 @@ FilterContainer.prototype.skipCompiledContent = function(lineIter) {
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
