@@ -32,11 +32,11 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"verberg advertenties in uw geselecteerde <span class='link' id='To3pfilter'> filter lijst <\/span>",
+    "message":"Verberg advertenties in uw geselecteerde <span> filter lijst <\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"register bezoeken op advertenties gevonden via uw <span class='link' id='To3pfilter'>filter lijst<\/span>",
+    "message":"Register bezoeken op advertenties gevonden via uw <span>filter lijst<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
@@ -71,9 +71,9 @@
     "message":"Activeren van de AdNauseam filter",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus en AdNauseam kunnen conflicteren!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock en AdNauseam kunnen conflicteren!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Bekijk Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Pauzeer AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

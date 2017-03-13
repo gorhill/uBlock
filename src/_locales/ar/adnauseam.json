@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"إخفاء الإعلانات في <span class='link' id='To3pfilter'> قوائم التصفية<\/span> المحددة",
+    "message":"إخفاء الإعلانات في <span> قوائم التصفية<\/span> المحددة",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"تسجيل الزيارات على الإعلانات التي وجدت عبر <span class='link' id='To3pfilter'> قوائم التصفية<\/span> الخاصة بك",
+    "message":"تسجيل الزيارات على الإعلانات التي وجدت عبر <span> قوائم التصفية<\/span> الخاصة بك",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"تحسين الإعدادات الخاصة بك للحماية من الإعلانات الخبيثة (<span class='link' id='ToOptions'> تعديل<\/span>)",
+    "message":"تحسين الإعدادات الخاصة بك للحماية من الإعلانات الخبيثة (<span> تعديل<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -71,9 +71,9 @@
     "message":"تفعيل قائمة التصفية أدنوسيام",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"احتمال تعارض بين اد بلوك و ادنوسيام!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"احتمال تعارض بين يوبلوك و ادنوسيام!",
@@ -171,12 +171,8 @@
     "message":"View Ad Vault",
     "description":"appears in ADN popup menu"
   },
-  "adnMenuPause":{
-    "message":"Pause AdNauseam",
-    "description":"appears in ADN popup menu"
-  },
   "adnMenuResume":{
-    "message":"استئناف أدنوسيام",
+    "message":"استئناف",
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
