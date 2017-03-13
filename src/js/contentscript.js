@@ -233,9 +233,9 @@ var platformHideNode = vAPI.hideNode,
         observer,
         changedNodes = [],
         observerOptions = {
-        attributes: true,
-        attributeFilter: [ 'style' ]
-    };
+            attributes: true,
+            attributeFilter: [ 'style' ]
+        };
 
     // https://jsperf.com/clientheight-and-clientwidth-vs-getcomputedstyle
     //   Avoid getComputedStyle(), detecting whether a node is visible can be
@@ -489,9 +489,9 @@ var domFilterer = {
     hiddenNodeEnforcer: false,
     loggerEnabled: undefined,
 
-    newHideSelectorBuffer: [],                  // Hide style filter buffer
-    newStyleRuleBuffer: [],                     // Non-hide style filter buffer
-    simpleHideSelectors: {                      // Hiding filters: simple selectors
+    newHideSelectorBuffer: [], // Hide style filter buffer
+    newStyleRuleBuffer: [],    // Non-hide style filter buffer
+    simpleHideSelectors: {     // Hiding filters: simple selectors
         entries: [],
         matchesProp: vAPI.matchesProp,
         selector: undefined,
@@ -513,7 +513,7 @@ var domFilterer = {
             }
         }
     },
-    complexHideSelectors: {                     // Hiding filters: complex selectors
+    complexHideSelectors: {    // Hiding filters: complex selectors
         entries: [],
         selector: undefined,
         add: function(selector) {
@@ -531,13 +531,8 @@ var domFilterer = {
             }
         }
     },
-    styleSelectors: {                           // Style filters
-        entries: [],
-        add: function(o) {
-            this.entries.push(o);
-        }
-    },
-    proceduralSelectors: {                      // Hiding filters: procedural
+    nqsSelectors: [],          // Non-querySelector-able filters
+    proceduralSelectors: {     // Hiding filters: procedural
         entries: [],
         add: function(o) {
             this.entries.push(new PSelector(o));
@@ -578,7 +573,12 @@ var domFilterer = {
         var o = JSON.parse(selector);
         if ( o.style ) {
             this.newStyleRuleBuffer.push(o.style.join(' '));
-            this.styleSelectors.add(o);
+            this.nqsSelectors.push(o.raw);
+            return;
+        }
+        if ( o.pseudoclass ) {
+            this.newHideSelectorBuffer.push(o.raw);
+            this.nqsSelectors.push(o.raw);
             return;
         }
         if ( o.tasks ) {
