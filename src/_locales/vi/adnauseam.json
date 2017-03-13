@@ -71,9 +71,9 @@
     "message":"Kích hoạt bộ lọc AdNauseam",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus và AdNauseam có thể xung đột với nhau!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock và AdNauseam có thể xung đột với nhau!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Xem Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Tạm dừng AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

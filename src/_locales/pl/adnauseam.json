@@ -71,9 +71,9 @@
     "message":"Aktywuj filtr AdNauseam",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock i AdNauseam mogą ze sobą konfliktować!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock i AdNauseam mogą ze sobą konfliktować!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Wyświetl Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Wstrzymaj AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

@@ -71,9 +71,9 @@
     "message":"Включить AdNauseam фильтры",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus и AdNauseam могут конфликтовать!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Ваше объявление blocker и AdNauseam могут конфликтовать!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock и AdNauseam могут конфликтовать!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Просмотр хранилища рекламы",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Приостановить AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

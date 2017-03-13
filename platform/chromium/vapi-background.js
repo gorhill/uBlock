@@ -1568,7 +1568,7 @@ vAPI.getAddonInfo = function (callback) {
 
         extensions.forEach(function (extension) {
 
-          if (extension.name.startsWith("Adblock") && extension.enabled)
+          if ((extension.name.startsWith("Adblock") || extension.name.startsWith("AdBlock")) && extension.enabled)
             adBlockConflict = true;
           else if (extension.name.startsWith("uBlock") && extension.enabled)
             uBlockConflict = true;

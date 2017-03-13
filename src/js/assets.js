@@ -1010,6 +1010,8 @@ var updateNext = function() {
 
     var updateOne = function() {
         var assetKey = findOne();
+        if (µb.userSettings.eventLogging)
+          console.log("Update", assetKey);
         if ( assetKey === undefined ) {
             return updateDone();
         }

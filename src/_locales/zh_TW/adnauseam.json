@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"隱藏由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
+    "message":"隱藏由你的<span>篩選器列表<\/span>標記的廣告",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"訪問由你的<span class='link' id='To3pfilter'>篩選器列表<\/span>標記的廣告",
+    "message":"訪問由你的<span>篩選器列表<\/span>標記的廣告",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"最佳化設定以遮蔽惡意軟體和隱形的使用者追蹤 (<span class='link' id='ToOptions'>更改<\/span>)",
+    "message":"最佳化設定以遮蔽惡意廣告和隱形的使用者追蹤 (<span>更改<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -71,9 +71,9 @@
     "message":"請啟用 AdNauseam 篩選列表",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus 同 AdNauseam 可能會衝突！",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"廣告攔截插件和 AdNauseam 可能會發生衝突 ！",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock 同 AdNauseam 可能會衝突！",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"查看廣告庫",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"暫停 Adnauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

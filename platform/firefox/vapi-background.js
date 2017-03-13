@@ -3840,7 +3840,7 @@ vAPI.getAddonInfo = function(callback) {
         addons.forEach(function(addon) {
             if(addon.name.startsWith("uBlock") && addon.isActive)
                 uBlockConflict = true;
-            if(addon.name.startsWith("Adblock") && addon.isActive)
+            if(( addon.name.startsWith("Adblock") || addon.name.startsWith("AdBlock")) && addon.isActive)
                 adBlockConflict = true;
         });
 

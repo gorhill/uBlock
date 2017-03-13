@@ -46,6 +46,7 @@ do
     sed -i '' "s/uBlock₀/AdNauseam/g" $outfile
     sed -i '' "s/uBlock Origin/AdNauseam/g" $outfile
     sed -i '' "s/ ＋ / \/ /g" $outfile
+    sed -i '' "s/Ctrl+click/Alt+click/g" $outfile
   fi
 
 done
