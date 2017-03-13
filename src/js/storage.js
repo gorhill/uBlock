@@ -180,8 +180,7 @@
         var listKeys = [];
         if ( bin.selectedFilterLists ) {
             listKeys = bin.selectedFilterLists;
-        }
-        if ( bin.remoteBlacklists ) {
+        } else if ( bin.remoteBlacklists ) {
             var oldListKeys = µb.newListKeysFromOldData(bin.remoteBlacklists);
             if ( oldListKeys.sort().join() !== listKeys.sort().join() ) {
                 listKeys = oldListKeys;
