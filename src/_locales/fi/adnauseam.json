@@ -71,9 +71,9 @@
     "message":"Activate the AdNauseam filter",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus ja AdNauseam olla ristiriidassa!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock ja AdNauseam saattavat olla ristiriidassa!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Katso mainosvarastoa",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Pysäytä AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

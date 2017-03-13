@@ -346,9 +346,11 @@ button.important {
 }
 .notification.dnt button,#DNTClickNotHide.notification button{
   right:-75px;
+  display: none;
 }
 .notification.dnt:hover > button,#DNTClickNotHide.notification:hover > button{
   right:10px;
+  display: block;
   animation-duration: .5s;
   animation-name: slidefromRight;
 }
@@ -404,6 +406,7 @@ button.success:hover:enabled,
 button.dnt:hover:enabled {
   color: #DFF2BF;
   background-color: #4F8A10 !important;
+
 }
 
 @keyframes slidefromRight {

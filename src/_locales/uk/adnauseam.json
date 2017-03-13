@@ -71,9 +71,9 @@
     "message":"Активувати AdNauseam фільтр",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
-  "adnNotificationDisableAdBlockPlus":{
-    "message":"AdBlock Plus і AdNauseam можуть конфліктувати!",
-    "description":"English: Notifications -> AdBlock Plus and AdNauseam may conflict!"
+  "adnNotificationDisableAdBlocker":{
+    "message":"Your ad blocker and AdNauseam may conflict!",
+    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
     "message":"uBlock і AdNauseam можуть конфліктувати!",
@@ -169,10 +169,6 @@
   },
   "adnMenuViewVault":{
     "message":"Перегляд Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuPause":{
-    "message":"Призупинити AdNauseam",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{

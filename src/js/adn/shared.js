@@ -137,27 +137,19 @@ var AdNauseamTxt = new Notification({
 });
 AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
 
-var AdBlockPlusEnabled = new Notification({
-  name: 'AdBlockPlusEnabled',
-  text: 'adnNotificationDisableAdBlockPlus',
+var AdBlockerEnabled = new Notification({
+  name: 'AdBlockerEnabled',
+  text: 'adnNotificationDisableAdBlocker',
   button: 'adnNotificationDisable',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
-AdBlockPlusEnabled.func = openExtPage.bind(AdBlockPlusEnabled);
+AdBlockerEnabled.func = openExtPage.bind(AdBlockerEnabled);
 
-var UBlockEnabled = new Notification({
-  name: 'UBlockEnabled',
-  text: 'adnNotificationDisableUBlock',
-  button: 'adnNotificationDisable',
-  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
-  firstrun: true
-});
-UBlockEnabled.func = openExtPage.bind(UBlockEnabled);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockPlusEnabled, UBlockEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
 
 function Notification(m) {
 
@@ -306,9 +298,9 @@ var modifyDNTNotifications = function () {
        newlink = uDom('span>#notify-link').nodes;
 
    if (text.length > 0 && link.length > 0 && newlink.length === 0) {
-       var sections = text[0].innerText.split(','),
+       var sections = text[0].innerText.indexOf(",") > 0 ? text[0].innerText.split(',') : text[0].innerText.split('，'),
            newText = sections[0] + link[0].outerHTML + "," + sections[1];
-
+      
        text[0].innerHTML = newText;
        uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
    }

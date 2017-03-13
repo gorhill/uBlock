@@ -1728,25 +1728,10 @@
     var notes = notifications,
       modified = false;
 
-    vAPI.getAddonInfo(function (UBlockConflict, AdBlockPlusConflict) {
+    vAPI.getAddonInfo(function (UBlockConflict, AdBlockConflict) {
 
-      if (AdBlockPlusConflict) {
-
-        modified = addNotification(notes, AdBlockPlusEnabled);
-
-      } else {
-
-        modified = removeNotification(notes, AdBlockPlusEnabled);
-      }
-
-      if (UBlockConflict) {
-
-        modified = addNotification(notes, UBlockEnabled);
-
-      } else {
-
-        modified = removeNotification(notes, UBlockEnabled);
-      }
+      if(UBlockConflict || AdBlockConflict) modified = addNotification(notes, AdBlockerEnabled);
+      else modified = removeNotification(notes, AdBlockerEnabled);
 
       modified && sendNotifications(notes);
     });
