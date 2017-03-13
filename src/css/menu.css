@@ -381,7 +381,7 @@ header{
   line-height: 85px;
   text-indent: 20px;
   font-size: 30px;
-  font-family: Bebas Neue;
+  font-family: bebas_neue;
 }
 .ad-item.just-visited::before,
 .ad-item-text.just-visited::before {
