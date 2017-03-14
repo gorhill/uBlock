@@ -1079,13 +1079,13 @@ var getURLFilteringData = function(details) {
         colorEntry = colors[url] = { r: 0, own: false };
         if ( suf.evaluateZ(context, url, type).r !== 0 ) {
             colorEntry.r = suf.r;
-            colorEntry.own = suf.context === context && suf.url === url && suf.type === type;
+            colorEntry.own = suf.r !== 0 && suf.context === context && suf.url === url && suf.type === type;
         }
         if ( response.dirty ) {
             continue;
         }
         puf.evaluateZ(context, url, type);
-        response.dirty = colorEntry.own !== (puf.context === context && puf.url === url && puf.type === type);
+        response.dirty = colorEntry.own !== (puf.r !== 0 && puf.context === context && puf.url === url && puf.type === type);
     }
     return response;
 };
