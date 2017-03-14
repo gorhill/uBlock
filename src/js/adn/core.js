@@ -1688,10 +1688,12 @@
    */
   var adlist = exports.adlist = function (pageUrl, currentOnly) {
 
-    var result = [], pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
-      : Object.keys(admap || µb.userSettings.admap);
+    admap = admap || µb.userSettings.admap;
 
-    for (var i = 0; i < pages.length; i++) {
+    var result = [], pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
+      : Object.keys(admap);
+
+    for (var i = 0; admap && i < pages.length; i++) {
 
       if (admap[pages[i]]) {
 
