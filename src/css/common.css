@@ -111,7 +111,9 @@ a.external-link {
 
 /* CUSTOM CHECKBOX */
 
-.custom-check input[type="checkbox"], .custom-check #lists input#effListInput[type="checkbox"]{
+.custom-check input[type="checkbox"],
+.custom-check #lists input#effListInput[type="checkbox"],
+.custom-check ul li input[type="radio"]{
   display:none;
 }
 .custom-check #lists input[type="checkbox"]{
@@ -127,7 +129,20 @@ a.external-link {
   margin: 0px 4px 0 0!important;
   vertical-align: baseline!important;
 }
-.custom-check input[type="checkbox"] + label::before, .custom-check #lists input[type="checkbox"]:not(#effListInput)::before{
+.custom-check ul{
+  margin-top: 1em;
+  border: solid 1px #555;
+  padding:.5em 0 1em .5em;
+  margin-left: -.5em;
+  border-radius: 8px;
+  width:200px;
+}
+.custom-check ul>label {
+  text-transform: uppercase;
+}
+.custom-check input[type="checkbox"] + label::before,
+.custom-check #lists input[type="checkbox"]:not(#effListInput)::before,
+.custom-check ul li input[type="radio"] + label::before{
   content: "";
   display:inline-block;
   width:12px;
@@ -139,7 +154,9 @@ a.external-link {
   cursor:pointer;
   border-radius: 3px;
 }
-.custom-check input[type="checkbox"]:checked + label::before,.custom-check #lists input[type="checkbox"]:not(#effListInput):checked:before{
+.custom-check input[type="checkbox"]:checked + label::before,
+.custom-check #lists input[type="checkbox"]:not(#effListInput):checked:before,
+.custom-check ul li input[type="radio"]:checked + label::before{
   background: #0076FF url(../img/check.svg) center center no-repeat;
   color: black;
   content: "";
