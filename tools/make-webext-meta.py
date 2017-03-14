@@ -43,6 +43,7 @@ for alpha2 in sorted(os.listdir(source_locale_dir)):
     descriptions[alpha2] = strings['extShortDesc']['message']
 
 webext_manifest['author'] = chromium_manifest['author'];
+webext_manifest['name'] = chromium_manifest['name'] + '/webext';
 webext_manifest['homepage'] = 'https://github.com/gorhill/uBlock'
 webext_manifest['description'] = descriptions['en']
 del descriptions['en']
