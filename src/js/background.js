@@ -59,9 +59,9 @@ return {
 
         clickOnlyWhenIdleFor: 0,
         noIncomingCookies: true,
-        noOutgoingCookies: true,
-        noOutgoingReferer: true,
-        noOutgoingUserAgent: true,
+        noOutgoingCookies: false,
+        noOutgoingReferer: false,
+        noOutgoingUserAgent: false,
         advancedUserEnabled: true,
 
         alwaysDetachLogger: false,
