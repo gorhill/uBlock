@@ -285,6 +285,12 @@ button.large.disabled {
 button.custom:hover {
     opacity: 1.0;
     }
+button.custom#buttonUpdateAdNauseam{
+  font-size:14px;
+  border-width:1px;
+  padding:3px;
+  height:24px;
+}
 button.important {
     padding: 1px 2em;
     }

@@ -222,6 +222,13 @@ var renderFilterLists = function(soft) {
         //if (entry.hidden) li.classList.toggle('hidden', true); // ADN
 
         li.classList.remove('discard');
+
+        //add adnauseam update button
+        if (listKey === "adnauseam-filters") {
+            var button = document.getElementById("buttonUpdateAdNauseam");
+            li.appendChild(button);
+        }
+        
         return li;
     };
 
@@ -240,7 +247,7 @@ var renderFilterLists = function(soft) {
     var liFromListGroup = function(groupKey, listKeys) {
 
 
-
+      
       var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
 
        // ADN: change some group key names
@@ -566,6 +573,7 @@ var selectFilterLists = function(callback) {
 
 /******************************************************************************/
 
+
 var buttonApplyHandler = function() {
     uDom('#buttonApply').removeClass('enabled');
     var onSelectionDone = function() {
@@ -575,7 +583,13 @@ var buttonApplyHandler = function() {
     selectFilterLists(onSelectionDone);
     renderWidgets();
 };
+/******************************************************************************/
 
+var buttonUpdateAdNauseam = function() {
+    //only update adnauseam.txt
+    messaging.send('dashboard', { what: 'forceUpdateAdnauseam' });
+    renderWidgets();
+};
 /******************************************************************************/
 
 var buttonUpdateHandler = function() {
@@ -714,6 +728,8 @@ uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#buttonApply').on('click', buttonApplyHandler);
 uDom('#buttonUpdate').on('click', buttonUpdateHandler);
+uDom('#buttonUpdateAdNauseam').on('click', buttonUpdateAdNauseam);
+
 uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
 uDom('#listsOfBlockedHostsPrompt').on('click', toggleUnusedLists);
 uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
