@@ -129,7 +129,7 @@ a.external-link {
   margin: 0px 4px 0 0!important;
   vertical-align: baseline!important;
 }
-.custom-check ul{
+.custom-check ul#clickingFrequency{
   margin-top: 1em;
   border: solid 1px #555;
   padding:.5em 0 1em .5em;
@@ -285,6 +285,12 @@ button.large.disabled {
 button.custom:hover {
     opacity: 1.0;
     }
+button.custom#buttonUpdateAdNauseam{
+  font-size:14px;
+  border-width:1px;
+  padding:3px;
+  height:24px;
+}
 button.important {
     padding: 1px 2em;
     }

@@ -53,6 +53,7 @@ var getDomainNames = function(targets) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+
     // Async
     switch ( request.what ) {
     case 'getAssetContent':
@@ -121,6 +122,10 @@ var onMessage = function(request, sender, callback) {
     case 'forceUpdateAssets':
         µb.scheduleAssetUpdater(0);
         µb.assets.updateStart({ delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod || 2000 });
+        break;
+
+    case 'forceUpdateAdnauseam':
+        µb.assets.updateAdNauseam();
         break;
 
     case 'getAppData':
