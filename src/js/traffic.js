@@ -437,9 +437,11 @@ var processCSP = function(pageStore, details) {
         inlineScriptResult = pageStore.filterRequestNoCache(context);
         blockInlineScript = µb.isBlockResult(inlineScriptResult);
         // https://github.com/gorhill/uBlock/issues/2360
+        // https://github.com/gorhill/uBlock/issues/2440
         context.requestType = 'script';
         context.requestURL = 'blob:';
-        workerResult = pageStore.filterRequestNoCache(context);
+        µb.staticNetFilteringEngine.matchString(context);
+        workerResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
         blockWorker = µb.isBlockResult(workerResult);
     }
 
@@ -469,7 +471,7 @@ var processCSP = function(pageStore, details) {
                 context.pageHostname
             );
         }
-        if ( websocketResult !== '' ) {
+        if ( websocketResult ) {
             µb.logger.writeOne(
                 tabId,
                 'net',
@@ -480,7 +482,7 @@ var processCSP = function(pageStore, details) {
                 context.pageHostname
             );
         }
-        if ( workerResult !== '' ) {
+        if ( workerResult ) {
             µb.logger.writeOne(
                 tabId,
                 'net',
