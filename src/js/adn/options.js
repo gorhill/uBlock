@@ -81,6 +81,8 @@
 
   var changeUserSettings = function (name, value) {
 
+    //console.log('changeUserSettings',name, value);
+
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -139,8 +141,6 @@
       input.value = value;
     }
 
-    //    uDom('.clickingAds-child').on('change', onClickProbabilityChanged);
-    console.log(name,value);
     changeUserSettings(name, value);
   };
 
@@ -189,8 +189,6 @@
         uNode.val(details[uNode.attr('data-setting-name')])
           .on('change', onInputChanged);
       });
-
-
 
     uDom('#reset').on('click', clearAds);
     uDom('#export').on('click', exportToFile);
