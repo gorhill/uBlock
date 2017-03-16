@@ -98,6 +98,8 @@ vAPI.matchesProp = (function() {
             return 'mozMatchesSelector';
         } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
             return 'webkitMatchesSelector';
+        } else if ( typeof docElem.msMatchesSelector === 'function' ) {
+            return 'msMatchesSelector';
         }
     }
     return 'matches';
