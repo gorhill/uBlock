@@ -93,7 +93,7 @@
 
   var renderAds = function (json) {
 
-    // console.log('renderAds: ', json);
+    console.log('renderAds: ', json);
     gAds = json.data; // store
     addInterfaceHandlers();
     createSlider(true);
@@ -550,19 +550,20 @@
 
   function computeStats(adsets) {
 
-    var numVisits = numVisited(adsets);
+    var numVisits = numVisited(gAds);
     $('.since').text(sinceTime(adsets));
     $('#clicked').text(numVisits);
     $('#detected').text(numFound(adsets));
+    $('#total').text(numTotal());
     setCost(numVisits);
   }
 
   function numVisited(adsets) {
-
+   //TODO: update after visit
     var numv = 0;
 
     for (var i = 0, j = adsets && adsets.length; i < j; i++)
-      numv += (adsets[i].visitedCount());
+      numv += (adsets[i].visitedTs > 0);
 
     return numv;
   }
@@ -575,6 +576,11 @@
       numv += (adsets[i].count());
 
     return numv;
+  }
+
+  function numTotal() {
+
+    return gAds.length;
   }
 
   function sinceTime(adsets) {

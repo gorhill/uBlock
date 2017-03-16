@@ -506,6 +506,22 @@
     vAPI.closePopup();
   });
 
+    uDom('#help-button').on('click', function () {
+
+    vAPI.messaging.send(
+      'default', {
+        what: 'gotoURL',
+        details: {
+          url: "https://github.com/dhowe/AdNauseam/wiki/FAQ",
+          select: true,
+          index: -1
+        }
+      }
+    );
+
+    vAPI.closePopup();
+  });
+
   //$('#settings-close')
   uDom('#settings-close').on('click', function () {
 
