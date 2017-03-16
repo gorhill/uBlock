@@ -604,16 +604,21 @@ footer {
 button.pause,
 button.resume,
 button.settings {
-  width: 162px;
+  width: 153px;
   float: left;
-  margin-right: 7px;
+  margin-right: 6px;
 }
 button:disabled {
   opacity:.4;
   cursor: default;
 }
-button.about {
+button.about,
+button.help {
   width: 27px;
+  float: left;
+}
+button.about {
+  margin-right: 6px;
 }
 
 /* ============================================================
