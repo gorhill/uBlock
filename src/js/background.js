@@ -56,6 +56,7 @@ return {
         blockingMalware: false,
         disableHidingForDNT: false,
         disableClickingForDNT: false,
+        clickProbability: 1.0,
 
         clickOnlyWhenIdleFor: 0,
         noIncomingCookies: true,
