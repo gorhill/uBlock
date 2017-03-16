@@ -285,6 +285,7 @@ header{
   border-top: #383838 1px solid;
   border-bottom: #000 1px solid;
   position: relative;
+  overflow: hidden;
 }
 
 .ad-item a {

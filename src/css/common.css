@@ -350,6 +350,7 @@ button.important {
   background-position: 3px center;
   background-repeat: no-repeat;
   position: relative;
+  overflow: hidden;
 }
 .notification button{
   background-image: none !important;
