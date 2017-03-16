@@ -81,8 +81,6 @@
 
   var changeUserSettings = function (name, value) {
 
-    //console.log('changeUserSettings',name, value);
-
     messager.send('dashboard', {
       what: 'userSettings',
       name: name,
@@ -96,7 +94,37 @@
       updateGroupState();
     });
   };
+/******************************************************************************/
 
+  var ClickProbabilityChanged = function() {
+      var p, selection = uDom('input[name="click-frequency"]:checked'),
+          tag = selection.attr("id").replace("click-frequency-","");
+
+      switch (tag) {
+          case "all":
+          p = 1;
+          break;
+
+          case "most":
+          p = 0.75;
+          break;
+
+          case "some":
+          p = 0.3;
+          break;
+
+          case "occasional":
+          p = 0.1;
+          break;
+      }
+      
+    messager.send('dashboard', {
+      what: 'userSettings',
+      name: 'onClickProbability',
+      value: p
+    });
+  
+  };
 
   /******************************************************************************/
 
@@ -111,6 +139,8 @@
       input.value = value;
     }
 
+    //    uDom('.clickingAds-child').on('change', onClickProbabilityChanged);
+    console.log(name,value);
     changeUserSettings(name, value);
   };
 
@@ -145,7 +175,11 @@
             this.checked
           );
         });
+
+
     });
+
+    uDom('input[type="radio"]').on('click',ClickProbabilityChanged);
 
     uDom('[data-setting-name="noLargeMedia"] ~ label:first-of-type > input[type="number"]')
       .attr('data-setting-name', 'largeMediaSize')
@@ -155,6 +189,8 @@
         uNode.val(details[uNode.attr('data-setting-name')])
           .on('change', onInputChanged);
       });
+
+
 
     uDom('#reset').on('click', clearAds);
     uDom('#export').on('click', exportToFile);
