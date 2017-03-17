@@ -551,7 +551,6 @@
   }
 
   function computeStats(adsets) {
-    console.log("computeStats");
     var numVisits = numVisited(gAds);
     $('.since').text(sinceTime(adsets));
     $('#clicked').text(numVisits);
