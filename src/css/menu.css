@@ -213,8 +213,9 @@ header{
 
 #toggle-button {
   display: block;
-  height: 100px;
-  width: 100px;
+  height: 90px;
+  width: 90px;
+  margin:10px 0 0 10px;
   background: url(../img/active@2x.png) center center no-repeat;
   background-size: 100px 100px;
   float: left;
