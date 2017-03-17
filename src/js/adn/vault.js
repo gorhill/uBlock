@@ -61,7 +61,6 @@
       break;
 
     case 'adDetected':
-      //  TODO: add to edge of pack
       //console.log('ad-detected');
       break;
 
@@ -206,6 +205,9 @@
 
     var groupInfo = findAdById(updated.id),
       adset, itemClass, $item;
+
+    for (var i = 0, j = gAds && gAds.length; i < j; i++)
+      if(gAds[i].id === updated.id) gAds[i] = updated;
 
     if (groupInfo) {
 
