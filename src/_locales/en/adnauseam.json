@@ -240,11 +240,15 @@
     "description": "appears in ADN popup menu"
   },
   "adnVaultAdsClicked": {
-    "message": "Ads clicked",
+    "message": "Clicked",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "shown",
+    "message": "ads collected",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "showing",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {

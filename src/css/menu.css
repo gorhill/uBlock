@@ -285,7 +285,6 @@ header{
   border-top: #383838 1px solid;
   border-bottom: #000 1px solid;
   position: relative;
-  overflow: hidden;
 }
 
 .ad-item a {
@@ -424,6 +423,7 @@ header{
 .ad-item-text {
   padding: 10px 20px 0 130px;
   font-size: 10px;
+  overflow: hidden;
 }
 
 .ad-item-text .thumb {
