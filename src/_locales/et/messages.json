@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Võrgutaotluste logi",
+    "message":"uBlock₀ — Võrgutaotluste logi",
     "description":"Title for the logger window"
   },
   "aboutPageName":{

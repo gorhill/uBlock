@@ -3,11 +3,11 @@ Um bloqueador eficiente: leve na memória e CPU e, no entanto, consegue carregar
 Visão geral ilustradora da sua eficiência:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Utilização: O botão grande de energia na janela serve para desativar ou ativar, permanentemente, o uBlock para o web site atual. Aplica-se unicamente ao web site atual, não sendo um botão de energia global.
+Utilização: O botão grande de energia na janela serve para desativar/ativar permanentemente o uBlock para o web site atual. Aplica-se unicamente ao web site atual, não sendo um botão de energia global.
 
 ***
 
-Flexível, é mais do que um bloqueador de anúncios. Pode também ler e criar filtros a partir de ficheiros de servidores.
+Flexível, é mais do que um "bloqueador de anúncios": pode também ler e criar filtros a partir de ficheiros de servidores.
 
 Por predefinição, estas listas de filtros são carregadas e aplicadas:
 
@@ -27,7 +27,7 @@ Se quiser, estão disponíveis mais listas para seleção:
 
 Obviamente que quanto maior o número de filtros ativos, maior será o consumo de memória. No entanto, mesmo após adicionar as duas listas extra do Fanboy, hpHosts Ad and tracking servers, o uBlock₀ continua a consumir menos memória do que outros bloqueadores populares disponíveis.
 
-Esteja ciente de que se selecionar algumas destas listas extra pode resultar numa probabilidade acrescida de rutura em alguns web sites -- especialmente nas listas que são normalmente utilizadas como ficheiro de servidores.
+Esteja ciente de que selecionar algumas destas listas extra pode resultar numa probabilidade acrescida de rutura em alguns web sites -- especialmente as listas que são normalmente utilizadas como ficheiro de servidores.
 
 ***
 
@@ -35,7 +35,7 @@ Sem as listas de filtros predefinidas, esta extensão não é nada. Se realmente
 
 ***
 
-Grátis.
+Livre.
 Código aberto com licença pública (GPLv3)
 De utilizadores para utilizadores.
 
