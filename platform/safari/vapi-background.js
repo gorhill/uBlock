@@ -1028,28 +1028,33 @@ vAPI.net.registerListeners = function() {
         onBeforeRequestClient = onBeforeRequest.callback,
         onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback;
 
+    // https://github.com/el1t/uBlock-Safari/issues/32
+    // Ignore websocket/webworker directives
+    var shouldBlockResponseHeader = /script-src/;
+
     var onBeforeRequestAdapter = function(e) {
         if ( e.name !== 'canLoad' ) {
             return;
         }
         e.stopPropagation && e.stopPropagation();
-        if ( e.message.type === 'main_frame' ) {
-            vAPI.tabs.onNavigation({
-                url: e.message.url,
-                frameId: 0,
-                tabId: vAPI.tabs.getTabId(e.target).toString()
-            });
-            e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
-            e.message.tabId = vAPI.tabs.getTabId(e.target);
-            e.message.responseHeaders = [];
-            onBeforeRequestClient(e.message);
-            var blockVerdict = onHeadersReceivedClient(e.message);
-            e.message = {
-                shouldBlock: blockVerdict && blockVerdict.responseHeaders
-            };
-            return;
-        }
         switch ( e.message.type ) {
+            case 'main_frame':
+                vAPI.tabs.onNavigation({
+                    url: e.message.url,
+                    frameId: 0,
+                    tabId: vAPI.tabs.getTabId(e.target).toString()
+                });
+                e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
+                e.message.tabId = vAPI.tabs.getTabId(e.target);
+                e.message.responseHeaders = [];
+                onBeforeRequestClient(e.message);
+                var blockVerdict = onHeadersReceivedClient(e.message);
+                blockVerdict = blockVerdict && blockVerdict.responseHeaders && blockVerdict.responseHeaders[0] &&
+                    shouldBlockResponseHeader.test(blockVerdict.responseHeaders[0].value);
+                e.message = {
+                    shouldBlock: blockVerdict === true
+                };
+                return;
             case 'popup':
                 var openerTabId = vAPI.tabs.getTabId(e.target).toString();
                 var shouldBlock = !!vAPI.tabs.onPopupUpdated('preempt', openerTabId, e.message.url);
