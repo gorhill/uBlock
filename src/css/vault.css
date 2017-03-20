@@ -256,7 +256,9 @@ div.tooltip {
 	font-weight: 700;
 	color: #0076FF;
 }
-
+.session-sum .showing {
+	display: none;
+}
 #actions {
 	position: relative;
 	z-index: 100;
