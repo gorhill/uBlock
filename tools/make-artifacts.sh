@@ -4,6 +4,9 @@ CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 FIREFOX=/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin
 OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
+# before running, check that above programs exist, as well as that 'webext' cmd exists 
+# if not, exit with error 
+
 DES=dist/build
 ARTS=artifacts
 
@@ -14,7 +17,8 @@ VERSION=`jq .version manifest.json | tr -d '"'`
 
 
 # CLEAN
-rm -rf ${ARTS}/*
+rm -rf ${ARTS}
+mkdir ${ARTS}
 rm -rf ${DES}/*
 
 
