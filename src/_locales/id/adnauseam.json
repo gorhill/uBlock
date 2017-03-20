@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
+    "message":"sembunyikan iklan di <span>daftar filter<\/span> yang telah Anda pilih",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
+    "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span>daftar filter<\/span> Anda",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span class='link' id='ToOptions'> Sesuaikan<\/span>)",
+    "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span> Sesuaikan<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{

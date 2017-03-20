@@ -32,7 +32,7 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"скриване на реклами във вашите избрани <span class='link' id='To3pfilter'> списъци за филтриране<\/span>",
+    "message":"скриване на реклами във вашите избрани <span> списъци за филтриране<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{

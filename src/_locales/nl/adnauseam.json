@@ -40,7 +40,7 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimaliseren van uw instellingen ter bescherming tegen malware en niet-visuele trackers (<span class='link' id='ToOptions'> aanpassen<\/span>)",
+    "message":"optimaliseren van uw instellingen ter bescherming tegen malware en niet-visuele trackers (<span> aanpassen<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
