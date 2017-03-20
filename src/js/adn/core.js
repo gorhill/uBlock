@@ -303,7 +303,7 @@
 
     var pending = ad && ad.attempts < maxAttemptsPerAd
       && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
-
+  
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
       log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
@@ -1542,7 +1542,7 @@
     }
 
     ad.id = ++idgen; // gets an id only if its not a duplicate
-    ad.noVisit = Math.random() < µb.userSettings.clickProbability; // if true, ad will never be visited
+    ad.noVisit = Math.random() > µb.userSettings.clickProbability; // if true, ad will never be visited
 
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
