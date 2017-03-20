@@ -235,12 +235,12 @@
     "message":"Lösche",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Werbungen geklickt",
+  "adnVaultFound":{
+    "message":"Werbungen gesammelt",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"angezeigt",
+  "adnVaultShowing":{
+    "message":"gezeigt",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Verweisseite bei Webpagebesuchen ausblenden",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Alle Werbungen klicken",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Meisten Werbungen klicken",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Einige Werbungen klicken",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Wenige Werbungen klicken",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Ausnahme für nicht-trackende Anzeigen",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Sprachen",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Aktualisieren",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Weiße Liste",

@@ -235,12 +235,12 @@
     "message":"Vyčistiť",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Kliknuté reklamy",
+  "adnVaultFound":{
+    "message":"reklamy, ktoré sa zhromažďujú",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"zobrazené",
+  "adnVaultShowing":{
+    "message":"zobrazujem",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Skryť predchádzajúcu stránku pri zobrazeniach",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Klikať na všetky reklamy",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Klikať na všetky reklamy",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Klikať na niektoré reklamy",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Klikať na príležitostné reklamy",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Udeliť výnimku pre nesledovacie reklamy",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Jazyky",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Posodobi",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Zoznam povolených",

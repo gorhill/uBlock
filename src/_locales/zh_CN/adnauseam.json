@@ -235,12 +235,12 @@
     "message":"清空",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"已点击",
+  "adnVaultFound":{
+    "message":"已收集的广告",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"个广告被显示",
+  "adnVaultShowing":{
+    "message":"显示",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"当访问广告时隐藏引用页面",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"点击所有广告",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"点击大多数广告",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"点击一些广告",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"点击少数广告",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"排除非追踪广告",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"语言",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"更新",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"白名单",

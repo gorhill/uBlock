@@ -235,11 +235,11 @@
     "message":"Очистить",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Рекламы кликнуто",
+  "adnVaultFound":{
+    "message":"собраны объявления",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
+  "adnVaultShowing":{
     "message":"показано",
     "description":"appears on vault page"
   },
@@ -299,6 +299,22 @@
     "message":"Скрывать исходную страницу при посещении",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Кликать по Все рекламе",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Кликать по большинство рекламе",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Кликать по некоторые рекламе",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Кликать по Случайные рекламе",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Сделать исключения для неследящей рекламы",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Языки",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Обновить",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Белые списки",
