@@ -32,7 +32,7 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"隐藏由你的<span class='link' id='To3pfilter'>筛选器列表<\/span>标记的广告",
+    "message":"隐藏由你的<span>筛选器列表<\/span>标记的广告",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
