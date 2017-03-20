@@ -45,7 +45,7 @@ mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.webext.zip
 
 
 # CHROME-RAW
-cd dist/build
+cd ${DES}
 zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
 cd -
 
