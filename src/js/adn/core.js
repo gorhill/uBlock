@@ -132,7 +132,7 @@
       }, 2000);
     }
 
-    clearVisitData && clearAdVisits(ads);
+    if (clearVisitData) clearAdVisits(ads);
 
     while (i--) {
 
@@ -221,7 +221,7 @@
     //log('[CRYPT] '+adCount()+ ' ads hash-verified');
   }
 
-  var clearAdVisits = function (ads) {
+  var clearAdVisits = function (ads) { // for dev-debugging only
 
     warn("[WARN] Clearing all Ad visit data!");
 
@@ -229,7 +229,8 @@
 
     ads.forEach(function (ad) {
 
-      ad.resolvedTargetUrl = null;
+      delete ad.noVisit; // Note: ignore click-prob & assume all ads should be re-visited
+      delete ad.resolvedTargetUrl;
       ad.attemptedTs = 0;
       ad.visitedTs = 0;
       ad.attempts = 0
@@ -1541,6 +1542,7 @@
     }
 
     ad.id = ++idgen; // gets an id only if its not a duplicate
+    ad.noVisit = Math.random() < µb.userSettings.clickProbability; // if true, ad will never be visited
 
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
@@ -1625,7 +1627,7 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        if (0) { // TODO: do we block 3rd party-requests to DNT-domains? disabled for now
+        if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
           var cval = headers[i].value.trim();
           var domain = cookieAttr(cval, 'domain');
@@ -1926,7 +1928,7 @@
 
     admap = map;
     computeNextId();
-    clearVisitData && clearAdVisits();
+    if (clearVisitData) clearAdVisits();
     storeUserData();
 
     importedCount = adCount() - count;
