@@ -25,8 +25,7 @@ git commit -m "Release v$VERSION"
 git tag -a v$VERSION -m "Release v$VERSION"
 
 # push to GitHub
-#git push --force origin master --tags  
-#git push --force origin master && git push --tags
-#git push && git push --tags
-git push && git push origin v$VERSION
+#git push && git push origin v$VERSION
+
+echo "done: now submit a PR for the new tag"
 
