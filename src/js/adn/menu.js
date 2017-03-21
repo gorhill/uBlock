@@ -594,8 +594,6 @@
       return;
     }
 
-    console.log(ev);
-
     vAPI.messaging.send(
       'adnauseam', {
         what: 'toggleEnabled',
