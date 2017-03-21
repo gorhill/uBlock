@@ -2106,13 +2106,6 @@ FilterContainer.prototype.removeBadFilters = function() {
         if ( entry === undefined ) {
             continue;
         }
-        if ( entry instanceof FilterHostnameDict ) {
-            entry.remove(fclass);  // 'fclass' is hostname
-            if ( entry.size === 0 ) {
-                this.categories.delete(hash);
-            }
-            continue;
-        }
         if ( entry instanceof FilterBucket ) {
             entry.remove(fclass, fdata);
             if ( entry.filters.length === 1 ) {
@@ -2120,8 +2113,22 @@ FilterContainer.prototype.removeBadFilters = function() {
             }
             continue;
         }
+        if ( entry instanceof FilterHostnameDict ) {
+            entry.remove(fclass);  // 'fclass' is hostname
+            if ( entry.size === 0 ) {
+                bucket.delete(token);
+                if ( bucket.size === 0 ) {
+                    this.categories.delete(hash);
+                }
+            }
+            continue;
+        }
         if ( entry.fid === fclass && entry.toSelfie() === fdata ) {
-            this.categories.delete(hash);
+            bucket.delete(token);
+            if ( bucket.size === 0 ) {
+                this.categories.delete(hash);
+            }
+            continue;
         }
     }
 };
