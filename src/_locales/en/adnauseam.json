@@ -239,10 +239,6 @@
     "message": "Import Ads",
     "description": "appears in ADN popup menu"
   },
-  "adnVaultAdsClicked": {
-    "message": "Clicked",
-    "description": "appears on vault page"
-  },
   "adnVaultFound": {
     "message": "ads collected",
     "description": "appears on vault page"
@@ -359,6 +355,10 @@
   "3pGroupRegions": {
     "message": "Languages",
     "description": "English: Languages"
+  },
+   "3pPageUpdate":{
+    "message":"Update",
+    "description":"English: update"
   },
   "whitelistPageName": {
     "message": "Whitelists",

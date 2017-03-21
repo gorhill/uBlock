@@ -594,11 +594,13 @@
       return;
     }
 
+    console.log(ev);
+
     vAPI.messaging.send(
       'adnauseam', {
         what: 'toggleEnabled',
         url: popupData.pageURL,
-        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
+        scope: ev.altKey || ev.metaKey ? 'page' : '',
         state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
         tabId: popupData.tabId
       });

@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"piilota mainokset valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
+    "message":"piilota mainokset valitsemistasi <span>suodatuslistoista<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"rekisteröi vierailut mainoksiin valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
+    "message":"rekisteröi vierailut mainoksiin valitsemistasi <span>suodatuslistoista<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimoi asetuksiasi suojautuaksesi haitallisilta mainoksilta (<span class='link' id='ToOptions'>mukauta<\/span>)",
+    "message":"optimoi asetuksiasi suojautuaksesi haitallisilta mainoksilta (<span>mukauta<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -235,12 +235,12 @@
     "message":"Tyhjennä",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Mainoksia klikattu",
+  "adnVaultFound":{
+    "message":"ads collected",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"näytetty",
+  "adnVaultShowing":{
+    "message":"showing",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Piilota sivun viittaus vierailuilla",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Click ALL Ads",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Click MOST Ads",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Click SOME Ads",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Click OCCASIONAL Ads",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Tee poikkeus mainoksille jotka eivät seuraa",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Kielet",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Update",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Valkoinen lista",

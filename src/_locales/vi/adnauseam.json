@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"ẩn quảng cáo trong <span class='link' id='To3pfilter'>bộ lọc<\/span> bạn đã chọn",
+    "message":"ẩn quảng cáo trong <span>bộ lọc<\/span> bạn đã chọn",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"đăng ký truy cập vào quảng cáo được phát hiện qua <span class='link' id='To3pfilter'>bộ lọc của bạn<\/span>",
+    "message":"đăng ký truy cập vào quảng cáo được phát hiện qua <span>bộ lọc của bạn<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"tối ưu cài đặt để bảo vệ chống quảng cáo nguy hiểm (<span class='link' id='ToOptions'>tuỳ biến<\/span>)",
+    "message":"tối ưu cài đặt để bảo vệ chống quảng cáo nguy hiểm (<span>tuỳ biến<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -235,12 +235,12 @@
     "message":"Xoá",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"quảng cáo đã được mở",
+  "adnVaultFound":{
+    "message":"ads collected",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"đã hiển thị",
+  "adnVaultShowing":{
+    "message":"showing",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Ẩn trang tham chiếu khi truy cập",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Click ALL Ads",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Click MOST Ads",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Click SOME Ads",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Click OCCASIONAL Ads",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Tạo loại trừ cho quảng cáo không theo dõi",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Ngôn ngữ",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Update",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Danh sách loại trừ",

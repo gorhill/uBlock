@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"ocultar anúncios em suas <span class='link' id='To3pfilter'>listas de filtros<\/span> selecionadas",
+    "message":"ocultar anúncios em suas <span>listas de filtros<\/span> selecionadas",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"registar visitas em anúncios encontrados através das suas <span class='link' id='To3pfilter'>listas de filtros<\/span>",
+    "message":"registar visitas em anúncios encontrados através das suas <span>listas de filtros<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"otimizar as suas configurações para proteger contra anúncios maliciosos (<span class='link' id='ToOptions'>personalizar<\/span>)",
+    "message":"otimizar as suas configurações para proteger contra anúncios maliciosos (<span>personalizar<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -235,12 +235,12 @@
     "message":"Limpar",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Anúncios clicados",
+  "adnVaultFound":{
+    "message":"anúncios coletados",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"mostrados",
+  "adnVaultShowing":{
+    "message":"mostrando",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Ocultar página referente em visitas",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Clique em todos os anúncios",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Clique em todos os anúncios",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Clique em alguns anúncios",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Clique em anúncios ocasionais",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Fazer exceções para anúncios sem monitoramento",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Idiomas",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Atualizar",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Listas brancas",

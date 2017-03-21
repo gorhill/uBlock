@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
+    "message":"sembunyikan iklan di <span>daftar filter<\/span> yang telah Anda pilih",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
+    "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span>daftar filter<\/span> Anda",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span class='link' id='ToOptions'> Sesuaikan<\/span>)",
+    "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span> Sesuaikan<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -235,12 +235,12 @@
     "message":"Hapus",
     "description":"appears on vault page"
   },
-  "adnVaultAdsClicked":{
-    "message":"Iklan yang diklik",
+  "adnVaultFound":{
+    "message":"ads collected",
     "description":"appears on vault page"
   },
-  "adnVaultFound":{
-    "message":"ditampilkan",
+  "adnVaultShowing":{
+    "message":"showing",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -299,6 +299,22 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
+  "ClickingFrequencyAllPrompt":{
+    "message":"Click ALL Ads",
+    "description":"English: Click Frequency - Click ALL Ads"
+  },
+  "ClickingFrequencyMostPrompt":{
+    "message":"Click MOST Ads",
+    "description":"English: Click Frequency - Click MOST Ads"
+  },
+  "ClickingFrequencySomePrompt":{
+    "message":"Click SOME Ads",
+    "description":"English: Click Frequency - Click SOME Ads"
+  },
+  "ClickingFrequencyOccationalPrompt":{
+    "message":"Click OCCASIONAL Ads",
+    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  },
   "respectDNTPrompt":{
     "message":"Buat pengecualian untuk iklan yang tidak melacak",
     "description":"English: Make exceptions for non-tracking Ads"
@@ -334,6 +350,10 @@
   "3pGroupRegions":{
     "message":"Daftar Bahasa",
     "description":"English: Languages"
+  },
+  "3pPageUpdate":{
+    "message":"Update",
+    "description":"English: update"
   },
   "whitelistPageName":{
     "message":"Daftar yang dibolehkan",
