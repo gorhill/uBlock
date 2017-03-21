@@ -1539,12 +1539,15 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         curTabId = tabWatcher.tabIdFromTarget(tabBrowser.selectedTab);
     }
     var tb = vAPI.toolbarButton;
-
+    
     // from 'TabSelect' event
     if ( tabId === undefined ) {
+    
         tabId = curTabId;
-    } else if ( badge !== undefined ) {
-        tb.tabs[tabId] = { badge: badge, img: iconStatus === 'on' };
+    }
+
+    if ( badge !== undefined ) {
+        tb.tabs[tabId] = { badge: badge, img: iconStatus};
     }
 
     if ( curTabId && tabId === curTabId ) {
@@ -2748,6 +2751,7 @@ vAPI.toolbarButton = {
         if ( !id ) {
             return;
         }
+
         win.NativeWindow.menu.update(id, {
             name: this.getMenuItemLabel(tabId)
         });
@@ -2812,11 +2816,12 @@ vAPI.toolbarButton = {
             return;
         }
 
-        var icon = this.tabs[tabId], isOff = !icon || !icon.img;
-        // console.log("updateState",isOff, iconStatus);
+        var icon = this.tabs[tabId];
+        if( typeof iconStatus != "string") iconStatus = icon.img;
+
         button.setAttribute('badge', icon && icon.badge || '');
 
-        button.classList.toggle('off', isOff);
+        button.classList.toggle('off', iconStatus === "off");
         button.classList.toggle('active', iconStatus === 'onactive');
         button.classList.toggle('dnt', iconStatus === 'dnt');
         button.classList.toggle('dntactive', iconStatus === 'dntactive');
@@ -2935,7 +2940,7 @@ vAPI.toolbarButton = {
         toolbarButton.setAttribute('id', tbb.id);
         // type = panel would be more accurate, but doesn't look as good
         toolbarButton.setAttribute('type', 'menu');
-        toolbarButton.setAttribute('removable', 'true');
+        toolbarButton.setAtribute('removable', 'true');
         toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
         toolbarButton.setAttribute('label', tbb.label);
         toolbarButton.setAttribute('tooltiptext', tbb.label);
