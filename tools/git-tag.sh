@@ -27,5 +27,5 @@ git tag -a v$VERSION -m "Release v$VERSION"
 # push to GitHub
 #git push && git push origin v$VERSION
 
-echo "done: now submit a PR for the new tag"
+echo "done: now push and submit a PR for the new tag"
 
