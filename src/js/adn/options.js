@@ -120,9 +120,10 @@
           break;
       }
       
+
     messager.send('dashboard', {
       what: 'userSettings',
-      name: 'onClickProbability',
+      name: 'clickProbability',
       value: p
     });
   
