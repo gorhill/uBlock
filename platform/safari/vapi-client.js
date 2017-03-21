@@ -634,12 +634,12 @@ x.setAttribute("src", val);\
 return x;\
 };\
 open = function(u) {\
-if ( block(u, "popup") ) return {};\
+if ( block(u, "popup") ) return null;\
 else return wo.apply(this, arguments);\
 };\
 XMLHttpRequest.prototype.open = function(m, u) {\
 if ( block(u, "xmlhttprequest") ) {\
-throw new Error("InvalidAccessError"); return;\
+xo.apply(this, [m, ""]); return;\
 } else {\
 xo.apply(this, arguments); return;}\
 };';
