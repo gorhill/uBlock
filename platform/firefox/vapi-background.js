@@ -2294,8 +2294,10 @@ var httpObserver = {
             var adn = µBlock.adnauseam;
 
             // ADN(FF): blocking of incoming cookies for ad visits
+
             if (µBlock.userSettings.noIncomingCookies && adn.lookupAd(URI.asciiSpec, requestId))
             {
+                adn.logNetEvent('[COOKIE]', 'Block', "FF: AdVisit");
                 channel.setResponseHeader('Set-Cookie', '', false);
                 channel.setResponseHeader('Set-Cookie2', '', false);
             }
@@ -2304,7 +2306,6 @@ var httpObserver = {
             else if (adn.isBlockableException(URI.asciiSpec, channel.originalURI.asciiSpec)) {
 
               adn.logNetEvent('[COOKIE]', 'Block', "FF: " + URI.asciiHost + "/" + channel.originalURI.asciiHost);
-
               channel.setResponseHeader('Set-Cookie', '', false);
               channel.setResponseHeader('Set-Cookie2', '', false);
             }
