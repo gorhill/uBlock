@@ -553,39 +553,50 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 // To handle:
 // - inline script tags
-// - websockets
 // - media elements larger than n kB
 
-var onHeadersReceived = function(details) {
-    // Do not interfere with behind-the-scene requests.
-    var tabId = details.tabId, ad, result, µb = µBlock, requestType = details.type; // ADN
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
 
-        // ADN: handle incoming cookies for our visits (ignore in ff for now)
-        if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
+var onHeadersReceived = function (details) {
 
-            //console.log('onHeadersReceived: ', requestType, details.url);
+//console.log('traffic.onHeadersReceived',details);
 
-            ad = µb.adnauseam.lookupAd(details.url, details.requestId);
-            if (ad) {
+    var µb = µBlock, ad, result, tabId = details.tabId, requestType = details.type, dbug = 0;
+    //ADN
 
-                // this is an ADN request
-                µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+    if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-                if (details.responseHeaders.length) {
-                    return { 'responseHeaders': details.responseHeaders };
-                }
-            }
-            //else console.log('Ignoring non-ADN response', requestType, details.url);
+      // ADN: handle incoming cookies for our visits (ignore in ff for now)
+      if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
+
+          dbug && console.log('onHeadersReceived: ', requestType, details.url);
+
+          // ADN
+          ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
+          if (ad) {
+
+            // this is an ADN request
+            µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+          }
+          else if (dbug && vAPI.chrome) {
+
+            console.log('Ignoring non-ADN response', requestType, details.url);
+          }
       }
-      return;
+
+      // don't return an empty headers array
+      return details.responseHeaders.length ?
+        { 'responseHeaders': details.responseHeaders } : null;
     }
 
-    if ( requestType === 'main_frame' ) {
-        µb.tabContextManager.push(tabId, details.url);
+    // ADN: check if this was an allowed exception and, if so, block cookies
+    var  modified = pageStore && µBlock.adnauseam.checkAllowedException
+        (details.responseHeaders, details.url, pageStore.rawURL);
+
+    if (requestType === 'main_frame') {
+      µb.tabContextManager.push(tabId, details.url);
     }
 
-    var pageStore = µb.pageStoreFromTabId(tabId);
+     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) {
         if ( requestType !== 'main_frame' ) { return; }
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
@@ -615,7 +626,7 @@ var onHeadersReceived = function(details) {
           result = { 'responseHeaders': details.responseHeaders };
     }
 
-    return result; // ADN
+    return result;
 };
 
 /******************************************************************************/
