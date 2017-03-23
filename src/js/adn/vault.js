@@ -807,7 +807,7 @@
           ids: selectedAdSet.childIds()
         },
         function (data) {
-          console.log(data);
+          location.href = "data:text/plain," +  encodeURI(data);
         });
     }
   }
