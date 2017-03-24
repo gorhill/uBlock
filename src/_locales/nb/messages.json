@@ -76,7 +76,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Åpne loggeren",
+    "message":"Åpne loggen",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -616,7 +616,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Vis loggeren",
+    "message":"Vis logg",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
