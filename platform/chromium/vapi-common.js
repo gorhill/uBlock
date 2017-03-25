@@ -56,6 +56,7 @@ vAPI.download = function(details) {
     var a = document.createElement('a');
     a.href = details.url;
     a.setAttribute('download', details.filename || '');
+    a.setAttribute('type', 'text/plain');
     a.dispatchEvent(new MouseEvent('click'));
 };
 
