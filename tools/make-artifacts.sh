@@ -6,6 +6,11 @@ OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
 # before running, check that above programs exist, as well as that 'webext' cmd exists 
 # if not, exit with error 
+command "${CHROME}" --version || { echo >&2 "Chrome is not installed."; exit 1; }
+command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
+command "${OPERA}" --version || { echo >&2 "Opera is not installed."; exit 1; }
+hash web-ext 2>/dev/null || { echo >&2 "Webext is not installed. Please do npm install --global web-ext."; exit 1; }
+
 
 DES=dist/build
 ARTS=artifacts
