@@ -303,7 +303,7 @@
 
     var pending = ad && ad.attempts < maxAttemptsPerAd
       && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
-  
+
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
       log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
@@ -541,6 +541,12 @@
 
   var visitAd = function (ad) {
 
+    function timeoutError(xhr) {
+      return onVisitError.call(xhr, {
+        type: 'timeout'
+      });
+    }
+
     var url = ad.targetUrl,
       now = markActivity();
 
@@ -552,16 +558,19 @@
 
     if (xhr) {
 
-      var elapsed = (now - xhr.delegate.attemptedTs);
+      if (xhr.delegate.attemptedTs) {
 
-      // TODO: why does this happen... a redirect?
-      warn('[TRYING] Attempt to reuse xhr from ' + elapsed + " ms ago");
+        var elapsed = (now - xhr.delegate.attemptedTs);
 
-      if (elapsed > visitTimeout) {
+        // TODO: why does this happen... a redirect?
+        warn('[TRYING] Attempt to reuse xhr from ' + elapsed + " ms ago");
 
-        return onVisitError.call(xhr, {
-          type: 'timeout'
-        });
+        if (elapsed > visitTimeout)
+          timeoutError();
+      }
+      else {
+
+        warn('[TRYING] Attempt to reuse xhr with no attemptedTs!!', xhr);
       }
     }
 

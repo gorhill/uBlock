@@ -56,30 +56,28 @@
           <p data-i18n="clickingAdsPrompt" for="clicking-ads"></p>
       </div>
       <ul class="custom-check">
+        <!-- <li>
+          <input id="parse-text-ads" type="checkbox" data-setting-name="parseTextAds" data-setting-type="bool">
+          <label data-i18n="parseTextAdsPrompt" for="parse-text-ads"></label>
+        </li>
+        <li>
+          <input id="no-outgoing-cookies" class="clickingAds-child" type="checkbox" data-setting-name="noOutgoingCookies" data-setting-type="bool">
+          <label data-i18n="noOutgoingCookiesPrompt" for="no-outgoing-cookies"></label>
+          <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-dont-send-cookies-on-visits" target="_blank">&#xf05a;</a>
+        </li-->
+        <li>
+           <ul id="clickingFrequency">
+             <li><input name="click-frequency" id="click-frequency-all" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-all" checked><label  data-i18n="ClickingFrequencyAllPrompt" for="click-frequency-all"></label><a style="float:right;margin-right:.5em;"class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-click-probability-preference" target="_blank">&#xf05a;</a></li>
+             <li><input name="click-frequency" id="click-frequency-most" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-most"  ><label data-i18n="ClickingFrequencyMostPrompt"for="click-frequency-most"></label></li>
+             <li><input name="click-frequency" id="click-frequency-some" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-some" ><label data-i18n="ClickingFrequencySomePrompt" for="click-frequency-some"></label></li>
+             <li><input name="click-frequency" id="click-frequency-occasional" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-occasional" ><label  data-i18n="ClickingFrequencyOccationalPrompt" for="click-frequency-occasional"></label></li>
+           </ul>
+        </li>
         <li>
           <input id="respect-dnt-for-clicking" class="clickingAds-child" type="checkbox" data-setting-name="disableClickingForDNT"
               data-setting-type="bool">
           <label data-i18n="disableClickingForDNTPrompt" for="respect-dnt-for-clicking"></label>
           <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam" target="_blank">&#xf05a;</a>
-        </li>
-        <!-- <li>
-          <input id="parse-text-ads" type="checkbox" data-setting-name="parseTextAds" data-setting-type="bool">
-          <label data-i18n="parseTextAdsPrompt" for="parse-text-ads"></label>
-        </li> -->
-        <li>
-          <input id="no-outgoing-cookies" class="clickingAds-child" type="checkbox" data-setting-name="noOutgoingCookies"
-              data-setting-type="bool">
-          <label data-i18n="noOutgoingCookiesPrompt" for="no-outgoing-cookies"></label>
-          <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-dont-send-cookies-on-visits" target="_blank">&#xf05a;</a>
-        </li>
-
-        <li>
-           <ul id="clickingFrequency"> 
-             <li><input name="click-frequency" id="click-frequency-all" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-all" checked><label  data-i18n="ClickingFrequencyAllPrompt" for="click-frequency-all"></label><a style="float:right;margin-right:.5em;"class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-click-probability-preference" target="_blank">&#xf05a;</a></li>  
-             <li><input name="click-frequency" id="click-frequency-most" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-most"  ><label data-i18n="ClickingFrequencyMostPrompt"for="click-frequency-most"></label></li>
-             <li><input name="click-frequency" id="click-frequency-some" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-some" ><label data-i18n="ClickingFrequencySomePrompt" for="click-frequency-some"></label></li>
-             <li><input name="click-frequency" id="click-frequency-occasional" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-occasional" ><label  data-i18n="ClickingFrequencyOccationalPrompt" for="click-frequency-occasional"></label></li>
-           </ul>
         </li>
         <!--
         <li>
