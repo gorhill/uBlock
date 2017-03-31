@@ -61,6 +61,60 @@ function startup(data/*, reason*/) {
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
 
+    if ( appShell.createWindowlessBrowser ) {
+        getWindowlessBrowserFrame(appShell);
+    } else {
+        getHiddenWindowBrowserFrame(appShell);
+    }
+}
+
+function createBgProcess(parentDocument) {
+    bgProcess = parentDocument.documentElement.appendChild(
+        parentDocument.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+    );
+    bgProcess.setAttribute(
+        'src',
+        'chrome://' + hostName + '/content/background.html#' + version
+    );
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
+    // "If the same listener registers twice for the same message, the
+    // "second registration is ignored."
+    restartListener.messageManager.addMessageListener(
+        hostName + '-restart',
+        restartListener
+    );
+}
+
+let windowlessBrowser;
+let windowlessBrowserPL;
+
+function getWindowlessBrowserFrame(appShell) {
+    windowlessBrowser = appShell.createWindowlessBrowser(true);
+    windowlessBrowser.QueryInterface(Ci.nsIInterfaceRequestor);
+    let webProgress = windowlessBrowser.getInterface(Ci.nsIWebProgress);
+    let XPCOMUtils = Components.utils.import('resource://gre/modules/XPCOMUtils.jsm', null).XPCOMUtils;
+    windowlessBrowserPL = {
+        QueryInterface: XPCOMUtils.generateQI([
+            Ci.nsIWebProgressListener, Ci.nsIWebProgressListener2,
+            Ci.nsISupportsWeakReference]),
+        onStateChange(wbp, request, stateFlags, status) {
+            if ( !request ) {
+                return;
+            }
+            if ( stateFlags & Ci.nsIWebProgressListener.STATE_STOP ) {
+                webProgress.removeProgressListener(windowlessBrowserPL);
+                windowlessBrowserPL = null;
+                createBgProcess(windowlessBrowser.document);
+            }
+        }
+    };
+    webProgress.addProgressListener(windowlessBrowserPL, Ci.nsIWebProgress.NOTIFY_STATE_DOCUMENT);
+    windowlessBrowser.document.location = "data:application/vnd.mozilla.xul+xml;charset=utf-8,<window%20id='" + hostName + "-win'/>";
+}
+
+
+function getHiddenWindowBrowserFrame(appShell) {
     let isReady = function() {
         var hiddenDoc;
 
@@ -75,23 +129,7 @@ function startup(data/*, reason*/) {
         if ( !hiddenDoc || hiddenDoc.readyState !== 'complete' ) {
             return false;
         }
-
-        bgProcess = hiddenDoc.documentElement.appendChild(
-            hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
-        );
-        bgProcess.setAttribute(
-            'src',
-            'chrome://' + hostName + '/content/background.html#' + version
-        );
-
-        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
-        // "If the same listener registers twice for the same message, the
-        // "second registration is ignored."
-        restartListener.messageManager.addMessageListener(
-            hostName + '-restart',
-            restartListener
-        );
-
+        createBgProcess(hiddenDoc);
         return true;
     };
 
@@ -148,6 +186,12 @@ function shutdown(data, reason) {
     if ( bgProcess !== null ) {
         bgProcess.parentNode.removeChild(bgProcess);
         bgProcess = null;
+    }
+
+    if ( windowlessBrowser !== null ) {
+        windowlessBrowser.close();
+        windowlessBrowser = null;
+        windowlessBrowserPL = null;
     }
 
     if ( data === undefined ) {
