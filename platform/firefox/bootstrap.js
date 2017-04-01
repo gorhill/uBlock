@@ -95,12 +95,12 @@ function getWindowlessBrowserFrame(appShell) {
     let XPCOMUtils = Components.utils.import('resource://gre/modules/XPCOMUtils.jsm', null).XPCOMUtils;
     windowlessBrowserPL = {
         QueryInterface: XPCOMUtils.generateQI([
-            Ci.nsIWebProgressListener, Ci.nsIWebProgressListener2,
-            Ci.nsISupportsWeakReference]),
-        onStateChange(wbp, request, stateFlags/*, status*/) {
-            if ( !request ) {
-                return;
-            }
+            Ci.nsIWebProgressListener,
+            Ci.nsIWebProgressListener2,
+            Ci.nsISupportsWeakReference
+        ]),
+        onStateChange: function(wbp, request, stateFlags/*, status*/) {
+            if ( !request ) { return; }
             if ( stateFlags & Ci.nsIWebProgressListener.STATE_STOP ) {
                 webProgress.removeProgressListener(windowlessBrowserPL);
                 windowlessBrowserPL = null;
