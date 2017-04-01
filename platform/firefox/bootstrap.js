@@ -60,10 +60,7 @@ function startup(data/*, reason*/) {
         return;
     }
 
-    let appShell = Cc['@mozilla.org/appshell/appShellService;1']
-        .getService(Ci.nsIAppShellService);
-
-    waitForHiddenWindow(appShell);
+    waitForHiddenWindow();
 }
 
 function createBgProcess(parentDocument) {
@@ -109,7 +106,10 @@ function getWindowlessBrowserFrame(appShell) {
 }
 
 
-function waitForHiddenWindow(appShell) {
+function waitForHiddenWindow() {
+    let appShell = Cc['@mozilla.org/appshell/appShellService;1']
+        .getService(Ci.nsIAppShellService);
+
     let isReady = function() {
         var hiddenDoc;
 
