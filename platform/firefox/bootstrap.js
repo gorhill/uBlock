@@ -31,6 +31,8 @@ const {classes: Cc, interfaces: Ci} = Components;
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
+let windowlessBrowser = null;
+let windowlessBrowserPL = null;
 let bgProcess = null;
 let version;
 const hostName = 'ublock0';
@@ -86,9 +88,6 @@ function createBgProcess(parentDocument) {
     );
 }
 
-let windowlessBrowser;
-let windowlessBrowserPL;
-
 function getWindowlessBrowserFrame(appShell) {
     windowlessBrowser = appShell.createWindowlessBrowser(true);
     windowlessBrowser.QueryInterface(Ci.nsIInterfaceRequestor);
@@ -98,7 +97,7 @@ function getWindowlessBrowserFrame(appShell) {
         QueryInterface: XPCOMUtils.generateQI([
             Ci.nsIWebProgressListener, Ci.nsIWebProgressListener2,
             Ci.nsISupportsWeakReference]),
-        onStateChange(wbp, request, stateFlags, status) {
+        onStateChange(wbp, request, stateFlags/*, status*/) {
             if ( !request ) {
                 return;
             }
@@ -189,7 +188,10 @@ function shutdown(data, reason) {
     }
 
     if ( windowlessBrowser !== null ) {
-        windowlessBrowser.close();
+        // close() does not exist for older versions of Firefox.
+        if ( typeof windowlessBrowser.close === 'function' ) {
+            windowlessBrowser.close();
+        }
         windowlessBrowser = null;
         windowlessBrowserPL = null;
     }
