@@ -63,11 +63,7 @@ function startup(data/*, reason*/) {
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
 
-    if ( appShell.createWindowlessBrowser ) {
-        getWindowlessBrowserFrame(appShell);
-    } else {
-        getHiddenWindowBrowserFrame(appShell);
-    }
+    waitForHiddenWindow(appShell);
 }
 
 function createBgProcess(parentDocument) {
@@ -113,7 +109,7 @@ function getWindowlessBrowserFrame(appShell) {
 }
 
 
-function getHiddenWindowBrowserFrame(appShell) {
+function waitForHiddenWindow(appShell) {
     let isReady = function() {
         var hiddenDoc;
 
@@ -128,7 +124,20 @@ function getHiddenWindowBrowserFrame(appShell) {
         if ( !hiddenDoc || hiddenDoc.readyState !== 'complete' ) {
             return false;
         }
-        createBgProcess(hiddenDoc);
+
+        // In theory, it should be possible to create a windowless browser
+        // immediately, without waiting for the hidden window to have loaded
+        // completely. However, in practice, on Windows this seems to lead
+        // to a broken Firefox appearance. To avoid this, we only create the
+        // windowless browser here. We'll use that rather than the hidden
+        // window for the actual background page (windowless browsers are
+        // also what the webextension implementation in Firefox uses for
+        // background pages).
+        if ( appShell.createWindowlessBrowser ) {
+            getWindowlessBrowserFrame(appShell);
+        } else {
+            createBgProcess(hiddenDoc);
+        }
         return true;
     };
 
