@@ -20,7 +20,7 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</em:id>
-                <em:minVersion>24.0</em:minVersion>
+                <em:minVersion>27.0</em:minVersion>
                 <em:maxVersion>*</em:maxVersion>
             </Description>
         </em:targetApplication>
@@ -29,7 +29,7 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</em:id>
-                <em:minVersion>24.0</em:minVersion>
+                <em:minVersion>27.0</em:minVersion>
                 <em:maxVersion>*</em:maxVersion>
             </Description>
         </em:targetApplication>
@@ -38,7 +38,7 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</em:id>
-                <em:minVersion>2.21</em:minVersion>
+                <em:minVersion>2.24</em:minVersion>
                 <em:maxVersion>*</em:maxVersion>
             </Description>
         </em:targetApplication>
@@ -47,7 +47,7 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</em:id>
-                <em:minVersion>25.0</em:minVersion>
+                <em:minVersion>26.0</em:minVersion>
                 <em:maxVersion>27.*</em:maxVersion>
             </Description>
         </em:targetApplication>
