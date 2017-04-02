@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2017 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 /******************************************************************************/
 
-const {classes: Cc, interfaces: Ci} = Components;
+const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
@@ -85,7 +85,7 @@ function getWindowlessBrowserFrame(appShell) {
     windowlessBrowser = appShell.createWindowlessBrowser(true);
     windowlessBrowser.QueryInterface(Ci.nsIInterfaceRequestor);
     let webProgress = windowlessBrowser.getInterface(Ci.nsIWebProgress);
-    let XPCOMUtils = Components.utils.import('resource://gre/modules/XPCOMUtils.jsm', null).XPCOMUtils;
+    let XPCOMUtils = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null).XPCOMUtils;
     windowlessBrowserPL = {
         QueryInterface: XPCOMUtils.generateQI([
             Ci.nsIWebProgressListener,
@@ -133,7 +133,8 @@ function waitForHiddenWindow() {
         // window for the actual background page (windowless browsers are
         // also what the webextension implementation in Firefox uses for
         // background pages).
-        if ( appShell.createWindowlessBrowser ) {
+        let { Services } = Cu.import('resource://gre/modules/Services.jsm', null);
+        if ( Services.vc.compare(Services.appinfo.platformVersion, '27') >= 0 ) {
             getWindowlessBrowserFrame(appShell);
         } else {
             createBgProcess(hiddenDoc);
@@ -242,8 +243,9 @@ function uninstall(aData, aReason) {
     // To cleanup vAPI.localStorage in vapi-common.js
     // As I get more familiar with FF API, will find out whetehr there was
     // a better way to do this.
-    Components.utils.import('resource://gre/modules/Services.jsm', null)
-        .Services.prefs.getBranch('extensions.' + hostName + '.').deleteBranch('');
+    Cu.import('resource://gre/modules/Services.jsm', null)
+      .Services.prefs.getBranch('extensions.' + hostName + '.')
+      .deleteBranch('');
 }
 
 /******************************************************************************/
