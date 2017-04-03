@@ -105,7 +105,6 @@ function getWindowlessBrowserFrame(appShell) {
     windowlessBrowser.document.location = "data:application/vnd.mozilla.xul+xml;charset=utf-8,<window%20id='" + hostName + "-win'/>";
 }
 
-
 function waitForHiddenWindow() {
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
