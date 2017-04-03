@@ -37,7 +37,7 @@ const {Services} = Components.utils.import(
 );
 
 // https://bugs.chromium.org/p/project-zero/issues/detail?id=1225&desc=6#c10
-if ( !self.vAPI || !self.vAPI.uBO ) {
+if ( !self.vAPI || self.vAPI.uBO !== true ) {
     self.vAPI = { uBO: true };
 }
 
