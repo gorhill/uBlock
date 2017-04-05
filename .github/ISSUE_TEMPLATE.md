@@ -23,6 +23,7 @@ Read first: <https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md>
 
 [If you fail to provide this info, I will mark the issue as invalid. Lists all settings which differs from default settings]
 
+- OS/version: 
 - Browser/version: 
 - uBlock Origin version: 
 
