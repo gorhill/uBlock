@@ -204,7 +204,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Ativar suporte à 'cloud'",
+    "message":"Ativar suporte à nuvem",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -660,15 +660,15 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportar para a 'cloud'",
+    "message":"Exportar para a nuvem",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importar da 'cloud'",
+    "message":"Importar a partir da nuvem",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importar do armazenamento 'cloud' e juntar às definições atuais",
+    "message":"Importar a partir da nuvem e juntar às definições atuais",
     "description":"tooltip"
   },
   "cloudNoData":{
