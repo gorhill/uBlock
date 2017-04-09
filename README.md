@@ -1,4 +1,4 @@
-[![Build](https://travis-ci.org/el1t/uBlock-Safari.svg?branch=master)](https://travis-ci.org/el1t/uBlock-Safari)
+[![Build](https://travis-ci.org/el1t/uBlock-Safari.svg?branch=safari)](https://travis-ci.org/el1t/uBlock-Safari)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
 
 ***

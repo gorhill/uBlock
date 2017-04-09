@@ -1,8 +1,7 @@
 language: ruby
 sudo: false
 env:
-  - BROWSER=safari
-  - EXT=safariextension
+  - BROWSER=safari EXT=safariextension
 script: ./tools/make-${BROWSER}.sh all
 #deploy:
 #  provider: releases
