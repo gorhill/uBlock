@@ -39,13 +39,15 @@ awkscript='BEGIN { p = 0 }
 /^\/\/ __MSG_[A-Za-z_]+__/ && p { exit 0 }
 /^[ ]*\/\// { next }
 /^[ ]*[^\/]{2}/ && p {
-  gsub(/^[ ]+/, "", $0)
+  sub(/^[ ]+/, "", $0)
+  gsub(/\\/, "\\\\")
+  gsub(/'"'"'/, "\\'"'"'")
   printf "%s", $0
 }'
 declare -a sedargs=('-i' '')
 for message in $(perl -nle '/^\/\/ (__MSG_[A-Za-z]+__)/ && print $1' < $DES/js/client-injected.js); do
-    script=$(awk "${awkscript/__MSG__/${message}}" $DES/js/client-injected.js | sed -e 's/[\"#&]/\\&/g' -e "s/'/\\\\'/g")
-    sedargs+=('-e' "s#${message}#${script//\\/\\\\}#")
+    script=$(awk "${awkscript/__MSG__/${message}}" $DES/js/client-injected.js | sed -e 's/[\"#&]/\\&/g')
+    sedargs+=('-e' "s#${message}#${script}#")
 done
 sed "${sedargs[@]}" $DES/js/vapi-client.js
 rm -f $DES/js/client-injected.js
