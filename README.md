@@ -1,4 +1,7 @@
+[![Build](https://travis-ci.org/el1t/uBlock-Safari.svg?branch=master)](https://travis-ci.org/el1t/uBlock-Safari)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
+
+***
 
 <h1 align="center">
 <sub>
@@ -49,7 +52,7 @@ To build and load an unpacked extension for development:
 1. **Install** the unpacked extension through Safari's Extension Builder
     1. In Safari, load the Extension Builder (Develop > Show Extension Builder)
     1. Click the `+` button in the bottom left corner and "Add Extension"
-    1. Select `dist/build/uBlock.safariextension`
+    1. Select `dist/build/uBlock0.safariextension`
     1. Click install and enter your password
     1. You will have to reinstall from this panel every time you restart Safari
 
@@ -66,7 +69,7 @@ git clone https://github.com/el1t/uBlock-Safari.git
 # Build
 cd uBlock-Safari
 ./tools/make-safari.sh
-echo 'Output is in dist/build/uBlock.safariextension'
+echo 'Output is in dist/build/uBlock0.safariextension'
 ```
 
 ## Release History

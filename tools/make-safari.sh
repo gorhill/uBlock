@@ -2,9 +2,9 @@
 #
 # This script assumes an OS X or *NIX environment
 
-echo '*** uBlock.safariextension: Copying files...'
+echo '*** uBlock0.safariextension: Copying files...'
 
-DES=dist/build/uBlock.safariextension
+DES=dist/build/uBlock0.safariextension
 rm -rf $DES
 mkdir -p $DES
 
@@ -25,12 +25,12 @@ cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt                    $DES/
 
 # https://github.com/el1t/uBlock-Safari/issues/4
-echo '*** uBlock.safariextension: Adding extensions to extensionless assets...'
+echo '*** uBlock0.safariextension: Adding extensions to extensionless assets...'
 find $DES/assets/thirdparties -type f -regex '.*\/[^.]*' -exec mv {} {}.txt \;
 
 # Declare __MSG__ scripts inside client-injected.js
 # Beware: this removes all newlines within each script
-echo '*** uBlock.safariextension: Injecting scripts into vapi-client...'
+echo '*** uBlock0.safariextension: Injecting scripts into vapi-client...'
 awkscript='BEGIN { p = 0 }
 /^\/\/ __MSG__/ {
   p = 1
@@ -50,12 +50,12 @@ done
 sed "${sedargs[@]}" $DES/js/vapi-client.js
 rm -f $DES/js/client-injected.js
 
-echo '*** uBlock.safariextension: Generating Info.plist...'
+echo '*** uBlock0.safariextension: Generating Info.plist...'
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
 fi
 
-echo '*** uBlock.safariextension: Done.'
+echo '*** uBlock0.safariextension: Done.'
 
