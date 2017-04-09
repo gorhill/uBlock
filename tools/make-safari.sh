@@ -2,7 +2,7 @@
 #
 # This script assumes an OS X or *NIX environment
 
-echo "*** uBlock.safariextension: Copying files..."
+echo '*** uBlock.safariextension: Copying files...'
 
 DES=dist/build/uBlock.safariextension
 rm -rf $DES
@@ -18,6 +18,7 @@ cp -R src/_locales                $DES/
 cp src/*.html                     $DES/
 mv $DES/img/icon_128.png          $DES/Icon.png
 cp platform/safari/*.js           $DES/js/
+cp platform/safari/*.html         $DES/
 cp -R platform/safari/img         $DES/
 cp platform/safari/Info.plist     $DES/
 cp platform/safari/Settings.plist $DES/
@@ -27,11 +28,34 @@ cp LICENSE.txt                    $DES/
 echo '*** uBlock.safariextension: Adding extensions to extensionless assets...'
 find $DES/assets/thirdparties -type f -regex '.*\/[^.]*' -exec mv {} {}.txt \;
 
-echo "*** uBlock.safariextension: Generating Info.plist..."
+# Declare __MSG__ scripts inside client-injected.js
+# Beware: this removes all newlines within each script
+echo '*** uBlock.safariextension: Injecting scripts into vapi-client...'
+awkscript='BEGIN { p = 0 }
+/^\/\/ __MSG__/ {
+  p = 1
+  next
+}
+/^\/\/ __MSG_[A-Za-z_]+__/ && p { exit 0 }
+/^[ ]*\/\// { next }
+/^[ ]*[^\/]{2}/ && p {
+  gsub(/^[ ]+/, "", $0)
+  printf "%s", $0
+}'
+declare -a sedargs=('-i' '')
+for message in $(perl -nle '/^\/\/ (__MSG_[A-Za-z]+__)/ && print $1' < $DES/js/client-injected.js); do
+    script=$(awk "${awkscript/__MSG__/${message}}" $DES/js/client-injected.js | sed -e 's/[\"#&]/\\&/g' -e "s/'/\\\\'/g")
+    sedargs+=('-e' "s#${message}#${script//\\/\\\\}#")
+done
+sed "${sedargs[@]}" $DES/js/vapi-client.js
+rm -f $DES/js/client-injected.js
+
+echo '*** uBlock.safariextension: Generating Info.plist...'
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
 fi
 
-echo "*** uBlock.safariextension: Done."
+echo '*** uBlock.safariextension: Done.'
+

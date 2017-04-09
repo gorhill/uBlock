@@ -596,75 +596,19 @@ var firstMutation = function() {
         }
     }, true);
     var tmpJS = document.createElement('script');
-    var tmpScript = '\
-(function() {\
-var block = function(u, t) {\
-if ( typeof u !== "string" ) return false;' +
-(legacyMode ?
-'var e = document.createEvent("CustomEvent");\
+    var tmpScript = '!function(){__MSG_clientInjectedScript__';
+    var eventScript;
+    if (legacyMode) {
+        eventScript = 'var e = document.createEvent("CustomEvent");\
 e.initCustomEvent("' + vAPI.sessionId + '", false, false, {url: u, type: t});'
-: 'var e = new CustomEvent("' + vAPI.sessionId + '", {bubbles: false, detail: {url: u, type: t}});'
-) +
-'document.documentElement.setAttribute("data-ublock-blocked", "");\
-document.dispatchEvent(e);\
-return !!document.documentElement.getAttribute("data-ublock-blocked");\
-},\
-wo = open,\
-xo = XMLHttpRequest.prototype.open,\
-img = Image;\
-Image = function() {\
-var x = new img(),\
-src = "";\
-try {\
-Object.defineProperty(x, "src", {\
-get: function() {\
-return src;\
-},\
-set: function(val) {\
-src = val;\
-if ( block(val, "image") ) {\
-val = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";\
-if ( x.width === 1 ) x.width=0;\
-if ( x.height === 1 ) x.height=0;\
-}\
-x.setAttribute("src", val);\
-}\
-});\
-} catch ( e ) {}\
-return x;\
-};\
-open = function(u) {\
-if ( block(u, "popup") ) return null;\
-else return wo.apply(this, arguments);\
-};\
-XMLHttpRequest.prototype.open = function(m, u) {\
-if ( block(u, "xmlhttprequest") ) {\
-xo.apply(this, [m, ""]); return;\
-} else {\
-xo.apply(this, arguments); return;}\
-};';
-    if ( frameId === 0 ) {
-        tmpScript += '\
-var pS = history.pushState,\
-rS = history.replaceState,\
-onpopstate = function(e) {\
-if ( !e || e.state !== null ) {\
-block(location.href, "popstate");\
-}\
-};\
-window.addEventListener("popstate", onpopstate, true);\
-history.pushState = function() {\
-var r = pS.apply(this, arguments);\
-onpopstate();\
-return r;\
-};\
-history.replaceState = function() {\
-var r = rS.apply(this, arguments);\
-onpopstate();\
-return r;\
-};';
+    } else {
+        eventScript = 'var e = new CustomEvent("' + vAPI.sessionId + '", {bubbles: false, detail: {url: u, type: t}});'
     }
-    tmpScript += '})();';
+    tmpScript = tmpScript.replace('/* __MSG_eventScript__ */', eventScript);
+    if ( frameId === 0 ) {
+        tmpScript += '__MSG_historyScript__';
+    }
+    tmpScript += '}();';
     tmpJS.textContent = tmpScript;
     document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
 };
