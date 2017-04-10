@@ -8,6 +8,9 @@ DES=dist/build/uBlock0.safariextension
 rm -rf $DES
 mkdir -p $DES
 
+# Delete .DS_Store before making
+find . ../uAssets -name '.DS_Store' -type f -delete
+
 bash ./tools/make-assets.sh       $DES
 
 cp -R src/css                     $DES/
