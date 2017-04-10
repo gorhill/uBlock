@@ -63,6 +63,18 @@ XMLHttpRequest.prototype.open = function(m, u) {
         xo.apply(this, arguments);
     }
 };
+if ( window.Worker instanceof Function ) {
+    var RealWorker = window.Worker;
+    var WrappedWorker = function(url) {
+        if ( this instanceof WrappedWorker === false ) { return RealWorker(); };
+        if ( block(url, 'worker') ) {
+            return new RealWorker(window.URL.createObjectURL(new Blob([';'], {type:'text/javascript'})));
+        };
+        return new RealWorker(url);
+    };
+    WrappedWorker.prototype = RealWorker.prototype;
+    window.Worker = WrappedWorker.bind(window);
+};
 
 // __MSG_historyScript__
 var pS = history.pushState,

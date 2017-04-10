@@ -1029,8 +1029,11 @@ vAPI.net.registerListeners = function() {
         onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback;
 
     // https://github.com/el1t/uBlock-Safari/issues/32
-    // Ignore websocket/webworker directives
-    var shouldBlockResponseHeader = /script-src/;
+    // Ignore directives
+    var shouldBlockResponseHeader = {
+        script: /script-src/,
+        worker: /child-src/
+    };
 
     var onBeforeRequestAdapter = function(e) {
         if ( e.name !== 'canLoad' ) {
@@ -1050,7 +1053,7 @@ vAPI.net.registerListeners = function() {
                 onBeforeRequestClient(e.message);
                 var blockVerdict = onHeadersReceivedClient(e.message);
                 blockVerdict = blockVerdict && blockVerdict.responseHeaders && blockVerdict.responseHeaders[0] &&
-                    shouldBlockResponseHeader.test(blockVerdict.responseHeaders[0].value);
+                    shouldBlockResponseHeader.script.test(blockVerdict.responseHeaders[0].value);
                 e.message = {
                     shouldBlock: blockVerdict === true
                 };
@@ -1073,6 +1076,18 @@ vAPI.net.registerListeners = function() {
                     url: e.message.url
                 });
                 break;
+            case 'worker':
+                e.message.type = 'sub_frame';
+                e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
+                e.message.tabId = vAPI.tabs.getTabId(e.target);
+                e.message.responseHeaders = [];
+                var blockVerdict = onHeadersReceivedClient(e.message);
+                blockVerdict = blockVerdict && blockVerdict.responseHeaders && blockVerdict.responseHeaders[0] &&
+                    shouldBlockResponseHeader.worker.test(blockVerdict.responseHeaders[0].value);
+                e.message = {
+                    shouldBlock: blockVerdict === true
+                }
+                return;
             default:
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
