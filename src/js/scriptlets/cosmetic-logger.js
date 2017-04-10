@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2016 Raymond Hill
+    Copyright (C) 2015-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,14 +51,11 @@ vAPI.domFilterer.simpleHideSelectors.entries.forEach(evaluateSelector);
 // Complex CSS selector-based cosmetic filters.
 vAPI.domFilterer.complexHideSelectors.entries.forEach(evaluateSelector);
 
-// Style cosmetic filters.
-vAPI.domFilterer.styleSelectors.entries.forEach(function(filter) {
-    if (
-        loggedSelectors.hasOwnProperty(filter.raw) === false &&
-        document.querySelector(filter.style[0]) !== null
-    ) {
-        loggedSelectors[filter.raw] = true;
-        matchedSelectors.push(filter.raw);
+// Non-querySelector-able filters.
+vAPI.domFilterer.nqsSelectors.forEach(function(filter) {
+    if ( loggedSelectors.hasOwnProperty(filter) === false ) {
+        loggedSelectors[filter] = true;
+        matchedSelectors.push(filter);
     }
 });
 

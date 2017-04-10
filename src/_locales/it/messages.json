@@ -284,7 +284,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Questa opzione abilita i filtri di <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.<\/p><p>Questa funziona aumenta l'uso della memoria da parte di <i>uBlock<\/i>.<\/p>",
+    "message":"<p>Questa opzione abilita i filtri di <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.<\/p><p>Questa funziona aumenta l'uso della memoria da parte di <i>uBlock₀<\/i>.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{

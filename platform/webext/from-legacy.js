@@ -52,7 +52,14 @@
             });
         };
 
-        migrateNext();
+        self.browser.storage.local.get('legacyStorageMigrated', bin => {
+            if ( bin && bin.legacyStorageMigrated ) {
+                self.browser.runtime.sendMessage({ what: 'webext:storageMigrateDone' });
+                return callback();
+            }
+            self.browser.storage.local.set({ legacyStorageMigrated: true });
+            migrateNext();
+        });
     };
 
     µb.onBeforeStartQueue.push(migrateAll);

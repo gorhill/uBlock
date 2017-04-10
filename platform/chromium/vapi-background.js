@@ -169,16 +169,12 @@ vAPI.browserSettings = (function() {
                             scope: 'regular'
                         }, this.noopCallback);
                     } else {
-                        // Respect current stricter setting if any. 
-                        cpn.webRTCIPHandlingPolicy.get({}, function(details) {
-                            var value = details.value === 'disable_non_proxied_udp' ?
-                                'disable_non_proxied_udp' :
-                                'default_public_interface_only';
-                            cpn.webRTCIPHandlingPolicy.set({
-                                value: value,
-                                scope: 'regular'
-                            }, this.noopCallback);
-                        }.bind(this));
+                        // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
+                        // - Leverage virtuous side-effect of strictest setting.
+                        cpn.webRTCIPHandlingPolicy.set({
+                            value: 'disable_non_proxied_udp',
+                            scope: 'regular'
+                        }, this.noopCallback);
                     }
                 } catch(ex) {
                     console.error(ex);

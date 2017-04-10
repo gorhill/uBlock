@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Hangi alan adları için uBlock'un devre dışı olacağını belirten listeniz. Satır başına bir girdi. Geçersiz alan adları sessizce yok sayılır.",
+    "message":"Hangi alan adları için uBlock₀'in devre dışı olacağını belirten listeniz. Satır başına bir girdi. Geçersiz alan adları sessizce yok sayılır.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -556,7 +556,7 @@
     "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
-    "message":"ublock-yedek_{{datetime}}.txt",
+    "message":"ublock-yedeğim_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -624,7 +624,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock aşağıdaki sayfanın yüklenmesini engelledi:",
+    "message":"uBlock₀ aşağıdaki sayfanın yüklenmesini engelledi:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -664,11 +664,11 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Bulut depodan al",
+    "message":"Bulut depodan içe aktar",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Bulut depolamadan içeri aktar ve şu anki ayarlarla birleştir",
+    "message":"Bulut depodan içe aktar ve şu anki ayarlarla birleştir",
     "description":"tooltip"
   },
   "cloudNoData":{

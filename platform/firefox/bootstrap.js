@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2014-2017 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,11 +26,13 @@
 
 /******************************************************************************/
 
-const {classes: Cc, interfaces: Ci} = Components;
+const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 // Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
+let windowlessBrowser = null;
+let windowlessBrowserPL = null;
 let bgProcess = null;
 let version;
 const hostName = 'ublock0';
@@ -58,6 +60,52 @@ function startup(data/*, reason*/) {
         return;
     }
 
+    waitForHiddenWindow();
+}
+
+function createBgProcess(parentDocument) {
+    bgProcess = parentDocument.documentElement.appendChild(
+        parentDocument.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+    );
+    bgProcess.setAttribute(
+        'src',
+        'chrome://' + hostName + '/content/background.html#' + version
+    );
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
+    // "If the same listener registers twice for the same message, the
+    // "second registration is ignored."
+    restartListener.messageManager.addMessageListener(
+        hostName + '-restart',
+        restartListener
+    );
+}
+
+function getWindowlessBrowserFrame(appShell) {
+    windowlessBrowser = appShell.createWindowlessBrowser(true);
+    windowlessBrowser.QueryInterface(Ci.nsIInterfaceRequestor);
+    let webProgress = windowlessBrowser.getInterface(Ci.nsIWebProgress);
+    let XPCOMUtils = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null).XPCOMUtils;
+    windowlessBrowserPL = {
+        QueryInterface: XPCOMUtils.generateQI([
+            Ci.nsIWebProgressListener,
+            Ci.nsIWebProgressListener2,
+            Ci.nsISupportsWeakReference
+        ]),
+        onStateChange: function(wbp, request, stateFlags/*, status*/) {
+            if ( !request ) { return; }
+            if ( stateFlags & Ci.nsIWebProgressListener.STATE_STOP ) {
+                webProgress.removeProgressListener(windowlessBrowserPL);
+                windowlessBrowserPL = null;
+                createBgProcess(windowlessBrowser.document);
+            }
+        }
+    };
+    webProgress.addProgressListener(windowlessBrowserPL, Ci.nsIWebProgress.NOTIFY_STATE_DOCUMENT);
+    windowlessBrowser.document.location = "data:application/vnd.mozilla.xul+xml;charset=utf-8,<window%20id='" + hostName + "-win'/>";
+}
+
+function waitForHiddenWindow() {
     let appShell = Cc['@mozilla.org/appshell/appShellService;1']
         .getService(Ci.nsIAppShellService);
 
@@ -76,22 +124,20 @@ function startup(data/*, reason*/) {
             return false;
         }
 
-        bgProcess = hiddenDoc.documentElement.appendChild(
-            hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
-        );
-        bgProcess.setAttribute(
-            'src',
-            'chrome://' + hostName + '/content/background.html#' + version
-        );
-
-        // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIMessageListenerManager#addMessageListener%28%29
-        // "If the same listener registers twice for the same message, the
-        // "second registration is ignored."
-        restartListener.messageManager.addMessageListener(
-            hostName + '-restart',
-            restartListener
-        );
-
+        // In theory, it should be possible to create a windowless browser
+        // immediately, without waiting for the hidden window to have loaded
+        // completely. However, in practice, on Windows this seems to lead
+        // to a broken Firefox appearance. To avoid this, we only create the
+        // windowless browser here. We'll use that rather than the hidden
+        // window for the actual background page (windowless browsers are
+        // also what the webextension implementation in Firefox uses for
+        // background pages).
+        let { Services } = Cu.import('resource://gre/modules/Services.jsm', null);
+        if ( Services.vc.compare(Services.appinfo.platformVersion, '27') >= 0 ) {
+            getWindowlessBrowserFrame(appShell);
+        } else {
+            createBgProcess(hiddenDoc);
+        }
         return true;
     };
 
@@ -150,6 +196,15 @@ function shutdown(data, reason) {
         bgProcess = null;
     }
 
+    if ( windowlessBrowser !== null ) {
+        // close() does not exist for older versions of Firefox.
+        if ( typeof windowlessBrowser.close === 'function' ) {
+            windowlessBrowser.close();
+        }
+        windowlessBrowser = null;
+        windowlessBrowserPL = null;
+    }
+
     if ( data === undefined ) {
         return;
     }
@@ -187,8 +242,9 @@ function uninstall(aData, aReason) {
     // To cleanup vAPI.localStorage in vapi-common.js
     // As I get more familiar with FF API, will find out whetehr there was
     // a better way to do this.
-    Components.utils.import('resource://gre/modules/Services.jsm', null)
-        .Services.prefs.getBranch('extensions.' + hostName + '.').deleteBranch('');
+    Cu.import('resource://gre/modules/Services.jsm', null)
+      .Services.prefs.getBranch('extensions.' + hostName + '.')
+      .deleteBranch('');
 }
 
 /******************************************************************************/

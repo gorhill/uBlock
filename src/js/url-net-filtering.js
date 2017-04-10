@@ -274,9 +274,9 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
     while ( i-- ) {
         url = urls[i];
         other.evaluateZ(context, url, type);
-        otherOwn = other.context === context && other.url === url && other.type === type;
+        otherOwn = other.r !== 0 && other.context === context && other.url === url && other.type === type;
         this.evaluateZ(context, url, type);
-        thisOwn = this.context === context && this.url === url && this.type === type;
+        thisOwn = this.r !== 0 && this.context === context && this.url === url && this.type === type;
         if ( otherOwn && !thisOwn ) {
             this.setRule(context, url, type, other.r);
             changed = true;

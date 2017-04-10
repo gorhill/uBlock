@@ -46,6 +46,9 @@ function startup({ webExtension }) {
                 });
                 return true;
             }
+            if ( message.what === 'webext:storageMigrateDone' ) {
+                browser.runtime.onMessage.removeListener(onMessage);
+            }
             if ( typeof callback === 'function' ) {
                 callback();
             }
@@ -262,13 +265,6 @@ var getStorageMigrator = function() {
 
     let markAsDone = function() {
         close();
-        let { Services } = Components.utils.import('resource://gre/modules/Services.jsm', null),
-            path = Services.dirsvc.get('ProfD', Components.interfaces.nsIFile);
-        path.append('extension-data');
-        path.append(hostName + '.sqlite');
-        if ( path.exists() && path.isFile() ) {
-            path.renameTo(null, hostName + '.migrated.sqlite');
-        }
     };
 
     return {

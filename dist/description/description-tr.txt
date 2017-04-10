@@ -44,7 +44,7 @@ Katkıda bulunanlar @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Bu çok erken bir sürüm, gözden geçirirken, bunu göz önünde bulundurun.
+Bu çok erken bir sürüm, gözden geçirirken bunu göz önünde bulundurun.
 
 Proje değişiklik günlüğü:
 https://github.com/gorhill/uBlock/releases

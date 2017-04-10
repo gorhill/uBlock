@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -732,7 +732,8 @@ FilterContainer.prototype.freeze = function() {
 // https://github.com/gorhill/uBlock/issues/1752
 
 FilterContainer.prototype.compileSelector = (function() {
-    var reStyleSelector = /^(.+?):style\((.+?)\)$/,
+    var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
+        reStyleSelector = /^(.+?):style\((.+?)\)$/,
         reStyleBad = /url\([^)]+\)/,
         reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
         div = document.createElement('div');
@@ -751,17 +752,43 @@ FilterContainer.prototype.compileSelector = (function() {
         }
 
         // We  rarely reach this point.
-        var matches;
+        var matches,
+            selector = raw,
+            pseudoclass,
+            style;
 
         // `:style` selector?
-        if (
-            (matches = reStyleSelector.exec(raw)) !== null &&
-            isValidCSSSelector(matches[1]) &&
-            isValidStyleProperty(matches[2])
-        ) {
+        if ( (matches = reStyleSelector.exec(selector)) !== null ) {
+            selector = matches[1];
+            style = matches[2];
+        }
+
+        // https://github.com/gorhill/uBlock/issues/2448
+        // :after- or :before-based selector?
+        if ( (matches = reAfterBeforeSelector.exec(selector)) ) {
+            selector = matches[1];
+            pseudoclass = matches[2];
+        }
+
+        if ( style !== undefined || pseudoclass !== undefined ) {
+            if ( isValidCSSSelector(selector) === false ) {
+                return;
+            }
+            if ( pseudoclass !== undefined ) {
+                selector += pseudoclass;
+            }
+            if ( style !== undefined ) {
+                if ( isValidStyleProperty(style) === false ) {
+                    return;
+                }
+                return JSON.stringify({
+                    raw: raw,
+                    style: [ selector, '{' + style + '}' ]
+                });
+            }
             return JSON.stringify({
                 raw: raw,
-                style: [ matches[1], '{' + matches[2] + '}' ]
+                pseudoclass: true
             });
         }
 
@@ -1148,10 +1175,11 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCo
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
@@ -1274,10 +1302,11 @@ FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
@@ -1336,10 +1365,11 @@ FilterContainer.prototype.skipCompiledContent = function(lineIter) {
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        if ( lineIter.text.charCodeAt(lineIter.offset) !== 0x63 /* 'c' */ ) {
+        line = lineIter.next();
+        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
+            lineIter.rewind();
             return;
         }
-        line = lineIter.next();
 
         this.acceptedCount += 1;
         if ( this.duplicateBuster.has(line) ) {
