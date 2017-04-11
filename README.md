@@ -45,6 +45,8 @@ To benefit from uBlock Origin's higher efficiency, it's advised that you don't u
 
 ## Building
 
+### Development
+
 To build and load an unpacked extension for development:
 
 1. **Clone** `uBlock-Safari` and [`uAssets`](https://github.com/uBlockOrigin/uAssets) into the same parent directory
@@ -71,6 +73,14 @@ cd uBlock-Safari
 ./tools/make-safari.sh
 echo 'Output is in dist/build/uBlock0.safariextension'
 ```
+
+### Release
+
+To build and sign for release (certificates required):
+
+1. **Clone** `uBlock-Safari` and [`uAssets`](https://github.com/uBlockOrigin/uAssets) into the same parent directory
+1. **Build** by running `./tools/make-safari.sh all` in `uBlock-Safari`'s directory
+    1. Requires `xar-mackyle`, which will be built if not found
 
 ## Release History
 

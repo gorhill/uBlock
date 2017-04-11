@@ -59,7 +59,13 @@ echo '*** uBlock0.safariextension: Generating Info.plist...'
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
+    if [ ! -f dist/certs/key.pem ]; then
+        echo '*** uBlock0.safariextension: Error signing extension; missing private key'
+        exit 1
+    fi
+    echo -n '*** uBlock0.safariextension: Creating signed extension...'
+    bash ./tools/make-safari-sign.sh "$DES"
+    echo ' done.'
 fi
 
 echo '*** uBlock0.safariextension: Done.'

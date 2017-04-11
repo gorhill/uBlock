@@ -2,7 +2,7 @@
 
 #### Safari
 
-- Download `uBlock.safariextz` ([latest release desirable](https://github.com/el1t/uBlock/releases))
+- Download `uBlock0.safariextz` ([latest release desirable](https://github.com/el1t/uBlock/releases))
 - Open the downloaded extension
 - In Safari's popup:
     - Click *Trust*
