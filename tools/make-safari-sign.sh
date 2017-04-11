@@ -7,7 +7,7 @@ DES="${1/safariextension/safariextz}"
 if ! which xar-mackyle > /dev/null 2>&1; then
     if [ ! -f ./tools/xar ]; then
         # Compile patched xar
-        curl https://github.com/downloads/mackyle/xar/xar-1.6.1.tar.gz
+        curl -O https://cloud.github.com/downloads/mackyle/xar/xar-1.6.1.tar.gz
         tar xf xar-1.6.1.tar.gz
         cd xar-1.6.1
         ./configure --disable-shared > /dev/null
