@@ -1461,6 +1461,186 @@ vAPI.adminStorage = {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.cloud = browser.storage.sync instanceof Object && (function() {
+    var chunkCountPerFetch = 16; // Must be a power of 2
+
+    // Mind browser.storage.sync.MAX_ITEMS (512 at time of writing)
+    var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
+
+    // Mind browser.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
+    var maxChunkSize = Math.floor(browser.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 6144);
+
+    // Mind browser.storage.sync.QUOTA_BYTES (128 kB at time of writing)
+    // Firefox:
+    // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
+    // > You can store up to 100KB of data using this API/
+    var maxStorageSize = browser.storage.sync.QUOTA_BYTES || 102400;
+
+    var options = {
+        defaultDeviceName: window.navigator.platform,
+        deviceName: window.localStorage.getItem('deviceName') || ''
+    };
+
+    // This is used to find out a rough count of how many chunks exists:
+    // We "poll" at specific index in order to get a rough idea of how
+    // large is the stored string.
+    // This allows reading a single item with only 2 sync operations -- a
+    // good thing given browser.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
+    // and browser.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
+
+    var getCoarseChunkCount = function(dataKey, callback) {
+        var bin = {};
+        for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
+            bin[dataKey + i.toString()] = '';
+        }
+
+        browser.storage.sync.get(bin, function(bin) {
+            if ( browser.runtime.lastError ) {
+                callback(0, browser.runtime.lastError.message);
+                return;
+            }
+
+            var chunkCount = 0;
+            for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
+                if ( bin[dataKey + i.toString()] === '' ) {
+                    break;
+                }
+                chunkCount = i + 16;
+            }
+
+            callback(chunkCount);
+        });
+    };
+
+    var deleteChunks = function(dataKey, start) {
+        var keys = [];
+
+        // No point in deleting more than:
+        // - The max number of chunks per item
+        // - The max number of chunks per storage limit
+        var n = Math.min(
+            maxChunkCountPerItem,
+            Math.ceil(maxStorageSize / maxChunkSize)
+        );
+        for ( var i = start; i < n; i++ ) {
+            keys.push(dataKey + i.toString());
+        }
+        browser.storage.sync.remove(keys);
+    };
+
+    var start = function(/* dataKeys */) {
+    };
+
+    var push = function(dataKey, data, callback) {
+        var bin = {
+            'source': options.deviceName || options.defaultDeviceName,
+            'tstamp': Date.now(),
+            'data': data,
+            'size': 0
+        };
+        bin.size = JSON.stringify(bin).length;
+        var item = JSON.stringify(bin);
+
+        // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
+        //   https://developer.chrome.com/extensions/storage#property-sync
+        //   "The maximum size (in bytes) of each individual item in sync
+        //   "storage, as measured by the JSON stringification of its value
+        //   "plus its key length."
+        bin = {};
+        var chunkCount = Math.ceil(item.length / maxChunkSize);
+        for ( var i = 0; i < chunkCount; i++ ) {
+            bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
+        }
+        bin[dataKey + i.toString()] = ''; // Sentinel
+
+        browser.storage.sync.set(bin, function() {
+            var errorStr;
+            if ( browser.runtime.lastError ) {
+                errorStr = browser.runtime.lastError.message;
+            }
+            callback(errorStr);
+
+            // Remove potentially unused trailing chunks
+            deleteChunks(dataKey, chunkCount);
+        });
+    };
+
+    var pull = function(dataKey, callback) {
+        var assembleChunks = function(bin) {
+            if ( browser.runtime.lastError ) {
+                callback(null, browser.runtime.lastError.message);
+                return;
+            }
+
+            // Assemble chunks into a single string.
+            var json = [], jsonSlice;
+            var i = 0;
+            for (;;) {
+                jsonSlice = bin[dataKey + i.toString()];
+                if ( jsonSlice === '' ) {
+                    break;
+                }
+                json.push(jsonSlice);
+                i += 1;
+            }
+
+            var entry = null;
+            try {
+                entry = JSON.parse(json.join(''));
+            } catch(ex) {
+            }
+            callback(entry);
+        };
+
+        var fetchChunks = function(coarseCount, errorStr) {
+            if ( coarseCount === 0 || typeof errorStr === 'string' ) {
+                callback(null, errorStr);
+                return;
+            }
+
+            var bin = {};
+            for ( var i = 0; i < coarseCount; i++ ) {
+                bin[dataKey + i.toString()] = '';
+            }
+
+            browser.storage.sync.get(bin, assembleChunks);
+        };
+
+        getCoarseChunkCount(dataKey, fetchChunks);
+    };
+
+    var getOptions = function(callback) {
+        if ( typeof callback !== 'function' ) {
+            return;
+        }
+        callback(options);
+    };
+
+    var setOptions = function(details, callback) {
+        if ( typeof details !== 'object' || details === null ) {
+            return;
+        }
+
+        if ( typeof details.deviceName === 'string' ) {
+            window.localStorage.setItem('deviceName', details.deviceName);
+            options.deviceName = details.deviceName;
+        }
+
+        getOptions(callback);
+    };
+
+    return {
+        start: start,
+        push: push,
+        pull: pull,
+        getOptions: getOptions,
+        setOptions: setOptions
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/
