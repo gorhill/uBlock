@@ -100,7 +100,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Reglas locales: las reglas en esta columna aplican solo al sitio actual.\nLas reglas locales tienen preferencia sobre las reglas globales.",
+    "message":"Reglas locales: las reglas en esta columna aplican solo al sitio actual.\nLas reglas locales anulan las reglas globales.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista de nombres de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores no válidos.",
+    "message":"Lista de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores inválidos.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{

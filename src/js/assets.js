@@ -64,10 +64,8 @@ var fireNotification = function(topic, details) {
 
 /******************************************************************************/
 
-var getTextFileFromURL = function(url, onLoad, onError) {
-    if ( reIsExternalPath.test(url) === false ) {
-        url = vAPI.getURL(url);
-    }
+api.fetchText = function(url, onLoad, onError) {
+    var actualUrl = reIsExternalPath.test(url) ? url : vAPI.getURL(url);
 
     if ( typeof onError !== 'function' ) {
         onError = onLoad;
@@ -77,28 +75,34 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     var onResponseReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
         // xhr for local files gives status 0, but actually succeeds
-        var status = this.status || 200;
-        if ( status < 200 || status >= 300 ) {
-            return onError.call(this);
+        var details = {
+            url: url,
+            content: '',
+            statusCode: this.status || 200,
+            statusText: this.statusText || ''
+        };
+        if ( details.statusCode < 200 || details.statusCode >= 300 ) {
+            return onError.call(null, details);
         }
         // consider an empty result to be an error
         if ( stringIsNotEmpty(this.responseText) === false ) {
-            return onError.call(this);
+            return onError.call(null, details);
         }
         // we never download anything else than plain text: discard if response
         // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
         var text = this.responseText.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
-            return onError.call(this);
+            return onError.call(null, details);
         }
-        return onLoad.call(this);
+        details.content = this.responseText;
+        return onLoad.call(null, details);
     };
 
     var onErrorReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
-        µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', url));
-        onError.call(this);
+        µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', actualUrl));
+        onError.call(null, { url: url, content: '' });
     };
 
     // Be ready for thrown exceptions:
@@ -106,7 +110,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     // `file:///` on Chromium 40 results in an exception being thrown.
     var xhr = new XMLHttpRequest();
     try {
-        xhr.open('get', url, true);
+        xhr.open('get', actualUrl, true);
         xhr.timeout = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
         xhr.onload = onResponseReceived;
         xhr.onerror = onErrorReceived;
@@ -405,10 +409,10 @@ var getAssetSourceRegistry = function(callback) {
 
     // First-install case.
     var createRegistry = function() {
-        getTextFileFromURL(
+        api.fetchText(
             µBlock.assetsBootstrapLocation || 'assets/assets.json',
-            function() {
-                updateAssetSourceRegistry(this.responseText, true);
+            function(details) {
+                updateAssetSourceRegistry(details.content, true);
                 registryReady();
             }
         );
@@ -757,21 +761,21 @@ api.get = function(assetKey, options, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        getTextFileFromURL(contentURL, onContentLoaded, onContentNotLoaded);
+        api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
     };
 
-    var onContentLoaded = function() {
-        if ( stringIsNotEmpty(this.responseText) === false ) {
+    var onContentLoaded = function(details) {
+        if ( stringIsNotEmpty(details.content) === false ) {
             onContentNotLoaded();
             return;
         }
         if ( reIsExternalPath.test(contentURL) && options.dontCache !== true ) {
             assetCacheWrite(assetKey, {
-                content: this.responseText,
+                content: details.content,
                 url: contentURL
             });
         }
-        reportBack(this.responseText);
+        reportBack(details.content);
     };
 
     var onCachedContentLoaded = function(details) {
@@ -811,23 +815,23 @@ var getRemote = function(assetKey, callback) {
         callback(details);
     };
 
-    var onRemoteContentLoaded = function() {
-        if ( stringIsNotEmpty(this.responseText) === false ) {
+    var onRemoteContentLoaded = function(details) {
+        if ( stringIsNotEmpty(details.content) === false ) {
             registerAssetSource(assetKey, { error: { time: Date.now(), error: 'No content' } });
             tryLoading();
             return;
         }
         assetCacheWrite(assetKey, {
-            content: this.responseText,
+            content: details.content,
             url: contentURL
         });
         registerAssetSource(assetKey, { error: undefined });
-        reportBack(this.responseText);
+        reportBack(details.content);
     };
 
-    var onRemoteContentError = function() {
-        var text = this.statusText;
-        if ( this.status === 0 ) {
+    var onRemoteContentError = function(details) {
+        var text = details.statusText;
+        if ( details.statusCode === 0 ) {
             text = 'network error';
         }
         registerAssetSource(assetKey, { error: { time: Date.now(), error: text } });
@@ -841,7 +845,7 @@ var getRemote = function(assetKey, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        getTextFileFromURL(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
     };
 
     getAssetSourceRegistry(function(registry) {

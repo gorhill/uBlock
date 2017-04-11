@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.11.2",
+    "version": "1.12.0",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -55,8 +55,7 @@
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
-        "http://*/*",
-        "https://*/*"
+        "<all_urls>"
     ],
     "short_name": "uBlock₀",
     "storage": {

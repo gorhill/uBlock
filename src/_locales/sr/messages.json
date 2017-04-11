@@ -188,7 +188,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Покажи број блокираних захтева на икони",
+    "message":"Прикажи број блокираних захтева на иконици",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -528,7 +528,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Статички филтер {{filter}} нађен у:",
+    "message":"Статички филтер {{filter}} пронађен у:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
@@ -628,7 +628,7 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Због следећег филтера",
+    "message":"због следећег филтера",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
@@ -636,7 +636,7 @@
     "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
-    "message":"Нађен у:",
+    "message":"Пронађен у:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{

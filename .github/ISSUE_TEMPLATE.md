@@ -1,3 +1,5 @@
+**Important:** If you are having issue with uBlock Origin ("uBO") on **Firefox Nightly**, please install the most recent developer version of uBO on AMO: <https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/versions/beta>.
+
 Read first: <https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md>
 
 ### Describe the issue
@@ -21,6 +23,7 @@ Read first: <https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md>
 
 [If you fail to provide this info, I will mark the issue as invalid. Lists all settings which differs from default settings]
 
+- OS/version: 
 - Browser/version: 
 - uBlock Origin version: 
 
