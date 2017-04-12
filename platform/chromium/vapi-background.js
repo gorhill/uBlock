@@ -1309,7 +1309,9 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     };
 
     if (tabId)  {
-        chrome.tabs.get(tabId, function(tab) { startInTab(tab, frameId); }); // ADN
+         chrome.tabs.get(tabId, function(tab) { 
+          if(tab) startInTab(tab, frameId); }
+        ); // ADN
     }
     else {
         chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
