@@ -49,22 +49,27 @@ awkscript='BEGIN { p = 0 }
 }'
 declare -a sedargs=('-i' '')
 for message in $(perl -nle '/^\/\/ (__MSG_[A-Za-z]+__)/ && print $1' < $DES/js/client-injected.js); do
-    script=$(awk "${awkscript/__MSG__/${message}}" $DES/js/client-injected.js | sed -e 's/[\"#&]/\\&/g')
+    script=$(awk "${awkscript/__MSG__/${message}}" $DES/js/client-injected.js | sed 's/[\"#&]/\\&/g')
     sedargs+=('-e' "s#${message}#${script}#")
 done
-sed "${sedargs[@]}" $DES/js/vapi-client.js
+if ! sed "${sedargs[@]}" $DES/js/vapi-client.js 2>/dev/null; then
+    sed ${sedargs[@]} $DES/js/vapi-client.js
+fi
 rm -f $DES/js/client-injected.js
 
 echo '*** uBlock0.safariextension: Generating Info.plist...'
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
-    if [ ! -f dist/certs/key.pem ]; then
-        echo '*** uBlock0.safariextension: Error signing extension; missing private key'
+    if [ ! -f dist/certs/key.pem ] || [ ! -f dist/certs/SafariDeveloper.cer ]; then
+        echo '*** uBlock0.safariextension: Cannot sign extension; missing credentials'
         exit 1
     fi
     echo -n '*** uBlock0.safariextension: Creating signed extension...'
-    bash ./tools/make-safari-sign.sh "$DES"
+    if ! bash ./tools/make-safari-sign.sh "$DES"; then
+        echo '*** uBlock0.safariextension: Error signing extension'
+        exit 1
+    fi
     echo ' done.'
 fi
 

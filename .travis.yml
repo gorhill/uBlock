@@ -1,10 +1,16 @@
-language: ruby
+language: bash
 sudo: false
+os:
+  - linux
+  - osx
 env:
-- BROWSER=safari EXT=safariextz
+  - BROWSER=safari EXT=safariextz
 script: "./tools/make-${BROWSER}.sh all"
 before_install:
-- openssl aes-256-cbc -K $encrypted_e984caf80568_key -iv $encrypted_e984caf80568_iv
-  -in dist/certs/SafariDeveloper.cer.enc -out dist/certs/SafariDeveloper.cer -d
-- openssl aes-256-cbc -K $encrypted_197d257244cd_key -iv $encrypted_197d257244cd_iv
-  -in dist/certs/key.pem.enc -out dist/certs/key.pem -d
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install xar-mackyle; fi
+  - git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git ../uAssets
+  - openssl aes-256-cbc -K $encrypted_e984caf80568_key -iv $encrypted_e984caf80568_iv
+    -in dist/certs/SafariDeveloper.cer.enc -out dist/certs/SafariDeveloper.cer -d
+  - openssl aes-256-cbc -K $encrypted_197d257244cd_key -iv $encrypted_197d257244cd_iv
+    -in dist/certs/key.pem.enc -out dist/certs/key.pem -d
