@@ -1212,9 +1212,13 @@ vAPI.domCollapser = (function() {
                     console.log('[CS] Ignored cross-domain (dynamic) iFrame', f);
                 }
             }
-
-            sendInjectScripts(iframe);
-            // iframe.onload = sendInjectScripts; // ADN: may still need this but I can't find a case
+            try {
+              sendInjectScripts(iframe);
+              // iframe.onload = sendInjectScripts; // ADN: may still need this but I can't find a case
+            }
+            catch (e) {
+              console.warn('sendInjectScripts failed', e);
+            }
         }
     };
 
