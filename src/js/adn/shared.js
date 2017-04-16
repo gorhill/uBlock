@@ -543,7 +543,8 @@ var parseHostname = function (url) {
 var parseDomain = function (url, useLast) {
 
   var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
-  return domains.length ? new URL(
+
+  return (domains && domains.length > 0) ? new URL(
       useLast ? domains[domains.length - 1] : domains[0])
     .hostname : undefined;
 }

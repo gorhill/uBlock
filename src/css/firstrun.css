@@ -1,6 +1,10 @@
+html{
+  height:100%;
+}
 body {
   background: url(../img/adn_clickbot_bg.jpg);
   background-size: cover;
+  background-repeat: no-repeat;
   height:100%;
   margin:0;
 }
