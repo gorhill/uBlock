@@ -34,7 +34,7 @@ var vAPI = self.vAPI = self.vAPI || {};
 var browser = self.browser;
 var manifest = browser.runtime.getManifest();
 
-vAPI.chrome = true;
+vAPI.edge = true;
 vAPI.cantWebsocket = true; 
 
 var noopFunc = function(){};

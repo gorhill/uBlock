@@ -250,7 +250,7 @@ vAPI.randomToken = function() {
 };
 
 vAPI.sessionId = vAPI.randomToken();
-vAPI.chrome = true;
+vAPI.edge = true;
 vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 /******************************************************************************/
