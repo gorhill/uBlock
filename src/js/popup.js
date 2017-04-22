@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -94,6 +94,7 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
+var reHasAsciiAndUnicode = /[A-Za-z]+[^\x00-\x7F]|[^\x00-\x7F]+[A-Za-z]/;
 
 /******************************************************************************/
 
@@ -196,10 +197,25 @@ var addFirewallRow = function(des) {
     }
 
     row.descendants('[data-des]').attr('data-des', des);
-    row.descendants('span:nth-of-type(1)').text(punycode.toUnicode(des));
 
-    var hnDetails = popupData.hostnameDict[des] || {};
-    var isDomain = des === hnDetails.domain;
+    var hnDetails = popupData.hostnameDict[des] || {},
+        isDomain = des === hnDetails.domain;
+
+    var prettyDomainName = punycode.toUnicode(des),
+        isPunycoded = prettyDomainName !== des,
+        mixedDomainName = false;
+    if ( isDomain && isPunycoded ) {
+        var pos = prettyDomainName.indexOf('.');
+        if ( pos !== -1 ) {
+            mixedDomainName = reHasAsciiAndUnicode.test(prettyDomainName.slice(0, pos));
+        }
+    }
+
+    var span = row.nodeAt(0).querySelector('span:first-of-type');
+    span.classList.toggle('isIDN', mixedDomainName);
+    span.querySelector('span').textContent = prettyDomainName;
+    span.title = isDomain && isPunycoded ? des : '';
+
     row.toggleClass('isDomain', isDomain)
        .toggleClass('isSubDomain', !isDomain)
        .toggleClass('allowed', hnDetails.allowCount !== 0)
