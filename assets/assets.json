@@ -369,7 +369,7 @@
 		"off": true,
 		"title": "FIN: Finnish Addition to Easylist",
 		"lang": "fi",
-		"contentURL": "http://adb.juvander.net/Finland_adb.txt",
+		"contentURL": "https://adb.juvander.net/Finland_adb.txt",
 		"supportURL": "http://www.juvander.fi/AdblockFinland"
 	},
 	"FRA-0": {
