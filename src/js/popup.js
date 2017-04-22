@@ -94,7 +94,15 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
-var reHasAsciiAndUnicode = /[A-Za-z]+[^\x00-\x7F]|[^\x00-\x7F]+[A-Za-z]/;
+
+// https://github.com/gorhill/uBlock/issues/2550
+// Solution inspired from
+// - https://bugzilla.mozilla.org/show_bug.cgi?id=1332714#c17
+// Confusable character set from:
+// - http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%D0%B0%D1%81%D4%81%D0%B5%D2%BB%D1%96%D1%98%D3%8F%D0%BE%D1%80%D4%9B%D1%95%D4%9D%D1%85%D1%83%D1%8A%D0%AC%D2%BD%D0%BF%D0%B3%D1%B5%D1%A1%5D&g=gc&i=
+// Linked from:
+// - https://www.chromium.org/developers/design-documents/idn-in-google-chrome
+var reAmbiguousIDN = /^[a-zасԁеһіјӏорԛѕԝхуъЬҽпгѵѡ.-]+$/;
 
 /******************************************************************************/
 
@@ -199,20 +207,15 @@ var addFirewallRow = function(des) {
     row.descendants('[data-des]').attr('data-des', des);
 
     var hnDetails = popupData.hostnameDict[des] || {},
-        isDomain = des === hnDetails.domain;
-
-    var prettyDomainName = punycode.toUnicode(des),
-        isPunycoded = prettyDomainName !== des,
-        mixedDomainName = false;
-    if ( isDomain && isPunycoded ) {
-        var pos = prettyDomainName.indexOf('.');
-        if ( pos !== -1 ) {
-            mixedDomainName = reHasAsciiAndUnicode.test(prettyDomainName.slice(0, pos));
-        }
-    }
+        isDomain = des === hnDetails.domain,
+        prettyDomainName = punycode.toUnicode(des),
+        isPunycoded = prettyDomainName !== des;
 
     var span = row.nodeAt(0).querySelector('span:first-of-type');
-    span.classList.toggle('isIDN', mixedDomainName);
+    span.classList.toggle(
+        'isIDN',
+        isDomain && isPunycoded && reAmbiguousIDN.test(prettyDomainName)
+    );
     span.querySelector('span').textContent = prettyDomainName;
     span.title = isDomain && isPunycoded ? des : '';
 
