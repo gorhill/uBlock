@@ -300,7 +300,7 @@ var modifyDNTNotifications = function () {
    if (text.length > 0 && link.length > 0 && newlink.length === 0) {
        var sections = text[0].innerText.indexOf(",") > 0 ? text[0].innerText.split(',') : text[0].innerText.split('，'),
            newText = sections[0] + link[0].outerHTML + "," + sections[1];
-      
+
        text[0].innerHTML = newText;
        uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
    }
