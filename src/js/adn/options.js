@@ -96,35 +96,35 @@
       updateGroupState();
     });
   };
+
+/******************************************************************************/
+
+var frequencyTagConverter = function(input) {
+    var match = {
+        all: 1,
+        most: 0.75,
+        some: 0.3,
+        occasional: 0.1
+    }
+    
+    if (typeof input === "string") return match[input];
+    else {
+        for (var prop in match) {
+            if (match[prop] === input) return prop;
+        }
+    }
+
+}
 /******************************************************************************/
 
   var ClickProbabilityChanged = function() {
-      var p, selection = uDom('input[name="click-frequency"]:checked'),
-          tag = selection.attr("id").replace("click-frequency-","");
-
-      switch (tag) {
-          case "all":
-          p = 1;
-          break;
-
-          case "most":
-          p = 0.75;
-          break;
-
-          case "some":
-          p = 0.3;
-          break;
-
-          case "occasional":
-          p = 0.1;
-          break;
-      }
-      
-
+    var selection = uDom('input[name="click-frequency"]:checked'),
+        tag = selection.attr("id").replace("click-frequency-","");
+    
     messager.send('dashboard', {
       what: 'userSettings',
       name: 'clickProbability',
-      value: p
+      value: frequencyTagConverter(tag)
     });
   
   };
@@ -177,6 +177,8 @@
           );
         });
 
+        var id = "#click-frequency-" + frequencyTagConverter(details.clickProbability);
+        uDom(id).prop('checked',true);
 
     });
 
