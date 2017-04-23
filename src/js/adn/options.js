@@ -177,11 +177,8 @@ var frequencyTagConverter = function(input) {
           );
         });
 
-
         var id = "#click-frequency-" + frequencyTagConverter(details.clickProbability);
-        console.log(id,uDom(id));
         uDom(id).prop('checked',true);
-
 
     });
 
