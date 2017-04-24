@@ -300,7 +300,7 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyAllPrompt":{
-    "message":"Click ALL Ads",
+    "message":"انقر فوق كل الإعلانات",
     "description":"English: Click Frequency - Click ALL Ads"
   },
   "ClickingFrequencyMostPrompt":{
@@ -308,7 +308,7 @@
     "description":"English: Click Frequency - Click MOST Ads"
   },
   "ClickingFrequencySomePrompt":{
-    "message":"Click SOME Ads",
+    "message":"انقر فوق بعض الإعلانات",
     "description":"English: Click Frequency - Click SOME Ads"
   },
   "ClickingFrequencyOccationalPrompt":{
@@ -352,7 +352,7 @@
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"ترقية",
     "description":"English: update"
   },
   "whitelistPageName":{

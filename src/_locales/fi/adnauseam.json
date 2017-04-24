@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"piilota mainokset valitsemistasi <span>suodatuslistoista<\/span>",
+    "message":"piilota mainokset valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"rekisteröi vierailut mainoksiin valitsemistasi <span>suodatuslistoista<\/span>",
+    "message":"rekisteröi vierailut mainoksiin valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimoi asetuksiasi suojautuaksesi haitallisilta mainoksilta (<span>mukauta<\/span>)",
+    "message":"optimoi asetuksiasi suojautuaksesi haitallisilta mainoksilta (<span class='link' id='ToOptions'>mukauta<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{

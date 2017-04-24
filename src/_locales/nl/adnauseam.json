@@ -12,7 +12,7 @@
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Veelgestelde vragen",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
@@ -40,7 +40,7 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimaliseren van uw instellingen ter bescherming tegen malware en niet-visuele trackers (<span> aanpassen<\/span>)",
+    "message":"optimaliseren van uw instellingen ter bescherming tegen malware en niet-visuele trackers (<span class='link' id='ToOptions'> aanpassen<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -72,7 +72,7 @@
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"Uw ad-blocker en de AdNauseam conflicteren!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
