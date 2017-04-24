@@ -967,6 +967,8 @@ vAPI.tabs.open = function(details) {
 
         for ( tab of this.getAll() ) {
             var browser = tabWatcher.browserFromTarget(tab);
+            // https://github.com/gorhill/uBlock/issues/2558
+            if ( browser === null ) { continue; }
 
             // Or simply .equals if we care about the fragment
             if ( URI.equalsExceptRef(browser.currentURI) === false ) {
