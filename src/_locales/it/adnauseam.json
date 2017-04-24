@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"nascondi le pubblicità presenti nelle <span>liste selezionate<\/span>",
+    "message":"nascondi le pubblicità presenti nelle <span class='link' id='To3pfilter'>liste selezionate<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"registro delle visite delle pubblicità trovate attraverso i tuoi <span>elenchi filtri<\/span>",
+    "message":"registro delle visite delle pubblicità trovate attraverso i tuoi <span class='link' id='To3pfilter'>elenchi filtri<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"ottimizza impostazioni per la protezione contro i malware (<span>personalizza<\/span>)",
+    "message":"ottimizza impostazioni per la protezione contro i malware (<span class='link' id='ToOptions'>personalizza<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -236,11 +236,11 @@
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"pubblicità raccolte",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
-    "message":"showing",
+    "message":"mostrando",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -300,19 +300,19 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyAllPrompt":{
-    "message":"Click ALL Ads",
+    "message":"Clicca su TUTTE le pubblicità",
     "description":"English: Click Frequency - Click ALL Ads"
   },
   "ClickingFrequencyMostPrompt":{
-    "message":"Click MOST Ads",
+    "message":"Clicca sulla MAGGIOR PARTE delle pubblicità",
     "description":"English: Click Frequency - Click MOST Ads"
   },
   "ClickingFrequencySomePrompt":{
-    "message":"Click SOME Ads",
+    "message":"Clicca su QUALCHE pubblicità",
     "description":"English: Click Frequency - Click SOME Ads"
   },
   "ClickingFrequencyOccationalPrompt":{
-    "message":"Click OCCASIONAL Ads",
+    "message":"Clicca OCCASIONALMENTE sulle pubblicità",
     "description":"English: Click Frequency - Click OCCASIONAL Ads"
   },
   "respectDNTPrompt":{
@@ -352,7 +352,7 @@
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"Aggiorna",
     "description":"English: update"
   },
   "whitelistPageName":{

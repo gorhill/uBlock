@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"ukryj reklamy z wybranych <span>list filtrów<\/span>",
+    "message":"ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"rejestruj wizyty w reklamach znalezionych na <span>listach filtrów<\/span>",
+    "message":"rejestruj wizyty w reklamach znalezionych na <span class='link' id='To3pfilter'>listach filtrów<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"zoptymalizuj ustawienia ochrony przed złośliwymi reklamami (<span> dostosuj<\/span>)",
+    "message":"zoptymalizuj ustawienia ochrony przed złośliwymi reklamami (<span class='link' id='ToOptions'> dostosuj<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{

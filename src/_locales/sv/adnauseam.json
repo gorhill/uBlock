@@ -32,15 +32,15 @@
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"dölj annonser i dina valda <span>filterlistor<\/span>",
+    "message":"dölj annonser i dina valda <span class='link' id='To3pfilter'>filterlistor<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"registrera besökta annonser hittade via dina <span>filterlistor<\/span>",
+    "message":"registrera besökta annonser hittade via dina <span class='link' id='To3pfilter'>filterlistor<\/span>",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimera dina inställningar för att skydda dig mot skadlig programvara och icke-visuella trackers (<span>Anpassa<\/span>)",
+    "message":"optimera dina inställningar för att skydda dig mot skadlig programvara och icke-visuella trackers (<span class='link' id='ToOptions'>Anpassa<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
