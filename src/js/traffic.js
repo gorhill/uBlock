@@ -537,39 +537,22 @@ var foilLargeMediaElement = function(pageStore, details) {
 
 /******************************************************************************/
 
-var foilWithCSP = function(headers, noInlineScript, noWebsocket, noWorker) {
-    var me = foilWithCSP,
-        i = headerIndexFromName('content-security-policy', headers),
-        before = i === -1 ? '' : headers[i].value.trim(),
-        after = before;
+var foilWithCSP = function(headers, noInlineScript, noWebsocket, noBlobWorker) {
+    var i = headerIndexFromName('content-security-policy', headers),
+        cspSubset = [];
 
     if ( noInlineScript ) {
-        after = foilWithCSPDirective(
-            after,
-            me.reScriptSrc,
-            "script-src 'unsafe-eval' *",
-            me.reScriptSrcRemove
-        );
+        cspSubset.push("script-src 'unsafe-eval' *");
     }
 
     if ( noWebsocket ) {
-        after = foilWithCSPDirective(
-            after,
-            me.reConnectSrc,
-            'connect-src http:',
-            me.reConnectSrcRemove
-        );
+        cspSubset.push('connect-src http: https:');
     }
 
     // https://www.w3.org/TR/CSP2/#directive-child-src
     // https://www.w3.org/TR/CSP3/#directive-worker-src
-    if ( noWorker ) {
-        after = foilWithCSPDirective(
-            after,
-            me.reWorkerSrc,
-            'child-src http:',
-            me.reWorkerSrcRemove
-        );
+    if ( noBlobWorker ) {
+        cspSubset.push('child-src http: https:');
     }
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=513860
@@ -579,88 +562,29 @@ var foilWithCSP = function(headers, noInlineScript, noWebsocket, noWorker) {
     //   contexts based on data:- or blob:-based URIs.
     if ( vAPI.chrome && (noInlineScript || noWebsocket) ) {
         // https://w3c.github.io/webappsec-csp/#directive-frame-src
-        after = foilWithCSPDirective(
-            after,
-            me.reFrameSrc,
-            'frame-src http:',
-            me.reFrameSrcRemove
-        );
+        cspSubset.push('frame-src http: https:');
     }
 
-    var changed = after !== before;
-    if ( changed ) {
-        if ( i !== -1 ) {
-            headers.splice(i, 1);
-        }
-        headers.push({ name: 'Content-Security-Policy', value: after });
+    if ( cspSubset.length === 0 ) { return; }
+
+    var csp = '';
+    if ( i !== -1 ) {
+        csp = headers[i].value.trim();
+        headers.splice(i, 1);
     }
 
-    return changed;
+    // Use comma to add a new subset to potentially existing one(s). This new
+    // subset has its own reporting options and won't cause spurious CSP
+    // reports to outside world.
+    // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
+    cspSubset = cspSubset.join('; ');
+    headers.push({
+        name: 'Content-Security-Policy',
+        value: csp.length === 0 ? cspSubset : csp + ', ' + cspSubset
+    });
+
+    return true;
 };
-
-(function() {
-    var fn = foilWithCSP;
-    fn.reScriptSrc = /script-src[^;]*;?\s*/;
-    fn.reScriptSrcRemove = /'unsafe-inline'\s*|'nonce-[^']+'\s*/g;
-    fn.reConnectSrc = /connect-src[^;]*;?\s*/;
-    fn.reConnectSrcRemove = /wss?:[^\s]*\s*/g;
-    fn.reWorkerSrc = /child-src[^;]*;?\s*/;
-    fn.reWorkerSrcRemove = /blob:[^\s]*\s*/g;
-    fn.reFrameSrc = /frame-src[^;]*;?\s*/;
-    fn.reFrameSrcRemove = /data:[^\s]*\s*|blob:[^\s]*\s*/g;
-})();
-
-/******************************************************************************/
-
-// Past issues to keep in mind:
-// - https://github.com/gorhill/uMatrix/issues/129
-// - https://github.com/gorhill/uMatrix/issues/320
-// - https://github.com/gorhill/uBlock/issues/1909
-
-var foilWithCSPDirective = function(csp, toExtract, toAdd, toRemove) {
-    // Set
-    if ( csp === '' ) {
-        return toAdd;
-    }
-
-    var matches = toExtract.exec(csp);
-
-    // Add
-    if ( matches === null ) {
-        if ( csp.slice(-1) !== ';' ) {
-            csp += ';';
-        }
-        csp += ' ' + toAdd;
-        return csp.replace(reReportDirective, '');
-    }
-
-    var directive = matches[0];
-
-    // No change
-    if ( toRemove.test(directive) === false ) {
-        return csp;
-    }
-
-    // Remove
-    csp = csp.replace(toExtract, '').trim();
-    if ( csp.slice(-1) !== ';' ) {
-        csp += ';';
-    }
-    directive = directive.replace(toRemove, '').trim();
-
-    // Check for empty directive after removal
-    matches = reEmptyDirective.exec(directive);
-    if ( matches ) {
-        directive = matches[1] + " 'none';";
-    }
-
-    csp += ' ' + directive;
-    return csp.replace(reReportDirective, '');
-};
-
-// https://w3c.github.io/webappsec-csp/#directives-reporting
-var reReportDirective = /report-(?:to|uri)[^;]*;?\s*/;
-var reEmptyDirective = /^([a-z-]+)\s*;/;
 
 /******************************************************************************/
 
