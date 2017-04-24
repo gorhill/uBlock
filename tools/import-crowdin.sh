@@ -92,8 +92,10 @@ cp $SRC/id/description.txt    $DES/description-id.txt
 cp $SRC/it/description.txt    $DES/description-it.txt
 cp $SRC/ja/description.txt    $DES/description-ja.txt
 cp $SRC/ko/description.txt    $DES/description-ko.txt
+cp $SRC/kn/description.txt    $DES/description-kn.txt
 cp $SRC/lt/description.txt    $DES/description-lt.txt
 cp $SRC/lv/description.txt    $DES/description-lv.txt
+cp $SRC/ml-IN/description.txt $DES/description-ml.txt
 cp $SRC/ms/description.txt    $DES/description-ms.txt
 cp $SRC/mr/description.txt    $DES/description-mr.txt
 cp $SRC/no/description.txt    $DES/description-no.txt

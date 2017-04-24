@@ -44,7 +44,7 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra kun på den nuværende side.",
+    "message":"Klik: Deaktiver\/aktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Deaktiver uBlock₀ kun på denne side.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Aktiver\/deaktiver blokering af fjerntliggende 3. parts skrifttyper på denne side",
+    "message":"Aktiver\/deaktiver blokering af skrifttyper fra nettet på dette websted",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -244,7 +244,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Bloker fjerntliggende skrifttyper",
+    "message":"Bloker skrifttyper fra nettet",
     "description":""
   },
   "settingsStorageUsed":{
