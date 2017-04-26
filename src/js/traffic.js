@@ -133,15 +133,15 @@ var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
   // console.log('handleRefererForVisit()', arguments);
 
   // Referer cases (4):
-  // noOutgoingReferer=true  / no refererIdx:     no-op
-  // noOutgoingReferer=true  / have refererIdx:   setHeader('')
-  // noOutgoingReferer=false / no refererIdx:     addHeader(referer)
-  // noOutgoingReferer=false / have refererIdx:   no-op
+  // noOutgoingReferer=true  / no refIdx:     no-op
+  // noOutgoingReferer=true  / have refIdx:   setHeader('')
+  // noOutgoingReferer=false / no refIdx:     addHeader(referer)
+  // noOutgoingReferer=false / have refIdx:   no-op
   if (refIdx > -1 && prefs.noOutgoingReferer) {
 
     // will never happen when using XMLHttpRequest
     µBlock.adnauseam.logNetEvent('[REFERER]', 'Strip', referer, url);
-    setHeader(headers[refererIdx], '');
+    setHeader(headers[refIdx], '');
 
   } else if (!prefs.noOutgoingReferer && refIdx < 0) {
 
