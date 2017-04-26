@@ -567,7 +567,7 @@ var foilWithCSP = function(headers, noInlineScript, noWebsocket, noBlobWorker) {
 
     if ( cspSubset.length === 0 ) { return; }
 
-    var csp = '';
+    var csp;
     if ( i !== -1 ) {
         csp = headers[i].value.trim();
         headers.splice(i, 1);
@@ -580,7 +580,7 @@ var foilWithCSP = function(headers, noInlineScript, noWebsocket, noBlobWorker) {
     cspSubset = cspSubset.join('; ');
     headers.push({
         name: 'Content-Security-Policy',
-        value: csp.length === 0 ? cspSubset : csp + ', ' + cspSubset
+        value: csp === undefined ? cspSubset : csp + ', ' + cspSubset
     });
 
     return true;
