@@ -1,7 +1,7 @@
 body {
   padding: 0 0.5em;
   font-size: 20px;
-  font-family: bebas_neue;
+  font-family: bebas_neue,sans-serif;
 }
 #aboutNameVer {
   color: #BD10E0;

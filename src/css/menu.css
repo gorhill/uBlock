@@ -144,7 +144,7 @@ a.hide {
 button {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   background: none;
   box-shadow: none;
   color: #0076FF;
@@ -207,7 +207,7 @@ button.danger:hover{
 header{
   background: #000;
   height: 100px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   font-size: 20px;
 }
 
@@ -382,7 +382,7 @@ header{
   line-height: 85px;
   text-indent: 20px;
   font-size: 30px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
 }
 .ad-item.just-visited::before,
 .ad-item-text.just-visited::before {
@@ -436,7 +436,7 @@ header{
   font-size: 16px;
   line-height: 1em;
   padding: 10px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   top: 40px;
   left: 63px;
 }
@@ -516,7 +516,7 @@ header{
 
 #settings {
   height: 450px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   width: 100%;
   color: #aaa;
 }
@@ -537,7 +537,7 @@ header{
   height: 100px;
   float: right;
   padding-top:30px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   font-size: 40px;
   text-align: center;
 }
@@ -643,8 +643,9 @@ button.about {
   right: 0;
   background: #000 url(../img/gray_grid.png);
   opacity: 0.95;
-  padding: 145px 85px 0;
+  padding: 145px 5px 0;
   z-index: 10000;
+  text-align: center;
 }
 
 .disabled #tooltip {
@@ -652,7 +653,7 @@ button.about {
 }
 
 #paused-menu h2{
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   font-size:19px;
   color: #dadada;
   line-height:28px;
@@ -668,7 +669,7 @@ button.about {
 select {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue;
+  font-family: bebas_neue, sans-serif;
   background: none;
   box-shadow: none;
   color: #0076FF;
