@@ -132,9 +132,12 @@ a.external-link {
 .custom-check ul#clickingFrequency{
   margin: .5em 0 1em -.5em;
   border: solid 1px #555;
-  padding:.5em 0 1em .5em;
+  padding:.5em 1em 1em .5em;
   border-radius: 8px;
-  width:200px;
+  display: inline-block;
+}
+#clickingFrequency a {
+  margin-right: -.5em!important;
 }
 .custom-check ul>label {
   text-transform: uppercase;
@@ -222,7 +225,7 @@ a.hide {
 button {
   border: 2px solid #0076FF;
   border-radius: 5px;
-  font-family: bebas_neue;
+  font-family: bebas_neue,sans-serif;
   background: none;
   box-shadow: none;
   color: #0076FF;
@@ -265,7 +268,7 @@ button.small {
 button.custom {
     border: 2px solid #0076FF;
     border-radius: 5px;
-    font-family: bebas_neue;
+    font-family: bebas_neue,sans-serif;
     background: none;
     box-shadow: none;
     color: #0076FF;
@@ -343,7 +346,7 @@ button.important {
   background-size: 40px 39px;
   padding: 5px 5px 5px 44px;
   line-height: 1.7em;
-  font-family: 'bebas_neue';
+  font-family: 'bebas_neue,sans-serif';
   font-size: 18px;
   border-bottom: 1px solid;
   background-position: 3px center;
@@ -490,57 +493,57 @@ button.error{
     }
 /*@import 'fonts/stylesheet.css';*/
 @font-face {
-    font-family: 'bebas_neue';
+    font-family: 'bebas_neue,sans-serif';
     src: url('fonts/bebasneue_thin-webfont.eot');
     src: url('fonts/bebasneue_thin-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_thin-webfont.woff2') format('woff2'),
          url('fonts/bebasneue_thin-webfont.woff') format('woff'),
          url('fonts/bebasneue_thin-webfont.ttf') format('truetype'),
-         url('fonts/bebasneue_thin-webfont.svg#bebas_neuethin') format('svg');
+         url('fonts/bebasneue_thin-webfont.svg#bebas_neue,sans-serifthin') format('svg');
     font-weight: 100;
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue';
+    font-family: 'bebas_neue,sans-serif';
     src: url('fonts/bebasneue_light-webfont.eot');
     src: url('fonts/bebasneue_light-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_light-webfont.woff2') format('woff2'),
          url('fonts/bebasneue_light-webfont.woff') format('woff'),
          url('fonts/bebasneue_light-webfont.ttf') format('truetype'),
-         url('fonts/bebasneue_light-webfont.svg#bebas_neuelight') format('svg');
+         url('fonts/bebasneue_light-webfont.svg#bebas_neue,sans-seriflight') format('svg');
     font-weight: 200;
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue';
+    font-family: 'bebas_neue,sans-serif';
     src: url('fonts/bebasneue_book-webfont.eot');
     src: url('fonts/bebasneue_book-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_book-webfont.woff2') format('woff2'),
          url('fonts/bebasneue_book-webfont.woff') format('woff'),
          url('fonts/bebasneue_book-webfont.ttf') format('truetype'),
-         url('fonts/bebasneue_book-webfont.svg#bebas_neuebook') format('svg');
+         url('fonts/bebasneue_book-webfont.svg#bebas_neue,sans-serifbook') format('svg');
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue';
+    font-family: 'bebas_neue,sans-serif';
     src: url('fonts/bebasneue_regular-webfont.eot');
     src: url('fonts/bebasneue_regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_regular-webfont.woff2') format('woff2'),
          url('fonts/bebasneue_regular-webfont.woff') format('woff'),
          url('fonts/bebasneue_regular-webfont.ttf') format('truetype'),
-         url('fonts/bebasneue_regular-webfont.svg#bebas_neue_regularregular') format('svg');
+         url('fonts/bebasneue_regular-webfont.svg#bebas_neue,sans-serif_regularregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue';
+    font-family: 'bebas_neue,sans-serif';
     src: url('fonts/bebasneue_bold-webfont.eot');
     src: url('fonts/bebasneue_bold-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_bold-webfont.woff2') format('woff2'),
          url('fonts/bebasneue_bold-webfont.woff') format('woff'),
          url('fonts/bebasneue_bold-webfont.ttf') format('truetype'),
-         url('fonts/bebasneue_bold-webfont.svg#bebas_neuebold') format('svg');
+         url('fonts/bebasneue_bold-webfont.svg#bebas_neue,sans-serifbold') format('svg');
     font-weight: 700;
     font-style: normal;
 }
@@ -615,7 +618,7 @@ input {
   color: #fff;
   text-transform: uppercase;
   line-height: 1em;
-  font-family: bebas_neue;
+  font-family: bebas_neue,sans-serif;
 }
 .question.small {
   font-size: 24px;
@@ -623,7 +626,7 @@ input {
   color: #fff;
   text-transform: uppercase;
   line-height: 1em;
-  font-family: bebas_neue;
+  font-family: bebas_neue,sans-serif;
   left: 50px;
 }
 p.option-meta {
@@ -781,7 +784,7 @@ body[dir=rtl] #lists {
 #lists > .groupEntry > .geName {
     cursor: pointer;
     font-size: 140%;
-    font-family: bebas_neue;
+    font-family: bebas_neue,sans-serif;
     }
 #lists > .groupEntry > .geCount {
     font-size: 90%;

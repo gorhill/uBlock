@@ -40,7 +40,7 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimiser vos paramètres de protection contre les malveillants publicités (<span class='link' id='ToOptions'> personnaliser<\/span>)",
+    "message":"Optimiser vos paramètres de protection contre les malveillants publicités (<span> personnaliser<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -172,7 +172,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{
-    "message":"Réactiver AdNauseam",
+    "message":"Réactiver",
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{

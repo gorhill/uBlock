@@ -36,7 +36,7 @@ div> p:last-child {
 ul#userSettings .subgroup> span {
   font-size: larger;
   font-weight: bold;
-  font-family: 'bebas_neue';
+  font-family: 'bebas_neue',sans-serif;
 }
 ul#userSettings .subgroup> ul {
   padding: 10px 0 10px 44px;
