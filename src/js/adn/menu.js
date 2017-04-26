@@ -649,6 +649,13 @@
     uDom('#notifications').on('click', setBackBlockHeight);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
       .on('mouseleave', '[data-tip]', onHideTooltip);
+    
+
+    //tmp Russian fix
+    if(uDom('#vault-button').text()===" Просмотр хранилища рекламы") {
+     uDom('#vault-button').css("font-size","14px");
+     uDom('#stats').css("font-size","16px");
+    }
 
   })();
 
