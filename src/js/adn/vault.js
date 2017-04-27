@@ -47,7 +47,7 @@
     zoomIdx = 0, // determined by zoom in / out buttons
     draggingVault = false;
 
-  var gAds, gAdSets, gMin, gMax; // stateful
+  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft; // stateful
 
   var messager = vAPI.messaging;
 
@@ -1585,9 +1585,24 @@
     }
 
     function brushend() {
+      var lastgSliderRight = gSliderRight;
+      var lastgSliderLeft = gSliderLeft;
+      gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
+      gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      var filtered = runFilter(d3.event.target.extent());
-      filtered && doLayout(filtered);
+      if (!lastgSliderRight || !lastgSliderLeft) {
+        return;
+
+      }
+      if (gSliderRight === lastgSliderRight && gSliderLeft == lastgSliderLeft) {
+
+        return;
+      } else {
+
+        var filtered = runFilter(d3.event.target.extent());
+        filtered && doLayout(filtered);
+      }
+
     }
   }
 
@@ -1729,7 +1744,7 @@
 
     return failed ? 'failed' : 'pending';
   };
-  
+
   messager.send('adnauseam', {
     what: 'adsForVault'
   }, renderAds);
