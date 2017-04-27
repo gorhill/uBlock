@@ -73,6 +73,7 @@ var details = {};
                 node.textContent = entry.title;
                 node.setAttribute('href', url);
                 node.setAttribute('target', '_blank');
+                node.setAttribute('rel', 'noopener noreferrer');
             } else {
                 node = document.createTextNode(entry.title);
             }
