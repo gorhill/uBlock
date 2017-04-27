@@ -335,25 +335,21 @@
     "message":"W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika [ ! ] i błędne adresy URL będą pomijane.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Zastosuj",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"wyczyść pamięć podręczną",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"jest dostępna nowa wersja",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"nieaktualna",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"nieaktualne",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Ostatnio zaktualizowano: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Zaktualizowano: {{ago}}",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Aktualizowanie...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Błąd sieci uniemożliwia aktualizację zasobów.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem AdBlock Plus. Wiersze poprzedzone znakiem wykrzyknika [ ! ] będą pomijane.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Nie można się połączyć z {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Dodać następujący URL do twojej listy filtrów?\n\nTytuł: \"{{title}}\"\nAdres: {{url}}",

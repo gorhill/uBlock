@@ -335,25 +335,21 @@
     "message":"URL1つにつき1行です。&lsquo;!&rsquo; が先頭にある行は無視されます。無効なURLもそのまま無視されます。",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"解析",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"キャッシュを削除",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"新しいバージョンが使用可能です",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"古いバージョンです",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"最終更新: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"1行につき1つのフィルターです。フィルターはただのホストネームでもAdblock Plus適合のフィルターでも構いません。&lsquo;!&rsquo;ですでに固定されている行は無視されます。",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}}に接続できません",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: 以下のURLをカスタムフィルターに追加しますか？\n\nタイトル: \"{{title}}\"\nURL: {{url}}",

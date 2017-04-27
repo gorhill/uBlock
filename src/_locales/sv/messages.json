@@ -335,25 +335,21 @@
     "message":"En adress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga adresser kommer också ignoreras.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Verkställ",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"Rensa cache",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"ny version tillgänglig",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"föråldrad",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Senaste uppdatering: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Senast uppdaterad: {{ago}}",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Uppdaterar...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Ett nätverksproblem har förhindrat resursen från att uppdateras.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Det gick inte att ansluta till {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Lägg till följande URL till din skräddarsydda filterlista?\n\nTitel: \"{{title}}\"\nURL: {{url}}",

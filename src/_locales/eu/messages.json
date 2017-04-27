@@ -335,25 +335,21 @@
     "message":"URL bat lerroko. Hasieran &lsquo;&rsquo; duten lerroak ezikusiko dira. Baliogabeko URLak isilean ezikusiko dira.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Prozesatu",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"garbitu cachea",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"bertsio berria eskuragarri",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"zaharkituta",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Azken eguneraketa: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran &lsquo;&rsquo; duten lerroak ezikusiko dira.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Ezin izan da konektatu {{url}} helbidera",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Gehitu honako URL hauek zure iragazki pertsonalizatuen zerrendara?\n\nIzenburua: \"{{title}}\"\nURLa: {{url}}",

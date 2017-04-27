@@ -335,25 +335,21 @@
     "message":"Una URL por línea. Las líneas que empiezan con &lsquo;!&rsquo; serán ignoradas. Se omitirán las URL no válidas.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Aplicar",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"vaciar caché",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"nueva versión disponible",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"desactualizado",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Desactualizado.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Última actualización: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Última actualización: {{ago}}.\nHaz clic para actualizar ya.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Actualizando...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Un error de red impide que se actualicen los recursos.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con &lsquo;!&rsquo; serán ignoradas.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"No se puede conectar a {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Error de red: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: ¿Desea añadir la siguiente dirección a su lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",

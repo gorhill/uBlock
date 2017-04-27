@@ -335,25 +335,21 @@
     "message":"Một URL cho mỗi dòng. Dòng bắt đầu với &lsquo;!&rsquo;sẽ bị bỏ qua. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Phân tích",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"dọn bộ nhớ đệm",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"có phiên bản mới",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"đã cũ",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Cập nhật trước: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc Adblock Plus tương thích. Những dòng bắt đầu với &lsquo;!&rsquo; sẽ bị bỏ qua.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Không thể kết nối đến {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Thêm URL dưới đây vào bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",

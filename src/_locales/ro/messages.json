@@ -335,25 +335,21 @@
     "message":"O adresă pe linie. Liniile care încep cu &lsquo;!&rsquo; vor fi ignorate. Adresele nevalide vor fi ignorate fără avertizare.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analizează",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"golește memoria tampon",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"versiune nouă disponibilă",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"învechit",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Ultima actualizare: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Nu mă pot conecta la {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Adaug următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",

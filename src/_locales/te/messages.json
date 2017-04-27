@@ -335,25 +335,21 @@
     "message":"ఒక్కో పంక్తిలో ఒక URL. పంక్తిలో మొదలు &lsquo;!&rsquo; ఉన్నచో అది పరిగనించబడదు. చెల్లని URLలు మౌనంగా విస్మరించబడుతాయి.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"పదనిరూపణ",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"తాత్కాలిక నిలువలను త్యజించు",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"నవీకరణ అందుబాటులో ఉంది",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"పాతబడింది",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"గత నవీకరణ: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"ఒక్కో పంక్తిలో ఒక వడపోత నమోదు. పేర్కొనబడే వడపోత, కేవలం హోస్టుపేరు లేదా Adblock Plusకి అనువైన వడపోత కావొచ్చు. పంక్తిలో మొదలు  &lsquo;!&rsquo; ఉన్నచో అది పరిగణలోకి తీసుకొబడదు.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}}తో అనుసంధానం విఫలమైనది",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",

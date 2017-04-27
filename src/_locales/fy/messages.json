@@ -335,25 +335,21 @@
     "message":"Ien URL per rigel. Rigels begjinnend mei &lsquo;!&rsquo; wurde negearre. Unjildige URL's wurde stil negearre.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Tapasse",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"buffer leegje",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"nije ferzje beskikber",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"ferâldere",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Lêste fernijing: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Ien filter per rigel. Ien filter kin in gewoane hostnamme of ien Adblock Plus-kompatibel filter wêze. Rigels begjinnend mei &lsquo;!&rsquo; wurde negearre.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Kin net ferbine mei {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: De folgjende URL oan jo oanpaste filterlisten tafoegje?\n\nTitel: \"{{title}}\"\nURL: {{url}}",

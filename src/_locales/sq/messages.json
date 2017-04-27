@@ -335,25 +335,21 @@
     "message":"Një URL për rresht. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;, sikundër adresat e pasakta.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analizoj",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"heq stokun",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"ka dalë versioni i ri",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"e vjetër",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Përditësimi i fundit: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i ngjasojë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Nuk arrin të lidhet me {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",

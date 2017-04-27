@@ -335,25 +335,21 @@
     "message":"رابط واحد كل سطر. روابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها . الروابط الغير صحيحه سوف ايضاً تجاهلها .",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"تحليل",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"مسح الكاش ",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"يوجد اصدار جديد",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"قد يكون قديم ولا يعمل ",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"قد يكون قديماً ولا يعمل",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"آخر تحديث: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"جار التحديث...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"حدث خطأ في الشبكة منع تحديث المورد.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"كل سطر يمكن ان يتحمل على فلتر واحد. يمكن ان يكون الفلتر رابط موقع او فلتر متعارف مع نظام AdBlock Plus. روابط التي تحتوي على &lsquo;!&rsquo;  سوف يتم تجاهلها.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"ليس بالإمكان الإتصال بـ {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀ : إضافة الرابط التالي للقوائم الفلترات الخاصة لك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",

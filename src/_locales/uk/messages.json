@@ -335,25 +335,21 @@
     "message":"Одне посилання на рядок. Рядки, що починаються з &lsquo;!&rsquo;  будуть проігноровані. Невірні посилання будуть тихо проігноровані.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Проаналізувати",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"очистити кеш",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"наявна нова версія",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"застаріле",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Востаннє оновленно: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Останнє оновлення: {{ago}}",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Оновлення...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Через помилку мережі не вдалося оновити дані.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Не вдалося підключитися до {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",

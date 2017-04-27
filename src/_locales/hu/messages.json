@@ -335,25 +335,21 @@
     "message":"Soronként egy URL. A &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak. A szabálytalan URL-ek szintén figyelmen kívül maradnak, hibajelzés nélkül.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Alkalmaz",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"gyorsítótár ürítése",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"új verzió érhető el",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"elavult",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Utolsó frissítés: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Csatlakozás sikertelen a következő címhez: {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Hozzáadja a következő URL-t a saját szűrő listákhoz?\n\nNév: \"{{title}}\"\nURL: \"{{url}}\"",

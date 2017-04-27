@@ -335,25 +335,21 @@
     "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ולא תהיה התראה לכך.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"החל",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"נקה זיכרון מטמון",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"גרסה חדשה זמינה",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"עדכון זמין",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"לא עדכני.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"עדכון אחרון: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"עדכון אחרון: {{ago}}.\nלחץ על מנת לאלץ עידכון.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"מעדכן...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"בעיית רשת מנעה מהמשאב להתעדכן.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"אין אפשרות להתחבר ל {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"בעיית רשת: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",

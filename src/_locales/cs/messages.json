@@ -335,25 +335,21 @@
     "message":"Jedna adresa URL na řádek. Řádky začínající na &lsquo;!&rsquo; budou ignorovány. Neplatné adresy URL budou tiše ignorovány.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Použít",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"vyprázdnit cache",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"nová verze je k dispozici",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"zastaralé",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Zastaralé.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Poslední aktualizace: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Poslední aktualizace: {{ago}}.\nKliknutím vynutíte aktualizaci.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Aktualizování...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Chyba sítě znemožnila aktualizaci tohoto zdroje.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající na &lsquo;!&rsquo; budou ignorovány.",
@@ -424,7 +420,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Váš seznam názvů hostitelů, pro které bude uBlock₀ zakázán. Jedna položka na řádek. Neplatné názvy hostitelů budou tiše ignorovány.",
+    "message":"Pokyny whitelistu určují, pro které webové stránky bude uBlock Origin zakázán. Jedna položka na řádek. Neplatné pokyny budou tiše ignorovány a zakomentovány.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nelze se připojit k {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Chyba sítě: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Přidat následující URL adresu do seznamů vlastních filtrů?\n\nNázev: \"{{title}}\"\nURL: {{url}}",

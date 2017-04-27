@@ -335,25 +335,21 @@
     "message":"ஒரு வரிக்கு ஒரு இணைய முகவரி. &lsquo;!&rsquo; எனும் எழுத்தில் தொடங்கும் வரிகள் புறக்கணிக்கப்படும். தவறான முகவரிகளும் அமைதியாகப் புறக்கணிக்கப்படும்.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"இலக்கணகூறு",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"தற்காலிக சேமிப்பை அகற்று",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"புதிய பதிப்பு கிடைக்கிறது",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"காலாவதியாகிவிட்டது",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"கடைசி புதுப்பிப்பு: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"ஒரு வரிக்கு ஒரு வடிகட்டி. வடிகட்டி என்பது வெறும் வழங்கிப்பெயராக இருக்கலாம், அல்லது Adblock Plus-க்குப் பொருந்தும் வடிகட்டியாக இருக்கலாம். &lsquo;!&rsquo; எனும் எழுத்தில் தொடங்கும் வரிகள் புறக்கணிக்கப்படும்.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}} இணைக்க முடியவில்லை",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: பின்வரும் உரலியை உங்களுடைய தனிபயன் வடிகட்டியில் சேர்க்கலாமா?\n\nதலைப்பு: \"{{title}}\"\nஉரலி: {{url}}",

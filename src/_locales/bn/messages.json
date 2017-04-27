@@ -335,25 +335,21 @@
     "message":"লাইন প্রতি একটি URL। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে। অকার্যকর URL গুলি নীরবে উপেক্ষা করা হবে।",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"পার্স",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"ক্যাশে শোধন করুন",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"নতুন সংস্করণ উপলব্ধ",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"পুরোনো",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"সর্বশেষ হালনাগাদ: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার স্পষ্ট হোস্টনেম বা অ্যাডব্লক প্লাস-সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে।",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}} -এ সংযোগ করতে অক্ষম",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: আপনার নিজস্ব ফিল্টার তালিকায় নিম্নলিখিত URL যোগ করবেন?\n\nশিরোনাম: \"{{title}}\"\nURL: {{url}}",

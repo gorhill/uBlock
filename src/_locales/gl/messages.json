@@ -335,25 +335,21 @@
     "message":"Un enderezo por liña. As liñas prefixadas con &lsquo;!&rsquo; seranche ignoradas, así como os enderezos inválidos.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Aplicar",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"baleirar a caché",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"unha nova versión está dispoñible",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"desactualizado",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Última actualización: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con &lsquo;!&rsquo; seranche ignoradas.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Non foi posible conectar con {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Engadir o seguinte enderezo á túa lista de filtros personalizados?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
