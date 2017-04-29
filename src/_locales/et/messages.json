@@ -335,25 +335,21 @@
     "message":"Üks URL rea kohta, märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Rakenda",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"tühjenda vahemälu",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"uus versioon on saadaval",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"vananenud",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Viimane uuendus: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Viimane uuendus: {{ago}}.\nUuendamiseks vajutage.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Uuendamine...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Ressursi uuendamist takistas võrgu viga.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Üks filter rea kohta, filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Ei suudetud ühenduda aadressiga {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Võrgu viga: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",

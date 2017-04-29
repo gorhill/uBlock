@@ -335,25 +335,21 @@
     "message":"Vienas URL eilutėje. Eilutės pradėtos „!“ bus ignoruotos. Neteisingi URL bus tyliai ignoruoti.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analizuoti",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"valyti podėlį",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"prieinama nauja versija",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"pasenęs",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Pasenęs.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Paskutinis atnaujinimas: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Paskutinis atnaujinimas: {{ago}}.\nIeškoti atnaujinimo.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Atnaujinama...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Tinklo klaida sutrukdė atnaujinti resursą.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Vienas filtras eilutėje. Filtras gali būti paprastas serverio adresas, arba su Adblock Plus suderinamas filtras. Eilutės pradėtos „!“ bus ignoruotos. ",
@@ -424,7 +420,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Serverių sąrašas, kuriems uBlock₀ bus išjungtas. Vienas įrašas eilutėje. Neteisingi serverių vardai bus tyliai ignoruoti.",
+    "message":"Baltojo sąrašo direktyvos nurodo, kurioms svetainėms uBlock Origin turėtų būti išjungtas. Vienas įrašas eilutėje. Neteisingos direktyvos bus tyliai ignoruotos ir užkomentuotos.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nepavyko prisijungti prie {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Tinklo klaida: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Pridėti šį URL į jūsų adaptuotų filtrų sąrašą?\n\nPavadinimas: „{{title}}“\nURL: {{url}}",

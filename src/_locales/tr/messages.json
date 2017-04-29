@@ -335,25 +335,21 @@
     "message":"Her satırda bir URL. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir. Geçersiz URL'ler sessizce yoksayılır.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Uygula",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"önbelleği temizle",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"yeni sürüm mevcut",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"eski",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Güncel değil.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Son güncelleme: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Son güncelleme: {{ago}}.\nGüncelleştirmeye zorlamak için tıklayın.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Güncelleniyor...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Bir ağ hatası kaynağın güncellenmesini engelledi.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Her satırda bir süzgeç. Süzgeç bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. &lsquo;!&rsquo; ile başlayan satırlar yok sayılır.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}} adresine bağlanılamıyor",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Ağ hatası: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Aşağıdaki URL, özel süzgeç listenize eklensin mi?\n\nBaşlık: \"{{title}}\"\nURL: {{url}}",

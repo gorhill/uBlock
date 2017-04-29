@@ -268,7 +268,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Аутоматско освежавање листе филтера.",
+    "message":"Аутоматско ажурирање листе филтера",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -335,25 +335,21 @@
     "message":"Једна адреса по реду. Редови са префиксом &lsquo;!&rsquo; ће бити игнорисани. Неисправне адресе ће бити тихо игнорисане.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Примени",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"испразни кеш",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"доступна нова верзија",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"застарело",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Застарело.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Последње освежавање: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Последње ажурирање: {{ago}}.\nКликните да бисте ажурирали.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Ажурирање...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Грешка на мрежи је спречила ажурирање ресурса.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Један филтер по реду. Филтер може бити назив хоста или филтер компатибилан са Adblock Plus форматом. Редови са префиксом &lsquo;!&rsquo; ће бити игнорисани.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Није могуће повезати се са {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Грешка на мрежи: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Додати следећу УРЛ адресу у вашу прилагођену листу филтера?\n\nНазив: \"{{title}}\"\nУРЛ: {{url}}",

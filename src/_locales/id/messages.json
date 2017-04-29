@@ -335,25 +335,21 @@
     "message":"Satu URL per baris. Baris yang diawali dengan &lsquo;!&rsquo; akan diabaikan. URL yang tidak valid akan diabaikan tanpa peringatan.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Uraikan",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"bersihkan tembolok",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"versi baru tersedia",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"usang",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Sudah usang.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Pembaruan terakhir: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Pembaruan terakhir: {{ago}}.\nKlik untuk memaksa memperbarui.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Memperbarui...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Galat jaringan mencegah sumber daya diperbarui.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan &lsquo;!&rsquo; akan diabaikan.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Tidak dapat terhubung ke {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Galat jaringan: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Tambahkan URL berikut ke daftar filter tersesuai anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",

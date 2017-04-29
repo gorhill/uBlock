@@ -33,7 +33,7 @@ h2 {
     padding: 0.2em;
     text-align: center;
     }
-h2:nth-of-type(1) {
+h2:first-of-type {
     margin-top: 0;
     }
 a {
@@ -124,7 +124,7 @@ body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
 #panes:not(.dfEnabled) > div:nth-of-type(2) {
     display: none;
     }
-#panes > div:nth-of-type(1) {
+#panes > div:first-of-type {
     min-width: 11em;
     padding: 0;
     }
@@ -304,24 +304,30 @@ body[dir="rtl"] #tooltip {
     color: #000;
     display: inline-block;
     height: 1.9em;
-    line-height: 1.9em;
+    line-height: 1.9;
     overflow: hidden;
     position: relative;
     vertical-align: top;
     }
-#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1) {
+#firewallContainer > div:first-of-type > span:first-of-type {
     cursor: pointer;
     }
-#firewallContainer > div > span:nth-of-type(1) {
+#firewallContainer > div > span:first-of-type {
     padding-right: 2px;
     position: relative;
     text-overflow: ellipsis;
     width: calc(100% - 4em);
     }
+#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup:before {
+    color: #666;
+    content: 'idn\2002';
+    font-size: 80%;
+    font-weight: normal;
+    }
 #firewallContainer > div > span:nth-of-type(2) {
     display: none;
     }
-#firewallContainer > div > span:nth-of-type(1) ~ span {
+#firewallContainer > div > span:first-of-type ~ span {
     border-left: 1px solid white;
     width: 4em;
     }
@@ -333,15 +339,15 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div > span:nth-of-type(4) {
     display: none;
     }
-#firewallContainer > div.isDomain > span:nth-of-type(1) {
+#firewallContainer > div.isDomain > span:first-of-type {
     font-weight: bold;
     }
-#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1):before {
+#firewallContainer > div:first-of-type > span:first-of-type:before {
     color: #aaa;
     content: '\2012';
     padding-right: 0.25em;
     }
-#firewallContainer.minimized > div:nth-of-type(1) > span:nth-of-type(1):before {
+#firewallContainer.minimized > div:first-of-type > span:first-of-type:before {
     content: '+';
     }
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(3) {
@@ -379,7 +385,7 @@ body[dir="rtl"] #tooltip {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:nth-of-type(1) {
+body.advancedUser #firewallContainer > div > span:first-of-type {
     width: calc(100% - 8em);
     }
 body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
@@ -388,17 +394,17 @@ body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
 body.advancedUser #firewallContainer > div:first-child ~ div:not([class]) {
     display: block;
     }
-body.advancedUser #firewallContainer > div > span:nth-of-type(1) ~ span {
+body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     cursor: pointer;
     }
 
 /**
  Small coloured label at the left of a row
  */
-#firewallContainer > div.allowed > span:nth-of-type(1):before,
-#firewallContainer > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.allowed > span:first-of-type:before,
+#firewallContainer > div.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     box-sizing: border-box;
     content: '';
     display: inline-block;
@@ -412,24 +418,24 @@ body.advancedUser #firewallContainer > div > span:nth-of-type(1) ~ span {
  Source for color-blind color scheme from https://github.com/WyohKnott:
  https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
  */
-#firewallContainer > div.allowed > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+#firewallContainer > div.allowed > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:first-of-type:before {
     background-color: rgb(0, 160, 0);
     }
-#firewallContainer.colorBlind > div.allowed > span:nth-of-type(1):before,
-#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+#firewallContainer.colorBlind > div.allowed > span:first-of-type:before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed > span:first-of-type:before {
     background-color: rgb(255, 194, 57);
     }
-#firewallContainer > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     background-color: rgb(192, 0, 0);
     }
-#firewallContainer.colorBlind > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.colorBlind.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer.colorBlind > div.blocked > span:first-of-type:before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     background-color: rgb(0, 19, 110);
     }
-#firewallContainer > div.allowed.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.allowed.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:first-of-type:before {
     background-color: rgb(192, 160, 0);
     }
 /* Rule cells */
@@ -483,7 +489,7 @@ body.advancedUser #firewallContainer > div > span.nRule.ownRule {
     height: 100%;
     opacity: 0.2;
     }
-#actionSelector > span:nth-of-type(1) {
+#actionSelector > span:first-of-type {
     width: 33%;
     }
 #actionSelector > span:nth-of-type(2) {
@@ -495,10 +501,10 @@ body.advancedUser #firewallContainer > div > span.nRule.ownRule {
 #actionSelector > span:hover {
     opacity: 0.75;
     }
-#actionSelector > span:nth-of-type(1) {
+#actionSelector > span:first-of-type {
     background-color: rgb(0, 160, 0);
     }
-#actionSelector.colorBlind > span:nth-of-type(1) {
+#actionSelector.colorBlind > span:first-of-type {
     background-color: rgb(255, 194, 57);
     }
 #actionSelector > span:nth-of-type(2) {

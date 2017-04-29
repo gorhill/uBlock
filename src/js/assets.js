@@ -71,9 +71,25 @@ api.fetchText = function(url, onLoad, onError) {
         onError = onLoad;
     }
 
+    var contentLoaded = 0,
+        timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000,
+        timeoutTimer,
+        xhr = new XMLHttpRequest();
+
+    var cleanup = function() {
+        xhr.removeEventListener('load', onLoadEvent);
+        xhr.removeEventListener('error', onErrorEvent);
+        xhr.removeEventListener('abort', onErrorEvent);
+        xhr.removeEventListener('progress', onProgressEvent);
+        if ( timeoutTimer !== undefined ) {
+            clearTimeout(timeoutTimer);
+            timeoutTimer = undefined;
+        }
+    };
+
     // https://github.com/gorhill/uMatrix/issues/15
-    var onResponseReceived = function() {
-        this.onload = this.onerror = this.ontimeout = null;
+    var onLoadEvent = function() {
+        cleanup();
         // xhr for local files gives status 0, but actually succeeds
         var details = {
             url: url,
@@ -96,29 +112,44 @@ api.fetchText = function(url, onLoad, onError) {
             return onError.call(null, details);
         }
         details.content = this.responseText;
-        return onLoad.call(null, details);
+        onLoad(details);
     };
 
-    var onErrorReceived = function() {
-        this.onload = this.onerror = this.ontimeout = null;
+    var onErrorEvent = function() {
+        cleanup();
         µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', actualUrl));
-        onError.call(null, { url: url, content: '' });
+        onError({ url: url, content: '' });
+    };
+
+    var onTimeout = function() {
+        xhr.abort();
+    };
+
+    // https://github.com/gorhill/uBlock/issues/2526
+    // - Timeout only when there is no progress.
+    var onProgressEvent = function(ev) {
+        if ( ev.loaded === contentLoaded ) { return; }
+        contentLoaded = ev.loaded;
+        if ( timeoutTimer !== undefined ) {
+            clearTimeout(timeoutTimer); 
+        }
+        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
     };
 
     // Be ready for thrown exceptions:
     // I am pretty sure it used to work, but now using a URL such as
     // `file:///` on Chromium 40 results in an exception being thrown.
-    var xhr = new XMLHttpRequest();
     try {
         xhr.open('get', actualUrl, true);
-        xhr.timeout = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
-        xhr.onload = onResponseReceived;
-        xhr.onerror = onErrorReceived;
-        xhr.ontimeout = onErrorReceived;
+        xhr.addEventListener('load', onLoadEvent);
+        xhr.addEventListener('error', onErrorEvent);
+        xhr.addEventListener('abort', onErrorEvent);
+        xhr.addEventListener('progress', onProgressEvent);
         xhr.responseType = 'text';
         xhr.send();
+        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
     } catch (e) {
-        onErrorReceived.call(xhr);
+        onErrorEvent.call(xhr);
     }
 };
 

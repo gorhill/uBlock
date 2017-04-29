@@ -335,25 +335,21 @@
     "message":"Един адрес на ред. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Анализиране",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"Изчистване на кеш паметта",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"Налична актуализация",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"Остарял",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Последна актуализация: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Последна актуализация: {{ago}}\nЩракнете за принудително актуализиране.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Актуализиране...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Актуализирането на ресурса е прекратено от грешка в мрежата.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Един филтър на ред. Това може да бъде обикновен адрес или съвместим с Adblock Plus филтър. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Неуспешно свързване с {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Неуспешно свързване: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Добавяне на следния адрес към вашият списък с потребителски филтри?\n\nИме: \"{{title}}\"\nURL адрес: {{url}}",

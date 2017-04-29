@@ -335,25 +335,21 @@
     "message":"한 줄에 한 개의 URL을 입력하세요. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다. 존재하지 않는 URL은 자동으로 무시됩니다.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"분석",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"캐시 제거",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"최신 버전 존재",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"구버전",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"마지막 업데이트: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"업데이트중...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"네트워크 오류로 인해 리소스가 업데이트되지 못했습니다.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"한 줄에 한 개의 필터를 입력하세요. 필터는 순수 호스트이름, 혹은 Adblock Plus-호환 필터가 될 수 있습니다. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}}에 연결할 수 없습니다.",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: 선택한 URL을 사용자 지정 필터 목록에 추가하시겠습니까?\n\n제목: \"{{title}}\"\nURL: {{url}}",

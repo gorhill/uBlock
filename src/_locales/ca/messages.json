@@ -335,25 +335,21 @@
     "message":"Una URL per línia. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran. Adreces URL no vàlides s'ignoraran silenciosament.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analitzar",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"neteja la memòria",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"nova versió disponible",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"antiquat",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Obsolet",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Darrera actualització: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"S'està actualitzant...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Un error de xarxa va impedir que s'actualitzés el recurs.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb Adblock Plus. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Impossible connectar a {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"No es pot connectar a {{url}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Voleu afegir aquest enllaç a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",

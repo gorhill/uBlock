@@ -216,7 +216,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"關閉預讀功能（用以避免已經阻擋的網域的任何連線）",
+    "message":"關閉預讀功能（避免連線至被阻擋的網域）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -335,25 +335,21 @@
     "message":"每行一個網址。以“!”開頭的行將被忽略。無效的網址將被忽略。",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"解析",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"清除快取",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"有新版本",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"已過期",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"已過期。",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"最後更新：{{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"最後更新：{{ago}}。",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"更新中…",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"更新資源時發生網路錯誤。",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"每行一個過濾規則。一個規則可以是一個平凡的主機名稱或者是一個與 Adblock Plus 相容的過濾規則。以“!”開頭的行將被忽略。",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"無法連接到 {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"無法連線至 {{url}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀：確定要新增下列網址至自訂過濾規則清單？\n\n標題：「{{title}}」\n網址：{{url}}",

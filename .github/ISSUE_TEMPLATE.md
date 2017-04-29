@@ -1,4 +1,4 @@
-> Read first: <https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md>
+> Filter issues **MUST NOT** be reported here. Read first: <https://github.com/gorhill/uBlock/blob/master/CONTRIBUTING.md>
 
 ### Describe the issue
 
@@ -21,9 +21,9 @@
 
 > [If you fail to provide this info, I will mark the issue as invalid. Lists all settings which differs from default settings]
 
+- MacOS version: 
 - Safari version: 
 - uBlock Origin version: 
-- MacOS version: 
 
 ##### Your filter lists
 
