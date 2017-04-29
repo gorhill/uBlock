@@ -113,7 +113,7 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 /******************************************************************************/
 
 // Open links in the proper window
-uDom('a').attr('target', '_blank').attr('rel', 'noopener noreferrer');
+uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');
 uDom('.whatisthis').on('click', function() {
     uDom(this)
