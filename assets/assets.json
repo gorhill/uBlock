@@ -74,6 +74,15 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
+	"abprotector-0": {
+		"content": "filters",
+		"group": "ads",
+		"off": true,
+		"title": "Adblock Protector List",
+		"contentURL": "https://raw.githubusercontent.com/jspenguin2017/AdBlockProtector/master/AdBlockProtectorList.txt",
+		"supportURL": "https://github.com/jspenguin2017/AdBlockProtector",
+		"instructionURL": "https://jspenguin2017.github.io/AdBlockProtector/"
+	},
 	"awrl-0": {
 		"content": "filters",
 		"group": "ads",
