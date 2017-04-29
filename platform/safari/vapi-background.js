@@ -72,17 +72,6 @@ vAPI.app.restart = function() {
 
 /******************************************************************************/
 
-safari.extension.addContentScriptFromURL(vAPI.getURL('js/scriptlets/subscriber.js'), [
-    'https://*.adblockplus.org/*',
-    'https://*.adblockplus.me/*',
-    'https://www.fanboy.co.nz/*',
-    'http://*.adblockplus.org/*',
-    'http://*.adblockplus.me/*',
-    'http://www.fanboy.co.nz/*'
-], [], true);
-
-/******************************************************************************/
-
 safari.extension.settings.addEventListener('change', function(e) {
     if ( e.key === 'open_prefs' ) {
         vAPI.tabs.open({

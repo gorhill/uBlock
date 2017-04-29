@@ -67,6 +67,10 @@
                 <string>js/vapi-client.js</string>
                 <string>js/contentscript.js</string>
             </array>
+            <key>End</key>
+            <array>
+                <string>js/scriptlets/subscriber.js</string>
+            </array>
         </dict>
         <key>Whitelist</key>
         <array>
