@@ -48,3 +48,73 @@ If you're not sure where to start, look at the issues labeled [HELP US CODE](htt
     ```
 
 2. [How to build the extension for various browsers](https://github.com/dhowe/AdNauseam/wiki/Building-AdNauseam-from-source-(for-developers))
+
+### Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/adnauseam#backer)]
+
+<a href="https://opencollective.com/adnauseam/backer/0/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/1/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/2/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/3/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/4/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/5/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/6/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/7/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/8/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/9/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/10/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/11/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/12/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/13/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/14/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/15/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/16/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/17/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/18/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/19/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/20/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/21/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/22/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/23/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/24/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/25/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/26/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/27/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/28/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/backer/29/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/29/avatar.svg"></a>
+
+### Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/adnauseam#sponsor)]
+
+<a href="https://opencollective.com/adnauseam/sponsor/0/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/1/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/2/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/3/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/4/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/5/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/6/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/7/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/8/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/9/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/10/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/11/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/12/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/13/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/14/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/15/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/16/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/17/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/18/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/19/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/20/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/21/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/22/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/23/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/24/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/25/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/26/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/27/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/28/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/adnauseam/sponsor/29/website" target="_blank"><img src="https://opencollective.com/adnauseam/sponsor/29/avatar.svg"></a>
