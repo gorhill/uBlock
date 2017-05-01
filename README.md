@@ -49,9 +49,9 @@ If you're not sure where to start, look at the issues labeled [HELP US CODE](htt
 
 2. [How to build the extension for various browsers](https://github.com/dhowe/AdNauseam/wiki/Building-AdNauseam-from-source-(for-developers))
 
-### Backers
+<br>
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/adnauseam#backer)]
+Support us with a monthly donation and help us continue our activities ([Become a backer](https://opencollective.com/adnauseam#backer)]).
 
 <a href="https://opencollective.com/adnauseam/backer/0/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/adnauseam/backer/1/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/1/avatar.svg"></a>
