@@ -45,6 +45,7 @@
     },
     "permissions": [
         "contextMenus",
+        "privacy",
         "storage",
         "tabs",
         "webNavigation",

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1585,36 +1585,48 @@ vAPI.domSurveyor = (function() {
 
     var surveyPhase1 = function(addedNodes) {
         var t0 = window.performance.now(),
-            nodes = selectNodes('[class],[id]', addedNodes),
+            rews = reWhitespace,
             qq = queriedSelectors,
             ll = lowGenericSelectors,
-            node, v, vv, j,
-            i = nodes.length;
+            lli = ll.length,
+            nodes, i, node, v, vv, j;
+        nodes = selectNodes('[id]', addedNodes);
+        i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
-            if ( node.nodeType !== 1 ) { continue; }
             v = node.id;
-            if ( v !== '' && typeof v === 'string' ) {
-                v = '#' + v.trim();
-                if ( v !== '#' && !qq.has(v) ) { ll.push(v); qq.add(v); }
+            if ( typeof v !== 'string' ) { continue; }
+            v = '#' + v.trim();
+            if ( !qq.has(v) && v.length !== 1 ) {
+                ll[lli] = v; lli++; qq.add(v);
             }
+        }
+        nodes = selectNodes('[class]', addedNodes);
+        i = nodes.length;
+        while ( i-- ) {
+            node = nodes[i];
             vv = node.className;
-            if ( vv === '' || typeof vv !== 'string' ) { continue; }
-            if ( /\s/.test(vv) === false ) {
+            if ( typeof vv !== 'string' ) { continue; }
+            if ( !rews.test(vv) ) {
                 v = '.' + vv;
-                if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
+                if ( !qq.has(v) && v.length !== 1 ) {
+                    ll[lli] = v; lli++; qq.add(v);
+                }
             } else {
                 vv = node.classList;
                 j = vv.length;
                 while ( j-- ) {
                     v = '.' + vv[j];
-                    if ( !qq.has(v) ) { ll.push(v); qq.add(v); }
+                    if ( !qq.has(v) ) {
+                        ll[lli] = v; lli++; qq.add(v);
+                    }
                 }
             }
         }
         surveyCost += window.performance.now() - t0;
         surveyPhase2(addedNodes);
     };
+    var reWhitespace = /\s/;
 
     var domChangedHandler = function(addedNodes) {
         if ( cosmeticSurveyingMissCount > 255 ) {
