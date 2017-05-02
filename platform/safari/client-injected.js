@@ -29,7 +29,8 @@ var block = function(u, t) {
 };
 var wo = open,
     xo = XMLHttpRequest.prototype.open,
-    img = Image;
+    img = Image,
+    linkResolver = document.createElement('a');
 Image = function() {
     var x = new img(),
         src = '';
@@ -39,7 +40,9 @@ Image = function() {
                 return src;
             },
             set: function(val) {
-                src = val;
+                // Resolve relative URL
+                linkResolver.href = val;
+                src = linkResolver.href;
                 if (block(val, 'image')) {
                     val = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=';
                     if (x.width === 1) x.width = 0;
