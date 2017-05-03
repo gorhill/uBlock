@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016  Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -444,9 +444,10 @@ Matrix.prototype.desHostnameFromRule = function(rule) {
 /******************************************************************************/
 
 Matrix.prototype.toString = function() {
-    var out = [];
-    var rule, type, val;
-    var srcHostname, desHostname;
+    var out = [],
+        rule, type, val,
+        srcHostname, desHostname,
+        toUnicode = punycode.toUnicode;
     for ( rule in this.rules ) {
         if ( this.rules.hasOwnProperty(rule) === false ) {
             continue;
@@ -458,12 +459,16 @@ Matrix.prototype.toString = function() {
                 continue;
             }
             val = this.evaluateCell(srcHostname, desHostname, type);
-            if ( val === 0 ) {
-                continue;
+            if ( val === 0 ) { continue; }
+            if ( srcHostname.indexOf('xn--') !== -1 ) {
+                srcHostname = toUnicode(srcHostname);
+            }
+            if ( desHostname.indexOf('xn--') !== -1 ) {
+                desHostname = toUnicode(desHostname);
             }
             out.push(
-                punycode.toUnicode(srcHostname) + ' ' +
-                punycode.toUnicode(desHostname) + ' ' +
+                srcHostname + ' ' +
+                desHostname + ' ' +
                 type + ' ' +
                 actionToNameMap[val]
             );
@@ -475,26 +480,18 @@ Matrix.prototype.toString = function() {
 /******************************************************************************/
 
 Matrix.prototype.fromString = function(text, append) {
-    var textEnd = text.length;
-    var lineBeg = 0, lineEnd;
-    var line, pos, fields;
-    var srcHostname, desHostname, type, action;
+    var lineIter = new µBlock.LineIterator(text),
+        line, pos, fields,
+        srcHostname, desHostname, type, action,
+        reNotASCII = /[^\x20-\x7F]/,
+        toASCII = punycode.toASCII;
 
     if ( append !== true ) {
         this.reset();
     }
 
-    while ( lineBeg < textEnd ) {
-        lineEnd = text.indexOf('\n', lineBeg);
-        if ( lineEnd < 0 ) {
-            lineEnd = text.indexOf('\r', lineBeg);
-            if ( lineEnd < 0 ) {
-                lineEnd = textEnd;
-            }
-        }
-        line = text.slice(lineBeg, lineEnd).trim();
-        lineBeg = lineEnd + 1;
-
+    while ( lineIter.eot() === false ) {
+        line = lineIter.next().trim();
         pos = line.indexOf('# ');
         if ( pos !== -1 ) {
             line = line.slice(0, pos).trim();
@@ -527,8 +524,16 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
-        srcHostname = punycode.toASCII(fields[0]);
-        desHostname = punycode.toASCII(fields[1]);
+        // Performance: avoid punycoding if hostnames are made only of
+        // ASCII characters.
+        srcHostname = fields[0];
+        if ( reNotASCII.test(srcHostname) ) {
+            srcHostname = toASCII(srcHostname);
+        }
+        desHostname = fields[1];
+        if ( reNotASCII.test(desHostname) ) {
+            desHostname = toASCII(desHostname);
+        }
 
         // https://github.com/chrisaljoudi/uBlock/issues/1082
         // Discard rules with invalid hostnames
