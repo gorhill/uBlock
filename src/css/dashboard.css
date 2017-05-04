@@ -28,6 +28,13 @@ html, body {
     white-space: nowrap;
     background-color: #000;
     }
+
+@media screen and (max-width: 500px) {
+    #dashboard-nav-widgets span {
+        display: none!important;
+    }
+}
+
 #dashboard-nav-widgets span {
     padding: 0 0.5em;
     font-size: 20px;
@@ -36,8 +43,8 @@ html, body {
     width: 100px;
     float: left;
     margin: 5px 0;
-    color: #fff;
-    }
+    color: #fff; 
+}
 .tabButton {
     font-family: bebas_neue,sans-serif;
     background-color: #222;

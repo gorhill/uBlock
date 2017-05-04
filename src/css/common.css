@@ -275,6 +275,7 @@ button.custom {
     font-size: 20px;
     height: 30px;
     padding-top: 2px;
+    margin:4px 0;
     }
 button.custom.disabled,
 button.custom[disabled],
