@@ -904,7 +904,6 @@
       centerZoom(false);
 
       $('#container').removeClass('lightbox');
-      createSlider(false);
     }
   }
 
@@ -1516,6 +1515,9 @@
       centerContainer();
       gMin = ext[0], gMax = ext[1];
 
+      gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
+      gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
+      
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
         //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
