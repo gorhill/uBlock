@@ -5,6 +5,13 @@
 ul {
   padding-left: 1em;
 }
+
+@media screen and (max-width: 500px) {
+    ul#userSettings {
+        margin: 0px !important;
+    }
+}
+
 ul#userSettings {
   padding-left: 0;
   margin: 50px;
