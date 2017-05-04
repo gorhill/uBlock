@@ -618,7 +618,8 @@
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                     hour: 'numeric', minute: 'numeric' };
 
-    return new Intl.DateTimeFormat(getLocale(), options).format(date);
+    var result = typeof Intl === "object" ? new Intl.DateTimeFormat(getLocale(), options).format(date) : date;
+    return result;
   }
 
   function enableLightbox() {
