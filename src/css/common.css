@@ -346,7 +346,7 @@ button.important {
   background-size: 40px 39px;
   padding: 5px 5px 5px 44px;
   line-height: 1.7em;
-  font-family: 'bebas_neue,sans-serif';
+  font-family: 'bebas_neue',sans-serif;
   font-size: 18px;
   border-bottom: 1px solid;
   background-position: 3px center;
