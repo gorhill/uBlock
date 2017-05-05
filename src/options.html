@@ -66,13 +66,15 @@
           <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-dont-send-cookies-on-visits" target="_blank">&#xf05a;</a>
         </li-->
         <li>
-           <ul id="clickingFrequency">
-             <li><input name="click-frequency" id="click-frequency-all" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-all"><label  data-i18n="ClickingFrequencyAllPrompt" for="click-frequency-all"></label>&nbsp;<a style="float:right;margin-right:.5em;"class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-click-probability-setting" target="_blank">&#xf05a;</a></li>
-             <li><input name="click-frequency" id="click-frequency-most" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-most"  ><label data-i18n="ClickingFrequencyMostPrompt"for="click-frequency-most"></label></li>
-             <li><input name="click-frequency" id="click-frequency-some" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-some" ><label data-i18n="ClickingFrequencySomePrompt" for="click-frequency-some"></label></li>
-             <li><input name="click-frequency" id="click-frequency-occasional" class="clickingAds-child" type="radio" data-setting-name="clickFrequency-occasional" ><label  data-i18n="ClickingFrequencyOccationalPrompt" for="click-frequency-occasional"></label></li>
-           </ul>
-        </li>
+          <ul id="clickingFrequency">
+               <input  class="clickingAds-child" id="slider" type="range" min="0.1" max="1" step="0.05" list="ticks"/>
+               <datalist id="ticks">
+                 <option value=".3">
+                 <option value=".75">
+               </datalist>
+             <span id="choiceValue"></span>
+          </ul>
+       </li>
         <li>
           <input id="respect-dnt-for-clicking" class="clickingAds-child" type="checkbox" data-setting-name="disableClickingForDNT"
               data-setting-type="bool">
