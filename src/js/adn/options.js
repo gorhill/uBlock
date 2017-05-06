@@ -97,36 +97,60 @@
     });
   };
 
-/******************************************************************************/
+  /******************************************************************************/
+  // Not needed for new slider
+  // var frequencyTagConverter = function(input) {
+  //     var match = {
+  //         all: 1,
+  //         most: 0.75,
+  //         some: 0.3,
+  //         occasional: 0.1
+  //     }
+  //
+  //     if (typeof input === "string") return match[input];
+  //     else {
+  //         for (var prop in match) {
+  //             if (match[prop] === input) return prop;
+  //         }
+  //     }
+  //
+  // }
+  /******************************************************************************/
+  var ClickChoice = function(slideVal, disabled) {
+    var choiceValue = document.getElementById('choiceValue');
 
-var frequencyTagConverter = function(input) {
-    var match = {
-        all: 1,
-        most: 0.75,
-        some: 0.3,
-        occasional: 0.1
+    if ( disabled) {
+      return choiceValue.innerHTML = "<i>Disabled</i>";
     }
-    
-    if (typeof input === "string") return match[input];
-    else {
-        for (var prop in match) {
-            if (match[prop] === input) return prop;
-        }
+    if (Number(slideVal) < .3) {
+      return choiceValue.innerHTML = "Occasional";
+    }
+    if (.3 <= Number(slideVal) &&  Number(slideVal) < .75) {
+      return choiceValue.innerHTML = "Some";
+    }
+    if (.75 <= Number(slideVal) &&  Number(slideVal)  < 1) {
+      return choiceValue.innerHTML = "Most";
+    }
+    if (Number(slideVal) === 1) {
+      return choiceValue.innerHTML = "All";
     }
 
-}
-/******************************************************************************/
 
+  }
   var ClickProbabilityChanged = function() {
-    var selection = uDom('input[name="click-frequency"]:checked'),
-        tag = selection.attr("id").replace("click-frequency-","");
-    
-    messager.send('dashboard', {
-      what: 'userSettings',
-      name: 'clickProbability',
-      value: frequencyTagConverter(tag)
-    });
-  
+      var selection = uDom('input[id="slider"]');
+      var slideVal = selection.nodes[0].value;
+
+      selection.val(slideVal);
+
+      ClickChoice(slideVal, selection.nodes[0].disabled);
+
+      messager.send('dashboard', {
+        what: 'userSettings',
+        name: 'clickProbability',
+        value: Number(slideVal)
+      });
+
   };
 
   /******************************************************************************/
@@ -166,8 +190,13 @@ var frequencyTagConverter = function(input) {
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
 
       var name = uNode.attr('data-setting-name'), value = details[name];
+      var selection = uDom('input[id="slider"]');
+
+      ClickChoice(details.clickProbability, !details.clickingAds);
 
       //updateSubgroupState(name, value);
+
+      selection.val(details.clickProbability);
 
       uNode.prop('checked', value === true)
         .on('change', function () {
@@ -177,12 +206,12 @@ var frequencyTagConverter = function(input) {
           );
         });
 
-        var id = "#click-frequency-" + frequencyTagConverter(details.clickProbability);
+        var id = "#slider";
         uDom(id).prop('checked',true);
 
     });
 
-    uDom('input[type="radio"]').on('click',ClickProbabilityChanged);
+    uDom('input[type="range"]').on('change', ClickProbabilityChanged);
 
     uDom('[data-setting-name="noLargeMedia"] ~ label:first-of-type > input[type="number"]')
       .attr('data-setting-name', 'largeMediaSize')
