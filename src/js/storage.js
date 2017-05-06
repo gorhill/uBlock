@@ -415,7 +415,7 @@
         µb.staticNetFilteringEngine.freeze();
         µb.redirectEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
-        µb.selfieManager.create();
+        µb.selfieManager.destroy();
     };
 
     var onLoaded = function(details) {
@@ -597,7 +597,7 @@
 
         callback();
 
-        µb.selfieManager.create();
+        µb.selfieManager.destroy();
         µb.loadingFilterLists = false;
     };
 
@@ -895,47 +895,31 @@
 // some set time.
 
 µBlock.selfieManager = (function() {
-    var µb = µBlock;
     var timer = null;
 
     var create = function() {
         timer = null;
-
         var selfie = {
-            magic: µb.systemSettings.selfieMagic,
+            magic: this.systemSettings.selfieMagic,
             publicSuffixList: publicSuffixList.toSelfie(),
-            availableFilterLists: µb.availableFilterLists,
-            staticNetFilteringEngine: µb.staticNetFilteringEngine.toSelfie(),
-            redirectEngine: µb.redirectEngine.toSelfie(),
-            cosmeticFilteringEngine: µb.cosmeticFilteringEngine.toSelfie()
+            availableFilterLists: this.availableFilterLists,
+            staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
+            redirectEngine: this.redirectEngine.toSelfie(),
+            cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
         };
-
         vAPI.cacheStorage.set({ selfie: selfie });
-    };
-
-    var createAsync = function(after) {
-        if ( typeof after !== 'number' ) {
-            after = µb.selfieAfter;
-        }
-
-        if ( timer !== null ) {
-            clearTimeout(timer);
-        }
-
-        timer = vAPI.setTimeout(create, after);
-    };
+    }.bind(µBlock);
 
     var destroy = function() {
         if ( timer !== null ) {
             clearTimeout(timer);
             timer = null;
         }
-
         vAPI.cacheStorage.remove('selfie');
-    };
+        timer = vAPI.setTimeout(create, this.selfieAfter);
+    }.bind(µBlock);
 
     return {
-        create: createAsync,
         destroy: destroy
     };
 })();
@@ -1117,6 +1101,10 @@
             cached: cached
             
         });
+        // https://github.com/gorhill/uBlock/issues/2585
+        // Whenever an asset is overwritten, the current selfie is quite
+        // likely no longer valid.
+        this.selfieManager.destroy();
         return;
     }
 
