@@ -175,7 +175,7 @@
 			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains.txt",
 			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains"
 		],
-		"supportURL": "http://www.malwaredomains.com/"
+		"supportURL": "https://www.malwaredomains.com/"
 	},
 	"malware-2": {
 		"content": "filters",
@@ -186,7 +186,7 @@
 			"https://mirror1.malwaredomains.com/files/immortal_domains.txt",
 			"https://mirror.cedia.org.ec/malwaredomains/immortal_domains.txt"
 		],
-		"supportURL": "http://www.malwaredomains.com/"
+		"supportURL": "https://www.malwaredomains.com/"
 	},
 	"disconnect-malware": {
 		"content": "filters",
@@ -379,7 +379,7 @@
 		"title": "FIN: Finnish Addition to Easylist",
 		"lang": "fi",
 		"contentURL": "https://adb.juvander.net/Finland_adb.txt",
-		"supportURL": "http://www.juvander.fi/AdblockFinland"
+		"supportURL": "https://www.juvander.fi/AdblockFinland"
 	},
 	"FRA-0": {
 		"content": "filters",
@@ -435,8 +435,8 @@
 		"off": true,
 		"title": "ISL: Icelandic ABP List",
 		"lang": "is",
-		"contentURL": "http://adblock.gardar.net/is.abp.txt",
-		"supportURL": "http://adblock.gardar.net/"
+		"contentURL": "https://adblock.gardar.net/is.abp.txt",
+		"supportURL": "https://adblock.gardar.net/"
 	},
 	"ISR-0": {
 		"content": "filters",
