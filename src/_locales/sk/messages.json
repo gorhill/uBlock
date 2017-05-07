@@ -340,7 +340,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Posledná aktualizácia: {{ago}}",
+    "message":"Posledná aktualizácia: {{ago}}.\nKliknutím vynútite aktualizáciu.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -420,7 +420,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Váš zoznam názvov hostiteľov, pre ktoré bude uBlock zakázaný. Jedna položka na riadok. Neplatné názvy hostiteľov budú ignorované.",
+    "message":"Zoznam hostiteľov, pre ktoré webové stránky bude uBlock Origin zakázaný. Jedna položka na riadok. Neplatní hostitelia budú ignorovaní a zakomentovaní.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nie je možné sa pripojiť k {{url}}",
+    "message":"Chyba siete: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

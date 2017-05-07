@@ -348,7 +348,7 @@
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"Актуализирането на ресурса е прекратено от грешка в мрежата.",
+    "message":"Актуализирането на ресурса е прекратено заради грешка в мрежата.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

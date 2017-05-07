@@ -336,19 +336,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"ferâldere",
+    "message":"Ferâldere.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Lêste fernijing: {{ago}}",
+    "message":"Lêste fernijing: {{ago}}.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Fernijt…",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"In netwurkflater hat opkeard dat de boarne bywurke waard.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -400,7 +400,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Ut bestân ymportearje...",
+    "message":"Ut bestân ymportearje…",
     "description":""
   },
   "rulesExport":{
@@ -556,11 +556,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Ut bestân werstelle...",
+    "message":"Ut bestân werstelle…",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Nei de standertynstellingen weromsette...",
+    "message":"Nei de standertynstellingen weromsette…",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Kin net ferbine mei {{url}}",
+    "message":"Netwurkflater: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
@@ -644,7 +644,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Strikte blokkearing foar {{hostname}} útskeakelje",
+    "message":"Strikte blokkearring foar {{hostname}} útskeakelje",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -668,7 +668,7 @@
     "description":"tooltip"
   },
   "cloudNoData":{
-    "message":"...\n...",
+    "message":"…\n…",
     "description":""
   },
   "cloudDeviceNamePrompt":{

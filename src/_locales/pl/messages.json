@@ -340,7 +340,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Zaktualizowano: {{ago}}",
+    "message":"Zaktualizowano: {{ago}}.\nKliknij by wymusić aktualizację.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -348,7 +348,7 @@
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"Błąd sieci uniemożliwia aktualizację zasobów.",
+    "message":"Błąd sieci uniemożliwił aktualizację zasobów.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nie można się połączyć z {{url}}",
+    "message":"Błąd sieci: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

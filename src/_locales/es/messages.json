@@ -340,7 +340,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Última actualización: {{ago}}.\nHaz clic para actualizar ya.",
+    "message":"Última actualización: {{ago}}.\nHaz clic para actualizar ahora.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{

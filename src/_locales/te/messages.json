@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"అధునాతన అమరికలు",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -208,11 +208,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
+    "message":"మీరు నిపుణత కలిగిన వినియోగాదారులితే (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>ఇది తప్పనిసరిగా చదవాలి<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"అధునాతన అమరికలు",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"చిరునామాల తానిఖిని నిషేధించు",
+    "message":"చిరునామాల తానిఖిని దాటవేయు",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -340,15 +340,15 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"గత నవీకరణ: {{ago}}",
+    "message":"గత నవీకరణ: {{ago}}.\nనవీకరించుటకు క్లిక్ చెయ్యండి.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"నవీకరిస్తున్నది...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"ఈ చిట్టా అనుసంధాన వైఫల్యం వలన నవికరించబడలేదు.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}}తో అనుసంధానం విఫలమైనది",
+    "message":"అనుసంధాన వైఫల్యం: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
@@ -676,7 +676,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"హెచ్చరిక! ఈ అధునాతన అమరికలను జాగ్రత్తతో మార్చండి.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

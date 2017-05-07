@@ -336,19 +336,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"устарел",
+    "message":"Устарел.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Последнее обновление: {{ago}}",
+    "message":"Последнее обновление: {{ago}}.\nКликните для принудительного обновления.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Обновляется...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"В результате ошибки сети обновление не произошло.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Не удаётся подключиться к {{url}}",
+    "message":"Ошибка сети: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

@@ -336,11 +336,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"utgått på dato",
+    "message":"Utgått på dato.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Siste oppdatering: {{ago}}",
+    "message":"Siste oppdatering: {{ago}}.\nKlikk for å framtvinge en oppdatering.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Kan ikke koble til {{url}}",
+    "message":"Nettverksfeil: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

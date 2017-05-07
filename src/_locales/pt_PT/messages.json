@@ -480,7 +480,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Filtragem de URL dinâmico",
+    "message":"Filtragem dinâmica de URL",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{

@@ -44,7 +44,7 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKlikoj+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
+    "message":"Kliko: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKliko+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klikoj pultin e programit",
+    "message":"Pulti i programit",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -96,19 +96,19 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Rregullat globale: rregullat në këtë shtyllë aplikohen te të gjitha faqet.",
+    "message":"Rregullat globale: rregullat në këtë shtyllë aplikohen për të gjitha faqet.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm te kjo faqja.\nKëto rregulla kanë më përparësi sesa rregullat globale.",
+    "message":"Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë faqen.\nKëto kanë më përparësi sesa rregullat globale.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Klikoni që t'i bëni ndryshimet të përhershme.",
+    "message":"Ruaj ndryshimet përherë.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Klikoni që t'i zhbëni ndryshimet.",
+    "message":"Kthej ndryshimet.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klikoj, Klikoj me Ctrl",
+    "message":"Kliko, Kliko me Ctrl",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -188,7 +188,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Tregoj te ikona numrin e kërkesave që janë refuzuar",
+    "message":"Tregoj te ikona numrin e kërkesave të refuzuara",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -344,11 +344,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Po përditësohet...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Një problem me rrjetin pengoi përditësimin e informacionit.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

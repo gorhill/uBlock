@@ -52,7 +52,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"此页面",
+    "message":"此页面上的",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -312,7 +312,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"恶意软件",
+    "message":"恶意网站",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -324,7 +324,7 @@
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"地区语言",
+    "message":"区域、语言",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -336,11 +336,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"过时的版本",
+    "message":"已过时",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"上次更新：{{ago}}",
+    "message":"上次更新：{{ago}}\n点此强制更新",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"无法连接到 {{url}}",
+    "message":"网络错误：{{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

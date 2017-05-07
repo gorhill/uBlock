@@ -340,11 +340,11 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"마지막 업데이트: {{ago}}",
+    "message":"마지막 업데이트: {{ago}}\n업데이트하려면 여기를 클릭하세요.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"업데이트중...",
+    "message":"업데이트 중...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}}에 연결할 수 없습니다.",
+    "message":"네트워크 오류: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

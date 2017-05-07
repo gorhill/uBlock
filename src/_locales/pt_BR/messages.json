@@ -348,7 +348,7 @@
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"Um erro de rede impediu que o recurso fosse atualizado.",
+    "message":"Um erro na rede preveniu que o recurso fosse atualizado.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

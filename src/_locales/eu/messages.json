@@ -336,19 +336,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"zaharkituta",
+    "message":"Zaharkituta.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Azken eguneraketa: {{ago}}",
+    "message":"Azken eguneraketa: {{ago}}.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Eguneratzen...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Sare errore batek baliabidea eguneratzea eragotzi du.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -576,7 +576,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Ezin izan da konektatu {{url}} helbidera",
+    "message":"Sare-errorea: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
