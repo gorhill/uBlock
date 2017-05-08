@@ -1059,11 +1059,22 @@
 µBlock.assetObserver = function(topic, details) {
     // Do not update filter list if not in use.
     if ( topic === 'before-asset-updated' ) {
-        if (
-            this.availableFilterLists.hasOwnProperty(details.assetKey) &&
-            this.selectedFilterLists.indexOf(details.assetKey) === -1
-        ) {
-            return false;
+        if ( details.type === 'filters' ) {
+            if (
+                this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
+                this.selectedFilterLists.indexOf(details.assetKey) === -1
+            ) {
+                return false;
+            }
+        }
+        // https://github.com/gorhill/uBlock/issues/2594
+        if ( details.assetKey === 'ublock-resources' ) {
+            if (
+                this.hiddenSettings.ignoreRedirectFilters === true &&
+                this.hiddenSettings.ignoreScriptInjectFilters === true
+            ) {
+                return false;
+            }
         }
         return;
     }

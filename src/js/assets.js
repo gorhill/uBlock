@@ -1007,7 +1007,12 @@ var updateNext = function() {
             if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
                 continue;
             }
-            if ( fireNotification('before-asset-updated', { assetKey: assetKey }) !== false ) {
+            if (
+                fireNotification(
+                    'before-asset-updated',
+                    { assetKey: assetKey,  type: assetEntry.content }
+                ) !== false
+            ) {
                 return assetKey;
             }
             garbageCollectOne(assetKey);
