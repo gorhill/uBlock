@@ -65,7 +65,20 @@ var fireNotification = function(topic, details) {
 /******************************************************************************/
 
 api.fetchText = function(url, onLoad, onError) {
-    var actualUrl = reIsExternalPath.test(url) ? url : vAPI.getURL(url);
+    var isExternal = reIsExternalPath.test(url),
+        actualUrl = isExternal ? url : vAPI.getURL(url);
+
+    // https://github.com/gorhill/uBlock/issues/2592
+    // Force browser cache to be bypassed, but only for resources which have
+    // been fetched more than one hour ago.
+    if ( isExternal ) {
+        var queryValue = Math.floor(Date.now() / 7200000);
+        if ( actualUrl.indexOf('?') === -1 ) {
+            actualUrl += '?_=' + queryValue;
+        } else {
+            actualUrl += '&_=' + queryValue;
+        }
+    }
 
     if ( typeof onError !== 'function' ) {
         onError = onLoad;
