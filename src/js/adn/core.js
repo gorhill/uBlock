@@ -1365,6 +1365,10 @@
     return result && result.length && !isBlockableRequest(context);
   };
 
+  exports.isAllowedExceptions = function (url) {
+    return url && typeof allowedExceptions[url] !== undefined;
+  }
+
   exports.itemInspected = function (request, pageStore, tabId) {
 
     if (request.id) {

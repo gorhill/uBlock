@@ -725,10 +725,12 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
             
-
-            if (µb.adnauseam.mustAllowRequest(result, context)) {
+            if ( µb.adnauseam.mustAllowRequest(result, context)) {
                 // console.warn("*** Blocking filterRequestNoCache ***"); // 
-                result = result.replace("b","s");// ADN: adnauseamAllowed
+                if (µb.adnauseam.isAllowedExceptions(context.requestURL)) {
+                   result = result.replace("b","s");// ADN: adnauseamAllowed
+                }
+                else result = "";
             }
         }
     }
