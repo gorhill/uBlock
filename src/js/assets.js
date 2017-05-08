@@ -72,12 +72,13 @@ api.fetchText = function(url, onLoad, onError) {
     // Force browser cache to be bypassed, but only for resources which have
     // been fetched more than one hour ago.
     if ( isExternal ) {
-        var queryValue = Math.floor(Date.now() / 7200000);
+        var queryValue = '_=' + Math.floor(Date.now() / 7200000);
         if ( actualUrl.indexOf('?') === -1 ) {
-            actualUrl += '?_=' + queryValue;
+            actualUrl += '?';
         } else {
-            actualUrl += '&_=' + queryValue;
+            actualUrl += '&';
         }
+        actualUrl += queryValue;
     }
 
     if ( typeof onError !== 'function' ) {
