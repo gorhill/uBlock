@@ -498,6 +498,9 @@ var renderNetLogEntry = function(tr, entry) {
     } else if ( filteringOp === 'r' ) {
         trcl.add('redirected');
         td.textContent = '<<';
+    } else if ( filteringOp === 's') {
+        trcl.add('adnauseamAllowed');
+        td.textContent = '';
     } else {
         td.textContent = '';
     }

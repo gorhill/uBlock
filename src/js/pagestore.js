@@ -724,14 +724,15 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     if ( result === '' || result.charCodeAt(1) === 110 /* 'n' */ ) {
         if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+            
 
             if (µb.adnauseam.mustAllowRequest(result, context)) {
-                //console.warn("*** Blocking filterRequestNoCache ***"); // when?
-                result = ''; // ADN: cannot block
+                // console.warn("*** Blocking filterRequestNoCache ***"); // 
+                result = result.replace("b","s");// ADN: adnauseamAllowed
             }
         }
     }
-
+   
     return result;
 };
 
