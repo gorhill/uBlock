@@ -609,9 +609,9 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "VIE: Fanboy's Vietnamese",
+		"title": "VIE: ABPVN List",
 		"lang": "vi",
-		"contentURL": "https://www.fanboy.co.nz/fanboy-vietnam.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"contentURL": "https://github.com/abpvn/abpvn/blob/master/filter/abpvn.txt",
+		"supportURL": "https://abpvn.com/"
 	}
 }
