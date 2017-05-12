@@ -680,9 +680,6 @@
             µb.assets.get(assetKey, onRawListLoaded);
             return;
         }
-        if ( /[^\x00-\x7F]/.test(details.content) ) {
-            console.log(assetKey, 'has Unicode characters');
-        }
         details.assetKey = assetKey;
         callback(details);
     };
