@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -150,7 +150,10 @@
     this.offset = offset || 0;
 };
 
-µBlock.LineIterator.prototype.next = function() {
+µBlock.LineIterator.prototype.next = function(offset) {
+    if ( offset !== undefined ) {
+        this.offset += offset;
+    }
     var lineEnd = this.text.indexOf('\n', this.offset);
     if ( lineEnd === -1 ) {
         lineEnd = this.text.indexOf('\r', this.offset);
@@ -163,18 +166,8 @@
     return line;
 };
 
-µBlock.LineIterator.prototype.rewind = function() {
-    if ( this.offset <= 1 ) {
-        this.offset = 0;
-        return;
-    }
-    var lineEnd = this.text.lastIndexOf('\n', this.offset - 2);
-    if ( lineEnd !== -1 ) {
-        this.offset = lineEnd + 1;
-    } else {
-        lineEnd = this.text.lastIndexOf('\r', this.offset - 2);
-        this.offset = lineEnd !== -1 ? lineEnd + 1 : 0;
-    }
+µBlock.LineIterator.prototype.charCodeAt = function(offset) {
+    return this.text.charCodeAt(this.offset + offset);
 };
 
 µBlock.LineIterator.prototype.eot = function() {
@@ -207,6 +200,59 @@
     var field = this.text.slice(this.offset, end);
     this.offset = end + this.sepLen;
     return field;
+};
+
+µBlock.FieldIterator.prototype.remainder = function() {
+    return this.text.slice(this.offset);
+};
+
+/******************************************************************************/
+
+µBlock.CompiledOutput = function() {
+    this.bufferLen = 8192;
+    this.buffer = new Uint8Array(this.bufferLen);
+    this.offset = 0;
+};
+
+µBlock.CompiledOutput.prototype.push = function(lineBits, line) {
+    var lineLen = line.length,
+        offset = this.offset,
+        need = offset + 2 + lineLen; // lineBits, line, \n
+    if ( need > this.bufferLen ) {
+        this.grow(need);
+    }
+    var buffer = this.buffer;
+    if ( offset !== 0 ) {
+        buffer[offset++] = 0x0A /* '\n' */;
+    }
+    buffer[offset++] = 0x61 /* 'a' */ + lineBits;
+    for ( var i = 0, c; i < lineLen; i++ ) {
+        c = line.charCodeAt(i);
+        if ( c > 0x7F ) {
+            return this.push(lineBits | 0x02, encodeURIComponent(line));
+        }
+        buffer[offset++] = c;
+    }
+    this.offset = offset;
+};
+
+µBlock.CompiledOutput.prototype.grow = function(need) {
+    var newBufferLen = Math.min(
+        2097152,
+        1 << Math.ceil(Math.log(need) / Math.log(2))
+    );
+    while ( newBufferLen < need ) {
+        newBufferLen += 1048576;
+    }
+    var newBuffer = new Uint8Array(newBufferLen);
+    newBuffer.set(this.buffer);
+    this.buffer = newBuffer;
+    this.bufferLen = newBufferLen;
+};
+
+µBlock.CompiledOutput.prototype.toString = function() {
+    var decoder = new TextDecoder();
+    return decoder.decode(new Uint8Array(this.buffer.buffer, 0, this.offset));
 };
 
 /******************************************************************************/

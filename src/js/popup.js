@@ -79,7 +79,6 @@ var messaging = vAPI.messaging;
 var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
-var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+) ([^ ]+)/;
 var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -148,16 +147,12 @@ var hashFromPopupData = function(reset) {
         return;
     }
 
-    var hasher = [];
-    var rules = popupData.firewallRules;
-    var rule;
+    var hasher = [],
+        rules = popupData.firewallRules;
     for ( var key in rules ) {
-        if ( rules.hasOwnProperty(key) === false ) {
-            continue;
-        }
-        rule = rules[key];
-        if ( rule !== '' ) {
-            hasher.push(rule);
+        var rule = rules[key];
+        if ( rule !== null ) {
+            hasher.push(rule.src + ' ' + rule.des + ' ' + rule.type + ' ' + rule.action);
         }
     }
     hasher.sort();
@@ -243,18 +238,16 @@ var updateFirewallCell = function(scope, des, type, rule) {
     }
 
     cells.removeClass();
-    var action = rule.charAt(1);
-    if ( action !== '' ) {
-        cells.toggleClass(action + 'Rule', true);
+    if ( rule !== null ) {
+        cells.toggleClass(rule.action + 'Rule', true);
     }
 
     // Use dark shade visual cue if the rule is specific to the cell.
     var ownRule = false;
-    var matches = reSrcHostnameFromRule.exec(rule);
-    if ( matches !== null ) {
-        ownRule = (matches[2] !== '*' || matches[3] === type) &&
-                  (matches[2] === des) &&
-                  (matches[1] === scopeToSrcHostnameMap[scope]);
+    if ( rule !== null ) {
+        ownRule = (rule.des !== '*' || rule.type === type) &&
+                  (rule.des === des) &&
+                  (rule.src === scopeToSrcHostnameMap[scope]);
     }
     cells.toggleClass('ownRule', ownRule);
 

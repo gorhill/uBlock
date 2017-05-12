@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2016 Raymond Hill
+    Copyright (C) 2015-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -92,9 +92,11 @@ var uglyRequestTypes = {
 };
 
 var staticFilterTypes = {
+    'beacon': 'other',
     'doc': 'document',
     'css': 'stylesheet',
     'frame': 'subdocument',
+    'ping': 'other',
     'xhr': 'xmlhttprequest'
 };
 
@@ -143,212 +145,6 @@ var nodeFromURL = function(url, re) {
 };
 
 var renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
-
-/******************************************************************************/
-
-// Pretty much same logic as found in:
-//   µBlock.staticNetFilteringEngine.filterStringFromCompiled
-//   µBlock.staticNetFilteringEngine.filterRegexFromCompiled
-
-var filterDecompiler = (function() {
-    var typeValToTypeName = {
-         1: 'stylesheet',
-         2: 'image',
-         3: 'object',
-         4: 'script',
-         5: 'xmlhttprequest',
-         6: 'subdocument',
-         7: 'font',
-         8: 'media',
-         9: 'websocket',
-        10: 'other',
-        11: 'popunder',
-        12: 'document',
-        13: 'generichide',
-        14: 'inline-script',
-        15: 'popup'
-    };
-
-    var toString = function(compiled) {
-        var opts = [];
-        var vfields = compiled.split('\v');
-        var filter = '';
-        var bits = parseInt(vfields[0], 16) | 0;
-
-        if ( bits & 0x01 ) {
-            filter += '@@';
-        }
-
-        var fid = vfields[1] === '.' ? '.' : vfields[2];
-        var tfields = fid !== '.' ? vfields[3].split('\t') : [];
-        var tfield0 = tfields[0];
-
-        // Filter options
-        // Importance
-        if ( bits & 0x02 ) {
-            opts.push('important');
-        }
-        // Party
-        if ( bits & 0x08 ) {
-            opts.push('third-party');
-        } else if ( bits & 0x04 ) {
-            opts.push('first-party');
-        }
-        // Type
-        var typeVal = bits >>> 4 & 0x0F;
-        if ( typeVal ) {
-            opts.push(typeValToTypeName[typeVal]);
-        }
-
-        switch ( fid ) {
-        case '.':
-            filter += '||' + vfields[2] + '^';
-            break;
-        case 'a':
-        case 'ah':
-        case '0a':
-        case '0ah':
-        case '1a':
-        case '1ah':
-        case '_':
-        case '_h':
-            filter += tfield0;
-            // If the filter resemble a regex, add a trailing `*` as is
-            // customary to prevent ambiguity in logger.
-            if ( tfield0.charAt(0) === '/' && tfield0.slice(-1) === '/' ) {
-                filter += '*';
-            }
-            break;
-        case '|a':
-        case '|ah':
-            filter += '|' + tfield0;
-            break;
-        case 'a|':
-        case 'a|h':
-            filter += tfield0 + '|';
-            break;
-        case '||a':
-        case '||ah':
-            filter += '||' + tfield0;
-            break;
-        case '||_':
-        case '||_h':
-            filter += '||' + tfield0;
-            if ( tfields[1] === '1' ) { // left-anchored?
-                filter += '|';
-            }
-            break;
-        case '//':
-        case '//h':
-            filter += '/' + tfield0 + '/';
-            break;
-        // https://github.com/gorhill/uBlock/issues/465
-        // Unexpected: return the raw compiled representation instead of a
-        // blank string.
-        default:
-            return compiled.replace(/\s+/g, ' ');
-        }
-
-        // Domain option?
-        switch ( fid ) {
-        case '0ah':
-        case '1ah':
-        case '|ah':
-        case 'a|h':
-        case '||ah':
-        case '//h':
-            opts.push('domain=' + tfields[1]);
-            break;
-        case 'ah':
-        case '_h':
-        case '||_h':
-            opts.push('domain=' + tfields[2]);
-            break;
-        default:
-            break;
-        }
-
-        if ( opts.length !== 0 ) {
-            filter += '$' + opts.join(',');
-        }
-
-        return filter;
-    };
-
-    var reEscapeHostname = /[.[\]]/g;
-    var reEscape = /[.+?${}()|[\]\\]/g;
-    var reWildcards = /\*+/g;
-    var reSeparator = /\^/g;
-
-    var toRegex = function(compiled) {
-        var vfields = compiled.split('\v');
-        var fid = vfields[1] === '.' ? '.' : vfields[2];
-        var tfields = fid !== '.' ? vfields[3].split('\t') : [];
-        var reStr;
-
-        switch ( fid ) {
-        case '.':
-            reStr = vfields[2].replace(reEscapeHostname, '\\$&') +
-                    '(?:[^%.0-9a-z_-]|$)';
-            break;
-        case 'a':
-        case 'ah':
-        case '0a':
-        case '0ah':
-        case '1a':
-        case '1ah':
-        case '|a':
-        case '|ah':
-        case 'a|':
-        case 'a|h':
-        case '_':
-        case '_h':
-            reStr = tfields[0]
-                .replace(reEscape, '\\$&')
-                .replace(reWildcards, '.*?')
-                .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
-            break;
-        case '||a':
-        case '||ah':
-        case '||_':
-        case '||_h':
-            reStr = '';
-            if ( tfields[0].charCodeAt(0) === 0x2A ) {
-                reStr = '[0-9a-z.-]*?';
-                tfields[0] = tfields[0].slice(1);
-            }
-            reStr += tfields[0]
-                .replace(reEscape, '\\$&')
-                .replace(reWildcards, '.*?')
-                .replace(reSeparator, '(?:[^%.0-9a-z_-]|$)');
-            break;
-        case '//':
-        case '//h':
-            reStr = tfields[0];
-            break;
-        default:
-            break;
-        }
-
-        // Anchored?
-        var s = fid.slice(0, 2);
-        if ( s === '|a' ) {
-            reStr = '^' + reStr;
-        } else if ( s === 'a|' ) {
-            reStr += '$';
-        }
-
-        if ( reStr === undefined) {
-            return null;
-        }
-        return new RegExp(reStr, 'gi');
-    };
-
-    return {
-        toString: toString,
-        toRegex: toRegex
-    };
-})();
 
 /******************************************************************************/
 
@@ -442,7 +238,7 @@ var createGap = function(tabId, url) {
 
 var renderNetLogEntry = function(tr, entry) {
     var trcl = tr.classList;
-    var filter = entry.d0;
+    var filter = entry.d0 || undefined;
     var type = entry.d1;
     var url = entry.d2;
     var td;
@@ -463,52 +259,50 @@ var renderNetLogEntry = function(tr, entry) {
         tr.setAttribute('data-hn-frame', entry.d4);
     }
 
-    var filterCat = filter.slice(0, 3);
-    if ( filterCat.charAt(2) === ':' ) {
-        trcl.add(filterCat.slice(0, 2));
+    var filteringType;
+    if ( filter !== undefined && typeof filter.source === 'string' ) {
+        filteringType = filter.source;
+        trcl.add(filteringType);
     }
 
-    var filteringType = filterCat.charAt(0);
     td = tr.cells[2];
-    if ( filter !== '' ) {
-        filter = filter.slice(3);
-        if ( filteringType === 's' ) {
-            td.textContent = filterDecompiler.toString(filter);
+    if ( filter !== undefined ) {
+        if ( filteringType === 'static' ) {
+            td.textContent = filter.raw;
             trcl.add('canLookup');
-            tr.setAttribute('data-filter', filter);
-        } else if ( filteringType === 'c' ) {
-            td.textContent = filter;
+            tr.setAttribute('data-filter', filter.compiled);
+        } else if ( filteringType === 'cosmetic' ) {
+            td.textContent = filter.raw;
             trcl.add('canLookup');
         } else {
-            td.textContent = filter;
+            td.textContent = filter.raw;
         }
     }
 
     td = tr.cells[3];
-    var filteringOp = filterCat.charAt(1);
-    if ( filteringOp === 'b' ) {
-        trcl.add('blocked');
-        td.textContent = '--';
-    } else if ( filteringOp === 'a' ) {
-        trcl.add('allowed');
-        td.textContent = '++';
-    } else if ( filteringOp === 'n' ) {
-        trcl.add('nooped');
-        td.textContent = '**';
-    } else if ( filteringOp === 'r' ) {
-        trcl.add('redirected');
-        td.textContent = '<<';
-    } else {
-        td.textContent = '';
+    if ( filter !== undefined ) {
+        if ( filter.result === 1 ) {
+            trcl.add('blocked');
+            td.textContent = '--';
+        } else if ( filter.result === 2 ) {
+            trcl.add('allowed');
+            td.textContent = '++';
+        } else if ( filter.result === 3 ) {
+            trcl.add('nooped');
+            td.textContent = '**';
+        } else if ( filter.source === 'redirect' ) {
+            trcl.add('redirect');
+            td.textContent = '<<';
+        }
     }
 
     tr.cells[4].textContent = (prettyRequestTypes[type] || type);
 
     var re = null;
-    if ( filteringType === 's' ) {
-        re = filterDecompiler.toRegex(filter);
-    } else if ( filteringType === 'l' ) {
-        re = regexFromURLFilteringResult(filter);
+    if ( filteringType === 'static' ) {
+        re = new RegExp(filter.regex, 'gi');
+    } else if ( filteringType === 'dynamicUrl' ) {
+        re = regexFromURLFilteringResult(filter.rule.join(' '));
     }
     tr.cells[5].appendChild(nodeFromURL(url, re));
 };

@@ -719,6 +719,8 @@ FilterContainer.prototype.freeze = function() {
                           this.highHighComplexGenericHideCount !== 0;
 
     this.parser.reset();
+    this.compileSelector.reset();
+    this.compileProceduralSelector.reset();
     this.frozen = true;
 };
 
@@ -746,7 +748,7 @@ FilterContainer.prototype.compileSelector = (function() {
         return true;
     };
 
-    return function(raw) {
+    var entryPoint = function(raw) {
         if ( isValidCSSSelector(raw) && raw.indexOf('[-abp-properties=') === -1 ) {
             return raw;
         }
@@ -812,6 +814,11 @@ FilterContainer.prototype.compileSelector = (function() {
 
         µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + raw);
     };
+
+    entryPoint.reset = function() {
+    };
+
+    return entryPoint;
 })();
 
 /******************************************************************************/
@@ -927,7 +934,7 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         return { selector: firstOperand, tasks: tasks };
     };
 
-    return function(raw) {
+    var entryPoint = function(raw) {
         if ( raw === lastProceduralSelector ) {
             return lastProceduralSelectorCompiled;
         }
@@ -940,6 +947,13 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         lastProceduralSelectorCompiled = compiled;
         return compiled;
     };
+
+    entryPoint.reset = function() {
+        lastProceduralSelector = '';
+        lastProceduralSelectorCompiled = undefined;
+    };
+
+    return entryPoint;
 })();
 
 /******************************************************************************/
@@ -1038,12 +1052,12 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
         // is valid, the regex took care of this. Most generic selector falls
         // into that category.
         if ( key === selector ) {
-            out.push('c\vlg\v' + key);
+            out.push(4, 'lg\v' + key);
             return;
         }
         // Composite CSS rule.
         if ( this.compileSelector(selector) ) {
-            out.push('c\vlg+\v' + key + '\v' + selector);
+            out.push(4, 'lg+\v' + key + '\v' + selector);
         }
         return;
     }
@@ -1054,21 +1068,21 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
 
     // ["title"] and ["alt"] will go in high-low generic bin.
     if ( this.reHighLow.test(selector) ) {
-        out.push('c\vhlg0\v' + selector);
+        out.push(4, 'hlg0\v' + selector);
         return;
     }
 
     // [href^="..."] will go in high-medium generic bin.
     matches = this.reHighMedium.exec(selector);
     if ( matches && matches.length === 2 ) {
-        out.push('c\vhmg0\v' + matches[1] + '\v' + selector);
+        out.push(4, 'hmg0\v' + matches[1] + '\v' + selector);
         return;
     }
 
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        out.push('c\vjs\v0\v\v' + selector);
+        out.push(4, 'js\v0\v\v' + selector);
         return;
     }
 
@@ -1077,16 +1091,16 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
     // as a low generic cosmetic filter.
     matches = this.rePlainSelectorEx.exec(selector);
     if ( matches && matches.length === 2 ) {
-        out.push('c\vlg+\v' + matches[1] + '\v' + selector);
+        out.push(4, 'lg+\v' + matches[1] + '\v' + selector);
         return;
     }
 
     // All else: high-high generics.
     // Distinguish simple vs complex selectors.
     if ( selector.indexOf(' ') === -1 ) {
-        out.push('c\vhhsg0\v' + selector);
+        out.push(4, 'hhsg0\v' + selector);
     } else {
-        out.push('c\vhhcg0\v' + selector);
+        out.push(4, 'hhcg0\v' + selector);
     }
 };
 
@@ -1098,7 +1112,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, out) {
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        out.push('c\vjs\v1\v\v' + selector);
+        out.push(4, 'js\v1\v\v' + selector);
         return;
     }
 
@@ -1109,7 +1123,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, out) {
     // https://github.com/chrisaljoudi/uBlock/issues/497
     // All generic exception filters are put in the same bucket: they are
     // expected to be very rare.
-    out.push('c\vg1\v' + compiled);
+    out.push(4, 'g1\v' + compiled);
 };
 
 /******************************************************************************/
@@ -1138,7 +1152,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         if ( unhide ) {
             hash = '!' + hash;
         }
-        out.push('c\vjs\v' + hash + '\v' + hostname + '\v' + selector);
+        out.push(4, 'js\v' + hash + '\v' + hostname + '\v' + selector);
         return;
     }
 
@@ -1156,12 +1170,16 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         hash = '!' + hash;
     }
 
-    out.push('c\vh\v' + hash + '\v' + hostname + '\v' + compiled);
+    out.push(4, 'h\v' + hash + '\v' + hostname + '\v' + compiled);
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCosmetic, skipCosmetic) {
+FilterContainer.prototype.fromCompiledContent = function(
+    lineIter,
+    skipGenericCosmetic,
+    skipCosmetic
+) {
     if ( skipCosmetic ) {
         this.skipCompiledContent(lineIter);
         return;
@@ -1171,14 +1189,18 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCo
         return;
     }
 
-    var line, field0, field1, field2, field3, filter, bucket,
+    var lineBits, line, field0, field1, field2, field3, filter, bucket,
+        aCharCode = 'a'.charCodeAt(0),
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
+        lineBits = lineIter.charCodeAt(0) - aCharCode;
+        if ( (lineBits & 0x04) === 0 ) {
             return;
+        }
+        line = lineIter.next(1);
+        if ( (lineBits & 0x02) !== 0 ) {
+            line = decodeURIComponent(line);
         }
 
         this.acceptedCount += 1;
@@ -1188,8 +1210,7 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCo
         }
         this.duplicateBuster.add(line);
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
+        field0 = fieldIter.first(line);
         field1 = fieldIter.next();
 
         // h  [\v]  hash  [\v]  example.com  [\v]  .promoted-tweet
@@ -1298,14 +1319,18 @@ FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCo
 /******************************************************************************/
 
 FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
-    var line, field0, field1, field2, field3, filter, bucket,
+    var lineBits, line, field0, field1, field2, field3, filter, bucket,
+        aCharCode = 'a'.charCodeAt(0),
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
+        lineBits = lineIter.charCodeAt(0) - aCharCode;
+        if ( (lineBits & 0x04) === 0 ) {
             return;
+        }
+        line = lineIter.next(1);
+        if ( (lineBits & 0x02) !== 0 ) {
+            line = decodeURIComponent(line);
         }
 
         this.acceptedCount += 1;
@@ -1361,14 +1386,18 @@ FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
 /******************************************************************************/
 
 FilterContainer.prototype.skipCompiledContent = function(lineIter) {
-    var line, field0, field1, field2, field3,
+    var lineBits, line, field0, field1, field2, field3,
+        aCharCode = 'a'.charCodeAt(0),
         fieldIter = new µb.FieldIterator('\v');
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
+        lineBits = lineIter.charCodeAt(0) - aCharCode;
+        if ( (lineBits & 0x04) === 0 ) {
             return;
+        }
+        line = lineIter.next(1);
+        if ( (lineBits & 0x02) !== 0 ) {
+            line = decodeURIComponent(line);
         }
 
         this.acceptedCount += 1;

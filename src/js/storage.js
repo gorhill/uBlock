@@ -680,6 +680,9 @@
             µb.assets.get(assetKey, onRawListLoaded);
             return;
         }
+        if ( /[^\x00-\x7F]/.test(details.content) ) {
+            console.log(assetKey, 'has Unicode characters');
+        }
         details.assetKey = assetKey;
         callback(details);
     };
@@ -727,7 +730,7 @@
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText) {
-    var compiledFilters = [];
+    var compiledFilters = new this.CompiledOutput();
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
@@ -793,7 +796,7 @@
         staticNetFilteringEngine.compile(line, compiledFilters);
     }
 
-    return compiledFilters.join('\n');
+    return compiledFilters.toString();
 };
 
 /******************************************************************************/

@@ -210,7 +210,7 @@ URLNetFiltering.prototype.removeRule = function(srcHostname, url, type) {
 URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     this.r = 0;
     if ( this.rules.size === 0 ) {
-        return this;
+        return 0;
     }
     var entries, pos, i, entry;
     for (;;) {
@@ -222,7 +222,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 this.url = entry.url;
                 this.type = type;
                 this.r = entry.action;
-                return this;
+                return this.r;
             }
         }
         if ( (entries = this.rules.get(context + ' *')) ) {
@@ -232,14 +232,20 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 this.url = entry.url;
                 this.type = '*';
                 this.r = entry.action;
-                return this;
+                return this.r;
             }
         }
         if ( context === '*' ) { break; }
         pos = context.indexOf('.');
         context = pos !== -1 ? context.slice(pos + 1) : '*';
     }
-    return this;
+    return 0;
+};
+
+/******************************************************************************/
+
+URLNetFiltering.prototype.mustAllowCellZ = function(context, target, type) {
+    return this.evaluateZ(context, target, type).r === 2;
 };
 
 /******************************************************************************/
@@ -250,20 +256,29 @@ URLNetFiltering.prototype.mustBlockOrAllow = function() {
 
 /******************************************************************************/
 
-URLNetFiltering.prototype.toFilterString = function() {
-    if ( this.r === 0 ) {
-        return '';
-    }
-    var body = this.context + ' ' + this.url + ' ' + this.type;
-    if ( this.r === 1 ) {
-        return 'lb:' + body + ' block';
-    }
-    if ( this.r === 2 ) {
-        return 'la:' + body + ' allow';
-    }
-    /* this.r === 3 */
-    return 'ln:' + body + ' noop';
+URLNetFiltering.prototype.toLogData = function() {
+    if ( this.r === 0 ) { return; }
+    return {
+        source: 'dynamicUrl',
+        result: this.r,
+        rule: [
+            this.context,
+            this.url,
+            this.type,
+            this.intToActionMap.get(this.r)
+        ],
+        raw: this.context + ' ' +
+             this.url + ' ' +
+             this.type + ' ' +
+             this.intToActionMap.get(this.r)
+    };
 };
+
+URLNetFiltering.prototype.intToActionMap = new Map([
+    [ 1, ' block' ],
+    [ 2, ' allow' ],
+    [ 3, ' noop' ]
+]);
 
 /******************************************************************************/
 

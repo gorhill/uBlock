@@ -258,28 +258,28 @@ var getHostnameDict = function(hostnameToCountMap) {
 var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
     var df = µb.sessionFirewall;
-    r['/ * *'] = df.evaluateCellZY('*', '*', '*').toFilterString();
-    r['/ * image'] = df.evaluateCellZY('*', '*', 'image').toFilterString();
-    r['/ * 3p'] = df.evaluateCellZY('*', '*', '3p').toFilterString();
-    r['/ * inline-script'] = df.evaluateCellZY('*', '*', 'inline-script').toFilterString();
-    r['/ * 1p-script'] = df.evaluateCellZY('*', '*', '1p-script').toFilterString();
-    r['/ * 3p-script'] = df.evaluateCellZY('*', '*', '3p-script').toFilterString();
-    r['/ * 3p-frame'] = df.evaluateCellZY('*', '*', '3p-frame').toFilterString();
+    r['/ * *'] = df.lookupRuleData('*', '*', '*');
+    r['/ * image'] = df.lookupRuleData('*', '*', 'image');
+    r['/ * 3p'] = df.lookupRuleData('*', '*', '3p');
+    r['/ * inline-script'] = df.lookupRuleData('*', '*', 'inline-script');
+    r['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
+    r['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
+    r['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
     if ( typeof srcHostname !== 'string' ) {
         return r;
     }
 
-    r['. * *'] = df.evaluateCellZY(srcHostname, '*', '*').toFilterString();
-    r['. * image'] = df.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
-    r['. * 3p'] = df.evaluateCellZY(srcHostname, '*', '3p').toFilterString();
-    r['. * inline-script'] = df.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
-    r['. * 1p-script'] = df.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
-    r['. * 3p-script'] = df.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
-    r['. * 3p-frame'] = df.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
+    r['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
+    r['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
+    r['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
+    r['. * inline-script'] = df.lookupRuleData(srcHostname, '*', 'inline-script');
+    r['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
+    r['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
+    r['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
 
     for ( var desHostname in desHostnames ) {
-        r['/ ' + desHostname + ' *'] = df.evaluateCellZY('*', desHostname, '*').toFilterString();
-        r['. ' + desHostname + ' *'] = df.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
+        r['/ ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
+        r['. ' + desHostname + ' *'] = df.lookupRuleData(srcHostname, desHostname, '*');
     }
     return r;
 };
@@ -1239,7 +1239,7 @@ var logCosmeticFilters = function(tabId, details) {
         µb.logger.writeOne(
             tabId,
             'cosmetic',
-            'cb:##' + selectors[i],
+            { source: 'cosmetic', raw: '##' + selectors[i] },
             'dom',
             details.frameURL,
             null,
