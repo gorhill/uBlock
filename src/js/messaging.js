@@ -501,10 +501,7 @@ var filterRequests = function(pageStore, details) {
         context.requestType = tagNameToRequestTypeMap[request.tag];
         if ( pageStore.filterRequest(context) !== 1 ) { continue; }
         // Redirected? (We do not hide redirected resources.)
-        if ( redirectEngine.matches(context) ) {
-            continue;
-        }
-        request.collapse = true;
+        request.collapse = redirectEngine.matches(context) !== true;
     }
 
     context.dispose();
