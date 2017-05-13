@@ -35,6 +35,7 @@ cp $SRC/hu/messages.json    $DES/hu/messages.json
 cp $SRC/id/messages.json    $DES/id/messages.json
 cp $SRC/it/messages.json    $DES/it/messages.json
 cp $SRC/ja/messages.json    $DES/ja/messages.json
+cp $SRC/ka/messages.json    $DES/ka/messages.json
 cp $SRC/kn/messages.json    $DES/kn/messages.json
 cp $SRC/ko/messages.json    $DES/ko/messages.json
 cp $SRC/lt/messages.json    $DES/lt/messages.json
@@ -91,6 +92,7 @@ cp $SRC/hu/description.txt    $DES/description-hu.txt
 cp $SRC/id/description.txt    $DES/description-id.txt
 cp $SRC/it/description.txt    $DES/description-it.txt
 cp $SRC/ja/description.txt    $DES/description-ja.txt
+cp $SRC/ka/description.txt    $DES/description-ka.txt
 cp $SRC/ko/description.txt    $DES/description-ko.txt
 cp $SRC/kn/description.txt    $DES/description-kn.txt
 cp $SRC/lt/description.txt    $DES/description-lt.txt
