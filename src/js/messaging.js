@@ -492,17 +492,14 @@ var filterRequests = function(pageStore, details) {
 
     // Create evaluation context
     var context = pageStore.createContextFromFrameHostname(details.pageHostname),
-        request, r,
+        request,
         i = requests.length;
     while ( i-- ) {
         request = requests[i];
         context.requestURL = punycodeURL(request.url);
         context.requestHostname = hostnameFromURI(context.requestURL);
         context.requestType = tagNameToRequestTypeMap[request.tag];
-        r = pageStore.filterRequest(context);
-        if ( typeof r !== 'string' || r.charCodeAt(1) !== 98 /* 'b' */ ) {
-            continue;
-        }
+        if ( pageStore.filterRequest(context) !== 1 ) { continue; }
         // Redirected? (We do not hide redirected resources.)
         if ( redirectEngine.matches(context) ) {
             continue;
