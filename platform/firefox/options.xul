@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<vbox xmlns="https://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<setting type="control">
 		<vbox>
 		<button id="showDashboardButton"/>
