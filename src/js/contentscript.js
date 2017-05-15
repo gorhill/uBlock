@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global createSet */
-
 'use strict';
 
 /*******************************************************************************
@@ -139,15 +137,15 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-var allExceptions = createSet(),
-    allSelectors = createSet(),
+var allExceptions = new Set(),
+    allSelectors = new Set(),
     stagedNodes = [];
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
 
 var complexSelectorsOldResultSet,
-    complexSelectorsCurrentResultSet = createSet('object');
+    complexSelectorsCurrentResultSet = new Set();
 
 /******************************************************************************/
 
@@ -597,7 +595,7 @@ var domFilterer = {
         this.commitTimer.clear();
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
-            styleText = '', i;
+            styleText = '';
 
         // CSS rules/hide
         if ( this.newHideSelectorBuffer.length ) {
@@ -615,7 +613,7 @@ var domFilterer = {
 
         // Simple css selectors/hide
         if ( this.simpleHideSelectors.entries.length ) {
-            i = stagedNodes.length;
+            var i = stagedNodes.length;
             while ( i-- ) {
                 this.simpleHideSelectors.forEachNode(hideNode, stagedNodes[i], cssNotHiddenId);
             }
@@ -624,7 +622,7 @@ var domFilterer = {
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
-        complexSelectorsCurrentResultSet = createSet('object');
+        complexSelectorsCurrentResultSet = new Set();
 
         // Complex css selectors/hide
         // The handling of these can be considered optional, since they are
@@ -658,14 +656,10 @@ var domFilterer = {
         }
 
         // Un-hide nodes previously hidden.
-        i = complexSelectorsOldResultSet.size;
-        if ( i !== 0 ) {
-            var iter = complexSelectorsOldResultSet.values();
-            while ( i-- ) {
-                this.unhideNode(iter.next().value);
-            }
-            complexSelectorsOldResultSet.clear();
+        for ( var node of complexSelectorsOldResultSet ) {
+            this.unhideNode(node);
         }
+        complexSelectorsOldResultSet.clear();
 
         // If DOM nodes have been affected, lazily notify core process.
         if (
@@ -1303,7 +1297,7 @@ vAPI.domSurveyor = (function() {
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = createSet(),
+        queriedSelectors = new Set(),
         surveyCost = 0;
 
     // Handle main process' response.
