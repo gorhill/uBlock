@@ -210,26 +210,18 @@ rawToRegexStr.escape4 = /\*/g;
 
 // If using native Map, we use numerical keys, otherwise for
 // Object-based map we use string-based keys.
-var exportMapKey = Map.polyfill !== true
-    ? function(k) { return k.toString(32); }
-    : function(k) { return k; };
+var exportMapKey = function(k) {
+    return k.toString(32);
+};
 
-var importMapKey = Map.polyfill !== true
-    ? function(k) { return parseInt(k,32); }
-    : function(k) { return k; };
-
-var bitsToMapKey = Map.polyfill !== true
-    ? function(k) { return k; }
-    : function(k) { return k.toString(32); };
-
-var mapKeyToBits = Map.polyfill !== true
-    ? function(k) { return k; }
-    : function(k) { return parseInt(k,32); };
+var importMapKey = function(k) {
+    return parseInt(k,32);
+};
 
 var toLogDataInternal = function(key, token, filter) {
     if ( filter === null ) { return undefined; }
     var logData = filter.logData();
-    logData.compiled = exportMapKey(bitsToMapKey(key)) + '\v' +
+    logData.compiled = exportMapKey(key) + '\v' +
                        token + '\v' +
                        logData.compiled;
     if ( key & 0x001 ) {
@@ -1017,7 +1009,7 @@ registerFilterClass(FilterDataHolder);
 // Helper class for storing instances of FilterDataHolder.
 
 var FilterDataHolderEntry = function(key, token, fdata) {
-    this.keyBits = mapKeyToBits(key);
+    this.keyBits = key;
     this.token = token;
     this.filter = filterFromCompiledData(fdata);
     this.next = undefined;
@@ -2070,7 +2062,7 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     if ( type === 0 ) {
         out.push(
             route,
-            exportMapKey(bitsToMapKey(keyShard)) + '\v' +
+            exportMapKey(keyShard) + '\v' +
             '.\v' +
             parsed.f
         );
@@ -2082,7 +2074,7 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
         if ( type & 1 ) {
             out.push(
                 route,
-                exportMapKey(bitsToMapKey(keyShard | (bitOffset << 4))) + '\v' +
+                exportMapKey(keyShard | (bitOffset << 4)) + '\v' +
                 '.\v' +
                 parsed.f
             );
@@ -2102,7 +2094,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, out) {
     if ( type === 0 ) {
         out.push(
             route,
-            exportMapKey(bitsToMapKey(bits)) + '\v' +
+            exportMapKey(bits) + '\v' +
             parsed.token + '\v' +
             fdata
         );
@@ -2113,7 +2105,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, out) {
         if ( type & 1 ) {
             out.push(
                 route,
-                exportMapKey(bitsToMapKey(bits | (bitOffset << 4))) + '\v' +
+                exportMapKey(bits | (bitOffset << 4)) + '\v' +
                 parsed.token + '\v' +
                 fdata
             );
@@ -2456,13 +2448,13 @@ FilterContainer.prototype.matchStringGenericHide = function(context, requestURL)
     //   Important: this is used by FilterHostnameDict.match().
     requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
-    var bucket = this.categories.get(bitsToMapKey(genericHideException));
+    var bucket = this.categories.get(genericHideException);
     if ( !bucket || this.matchTokens(bucket, url) === false ) {
         this.fRegister = null;
         return 0;
     }
 
-    bucket = this.categories.get(bitsToMapKey(genericHideImportant));
+    bucket = this.categories.get(genericHideImportant);
     if ( bucket && this.matchTokens(bucket, url) ) {
         this.keyRegister = genericHideImportant;
         return 1;
@@ -2504,14 +2496,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // https://github.com/chrisaljoudi/uBlock/issues/139
     //   Test against important block filters
     key = BlockAnyParty | Important | type;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
@@ -2520,14 +2512,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against block filters
     key = BlockAnyParty | type;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAction | type | party;
-        if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+        if ( (bucket = categories.get(key)) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
@@ -2541,14 +2533,14 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // Test against allow filters
     key = AllowAnyParty | type;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
         }
     }
     key = AllowAction | type | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
@@ -2613,28 +2605,28 @@ FilterContainer.prototype.matchString = function(context) {
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
     key = BlockAnyTypeAnyParty | Important;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
         }
     }
     key = BlockAnyType | Important | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
         }
     }
     key = BlockAnyParty | Important | type;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
         }
     }
     key = BlockAction | Important | type | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 1;
@@ -2643,28 +2635,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against block filters
     key = BlockAnyTypeAnyParty;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
         key = BlockAnyType | party;
-        if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+        if ( (bucket = categories.get(key)) ) {
             if ( this.matchTokens(bucket, url) ) {
                 this.keyRegister = key;
             }
         }
         if ( this.fRegister === null ) {
             key = BlockAnyParty | type;
-            if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+            if ( (bucket = categories.get(key)) ) {
                 if ( this.matchTokens(bucket, url) ) {
                     this.keyRegister = key;
                 }
             }
             if ( this.fRegister === null ) {
                 key = BlockAction | type | party;
-                if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+                if ( (bucket = categories.get(key)) ) {
                     if ( this.matchTokens(bucket, url) ) {
                         this.keyRegister = key;
                     }
@@ -2680,28 +2672,28 @@ FilterContainer.prototype.matchString = function(context) {
 
     // Test against allow filters
     key = AllowAnyTypeAnyParty;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
         }
     }
     key = AllowAnyType | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
         }
     }
     key = AllowAnyParty | type;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
         }
     }
     key = AllowAction | type | party;
-    if ( (bucket = categories.get(bitsToMapKey(key))) ) {
+    if ( (bucket = categories.get(key)) ) {
         if ( this.matchTokens(bucket, url) ) {
             this.keyRegister = key;
             return 2;
