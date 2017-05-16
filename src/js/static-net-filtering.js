@@ -1252,6 +1252,7 @@ var FilterParser = function() {
     this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
+    this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
     this.domainOpt = '';
     this.reset();
 };
@@ -1451,7 +1452,7 @@ FilterParser.prototype.parseOptions = function(s) {
             break;
         }
         if ( opt.startsWith('csp=') ) {
-            if ( opt.length > 4 ) {
+            if ( opt.length > 4 && this.reBadCSP.test(opt) === false ) {
                 this.parseTypeOption('data', not);
                 this.dataType = 'csp';
                 this.dataStr = opt.slice(4).trim();
