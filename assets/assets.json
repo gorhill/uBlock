@@ -240,9 +240,7 @@
 		"group": "social",
 		"off": true,
 		"title": "LinkedInsanity Rules",
-		"contentURL": [
-			"https://raw.githubusercontent.com/taylr/linkedinsanity/master/linkedinsanity.txt"
-		],
+		"contentURL": "https://raw.githubusercontent.com/taylr/linkedinsanity/master/linkedinsanity.txt",
 		"supportURL": "https://github.com/taylr/linkedinsanity/issues"
 	},
 	"dpollock-0": {

@@ -114,12 +114,6 @@
 		"group": "social",
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"https://raw.githubusercontent.com/taylr/linkedinsanity/master/linkedinsanity.txt": {
-		"off": true,
-		"title": "LinkedInsanity Rules",
-		"group": "social",
-		"supportURL": "https://github.com/taylr/linkedinsanity/issues"
-	},
 	"https://easylist-downloads.adblockplus.org/liste_fr.txt": {
 		"off": true,
 		"title": "FRA: EasyList Liste FR",
