@@ -1339,8 +1339,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
             continue;
         }
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
+        field0 = fieldIter.first(line);
         field1 = fieldIter.next();
 
         // h  [\v]  hash  [\v]  example.com  [\v]  .promoted-tweet
@@ -1406,8 +1405,7 @@ FilterContainer.prototype.skipCompiledContent = function(lineIter) {
             continue;
         }
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
+        field0 = fieldIter.first(line);
 
         // js [\v] hash [\v] example.com [\v] script:contains(...)
         // js [\v] hash [\v] example.com [\v] script:inject(...)
