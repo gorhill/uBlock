@@ -2240,8 +2240,7 @@ FilterContainer.prototype.removeBadFilters = function() {
         hash, token, fdata, bucket, entry,
         i = lines.length;
     while ( i-- ) {
-        fieldIter.first(lines[i]);
-        hash = importMapKey(fieldIter.next());
+        hash = importMapKey(fieldIter.first(lines[i]));
         bucket = this.categories.get(hash);
         if ( bucket === undefined ) {
             continue;
