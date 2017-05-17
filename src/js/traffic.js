@@ -473,18 +473,14 @@ var injectCSP = function(pageStore, details) {
 
     // Static filtering.
 
-    var logData = [];
+    var logDataEntries = [];
 
     µb.staticNetFilteringEngine.matchAndFetchData(
         'csp',
         requestURL,
         cspSubsets,
-        loggerEnabled === true ? logData : undefined
+        loggerEnabled === true ? logDataEntries : undefined
     );
-
-    // <<<<<<<< All policies have been collected
-
-    context.dispose();
 
     // URL filtering `allow` rules override static filtering.
     if (
@@ -502,10 +498,11 @@ var injectCSP = function(pageStore, details) {
                 context.pageHostname
             );
         }
+        context.dispose();
         return;
     }
 
-    // Dynamic filtering rules override static filtering.
+    // Dynamic filtering `allow` rules override static filtering.
     if (
         cspSubsets.length !== 0 &&
         µb.userSettings.advancedUserEnabled &&
@@ -522,16 +519,18 @@ var injectCSP = function(pageStore, details) {
                 context.pageHostname
             );
         }
+        context.dispose();
         return;
     }
 
+    // <<<<<<<< All policies have been collected
+
     // Static CSP policies will be applied.
-    var i = logData.length;
-    while ( i-- ) {
+    for ( var entry of logDataEntries ) {
         logger.writeOne(
             tabId,
             'net',
-            logData[i],
+            entry,
             'csp',
             requestURL,
             context.rootHostname,
@@ -539,14 +538,17 @@ var injectCSP = function(pageStore, details) {
         );
     }
 
+    context.dispose();
+
     if ( cspSubsets.length === 0 ) {
         return;
     }
 
     µb.updateBadgeAsync(tabId);
 
-    var csp, headers = details.responseHeaders;
-    i = headerIndexFromName('content-security-policy', headers);
+    var csp,
+        headers = details.responseHeaders,
+        i = headerIndexFromName('content-security-policy', headers);
     if ( i !== -1 ) {
         csp = headers[i].value.trim();
         headers.splice(i, 1);
