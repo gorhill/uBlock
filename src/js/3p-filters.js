@@ -222,15 +222,15 @@ var renderFilterLists = function(soft) {
             groups = groupsFromLists(details.available),
             liGroup, i, groupKey,
             groupKeys = [
-            'default',
-            'ads',
-            'privacy',
-            'malware',
-            'social',
-            'multipurpose',
-            'regions',
-            'custom'
-        ];
+                'default',
+                'ads',
+                'privacy',
+                'malware',
+                'social',
+                'multipurpose',
+                'regions',
+                'custom'
+            ];
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
             liGroup = liFromListGroup(groupKey, groups[groupKey]);
