@@ -276,13 +276,9 @@
 µBlock.mapToArray = typeof Array.from === 'function'
     ? Array.from
     : function(map) {
-        var out = [],
-            entries = map.entries(),
-            entry;
-        for (;;) {
-            entry = entries.next();
-            if ( entry.done ) { break; }
-            out.push([ entry.value[0], entry.value[1] ]);
+        var out = [];
+        for ( var entry of map ) {
+            out.push(entry);
         }
         return out;
     };
@@ -294,13 +290,9 @@
 µBlock.setToArray = typeof Array.from === 'function'
     ? Array.from
     : function(dict) {
-        var out = [],
-            entries = dict.values(),
-            entry;
-        for (;;) {
-            entry = entries.next();
-            if ( entry.done ) { break; }
-            out.push(entry.value);
+        var out = [];
+        for ( var value of dict ) {
+            out.push(value);
         }
         return out;
     };

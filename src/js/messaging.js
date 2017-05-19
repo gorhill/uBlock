@@ -208,17 +208,11 @@ var getHostnameDict = function(hostnameToCountMap) {
         domainEntry,
         domainFromHostname = µb.URI.domainFromHostname,
         domain, blockCount, allowCount,
-        iter = hostnameToCountMap.entries(),
-        entry, hostname, counts;
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done ) {
-            break;
-        }
-        hostname = entry.value[0];
-        if ( r[hostname] !== undefined ) {
-            continue;
-        }
+        hostname, counts;
+    // Note: destructuring assignment not supported before Chromium 49.
+    for ( var entry of hostnameToCountMap ) {
+        hostname = entry[0];
+        if ( r[hostname] !== undefined ) { continue; }
         domain = domainFromHostname(hostname) || hostname;
         counts = hostnameToCountMap.get(domain) || 0;
         blockCount = counts & 0xFFFF;
@@ -234,14 +228,12 @@ var getHostnameDict = function(hostnameToCountMap) {
         } else {
             domainEntry = r[domain];
         }
-        counts = entry.value[1];
+        counts = entry[1];
         blockCount = counts & 0xFFFF;
         allowCount = counts >>> 16 & 0xFFFF;
         domainEntry.totalBlockCount += blockCount;
         domainEntry.totalAllowCount += allowCount;
-        if ( hostname === domain ) {
-            continue;
-        }
+        if ( hostname === domain ) { continue; }
         r[hostname] = {
             domain: domain,
             blockCount: blockCount,

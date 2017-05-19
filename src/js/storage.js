@@ -333,15 +333,12 @@
             return url;
         };
         var importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists)),
-            toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport)),
-            iter = toImportSet.values();
-        for (;;) {
-            var entry = iter.next();
-            if ( entry.done ) { break; }
-            if ( importedSet.has(entry.value) ) { continue; }
-            assetKey = assetKeyFromURL(entry.value);
-            if ( assetKey === entry.value ) {
-                importedSet.add(entry.value);
+            toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport));
+        for ( var urlKey of toImportSet ) {
+            if ( importedSet.has(urlKey) ) { continue; }
+            assetKey = assetKeyFromURL(urlKey);
+            if ( assetKey === urlKey ) {
+                importedSet.add(urlKey);
             }
             selectedListKeySet.add(assetKey);
         }

@@ -48,12 +48,8 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
         var suspendedTabs = new Set();
         µBlock.onStartCompletedQueue.push(function(callback) {
             onBeforeReady = null;
-            var iter = suspendedTabs.values(),
-                entry;
-            for (;;) {
-                entry = iter.next();
-                if ( entry.done ) { break; }
-                vAPI.tabs.reload(entry.value);
+            for ( var tabId of suspendedTabs ) {
+                vAPI.tabs.reload(tabId);
             }
             callback();
         });

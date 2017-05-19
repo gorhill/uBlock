@@ -1629,19 +1629,13 @@ FilterContainer.prototype._reEscapeScriptArg = /[\\'"]/g;
 FilterContainer.prototype.toSelfie = function() {
     var selfieFromMap = function(map) {
         var selfie = [],
-            entry, bucket, ff, f,
-            iterator = map.entries();
-        for (;;) {
-            entry = iterator.next();
-            if ( entry.done ) {
-                break;
-            }
-            selfie.push('k\t' + entry.value[0]);
-            bucket = entry.value[1];
+            bucket, ff, f;
+        // Note: destructuring assignment not supported before Chromium 49. 
+        for ( var entry of map ) {
+            selfie.push('k\t' + entry[0]);
+            bucket = entry[1];
             selfie.push(bucket.fid + '\t' + bucket.toSelfie());
-            if ( bucket.fid !== '[]' ) {
-                continue;
-            }
+            if ( bucket.fid !== '[]' ) { continue; }
             ff = bucket.filters;
             for ( var j = 0, nj = ff.length; j < nj; j++ ) {
                 f = ff[j];

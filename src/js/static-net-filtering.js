@@ -1875,39 +1875,26 @@ FilterContainer.prototype.freeze = function() {
 
 FilterContainer.prototype.toSelfie = function() {
     var categoryToSelfie = function(map) {
-        var selfie = [],
-            iterator = map.entries(),
-            entry;
-        for (;;) {
-            entry = iterator.next();
-            if ( entry.done === true ) { break; }
-            selfie.push('k2\t' + exportInt(entry.value[0])); // token hash
-            selfie.push(entry.value[1].compile());
+        var selfie = [];
+        for ( var entry of map ) {
+            selfie.push('k2\t' + exportInt(entry[0])); // token hash
+            selfie.push(entry[1].compile());
         }
         return selfie.join('\n');
     };
 
     var categoriesToSelfie = function(map) {
-        var selfie = [],
-            iterator = map.entries(),
-            entry;
-        for (;;) {
-            entry = iterator.next();
-            if ( entry.done === true ) { break; }
-            selfie.push('k1\t' + exportInt(entry.value[0])); // category bits
-            selfie.push(categoryToSelfie(entry.value[1]));
+        var selfie = [];
+        for ( var entry of map ) {
+            selfie.push('k1\t' + exportInt(entry[0])); // category bits
+            selfie.push(categoryToSelfie(entry[1]));
         }
         return selfie.join('\n');
     };
 
     var dataFiltersToSelfie = function(dataFilters) {
-        var selfie = [],
-            iter = dataFilters.entries(),
-            entry;
-        for (;;) {
-            entry = iter.next();
-            if ( entry.done === true ) { break; }
-            entry = entry.value[1];
+        var selfie = [];
+        for ( var entry of dataFilters.values() ) {
             do {
                 selfie.push(entry.compile());
                 entry = entry.next;
@@ -2344,56 +2331,39 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
     if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
 
     // Remove entries overriden by other filters.
-    var iter = toAddImportant.entries(),
-        k;
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done === true ) { break; }
-        k = entry.value[0];
-        toAdd.delete(k);
-        toRemove.delete(k);
+    var key;
+    for ( key of toAddImportant.keys() ) {
+        toAdd.delete(key);
+        toRemove.delete(key);
     }
-    iter = toRemove.entries();
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done === true ) { break; }
-        k = entry.value[0];
-        if ( k === '' ) {
+    for ( key of toRemove.keys() ) {
+        if ( key === '' ) {
             toAdd.clear();
             break;
         }
-        toAdd.delete(k);
+        toAdd.delete(key);
     }
 
     var logData;
-    iter = toAddImportant.entries();
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done === true ) { break; }
-        out.push(entry.value[0]);
+    for ( entry of toAddImportant ) {
+        out.push(entry[0]);
         if ( outlog === undefined ) { continue; }
-        logData = entry.value[1].logData();
+        logData = entry[1].logData();
         logData.source = 'static';
         logData.result = 1;
         outlog.push(logData);
     }
-    iter = toAdd.entries();
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done === true ) { break; }
-        out.push(entry.value[0]);
+    for ( entry of toAdd ) {
+        out.push(entry[0]);
         if ( outlog === undefined ) { continue; }
-        logData = entry.value[1].logData();
+        logData = entry[1].logData();
         logData.source = 'static';
         logData.result = 1;
         outlog.push(logData);
     }
     if ( outlog !== undefined ) {
-        iter = toRemove.entries();
-        for (;;) {
-            entry = iter.next();
-            if ( entry.done === true ) { break; }
-            logData = entry.value[1].logData();
+        for ( entry of toRemove.values()) {
+            logData = entry.logData();
             logData.source = 'static';
             logData.result = 2;
             outlog.push(logData);

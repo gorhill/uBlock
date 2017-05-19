@@ -142,23 +142,16 @@ URLNetFiltering.prototype.reset = function() {
 
 URLNetFiltering.prototype.assign = function(other) {
     var thisRules = this.rules,
-        otherRules = other.rules,
-        iter, item;
+        otherRules = other.rules;
     // Remove rules not in other
-    iter = thisRules.entries();
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        if ( otherRules.has(item.value) === false ) {
-            thisRules.delete(item.value);
+    for ( var key of thisRules.keys() ) {
+        if ( otherRules.has(key) === false ) {
+            thisRules.delete(key);
         }
     }
     // Add/change rules in other
-    iter = otherRules.entries();
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        thisRules.set(item.value[0], item.value[1].slice());
+    for ( var entry of otherRules ) {
+        thisRules.set(entry[0], entry[1].slice());
     }
 };
 
@@ -310,17 +303,14 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
 
 URLNetFiltering.prototype.toString = function() {
     var out = [],
-        iter = this.rules.entries(),
-        item, key, pos, hn, type, entries, i, entry;
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        key = item.value[0];
+        key, pos, hn, type, entries, i, entry;
+    for ( var item of this.rules ) {
+        key = item[0];
         pos = key.indexOf(' ');
         hn = key.slice(0, pos);
         pos = key.lastIndexOf(' ');
         type = key.slice(pos + 1);
-        entries = item.value[1];
+        entries = item[1];
         for ( i = 0; i < entries.length; i++ ) {
             entry = entries[i];
             out.push(
