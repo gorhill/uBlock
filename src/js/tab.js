@@ -639,11 +639,13 @@ vAPI.tabs.onPopupUpdated = (function() {
         if (
             logData === undefined ||
             logData.source !== 'static' ||
-            logData.token === '*'
+            logData.token === µb.staticNetFilteringEngine.noTokenHash
         ) {
             return 0;
         }
-        if ( logData.token === '.' ) { return result; }
+        if ( logData.token === µb.staticNetFilteringEngine.dotTokenHash ) {
+            return result;
+        }
         var re = new RegExp(logData.regex),
             matches = re.exec(popunderURL);
         if ( matches === null ) { return ''; }

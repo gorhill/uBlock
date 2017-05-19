@@ -29,6 +29,17 @@
 // - Tokenize only on demand.
 // - To potentially avoid tokenizing when same URL is fed to tokenizer.
 //   - Benchmarking shows this to be a common occurrence.
+//
+// https://github.com/gorhill/uBlock/issues/2630
+// Slice input URL into a list of integer-safe token values, instead of a list
+// of substrings. The assumption is that with dealing only with numeric
+// values, less underlying memory allocations, and also as a consequence
+// less work for the garbage collector down the road.
+// Another assumption is that using a numeric-based key value for Map() is
+// more efficient than string-based key value (but that is something I would
+// have to benchmark).
+// Benchmark for string-based tokens vs. integer-safe token values:
+//   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
 
 µBlock.urlTokenizer = {
     setURL: function(url) {
@@ -43,70 +54,75 @@
     // Tokenize on demand.
     getTokens: function() {
         if ( this._tokenized === false ) {
-            if ( this._gcAfter === undefined ) {
-                this._gcAfter = Date.now() + 1499;
-            }
             this._tokenize();
             this._tokenized = true;
         }
         return this._tokens;
     },
 
-    isTokenized: function() {
-        return this._tokens !== null && this._tokens[0].token !== '';
-    },
-
-    _Entry: function() {
-        this.beg = 0;
-        this.token = undefined;
-    },
-
-    // https://github.com/chrisaljoudi/uBlock/issues/1118
-    // We limit to a maximum number of tokens.
-    _init: function() {
-        this._tokens = new Array(2048);
-        for ( var i = 0; i < 2048; i++ ) {
-            this._tokens[i] = new this._Entry();
+    tokenHashFromString: function(s) {
+        var l = s.length;
+        if ( l === 0 ) { return 0; }
+        if ( l === 1 ) {
+            if ( s === '*' ) { return 63; }
+            if ( s === '.' ) { return 62; }
         }
-        this._init = null;
+        var vtc = this._validTokenChars,
+            th = vtc[s.charCodeAt(0)];
+        for ( var i = 1; i !== 8 && i !== l; i++ ) {
+            th = th * 64 + vtc[s.charCodeAt(i)];
+        }
+        return th;
     },
 
     _tokenize: function() {
         var tokens = this._tokens,
-            re = this._reAnyToken,
-            url = this._urlOut;
-        var matches, entry;
-        re.lastIndex = 0;
-        for ( var i = 0; i < 2047; i++ ) {
-            matches = re.exec(url);
-            if ( matches === null ) { break; }
-            entry = tokens[i];
-            entry.beg = matches.index;
-            entry.token = matches[0];
+            url = this._urlOut,
+            l = url.length;
+        if ( l === 0 ) { tokens[0] = 0; return; }
+        // https://github.com/chrisaljoudi/uBlock/issues/1118
+        // We limit to a maximum number of tokens.
+        if ( l > 2048 ) {
+            url = url.slice(0, 2048);
+            l = 2048;
         }
-        tokens[i].token = ''; // Sentinel
-        // Could no-longer-used-but-still-referenced string fragments 
-        // contribute to memory fragmentation in the long-term? The code below
-        // is to address this: left over unused string fragments are removed at
-        // regular interval.
-        if ( Date.now() < this._gcAfter ) { return; }
-        this._gcAfter = undefined;
-        for ( i += 1; i < 2047; i++ ) {
-            entry = tokens[i];
-            if ( entry.token === undefined ) { break; }
-            entry.token = undefined;
+        var i = 0, j = 0, v, n, ti, th,
+            vtc = this._validTokenChars;
+        for (;;) {
+            for (;;) {
+                if ( i === l ) { tokens[j] = 0; return; }
+                v = vtc[url.charCodeAt(i++)];
+                if ( v !== 0 ) { break; }
+            }
+            th = v; ti = i - 1; n = 1;
+            for (;;) {
+                if ( i === l ) { break; }
+                v = vtc[url.charCodeAt(i++)];
+                if ( v === 0 ) { break; }
+                if ( n !== 8 ) {
+                    th = th * 64 + v;
+                    n += 1;
+                }
+            }
+            tokens[j++] = th;
+            tokens[j++] = ti;
         }
     },
 
     _urlIn: '',
     _urlOut: '',
     _tokenized: false,
-    _tokens: null,
-    _reAnyToken: /[%0-9a-z]+/g,
-    _gcAfter: undefined
+    _tokens: [ 0 ],
+    _validTokenChars: (function() {
+        var vtc = new Uint8Array(128),
+            chars = '0123456789%abcdefghijklmnopqrstuvwxyz',
+            i = chars.length;
+        while ( i-- ) {
+            vtc[chars.charCodeAt(i)] = i + 1;
+        }
+        return vtc;
+    })()
 };
-
-µBlock.urlTokenizer._init();
 
 /******************************************************************************/
 
