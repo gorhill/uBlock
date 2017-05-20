@@ -658,21 +658,34 @@
 
 µBlock.getCompiledFilterList = function(assetKey, callback) {
     var µb = this,
-        compiledPath = 'compiled/' + assetKey;
+        compiledPath = 'compiled/' + assetKey,
+        rawContent;
+
+    var onCompiledListLoaded2 = function(details) {
+        if ( details.content === '' ) {
+            details.content = µb.compileFilters(rawContent);
+            µb.assets.put(compiledPath, details.content);
+        }
+        rawContent = undefined;
+        details.assetKey = assetKey;
+        callback(details);
+    };
 
     var onRawListLoaded = function(details) {
-        details.assetKey = assetKey;
         if ( details.content === '' ) {
+            details.assetKey = assetKey;
             callback(details);
             return;
         }
         µb.extractFilterListMetadata(assetKey, details.content);
-        details.content = µb.compileFilters(details.content);
-        µb.assets.put(compiledPath, details.content);
-        callback(details);
+        // Fectching the raw content may cause the compiled content to be
+        // generated somewhere else in uBO, hence we try one last time to
+        // fetch the compiled content in case it has become available.
+        rawContent = details.content;
+        µb.assets.get(compiledPath, onCompiledListLoaded2);
     };
 
-    var onCompiledListLoaded = function(details) {
+    var onCompiledListLoaded1 = function(details) {
         if ( details.content === '' ) {
             µb.assets.get(assetKey, onRawListLoaded);
             return;
@@ -681,7 +694,7 @@
         callback(details);
     };
 
-    this.assets.get(compiledPath, onCompiledListLoaded);
+    this.assets.get(compiledPath, onCompiledListLoaded1);
 };
 
 /******************************************************************************/
