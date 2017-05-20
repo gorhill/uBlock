@@ -313,7 +313,7 @@ var toBlockDocResult = function(url, hostname, logData) {
     // https://github.com/chrisaljoudi/uBlock/issues/1212
     // Relax the rule: verify that the match is completely before the path part
     if (
-        (match.index + match.length) <=
+        (match.index + match[0].length) <=
         (url.indexOf(hostname) + hostname.length + 1)
     ) {
         return true;
