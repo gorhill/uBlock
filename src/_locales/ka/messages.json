@@ -216,7 +216,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"წინასწარი ჩატვირთვის გათიშვა (კავშირების თავიდან ასარიდებლად დაბლოკილი ქსელური მოთხოვნებისათვის)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -224,11 +224,11 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"WebRTC-სთვის ხელის შეშლა ლოკალური IP მისამართის გაჟონვაში",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"ნაგულისხმევი ქცევა",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{

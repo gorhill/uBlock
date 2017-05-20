@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Alternar o bloqueio de fontes remotas para este site",
+    "message":"Alternar o bloqueio de tipos de letra remotos para este site",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
