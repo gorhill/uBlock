@@ -31,14 +31,14 @@
 //   - Benchmarking shows this to be a common occurrence.
 //
 // https://github.com/gorhill/uBlock/issues/2630
-// Slice input URL into a list of integer-safe token values, instead of a list
+// Slice input URL into a list of safe-integer token values, instead of a list
 // of substrings. The assumption is that with dealing only with numeric
 // values, less underlying memory allocations, and also as a consequence
 // less work for the garbage collector down the road.
 // Another assumption is that using a numeric-based key value for Map() is
 // more efficient than string-based key value (but that is something I would
 // have to benchmark).
-// Benchmark for string-based tokens vs. integer-safe token values:
+// Benchmark for string-based tokens vs. safe-integer token values:
 //   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
 
 µBlock.urlTokenizer = {

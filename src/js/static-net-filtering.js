@@ -2379,7 +2379,7 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
 FilterContainer.prototype.matchTokens = function(bucket, url) {
     // Hostname-only filters
     var f = bucket.get(this.dotTokenHash);
-    if ( f !== undefined && f.match() ) {
+    if ( f !== undefined && f.match() === true ) {
         this.thRegister = this.dotTokenHash;
         this.fRegister = f;
         return true;
