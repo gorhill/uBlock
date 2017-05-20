@@ -733,11 +733,16 @@ FilterContainer.prototype.freeze = function() {
 // implemented (if ever). Unlikely, see:
 // https://github.com/gorhill/uBlock/issues/1752
 
+// https://github.com/gorhill/uBlock/issues/2624
+// Convert Adguard's `-ext-has='...'` into uBO's `:has(...)`.
+
 FilterContainer.prototype.compileSelector = (function() {
     var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
         reStyleSelector = /^(.+?):style\((.+?)\)$/,
         reStyleBad = /url\([^)]+\)/,
         reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
+        reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
+        reExtendedSyntaxHas = /\[-ext-has=(['"])(.+?)\1\]/,
         div = document.createElement('div');
 
     var isValidStyleProperty = function(cssText) {
@@ -749,15 +754,36 @@ FilterContainer.prototype.compileSelector = (function() {
     };
 
     var entryPoint = function(raw) {
-        if ( isValidCSSSelector(raw) && raw.indexOf('[-abp-properties=') === -1 ) {
+        if ( isValidCSSSelector(raw) && reExtendedSyntax.test(raw) === false ) {
             return raw;
         }
 
-        // We  rarely reach this point.
-        var matches,
-            selector = raw,
-            pseudoclass,
-            style;
+        // We  rarely reach this point -- majority of selectors are plain
+        // CSS selectors.
+
+        // Unsupported ABP's advanced selector syntax.
+        if ( raw.indexOf('[-abp-properties=') !== -1 ) {
+            return;
+        }
+
+        var matches;
+
+        // Supported Adguard's advanced selector syntax: will translate into
+        // uBO's syntax before further processing.
+        //
+        // [-ext-has=...]
+        // Converted to `:if(...)`, because Adguard accepts procedural
+        // selectors within its `:has(...)` selector.
+        if ( (matches = reExtendedSyntaxHas.exec(raw)) !== null ) {
+            return this.compileSelector(
+                raw.slice(0, matches.index) +
+                ':if('+ matches[2].replace(/:contains\(/g, ':has-text(') + ')' +
+                raw.slice(matches.index + matches[0].length)
+            );
+        }
+
+        var selector = raw,
+            pseudoclass, style;
 
         // `:style` selector?
         if ( (matches = reStyleSelector.exec(selector)) !== null ) {
@@ -827,12 +853,18 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     var reOperatorParser = /(:(?:has|has-text|if|if-not|matches-css|matches-css-after|matches-css-before|xpath))\(.+\)$/,
         reFirstParentheses = /^\(*/,
         reLastParentheses = /\)*$/,
-        reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
+        reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
+        reNeedScope = /^\s*[+>~]/;
 
     var lastProceduralSelector = '',
         lastProceduralSelectorCompiled;
 
     var compileCSSSelector = function(s) {
+        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+        // Prepend `:scope ` if needed.
+        if ( reNeedScope.test(s) ) {
+            s = ':scope ' + s;
+        }
         if ( isValidCSSSelector(s) ) {
             return s;
         }
@@ -864,6 +896,11 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     };
 
     var compileConditionalSelector = function(s) {
+        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+        // Prepend `:scope ` if needed.
+        if ( reNeedScope.test(s) ) {
+            s = ':scope ' + s;
+        }
         return compile(s);
     };
 
@@ -1056,7 +1093,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
             return;
         }
         // Composite CSS rule.
-        if ( this.compileSelector(selector) ) {
+        if ( this.compileSelector(selector) !== undefined ) {
             out.push(4, 'lg+\v' + key + '\v' + selector);
         }
         return;
