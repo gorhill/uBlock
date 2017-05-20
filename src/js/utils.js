@@ -99,10 +99,9 @@
                 if ( i === l ) { break; }
                 v = vtc[url.charCodeAt(i++)];
                 if ( v === 0 ) { break; }
-                if ( n !== 8 ) {
-                    th = th * 64 + v;
-                    n += 1;
-                }
+                if ( n === 8 ) { continue; }
+                th = th * 64 + v;
+                n += 1;
             }
             tokens[j++] = th;
             tokens[j++] = ti;
