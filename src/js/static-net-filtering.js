@@ -1075,7 +1075,7 @@ FilterHostnameDict.prototype.match = function() {
         hostname = hostname.slice(pos + 1);
     }
     this.h = hostname;
-    return this;
+    return true;
 };
 
 FilterHostnameDict.prototype.logData = function() {
