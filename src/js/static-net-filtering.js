@@ -687,8 +687,8 @@ FilterRegex.prototype.match = function(url) {
 
 FilterRegex.prototype.logData = function() {
     return {
-        raw: '/' + this.s + '/',
-        regex: this.s,
+        raw: '/' + this.re.source + '/',
+        regex: this.re.source,
         compiled: this.compile()
     };
 };
