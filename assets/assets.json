@@ -79,7 +79,7 @@
 		"group": "ads",
 		"off": true,
 		"title": "uBlock Protector List",
-		"contentURL": "https://github.com/jspenguin2017/uBlockProtector/raw/master/uBlockProtectorList.txt",
+		"contentURL": "https://raw.githubusercontent.com/jspenguin2017/uBlockProtector/master/uBlockProtectorList.txt",
 		"supportURL": "https://github.com/jspenguin2017/uBlockProtector/blob/master/CONTRIBUTING.MD",
 		"instructionURL": "https://jspenguin2017.github.io/uBlockProtector/"
 	},
