@@ -223,51 +223,58 @@
 
 /******************************************************************************/
 
-µBlock.CompiledOutput = function() {
-    this.bufferLen = 8192;
-    this.buffer = new Uint8Array(this.bufferLen);
-    this.offset = 0;
+µBlock.CompiledLineWriter = function() {
+    this.output = [];
+    this.stringifier = JSON.stringify;
 };
 
-µBlock.CompiledOutput.prototype.push = function(lineBits, line) {
-    var lineLen = line.length,
-        offset = this.offset,
-        need = offset + 2 + lineLen; // lineBits, line, \n
-    if ( need > this.bufferLen ) {
-        this.grow(need);
+µBlock.CompiledLineWriter.fingerprint = function(args) {
+    return JSON.stringify(args);
+};
+
+µBlock.CompiledLineWriter.prototype = {
+    push: function(args) {
+        this.output[this.output.length] = this.stringifier(args);
+    },
+    toString: function() {
+        return this.output.join('\n');
     }
-    var buffer = this.buffer;
-    if ( offset !== 0 ) {
-        buffer[offset++] = 0x0A /* '\n' */;
-    }
-    buffer[offset++] = 0x61 /* 'a' */ + lineBits;
-    for ( var i = 0, c; i < lineLen; i++ ) {
-        c = line.charCodeAt(i);
-        if ( c > 0x7F ) {
-            return this.push(lineBits | 0x02, encodeURIComponent(line));
+};
+
+µBlock.CompiledLineReader = function(raw) {
+    this.reset(raw);
+    this.parser = JSON.parse;
+};
+
+µBlock.CompiledLineReader.prototype = {
+    reset: function(raw) {
+        this.input = raw;
+        this.len = raw.length;
+        this.offset = 0;
+        this.s = '';
+        return this;
+    },
+    next: function() {
+        if ( this.offset === this.len ) {
+            this.s = '';
+            return false;
         }
-        buffer[offset++] = c;
+        var pos = this.input.indexOf('\n', this.offset);
+        if ( pos !== -1 ) {
+            this.s = this.input.slice(this.offset, pos);
+            this.offset = pos + 1;
+        } else {
+            this.s = this.input.slice(this.offset);
+            this.offset = this.len;
+        }
+        return true;
+    },
+    fingerprint: function() {
+        return this.s;
+    },
+    args: function() {
+        return this.parser(this.s);
     }
-    this.offset = offset;
-};
-
-µBlock.CompiledOutput.prototype.grow = function(need) {
-    var newBufferLen = Math.min(
-        2097152,
-        1 << Math.ceil(Math.log(need) / Math.log(2))
-    );
-    while ( newBufferLen < need ) {
-        newBufferLen += 1048576;
-    }
-    var newBuffer = new Uint8Array(newBufferLen);
-    newBuffer.set(this.buffer);
-    this.buffer = newBuffer;
-    this.bufferLen = newBufferLen;
-};
-
-µBlock.CompiledOutput.prototype.toString = function() {
-    var decoder = new TextDecoder();
-    return decoder.decode(new Uint8Array(this.buffer.buffer, 0, this.offset));
 };
 
 /******************************************************************************/

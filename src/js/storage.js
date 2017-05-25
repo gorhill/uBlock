@@ -737,7 +737,8 @@
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText) {
-    var compiledFilters = new this.CompiledOutput();
+    var networkFilters = new this.CompiledLineWriter(),
+        cosmeticFilters = new this.CompiledLineWriter();
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
@@ -766,7 +767,7 @@
 
         // Parse or skip cosmetic filters
         // All cosmetic filters are caught here
-        if ( cosmeticFilteringEngine.compile(line, compiledFilters) ) {
+        if ( cosmeticFilteringEngine.compile(line, cosmeticFilters) ) {
             continue;
         }
 
@@ -800,10 +801,12 @@
 
         if ( line.length === 0 ) { continue; }
 
-        staticNetFilteringEngine.compile(line, compiledFilters);
+        staticNetFilteringEngine.compile(line, networkFilters);
     }
 
-    return compiledFilters.toString();
+    return networkFilters.toString() +
+           '\n/* end of network - start of cosmetic */\n' +
+           cosmeticFilters.toString();
 };
 
 /******************************************************************************/
@@ -813,15 +816,16 @@
 //   applying 1st-party filters.
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
-    var skipCosmetic = !firstparty && !this.userSettings.parseAllABPHideFilters,
-        skipGenericCosmetic = this.userSettings.ignoreGenericCosmeticFilters,
-        staticNetFilteringEngine = this.staticNetFilteringEngine,
-        cosmeticFilteringEngine = this.cosmeticFilteringEngine,
-        lineIter = new this.LineIterator(rawText);
-    while ( lineIter.eot() === false ) {
-        cosmeticFilteringEngine.fromCompiledContent(lineIter, skipGenericCosmetic, skipCosmetic);
-        staticNetFilteringEngine.fromCompiledContent(lineIter);
-    }
+    if ( rawText === '' ) { return; }
+    var separator = '\n/* end of network - start of cosmetic */\n',
+        pos = rawText.indexOf(separator),
+        reader = new this.CompiledLineReader(rawText.slice(0, pos));
+    this.staticNetFilteringEngine.fromCompiledContent(reader);
+    this.cosmeticFilteringEngine.fromCompiledContent(
+        reader.reset(rawText.slice(pos + separator.length)),
+        this.userSettings.ignoreGenericCosmeticFilters,
+        !firstparty && !this.userSettings.parseAllABPHideFilters
+    );
 };
 
 /******************************************************************************/

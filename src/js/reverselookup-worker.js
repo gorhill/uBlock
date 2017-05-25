@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-var listEntries = Object.create(null);
+var listEntries = Object.create(null),
+    filterClassSeparator = '\n/* end of network - start of cosmetic */\n';
 
 /******************************************************************************/
 
@@ -35,20 +36,19 @@ var reEscape = function(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
-var reSpecialNetworkChars = /[a-d]/;
-
 /******************************************************************************/
 
 var fromNetFilter = function(details) {
-    var lists = [];
-    var compiledFilter = details.compiledFilter;
-    var entry, content, pos, notFound;
+    var lists = [],
+        compiledFilter = details.compiledFilter,
+        entry, content, pos, notFound;
     for ( var assetKey in listEntries ) {
         entry = listEntries[assetKey];
-        if ( entry === undefined ) {
-            continue;
-        }
-        content = entry.content;
+        if ( entry === undefined ) { continue; }
+        content = entry.content.slice(
+            0,
+            entry.content.indexOf(filterClassSeparator)
+        );
         pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
@@ -56,19 +56,19 @@ var fromNetFilter = function(details) {
             // We need an exact match.
             // https://github.com/gorhill/uBlock/issues/1392
             // https://github.com/gorhill/uBlock/issues/835
-            pos -= 1;
-            notFound = 
-                reSpecialNetworkChars.test(content.charAt(pos)) === false ||
-                pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A /* '\n' */;
-            pos += 1 + compiledFilter.length;
-            if ( notFound ) { continue; }
-            if ( pos === content.length || content.charCodeAt(pos) === 0x0A ) {
-                lists.push({
-                    title: entry.title,
-                    supportURL: entry.supportURL
-                });
-                break;
+            notFound = pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A;
+            pos += compiledFilter.length;
+            if (
+                notFound ||
+                pos !== content.length && content.charCodeAt(pos) !== 0x0A
+            ) {
+                continue;
             }
+            lists.push({
+                title: entry.title,
+                supportURL: entry.supportURL
+            });
+            break;
         }
     }
 
@@ -104,93 +104,92 @@ var fromNetFilter = function(details) {
 // the various compiled versions.
 
 var fromCosmeticFilter = function(details) {
-    var filter = details.rawFilter;
-    var exception = filter.startsWith('#@#');
+    var match = /^#@?#/.exec(details.rawFilter),
+        prefix = match[0],
+        filter = details.rawFilter.slice(prefix.length);
 
-    filter = exception ? filter.slice(3) : filter.slice(2);
+    var compiled = JSON.stringify(filter),
+        reFilter = new RegExp('(^|\\n).*?' + reEscape(compiled) + '.*?(\\n|$)', 'g');
 
-    var candidates = Object.create(null);
-    var response = Object.create(null);
+    var reHostname = new RegExp(
+        '^' +
+        details.hostname.split('.').reduce(
+            function(acc, item) {
+                return acc === ''
+                     ? item
+                    : '(' + acc + '\\.)?' + item;
+            },
+            ''
+        ) +
+        '$'
+    );
 
-    // First step: assuming the filter is generic, find out its compiled
-    // representation.
-    // Reference: FilterContainer.compileGenericSelector().
-    var reStr = [];
-    var matches = rePlainSelector.exec(filter);
-    if ( matches ) {
-        if ( matches[0] === filter ) {          // simple CSS selector
-            reStr.push('[e-h]lg', reEscape(filter));
-        } else {                                // complex CSS selector
-            reStr.push('[e-h]lg\\+', reEscape(matches[0]), reEscape(filter));
-        }
-    } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
-        reStr.push('[e-h]hlg0', reEscape(filter));
-    } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
-        reStr.push('[e-h]hmg0', '[^"]{8}', '[a-z]*' + reEscape(filter));
-    } else if ( filter.indexOf(' ') === -1 ) {  // high-high-simple selector
-        reStr.push('[e-h]hhsg0', reEscape(filter));
-    } else {                                    // high-high-complex selector
-        reStr.push('[e-h]hhcg0', reEscape(filter));
-    }
-    candidates[details.rawFilter] = new RegExp(reStr.join('\\v') + '(?:\\n|$)');
-
-    // Procedural filters, which are pre-compiled, make thing sort of
-    // complicated. We are going to also search for one portion of the
-    // compiled form of a filter.
-    var filterEx = '(' +
-                   reEscape(filter) +
-                   '|\{[^\\v]*' +
-                   reEscape(JSON.stringify({ raw: filter }).slice(1,-1)) +
-                   '[^\\v]*\})';
-
-    // Second step: find hostname-based versions.
-    // Reference: FilterContainer.compileHostnameSelector().
-    var pos,
-        hostname = details.hostname;
-    if ( hostname !== '' ) {
-        for ( ;; ) {
-            candidates[hostname + '##' + filter] = new RegExp(
-                ['[e-h]h', '[^\\v]+', reEscape(hostname), filterEx].join('\\v') +
-                '(?:\\n|$)'
-            );
-            pos = hostname.indexOf('.');
-            if ( pos === -1 ) {
-                break;
-            }
-            hostname = hostname.slice(pos + 1);
-        }
-    }
-
-    // Last step: find entity-based versions.
-    // Reference: FilterContainer.compileEntitySelector().
-    var domain = details.domain;
-    pos = domain.indexOf('.');
+    var reEntity,
+        domain = details.domain,
+        pos = domain.indexOf('.');
     if ( pos !== -1 ) {
-        var entity = domain.slice(0, pos) + '.*';
-        candidates[entity + '##' + filter] = new RegExp(
-            ['[e-h]h', '[^\\v]+', reEscape(entity), filterEx].join('\\v') +
-            '(?:\\n|$)'
+        reEntity = new RegExp(
+            '^' +
+            domain.slice(0, pos).split('.').reduce(
+                function(acc, item) {
+                    return acc === ''
+                         ? item
+                        : '(' + acc + '\\.)?' + item;
+                },
+                ''
+            ) +
+            '\\.\\*$'
         );
     }
+        
+    var response = Object.create(null),
+        assetKey, entry, content, found, fargs;
 
-    var re, assetKey, entry;
-    for ( var candidate in candidates ) {
-        re = candidates[candidate];
-        for ( assetKey in listEntries ) {
-            entry = listEntries[assetKey];
-            if ( entry === undefined ) {
-                continue;
+    for ( assetKey in listEntries ) {
+        entry = listEntries[assetKey];
+        if ( entry === undefined ) { continue; }
+        content = entry.content.slice(
+            entry.content.indexOf(filterClassSeparator) +
+            filterClassSeparator.length
+        );
+        found = undefined;
+        while ( (match = reFilter.exec(content)) !== null ) {
+            fargs = JSON.parse(match[0]);
+            switch ( fargs[0] ) {
+            case 0:
+            case 2:
+            case 4:
+            case 5:
+            case 7:
+                found = prefix + filter;
+                break;
+            case 1:
+            case 3:
+                if ( fargs[2] === filter ) {
+                    found = prefix + filter;
+                }
+                break;
+            case 6:
+            case 8:
+                if (
+                    fargs[2] === '' ||
+                    reHostname.test(fargs[2]) === true ||
+                    reEntity !== undefined && reEntity.test(fargs[2]) === true
+                ) {
+                    found = fargs[2] + prefix + filter;
+                }
+                break;
             }
-            if ( re.test(entry.content) === false ) {
-                continue;
+            if ( found !== undefined  ) {
+                if ( response[found] === undefined ) {
+                    response[found] = [];
+                }
+                response[found].push({
+                    title: entry.title,
+                    supportURL: entry.supportURL
+                });
+                break;
             }
-            if ( response[candidate] === undefined ) {
-                response[candidate] = [];
-            }
-            response[candidate].push({
-                title: entry.title,
-                supportURL: entry.supportURL
-            });
         }
     }
 
@@ -199,10 +198,6 @@ var fromCosmeticFilter = function(details) {
         response: response
     });
 };
-
-var rePlainSelector = /^([#.][\w-]+)/;
-var reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
-var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
 /******************************************************************************/
 
