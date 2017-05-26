@@ -75,13 +75,14 @@
         return th;
     },
 
+    // https://github.com/chrisaljoudi/uBlock/issues/1118
+    // We limit to a maximum number of tokens.
+
     _tokenize: function() {
         var tokens = this._tokens,
             url = this._urlOut,
             l = url.length;
         if ( l === 0 ) { tokens[0] = 0; return; }
-        // https://github.com/chrisaljoudi/uBlock/issues/1118
-        // We limit to a maximum number of tokens.
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
