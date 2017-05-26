@@ -710,7 +710,11 @@
     if ( listEntry.title === '' || listEntry.group === 'custom' ) {
         matches = head.match(/(?:^|\n)!\s*Title:([^\n]+)/i);
         if ( matches !== null ) {
-            listEntry.title = matches[1].trim();
+            // https://bugs.chromium.org/p/v8/issues/detail?id=2869
+            // JSON.stringify/JSON.parse is to work around String.slice()
+            // potentially causing the whole raw filter list to be held in
+            // memory just because we cut out the title as a substring.
+            listEntry.title = JSON.parse(JSON.stringify(matches[1].trim()));
         }
     }
     // Extract update frequency information
