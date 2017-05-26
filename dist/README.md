@@ -16,15 +16,6 @@
 
 The extension will now be available in your chromium/chromium-based browser.
 
-##### Chromium Build Instructions (for developers)
-
-- Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
-- Set path to uBlock: `cd uBlock`
-- Optional: Select the version to build: `git checkout <tag>`
-- Build the plugin: `./tools/make-chromium.sh`
-- Load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension
-
-
 Remember that you have to update manually also. For some users, updating manually is actually an advantage because:
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
@@ -39,3 +30,16 @@ Your uBlock Origin settings are kept intact even after you uninstall the addon.
 On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
 
 On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
+
+#### Build instructions (for developers)
+
+- Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
+- Set path to uBlock: `cd uBlock`
+- Optional: Select the version to build: `git checkout <tag>`
+- Build the plugin:
+    - Chromium: `./tools/make-chromium.sh`
+    - Firefox: `./tools/make-firefox.sh all`
+- Load the result of the build into your browser:
+    - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
+    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` into Firefox.
+   
