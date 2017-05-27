@@ -259,6 +259,23 @@ var isHnAnchored = function(url, matchStart) {
 
 var reURLPostHostnameAnchors = /[\/?#]/;
 
+var arrayStrictEquals = function(a, b) {
+    var n = a.length;
+    if ( n !== b.length ) { return false; }
+    var isArray, x, y;
+    for ( var i = 0; i < n; i++ ) {
+        x = a[i]; y = b[i];
+        isArray = Array.isArray(x);
+        if ( isArray !== Array.isArray(y) ) { return false; }
+        if ( isArray === true ) {
+            if ( arrayStrictEquals(x, y) === false ) { return false; }
+        } else {
+            if ( x !== y ) { return false; }
+        }
+    }
+    return true;
+};
+
 /*******************************************************************************
 
     Each filter class will register itself in the map. A filter class
@@ -804,7 +821,9 @@ FilterOriginMiss.prototype = Object.create(FilterOrigin.prototype, {
 
 var FilterOriginHitSet = function(domainOpt) {
     FilterOrigin.call(this);
-    this.domainOpt = domainOpt;
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
 };
 
 FilterOriginHitSet.prototype = Object.create(FilterOrigin.prototype, {
@@ -834,7 +853,9 @@ FilterOriginHitSet.prototype = Object.create(FilterOrigin.prototype, {
 
 var FilterOriginMissSet = function(domainOpt) {
     FilterOrigin.call(this);
-    this.domainOpt = domainOpt;
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
 };
 
 FilterOriginMissSet.prototype = Object.create(FilterOrigin.prototype, {
@@ -864,7 +885,9 @@ FilterOriginMissSet.prototype = Object.create(FilterOrigin.prototype, {
 
 var FilterOriginMixedSet = function(domainOpt) {
     FilterOrigin.call(this);
-    this.domainOpt = domainOpt;
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
 };
 
 FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
@@ -1115,14 +1138,90 @@ registerFilterClass(FilterHostnameDict);
 
 /******************************************************************************/
 
-var FilterBucket = function(a, b) {
+var FilterPair = function(a, b) {
+    this.f1 = a;
+    this.f2 = b;
+    this.f = null;
+};
+
+Object.defineProperty(FilterPair.prototype, 'size', {
+    get: function() {
+        if ( this.f1 === undefined && this.f2 === undefined ) { return 0; }
+        if ( this.f1 === undefined || this.f2 === undefined ) { return 1; }
+        return 2;
+    }
+});
+
+FilterPair.prototype.remove = function(fdata) {
+    if ( arrayStrictEquals(this.f2.compile(), fdata) === true ) {
+        this.f2 = undefined;
+    }
+    if ( arrayStrictEquals(this.f1.compile(), fdata) === true ) {
+        this.f1 = this.f2;
+    }
+};
+
+FilterPair.prototype.match = function(url, tokenBeg) {
+    if ( this.f1.match(url, tokenBeg) === true ) {
+        this.f = this.f1;
+        return true;
+    }
+    if ( this.f2.match(url, tokenBeg) === true ) {
+        this.f = this.f2;
+        return true;
+    }
+    return false;
+};
+
+FilterPair.prototype.logData = function() {
+    return this.f.logData();
+};
+
+FilterPair.prototype.compile = function() {
+    return [ this.fid, this.f1.compile(), this.f2.compile() ];
+};
+
+FilterPair.prototype.upgrade = function(a) {
+    var bucket = new FilterBucket(this.f1, this.f2, a);
+    this.f1 = this.f2 = this.f = null;
+    FilterPair.available = this;
+    return bucket;
+};
+
+FilterPair.load = function(args) {
+    var f1 = filterFromCompiledData(args[1]),
+        f2 = filterFromCompiledData(args[2]),
+        pair = FilterPair.available;
+    if ( pair === null ) {
+        return new FilterPair(f1, f2);
+    }
+    FilterPair.available = null;
+    pair.f1 = f1;
+    pair.f2 = f2;
+    return pair;
+};
+
+FilterPair.available = null;
+
+registerFilterClass(FilterPair);
+
+/******************************************************************************/
+
+var FilterBucket = function(a, b, c) {
     this.filters = [];
     this.f = null;
     if ( a !== undefined ) {
         this.filters[0] = a;
         this.filters[1] = b;
+        this.filters[2] = c;
     }
 };
+
+Object.defineProperty(FilterBucket.prototype, 'size', {
+    get: function() {
+        return this.filters.length;
+    }
+});
 
 FilterBucket.prototype.promoted = 0;
 
@@ -1135,7 +1234,7 @@ FilterBucket.prototype.remove = function(fdata) {
         filter;
     while ( i-- ) {
         filter = this.filters[i];
-        if ( filter.compile() === fdata ) {
+        if ( arrayStrictEquals(filter.compile(), fdata) === true ) {
             this.filters.splice(i, 1);
         }
     }
@@ -1184,13 +1283,13 @@ FilterBucket.prototype.compile = function() {
 };
 
 FilterBucket.load = function(args) {
-    var f = new FilterBucket(),
+    var bucket = new FilterBucket(),
         compiledFilters = args[1],
-        filters = f.filters;
+        filters = bucket.filters;
     for ( var i = 0, n = compiledFilters.length; i < n; i++ ) {
         filters[i] = filterFromCompiledData(compiledFilters[i]);
     }
-    return f;
+    return bucket;
 };
 
 registerFilterClass(FilterBucket);
@@ -2063,6 +2162,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, writer
 
 FilterContainer.prototype.fromCompiledContent = function(reader) {
     var badFilterBit = BadFilter,
+        filterPairId = FilterPair.fid,
         filterBucketId = FilterBucket.fid,
         filterDataHolderId = FilterDataHolder.fid,
         args, bits, bucket, entry,
@@ -2141,14 +2241,27 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
             entry.add(fdata);
             continue;
         }
-        bucket.set(tokenHash, new FilterBucket(entry, filterFromCompiledData(fdata)));
+        if ( entry.fid === filterPairId ) {
+            bucket.set(
+                tokenHash,
+                entry.upgrade(filterFromCompiledData(fdata))
+            );
+            continue;
+        }
+        bucket.set(
+            tokenHash,
+            new FilterPair(entry, filterFromCompiledData(fdata))
+        );
     }
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.removeBadFilters = function() {
-    var bits, tokenHash, fdata, bucket, entry;
+    var filterPairId = FilterPair.fid,
+        filterBucketId = FilterBucket.fid,
+        filterHostnameDictId = FilterHostnameDict.fid,
+        bits, tokenHash, fdata, bucket, entry;
     for ( var args of this.badFilters ) {
         bits = args[0] & ~BadFilter;
         bucket = this.categories.get(bits);
@@ -2157,14 +2270,24 @@ FilterContainer.prototype.removeBadFilters = function() {
         entry = bucket.get(tokenHash);
         if ( entry === undefined ) { continue; }
         fdata = args[2];
-        if ( entry instanceof FilterBucket ) {
+        if ( entry.fid === filterPairId ) {
             entry.remove(fdata);
-            if ( entry.filters.length === 1 ) {
-                bucket.set(tokenHash, entry.filters[0]);
+            if ( entry.size === 1 ) {
+                bucket.set(tokenHash, entry.f1);
             }
             continue;
         }
-        if ( entry instanceof FilterHostnameDict ) {
+        if ( entry.fid === filterBucketId ) {
+            entry.remove(fdata);
+            if ( entry.size === 2 ) {
+                bucket.set(
+                    tokenHash,
+                    new FilterPair(entry.filters[0], entry.filters[1])
+                );
+            }
+            continue;
+        }
+        if ( entry.fid === filterHostnameDictId ) {
             entry.remove(fdata);
             if ( entry.size === 0 ) {
                 bucket.delete(tokenHash);
@@ -2174,7 +2297,7 @@ FilterContainer.prototype.removeBadFilters = function() {
             }
             continue;
         }
-        if ( entry.compile() === fdata ) {
+        if ( arrayStrictEquals(entry.compile(), fdata) === true ) {
             bucket.delete(tokenHash);
             if ( bucket.size === 0 ) {
                 this.categories.delete(bits);

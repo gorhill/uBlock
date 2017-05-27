@@ -121,8 +121,8 @@ var µBlock = (function() { // jshint ignore:line
 
         // read-only
         systemSettings: {
-            compiledMagic: 'ohszqbtqggmp',
-            selfieMagic: 'ohszqbtqggmp'
+            compiledMagic: 'pwvcdyqfkuek',
+            selfieMagic: 'pwvcdyqfkuek'
         },
 
         restoreBackupSettings: {
