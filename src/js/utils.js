@@ -285,6 +285,9 @@
 // longer needed. A timer will be used for self-garbage-collect.
 // Cleaning up 10s after last hit sounds reasonable.
 
+// https://github.com/gorhill/uBlock/issues/2656
+// Can't use chained calls if we want to support legacy Map().
+
 µBlock.stringDeduplicater = {
     strings: new Map(),
     timer: undefined,
@@ -293,7 +296,8 @@
     lookup: function(s) {
         var t = this.strings.get(s);
         if ( t === undefined ) {
-            t = this.strings.set(s, s).get(s);
+            this.strings.set(s, s);
+            t = this.strings.get(s);
             if ( this.timer === undefined ) { this.cleanupAsync(); }
         }
         this.last = Date.now();
