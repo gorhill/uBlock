@@ -71,6 +71,10 @@
     "message":"クリックしてダッシュボードを開く",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"要素選択モードに移行",
     "description":"English: Enter element picker mode"

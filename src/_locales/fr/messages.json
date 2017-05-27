@@ -71,6 +71,10 @@
     "message":"Cliquez pour accéder au tableau de bord",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Activer le sélecteur d'élément",
     "description":"English: Enter element picker mode"

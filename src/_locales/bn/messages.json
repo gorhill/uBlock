@@ -71,6 +71,10 @@
     "message":"ড্যাশবোর্ড খোলার জন্য ক্লিক করুন",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"উপাদান বাছাইকারী মোডে প্রবেশ করুন",
     "description":"English: Enter element picker mode"

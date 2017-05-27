@@ -71,6 +71,10 @@
     "message":"Fai click para abrir o panel de control",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Ir ó modo do selector de elementos",
     "description":"English: Enter element picker mode"

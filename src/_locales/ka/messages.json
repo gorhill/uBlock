@@ -71,6 +71,10 @@
     "message":"დააწპაკუნეთ სამართავი დაფის გასახსნელად",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"პიპეტის რეჟიმი",
     "description":"English: Enter element picker mode"

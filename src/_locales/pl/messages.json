@@ -71,6 +71,10 @@
     "message":"Kliknij, aby otworzyć panel sterowania",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Przejdź do trybu zaznaczania elementów",
     "description":"English: Enter element picker mode"
