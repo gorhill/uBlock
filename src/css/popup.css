@@ -167,10 +167,11 @@ body.off #switch .fa {
     color: #aaa;
     cursor: pointer;
     display: none;
+    min-width: 1em;
     unicode-bidi: embed;
     }
 .tool.enabled {
-    display: inline;
+    display: inline-block;
     }
 .tool:hover {
     color: #444;

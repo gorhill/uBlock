@@ -11,6 +11,20 @@
         }
     },
 
+    "commands": {
+        "launch-element-zapper": {
+            "suggested_key": {
+              "default": "Alt+Z"
+            },
+            "description": "__MSG_popupTipZapper__"
+        },
+        "launch-element-picker": {
+            "suggested_key": {
+              "default": "Alt+X"
+            },
+            "description": "__MSG_popupTipPicker__"
+        }
+    },
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {

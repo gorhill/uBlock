@@ -408,6 +408,7 @@ var renderPopup = function() {
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
+    uDom.nodeFromId('gotoZap').classList.toggle('enabled', popupData.canElementPicker === true);
 
     var text,
         blocked = popupData.pageBlockedRequestCount,
@@ -583,6 +584,21 @@ var toggleNetFilteringSwitch = function(ev) {
     );
 
     hashFromPopupData();
+};
+
+/******************************************************************************/
+
+var gotoZap = function() {
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'launchElementPicker',
+            tabId: popupData.tabId,
+            zap: true
+        }
+    );
+
+    vAPI.closePopup();
 };
 
 /******************************************************************************/
@@ -981,6 +997,7 @@ var onHideTooltip = function() {
     getPopupData(tabId);
 
     uDom('#switch').on('click', toggleNetFilteringSwitch);
+    uDom('#gotoZap').on('click', gotoZap);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);

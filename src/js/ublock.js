@@ -392,11 +392,12 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = function(tabId, targetElement) {
+µBlock.elementPickerExec = function(tabId, targetElement, zap) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
     }
     this.epickerTarget = targetElement || '';
+    this.epickerZap = zap || false;
     this.scriptlets.inject(tabId, 'element-picker');
     if ( typeof vAPI.tabs.select === 'function' ) {
         vAPI.tabs.select(tabId);

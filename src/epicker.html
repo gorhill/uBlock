@@ -141,13 +141,18 @@ svg {
     cursor: not-allowed;
 }
 svg > path:first-child {
-    fill: rgba(0,0,0,0.75);
+    fill: rgba(0,0,0,0.6);
     fill-rule: evenodd;
 }
 svg > path + path {
     stroke: #F00;
     stroke-width: 0.5px;
     fill: rgba(255,63,63,0.20);
+}
+body.zap svg > path + path {
+    stroke: #FF0;
+    stroke-width: 0.5px;
+    fill: rgba(255,255,63,0.20);
 }
 body.preview svg > path {
     fill: rgba(0,0,0,0.10);

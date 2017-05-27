@@ -1179,7 +1179,10 @@ var showDialog = function(options) {
     populate(netFilterCandidates, '#netFilters');
     populate(cosmeticFilterCandidates, '#cosmeticFilters');
 
-    dialog.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
+    dialog.querySelector('ul').style.display =
+        netFilterCandidates.length || cosmeticFilterCandidates.length
+            ? ''
+            : 'none';
     dialog.querySelector('#create').disabled = true;
 
     // Auto-select a candidate filter
@@ -1201,18 +1204,41 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var elementFromPoint = function(x, y) {
-    if ( !pickerRoot ) {
-        return null;
+var zap = function() {
+    if ( targetElements.length === 0 ) { return; }
+    var elem = targetElements[0],
+        style = window.getComputedStyle(elem);
+    // Heuristic to detect scroll-locking: remove such lock when detected.
+    if ( parseInt(style.zIndex, 10) >= 1000 || style.position === 'fixed' ) {
+        document.body.style.setProperty('overflow', 'auto', 'important');
+        document.documentElement.style.setProperty('overflow', 'auto', 'important');
     }
-    pickerRoot.style.pointerEvents = 'none';
-    var elem = document.elementFromPoint(x, y);
-    if ( elem === document.body || elem === document.documentElement ) {
-        elem = null;
-    }
-    pickerRoot.style.pointerEvents = '';
-    return elem;
+    elem.parentNode.removeChild(elem);
 };
+
+/******************************************************************************/
+
+var elementFromPoint = (function() {
+    var lastX, lastY;
+
+    return function(x, y) {
+        if ( x !== undefined ) {
+            lastX = x; lastY = y;
+        } else if ( lastX !== undefined ) {
+            x = lastX; y = lastY;
+        } else {
+            return null;
+        }
+        if ( !pickerRoot ) { return null; }
+        pickerRoot.style.pointerEvents = 'none';
+        var elem = document.elementFromPoint(x, y);
+        if ( elem === document.body || elem === document.documentElement ) {
+            elem = null;
+        }
+        pickerRoot.style.pointerEvents = '';
+        return elem;
+    };
+})();
 
 /******************************************************************************/
 
@@ -1253,6 +1279,11 @@ var onSvgClicked = function(ev) {
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
+    if ( pickerBody.classList.contains('zap') ) {
+        zap();
+        stopPicker();
+        return;
+    }
     showDialog();
 };
 
@@ -1266,11 +1297,24 @@ var svgListening = function(on) {
 /******************************************************************************/
 
 var onKeyPressed = function(ev) {
-    if ( ev.which === 27 ) {
+    var elem;
+
+    // Delete
+    if ( ev.key === 'Delete' ) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        zap();
+        elem = elementFromPoint();
+        highlightElements(elem ? [elem] : []);
+        return;
+    }
+    // Esc
+    if ( ev.key === 'Escape' || ev.which === 27 ) {
         ev.stopPropagation();
         ev.preventDefault();
         filterToDOMInterface.preview(false);
         stopPicker();
+        return;
     }
 };
 
@@ -1360,6 +1404,7 @@ var startPicker = function(details) {
 
     pickerBody = frameDoc.body;
     pickerBody.setAttribute('lang', navigator.language);
+    pickerBody.classList.toggle('zap', details.zap === true);
 
     dialog = pickerBody.querySelector('aside');
     dialog.addEventListener('click', onDialogClicked);

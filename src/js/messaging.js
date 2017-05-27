@@ -138,7 +138,7 @@ var onMessage = function(request, sender, callback) {
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
         µb.mouseX = µb.mouseY = -1;
-        µb.elementPickerExec(request.tabId, request.targetURL || '');
+        µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
         break;
 
     case 'gotoURL':
@@ -324,7 +324,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
         r.firewallRules = getFirewallRules(rootHostname, r.hostnameDict);
-        r.canElementPicker = rootHostname.indexOf('.') !== -1;
+        r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
         r.noPopups = µb.hnSwitches.evaluateZ('no-popups', rootHostname);
         r.popupBlockedCount = pageStore.popupBlockedCount;
         r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', rootHostname);
@@ -606,6 +606,7 @@ var onMessage = function(request, sender, callback) {
                 target: µb.epickerTarget,
                 clientX: µb.mouseX,
                 clientY: µb.mouseY,
+                zap: µb.epickerZap,
                 eprom: µb.epickerEprom
             });
 

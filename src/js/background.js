@@ -158,6 +158,7 @@ var µBlock = (function() { // jshint ignore:line
         mouseY: -1,
         mouseURL: '',
         epickerTarget: '',
+        epickerZap: false,
         epickerEprom: null,
 
         scriptlets: {
