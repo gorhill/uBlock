@@ -365,7 +365,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         µb.logger.writeOne(
             vAPI.noTabId,
             'net',
-            result,
+            pageStore.logData,
             requestType,
             requestURL,
             context.rootHostname,
