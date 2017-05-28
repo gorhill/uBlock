@@ -1214,6 +1214,8 @@ var zap = function() {
         document.documentElement.style.setProperty('overflow', 'auto', 'important');
     }
     elem.parentNode.removeChild(elem);
+    elem = elementFromPoint();
+    highlightElements(elem ? [elem] : []);
 };
 
 /******************************************************************************/
@@ -1281,7 +1283,9 @@ var onSvgClicked = function(ev) {
     }
     if ( pickerBody.classList.contains('zap') ) {
         zap();
-        stopPicker();
+        if ( !ev.shiftKey ) {
+            stopPicker();
+        }
         return;
     }
     showDialog();
@@ -1304,8 +1308,6 @@ var onKeyPressed = function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         zap();
-        elem = elementFromPoint();
-        highlightElements(elem ? [elem] : []);
         return;
     }
     // Esc
