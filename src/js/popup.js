@@ -434,7 +434,7 @@ var renderPopup = function() {
     // https://github.com/gorhill/uBlock/issues/507
     // Convenience: open the logger with current tab automatically selected
     if ( popupData.tabId ) {
-        uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
+        uDom.nodeFromSelector('#basicTools > a[href^="logger-ui.html"]').setAttribute(
             'href',
             'logger-ui.html#tab_' + popupData.tabId
         );

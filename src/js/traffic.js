@@ -375,11 +375,10 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     context.dispose();
 
-    // Not blocked
-    if ( result !== 1 ) { return; }
-
-    // Blocked
-    return { 'cancel': true };
+    // Blocked?
+    if ( result === 1 ) {
+        return { 'cancel': true };
+    }
 };
 
 /******************************************************************************/

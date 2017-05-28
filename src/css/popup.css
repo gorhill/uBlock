@@ -29,12 +29,8 @@ h2 {
     cursor: pointer;
     font-size: 100%;
     font-weight: normal;
-    margin: 1em 0 0.8em 0;
     padding: 0.2em;
     text-align: center;
-    }
-h2:first-of-type {
-    margin-top: 0;
     }
 a {
     color: inherit;
@@ -150,6 +146,27 @@ p {
 body.off #switch .fa {
     color: #ccc;
     }
+#basicTools {
+    margin: 0.8em 0 0.4em 0;
+    }
+.tool:first-child {
+    margin-left: 0;
+    }
+.tool {
+    color: #aaa;
+    cursor: pointer;
+    visibility: hidden;
+    margin-left: 0.8em;
+    min-width: 1em;
+    padding: 0 0.2em;
+    unicode-bidi: embed;
+    }
+.tool.enabled {
+    visibility: visible;
+    }
+.tool.enabled:hover {
+    color: #444;
+    }
 #page-blocked {
     font-size: 1.25em;
     }
@@ -162,19 +179,6 @@ body.off #switch .fa {
 .statValue {
     margin: 0;
     text-align: center;
-    }
-.tool {
-    color: #aaa;
-    cursor: pointer;
-    display: none;
-    min-width: 1em;
-    unicode-bidi: embed;
-    }
-.tool.enabled {
-    display: inline-block;
-    }
-.tool:hover {
-    color: #444;
     }
 #extraTools {
     background-color: #eee;
