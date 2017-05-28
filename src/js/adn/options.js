@@ -116,34 +116,12 @@
   //
   // }
   /******************************************************************************/
-  var ClickChoice = function(slideVal, disabled) {
-    var choiceValue = document.getElementById('choiceValue');
 
-    if ( disabled) {
-      return choiceValue.innerHTML = "<i>Disabled</i>";
-    }
-    if (Number(slideVal) < .3) {
-      return choiceValue.innerHTML = "Occasional";
-    }
-    if (.3 <= Number(slideVal) &&  Number(slideVal) < .75) {
-      return choiceValue.innerHTML = "Some";
-    }
-    if (.75 <= Number(slideVal) &&  Number(slideVal)  < 1) {
-      return choiceValue.innerHTML = "Most";
-    }
-    if (Number(slideVal) === 1) {
-      return choiceValue.innerHTML = "All";
-    }
-
-
-  }
   var ClickProbabilityChanged = function() {
       var selection = uDom('input[id="slider"]');
       var slideVal = selection.nodes[0].value;
 
       selection.val(slideVal);
-
-      ClickChoice(slideVal, selection.nodes[0].disabled);
 
       messager.send('dashboard', {
         what: 'userSettings',
@@ -192,7 +170,6 @@
       var name = uNode.attr('data-setting-name'), value = details[name];
       var selection = uDom('input[id="slider"]');
 
-      ClickChoice(details.clickProbability, !details.clickingAds);
 
       //updateSubgroupState(name, value);
 
