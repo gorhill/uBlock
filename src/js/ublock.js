@@ -479,18 +479,6 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
 /******************************************************************************/
 
-µBlock.isBlockResult = function(result) {
-    return typeof result === 'string' && result.charCodeAt(1) === 98 /* 'b' */;
-};
-
-/******************************************************************************/
-
-µBlock.isAllowResult = function(result) {
-    return typeof result !== 'string' || result.charCodeAt(1) !== 98 /* 'b' */;
-};
-
-/******************************************************************************/
-
 µBlock.toggleHostnameSwitch = function(details) {
     if ( this.hnSwitches.toggleZ(details.name, details.hostname, !!details.deep, details.state) ) {
         this.saveHostnameSwitches();

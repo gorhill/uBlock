@@ -336,7 +336,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
     if ( !pageStore ) { return; }
 
-    var result = '',
+    var result = 0,
         context = pageStore.createContextFromPage(),
         requestType = details.type,
         requestURL = details.url;
@@ -376,9 +376,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     context.dispose();
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
-        return;
-    }
+    if ( result !== 1 ) { return; }
 
     // Blocked
     return { 'cancel': true };
