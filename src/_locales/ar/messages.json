@@ -344,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"آخر تحديث: {{ago}}",
+    "message":"آخر تحديث: {{ago}}. \nانقر لفرض التحديث.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
