@@ -23,6 +23,12 @@
               "default": "Alt+X"
             },
             "description": "__MSG_popupTipPicker__"
+        },
+        "launch-logger": {
+            "suggested_key": {
+              "default": "Alt+L"
+            },
+            "description": "__MSG_popupTipLog__"
         }
     },
     "default_locale": "en",

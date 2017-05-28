@@ -42,6 +42,15 @@
                 µb.elementPickerExec(tab.id, undefined, command === 'launch-element-zapper');
             });
             break;
+        case 'launch-logger':
+            vAPI.tabs.get(null, function(tab) {
+                µb.openNewTab({
+                    url: 'logger-ui.html#tab_' + tab.id,
+                    select: true,
+                    index: -1
+                });
+            });
+            break;
         default:
             break;
         }
