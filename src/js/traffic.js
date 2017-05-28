@@ -235,7 +235,7 @@ var onBeforeRootFrameRequest = function(details) {
     // Check for specific block
     if ( result === 0 ) {
         result = snfe.matchStringExactType(context, requestURL, 'main_frame');
-        if ( result !== 0 && logEnabled === true ) {
+        if ( result !== 0 || logEnabled === true ) {
             logData = snfe.toLogData();
         }
     }
@@ -243,21 +243,20 @@ var onBeforeRootFrameRequest = function(details) {
     // Check for generic block
     if ( result === 0 ) {
         result = snfe.matchStringExactType(context, requestURL, 'no_type');
-        if ( result !== 0 ) {
-            if ( result === 1 || logEnabled === true ) {
-                logData = snfe.toLogData();
-            }
-            // https://github.com/chrisaljoudi/uBlock/issues/1128
-            // Do not block if the match begins after the hostname, except when
-            // the filter is specifically of type `other`.
-            // https://github.com/gorhill/uBlock/issues/490
-            // Removing this for the time being, will need a new, dedicated type.
-            if (
-                result === 1 &&
-                toBlockDocResult(requestURL, requestHostname, logData) === false
-            ) {
-                result = 0;
-            }
+        if ( result !== 0 || logEnabled === true ) {
+            logData = snfe.toLogData();
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/1128
+        // Do not block if the match begins after the hostname, except when
+        // the filter is specifically of type `other`.
+        // https://github.com/gorhill/uBlock/issues/490
+        // Removing this for the time being, will need a new, dedicated type.
+        if (
+            result === 1 &&
+            toBlockDocResult(requestURL, requestHostname, logData) === false
+        ) {
+            result = 0;
+            logData = undefined;
         }
     }
 
