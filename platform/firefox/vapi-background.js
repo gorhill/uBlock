@@ -1369,6 +1369,7 @@ var tabWatcher = (function() {
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
             vAPI.contextMenu.register(window);
+            vAPI.commands.register(window);
         }
 
         // https://github.com/gorhill/uBlock/issues/697
@@ -1413,6 +1414,7 @@ var tabWatcher = (function() {
 
     var onWindowUnload = function(win) {
         vAPI.contextMenu.unregister(win);
+        vAPI.commands.unregister(win);
 
         var tabBrowser = getTabBrowser(win);
         if ( tabBrowser === null ) {
@@ -3372,6 +3374,101 @@ vAPI.contextMenu = (function() {
         register: registerAsync,
         unregister: unregister,
         setEntries: setEntries
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// Keyboard shortcut have to be hardcoded, as they are declaratively created
+// with the browser.commands API.
+// Assuming only one client listener is installed.
+
+// Shortcuts can be customized in `about:config` using
+//     extensions.ublock0.shortcuts.[command id]    => modifier-key
+// To disable a shortcut, set it to `-`:
+//     extensions.ublock0.shortcuts.[command id]    => -
+
+vAPI.commands = (function() {
+    var commands = [
+        { id: 'launch-element-zapper', shortcut: 'alt-z' },
+        { id: 'launch-element-picker', shortcut: 'alt-x' },
+        { id: 'launch-logger',         shortcut: 'alt-l' }
+    ];
+    var clientListener;
+
+    var commandHandler = function(ev) {
+        if ( typeof clientListener !== 'function' ) { return; }
+        var match = /^uBlock0-key-([a-z-]+)$/.exec(ev.target.id);
+        if ( match === null ) { return; }
+        clientListener(match[1]);
+    };
+
+    var canRegister = function(win) {
+        return win && win.document.readyState === 'complete';
+    };
+
+    var register = function(window) {
+        if ( canRegister(window) !== true ) { return; }
+
+        var doc = window.document,
+            myKeyset = doc.getElementById('uBlock0-keyset');
+        // Already registered?
+        if ( myKeyset !== null ) { return; }
+
+        var mainKeyset = doc.getElementById('mainKeyset'),
+            keysetHolder = mainKeyset && mainKeyset.parentNode;
+        if ( keysetHolder === null ) { return; }
+
+        myKeyset = doc.createElement('keyset');
+        myKeyset.setAttribute('id', 'uBlock0-keyset');
+
+        var myKey, shortcut, parts, modifier, key;
+        for ( var command of commands ) {
+            shortcut = vAPI.localStorage.getItem('shortcuts.' + command.id);
+            if ( shortcut === null ) { shortcut = command.shortcut; }
+            parts = /(([a-z]+)-)?(\w)/.exec(shortcut);
+            if ( parts === null ) { continue; }
+            modifier = parts[2] || '';
+            key = parts[3] || '';
+            if ( key === '' ) { continue; }
+            myKey = doc.createElement('key');
+            myKey.setAttribute('id', 'uBlock0-key-' + command.id);
+            if ( modifier !== '' ) {
+                myKey.setAttribute('modifiers', parts[2]);
+            }
+            myKey.setAttribute('key', key);
+            myKey.setAttribute('oncommand', ';');
+            myKeyset.appendChild(myKey);
+        }
+
+        keysetHolder.addEventListener('command', commandHandler);
+        keysetHolder.appendChild(myKeyset);
+    };
+
+    var registerAsync = function(win) {
+        if ( vAPI.fennec ) { return; }
+        deferUntil(canRegister.bind(null, win), register.bind(null, win));
+    };
+
+    var unregister = function(window) {
+        var doc = window.document,
+            myKeyset = doc.getElementById('uBlock0-keyset');
+        if ( myKeyset === null ) { return; }
+        myKeyset.removeEventListener('command', commandHandler);
+        myKeyset.parentNode.removeChild(myKeyset);
+    };
+
+    var addListener = function(callback) {
+        clientListener = callback;
+    };
+
+    return {
+        register: registerAsync,
+        unregister: unregister,
+        onCommand: {
+            addListener: addListener
+        }
     };
 })();
 
