@@ -108,8 +108,13 @@ var fromCosmeticFilter = function(details) {
         prefix = match[0],
         filter = details.rawFilter.slice(prefix.length);
 
-    var compiled = JSON.stringify(filter),
-        reFilter = new RegExp('(^|\\n).*?' + reEscape(compiled) + '.*?(\\n|$)', 'g');
+    var compiled = JSON.stringify(filter).slice(1, -1),
+        reFilter = new RegExp(
+            '(?:^|\\n)[^\\n]*?("|\\")?' +
+            reEscape(compiled) +
+            '\\1[^\\n]*?(?:\\n|$)',
+            'g'
+        );
 
     var reHostname = new RegExp(
         '^' +
