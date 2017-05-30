@@ -53,9 +53,9 @@ var deferUntil = function(testFn, mainFn, details) {
         details = {};
     }
 
-    var now = 0;
-    var next = details.next || 200;
-    var until = details.until || 2000;
+    var now = 0,
+        next = details.next || 200,
+        until = details.until || 2000;
 
     var check = function() {
         if ( testFn() === true || now >= until ) {
@@ -69,7 +69,7 @@ var deferUntil = function(testFn, mainFn, details) {
     if ( 'sync' in details && details.sync === true ) {
         check();
     } else {
-        vAPI.setTimeout(check, 1);
+        vAPI.setTimeout(check, details.first || 1);
     }
 };
 
@@ -3342,7 +3342,8 @@ vAPI.contextMenu = (function() {
         }
         deferUntil(
             canRegister.bind(null, win),
-            register.bind(null, win)
+            register.bind(null, win),
+            { first: 4000 }
         );
     };
 
@@ -3380,8 +3381,10 @@ vAPI.contextMenu = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-// Keyboard shortcut have to be hardcoded, as they are declaratively created
-// with the browser.commands API.
+// Keyboard shortcuts have to be hardcoded, as they are declaratively created
+// in the manifest.json file on webext API, and only a listener has to be
+// installed with the browser.commands API.
+//
 // Assuming only one client listener is installed.
 
 // Shortcuts can be customized in `about:config` using
@@ -3399,7 +3402,7 @@ vAPI.commands = (function() {
 
     var commandHandler = function(ev) {
         if ( typeof clientListener !== 'function' ) { return; }
-        var match = /^uBlock0-key-([a-z-]+)$/.exec(ev.target.id);
+        var match = /^uBlock0Key-([a-z-]+)$/.exec(ev.target.id);
         if ( match === null ) { return; }
         clientListener(match[1]);
     };
@@ -3412,7 +3415,7 @@ vAPI.commands = (function() {
         if ( canRegister(window) !== true ) { return; }
 
         var doc = window.document,
-            myKeyset = doc.getElementById('uBlock0-keyset');
+            myKeyset = doc.getElementById('uBlock0Keyset');
         // Already registered?
         if ( myKeyset !== null ) { return; }
 
@@ -3421,7 +3424,7 @@ vAPI.commands = (function() {
         if ( keysetHolder === null ) { return; }
 
         myKeyset = doc.createElement('keyset');
-        myKeyset.setAttribute('id', 'uBlock0-keyset');
+        myKeyset.setAttribute('id', 'uBlock0Keyset');
 
         var myKey, shortcut, parts, modifier, key;
         for ( var command of commands ) {
@@ -3433,11 +3436,12 @@ vAPI.commands = (function() {
             key = parts[3] || '';
             if ( key === '' ) { continue; }
             myKey = doc.createElement('key');
-            myKey.setAttribute('id', 'uBlock0-key-' + command.id);
+            myKey.setAttribute('id', 'uBlock0Key-' + command.id);
             if ( modifier !== '' ) {
                 myKey.setAttribute('modifiers', parts[2]);
             }
             myKey.setAttribute('key', key);
+            // https://stackoverflow.com/a/16786770
             myKey.setAttribute('oncommand', ';');
             myKeyset.appendChild(myKey);
         }
@@ -3448,12 +3452,16 @@ vAPI.commands = (function() {
 
     var registerAsync = function(win) {
         if ( vAPI.fennec ) { return; }
-        deferUntil(canRegister.bind(null, win), register.bind(null, win));
+        deferUntil(
+            canRegister.bind(null, win),
+            register.bind(null, win),
+            { first: 4000 }
+        );
     };
 
     var unregister = function(window) {
         var doc = window.document,
-            myKeyset = doc.getElementById('uBlock0-keyset');
+            myKeyset = doc.getElementById('uBlock0Keyset');
         if ( myKeyset === null ) { return; }
         myKeyset.removeEventListener('command', commandHandler);
         myKeyset.parentNode.removeChild(myKeyset);
@@ -3545,7 +3553,7 @@ var optionsObserver = (function() {
     var register = function() {
         Services.obs.addObserver(observer, 'addon-options-displayed', false);
         cleanupTasks.push(unregister);
-        deferUntil(canInit, init, { next: 463 });
+        deferUntil(canInit, init, { first: 4000 });
     };
 
     return {
