@@ -71,7 +71,8 @@ var typeNameToTypeValue = {
        'generichide': 14 << 4,
      'inline-script': 15 << 4,
               'data': 16 << 4,  // special: a generic data holder
-          'redirect': 17 << 4
+          'redirect': 17 << 4,
+            'webrtc': 18 << 4
 };
 var otherTypeBitValue = typeNameToTypeValue.other;
 
@@ -92,7 +93,8 @@ var typeValueToTypeName = {
     14: 'generichide',
     15: 'inline-script',
     16: 'data',
-    17: 'redirect'
+    17: 'redirect',
+    18: 'webrtc'
 };
 
 // All network request types to bitmap
@@ -1282,6 +1284,10 @@ FilterBucket.prototype.compile = function() {
     return [ this.fid, compiled ];
 };
 
+FilterBucket.prototype.downgrade = function() {
+    return new FilterPair(this.filters[0], this.filters[1]);
+};
+
 FilterBucket.load = function(args) {
     var bucket = new FilterBucket(),
         compiledFilters = args[1],
@@ -1301,9 +1307,8 @@ var FilterParser = function() {
     this.cantWebsocket = vAPI.cantWebsocket;
     this.reBadDomainOptChars = /[*+?^${}()[\]\\]/;
     this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
-    this.reHostnameRule2 = /^\**[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
-    this.reCleanupHostnameRule2 = /^\**|\^$/g;
-    this.reHasWildcard = /[\^\*]/;
+    this.reHostnameRule2 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
+    this.reCleanupHostnameRule2 = /\^$/g;
     this.reCanTrimCarets1 = /^[^*]*$/;
     this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
     this.reHasUppercase = /[A-Z]/;
@@ -1341,6 +1346,7 @@ FilterParser.prototype.toNormalizedType = {
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
     'xmlhttprequest': 'xmlhttprequest',
+            'webrtc': 'webrtc',
          'websocket': 'websocket'
 };
 
@@ -1749,20 +1755,14 @@ FilterParser.prototype.parse = function(raw) {
         s = s.slice(0, -1);
     }
 
-    // normalize placeholders
-    if ( this.reHasWildcard.test(s) ) {
-        // remove pointless leading *
-        // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
-        // Keep the leading asterisk if we are dealing with a hostname-anchored
-        // filter, this will ensure the generic filter implementation is
-        // used.
-        if ( s.startsWith('*') && (this.anchor & 0x4) ) {
-            s = s.replace(/^\*+([^%0-9a-z])/, '$1');
-        }
-        // remove pointless trailing *
-        if ( s.endsWith('*') ) {
-            s = s.replace(/([^%0-9a-z])\*+$/, '$1');
-        }
+    // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
+    // remove pointless leading *.
+    if ( s.startsWith('*') ) {
+        s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+    }
+    // remove pointless trailing *
+    if ( s.endsWith('*') ) {
+        s = s.replace(/([^%0-9a-z])\*+$/, '$1');
     }
 
     // nothing left?
@@ -1818,8 +1818,8 @@ var badTokens = new Set([
 
 var findFirstGoodToken = function(s) {
     reGoodToken.lastIndex = 0;
-    var matches, lpos;
-    var badTokenMatch = null;
+    var matches, lpos,
+        badTokenMatch = null;
     while ( (matches = reGoodToken.exec(s)) !== null ) {
         // https://github.com/gorhill/uBlock/issues/997
         // Ignore token if preceded by wildcard.
@@ -1841,22 +1841,20 @@ var findFirstGoodToken = function(s) {
     return badTokenMatch;
 };
 
-var findHostnameToken = function(s) {
-    return reHostnameToken.exec(s);
-};
-
 /******************************************************************************/
 
 FilterParser.prototype.makeToken = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/1038
     // Single asterisk will match any URL.
-    if ( this.isRegex || this.f === '*' ) {
-        return;
-    }
-    var matches = this.anchor & 0x4 && this.f.indexOf('*') === -1 ?
-        findHostnameToken(this.f) :
-        findFirstGoodToken(this.f);
+    if ( this.isRegex || this.f === '*' ) { return; }
 
+    var matches = null;
+    if ( (this.anchor & 0x4) !== 0 && this.f.indexOf('*') === -1 ) {
+        matches = reHostnameToken.exec(this.f);
+    }
+    if ( matches === null ) {
+        matches = findFirstGoodToken(this.f);
+    }
     if ( matches !== null ) {
         this.token = matches[0];
         this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
@@ -2048,17 +2046,21 @@ FilterContainer.prototype.compile = function(raw, writer) {
     } else if ( parsed.anchor === 0x5 ) {
         // https://github.com/gorhill/uBlock/issues/1669
         fdata = FilterGenericHnAndRightAnchored.compile(parsed);
+    } else if ( parsed.anchor === 0x4 ) {
+        if (
+            this.reIsGeneric.test(parsed.f) === false &&
+            parsed.tokenHash !== parsed.noTokenHash &&
+            parsed.tokenBeg === 0
+        ) {
+            fdata = FilterPlainHnAnchored.compile(parsed);
+        } else {
+            fdata = FilterGenericHnAnchored.compile(parsed);
+        }
     } else if (
         this.reIsGeneric.test(parsed.f) ||
         parsed.tokenHash === parsed.noTokenHash
     ) {
-        if ( parsed.anchor === 0x4 ) {
-            fdata = FilterGenericHnAnchored.compile(parsed);
-        } else {
-            fdata = FilterGeneric.compile(parsed);
-        }
-    } else if ( parsed.anchor === 0x4 ) {
-        fdata = FilterPlainHnAnchored.compile(parsed);
+        fdata = FilterGeneric.compile(parsed);
     } else if ( parsed.anchor === 0x2 ) {
         fdata = FilterPlainLeftAnchored.compile(parsed);
     } else if ( parsed.anchor === 0x1 ) {
@@ -2280,10 +2282,7 @@ FilterContainer.prototype.removeBadFilters = function() {
         if ( entry.fid === filterBucketId ) {
             entry.remove(fdata);
             if ( entry.size === 2 ) {
-                bucket.set(
-                    tokenHash,
-                    new FilterPair(entry.filters[0], entry.filters[1])
-                );
+                bucket.set(tokenHash, entry.downgrade());
             }
             continue;
         }
