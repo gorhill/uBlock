@@ -1344,7 +1344,7 @@ var svgListening = function(on) {
 
 var onKeyPressed = function(ev) {
     // Delete
-    if ( ev.key === 'Delete' ) {
+    if ( ev.key === 'Delete' && pickerBody.classList.contains('zap') ) {
         ev.stopPropagation();
         ev.preventDefault();
         zap();
