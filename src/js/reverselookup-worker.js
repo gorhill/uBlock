@@ -30,14 +30,6 @@ var listEntries = Object.create(null),
 
 /******************************************************************************/
 
-// Helpers
-
-var reEscape = function(s) {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-};
-
-/******************************************************************************/
-
 var fromNetFilter = function(details) {
     var lists = [],
         compiledFilter = details.compiledFilter,
@@ -108,11 +100,10 @@ var fromCosmeticFilter = function(details) {
         prefix = match[0],
         filter = details.rawFilter.slice(prefix.length);
 
-    var compiled = JSON.stringify(filter).slice(1, -1),
-        reFilter = new RegExp(
-            '(?:^|\\n)[^\\n]*?("|\\")?' +
-            reEscape(compiled) +
-            '\\1[^\\n]*?(?:\\n|$)',
+    var reFilter = new RegExp(
+            '(?:^|\\n)[^\\n]*?\\\\*"' +
+            reEscapeCosmetic(filter) +
+            '\\\\*"[^\\n]*?(?:\\n|$)',
             'g'
         );
 
@@ -202,6 +193,15 @@ var fromCosmeticFilter = function(details) {
         id: details.id,
         response: response
     });
+};
+
+// https://github.com/gorhill/uBlock/issues/2666
+//   Raw filters in compiled filter lists may have been JSON-stringified one or
+//   multiple times.
+
+var reEscapeCosmetic = function(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            .replace(/"/g, '\\\\*"');
 };
 
 /******************************************************************************/
