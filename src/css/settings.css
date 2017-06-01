@@ -128,11 +128,11 @@ p:disabled{
 }
 input[type=range]::-moz-range-progress {
   background-color: #0076FF;
-  height: 10px;
+  height: 8px;
   border-color: #0076FF;
-  border-radius: 5px;
   margin:0;
-  padding:0;
+  padding:0px;
+  border-radius: 2px;
 }
 input[type=range]::-moz-range-track{
   background-color: transparent;
