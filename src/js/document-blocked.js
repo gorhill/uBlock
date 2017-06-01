@@ -272,8 +272,8 @@ uDom.nodeFromId('why').textContent = details.fs;
 
 /******************************************************************************/
 
-if ( window.history.length > 1 ) {
-    uDom('#back').on('click', function() { window.history.back(); });
+if ( window.history.length > 2 ) {
+    uDom('#back').on('click', function() { window.history.go(-2); });
     uDom('#bye').css('display', 'none');
 } else {
     uDom('#bye').on('click', function() { window.close(); });
