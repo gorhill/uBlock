@@ -123,7 +123,7 @@ a.external-link {
   display: none;
 }
 .custom-check #lists input#effListInput + label {
-    display: inline-block!important;
+  display: inline-block!important;
 }
 .custom-check #lists input[type="checkbox"]::before{
   margin: 0px 4px 0 0!important;
@@ -131,8 +131,7 @@ a.external-link {
 }
 .custom-check ul#clickingFrequency{
   margin: .5em 0 1em -.5em;
-  border: solid 1px #555;
-  padding:.5em 1em 1em .5em;
+  padding:.5em 1em .3em .5em;
   border-radius: 8px;
   display: inline-block;
 }
