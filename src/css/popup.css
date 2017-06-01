@@ -56,18 +56,6 @@ a {
     font-size: 90%;
     font-weight: normal;
     }
-#gotoPrefs > span:nth-of-type(3) {
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    }
-body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
-    left: 3px;
-    }
-body[dir="rtl"] #gotoPrefs > span:nth-of-type(3) {
-    right: 3px;
-    }
 body[dir="ltr"] #panes {
     direction: rtl;
     }
