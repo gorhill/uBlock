@@ -30,6 +30,12 @@ ul#userSettings .subgroup p {
   margin: 0 0 0 50px;
   line-height: 1.5em;
   float:left;
+  cursor: default;
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none;     
+  user-select: none;
+
 }
 ul#userSettings .subgroup .subgroupDescription {
     clear: both;
@@ -67,52 +73,51 @@ ul#userSettings .subgroup> ul> li label {
 body.advancedUser #advanced-user-enabled ~ a.fa {
   display: inline;
 }
-
 input[type="range"]:focus {
   outline: none!important;
 }
-
 input[type="range"]:disabled{
   overflow: hidden;
   outline: none!important;
-  background-color: black;
-  border-color: black;
-
+  border-color: gray;
 }
 input[type="range"]:disabled::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    -moz-apperance: none;
-    cursor: pointer;
-    box-shadow: -315px 0 0 315px black;
-    background-color: black;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
+    box-shadow: -320px 0 0 315px gray;
+    background-color: #BBB;
 }
 input[type=range] {
   -webkit-appearance: none;
-   overflow: hidden;
   -moz-apperance: none;
-   border-radius: 2px;
+   overflow: hidden;
+   border-radius: 5px;
    background-color: transparent;
    height: 10px;
-   width: 315px;
+   width: 280px;
    border-color: #0076FF;
+   padding:0;
+   margin:0;
 }
-input[type="range"]::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb{
     -webkit-appearance: none;
     -moz-apperance: none;
-    box-shadow: -315px 0 0 315px #0076FF;
-    cursor: pointer;
+    box-shadow: -320px 0 0 315px #0076FF;
     width: 2em;
-    height: 2em;
-    background-color: #0060d1;
-    border-radius: 50%;
+    height: 8px;
+    background-color: #004ca5;
+    border-radius: 5px;
 }
-
+input[type=range]::-moz-range-thumb {
+  background-color: #004ca5;
+  width: 2em;
+  border-radius: 5px;
+  border-style: none;
+}
+input[type=range]:disabled::-moz-range-thumb {
+  background-color: #BBB;
+}
 p#choiceSlider {
   display: inline-block;
-  padding-right: 2.9em;
+  padding-right: 2.2em;
   text-indent: -47px;
 }
 p#choiceSlider2 {
@@ -121,13 +126,18 @@ p#choiceSlider2 {
 p:disabled{
   color: #777;
 }
-input[type="range"]::-moz-range-progress {
+input[type=range]::-moz-range-progress {
   background-color: #0076FF;
+  height: 10px;
+  border-color: #0076FF;
+  border-radius: 5px;
+  margin:0;
+  padding:0;
 }
-input[type="range"]::-moz-range-track {
+input[type=range]::-moz-range-track{
   background-color: transparent;
 }
 
-input[type="range"]:disabled"::-moz-range-progress {
-  background-color: black;
+input[type=range]:disabled::-moz-range-progress {
+  background-color: gray;
 }
