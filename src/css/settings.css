@@ -67,3 +67,67 @@ ul#userSettings .subgroup> ul> li label {
 body.advancedUser #advanced-user-enabled ~ a.fa {
   display: inline;
 }
+
+input[type="range"]:focus {
+  outline: none!important;
+}
+
+input[type="range"]:disabled{
+  overflow: hidden;
+  outline: none!important;
+  background-color: black;
+  border-color: black;
+
+}
+input[type="range"]:disabled::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    cursor: pointer;
+    box-shadow: -315px 0 0 315px black;
+    background-color: black;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+}
+input[type=range] {
+  -webkit-appearance: none;
+   overflow: hidden;
+  -moz-apperance: none;
+   border-radius: 2px;
+   background-color: transparent;
+   height: 10px;
+   width: 315px;
+   border-color: #0076FF;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    box-shadow: -315px 0 0 315px #0076FF;
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    background-color: #0060d1;
+    border-radius: 50%;
+}
+
+p#choiceSlider {
+  display: inline-block;
+  padding-right: 2.9em;
+  text-indent: -47px;
+}
+p#choiceSlider2 {
+  text-indent: -47px;
+}
+p:disabled{
+  color: #777;
+}
+input[type="range"]::-moz-range-progress {
+  background-color: #0076FF;
+}
+input[type="range"]::-moz-range-track {
+  background-color: transparent;
+}
+
+input[type="range"]:disabled"::-moz-range-progress {
+  background-color: black;
+}
