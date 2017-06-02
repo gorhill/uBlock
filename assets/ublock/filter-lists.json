@@ -1,10 +1,10 @@
 {
-	"http://adblock.gardar.net/is.abp.txt": {
+	"https://adblock.gardar.net/is.abp.txt": {
 		"off": true,
 		"title": "ISL: Icelandic ABP List",
 		"group": "regions",
 		"lang": "is",
-		"supportURL": "http://adblock.gardar.net/"
+		"supportURL": "https://adblock.gardar.net/"
 	},
 	"https://adblock.dk/block.csv": {
 		"off": true,
@@ -128,11 +128,11 @@
 		"lang": "lv",
 		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
 	},
-	"http://hosts-file.net/.%5Cad_servers.txt": {
+	"https://hosts-file.net/.%5Cad_servers.txt": {
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
 		"group": "multipurpose",
-		"supportURL": "http://hosts-file.net/"
+		"supportURL": "https://hosts-file.net/"
 	},
 	"http://adblock.ee/list.php": {
 		"off": true,
@@ -169,12 +169,12 @@
 		"group": "ads",
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"http://adb.juvander.net/Finland_adb.txt": {
+	"https://adb.juvander.net/Finland_adb.txt": {
 		"off": true,
 		"title": "FIN: Finnish Addition to Easylist",
 		"group": "regions",
 		"lang": "fi",
-		"supportURL": "http://www.juvander.fi/AdblockFinland"
+		"supportURL": "https://www.juvander.fi/AdblockFinland"
 	},
 	"https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": {
 		"off": true,
@@ -230,7 +230,7 @@
 		"group": "malware",
 		"supportURL": "http://www.malwaredomains.com/"
 	},
-	"mirror1.malwaredomains.com/files/justdomains": {
+	"https://mirror1.malwaredomains.com/files/justdomains": {
 		"title": "Malware domains",
 		"group": "malware",
 		"homeURL": "https://mirror.cedia.org.ec/malwaredomains/justdomains",
@@ -282,12 +282,12 @@
 		"group": "malware",
 		"supportURL": "http://www.spam404.com/"
 	},
-	"http://stanev.org/abp/adblock_bg.txt": {
+	"https://stanev.org/abp/adblock_bg.txt": {
 		"off": true,
 		"title": "BGR: Bulgarian Adblock list",
 		"group": "regions",
 		"lang": "bg",
-		"supportURL": "http://stanev.org/abp/"
+		"supportURL": "https://stanev.org/abp/"
 	},
 	"http://winhelp2002.mvps.org/hosts.txt": {
 		"off": true,
@@ -353,7 +353,7 @@
 		"lang": "vi",
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"www.malwaredomainlist.com/hostslist/hosts.txt": {
+	"https://www.malwaredomainlist.com/hostslist/hosts.txt": {
 		"title": "Malware Domain List",
 		"group": "malware",
 		"homeURL": "https://www.malwaredomainlist.com/hostslist/hosts.txt"
