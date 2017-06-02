@@ -143,7 +143,7 @@ var µBlock = (function() { // jshint ignore:line
         selectedFilterLists: [],
         availableFilterLists: {},
 
-        selfieAfter: 23 * oneMinute,
+        selfieAfter: 17 * oneMinute,
 
         pageStores: {},
         pageStoresToken: 0,
