@@ -1,21 +1,21 @@
-Një bllokues efikas: me impakt të vogël te memorja dhe procesori, por mund të ngarkojë dhe të zbatojë mijëra filtra më shumë sesa bllokuesit e tjerë të njohur.
+Një bllokues efikas: me impakt të vogël te memorja dhe procesori, por mund të hapë dhe të zbatojë mijëra filtra më shumë sesa bllokuesit e tjerë të njohur.
 
 Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Përdorim: Butoni i madh power tek dritarja e vogël shërben për të aktivuar ose jo në mënyrë të përhershme uBlock-un për faqen aktuale. Ai vlen vetëm për faqen aktuale, nuk është një buton i përgjithshëm.
+Përdorimi: Çelësi i komandimit te dritarja e vogël e bën uBlock përherë joaktiv/aktiv për uebsajtin aktual. Ai vlen vetëm për uebsajtin aktual, nuk është një çelës i përgjithshëm.
 
 ***
 
 Është fleksibël dhe jo thjesht një "bllokues reklamash": mund të lexojë dhe të krijojë filtra nga skedat "hosts".
 
-Filtrat e kësaj liste hapen dhe zbatohen pas instalimit:
+Filtrat e listuar këtu hapen dhe zbatohen pas instalimit:
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
-Nëse dëshironi, ka edhe shumë lista të tjera të gatshme:
+Po të doni, ka edhe shumë lista të tjera të gatshme:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
@@ -24,13 +24,13 @@ Nëse dëshironi, ka edhe shumë lista të tjera të gatshme:
 - Spam404
 - Dhe shumë të tjera
 
-Sigurisht që sa më shumë filtra të aktivizohen, aq më i madh do të jetë impakti tek memorja. Edhe me shtimin e dy listave shtesë të Fanboy, hpHosts’s Ad and tracking servers, µBlock përsëri ka impakt më të ulët në memorje sesa bllokuesit e tjerë shumë të njohur.
+Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memorja. Edhe sikur të shtoni dy listat e tjera të Fanboy, hpHosts’s Ad and tracking servers, uBlock përsëri ka impakt më të ulët te memorja sesa bllokuesit e tjerë shumë të njohur.
 
 Por, kujdes, sepse duke përzgjedhur disa prej këtyre listave, gjasat që faqet të shfaqin probleme do të jenë më të mëdha -- sidomos listat që normalisht përdoren si skeda "hosts".
 
 ***
 
-Pa listat e përmbushura të filtrave, ky program nuk ka asnjë vlerë. Prandaj, po të doni të kontribuoni diçka, mendoni pak për njerëzit që punojnë fort për mirëmbajtjen e listave me filtra që po përdorni, të cilat ju ofrohen pa pagesë.
+Pa listat e programuara, ky program nuk ka asnjë vlerë. Prandaj, po të doni të kontribuoni diçka, mendoni pak për njerëzit që punojnë fort për mirëmbajtjen e listave me filtra që po përdorni, të cilat na ofrohen të gjithëve pa pagesë.
 
 ***
 
@@ -45,5 +45,5 @@ Kontributorët @ Crowdin: https://crowdin.net/project/ublock
 
 Kur bëni vlerësimin e programit, mos harroni se ky është një version paraprak.
 
-Ditari i ndryshimeve të projektit:
+Ditari i projektit:
 https://github.com/gorhill/uBlock/releases
