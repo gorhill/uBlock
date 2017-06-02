@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Më në fund, një bllokues efikas. Me pak impakt në CPU dhe në memorje.",
+    "message":"Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorjen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Panel i kontrollit",
+    "message":"uBlock₀ — Paneli i kontrollit",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Lista e filtrave",
+    "message":"Filtrat nga palët e treta",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Ditari",
+    "message":"uBlock₀ — Regjistri i kërkesave",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -40,19 +40,19 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Parametra të përparuara",
+    "message":"Parametra të avancuar",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: çaktivizim\/aktivizim i uBlock₀ për këtë domeni.\n\nCtrl+Klik: çaktivizim i uBlock₀ vetëm për këtë faqe.",
+    "message":"Kliko: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKliko+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"kërkesa të bllokuara",
+    "message":"kërkesa të refuzuara",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"në këtë faqe",
+    "message":"te kjo faqja",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -68,51 +68,51 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliko për hapjen e panelit të kontrollit",
+    "message":"Hap panelin e kontrollit",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Asgjësuesi i elementeve",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
-    "message":"Përzgjedhës i elementeve",
+    "message":"Përzgjedhësi i elementeve",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ditar i kërkesave",
+    "message":"Regjistri i kërkesave",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"çaktivizim\/aktivizim i bllokut të çdo dritare të vogël për këtë faqe",
+    "message":"Bllokoj të gjitha dritaret automatike që hap kjo faqja",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"çaktivizim\/aktivizim i bllokut të elementeve multimedial me përmasa të mëdha për këtë faqe",
+    "message":"Bllokoj elementet e mëdha mediatike te kjo faqja",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"çaktivizim\/aktivizim i filtrave kozmetikë për këtë faqe",
+    "message":"Përdor filtrat kozmetikë te kjo faqja",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"çaktivizim\/aktivizim i sistemit të shkronjave të huaja",
+    "message":"Bllokoj sistemin e shkronjave në linjë",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Rregullat globale: rregullat në këtë kolonë zbatohen për të gjitha faqet.",
+    "message":"Rregullat globale: rregullat në këtë shtyllë aplikohen për të gjitha faqet.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Rregullat lokale: rregullat në këtë kolonë zbatohen vetëm për këtë faqe.\nRregullat lokale kanë më përparësi sesa rregullat globale.",
+    "message":"Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë faqen.\nAto kanë më përparësi sesa rregullat globale.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Kliko për ruajtjen e ndryshimeve.",
+    "message":"Ruaj ndryshimet përherë.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Kliko për kthimin e ndryshimeve.",
+    "message":"Kthej ndryshimet.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -124,23 +124,23 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"nga palët e treta",
+    "message":"palët e treta",
     "description":""
   },
   "popup3pPassiveRulePrompt":{
-    "message":"figurat\/css nga palët e treta",
+    "message":"css\/figurat nga palët e treta",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"skript të integruar",
+    "message":"skriptet e integruara",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"skript në këtë faqe",
+    "message":"skriptet nga pala kryesore",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"skript nga palët e treta",
+    "message":"skriptet nga palët e treta",
     "description":""
   },
   "popup3pFrameRulePrompt":{
@@ -148,7 +148,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domeni të kontaktuara",
+    "message":"faqe të kontaktuara",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -156,7 +156,7 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Krijo",
+    "message":"Krijoj",
     "description":"English: Create"
   },
   "pickerPick":{
@@ -168,23 +168,23 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Parapamje",
+    "message":"Parashikoj",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
-    "message":"Filtrat e linjës",
+    "message":"Filtrat e rrjetit",
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"Filtrat e kozmetikës",
+    "message":"Filtrat kozmetikë",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klik, Ctrl-klik",
+    "message":"Kliko, Kliko me Ctrl",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Bllokim i elementit",
+    "message":"Bllokoj elementin",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -192,11 +192,11 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Shfaq numrin e kërkesave të refuzuara te ikona",
+    "message":"Tregoj te ikona numrin e kërkesave të refuzuara",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Çaktivizim i sygjerimeve",
+    "message":"Çaktivizoj përshkrimet e shkurtra",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -208,59 +208,59 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Aktivizim në renë informatike",
+    "message":"Aktivizoj renë informatike",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jam një përdorues i përparuar (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
+    "message":"Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"parametra të përparuara",
+    "message":"parametra të avancuar",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Çaktivizim i kërkesës së parakohshme (për të parandaluar lidhjet me kërkesat e refuzuara)",
+    "message":"Çaktivizoj kërkesat e parakohshme (për të evituar çdo lidhje me kërkesat e refuzuara)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Çaktivizim për shqyrtimin e tejlidhjeve",
+    "message":"Çaktivizoj shqyrtimin e tejlidhjeve",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Pengon WebRTC-në për zbulimin e adresës IP lokale",
+    "message":"Nuk lejoj WebRTC-në që të zbulojë adresat IP lokale",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Vlera të paracaktuara",
+    "message":"Vlerat standarde",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Këto vlera të paracaktuara mund të mbishkruhen, për çdo faqe",
+    "message":"Këto vlera bëhen të panevojshme, sipas rastit",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Çaktivizim i filtrave kozmetikë",
+    "message":"Çaktivizoj filtrat kozmetikë",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Bllokim i elementeve mediatike më të mëdha se {{input:number}} kB",
+    "message":"Bllokoj elementet mediatike më të mëdha se {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Bllokim i sistemit të shkronjave të huaja",
+    "message":"Bllokoj sistemin e shkronjave në linjë",
     "description":""
   },
   "settingsStorageUsed":{
-    "message":"Hapësira e përdorur: {{value}} bytes",
+    "message":"Hapësira e përdorur: {{value}} bajt",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Rindërtim i fundit:",
+    "message":"Rindërtimi i fundit:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Kopjim i fundit:",
+    "message":"Kopja e fundit:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -268,23 +268,23 @@
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} të përdorur nga {{total}}",
+    "message":"përdor {{used}} nga {{total}}",
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Përditësim automatik i filtrave",
+    "message":"Përditësoj filtrat automatikisht",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
-    "message":"Përditëso tani",
+    "message":"Përditësoj tani",
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
-    "message":"Pastrim i të gjitha stoqeve",
+    "message":"Heq të gjitha stoqet",
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analizim dhe zbatim i filtrave kozmetikë",
+    "message":"Analizoj dhe zbatoj filtrat kozmetikë",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -292,7 +292,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Injorim i filtrave kozmetikë jospecifikë",
+    "message":"Nuk marr parasysh filtrat kozmetikë jospecifikë",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -320,7 +320,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Lidhjet sociale",
+    "message":"Rrjetet sociale",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
@@ -332,7 +332,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Personalizim",
+    "message":"Personalizoj",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -340,19 +340,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"E vjetruar.",
+    "message":"E vjetër.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Përditësim i fundit: {{ago}}.",
+    "message":"Përditësimi i fundit: {{ago}}.\nKlikoni për ta kryer vetë përditësimin.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Në përditësim...",
+    "message":"Po përditësohet...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"Një problem me rrjetin informatik pengoi përditësimin.",
+    "message":"Një problem me rrjetin pengoi përditësimin e informacionit.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -360,11 +360,11 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importim e shtim",
+    "message":"Importoj dhe shtoj",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eksportim",
+    "message":"Eksportoj",
     "description":"English: Export"
   },
   "1pExportFilename":{
@@ -384,15 +384,15 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Rikthim",
+    "message":"Rikthej",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Aplikim",
+    "message":"Aplikoj",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"Ndrysho",
+    "message":"Modifikoj",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
@@ -400,15 +400,15 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Anullim",
+    "message":"Anuloj",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importim nga skedari...",
+    "message":"Importoj nga skedari...",
     "description":""
   },
   "rulesExport":{
-    "message":"Eksportim në skedar",
+    "message":"Ruaj në skedar",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -420,19 +420,19 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rregullat e sintaksës: <code>burim destinacion lloj veprim<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentim i plotë<\/a>).",
+    "message":"Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista e hosteve për të cilat uBlock₀ do të jetë i çaktivizuar. Një element për rresht. Nuk do të merren parasysh emrat e pasaktë.",
+    "message":"Lista e bardhë e detyron uBlock Origin që të mos veprojë në faqe të caktuara. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
-    "message":"Importim e shtim",
+    "message":"Importoj dhe shtoj",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Eksportim",
+    "message":"Eksportoj",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
@@ -468,11 +468,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filtrim i elementeve të ditarit",
+    "message":"filtroni elementet në regjistër",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Numri maksimal i elementeve të ditarit",
+    "message":"Numri maksimal i elementeve në regjistër",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
@@ -484,23 +484,23 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Filtrim dinamik i adresave",
+    "message":"Filtrimi dinamik i adresave",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Filtrim statik",
+    "message":"Filtrimi statik",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} i kërkesave të {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe që e kanë origjinën {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
+    "message":"{{action}} kërkesat e {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe që e kanë origjinën {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Bllokim",
+    "message":"Bllokoj",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Lejim",
+    "message":"Lejoj",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
@@ -528,15 +528,15 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Filtri statik {{filter}} i gjendur në:",
+    "message":"Filtri statik {{filter}} gjendet në:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
-    "message":"Ditar i ndryshimeve",
+    "message":"Ditari i ndryshimeve",
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Dokumentim",
+    "message":"Dokumentimi",
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
@@ -544,7 +544,7 @@
     "description":"A link for where to get support"
   },
   "aboutCode":{
-    "message":"Material burimor (GPLv3)",
+    "message":"Materiali burimor (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -552,7 +552,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Kopjim në skedar",
+    "message":"Kopjoj në skedar",
     "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
@@ -560,15 +560,15 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Rindërtim nga skedari...",
+    "message":"Rindërtoj sipas skedarit...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Kthim në parametrat e mëparshëm...",
+    "message":"Kthej parametrat e mëparshëm...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara në datën {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nDëshironi ti mbishkruani të gjithë parametrat aktualë?",
+    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nDo i mbishkruani parametrat aktualë?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -576,15 +576,15 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDëshironi të ktheheni në parametrat origjinalë?",
+    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDo i ktheni parametrat origjinalë?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Problem linje: {{msg}}",
+    "message":"Problem me rrjetin: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Do e shtoni këtë adresë në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -612,15 +612,15 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Shfaq panelin",
+    "message":"Paneli i kontrollit",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Ditar i kërkesave",
+    "message":"Regjistri i kërkesave",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"fik",
+    "message":"fikur",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
@@ -628,7 +628,7 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Për shkak të këtij filtri",
+    "message":"Për shkak të filtrit",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
@@ -636,19 +636,19 @@
     "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn":{
-    "message":"I gjetur në:",
+    "message":"Gjendet në:",
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
-    "message":"Kthehu prapa",
+    "message":"Kthehem",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Mbyll këtë dritare",
+    "message":"Mbyll dritaren",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Zhbllokim i mënyrës strikte për {{hostname}}",
+    "message":"Zhbllokoj mënyrën strikte për {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
@@ -656,19 +656,19 @@
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Përherë",
+    "message":"Gjithmonë",
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Eksportim në renë informatike",
+    "message":"Eksportoj në renë informatike",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importim nga reja informatike",
+    "message":"Importoj nga reja informatike",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importim nga reja informatike dhe bashkim me parametrat aktualë",
+    "message":"Importoj nga reja informatike dhe bashkoj me parametrat aktualë",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -684,7 +684,7 @@
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
-    "message":"Dërgo",
+    "message":"Parashtroj",
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
@@ -692,15 +692,15 @@
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
-    "message":"Rikthim",
+    "message":"Rikthej",
     "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
-    "message":"bytes",
+    "message":"bajt",
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Lejim përkohësisht i elementeve me përmasa të mëdha",
+    "message":"Lejoj përkohësisht elementet me përmasa të mëdha",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

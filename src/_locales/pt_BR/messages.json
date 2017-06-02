@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Entrar no modo elemento \"zapper\"",
+    "message":"Entrar no modo elemento zapper",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -188,7 +188,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar os espaços ocupados por elementos bloqueados",
+    "message":"Ocultar espaços ocupados por elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -196,7 +196,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Desativar dicas",
+    "message":"Desabilitar dicas de ferramentas",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -228,7 +228,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Impedir o protocolo WebRTC de vazar meu endereço de IP local",
+    "message":"Impedir o protocolo WebRTC de vazar endereços de IP locais",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -236,7 +236,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Estes comportamentos padrões podem ser substituídos em uma base por site",
+    "message":"Esses comportamentos padrões podem ser substituídos por site",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -352,7 +352,7 @@
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"Um erro na rede preveniu que o recurso fosse atualizado.",
+    "message":"Um erro de rede impediu a atualização desse recurso.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -388,7 +388,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Aplicar",
+    "message":"Confirmar",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -464,7 +464,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Bastidores",
+    "message":"Por trás da cena",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -664,7 +664,7 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importar do armazenamento em nuvem",
+    "message":"Importação do armazenamento na nuvem",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Atenção! Altere essas configurações avançadas por sua conta e risco.",
+    "message":"Atenção! Altere essas configurações avançadas por sua própria conta e risco.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

@@ -344,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Ultimo aggiornamento: {{ago}}",
+    "message":"Ultimo aggiornamento: {{ago}}.\nClicca per forzare l'aggiornamento.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -580,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Impossibile connettersi al {{url}}",
+    "message":"Errore di connessione: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

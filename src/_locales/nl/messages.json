@@ -72,11 +72,11 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Elementafschietmodus inschakelen",
+    "message":"Elementwissermodus openen",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
-    "message":"Elementselectiemodus inschakelen",
+    "message":"Elementkiezermodus openen",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{

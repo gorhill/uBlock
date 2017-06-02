@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Zapnout režim likvidace prvků",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{

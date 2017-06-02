@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Gå till element zapper läge",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -80,7 +80,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Öppna loggaren",
+    "message":"Öppna logg för nätverksbegäran",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
