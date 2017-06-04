@@ -6,19 +6,22 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="css/common.css" type="text/css">
 <link rel="stylesheet" href="css/popup.css" type="text/css">
-<title>uBlock</title>
+<title>uBlock Origin</title>
 </head>
 
 <body>
-<a href="dashboard.html" target="_blank" id="gotoPrefs" data-i18n-tip="popupTipDashboard" data-tip-position="under"><span id="appname">&nbsp;</span> <span id="version">&nbsp;</span><span class="fa">&#xf013;</span></a>
+<a href="dashboard.html" target="_blank" id="gotoPrefs" data-i18n-tip="popupTipDashboard" data-tip-position="under"><span id="appname">&nbsp;</span> <span id="version">&nbsp;</span></a>
 <div id="panes">
     <div class="tooltipContainer">
         <p id="switch" data-i18n-tip="popupPowerSwitchInfo" data-tip-position="under"><span class="fa">&#xf011;</span></p>
+        <p id="basicTools">
+            <span id="gotoZap" class="fa tool" data-i18n-tip="popupTipZapper" data-tip-position="under">&#xf0e7;</span>
+            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-position="under">&#xf1fb;</span>
+            <a href="logger-ui.html" class="fa tool enabled" data-i18n-tip="popupTipLog" data-tip-position="under">&#xf022;</a>
+        </p>
         <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt">&nbsp;</h2>
         <p class="statName">
-            <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>&ensp;
-            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker">&#xf1fb;</span>&ensp;
-            <a href="logger-ui.html" class="fa tool enabled" data-i18n-tip="popupTipLog">&#xf022;</a>
+            <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>
         </p>
         <p class="statValue" id="page-blocked">?</p>
         <div id="refresh" class="fa">&#xf021;</div>

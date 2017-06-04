@@ -71,6 +71,10 @@
     "message":"Kattintson ide a vezérlőpult megnyitásához",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Elemváltó mód aktiválása",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Elemválasztó mód aktiválása",
     "description":"English: Enter element picker mode"
@@ -336,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"elavult",
+    "message":"Elavult.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
@@ -344,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Frissítés...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Egy hálózati hiba megakadályozta az erőforrás frissítését.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

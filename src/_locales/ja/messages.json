@@ -71,6 +71,10 @@
     "message":"クリックしてダッシュボードを開く",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"要素除去モードに移行",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"要素選択モードに移行",
     "description":"English: Enter element picker mode"
@@ -344,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"更新中...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"ネットワークエラーが発生したため、リソースを更新できませんでした。",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

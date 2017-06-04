@@ -52,7 +52,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"على هذه الصفحه",
+    "message":"على هذه الصفحة",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -64,15 +64,19 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"او",
+    "message":"أو",
     "description":"English: or"
   },
   "popupTipDashboard":{
     "message":"إضغط لفتح لوحة التحكم",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"دخول وضع تحديد العناصر السريع",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
-    "message":"دخول وضع اختيار اليدوي",
+    "message":"دخول وضع تحديد العناصر",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -80,7 +84,7 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"لا نوافذ منبثقة لهذا الموقع",
+    "message":"تفعيل أو تعطيل النوافذ منبثقة لهذا الموقع",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
@@ -88,11 +92,11 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"تفعيل أو تعطيل التصفية الجمالية لهذا الموقع",
+    "message":"تفعيل أو تعطيل الفلترة التجميلية لهذا الموقع",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"تبديل حجب الخطوط البعيدة لهذا الموقع",
+    "message":"تفعيل أو تعطيل حجب الخطوط الخارجية لهذا الموقع",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -108,15 +112,15 @@
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"إضغط لتعيد التغييرات للوضع السابِق.",
+    "message":"إضغط لإعادة التغييرات للوضع السابق.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"كل",
+    "message":"الكل",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"صور",
+    "message":"الصور",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -144,7 +148,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"النطاقات الملموسة",
+    "message":"النطاقات المتصلة",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -168,11 +172,11 @@
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
-    "message":"فلاتر النت",
+    "message":"فلاتر الشبكة",
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"فلاتر تجميليه",
+    "message":"فلاتر تجميلية",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -208,7 +212,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"أنا مستخدم ذو خبرة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>قراءة إجبارية<\/a>)",
+    "message":"تمكين الميزات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يرجى الإطلاع<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
@@ -288,11 +292,11 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"تجاهُل الفلاتر التجميلية العمومية",
+    "message":"تجاهل الفلاتر التجميلية العامة",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>الفلاتر التجميلية العمومية هي الفلاتر التجميلية التي تنطبق على كل مواقع الإنترنت.<p>رغم أن uBlock₀ يتعامل معها بكفاءة، تستطيع الفلاتر التجميلية العمومية أن تستهلك كمية لا بأس بها من الذاكرة و قوة المعالجة على بعض الصفحات، خاصّةً الصفحات الكبيرة أو ذات العمر الطويل.<p>تفعيل هذه الخاصية سيلغي استهلاك الذاكرة و قوة المعالجة المضافان على صفحات الإنترنت الناتجان عن التعامل مع الفلاتر التجميلية العمومية، بالإضافة إلى تقليل استهلاك الذاكرة من uBlock₀ بشكلٍ عام.<p>من الأفضل أن تُفَعَّل هذه الخاصية في الأجهزة الأقل كفاءة.",
+    "message":"<p>الفلاتر التجميلية العامة هي الفلاتر التجميلية التي تنطبق على كل مواقع الإنترنت.<p>رغم أن uBlock₀ يتعامل معها بكفاءة، لكن يبقى من المرجح أن تستهلك المزيد من الموارد من الذاكرة و قوة المعالج على بعض الصفحات، خاصّةً الصفحات الكبيرة أو الممتدة<p>إهمال هذا النوع من الفلترة يلغي إستهلاك الذاكرة و قوة المعالج التي تستخدم في صفحات الإنترنت والناتجة عن التعامل مع اللفلاتر التجميلية، بالإضافة إلى تقليل إستهلاك الذاكرة من طرف uBlock₀ بشكلٍ عام.<p>من الأفضل أن تُفَعَّل هذه الخاصية على الأجهزة الأقل كفاءة.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,11 +340,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"قد يكون قديماً ولا يعمل",
+    "message":"متقادم.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"آخر تحديث: {{ago}}",
+    "message":"آخر تحديث: {{ago}}. \nانقر لفرض التحديث.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -420,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"القائمة الخاصه التي سوف يتم تجاهلها من قبل uBlock₀. رابط واحد كل سطر.\nالروابط الغير صحيحه سوف يتم تجاهلها.",
+    "message":"القائمة البيضاء تشيرللصفحات التي سوف يتم تعطيل uBlock₀ فيها. مدخل واحد لكل سطر. الفلاتر الغير صحيحه سوف يتم تجاهلها وإستبعادها.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -576,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"ليس بالإمكان الإتصال بـ {{url}}",
+    "message":"خطأ في الشبكة: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
@@ -676,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"إنذار! غيِّر هذه الإعدادات المتقدمة على مسؤوليتك الخاصة.",
+    "message":"تحذير! تغيير هذه الإعدادات المتقدمة يكون على مسؤوليتك.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

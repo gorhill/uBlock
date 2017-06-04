@@ -71,6 +71,10 @@
     "message":"Κάντε κλικ για να ανοίξετε τον πίνακα εργαλείων",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Είσοδος στη λειτουργία επιλογής στοιχείων",
     "description":"English: Enter element picker mode"

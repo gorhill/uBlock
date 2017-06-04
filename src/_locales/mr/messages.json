@@ -71,6 +71,10 @@
     "message":"डॅशबोर्ड उघडण्यासाठी क्लिक करा",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"घटक निवडक मोड प्रविष्ट करा",
     "description":"English: Enter element picker mode"

@@ -65,7 +65,21 @@ var fireNotification = function(topic, details) {
 /******************************************************************************/
 
 api.fetchText = function(url, onLoad, onError) {
-    var actualUrl = reIsExternalPath.test(url) ? url : vAPI.getURL(url);
+    var isExternal = reIsExternalPath.test(url),
+        actualUrl = isExternal ? url : vAPI.getURL(url);
+
+    // https://github.com/gorhill/uBlock/issues/2592
+    // Force browser cache to be bypassed, but only for resources which have
+    // been fetched more than one hour ago.
+    if ( isExternal ) {
+        var queryValue = '_=' + Math.floor(Date.now() / 7200000);
+        if ( actualUrl.indexOf('?') === -1 ) {
+            actualUrl += '?';
+        } else {
+            actualUrl += '&';
+        }
+        actualUrl += queryValue;
+    }
 
     if ( typeof onError !== 'function' ) {
         onError = onLoad;
@@ -993,7 +1007,12 @@ var updateNext = function() {
             if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
                 continue;
             }
-            if ( fireNotification('before-asset-updated', { assetKey: assetKey }) !== false ) {
+            if (
+                fireNotification(
+                    'before-asset-updated',
+                    { assetKey: assetKey,  type: assetEntry.content }
+                ) !== false
+            ) {
                 return assetKey;
             }
             garbageCollectOne(assetKey);

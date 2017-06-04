@@ -71,6 +71,10 @@
     "message":"Кликните за отварање контролне табле",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Ући у режим уклањања елемената",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Ући у режим избора елемената",
     "description":"English: Enter element picker mode"

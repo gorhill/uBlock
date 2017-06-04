@@ -71,6 +71,10 @@
     "message":"Klikni za odpiranje nadzorne plošče",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Vklopi način izbire elementov",
     "description":"English: Enter element picker mode"

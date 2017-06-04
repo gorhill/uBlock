@@ -71,6 +71,10 @@
     "message":"Kontrol panelini açmak için tıklayın",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Öğe silme moduna gir",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Öğe seçme moduna gir",
     "description":"English: Enter element picker mode"

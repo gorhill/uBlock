@@ -71,6 +71,10 @@
     "message":"Klik om het dashboard te openen",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Elementwissermodus openen",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Elementkiezermodus openen",
     "description":"English: Enter element picker mode"
@@ -340,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Laatste update: {{ago}}.\nKlik om een update af te dwingen.",
+    "message":"Laatst bijgewerkt: {{ago}}.\nKlik om een update af te dwingen.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{

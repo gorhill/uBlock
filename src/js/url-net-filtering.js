@@ -142,23 +142,16 @@ URLNetFiltering.prototype.reset = function() {
 
 URLNetFiltering.prototype.assign = function(other) {
     var thisRules = this.rules,
-        otherRules = other.rules,
-        iter, item;
+        otherRules = other.rules;
     // Remove rules not in other
-    iter = thisRules.entries();
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        if ( otherRules.has(item.value) === false ) {
-            thisRules.delete(item.value);
+    for ( var key of thisRules.keys() ) {
+        if ( otherRules.has(key) === false ) {
+            thisRules.delete(key);
         }
     }
     // Add/change rules in other
-    iter = otherRules.entries();
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        thisRules.set(item.value[0], item.value[1].slice());
+    for ( var entry of otherRules ) {
+        thisRules.set(entry[0], entry[1].slice());
     }
 };
 
@@ -210,7 +203,7 @@ URLNetFiltering.prototype.removeRule = function(srcHostname, url, type) {
 URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     this.r = 0;
     if ( this.rules.size === 0 ) {
-        return this;
+        return 0;
     }
     var entries, pos, i, entry;
     for (;;) {
@@ -222,7 +215,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 this.url = entry.url;
                 this.type = type;
                 this.r = entry.action;
-                return this;
+                return this.r;
             }
         }
         if ( (entries = this.rules.get(context + ' *')) ) {
@@ -232,14 +225,20 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 this.url = entry.url;
                 this.type = '*';
                 this.r = entry.action;
-                return this;
+                return this.r;
             }
         }
         if ( context === '*' ) { break; }
         pos = context.indexOf('.');
         context = pos !== -1 ? context.slice(pos + 1) : '*';
     }
-    return this;
+    return 0;
+};
+
+/******************************************************************************/
+
+URLNetFiltering.prototype.mustAllowCellZ = function(context, target, type) {
+    return this.evaluateZ(context, target, type).r === 2;
 };
 
 /******************************************************************************/
@@ -250,20 +249,29 @@ URLNetFiltering.prototype.mustBlockOrAllow = function() {
 
 /******************************************************************************/
 
-URLNetFiltering.prototype.toFilterString = function() {
-    if ( this.r === 0 ) {
-        return '';
-    }
-    var body = this.context + ' ' + this.url + ' ' + this.type;
-    if ( this.r === 1 ) {
-        return 'lb:' + body + ' block';
-    }
-    if ( this.r === 2 ) {
-        return 'la:' + body + ' allow';
-    }
-    /* this.r === 3 */
-    return 'ln:' + body + ' noop';
+URLNetFiltering.prototype.toLogData = function() {
+    if ( this.r === 0 ) { return; }
+    return {
+        source: 'dynamicUrl',
+        result: this.r,
+        rule: [
+            this.context,
+            this.url,
+            this.type,
+            this.intToActionMap.get(this.r)
+        ],
+        raw: this.context + ' ' +
+             this.url + ' ' +
+             this.type + ' ' +
+             this.intToActionMap.get(this.r)
+    };
 };
+
+URLNetFiltering.prototype.intToActionMap = new Map([
+    [ 1, ' block' ],
+    [ 2, ' allow' ],
+    [ 3, ' noop' ]
+]);
 
 /******************************************************************************/
 
@@ -295,17 +303,14 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
 
 URLNetFiltering.prototype.toString = function() {
     var out = [],
-        iter = this.rules.entries(),
-        item, key, pos, hn, type, entries, i, entry;
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        key = item.value[0];
+        key, pos, hn, type, entries, i, entry;
+    for ( var item of this.rules ) {
+        key = item[0];
         pos = key.indexOf(' ');
         hn = key.slice(0, pos);
         pos = key.lastIndexOf(' ');
         type = key.slice(pos + 1);
-        entries = item.value[1];
+        entries = item[1];
         for ( i = 0; i < entries.length; i++ ) {
             entry = entries[i];
             out.push(
