@@ -40,15 +40,15 @@ Image = function() {
                 return src;
             },
             set: function(val) {
-                // Resolve relative URL
-                linkResolver.href = val;
-                src = linkResolver.href;
                 if (block(val, 'image')) {
                     val = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=';
                     if (x.width === 1) x.width = 0;
                     if (x.height === 1) x.height = 0;
                 }
                 x.setAttribute('src', val);
+                // Resolve relative URL
+                linkResolver.href = val;
+                src = linkResolver.href;
             }
         });
     } catch (e) {
@@ -82,19 +82,19 @@ if ( window.Worker instanceof Function ) {
 // __MSG_historyScript__
 var pS = history.pushState,
     rS = history.replaceState,
-    onpopstate = function(e) {
+    onStateChange = function(e) {
         if (!e || e.state !== null) {
             block(location.href, 'popstate');
         }
     };
-window.addEventListener('popstate', onpopstate, true);
+window.addEventListener('popstate', onStateChange, true);
 history.pushState = function() {
     var r = pS.apply(this, arguments);
-    onpopstate();
+    onStateChange();
     return r;
 };
 history.replaceState = function() {
     var r = rS.apply(this, arguments);
-    onpopstate();
+    onStateChange();
     return r;
 };

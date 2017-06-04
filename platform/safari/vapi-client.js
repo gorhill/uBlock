@@ -585,8 +585,7 @@ var firstMutation = function() {
         meta.setAttribute('content', 'script-src "unsafe-eval" *');
         if ( document.documentElement.firstChild ) {
             document.documentElement.insertBefore(meta, document.documentElement.firstChild);
-        }
-        else {
+        } else {
             document.documentElement.appendChild(meta);
         }
     }
@@ -598,7 +597,7 @@ var firstMutation = function() {
     var tmpJS = document.createElement('script');
     var tmpScript = '!function(){__MSG_clientInjectedScript__';
     var eventScript;
-    if (legacyMode) {
+    if ( legacyMode ) {
         eventScript = 'var e = document.createEvent("CustomEvent");\
 e.initCustomEvent("' + vAPI.sessionId + '", false, false, {url: u, type: t});'
     } else {
