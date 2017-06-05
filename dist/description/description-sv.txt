@@ -1,22 +1,22 @@
-En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda och applicera tusentals fler filter jämfört med andra populära blockerare där ute.
+En effektiv blockerare: Använder lite minne och CPU, men som ändå kan ladda och applicera tusentals fler filter jämfört med andra populära blockerare där ute.
 
 Illustrerad översikt av dess effektivitet:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
+Användning: Den stora strömbrytarikonen i popup-rutan är till för att inaktivera/aktivera uBlock₀ permanent på den aktuella webbplatsen. Detta gäller enbart för den aktuella webbplatsen, det är alltså inte en global strömbrytare.
 
 ***
 
-Flexibel. uBlock₀ är inte enbart en "reklamblockerare": den kan också läsa och skapa filter från hosts-filer.
+Flexibel. uBlock₀ är inte bara en "blockerare för reklam": Den kan också läsa och skapa filter från hosts-filer.
 
-Som standard är följande filterlistor laddade och applicerade:
+Följande filter-listor är laddade och applicerade som standard:
 
 - EasyList
-- Peter Lowe’s Ad server list
+- Peter Lowe’s Ad server-lista
 - EasyPrivacy
 - Malware domains
 
-Fler filterlistor finns tillgängliga att använda om du vill:
+Fler filter-listor finns tillgängliga att använda om du så önskar:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
@@ -25,13 +25,13 @@ Fler filterlistor finns tillgängliga att använda om du vill:
 - Spam404
 - med flera
 
-Ju fler aktiverade filter, desto högre minnesanvändning. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts' Ad and tracking servers så använder uBlock₀ mindre minne än andra väldigt populära blockerare.
+Ju fler aktiverade filter, desto högre minnesanvändning, men även efter att ha lagt till Fanboy's två extra filter-listor och hpHosts' Ad and tracking servers så använder uBlock₀ mindre minne än andra väldigt populära blockerare.
 
-Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder - särskilt de listor som i normala fall används som hosts-filer.
+Tänk på att genom att aktivera vissa av dessa extra filter-listor finns det större risk att webbplatser slutar fungera helt - särskilt de listor som i normala fall används som hosts-filer.
 
 ***
 
-uBlock₀ vore ingenting utan filterlistorna. Så om du vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
+uBlock₀ vore ingenting utan filter-listorna. Så om du vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filter-listor du använder, vilka är fritt tillgängliga för vem som helst att använda.
 
 ***
 
@@ -46,5 +46,5 @@ Bidragsgivare @ Crowdin: https://crowdin.net/project/ublock
 
 Detta är en ganska tidig version, tänk på detta när du skriver en recension.
 
-Projektets ändringslogg:
+Ändringslogg för projektet:
 https://github.com/gorhill/uBlock/releases
