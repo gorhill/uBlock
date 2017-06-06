@@ -130,7 +130,7 @@ input[type=range]::-moz-range-progress {
   background-color: #0076FF;
   height: 8px;
   border-color: #0076FF;
-  margin:0;
+  margin-right: 5px;
   padding:0px;
   border-radius: 2px;
 }
