@@ -27,7 +27,7 @@ ul#userSettings .subgroup {
   margin: 1em 0 2em;
 }
 ul#userSettings .subgroup p {
-  margin: 0 0 0 50px;
+  margin: 0 22px 0 50px;
   line-height: 1.5em;
   float:left;
   cursor: default;
@@ -52,7 +52,7 @@ ul#userSettings .subgroup> span {
   font-family: 'bebas_neue',sans-serif;
 }
 ul#userSettings .subgroup> ul {
-  padding: 10px 0 10px 44px;
+  padding: 5px 0 15px 44px;
   clear:both;
 }
 ul#userSettings .subgroup> ul> li label {
@@ -92,7 +92,7 @@ input[type=range] {
    border-radius: 5px;
    background-color: transparent;
    height: 10px;
-   width: 280px;
+   width: 275px;
    border-color: #0076FF;
    padding:0;
    margin:0;
