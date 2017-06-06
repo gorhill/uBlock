@@ -407,6 +407,8 @@ var renderWidgets = function() {
     uDom('#buttonApply').toggleClass('disabled', filteringSettingsHash === hashFromCurrentFromSettings());
     uDom('#buttonPurgeAll').toggleClass('disabled', document.querySelector('#lists .listEntry.cached') === null);
     uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete input[type="checkbox"]:checked') === null);
+    uDom('#buttonUpdateAdNauseam').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .groupEntry:first-child .listEntry:first-child span.cache').offsetWidth > 0);
+
 };
 
 /******************************************************************************/
