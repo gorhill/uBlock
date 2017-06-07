@@ -2144,6 +2144,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, writer
 
     var redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
     if ( Array.isArray(redirects) === false ) {
+        return;
     }
     descBits = typeNameToTypeValue.redirect;
     var i = redirects.length;
