@@ -42,7 +42,7 @@ var exports = {};
 // Called before each outgoing request (ADN:)
 var onBeforeSendHeaders = function (details) {
 
-console.log('onBeforeSendHeaders');
+// console.log('onBeforeSendHeaders');
 
   var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 

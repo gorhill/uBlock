@@ -1150,7 +1150,7 @@ vAPI.net.registerListeners = function() {
     // Chromium 48 and lower does not support `ping` type.
     // Chromium 56 and higher does support `csp_report` stype.
     if ( onBeforeSendHeaders ) {
-      console.log('adding onBeforeSendHeaders');
+      // console.log('adding onBeforeSendHeaders');
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             {
@@ -1161,7 +1161,7 @@ vAPI.net.registerListeners = function() {
         );
     }
     else {
-      console.log('skipping onBeforeSendHeaders');
+      // console.log('skipping onBeforeSendHeaders');
     }
 
     if ( onHeadersReceived ) {
