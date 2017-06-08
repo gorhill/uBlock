@@ -50,7 +50,7 @@ var µBlock = (function() { // jshint ignore:line
         onStartCompletedQueue: [],
 
         userSettings: {
-            admap: {},          // ADN
+            admap: {},          // ADN //////////////////
             dntDomains: [],
             parseTextAds: true,
             eventLogging: false,
@@ -68,6 +68,8 @@ var µBlock = (function() { // jshint ignore:line
             noOutgoingReferer: false,
             noOutgoingUserAgent: false,
             advancedUserEnabled: true,
+
+            ////////////////// end-ADN ////////////////////
 
             alwaysDetachLogger: false,
             autoUpdate: true,

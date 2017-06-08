@@ -1051,12 +1051,25 @@ vAPI.net.registerListeners = function() {
             return onBeforeRequestClient(details);
         };
 
+    // var onBeforeSendHeadersClientStub = function(details) {
+    //   console.log('onBeforeSendHeadersClientStub');
+    //   normalizeRequestDetails(details);
+    //   return onHeadersReceivedClient(details);
+    // };
+
+    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
+        onBeforeSendHeadersClientTypes = this.onBeforeSendHeaders.types ? this.onBeforeSendHeaders.types.slice(0) : [],
+        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
+
     // This is needed for Chromium 49-55.
     var onBeforeSendHeaders = validTypes.csp_report
         // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? null
+        ? function(details) { return onBeforeSendHeadersClient(details); }
         // legacy Chromium
         : function(details) {
+
+            var result = onBeforeSendHeadersClient(details);
+
             if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
             var type = headerValue(details.requestHeaders, 'content-type');
             if ( type === '' ) { return; }
@@ -1066,9 +1079,11 @@ vAPI.net.registerListeners = function() {
             }
         };
 
+
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+
     var onHeadersReceived = validTypes.font
         // modern Chromium/WebExtensions: type 'font' is supported
         ? function(details) {
@@ -1135,14 +1150,18 @@ vAPI.net.registerListeners = function() {
     // Chromium 48 and lower does not support `ping` type.
     // Chromium 56 and higher does support `csp_report` stype.
     if ( onBeforeSendHeaders ) {
+      console.log('adding onBeforeSendHeaders');
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             {
-                'urls': [ '<all_urls>' ],
-                'types': [ 'ping' ]
+                'urls': [ '<all_urls>' ]
+                //,'types': [ 'ping' ]
             },
             [ 'blocking', 'requestHeaders' ]
         );
+    }
+    else {
+      console.log('skipping onBeforeSendHeaders');
     }
 
     if ( onHeadersReceived ) {

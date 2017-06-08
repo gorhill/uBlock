@@ -42,6 +42,8 @@ var exports = {};
 // Called before each outgoing request (ADN:)
 var onBeforeSendHeaders = function (details) {
 
+console.log('onBeforeSendHeaders');
+
   var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 
   // if clicking/hiding is enabled with DNT, then send the DNT header
