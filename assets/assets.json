@@ -235,6 +235,14 @@
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
+	"linkedinsanity-social": {
+		"content": "filters",
+		"group": "social",
+		"off": true,
+		"title": "LinkedInsanity Rules",
+		"contentURL": "https://raw.githubusercontent.com/taylr/linkedinsanity/master/linkedinsanity.txt",
+		"supportURL": "https://github.com/taylr/linkedinsanity/issues"
+	},
 	"dpollock-0": {
 		"content": "filters",
 		"group": "multipurpose",
