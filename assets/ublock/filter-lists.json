@@ -371,5 +371,11 @@
 		"group": "regions",
 		"lang": "sl",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
+	},
+	"https://raw.githubusercontent.com/gasull/adblock-nsa/master/filters.txt": {
+		"off": true,
+		"title": "Adblock the NSA",
+		"group": "privacy",
+		"supportURL": "https://github.com/gasull/adblock-nsa"
 	}
 }
