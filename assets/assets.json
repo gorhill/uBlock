@@ -121,6 +121,14 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
+	"piperun-iplogger": {
+		"content": "filters",
+		"group": "iplogger",
+		"off": true,
+		"title": "Piperun's IPlogger blocklist",
+		"contentURL": "https://raw.githubusercontent.com/piperun/iploggerfilter/master/filterlist",
+		"supportURL": "https://github.com/piperun/iploggerfilter"
+	},
 	"disconnect-tracking": {
 		"content": "filters",
 		"group": "privacy",
