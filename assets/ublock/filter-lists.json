@@ -282,12 +282,12 @@
 		"group": "malware",
 		"supportURL": "http://www.spam404.com/"
 	},
-	"http://stanev.org/abp/adblock_bg.txt": {
+	"https://stanev.org/abp/adblock_bg.txt": {
 		"off": true,
 		"title": "BGR: Bulgarian Adblock list",
 		"group": "regions",
 		"lang": "bg",
-		"supportURL": "http://stanev.org/abp/"
+		"supportURL": "https://stanev.org/abp/"
 	},
 	"http://winhelp2002.mvps.org/hosts.txt": {
 		"off": true,
