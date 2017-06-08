@@ -52,6 +52,11 @@ a {
     position: relative;
     text-align: center;
     }
+#appname:before{
+    content:"\f013";
+    font-family: FontAwesome;
+    padding-right:5px;
+}
 #version {
     font-size: 90%;
     font-weight: normal;
