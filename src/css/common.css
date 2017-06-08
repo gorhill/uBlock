@@ -123,16 +123,14 @@ a.external-link {
   display: none;
 }
 .custom-check #lists input#effListInput + label {
-    display: inline-block!important;
+  display: inline-block!important;
 }
 .custom-check #lists input[type="checkbox"]::before{
   margin: 0px 4px 0 0!important;
   vertical-align: baseline!important;
 }
 .custom-check ul#clickingFrequency{
-  margin: .5em 0 1em -.5em;
-  border: solid 1px #555;
-  padding:.5em 1em 1em .5em;
+  padding:.5em 1em .3em .3em;
   border-radius: 8px;
   display: inline-block;
 }
@@ -275,6 +273,7 @@ button.custom {
     font-size: 20px;
     height: 30px;
     padding-top: 2px;
+    margin:4px 0;
     }
 button.custom.disabled,
 button.custom[disabled],
@@ -346,7 +345,7 @@ button.important {
   background-size: 40px 39px;
   padding: 5px 5px 5px 44px;
   line-height: 1.7em;
-  font-family: 'bebas_neue,sans-serif';
+  font-family: 'bebas_neue',sans-serif;
   font-size: 18px;
   border-bottom: 1px solid;
   background-position: 3px center;
@@ -493,7 +492,7 @@ button.error{
     }
 /*@import 'fonts/stylesheet.css';*/
 @font-face {
-    font-family: 'bebas_neue,sans-serif';
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_thin-webfont.eot');
     src: url('fonts/bebasneue_thin-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_thin-webfont.woff2') format('woff2'),
@@ -504,7 +503,7 @@ button.error{
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue,sans-serif';
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_light-webfont.eot');
     src: url('fonts/bebasneue_light-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_light-webfont.woff2') format('woff2'),
@@ -515,7 +514,7 @@ button.error{
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue,sans-serif';
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_book-webfont.eot');
     src: url('fonts/bebasneue_book-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_book-webfont.woff2') format('woff2'),
@@ -526,7 +525,7 @@ button.error{
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue,sans-serif';
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_regular-webfont.eot');
     src: url('fonts/bebasneue_regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_regular-webfont.woff2') format('woff2'),
@@ -537,7 +536,7 @@ button.error{
     font-style: normal;
 }
 @font-face {
-    font-family: 'bebas_neue,sans-serif';
+    font-family: 'bebas_neue';
     src: url('fonts/bebasneue_bold-webfont.eot');
     src: url('fonts/bebasneue_bold-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/bebasneue_bold-webfont.woff2') format('woff2'),

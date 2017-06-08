@@ -102,12 +102,12 @@
     if (hasEnabledToggle()) {
       //remove class "disable"
       button.removeClass("disabled");
-    } 
+    }
     else {
       //add class disable
       button.addClass("disabled");
     }
-    
+
     //hide all
     uDom('#confirm-close button span').css("display", "none");
 
@@ -119,7 +119,7 @@
 
         button.addClass("toggled0");
         break;
-    case 1: 
+    case 1:
         uDom('span[data-i18n="adnFirstRunThatsIt"]').css("display", "inline-block");
         button.removeClass("toggled0");
         button.removeClass("toggled2");
@@ -147,27 +147,28 @@
   var onUserSettingsReceived = function (details) {
 
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
+      if (details.hasOwnProperty([uNode.attr('data-setting-name')])) {
+        uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
+          .on('change', function () {
 
-      uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
-        .on('change', function () {
+              if (this.getAttribute('data-setting-name') === "respectDNT") {
+                changeDNTexceptions(this.checked);
+              } else {
+                changeUserSettings(
+                  this.getAttribute('data-setting-name'),
+                  this.checked
+                );
+              }
 
-            if (this.getAttribute('data-setting-name') === "respectDNT") {
-              changeDNTexceptions(this.checked);
-            } else {
-              changeUserSettings(
-                this.getAttribute('data-setting-name'),
-                this.checked
-              );
-            }
+              if (!hideOrClick()) {
+                changeDNTexceptions(false);
+              }
 
-            if (!hideOrClick()) {
-              changeDNTexceptions(false);
-            }
+              toggleFirstRunButton();
+              toggleDNTException();
 
-            toggleFirstRunButton();
-            toggleDNTException();
-
-        });
+          });
+        }
     });
 
     uDom('[data-setting-type="input"]').forEach(function (uNode) {

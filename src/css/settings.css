@@ -5,6 +5,13 @@
 ul {
   padding-left: 1em;
 }
+
+@media screen and (max-width: 500px) {
+    ul#userSettings {
+        margin: 0px !important;
+    }
+}
+
 ul#userSettings {
   padding-left: 0;
   margin: 50px;
@@ -20,9 +27,15 @@ ul#userSettings .subgroup {
   margin: 1em 0 2em;
 }
 ul#userSettings .subgroup p {
-  margin: 0 0 0 50px;
+  margin: 0 22px 0 50px;
   line-height: 1.5em;
   float:left;
+  cursor: default;
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none;     
+  user-select: none;
+
 }
 ul#userSettings .subgroup .subgroupDescription {
     clear: both;
@@ -39,7 +52,7 @@ ul#userSettings .subgroup> span {
   font-family: 'bebas_neue',sans-serif;
 }
 ul#userSettings .subgroup> ul {
-  padding: 10px 0 10px 44px;
+  padding: 5px 0 15px 44px;
   clear:both;
 }
 ul#userSettings .subgroup> ul> li label {
@@ -59,4 +72,72 @@ ul#userSettings .subgroup> ul> li label {
 }
 body.advancedUser #advanced-user-enabled ~ a.fa {
   display: inline;
+}
+input[type="range"]:focus {
+  outline: none!important;
+}
+input[type="range"]:disabled{
+  overflow: hidden;
+  outline: none!important;
+  border-color: gray;
+}
+input[type="range"]:disabled::-webkit-slider-thumb {
+    box-shadow: -320px 0 0 315px gray;
+    background-color: #BBB;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  -moz-apperance: none;
+   overflow: hidden;
+   border-radius: 5px;
+   background-color: transparent;
+   height: 10px;
+   width: 275px;
+   border-color: #0076FF;
+   padding:0;
+   margin:0;
+}
+input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    box-shadow: -320px 0 0 315px #0076FF;
+    width: 2em;
+    height: 8px;
+    background-color: #004ca5;
+    border-radius: 5px;
+}
+input[type=range]::-moz-range-thumb {
+  background-color: #004ca5;
+  width: 2em;
+  border-radius: 5px;
+  border-style: none;
+}
+input[type=range]:disabled::-moz-range-thumb {
+  background-color: #BBB;
+}
+p#choiceSlider {
+  display: inline-block;
+  padding-right: 2.2em;
+  text-indent: -47px;
+}
+p#choiceSlider2 {
+  text-indent: -47px;
+}
+p:disabled{
+  color: #777;
+}
+input[type=range]::-moz-range-progress {
+  background-color: #0076FF;
+  height: 8px;
+  border-color: #0076FF;
+  margin-right: 5px;
+  padding:0px;
+  border-radius: 2px;
+}
+input[type=range]::-moz-range-track{
+  background-color: transparent;
+}
+
+input[type=range]:disabled::-moz-range-progress {
+  background-color: gray;
 }

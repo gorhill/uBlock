@@ -618,7 +618,8 @@
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                     hour: 'numeric', minute: 'numeric' };
 
-    return new Intl.DateTimeFormat(getLocale(), options).format(date);
+    var result = typeof Intl === "object" ? new Intl.DateTimeFormat(getLocale(), options).format(date) : date;
+    return result;
   }
 
   function enableLightbox() {
@@ -903,7 +904,6 @@
       centerZoom(false);
 
       $('#container').removeClass('lightbox');
-      createSlider(false);
     }
   }
 
@@ -1515,6 +1515,9 @@
       centerContainer();
       gMin = ext[0], gMax = ext[1];
 
+      gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
+      gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
+      
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
         //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);

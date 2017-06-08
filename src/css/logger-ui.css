@@ -156,6 +156,9 @@ body.colorBlind #netInspector tr.nooped {
 #netInspector tr.allowed {
     background-color: rgba(0, 160, 0, 0.25);
     }
+#netInspector tr.adnauseamAllowed {
+    background-color: rgba(160,31,240, 0.2);
+    }
 body.colorBlind #netInspector tr.allowed {
     background-color: rgba(255, 194, 57, 0.25)
     }
@@ -547,6 +550,7 @@ body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.en
 body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
     background-color: rgb(255, 194, 57);
     }
+
 #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.noop {
     background-color: rgb(108, 108, 108);
     }
