@@ -39,6 +39,10 @@
     "message":"ಕುರಿತು",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"ಸುಧಾರಿತ ಆಯ್ಕೆಗಳು",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"ಕ್ಲಿಕ್: ಈ ಜಾಲತಾಣಕ್ಕೆ ನಿಷ್ಕ್ರಿಯ\/ಸಕ್ರಿಯಗೊಳಿಸಲು.\nಕಂಟ್ರೋಲ್ + ಕ್ಲಿಕ್: ಈ ಜಾಲತಾಣಕ್ಕೆ ಮಾತ್ರ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲು.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -165,7 +169,7 @@
   },
   "pickerNetFilters":{
     "message":"ನಿವ್ವಳ ಫಿಲ್ಟರುಗಳು",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"ಕಾಸ್ಮೆಟಿಕ್ ಫಿಲ್ಟರುಗಳು",
@@ -196,7 +200,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"ಬಣ್ಣ ಅಂಧತೆ ಉಪಯುಕ್ತ",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -204,15 +208,19 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
-    "description":"English: "
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>required reading<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"advanced settings",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -416,8 +424,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which uBlock₀ will be disabled. One entry per line. Invalid host names will be silently ignored.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"The whitelist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Import and append",
@@ -544,8 +552,8 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
-    "description":"English: Backup to file"
+    "message":"Back up to file",
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"my-ublock-backup_{{datetime}}.txt",
@@ -671,13 +679,21 @@
     "message":"ಈ ಸಾಧನದ ಹೆಸರು:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"ಸಲ್ಲಿಸಿ",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"ಹಿಂತಿರುಗಿಸಿ",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"ಬೈಟ್ಗಳು",

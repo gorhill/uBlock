@@ -284,7 +284,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros para &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
@@ -292,7 +292,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Habilitando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "message":"<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{

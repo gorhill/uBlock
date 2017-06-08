@@ -100,6 +100,8 @@ vAPI.matchesProp = (function() {
             return 'mozMatchesSelector';
         } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
             return 'webkitMatchesSelector';
+        } else if ( typeof docElem.msMatchesSelector === 'function' ) {
+            return 'msMatchesSelector';
         }
     }
     return 'matches';
@@ -233,55 +235,75 @@ var platformHideNode = vAPI.hideNode,
     }
 
     var uid,
-        timerId,
+        timer,
         observer,
-        changedNodes = [];
-    var observerOptions = {
-        attributes: true,
-        attributeFilter: [ 'style' ]
-    };
+        changedNodes = [],
+        observerOptions = {
+            attributes: true,
+            attributeFilter: [ 'style' ]
+        };
 
-    var overrideInlineStyle = function(node) {
-        var style = window.getComputedStyle(node),
-            display = style.getPropertyValue('display'),
-            attr = node.getAttribute('style') || '';
-        if ( node[uid] === undefined ) {
-            node[uid] = node.hasAttribute('style') && attr;
+    // https://jsperf.com/clientheight-and-clientwidth-vs-getcomputedstyle
+    //   Avoid getComputedStyle(), detecting whether a node is visible can be
+    //   achieved with clientWidth/clientHeight.
+    // https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+    //   Do not interleave read-from/write-to the DOM. Write-to DOM
+    //   operations would cause the first read-from to be expensive, and
+    //   interleaving means that potentially all single read-from operation
+    //   would be expensive rather than just the 1st one.
+    //   Benchmarking toggling off/on cosmetic filtering confirms quite an
+    //   improvement when:
+    //   - batching as much as possible handling of all nodes;
+    //   - avoiding to interleave read-from/write-to operations.
+    //   However, toggling off/on cosmetic filtering repeatedly is not
+    //   a real use case, but this shows this will help performance
+    //   on sites which try to use inline styles to bypass blockers.
+    var batchProcess = function() {
+        timer.clear();
+        var cNodes = changedNodes, i = cNodes.length,
+            vNodes = [], j = 0,
+            node;
+        while ( i-- ) {
+            node = cNodes[i];
+            if ( node[uid] !== undefined && node.clientHeight && node.clientWidth ) {
+                vNodes[j++] = node;
+            }
         }
-        if ( display !== '' && display !== 'none' ) {
-            if ( attr !== '' ) { attr += '; '; }
+        cNodes.length = 0;
+        while ( j-- ) {
+            node = vNodes[j];
+            var attr = node.getAttribute('style');
+            if ( !attr ) {
+                attr = '';
+            } else {
+                attr += '; ';
+            }
             node.setAttribute('style', attr + 'display: none !important;');
         }
     };
 
-    var timerHandler = function() {
-        timerId = undefined;
-        var nodes = changedNodes,
-            i = nodes.length, node;
-        while ( i-- ) {
-            node = nodes[i];
-            if ( node[uid] !== undefined ) {
-                overrideInlineStyle(node);
-            }
-        }
-        nodes.length = 0;
-    };
-
     var observerHandler = function(mutations) {
-        var i = mutations.length;
+        var i = mutations.length,
+            cNodes = changedNodes,
+            j = cNodes.length;
         while ( i-- ) {
-            changedNodes.push(mutations[i].target);
+            cNodes[j++] = mutations[i].target;
         }
-        if ( timerId === undefined ) {
-            timerId = vAPI.setTimeout(timerHandler, 1);
-        }
+        timer.start();
     };
 
     platformHideNode = function(node) {
         if ( uid === undefined ) {
             uid = vAPI.randomToken();
+            timer = new vAPI.SafeAnimationFrame(batchProcess);
         }
-        overrideInlineStyle(node);
+        if ( node[uid] === undefined ) {
+            node[uid] = node.hasAttribute('style') && (node.getAttribute('style') || '');
+        }
+        // Performance: batch-process nodes to hide.
+        var cNodes = changedNodes;
+        cNodes[cNodes.length] = node;
+        timer.start();
         if ( observer === undefined ) {
             observer = new MutationObserver(observerHandler);
         }
@@ -473,9 +495,9 @@ var domFilterer = {
     hiddenNodeEnforcer: false,
     loggerEnabled: undefined,
 
-    newHideSelectorBuffer: [],                  // Hide style filter buffer
-    newStyleRuleBuffer: [],                     // Non-hide style filter buffer
-    simpleHideSelectors: {                      // Hiding filters: simple selectors
+    newHideSelectorBuffer: [], // Hide style filter buffer
+    newStyleRuleBuffer: [],    // Non-hide style filter buffer
+    simpleHideSelectors: {     // Hiding filters: simple selectors
         entries: [],
         matchesProp: vAPI.matchesProp,
         selector: undefined,
@@ -497,7 +519,7 @@ var domFilterer = {
             }
         }
     },
-    complexHideSelectors: {                     // Hiding filters: complex selectors
+    complexHideSelectors: {    // Hiding filters: complex selectors
         entries: [],
         selector: undefined,
         add: function(selector) {
@@ -515,13 +537,8 @@ var domFilterer = {
             }
         }
     },
-    styleSelectors: {                           // Style filters
-        entries: [],
-        add: function(o) {
-            this.entries.push(o);
-        }
-    },
-    proceduralSelectors: {                      // Hiding filters: procedural
+    nqsSelectors: [],          // Non-querySelector-able filters
+    proceduralSelectors: {     // Hiding filters: procedural
         entries: [],
         add: function(o) {
             this.entries.push(new PSelector(o));
@@ -562,7 +579,12 @@ var domFilterer = {
         var o = JSON.parse(selector);
         if ( o.style ) {
             this.newStyleRuleBuffer.push(o.style.join(' '));
-            this.styleSelectors.add(o);
+            this.nqsSelectors.push(o.raw);
+            return;
+        }
+        if ( o.pseudoclass ) {
+            this.newHideSelectorBuffer.push(o.raw);
+            this.nqsSelectors.push(o.raw);
             return;
         }
         if ( o.tasks ) {

@@ -14,8 +14,6 @@ html, body {
     }
 #dashboard-nav {
     border: 0;
-    font-size: 20px;
-    line-height: 25px;
     margin: 0;
     padding: 0;
     top: 0;
@@ -23,61 +21,41 @@ html, body {
     z-index: 10;
     }
 #dashboard-nav-widgets {
-    border-bottom: 1px solid #444;
-    padding: 4px 10px 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 0 0;
     white-space: nowrap;
-    background-color: #000;
+    background-color: white;
     }
-
-@media screen and (max-width: 500px) {
-    #dashboard-nav-widgets span {
-        display: none!important;
-    }
-}
-
 #dashboard-nav-widgets span {
     padding: 0 0.5em;
-    font-size: 20px;
-    font-family: bebas_neue,sans-serif;
-    display: block;
-    width: 100px;
-    float: left;
-    margin: 5px 0;
-    color: #fff; 
-}
+    font-size: larger;
+    }
 .tabButton {
-    font-family: bebas_neue,sans-serif;
-    background-color: #222;
-    border: 2px solid #444;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-width: 1px;
-    color: #ccc;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom: 1px solid #ccc;
+    color: black;
     cursor: pointer;
     display: inline-block;
     font-size: 110%;
-    margin: 0;
-    padding: 2px 10px;
+    margin: 0 0.2em 0 0;
+    padding: 4px;
     position: relative;
     text-decoration: none;
     top: 1px;
-    opacity: 0.75;
-    }
-.tabButton:hover{
-    opacity: 1;
-    color: #ccc;
     }
 .tabButton:focus {
     outline: 0;
     }
 .tabButton:active,.tabButton:visited {
-    /*color: inherit;*/
+    color: inherit;
     }
 .tabButton.selected {
-    background-color: #444;
-    color: #fff;
-    border-color: #444;
-    opacity: 1;
+    background-color: white;
+    border-bottom: 1px solid white;
     }
 iframe {
     margin: 0;
@@ -92,15 +70,19 @@ iframe {
         position: relative;
         }
     #dashboard-nav-widgets {
-        padding: 0;
+        padding: 1px 0 0 0;
+        white-space: normal;
         }
     [data-i18n="extName"] {
         display: none;
         }
     .tabButton {
         border-radius: 0;
-        border-top: 0;
-        display: block;
+        display: inline-block;
+        font-size: 100%;
+        margin-bottom: 1px;
+        margin-right: 1px;
+        top: 0;
         }
     .tabButton.selected {
         border-bottom: 1px solid #ccc;

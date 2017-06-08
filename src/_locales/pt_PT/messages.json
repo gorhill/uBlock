@@ -204,7 +204,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Ativar suporte à 'cloud'",
+    "message":"Ativar suporte à nuvem",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
@@ -292,7 +292,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a ser aplicados em todos os web sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para uma memória mensurável e overhead da CPU em algumas páginas web, especialmente os grandes e duradouros.<p>Ao ativar esta opção irá eliminar a overhead da memória e CPU adicionada a páginas web como resultado do manuseamento de filtros cosméticos genéricos, e também irá diminuir a pegada de memória do próprio uBlock₀.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "message":"<p>Os filtros cosméticos genéricos são aqueles filtros cosméticos destinados a ser aplicados em todos os web sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para uma memória mensurável e overhead da CPU em algumas páginas web, especialmente os grandes e duradouros.<p>Ao ativar esta opção irá eliminar a overhead da memória e CPU adicionada a páginas web como resultado do manuseamento de filtros cosméticos genéricos, e também irá diminuir a pegada de memória do próprio uBlock₀.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -584,7 +584,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Adicionar o seguinte URL à lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Adicionar o seguinte URL à sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -592,7 +592,7 @@
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"há {{value}} minuto(s)",
+    "message":"há {{value}} minutos",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
@@ -600,7 +600,7 @@
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"há {{value}} hora(s)",
+    "message":"há {{value}} horas",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
@@ -608,7 +608,7 @@
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"há {{value}} dia(s)",
+    "message":"há {{value}} dias",
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
@@ -660,15 +660,15 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Exportar para a 'cloud'",
+    "message":"Exportar para a nuvem",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importar da 'cloud'",
+    "message":"Importar a partir da nuvem",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importar do armazenamento 'cloud' e juntar às definições atuais",
+    "message":"Importar a partir da nuvem e juntar às definições atuais",
     "description":"tooltip"
   },
   "cloudNoData":{

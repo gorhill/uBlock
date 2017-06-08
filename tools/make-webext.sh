@@ -2,48 +2,45 @@
 #
 # This script assumes a linux environment
 
-echo "*** AdNauseam::WebExt: Creating web store package"
-echo "*** AdNauseam::WebExt: Copying files"
+echo "*** uBlock0.webext: Creating web store package"
+echo "*** uBlock0.webext: Copying files"
 
-DES=dist/build/adnauseam.webext
+DES=dist/build/uBlock0.webext
 rm -rf $DES
-mkdir -p $DES
+mkdir -p $DES/webextension
 
-VERSION=`jq .version manifest.json` # top-level adnauseam manifest
-UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
+bash ./tools/make-assets.sh $DES/webextension
 
-bash ./tools/make-assets.sh $DES
-bash ./tools/make-locales.sh $DES
+cp -R src/css                         $DES/webextension/
+cp -R src/img                         $DES/webextension/
+cp -R src/js                          $DES/webextension/
+cp -R src/lib                         $DES/webextension/
+cp -R src/_locales                    $DES/webextension/
+cp -R $DES/webextension/_locales/nb   $DES/webextension/_locales/no
+cp src/*.html                         $DES/webextension/
+cp platform/chromium/*.js             $DES/webextension/js/
+cp -R platform/chromium/img           $DES/webextension/
+cp platform/chromium/*.html           $DES/webextension/
+cp platform/chromium/*.json           $DES/webextension/
+cp platform/webext/polyfill.js        $DES/webextension/js/
+cp LICENSE.txt                        $DES/webextension/
 
-cp -R src/css                    $DES/
-cp -R src/img                    $DES/
-cp -R src/js                     $DES/
-cp -R src/lib                    $DES/
-#cp -R src/_locales               $DES/
-#cp -R $DES/_locales/nb           $DES/_locales/no
-cp src/*.html                    $DES/
-cp platform/chromium/*.js        $DES/js/
-cp -R platform/chromium/img      $DES/
-cp platform/chromium/*.html      $DES/
-cp platform/chromium/*.json      $DES/
-cp platform/webext/polyfill.js   $DES/js/
-cp platform/webext/manifest.json $DES/
-cp LICENSE.txt                   $DES/
+cp platform/webext/background.html    $DES/webextension/
+cp platform/webext/from-legacy.js     $DES/webextension/js/
+cp platform/webext/manifest.json      $DES/webextension/
+cp platform/webext/bootstrap.js       $DES/
+cp platform/webext/chrome.manifest    $DES/
+cp platform/webext/install.rdf        $DES/
+mv $DES/webextension/img/icon_128.png $DES/icon.png
 
-echo "*** AdNauseam::WebExt: Generating meta..."
-# python tools/make-webext-meta.py $DES/     ADN: use our own version
-#
-
-sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+echo "*** uBlock0.webext: Generating meta..."
+python tools/make-webext-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** AdNauseam::WebExt: Creating package..."
-    pushd $(dirname $DES/) > /dev/null
-    zip adnauseam.webext.zip -qr $(basename $DES/)/*
+    echo "*** uBlock0.webext: Creating package..."
+    pushd $DES > /dev/null
+    zip ../$(basename $DES).xpi -qr *
     popd > /dev/null
 fi
 
-echo "*** AdNauseam::WebExt: Package done."
-echo
+echo "*** uBlock0.webext: Package done."

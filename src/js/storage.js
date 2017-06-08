@@ -876,17 +876,33 @@
 /******************************************************************************/
 
 µBlock.loadRedirectResources = function(callback) {
-    var µb = this;
+    var µb = this,
+        content = '';
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
 
+    var onDone = function() {
+        µb.redirectEngine.resourcesFromString(content);
+        callback();
+    };
+
+    var onUserResourcesLoaded = function(details) {
+        if ( details.content !== '' ) {
+            content += '\n\n' + details.content;
+        }
+        onDone();
+    };
+
     var onResourcesLoaded = function(details) {
         if ( details.content !== '' ) {
-            µb.redirectEngine.resourcesFromString(details.content);
+            content = details.content;
         }
-        callback();
+        if ( µb.hiddenSettings.userResourcesLocation === 'unset' ) {
+            return onDone();
+        }
+        µb.assets.fetchText(µb.hiddenSettings.userResourcesLocation, onUserResourcesLoaded);
     };
 
     this.assets.get('ublock-resources', onResourcesLoaded);

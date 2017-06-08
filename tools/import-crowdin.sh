@@ -35,9 +35,11 @@ cp $SRC/hu/messages.json    $DES/hu/messages.json
 cp $SRC/id/messages.json    $DES/id/messages.json
 cp $SRC/it/messages.json    $DES/it/messages.json
 cp $SRC/ja/messages.json    $DES/ja/messages.json
+cp $SRC/kn/messages.json    $DES/kn/messages.json
 cp $SRC/ko/messages.json    $DES/ko/messages.json
 cp $SRC/lt/messages.json    $DES/lt/messages.json
 cp $SRC/lv/messages.json    $DES/lv/messages.json
+cp $SRC/ml-IN/messages.json $DES/ml/messages.json
 cp $SRC/mr/messages.json    $DES/mr/messages.json
 #cp $SRC/ms/messages.json    $DES/ms/messages.json
 cp $SRC/no/messages.json    $DES/nb/messages.json

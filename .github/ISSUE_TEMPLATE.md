@@ -13,6 +13,6 @@
 ### Your settings
 
 - OS/version: 
-- Browser/version: 
-- AdNauseam version: 
+- Browser/version:
+- AdNauseam version:
 - Other extensions you have installed:

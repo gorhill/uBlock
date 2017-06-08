@@ -44,7 +44,7 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Натиснення: вимикає\/умикає µBlock для поточного сайту.\n\nCtrl+натиснення: вимикає µBlock тільки для цієї сторінки.",
+    "message":"Натиснення: вимикає\/умикає uBlock₀ для поточного сайту.\n\nCtrl+натиснення: вимикає uBlock₀ тільки для цієї сторінки.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -284,7 +284,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації  мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
+    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>uBlock₀<\/i>'ом.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
@@ -584,7 +584,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
+    "message":"uBlock₀: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

@@ -1061,6 +1061,15 @@ var candidateFromFilterChoice = function(filterChoice) {
         }
         joiner = ' > ';
     }
+
+    // https://github.com/gorhill/uBlock/issues/2519
+    if (
+        slot === filters.length &&
+        document.querySelectorAll(selector).length > 1
+    ) {
+        selector = 'body > ' + selector;
+    }
+
     return '##' + selector;
 };
 

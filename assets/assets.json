@@ -106,6 +106,7 @@
 		"title": "EasyList",
 		"contentURL": [
 			"https://easylist.to/easylist/easylist.txt",
+			"https://secure.fanboy.co.nz/easylist.txt",
 			"https://easylist-downloads.adblockplus.org/easylist.txt",
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
@@ -125,6 +126,7 @@
 		"title": "EasyPrivacy",
 		"contentURL": [
 			"https://easylist.to/easylist/easyprivacy.txt",
+			"https://secure.fanboy.co.nz/easyprivacy.txt",
 			"https://easylist-downloads.adblockplus.org/easyprivacy.txt",
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt"

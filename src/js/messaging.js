@@ -793,15 +793,12 @@ var backupUserData = function(callback) {
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
-
-        vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
-            'filename': filename
-        });
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
         vAPI.storage.set(µb.restoreBackupSettings);
-        getLocalData(callback);
+        getLocalData(function(localData) {
+            callback({ localData: localData, userData: userData });
+        });
     };
 
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
@@ -1114,13 +1111,13 @@ var getURLFilteringData = function(details) {
         colorEntry = colors[url] = { r: 0, own: false };
         if ( suf.evaluateZ(context, url, type).r !== 0 ) {
             colorEntry.r = suf.r;
-            colorEntry.own = suf.context === context && suf.url === url && suf.type === type;
+            colorEntry.own = suf.r !== 0 && suf.context === context && suf.url === url && suf.type === type;
         }
         if ( response.dirty ) {
             continue;
         }
         puf.evaluateZ(context, url, type);
-        response.dirty = colorEntry.own !== (puf.context === context && puf.url === url && puf.type === type);
+        response.dirty = colorEntry.own !== (puf.r !== 0 && puf.context === context && puf.url === url && puf.type === type);
     }
     return response;
 };
