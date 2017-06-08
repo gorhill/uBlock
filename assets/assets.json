@@ -432,6 +432,15 @@
 		"contentURL": "https://raw.githubusercontent.com/farrokhi/adblock-iran/master/filter.txt",
 		"supportURL": "https://github.com/farrokhi/adblock-iran"
 	},
+	"IRN-1": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "IRN: AdBlockFa",
+		"lang": "fa",
+		"contentURL": "https://cdn.rawgit.com/SlashArash/adblockfa/master/adblockfa.txt",
+		"supportURL": "https://github.com/SlashArash/adblockfa"
+	},
 	"ISL-0": {
 		"content": "filters",
 		"group": "regions",
