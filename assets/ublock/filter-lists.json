@@ -1,10 +1,10 @@
 {
-	"http://adblock.gardar.net/is.abp.txt": {
+	"https://adblock.gardar.net/is.abp.txt": {
 		"off": true,
 		"title": "ISL: Icelandic ABP List",
 		"group": "regions",
 		"lang": "is",
-		"supportURL": "http://adblock.gardar.net/"
+		"supportURL": "https://adblock.gardar.net/"
 	},
 	"https://adblock.dk/block.csv": {
 		"off": true,
@@ -17,7 +17,7 @@
 		"off": true,
 		"title": "ITA: ABP X Files",
 		"group": "regions",
-		"supportURL": "http://noads.it/"
+		"supportURL": "https://noads.it/"
 	},
 	"https://adguard.com/en/filter-rules.html?id=1": {
 		"off": true,
@@ -128,11 +128,11 @@
 		"lang": "lv",
 		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
 	},
-	"http://hosts-file.net/.%5Cad_servers.txt": {
+	"https://hosts-file.net/.%5Cad_servers.txt": {
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
 		"group": "multipurpose",
-		"supportURL": "http://hosts-file.net/"
+		"supportURL": "https://hosts-file.net/"
 	},
 	"http://adblock.ee/list.php": {
 		"off": true,
@@ -161,7 +161,7 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"group": "regions",
 		"lang": "pl",
-		"supportURL": "http://www.certyficate.it/adblock-ublock-polish-filters/"
+		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
 	},
 	"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
 		"off": true,
@@ -174,7 +174,7 @@
 		"title": "FIN: Finnish Addition to Easylist",
 		"group": "regions",
 		"lang": "fi",
-		"supportURL": "http://www.juvander.fi/AdblockFinland"
+		"supportURL": "https://www.juvander.fi/AdblockFinland"
 	},
 	"https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": {
 		"off": true,
@@ -228,13 +228,13 @@
 		"off": true,
 		"title": "Malware domains (long-lived)",
 		"group": "malware",
-		"supportURL": "http://www.malwaredomains.com/"
+		"supportURL": "https://www.malwaredomains.com/"
 	},
 	"mirror1.malwaredomains.com/files/justdomains": {
 		"title": "Malware domains",
 		"group": "malware",
 		"homeURL": "https://mirror.cedia.org.ec/malwaredomains/justdomains",
-		"supportURL": "http://www.malwaredomains.com/"
+		"supportURL": "https://www.malwaredomains.com/"
 	},
 	"pgl.yoyo.org/as/serverlist": {
 		"title": "Peter Lowe’s Ad and tracking server list",
@@ -282,12 +282,12 @@
 		"group": "malware",
 		"supportURL": "http://www.spam404.com/"
 	},
-	"http://stanev.org/abp/adblock_bg.txt": {
+	"https://stanev.org/abp/adblock_bg.txt": {
 		"off": true,
 		"title": "BGR: Bulgarian Adblock list",
 		"group": "regions",
 		"lang": "bg",
-		"supportURL": "http://stanev.org/abp/"
+		"supportURL": "https://stanev.org/abp/"
 	},
 	"http://winhelp2002.mvps.org/hosts.txt": {
 		"off": true,
