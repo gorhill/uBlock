@@ -210,6 +210,13 @@
 		"lang": "ko",
 		"supportURL": "https://github.com/yous/YousList"
 	},
+	"https://raw.githubusercontent.com/farrokhi/adblock-iran/master/filter.txt": {
+		"off": true,
+		"title": "IRN: AdBlock Iran",
+		"group": "regions",
+		"lang": "fa",
+		"supportURL": "https://github.com/farrokhi/adblock-iran"
+	},
 	"https://easylist-downloads.adblockplus.org/Liste_AR.txt": {
 		"off": true,
 		"title": "ara: Liste AR",
