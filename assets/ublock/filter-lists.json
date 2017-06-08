@@ -371,5 +371,32 @@
 		"group": "regions",
 		"lang": "sl",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
-	}
+	},
+	"https://easylist-downloads.adblockplus.org/adwarefilters.txt": {
+		"off": true,
+		"title": "Adblock Plus Adware filters",
+		"group": "malware",
+},
+	"https://disconnect.me/trackerprotection/blocked": {
+		"off": true,
+		"title": "Advanced Tracking List By Disconnect (May Brake Some Sites)",
+		"group": "privacy",
+		"supportURL": "https://disconnect.me/trackerprotection"
+},
+	"https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt": {
+		"off": true,
+		"title": "Facebook Annoyances Blocker",
+		"group": "multipurpose",
+},
+	"https://secure.fanboy.co.nz/fanboy-antifonts.txt": {
+		"off": true,
+		"title": "FanBoy Anti Third Party Fonts",
+		"group": "privacy",
+		"supportURL": "https://secure.fanboy.co.nz"
+},
+	"https://www.kiboke-studio.hr/i-dont-care-about-cookies/abp/": {
+		"off": true,
+		"title": "I Don't Care About Cookies",
+		"group": "privacy",
+		"supportURL": "https://www.kiboke-studio.hr/i-dont-care-about-cookies/"
 }
