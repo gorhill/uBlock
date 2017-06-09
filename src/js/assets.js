@@ -96,6 +96,12 @@ api.fetchText = function(url, onLoad, onError) {
             return onError.call(null, details);
         }
         details.content = this.responseText;
+
+        // ADN: If we've loaded a DNT list, we need to parse it
+        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(url)) {
+            µBlock.adnauseam.dnt.processEntries(this.responseText);
+        }
+
         return onLoad.call(null, details);
     };
 
@@ -141,6 +147,8 @@ api.fetchText = function(url, onLoad, onError) {
 **/
 
 api.listKeyAliases = {
+    "assets/ublock/adnauseam.txt": "adnauseam-filters",
+    "assets/thirdparties/www.eff.org/files/effdntlist.txt": "effdntlist",
     "assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
     "assets/user/filters.txt": "user-filters",
     "assets/ublock/resources.txt": "ublock-resources",
@@ -708,11 +716,9 @@ var saveUserAsset = function(assetKey, content, callback) {
     // TODO(seamless migration):
     // This is for forward compatibility. Only for a limited time. Remove when
     // everybody moved to 1.11.0 and beyond.
-    // >>>>>>>>
     if ( assetKey === µBlock.userFiltersPath ) {
         bin['assets/user/filters.txt'] = content;
     }
-    // <<<<<<<<
     var onSaved = function() {
         if ( callback instanceof Function ) {
             callback({ assetKey: assetKey, content: content });
@@ -760,6 +766,7 @@ api.get = function(assetKey, options, callback) {
         }
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
+
         }
         api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
     };
@@ -775,6 +782,7 @@ api.get = function(assetKey, options, callback) {
                 url: contentURL
             });
         }
+
         reportBack(details.content);
     };
 
@@ -821,10 +829,17 @@ var getRemote = function(assetKey, callback) {
             tryLoading();
             return;
         }
+
+        // ADN: If we've loaded a DNT list, we need to parse it
+        if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) {
+            µBlock.adnauseam.dnt.processEntries(this.responseText);
+        }
+
         assetCacheWrite(assetKey, {
             content: details.content,
             url: contentURL
         });
+
         registerAssetSource(assetKey, { error: undefined });
         reportBack(details.content);
     };
