@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"উপাদান অপসারণ মোডে প্রবেশ করুন",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -348,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"হালনাগাদ করা হচ্ছে...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"একটি নেটওয়ার্ক ত্রুটি রিসোর্স হালনাগাদ হওয়া থেকে রোধ করেছে।",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
