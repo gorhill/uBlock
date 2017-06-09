@@ -1030,6 +1030,32 @@ api.updateStart = function(details) {
     updateFirst();
 };
 
+api.updateAdNauseam = function() {
+
+    var updateDone = function() {
+        var assetKeys = updaterUpdated;
+        updaterFetched.clear();
+        updaterUpdated = [];
+        updaterStatus = undefined;
+        updaterAssetDelay = updaterAssetDelayDefault;
+        fireNotification('after-assets-updated', { assetKeys: assetKeys });
+    };
+
+    var updatedOne = function(details) {
+        if (details.content !== '') {
+            updaterUpdated.push(details.assetKey);
+        } else {
+            fireNotification('asset-update-failed', { assetKey: details.assetKey });
+        }
+        updateDone();
+    };
+
+    var assetKey = "adnauseam-filters";
+    getRemote(assetKey, updatedOne);
+    if (µBlock.userSettings.eventLogging)
+          console.log("Update adnauseam-filters");
+}
+
 api.updateStop = function() {
     if ( updaterTimer ) {
         clearTimeout(updaterTimer);
