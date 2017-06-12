@@ -66,6 +66,20 @@ var processCallbackQueue = function(queue, callback) {
 
 /******************************************************************************/
 
+var processCallbackQueue = function(queue, callback) {
+    var processOne = function() {
+        var fn = queue.pop();
+        if ( fn ) {
+            fn(processOne);
+        } else if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+    processOne();
+};
+
+/******************************************************************************/
+
 // Final initialization steps after all needed assets are in memory.
 // - Initialize internal state with maybe already existing tabs.
 // - Schedule next update operation.

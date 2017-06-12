@@ -12,7 +12,7 @@
 
 ### Your settings
 
-- OS/version: 
+- OS/version:
 - Browser/version:
 - AdNauseam version:
 - Other extensions you have installed:
