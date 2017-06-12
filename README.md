@@ -3,7 +3,7 @@
 
 Install [AdNauseam](http://adnauseam.io) for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2) or [Chrome](https://github.com/dhowe/AdNauseam/wiki/Install-AdNauseam-on-Chrome-Without-Google's-Permission)...
 
-<div align="left" style="margin-left: 50px">
+<div align="left">
   <a href="http://adnauseam.io">
     <img src="https://rednoise.org/adnauseam.png" width="150px"/>
   </a>
