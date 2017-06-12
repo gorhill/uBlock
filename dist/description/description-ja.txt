@@ -1,0 +1,50 @@
+効率的なブロッカー：コンピュータのメモリとCPUのフットプリントはより少なく
+、別の人気のブロッカーよりも何千ものフィルタをロードし、強制的にブロックができます
+
+他ソフトとの比較： https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+使用法: ポップアップに表示される大きな電源ボタンは、現在のサイトでuBlockの有効/無効を切り替えます。 変更は現在のサイトへのみ適用されます。他のサイトとの共通ボタンではありません。
+
+***
+
+ただの「広告ブロッカー」より柔軟です：ホストファイルを読み込みフィルターを作成できます。
+
+初回起動時の設定では、以下のフィルターが読み込まれ、適用されています：
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+ご希望であればさらに多くのリストがご利用できます：
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- などなど
+
+もちろん、多くのフィルターを適用すれば使用メモリーは増えます。 ただ、それでも、Fanboy's Special Blocking List、Fanboy's Enhanced Tracking List、hpHost's Ad and tracking serversの三つのリストを追加で適用しても、uBlockは他の人気のブロッカーより少ないメモリー消費を実現しています。
+
+それと、多くのリストの適用は（特にホストファイルとしてよく使われているリスト）ウェブサイトの崩壊を起こしかねないことに注意してください。
+
+***
+
+この拡張機能は、あらかじめ設定されているフィルターのリストが無ければ意味を成しません。 ですので、何かしらの形で貢献したいと考えることがあった時は、これらのリストを無料で懸命に更新し続けている方々を思い出してください。
+
+***
+
+無料.
+パブリックライセンス(GPLv3)のオープンソース
+ユーザーによって作られた、ユーザーのための物。
+
+貢献者 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+貢献者 @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+これは割と初期のバージョンですので、それを念頭にレビューをお願いします。
+
+プロジェクト変更ログ：
+https://github.com/gorhill/uBlock/releases

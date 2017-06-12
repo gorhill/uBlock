@@ -284,7 +284,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Τα φίλτρα αυτά είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήματα δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Τα φίλτρα αυτά είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήματα δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>uBlock₀<\/i>.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{

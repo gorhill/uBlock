@@ -489,13 +489,11 @@ var cosmeticFilterFromElement = function(elem) {
     }
 
     // Class(es)
-    if ( selector === '' ) {
-        v = elem.classList;
-        if ( v ) {
-            i = v.length || 0;
-            while ( i-- ) {
-                selector += '.' + CSS.escape(v.item(i));
-            }
+    v = elem.classList;
+    if ( v ) {
+        i = v.length || 0;
+        while ( i-- ) {
+            selector += '.' + CSS.escape(v.item(i));
         }
     }
 
@@ -1001,7 +999,7 @@ var onCandidateChanged = (function() {
                 elems.push(items[i].elem);
             }
         }
-        pickerBody.querySelector('body section textarea + div').textContent = valid ?
+        pickerBody.querySelector('#resultsetCount').textContent = valid ?
             items.length.toLocaleString() :
             'E';
         dialog.querySelector('section').classList.toggle('invalidFilter', !valid);
@@ -1036,13 +1034,22 @@ var candidateFromFilterChoice = function(filterChoice) {
     // - Do not compute exact path.
     // - Discard narrowing directives.
     if ( filterChoice.modifier ) {
-        return filter.replace(/:nth-of-type\(\d+\)/, '');
+        filter = filter.replace(/:nth-of-type\(\d+\)/, '');
+        // Remove the id if one or more classes exist.
+        if ( filter.charAt(2) === '#' && filter.indexOf('.') !== -1 ) {
+            filter = filter.replace(/#[^#.]+/, '');
+        }
+        return filter;
     }
 
     // Return path: the target element, then all siblings prepended
     var selector = '', joiner = '';
     for ( ; slot < filters.length; slot++ ) {
         filter = filters[slot];
+        // Remove all classes when an id exists.
+        if ( filter.charAt(2) === '#' ) {
+            filter = filter.replace(/\..+$/, '');
+        }
         selector = filter.slice(2) + joiner + selector;
         // Stop at any element with an id: these are unique in a web page
         if ( filter.lastIndexOf('###', 0) === 0 ) {
@@ -1054,6 +1061,15 @@ var candidateFromFilterChoice = function(filterChoice) {
         }
         joiner = ' > ';
     }
+
+    // https://github.com/gorhill/uBlock/issues/2519
+    if (
+        slot === filters.length &&
+        document.querySelectorAll(selector).length > 1
+    ) {
+        selector = 'body > ' + selector;
+    }
+
     return '##' + selector;
 };
 

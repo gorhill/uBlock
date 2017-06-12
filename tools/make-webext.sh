@@ -7,7 +7,7 @@ echo "*** AdNauseam::WebExt: Copying files"
 
 DES=dist/build/adnauseam.webext
 rm -rf $DES
-mkdir -p $DES
+mkdir -p $DES/webextension
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes

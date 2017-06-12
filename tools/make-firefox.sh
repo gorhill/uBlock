@@ -24,9 +24,6 @@ cp    src/*.html                        $DES/
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-# AMO review feedback: avoid "unnecessary files or folders" in package
-cat   src/background.html | sed -e '/vapi-polyfill\.js/d' > $DES/background.html
-
 mv    $DES/img/icon_128.png             $DES/icon.png
 cp    platform/firefox/css/*            $DES/css/
 cp    platform/firefox/polyfill.js      $DES/js/

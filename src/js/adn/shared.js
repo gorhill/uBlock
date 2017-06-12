@@ -568,8 +568,12 @@ var exportToFile = function () {
 
   vAPI.messaging.send('adnauseam', {
     what: 'exportAds',
-    filename: getExportFileName(),
     includeImages: true //tmp
+  }, function(jsonData) {
+      var filename = getExportFileName(),
+          url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
+     
+     vAPI.download({ 'url': url, 'filename': filename });
   });
 };
 

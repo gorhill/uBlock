@@ -1,0 +1,50 @@
+Um bloqueador eficiente: leve na memória e CPU e, no entanto, consegue carregar e aplicar milhares de filtros a mais do que outros bloqueadores populares disponíveis.
+
+Visão geral ilustradora da sua eficiência:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Utilização: O botão grande de energia na janela serve para desativar/ativar permanentemente o uBlock para o web site atual. Aplica-se unicamente ao web site atual, não sendo um botão de energia global.
+
+***
+
+Flexível, é mais do que um "bloqueador de anúncios": pode também ler e criar filtros a partir de ficheiros de servidores.
+
+Por predefinição, estas listas de filtros são carregadas e aplicadas:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Se quiser, estão disponíveis mais listas para seleção:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- E muitas mais
+
+Obviamente que quanto maior o número de filtros ativos, maior será o consumo de memória. No entanto, mesmo após adicionar as duas listas extra do Fanboy, hpHosts Ad and tracking servers, o uBlock₀ continua a consumir menos memória do que outros bloqueadores populares disponíveis.
+
+Esteja ciente de que selecionar algumas destas listas extra pode resultar numa probabilidade acrescida de rutura em alguns web sites -- especialmente as listas que são normalmente utilizadas como ficheiro de servidores.
+
+***
+
+Sem as listas de filtros predefinidas, esta extensão não é nada. Se realmente quiser contribuir com algo, pense nas pessoas que trabalham duro para manter as listas de filtros que usa, que foram tornadas disponíveis para uso por todos sem custos.
+
+***
+
+Livre.
+Código aberto com licença pública (GPLv3)
+De utilizadores para utilizadores.
+
+Contribuidores @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contribuidores @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Esta é uma versão inicial, tenha isso em mente quando avaliar.
+
+Registo de alterações do projeto:
+https://github.com/gorhill/uBlock/releases

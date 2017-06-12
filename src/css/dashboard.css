@@ -27,14 +27,7 @@ html, body {
     padding: 4px 10px 0;
     white-space: nowrap;
     background-color: #000;
-    }
-
-@media screen and (max-width: 500px) {
-    #dashboard-nav-widgets span {
-        display: none!important;
-    }
 }
-
 #dashboard-nav-widgets span {
     padding: 0 0.5em;
     font-size: 20px;
@@ -43,7 +36,7 @@ html, body {
     width: 100px;
     float: left;
     margin: 5px 0;
-    color: #fff; 
+    color: #fff;
 }
 .tabButton {
     font-family: bebas_neue,sans-serif;
@@ -92,15 +85,19 @@ iframe {
         position: relative;
         }
     #dashboard-nav-widgets {
-        padding: 0;
+        padding: 1px 0 0 0;
+        white-space: normal;
         }
     [data-i18n="extName"] {
         display: none;
         }
     .tabButton {
         border-radius: 0;
-        border-top: 0;
-        display: block;
+        display: inline-block;
+        font-size: 100%;
+        margin-bottom: 1px;
+        margin-right: 1px;
+        top: 0;
         }
     .tabButton.selected {
         border-bottom: 1px solid #ccc;

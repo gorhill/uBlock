@@ -1028,9 +1028,9 @@ vAPI.tabs.open = function(details) {
     // Open in a standalone window
     if ( details.popup === true ) {
         Services.ww.openWindow(
-            self,
+            win,
             details.url,
-            null,
+            'uBO-logger',
             'location=1,menubar=1,personalbar=1,resizable=1,toolbar=1',
             null
         );

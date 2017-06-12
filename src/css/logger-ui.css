@@ -459,6 +459,7 @@ body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
     border: 1px solid #ddc;
     border-radius: 4px;
     color: #888;
+    cursor: pointer;
     font-size: 1.8em;
     margin: 0.1em;
     padding: 0.25em 0.5em;

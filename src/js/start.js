@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global objectAssign, publicSuffixList */
+/* global publicSuffixList */
 
 'use strict';
 
@@ -52,6 +52,34 @@ vAPI.app.onShutdown = function() {
 
 /******************************************************************************/
 
+var processCallbackQueue = function(queue, callback) {
+    var processOne = function() {
+        var fn = queue.pop();
+        if ( fn ) {
+            fn(processOne);
+        } else if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+    processOne();
+};
+
+/******************************************************************************/
+
+var processCallbackQueue = function(queue, callback) {
+    var processOne = function() {
+        var fn = queue.pop();
+        if ( fn ) {
+            fn(processOne);
+        } else if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+    processOne();
+};
+
+/******************************************************************************/
+
 // Final initialization steps after all needed assets are in memory.
 // - Initialize internal state with maybe already existing tabs.
 // - Schedule next update operation.
@@ -80,7 +108,7 @@ var onAllReady = function() {
 
     µb.firstInstall = false;
 
-    vAPI.net.onReady();
+    processCallbackQueue(µb.onStartCompletedQueue);
 };
 
 /******************************************************************************/
@@ -283,31 +311,11 @@ var onAdminSettingsRestored = function() {
 
 /******************************************************************************/
 
-µb.hiddenSettings = (function() {
-    var out = objectAssign({}, µb.hiddenSettingsDefault),
-        json = vAPI.localStorage.getItem('hiddenSettings');
-    if ( typeof json === 'string' ) {
-        try {
-            var o = JSON.parse(json);
-            if ( o instanceof Object ) {
-                for ( var k in o ) {
-                    if ( out.hasOwnProperty(k) ) {
-                        out[k] = o[k];
-                    }
-                }
-            }
-        }
-        catch(ex) {
-        }
-    }
-    return out;
-})();
-
-/******************************************************************************/
-
 return function() {
-    // https://github.com/gorhill/uBlock/issues/531
-    µb.restoreAdminSettings(onAdminSettingsRestored);
+    processCallbackQueue(µb.onBeforeStartQueue, function() {
+        // https://github.com/gorhill/uBlock/issues/531
+        µb.restoreAdminSettings(onAdminSettingsRestored);
+    });
 };
 
 /******************************************************************************/

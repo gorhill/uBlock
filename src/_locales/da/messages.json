@@ -224,7 +224,7 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Forhindre WebRTC i at lække lokale IP-adresser",
+    "message":"Forhindr WebRTC i at lække lokale IP-adresser",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
@@ -232,7 +232,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Disse standardindstillinger kan overskrives på en per-side basis",
+    "message":"Disse standardindstillinger kan tilsidesættes for hver enkelt websted",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Bloker medieelementer større end {{input: nummer}} kB",
+    "message":"Bloker medieelementer større end {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{

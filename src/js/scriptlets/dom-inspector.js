@@ -810,6 +810,17 @@ var elementsFromSpecialSelector = function(selector) {
 
 /******************************************************************************/
 
+var getSvgRootChildren = function() {
+    if ( svgRoot.children ) {
+        return svgRoot.children;
+    } else {
+        var childNodes = Array.prototype.slice.apply(svgRoot.childNodes);
+        return childNodes.filter(function(node) {
+            return node.nodeType === Node.ELEMENT_NODE;
+        });
+    }
+};
+
 var highlightElements = function(scrollTo) {
     var wv = pickerRoot.contentWindow.innerWidth;
     var hv = pickerRoot.contentWindow.innerHeight;
@@ -818,6 +829,7 @@ var highlightElements = function(scrollTo) {
     var xl, xr, yt, yb, w, h, ws;
     var xlu = Number.MAX_VALUE, xru = 0, ytu = Number.MAX_VALUE, ybu = 0;
     var lists = highlightedElementLists;
+    var svgRootChildren = getSvgRootChildren();
 
     for ( var i = 0; i < lists.length; i++ ) {
         elems = lists[i];
@@ -857,7 +869,7 @@ var highlightElements = function(scrollTo) {
             if ( yt < ytu ) { ytu = yt; }
             if ( yb > ybu ) { ybu = yb; }
         }
-        svgRoot.children[i+1].setAttribute('d', islands.join('') || 'M0 0');
+        svgRootChildren[i+1].setAttribute('d', islands.join('') || 'M0 0');
     }
 
     svgRoot.firstElementChild.setAttribute('d', ocean.join(''));

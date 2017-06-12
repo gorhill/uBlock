@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
     <r:Description about="urn:mozilla:install-manifest">
         <id>adnauseam@rednoise.org</id>
@@ -26,7 +26,7 @@
         <targetApplication>
             <r:Description>
                 <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
-                <minVersion>24.0</minVersion>
+                <minVersion>27.0</minVersion>
                 <maxVersion>*</maxVersion>
             </r:Description>
         </targetApplication>
@@ -35,8 +35,8 @@
         <targetApplication>
             <r:Description>
                 <id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</id>
-                <minVersion>2.21</minVersion>
-                <maxVersion>2.40.*</maxVersion>
+                <minVersion>2.24</minVersion>
+                <maxVersion>*</maxVersion>
             </r:Description>
         </targetApplication>
 
@@ -44,8 +44,8 @@
         <targetApplication>
             <r:Description>
                 <id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</id>
-                <minVersion>25.0</minVersion>
-                <maxVersion>26.*</maxVersion>
+                <minVersion>26.0</minVersion>
+                <maxVersion>27.*</maxVersion>
             </r:Description>
         </targetApplication>
 
@@ -59,3 +59,8 @@
         </targetApplication>
     </r:Description>
 </r:RDF>
+axVersion>
+            </Description>
+        </em:targetApplication>
+    </Description>
+</RDF>

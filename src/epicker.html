@@ -78,7 +78,7 @@ section > div:first-child > textarea {
     resize: none;
     width: 100%;
 }
-section > div:first-child > textarea + div {
+#resultsetCount {
     background-color: #aaa;
     bottom: 0;
     color: white;
@@ -86,7 +86,7 @@ section > div:first-child > textarea + div {
     position: absolute;
     right: 0;
 }
-section.invalidFilter > div:first-child > textarea + div {
+section.invalidFilter #resultsetCount {
     background-color: red;
 }
 section > div:first-child + div {
@@ -183,7 +183,7 @@ body.paused > aside:hover {
 <section>
     <div>
         <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
-        <div></div>
+        <div id="resultsetCount"></div>
     </div>
     <div><!--
     --><button id="preview" type="button">{{preview}}</button><!--

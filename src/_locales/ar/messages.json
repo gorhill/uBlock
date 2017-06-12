@@ -208,7 +208,7 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"أنا مستخدم متقدم (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>قراءة إجبارية<\/a>)",
+    "message":"أنا مستخدم ذو خبرة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>قراءة إجبارية<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
@@ -516,7 +516,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"في أي مكان",
+    "message":"من أي مكان",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
@@ -592,7 +592,7 @@
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"منذ {{value}} دقيقة",
+    "message":"منذ {{value}} دقائق",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
