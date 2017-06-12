@@ -25,7 +25,7 @@
 
 /******************************* Polyfill ***********************************/
 
-if (Array.prototype.contains instanceof Function === false) {
+if (!Array.prototype.hasOwnProperty('contains')) {
 
   Array.prototype.contains = function (a) {
     var b = this.length;
@@ -38,7 +38,7 @@ if (Array.prototype.contains instanceof Function === false) {
   };
 }
 
-if (String.prototype.startsWith instanceof Function === false) {
+if (!String.prototype.hasOwnProperty('startsWith')) {
   String.prototype.startsWith = function (needle, pos) {
     if (typeof pos !== 'number') {
       pos = 0;
@@ -47,7 +47,7 @@ if (String.prototype.startsWith instanceof Function === false) {
   };
 }
 
-if (String.prototype.endsWith instanceof Function === false) {
+if (!String.prototype.hasOwnProperty('endsWith')) {
   String.prototype.endsWith = function (needle, pos) {
     if (typeof pos !== 'number') {
       pos = this.length;
@@ -57,7 +57,7 @@ if (String.prototype.endsWith instanceof Function === false) {
   };
 }
 
-if (String.prototype.includes instanceof Function === false) {
+if (!String.prototype.hasOwnProperty('includes'))
   String.prototype.includes = function (needle, pos) {
     if (typeof pos !== 'number') {
       pos = 0;
