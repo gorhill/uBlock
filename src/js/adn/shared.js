@@ -26,7 +26,6 @@
 /******************************* Polyfill ***********************************/
 
 if (!Array.prototype.hasOwnProperty('contains')) {
-
   Array.prototype.contains = function (a) {
     var b = this.length;
     while (b--) {
@@ -57,7 +56,7 @@ if (!String.prototype.hasOwnProperty('endsWith')) {
   };
 }
 
-if (!String.prototype.hasOwnProperty('includes'))
+if (!String.prototype.hasOwnProperty('includes')) {
   String.prototype.includes = function (needle, pos) {
     if (typeof pos !== 'number') {
       pos = 0;
@@ -572,7 +571,7 @@ var exportToFile = function () {
   }, function(jsonData) {
       var filename = getExportFileName(),
           url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
-     
+
      vAPI.download({ 'url': url, 'filename': filename });
   });
 };
