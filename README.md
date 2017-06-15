@@ -5,7 +5,7 @@ Install [AdNauseam](http://adnauseam.io) for [Firefox](https://addons.mozilla.or
 
 <div align="left">
   <a href="http://adnauseam.io">
-    <img src="https://rednoise.org/adnauseam.png" width="150px"/>
+    <img src="https://rednoise.org/images/adnauseam.png" width="150px"/>
   </a>
 </div>
 
