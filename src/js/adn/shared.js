@@ -576,6 +576,10 @@ var exportToFile = function () {
   });
 };
 
+function isMobile() {
+  return typeof window.NativeWindow != 'undefined';
+}
+
 function handleImportFilePicker(evt) {
 
   var files = evt.target.files;

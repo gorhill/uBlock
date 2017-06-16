@@ -86,14 +86,13 @@
 
     var dntInput = uDom('#dnt-exception');
 
-    if (hideOrClick() && !dntRespectAppeared) { // runs once only
-
+    if (!isMobile() && hideOrClick() && !dntRespectAppeared) { // runs once only
       changeDNTexceptions(true);
       dntInput.prop('checked', true);
       dntRespectAppeared = true;
     }
 
-    dntInput.parent().css('opacity', hideOrClick() ? '1' : '0');
+    dntInput.parent().css('opacity', !isMobile() && hideOrClick() ? '1' : '0');
   }
 
   function toggleFirstRunButton() {
@@ -159,7 +158,7 @@
                   this.checked
                 );
               }
-
+            
               if (!hideOrClick()) {
                 changeDNTexceptions(false);
               }
