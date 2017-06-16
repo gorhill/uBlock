@@ -164,6 +164,10 @@
   var onUserSettingsReceived = function (details) {
 
     // console.log('onUserSettingsReceived', details);
+    
+    if (isMobile()) {
+      uDom('.dntOption').css('display', 'none');
+    }
 
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
 
