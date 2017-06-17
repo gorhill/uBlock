@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Äntligen en effektiv blockerare! Snäll mot processor och minne.",
+    "message":"Äntligen, en effektiv blockerare. Lätt på processor och minne.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -80,7 +80,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Öppna logg för nätverksbegäran",
+    "message":"Öppna loggen",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -112,7 +112,7 @@
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Tryck för att ångra dina ändringar.",
+    "message":"Klicka för att ångra dina ändringar.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -232,7 +232,7 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Förvalt beteende",
+    "message":"Standardbeteende",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"Stäng av kosmetisk filtrering",
+    "message":"Avaktivera kosmetisk filtrering",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -340,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"föråldrad",
+    "message":"Föråldrad.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
@@ -416,7 +416,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lista över din dynamiska filterregler.",
+    "message":"Lista över dina dynamiska filterregler.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -668,7 +668,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Importera från molnlagring och slå ihop med nuvarande inställningar",
+    "message":"Importera från molnlagring och slå ihop med aktuella inställningar",
     "description":"tooltip"
   },
   "cloudNoData":{

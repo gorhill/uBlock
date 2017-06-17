@@ -3,16 +3,16 @@ En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda
 Illustrerad översikt av dess effektivitet:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
+Användning: Den stora strömbrytarikonen i poppupprutan är till för att avaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
 
 ***
 
-Flexibel. uBlock₀ är inte enbart en "reklamblockerare": den kan också läsa och skapa filter från hosts-filer.
+Flexibel, uBlock₀ är inte enbart en "reklamblockerare": den kan också läsa och skapa filter från hosts-filer.
 
-Som standard är följande filterlistor laddade och applicerade:
+Som standard är följande filterlistor laddade och tillämpade:
 
 - EasyList
-- Peter Lowe’s Ad server list
+- Peter Lowes reklamserverlista
 - EasyPrivacy
 - Malware domains
 
@@ -20,18 +20,18 @@ Fler filterlistor finns tillgängliga att använda om du vill:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
+- hpHosts reklam- och spårarservrar
 - MVPS HOSTS
 - Spam404
 - med flera
 
-Ju fler aktiverade filter, desto högre minnesanvändning. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts' Ad and tracking servers så använder uBlock₀ mindre minne än andra väldigt populära blockerare.
+Ju fler aktiverade filter, desto högre minnesfotavtryck. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts reklam- och språrarservrar, använder uBlock₀ mindre minnesfotavtryck än andra populära blockare.
 
 Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder - särskilt de listor som i normala fall används som hosts-filer.
 
 ***
 
-uBlock₀ vore ingenting utan filterlistorna. Så om du vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
+Utan de förinställda filterlistorna är detta tillägg ingenting. Så om du vill bidra med någonting, tänk på personerna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
 
 ***
 
