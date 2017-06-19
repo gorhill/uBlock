@@ -57,10 +57,6 @@
                 <maxVersion>45.*</maxVersion>
             </r:Description>
         </targetApplication>
+
     </r:Description>
 </r:RDF>
-axVersion>
-            </Description>
-        </em:targetApplication>
-    </Description>
-</RDF>
