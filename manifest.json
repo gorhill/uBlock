@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "AdNauseam",
-  "version": "3.3.402",
+  "version": "3.3.403",
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
