@@ -1,10 +1,10 @@
 {
   "adnAboutPageName":{
-    "message":"AdNauseam — About",
+    "message":"AdNauseam — Quant a",
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Assistència",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
@@ -12,23 +12,23 @@
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Preguntes freqüents",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"Si us plau:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Oculta publicitat",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
-    "message":"Click Ads",
+    "message":"Clica la publicitat",
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
+    "message":"Bloqueja publicitat maliciosa",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
@@ -40,47 +40,47 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Protect against malicious Ads and trackers (<span>customize<\/span>)",
+    "message":"Protegeix contra publicitat maliciosa i rastrejadors (<span>personalitzar<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Reactiva",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Desactiva",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Activa l'ocultació de publicitat",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
-    "message":"Activate Ad clicking",
+    "message":"Activa els clics a la publicitat",
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate blocking of malicious ads",
+    "message":"Activa el bloqueig de publicitat maliciososa",
     "description":"English: Notifications -> Activate blocking of malicious ads"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"Activa el filtre EasyList",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList":{
-    "message":"Activate the AdNauseam filter",
+    "message":"Activa el filtre AdNauseam",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"El teu bloquejador de publicitat i AdNauseam poden entrar en conflicte!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock i AdNauseam poden entrar en conflicte!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
-    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message":"Aquesta pàgina respecta <b>No rastregis<\/b>, la publicitat és permesa.",
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
@@ -124,11 +124,11 @@
     "description":"English: Firstrun.html -> Let's go!"
   },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"AdNauseam està aturat en aquesta pàgina",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
-    "message":"AdNauseam is not currently hiding Ads",
+    "message":"AdNauseam actualment no està ocultant publicitat",
     "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
@@ -152,7 +152,7 @@
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Mostra el registre",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
@@ -176,7 +176,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"Settings",
+    "message":"Configuració",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
@@ -299,21 +299,17 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Click ALL Ads",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Rarely",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Click MOST Ads",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Sometimes",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Click SOME Ads",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Click OCCASIONAL Ads",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Always",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Make exceptions for non-tracking Ads",
@@ -340,7 +336,7 @@
     "description":"English: Essentials"
   },
   "3pGroupOther":{
-    "message":"Other",
+    "message":"Altres",
     "description":"English: Other"
   },
   "3pGroupMalware":{
@@ -348,7 +344,7 @@
     "description":"English: Malware"
   },
   "3pGroupRegions":{
-    "message":"Languages",
+    "message":"Idiomes",
     "description":"English: Languages"
   },
   "3pPageUpdate":{

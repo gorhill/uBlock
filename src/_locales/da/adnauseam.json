@@ -299,21 +299,17 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Click ALL Ads",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Rarely",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Click MOST Ads",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Sometimes",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Click SOME Ads",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Click OCCASIONAL Ads",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Always",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Make exceptions for non-tracking Ads",

@@ -299,21 +299,17 @@
     "message":"當訪問廣告時隱藏引用頁面",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"點擊所有廣告",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"較少",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"點擊大多數廣告",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"偶而",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"點擊部分廣告",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"點擊少數廣告",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"始終",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"排除非追蹤廣告",

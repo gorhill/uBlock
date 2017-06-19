@@ -299,21 +299,17 @@
     "message":"Skryť predchádzajúcu stránku pri zobrazeniach",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Klikať na všetky reklamy",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Zriedka",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Klikať na všetky reklamy",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Niekedy",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Klikať na niektoré reklamy",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Klikať na príležitostné reklamy",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Vždy",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Udeliť výnimku pre nesledovacie reklamy",
