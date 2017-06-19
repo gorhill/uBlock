@@ -299,21 +299,17 @@
     "message":"Nascondi il referer durante la navigazione",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Clicca su TUTTE le pubblicità",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Raramente",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Clicca sulla MAGGIOR PARTE delle pubblicità",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"A volte",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Clicca su QUALCHE pubblicità",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Clicca OCCASIONALMENTE sulle pubblicità",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Sempre",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Fai eccezione per gli annunci rispettosi della Non tracciabilità",

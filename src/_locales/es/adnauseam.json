@@ -299,21 +299,17 @@
     "message":"Ocultar página de origen al realizar visitas",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Pulsar en TODOS los anuncios",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Rara vez",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Pulsar en la MAYORÍA de los anuncios",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"A veces",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Pulsar en ALGUNOS anuncios",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Pulsar OCASIONALMENTE en algunos anuncios",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Siempre",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Hacer excepción para anuncios sin rastreadores",

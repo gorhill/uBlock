@@ -72,7 +72,7 @@
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Ваше объявление blocker и AdNauseam могут конфликтовать!",
+    "message":"Ваш блокировщик рекламы и AdNauseam могут конфликтовать!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
@@ -299,21 +299,17 @@
     "message":"Скрывать исходную страницу при посещении",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Кликать по Все рекламе",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Редко",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Кликать по большинство рекламе",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Иногда",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Кликать по некоторые рекламе",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Кликать по Случайные рекламе",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Всегда",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Сделать исключения для неследящей рекламы",

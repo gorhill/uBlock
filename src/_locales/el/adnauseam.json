@@ -1,10 +1,10 @@
 {
   "adnAboutPageName":{
-    "message":"AdNauseam — About",
+    "message":"AdNauseam - Σχετικά",
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Υποστήριξη",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
@@ -12,15 +12,15 @@
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Συχνές ερωτήσεις",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
-    "message":"Please:",
+    "message":"Παρακαλώ:",
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Απόκρυψη διαφημίσεων",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
@@ -28,7 +28,7 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
+    "message":"Αποκλεισμός κακόβουλων διαφημίσεων",
     "description":"English: Firstrun.html -> Block Malicious Ads"
   },
   "adnFirstRunHideAllAdsDescription":{
@@ -299,21 +299,17 @@
     "message":"Hide referring page on visits",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Click ALL Ads",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Rarely",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Click MOST Ads",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Sometimes",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Click SOME Ads",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Click OCCASIONAL Ads",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Always",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Make exceptions for non-tracking Ads",

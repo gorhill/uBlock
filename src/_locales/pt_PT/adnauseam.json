@@ -40,7 +40,7 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Otimizar as suas definições para proteger contra anúncios maliciosos (<span>personalizar<\/span>)",
+    "message":"Proteger contra anúncios maliciosos e trackers (<span>personalizar<\/span>)",
     "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
   },
   "adnNotificationReactivate":{
@@ -299,21 +299,17 @@
     "message":"Ocultar página referente em visitas",
     "description":"English: Hide referring page on visits"
   },
-  "ClickingFrequencyAllPrompt":{
-    "message":"Clique em todos os anúncios",
-    "description":"English: Click Frequency - Click ALL Ads"
+  "ClickingFrequencyRarely":{
+    "message":"Raramente",
+    "description":"English: Click Frequency - Rarely"
   },
-  "ClickingFrequencyMostPrompt":{
-    "message":"Clique na maioria dos anúncios",
-    "description":"English: Click Frequency - Click MOST Ads"
+  "ClickingFrequencySometimes":{
+    "message":"Às vezes",
+    "description":"English: Click Frequency - Sometimes"
   },
-  "ClickingFrequencySomePrompt":{
-    "message":"Clique em alguns anúncios",
-    "description":"English: Click Frequency - Click SOME Ads"
-  },
-  "ClickingFrequencyOccationalPrompt":{
-    "message":"Clique em anúncios ocasionais",
-    "description":"English: Click Frequency - Click OCCASIONAL Ads"
+  "ClickingFrequencyAlways":{
+    "message":"Sempre",
+    "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
     "message":"Fazer exceções para anúncios sem monitorização",
