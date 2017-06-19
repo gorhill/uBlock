@@ -569,7 +569,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: Adguard Russian Filter",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/1.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
 	},
 	"spa-0": {
@@ -605,7 +605,7 @@
 		"off": true,
 		"title": "TUR: Adguard Turkish Filter",
 		"lang": "tr",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/13.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
 	},
 	"VIE-0": {
