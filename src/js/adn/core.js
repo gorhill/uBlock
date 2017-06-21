@@ -782,12 +782,6 @@
     }
   }
 
-  var closeExtPage = function (htmlPage) {
-
-    var tabId = getExtPageTabId(htmlPage)
-    tabId && vAPI.tabs.remove(tabId, true);
-  }
-
   var reloadExtPage = function (htmlPage) {
 
     var tabId = getExtPageTabId(htmlPage)
@@ -1440,9 +1434,11 @@
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       listsLoaded = true;
+
       verifyAdBlockers();
       verifySettings();
       verifyLists();
+
       µb.adnauseam.dnt.updateFilters();
     });
 
@@ -1973,16 +1969,24 @@
     return jsonData;
   };
 
+  exports.closeExtPage = function (request) {
+
+    var tabId = getExtPageTabId(request.page);
+    tabId && vAPI.tabs.remove(tabId, true);
+  }
+
   exports.adsForPage = function (request, pageStore, tabId) {
 
     var reqPageStore = request.tabId &&
       µb.pageStoreFromTabId(request.tabId) || pageStore;
 
-    if (!reqPageStore)
-      warn('No pageStore', request, pageStore, tabId);
-
-    if (!reqPageStore.hasOwnProperty('rawURL'))
-      warn('No rawURL', reqPageStore, request, tabId);
+    if (!reqPageStore) {
+        warn('No pageStore', request, pageStore, tabId);
+        return;
+    } else if (!reqPageStore.hasOwnProperty('rawURL')) {
+        warn('No rawURL', reqPageStore, request, tabId);
+        return;
+    }
 
     return adsForUI(reqPageStore.rawURL);
   };

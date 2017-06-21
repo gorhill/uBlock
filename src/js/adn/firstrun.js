@@ -29,13 +29,12 @@
 
   /******************************************************************************/
 
-  var messager = vAPI.messaging;
   var dntRespectAppeared = false;
 
   /******************************************************************************/
   var changeUserSettings = function (name, value) {
 
-    messager.send('dashboard', {
+    vAPI.messaging.send('dashboard', {
       what: 'userSettings',
       name: name,
       value: value
@@ -187,7 +186,14 @@
       if (hasEnabledToggle()) {
         e.preventDefault();
         // handles #371
-        window.open(location, '_self').close();
+        //window.open(location, '_self').close();
+
+        vAPI.messaging.send('adnauseam', { // fix to #1032
+          what: 'closeExtPage',
+          page: 'firstrun.html'
+        }, function(n) {
+          console.log('closeExtPage done', n);
+        });
       }
     });
 
@@ -199,11 +205,11 @@
 
   uDom.onLoad(function () {
 
-    messager.send('dashboard', {
+    vAPI.messaging.send('dashboard', {
       what: 'userSettings'
     }, onUserSettingsReceived);
 
-    messager.send('adnauseam', {
+    vAPI.messaging.send('adnauseam', {
       what: 'verifyAdBlockers' },
         function() {
           vAPI.messaging.send(
@@ -211,7 +217,7 @@
                   what: 'getNotifications'
               },
               function(n) {
-                  renderNotifications(n, "firstrun");
+                  renderNotifications(n, 'firstrun');
               });
         });
   });
