@@ -123,6 +123,10 @@
     "message": "Let's go!",
     "description": "English: Firstrun.html -> Let's go!"
   },
+  "goToAdNauseamWebsite": {
+    "message": "Go to AdNauseam website",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
   "adnPausedOnPage": {
     "message": "AdNauseam is paused on this page",
     "description": "English: Menu->display when paused on page/site"
