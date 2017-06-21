@@ -32,10 +32,11 @@
   /******************************************************************************/
 
   var onLocalDataReceived = function (details) {
-
-    uDom('#localData > ul > li:nth-of-type(1)').text(
-      vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
-    );
+  
+    if (details.storageUsed)
+     uDom('#localData > ul > li:nth-of-type(1)').text(
+         vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
+     );
 
     var elem, dt;
     var timeOptions = {

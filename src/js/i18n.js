@@ -149,7 +149,7 @@ vAPI.i18n.render = function(context) {
     n = elems.length;
     for ( i = 0; i < n; i++ ) {
         elem = elems[i];
-        text = vAPI.i18n(elem.getAttribute('title'));
+        text = vAPI.i18n(elem.getAttribute('title',''));
         if ( text ) {
             elem.setAttribute('title', text);
         }
