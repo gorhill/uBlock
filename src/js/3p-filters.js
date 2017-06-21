@@ -254,7 +254,7 @@ var renderFilterLists = function(soft) {
       if (groupKey === 'default') groupKey = 'Essentials';
       if (groupKey === 'multipurpose') groupKey = 'Other';
 
-      var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+      var groupName = groupKey === 'hidden' ? groupKey : vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
 
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
