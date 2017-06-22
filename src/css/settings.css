@@ -31,9 +31,9 @@ ul#userSettings .subgroup p {
   line-height: 1.5em;
   float:left;
   cursor: default;
-  -webkit-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none;     
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 
 }
@@ -128,7 +128,7 @@ p:disabled{
 }
 input[type=range]::-moz-range-progress {
   background-color: #0076FF;
-  height: 8px;
+  height: 10px;
   border-color: #0076FF;
   margin-right: 5px;
   padding:0px;

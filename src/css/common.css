@@ -130,7 +130,8 @@ a.external-link {
   vertical-align: baseline!important;
 }
 .custom-check ul#clickingFrequency{
-  padding:.5em 1em .3em .3em;
+  margin: .5em 0 1em -.5em;
+  padding:.5em 1em .3em .5em;
   border-radius: 8px;
   display: inline-block;
 }
@@ -733,7 +734,7 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 .help-mark {
 	font-size: 14px;
 	border-radius: 3px;
-	background-color: #85bb65;
+  background-color: #0076FF;
 	padding: 0 2px 0;
 	display: inline-block;
 	height: 14px;
@@ -746,6 +747,10 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 	text-align: center;
 	font-weight: 700;
 	margin-left: 2px;
+}
+
+.help-mark.cost {
+  background-color: #85bb65;
 }
 
 .help-mark.sml{
