@@ -3398,6 +3398,8 @@ vAPI.contextMenu = (function() {
 //     extensions.ublock0.shortcuts.[command id]    => -
 
 vAPI.commands = (function() {
+    if ( vAPI.fennec || vAPI.thunderbird ) { return; }
+
     var commands = [
         { id: 'launch-element-zapper' },
         { id: 'launch-element-picker' },
