@@ -37,6 +37,12 @@ ul#userSettings .subgroup p {
   user-select: none;
 
 }
+
+ul#userSettings .subgroup p.last {
+  margin-right:15px;
+  padding-right: 0;
+}  
+
 ul#userSettings .subgroup .subgroupDescription {
     clear: both;
 }
@@ -92,7 +98,7 @@ input[type=range] {
    border-radius: 5px;
    background-color: transparent;
    height: 10px;
-   width: 275px;
+   width: 96%;
    border-color: #0076FF;
    padding:0;
    margin:0;
