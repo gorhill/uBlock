@@ -4,7 +4,7 @@ env:
   matrix:
   - BROWSER=chromium EXT=zip
   - BROWSER=firefox EXT=xpi
-  #- BROWSER=webext EXT=xpi
+  - BROWSER=webext EXT=xpi
 script: ./tools/make-${BROWSER}.sh all
 deploy:
   provider: releases
