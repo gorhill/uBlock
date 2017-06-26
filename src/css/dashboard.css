@@ -102,4 +102,11 @@ iframe {
     .tabButton.selected {
         border-bottom: 1px solid #ccc;
         }
+}
+
+
+@media (max-width: 400px) {
+    #dashboard-nav-widgets span {
+        display: none;
     }
+}
