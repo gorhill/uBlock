@@ -1,3 +1,13 @@
+/*mobile*/
+@media only screen and (max-width: 600px) {
+    form {
+        top: 0 !important;
+        left: 0 !important;
+        width: auto !important;
+        margin: 50px 0 0 10px !important;
+    }
+}
+
 html{
   height:100%;
 }
