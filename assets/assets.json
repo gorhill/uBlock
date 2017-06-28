@@ -547,6 +547,15 @@
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
 		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
 	},
+	"ROU-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "ROU: ROad Block",
+		"lang": "ro",
+		"contentURL": "https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters.txt",
+		"supportURL": "https://github.com/tcptomato/ROad-Block"
+	},
 	"RUS-0": {
 		"content": "filters",
 		"group": "regions",
