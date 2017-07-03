@@ -257,7 +257,7 @@ FilterParser.prototype.parse = function(raw) {
 
     // Coarse-check that the anchor is valid.
     // `##`: l = 1
-    // `#@#`, `#$#`, `#%#`: l = 2
+    // `#@#`, `#$#`, `#%#`, `#?#`: l = 2
     // `#@$#`, `#@%#`: l = 3
     if ( (rpos - lpos) > 3 ) {
         this.cosmetic = false;
@@ -276,20 +276,28 @@ FilterParser.prototype.parse = function(raw) {
     // supported.
     var cCode = raw.charCodeAt(rpos - 1);
     if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
-        // We have an Adguard cosmetic filter if and only if the character is
-        // `$` or `%`, otherwise it's not a cosmetic filter.
+        // We have an Adguard or ABP cosmetic filter if and only if the character
+        // is `$`, `%` or `?`, otherwise it's not a cosmetic filter.
+        switch ( cCode ) {
+        // CSS injection rule: supported, but translate into uBO's own format.
+        case 0x24:
+            raw = this.translateAdguardCSSInjectionFilter(raw);
+            break;
+        // Not supported.
+        case 0x25:
+            this.invalid = true;
+            return this;
+        // ABP advanced element hiding rules: supported,
+        // but translate into uBO's own format.
+        case 0x3F:
+            raw = this.translateABPAdvancedRules(raw);
+            break;
         // Not a cosmetic filter.
-        if ( cCode !== 0x24 /* '$' */ && cCode !== 0x25 /* '%' */ ) {
+        default:
             this.cosmetic = false;
             return this;
         }
         // Not supported.
-        if ( cCode !== 0x24 /* '$' */ ) {
-            this.invalid = true;
-            return this;
-        }
-        // CSS injection rule: supported, but translate into uBO's own format.
-        raw = this.translateAdguardCSSInjectionFilter(raw);
         if ( raw === '' ) {
             this.invalid = true;
             return this;
@@ -372,6 +380,17 @@ FilterParser.prototype.translateAdguardCSSInjectionFilter = function(raw) {
 };
 
 /******************************************************************************/
+
+// Reference: https://adblockplus.org/development-builds/new-syntax-for-advanced-element-hiding-rules
+
+FilterParser.prototype.translateABPAdvancedRules = function(raw) {
+    // :-abp-properties() is not supported
+    if ( raw.indexOf(':-abp-properties(') !== -1 ) {
+        return '';
+    }
+    return raw.replace(':-abp-has(', ':has(');
+};
+
 /******************************************************************************/
 
 var SelectorCacheEntry = function() {
