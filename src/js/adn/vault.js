@@ -1517,11 +1517,16 @@
 
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
-      
+
       if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
 
         //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
         return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
+      }
+
+      if (gAds.length >= MaxStartNum) {
+        uDom("a[class=showing-help]").text("?")
+        uDom("a[class=showing-help]").addClass("help-mark")
       }
 
       var filtered = dateFilter(gMin, gMax);
