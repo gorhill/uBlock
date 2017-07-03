@@ -999,7 +999,6 @@ var onHideTooltip = function() {
     uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoZap').on('click', gotoZap);
     uDom('#gotoPick').on('click', gotoPick);
-    uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
     uDom('.hnSwitch').on('click', toggleHostnameSwitch);
@@ -1009,6 +1008,18 @@ var onHideTooltip = function() {
 
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
                 .on('mouseleave', '[data-tip]', onHideTooltip);
+
+    // https://github.com/gorhill/uBlock/issues/2734
+    // Workaround until fixed in Firefox Nightly.
+    if ( typeof chrome.runtime.getBrowserInfo !== 'function' ) {
+        uDom('a[href]').on('click', gotoURL);
+    } else {
+        chrome.runtime.getBrowserInfo().then(function(info) {
+            if ( info.name !== 'Firefox' ) {
+                uDom('a[href]').on('click', gotoURL);
+            }
+        });
+    }
 })();
 
 /******************************************************************************/
