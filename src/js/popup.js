@@ -1011,7 +1011,10 @@ var onHideTooltip = function() {
 
     // https://github.com/gorhill/uBlock/issues/2734
     // Workaround until fixed in Firefox Nightly.
-    if ( typeof chrome.runtime.getBrowserInfo !== 'function' ) {
+    if (
+        self.chrome instanceof Object === false ||
+        typeof chrome.runtime.getBrowserInfo !== 'function'
+    ) {
         uDom('a[href]').on('click', gotoURL);
     } else {
         chrome.runtime.getBrowserInfo().then(function(info) {
