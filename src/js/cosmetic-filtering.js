@@ -773,6 +773,7 @@ FilterContainer.prototype.compileSelector = (function() {
 
         if ( style !== undefined || pseudoclass !== undefined ) {
             if ( isValidCSSSelector(selector) === false ) {
+                µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid css selector: ' + raw);
                 return;
             }
             if ( pseudoclass !== undefined ) {
@@ -780,6 +781,7 @@ FilterContainer.prototype.compileSelector = (function() {
             }
             if ( style !== undefined ) {
                 if ( isValidStyleProperty(style) === false ) {
+                    µb.logger.writeOne('', 'error', 'Cosmetic filtering – bad style property: ' + raw);
                     return;
                 }
                 return JSON.stringify({
@@ -1008,7 +1010,7 @@ FilterContainer.prototype.compile = function(s, writer) {
         return false;
     }
     if ( parsed.invalid ) {
-        //console.error("uBlock Origin> discarding invalid cosmetic filter '%s'", s);
+        µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + s);
         return true;
     }
 
