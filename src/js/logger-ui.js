@@ -1227,8 +1227,8 @@ var reverseLookupManager = (function() {
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return null;
         }
-        var node;
-        var p = document.createElement('p');
+        var node,
+            p = document.createElement('p');
 
         reSentence1.lastIndex = 0;
         var matches = reSentence1.exec(sentence1Template);
@@ -1237,7 +1237,10 @@ var reverseLookupManager = (function() {
         } else {
             node = uDom.nodeFromSelector('#filterFinderDialogSentence1 > span').cloneNode(true);
             node.childNodes[0].textContent = sentence1Template.slice(0, matches.index);
-            node.childNodes[1].textContent = filter;
+            // https://github.com/gorhill/uBlock/issues/2753
+            node.childNodes[1].textContent = filter.length <= 1024
+                ? filter
+                : filter.slice(0, 1023) + '…';
             node.childNodes[2].textContent = sentence1Template.slice(reSentence1.lastIndex);
         }
         p.appendChild(node);
@@ -1273,9 +1276,7 @@ var reverseLookupManager = (function() {
 
         for ( var filter in response ) {
             var p = nodeFromFilter(filter, response[filter]);
-            if ( p === null ) {
-                continue;
-            }
+            if ( p === null ) { continue; }
             dialog.appendChild(p);
         }
 
