@@ -479,7 +479,7 @@ vAPI.tabs.open = function(details) {
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         if ( chrome.runtime.lastError ) { /* noop */ }
-        var tab = tabs[0];
+        var tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
