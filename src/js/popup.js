@@ -1009,20 +1009,7 @@ var onHideTooltip = function() {
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
                 .on('mouseleave', '[data-tip]', onHideTooltip);
 
-    // https://github.com/gorhill/uBlock/issues/2734
-    // Workaround until fixed in Firefox Nightly.
-    if (
-        self.chrome instanceof Object === false ||
-        typeof chrome.runtime.getBrowserInfo !== 'function'
-    ) {
-        uDom('a[href]').on('click', gotoURL);
-    } else {
-        chrome.runtime.getBrowserInfo().then(function(info) {
-            if ( info.name !== 'Firefox' ) {
-                uDom('a[href]').on('click', gotoURL);
-            }
-        });
-    }
+    uDom('a[href]').on('click', gotoURL);
 })();
 
 /******************************************************************************/
