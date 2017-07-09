@@ -760,8 +760,8 @@ vAPI.tabs.onPopupUpdated = (function() {
                 µb.URI.hostnameFromURI(context.rootURL),
                 µb.URI.hostnameFromURI(context.rootURL)
             );
-            logData = undefined;
         }
+        logData = undefined;
 
         // Not blocked
         if ( result !== 1 ) {
