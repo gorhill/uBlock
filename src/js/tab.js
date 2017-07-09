@@ -650,11 +650,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
         var re = new RegExp(logData.regex),
             matches = re.exec(popunderURL);
-        if ( matches === null ) { return ''; }
+        if ( matches === null ) { return 0; }
         var beg = matches.index,
             end = beg + matches[0].length,
             pos = popunderURL.indexOf(popunderHostname);
-        if ( pos === -1 ) { return ''; }
+        if ( pos === -1 ) { return 0; }
         // https://github.com/gorhill/uBlock/issues/1471
         //   We test whether the opener hostname as at least one character
         //   within matched portion of URL.
