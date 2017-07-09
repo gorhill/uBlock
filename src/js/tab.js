@@ -704,6 +704,9 @@ vAPI.tabs.onPopupUpdated = (function() {
     };
 
     return function(targetTabId, openerTabId) {
+        // https://github.com/gorhill/uBlock/issues/2776
+        logData = undefined;
+
         // Opener details.
         var tabContext = µb.tabContextManager.lookup(openerTabId);
         if ( tabContext === null ) { return; }
