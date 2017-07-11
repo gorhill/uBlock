@@ -693,23 +693,30 @@ registerFilterClass(FilterGenericHnAndRightAnchored);
 /******************************************************************************/
 
 var FilterRegex = function(s) {
-    this.re = new RegExp(s, 'i');
+    this.re = s;
 };
 
 FilterRegex.prototype.match = function(url) {
+    if ( typeof this.re === 'string' ) {
+        this.re = new RegExp(this.re, 'i');
+    }
     return this.re.test(url);
 };
 
 FilterRegex.prototype.logData = function() {
+    var s = typeof this.re === 'string' ? this.re : this.re.source;
     return {
-        raw: '/' + this.re.source + '/',
-        regex: this.re.source,
+        raw: '/' + s + '/',
+        regex: s,
         compiled: this.compile()
     };
 };
 
 FilterRegex.prototype.compile = function() {
-    return [ this.fid, this.re.source ];
+    return [
+        this.fid,
+        typeof this.re === 'string' ? this.re : this.re.source
+    ];
 };
 
 FilterRegex.compile = function(details) {
@@ -1794,6 +1801,7 @@ FilterParser.prototype.parse = function(raw) {
 // Hostname-anchored with no wildcard always have a token index of 0.
 var reHostnameToken = /^[0-9a-z]+/;
 var reGoodToken = /[%0-9a-z]{2,}/g;
+var reRegexToken = /^[^([{?]*?([%0-9a-z]{2,})/;
 
 var badTokens = new Set([
     'com',
@@ -1835,12 +1843,31 @@ var findFirstGoodToken = function(s) {
 
 /******************************************************************************/
 
-FilterParser.prototype.makeToken = function() {
-    // https://github.com/chrisaljoudi/uBlock/issues/1038
-    // Single asterisk will match any URL.
-    if ( this.isRegex || this.f === '*' ) { return; }
+// https://github.com/chrisaljoudi/uBlock/issues/1038
+// Single asterisk will match any URL.
 
-    var matches = null;
+// https://github.com/gorhill/uBlock/issues/2781
+//   For efficiency purpose, try to extract a token from a regex-based filter.
+
+FilterParser.prototype.makeToken = function() {
+    var matches;
+
+    if ( this.isRegex ) {
+        matches = reRegexToken.exec(this.f);
+        if (
+            matches !== null &&
+            this.f.charAt(matches[0].length - matches[1].length - 1) !== '\\'
+        ) {
+            this.token = matches[1];
+            this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
+            this.tokenBeg = matches[0].length - matches[1].length;
+        }
+        return;
+    }
+
+    if ( this.f === '*' ) { return; }
+
+    matches = null;
     if ( (this.anchor & 0x4) !== 0 && this.f.indexOf('*') === -1 ) {
         matches = reHostnameToken.exec(this.f);
     }
