@@ -1801,7 +1801,9 @@ FilterParser.prototype.parse = function(raw) {
 // Hostname-anchored with no wildcard always have a token index of 0.
 var reHostnameToken = /^[0-9a-z]+/;
 var reGoodToken = /[%0-9a-z]{2,}/g;
-var reRegexToken = /^[^([{?]*?([%0-9a-z]{2,})/;
+var reRegexToken = /^[^([{?]*?[^([{?%0-9A-Za-z]([%0-9A-Za-z]{2,})/;
+var reRegexBadPrefix = /(^|\\|[^\\]\.)$/;
+var reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{?*]|$)/;
 
 var badTokens = new Set([
     'com',
@@ -1816,9 +1818,10 @@ var badTokens = new Set([
     'www'
 ]);
 
-var findFirstGoodToken = function(s) {
+FilterParser.prototype.findFirstGoodToken = function() {
     reGoodToken.lastIndex = 0;
-    var matches, lpos,
+    var s = this.f,
+        matches, lpos,
         badTokenMatch = null;
     while ( (matches = reGoodToken.exec(s)) !== null ) {
         // https://github.com/gorhill/uBlock/issues/997
@@ -1841,6 +1844,19 @@ var findFirstGoodToken = function(s) {
     return badTokenMatch;
 };
 
+FilterParser.prototype.extractTokenFromRegex = function() {
+    var s = this.f,
+        matches = reRegexToken.exec(s);
+    if ( matches === null ) { return; }
+    var tokenEnd = matches[0].length,
+        tokenBeg = tokenEnd - matches[1].length;
+    if ( reRegexBadPrefix.test(s.slice(0, tokenBeg)) ) { return; }
+    if ( reRegexBadSuffix.test(s.slice(tokenEnd)) ) { return; }
+    this.token = matches[1].toLowerCase();
+    this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
+    this.tokenBeg = tokenBeg;
+};
+
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/1038
@@ -1850,29 +1866,19 @@ var findFirstGoodToken = function(s) {
 //   For efficiency purpose, try to extract a token from a regex-based filter.
 
 FilterParser.prototype.makeToken = function() {
-    var matches;
-
     if ( this.isRegex ) {
-        matches = reRegexToken.exec(this.f);
-        if (
-            matches !== null &&
-            this.f.charAt(matches[0].length - matches[1].length - 1) !== '\\'
-        ) {
-            this.token = matches[1];
-            this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
-            this.tokenBeg = matches[0].length - matches[1].length;
-        }
+        this.extractTokenFromRegex();
         return;
     }
 
     if ( this.f === '*' ) { return; }
 
-    matches = null;
+    var matches = null;
     if ( (this.anchor & 0x4) !== 0 && this.f.indexOf('*') === -1 ) {
         matches = reHostnameToken.exec(this.f);
     }
     if ( matches === null ) {
-        matches = findFirstGoodToken(this.f);
+        matches = this.findFirstGoodToken();
     }
     if ( matches !== null ) {
         this.token = matches[0];
