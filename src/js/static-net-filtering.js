@@ -1802,9 +1802,9 @@ FilterParser.prototype.parse = function(raw) {
 var reHostnameToken = /^[0-9a-z]+/;
 var reGoodToken = /[%0-9a-z]{2,}/g;
 var reRegexToken = /[%0-9A-Za-z]{2,}/g;
-var reRegexTokenAbort = /[([{]/;
-var reRegexBadPrefix = /(^|\\|[^\\]\.|\*)$/;
-var reRegexBadSuffix = /^(\*|[^\\]\.|\\[dw]|[([{?*]|$)/;
+var reRegexTokenAbort = /[([]/;
+var reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
+var reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*]|$)/;
 
 var badTokens = new Set([
     'com',
