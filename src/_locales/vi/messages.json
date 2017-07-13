@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Bấm để mở bảng điều khiển",
+    "message":"Mở bảng điều khiển",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Chọn chế độ zapper",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -344,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Cập nhật trước: {{ago}}",
+    "message":"Cập nhật mới: {{ago}}.\nClick để cập nhập.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
