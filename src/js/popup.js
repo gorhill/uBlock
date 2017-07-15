@@ -123,9 +123,6 @@ var cachePopupData = function(data) {
     }
     var domain, prefix;
     for ( var hostname in hostnameDict ) {
-        if ( hostnameDict.hasOwnProperty(hostname) === false ) {
-            continue;
-        }
         domain = hostnameDict[hostname].domain;
         prefix = hostname.slice(0, 0 - domain.length);
         // Prefix with space char for 1st-party hostnames: this ensure these
@@ -257,7 +254,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
 
     // Remember this may be a cell from a reused row, we need to clear text
     // content if we can't compute request counts.
-    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
+    if ( popupData.hostnameDict[des] === undefined ) {
         cells.removeAttr('data-acount');
         cells.removeAttr('data-acount');
         return;

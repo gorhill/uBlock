@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"क्लिक करा : या साइटसाठी म्यूब्लॉक अक्षम\/सक्षम.\n\nCtrl+क्लिक करा: फक्त या पृष्ठावर म्यूब्लॉक अक्षम.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"क्लिक करा : या साइटसाठी म्यूब्लॉक अक्षम\/सक्षम.\n\n⌘+क्लिक करा: फक्त या पृष्ठावर म्यूब्लॉक अक्षम.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"विनंत्या अवरोधित",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Ctrl - क्लिक करा",
-    "description":"English: Click, Ctrl-click"
+    "message":"⌘ - क्लिक करा",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"घटक अवरोधित करा",

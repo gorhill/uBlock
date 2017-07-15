@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikšķis: atslēgt\/ieslēgt uBlock₀ šajā vietnē.\n\nCtrl+klikšķis: atslēgt uBlock₀ tikai šai lapai.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Klikšķis: atslēgt\/ieslēgt uBlock₀ šajā vietnē.\n\n⌘+klikšķis: atslēgt uBlock₀ tikai šai lapai.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"bloķētie pieprasījumi",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
-    "description":"English: Click, Ctrl-click"
+    "message":"Click, ⌘-click",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Bloķēt elementu",

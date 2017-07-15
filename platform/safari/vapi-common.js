@@ -21,13 +21,17 @@
 
 // For background page or non-background pages
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
 
-'use strict';
-
 var vAPI = self.vAPI = self.vAPI || {};
+
+/******************************************************************************/
+
+vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 /******************************************************************************/
 
@@ -68,9 +72,9 @@ vAPI.download = function(details) {
         return;
     }
 
-    var messager = vAPI.messaging.channel('_download');
-    messager.send(request);
-    messager.close();
+    var messenger = vAPI.messaging.channel('_download');
+    messenger.send(request);
+    messenger.close();
 };
 
 /******************************************************************************/
@@ -82,6 +86,11 @@ vAPI.insertHTML = function(node, html) {
 /******************************************************************************/
 
 vAPI.getURL = function(path) {
+    // https://github.com/el1t/uBlock-Safari/issues/4
+    // Add extensions to extensionless assets
+    if ( path.match(/^assets\/thirdparties\/.*\/[^\/.]*$/) ) {
+        path += '.txt';
+    }
     return safari.extension.baseURI + path;
 };
 
@@ -91,17 +100,20 @@ vAPI.getURL = function(path) {
 // First language is the default
 
 vAPI.i18nData = [
-    'en', 'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'es', 'et', 'fa', 'fi',
-    'fil', 'fr', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv',
-    'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sl', 'sq', 'sr',
-    'sv', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
+    'en', 'ar', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'eo', 'es', 'et', 'eu',
+    'fa', 'fi', 'fil', 'fr', 'fy', 'gl', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko',
+    'lt', 'lv', 'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sk', 'sl', 'sq',
+    'sr', 'sv', 'ta', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
 ];
 
-vAPI.i18n = navigator.language;
+// Force uppercase after hyphen
+vAPI.i18n = navigator.language.slice(0, 2) + navigator.language.slice(2).toUpperCase();
 
+// Attempt removing hyphen
 if ( vAPI.i18nData.indexOf(vAPI.i18n) === -1 ) {
     vAPI.i18n = vAPI.i18n.slice(0, 2);
 
+    // Default to first
     if ( vAPI.i18nData.indexOf(vAPI.i18n) === -1 ) {
         vAPI.i18n = vAPI.i18nData[0];
     }
@@ -144,5 +156,23 @@ Number.prototype.toLocaleString = function() {
 // experience.
 
 vAPI.localStorage = self.localStorage;
+
+// Disable localStorage.setItem in Private Browsing mode (throws error)
+// https://gist.github.com/philfreo/68ea3cd980d72383c951
+if ( typeof self.localStorage === 'object' ) {
+    try {
+        self.localStorage.setItem('localStorage', 1);
+        self.localStorage.removeItem('localStorage');
+    } catch ( e ) {
+        var storage = self.localStorage;
+        vAPI.localStorage = {
+            getItem: function(key) { return storage.getItem(key) },
+            key: function(index) { return storage.key(index) },
+            setItem: function() {}, // throws error
+            length: storage.length, // 0
+            removeItem: function(key) { return storage.removeItem(key) } // ignored by Safari
+        }
+    }
+}
 
 })();

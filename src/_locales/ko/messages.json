@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"클릭: 이 사이트에서 uBlock₀을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서 uBlock₀을 끕니다.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"클릭: 이 사이트에서 uBlock₀을 켜고 끕니다.\n\n⌘+클릭: 이 페이지에서 uBlock₀을 끕니다.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"요청 차단됨",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"클릭, Ctrl-클릭",
-    "description":"English: Click, Ctrl-click"
+    "message":"클릭, ⌘-클릭",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"구성 요소 차단",

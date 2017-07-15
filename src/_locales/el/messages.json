@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο για αυτήν την σελίδα.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\n⌘+κλικ: απενεργοποίηση του uBlock₀ μόνο για αυτήν την σελίδα.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"αποκλεισμένα αιτήματα",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Κλικ, Ctrl-κλικ",
-    "description":"English: Click, Ctrl-click"
+    "message":"Κλικ, ⌘-κλικ",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Αποκλεισμός στοιχείου",

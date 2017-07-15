@@ -333,7 +333,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.noRemoteFonts = µb.hnSwitches.evaluateZ('no-remote-fonts', rootHostname);
         r.remoteFontCount = pageStore.remoteFontCount;
     } else {
-        r.hostnameDict = {};
+        r.hostnameDict = Object.create(null);
         r.firewallRules = getFirewallRules();
     }
     r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(

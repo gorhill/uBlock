@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Clique: desativa\/ativa o uBlock₀ para este site.\n\n⌘+clique: desativa o uBlock₀ apenas nesta página.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pedidos bloqueados",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Clique, Ctrl-clique",
-    "description":"English: Click, Ctrl-click"
+    "message":"Clique, ⌘-clique",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Bloquear elemento",

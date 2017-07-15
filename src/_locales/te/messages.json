@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"ఈ సైట్లో uBlock₀ను చేతనపరచడానికి లేదా అచేతనపరచడానికి క్లిక్ చేయండి.\n\nకేవలం ఈ పేజిలో uBlock₀ను అచేతనపరచడానికి Ctrl కీ వొత్తి పట్టుకొని క్లిక్ చేయండి.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"ఈ సైట్లో uBlock₀ను చేతనపరచడానికి లేదా అచేతనపరచడానికి క్లిక్ చేయండి.\n\nకేవలం ఈ పేజిలో uBlock₀ను అచేతనపరచడానికి ⌘ కీ వొత్తి పట్టుకొని క్లిక్ చేయండి.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"నిలువరించబడిన అభ్యర్ధనలు",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"క్లిక్, Ctrl+క్లిక్",
-    "description":"English: Click, Ctrl-click"
+    "message":"క్లిక్, ⌘+క్లిక్",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"దీన్ని నిరోధించు",

@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"點擊：對此網站 停用\/啟用 uBlock₀ 。\n\nCtrl + 點擊：僅在此頁面停用 uBlock₀ 。",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"點擊：對此網站 停用\/啟用 uBlock₀ 。\n\n⌘ + 點擊：僅在此頁面停用 uBlock₀ 。",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"已阻擋的連線請求",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"點擊，按住 Ctrl 鍵點擊",
-    "description":"English: Click, Ctrl-click"
+    "message":"點擊，按住 ⌘ 鍵點擊",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"阻擋元素",

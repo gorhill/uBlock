@@ -46,6 +46,12 @@ if ( typeof vAPI !== 'object' ) {
     return;
 }
 
+// Only run on top frame (Safari needs this check)
+if ( window !== window.top ) {
+    //console.debug('subscriber.js > not in top window');
+    return;
+}
+
 /******************************************************************************/
 
 var onMaybeAbpLinkClicked = function(ev) {

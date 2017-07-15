@@ -1,19 +1,16 @@
-language: ruby
+language: bash
 sudo: false
+os:
+  - linux
+  - osx
 env:
-  matrix:
-  - BROWSER=chromium EXT=zip
-  - BROWSER=firefox EXT=xpi
-  - BROWSER=webext EXT=xpi
-script: ./tools/make-${BROWSER}.sh all
-deploy:
-  provider: releases
-  prerelease: true
-  api_key:
-    secure: EnAMNsPbnS2I0JDkCWiY/6WLERsUbE2Ni5j9ap8YbZt4+sJv7aSoufWZ+0TZvSwr/w5MKCCDKhwXaPfbUwvqrI+eZv6LBXhwajK9Zla25FVjtdGCwKXQ3ZU85PHgL+5FYtuSGACmQj/ruAdSgrI7PgS08e5lqSgEk6lY4y3/6fE=
-  file: dist/build/uBlock0.${BROWSER}.${EXT}
-  skip_cleanup: true
-  on:
-    repo: gorhill/uBlock
-    tags: true
-    all_branches: true
+  - BROWSER=safari EXT=safariextz
+script: "./tools/make-${BROWSER}.sh all"
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install xar-mackyle; fi
+  - git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git ../uAssets
+  - openssl aes-256-cbc -K $encrypted_e984caf80568_key -iv $encrypted_e984caf80568_iv
+    -in dist/certs/SafariDeveloper.cer.enc -out dist/certs/SafariDeveloper.cer -d
+  - openssl aes-256-cbc -K $encrypted_197d257244cd_key -iv $encrypted_197d257244cd_iv
+    -in dist/certs/key.pem.enc -out dist/certs/key.pem -d

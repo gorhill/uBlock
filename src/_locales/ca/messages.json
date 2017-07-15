@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: habilita\/inhabilita l'µBlock per a aquest lloc.\n\nCtrl+clic: inhabilita l'µBlock només en aquesta pàgina.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Clic: habilita\/inhabilita l'µBlock per a aquest lloc.\n\n⌘+clic: inhabilita l'µBlock només en aquesta pàgina.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"sol·licituds bloquejades",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Clic, Ctrl+clic",
-    "description":"English: Click, Ctrl-click"
+    "message":"Clic, ⌘+clic",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Bloquejar element",

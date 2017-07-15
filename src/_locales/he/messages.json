@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"לחיצה: כבה\/הפעל את uBlock₀ לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"לחיצה: כבה\/הפעל את uBlock₀ לאתר זה לצמיתות.\n\n⌘+לחיצה: כבה את uBlock₀ רק בדף זה.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"בקשות שנחסמו",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"לחיצה, Ctrl+לחיצה",
-    "description":"English: Click, Ctrl-click"
+    "message":"לחיצה, ⌘+לחיצה",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"חסום אלמנט",

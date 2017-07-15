@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: uBlock₀ tiltása\/engedélyezése ezen a webhelyen.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"Klikk: uBlock₀ tiltása\/engedélyezése ezen a webhelyen.\n\n⌘+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"blokkolt lekérések",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klikk, Ctrl-klikk",
-    "description":"English: Click, Ctrl-click"
+    "message":"Klikk, ⌘-klikk",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"Elem blokkolása",

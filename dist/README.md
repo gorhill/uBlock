@@ -1,45 +1,23 @@
 ## INSTALL
 
-#### Chromium
+#### Safari
 
-- Download and unzip `ublock0.chromium.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
-- Rename the unzipped directory to `ublock`
-    - When you later update manually, replace the **content** of the `ublock` folder with the **content** of the latest zipped version.
-    - This will ensure that all the extension settings will be preserved
-    - As long as the extension loads **from same folder path from which it was originally installed**, all your settings will be preserved.
-- Go to chromium/chrome *Extensions*.
-- Click to check *Developer mode*.
-- Click *Load unpacked extension...*.
-- In the file selector dialog:
-    - Select the directory `ublock` which was created above.
-    - Click *Open*.
+- Download `uBlock0.safariextz` ([latest release desirable](https://github.com/el1t/uBlock/releases))
+- Open the downloaded extension
+- In Safari's popup:
+    - Click *Trust*
 
-The extension will now be available in your chromium/chromium-based browser.
-
-Remember that you have to update manually also. For some users, updating manually is actually an advantage because:
+For now, when installing manually, updates will not show up in Safari's extensions panel. 
+Therefore, you will have to repeat this process to update. For some users, updating manually is actually an advantage because:
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
 
-#### Firefox
+##### Troubleshooting
 
-- Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
-- Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
+If clicking *Trust* [does not work](https://github.com/el1t/uBlock-Safari/issues/6), you may [need to use keyboard controls](https://discussions.agilebits.com/discussion/57442/safari-extensions-dont-install-but-no-error-message):
 
-Your uBlock Origin settings are kept intact even after you uninstall the addon.
-
-On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
-
-On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
-
-#### Build instructions (for developers)
-
-- Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
-- Set path to uBlock: `cd uBlock`
-- Optional: Select the version to build: `git checkout <tag>`
-- Build the plugin:
-    - Chromium: `./tools/make-chromium.sh`
-    - Firefox: `./tools/make-firefox.sh all`
-- Load the result of the build into your browser:
-    - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
-    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` into Firefox.
-   
+> 1. Launch **System Preferences** and open the **Keyboard** pane.
+> 1. Switch to the **Shortcuts** tab.
+> 1. Toggle **All Controls** to selected.
+> 1. Re-attempt to install the extension and use the `Tab` key on the keyboard to highlight **Trust**.
+> 1. Press the `Space bar` key to press the **Trust** button once selected.

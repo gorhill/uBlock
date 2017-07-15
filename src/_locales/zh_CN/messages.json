@@ -44,8 +44,8 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"单击：对此网站禁用\/启用 uBlock₀。\n\nCtrl + 单击：在此页面上禁用 uBlock₀。",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message":"单击：对此网站禁用\/启用 uBlock₀。\n\n⌘ + 单击：在此页面上禁用 uBlock₀。",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\n⌘+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"请求已拦截",
@@ -180,8 +180,8 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"单击，Ctrl + 单击",
-    "description":"English: Click, Ctrl-click"
+    "message":"单击，⌘ + 单击",
+    "description":"English: Click, ⌘-click"
   },
   "pickerContextMenuEntry":{
     "message":"屏蔽元素",

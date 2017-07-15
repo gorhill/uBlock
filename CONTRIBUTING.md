@@ -65,12 +65,12 @@ To help diagnose and fix the bug/issue, please always include the following in y
 * A screenshot or transcription of **any of uBlock's preferences that differ from the defaults**
   * This includes a whitelisted website, enabled/disabled filter list, anything
   * Please do include everything different from the defaults whether or not it seems relevant to your issue
-* The version of uBlock you're having the issue with; you can find this in [uBlock's popup UI](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
-  * Example: `uBlock 0.9.0.0`
-* The browser you're using and its version
-  * Examples: `Firefox 36`, `Chrome 41.0.2272` 
-* The OS you're using and its version
-  * Examples: `Windows 8.1`, `Linux Mint 17.1`
+* The version of uBlock Origin you're having the issue with; you can find this in [uBlock's popup UI](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
+  * Example: `uBlock 1.10.0`
+* The Safari version you're using
+  * Examples: `Safari 10.0.1`, `Safari TP 18` 
+* The MacOS version you're using
+  * Examples: `MacOS Sierra 10.12.1`, `OSX 10.10.5`
 * A list of other extensions you have installed
   * Tip: try disabling them and see if your issue still occurs
 
