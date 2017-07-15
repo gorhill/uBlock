@@ -39,7 +39,7 @@
         }
     ],
     "incognito": "split",
-    "minimum_chrome_version": "26.0",
+    "minimum_chrome_version": "38.0",
     "optional_permissions": [ "file:///*" ],
     "options_page": "dashboard.html",
     "permissions": [
@@ -51,8 +51,7 @@
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
-        "http://*/*",
-        "https://*/*"
+        "<all_urls>"
     ],
     "short_name": "uBlock₀"
 }

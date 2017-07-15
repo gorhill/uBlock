@@ -101,9 +101,9 @@ var fromCosmeticFilter = function(details) {
         filter = details.rawFilter.slice(prefix.length);
 
     var reFilter = new RegExp(
-            '(?:^|\\n)[^\\n]*?\\\\*"' +
+            '[^\\n]*\\\\*"' +
             reEscapeCosmetic(filter) +
-            '\\\\*"[^\\n]*?(?:\\n|$)',
+            '\\\\*"[^\\n]*',
             'g'
         );
 

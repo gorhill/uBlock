@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Клацніть, щоб відкрити приладну дошку",
+    "message":"Клікніть, щоб відкрити панель керування",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -232,11 +232,11 @@
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Стандартні налаштування",
+    "message":"Типові налаштування",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Ці стандартні налаштування можуть бути перевизначені для кожного сайту окремо",
+    "message":"Усталені налаштування можуть бути перевизначеними для кожного сайту окремо",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -340,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"застаріле",
+    "message":"Застарілий.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
@@ -348,7 +348,7 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Оновлення...",
+    "message":"Оновлюється...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
@@ -668,7 +668,7 @@
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Імпортувати з хмарного сховища та обєднати з поточними налаштуваннями",
+    "message":"Імпортувати з хмари та об'єднати з чинними налаштуваннями",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Увага! Змінюйте ці налаштування на свій страх та ризик.",
+    "message":"Зверніть увагу! Зміна додаткових налаштувань на ваш ризик.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

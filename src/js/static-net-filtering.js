@@ -1473,14 +1473,6 @@ FilterParser.prototype.parseOptions = function(s) {
             this.unsupported = true;
             break;
         }
-        if ( opt === 'document' ) {
-            if ( this.action === BlockAction ) {
-                this.parseTypeOption('document', not);
-                continue;
-            }
-            this.unsupported = true;
-            break;
-        }
         // Test before handling all other types.
         if ( opt.startsWith('redirect=') ) {
             if ( this.action === BlockAction ) {
@@ -2152,6 +2144,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, writer
 
     var redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
     if ( Array.isArray(redirects) === false ) {
+        return;
     }
     descBits = typeNameToTypeValue.redirect;
     var i = redirects.length;

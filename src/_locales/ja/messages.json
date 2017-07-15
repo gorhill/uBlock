@@ -340,11 +340,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"古いバージョンです",
+    "message":"新しいバージョンがあります",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"最終更新: {{ago}}",
+    "message":"最終更新: {{ago}}\nクリックすると強制的に更新します",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -580,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}}に接続できません",
+    "message":"ネットワークエラー: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

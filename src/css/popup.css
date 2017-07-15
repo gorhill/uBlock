@@ -39,11 +39,10 @@ a {
 :focus {
     outline: 0;
     }
-#gotoPrefs {
+#appinfo {
     background-color: #444;
     border: 0;
     color: #bbb;
-    cursor: pointer;
     display: block;
     font-size: 85%;
     line-height: 1.2;
@@ -144,7 +143,7 @@ body.off #switch .fa {
     color: #aaa;
     cursor: pointer;
     visibility: hidden;
-    margin-left: 0.8em;
+    margin-left: 0.4em;
     min-width: 1em;
     padding: 0 0.2em;
     unicode-bidi: embed;
