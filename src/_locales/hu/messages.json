@@ -580,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Csatlakozás sikertelen a következő címhez: {{url}}",
+    "message":"Hálózati hiba: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
