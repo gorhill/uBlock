@@ -478,12 +478,12 @@ vAPI.tabs.open = function(details) {
     var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        var tab = tabs[0];
+        if ( chrome.runtime.lastError ) { /* noop */ }
+        var tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
         }
-
         var _details = {
             active: true,
             url: undefined

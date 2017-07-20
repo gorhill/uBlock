@@ -4,7 +4,7 @@
 
 ***
 
-##### BEWARE! uBlock Origin is COMPLETELY UNRELATED to the web site ublock.org
+##### BEWARE! uBlock Origin is (and has always been) COMPLETELY UNRELATED to the web site ublock.org
 
 The donations sought by the [individual](https://github.com/chrisaljoudi/) behind `ublock.org` (_"to keeps uBlock development possible"_, [a misrepresentation](https://en.wikipedia.org/wiki/UBlock_Origin#uBlock_.28ublock.org.29)) are _not_ benefiting any of those who contributed most to create uBlock Origin ([developers](https://github.com/gorhill/uBlock/graphs/contributors), [translators](https://crowdin.com/project/ublock), and all those who put efforts in opening detailed issues). For the differences between uBlock Origin and uBlock, see the unbiased [Wikipedia article](https://en.wikipedia.org/wiki/UBlock_Origin).
 
@@ -65,6 +65,8 @@ uBlock Origin
 <a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png" /></a><br><sup>.<br>.</sup> | <a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide"><img src="https://cloud.githubusercontent.com/assets/585534/9293685/378d18f0-4402-11e5-9255-8ed3fdbfa957.png" /></a><br><sup>Configure as you wish:<br>picture shows 3rd-party scripts and frames blocked by default everywhere</sup>
 
 Visit the [uBlock Origin's wiki](https://github.com/gorhill/uBlock/wiki) for documentation.
+
+For support/questions/help, there is [/r/uBlockOrigin](https://www.reddit.com/r/uBlockOrigin/) on Reddit.
 
 ## Philosophy
 

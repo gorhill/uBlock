@@ -37,6 +37,8 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 
 /******************************************************************************/
 
+var punycode = self.punycode;
+
 // Favorite regex tool: http://regex101.com/
 
 // Ref: <http://tools.ietf.org/html/rfc3986#page-50>
@@ -52,6 +54,7 @@ var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
 var reOriginFromURI          = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]+)/;
 var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
+var reMustNormalizeHostname  = /[^0-9a-z._-]/;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
@@ -61,11 +64,11 @@ var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
 // https://github.com/gorhill/httpswitchboard/issues/211
 // "While a hostname may not contain other characters, such as the
 // "underscore character (_), other DNS names may contain the underscore"
-var reHostPortFromAuthority  = /^(?:[^@]*@)?([0-9a-z._-]*)(:\d*)?$/i;
+var reHostPortFromAuthority  = /^(?:[^@]*@)?([^:]*)(:\d*)?$/;
 var reIPv6PortFromAuthority  = /^(?:[^@]*@)?(\[[0-9a-f:]*\])(:\d*)?$/i;
 
 var reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
-var reHostFromAuthority      = /^(?:[^@]*@)?([0-9a-z._-]+)(?::\d*)?$/i;
+var reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
 var reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
 
 // Coarse (but fast) tests
@@ -250,35 +253,34 @@ URI.authorityFromURI = function(uri) {
 
 // The most used function, so it better be fast.
 
+// https://github.com/gorhill/uBlock/issues/1559
+//   See http://en.wikipedia.org/wiki/FQDN
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1360285
+//   Revisit punycode dependency when above issue is fixed in Firefox.
+
 URI.hostnameFromURI = function(uri) {
     var matches = reCommonHostnameFromURL.exec(uri);
-    if ( matches ) {
-        return matches[1];
-    }
+    if ( matches !== null ) { return matches[1]; }
     matches = reAuthorityFromURI.exec(uri);
-    if ( !matches ) {
-        return '';
-    }
+    if ( matches === null ) { return ''; }
     var authority = matches[1].slice(2);
     // Assume very simple authority (most common case for µBlock)
     if ( reHostFromNakedAuthority.test(authority) ) {
         return authority.toLowerCase();
     }
     matches = reHostFromAuthority.exec(authority);
-    if ( !matches ) {
+    if ( matches === null ) {
         matches = reIPv6FromAuthority.exec(authority);
-        if ( !matches ) {
-            return '';
-        }
+        if ( matches === null ) { return ''; }
     }
-    // http://en.wikipedia.org/wiki/FQDN
-    // Also:
-    // - https://github.com/gorhill/uBlock/issues/1559
     var hostname = matches[1];
     while ( hostname.endsWith('.') ) {
         hostname = hostname.slice(0, -1);
     }
-    return hostname.toLowerCase();
+    if ( reMustNormalizeHostname.test(hostname) ) {
+        hostname = punycode.toASCII(hostname.toLowerCase());
+    }
+    return hostname;
 };
 
 /******************************************************************************/

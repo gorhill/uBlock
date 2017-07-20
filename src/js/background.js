@@ -105,7 +105,6 @@ var µBlock = (function() { // jshint ignore:line
             'behind-the-scene',
             'chrome-extension-scheme',
             'chrome-scheme',
-            'loopconversation.about-scheme',
             'moz-extension-scheme',
             'opera-scheme',
             'vivaldi-scheme',

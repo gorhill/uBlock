@@ -693,23 +693,30 @@ registerFilterClass(FilterGenericHnAndRightAnchored);
 /******************************************************************************/
 
 var FilterRegex = function(s) {
-    this.re = new RegExp(s, 'i');
+    this.re = s;
 };
 
 FilterRegex.prototype.match = function(url) {
+    if ( typeof this.re === 'string' ) {
+        this.re = new RegExp(this.re, 'i');
+    }
     return this.re.test(url);
 };
 
 FilterRegex.prototype.logData = function() {
+    var s = typeof this.re === 'string' ? this.re : this.re.source;
     return {
-        raw: '/' + this.re.source + '/',
-        regex: this.re.source,
+        raw: '/' + s + '/',
+        regex: s,
         compiled: this.compile()
     };
 };
 
 FilterRegex.prototype.compile = function() {
-    return [ this.fid, this.re.source ];
+    return [
+        this.fid,
+        typeof this.re === 'string' ? this.re : this.re.source
+    ];
 };
 
 FilterRegex.compile = function(details) {
@@ -1794,6 +1801,10 @@ FilterParser.prototype.parse = function(raw) {
 // Hostname-anchored with no wildcard always have a token index of 0.
 var reHostnameToken = /^[0-9a-z]+/;
 var reGoodToken = /[%0-9a-z]{2,}/g;
+var reRegexToken = /[%0-9A-Za-z]{2,}/g;
+var reRegexTokenAbort = /[([]/;
+var reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
+var reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*]|$)/;
 
 var badTokens = new Set([
     'com',
@@ -1808,9 +1819,10 @@ var badTokens = new Set([
     'www'
 ]);
 
-var findFirstGoodToken = function(s) {
+FilterParser.prototype.findFirstGoodToken = function() {
     reGoodToken.lastIndex = 0;
-    var matches, lpos,
+    var s = this.f,
+        matches, lpos,
         badTokenMatch = null;
     while ( (matches = reGoodToken.exec(s)) !== null ) {
         // https://github.com/gorhill/uBlock/issues/997
@@ -1833,19 +1845,48 @@ var findFirstGoodToken = function(s) {
     return badTokenMatch;
 };
 
+FilterParser.prototype.extractTokenFromRegex = function() {
+    reRegexToken.lastIndex = 0;
+    var s = this.f,
+        matches, prefix;
+    while ( (matches = reRegexToken.exec(s)) !== null ) {
+        prefix = s.slice(0, matches.index);
+        if ( reRegexTokenAbort.test(prefix) ) { return; }
+        if (
+            reRegexBadPrefix.test(prefix) ||
+            reRegexBadSuffix.test(s.slice(reRegexToken.lastIndex))
+        ) {
+            continue;
+        }
+        this.token = matches[0].toLowerCase();
+        this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
+        this.tokenBeg = matches.index;
+        if ( badTokens.has(this.token) === false ) { break; }
+    }
+};
+
 /******************************************************************************/
 
+// https://github.com/chrisaljoudi/uBlock/issues/1038
+// Single asterisk will match any URL.
+
+// https://github.com/gorhill/uBlock/issues/2781
+//   For efficiency purpose, try to extract a token from a regex-based filter.
+
 FilterParser.prototype.makeToken = function() {
-    // https://github.com/chrisaljoudi/uBlock/issues/1038
-    // Single asterisk will match any URL.
-    if ( this.isRegex || this.f === '*' ) { return; }
+    if ( this.isRegex ) {
+        this.extractTokenFromRegex();
+        return;
+    }
+
+    if ( this.f === '*' ) { return; }
 
     var matches = null;
     if ( (this.anchor & 0x4) !== 0 && this.f.indexOf('*') === -1 ) {
         matches = reHostnameToken.exec(this.f);
     }
     if ( matches === null ) {
-        matches = findFirstGoodToken(this.f);
+        matches = this.findFirstGoodToken();
     }
     if ( matches !== null ) {
         this.token = matches[0];

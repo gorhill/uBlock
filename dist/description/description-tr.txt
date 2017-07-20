@@ -1,13 +1,13 @@
-Etkili bir engelleyici: Belleği ve işlemciyi yormaz, yine de diğer popüler engelleyicilere göre binlerce daha fazla süzgeci yükleyip uygulayabilir.
+Etkili bir engelleyici: Belleği ve işlemciyi yormaz, yine de diğer popüler engelleyicilere göre binlerce daha çok süzgeci yükleyip uygulayabilir.
 
 Verimliliğine örneklendirilmiş genel bakış:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Kullanımı: Arayüzdeki büyük güç düğmesi mevcut web sitesinde uBlock'u kalıcı olarak etkisiz/etkin kılmak içindir. Bu yalnızca mevcut web sitesine uygulanır, evrensel bir güç düğmesi değildir.
+Kullanımı: Arayüzdeki büyük güç düğmesi o anki web sitesinde, uBlock'u kalıcı olarak devre dışı bırakmak/etkinleştirmek içindir. Bu yalnızca o anki web sitesine uygulanır, evrensel bir güç düğmesi değildir.
 
 ***
 
-Esnek, bir "reklam engelleyici"den daha fazlası: Alan adları  dosyalarınızdan süzgeçleri okuyabilir ve oluşturabilir.
+Esnek, bir "reklam engelleyici"den daha fazlası: Ayrıca alan adları dosyalarınızdan süzgeçleri okuyabilir ve oluşturabilir.
 
 Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 
@@ -23,21 +23,21 @@ Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 - hpHosts'un Reklam ve izleyici sunucuları
 - MVPS HOSTS
 - Spam404
-- Ve daha birçoğu
+- Ve daha başkaları
 
-Tabii ki,  daha fazla süzgeç etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleyici sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.
+Elbette, daha çok süzgeç etkinleştirildikçe, bellek kullanımı da artar. Yine de, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleyici sunucuları ekledikten sonra bile uBlock diğer oldukça popüler engelleyicilere göre daha az bellek kullanır.
 
 Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olasılığını artırabileceğini unutmayın -- özellikle normalde alan adları dosyası olarak kullanılan listelerin.
 
 ***
 
-Ön yüklü gelen süzgeç listeleri olmadan, bu eklenti hiçbir işe yaramaz. Eğer gerçekten bir şekilde katkıda bulunmak isterseniz, herkes tarafından özgürce kullanıma imkan veren, kullandığınız süzgeç listelerini oluşturmak için uğraşan insanları düşünün.
+Ön yüklü gelen süzgeç listeleri olmadan, bu eklenti bir işe yaramaz. Bu yüzden, gerçekten bir şekilde katkıda bulunmak isterseniz, herkesin özgürce kullanması için sunulan kullandığınız süzgeç listelerini oluşturmak için uğraşan insanları düşünün.
 
 ***
 
 Özgür.
 Açık kaynak kamu lisanslı (GPLv3)
-Kullanıcılar tarafından kullanıcılar için.
+Kullanıcılardan kullanıcılara.
 
 Katkıda bulunanlar @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Katkıda bulunanlar @ Crowdin: https://crowdin.net/project/ublock
