@@ -20,21 +20,12 @@
    },
    "commands":{
       "launch-element-zapper":{
-         "suggested_key":{
-
-         },
          "description":"__MSG_popupTipZapper__"
       },
       "launch-element-picker":{
-         "suggested_key":{
-
-         },
          "description":"__MSG_popupTipPicker__"
       },
       "launch-logger":{
-         "suggested_key":{
-
-         },
          "description":"__MSG_popupTipLog__"
       }
    },
