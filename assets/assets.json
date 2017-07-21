@@ -547,6 +547,15 @@
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
 		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
 	},
+	"ROU-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "ROU: Romanian Ad (ROad) Block List",
+		"lang": "ro",
+		"contentURL": "https://road.adblock.ro/lista.txt",
+		"supportURL": "https://github.com/tcptomato/ROad-Block"
+	},
 	"RUS-0": {
 		"content": "filters",
 		"group": "regions",
