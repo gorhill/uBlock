@@ -410,14 +410,23 @@ var onHeadersReceived = function(details) {
         return foilLargeMediaElement(pageStore, details);
     }
 
-    // https://github.com/gorhill/uBO-Extra/issues/19
-    //   Turns out scripts must also be considered as potential embedded
-    //   contexts (as workers) and as such we may need to inject content
-    //   security policy directives.
-    if ( requestType === 'main_frame' || requestType === 'sub_frame' ) {
+    // https://github.com/gorhill/uBlock/issues/2813
+    //   Disable the blocking of large media elements if the document is itself
+    //   a media element: the resource was not prevented from loading so no
+    //   point to further block large media elements for the current document.
+    if ( requestType === 'main_frame' ) {
+        if ( reMediaContentTypes.test(headerValueFromName('content-type', details.responseHeaders)) ) {
+            pageStore.allowLargeMediaElementsUntil = Date.now() + 86400000;
+        }
+        return injectCSP(pageStore, details);
+    }
+
+    if ( requestType === 'sub_frame' ) {
         return injectCSP(pageStore, details);
     }
 };
+
+var reMediaContentTypes = /^(?:audio|image|video)\//;
 
 /******************************************************************************/
 
@@ -601,6 +610,11 @@ var headerIndexFromName = function(headerName, headers) {
         }
     }
     return -1;
+};
+
+var headerValueFromName = function(headerName, headers) {
+    var i = headerIndexFromName(headerName, headers);
+    return i !== -1 ? headers[i].value : '';
 };
 
 /******************************************************************************/
