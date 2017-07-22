@@ -592,7 +592,7 @@ vAPI.tabs.onPopupUpdated = (function() {
                         source: 'switch',
                         raw: 'no-popups: ' + µb.hnSwitches.z + ' true'
                     };
-                    result = 1;
+                    return 1;
                 }
             }
 
