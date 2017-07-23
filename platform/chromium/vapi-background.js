@@ -655,8 +655,8 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging;
-    var toAuxPending = {};
+    var messaging = vAPI.messaging,
+        toAuxPending = {};
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
@@ -703,8 +703,8 @@ vAPI.messaging.onPortMessage = (function() {
     };
 
     var toAux = function(details, portFrom) {
-        var port, portTo;
-        var chromiumTabId = toChromiumTabId(details.toTabId);
+        var port, portTo,
+            chromiumTabId = toChromiumTabId(details.toTabId);
 
         // TODO: This could be an issue with a lot of tabs: easy to address
         //       with a port name to tab id map.
@@ -761,6 +761,32 @@ vAPI.messaging.onPortMessage = (function() {
         wrapper.callback(details.msg);
     };
 
+    var toFramework = function(msg, sender) {
+        var tabId = sender && sender.tab && sender.tab.id;
+        if ( !tabId ) { return; }
+        switch ( msg.what ) {
+        case 'userCSS':
+            if ( msg.toRemove ) {
+                chrome.tabs.removeCSS(tabId, {
+                    code: msg.toRemove,
+                    cssOrigin: 'user',
+                    frameId: sender.frameId,
+                    matchAboutBlank: true
+                });
+            }
+            if ( msg.toAdd ) {
+                chrome.tabs.insertCSS(tabId, {
+                    code: msg.toAdd,
+                    cssOrigin: 'user',
+                    frameId: sender.frameId,
+                    matchAboutBlank: true,
+                    runAt: 'document_start'
+                });
+            }
+            break;
+        }
+    };
+
     return function(request, port) {
         // Auxiliary process to auxiliary process
         if ( request.toTabId !== undefined ) {
@@ -774,6 +800,13 @@ vAPI.messaging.onPortMessage = (function() {
             return;
         }
 
+        // Content process to main process: framework handler.
+        // No callback supported/needed for now.
+        if ( request.channelName === 'vapi-background' ) {
+            toFramework(request.msg, port.sender);
+            return;
+        }
+
         // Auxiliary process to main process: prepare response
         var callback = messaging.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
@@ -781,8 +814,8 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: specific handler
-        var r = messaging.UNHANDLED;
-        var listener = messaging.listeners[request.channelName];
+        var r = messaging.UNHANDLED,
+            listener = messaging.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
         }

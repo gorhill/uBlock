@@ -37,6 +37,7 @@
          ],
          "js":[
             "js/vapi-client.js",
+            "js/vapi-usercss.js",
             "js/contentscript.js"
          ],
          "run_at":"document_start",
