@@ -167,6 +167,10 @@ var cosmeticFiltersActivated = function() {
 // Probably no longer need to watch for style tags removal/tampering with fix
 // to https://github.com/gorhill/uBlock/issues/963
 
+// https://github.com/gorhill/uBlock/issues/2810
+//   With Firefox Nightly, it may happens style tags are injected before the
+//   head element is present.
+
 var platformUserCSS = (function() {
     if ( vAPI.userCSS instanceof Object ) {
         return vAPI.userCSS;
@@ -179,8 +183,9 @@ var platformUserCSS = (function() {
             var style = document.createElement('style');
             style.setAttribute('type', 'text/css');
             style.textContent = css;
-            if ( document.head ) {
-                document.head.appendChild(style);
+            var parent = document.head || document.documentElement;
+            if ( parent !== null ) {
+                parent.appendChild(style);
             }
             this.styles.push(style);
             if ( style.sheet ) {
