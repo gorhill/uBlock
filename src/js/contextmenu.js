@@ -27,12 +27,10 @@
 
 /******************************************************************************/
 
-var api = {
-    update: function() {}
-};
-
 if ( vAPI.contextMenu === undefined ) {
-    return api;
+    return {
+        update: function() {}
+    };
 }
 
 var µb = µBlock;
@@ -142,19 +140,19 @@ vAPI.contextMenu.onMustUpdate = update;
 
 /******************************************************************************/
 
-api.update = function(tabId) {
-    if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
-        vAPI.tabs.get(null, function(tab) {
-            if ( tab ) {
-                update(tab.id);
-            }
-        });
-        return;
+return {
+    update: function(tabId) {
+        if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
+            vAPI.tabs.get(null, function(tab) {
+                if ( tab ) {
+                    update(tab.id);
+                }
+            });
+            return;
+        }
+        update(tabId);
     }
-    update(tabId);
 };
-
-return api;
 
 /******************************************************************************/
 

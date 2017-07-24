@@ -327,7 +327,9 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onActivated = function(details) {
-        vAPI.contextMenu.onMustUpdate(details.tabId);
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(details.tabId);
+        }
     };
 
     var onUpdated = function(tabId, changeInfo, tab) {
@@ -628,7 +630,7 @@ vAPI.setIcon = (function() {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        if ( chrome.browserAction.setIcon instanceof Object ) {
+        if ( chrome.browserAction.setIcon !== undefined ) {
             chrome.browserAction.setIcon(
                 {
                     tabId: tabId,
@@ -648,7 +650,7 @@ vAPI.setIcon = (function() {
                     }
                 }
             );
-        } else if ( chrome.browserAction.setTitle instanceof Object ) {
+        } else if ( chrome.browserAction.setTitle !== undefined ) {
             chrome.browserAction.setTitle({
                 tabId: tabId,
                 title: titleTemplate.replace(
@@ -658,9 +660,18 @@ vAPI.setIcon = (function() {
             });
         }
 
-        vAPI.contextMenu.onMustUpdate(tabId);
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(tabId);
+        }
     };
 })();
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+    vAPI.tabs.open({
+        select: true,
+        url: 'popup.html?tabId=' + tab.id + '&mobile=1'
+    });
+});
 
 /******************************************************************************/
 /******************************************************************************/
