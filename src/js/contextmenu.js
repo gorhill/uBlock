@@ -27,6 +27,14 @@
 
 /******************************************************************************/
 
+var api = {
+    update: function() {}
+};
+
+if ( vAPI.contextMenu === undefined ) {
+    return api;
+}
+
 var µb = µBlock;
 
 /******************************************************************************/
@@ -134,19 +142,19 @@ vAPI.contextMenu.onMustUpdate = update;
 
 /******************************************************************************/
 
-return {
-    update: function(tabId) {
-        if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
-            vAPI.tabs.get(null, function(tab) {
-                if ( tab ) {
-                    update(tab.id);
-                }
-            });
-            return;
-        }
-        update(tabId);
+api.update = function(tabId) {
+    if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
+        vAPI.tabs.get(null, function(tab) {
+            if ( tab ) {
+                update(tab.id);
+            }
+        });
+        return;
     }
+    update(tabId);
 };
+
+return api;
 
 /******************************************************************************/
 

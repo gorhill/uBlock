@@ -608,32 +608,59 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // Since we may be called asynchronously, the tab id may not exist
 // anymore, so this ensures it does still exist.
 
-vAPI.setIcon = function(tabId, iconStatus, badge) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
+//   Firefox for Android does no support browser.browserAction.setIcon().
 
-    var onIconReady = function() {
-        if ( vAPI.lastError() ) {
-            return;
+vAPI.setIcon = (function() {
+    var titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+    var iconPaths = [
+        {
+            '19': 'img/browsericons/icon19-off.png',
+            '38': 'img/browsericons/icon38-off.png'
+        },
+        {
+            '19': 'img/browsericons/icon19.png',
+            '38': 'img/browsericons/icon38.png'
         }
-        chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
-        if ( badge !== '' ) {
-            chrome.browserAction.setBadgeBackgroundColor({
+    ];
+
+    return function(tabId, iconStatus, badge) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        if ( chrome.browserAction.setIcon instanceof Object ) {
+            chrome.browserAction.setIcon(
+                {
+                    tabId: tabId,
+                    path: iconPaths[iconStatus === 'on' ? 1 : 0]
+                },
+                function onIconReady() {
+                    if ( vAPI.lastError() ) { return; }
+                    chrome.browserAction.setBadgeText({
+                        tabId: tabId,
+                        text: badge
+                    });
+                    if ( badge !== '' ) {
+                        chrome.browserAction.setBadgeBackgroundColor({
+                            tabId: tabId,
+                            color: '#666'
+                        });
+                    }
+                }
+            );
+        } else if ( chrome.browserAction.setTitle instanceof Object ) {
+            chrome.browserAction.setTitle({
                 tabId: tabId,
-                color: '#666'
+                title: titleTemplate.replace(
+                    '{badge}',
+                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                )
             });
         }
+
+        vAPI.contextMenu.onMustUpdate(tabId);
     };
-
-    var iconPaths = iconStatus === 'on' ?
-        { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
-        { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-
-    chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
-    vAPI.contextMenu.onMustUpdate(tabId);
-};
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1178,7 +1205,10 @@ vAPI.net.registerListeners = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.contextMenu = {
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
+//   Firefox for Android does no support browser.contextMenus.
+
+vAPI.contextMenu = chrome.contextMenus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
@@ -1304,7 +1334,7 @@ vAPI.punycodeURL = function(url) {
 // https://github.com/gorhill/uBlock/issues/900
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
-vAPI.adminStorage = {
+vAPI.adminStorage = chrome.storage.managed && {
     getItem: function(key, callback) {
         var onRead = function(store) {
             var data;
