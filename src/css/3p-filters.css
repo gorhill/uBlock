@@ -77,18 +77,20 @@ li.listEntry > .fa {
 li.listEntry > a.fa:hover {
     opacity: 1;
     }
-li.listEntry.support > a.support {
+li.listEntry.support > a.support,
+li.listEntry.external > a.remove,
+li.listEntry.mustread > a.mustread,
+li.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure,
+li.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache,
+body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete,
+li.listEntry.failed span.failed {
     display: inline-block;
     }
 li.listEntry > a.remove,
-li.listEntry > a.remove:visited {
+li.listEntry > a.remove:visited,
+li.listEntry span.unsecure,
+li.listEntry span.failed {
     color: darkred;
-    }
-li.listEntry.external > a.remove {
-    display: inline-block;
-    }
-li.listEntry.mustread > a.mustread {
-    display: inline-block;
     }
 li.listEntry.mustread > a.mustread:hover {
     color: mediumblue;
@@ -123,29 +125,11 @@ li.listEntry span.status {
 li.listEntry span.status:hover {
     opacity: 1;
     }
-li.listEntry span.unsecure {
-    color: darkred;
-    }
-li.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure {
-    display: inline-block;
-    }
-li.listEntry span.failed {
-    color: darkred;
-    }
-li.listEntry.failed span.failed {
-    display: inline-block;
-    }
 li.listEntry span.cache {
     cursor: pointer;
     }
-li.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
-    display: inline-block;
-    }
 li.listEntry span.obsolete {
     color: hsl(36, 100%, 40%);
-    }
-body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
-    display: inline-block;
     }
 li.listEntry span.updating {
     transform-origin: 50% 46%;
