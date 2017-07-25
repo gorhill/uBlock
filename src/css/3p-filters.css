@@ -19,18 +19,14 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     content: '+  ';
     }
 #lists {
-    margin: 0.5em 0 0 0;
     padding-left: 0.5em;
-    padding-right: 0em;
     }
 body[dir="rtl"] #lists {
-    padding-left: 0em;
+    padding-left: 0;
     padding-right: 0.5em;
     }
 #lists > li {
-    margin: 0.5em 0 0 0;
-    padding: 0;
-    list-style-type: none;
+    margin-top: 0.5em;
     }
 #lists > .groupEntry > .geName {
     cursor: pointer;
@@ -48,17 +44,14 @@ body[dir="rtl"] #lists {
     content: '+  ';
     }
 #lists > .groupEntry > ul {
-    margin: 0.25em 0 0 0;
+    margin-top: 0.25em;
     }
 #lists > .groupEntry.collapsed > ul {
     display: none;
     }
 li.listEntry {
     line-height: 150%;
-    margin: 0 auto 0 auto;
-    margin-left: 2.5em;
-    margin-right: 0;
-    text-indent: -2em;
+    margin-left: 0.5em;
     }
 body[dir="rtl"] li.listEntry {
     margin-left: 0em;
@@ -66,7 +59,6 @@ body[dir="rtl"] li.listEntry {
     }
 li.listEntry > * {
     margin-right: 0.5em;
-    text-indent: 0;
     unicode-bidi: embed;
     }
 li.listEntry.toRemove > input[type="checkbox"] {
@@ -126,7 +118,6 @@ body[dir=rtl] #buttonApply {
     }
 li.listEntry span.status {
     color: #444;
-    cursor: default;
     display: none;
 }
 li.listEntry span.status:hover {
@@ -175,5 +166,4 @@ body[dir=rtl] #externalListsDiv {
     margin-top: 0.25em;
     white-space: pre;
     width: 100%;
-    word-wrap: normal;
     }
