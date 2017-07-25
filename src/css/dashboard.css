@@ -1,8 +1,6 @@
 html, body {
     margin: 0;
-    border: 0;
     padding: 0;
-    position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -12,18 +10,9 @@ html, body {
         zoom: 1.2;
         }
     }
-#dashboard-nav {
-    border: 0;
-    margin: 0;
-    padding: 0;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-    }
 #dashboard-nav-widgets {
-    margin: 0;
     border-bottom: 1px solid #ccc;
-    padding: 4px 0 0;
+    padding-top: 4px;
     white-space: nowrap;
     background-color: white;
     }
@@ -36,7 +25,6 @@ html, body {
     border: 1px solid #ccc;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    border-bottom: 1px solid #ccc;
     color: black;
     cursor: pointer;
     display: inline-block;
@@ -58,19 +46,13 @@ html, body {
     border-bottom: 1px solid white;
     }
 iframe {
-    margin: 0;
     border: 0;
-    padding: 0;
-    background-color: transparent;
     width: 100%;
     }
 
 @media (max-width: 600px) {
-    #dashboard-nav {
-        position: relative;
-        }
     #dashboard-nav-widgets {
-        padding: 1px 0 0 0;
+        padding-top: 1px;
         white-space: normal;
         }
     [data-i18n="extName"] {
@@ -78,11 +60,8 @@ iframe {
         }
     .tabButton {
         border-radius: 0;
-        display: inline-block;
         font-size: 100%;
-        margin-bottom: 1px;
-        margin-right: 1px;
-        top: 0;
+        margin: 0 1px;
         }
     .tabButton.selected {
         border-bottom: 1px solid #ccc;
