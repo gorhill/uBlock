@@ -614,7 +614,8 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 //   Firefox for Android does no support browser.browserAction.setIcon().
 
 vAPI.setIcon = (function() {
-    var titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+    var browserAction = chrome.browserAction,
+        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
     var iconPaths = [
         {
             '19': 'img/browsericons/icon19-off.png',
@@ -630,8 +631,8 @@ vAPI.setIcon = (function() {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        if ( chrome.browserAction.setIcon !== undefined ) {
-            chrome.browserAction.setIcon(
+        if ( browserAction.setIcon !== undefined ) {
+            browserAction.setIcon(
                 {
                     tabId: tabId,
                     path: iconPaths[iconStatus === 'on' ? 1 : 0]
@@ -650,8 +651,10 @@ vAPI.setIcon = (function() {
                     }
                 }
             );
-        } else if ( chrome.browserAction.setTitle !== undefined ) {
-            chrome.browserAction.setTitle({
+        }
+
+        if ( browserAction.setTitle !== undefined ) {
+            browserAction.setTitle({
                 tabId: tabId,
                 title: titleTemplate.replace(
                     '{badge}',
