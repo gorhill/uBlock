@@ -1394,7 +1394,7 @@ vAPI.cloud = (function() {
 
     var options = {
         defaultDeviceName: window.navigator.platform,
-        deviceName: window.localStorage.getItem('deviceName') || ''
+        deviceName: vAPI.localStorage.getItem('deviceName') || ''
     };
 
     // This is used to find out a rough count of how many chunks exists:
@@ -1538,7 +1538,7 @@ vAPI.cloud = (function() {
         }
 
         if ( typeof details.deviceName === 'string' ) {
-            window.localStorage.setItem('deviceName', details.deviceName);
+            vAPI.localStorage.setItem('deviceName', details.deviceName);
             options.deviceName = details.deviceName;
         }
 
