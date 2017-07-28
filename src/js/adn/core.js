@@ -618,6 +618,13 @@
 
   var validateTarget = function (ad) {
 
+    function isValidDomain(v) {
+
+      // from: https://github.com/miguelmota/is-valid-domain/blob/master/is-valid-domain.js
+      var re = /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
+      return v ? re.test(v) : false;
+    }
+
     var url = ad.targetUrl;
 
     if (!/^http/.test(url)) {
@@ -631,18 +638,35 @@
 
       } else {
 
-        return warn("Invalid TargetUrl: " + url);
+        return warn("Invalid targetUrl: " + url);
       }
     }
 
     // ad.targetUrl = trimChar(ad.targetUrl, '/'); #751
-    ad.targetDomain = domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
-    ad.targetHostname = µb.URI.hostnameFromURI(ad.resolvedTargetUrl || ad.targetUrl);
+
+    var dInfo = domainInfo(ad.resolvedTargetUrl || ad.targetUrl);
+
+    if (!isValidDomain(dInfo.domain)) {
+
+      return warn("Invalid domain: " + url);
+    }
+
+    //console.log(dInfo.domain, isValidDomain(dInfo.domain));
+
+    ad.targetHostname = dInfo.hostname;
+    ad.targetDomain = dInfo.domain;
 
     return true;
   }
 
-  var domainFromURI = function (url) { // via uBlock/psl
+  var domainInfo = function (url) { // via uBlock/psl
+
+    var hostname = µb.URI.hostnameFromURI(url);
+    var domain = µb.URI.domainFromHostname(hostname);
+    return { hostname: hostname, domain: domain };
+  }
+
+  var domainFromURI = function (url) { // TODO: replace all uses with domainInfo()
 
     return µb.URI.domainFromHostname(µb.URI.hostnameFromURI(url));
   }
