@@ -539,13 +539,20 @@ var parseHostname = function (url) {
 }
 
 // TODO: replace with core::domainFromURI?
-var parseDomain = function (url, useLast) {
+var parseDomain = function (url, useLast) { // dup in parser.js
 
   var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
 
   return (domains && domains.length > 0) ? new URL(
       useLast ? domains[domains.length - 1] : domains[0])
     .hostname : undefined;
+}
+
+var isValidDomain = function(v) { // dup in parser.js
+
+  // from: https://github.com/miguelmota/is-valid-domain/blob/master/is-valid-domain.js
+  var re = /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
+  return v ? re.test(v) : false;
 }
 
 /*
