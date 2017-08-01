@@ -30,10 +30,10 @@
     return;
 
   vAPI.adCheck = function (elem) {
-      if (typeof vAPI.adParser === 'undefined') {
-        vAPI.adParser = createParser();
-      }
-      vAPI.adParser.process(elem);
+    if (typeof vAPI.adParser === 'undefined') {
+      vAPI.adParser = createParser();
+    }
+    elem && vAPI.adParser.process(elem);
   }
 
   var createParser = function () {
@@ -194,6 +194,13 @@
         .hostname : undefined;
     }
 
+    var isValidDomain = function(v) { // dup in shared
+
+      // from: https://github.com/miguelmota/is-valid-domain/blob/master/is-valid-domain.js
+      var re = /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
+      return v ? re.test(v) : false;
+    }
+
     var injectAutoDiv = function (request) { // not used
 
       var count = pageCount(request.data, request.pageUrl),
@@ -311,13 +318,14 @@
         parseDomain(document.referrer) : document.domain,
         proto = window.location.protocol || 'http';
 
-      //logP('createAd:', domain, target, typeof target);
-
-      if (targetDomain != undefined)
+      if (targetDomain !== undefined)
         domain = targetDomain;
+
       target = normalizeUrl(proto, domain, target);
 
-      if (target.indexOf('http') < 0) {
+      // logP('createAd:', target, isValidDomain(parseDomain(target)));
+
+      if (target.indexOf('http') < 0) {// || !isValidDomain(parseDomain(target)) {
 
         return warnP("Ignoring Ad with targetUrl=" + target, arguments);
       }

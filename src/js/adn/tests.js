@@ -19,6 +19,7 @@
     Home: https://github.com/dhowe/AdNauseam
 */
 
+if (!vAPI.parser) vAPI.adCheck();
 
 QUnit.test('notifications', function (assert) {
 
@@ -93,4 +94,47 @@ QUnit.test('parseOnClick', function (assert) {
 
   test = 'onclick="EBG.ads[&quot;39178788_6277666087953531&quot;].onImageClick(&quot;39178788_6277666087953531&quot;, false,&quot;ebDefaultImg_39178788_6277666087953531&quot;, &quot;https://www.rolex.com/?cmpid=dw_TheRolexWay_201604843&quot;, &quot;&quot;, &quot;&quot;)">';
   assert.equal(vAPI.adParser.parseOnClick(test, 'nytimes.com'), 'https://www.rolex.com/?cmpid=dw_TheRolexWay_201604843');
+});
+
+QUnit.test('isValidDomain', function (assert) {
+
+  assert.equal(isValidDomain('example.com'), true);
+  assert.equal(isValidDomain('foo.example.com'), true);
+  assert.equal(isValidDomain('bar.foo.example.com'), true);
+  assert.equal(isValidDomain('exa-mple.co.uk'), true);
+
+  assert.equal(isValidDomain('exa_mple.com'), false);
+  assert.equal(isValidDomain('example'), false);
+  assert.equal(isValidDomain({}), false);
+  assert.equal(isValidDomain(function () {}), false);
+  assert.equal(isValidDomain('ex*mple.com'), false);
+  assert.equal(isValidDomain('@#$@#$%fd'), false);
+
+  assert.equal(isValidDomain(''), false);
+  assert.equal(isValidDomain('https'), false);
+  assert.equal(isValidDomain('https:'), false);
+  assert.equal(isValidDomain('Dont_Tell_Anyone_You_Play_This_Game'), false);
+  assert.equal(isValidDomain('https://Dont_Tell_Anyone_You_Play_This_Game'), false);
+  assert.equal(isValidDomain('https://Get_Rid_Of_20_Lbs_Of_Belly_Fat_In_Just_1_Month'), false);
+  assert.equal(isValidDomain('https://This_Addictive_Game_Will_Keep_You_Up_All_Night'), false);
+  assert.equal(isValidDomain('https://leagueofangelsii/The_Hottest_New_MMO_Game_You_Need_To_Start_Playing_Now'), false);
+  assert.equal(isValidDomain('https://This_Fascinating_Game_Amazes_94_Of_The_Players._Wanna_Try_It'), false);
+});
+
+QUnit.test('parseAndValidateDomain', function (assert) {
+
+  assert.equal(isValidDomain(parseDomain('https://example.com')), true);
+  assert.equal(isValidDomain(parseDomain('https://foo.example.com')), true);
+  assert.equal(isValidDomain(parseDomain('https://bar.foo.example.com')), true);
+  assert.equal(isValidDomain(parseDomain('https://exa-mple.co.uk')), true);
+
+  assert.equal(isValidDomain(parseDomain('exa_mple.com')), false);
+  assert.equal(isValidDomain(parseDomain('example')), false);
+  assert.equal(isValidDomain(parseDomain('ex*mple.com')), false);
+
+  assert.equal(isValidDomain(parseDomain('https://Dont_Tell_Anyone_You_Play_This_Game')), false);
+  assert.equal(isValidDomain(parseDomain('https://Get_Rid_Of_20_Lbs_Of_Belly_Fat_In_Just_1_Month')), false);
+  assert.equal(isValidDomain(parseDomain('https://This_Addictive_Game_Will_Keep_You_Up_All_Night')), false);
+  assert.equal(isValidDomain(parseDomain('https://leagueofangelsii/The_Hottest_New_MMO_Game_You_Need_To_Start_Playing_Now')), false);
+  assert.equal(isValidDomain(parseDomain('https://This_Fascinating_Game_Amazes_94_Of_The_Players._Wanna_Try_It')), false);
 });

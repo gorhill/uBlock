@@ -631,18 +631,35 @@
 
       } else {
 
-        return warn("Invalid TargetUrl: " + url);
+        return warn("Invalid targetUrl: " + url);
       }
     }
 
     // ad.targetUrl = trimChar(ad.targetUrl, '/'); #751
-    ad.targetDomain = domainFromURI(ad.resolvedTargetUrl || ad.targetUrl);
-    ad.targetHostname = µb.URI.hostnameFromURI(ad.resolvedTargetUrl || ad.targetUrl);
+
+    var dInfo = domainInfo(ad.resolvedTargetUrl || ad.targetUrl);
+
+    if (!isValidDomain(dInfo.domain)) {
+
+      return warn("Invalid domain: " + url);
+    }
+
+    //console.log(dInfo.domain, isValidDomain(dInfo.domain));
+
+    ad.targetHostname = dInfo.hostname;
+    ad.targetDomain = dInfo.domain;
 
     return true;
   }
 
-  var domainFromURI = function (url) { // via uBlock/psl
+  var domainInfo = function (url) { // via uBlock/psl
+
+    var hostname = µb.URI.hostnameFromURI(url);
+    var domain = µb.URI.domainFromHostname(hostname);
+    return { hostname: hostname, domain: domain };
+  }
+
+  var domainFromURI = function (url) { // TODO: replace all uses with domainInfo()
 
     return µb.URI.domainFromHostname(µb.URI.hostnameFromURI(url));
   }
