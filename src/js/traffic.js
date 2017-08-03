@@ -355,7 +355,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // working properly, etc.
     // So we filter if and only if the "advanced user" mode is selected
     if ( µb.userSettings.advancedUserEnabled ) {
-        result = pageStore.filterRequestNoCache(context);
+        result = pageStore.filterRequest(context);
     }
 
     pageStore.journalAddRequest(context.requestHostname, result);
@@ -450,7 +450,7 @@ var injectCSP = function(pageStore, details) {
 
     context.requestType = 'inline-script';
     context.requestURL = requestURL;
-    if ( pageStore.filterRequestNoCache(context) === 1 ) {
+    if ( pageStore.filterRequest(context) === 1 ) {
         cspSubsets[0] = "script-src 'unsafe-eval' * blob: data:";
         // https://bugs.chromium.org/p/chromium/issues/detail?id=669086
         // TODO: remove when most users are beyond Chromium v56
