@@ -2,10 +2,10 @@
 #
 # This script assumes a linux environment
 
-echo "*** uBlock0.webext: Creating web store package"
-echo "*** uBlock0.webext: Copying files"
+echo "*** uBlock0.webext-hybrid: Creating web store package"
+echo "*** uBlock0.webext-hybrid: Copying files"
 
-DES=dist/build/uBlock0.webext
+DES=dist/build/uBlock0.webext-hybrid
 rm -rf $DES
 mkdir -p $DES/webextension
 
@@ -34,14 +34,14 @@ cp platform/webext/chrome.manifest    $DES/
 cp platform/webext/install.rdf        $DES/
 mv $DES/webextension/img/icon_128.png $DES/icon.png
 
-echo "*** uBlock0.webext: Generating meta..."
-python tools/make-webext-meta.py $DES/
+echo "*** uBlock0.webext-hybrid: Generating meta..."
+python tools/make-webext-hybrid-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** uBlock0.webext: Creating package..."
+    echo "*** uBlock0.webext-hybrid: Creating package..."
     pushd $DES > /dev/null
     zip ../$(basename $DES).xpi -qr *
     popd > /dev/null
 fi
 
-echo "*** uBlock0.webext: Package done."
+echo "*** uBlock0.webext-hybrid: Package done."
