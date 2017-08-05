@@ -22,13 +22,16 @@ cp platform/chromium/*.js             $DES/webextension/js/
 cp -R platform/chromium/img           $DES/webextension/
 cp platform/chromium/*.html           $DES/webextension/
 cp platform/chromium/*.json           $DES/webextension/
-cp platform/webext/polyfill.js        $DES/webextension/js/
-cp platform/webext/vapi-usercss.js    $DES/webextension/js/
-cp platform/webext/manifest.json      $DES/webextension/
 cp LICENSE.txt                        $DES/webextension/
                                   
+cp platform/webext/manifest.json      $DES/webextension/
 cp platform/webext/background.html    $DES/webextension/
+cp platform/webext/options_ui.html    $DES/webextension/
+cp platform/webext/polyfill.js        $DES/webextension/js/
+cp platform/webext/vapi-usercss.js    $DES/webextension/js/
 cp platform/webext/from-legacy.js     $DES/webextension/js/
+rm $DES/webextension/js/options_ui.js
+
 cp platform/webext/bootstrap.js       $DES/
 cp platform/webext/chrome.manifest    $DES/
 cp platform/webext/install.rdf        $DES/
