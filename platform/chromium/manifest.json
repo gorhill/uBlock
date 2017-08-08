@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.13.9.6",
+    "version": "1.13.9.7",
 
     "commands": {
         "launch-element-zapper": {
