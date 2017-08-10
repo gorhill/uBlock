@@ -2,6 +2,7 @@
 
 import os
 import json
+import re
 import sys
 
 if len(sys.argv) == 1 or not sys.argv[1]:
@@ -22,7 +23,14 @@ webext_manifest_file = os.path.join(build_dir, 'manifest.json')
 with open(webext_manifest_file) as f2:
     webext_manifest = json.load(f2)
 
-webext_manifest['version'] = chromium_manifest['version']
+match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', chromium_manifest['version'])
+if match:
+    buildtype = int(match.group(2)[1:])
+    if buildtype < 100:
+        builttype = 'b' + str(buildtype)
+    else:
+        builttype = 'rc' + str(buildtype - 100)
+    webext_manifest['version'] = match.group(1) + builttype
 
 with open(webext_manifest_file, 'w') as f2:
     json.dump(webext_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
