@@ -75,30 +75,6 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.insertHTML = (function() {
-    const parser = Components.classes['@mozilla.org/parserutils;1']
-        .getService(Components.interfaces.nsIParserUtils);
-
-    // https://github.com/gorhill/uBlock/issues/845
-    // Apparently dashboard pages execute with `about:blank` principal.
-
-    return function(node, html) {
-        while ( node.firstChild ) {
-            node.removeChild(node.firstChild);
-        }
-
-        node.appendChild(parser.parseFragment(
-            html,
-            parser.SanitizerAllowStyle,
-            false,
-            Services.io.newURI('about:blank', null, null),
-            document.documentElement
-        ));
-    };
-})();
-
-/******************************************************************************/
-
 vAPI.getURL = function(path) {
     return 'chrome://' + location.host + '/content/' + path.replace(/^\/+/, '');
 };
