@@ -31,6 +31,8 @@ if match:
     else:
         builttype = 'rc' + str(buildtype - 100)
     webext_manifest['version'] = match.group(1) + builttype
+else:
+    webext_manifest['version'] = chromium_manifest['version']
 
 with open(webext_manifest_file, 'w') as f2:
     json.dump(webext_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
