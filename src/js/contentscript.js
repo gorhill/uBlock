@@ -890,7 +890,7 @@ return domFilterer;
 vAPI.domWatcher = (function() {
 
     var domLayoutObserver = null,
-        ignoreTags = { 'head': 1, 'link': 1, 'meta': 1, 'script': 1, 'style': 1 },
+        ignoreTags = new Set([ 'head', 'link', 'meta', 'script', 'style' ]),
         addedNodeLists = [],
         addedNodes = [],
         removedNodes = false,
@@ -899,30 +899,30 @@ vAPI.domWatcher = (function() {
     var safeObserverHandler = function() {
         safeObserverHandlerTimer.clear();
         var i = addedNodeLists.length,
+            j = addedNodes.length,
             nodeList, iNode, node;
         while ( i-- ) {
             nodeList = addedNodeLists[i];
             iNode = nodeList.length;
             while ( iNode-- ) {
                 node = nodeList[iNode];
-                if ( node.nodeType !== 1 ) {
-                    continue;
+                if (
+                    node.nodeType === 1 &&
+                    ignoreTags.has(node.localName) === false &&
+                    node.parentElement !== null
+                ) {
+                    addedNodes[j++] = node;
                 }
-                if ( ignoreTags[node.localName] === 1 ) {
-                    continue;
-                }
-                addedNodes.push(node);
             }
         }
         addedNodeLists.length = 0;
-        if ( addedNodes.length !== 0 || removedNodes ) {
-            listeners[0](addedNodes);
-            if ( listeners[1] ) {
-                listeners[1](addedNodes);
-            }
-            addedNodes.length = 0;
-            removedNodes = false;
+        if ( j === 0 && removedNodes === false ) { return; }
+        listeners[0](addedNodes);
+        if ( listeners[1] ) {
+            listeners[1](addedNodes);
         }
+        addedNodes.length = 0;
+        removedNodes = false;
     };
 
     var safeObserverHandlerTimer = new vAPI.SafeAnimationFrame(safeObserverHandler);
@@ -1024,6 +1024,7 @@ vAPI.domCollapser = (function() {
     };
     var netSelectorCacheCount = 0,
         messaging = vAPI.messaging;
+
     var cachedBlockedSetClear = function() {
         cachedBlockedSet =
         cachedBlockedSetHash =
@@ -1033,8 +1034,7 @@ vAPI.domCollapser = (function() {
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
     var onProcessed = function(response) {
-        // This can happens if uBO is restarted.
-        if ( !response ) {
+        if ( !response ) { // This can happens if uBO is restarted.
             toCollapse.clear();
             return;
         }
@@ -1048,8 +1048,10 @@ vAPI.domCollapser = (function() {
             if ( cachedBlockedSetTimer !== undefined ) {
                 clearTimeout(cachedBlockedSetTimer);
             }
-            if ( cachedBlockedSet.size === 0 ) { return; }
             cachedBlockedSetTimer = vAPI.setTimeout(cachedBlockedSetClear, 30000);
+        }
+        if ( cachedBlockedSet === undefined || cachedBlockedSet.size === 0 ) {
+            return;
         }
         var selectors = [],
             iframeLoadEventPatch = vAPI.iframeLoadEventPatch,
@@ -1545,7 +1547,7 @@ vAPI.domSurveyor = (function() {
             v = node.id;
             if ( typeof v !== 'string' ) { continue; }
             v = '#' + v.trim();
-            if ( !qq.has(v) && v.length !== 1 ) {
+            if ( qq.has(v) === false && v.length !== 1 ) {
                 ll[lli] = v; lli++; qq.add(v);
             }
         }
@@ -1555,9 +1557,9 @@ vAPI.domSurveyor = (function() {
             node = nodes[i];
             vv = node.className;
             if ( typeof vv !== 'string' ) { continue; }
-            if ( !rews.test(vv) ) {
+            if ( rews.test(vv) === false ) {
                 v = '.' + vv;
-                if ( !qq.has(v) && v.length !== 1 ) {
+                if ( qq.has(v) === false && v.length !== 1 ) {
                     ll[lli] = v; lli++; qq.add(v);
                 }
             } else {
@@ -1565,7 +1567,7 @@ vAPI.domSurveyor = (function() {
                 j = vv.length;
                 while ( j-- ) {
                     v = '.' + vv[j];
-                    if ( !qq.has(v) ) {
+                    if ( qq.has(v) === false ) {
                         ll[lli] = v; lli++; qq.add(v);
                     }
                 }
