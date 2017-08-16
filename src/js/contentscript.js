@@ -1034,7 +1034,7 @@ vAPI.domCollapser = (function() {
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
     var onProcessed = function(response) {
-        if ( !response ) { // This can happens if uBO is restarted.
+        if ( !response ) { // This happens if uBO is disabled or restarted.
             toCollapse.clear();
             return;
         }
