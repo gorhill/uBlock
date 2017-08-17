@@ -77,17 +77,15 @@
 
 */
 
-/******************************************************************************/
-/******************************************************************************/
-/******************************************************************************/
+// Abort execution if our global vAPI object does not exist.
+//   https://github.com/chrisaljoudi/uBlock/issues/456
+//   https://github.com/gorhill/uBlock/issues/2029
 
-// Abort execution by throwing if an unexpected condition arise.
-// - https://github.com/chrisaljoudi/uBlock/issues/456
+if ( self.vAPI !== undefined ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
-if ( typeof vAPI !== 'object' ) {
-    throw new Error('uBlock Origin: aborting content scripts for ' + window.location);
-}
-vAPI.lock();
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
 
 vAPI.matchesProp = (function() {
     var docElem = document.documentElement;
@@ -805,7 +803,6 @@ return domFilterer;
         if ( !cfeDetails || !cfeDetails.ready ) {
             vAPI.domWatcher = vAPI.domCollapser = vAPI.domFilterer =
             vAPI.domSurveyor = vAPI.domIsLoaded = null;
-            vAPI.unlock();
             return;
         }
 
@@ -1611,9 +1608,7 @@ vAPI.domSurveyor = (function() {
 vAPI.domIsLoaded = function(ev) {
     // This can happen on Firefox. For instance:
     // https://github.com/gorhill/uBlock/issues/1893
-    if ( window.location === null ) {
-        return;
-    }
+    if ( window.location === null ) { return; }
 
     var slowLoad = ev instanceof Event;
     if ( slowLoad ) {
@@ -1678,3 +1673,5 @@ vAPI.domIsLoaded = function(ev) {
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
+
+} // <<<<<<<< end of HUGE-IF-BLOCK
