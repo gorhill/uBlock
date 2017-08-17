@@ -81,7 +81,7 @@
 //   https://github.com/chrisaljoudi/uBlock/issues/456
 //   https://github.com/gorhill/uBlock/issues/2029
 
-if ( self.vAPI !== undefined ) { // >>>>>>>> start of HUGE-IF-BLOCK
+if ( typeof vAPI !== undefined ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
 /******************************************************************************/
