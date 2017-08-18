@@ -364,8 +364,8 @@
 		"off": true,
 		"title": "EST: Eesti saitidele kohandatud filter",
 		"lang": "et",
-		"contentURL": "http://adblock.ee/list.php",
-		"supportURL": "http://adblock.ee/"
+		"contentURL": "https://adblock.ee/list.php",
+		"supportURL": "https://adblock.ee/"
 	},
 	"EU-prebake": {
 		"content": "filters",

@@ -215,7 +215,7 @@ api.listKeyAliases = {
     "https://easylist-downloads.adblockplus.org/easylistdutch.txt": "NLD-0",
     "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": "LVA-0",
     "http://hosts-file.net/.%5Cad_servers.txt": "hphosts",
-    "http://adblock.ee/list.php": "EST-0",
+    "https://adblock.ee/list.php": "EST-0",
     "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": "disconnect-malvertising",
     "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": "disconnect-malware",
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": "disconnect-tracking",
