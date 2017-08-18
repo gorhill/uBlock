@@ -134,12 +134,12 @@
 		"group": "multipurpose",
 		"supportURL": "http://hosts-file.net/"
 	},
-	"https://adblock.ee/list.php": {
+	"http://adblock.ee/list.php": {
 		"off": true,
 		"title": "EST: Eesti saitidele kohandatud filter",
 		"group": "regions",
 		"lang": "et",
-		"supportURL": "https://adblock.ee/"
+		"supportURL": "http://adblock.ee/"
 	},
 	"https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": {
 		"off": true,
