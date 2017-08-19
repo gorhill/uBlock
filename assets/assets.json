@@ -465,7 +465,7 @@
 		"off": true,
 		"title": "ITA: ABP X Files",
 		"contentURL": "https://raw.githubusercontent.com/gioxx/xfiles/master/filtri.txt",
-		"supportURL": "http://noads.it/"
+		"supportURL": "https://xfiles.noads.it/"
 	},
 	"JPN-0": {
 		"content": "filters",
