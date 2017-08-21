@@ -129,6 +129,20 @@ vAPI.SafeAnimationFrame.prototype.clear = function() {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.injectScriptlet = function(doc, text) {
+    if ( !doc ) { return; }
+    try {
+        var script = doc.createElement('script');
+        script.appendChild(doc.createTextNode(text));
+        (doc.head || doc.documentElement).appendChild(script);
+    } catch (ex) {
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
 // The DOM filterer is the heart of uBO's cosmetic filtering.
 
 vAPI.domFilterer = (function() {
@@ -838,7 +852,6 @@ return domFilterer;
             // Library of resources is located at:
             // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
             if ( cfeDetails.scripts ) {
-                elem = document.createElement('script');
                 // Have the injected script tag remove itself when execution completes:
                 // to keep DOM as clean as possible.
                 text = cfeDetails.scripts +
@@ -850,8 +863,7 @@ return domFilterer;
                     "        p.removeChild(c);\n" +
                     "    }\n" +
                     "})();";
-                elem.appendChild(document.createTextNode(text));
-                parent.appendChild(elem);
+                vAPI.injectScriptlet(document, text);
                 vAPI.injectedScripts = text;
             }
         }
@@ -1168,12 +1180,7 @@ vAPI.domCollapser = (function() {
         // and which scripts are selectively looked-up from:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( vAPI.injectedScripts ) {
-            var scriptTag = document.createElement('script');
-            scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
-            var parent = iframe.contentDocument && iframe.contentDocument.head;
-            if ( parent ) {
-                parent.appendChild(scriptTag);
-            }
+            vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
     };
 
