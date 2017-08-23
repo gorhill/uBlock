@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -94,6 +94,17 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
+
+// https://github.com/gorhill/uBlock/issues/2550
+// Solution inspired from
+// - https://bugs.chromium.org/p/chromium/issues/detail?id=683314
+// - https://bugzilla.mozilla.org/show_bug.cgi?id=1332714#c17
+// Confusable character set from:
+// - http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%D0%B0%D1%81%D4%81%D0%B5%D2%BB%D1%96%D1%98%D3%8F%D0%BE%D1%80%D4%9B%D1%95%D4%9D%D1%85%D1%83%D1%8A%D0%AC%D2%BD%D0%BF%D0%B3%D1%B5%D1%A1%5D&g=gc&i=
+// Linked from:
+// - https://www.chromium.org/developers/design-documents/idn-in-google-chrome
+var reCyrillicNonAmbiguous = /[\u0400-\u042b\u042d-\u042f\u0431\u0432\u0434\u0436-\u043d\u0442\u0444\u0446-\u0449\u044b-\u0454\u0457\u0459-\u0460\u0462-\u0474\u0476-\u04ba\u04bc\u04be-\u04ce\u04d0-\u0500\u0502-\u051a\u051c\u051e-\u052f]/;
+var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u0443\u0445\u044a\u0455\u0456\u0458\u0461\u0475\u04bb\u04bd\u04cf\u0501\u051b\u051d]/;
 
 /******************************************************************************/
 
@@ -197,10 +208,20 @@ var addFirewallRow = function(des) {
     }
 
     row.descendants('[data-des]').attr('data-des', des);
-    row.descendants('span:nth-of-type(1)').text(punycode.toUnicode(des));
 
-    var hnDetails = popupData.hostnameDict[des] || {};
-    var isDomain = des === hnDetails.domain;
+    var hnDetails = popupData.hostnameDict[des] || {},
+        isDomain = des === hnDetails.domain,
+        prettyDomainName = punycode.toUnicode(des),
+        isPunycoded = prettyDomainName !== des;
+    var span = row.nodeAt(0).querySelector('span:first-of-type');
+    span.classList.toggle(
+        'isIDN',
+        isPunycoded && reCyrillicAmbiguous.test(prettyDomainName) === true &&
+                       reCyrillicNonAmbiguous.test(prettyDomainName) === false
+    );
+    span.querySelector('span').textContent = prettyDomainName;
+    span.title = isDomain && isPunycoded ? des : '';
+
     row.toggleClass('isDomain', isDomain)
        .toggleClass('isSubDomain', !isDomain)
        .toggleClass('allowed', hnDetails.allowCount !== 0)

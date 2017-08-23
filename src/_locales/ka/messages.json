@@ -39,6 +39,10 @@
     "message":"შესახებ",
     "description":"appears as tab name in dashboard"
   },
+  "advancedSettingsPageName":{
+    "message":"ვრცელი პარამეტრები",
+    "description":"Title for the advanced settings page"
+  },
   "popupPowerSwitchInfo":{
     "message":"დაწკაპუნება: ამ საიტისთვის uBlock-ის ჩართვა\/გამორთვა.\n\nCtrl+დაწკაპუნება: uBlock-ის მხოლოდ ამ გვერდზე გამორთვა.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
@@ -80,31 +84,31 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Toggle the blocking of large media elements for this site",
+    "message":"დიდი მედია ელემენტების ბლოკირების გადართვა ამ საიტისთვის",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"კოსმეტიკური ფილტრაციის გადართვა ამ საიტისთვის",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"დაშორებული შრიფტების ბლოკირების გადართვა ამ საიტისთვის",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Global rules: this column is for rules which apply to all sites.",
+    "message":"გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message":"ლოკალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს მხოლოდ მიმდინარე საიტზე.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Click to make your changes permanent.",
+    "message":"დააწკაპუნეთ შეტანილი ცვლილებების პერმანენტულად ქცევისთვის.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Click to revert your changes.",
+    "message":"დააწკაპუნეთ შეტანილი ცვლილებების გაუქმებისთვის.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -140,11 +144,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"დაკავშირებული დომენები",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{total}}-დან {{count}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -160,12 +164,12 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"გადახედვა",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
     "message":"ქსელის ფილტრები",
-    "description":"English: Net filters"
+    "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
     "message":"კოსმეტიკური ფილტრები",
@@ -192,27 +196,31 @@
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"კონტექსტური მენიუს გამოყენება, როდესაც ეს ხელსაყრელია",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"ფერთა კორექცია დალტონიკებისთვის",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Enable cloud storage support",
+    "message":"ღრუბლოვანი მეხსიერების მხარდაჭერის ჩართვა",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
-    "description":"English: "
+    "message":"მე ვარ გამოცდილი მომხმარებელი (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>აუცილებლად წასაკითხი<\/a>)",
+    "description":""
+  },
+  "settingsAdvancedUserSettings":{
+    "message":"ვრცელი პარამეტრები",
+    "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
     "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -327,25 +335,21 @@
     "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"ანალიზი",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"კეში-მეხსიერების გასუფთავება",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"ხელმისაწვდომია განახლება",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"მოძველებული",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"ბოლო განახლება: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
@@ -416,8 +420,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which uBlock₀ will be disabled. One entry per line. Invalid host names will be silently ignored.",
-    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"The whitelist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
+    "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
     "message":"Import and append",
@@ -545,7 +549,7 @@
   },
   "aboutBackupDataButton":{
     "message":"ფაილში დამარქაფება",
-    "description":"English: Backup to file"
+    "description":"Text for button to create a backup of all settings"
   },
   "aboutBackupFilename":{
     "message":"ჩემი-ublock-მარქაფი_{{datetime}}.txt",
@@ -572,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Network error: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
@@ -671,13 +675,21 @@
     "message":"This device name:",
     "description":"used as a prompt for the user to provide a custom device name"
   },
+  "advancedSettingsWarning":{
+    "message":"Warning! Change these advanced settings at your own risk.",
+    "description":"A warning to users at the top of 'Advanced settings' page"
+  },
   "genericSubmit":{
     "message":"Submit",
-    "description":"for generic 'submit' buttons"
+    "description":"for generic 'Submit' buttons"
+  },
+  "genericApplyChanges":{
+    "message":"Apply changes",
+    "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
     "message":"Revert",
-    "description":"for generic 'revert' buttons"
+    "description":"for generic 'Revert' buttons"
   },
   "genericBytes":{
     "message":"bytes",

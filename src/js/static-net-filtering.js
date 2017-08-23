@@ -1443,10 +1443,13 @@ FilterParser.prototype.parse = function(raw) {
         s = s.slice(2);
 
         // convert hostname to punycode if needed
+        // https://github.com/gorhill/uBlock/issues/2599
         if ( this.reHasUnicode.test(s) ) {
             var matches = this.reIsolateHostname.exec(s);
             if ( matches ) {
-                s = matches[1] + punycode.toASCII(matches[2]) + matches[3];
+                s = (matches[1] !== undefined ? matches[1] : '') +
+                    punycode.toASCII(matches[2]) +
+                    matches[3];
                 //console.debug('µBlock.staticNetFilteringEngine/FilterParser.parse():', raw, '=', s);
             }
         }

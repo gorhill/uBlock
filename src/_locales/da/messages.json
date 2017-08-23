@@ -44,7 +44,7 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra kun på den nuværende side.",
+    "message":"Klik: Deaktiver\/aktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Deaktiver uBlock₀ kun på denne side.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Aktiver\/deaktiver blokering af fjerntliggende 3. parts skrifttyper på denne side",
+    "message":"Aktiver\/deaktiver blokering af skrifttyper fra nettet på dette websted",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -244,7 +244,7 @@
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
-    "message":"Bloker fjerntliggende skrifttyper",
+    "message":"Bloker skrifttyper fra nettet",
     "description":""
   },
   "settingsStorageUsed":{
@@ -335,25 +335,21 @@
     "message":"En URL pr. linje. Linjer der starter med &lsquo;!&rsquo; bliver ignoreret. Ugyldige URL'er bliver lydløst ignoreret.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Anvend",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"tøm cache",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"new version tilgængelig",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"kan være forældet",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"forældet",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"Sidste opdatering: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med &lsquo;!&rsquo; vil blive ignoreret.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"Kan ikke forbinde til {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Tilføj det følgende URL til din personlige filterliste?\n\nTitel: \"{{title}}\"\nURL: {{url}}",

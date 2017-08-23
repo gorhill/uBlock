@@ -335,25 +335,21 @@
     "message":"ഒരു വരിയില്‍ ഒരു യുആര്‍എല്‍ എന്ന രീതിയില്‍. &lsquo;!&rsquo; എന്നിവയില്‍ തുടങ്ങുന്ന വരികള്‍ ഇഗ്നോര്‍ ചെയ്യപ്പെടും. ഇന്‍വാലിഡ്‌ ആയ യുആര്‍എല്ലുകള്‍ നിശബ്ദമായി ഇഗ്നോര്‍ ചെയ്യപ്പെടും.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"പാര്‍സ്",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"ക്യാഷ് ശുദ്ധീകരിക്കുക",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"പുതിയ അപ്ഡേറ്റ് ലഭ്യം",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"കാലഹരണപ്പെട്ടത്",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
     "message":"അവസാന അപ്ഡേറ്റ്:{{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Updating...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"A network error prevented the resource from being updated.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"ഒരു വരിയില്‍ ഒരു ഫില്‍റ്റര്‍ എന്ന രീതിയില്‍. ഒരു ഫില്‍റ്റര്‍ എന്നത്, ഹോസ്റ്റ് നെയിം, അല്ലെങ്കില്‍ ആഡ് ബ്ലോക്ക് പ്ലസ്‌-നോട്‌ കംപാറ്റബിള്‍ ആയ ഫില്‍റ്റര്‍ എന്നിവ ആകാം. &lsquo;!&rsquo; എന്നിവയില്‍ ആരംഭിക്കുന്ന വരികള്‍ ഇഗ്നോര്‍ ചെയ്യപ്പെടും.",
@@ -581,7 +577,7 @@
   },
   "errorCantConnectTo":{
     "message":"{{url}} എന്നതിലേക്ക് കണക്റ്റ് ചെയ്യാനാകുന്നില്ല",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"യുബ്ലോക്ക്ഒ: താഴെ പറയുന്ന യുആര്‍എല്‍ താങ്കളുടെ കസ്റ്റം ഫില്‍റ്ററില്‍ ചേര്‍ക്കട്ടേയോ?\n\nടൈറ്റില്‍: \"{{title}}\"\nയുആര്‍എല്‍: {{url}}",

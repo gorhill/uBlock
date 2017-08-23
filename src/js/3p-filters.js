@@ -43,6 +43,7 @@ var onMessage = function(msg) {
         break;
     case 'assetsUpdated':
         document.body.classList.remove('updating');
+        renderWidgets();
         break;
     case 'staticFilteringDataChanged':
         renderFilterLists();
@@ -211,12 +212,17 @@ var renderFilterLists = function(soft) {
         );
         li.classList.toggle('failed', asset.error !== undefined);
         li.classList.toggle('obsolete', asset.obsolete === true);
-        li.classList.toggle('cached', asset.cached === true && asset.writeTime > 0);
-        if ( asset.cached ) {
+        if ( asset.cached === true ) {
+            li.classList.add('cached');
             li.querySelector('.status.cache').setAttribute(
                 'title',
-                lastUpdateTemplateString.replace('{{ago}}', renderElapsedTimeToString(asset.writeTime))
+                lastUpdateTemplateString.replace(
+                    '{{ago}}',
+                    renderElapsedTimeToString(asset.writeTime)
+                )
             );
+        } else {
+            li.classList.remove('cached');
         }
 
         //if (entry.hidden) li.classList.toggle('hidden', true); // ADN

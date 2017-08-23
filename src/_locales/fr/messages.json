@@ -335,25 +335,21 @@
     "message":"Une adresse Web par ligne. Les lignes débutant par un &lsquo;!&rsquo; seront ignorées. Les adresses Web invalides seront ignorées sans avertissement.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Appliquer",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"Vider le cache",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"Nouvelle version disponible",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"Potentiellement obsolète",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Obsolète",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Dernière mise à jour effectuée : {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Dernière mise à jour effectuée : {{ago}}\nCliquez pour forcer la mise à jour",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Mise à jour en cours...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Une erreur réseau a empêché la mise à jour de la ressource.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
@@ -580,8 +576,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Ne peut se connecter sur {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Erreur réseau : {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀ : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",

@@ -1,0 +1,49 @@
+കാര്യക്ഷമമായ ഒരു ബ്ലോക്കര്‍: മെമ്മറിയും സിപിയുവും ഉദാരമായി ഉപയോഗിക്കുന്നു, എന്നിരുന്നാലും ആയിരക്കണക്കിന് ഫില്‍ട്ടറുകള്‍ ലോഡ് ചെയ്യാനാകുന്നു, മറ്റുള്ള ബ്ലോക്കേര്‍സിനെ അപേക്ഷിച്ച്.
+
+ഇതിന്‍റെ കാര്യക്ഷമതയുടെ ഓവര്‍വ്യൂ ചിത്രം: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+ഉപയോഗരീതി: പോപ്‌അപ്പിള്‍ ഉള്ള വലിയ പവര്‍ ബട്ടണ്‍, ഇപ്പോള്‍ ലോഡ് ചെയ്യപ്പെട്ട വെബ്‌സൈറ്റില്‍ യുബ്ലോക്ക് സ്ഥിരമായി എനേബിള്‍/ഡിസേബിള്‍ ചെയ്യാന്‍ ഉപയോഗിക്കാം. ഇത് ഇപ്പോള്‍ നിലവില്‍ ഇരിക്കുന്ന വെബ്‌ സൈറ്റില്‍ മാത്രമേ അപ്ലൈ ചെയ്യപെടുകയുള്ളൂ. ഇത് ഒരു ഗ്ലോബല്‍ പവര്‍ ബട്ടന്‍ അല്ല.
+
+***
+
+ഫ്ലെക്സിബിള്‍ ആയ യുബ്ലോക്ക് വെറുമൊരു "പരസ്യ ബ്ലോക്കര്‍" മാത്രമല്ല: ഇതിനു ഹോസ്റ്റ് ഫയലുകളില്‍ നിന്നും റീഡ് ചെയ്യുവാനും ഫില്‍ട്ടറുകള്‍ ക്രിയേറ്റ് ചെയ്യുവാനും കഴിയും.
+
+പെട്ടിയില്‍ നിന്നും പുറത്തെടുക്കുമ്പോള്‍ ചുവടെ ഉള്ള ഫില്‍റ്റര്‍ ലിസ്റ്റുകള്‍ ലോഡ് ചെയ്ത് എന്‍ഫോര്‍സ് ചെയ്യപ്പെടുന്നു:
+
+-ഈസി ലിസ്റ്റ്
+-പീറ്റര്‍ ലോവ്ന്‍റെ ആഡ് സെര്‍വര്‍ ലിസ്റ്റ്
+-ഈസി പ്രൈവസി
+- മാല്‍വയര്‍ ഡൊമൈനുകള്‍
+
+താങ്കള്‍ക്ക് ആവശ്യമെങ്കില്‍ കൂടുതല്‍ പട്ടികകള്‍ ലഭ്യം:
+
+-ഫാന്‍ബോയ്യുടെ എന്‍ഹാന്‍സ്ഡ് ട്രാക്കിംഗ് ലിസ്റ്റ്
+-ഡാന്‍ പൊള്ളോക്കിന്‍റെ ഹോസ്റ്റ് ഫയല്‍
+-എച്പി ഹോസ്റ്റ്-ന്‍റെ ആഡ് & ട്രാക്കിംഗ് സെര്‍വറുകള്‍
+-എംവിപിഎസ് ഹോസ്റ്റുകള്‍
+-സ്പാം404
+-കൂടാതെ മറ്റ് അനവധി
+
+തീര്‍ച്ചയായും, കൂടുതല്‍ ഫില്‍ട്ടറുകള്‍ എനേബിള്‍ ചെയ്യുംതോറും മെമ്മറി ഉപഭോഗം കൂടുന്നതാണ്. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+
+Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+
+***
+
+Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+
+***
+
+Free.
+ഓപ്പണ്‍‌സോഴ്സ് പബ്ലിക്‌ ലൈസന്‍സ് (ജിപിഎല്‍വി3)
+ഉഭയോക്താക്കള്‍ക്ക്‌ ഉഭയോക്താക്കളില്‍ നിന്നും.
+
+കോണ്‍ട്രിബ്യൂട്ടര്‍മാര്‍ @ ഗിറ്റ്ഹബ്: https://github.com/gorhill/uBlock/graphs/contributors
+കോണ്‍ട്രിബ്യൂട്ടര്‍മാര്‍ @ ക്രൌവ്ഡിന്‍: https://crowdin.net/project/ublock
+
+***
+
+ഇത് സാമാന്യം ശൈശവ വേര്‍ഷന്‍ ആണ്, റിവ്യൂ ചെയ്യുമ്പോള്‍ ഇക്കാര്യം മനസ്സില്‍ വയ്ക്കൂ.
+
+പ്രൊജെക്റ്റ് മാറ്റങ്ങളുടെ ലോഗ്:
+https://github.com/gorhill/uBlock/releases

@@ -1,0 +1,51 @@
+Satu penghalang yang berkesan: kurang menggunakan memori dan CPU, tetapi dapat memuat dan menguatkuasakan beribu-ribu lagi penapis daripada penghalang popular yang lain di luar sana.
+
+Kecekapan yang digambarkan:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+(Bahasa English)
+
+Cara menguna: Butang besar di dalam popup adalah untuk mengaktifkan/menyahaktifkan uBlock bagi laman web yang terkini. Ini hanya boleh diggunakan dalam laman web ini sahaja, ini bukan satu butang kuasa global.
+
+***
+
+Fleksibel, ini lebih daripada satu "penghalang": ia boleh membaca dan menghasilkan penapis daripada fail hosts.
+
+Senarai penapis yang telah dimuatkan dan dikuatkuasakan adalah seperti berikut:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Domain mengandungi malware
+
+Banyak lagi senarai penapis yang boleh anda pilih jika anda ingin seperti:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- dan banyak lagi
+
+Sudah tentu, dengan lebih banyak penapis yang diaktifkan, jejakan memori lebih tinggi. Lagi, walaupun sudah menambah dua senarai tambahan Fanboy, hpHosts's Ad and tracking servers, uBlock masih kekal mempunyai jejakan memori yang rendah berbanding dengan penghalang yang terkenal di luar sana.
+
+Juga, berhati-hati memilih sesetengah senarai tambahan yang kemungkinan besar membawa kepada kerosakan laman web -- terutamanya senarai yang biasanya digunakan sebagai fail hosts.
+
+***
+
+Penapis yang tiada senarai pratetap, extension ini tiada kegunaannya. Jadi, jika pernah anda benar-benar mahu menyumbang sesuatu, berfikir tentang orang yang bekerja keras untuk mengekalkan senarai penapis anda menggunakan, mereka telah menyediakannya untuk digunakan oleh semua orang secara percuma.
+
+***
+
+Percuma.
+Sumber terbuka dengan lesen awam (GPLv3)
+Bagi pengguna oleh pengguna.
+
+Penyumbang @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Penyumbang @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Ia versi yang agak awal, ingat apabila anda mengulas.
+
+Log perubahan projek:
+https://github.com/gorhill/uBlock/releases

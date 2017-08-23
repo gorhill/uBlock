@@ -1,0 +1,49 @@
+Ein effizienter Blocker: Geringer Speicherbedarf und niedrige CPU-Belastung - und dennoch werden Tausende an Filtern mehr angewendet als bei anderen populären Blockern.
+
+Ein illustrierter Überblick über seine Effizienz: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum An-/Ausschalten von uBlock auf der aktuellen Webseite. Dies wirkt sich also nur auf die aktuelle Webseite aus und nicht global.
+
+ 
+
+uBlock ist flexibel, denn es ist mehr als ein „Werbeblocker“: Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+
+Standardmäßig werden folgende Filterlisten geladen und angewandt:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Auf Wunsch können zusätzliche Listen ausgewählt werden:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- etc.
+
+Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von uBlock₀ geringer als bei anderen sehr populären Blockern.
+
+Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
+
+ 
+
+  Wenn du etwas beitragen möchtest, dann denke an die Menschen, die hart dafür arbeiten, die von dir benutzten Filterlisten zu pflegen, und diese für uns alle frei verfügbar gemacht haben.
+
+ 
+
+Frei.
+Open-Source-Software unter der General Public License (GPLv3)
+Für Benutzer von Benutzern.
+
+Mitwirkende @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Mitwirkende @ Crowdin: https://crowdin.net/project/ublock
+
+ 
+
+ 
+
+Änderungsprotokoll:
+https://github.com/gorhill/uBlock/releases
