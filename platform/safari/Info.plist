@@ -92,6 +92,8 @@
             <string>All</string>
         </dict>
     </dict>
+    <key>Update Manifest URL</key>
+    <string>https://raw.githubusercontent.com/el1t/uBlock-Safari-releases/master/Update.plist</string>
     <key>Website</key>
     <string>https://www.github.com/el1t/uBlock-Safari</string>
 </dict>

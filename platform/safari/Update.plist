@@ -6,15 +6,15 @@
 		<array>
 			<dict>
 				<key>CFBundleIdentifier</key>
-				<string>net.gorhill.uBlock</string>
+				<string>com.el1t.uBlock</string>
 				<key>Developer Identifier</key>
-				<string>96G4BAKDQ9</string>
+				<string>3NU33NW2M3</string>
 				<key>CFBundleShortVersionString</key>
 				<string>{version}</string>
 				<key>CFBundleVersion</key>
 				<string>{buildNumber}</string>
 				<key>URL</key>
-				<string>https://chrismatic.io/ublock/ublock-latest.safariextz</string>
+				<string>https://raw.githubusercontent.com/el1t/uBlock-Safari-releases/master/uBlock0.safariextz</string>
 			</dict>
 		</array>
 	</dict>

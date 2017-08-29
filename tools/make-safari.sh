@@ -28,12 +28,13 @@ cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt                    $DES/
 
 # https://github.com/el1t/uBlock-Safari/issues/4
-echo '*** uBlock0.safariextension: Adding extensions to extensionless assets...'
+echo -n '*** uBlock0.safariextension: Adding extensions to extensionless assets...'
 find $DES/assets/thirdparties -type f -regex '.*\/[^.]*' -exec mv {} {}.txt \;
+echo ' ✔'
 
 # Declare __MSG__ scripts inside client-injected.js
 # Beware: this removes all newlines within each script
-echo '*** uBlock0.safariextension: Injecting scripts into vapi-client...'
+echo -n '*** uBlock0.safariextension: Injecting scripts into vapi-client...'
 awkscript='BEGIN { p = 0 }
 /^\/\/ __MSG__/ {
   p = 1
@@ -56,9 +57,11 @@ if ! sed "${sedargs[@]}" $DES/js/vapi-client.js 2>/dev/null; then
     sed ${sedargs[@]} $DES/js/vapi-client.js
 fi
 rm -f $DES/js/client-injected.js
+echo ' ✔'
 
-echo '*** uBlock0.safariextension: Generating Info.plist...'
+echo -n '*** uBlock0.safariextension: Generating Info.plist...'
 python tools/make-safari-meta.py $DES/
+echo ' ✔'
 
 if [ "$1" = all ]; then
     if [ ! -f dist/certs/key.pem ] || [ ! -f dist/certs/SafariDeveloper.cer ]; then
@@ -67,10 +70,19 @@ if [ "$1" = all ]; then
     fi
     echo -n '*** uBlock0.safariextension: Creating signed extension...'
     if ! bash ./tools/make-safari-sign.sh "$DES"; then
+        echo
         echo '*** uBlock0.safariextension: Error signing extension'
         exit 1
     fi
-    echo ' done.'
+    echo ' ✔'
+
+    RELEASES=../uBlock-releases
+    if [ -d "$RELEASES" ]; then
+        echo -n '*** uBlock0.safariextension: Copying into releases directory...'
+        cp "${DES/safariextension/safariextz}" "$RELEASES"
+        cp "$DES/../Update.plist" "$RELEASES"
+        echo ' ✔'
+    fi
 fi
 
 echo '*** uBlock0.safariextension: Done.'
