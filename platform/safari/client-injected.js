@@ -20,6 +20,11 @@
  */
 
 // __MSG_clientInjectedScript__
+var ce = CustomEvent,
+    wo = open,
+    xo = XMLHttpRequest.prototype.open,
+    img = Image,
+    linkResolver = document.createElement('a');
 var block = function(u, t) {
     if (typeof u !== 'string') return false;
     /* __MSG_eventScript__ */
@@ -27,10 +32,6 @@ var block = function(u, t) {
     document.dispatchEvent(e);
     return !!document.documentElement.getAttribute('data-ublock-blocked');
 };
-var wo = open,
-    xo = XMLHttpRequest.prototype.open,
-    img = Image,
-    linkResolver = document.createElement('a');
 Image = function() {
     var x = new img(),
         src = '';

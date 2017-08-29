@@ -601,7 +601,7 @@ var firstMutation = function() {
         eventScript = 'var e = document.createEvent("CustomEvent");\
 e.initCustomEvent("' + vAPI.sessionId + '", false, false, {url: u, type: t});'
     } else {
-        eventScript = 'var e = new CustomEvent("' + vAPI.sessionId + '", {bubbles: false, detail: {url: u, type: t}});'
+        eventScript = 'var e = new ce("' + vAPI.sessionId + '", {bubbles: false, detail: {url: u, type: t}});'
     }
     tmpScript = tmpScript.replace('/* __MSG_eventScript__ */', eventScript);
     if ( frameId === 0 ) {
