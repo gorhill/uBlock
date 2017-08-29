@@ -11,23 +11,24 @@ mkdir -p $DES
 
 bash ./tools/make-assets.sh $DES
 
-cp -R src/css                         $DES/
-cp -R src/img                         $DES/
-cp -R src/js                          $DES/
-cp -R src/lib                         $DES/
-cp -R src/_locales                    $DES/
-cp -R $DES/_locales/nb                $DES/_locales/no
-cp src/*.html                         $DES/
-cp platform/chromium/*.js             $DES/js/
-cp -R platform/chromium/img           $DES/
-cp platform/chromium/*.html           $DES/
-cp platform/chromium/*.json           $DES/
-cp LICENSE.txt                        $DES/
+cp -R src/css                           $DES/
+cp -R src/img                           $DES/
+cp -R src/js                            $DES/
+cp -R src/lib                           $DES/
+cp -R src/_locales                      $DES/
+cp -R $DES/_locales/nb                  $DES/_locales/no
+cp src/*.html                           $DES/
+cp platform/chromium/*.js               $DES/js/
+cp -R platform/chromium/img             $DES/
+cp platform/chromium/*.html             $DES/
+cp platform/chromium/*.json             $DES/
+cp LICENSE.txt                          $DES/
 
-cp platform/webext/manifest.json      $DES/
-cp platform/webext/options_ui.html    $DES/
-cp platform/webext/polyfill.js        $DES/js/
-cp platform/webext/vapi-usercss.js    $DES/js/
+cp platform/webext/manifest.json        $DES/
+cp platform/webext/options_ui.html      $DES/
+cp platform/webext/polyfill.js          $DES/js/
+cp platform/webext/vapi-cachestorage.js $DES/js/
+cp platform/webext/vapi-usercss.js      $DES/js/
 rm $DES/js/options_ui.js
 
 echo "*** uBlock0.webext: Generating meta..."

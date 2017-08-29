@@ -28,6 +28,7 @@
 (function() {
     let µb = µBlock;
     let migratedKeys = new Set();
+    let reCacheStorageKeys = /^(?:assetCacheRegistry|assetSourceRegistry|cache\/.+|selfie)$/;
 
     let migrateAll = function(callback) {
         let migrateKeyValue = function(details, callback) {
@@ -40,7 +41,11 @@
             migratedKeys.add(details.key);
             let bin = {};
             bin[details.key] = JSON.parse(details.value);
-            self.browser.storage.local.set(bin, callback);
+            if ( reCacheStorageKeys.test(details.key) ) {
+                vAPI.cacheStorage.set(bin, callback);
+            } else {
+                vAPI.storage.set(bin, callback);
+            }
         };
 
         let migrateNext = function() {
@@ -62,7 +67,7 @@
                 self.browser.runtime.sendMessage({ what: 'webext:storageMigrateDone' });
                 return callback();
             }
-            self.browser.storage.local.set({ legacyStorageMigrated: true });
+            vAPI.storage.set({ legacyStorageMigrated: true });
             migrateNext();
         });
     };

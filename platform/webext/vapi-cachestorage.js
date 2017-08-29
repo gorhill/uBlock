@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global indexedDB, IDBDatabase */
+
 'use strict';
 
 /******************************************************************************/
@@ -29,64 +31,50 @@
 // Commit author: https://github.com/nikrolls
 // Commit message: "Implement cacheStorage using IndexedDB"
 
+// The original imported code has been subsequently modified as it was not
+// compatible with Firefox.
+// (a Promise thing, see https://github.com/dfahlander/Dexie.js/issues/317)
+// Furthermore, code to migrate from browser.storage.local to vAPI.cacheStorage
+// has been added, for seamless migration of cache-related entries into
+// indexedDB.
+
 vAPI.cacheStorage = (function() {
-    const STORAGE_NAME = 'uBlockStorage';
-    const db = getDb();
+    const STORAGE_NAME = 'uBlock0CacheStorage';
+    var db;
+    var pending = [];
 
-    return {get, set, remove, clear, getBytesInUse};
+    // prime the db so that it's ready asap for next access.
+    getDb(noopfn);
 
-    function get(key, callback) {
-        let promise;
+    return { get, set, remove, clear, getBytesInUse };
 
-        if (key === null) {
-            promise = getAllFromDb();
-        } else if (typeof key === 'string') {
-            promise = getFromDb(key).then(result => [result]);
-        } else if (typeof key === 'object') {
-            const keys = Array.isArray(key) ? [].concat(key) : Object.keys(key);
-            const requests = keys.map(key => getFromDb(key));
-            promise = Promise.all(requests);
-        } else {
-            promise = Promise.resolve([]);
+    function get(input, callback) {
+        if ( typeof callback !== 'function' ) { return; }
+        if ( input === null ) {
+            return getAllFromDb(callback);
         }
-
-        promise.then(results => convertResultsToHash(results))
-            .then((converted) => {
-                if (typeof key === 'object' && !Array.isArray(key)) {
-                    callback(Object.assign({}, key, converted));
-                } else {
-                    callback(converted);
-                }
-            })
-            .catch((e) => {
-                browser.runtime.lastError = e;
-                callback(null);
-            });
+        var toRead, output = {};
+        if ( typeof input === 'string' ) {
+            toRead = [ input ];
+        } else if ( Array.isArray(input) ) {
+            toRead = input;
+        } else /* if ( typeof input === 'object' ) */ {
+            toRead = Object.keys(input);
+            output = input;
+        }
+        return getFromDb(toRead, output, callback);
     }
 
-    function set(data, callback) {
-        const requests = Object.keys(data).map(
-            key => putToDb(key, data[key])
-        );
-
-        Promise.all(requests)
-            .then(() => callback && callback())
-            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+    function set(input, callback) {
+        putToDb(input, callback);
     }
 
     function remove(key, callback) {
-        const keys = [].concat(key);
-        const requests = keys.map(key => deleteFromDb(key));
-
-        Promise.all(requests)
-            .then(() => callback && callback())
-            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+        deleteFromDb(key, callback);
     }
 
     function clear(callback) {
-        clearDb()
-            .then(() => callback && callback())
-            .catch(e => (browser.runtime.lastError = e, callback && callback()));
+        clearDb(callback);
     }
 
     function getBytesInUse(keys, callback) {
@@ -94,87 +82,180 @@ vAPI.cacheStorage = (function() {
         callback(0);
     }
 
-    function getDb() {
-        const openRequest = window.indexedDB.open(STORAGE_NAME, 1);
-        openRequest.onupgradeneeded = upgradeSchema;
-        return convertToPromise(openRequest).then((db) => {
-            db.onerror = console.error;
-            return db;
-        });
+    function genericErrorHandler(error) {
+        console.error('[uBlock0 cacheStorage]', error);
     }
 
-    function upgradeSchema(event) {
-        const db = event.target.result;
-        db.onerror = (error) => console.error('[storage] Error updating IndexedDB schema:', error);
-
-        const objectStore = db.createObjectStore(STORAGE_NAME, {keyPath: 'key'});
-        objectStore.createIndex('value', 'value', {unique: false});
+    function noopfn() {
     }
 
-    function getNewTransaction(mode = 'readonly') {
-        return db.then(db => db.transaction(STORAGE_NAME, mode).objectStore(STORAGE_NAME));
-    }
-
-    function getFromDb(key) {
-        return getNewTransaction()
-            .then(store => store.get(key))
-            .then(request => convertToPromise(request));
-    }
-
-    function getAllFromDb() {
-        return getNewTransaction()
-            .then((store) => {
-                return new Promise((resolve, reject) => {
-                    const request = store.openCursor();
-                    const output = [];
-
-                    request.onsuccess = (event) => {
-                        const cursor = event.target.result;
-                        if (cursor) {
-                            output.push(cursor.value);
-                            cursor.continue();
-                        } else {
-                            resolve(output);
-                        }
-                    };
-
-                    request.onerror = reject;
-                });
-            });
-    }
-
-    function putToDb(key, value) {
-        return getNewTransaction('readwrite')
-            .then(store => store.put({key, value}))
-            .then(request => convertToPromise(request));
-    }
-
-    function deleteFromDb(key) {
-        return getNewTransaction('readwrite')
-            .then(store => store.delete(key))
-            .then(request => convertToPromise(request));
-    }
-
-    function clearDb() {
-        return getNewTransaction('readwrite')
-            .then(store => store.clear())
-            .then(request => convertToPromise(request));
-    }
-
-    function convertToPromise(eventTarget) {
-        return new Promise((resolve, reject) => {
-            eventTarget.onsuccess = () => resolve(eventTarget.result);
-            eventTarget.onerror = reject;
-        });
-    }
-
-    function convertResultsToHash(results) {
-        return results.reduce((output, item) => {
-            if (item) {
-                output[item.key] = item.value;
+    function getDb(callback) {
+        if ( pending.length !== 0 ) {
+            pending.push(callback);
+            return;
+        }
+        if ( db instanceof IDBDatabase ) {
+            return callback(db);
+        }
+        pending.push(callback);
+        if ( pending.length !== 1 ) { return; }
+        var req = indexedDB.open(STORAGE_NAME, 1);
+        req.onupgradeneeded = function(ev) {
+            db = ev.target.result;
+            db.onerror = genericErrorHandler;
+            var table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
+            table.createIndex('value', 'value', { unique: false });
+        };
+        req.onsuccess = function(ev) {
+            db = ev.target.result;
+            db.onerror = genericErrorHandler;
+            var cb;
+            while ( (cb = pending.shift()) ) {
+                cb(db);
             }
-            return output;
-        }, {});
+        };
+        req.onerror = function(ev) {
+            console.log(ev);
+            var cb;
+            while ( (cb = pending.shift()) ) {
+                cb(db);
+            }
+        };
+    }
+
+    function getFromDb(keys, store, callback) {
+        if ( typeof callback !== 'function' ) { return; }
+        if ( keys.length === 0 ) { return callback(store); }
+        var notfoundKeys = new Set(keys);
+        var gotOne = function() {
+            if ( typeof this.result === 'object' ) {
+                store[this.result.key] = this.result.value;
+                notfoundKeys.delete(this.result.key);
+            }
+        };
+        getDb(function(db) {
+            if ( !db ) { return callback(); }
+            var transaction = db.transaction(STORAGE_NAME);
+            transaction.oncomplete = transaction.onerror = function() {
+                if ( notfoundKeys.size === 0 ) {
+                    return callback(store);
+                }
+                maybeMigrate(Array.from(notfoundKeys), store, callback);
+            };
+            var table = transaction.objectStore(STORAGE_NAME);
+            for ( var key of keys ) {
+                var req = table.get(key);
+                req.onsuccess = gotOne;
+                req.onerror = noopfn;
+            }
+        });
+    }
+
+    // Migrate from storage API
+    // TODO: removes once all users are migrated to the new cacheStorage.
+    function maybeMigrate(keys, store, callback) {
+        var toMigrate = new Set(),
+            i = keys.length;
+        while ( i-- ) {
+            var key = keys[i];
+            toMigrate.add(key);
+            // If migrating a compiled list, also migrate the non-compiled
+            // counterpart.
+            if ( /^cache\/compiled\//.test(key) ) {
+                toMigrate.add(key.replace('/compiled', ''));
+            }
+        }
+        vAPI.storage.get(Array.from(toMigrate), function(bin) {
+            if ( bin instanceof Object === false ) {
+                return callback(store);
+            }
+            var migratedKeys = Object.keys(bin);
+            if ( migratedKeys.length === 0 ) {
+                return callback(store);
+            }
+            var i = migratedKeys.length;
+            while ( i-- ) {
+                var key = migratedKeys[i];
+                store[key] = bin[key];
+            }
+            vAPI.storage.remove(migratedKeys);
+            vAPI.cacheStorage.set(bin);
+            callback(store);
+        });
+    }
+
+    function getAllFromDb(callback) {
+        if ( typeof callback !== 'function' ) {
+            callback = noopfn;
+        }
+        getDb(function(db) {
+            if ( !db ) { return callback(); }
+            var output = {};
+            var transaction = db.transaction(STORAGE_NAME);
+            transaction.oncomplete = transaction.onerror = function() {
+                callback(output);
+            };
+            var table = transaction.objectStore(STORAGE_NAME),
+                req = table.openCursor();
+            req.onsuccess = function(ev) {
+                var cursor = ev.target.result;
+                if ( !cursor ) { return; }
+                output[cursor.key] = cursor.value;
+                cursor.continue();
+            };
+        });
+    }
+
+    function putToDb(input, callback) {
+        if ( typeof callback !== 'function' ) {
+            callback = noopfn;
+        }
+        var keys = Object.keys(input);
+        if ( keys.length === 0 ) { return callback(); }
+        getDb(function(db) {
+            if ( !db ) { return callback(); }
+            var transaction = db.transaction(STORAGE_NAME, 'readwrite');
+            transaction.oncomplete = transaction.onerror = callback;
+            var table = transaction.objectStore(STORAGE_NAME),
+                entry = {};
+            for ( var key of keys ) {
+                entry.key = key;
+                entry.value = input[key];
+                table.put(entry);
+            }
+        });
+    }
+
+    function deleteFromDb(input, callback) {
+        if ( typeof callback !== 'function' ) {
+            callback = noopfn;
+        }
+        var keys = Array.isArray(input) ? input.slice() : [ input ];
+        if ( keys.length === 0 ) { return callback(); }
+        getDb(function(db) {
+            if ( !db ) { return callback(); }
+            var transaction = db.transaction(STORAGE_NAME, 'readwrite');
+            transaction.oncomplete = transaction.onerror = callback;
+            var table = transaction.objectStore(STORAGE_NAME);
+            for ( var key of keys ) {
+                table.delete(key);
+            }
+        });
+        // TODO: removes once all users are migrated to the new cacheStorage.
+        vAPI.storage.remove(keys);
+    }
+
+    function clearDb(callback) {
+        if ( typeof callback !== 'function' ) {
+            callback = noopfn;
+        }
+        getDb(function(db) {
+            if ( !db ) { return callback(); }
+            var req = db.transaction(STORAGE_NAME, 'readwrite')
+                        .objectStore(STORAGE_NAME)
+                        .clear();
+            req.onsuccess = req.onerror = callback;
+        });
     }
 }());
 
