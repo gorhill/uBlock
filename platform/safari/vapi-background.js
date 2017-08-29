@@ -308,7 +308,7 @@ vAPI.storage = {
 /******************************************************************************/
 
 vAPI.tabs = {
-    stack: {},
+    stack: Object.create(null),
     stackId: 1
 };
 
@@ -352,9 +352,9 @@ vAPI.tabs.getTabId = function(tab) {
     if ( typeof tab.uBlockCachedID !== 'undefined' ) {
         return tab.uBlockCachedID;
     }
-    for ( var i in vAPI.tabs.stack ) {
-        if ( vAPI.tabs.stack[i] === tab ) {
-            return (tab.uBlockCachedID = +i);
+    for ( var tabId in vAPI.tabs.stack ) {
+        if ( vAPI.tabs.stack[tabId] === tab ) {
+            return (tab.uBlockCachedID = +tabId);
         }
     }
 
@@ -976,12 +976,10 @@ vAPI.messaging.broadcast = function(message) {
     };
     var page;
     for ( var tabId in vAPI.tabs.stack ) {
-        if ( vAPI.tabs.stack.hasOwnProperty(tabId) ) {
-            page = vAPI.tabs.stack[tabId].page;
-            // page is undefined on new tabs
-            if ( page && typeof page.dispatchMessage === 'function' ) {
-                page.dispatchMessage('broadcast', message);
-            }
+        page = vAPI.tabs.stack[tabId].page;
+        // page is undefined on new tabs
+        if ( page && typeof page.dispatchMessage === 'function' ) {
+            page.dispatchMessage('broadcast', message);
         }
     }
 };
