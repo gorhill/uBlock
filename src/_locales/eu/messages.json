@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik kontrol panela irekitzeko",
+    "message":"Ireki kontrol panela",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Elementuak lekuz aldatzeko modua",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{

@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"تنظیمات پیشرفته",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"برای باز کردن داشبورد کلیک کنید",
+    "message":"باز کردن داشبورد",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"ورود به حالت انتخاب اشیاء",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -80,7 +80,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"بازنمایی ثبت درخواست",
+    "message":"رفتن به لاگ درخواست",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
@@ -216,7 +216,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"تنظیمات پیشرفته",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -348,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"درحال بروزرسانی...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"یک خطای شبکه از بروزشدن منابع جلوگیری کرد.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"هشدار! این تنظیمات پیشرفته را با مسئولیت خود تغییر دهید.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

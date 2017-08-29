@@ -72,70 +72,6 @@ if ( vAPI.sessionId ) {
 
 /******************************************************************************/
 
-var referenceCounter = 0;
-
-vAPI.lock = function() {
-    referenceCounter += 1;
-};
-
-vAPI.unlock = function() {
-    referenceCounter -= 1;
-    if ( referenceCounter === 0 ) {
-        // Eventually there will be code here to flush the javascript code
-        // from this file out of memory when it ends up unused.
-        
-    }
-};
-
-/******************************************************************************/
-
-vAPI.executionCost = {
-    start: function(){},
-    stop: function(){}
-};
-/*
-vAPI.executionCost = {
-    tcost: 0,
-    tstart: 0,
-    nstart: 0,
-    level: 1,
-    start: function() {
-        if ( this.nstart === 0 ) {
-            this.tstart = window.performance.now();
-        }
-        this.nstart += 1;
-    },
-    stop: function(mark) {
-        this.nstart -= 1;
-        if ( this.nstart !== 0 ) {
-            return;
-        }
-        var tcost = window.performance.now() - this.tstart;
-        this.tcost += tcost;
-        if ( mark === undefined ) {
-            return;
-        }
-        var top = window === window.top;
-        if ( !top && this.level < 2 ) {
-            return;
-        }
-        var context = window === window.top ? '  top' : 'frame';
-        var percent = this.tcost / window.performance.now() * 100;
-        console.log(
-            'uBO cost (%s): %sms/%s%% (%s: %sms)',
-            context,
-            this.tcost.toFixed(1),
-            percent.toFixed(1),
-            mark,
-            tcost.toFixed(2)
-        );
-    }
-};
-*/
-vAPI.executionCost.start();
-
-/******************************************************************************/
-
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +
            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -411,8 +347,6 @@ vAPI.shutdown.add(function() {
 
 // https://www.youtube.com/watch?v=rT5zCHn0tsg
 // https://www.youtube.com/watch?v=E-jS4e3zacI
-
-vAPI.executionCost.stop('vapi-client.js');
 
 /******************************************************************************/
 /******************************************************************************/

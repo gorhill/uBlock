@@ -1,4 +1,4 @@
-Un bloquejador eficient: el consum de memòria i de processador és baix però, no obstant això, pot carregar i aplicar milers de filtres més que altres bloquejadors coneguts.
+Un blocador eficient: Amb un consum discret de memòria i de processador, pot carregar i aplicar milers de filtres més que altres aplicacions semblants.
 
 Gràfic de l'eficiència: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 

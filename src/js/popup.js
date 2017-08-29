@@ -55,7 +55,7 @@ if ( /[\?&]mobile=1/.test(window.location.search) ) {
 // - Its horizontal position depends on whether there is a vertical scrollbar.
 document.getElementById('rulesetTools').style.setProperty(
     'top',
-    (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 3) + 'px'
+    (document.getElementById('appinfo').getBoundingClientRect().bottom + 3) + 'px'
 );
 
 var positionRulesetTools = function() {
@@ -519,7 +519,7 @@ var renderOnce = function() {
         lpane.style.setProperty(
             'height',
             Math.max(
-                window.innerHeight - uDom.nodeFromSelector('#gotoPrefs').offsetHeight,
+                window.innerHeight - uDom.nodeFromSelector('#appinfo').offsetHeight,
                 rpane.offsetHeight
             ) + 'px'
         );
@@ -996,7 +996,6 @@ var onHideTooltip = function() {
     uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoZap').on('click', gotoZap);
     uDom('#gotoPick').on('click', gotoPick);
-    uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
     uDom('.hnSwitch').on('click', toggleHostnameSwitch);
@@ -1006,6 +1005,8 @@ var onHideTooltip = function() {
 
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
                 .on('mouseleave', '[data-tip]', onHideTooltip);
+
+    uDom('a[href]').on('click', gotoURL);
 })();
 
 /******************************************************************************/

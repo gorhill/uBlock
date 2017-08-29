@@ -327,7 +327,9 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onActivated = function(details) {
-        vAPI.contextMenu.onMustUpdate(details.tabId);
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(details.tabId);
+        }
     };
 
     var onUpdated = function(tabId, changeInfo, tab) {
@@ -478,12 +480,12 @@ vAPI.tabs.open = function(details) {
     var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        var tab = tabs[0];
+        if ( chrome.runtime.lastError ) { /* noop */ }
+        var tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
         }
-
         var _details = {
             active: true,
             url: undefined
@@ -608,32 +610,71 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // Since we may be called asynchronously, the tab id may not exist
 // anymore, so this ensures it does still exist.
 
-vAPI.setIcon = function(tabId, iconStatus, badge) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
+//   Firefox for Android does no support browser.browserAction.setIcon().
 
-    var onIconReady = function() {
-        if ( vAPI.lastError() ) {
-            return;
+vAPI.setIcon = (function() {
+    var browserAction = chrome.browserAction,
+        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+    var iconPaths = [
+        {
+            '19': 'img/browsericons/icon19-off.png',
+            '38': 'img/browsericons/icon38-off.png'
+        },
+        {
+            '19': 'img/browsericons/icon19.png',
+            '38': 'img/browsericons/icon38.png'
         }
-        chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
-        if ( badge !== '' ) {
-            chrome.browserAction.setBadgeBackgroundColor({
+    ];
+
+    return function(tabId, iconStatus, badge) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        if ( browserAction.setIcon !== undefined ) {
+            browserAction.setIcon(
+                {
+                    tabId: tabId,
+                    path: iconPaths[iconStatus === 'on' ? 1 : 0]
+                },
+                function onIconReady() {
+                    if ( vAPI.lastError() ) { return; }
+                    chrome.browserAction.setBadgeText({
+                        tabId: tabId,
+                        text: badge
+                    });
+                    if ( badge !== '' ) {
+                        chrome.browserAction.setBadgeBackgroundColor({
+                            tabId: tabId,
+                            color: '#666'
+                        });
+                    }
+                }
+            );
+        }
+
+        if ( browserAction.setTitle !== undefined ) {
+            browserAction.setTitle({
                 tabId: tabId,
-                color: '#666'
+                title: titleTemplate.replace(
+                    '{badge}',
+                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                )
             });
         }
+
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(tabId);
+        }
     };
+})();
 
-    var iconPaths = iconStatus === 'on' ?
-        { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
-        { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-
-    chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
-    vAPI.contextMenu.onMustUpdate(tabId);
-};
+chrome.browserAction.onClicked.addListener(function(tab) {
+    vAPI.tabs.open({
+        select: true,
+        url: 'popup.html?tabId=' + tab.id + '&mobile=1'
+    });
+});
 
 /******************************************************************************/
 /******************************************************************************/
@@ -655,8 +696,8 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging;
-    var toAuxPending = {};
+    var messaging = vAPI.messaging,
+        toAuxPending = {};
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
@@ -703,8 +744,8 @@ vAPI.messaging.onPortMessage = (function() {
     };
 
     var toAux = function(details, portFrom) {
-        var port, portTo;
-        var chromiumTabId = toChromiumTabId(details.toTabId);
+        var port, portTo,
+            chromiumTabId = toChromiumTabId(details.toTabId);
 
         // TODO: This could be an issue with a lot of tabs: easy to address
         //       with a port name to tab id map.
@@ -761,6 +802,32 @@ vAPI.messaging.onPortMessage = (function() {
         wrapper.callback(details.msg);
     };
 
+    var toFramework = function(msg, sender) {
+        var tabId = sender && sender.tab && sender.tab.id;
+        if ( !tabId ) { return; }
+        switch ( msg.what ) {
+        case 'userCSS':
+            if ( msg.toRemove ) {
+                chrome.tabs.removeCSS(tabId, {
+                    code: msg.toRemove,
+                    cssOrigin: 'user',
+                    frameId: sender.frameId,
+                    matchAboutBlank: true
+                });
+            }
+            if ( msg.toAdd ) {
+                chrome.tabs.insertCSS(tabId, {
+                    code: msg.toAdd,
+                    cssOrigin: 'user',
+                    frameId: sender.frameId,
+                    matchAboutBlank: true,
+                    runAt: 'document_start'
+                });
+            }
+            break;
+        }
+    };
+
     return function(request, port) {
         // Auxiliary process to auxiliary process
         if ( request.toTabId !== undefined ) {
@@ -774,6 +841,13 @@ vAPI.messaging.onPortMessage = (function() {
             return;
         }
 
+        // Content process to main process: framework handler.
+        // No callback supported/needed for now.
+        if ( request.channelName === 'vapi-background' ) {
+            toFramework(request.msg, port.sender);
+            return;
+        }
+
         // Auxiliary process to main process: prepare response
         var callback = messaging.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
@@ -781,8 +855,8 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: specific handler
-        var r = messaging.UNHANDLED;
-        var listener = messaging.listeners[request.channelName];
+        var r = messaging.UNHANDLED,
+            listener = messaging.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
         }
@@ -1145,7 +1219,10 @@ vAPI.net.registerListeners = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.contextMenu = {
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
+//   Firefox for Android does no support browser.contextMenus.
+
+vAPI.contextMenu = chrome.contextMenus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
@@ -1271,7 +1348,7 @@ vAPI.punycodeURL = function(url) {
 // https://github.com/gorhill/uBlock/issues/900
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
-vAPI.adminStorage = {
+vAPI.adminStorage = chrome.storage.managed && {
     getItem: function(key, callback) {
         var onRead = function(store) {
             var data;
@@ -1317,7 +1394,7 @@ vAPI.cloud = (function() {
 
     var options = {
         defaultDeviceName: window.navigator.platform,
-        deviceName: window.localStorage.getItem('deviceName') || ''
+        deviceName: vAPI.localStorage.getItem('deviceName') || ''
     };
 
     // This is used to find out a rough count of how many chunks exists:
@@ -1461,7 +1538,7 @@ vAPI.cloud = (function() {
         }
 
         if ( typeof details.deviceName === 'string' ) {
-            window.localStorage.setItem('deviceName', details.deviceName);
+            vAPI.localStorage.setItem('deviceName', details.deviceName);
             options.deviceName = details.deviceName;
         }
 

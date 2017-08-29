@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"إضغط لفتح لوحة التحكم",
+    "message":"إضغط لفتح قائمة التحكم",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -340,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"متقادم.",
+    "message":"إنتهت صلاحيته.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{

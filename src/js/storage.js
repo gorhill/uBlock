@@ -467,7 +467,7 @@
         listKey = importedListKeys[i];
         entry = {
             content: 'filters',
-            contentURL: importedListKeys[i],
+            contentURL: listKey,
             external: true,
             group: 'custom',
             submitter: 'user',
@@ -476,6 +476,31 @@
         newAvailableLists[listKey] = entry;
         this.assets.registerAssetSource(listKey, entry);
     }
+
+    // Convert a no longer existing stock list into an imported list.
+    var customListFromStockList = function(assetKey) {
+        var oldEntry = oldAvailableLists[assetKey];
+        if ( oldEntry === undefined || oldEntry.off === true ) { return; }
+        var listURL = oldEntry.contentURL;
+        if ( Array.isArray(listURL) ) {
+            listURL = listURL[0];
+        }
+        var newEntry = {
+            content: 'filters',
+            contentURL: listURL,
+            external: true,
+            group: 'custom',
+            submitter: 'user',
+            title: oldEntry.title || ''
+        };
+        newAvailableLists[listURL] = newEntry;
+        µb.assets.registerAssetSource(listURL, newEntry);
+        importedListKeys.push(listURL);
+        µb.userSettings.externalLists += '\n' + listURL;
+        µb.userSettings.externalLists = µb.userSettings.externalLists.trim();
+        vAPI.storage.set({ externalLists: µb.userSettings.externalLists });
+        µb.saveSelectedFilterLists([ listURL ], true);
+    };
 
     // Final steps:
     // - reuse existing list metadata if any;
@@ -487,8 +512,13 @@
         for ( assetKey in oldAvailableLists ) {
             oldEntry = oldAvailableLists[assetKey];
             newEntry = newAvailableLists[assetKey];
+            // List no longer exists. If a stock list, try to convert to
+            // imported list if it was selected.
             if ( newEntry === undefined ) {
                 µb.removeFilterList(assetKey);
+                if ( assetKey.indexOf('://') === -1 ) {
+                    customListFromStockList(assetKey);
+                }
                 continue;
             }
             if ( oldEntry.entryCount !== undefined ) {

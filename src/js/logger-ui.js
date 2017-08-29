@@ -701,16 +701,22 @@ var netFilteringManager = (function() {
     };
 
     var parseStaticInputs = function() {
-        var filter = '';
-        var options = [];
-        var block = selectValue('select.static.action') === '';
+        var filter = '',
+            options = [],
+            block = selectValue('select.static.action') === '';
         if ( !block ) {
             filter = '@@';
         }
         var value = selectValue('select.static.url');
         if ( value !== '' ) {
-            filter += '||' + value;
+            if ( value.slice(-1) === '/' ) {
+                value += '*';
+            } else if ( /[/?]/.test(value) === false ) {
+                value += '^';
+            }
+            value = '||' + value;
         }
+        filter += value;
         value = selectValue('select.static.type');
         if ( value !== '' ) {
             options.push(uglyTypeFromSelector('static'));
@@ -974,7 +980,7 @@ var netFilteringManager = (function() {
             if ( pos === -1 ) {
                 pos = path.length;
             }
-            urls.unshift(rootURL + path.slice(0, pos));
+            urls.unshift(rootURL + path.slice(0, pos + 1));
         }
         var query = matches[4] || '';
         if ( query !== '') {
@@ -1042,7 +1048,7 @@ var netFilteringManager = (function() {
         var rePlaceholder = /\{\{[^}]+?\}\}/g;
         var nodes = [];
         var match, pos = 0;
-        var select, option, i, value;
+        var select, option, n, i, value;
         for (;;) {
             match = rePlaceholder.exec(template);
             if ( match === null ) {
@@ -1088,8 +1094,8 @@ var netFilteringManager = (function() {
             case '{{url}}':
                 select = document.createElement('select');
                 select.className = 'static url';
-                for ( i = 0; i < targetURLs.length; i++ ) {
-                    value = targetURLs[i].replace(/^[a-z]+:\/\//, '');
+                for ( i = 0, n = targetURLs.length; i < n; i++ ) {
+                    value = targetURLs[i].replace(/^[a-z-]+:\/\//, '');
                     option = document.createElement('option');
                     option.setAttribute('value', value);
                     option.textContent = shortenLongString(value, 128);
@@ -1221,8 +1227,8 @@ var reverseLookupManager = (function() {
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return null;
         }
-        var node;
-        var p = document.createElement('p');
+        var node,
+            p = document.createElement('p');
 
         reSentence1.lastIndex = 0;
         var matches = reSentence1.exec(sentence1Template);
@@ -1231,7 +1237,10 @@ var reverseLookupManager = (function() {
         } else {
             node = uDom.nodeFromSelector('#filterFinderDialogSentence1 > span').cloneNode(true);
             node.childNodes[0].textContent = sentence1Template.slice(0, matches.index);
-            node.childNodes[1].textContent = filter;
+            // https://github.com/gorhill/uBlock/issues/2753
+            node.childNodes[1].textContent = filter.length <= 1024
+                ? filter
+                : filter.slice(0, 1023) + '…';
             node.childNodes[2].textContent = sentence1Template.slice(reSentence1.lastIndex);
         }
         p.appendChild(node);
@@ -1267,9 +1276,7 @@ var reverseLookupManager = (function() {
 
         for ( var filter in response ) {
             var p = nodeFromFilter(filter, response[filter]);
-            if ( p === null ) {
-                continue;
-            }
+            if ( p === null ) { continue; }
             dialog.appendChild(p);
         }
 

@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik om it dashboerd te iepenjen",
+    "message":"Dashboerd iepenje",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Elemintwiskmodus iepenje",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{

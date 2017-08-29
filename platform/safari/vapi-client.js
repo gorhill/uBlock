@@ -489,7 +489,7 @@ var queueDispatchListener = function() {
 document.addEventListener('visibilitychange', queueDispatchListener);
 
 // The following code should run only in content pages
-if ( location.protocol === 'safari-extension:' || typeof safari !== 'object' ) {
+if ( location.protocol === 'safari-extension:' || safari instanceof Object === false) {
     return;
 }
 

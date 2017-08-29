@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"クリックしてダッシュボードを開く",
+    "message":"ダッシュボードを開く",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"このサイトの要素隠蔽フィルターを切り替える",
+    "message":"このサイトの要素隠蔽フィルターを切り替えます",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -176,7 +176,7 @@
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"要素隠蔽フィルター",
+    "message":"要素隠蔽フィルタ",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -204,7 +204,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"uBlock₀を優しい色使いにする",
+    "message":"uBlock₀を色盲の方に優しい色にする",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"要素隠蔽フィルターを無効にする",
+    "message":"要素隠蔽フィルタを無効にする",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -252,7 +252,7 @@
     "description":""
   },
   "settingsStorageUsed":{
-    "message":"使用中のストレージ:  {{value}} bytes",
+    "message":"使用中のストレージ: {{value}} バイト",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -264,7 +264,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ネットワークフィルター＋{{cosmeticFilterCount}} 要素隠蔽フィルター：",
+    "message":"{{netFilterCount}}ネットワークフィルタ＋{{cosmeticFilterCount}}コスメチックフィルタ：",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -284,7 +284,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"要素隠蔽フィルターを解析、施行する",
+    "message":"要素隠蔽フィルタを解析、施行する。",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -580,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}}に接続できません",
+    "message":"ネットワークエラー: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

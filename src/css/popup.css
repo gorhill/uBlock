@@ -39,11 +39,10 @@ a {
 :focus {
     outline: 0;
     }
-#gotoPrefs {
+#appinfo {
     background-color: #444;
     border: 0;
     color: #bbb;
-    cursor: pointer;
     display: block;
     font-size: 85%;
     line-height: 1.2;
@@ -144,7 +143,7 @@ body.off #switch .fa {
     color: #aaa;
     cursor: pointer;
     visibility: hidden;
-    margin-left: 0.8em;
+    margin-left: 0.4em;
     min-width: 1em;
     padding: 0 0.2em;
     unicode-bidi: embed;
@@ -194,20 +193,24 @@ body[dir="ltr"] #extraTools > span > span.badge {
 body[dir="rtl"] #extraTools > span > span.badge {
     right: 100%;
     }
-#extraTools > span.on > span:last-of-type {
+#extraTools > span > span:last-of-type {
     color: #e00;
-    font-size: 1.1em;
-    left: 0;
+    left: 50%;
     position: absolute;
-    text-align: center;
     top: 0;
-    width: 100%;
+    transform: translateX(-50%);
+    visibility: hidden;
     }
-#extraTools > span.on > span:last-of-type:after {
-    content: '\2715';
+#extraTools > span > span:last-of-type > svg {
+    stroke: red;
+    stroke-width: 2;
+    width: 1em;
+    }
+#extraTools > span.on > span:last-of-type {
+    visibility: visible;
     }
 #extraTools > span:hover {
-    color: #444;
+    color: #333;
     }
 
 #refresh {

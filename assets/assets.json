@@ -258,7 +258,10 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
-		"contentURL": "https://hosts-file.net/.%5Cad_servers.txt",
+		"contentURL": [
+			"https://hosts-file.net/.%5Cad_servers.txt",
+			"http://hosts-file.net/.%5Cad_servers.txt"
+		],
 		"supportURL": "https://hosts-file.net/"
 	},
 	"mvps-0": {
@@ -361,8 +364,8 @@
 		"off": true,
 		"title": "EST: Eesti saitidele kohandatud filter",
 		"lang": "et",
-		"contentURL": "http://adblock.ee/list.php",
-		"supportURL": "http://adblock.ee/"
+		"contentURL": "https://adblock.ee/list.php",
+		"supportURL": "https://adblock.ee/"
 	},
 	"EU-prebake": {
 		"content": "filters",
@@ -566,7 +569,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: Adguard Russian Filter",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/1.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
 	},
 	"spa-0": {
@@ -602,7 +605,7 @@
 		"off": true,
 		"title": "TUR: Adguard Turkish Filter",
 		"lang": "tr",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/13.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
 	},
 	"VIE-0": {

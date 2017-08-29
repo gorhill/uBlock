@@ -79,12 +79,6 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.insertHTML = function(node, html) {
-    node.innerHTML = html;
-};
-
-/******************************************************************************/
-
 vAPI.getURL = function(path) {
     // https://github.com/el1t/uBlock-Safari/issues/4
     // Add extensions to extensionless assets
@@ -159,7 +153,7 @@ vAPI.localStorage = self.localStorage;
 
 // Disable localStorage.setItem in Private Browsing mode (throws error)
 // https://gist.github.com/philfreo/68ea3cd980d72383c951
-if ( typeof self.localStorage === 'object' ) {
+if ( self.localStorage instanceof Object ) {
     try {
         self.localStorage.setItem('localStorage', 1);
         self.localStorage.removeItem('localStorage');

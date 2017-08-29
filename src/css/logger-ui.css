@@ -157,8 +157,13 @@ body.colorBlind #netInspector tr.nooped {
 body.colorBlind #netInspector tr.allowed {
     background-color: rgba(255, 194, 57, 0.1)
     }
-#netInspector tr.cosmetic, #netInspector tr.redirect {
+#netInspector tr.cosmetic,
+#netInspector tr.redirect {
     background-color: rgba(255, 255, 0, 0.1);
+    }
+body.colorBlind #netInspector tr.cosmetic,
+body.colorBlind #netInspector tr.redirect {
+    background-color: rgba(0, 19, 110, 0.1);
     }
 #netInspector tr.maindoc {
     background-color: #666;
@@ -573,12 +578,12 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
 
 #filterFinderDialog .dialog {
     padding: 1em;
+    word-break: break-all;
     }
 #filterFinderDialog .dialog code {
     background: #eee;
     font-size: 85%;
     padding: 3px;
-    word-break: break-all;
     }
 #filterFinderDialog .dialog ul {
     font-size: larger;
