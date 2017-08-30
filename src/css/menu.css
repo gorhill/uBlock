@@ -733,7 +733,7 @@ select {
   }
 }
 
-@media all and (max-width: 400px) {
+@media all and (max-width: 400px) and (max-device-width:400px) {
   header .branding {
     padding: 15px 0;
   }
@@ -756,6 +756,7 @@ select {
     margin-bottom: 15px;
   }
   body {
+    min-width: 320px;
     width:100%;
     height:100%;
   }
