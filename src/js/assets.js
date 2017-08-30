@@ -985,6 +985,22 @@ var updateFirst = function() {
     updateNext();
 };
 
+// Firefox extension reviewers do not want uBO/webext to fetch its *own*
+// scriptlets/resources asset from the project's *own* repo (github.com).
+var noRemoteResources = false;
+(function() {
+    if ( 
+        typeof browser === 'object' &&
+        browser !== null &&
+        browser.runtime instanceof Object &&
+        typeof browser.runtime.getBrowserInfo === 'function'
+    ) {
+        browser.runtime.getBrowserInfo().then(function(info) {
+            noRemoteResources = info.vendor === 'Mozilla';
+        });
+    }
+})();
+
 var updateNext = function() {
     var assetDict, cacheDict;
 
@@ -1005,6 +1021,10 @@ var updateNext = function() {
             if ( updaterFetched.has(assetKey) ) { continue; }
             cacheEntry = cacheDict[assetKey];
             if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
+                continue;
+            }
+            // Update of user scripts/resources forbidden?
+            if ( assetKey === 'ublock-resources' && noRemoteResources === true ) {
                 continue;
             }
             if (
