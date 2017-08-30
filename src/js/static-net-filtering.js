@@ -213,7 +213,7 @@ rawToRegexStr.escape1 = /[.+?${}()|[\]\\]/g;
 rawToRegexStr.escape2 = /\^/g;
 rawToRegexStr.escape3 = /^\*|\*$/g;
 rawToRegexStr.escape4 = /\*/g;
-rawToRegexStr.reTextHostnameAnchor = '^[a-z-]+://(?:[^/?#]+\\.)?';
+rawToRegexStr.reTextHostnameAnchor = '^[a-z-]+://(?:[^/?#]+\\.?)?';
 
 var filterFingerprinter = µb.CompiledLineWriter.fingerprint;
 
@@ -624,8 +624,7 @@ FilterGenericHnAnchored.prototype.match = function(url) {
     if ( this.re === null ) {
         this.re = new RegExp(rawToRegexStr(this.s, this.anchor));
     }
-    var matchStart = url.search(this.re);
-    return matchStart !== -1 && isHnAnchored(url, matchStart);
+    return this.re.test(url);
 };
 
 FilterGenericHnAnchored.prototype.reSourceOffset =
