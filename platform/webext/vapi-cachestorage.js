@@ -89,16 +89,26 @@ vAPI.cacheStorage = (function() {
     function noopfn() {
     }
 
+    function processPendings() {
+        var cb;
+        while ( (cb = pending.shift()) ) {
+            cb(db);
+        }
+    }
+
     function getDb(callback) {
+        if ( pending === undefined ) {
+            return callback();
+        }
         if ( pending.length !== 0 ) {
-            pending.push(callback);
-            return;
+            return pending.push(callback);
         }
         if ( db instanceof IDBDatabase ) {
             return callback(db);
         }
         pending.push(callback);
         if ( pending.length !== 1 ) { return; }
+        // This will fail in private browsing mode.
         var req = indexedDB.open(STORAGE_NAME, 1);
         req.onupgradeneeded = function(ev) {
             db = ev.target.result;
@@ -109,17 +119,12 @@ vAPI.cacheStorage = (function() {
         req.onsuccess = function(ev) {
             db = ev.target.result;
             db.onerror = genericErrorHandler;
-            var cb;
-            while ( (cb = pending.shift()) ) {
-                cb(db);
-            }
+            processPendings();
         };
-        req.onerror = function(ev) {
-            console.log(ev);
-            var cb;
-            while ( (cb = pending.shift()) ) {
-                cb(db);
-            }
+        req.onerror = function() {
+            console.log(this.error);
+            processPendings();
+            pending = undefined;
         };
     }
 
