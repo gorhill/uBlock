@@ -200,7 +200,11 @@ var rawToRegexStr = function(s, anchor) {
                  .replace(me.escape3, '')
                  .replace(me.escape4, '[^ ]*?');
     if ( anchor & 0x4 ) {
-        reStr = rawToRegexStr.reTextHostnameAnchor + reStr;
+        reStr = (
+                    reStr.startsWith('\\.') ?
+                        rawToRegexStr.reTextHostnameAnchor2 :
+                        rawToRegexStr.reTextHostnameAnchor1
+                ) + reStr;
     } else if ( anchor & 0x2 ) {
         reStr = '^' + reStr;
     }
@@ -213,7 +217,8 @@ rawToRegexStr.escape1 = /[.+?${}()|[\]\\]/g;
 rawToRegexStr.escape2 = /\^/g;
 rawToRegexStr.escape3 = /^\*|\*$/g;
 rawToRegexStr.escape4 = /\*/g;
-rawToRegexStr.reTextHostnameAnchor = '^[a-z-]+://(?:[^/?#]+\\.?)?';
+rawToRegexStr.reTextHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
+rawToRegexStr.reTextHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
 
 var filterFingerprinter = µb.CompiledLineWriter.fingerprint;
 
@@ -450,7 +455,7 @@ FilterPlainHostname.prototype.match = function() {
 FilterPlainHostname.prototype.logData = function() {
     return {
         raw: '||' + this.s + '^',
-        regex: rawToRegexStr(this.s, 0x4),
+        regex: rawToRegexStr(this.s + '^'),
         compiled: this.compile()
     };
 };
@@ -627,13 +632,10 @@ FilterGenericHnAnchored.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterGenericHnAnchored.prototype.reSourceOffset =
-    (new RegExp(rawToRegexStr.reTextHostnameAnchor)).source.length;
-
 FilterGenericHnAnchored.prototype.logData = function() {
     var out = {
         raw: '||' + this.s,
-        regex: this.re.source.slice(this.reSourceOffset),
+        regex: rawToRegexStr(this.s, this.anchor & ~0x4),
         compiled: this.compile()
     };
     return out;
