@@ -71,6 +71,10 @@
     "message":"Kattintson ide a vezérlőpult megnyitásához",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Elemváltó mód aktiválása",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Elemválasztó mód aktiválása",
     "description":"English: Enter element picker mode"

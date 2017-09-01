@@ -337,7 +337,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     var d = desHostname;
     if ( d === '' ) {
         this.r = 0;
-        return this;
+        return 0;
     }
 
     // Prepare broadening handlers -- depends on whether we are dealing with
@@ -350,7 +350,9 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     // Specific-destination, any party, any type
     while ( d !== '*' ) {
         this.y = d;
-        if ( this.evaluateCellZ(srcHostname, d, '*', broadenSource) !== 0 ) { return this; }
+        if ( this.evaluateCellZ(srcHostname, d, '*', broadenSource) !== 0 ) {
+            return this.r;
+        }
         d = broadenDestination(d);
     }
 
@@ -363,27 +365,39 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     if ( thirdParty ) {
         // 3rd-party, specific type
         if ( type === 'script' ) {
-            if ( this.evaluateCellZ(srcHostname, '*', '3p-script', broadenSource) !== 0 ) { return this; }
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-script', broadenSource) !== 0 ) {
+                return this.r;
+            }
         } else if ( type === 'sub_frame' ) {
-            if ( this.evaluateCellZ(srcHostname, '*', '3p-frame', broadenSource) !== 0 ) { return this; }
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-frame', broadenSource) !== 0 ) {
+                return this.r;
+            }
         }
         // 3rd-party, any type
-        if ( this.evaluateCellZ(srcHostname, '*', '3p', broadenSource) !== 0 ) { return this; }
+        if ( this.evaluateCellZ(srcHostname, '*', '3p', broadenSource) !== 0 ) {
+            return this.r;
+        }
     } else if ( type === 'script' ) {
         // 1st party, specific type
-        if ( this.evaluateCellZ(srcHostname, '*', '1p-script', broadenSource) !== 0 ) { return this; }
+        if ( this.evaluateCellZ(srcHostname, '*', '1p-script', broadenSource) !== 0 ) {
+            return this.r;
+        }
     }
 
     // Any destination, any party, specific type
     if ( supportedDynamicTypes.hasOwnProperty(type) ) {
-        if ( this.evaluateCellZ(srcHostname, '*', type, broadenSource) !== 0 ) { return this; }
+        if ( this.evaluateCellZ(srcHostname, '*', type, broadenSource) !== 0 ) {
+            return this.r;
+        }
     }
 
     // Any destination, any party, any type
-    if ( this.evaluateCellZ(srcHostname, '*', '*', broadenSource) !== 0 ) { return this; }
+    if ( this.evaluateCellZ(srcHostname, '*', '*', broadenSource) !== 0 ) {
+        return this.r;
+    }
 
     this.type = '';
-    return this;
+    return 0;
 };
 
 // http://youtu.be/gSGk1bQ9rcU?t=25m6s
@@ -391,7 +405,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
 /******************************************************************************/
 
 Matrix.prototype.mustAllowCellZY = function(srcHostname, desHostname, type) {
-    return this.evaluateCellZY(srcHostname, desHostname, type).r === 2;
+    return this.evaluateCellZY(srcHostname, desHostname, type) === 2;
 };
 
 /******************************************************************************/
@@ -414,20 +428,41 @@ Matrix.prototype.mustAbort = function() {
 
 /******************************************************************************/
 
-Matrix.prototype.toFilterString = function() {
-    if ( this.r === 0  || this.type === '' ) {
-        return '';
+Matrix.prototype.lookupRuleData = function(src, des, type) {
+    var r = this.evaluateCellZY(src, des, type);
+    if ( r === 0 ) {
+        return null;
     }
-    var body = this.z + ' ' + this.y + ' ' + this.type;
-    if ( this.r === 1 ) {
-        return 'db:' + body + ' block';
-    }
-    if ( this.r === 2 ) {
-        return 'da:' + body + ' allow';
-    }
-    /* this.r === 3 */
-    return 'dn:' + body + ' noop';
+    return {
+        src: this.z,
+        des: this.y,
+        type: this.type,
+        action: r === 1 ? 'block' : (r === 2 ? 'allow' : 'noop')
+    };
 };
+
+/******************************************************************************/
+
+Matrix.prototype.toLogData = function() {
+    if ( this.r === 0  || this.type === '' ) {
+        return;
+    }
+    var logData = {
+        source: 'dynamicHost',
+        result: this.r,
+        raw: this.z + ' ' +
+             this.y + ' ' +
+             this.type + ' ' +
+             this.intToActionMap.get(this.r)
+    };
+    return logData;
+};
+
+Matrix.prototype.intToActionMap = new Map([
+    [ 1, ' block' ],
+    [ 2, ' allow' ],
+    [ 3, ' noop' ]
+]);
 
 /******************************************************************************/
 

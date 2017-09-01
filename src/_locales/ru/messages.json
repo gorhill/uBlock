@@ -71,6 +71,10 @@
     "message":"Нажмите, чтобы открыть панель управления",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Войти в режим затирания элементов",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Войти в режим выбора элемента",
     "description":"English: Enter element picker mode"

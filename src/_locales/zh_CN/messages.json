@@ -71,6 +71,10 @@
     "message":"单击打开控制面板",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"进入元素选择器模式",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"进入元素选择器模式",
     "description":"English: Enter element picker mode"

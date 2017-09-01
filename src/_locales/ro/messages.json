@@ -71,6 +71,10 @@
     "message":"Clic pentru a deschide panoul",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Accesați modul de eliminare elemente",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Modul alege element",
     "description":"English: Enter element picker mode"

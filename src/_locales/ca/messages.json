@@ -71,6 +71,10 @@
     "message":"Clic per obrir el tauler de control",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Activa el mode d'eliminació d'elements",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Entrar al mode de selecció d'elements",
     "description":"English: Enter element picker mode"

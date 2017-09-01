@@ -4,14 +4,11 @@ env:
   matrix:
   - BROWSER=chromium EXT=zip
   - BROWSER=firefox EXT=xpi
-  - BROWSER=webext EXT=xpi
+  #- BROWSER=webext EXT=xpi
 script: ./tools/make-${BROWSER}.sh all
 deploy:
   provider: releases
   prerelease: true
-  # https://github.com/travis-ci/travis-ci/issues/6772
-  edge:
-    branch: releases-fix
   api_key:
     secure: EnAMNsPbnS2I0JDkCWiY/6WLERsUbE2Ni5j9ap8YbZt4+sJv7aSoufWZ+0TZvSwr/w5MKCCDKhwXaPfbUwvqrI+eZv6LBXhwajK9Zla25FVjtdGCwKXQ3ZU85PHgL+5FYtuSGACmQj/ruAdSgrI7PgS08e5lqSgEk6lY4y3/6fE=
   file: dist/build/adnauseam.${BROWSER}.${EXT}

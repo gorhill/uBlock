@@ -71,6 +71,10 @@
     "message":"클릭하여 대쉬보드 열기",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"구성 요소 선택기 모드로 진입",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"구성 요소 선택기 모드로 진입",
     "description":"English: Enter element picker mode"

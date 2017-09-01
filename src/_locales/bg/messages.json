@@ -71,6 +71,10 @@
     "message":"Щракнете, за да отворите таблото",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Премахване на отделен елемент",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Блокиране на отделен елемент",
     "description":"English: Enter element picker mode"

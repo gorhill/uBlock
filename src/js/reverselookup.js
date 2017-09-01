@@ -28,7 +28,7 @@
 /******************************************************************************/
 
 var worker = null;
-var workerTTL = 11 * 60 * 1000;
+var workerTTL = 5 * 60 * 1000;
 var workerTTLTimer = null;
 var needLists = true;
 var messageId = 1;

@@ -71,6 +71,10 @@
     "message":"Klõpsa, et avada töölaud",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Sisene elemendi hävitusrežiimi",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Sisene elemendi valikuolekusse",
     "description":"English: Enter element picker mode"

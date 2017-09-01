@@ -71,6 +71,10 @@
     "message":"Klik for at åbne dashboardet",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Start element zapper tilstand",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Start element-udvælger",
     "description":"English: Enter element picker mode"
@@ -344,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Opdaterer...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"En netværksfejl forhindrede ressourcen i at blive opdateret.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

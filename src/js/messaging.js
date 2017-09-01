@@ -146,7 +146,7 @@ var onMessage = function(request, sender, callback) {
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
         µb.mouseX = µb.mouseY = -1;
-        µb.elementPickerExec(request.tabId, request.targetURL || '');
+        µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
         break;
 
     case 'gotoURL':
@@ -223,17 +223,11 @@ var getHostnameDict = function(hostnameToCountMap) {
         domainEntry,
         domainFromHostname = µb.URI.domainFromHostname,
         domain, blockCount, allowCount,
-        iter = hostnameToCountMap.entries(),
-        entry, hostname, counts;
-    for (;;) {
-        entry = iter.next();
-        if ( entry.done ) {
-            break;
-        }
-        hostname = entry.value[0];
-        if ( r[hostname] !== undefined ) {
-            continue;
-        }
+        hostname, counts;
+    // Note: destructuring assignment not supported before Chromium 49.
+    for ( var entry of hostnameToCountMap ) {
+        hostname = entry[0];
+        if ( r[hostname] !== undefined ) { continue; }
         domain = domainFromHostname(hostname) || hostname;
         counts = hostnameToCountMap.get(domain) || 0;
         blockCount = counts & 0xFFFF;
@@ -249,14 +243,12 @@ var getHostnameDict = function(hostnameToCountMap) {
         } else {
             domainEntry = r[domain];
         }
-        counts = entry.value[1];
+        counts = entry[1];
         blockCount = counts & 0xFFFF;
         allowCount = counts >>> 16 & 0xFFFF;
         domainEntry.totalBlockCount += blockCount;
         domainEntry.totalAllowCount += allowCount;
-        if ( hostname === domain ) {
-            continue;
-        }
+        if ( hostname === domain ) { continue; }
         r[hostname] = {
             domain: domain,
             blockCount: blockCount,
@@ -273,28 +265,28 @@ var getHostnameDict = function(hostnameToCountMap) {
 var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
     var df = µb.sessionFirewall;
-    r['/ * *'] = df.evaluateCellZY('*', '*', '*').toFilterString();
-    r['/ * image'] = df.evaluateCellZY('*', '*', 'image').toFilterString();
-    r['/ * 3p'] = df.evaluateCellZY('*', '*', '3p').toFilterString();
-    r['/ * inline-script'] = df.evaluateCellZY('*', '*', 'inline-script').toFilterString();
-    r['/ * 1p-script'] = df.evaluateCellZY('*', '*', '1p-script').toFilterString();
-    r['/ * 3p-script'] = df.evaluateCellZY('*', '*', '3p-script').toFilterString();
-    r['/ * 3p-frame'] = df.evaluateCellZY('*', '*', '3p-frame').toFilterString();
+    r['/ * *'] = df.lookupRuleData('*', '*', '*');
+    r['/ * image'] = df.lookupRuleData('*', '*', 'image');
+    r['/ * 3p'] = df.lookupRuleData('*', '*', '3p');
+    r['/ * inline-script'] = df.lookupRuleData('*', '*', 'inline-script');
+    r['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
+    r['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
+    r['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
     if ( typeof srcHostname !== 'string' ) {
         return r;
     }
 
-    r['. * *'] = df.evaluateCellZY(srcHostname, '*', '*').toFilterString();
-    r['. * image'] = df.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
-    r['. * 3p'] = df.evaluateCellZY(srcHostname, '*', '3p').toFilterString();
-    r['. * inline-script'] = df.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
-    r['. * 1p-script'] = df.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
-    r['. * 3p-script'] = df.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
-    r['. * 3p-frame'] = df.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
+    r['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
+    r['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
+    r['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
+    r['. * inline-script'] = df.lookupRuleData(srcHostname, '*', 'inline-script');
+    r['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
+    r['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
+    r['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
 
     for ( var desHostname in desHostnames ) {
-        r['/ ' + desHostname + ' *'] = df.evaluateCellZY('*', desHostname, '*').toFilterString();
-        r['. ' + desHostname + ' *'] = df.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
+        r['/ ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
+        r['. ' + desHostname + ' *'] = df.lookupRuleData(srcHostname, desHostname, '*');
     }
     return r;
 };
@@ -347,7 +339,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
         r.firewallRules = getFirewallRules(rootHostname, r.hostnameDict);
-        r.canElementPicker = rootHostname.indexOf('.') !== -1;
+        r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
         r.noPopups = µb.hnSwitches.evaluateZ('no-popups', rootHostname);
         r.popupBlockedCount = pageStore.popupBlockedCount;
         r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', rootHostname);
@@ -508,22 +500,16 @@ var filterRequests = function(pageStore, details) {
 
     // Create evaluation context
     var context = pageStore.createContextFromFrameHostname(details.pageHostname),
-        request, r,
+        request,
         i = requests.length;
     while ( i-- ) {
         request = requests[i];
         context.requestURL = punycodeURL(request.url);
         context.requestHostname = hostnameFromURI(context.requestURL);
         context.requestType = tagNameToRequestTypeMap[request.tag];
-        r = pageStore.filterRequest(context);
-        if ( typeof r !== 'string' || r.charCodeAt(1) !== 98 /* 'b' */ ) {
-            continue;
-        }
+        if ( pageStore.filterRequest(context) !== 1 ) { continue; }
         // Redirected? (We do not hide redirected resources.)
-        if ( redirectEngine.matches(context) ) {
-            continue;
-        }
-        request.collapse = true;
+        request.collapse = redirectEngine.matches(context) !== true;
     }
 
     context.dispose();
@@ -637,6 +623,7 @@ var onMessage = function(request, sender, callback) {
                 target: µb.epickerTarget,
                 clientX: µb.mouseX,
                 clientY: µb.mouseY,
+                zap: µb.epickerZap,
                 eprom: µb.epickerEprom
             });
 
@@ -1274,7 +1261,7 @@ var logCosmeticFilters = function(tabId, details) {
         µb.logger.writeOne(
             tabId,
             'cosmetic',
-            'cb:##' + selectors[i],
+            { source: 'cosmetic', raw: '##' + selectors[i] },
             'dom',
             details.frameURL,
             null,

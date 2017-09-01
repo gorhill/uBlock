@@ -71,8 +71,12 @@
     "message":"Klikk for å åpne dashbordet",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Gå til element-fjerningsmodus",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
-    "message":"Åpne element-velgermodus",
+    "message":"Gå til element-velgermodus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -268,7 +272,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Automatisk oppdatering av filterlister.",
+    "message":"Automatisk oppdatering av filterlister",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -280,7 +284,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyser og bruk kosmetiske filtre.",
+    "message":"Analyser og bruk kosmetiske filtre",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -288,7 +292,7 @@
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignorer generelle kosmetiske filtre.",
+    "message":"Ignorer generelle kosmetiske filtre",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -336,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"Utgått på dato.",
+    "message":"Utgått på dato",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{

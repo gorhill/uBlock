@@ -35,7 +35,13 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
-vAPI.cantWebsocket = true;
+vAPI.chromiumVersion = (function(){
+    var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
+    return matches !== null ? parseInt(matches[1], 10) : NaN;
+    })();
+vAPI.cantWebsocket =
+    chrome.webRequest.ResourceType instanceof Object === false  ||
+    chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
 var noopFunc = function(){};
 
@@ -1221,6 +1227,11 @@ vAPI.contextMenu = {
         }
     }
 };
+
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.commands = chrome.commands;
 
 /******************************************************************************/
 /******************************************************************************/

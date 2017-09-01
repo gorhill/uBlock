@@ -201,12 +201,8 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
         var suspendedTabs = new Set();
         µBlock.onStartCompletedQueue.push(function(callback) {
             onBeforeReady = null;
-            var iter = suspendedTabs.values(),
-                entry;
-            for (;;) {
-                entry = iter.next();
-                if ( entry.done ) { break; }
-                vAPI.tabs.reload(entry.value);
+            for ( var tabId of suspendedTabs ) {
+                vAPI.tabs.reload(tabId);
             }
             callback();
         });
@@ -272,7 +268,9 @@ var onBeforeRequest = function(details) {
     var isFrame = requestType === 'sub_frame';
 
     // https://github.com/chrisaljoudi/uBlock/issues/114
-    var requestContext = pageStore.createContextFromFrameId(isFrame ? details.parentFrameId : details.frameId);
+    var requestContext = pageStore.createContextFromFrameId(
+        isFrame ? details.parentFrameId : details.frameId
+    );
 
     // Setup context and evaluate
     var requestURL = details.url;
@@ -288,7 +286,7 @@ var onBeforeRequest = function(details) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            pageStore.logData,
             requestType,
             requestURL,
             requestContext.rootHostname,
@@ -297,7 +295,7 @@ var onBeforeRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
+    if ( result !== 1 ) {
         // https://github.com/chrisaljoudi/uBlock/issues/114
         if ( details.parentFrameId !== -1 && isFrame ) {
             pageStore.setFrame(details.frameId, requestURL);
@@ -319,7 +317,7 @@ var onBeforeRequest = function(details) {
                 µb.logger.writeOne(
                     tabId,
                     'redirect',
-                    'rr:' + µb.redirectEngine.resourceNameRegister,
+                    { source: 'redirect', raw: µb.redirectEngine.resourceNameRegister },
                     requestType,
                     requestURL,
                     requestContext.rootHostname,
@@ -350,8 +348,7 @@ var onBeforeRootFrameRequest = function(details) {
     // behind-the-scene
     var µburi = µb.URI,
         requestHostname = µburi.hostnameFromURI(requestURL),
-        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname,
-        result = '';
+        requestDomain = µburi.domainFromHostname(requestHostname) || requestHostname;
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -361,22 +358,31 @@ var onBeforeRootFrameRequest = function(details) {
         requestHostname: requestHostname,
         requestType: 'main_frame'
     };
+    var result = 0,
+        logData,
+        logEnabled = µb.logger.isEnabled();
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {
-        result = 'ua:whitelisted';
+        result = 2;
+        if ( logEnabled === true ) {
+            logData = { engine: 'u', result: 2, raw: 'whitelisted' };
+        }
     }
 
     // Permanently unrestricted?
-    if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
-        result = 'ua:no-strict-blocking: ' + µb.hnSwitches.z + ' true';
+    if ( result === 0 && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+        result = 2;
+        if ( logEnabled === true ) {
+            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: ' + µb.hnSwitches.z + ' true' };
+        }
     }
 
     // Temporarily whitelisted?
-    if ( result === '' ) {
+    if ( result === 0 ) {
         result = isTemporarilyWhitelisted(result, requestHostname);
-        if ( result.charAt(1) === 'a' ) {
-            result = 'ua:no-strict-blocking true (temporary)';
+        if ( result === 2 && logEnabled === true ) {
+            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking true (temporary)' };
         }
     }
 
@@ -384,26 +390,30 @@ var onBeforeRootFrameRequest = function(details) {
     var snfe = µb.staticNetFilteringEngine;
 
     // Check for specific block
-    if (
-        result === '' &&
-        snfe.matchStringExactType(context, requestURL, 'main_frame') !== undefined
-    ) {
-        result = snfe.toResultString(true);
+    if ( result === 0 ) {
+        result = snfe.matchStringExactType(context, requestURL, 'main_frame');
+        if ( result !== 0 || logEnabled === true ) {
+            logData = snfe.toLogData();
+        }
     }
 
     // Check for generic block
-    if (
-        result === '' &&
-        snfe.matchStringExactType(context, requestURL, 'no_type') !== undefined
-    ) {
-        result = snfe.toResultString(true);
+    if ( result === 0 ) {
+        result = snfe.matchStringExactType(context, requestURL, 'no_type');
+        if ( result !== 0 || logEnabled === true ) {
+            logData = snfe.toLogData();
+        }
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname, except when
         // the filter is specifically of type `other`.
         // https://github.com/gorhill/uBlock/issues/490
         // Removing this for the time being, will need a new, dedicated type.
-        if ( result.charAt(1) === 'b' ) {
-            result = toBlockDocResult(requestURL, requestHostname, result);
+        if (
+            result === 1 &&
+            toBlockDocResult(requestURL, requestHostname, logData) === false
+        ) {
+            result = 0;
+            logData = undefined;
         }
     }
 
@@ -420,11 +430,11 @@ var onBeforeRootFrameRequest = function(details) {
         pageStore.journalAddRequest(requestHostname, result);
     }
 
-    if ( µb.logger.isEnabled() ) {
+    if ( logEnabled ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            logData,
             'main_frame',
             requestURL,
             requestHostname,
@@ -433,19 +443,19 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Not blocked
-    if ( µb.isAllowResult(result) ) {
-        return;
-    }
+    if ( result !== 1 ) { return; }
 
-    var compiled = result.slice(3);
+    // No log data means no strict blocking (because we need to report why
+    // the blocking occurs.
+    if ( logData === undefined  ) { return; }
 
     // Blocked
     var query = btoa(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
         dn: requestDomain,
-        fc: compiled,
-        fs: snfe.filterStringFromCompiled(compiled)
+        fc: logData.compiled,
+        fs: logData.raw
     }));
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
@@ -455,26 +465,23 @@ var onBeforeRootFrameRequest = function(details) {
 
 /******************************************************************************/
 
-var toBlockDocResult = function(url, hostname, result) {
-    // Make a regex out of the result
-    var re = µBlock.staticNetFilteringEngine
-                   .filterRegexFromCompiled(result.slice(3), 'gi');
-    if ( re === null ) {
-        return '';
-    }
-    var matches = re.exec(url);
-    if ( matches === null ) {
-        return '';
-    }
+var toBlockDocResult = function(url, hostname, logData) {
+    if ( typeof logData.regex !== 'string' ) { return; }
+    var re = new RegExp(logData.regex),
+        match = re.exec(url.toLowerCase());
+    if ( match === null ) { return ''; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
     // Relax the rule: verify that the match is completely before the path part
-    if ( re.lastIndex <= url.indexOf(hostname) + hostname.length + 1 ) {
-        return result;
+    if (
+        (match.index + match[0].length) <=
+        (url.indexOf(hostname) + hostname.length + 1)
+    ) {
+        return true;
     }
 
-    return '';
+    return false;
 };
 
 /******************************************************************************/
@@ -494,7 +501,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
     if ( !pageStore ) { return; }
 
-    var result = '',
+    var result = 0,
         context = pageStore.createContextFromPage(),
         requestType = details.type,
         requestURL = details.url;
@@ -523,7 +530,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         µb.logger.writeOne(
             vAPI.noTabId,
             'net',
-            result,
+            pageStore.logData,
             requestType,
             requestURL,
             context.rootHostname,
@@ -533,9 +540,9 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     context.dispose();
 
-    // Not blocked
-    if ( µb.isAllowResult(result) ) {
-        return;
+    // Blocked?
+    if ( result === 1 ) {
+        return { 'cancel': true };
     }
 
     // ADN: Blocked xhr
@@ -627,11 +634,13 @@ var onHeadersReceived = function (details) {
 
 /******************************************************************************/
 
-var processCSP = function(pageStore, details) {
+var injectCSP = function(pageStore, details) {
     var µb = µBlock,
         tabId = details.tabId,
         requestURL = details.url,
-        loggerEnabled = µb.logger.isEnabled();
+        loggerEnabled = µb.logger.isEnabled(),
+        logger = µb.logger,
+        cspSubsets = [];
 
     var context = pageStore.createContextFromPage();
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
@@ -639,79 +648,127 @@ var processCSP = function(pageStore, details) {
         context.pageHostname = context.pageDomain = context.requestHostname;
     }
 
-    var inlineScriptResult, blockInlineScript,
-        workerResult, blockWorker;
-    if ( details.type !== 'script' ) {
-        context.requestType = 'inline-script';
-        context.requestURL = requestURL;
-        inlineScriptResult = pageStore.filterRequestNoCache(context);
-        blockInlineScript = µb.isBlockResult(inlineScriptResult);
-        // https://github.com/gorhill/uBlock/issues/2360
-        // https://github.com/gorhill/uBlock/issues/2440
-        context.requestType = 'script';
-        context.requestURL = 'blob:';
-        µb.staticNetFilteringEngine.matchString(context);
-        workerResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
-        blockWorker = µb.isBlockResult(workerResult);
+    // Start collecting policies >>>>>>>>
+
+    // ======== built-in policies
+
+    context.requestType = 'inline-script';
+    context.requestURL = requestURL;
+    if ( pageStore.filterRequestNoCache(context) === 1 ) {
+        cspSubsets[0] = "script-src 'unsafe-eval' * blob: data:";
+        // https://bugs.chromium.org/p/chromium/issues/detail?id=669086
+        // TODO: remove when most users are beyond Chromium v56
+        if ( vAPI.chromiumVersion < 57 ) {
+            cspSubsets[0] += '; frame-src *';
+        }
     }
-
-    µb.staticNetFilteringEngine.matchStringExactType(context, requestURL, 'websocket');
-    var websocketResult = µb.staticNetFilteringEngine.toResultString(loggerEnabled),
-        blockWebsocket = µb.isBlockResult(websocketResult);
-
-    var headersChanged;
-    if ( blockInlineScript || blockWebsocket || blockWorker ) {
-        headersChanged = foilWithCSP(
-            details.responseHeaders,
-            blockInlineScript,
-            blockWebsocket,
-            blockWorker
+    if ( loggerEnabled === true ) {
+        logger.writeOne(
+            tabId,
+            'net',
+            pageStore.logData,
+            'inline-script',
+            requestURL,
+            context.rootHostname,
+            context.pageHostname
         );
     }
 
-    if ( loggerEnabled && details.type !== 'script' ) {
-        if ( blockInlineScript !== undefined ) {
-            µb.logger.writeOne(
+    // ======== filter-based policies
+
+    // Static filtering.
+
+    var logDataEntries = [];
+
+    µb.staticNetFilteringEngine.matchAndFetchData(
+        'csp',
+        requestURL,
+        cspSubsets,
+        loggerEnabled === true ? logDataEntries : undefined
+    );
+
+    // URL filtering `allow` rules override static filtering.
+    if (
+        cspSubsets.length !== 0 &&
+        µb.sessionURLFiltering.evaluateZ(context.rootHostname, requestURL, 'csp') === 2
+    ) {
+        if ( loggerEnabled === true ) {
+            logger.writeOne(
                 tabId,
                 'net',
-                inlineScriptResult,
-                'inline-script',
+                µb.sessionURLFiltering.toLogData(),
+                'csp',
                 requestURL,
                 context.rootHostname,
                 context.pageHostname
             );
         }
-        if ( websocketResult ) {
-            µb.logger.writeOne(
+        context.dispose();
+        return;
+    }
+
+    // Dynamic filtering `allow` rules override static filtering.
+    if (
+        cspSubsets.length !== 0 &&
+        µb.userSettings.advancedUserEnabled &&
+        µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.rootHostname, '*') === 2
+    ) {
+        if ( loggerEnabled === true ) {
+            logger.writeOne(
                 tabId,
                 'net',
-                websocketResult,
-                'websocket',
+                µb.sessionFirewall.toLogData(),
+                'csp',
                 requestURL,
                 context.rootHostname,
                 context.pageHostname
             );
         }
-        if ( workerResult ) {
-            µb.logger.writeOne(
-                tabId,
-                'net',
-                workerResult,
-                'worker',
-                requestURL,
-                context.rootHostname,
-                context.pageHostname
-            );
-        }
+        context.dispose();
+        return;
+    }
+
+    // <<<<<<<< All policies have been collected
+
+    // Static CSP policies will be applied.
+    for ( var entry of logDataEntries ) {
+        logger.writeOne(
+            tabId,
+            'net',
+            entry,
+            'csp',
+            requestURL,
+            context.rootHostname,
+            context.pageHostname
+        );
     }
 
     context.dispose();
 
-    if ( headersChanged !== true ) { return; }
+    if ( cspSubsets.length === 0 ) {
+        return;
+    }
 
     µb.updateBadgeAsync(tabId);
 
-    return { 'responseHeaders': details.responseHeaders };
+    var csp,
+        headers = details.responseHeaders,
+        i = headerIndexFromName('content-security-policy', headers);
+    if ( i !== -1 ) {
+        csp = headers[i].value.trim();
+        headers.splice(i, 1);
+    }
+    cspSubsets = cspSubsets.join(', ');
+    // Use comma to add a new subset to potentially existing one(s). This new
+    // subset has its own reporting options and won't cause spurious CSP
+    // reports to outside world.
+    // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
+    headers.push({
+        name: 'Content-Security-Policy',
+        value: csp === undefined ? cspSubsets : csp + ', ' + cspSubsets
+    });
+
+    return { 'responseHeaders': headers };
 };
 
 /******************************************************************************/
@@ -728,13 +785,13 @@ var foilLargeMediaElement = function(pageStore, details) {
     var tabId = details.tabId,
         size = parseInt(details.responseHeaders[i].value, 10) || 0,
         result = pageStore.filterLargeMediaElement(size);
-    if ( result === undefined ) { return; }
+    if ( result === 0 ) { return; }
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
             tabId,
             'net',
-            result,
+            pageStore.logData,
             details.type,
             details.url,
             pageStore.tabHostname,
@@ -743,57 +800,6 @@ var foilLargeMediaElement = function(pageStore, details) {
     }
 
     return { cancel: true };
-};
-
-/******************************************************************************/
-
-var foilWithCSP = function(headers, noInlineScript, noWebsocket, noBlobWorker) {
-    var i = headerIndexFromName('content-security-policy', headers),
-        cspSubset = [];
-
-    if ( noInlineScript ) {
-        cspSubset.push("script-src 'unsafe-eval' *");
-    }
-
-    if ( noWebsocket ) {
-        cspSubset.push('connect-src http: https:');
-    }
-
-    // https://www.w3.org/TR/CSP2/#directive-child-src
-    // https://www.w3.org/TR/CSP3/#directive-worker-src
-    if ( noBlobWorker ) {
-        cspSubset.push('child-src http: https:');
-    }
-
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=513860
-    //   Bad Chromium bug: web pages can work around CSP directives by
-    //   creating data:- or blob:-based URI. So if we must restrict using CSP,
-    //   we have no choice but to also prevent the creation of nested browsing
-    //   contexts based on data:- or blob:-based URIs.
-    if ( vAPI.chrome && (noInlineScript || noWebsocket) ) {
-        // https://w3c.github.io/webappsec-csp/#directive-frame-src
-        cspSubset.push('frame-src http: https:');
-    }
-
-    if ( cspSubset.length === 0 ) { return; }
-
-    var csp;
-    if ( i !== -1 ) {
-        csp = headers[i].value.trim();
-        headers.splice(i, 1);
-    }
-
-    // Use comma to add a new subset to potentially existing one(s). This new
-    // subset has its own reporting options and won't cause spurious CSP
-    // reports to outside world.
-    // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
-    cspSubset = cspSubset.join('; ');
-    headers.push({
-        name: 'Content-Security-Policy',
-        value: csp === undefined ? cspSubset : csp + ', ' + cspSubset
-    });
-
-    return true;
 };
 
 /******************************************************************************/
@@ -848,8 +854,6 @@ vAPI.net.onBeforeSendHeaders = {   // ADN
 
 vAPI.net.registerListeners();
 
-//console.log('traffic.js > Beginning to intercept net requests at %s', (new Date()).toISOString());
-
 /******************************************************************************/
 
 var isTemporarilyWhitelisted = function(result, hostname) {
@@ -859,17 +863,15 @@ var isTemporarilyWhitelisted = function(result, hostname) {
         obsolete = documentWhitelists[hostname];
         if ( obsolete !== undefined ) {
             if ( obsolete > Date.now() ) {
-                if ( result === '' ) {
-                    return 'ua:*' + ' ' + hostname + ' doc allow';
+                if ( result === 0 ) {
+                    return 2;
                 }
             } else {
                 delete documentWhitelists[hostname];
             }
         }
         pos = hostname.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
+        if ( pos === -1 ) { break; }
         hostname = hostname.slice(pos + 1);
     }
     return result;

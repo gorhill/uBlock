@@ -87,10 +87,10 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "Adblock Protector List",
-		"contentURL": "https://raw.githubusercontent.com/jspenguin2017/AdBlockProtector/master/AdBlockProtectorList.txt",
-		"supportURL": "https://github.com/jspenguin2017/AdBlockProtector",
-		"instructionURL": "https://jspenguin2017.github.io/AdBlockProtector/"
+		"title": "uBlock Protector List",
+		"contentURL": "https://raw.githubusercontent.com/jspenguin2017/uBlockProtector/master/uBlockProtectorList.txt",
+		"supportURL": "https://github.com/jspenguin2017/uBlockProtector/blob/master/CONTRIBUTING.MD",
+		"instructionURL": "https://jspenguin2017.github.io/uBlockProtector/"
 	},
 	"awrl-0": {
 		"content": "filters",
@@ -243,7 +243,10 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "hpHosts’ Ad and tracking servers",
-		"contentURL": "https://hosts-file.net/.%5Cad_servers.txt",
+		"contentURL": [
+			"https://hosts-file.net/.%5Cad_servers.txt",
+			"http://hosts-file.net/.%5Cad_servers.txt"
+		],
 		"supportURL": "https://hosts-file.net/"
 	},
 	"mvps-0": {
@@ -551,7 +554,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: Adguard Russian Filter",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/1.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
 	},
 	"spa-0": {
@@ -587,7 +590,7 @@
 		"off": true,
 		"title": "TUR: Adguard Turkish Filter",
 		"lang": "tr",
-		"contentURL": "https://filters.adtidy.org/extension/chromium/filters/13.txt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
 	},
 	"VIE-0": {

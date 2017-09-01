@@ -2,8 +2,28 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.12.4",
+    "version": "1.13.0",
 
+    "commands": {
+        "launch-element-zapper": {
+            "suggested_key": {
+              "default": "Alt+Z"
+            },
+            "description": "__MSG_popupTipZapper__"
+        },
+        "launch-element-picker": {
+            "suggested_key": {
+              "default": "Alt+X"
+            },
+            "description": "__MSG_popupTipPicker__"
+        },
+        "launch-logger": {
+            "suggested_key": {
+              "default": "Alt+L"
+            },
+            "description": "__MSG_popupTipLog__"
+        }
+    },
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {
@@ -39,7 +59,7 @@
         }
     ],
     "incognito": "split",
-    "minimum_chrome_version": "26.0",
+    "minimum_chrome_version": "38.0",
     "optional_permissions": [ "file:///*" ],
     "options_page": "dashboard.html",
     "options_ui": {

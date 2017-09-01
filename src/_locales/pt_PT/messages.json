@@ -71,6 +71,10 @@
     "message":"Clique para abrir o painel de controlo",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Entrar no modo \"zapper\" de elemento",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Entrar no modo de seleção de elemento",
     "description":"English: Enter element picker mode"
@@ -92,7 +96,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Alternar o bloqueio de fontes remotas para este site",
+    "message":"Alternar o bloqueio de tipos de letra remotos para este site",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{

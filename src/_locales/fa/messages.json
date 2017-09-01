@@ -71,6 +71,10 @@
     "message":"برای باز کردن داشبورد کلیک کنید",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"ورود به حالت انتخاب اشیاء",
     "description":"English: Enter element picker mode"

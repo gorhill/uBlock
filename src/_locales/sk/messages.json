@@ -71,6 +71,10 @@
     "message":"Kliknite sem pre otvorenie ovládacieho panela",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Prejsť do režimu výberu prvku",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Prejsť do režimu výberu prvku",
     "description":"English: Enter element picker mode"

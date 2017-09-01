@@ -29,12 +29,8 @@ h2 {
     cursor: pointer;
     font-size: 100%;
     font-weight: normal;
-    margin: 1em 0 0.8em 0;
     padding: 0.2em;
     text-align: center;
-    }
-h2:first-of-type {
-    margin-top: 0;
     }
 a {
     color: inherit;
@@ -59,18 +55,6 @@ a {
 #version {
     font-size: 90%;
     font-weight: normal;
-    }
-#gotoPrefs > span:nth-of-type(3) {
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    }
-body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
-    left: 3px;
-    }
-body[dir="rtl"] #gotoPrefs > span:nth-of-type(3) {
-    right: 3px;
     }
 body[dir="ltr"] #panes {
     direction: rtl;
@@ -150,6 +134,27 @@ p {
 body.off #switch .fa {
     color: #ccc;
     }
+#basicTools {
+    margin: 0.8em 0 0.4em 0;
+    }
+.tool:first-child {
+    margin-left: 0;
+    }
+.tool {
+    color: #aaa;
+    cursor: pointer;
+    visibility: hidden;
+    margin-left: 0.8em;
+    min-width: 1em;
+    padding: 0 0.2em;
+    unicode-bidi: embed;
+    }
+.tool.enabled {
+    visibility: visible;
+    }
+.tool.enabled:hover {
+    color: #444;
+    }
 #page-blocked {
     font-size: 1.25em;
     }
@@ -162,18 +167,6 @@ body.off #switch .fa {
 .statValue {
     margin: 0;
     text-align: center;
-    }
-.tool {
-    color: #aaa;
-    cursor: pointer;
-    display: none;
-    unicode-bidi: embed;
-    }
-.tool.enabled {
-    display: inline;
-    }
-.tool:hover {
-    color: #444;
     }
 #extraTools {
     background-color: #eee;
@@ -439,40 +432,40 @@ body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     background-color: rgb(192, 160, 0);
     }
 /* Rule cells */
-body.advancedUser #firewallContainer > div > span.aRule {
+body.advancedUser #firewallContainer > div > span.allowRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.aRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.allowRule {
     background-color: rgba(255, 194, 57, 0.4);
     }
-body.advancedUser #firewallContainer > div > span.bRule {
+body.advancedUser #firewallContainer > div > span.blockRule {
     background-color: rgba(192, 0, 0, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.bRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
     background-color: rgba(0, 19, 110, 0.4);
     }
-body.advancedUser #firewallContainer > div > span.nRule {
+body.advancedUser #firewallContainer > div > span.noopRule {
     background-color: rgba(108, 108, 108, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.nRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.noopRule {
     background-color: rgba(96, 96, 96, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.ownRule {
     color: white;
     }
-body.advancedUser #firewallContainer > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer > div > span.allowRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.allowRule.ownRule {
     background-color: rgba(255, 194, 57, 1);
     }
-body.advancedUser #firewallContainer > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer > div > span.blockRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
     background-color: rgba(0, 19, 110, 1);
     }
-body.advancedUser #firewallContainer > div > span.nRule.ownRule {
+body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     }
 

@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global createSet */
-
 'use strict';
 
 //console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
@@ -143,15 +141,15 @@ vAPI.domFilterer = (function() {
 
 /******************************************************************************/
 
-var allExceptions = createSet(),
-    allSelectors = createSet(),
+var allExceptions = new Set(),
+    allSelectors = new Set(),
     stagedNodes = [];
 
 // Complex selectors, due to their nature may need to be "de-committed". A
 // Set() is used to implement this functionality.
 
 var complexSelectorsOldResultSet,
-    complexSelectorsCurrentResultSet = createSet('object');
+    complexSelectorsCurrentResultSet = new Set();
 
 /******************************************************************************/
 
@@ -237,7 +235,7 @@ var platformHideNode = vAPI.hideNode,
     var uid,
         timer,
         observer,
-        changedNodes = [],
+        changedNodes = new Set(),
         observerOptions = {
             attributes: true,
             attributeFilter: [ 'style' ]
@@ -260,34 +258,33 @@ var platformHideNode = vAPI.hideNode,
     //   on sites which try to use inline styles to bypass blockers.
     var batchProcess = function() {
         timer.clear();
-        var cNodes = changedNodes, i = cNodes.length,
-            vNodes = [], j = 0,
-            node;
-        while ( i-- ) {
-            node = cNodes[i];
-            if ( node[uid] !== undefined && node.clientHeight && node.clientWidth ) {
-                vNodes[j++] = node;
+        var uid_ = uid;
+        for ( var node of changedNodes ) {
+            if (
+                node[uid_] === undefined ||
+                node.clientHeight === 0 || node.clientWidth === 0
+            ) {
+                continue;
             }
-        }
-        cNodes.length = 0;
-        while ( j-- ) {
-            node = vNodes[j];
             var attr = node.getAttribute('style');
-            if ( !attr ) {
+            if ( attr === null ) {
                 attr = '';
-            } else {
+            } else if (
+                attr.length !== 0 &&
+                attr.charCodeAt(attr.length - 1) !== 0x3B /* ';' */
+            ) {
                 attr += '; ';
             }
             node.setAttribute('style', attr + 'display: none !important;');
         }
+        changedNodes.clear();
     };
 
     var observerHandler = function(mutations) {
         var i = mutations.length,
-            cNodes = changedNodes,
-            j = cNodes.length;
+            changedNodes_ = changedNodes;
         while ( i-- ) {
-            cNodes[j++] = mutations[i].target;
+            changedNodes_.add(mutations[i].target);
         }
         timer.start();
     };
@@ -301,8 +298,7 @@ var platformHideNode = vAPI.hideNode,
             node[uid] = node.hasAttribute('style') && (node.getAttribute('style') || '');
         }
         // Performance: batch-process nodes to hide.
-        var cNodes = changedNodes;
-        cNodes[cNodes.length] = node;
+        changedNodes.add(node);
         timer.start();
         if ( observer === undefined ) {
             observer = new MutationObserver(observerHandler);
@@ -603,7 +599,7 @@ var domFilterer = {
         this.commitTimer.clear();
 
         var beforeHiddenNodeCount = this.hiddenNodeCount,
-            styleText = '', i;
+            styleText = '';
 
         if (!vAPI.prefs.hidingDisabled) { // ADN: don't append style tag if not hiding
 
@@ -624,7 +620,7 @@ var domFilterer = {
 
         // Simple css selectors/hide
         if ( this.simpleHideSelectors.entries.length ) {
-            i = stagedNodes.length;
+            var i = stagedNodes.length;
             while ( i-- ) {
                 this.simpleHideSelectors.forEachNode(hideNode, stagedNodes[i], cssNotHiddenId);
             }
@@ -633,7 +629,7 @@ var domFilterer = {
 
         // Complex selectors: non-incremental.
         complexSelectorsOldResultSet = complexSelectorsCurrentResultSet;
-        complexSelectorsCurrentResultSet = createSet('object');
+        complexSelectorsCurrentResultSet = new Set();
 
         // Complex css selectors/hide
         // The handling of these can be considered optional, since they are
@@ -667,14 +663,10 @@ var domFilterer = {
         }
 
         // Un-hide nodes previously hidden.
-        i = complexSelectorsOldResultSet.size;
-        if ( i !== 0 ) {
-            var iter = complexSelectorsOldResultSet.values();
-            while ( i-- ) {
-                this.unhideNode(iter.next().value);
-            }
-            complexSelectorsOldResultSet.clear();
+        for ( var node of complexSelectorsOldResultSet ) {
+            this.unhideNode(node);
         }
+        complexSelectorsOldResultSet.clear();
 
         // If DOM nodes have been affected, lazily notify core process.
         if (
@@ -1357,7 +1349,7 @@ vAPI.domSurveyor = (function() {
         cosmeticSurveyingMissCount = 0,
         highGenerics = null,
         lowGenericSelectors = [],
-        queriedSelectors = createSet(),
+        queriedSelectors = new Set(),
         surveyCost = 0;
 
     // Handle main process' response.

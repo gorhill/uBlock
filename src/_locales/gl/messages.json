@@ -12,7 +12,7 @@
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
-    "message":"Preferencias",
+    "message":"Configuración",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
@@ -40,11 +40,11 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"Configuración avanzada",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: desactivar o uBlock₀ só nesta páxina.",
+    "message":"Click: desactivar\/activar uBlock₀ neste sitio.\n\nCtrl+click: desactivar o uBlock₀ só nesta páxina.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -70,6 +70,10 @@
   "popupTipDashboard":{
     "message":"Fai click para abrir o panel de control",
     "description":"English: Click to open the dashboard"
+  },
+  "popupTipZapper":{
+    "message":"Activar o modo \"eliminación de elementos\"",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
     "message":"Ir ó modo do selector de elementos",
@@ -212,7 +216,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"configuración avanzada",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -344,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Actualizando...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Un erro de rede está a impedir que se actualicen os recursos.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -676,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"Ollo! Non cambies estas configuracións avanzadas senón sabes ben o que estás a facer.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
@@ -684,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Aplicar os cambios",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

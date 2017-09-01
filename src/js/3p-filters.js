@@ -234,7 +234,7 @@ var renderFilterLists = function(soft) {
             var button = document.getElementById("buttonUpdateAdNauseam");
             li.appendChild(button);
         }
-        
+
         return li;
     };
 
@@ -253,7 +253,7 @@ var renderFilterLists = function(soft) {
     var liFromListGroup = function(groupKey, listKeys) {
 
 
-      
+
       var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
 
        // ADN: change some group key names

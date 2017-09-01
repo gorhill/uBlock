@@ -53,9 +53,9 @@ var deferUntil = function(testFn, mainFn, details) {
         details = {};
     }
 
-    var now = 0;
-    var next = details.next || 200;
-    var until = details.until || 2000;
+    var now = 0,
+        next = details.next || 200,
+        until = details.until || 12800;
 
     var check = function() {
         if ( testFn() === true || now >= until ) {
@@ -69,7 +69,7 @@ var deferUntil = function(testFn, mainFn, details) {
     if ( 'sync' in details && details.sync === true ) {
         check();
     } else {
-        vAPI.setTimeout(check, 1);
+        vAPI.setTimeout(check, details.first || 1);
     }
 };
 
@@ -1384,6 +1384,7 @@ var tabWatcher = (function() {
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
             vAPI.contextMenu.register(window);
+            vAPI.commands.register(window);
         }
 
         // https://github.com/gorhill/uBlock/issues/697
@@ -1428,6 +1429,7 @@ var tabWatcher = (function() {
 
     var onWindowUnload = function(win) {
         vAPI.contextMenu.unregister(win);
+        vAPI.commands.unregister(win);
 
         var tabBrowser = getTabBrowser(win);
         if ( tabBrowser === null ) {
@@ -3281,6 +3283,9 @@ vAPI.toolbarButton = {
 
         CustomizableUI.addListener(CUIEvents);
 
+        // https://github.com/gorhill/uBlock/issues/2696
+        // https://github.com/gorhill/uBlock/issues/2709
+
         var style = [
             '#' + this.id + '.off {',
                 'list-style-image: url(',
@@ -3309,9 +3314,11 @@ vAPI.toolbarButton = {
             '}',
             '#' + this.viewId + ',',
             '#' + this.viewId + ' > iframe {',
-                'width: 160px;',
                 'height: 290px;',
+                'min-width: 0 !important;',
                 'overflow: hidden !important;',
+                'padding: 0 !important;',
+                'width: 160px;',
             '}'
         ];
 
@@ -3530,7 +3537,8 @@ vAPI.contextMenu = (function() {
         }
         deferUntil(
             canRegister.bind(null, win),
-            register.bind(null, win)
+            register.bind(null, win),
+            { first: 4000 }
         );
     };
 
@@ -3562,6 +3570,108 @@ vAPI.contextMenu = (function() {
         register: registerAsync,
         unregister: unregister,
         setEntries: setEntries
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// Keyboard shortcuts have to be hardcoded, as they are declaratively created
+// in the manifest.json file on webext API, and only a listener has to be
+// installed with the browser.commands API.
+//
+// Assuming only one client listener is installed.
+
+// Shortcuts can be customized in `about:config` using
+//     extensions.ublock0.shortcuts.[command id]    => modifier-key
+// To disable a shortcut, set it to `-`:
+//     extensions.ublock0.shortcuts.[command id]    => -
+
+vAPI.commands = (function() {
+    var commands = [
+        { id: 'launch-element-zapper', shortcut: 'alt-z' },
+        { id: 'launch-element-picker', shortcut: 'alt-x' },
+        { id: 'launch-logger',         shortcut: 'alt-l' }
+    ];
+    var clientListener;
+
+    var commandHandler = function(ev) {
+        if ( typeof clientListener !== 'function' ) { return; }
+        var match = /^uBlock0Key-([a-z-]+)$/.exec(ev.target.id);
+        if ( match === null ) { return; }
+        clientListener(match[1]);
+    };
+
+    var canRegister = function(win) {
+        return win && win.document.readyState === 'complete';
+    };
+
+    var register = function(window) {
+        if ( canRegister(window) !== true ) { return; }
+
+        var doc = window.document,
+            myKeyset = doc.getElementById('uBlock0Keyset');
+        // Already registered?
+        if ( myKeyset !== null ) { return; }
+
+        var mainKeyset = doc.getElementById('mainKeyset'),
+            keysetHolder = mainKeyset && mainKeyset.parentNode;
+        if ( keysetHolder === null ) { return; }
+
+        myKeyset = doc.createElement('keyset');
+        myKeyset.setAttribute('id', 'uBlock0Keyset');
+
+        var myKey, shortcut, parts, modifier, key;
+        for ( var command of commands ) {
+            shortcut = vAPI.localStorage.getItem('shortcuts.' + command.id);
+            if ( shortcut === null ) { shortcut = command.shortcut; }
+            parts = /(([a-z]+)-)?(\w)/.exec(shortcut);
+            if ( parts === null ) { continue; }
+            modifier = parts[2] || '';
+            key = parts[3] || '';
+            if ( key === '' ) { continue; }
+            myKey = doc.createElement('key');
+            myKey.setAttribute('id', 'uBlock0Key-' + command.id);
+            if ( modifier !== '' ) {
+                myKey.setAttribute('modifiers', parts[2]);
+            }
+            myKey.setAttribute('key', key);
+            // https://stackoverflow.com/a/16786770
+            myKey.setAttribute('oncommand', ';');
+            myKeyset.appendChild(myKey);
+        }
+
+        keysetHolder.addEventListener('command', commandHandler);
+        keysetHolder.appendChild(myKeyset);
+    };
+
+    var registerAsync = function(win) {
+        if ( vAPI.fennec ) { return; }
+        deferUntil(
+            canRegister.bind(null, win),
+            register.bind(null, win),
+            { first: 4000 }
+        );
+    };
+
+    var unregister = function(window) {
+        var doc = window.document,
+            myKeyset = doc.getElementById('uBlock0Keyset');
+        if ( myKeyset === null ) { return; }
+        myKeyset.removeEventListener('command', commandHandler);
+        myKeyset.parentNode.removeChild(myKeyset);
+    };
+
+    var addListener = function(callback) {
+        clientListener = callback;
+    };
+
+    return {
+        register: registerAsync,
+        unregister: unregister,
+        onCommand: {
+            addListener: addListener
+        }
     };
 })();
 
@@ -3638,7 +3748,7 @@ var optionsObserver = (function() {
     var register = function() {
         Services.obs.addObserver(observer, 'addon-options-displayed', false);
         cleanupTasks.push(unregister);
-        deferUntil(canInit, init, { next: 463 });
+        deferUntil(canInit, init, { first: 4000 });
     };
 
     return {

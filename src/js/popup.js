@@ -79,7 +79,6 @@ var messaging = vAPI.messaging;
 var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
-var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+) ([^ ]+)/;
 var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -149,16 +148,12 @@ var hashFromPopupData = function(reset) {
         return;
     }
 
-    var hasher = [];
-    var rules = popupData.firewallRules;
-    var rule;
+    var hasher = [],
+        rules = popupData.firewallRules;
     for ( var key in rules ) {
-        if ( rules.hasOwnProperty(key) === false ) {
-            continue;
-        }
-        rule = rules[key];
-        if ( rule !== '' ) {
-            hasher.push(rule);
+        var rule = rules[key];
+        if ( rule !== null ) {
+            hasher.push(rule.src + ' ' + rule.des + ' ' + rule.type + ' ' + rule.action);
         }
     }
     hasher.sort();
@@ -244,18 +239,16 @@ var updateFirewallCell = function(scope, des, type, rule) {
     }
 
     cells.removeClass();
-    var action = rule.charAt(1);
-    if ( action !== '' ) {
-        cells.toggleClass(action + 'Rule', true);
+    if ( rule !== null ) {
+        cells.toggleClass(rule.action + 'Rule', true);
     }
 
     // Use dark shade visual cue if the rule is specific to the cell.
     var ownRule = false;
-    var matches = reSrcHostnameFromRule.exec(rule);
-    if ( matches !== null ) {
-        ownRule = (matches[2] !== '*' || matches[3] === type) &&
-                  (matches[2] === des) &&
-                  (matches[1] === scopeToSrcHostnameMap[scope]);
+    if ( rule !== null ) {
+        ownRule = (rule.des !== '*' || rule.type === type) &&
+                  (rule.des === des) &&
+                  (rule.src === scopeToSrcHostnameMap[scope]);
     }
     cells.toggleClass('ownRule', ownRule);
 
@@ -416,6 +409,7 @@ var renderPopup = function() {
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
+    uDom.nodeFromId('gotoZap').classList.toggle('enabled', popupData.canElementPicker === true);
 
     var text,
         blocked = popupData.pageBlockedRequestCount,
@@ -441,9 +435,9 @@ var renderPopup = function() {
     // https://github.com/gorhill/uBlock/issues/507
     // Convenience: open the logger with current tab automatically selected
     if ( popupData.tabId ) {
-        uDom.nodeFromSelector('.statName > a[href^="logger-ui.html"]').setAttribute(
-             'href',
-             'logger-ui.html#tab_' + popupData.tabId
+        uDom.nodeFromSelector('#basicTools > a[href^="logger-ui.html"]').setAttribute(
+            'href',
+            'logger-ui.html#tab_' + popupData.tabId
         );
     }
 
@@ -591,6 +585,21 @@ var toggleNetFilteringSwitch = function(ev) {
     );
 
     hashFromPopupData();
+};
+
+/******************************************************************************/
+
+var gotoZap = function() {
+    messaging.send(
+        'popupPanel',
+        {
+            what: 'launchElementPicker',
+            tabId: popupData.tabId,
+            zap: true
+        }
+    );
+
+    vAPI.closePopup();
 };
 
 /******************************************************************************/
@@ -990,6 +999,7 @@ var onHideTooltip = function() {
     getPopupData(tabId);
 
     uDom('#switch').on('click', toggleNetFilteringSwitch);
+    uDom('#gotoZap').on('click', gotoZap);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);

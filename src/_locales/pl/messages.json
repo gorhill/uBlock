@@ -71,6 +71,10 @@
     "message":"Kliknij, aby otworzyć panel sterowania",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Przejdź do trybu usuwania elementów",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Przejdź do trybu zaznaczania elementów",
     "description":"English: Enter element picker mode"
@@ -336,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"nieaktualne",
+    "message":"Nieaktualne.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{

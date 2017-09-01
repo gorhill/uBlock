@@ -71,8 +71,12 @@
     "message":"Clic para abrir el panel de control",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Activar el modo eliminación de elementos",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
-    "message":"Entrar al modo de selección de elementos",
+    "message":"Activar el modo de selección de elementos",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{

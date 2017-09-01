@@ -4,6 +4,26 @@
     "name": "AdNauseam",
     "version": "{version}",
 
+    "commands": {
+        "launch-element-zapper": {
+            "suggested_key": {
+              "default": "Alt+Z"
+            },
+            "description": "__MSG_popupTipZapper__"
+        },
+        "launch-element-picker": {
+            "suggested_key": {
+              "default": "Alt+X"
+            },
+            "description": "__MSG_popupTipPicker__"
+        },
+        "launch-logger": {
+            "suggested_key": {
+              "default": "Alt+L"
+            },
+            "description": "__MSG_popupTipLog__"
+        }
+    },
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {
@@ -50,8 +70,7 @@
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
-        "http://*/*",
-        "https://*/*"
+        "<all_urls>"
     ],
     "short_name": "AdNauseam"
 }

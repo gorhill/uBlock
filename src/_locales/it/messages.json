@@ -71,6 +71,10 @@
     "message":"Clicca per aprire il dashboard",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Accedi alla modalità elimina elemento",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Accedi alla modalità seleziona elemento",
     "description":"English: Enter element picker mode"
@@ -340,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Ultimo aggiornamento: {{ago}}",
+    "message":"Ultimo aggiornamento: {{ago}}.\nClicca per forzare l'aggiornamento.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -576,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Impossibile connettersi al {{url}}",
+    "message":"Errore di connessione: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

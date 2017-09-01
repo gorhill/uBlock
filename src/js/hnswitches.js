@@ -249,10 +249,12 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
 
 /******************************************************************************/
 
-HnSwitches.prototype.toResultString = function() {
-    return this.r !== 1 ?
-        '' :
-        'ub:' + this.n + ': ' + this.z + ' true';
+HnSwitches.prototype.toLogData = function() {
+    return {
+        source: 'switch',
+        result: this.r,
+        raw: this.n + ': ' + this.z + ' true'
+    };
 };
 
 /******************************************************************************/

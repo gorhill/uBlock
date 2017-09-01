@@ -71,6 +71,10 @@
     "message":"დააწპაკუნეთ სამართავი დაფის გასახსნელად",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Enter element zapper mode",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"პიპეტის რეჟიმი",
     "description":"English: Enter element picker mode"
@@ -216,7 +220,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"წინასწარი ჩატვირთვის გათიშვა (კავშირების თავიდან ასარიდებლად დაბლოკილი ქსელური მოთხოვნებისათვის)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -224,11 +228,11 @@
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Prevent WebRTC from leaking local IP addresses",
+    "message":"WebRTC-სთვის ხელის შეშლა ლოკალური IP მისამართის გაჟონვაში",
     "description":"English: "
   },
   "settingPerSiteSwitchGroup":{
-    "message":"Default behavior",
+    "message":"ნაგულისხმევი ქცევა",
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{

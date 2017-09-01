@@ -54,46 +54,6 @@ var vAPI = self.vAPI;
 
 /******************************************************************************/
 
-// Support minimally working Set() for legacy Firefox: iterator for legacy
-// Set() does not work like the one for standard ES6 Set().
-
-if ( self.Set.prototype.iterator instanceof Function === false ) {
-    self.createSet = function() {
-        return new Set();
-    };
-} else {
-    self.createSet = (function() {
-        //console.log('Patching non-ES6 Set() to be more ES6-like.');
-        var values = function() {
-            this._valueIter = this.prototype.values();
-            this.value = undefined;
-            this.done = false;
-            return this;
-        };
-        var next = function() {
-            try {
-                this.value = this._valueIter.next();
-            } catch (ex) {
-                this._valueIter = undefined;
-                this.value = undefined;
-                this.done = true;
-            }
-            return this;
-        };
-        return function() {
-            var r = new Set();
-            r._valueIter = undefined;
-            r.value = undefined;
-            r.done = false;
-            r.values = values.bind(r);
-            r.next = next.bind(r);
-            return r;
-        };
-    })();
-}
-
-/******************************************************************************/
-
 var referenceCounter = 0;
 
 vAPI.lock = function() {

@@ -71,6 +71,10 @@
     "message":"Κάντε κλικ για να ανοίξετε τον πίνακα εργαλείων",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Είσοδος σε λειτουργία εκτέλεσης στοιχείων",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
     "message":"Είσοδος στη λειτουργία επιλογής στοιχείων",
     "description":"English: Enter element picker mode"
@@ -344,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Ενημέρωση...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Ένα σφάλμα δικτύου εμπόδισε την ενημέρωση του πόρου.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

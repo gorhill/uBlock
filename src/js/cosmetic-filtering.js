@@ -34,11 +34,6 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-// Could be replaced with encodeURIComponent/decodeURIComponent,
-// which seems faster on Firefox.
-var encode = JSON.stringify;
-var decode = JSON.parse;
-
 var isValidCSSSelector = (function() {
     var div = document.createElement('div'),
         matchesFn;
@@ -118,56 +113,23 @@ var histogram = function(label, buckets) {
     console.log('\tTotal buckets count: %d', total);
 };
 */
-/******************************************************************************/
+/*******************************************************************************
 
-// Pure id- and class-based filters
-// Examples:
-//   #A9AdsMiddleBoxTop
-//   .AD-POST
+    Each filter class will register itself in the map.
 
-var FilterPlain = function() {
+    IMPORTANT: any change which modifies the mapping will have to be
+    reflected with µBlock.systemSettings.compiledMagic.
+
+**/
+
+var filterClasses = [];
+
+var registerFilterClass = function(ctor) {
+    filterClasses[ctor.prototype.fid] = ctor;
 };
 
-FilterPlain.prototype.retrieve = function(s, out) {
-    out.push(s);
-};
-
-FilterPlain.prototype.fid = '#';
-
-FilterPlain.prototype.toSelfie = function() {
-};
-
-FilterPlain.fromSelfie = function() {
-    return filterPlain;
-};
-
-var filterPlain = new FilterPlain();
-
-/******************************************************************************/
-
-// Id- and class-based filters with extra selector stuff following.
-// Examples:
-//   #center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] ...
-//   #adframe:not(frameset)
-//   .l-container > #fishtank
-//   body #sliding-popup
-
-var FilterPlainMore = function(s) {
-    this.s = s;
-};
-
-FilterPlainMore.prototype.retrieve = function(s, out) {
-    out.push(this.s);
-};
-
-FilterPlainMore.prototype.fid = '#+';
-
-FilterPlainMore.prototype.toSelfie = function() {
-    return this.s;
-};
-
-FilterPlainMore.fromSelfie = function(s) {
-    return new FilterPlainMore(s);
+var filterFromCompiledData = function(args) {
+    return filterClasses[args[0]].load(args);
 };
 
 /******************************************************************************/
@@ -187,22 +149,23 @@ var FilterHostname = function(s, hostname) {
     this.hostname = hostname;
 };
 
+FilterHostname.prototype.fid = 8;
+
 FilterHostname.prototype.retrieve = function(hostname, out) {
     if ( hostname.endsWith(this.hostname) ) {
         out.push(this.s);
     }
 };
 
-FilterHostname.prototype.fid = 'h';
-
-FilterHostname.prototype.toSelfie = function() {
-    return encode(this.s) + '\t' + this.hostname;
+FilterHostname.prototype.compile = function() {
+    return [ this.fid, this.s, this.hostname ];
 };
 
-FilterHostname.fromSelfie = function(s) {
-    var pos = s.indexOf('\t');
-    return new FilterHostname(decode(s.slice(0, pos)), s.slice(pos + 1));
+FilterHostname.load = function(data) {
+    return new FilterHostname(data[1], data[2]);
 };
+
+registerFilterClass(FilterHostname);
 
 /******************************************************************************/
 
@@ -211,11 +174,11 @@ var FilterBucket = function(a, b) {
     this.filters = [];
     if ( a !== undefined ) {
         this.filters[0] = a;
-        if ( b !== undefined ) {
-            this.filters[1] = b;
-        }
+        this.filters[1] = b;
     }
 };
+
+FilterBucket.prototype.fid = 10;
 
 FilterBucket.prototype.add = function(a) {
     this.filters.push(a);
@@ -228,15 +191,25 @@ FilterBucket.prototype.retrieve = function(s, out) {
     }
 };
 
-FilterBucket.prototype.fid = '[]';
-
-FilterBucket.prototype.toSelfie = function() {
-    return this.filters.length.toString();
+FilterBucket.prototype.compile = function() {
+    var out = [],
+        filters = this.filters;
+    for ( var i = 0, n = filters.length; i < n; i++ ) {
+        out[i] = filters[i].compile();
+    }
+    return [ this.fid, out ];
 };
 
-FilterBucket.fromSelfie = function() {
-    return new FilterBucket();
+FilterBucket.load = function(data) {
+    var bucket = new FilterBucket(),
+        entries = data[1];
+    for ( var i = 0, n = entries.length; i < n; i++ ) {
+        bucket.filters[i] = filterFromCompiledData(entries[i]);
+    }
+    return bucket;
 };
+
+registerFilterClass(FilterBucket);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -719,6 +692,8 @@ FilterContainer.prototype.freeze = function() {
                           this.highHighComplexGenericHideCount !== 0;
 
     this.parser.reset();
+    this.compileSelector.reset();
+    this.compileProceduralSelector.reset();
     this.frozen = true;
 };
 
@@ -731,11 +706,16 @@ FilterContainer.prototype.freeze = function() {
 // implemented (if ever). Unlikely, see:
 // https://github.com/gorhill/uBlock/issues/1752
 
+// https://github.com/gorhill/uBlock/issues/2624
+// Convert Adguard's `-ext-has='...'` into uBO's `:has(...)`.
+
 FilterContainer.prototype.compileSelector = (function() {
     var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
         reStyleSelector = /^(.+?):style\((.+?)\)$/,
         reStyleBad = /url\([^)]+\)/,
         reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
+        reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
+        reExtendedSyntaxHas = /\[-ext-has=(['"])(.+?)\1\]/,
         div = document.createElement('div');
 
     var isValidStyleProperty = function(cssText) {
@@ -746,16 +726,37 @@ FilterContainer.prototype.compileSelector = (function() {
         return true;
     };
 
-    return function(raw) {
-        if ( isValidCSSSelector(raw) && raw.indexOf('[-abp-properties=') === -1 ) {
+    var entryPoint = function(raw) {
+        if ( isValidCSSSelector(raw) && reExtendedSyntax.test(raw) === false ) {
             return raw;
         }
 
-        // We  rarely reach this point.
-        var matches,
-            selector = raw,
-            pseudoclass,
-            style;
+        // We  rarely reach this point -- majority of selectors are plain
+        // CSS selectors.
+
+        // Unsupported ABP's advanced selector syntax.
+        if ( raw.indexOf('[-abp-properties=') !== -1 ) {
+            return;
+        }
+
+        var matches;
+
+        // Supported Adguard's advanced selector syntax: will translate into
+        // uBO's syntax before further processing.
+        //
+        // [-ext-has=...]
+        // Converted to `:if(...)`, because Adguard accepts procedural
+        // selectors within its `:has(...)` selector.
+        if ( (matches = reExtendedSyntaxHas.exec(raw)) !== null ) {
+            return this.compileSelector(
+                raw.slice(0, matches.index) +
+                ':if('+ matches[2].replace(/:contains\(/g, ':has-text(') + ')' +
+                raw.slice(matches.index + matches[0].length)
+            );
+        }
+
+        var selector = raw,
+            pseudoclass, style;
 
         // `:style` selector?
         if ( (matches = reStyleSelector.exec(selector)) !== null ) {
@@ -812,6 +813,11 @@ FilterContainer.prototype.compileSelector = (function() {
 
         µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + raw);
     };
+
+    entryPoint.reset = function() {
+    };
+
+    return entryPoint;
 })();
 
 /******************************************************************************/
@@ -820,12 +826,18 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     var reOperatorParser = /(:(?:has|has-text|if|if-not|matches-css|matches-css-after|matches-css-before|xpath))\(.+\)$/,
         reFirstParentheses = /^\(*/,
         reLastParentheses = /\)*$/,
-        reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
+        reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
+        reNeedScope = /^\s*[+>~]/;
 
     var lastProceduralSelector = '',
         lastProceduralSelectorCompiled;
 
     var compileCSSSelector = function(s) {
+        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+        // Prepend `:scope ` if needed.
+        if ( reNeedScope.test(s) ) {
+            s = ':scope ' + s;
+        }
         if ( isValidCSSSelector(s) ) {
             return s;
         }
@@ -857,6 +869,11 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     };
 
     var compileConditionalSelector = function(s) {
+        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+        // Prepend `:scope ` if needed.
+        if ( reNeedScope.test(s) ) {
+            s = ':scope ' + s;
+        }
         return compile(s);
     };
 
@@ -927,7 +944,7 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         return { selector: firstOperand, tasks: tasks };
     };
 
-    return function(raw) {
+    var entryPoint = function(raw) {
         if ( raw === lastProceduralSelector ) {
             return lastProceduralSelectorCompiled;
         }
@@ -940,6 +957,13 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         lastProceduralSelectorCompiled = compiled;
         return compiled;
     };
+
+    entryPoint.reset = function() {
+        lastProceduralSelector = '';
+        lastProceduralSelectorCompiled = undefined;
+    };
+
+    return entryPoint;
 })();
 
 /******************************************************************************/
@@ -978,7 +1002,7 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compile = function(s, out) {
+FilterContainer.prototype.compile = function(s, writer) {
     var parsed = this.parser.parse(s);
     if ( parsed.cosmetic === false ) {
         return false;
@@ -991,7 +1015,7 @@ FilterContainer.prototype.compile = function(s, out) {
     var hostnames = parsed.hostnames;
     var i = hostnames.length;
     if ( i === 0 ) {
-        this.compileGenericSelector(parsed, out);
+        this.compileGenericSelector(parsed, writer);
         return true;
     }
 
@@ -1005,10 +1029,10 @@ FilterContainer.prototype.compile = function(s, out) {
         if ( hostname.startsWith('~') === false ) {
             applyGlobally = false;
         }
-        this.compileHostnameSelector(hostname, parsed, out);
+        this.compileHostnameSelector(hostname, parsed, writer);
     }
     if ( applyGlobally ) {
-        this.compileGenericSelector(parsed, out);
+        this.compileGenericSelector(parsed, writer);
     }
 
     return true;
@@ -1016,17 +1040,17 @@ FilterContainer.prototype.compile = function(s, out) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
+FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
     if ( parsed.unhide === 0 ) {
-        this.compileGenericHideSelector(parsed, out);
+        this.compileGenericHideSelector(parsed, writer);
     } else {
-        this.compileGenericUnhideSelector(parsed, out);
+        this.compileGenericUnhideSelector(parsed, writer);
     }
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
+FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) {
     var selector = parsed.suffix,
         type = selector.charAt(0),
         key, matches;
@@ -1038,12 +1062,12 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
         // is valid, the regex took care of this. Most generic selector falls
         // into that category.
         if ( key === selector ) {
-            out.push('c\vlg\v' + key);
+            writer.push([ 0 /* lg */, key ]);
             return;
         }
         // Composite CSS rule.
-        if ( this.compileSelector(selector) ) {
-            out.push('c\vlg+\v' + key + '\v' + selector);
+        if ( this.compileSelector(selector) !== undefined ) {
+            writer.push([ 1 /* lg+ */, key, selector ]);
         }
         return;
     }
@@ -1054,21 +1078,14 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
 
     // ["title"] and ["alt"] will go in high-low generic bin.
     if ( this.reHighLow.test(selector) ) {
-        out.push('c\vhlg0\v' + selector);
+        writer.push([ 2 /* hlg0 */, selector ]);
         return;
     }
 
     // [href^="..."] will go in high-medium generic bin.
     matches = this.reHighMedium.exec(selector);
     if ( matches && matches.length === 2 ) {
-        out.push('c\vhmg0\v' + matches[1] + '\v' + selector);
-        return;
-    }
-
-    // script:contains(...)
-    // script:inject(...)
-    if ( this.reScriptSelector.test(selector) ) {
-        out.push('c\vjs\v0\v\v' + selector);
+        writer.push([ 3 /* hmg0 */, matches[1], selector ]);
         return;
     }
 
@@ -1077,28 +1094,28 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, out) {
     // as a low generic cosmetic filter.
     matches = this.rePlainSelectorEx.exec(selector);
     if ( matches && matches.length === 2 ) {
-        out.push('c\vlg+\v' + matches[1] + '\v' + selector);
+        writer.push([ 1 /* lg+ */, matches[1], selector ]);
         return;
     }
 
     // All else: high-high generics.
     // Distinguish simple vs complex selectors.
     if ( selector.indexOf(' ') === -1 ) {
-        out.push('c\vhhsg0\v' + selector);
+        writer.push([ 4 /* hhsg0 */, selector ]);
     } else {
-        out.push('c\vhhcg0\v' + selector);
+        writer.push([ 5 /* hhcg0 */, selector ]);
     }
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, out) {
+FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer) {
     var selector = parsed.suffix;
 
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        out.push('c\vjs\v1\v\v' + selector);
+        writer.push([ 6 /* js */, '!', '', selector ]);
         return;
     }
 
@@ -1109,12 +1126,12 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, out) {
     // https://github.com/chrisaljoudi/uBlock/issues/497
     // All generic exception filters are put in the same bucket: they are
     // expected to be very rare.
-    out.push('c\vg1\v' + compiled);
+    writer.push([ 7 /* g1 */, compiled ]);
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, out) {
+FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, writer) {
     // https://github.com/chrisaljoudi/uBlock/issues/145
     var unhide = parsed.unhide;
     if ( hostname.startsWith('~') ) {
@@ -1138,7 +1155,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         if ( unhide ) {
             hash = '!' + hash;
         }
-        out.push('c\vjs\v' + hash + '\v' + hostname + '\v' + selector);
+        writer.push([ 6 /* js */, hash, hostname, selector ]);
         return;
     }
 
@@ -1156,238 +1173,212 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         hash = '!' + hash;
     }
 
-    out.push('c\vh\v' + hash + '\v' + hostname + '\v' + compiled);
+    // h,  hash,  example.com, .promoted-tweet
+    // h,  hash,  example.*, .promoted-tweet
+    writer.push([ 8 /* h */, hash, hostname, compiled ]);
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(lineIter, skipGenericCosmetic, skipCosmetic) {
+FilterContainer.prototype.fromCompiledContent = function(
+    reader,
+    skipGenericCosmetic,
+    skipCosmetic
+) {
     if ( skipCosmetic ) {
-        this.skipCompiledContent(lineIter);
+        this.skipCompiledContent(reader);
         return;
     }
     if ( skipGenericCosmetic ) {
-        this.skipGenericCompiledContent(lineIter);
+        this.skipGenericCompiledContent(reader);
         return;
     }
 
-    var line, field0, field1, field2, field3, filter, bucket,
-        fieldIter = new µb.FieldIterator('\v');
+    var fingerprint, args, filter, bucket;
 
-    while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
-            return;
-        }
-
+    while ( reader.next() === true ) {
         this.acceptedCount += 1;
-        if ( this.duplicateBuster.has(line) ) {
+        fingerprint = reader.fingerprint();
+        if ( this.duplicateBuster.has(fingerprint) ) {
             this.discardedCount += 1;
             continue;
         }
-        this.duplicateBuster.add(line);
+        this.duplicateBuster.add(fingerprint);
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
-        field1 = fieldIter.next();
+        args = reader.args();
 
-        // h  [\v]  hash  [\v]  example.com  [\v]  .promoted-tweet
-        // h  [\v]  hash  [\v]  example.*  [\v]  .promoted-tweet
-        if ( field0 === 'h' ) {
-            field2 = fieldIter.next();
-            field3 = fieldIter.next();
-            filter = new FilterHostname(field3, field2);
-            bucket = this.specificFilters.get(field1);
+        switch ( args[0] ) {
+
+        // .largeAd
+        case 0:
+            bucket = this.lowGenericHideEx.get(args[1]);
             if ( bucket === undefined ) {
-                this.specificFilters.set(field1, filter);
-            } else if ( bucket instanceof FilterBucket ) {
-                bucket.add(filter);
-            } else {
-                this.specificFilters.set(field1, new FilterBucket(bucket, filter));
-            }
-            continue;
-        }
-
-        // lg  [\v]  .largeAd
-        if ( field0 === 'lg' ) {
-            bucket = this.lowGenericHideEx.get(field1);
-            if ( bucket === undefined ) {
-                this.lowGenericHide.add(field1);
+                this.lowGenericHide.add(args[1]);
             } else if ( Array.isArray(bucket) ) {
-                bucket.push(field1);
+                bucket.push(args[1]);
             } else {
-                this.lowGenericHideEx.set(field1, [ bucket, field1 ]);
+                this.lowGenericHideEx.set(args[1], [ bucket, args[1] ]);
             }
             this.lowGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        // lg+  [\v]  .Mpopup  [\v]  .Mpopup + #Mad > #MadZone
-        if ( field0 === 'lg+' ) {
-            field2 = fieldIter.next();
-            bucket = this.lowGenericHideEx.get(field1);
+        // .Mpopup, .Mpopup + #Mad > #MadZone
+        case 1:
+            bucket = this.lowGenericHideEx.get(args[1]);
             if ( bucket === undefined ) {
-                if ( this.lowGenericHide.has(field1) ) {
-                    this.lowGenericHideEx.set(field1, [ field1, field2 ]);
+                if ( this.lowGenericHide.has(args[1]) ) {
+                    this.lowGenericHideEx.set(args[1], [ args[1], args[2] ]);
                 } else {
-                    this.lowGenericHideEx.set(field1, field2);
-                    this.lowGenericHide.add(field1);
+                    this.lowGenericHideEx.set(args[1], args[2]);
+                    this.lowGenericHide.add(args[1]);
                 }
             } else if ( Array.isArray(bucket) ) {
-                bucket.push(field2);
+                bucket.push(args[2]);
             } else {
-                this.lowGenericHideEx.set(field1, [ bucket, field2 ]);
+                this.lowGenericHideEx.set(args[1], [ bucket, args[2] ]);
             }
             this.lowGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        if ( field0 === 'hlg0' ) {
-            this.highLowGenericHide[field1] = true;
+        // ["title"]
+        // ["alt"]
+        case 2:
+            this.highLowGenericHide[args[1]] = true;
             this.highLowGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        if ( field0 === 'hmg0' ) {
-            field2 = fieldIter.next();
-            bucket = this.highMediumGenericHide[field1];
+        // [href^="..."]
+        case 3:
+            bucket = this.highMediumGenericHide[args[1]];
             if ( bucket === undefined ) {
-                this.highMediumGenericHide[field1] = field2;
+                this.highMediumGenericHide[args[1]] = args[2];
             } else if ( Array.isArray(bucket) ) {
-                bucket.push(field2);
+                bucket.push(args[2]);
             } else {
-                this.highMediumGenericHide[field1] = [bucket, field2];
+                this.highMediumGenericHide[args[1]] = [bucket, args[2]];
             }
             this.highMediumGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        if ( field0 === 'hhsg0' ) {
-            this.highHighSimpleGenericHideArray.push(field1);
+        // High-high generic hide/simple selectors
+        // div[id^="allo"]
+        case 4:
+            this.highHighSimpleGenericHideArray.push(args[1]);
             this.highHighSimpleGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        if ( field0 === 'hhcg0' ) {
-            this.highHighComplexGenericHideArray.push(field1);
+        // High-high generic hide/complex selectors
+        // div[id^="allo"] > span
+        case 5:
+            this.highHighComplexGenericHideArray.push(args[1]);
             this.highHighComplexGenericHideCount += 1;
-            continue;
-        }
+            break;
 
-        // js [\v] hash [\v] example.com [\v] script:contains(...)
-        // js [\v] hash [\v] example.com [\v] script:inject(...)
-        if ( field0 === 'js' ) {
-            field2 = fieldIter.next();
-            field3 = fieldIter.next();
-            this.createScriptFilter(field1, field2, field3);
-            continue;
-        }
+        // js, hash, example.com, script:contains(...)
+        // js, hash, example.com, script:inject(...)
+        case 6:
+            this.createScriptFilter(args[1], args[2], args[3]);
+            break;
 
         // https://github.com/chrisaljoudi/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
-        if ( field0 === 'g1' ) {
-            this.genericDonthide.push(field1);
-            continue;
-        }
+        // #@#.tweet
+        case 7:
+            this.genericDonthide.push(args[1]);
+            break;
 
-        this.discardedCount += 1;
+        // h,  hash,  example.com, .promoted-tweet
+        // h,  hash,  example.*, .promoted-tweet
+        case 8:
+            filter = new FilterHostname(args[3], args[2]);
+            bucket = this.specificFilters.get(args[1]);
+            if ( bucket === undefined ) {
+                this.specificFilters.set(args[1], filter);
+            } else if ( bucket instanceof FilterBucket ) {
+                bucket.add(filter);
+            } else {
+                this.specificFilters.set(args[1], new FilterBucket(bucket, filter));
+            }
+            break;
+
+        default:
+            this.discardedCount += 1;
+            break;
+        }
     }
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.skipGenericCompiledContent = function(lineIter) {
-    var line, field0, field1, field2, field3, filter, bucket,
-        fieldIter = new µb.FieldIterator('\v');
+FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
+    var fingerprint, args, filter, bucket;
 
-    while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
-            return;
-        }
-
+    while ( reader.next() === true ) {
         this.acceptedCount += 1;
-        if ( this.duplicateBuster.has(line) ) {
+        fingerprint = reader.fingerprint();
+        if ( this.duplicateBuster.has(fingerprint) ) {
             this.discardedCount += 1;
             continue;
         }
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
-        field1 = fieldIter.next();
+        args = reader.args();
 
-        // h  [\v]  hash  [\v]  example.com  [\v]  .promoted-tweet
-        // h  [\v]  hash  [\v]  example.*  [\v]  .promoted-tweet
-        if ( field0 === 'h' ) {
-            field2 = fieldIter.next();
-            field3 = fieldIter.next();
-            this.duplicateBuster.add(line);
-            filter = new FilterHostname(field3, field2);
-            bucket = this.specificFilters.get(field1);
-            if ( bucket === undefined ) {
-                this.specificFilters.set(field1, filter);
-            } else if ( bucket instanceof FilterBucket ) {
-                bucket.add(filter);
-            } else {
-                this.specificFilters.set(field1, new FilterBucket(bucket, filter));
-            }
-            continue;
-        }
+        switch ( args[0] ) {
 
-        // js [\v] hash [\v] example.com [\v] script:contains(...)
-        // js [\v] hash [\v] example.com [\v] script:inject(...)
-        if ( field0 === 'js' ) {
-            field2 = fieldIter.next();
-            field3 = fieldIter.next();
-            this.duplicateBuster.add(line);
-            this.createScriptFilter(field1, field2, field3);
-            continue;
-        }
+        // js, hash, example.com, script:contains(...)
+        // js, hash, example.com, script:inject(...)
+        case 6:
+            this.duplicateBuster.add(fingerprint);
+            this.createScriptFilter(args[1], args[2], args[3]);
+            break;
 
         // https://github.com/chrisaljoudi/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
-        if ( field0 === 'g1' ) {
-            this.duplicateBuster.add(line);
-            this.genericDonthide.push(field1);
-            continue;
-        }
+        case 7:
+            this.duplicateBuster.add(fingerprint);
+            this.genericDonthide.push(args[1]);
+            break;
 
-         this.discardedCount += 1;
+        // h,  hash,  example.com, .promoted-tweet
+        // h,  hash,  example.*, .promoted-tweet
+        case 8:
+            this.duplicateBuster.add(fingerprint);
+            filter = new FilterHostname(args[3], args[2]);
+            bucket = this.specificFilters.get(args[1]);
+            if ( bucket === undefined ) {
+                this.specificFilters.set(args[1], filter);
+            } else if ( bucket instanceof FilterBucket ) {
+                bucket.add(filter);
+            } else {
+                this.specificFilters.set(args[1], new FilterBucket(bucket, filter));
+            }
+            break;
+
+        default:
+            this.discardedCount += 1;
+            break;
+        }
    }
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.skipCompiledContent = function(lineIter) {
-    var line, field0, field1, field2, field3,
-        fieldIter = new µb.FieldIterator('\v');
+FilterContainer.prototype.skipCompiledContent = function(reader) {
+    var fingerprint, args;
 
-    while ( lineIter.eot() === false ) {
-        line = lineIter.next();
-        if ( line.charCodeAt(0) !== 0x63 /* 'c' */ ) {
-            lineIter.rewind();
-            return;
-        }
-
+    while ( reader.next() === true ) {
         this.acceptedCount += 1;
-        if ( this.duplicateBuster.has(line) ) {
-            this.discardedCount += 1;
-            continue;
-        }
 
-        fieldIter.first(line);
-        field0 = fieldIter.next();
+        args = reader.args();
 
-        // js [\v] hash [\v] example.com [\v] script:contains(...)
-        // js [\v] hash [\v] example.com [\v] script:inject(...)
-        if ( field0 === 'js' ) {
-            this.duplicateBuster.add(line);
-            field1 = fieldIter.next();
-            field2 = fieldIter.next();
-            field3 = fieldIter.next();
-            this.createScriptFilter(field1, field2, field3);
+        // js, hash, example.com, script:contains(...)
+        // js, hash, example.com, script:inject(...)
+        if ( args[0] === 6 ) {
+            fingerprint = reader.fingerprint();
+            if ( this.duplicateBuster.has(fingerprint) === false ) {
+                this.duplicateBuster.add(fingerprint);
+                this.createScriptFilter(args[1], args[2], args[3]);
+            }
             continue;
         }
 
@@ -1601,27 +1592,12 @@ FilterContainer.prototype._reEscapeScriptArg = /[\\'"]/g;
 
 FilterContainer.prototype.toSelfie = function() {
     var selfieFromMap = function(map) {
-        var selfie = [],
-            entry, bucket, ff, f,
-            iterator = map.entries();
-        for (;;) {
-            entry = iterator.next();
-            if ( entry.done ) {
-                break;
-            }
-            selfie.push('k\t' + entry.value[0]);
-            bucket = entry.value[1];
-            selfie.push(bucket.fid + '\t' + bucket.toSelfie());
-            if ( bucket.fid !== '[]' ) {
-                continue;
-            }
-            ff = bucket.filters;
-            for ( var j = 0, nj = ff.length; j < nj; j++ ) {
-                f = ff[j];
-                selfie.push(f.fid + '\t' + f.toSelfie());
-            }
+        var selfie = [];
+        // Note: destructuring assignment not supported before Chromium 49. 
+        for ( var entry of map ) {
+            selfie.push([ entry[0], entry[1].compile() ]);
         }
-        return selfie.join('\n');
+        return JSON.stringify(selfie);
     };
 
     return {
@@ -1651,46 +1627,15 @@ FilterContainer.prototype.toSelfie = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.fromSelfie = function(selfie) {
-    var factories = {
-        '[]': FilterBucket,
-         '#': FilterPlain,
-        '#+': FilterPlainMore,
-         'h': FilterHostname
-    };
-
     var mapFromSelfie = function(selfie) {
-        var map = new Map(),
-            key,
-            bucket = null,
-            rawText = selfie,
-            rawEnd = rawText.length,
-            lineBeg = 0, lineEnd,
-            line, pos, what, factory;
-        while ( lineBeg < rawEnd ) {
-            lineEnd = rawText.indexOf('\n', lineBeg);
-            if ( lineEnd < 0 ) {
-                lineEnd = rawEnd;
-            }
-            line = rawText.slice(lineBeg, lineEnd);
-            lineBeg = lineEnd + 1;
-            pos = line.indexOf('\t');
-            what = line.slice(0, pos);
-            if ( what === 'k' ) {
-                key = line.slice(pos + 1);
-                bucket = null;
-                continue;
-            }
-            factory = factories[what];
-            if ( bucket === null ) {
-                bucket = factory.fromSelfie(line.slice(pos + 1));
-                map.set(key, bucket);
-                continue;
-            }
-            // When token key is reused, it can't be anything
-            // else than FilterBucket
-            bucket.add(factory.fromSelfie(line.slice(pos + 1)));
+        var entries = JSON.parse(selfie),
+            out = new Map(),
+            entry;
+        for ( var i = 0, n = entries.length; i < n; i++ ) {
+            entry = entries[i];
+            out.set(entry[0], filterFromCompiledData(entry[1]));
         }
-        return map;
+        return out;
     };
 
     this.acceptedCount = selfie.acceptedCount;
@@ -1851,10 +1796,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         selector, bucket;
     while ( i-- ) {
         selector = selectors[i];
-        if ( this.lowGenericHide.has(selector) === false ) {
-            continue;
-        }
-        if ( (bucket = this.lowGenericHideEx.get(selector)) ) {
+        if ( this.lowGenericHide.has(selector) === false ) { continue; }
+        if ( (bucket = this.lowGenericHideEx.get(selector)) !== undefined ) {
             if ( Array.isArray(bucket) ) {
                 hideSelectors = hideSelectors.concat(bucket);
             } else {

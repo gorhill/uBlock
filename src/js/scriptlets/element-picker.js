@@ -1179,7 +1179,10 @@ var showDialog = function(options) {
     populate(netFilterCandidates, '#netFilters');
     populate(cosmeticFilterCandidates, '#cosmeticFilters');
 
-    dialog.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
+    dialog.querySelector('ul').style.display =
+        netFilterCandidates.length || cosmeticFilterCandidates.length
+            ? ''
+            : 'none';
     dialog.querySelector('#create').disabled = true;
 
     // Auto-select a candidate filter
@@ -1201,18 +1204,43 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var elementFromPoint = function(x, y) {
-    if ( !pickerRoot ) {
-        return null;
+var zap = function() {
+    if ( targetElements.length === 0 ) { return; }
+    var elem = targetElements[0],
+        style = window.getComputedStyle(elem);
+    // Heuristic to detect scroll-locking: remove such lock when detected.
+    if ( parseInt(style.zIndex, 10) >= 1000 || style.position === 'fixed' ) {
+        document.body.style.setProperty('overflow', 'auto', 'important');
+        document.documentElement.style.setProperty('overflow', 'auto', 'important');
     }
-    pickerRoot.style.pointerEvents = 'none';
-    var elem = document.elementFromPoint(x, y);
-    if ( elem === document.body || elem === document.documentElement ) {
-        elem = null;
-    }
-    pickerRoot.style.pointerEvents = '';
-    return elem;
+    elem.parentNode.removeChild(elem);
+    elem = elementFromPoint();
+    highlightElements(elem ? [elem] : []);
 };
+
+/******************************************************************************/
+
+var elementFromPoint = (function() {
+    var lastX, lastY;
+
+    return function(x, y) {
+        if ( x !== undefined ) {
+            lastX = x; lastY = y;
+        } else if ( lastX !== undefined ) {
+            x = lastX; y = lastY;
+        } else {
+            return null;
+        }
+        if ( !pickerRoot ) { return null; }
+        pickerRoot.style.pointerEvents = 'none';
+        var elem = document.elementFromPoint(x, y);
+        if ( elem === document.body || elem === document.documentElement ) {
+            elem = null;
+        }
+        pickerRoot.style.pointerEvents = '';
+        return elem;
+    };
+})();
 
 /******************************************************************************/
 
@@ -1226,20 +1254,69 @@ var onSvgHovered = (function() {
         highlightElements(elem ? [elem] : []);
     };
 
-    var onMove = function(ev) {
+    return function onMove(ev) {
         mx = ev.clientX;
         my = ev.clientY;
         if ( timer === null ) {
             timer = vAPI.setTimeout(onTimer, 40);
         }
     };
+})();
 
-    return onMove;
+/******************************************************************************/
+
+var onSvgTouchStartStop = (function() {
+    var startX,
+        startY;
+    return function onTouch(ev) {
+        ev.preventDefault();
+        if ( ev.type === 'touchstart' ) {
+            startX = ev.touches[0].pageX;
+            startY = ev.touches[0].pageY;
+            return;
+        }
+        if ( startX === undefined ) { return; }
+        var stopX = ev.changedTouches[0].pageX,
+            stopY = ev.changedTouches[0].pageY,
+            distance = Math.sqrt(
+                Math.pow(stopX - startX, 2),
+                Math.pow(stopY - startY, 2)
+            );
+        // Swipe = exit element zapper/picker.
+        if ( distance > 32 ) {
+            stopPicker();
+            return;
+        }
+        // Interpret touch event as a click.
+        onSvgClicked({
+            type: 'click',
+            target: ev.target,
+            clientX: startX,
+            clientY: startY
+        });
+    };
 })();
 
 /******************************************************************************/
 
 var onSvgClicked = function(ev) {
+    // If zap mode, highlight element under mouse, this makes the zapper usable
+    // on touch screens.
+    if ( pickerBody.classList.contains('zap') ) {
+        var elem = targetElements.lenght !== 0 && targetElements[0];
+        if ( !elem || ev.target !== svgIslands ) {
+            elem = elementFromPoint(ev.clientX, ev.clientY);
+            if ( elem !== null ) {
+                highlightElements([elem]);
+                return;
+            }
+        }
+        zap();
+        if ( !ev.shiftKey ) {
+            stopPicker();
+        }
+        return;
+    }
     // https://github.com/chrisaljoudi/uBlock/issues/810#issuecomment-74600694
     // Unpause picker if:
     // - click outside dialog AND
@@ -1260,17 +1337,26 @@ var onSvgClicked = function(ev) {
 
 var svgListening = function(on) {
     var action = (on ? 'add' : 'remove') + 'EventListener';
-    svgRoot[action]('mousemove', onSvgHovered);
+    svgRoot[action]('mousemove', onSvgHovered, { passive: true });
 };
 
 /******************************************************************************/
 
 var onKeyPressed = function(ev) {
-    if ( ev.which === 27 ) {
+    // Delete
+    if ( ev.key === 'Delete' && pickerBody.classList.contains('zap') ) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        zap();
+        return;
+    }
+    // Esc
+    if ( ev.key === 'Escape' || ev.which === 27 ) {
         ev.stopPropagation();
         ev.preventDefault();
         filterToDOMInterface.preview(false);
         stopPicker();
+        return;
     }
 };
 
@@ -1326,6 +1412,8 @@ var stopPicker = function() {
     dialog.removeEventListener('click', onDialogClicked);
     svgListening(false);
     svgRoot.removeEventListener('click', onSvgClicked);
+    svgRoot.removeEventListener('touchstart', onSvgTouchStartStop);
+    svgRoot.removeEventListener('touchend', onSvgTouchStartStop);
     pickerStyle.parentNode.removeChild(pickerStyle);
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.onload = null;
@@ -1360,6 +1448,7 @@ var startPicker = function(details) {
 
     pickerBody = frameDoc.body;
     pickerBody.setAttribute('lang', navigator.language);
+    pickerBody.classList.toggle('zap', details.zap === true);
 
     dialog = pickerBody.querySelector('aside');
     dialog.addEventListener('click', onDialogClicked);
@@ -1371,6 +1460,8 @@ var startPicker = function(details) {
     svgOcean = svgRoot.firstChild;
     svgIslands = svgRoot.lastChild;
     svgRoot.addEventListener('click', onSvgClicked);
+    svgRoot.addEventListener('touchstart', onSvgTouchStartStop);
+    svgRoot.addEventListener('touchend', onSvgTouchStartStop);
     svgListening(true);
 
     window.addEventListener('scroll', onScrolled, true);
