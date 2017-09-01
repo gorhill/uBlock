@@ -542,14 +542,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     // Blocked?
     if ( result === 1 ) {
+        // ADN: Blocked xhr
+        µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
         return { 'cancel': true };
     }
 
-    // ADN: Blocked xhr
-    µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
-
-    // Blocked
-    return { 'cancel': true };
 };
 
 /******************************************************************************/
@@ -614,9 +611,9 @@ var onHeadersReceived = function (details) {
     //   Turns out scripts must also be considered as potential embedded
     //   contexts (as workers) and as such we may need to inject content
     //   security policy directives.
-    if (!result && requestType === 'script' || requestType === 'main_frame' || requestType === 'sub_frame' ) {
-        result = processCSP(pageStore, details);
-    }
+    if ( requestType === 'main_frame' || requestType === 'sub_frame' ) {      
+         return injectCSP(pageStore, details);
+    }      
 
     if (!result) { // ADN
 
