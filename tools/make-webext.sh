@@ -27,6 +27,7 @@ cp LICENSE.txt                          $DES/
 cp platform/webext/manifest.json        $DES/
 cp platform/webext/options_ui.html      $DES/
 cp platform/webext/polyfill.js          $DES/js/
+cp platform/webext/vapi-webrequest.js   $DES/js/
 cp platform/webext/vapi-cachestorage.js $DES/js/
 cp platform/webext/vapi-usercss.js      $DES/js/
 rm $DES/js/options_ui.js
