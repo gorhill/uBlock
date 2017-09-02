@@ -62,13 +62,11 @@ vAPI.net.registerListeners = function() {
     };
     // modern Chromium/WebExtensions: more types available.
     if ( wrApi.ResourceType ) {
-        (function() {
-            for ( var typeKey in wrApi.ResourceType ) {
-                if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                    validTypes[wrApi.ResourceType[typeKey]] = true;
-                }
+        for ( let typeKey in wrApi.ResourceType ) {
+            if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
+                validTypes[wrApi.ResourceType[typeKey]] = true;
             }
-        })();
+        }
     }
 
     var denormalizeTypes = function(aa) {
