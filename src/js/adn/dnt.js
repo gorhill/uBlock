@@ -135,7 +135,7 @@
 
     if (firewall.mustBlockOrAllow()) {
 
-      result = firewall.toFilterString();
+      result = firewall.r;
       //action = firewall.mustBlock() ? 'Block' : 'Allow'; // ADN: we only allow here
 
       if (firewall.mustBlock())
