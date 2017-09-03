@@ -750,14 +750,15 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     // Static filtering has lowest precedence.
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
-        if ( µb.adnauseam.mustAllowRequest(result, context)) {
-            // console.warn("*** Blocking filterRequestNoCache ***"); //
-            if (µb.adnauseam.isAllowedExceptions(context.requestURL)) {
+        
+        if ( µb.adnauseam.mustAllowRequest(result, context) && µb.adnauseam.isAllowedExceptions(context.requestURL)) {
+               // console.warn("*** Blocking filterRequestNoCache *** AdNauseamAllowed");      
                result = 4;// ADN: adnauseamAllowed
-            }
         }
+
         if ( result !== 0 && µb.logger.isEnabled() ) {
             this.logData = µb.staticNetFilteringEngine.toLogData();
+
         }
     }
 
