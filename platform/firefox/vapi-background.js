@@ -2941,7 +2941,7 @@ vAPI.toolbarButton = {
         toolbarButton.setAttribute('id', tbb.id);
         // type = panel would be more accurate, but doesn't look as good
         toolbarButton.setAttribute('type', 'menu');
-        toolbarButton.setAtribute('removable', 'true');
+        toolbarButton.setAttribute('removable', 'true');
         toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
         toolbarButton.setAttribute('label', tbb.label);
         toolbarButton.setAttribute('tooltiptext', tbb.label);
