@@ -22,7 +22,7 @@ Remember that you have to update manually also. For some users, updating manuall
 
 ### Firefox webext
 
-Compatible with Firefox 50 and beyond.
+Compatible with Firefox 52 and beyond.
 
 - Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
