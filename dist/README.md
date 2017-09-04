@@ -27,6 +27,8 @@ Remember that you have to update manually also. For some users, updating manuall
 
 On Linux, the settings are saved in a JSON file located at `~/.mozilla/firefox/[profile name]/browser-extension-data/uBlock0@raymondhill.net/storage.js`.
 
+When you uninstall the extension, Firefox deletes that file, so all your settings are lost when you uninstall.
+
 ### Firefox legacy
 
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
