@@ -1,6 +1,6 @@
 ## INSTALL
 
-#### Chromium
+### Chromium
 
 - Download and unzip `ublock0.chromium.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
 - Rename the unzipped directory to `ublock`
@@ -20,7 +20,14 @@ Remember that you have to update manually also. For some users, updating manuall
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
 
-#### Firefox legacy
+### Firefox webext
+
+- Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
+- Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
+
+On Linux, the settings are saved in a JSON file located at `~/.mozilla/firefox/[profile name]/browser-extension-data/uBlock0@raymondhill.net/storage.js`.
+
+### Firefox legacy
 
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
@@ -33,14 +40,15 @@ On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox
 
 On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
 
-#### Build instructions (for developers)
+### Build instructions (for developers)
 
 - Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
 - Set path to uBlock: `cd uBlock`
 - Optional: Select the version to build: `git checkout <tag>`
 - Build the plugin:
     - Chromium: `./tools/make-chromium.sh`
-    - Firefox: `./tools/make-firefox.sh all`
+    - Firefox webext: `./tools/make-webext.sh all`
+    - Firefox legacy: `./tools/make-firefox.sh all`
 - Load the result of the build into your browser:
     - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
     - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` into Firefox.
