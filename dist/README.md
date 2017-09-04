@@ -20,10 +20,12 @@ Remember that you have to update manually also. For some users, updating manuall
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
 
-#### Firefox
+#### Firefox legacy
 
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
+
+With Firefox 43 and beyond, you may need to toggle the setting `xpinstall.signatures.required` to `false` in `about:config`.
 
 Your uBlock Origin settings are kept intact even after you uninstall the addon.
 
