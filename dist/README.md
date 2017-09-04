@@ -57,5 +57,5 @@ On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozill
     - Firefox legacy: `./tools/make-firefox.sh all`
 - Load the result of the build into your browser:
     - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
-    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` into Firefox.
+    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.webext.xpi` into Firefox.
    
