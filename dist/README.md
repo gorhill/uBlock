@@ -22,6 +22,8 @@ Remember that you have to update manually also. For some users, updating manuall
 
 ### Firefox webext
 
+Compatible with Firefox 50 and beyond.
+
 - Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
 
@@ -30,6 +32,8 @@ On Linux, the settings are saved in a JSON file located at `~/.mozilla/firefox/[
 When you uninstall the extension, Firefox deletes that file, so all your settings are lost when you uninstall.
 
 ### Firefox legacy
+
+Compatible with Firefox 24 to Firefox 56.
 
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
