@@ -1659,7 +1659,7 @@ vAPI.domIsLoaded = function(ev) {
                 what: 'mouseClick',
                 x: ev.clientX,
                 y: ev.clientY,
-                url: elem !== null ? elem.href : ''
+                url: elem !== null && ev.isTrusted !== false ? elem.href : ''
             }
         );
     };

@@ -88,7 +88,10 @@ var onMessage = function(request, sender, callback) {
         break;
     }
 
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
+    // The concatenation with the empty string ensure that the resulting value
+    // is a string. This is important since tab id values are assumed to be
+    // of string type.
+    var tabId = sender && sender.tab ? '' + sender.tab.id : 0;
 
     // Sync
     var response;
@@ -137,7 +140,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
-        µb.mouseX = µb.mouseY = -1;
+        µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
         µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
         break;
 
@@ -146,9 +149,10 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'mouseClick':
-        µb.mouseX = request.x;
-        µb.mouseY = request.y;
-        µb.mouseURL = request.url;
+        µb.mouseEventRegister.tabId = tabId;
+        µb.mouseEventRegister.x = request.x;
+        µb.mouseEventRegister.y = request.y;
+        µb.mouseEventRegister.url = request.url;
         break;
 
     case 'reloadTab':
@@ -560,15 +564,14 @@ var onMessage = function(request, sender, callback) {
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
                 target: µb.epickerTarget,
-                clientX: µb.mouseX,
-                clientY: µb.mouseY,
+                clientX: µb.mouseEventRegister.x,
+                clientY: µb.mouseEventRegister.y,
                 zap: µb.epickerZap,
                 eprom: µb.epickerEprom
             });
 
             µb.epickerTarget = '';
-            µb.mouseX = -1;
-            µb.mouseY = -1;
+            µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
         };
         xhr.send();
         return;

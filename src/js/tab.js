@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -536,22 +536,16 @@ vAPI.tabs.onPopupUpdated = (function() {
     var areDifferentURLs = function(a, b) {
         // https://github.com/gorhill/uBlock/issues/1378
         // Maybe no link element was clicked.
-        if ( b === '' ) {
-            return true;
-        }
+        if ( b === '' ) { return true; }
         var pos = a.indexOf('://');
-        if ( pos === -1 ) {
-            return false;
-        }
+        if ( pos === -1 ) { return false; }
         a = a.slice(pos);
         pos = b.indexOf('://');
-        if ( pos === -1 ) {
-            return false;
-        }
+        if ( pos === -1 ) { return false; }
         return b.slice(pos) !== a;
     };
 
-    var popupMatch = function(openerURL, targetURL, clickedURL, popupType) {
+    var popupMatch = function(openerURL, targetURL, popupType) {
         var openerHostname = µb.URI.hostnameFromURI(openerURL),
             openerDomain = µb.URI.domainFromHostname(openerHostname),
             result;
@@ -584,16 +578,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( openerHostname !== '' && targetURL !== 'about:blank' ) {
             // Check per-site switch first
             if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) === true ) {
-                if (
-                    typeof clickedURL === 'string' &&
-                    areDifferentURLs(targetURL, clickedURL)
-                ) {
-                    logData = {
-                        source: 'switch',
-                        raw: 'no-popups: ' + µb.hnSwitches.z + ' true'
-                    };
-                    return 1;
-                }
+                logData = {
+                    source: 'switch',
+                    raw: 'no-popups: ' + µb.hnSwitches.z + ' true'
+                };
+                return 1;
             }
 
             // https://github.com/gorhill/uBlock/issues/581
@@ -736,9 +725,18 @@ vAPI.tabs.onPopupUpdated = (function() {
             }
         }
 
+        // https://github.com/gorhill/uBlock/issues/2919
+        // - The target tab matches a clicked link, assume it's legit.
+        if (
+            openerTabId === µb.mouseEventRegister.tabId &&
+            areDifferentURLs(targetURL, µb.mouseEventRegister.url) === false
+        ) {
+            return;
+        }
+
         // Popup test.
         var popupType = 'popup',
-            result = popupMatch(openerURL, targetURL, µb.mouseURL, 'popup');
+            result = popupMatch(openerURL, targetURL, 'popup');
 
         // Popunder test.
         if ( result === 0 ) {
