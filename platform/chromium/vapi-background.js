@@ -643,41 +643,44 @@ vAPI.setIcon = (function() {
         }
     ];
 
-    return function(tabId, iconStatus, badge) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) { return; }
+    var onTabReady = function(tab, status, badge) {
+        if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            browserAction.setIcon(
-                {
-                    tabId: tabId,
-                    path: iconPaths[iconStatus === 'on' ? 1 : 0]
-                },
-                function onIconReady() {
-                    if ( vAPI.lastError() ) { return; }
-                    chrome.browserAction.setBadgeText({
-                        tabId: tabId,
-                        text: badge
-                    });
-                    if ( badge !== '' ) {
-                        chrome.browserAction.setBadgeBackgroundColor({
-                            tabId: tabId,
-                            color: '#666'
-                        });
-                    }
-                }
-            );
+            browserAction.setIcon({
+                tabId: tab.id,
+                path: iconPaths[status === 'on' ? 1 : 0]
+            });
+            browserAction.setBadgeText({
+                tabId: tab.id,
+                text: badge
+            });
+            if ( badge !== '' ) {
+                browserAction.setBadgeBackgroundColor({
+                    tabId: tab.id,
+                    color: '#666'
+                });
+            }
         }
 
         if ( browserAction.setTitle !== undefined ) {
             browserAction.setTitle({
-                tabId: tabId,
+                tabId: tab.id,
                 title: titleTemplate.replace(
                     '{badge}',
-                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
+    };
+
+    return function(tabId, iconStatus, badge) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.get(tabId, function(tab) {
+            onTabReady(tab, iconStatus, badge);
+        });
 
         if ( vAPI.contextMenu instanceof Object ) {
             vAPI.contextMenu.onMustUpdate(tabId);
@@ -831,14 +834,22 @@ vAPI.messaging.onPortMessage = (function() {
             if ( vAPI.supportsUserStylesheets === true ) {
                 details.cssOrigin = 'user';
             }
-            if ( msg.toRemove ) {
-                details.code = msg.toRemove;
-                chrome.tabs.removeCSS(tabId, details);
-            }
-            if ( msg.toAdd ) {
-                details.code = msg.toAdd;
+            var fn;
+            if ( msg.add ) {
                 details.runAt = 'document_start';
-                chrome.tabs.insertCSS(tabId, details);
+                fn = chrome.tabs.insertCSS;
+            } else {
+                fn = chrome.tabs.removeCSS;
+            }
+            var css = msg.css;
+            if ( typeof css === 'string' ) {
+                details.code = css;
+                fn(tabId, details);
+                return;
+            }
+            for ( var i = 0, n = css.length; i < n; i++ ) {
+                details.code = css[i];
+                fn(tabId, details);
             }
             break;
         }
