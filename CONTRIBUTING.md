@@ -1,12 +1,14 @@
 # Submitting issues
 
-For **support/discussions**, there is [Mozilla Discourse](https://discourse.mozilla-community.org/t/support-ublock-origin/6746).
+Please stop opening invalid issues regarding the "Legacy" label of uBlock Origin on AMO, it's all explained in the [Release notes](https://github.com/gorhill/uBlock/releases).
+
+For **support/discussions/help**, there is [/r/uBlockOrigin](https://www.reddit.com/r/uBlockOrigin/) on Reddit -- this is where I see the most activity for people helping each other regarding uBlock Origin.
 
 For **filter-related issues**, report on the respective filter list support site, or at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues). Use [the logger](https://github.com/gorhill/uBlock/wiki/The-logger) to diagnose/confirm filter-related issues. If something does not work properly with uBO enabled, the **first step** is to rule out filter-related issues.
 
 Ignorance of the above rules is no excuse: **Opening an issue for purpose of support or discussion, or opening a filter-related issue will result in the user being immediately blocked.** Given the [amount of invalid issues being opened](https://github.com/gorhill/uBlock/issues?q=is%3Aissue+label%3Ainvalid+is%3Aclosed), I have no choice but to resort to such a drastic measure. You will still be able to open filter list issues at [uBlockOrigin/uAssets](https://github.com/uBlockOrigin/uAssets/issues).
 
-**The issue tracker is for provable issues only:** You will have to make the case that the issue is really with uBlock Origin and not something else on your side. To make a case means to provide detailed steps so that anybody can reproduce the issue. Be sure to rule out that the issue is not caused by something specific on your side.
+**The issue tracker is for provable issues only:** You will have to make the case that the issue is really with uBlock Origin and not something else on your side. To make a case means to provide detailed steps so that anybody can reproduce the issue. Be sure to rule out that the issue is not caused by something specific on your side. Specifically, _speculated_ performance issues will be marked as invalid and closed if they do not come with **actual profiling data + analysis** supporting the claim.
 
 **Any issue opened without effort to provide the required details for me (or anybody else) to reproduce the problem will be closed as _invalid_.** If you provide more details thereafter for me to reproduce the issue, I will reopen it if I can confirm there is indeed an issue with uBlock Origin. Example of detailed steps:
 

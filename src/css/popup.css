@@ -193,20 +193,24 @@ body[dir="ltr"] #extraTools > span > span.badge {
 body[dir="rtl"] #extraTools > span > span.badge {
     right: 100%;
     }
-#extraTools > span.on > span:last-of-type {
+#extraTools > span > span:last-of-type {
     color: #e00;
-    font-size: 1.1em;
-    left: 0;
+    left: 50%;
     position: absolute;
-    text-align: center;
     top: 0;
-    width: 100%;
+    transform: translateX(-50%);
+    visibility: hidden;
     }
-#extraTools > span.on > span:last-of-type:after {
-    content: '\2715';
+#extraTools > span > span:last-of-type > svg {
+    stroke: red;
+    stroke-width: 2;
+    width: 1em;
+    }
+#extraTools > span.on > span:last-of-type {
+    visibility: visible;
     }
 #extraTools > span:hover {
-    color: #444;
+    color: #333;
     }
 
 #refresh {

@@ -1,84 +1,81 @@
 {
-    "manifest_version": 2,
-
-    "name": "uBlock Origin",
-    "version": "1.9.15.101",
-
-    "applications": {
-        "gecko": {
-            "id": "uBlock0@raymondhill.net",
-            "strict_min_version": "52.0a1"
-        }
-    },
-
-    "commands": {
-        "launch-element-zapper": {
-            "suggested_key": {
-              "default": "Alt+Z"
-            },
-            "description": "__MSG_popupTipZapper__"
-        },
-        "launch-element-picker": {
-            "suggested_key": {
-              "default": "Alt+X"
-            },
-            "description": "__MSG_popupTipPicker__"
-        },
-        "launch-logger": {
-            "suggested_key": {
-              "default": "Alt+L"
-            },
-            "description": "__MSG_popupTipLog__"
-        }
-    },
-    "default_locale": "en",
-    "description": "__MSG_extShortDesc__",
-    "icons": {
-        "16": "img/icon_16.png",
-        "128": "img/icon_128.png"
-    },
-
-    "browser_action": {
-        "browser_style": false,
-        "default_icon": {
-            "19": "img/browsericons/icon19.png",
-            "38": "img/browsericons/icon38.png"
-        },
-        "default_title": "uBlock Origin",
-        "default_popup": "popup.html"
-    },
-
-    "author": "All uBlock Origin contributors",
-    "background": {
-        "page": "background.html"
-    },
-    "content_scripts": [
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi-client.js", "js/contentscript.js"],
-            "run_at": "document_start",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/scriptlets/subscriber.js"],
-            "run_at": "document_idle",
-            "all_frames": false
-        }
-    ],
-    "minimum_chrome_version": "26.0",
-    "options_ui": {
-        "page": "options_ui.html"
-    },
-    "permissions": [
-        "contextMenus",
-        "privacy",
-        "storage",
-        "tabs",
-        "webNavigation",
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>"
-    ],
-    "short_name": "uBlock₀"
+   "applications":{
+      "gecko":{
+         "id":"uBlock0@raymondhill.net",
+         "strict_min_version":"52.0"
+      }
+   },
+   "author":"All uBlock Origin contributors",
+   "background":{
+      "page":"background.html"
+   },
+   "browser_action":{
+      "browser_style":false,
+      "default_icon":{
+         "19":"img/browsericons/icon19.png",
+         "38":"img/browsericons/icon38.png"
+      },
+      "default_title":"uBlock Origin",
+      "default_popup":"popup.html"
+   },
+   "commands":{
+      "launch-element-zapper":{
+         "description":"__MSG_popupTipZapper__"
+      },
+      "launch-element-picker":{
+         "description":"__MSG_popupTipPicker__"
+      },
+      "launch-logger":{
+         "description":"__MSG_popupTipLog__"
+      }
+   },
+   "content_scripts":[
+      {
+         "matches":[
+            "http://*/*",
+            "https://*/*"
+         ],
+         "js":[
+            "js/vapi-client.js",
+            "js/vapi-usercss.js",
+            "js/contentscript.js"
+         ],
+         "run_at":"document_start",
+         "all_frames":true
+      },
+      {
+         "matches":[
+            "http://*/*",
+            "https://*/*"
+         ],
+         "js":[
+            "js/scriptlets/subscriber.js"
+         ],
+         "run_at":"document_idle",
+         "all_frames":false
+      }
+   ],
+   "default_locale":"en",
+   "description":"__MSG_extShortDesc__",
+   "icons":{
+      "16":"img/icon_16.png",
+      "128":"img/icon_128.png"
+   },
+   "manifest_version":2,
+   "name":"uBlock Origin",
+   "options_ui":{
+      "page":"options_ui.html"
+   },
+   "permissions":[
+      "contextMenus",
+      "privacy",
+      "storage",
+      "tabs",
+      "webNavigation",
+      "webRequest",
+      "webRequestBlocking",
+      "<all_urls>"
+   ],
+   "short_name":"uBlock₀",
+   "version":"1.9.15.101"
 }

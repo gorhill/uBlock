@@ -650,11 +650,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
         var re = new RegExp(logData.regex),
             matches = re.exec(popunderURL);
-        if ( matches === null ) { return ''; }
+        if ( matches === null ) { return 0; }
         var beg = matches.index,
             end = beg + matches[0].length,
             pos = popunderURL.indexOf(popunderHostname);
-        if ( pos === -1 ) { return ''; }
+        if ( pos === -1 ) { return 0; }
         // https://github.com/gorhill/uBlock/issues/1471
         //   We test whether the opener hostname as at least one character
         //   within matched portion of URL.
@@ -749,17 +749,19 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
 
         // Log only for when there was a hit against an actual filter (allow or block).
+        // https://github.com/gorhill/uBlock/issues/2776
         if ( µb.logger.isEnabled() ) {
             µb.logger.writeOne(
                 popupType === 'popup' ? openerTabId : targetTabId,
                 'net',
-                logData,
+                result !== 0 ? logData : undefined,
                 popupType,
                 popupType === 'popup' ? targetURL : openerURL,
                 µb.URI.hostnameFromURI(context.rootURL),
                 µb.URI.hostnameFromURI(context.rootURL)
             );
         }
+        logData = undefined;
 
         // Not blocked
         if ( result !== 1 ) {
@@ -901,7 +903,7 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 666);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
     };
 })();
 

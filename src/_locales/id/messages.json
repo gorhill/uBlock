@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik untuk membuka dasbor",
+    "message":"Buka dasbor",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Memasuki mode penghapus elemen",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{

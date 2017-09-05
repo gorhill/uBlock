@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Elemváltó mód aktiválása",
+    "message":"Elem eltávolító mód",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -580,7 +580,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Csatlakozás sikertelen a következő címhez: {{url}}",
+    "message":"Hálózati hiba: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

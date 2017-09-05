@@ -7,31 +7,30 @@ echo "*** uBlock0.webext: Copying files"
 
 DES=dist/build/uBlock0.webext
 rm -rf $DES
-mkdir -p $DES/webextension
+mkdir -p $DES
 
-bash ./tools/make-assets.sh $DES/webextension
+bash ./tools/make-assets.sh $DES
 
-cp -R src/css                         $DES/webextension/
-cp -R src/img                         $DES/webextension/
-cp -R src/js                          $DES/webextension/
-cp -R src/lib                         $DES/webextension/
-cp -R src/_locales                    $DES/webextension/
-cp -R $DES/webextension/_locales/nb   $DES/webextension/_locales/no
-cp src/*.html                         $DES/webextension/
-cp platform/chromium/*.js             $DES/webextension/js/
-cp -R platform/chromium/img           $DES/webextension/
-cp platform/chromium/*.html           $DES/webextension/
-cp platform/chromium/*.json           $DES/webextension/
-cp platform/webext/polyfill.js        $DES/webextension/js/
-cp LICENSE.txt                        $DES/webextension/
-                                  
-cp platform/webext/background.html    $DES/webextension/
-cp platform/webext/from-legacy.js     $DES/webextension/js/
-cp platform/webext/manifest.json      $DES/webextension/
-cp platform/webext/bootstrap.js       $DES/
-cp platform/webext/chrome.manifest    $DES/
-cp platform/webext/install.rdf        $DES/
-mv $DES/webextension/img/icon_128.png $DES/icon.png
+cp -R src/css                           $DES/
+cp -R src/img                           $DES/
+cp -R src/js                            $DES/
+cp -R src/lib                           $DES/
+cp -R src/_locales                      $DES/
+cp -R $DES/_locales/nb                  $DES/_locales/no
+cp src/*.html                           $DES/
+cp platform/chromium/*.js               $DES/js/
+cp -R platform/chromium/img             $DES/
+cp platform/chromium/*.html             $DES/
+cp platform/chromium/*.json             $DES/
+cp LICENSE.txt                          $DES/
+
+cp platform/webext/manifest.json        $DES/
+cp platform/webext/options_ui.html      $DES/
+cp platform/webext/polyfill.js          $DES/js/
+cp platform/webext/vapi-webrequest.js   $DES/js/
+cp platform/webext/vapi-cachestorage.js $DES/js/
+cp platform/webext/vapi-usercss.js      $DES/js/
+rm $DES/js/options_ui.js
 
 echo "*** uBlock0.webext: Generating meta..."
 python tools/make-webext-meta.py $DES/

@@ -54,63 +54,6 @@ var vAPI = self.vAPI;
 
 /******************************************************************************/
 
-var referenceCounter = 0;
-
-vAPI.lock = function() {
-    referenceCounter += 1;
-};
-
-vAPI.unlock = function() {
-    referenceCounter -= 1;
-};
-
-/******************************************************************************/
-
-vAPI.executionCost = {
-    start: function(){},
-    stop: function(){}
-};
-/*
-vAPI.executionCost = vAPI.executionCost || {
-    tcost: 0,
-    tstart: 0,
-    nstart: 0,
-    level: 1,
-    start: function() {
-        if ( this.nstart === 0 ) {
-            this.tstart = window.performance.now();
-        }
-        this.nstart += 1;
-    },
-    stop: function(mark) {
-        this.nstart -= 1;
-        if ( this.nstart !== 0 ) {
-            return;
-        }
-        var tcost = window.performance.now() - this.tstart;
-        this.tcost += tcost;
-        if ( mark === undefined ) {
-            return;
-        }
-        var top = window === window.top;
-        if ( !top && this.level < 2 ) {
-            return;
-        }
-        var context = window === window.top ? '  top' : 'frame';
-        var percent = this.tcost / window.performance.now() * 100;
-        console.log(
-            'uBO cost (' + context + '): ' +
-            this.tcost.toFixed(1) + 'ms/' +
-            percent.toFixed(1) + '% (' +
-            mark + ': ' + tcost.toFixed(2) + 'ms)'
-        );
-    }
-};
-*/
-vAPI.executionCost.start();
-
-/******************************************************************************/
-
 vAPI.firefox = true;
 
 vAPI.randomToken = function() {
@@ -495,10 +438,6 @@ vAPI.iframeLoadEventPatch = function(target) {
 if ( window !== window.top ) {
     // Can anything be done?
 }
-
-/******************************************************************************/
-
-vAPI.executionCost.stop('vapi-client.js');
 
 /******************************************************************************/
 

@@ -680,6 +680,12 @@ var winWatcher = (function() {
         if ( !win || windowToIdMap.delete(win) !== true ) {
             return;
         }
+        // https://github.com/uBlockOrigin/uAssets/issues/567
+        //   We need to cleanup if and only if the window being closed is
+        //   the actual top window.
+        if ( win.gBrowser && win.gBrowser.ownerGlobal !== win ) {
+            return;
+        }
         if ( typeof api.onCloseWindow === 'function' ) {
             api.onCloseWindow(win);
         }
@@ -3125,6 +3131,7 @@ vAPI.toolbarButton = {
             '#' + this.viewId + ',',
             '#' + this.viewId + ' > iframe {',
                 'height: 290px;',
+                'max-width: none !important;',
                 'min-width: 0 !important;',
                 'overflow: hidden !important;',
                 'padding: 0 !important;',
