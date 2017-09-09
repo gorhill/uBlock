@@ -42,7 +42,7 @@ var exports = {};
 // Called before each outgoing request (ADN:)
 var onBeforeSendHeaders = function (details) {
 
-// console.log('onBeforeSendHeaders');
+ console.log('onBeforeSendHeaders');
 
   var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 
@@ -54,7 +54,7 @@ var onBeforeSendHeaders = function (details) {
     // add it only if the browser is not sending it already
     if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
-      if (false && details.type === 'main_frame') // minimize logging
+      if (details.type === 'main_frame') // minimize logging
         adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
 
       addHeader(headers, 'DNT', '1');
