@@ -32,13 +32,14 @@ cp platform/webext/chrome.manifest    $DES/
 cp platform/webext/install.rdf        $DES/
 mv $DES/webextension/img/icon_128.png $DES/icon.png
 
+
 echo "*** AdNauseam::WebExt: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version
 #
 
-sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+sed -i '' "s/\"{version}\"/${VERSION}/" $DES/webextension/manifest.json
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/webextension/popup.html
+sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/webextension/links.html
 
 if [ "$1" = all ]; then
     echo "*** AdNauseam::WebExt: Creating package..."

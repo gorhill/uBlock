@@ -70,7 +70,6 @@ var onBeforeSendHeaders = function (details) {
   }
 
   // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
-
   return { requestHeaders: headers };
 };
 
