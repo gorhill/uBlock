@@ -433,11 +433,12 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = function(tabId, targetElement) {
+µBlock.elementPickerExec = function(tabId, targetElement, zap) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
     }
     this.epickerTarget = targetElement || '';
+    this.epickerZap = zap || false;
     this.scriptlets.inject(tabId, 'element-picker');
     if ( typeof vAPI.tabs.select === 'function' ) {
         vAPI.tabs.select(tabId);
@@ -515,18 +516,6 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
     if ( changed ) {
         this.savePermanentFirewallRules();
     }
-};
-
-/******************************************************************************/
-
-µBlock.isBlockResult = function(result) {
-    return typeof result === 'string' && result.charCodeAt(1) === 98 /* 'b' */;
-};
-
-/******************************************************************************/
-
-µBlock.isAllowResult = function(result) {
-    return typeof result !== 'string' || result.charCodeAt(1) !== 98 /* 'b' */;
 };
 
 /******************************************************************************/

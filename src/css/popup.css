@@ -29,12 +29,8 @@ h2 {
     cursor: pointer;
     font-size: 100%;
     font-weight: normal;
-    margin: 1em 0 0.8em 0;
     padding: 0.2em;
     text-align: center;
-    }
-h2:nth-of-type(1) {
-    margin-top: 0;
     }
 a {
     color: inherit;
@@ -59,18 +55,6 @@ a {
 #version {
     font-size: 90%;
     font-weight: normal;
-    }
-#gotoPrefs > span:nth-of-type(3) {
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    }
-body[dir="ltr"] #gotoPrefs > span:nth-of-type(3) {
-    left: 3px;
-    }
-body[dir="rtl"] #gotoPrefs > span:nth-of-type(3) {
-    right: 3px;
     }
 body[dir="ltr"] #panes {
     direction: rtl;
@@ -124,7 +108,7 @@ body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
 #panes:not(.dfEnabled) > div:nth-of-type(2) {
     display: none;
     }
-#panes > div:nth-of-type(1) {
+#panes > div:first-of-type {
     min-width: 11em;
     padding: 0;
     }
@@ -150,6 +134,27 @@ p {
 body.off #switch .fa {
     color: #ccc;
     }
+#basicTools {
+    margin: 0.8em 0 0.4em 0;
+    }
+.tool:first-child {
+    margin-left: 0;
+    }
+.tool {
+    color: #aaa;
+    cursor: pointer;
+    visibility: hidden;
+    margin-left: 0.8em;
+    min-width: 1em;
+    padding: 0 0.2em;
+    unicode-bidi: embed;
+    }
+.tool.enabled {
+    visibility: visible;
+    }
+.tool.enabled:hover {
+    color: #444;
+    }
 #page-blocked {
     font-size: 1.25em;
     }
@@ -162,18 +167,6 @@ body.off #switch .fa {
 .statValue {
     margin: 0;
     text-align: center;
-    }
-.tool {
-    color: #aaa;
-    cursor: pointer;
-    display: none;
-    unicode-bidi: embed;
-    }
-.tool.enabled {
-    display: inline;
-    }
-.tool:hover {
-    color: #444;
     }
 #extraTools {
     background-color: #eee;
@@ -304,24 +297,30 @@ body[dir="rtl"] #tooltip {
     color: #000;
     display: inline-block;
     height: 1.9em;
-    line-height: 1.9em;
+    line-height: 1.9;
     overflow: hidden;
     position: relative;
     vertical-align: top;
     }
-#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1) {
+#firewallContainer > div:first-of-type > span:first-of-type {
     cursor: pointer;
     }
-#firewallContainer > div > span:nth-of-type(1) {
+#firewallContainer > div > span:first-of-type {
     padding-right: 2px;
     position: relative;
     text-overflow: ellipsis;
     width: calc(100% - 4em);
     }
+#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup:before {
+    color: #666;
+    content: '\0416\2002';
+    font-size: 80%;
+    font-weight: normal;
+    }
 #firewallContainer > div > span:nth-of-type(2) {
     display: none;
     }
-#firewallContainer > div > span:nth-of-type(1) ~ span {
+#firewallContainer > div > span:first-of-type ~ span {
     border-left: 1px solid white;
     width: 4em;
     }
@@ -333,15 +332,15 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div > span:nth-of-type(4) {
     display: none;
     }
-#firewallContainer > div.isDomain > span:nth-of-type(1) {
+#firewallContainer > div.isDomain > span:first-of-type {
     font-weight: bold;
     }
-#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1):before {
+#firewallContainer > div:first-of-type > span:first-of-type:before {
     color: #aaa;
     content: '\2012';
     padding-right: 0.25em;
     }
-#firewallContainer.minimized > div:nth-of-type(1) > span:nth-of-type(1):before {
+#firewallContainer.minimized > div:first-of-type > span:first-of-type:before {
     content: '+';
     }
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(3) {
@@ -379,7 +378,7 @@ body[dir="rtl"] #tooltip {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:nth-of-type(1) {
+body.advancedUser #firewallContainer > div > span:first-of-type {
     width: calc(100% - 8em);
     }
 body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
@@ -388,17 +387,17 @@ body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
 body.advancedUser #firewallContainer > div:first-child ~ div:not([class]) {
     display: block;
     }
-body.advancedUser #firewallContainer > div > span:nth-of-type(1) ~ span {
+body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     cursor: pointer;
     }
 
 /**
  Small coloured label at the left of a row
  */
-#firewallContainer > div.allowed > span:nth-of-type(1):before,
-#firewallContainer > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.allowed > span:first-of-type:before,
+#firewallContainer > div.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     box-sizing: border-box;
     content: '';
     display: inline-block;
@@ -412,61 +411,61 @@ body.advancedUser #firewallContainer > div > span:nth-of-type(1) ~ span {
  Source for color-blind color scheme from https://github.com/WyohKnott:
  https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
  */
-#firewallContainer > div.allowed > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+#firewallContainer > div.allowed > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:first-of-type:before {
     background-color: rgb(0, 160, 0);
     }
-#firewallContainer.colorBlind > div.allowed > span:nth-of-type(1):before,
-#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+#firewallContainer.colorBlind > div.allowed > span:first-of-type:before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed > span:first-of-type:before {
     background-color: rgb(255, 194, 57);
     }
-#firewallContainer > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     background-color: rgb(192, 0, 0);
     }
-#firewallContainer.colorBlind > div.blocked > span:nth-of-type(1):before,
-#firewallContainer.colorBlind.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer.colorBlind > div.blocked > span:first-of-type:before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalBlocked > span:first-of-type:before {
     background-color: rgb(0, 19, 110);
     }
-#firewallContainer > div.allowed.blocked > span:nth-of-type(1):before,
-#firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
+#firewallContainer > div.allowed.blocked > span:first-of-type:before,
+#firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:first-of-type:before {
     background-color: rgb(192, 160, 0);
     }
 /* Rule cells */
-body.advancedUser #firewallContainer > div > span.aRule {
+body.advancedUser #firewallContainer > div > span.allowRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.aRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.allowRule {
     background-color: rgba(255, 194, 57, 0.4);
     }
-body.advancedUser #firewallContainer > div > span.bRule {
+body.advancedUser #firewallContainer > div > span.blockRule {
     background-color: rgba(192, 0, 0, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.bRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
     background-color: rgba(0, 19, 110, 0.4);
     }
-body.advancedUser #firewallContainer > div > span.nRule {
+body.advancedUser #firewallContainer > div > span.noopRule {
     background-color: rgba(108, 108, 108, 0.3);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.nRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.noopRule {
     background-color: rgba(96, 96, 96, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.ownRule {
     color: white;
     }
-body.advancedUser #firewallContainer > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer > div > span.allowRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.aRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.allowRule.ownRule {
     background-color: rgba(255, 194, 57, 1);
     }
-body.advancedUser #firewallContainer > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer > div > span.blockRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.bRule.ownRule {
+body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
     background-color: rgba(0, 19, 110, 1);
     }
-body.advancedUser #firewallContainer > div > span.nRule.ownRule {
+body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     }
 
@@ -483,7 +482,7 @@ body.advancedUser #firewallContainer > div > span.nRule.ownRule {
     height: 100%;
     opacity: 0.2;
     }
-#actionSelector > span:nth-of-type(1) {
+#actionSelector > span:first-of-type {
     width: 33%;
     }
 #actionSelector > span:nth-of-type(2) {
@@ -495,10 +494,10 @@ body.advancedUser #firewallContainer > div > span.nRule.ownRule {
 #actionSelector > span:hover {
     opacity: 0.75;
     }
-#actionSelector > span:nth-of-type(1) {
+#actionSelector > span:first-of-type {
     background-color: rgb(0, 160, 0);
     }
-#actionSelector.colorBlind > span:nth-of-type(1) {
+#actionSelector.colorBlind > span:first-of-type {
     background-color: rgb(255, 194, 57);
     }
 #actionSelector > span:nth-of-type(2) {

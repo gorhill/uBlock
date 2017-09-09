@@ -403,14 +403,18 @@ URI.domainFromURI = function(uri) {
 /******************************************************************************/
 
 URI.isNetworkURI = function(uri) {
-    return /^(?:ftps?|https?|wss?):\/\//.test(uri);
+    return reNetworkURI.test(uri);
 };
+
+var reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
 URI.isNetworkScheme = function(scheme) {
-    return /^(?:ftps?|https?|wss?)$/.test(scheme);
+    return reNetworkScheme.test(scheme);
 };
+
+var reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
 
 /******************************************************************************/
 

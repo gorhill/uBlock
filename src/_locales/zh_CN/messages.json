@@ -52,7 +52,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"此页面",
+    "message":"此页面上的",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -70,6 +70,10 @@
   "popupTipDashboard":{
     "message":"单击打开控制面板",
     "description":"English: Click to open the dashboard"
+  },
+  "popupTipZapper":{
+    "message":"进入元素选择器模式",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
     "message":"进入元素选择器模式",
@@ -312,7 +316,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"恶意软件",
+    "message":"恶意网站",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -324,7 +328,7 @@
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"地区语言",
+    "message":"区域、语言",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -335,25 +339,21 @@
     "message":"一行一条 URL。以 &lsquo;!&rsquo; 开头的行将被忽略，无效的 URL 也将被忽略。",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"解析",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"清除缓存",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"有新版本可用",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"过时的版本",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"已过时",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"上次更新：{{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"上次更新：{{ago}}\n点此强制更新",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"正在更新...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"资源更新因网络错误受阻。",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条 Adblock Plus 兼容的过滤规则。以 &lsquo;!&rsquo; 开头的行将被忽略。",
@@ -580,8 +580,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"无法连接到 {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"网络错误：{{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",

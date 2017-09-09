@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
-    "message":"Advanced settings",
+    "message":"అధునాతన అమరికలు",
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
@@ -70,6 +70,10 @@
   "popupTipDashboard":{
     "message":"నియంత్రణా పట్టికను తెరచుటకు క్లిక్ చేయండి",
     "description":"English: Click to open the dashboard"
+  },
+  "popupTipZapper":{
+    "message":"భాగాలను ఎంచుకొని తొలగించు ప్రక్ర్యియనారంభించు",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
     "message":"భాగాలను ఎంచుకొని తొలగించు ప్రక్ర్యియనారంభించు",
@@ -208,11 +212,11 @@
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
+    "message":"మీరు నిపుణత కలిగిన వినియోగాదారులితే (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>ఇది తప్పనిసరిగా చదవాలి<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"అధునాతన అమరికలు",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -220,7 +224,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"చిరునామాల తానిఖిని నిషేధించు",
+    "message":"చిరునామాల తానిఖిని దాటవేయు",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -335,25 +339,21 @@
     "message":"ఒక్కో పంక్తిలో ఒక URL. పంక్తిలో మొదలు &lsquo;!&rsquo; ఉన్నచో అది పరిగనించబడదు. చెల్లని URLలు మౌనంగా విస్మరించబడుతాయి.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"పదనిరూపణ",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"తాత్కాలిక నిలువలను త్యజించు",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"నవీకరణ అందుబాటులో ఉంది",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"పాతబడింది",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"గత నవీకరణ: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"గత నవీకరణ: {{ago}}.\nనవీకరించుటకు క్లిక్ చెయ్యండి.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"నవీకరిస్తున్నది...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"ఈ చిట్టా అనుసంధాన వైఫల్యం వలన నవికరించబడలేదు.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"ఒక్కో పంక్తిలో ఒక వడపోత నమోదు. పేర్కొనబడే వడపోత, కేవలం హోస్టుపేరు లేదా Adblock Plusకి అనువైన వడపోత కావొచ్చు. పంక్తిలో మొదలు  &lsquo;!&rsquo; ఉన్నచో అది పరిగణలోకి తీసుకొబడదు.",
@@ -580,8 +580,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}}తో అనుసంధానం విఫలమైనది",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"అనుసంధాన వైఫల్యం: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Warning! Change these advanced settings at your own risk.",
+    "message":"హెచ్చరిక! ఈ అధునాతన అమరికలను జాగ్రత్తతో మార్చండి.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

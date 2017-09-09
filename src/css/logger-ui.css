@@ -162,8 +162,8 @@ body.colorBlind #netInspector tr.nooped {
 body.colorBlind #netInspector tr.allowed {
     background-color: rgba(255, 194, 57, 0.25)
     }
-#netInspector tr.cb, #netInspector tr.rr {
-    background-color: rgba(255, 255, 0, 0.25);
+#netInspector tr.cosmetic, #netInspector tr.redirect {
+    background-color: rgba(255, 255, 0, 0.1);
     }
 #netInspector tr.maindoc {
     background-color: #666;

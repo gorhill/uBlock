@@ -45,8 +45,7 @@
     "webRequest",
     "webRequestBlocking",
     "http://*/*",
-    "https://*/*",
-    "management"
+    "https://*/*"
   ],
   "short_name": "AdNauseam",
   "storage": {

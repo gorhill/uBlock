@@ -35,7 +35,13 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
-vAPI.cantWebsocket = true;
+vAPI.chromiumVersion = (function(){
+    var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
+    return matches !== null ? parseInt(matches[1], 10) : NaN;
+    })();
+vAPI.cantWebsocket =
+    chrome.webRequest.ResourceType instanceof Object === false  ||
+    chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
 var noopFunc = function(){};
 
@@ -1079,11 +1085,10 @@ vAPI.net.registerListeners = function() {
             }
         };
 
-
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-
+        
     var onHeadersReceived = validTypes.font
         // modern Chromium/WebExtensions: type 'font' is supported
         ? function(details) {
@@ -1150,18 +1155,14 @@ vAPI.net.registerListeners = function() {
     // Chromium 48 and lower does not support `ping` type.
     // Chromium 56 and higher does support `csp_report` stype.
     if ( onBeforeSendHeaders ) {
-      // console.log('adding onBeforeSendHeaders');
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             {
-                'urls': [ '<all_urls>' ]
-                //,'types': [ 'ping' ]
+                'urls': [ '<all_urls>' ],
+                'types': [ 'ping' ]
             },
             [ 'blocking', 'requestHeaders' ]
         );
-    }
-    else {
-      // console.log('skipping onBeforeSendHeaders');
     }
 
     if ( onHeadersReceived ) {
@@ -1221,6 +1222,11 @@ vAPI.contextMenu = {
         }
     }
 };
+
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.commands = chrome.commands;
 
 /******************************************************************************/
 /******************************************************************************/

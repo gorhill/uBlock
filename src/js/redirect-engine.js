@@ -322,13 +322,10 @@ RedirectEngine.prototype.toSelfie = function() {
     // convert it to a serializable format. The serialized format must be
     // suitable to be used as an argument to the Map() constructor.
     var rules = [],
-        iter = this.rules.entries(),
-        item, rule, entries, i, entry;
-    for (;;) {
-        item = iter.next();
-        if ( item.done ) { break; }
-        rule = [ item.value[0], [] ];
-        entries = item.value[1];
+        rule, entries, i, entry;
+    for ( var item of this.rules ) {
+        rule = [ item[0], [] ];
+        entries = item[1];
         i = entries.length;
         while ( i-- ) {
             entry = entries[i];
