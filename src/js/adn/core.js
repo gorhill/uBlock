@@ -1876,7 +1876,9 @@
 
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
-        µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
+
+        // ADN/TODO: need a new way to check this ************************
+        // µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
       }
 
       sendNotifications(notes);

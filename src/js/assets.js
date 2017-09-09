@@ -1114,10 +1114,7 @@ api.updateAdNauseam = function() {
         updateDone();
     };
 
-    var assetKey = "adnauseam-filters";
-    getRemote(assetKey, updatedOne);
-    if (µBlock.userSettings.eventLogging)
-          console.log("Update adnauseam-filters");
+    getRemote("adnauseam-filters", updatedOne);
 }
 
 api.updateStop = function() {
