@@ -849,7 +849,7 @@
 
     this.loadFilterLists(onFiltersReady);
 };
-*/
+
 /******************************************************************************/
 
 µBlock.loadRedirectResources = function(callback) {

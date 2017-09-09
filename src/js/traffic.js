@@ -615,6 +615,7 @@ var onHeadersReceived = function (details) {
 
     if ( requestType === 'main_frame' || requestType === 'sub_frame' ) {
         result = injectCSP(pageStore, details);
+    }
 
     if (!result) { // ADN
 
