@@ -697,11 +697,12 @@ vAPI.messaging.onPortMessage = (function() {
         }
         // https://github.com/chrisaljoudi/uBlock/issues/383
         if ( messaging.ports.hasOwnProperty(this.port.name) ) {
-            this.port.postMessage({
-                auxProcessId: this.request.auxProcessId,
-                channelName: this.request.channelName,
-                msg: response !== undefined ? response : null
-            });
+          var msg = {
+              auxProcessId: this.request.auxProcessId,
+              channelName: this.request.channelName,
+              msg: response !== undefined ? response : null
+          }
+          this.port.postMessage(msg);
         }
         // Mark for reuse
         this.port = this.request = null;
@@ -860,6 +861,12 @@ vAPI.messaging.setup = function(defaultHandler) {
 /******************************************************************************/
 
 vAPI.messaging.broadcast = function(message) {
+
+    if (message.what === 'notifications') { // ADN
+
+      makeCloneable(message.notifications); // #1163
+    }
+
     var messageWrapper = {
         broadcast: true,
         msg: message

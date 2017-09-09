@@ -32,7 +32,7 @@
   /******************************************************************************/
 
   var onLocalDataReceived = function (details) {
-  
+
     if (details.storageUsed)
      uDom('#localData > ul > li:nth-of-type(1)').text(
          vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
@@ -90,33 +90,9 @@
       value: value
     },
     function(details) {
-
-      // see #488
-      // renderNotifications(details.notifications);
-
       updateGroupState();
     });
   };
-
-  /******************************************************************************/
-  // Not needed for new slider
-  // var frequencyTagConverter = function(input) {
-  //     var match = {
-  //         all: 1,
-  //         most: 0.75,
-  //         some: 0.3,
-  //         occasional: 0.1
-  //     }
-  //
-  //     if (typeof input === "string") return match[input];
-  //     else {
-  //         for (var prop in match) {
-  //             if (match[prop] === input) return prop;
-  //         }
-  //     }
-  //
-  // }
-  /******************************************************************************/
 
   var ClickProbabilityChanged = function() {
       var selection = uDom('input[id="slider"]');
@@ -165,7 +141,7 @@
   var onUserSettingsReceived = function (details) {
 
     // console.log('onUserSettingsReceived', details);
-    
+
     if (isMobile()) {
       uDom('.dntOption').css('display', 'none');
     }
@@ -214,8 +190,6 @@
       window.open(location, '_self').close();
     });
 
-    // see #488
-    //renderNotifications(details.notifications);
     updateGroupState();
   };
 

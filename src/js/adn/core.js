@@ -369,6 +369,7 @@
     vAPI.messaging.broadcast({
        what: 'notifications',
        notifications: notes
+       // TODO: do we need to make these cloneable ? see #1163
      });
   }
 
@@ -873,6 +874,7 @@
       prefs: contentPrefs(),
       current: activeVisit(),
       notifications: notifications
+      // TODO: do we need to make these cloneable ? see #1163
     };
   }
 

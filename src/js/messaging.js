@@ -187,8 +187,8 @@ var onMessage = function(request, sender, callback) {
 
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
-        if (!response) { // return notifications either way
-          response = { notifications: µb.adnauseam.getNotifications() };
+        if (typeof response === 'undefined') { // return notifications either way
+          response = { notifications: makeCloneable(µb.adnauseam.getNotifications()) }; // #1163
         }
         break;
 

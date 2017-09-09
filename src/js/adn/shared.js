@@ -152,6 +152,10 @@ var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, Blockin
 
 function Notification(m) {
 
+  function opt(opts, name, def) {
+    return opts && opts.hasOwnProperty(name) ? opts[name] : def;
+  }
+
   this.prop = opt(m, 'prop', '');
   this.name = opt(m, 'name', '');
   this.text = opt(m, 'text', '');
@@ -169,9 +173,10 @@ function Notification(m) {
   this.func = opt(m, 'func', (this.isDNT ? openSettings : reactivateSetting).bind(this));
 }
 
-function opt(opts, name, def) {
+var makeCloneable = function (notes) {
 
-  return opts && opts.hasOwnProperty(name) ? opts[name] : def;
+  notes && notes.forEach(function(n){ delete n.func }); // remove func to allow clone
+  // see https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
 }
 
 var addNotification = function (notes, note) {
