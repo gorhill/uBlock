@@ -1070,10 +1070,10 @@ vAPI.net.registerListeners = function() {
     // This is needed for Chromium 49-55.
     var onBeforeSendHeaders = validTypes.csp_report
         // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? function(details) { return onBeforeSendHeadersClient(details); }
+        ? function(details) {
+          return onBeforeSendHeadersClient(details); }
         // legacy Chromium
         : function(details) {
-
             var result = onBeforeSendHeadersClient(details);
 
             if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
@@ -1088,7 +1088,7 @@ vAPI.net.registerListeners = function() {
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-        
+
     var onHeadersReceived = validTypes.font
         // modern Chromium/WebExtensions: type 'font' is supported
         ? function(details) {
@@ -1158,8 +1158,8 @@ vAPI.net.registerListeners = function() {
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             {
-                'urls': [ '<all_urls>' ],
-                'types': [ 'ping' ]
+                'urls': [ '<all_urls>' ]
+                //'types': [ 'ping' ]
             },
             [ 'blocking', 'requestHeaders' ]
         );
