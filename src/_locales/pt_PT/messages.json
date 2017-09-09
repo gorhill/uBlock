@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clique para abrir o painel de controlo",
+    "message":"Abrir o painel de controlo",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -108,11 +108,11 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Clique para tornar as alterações permanentes.",
+    "message":"Clique para tornar as suas alterações permanentes.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Clique para reverter as alterações.",
+    "message":"Clique para reverter as suas alterações.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -220,7 +220,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar 'pre-fetching' (para impedir qualquer ligação para pedidos de rede bloqueados)",
+    "message":"Desativar \"pre-fetching\" (para impedir qualquer ligação para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{

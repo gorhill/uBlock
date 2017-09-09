@@ -3588,10 +3588,12 @@ vAPI.contextMenu = (function() {
 //     extensions.ublock0.shortcuts.[command id]    => -
 
 vAPI.commands = (function() {
+    if ( vAPI.fennec || vAPI.thunderbird ) { return; }
+
     var commands = [
-        { id: 'launch-element-zapper', shortcut: 'alt-z' },
-        { id: 'launch-element-picker', shortcut: 'alt-x' },
-        { id: 'launch-logger',         shortcut: 'alt-l' }
+        { id: 'launch-element-zapper' },
+        { id: 'launch-element-picker' },
+        { id: 'launch-logger' }
     ];
     var clientListener;
 
@@ -3621,19 +3623,25 @@ vAPI.commands = (function() {
         myKeyset = doc.createElement('keyset');
         myKeyset.setAttribute('id', 'uBlock0Keyset');
 
-        var myKey, shortcut, parts, modifier, key;
+        var myKey, shortcut, parts, modifiers, key;
         for ( var command of commands ) {
             shortcut = vAPI.localStorage.getItem('shortcuts.' + command.id);
-            if ( shortcut === null ) { shortcut = command.shortcut; }
-            parts = /(([a-z]+)-)?(\w)/.exec(shortcut);
+            if ( shortcut === null ) {
+                vAPI.localStorage.setItem('shortcuts.' + command.id, '');
+            }
+            if ( typeof shortcut !== 'string' ) { continue; }
+            parts = /^((?:[a-z]+-){1,})?(\w)$/.exec(shortcut);
             if ( parts === null ) { continue; }
-            modifier = parts[2] || '';
-            key = parts[3] || '';
-            if ( key === '' ) { continue; }
+            modifiers = parts[1];
+            if ( typeof modifiers === 'string' ) {
+                modifiers = parts[1].slice(0, -1).split('-').join(' ');
+            }
+            key = parts[2];
+            if ( typeof key !== 'string' ) { continue; }
             myKey = doc.createElement('key');
             myKey.setAttribute('id', 'uBlock0Key-' + command.id);
-            if ( modifier !== '' ) {
-                myKey.setAttribute('modifiers', parts[2]);
+            if ( modifiers !== '' ) {
+                myKey.setAttribute('modifiers', modifiers);
             }
             myKey.setAttribute('key', key);
             // https://stackoverflow.com/a/16786770

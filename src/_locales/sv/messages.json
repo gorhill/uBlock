@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicka för att öppna kontrollpanelen",
+    "message":"Öppna kontrollpanelen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -108,7 +108,7 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Tryck för att göra ändringarna permanenta.",
+    "message":"Klicka för att göra ändringarna permanenta.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
@@ -220,7 +220,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Stäng av hämtning i förhand (för att motverka anslutningar av blockerade förfrågningar)",
+    "message":"Avaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{

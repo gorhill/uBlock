@@ -2,7 +2,8 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.13.2",
+    "version": "1.13.4",
+
     "commands": {
         "launch-element-zapper": {
             "description": "__MSG_popupTipZapper__"

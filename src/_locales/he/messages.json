@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"לחץ כדי לפתוח את פאנל הקונפיגורציות",
+    "message":"לחץ כדי לפתוח את לוח המחוונים",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -104,7 +104,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"חוקים לוקאליים: עמודה זו היא עבור חוקים אשר תקפים לאתר הנוכחי בלבד.\nחוקים לוקאליים דורסים את החוקים גלובליים.",
+    "message":"חוקים לוקאליים: עמודה זו היא עבור חוקים אשר תקפים לאתר הנוכחי בלבד.\nחוקים לוקאליים דורסים את החוקים הגלובליים.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
