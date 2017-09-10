@@ -187,7 +187,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Anti-ThirdpartySocial (see warning inside list)",
+		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -202,6 +202,14 @@
 			"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
+	},
+	"fanboy-cookiemonster": {
+		"content": "filters",
+		"group": "social",
+		"off": true,
+		"title": "Fanboy’s Cookiemonster List",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-social": {
 		"content": "filters",
@@ -346,14 +354,6 @@
 		"lang": "et",
 		"contentURL": "https://adblock.ee/list.php",
 		"supportURL": "https://adblock.ee/"
-	},
-	"EU-prebake": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "EU: Prebake - Filter Obtrusive Cookie Notices",
-		"contentURL": "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt",
-		"supportURL": "https://github.com/liamja/Prebake"
 	},
 	"FIN-0": {
 		"content": "filters",
