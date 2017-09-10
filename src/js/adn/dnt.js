@@ -5,9 +5,10 @@
   var µb = µBlock, adn = µb.adnauseam, log = adn.log;
   //var effList = 'https://www.eff.org/files/effdntlist.txt'; // old-list-key
   var effList = 'eff-dnt-whitelist';
-  var firewall = new µb.Firewall();
-
+  
   var exports = {};
+
+  var firewall = exports.firewall = new µb.Firewall();
 
   exports.shutdown = function () {
 
