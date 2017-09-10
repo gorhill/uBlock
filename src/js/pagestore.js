@@ -639,8 +639,12 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     // ADN: now check our firewall (top precedence)
-    if ( result === 0 ) {
-      result = µb.adnauseam.dnt.mustAllowRequest(context);
+   if ( result === 0 ) {
+         result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
+         // logger
+          if ( result === 2 && µb.logger.isEnabled() ) {
+             this.logData = µb.adnauseam.dnt.firewall.toLogData();
+         }
     }
 
     // Dynamic hostname/type filtering.
@@ -655,11 +659,12 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
         if ( result !== 0) {
-          if (µb.adnauseam.mustAllowRequest(result, context)) {
-              result = 0; // ADN: cannot block
-          }
+          if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {           
+             result = 4;// ADN: adnauseamAllowed
+          }               }
           else if (µb.logger.isEnabled() ) {
              this.logData = µb.staticNetFilteringEngine.toLogData();
+             if (result === 4) this.logData.result = 4;
           }
         }
     }
@@ -741,9 +746,14 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         }
     }
 
-    // ADN: now check our DNT firewall (top precendence)
-    //if ( result === '' ) result = µb.adnauseam.dnt.mustAllowRequest(context);
-    if ( result === 0 ) result = µb.adnauseam.dnt.mustAllowRequest(context);
+    // ADN: now check our firewall (top precedence)
+   if ( result === 0 ) {
+         result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
+         // logger
+          if ( result === 2 && µb.logger.isEnabled() ) {
+             this.logData = µb.adnauseam.dnt.firewall.toLogData();
+         }
+    }
 
     // Dynamic hostname/type filtering.
     if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
@@ -757,15 +767,15 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
 
-        if ( µb.adnauseam.mustAllowRequest(result, context)) { // ADN
-
-            if (µb.adnauseam.isAllowedExceptions(context.requestURL)) {
-               result = 99;// ADN: adnauseamAllowed
-            }
-        }
-
-        else if ( result !== 0 && µb.logger.isEnabled() ) {
+        if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
+                 // console.warn("*** Blocking filterRequestNoCache *** AdNauseamAllowed");      
+                 result = 4;// ADN: adnauseamAllowed
+          }
+  
+        if ( result !== 0 && µb.logger.isEnabled() ) {
             this.logData = µb.staticNetFilteringEngine.toLogData();
+            if (result === 4) this.logData.result = 4;
+  
         }
     }
 
