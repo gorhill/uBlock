@@ -31,14 +31,24 @@
     "run_at": "document_idle",
     "all_frames": false
   }],
+  "commands": {
+      "launch-element-zapper": {
+          "description": "__MSG_popupTipZapper__"
+      },
+      "launch-element-picker": {
+          "description": "__MSG_popupTipPicker__"
+      },
+      "launch-logger": {
+          "description": "__MSG_popupTipLog__"
+      }
+  },
   "incognito": "split",
-  "minimum_chrome_version": "22.0",
+  "minimum_chrome_version": "38.0",
   "options_page": "dashboard.html",
   "options_ui": {
     "page": "options_ui.html"
   },
   "permissions": [
-    "activeTab",
     "contextMenus",
     "privacy",
     "storage",
@@ -47,14 +57,10 @@
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
-    "management",
-    "http://*/*",
-    "https://*/*",
-    "downloads"
+    "<all_urls>"
   ],
   "short_name": "AdNauseam",
   "storage": {
     "managed_schema": "managed_storage.json"
   }
-} 
-
+}
