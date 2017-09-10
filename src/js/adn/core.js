@@ -1783,8 +1783,6 @@
 
   var verifyList = exports.verifyList = function (note, lists) {
 
-    // TODO: # 1174
-
     var notes = notifications,
       modified = false,
       path, entry;

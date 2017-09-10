@@ -20,6 +20,17 @@
   "background": {
     "page": "background.html"
   },
+  "commands": {
+      "launch-element-zapper": {
+          "description": "__MSG_popupTipZapper__"
+      },
+      "launch-element-picker": {
+          "description": "__MSG_popupTipPicker__"
+      },
+      "launch-logger": {
+          "description": "__MSG_popupTipLog__"
+      }
+  },
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
     "js": ["js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
@@ -32,7 +43,7 @@
     "all_frames": false
   }],
   "incognito": "split",
-  "minimum_chrome_version": "22.0",
+  "minimum_chrome_version": "38.0",
   "optional_permissions": [ "file:///*" ],
   "options_page": "dashboard.html",
   "permissions": [
@@ -44,8 +55,7 @@
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ],
   "short_name": "AdNauseam",
   "storage": {

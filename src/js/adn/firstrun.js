@@ -206,9 +206,8 @@
     });
 
     uDom('#app-version').text(details.appVersion);
-    
-    uDom('#dnt-exception').on('change', function (e) {
-      console.log("CHANGED",this.checked);
+
+    uDom('#dnt-exception').on('change', function (e) {     // #1173
       changeDNTexceptions(this.checked);
     });
 
