@@ -159,9 +159,11 @@ function Notification(m) {
   this.prop = opt(m, 'prop', '');
   this.name = opt(m, 'name', '');
   this.text = opt(m, 'text', '');
-  this.link = opt(m, 'link', this.isDNT ? DNTFAQ : FAQ);
 
   this.isDNT = opt(m, 'isDNT', '');
+
+  this.link = opt(m, 'link', this.isDNT ? DNTFAQ : FAQ);
+
   this.listName = opt(m, 'listName', '');
   this.expected = opt(m, 'expected', true);
   this.firstrun = opt(m, 'firstrun', false);
