@@ -69,7 +69,8 @@ var renderFilterLists = function(soft) {
         listEntryTemplate = uDom('#templates .listEntry'),
         listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats'),
         renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString,
-        hideUnusedLists = document.body.classList.contains('hideUnused');
+        hideUnusedLists = document.body.classList.contains('hideUnused'),
+        groupNames = new Map();
 
     // Assemble a pretty list name if possible
     var listNameFromListKey = function(listKey) {
@@ -170,7 +171,17 @@ var renderFilterLists = function(soft) {
         var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
-            var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+            var groupName = groupNames.get(groupKey);
+            if ( groupName === undefined ) {
+                groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+                // Category "Social" is being renamed "Annoyances": ensure
+                // smooth transition.
+                // TODO: remove when majority of users are post-1.14.8 uBO.
+                if ( groupName === '' && groupKey === 'social' ) {
+                    groupName = vAPI.i18n('3pGroupAnnoyances');
+                }
+                groupNames.set(groupKey, groupName);
+            }
             if ( groupName !== '' ) {
                 liGroup.querySelector('.geName').textContent = groupName;
             }
