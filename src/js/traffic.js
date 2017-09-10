@@ -539,12 +539,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     // Blocked?
     if ( result === 1 ) {
-
         // ADN: Blocked xhr
         µb.adnauseam.logNetBlock(details.type, requestURL, JSON.stringify(context));
-
         return { 'cancel': true };
     }
+
 };
 
 /******************************************************************************/

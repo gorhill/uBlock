@@ -1137,8 +1137,8 @@
     }
 
     var snfe = µb.staticNetFilteringEngine,
-      compiled = snfe.toResultString(1).slice(3),
-      raw = snfe.filterStringFromCompiled(compiled),
+      compiled = snfe.toLogData().compiled,
+      raw = snfe.toLogData().raw,
       url = context.requestURL;
 
     /*
@@ -1374,8 +1374,7 @@
   };
 
   exports.mustAllowRequest = function (result, context) {
-
-    return result && result.length && !isBlockableRequest(context);
+    return result !== 0 && !isBlockableRequest(context);
   };
 
   exports.isAllowedExceptions = function (url) {

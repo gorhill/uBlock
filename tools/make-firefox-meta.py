@@ -99,14 +99,14 @@ for alpha2 in descriptions:
     if alpha2 == 'en':
         continue
     manifest['localized'].append(
-        '\n' + t*2 + '<em:localized><Description>\n' +
-        t3 + '<em:locale>' + alpha2 + '</em:locale>\n' +
-        t3 + '<em:name>' + manifest['name'] + '</em:name>\n' +
-        t3 + '<em:description>' + descriptions[alpha2] + '</em:description>\n' +
-        t3 + '<em:creator>' + manifest['author'] + '</em:creator>\n' +
+       '\n' + t*2 + '<localized><r:Description>\n' +
+         t3 + '<locale>' + alpha2 + '</locale>\n' +
+         t3 + '<name>' + manifest['name'] + '</name>\n' +
+         t3 + '<description>' + descriptions[alpha2] + '</description>\n' +
+         t3 + '<creator>' + manifest['author'] + '</creator>\n' +
         # t3 + '<translator>' + ??? + '</translator>\n' +
-        t3 + '<em:homepageURL>' + manifest['homepage'] + '</em:homepageURL>\n' +
-        t*2 + '</Description></em:localized>'
+         t3 + '<homepageURL>' + manifest['homepage'] + '</homepageURL>\n' +
+         t*2 + '</r:Description></localized>'
     )
 manifest['localized'] = '\n'.join(manifest['localized'])
 

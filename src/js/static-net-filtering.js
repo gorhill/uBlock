@@ -1242,17 +1242,6 @@ FilterBucket.prototype.remove = function(fdata) {
     }
 };
 
-FilterBucket.prototype.remove = function(fclass, fdata) {
-    var i = this.filters.length,
-        filter;
-    while ( i-- ) {
-        filter = this.filters[i];
-        if ( filter.fid === fclass && filter.toSelfie() === fdata ) {
-            this.filters.splice(i, 1);
-        }
-    }
-};
-
 // Promote hit filters so they can be found faster next time.
 FilterBucket.prototype.promote = function(i) {
     var filters = this.filters,
