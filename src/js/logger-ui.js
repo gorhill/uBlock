@@ -290,15 +290,10 @@ var renderNetLogEntry = function(tr, entry) {
         } else if ( filter.result === 3 ) {
             trcl.add('nooped');
             td.textContent = '**';
-
-        } else if ( filter.result === 99) { // ADN
-          trcl.add('adnauseamAllowed');
-          td.textContent = '';
-
         } else if ( filter.source === 'redirect' ) {
             trcl.add('redirect');
             td.textContent = '<<';
-        } else if ( filter.result === 4) {
+        } else if ( filter.result === 4) { // ADN
           trcl.add('adnauseamAllowed');
           td.textContent = '';
         }

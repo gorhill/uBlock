@@ -640,11 +640,11 @@ PageStore.prototype.filterRequest = function(context) {
 
     // ADN: now check our firewall (top precedence)
    if ( result === 0 ) {
-         result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
-         // logger
-          if ( result === 2 && µb.logger.isEnabled() ) {
-             this.logData = µb.adnauseam.dnt.firewall.toLogData();
-         }
+        result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
+        // logger
+        if ( result === 2 && µb.logger.isEnabled() ) {
+           this.logData = µb.adnauseam.dnt.firewall.toLogData();
+        }
     }
 
     // Dynamic hostname/type filtering.
@@ -652,16 +652,16 @@ PageStore.prototype.filterRequest = function(context) {
         result = µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, requestType);
         if ( result !== 0 && result !== 3 && µb.logger.isEnabled() ) {
             this.logData = µb.sessionFirewall.toLogData();
-         }
+        }
     }
 
     // Static filtering: lowest filtering precedence.
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
         if ( result !== 0) {
-          if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {           
+          if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
              result = 4;// ADN: adnauseamAllowed
-          }               }
+          }
           else if (µb.logger.isEnabled() ) {
              this.logData = µb.staticNetFilteringEngine.toLogData();
              if (result === 4) this.logData.result = 4;
@@ -768,14 +768,14 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         result = µb.staticNetFilteringEngine.matchString(context);
 
         if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
-                 // console.warn("*** Blocking filterRequestNoCache *** AdNauseamAllowed");      
+                 // console.warn("*** Blocking filterRequestNoCache *** AdNauseamAllowed");
                  result = 4;// ADN: adnauseamAllowed
           }
-  
+
         if ( result !== 0 && µb.logger.isEnabled() ) {
             this.logData = µb.staticNetFilteringEngine.toLogData();
             if (result === 4) this.logData.result = 4;
-  
+
         }
     }
 

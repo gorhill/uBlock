@@ -812,6 +812,48 @@
            '\n/* end of network - start of cosmetic */\n' +
            cosmeticFilters.toString();
 };
+/******************************************************************************/
+
+// ADN: these 2 functions are no longer in uBlock
+
+// `switches` contains the filter lists for which the switch must be revisited.
+
+µBlock.selectFilterLists = function(switches) {
+    switches = switches || {};
+
+    // console.log('storage.js::µBlock.selectFilterLists', switches);
+
+    // Only the lists referenced by the switches are touched.
+    var filterLists = this.availableFilterLists;
+    var entry, state, location;
+    var i = switches.length;
+    while ( i-- ) {
+        entry = switches[i];
+        state = entry.off === true;
+        location = entry.location;
+        if ( filterLists.hasOwnProperty(location) === false ) {
+            if ( state !== true ) {
+                filterLists[location] = { off: state };
+            }
+            continue;
+        }
+        if ( filterLists[location].off === state ) {
+            continue;
+        }
+        filterLists[location].off = state;
+    }
+
+    vAPI.storage.set({ 'availableFilterLists': filterLists });
+};
+
+µBlock.reactivateList = function(list, callback) {
+
+  var lists = this.selectedFilterLists;
+  lists.push(list);
+  µBlock.selectFilterLists([{location:list, off:false}]); // change availableFilterLists
+  vAPI.storage.set({ 'selectedFilterLists': lists }, callback);
+  µBlock.loadFilterLists();
+}
 
 /******************************************************************************/
 

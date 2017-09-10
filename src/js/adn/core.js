@@ -1783,6 +1783,8 @@
 
   var verifyList = exports.verifyList = function (note, lists) {
 
+    // TODO: # 1174
+
     var notes = notifications,
       modified = false,
       path, entry;
@@ -1874,7 +1876,7 @@
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
 
-        // ADN/TODO: need a new way to check this ************************
+        // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
         // µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
       }
 
