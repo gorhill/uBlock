@@ -79,6 +79,7 @@
 
   function changeDNTexceptions(bool) {
 
+    console.log('changeDNTexceptions: '+bool);
     changeUserSettings("disableClickingForDNT", bool);
     changeUserSettings("disableHidingForDNT", bool);
   }
@@ -97,6 +98,7 @@
   }
 
   function toggleFirstRunButton() {
+
     var button = uDom('#confirm-close > button');
 
     if (hasEnabledToggle()) {
@@ -172,19 +174,23 @@
     });
 
     uDom('[data-setting-type="input"]').forEach(function (uNode) {
+
       uNode.val(details[uNode.attr('data-setting-name')])
         .on('change', onInputChanged);
     });
 
     uDom(document).on('click', 'p[data-i18n="adnFirstRunHideAllAdsDescription"] span, p[data-i18n="adnFirstRunClickingAdsDescription"] span', function() {
+
         openPage('/dashboard.html#3p-filters.html');
     });
 
     uDom(document).on('click', 'p[data-i18n="adnFirstRunBlockingMalwareDescription"] span',function (e) {
+
        openPage('/dashboard.html#options.html');
     });
 
     uDom('#confirm-close').on('click', function (e) {
+
       if (hasEnabledToggle()) {
         e.preventDefault();
         // handles #371
@@ -200,6 +206,11 @@
     });
 
     uDom('#app-version').text(details.appVersion);
+    
+    uDom('#dnt-exception').on('change', function (e) {
+      console.log("CHANGED",this.checked);
+      changeDNTexceptions(this.checked);
+    });
 
     toggleDNTException();
   };
