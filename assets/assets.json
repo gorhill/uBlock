@@ -183,6 +183,14 @@
 		"contentURL": "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt",
 		"supportURL": "http://www.spam404.com/"
 	},
+	"adguard-annoyance": {
+		"content": "filters",
+		"group": "social",
+		"off": true,
+		"title": "Adguard’s Annoyance List",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+	},
 	"fanboy-thirdparty_social": {
 		"content": "filters",
 		"group": "social",
