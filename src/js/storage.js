@@ -814,7 +814,7 @@
 };
 /******************************************************************************/
 
-// ADN: these 2 functions are no longer in uBlock
+// ADN: these 2 functions are no longer in uBlock (TODO: move to core.js)
 
 // `switches` contains the filter lists for which the switch must be revisited.
 

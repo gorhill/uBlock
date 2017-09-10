@@ -63,10 +63,12 @@
   }
 
   function hasEnabledToggle() {
+
     return switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware');
   }
 
   function toggleNum(){
+
     var toggleNum = 0;
     if(switchValue('hidingAds')) toggleNum++;
     if(switchValue('clickingAds')) toggleNum++;
@@ -157,7 +159,7 @@
                   this.checked
                 );
               }
-            
+
               if (!hideOrClick()) {
                 changeDNTexceptions(false);
               }
