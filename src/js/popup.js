@@ -108,7 +108,6 @@ var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u04
 /******************************************************************************/
 
 var cachePopupData = function(data) {
-    //console.log("DATA",data);
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
@@ -995,7 +994,6 @@ var onHideTooltip = function() {
     if ( matches && matches.length === 2 ) {
         tabId = matches[1];
     }
-
     getPopupData(tabId);
 
     uDom('#switch').on('click', toggleNetFilteringSwitch);
