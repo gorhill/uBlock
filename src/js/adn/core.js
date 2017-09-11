@@ -1789,7 +1789,10 @@
 
       for (var i = 0; i < lists.length; i++) {
         if (lists[i] === note.listName) {
-            entry = lists[i];
+            entry = lists[i];  
+        } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {  
+            //Fanboy's Ultimate Merged List 
+            entry = note.listName;
         }
       }
 
