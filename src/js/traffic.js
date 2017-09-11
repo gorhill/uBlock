@@ -443,20 +443,17 @@ var injectCSP = function(pageStore, details) {
     if ( details.type !== 'main_frame' ) {
         context.pageHostname = context.pageDomain = context.requestHostname;
     }
+    context.requestURL = requestURL;
 
     // Start collecting policies >>>>>>>>
 
     // ======== built-in policies
 
+    var builtinDirectives = [];
+
     context.requestType = 'inline-script';
-    context.requestURL = requestURL;
     if ( pageStore.filterRequest(context) === 1 ) {
-        cspSubsets[0] = "script-src 'unsafe-eval' * blob: data:";
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=669086
-        // TODO: remove when most users are beyond Chromium v56
-        if ( vAPI.chromiumVersion < 57 ) {
-            cspSubsets[0] += '; frame-src *';
-        }
+        builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
     }
     if ( loggerEnabled === true ) {
         logger.writeOne(
@@ -468,6 +465,28 @@ var injectCSP = function(pageStore, details) {
             context.rootHostname,
             context.pageHostname
         );
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1539
+    // - Use a CSP to also forbid inline fonts if remote fonts are blocked.
+    context.requestType = 'inline-font';
+    if ( pageStore.filterRequest(context) === 1 ) {
+        builtinDirectives.push('font-src *');
+        if ( loggerEnabled === true ) {
+            logger.writeOne(
+                tabId,
+                'net',
+                pageStore.logData,
+                'inline-font',
+                requestURL,
+                context.rootHostname,
+                context.pageHostname
+            );
+        }
+    }
+
+    if ( builtinDirectives.length !== 0 ) {
+        cspSubsets[0] = builtinDirectives.join('; ');
     }
 
     // ======== filter-based policies

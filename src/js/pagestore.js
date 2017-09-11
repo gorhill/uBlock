@@ -598,8 +598,10 @@ PageStore.prototype.filterRequest = function(context) {
         }
     }
 
-    if ( requestType === 'font' ) {
-        this.remoteFontCount += 1;
+    if ( requestType.endsWith('font') ) {
+        if ( requestType === 'font' ) {
+            this.remoteFontCount += 1;
+        }
         if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
             if ( µb.logger.isEnabled() ) {
                 this.logData = µb.hnSwitches.toLogData();
