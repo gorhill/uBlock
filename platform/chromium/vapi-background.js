@@ -1122,7 +1122,12 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 6144);
+    // https://github.com/gorhill/uBlock/issues/3006
+    //  For Firefox, we will use a higher ratio to allow for more overhead for
+    //  the infrastructure. Unfortunately this leads to less usable space for
+    //  actual data, but all of this is provided for free by browser vendors,
+    //  so we need to accept and deal with these limitations.
+    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 5120);
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     // Firefox:
