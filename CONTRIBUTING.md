@@ -1,6 +1,6 @@
 # Submitting issues
 
-Please stop opening invalid issues regarding the "Legacy" label of uBlock Origin on AMO, it's all explained in the [Release notes](https://github.com/gorhill/uBlock/releases).
+From now on, I will be quite less inclined to deal with issues for which little to no investigation to find the **actual cause** of a purported issue was made by the reporter. Positive contributions are those which are reported with efforts to find the actual cause of an issue, or at the very least efforts were made to narrow it as much as possible. This project is a hobby, do not expect "customer support"-style interaction. Requiring people to investigate as much as possible before opening an issue will more than likely avoid burdening the project with issues unrelated to uBO.
 
 For **support/discussions/help**, there is [/r/uBlockOrigin](https://www.reddit.com/r/uBlockOrigin/) on Reddit -- this is where I see the most activity for people helping each other regarding uBlock Origin.
 
