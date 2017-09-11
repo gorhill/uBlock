@@ -319,9 +319,9 @@
     "message":"മാല്‍വെയര്‍ ഡൊമൈനുകള്‍",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"സാമൂഹിക",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"മള്‍ട്ടിപര്‍പ്പസ്",

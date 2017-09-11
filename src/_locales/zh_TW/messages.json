@@ -319,9 +319,9 @@
     "message":"惡意域名",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"社交",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"惱人的",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"多用途",

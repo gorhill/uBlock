@@ -319,9 +319,9 @@
     "message":"Domain malware",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Sosial",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Gangguan",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Serbaguna",

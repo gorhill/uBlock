@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliknite sem pre otvorenie ovládacieho panela",
+    "message":"Otvoriť ovládací panel",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -319,9 +319,9 @@
     "message":"Domény malvéru",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Sociálne",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Obťažujúce",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Viacúčelové",

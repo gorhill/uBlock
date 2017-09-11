@@ -1,6 +1,6 @@
-Skutecznie blokuje reklamy, używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne rozszerzenia do blokowania reklam.
+Skuteczny bloker, który używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne rozszerzenia do blokowania.
 
-Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Ilustrowany przegląd jego skuteczności: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-Compared
 
 Sposób użycia: Wyświetlany w panelu duży przycisk oznaczony symbolem zasilania służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
@@ -10,27 +10,27 @@ Elastyczny. Jest czymś więcej niż „blokerem reklam”. Może czytać i twor
 
 Po zainstalowaniu są  wczytywane i stosowane następujące listy filtrów:
 
-- EasyList
-- Lista serwerów reklam Petera Lowe'a
-- EasyPrivacy
-- Domeny malware
+– EasyList
+– Peter Lowe’s Ad server list
+– EasyPrivacy
+– Malware domains.
 
 Można wybrać więcej list filtrów:
 
-- Rozszerzona lista śledzenia dla fanboyów
-- Plik hosts Dana Pollocka
-- Lista serwerów śledzących i reklamowych hpHosts
-- MVPS HOSTS
-- Spam404
-- I wiele innych
+– Fanboy's Enhanced Tracking List
+– Dan Pollock’s hosts file
+– hpHosts’s Ad and tracking servers
+– MVPS HOSTS
+– Spam404
+– i wiele innych.
 
-Im więcej filtrów jest włączonych, tym większe jest użycie pamięci RAM. Nawet po dodaniu dwóch dodatkowych list filtrów dla fanboyów – listy serwerów reklamowych i śledzących hpHosts – µBlock₀ używa mniej pamięci RAM niż inne popularne dodatki do blokowania reklam.
+Oczywiście, im więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów Fanboya, oraz listy hpHosts’ Ad and tracking servers, uBlock ma nadal niższe zużycie pamięci niż inne bardzo popularne blokery.
 
 Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić do wzrostu prawdopodobieństwa uszkodzenia witryny internetowej – zwłaszcza tych list, które są zwykle używane jako plik hostów.
 
 ***
 
-Bez ustawionej listy filtrów, to rozszerzenie jest bezużyteczne. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+Bez ustawionej listy filtrów, to rozszerzenie jest bezużyteczne. Więc jeśli rzeczywiście chciałbyś przekazać jakieś wsparcie, pomyśl o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
 
 ***
 
