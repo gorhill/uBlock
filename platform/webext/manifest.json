@@ -67,7 +67,8 @@
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
-        "<all_urls>"
+        "<all_urls>",
+        "management"
     ],
     "short_name": "AdNauseam"
 }

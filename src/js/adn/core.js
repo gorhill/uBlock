@@ -1755,8 +1755,12 @@
 
     vAPI.getAddonInfo(function (UBlockConflict, AdBlockConflict) {
 
-      if(UBlockConflict || AdBlockConflict) modified = addNotification(notes, AdBlockerEnabled);
-      else modified = removeNotification(notes, AdBlockerEnabled);
+      if (UBlockConflict || AdBlockConflict) {
+        modified = addNotification(notes, AdBlockerEnabled);
+      }
+      else {
+        modified = removeNotification(notes, AdBlockerEnabled);
+      }
 
       modified && sendNotifications(notes);
     });

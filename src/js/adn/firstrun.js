@@ -79,7 +79,6 @@
 
   function changeDNTexceptions(bool) {
 
-    console.log('changeDNTexceptions: '+bool);
     changeUserSettings("disableClickingForDNT", bool);
     changeUserSettings("disableHidingForDNT", bool);
   }
