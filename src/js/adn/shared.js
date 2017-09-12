@@ -139,12 +139,18 @@ AdNauseamTxt.func = reactivateList.bind(AdNauseamTxt);
 var AdBlockerEnabled = new Notification({
   name: 'AdBlockerEnabled',
   text: 'adnNotificationDisableAdBlocker',
-  button: 'adnNotificationDisable',
+  button: isFirefox() ? undefined : 'adnNotificationDisable',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
-AdBlockerEnabled.func = openExtPage.bind(AdBlockerEnabled);
+AdBlockerEnabled.func = isFirefox() ? undefined : openExtPage.bind(AdBlockerEnabled);
 
+if (isFirefox()) {
+  console.log('FIREFOX', AdBlockerEnabled);
+}
+else {
+  console.log('CHROME skipping disable button');
+}
 
 /***************************************************************************/
 
@@ -282,8 +288,13 @@ var appendNotifyDiv = function (notify, template) {
   var text = document.querySelectorAll('span[data-i18n=' + notify.text + ']');
   node.descendants('#notify-text').text(text[0].innerHTML);
 
-   var button = document.querySelectorAll('span[data-i18n=' + notify.button + ']');
-   node.descendants('#notify-button').text(button[0].innerHTML);
+  var button = document.querySelectorAll('span[data-i18n=' + notify.button + ']');
+  if (button && button[0]) {
+    node.descendants('#notify-button').text(button[0].innerHTML).removeClass('hidden');
+  }
+  else {
+    node.descendants('#notify-button').addClass('hidden');
+  }
 
   node.descendants('#notify-link').attr('href', notify.link);
 
@@ -300,15 +311,15 @@ var appendNotifyDiv = function (notify, template) {
 var modifyDNTNotifications = function () {
 
    var text = document.querySelectorAll('div[id^="DNT"] #notify-text'),
-       link = uDom('div[id^="DNT"] #notify-link').nodes,
-       newlink = uDom('span>#notify-link').nodes;
+     link = uDom('div[id^="DNT"] #notify-link').nodes,
+     newlink = uDom('span>#notify-link').nodes;
 
    if (text.length > 0 && link.length > 0 && newlink.length === 0) {
-       var sections = text[0].innerText.indexOf(",") > 0 ? text[0].innerText.split(',') : text[0].innerText.split('，'),
-           newText = sections[0] + link[0].outerHTML + "," + sections[1];
+     var sections = text[0].innerText.indexOf(",") > 0 ? text[0].innerText.split(',') : text[0].innerText.split('，'),
+         newText = sections[0] + link[0].outerHTML + "," + sections[1];
 
-       text[0].innerHTML = newText;
-       uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
+     text[0].innerHTML = newText;
+     uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
    }
 };
 
@@ -355,7 +366,14 @@ function openPage(url){
   );
 }
 
+function isFirefox() {
+
+  return navigator && navigator.userAgent &&
+    navigator.userAgent.includes('Firefox/');
+}
+
 function openExtPage() {
+
   openPage(vAPI.extensionsPage);
 }
 
