@@ -493,11 +493,9 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
         );
         break;
     case 'no-large-media':
-        if ( details.state === false ) {
-            var pageStore = this.pageStoreFromTabId(details.tabId);
-            if ( pageStore !== null ) {
-                pageStore.temporarilyAllowLargeMediaElements();
-            }
+        var pageStore = this.pageStoreFromTabId(details.tabId);
+        if ( pageStore !== null ) {
+            pageStore.temporarilyAllowLargeMediaElements(!details.state);
         }
         break;
     }

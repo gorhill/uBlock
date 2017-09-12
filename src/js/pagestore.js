@@ -485,10 +485,10 @@ PageStore.prototype.injectLargeMediaElementScriptlet = function() {
     µb.contextMenu.update(this.tabId);
 };
 
-PageStore.prototype.temporarilyAllowLargeMediaElements = function() {
+PageStore.prototype.temporarilyAllowLargeMediaElements = function(state) {
     this.largeMediaCount = 0;
     µb.contextMenu.update(this.tabId);
-    this.allowLargeMediaElementsUntil = Date.now() + 86400000;
+    this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
     µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
 };
 
