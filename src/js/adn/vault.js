@@ -1079,7 +1079,10 @@
     $('#x-close-button').click(function (e) {
 
       e.preventDefault();
-      window.open(location, '_self').close(); // close vault
+      messager.send('adnauseam', {
+        what: 'closeExtPage',
+        page: 'vault.html'
+      });
     });
 
     $('#logo').click(function (e) {
@@ -1756,8 +1759,6 @@
   messager.send('adnauseam', {
     what: 'adsForVault'
   }, renderAds);
-
-  /********************************************************************/
 
   $('#export').on('click', exportToFile);
   $('#import').on('click', startImportFilePicker);

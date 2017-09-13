@@ -1217,7 +1217,6 @@
     return (automatedMode && automatedMode.length);
   }
 
-
   var saveVaultImages = function (jsonName) {
 
     // Note(not-in-use): crashes over approx. 725 image or 70MB
@@ -1793,9 +1792,9 @@
 
       for (var i = 0; i < lists.length; i++) {
         if (lists[i] === note.listName) {
-            entry = lists[i];  
-        } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {  
-            //Fanboy's Ultimate Merged List 
+            entry = lists[i];
+        } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
+            //Fanboy's Ultimate Merged List
             entry = note.listName;
         }
       }
@@ -1991,6 +1990,26 @@
 
     return jsonData;
   };
+
+  /*var downloadAds = exports.downloadAds = function (request) {
+
+    var count = adCount(),
+      jsonData = admapToJSON(request.sanitize);
+
+    if (!production && request.includeImages) saveVaultImages();
+
+    log('[EXPORT] ' + count + ' ads');
+
+    console.log('core.downloadAds', jsonData);
+
+    var filename = getExportFileName(),
+      url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+
+    chrome.downloads.download({
+      url : url,
+      filename : filename
+    });
+  };*/
 
   exports.closeExtPage = function (request) {
 

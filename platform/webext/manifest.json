@@ -68,7 +68,8 @@
         "webRequest",
         "webRequestBlocking",
         "<all_urls>",
-        "management"
+        "management",
+        "downloads"
     ],
     "short_name": "AdNauseam"
 }

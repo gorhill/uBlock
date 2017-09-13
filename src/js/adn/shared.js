@@ -145,13 +145,6 @@ var AdBlockerEnabled = new Notification({
 });
 AdBlockerEnabled.func = isFirefox() ? undefined : openExtPage.bind(AdBlockerEnabled);
 
-if (isFirefox()) {
-  console.log('FIREFOX', AdBlockerEnabled);
-}
-else {
-  console.log('CHROME skipping disable button');
-}
-
 /***************************************************************************/
 
 var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
@@ -342,6 +335,7 @@ function onSelectionDone() {
 };
 
 function reactivateList() {
+
   vAPI.messaging.send(
   'dashboard', {
     what: 'reactivateList',
@@ -366,10 +360,16 @@ function openPage(url){
   );
 }
 
-function isFirefox() {
+function isFirefox() { // hack for webextensions incompatibilities
 
   return navigator && navigator.userAgent &&
     navigator.userAgent.includes('Firefox/');
+}
+
+
+function isMobile() {
+
+  return typeof window.NativeWindow !== 'undefined';
 }
 
 function openExtPage() {
@@ -598,19 +598,32 @@ var targetDomain = function (ad) {
 var exportToFile = function () {
 
   vAPI.messaging.send('adnauseam', {
-    what: 'exportAds',
-    includeImages: true //tmp
-  }, function(jsonData) {
-      var filename = getExportFileName(),
-          url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
 
-     vAPI.download({ 'url': url, 'filename': filename });
+    what: 'exportAds',
+    includeImages: false
+
+  }, function (jsonData) {
+
+    //console.log('shared.exportToFile', jsonData);
+
+    var filename = getExportFileName(),
+       url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+
+    if (isFirefox()) {
+
+      chrome.downloads.download({
+        url : url,
+        filename : filename
+      });
+    } else {
+
+      vAPI.download({
+        'url': url,
+        'filename': filename
+      });
+    }
   });
 };
-
-function isMobile() {
-  return typeof window.NativeWindow != 'undefined';
-}
 
 function handleImportFilePicker(evt) {
 
