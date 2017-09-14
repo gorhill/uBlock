@@ -72,7 +72,8 @@ var typeNameToTypeValue = {
      'inline-script': 15 << 4,
               'data': 16 << 4,  // special: a generic data holder
           'redirect': 17 << 4,
-            'webrtc': 18 << 4
+            'webrtc': 18 << 4,
+       'unsupported': 19 << 4
 };
 var otherTypeBitValue = typeNameToTypeValue.other;
 
@@ -94,14 +95,9 @@ var typeValueToTypeName = {
     15: 'inline-script',
     16: 'data',
     17: 'redirect',
-    18: 'webrtc'
+    18: 'webrtc',
+    19: 'unsupported'
 };
-
-// All network request types to bitmap
-//   bring origin to 0 (from 4 -- see typeNameToTypeValue)
-//   left-shift 1 by the above-calculated value
-//   subtract 1 to set all type bits
-var allNetRequestTypesBitmap = (1 << (otherTypeBitValue >>> 4)) - 1;
 
 var BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 var BlockAnyType = BlockAction | AnyType;
@@ -1330,6 +1326,12 @@ var FilterParser = function() {
     this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
     this.domainOpt = '';
     this.noTokenHash = µb.urlTokenizer.tokenHashFromString('*');
+    this.unsupportedTypeBit = this.bitFromType('unsupported');
+    // All network request types to bitmap
+    //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
+    //   left-shift 1 by the above-calculated value
+    //   subtract 1 to set all type bits
+    this.allNetRequestTypeBits = (1 << (otherTypeBitValue >>> 4)) - 1;
     this.reset();
 };
 
@@ -1344,6 +1346,7 @@ FilterParser.prototype.toNormalizedType = {
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',
+     'genericblock' : 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
      'inline-script': 'inline-script',
@@ -1358,7 +1361,7 @@ FilterParser.prototype.toNormalizedType = {
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
     'xmlhttprequest': 'xmlhttprequest',
-            'webrtc': 'webrtc',
+            'webrtc': 'unsupported',
          'websocket': 'websocket'
 };
 
@@ -1410,16 +1413,16 @@ FilterParser.prototype.parseTypeOption = function(raw, not) {
     }
 
     // Non-discrete network types can't be negated.
-    if ( (typeBit & allNetRequestTypesBitmap) === 0 ) {
+    if ( (typeBit & this.allNetRequestTypeBits) === 0 ) {
         return;
     }
 
     // Negated type: set all valid network request type bits to 1
     if (
-        (typeBit & allNetRequestTypesBitmap) !== 0 &&
-        (this.types & allNetRequestTypesBitmap) === 0
+        (typeBit & this.allNetRequestTypeBits) !== 0 &&
+        (this.types & this.allNetRequestTypeBits) === 0
     ) {
-        this.types |= allNetRequestTypesBitmap;
+        this.types |= this.allNetRequestTypeBits;
     }
     this.types &= ~typeBit;
 };
@@ -1685,12 +1688,22 @@ FilterParser.prototype.parse = function(raw) {
         pos = s.lastIndexOf('$');
         if ( pos !== -1 ) {
             // https://github.com/gorhill/uBlock/issues/952
-            // Discard Adguard-specific `$$` filters.
+            //   Discard Adguard-specific `$$` filters.
             if ( s.indexOf('$$') !== -1 ) {
                 this.unsupported = true;
                 return this;
             }
             this.parseOptions(s.slice(pos + 1));
+            // https://github.com/gorhill/uBlock/issues/2283
+            //   Abort if type is only for unsupported types, otherwise
+            //   toggle off `unsupported` bit.
+            if ( this.types & this.unsupportedTypeBit ) {
+                this.types &= ~(this.unsupportedTypeBit | this.allNetRequestTypeBits);
+                if ( this.types === 0 ) {
+                    this.unsupported = true;
+                    return this;
+                }
+            }
             s = s.slice(0, pos);
         }
     }
