@@ -1346,7 +1346,7 @@ FilterParser.prototype.toNormalizedType = {
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',
-     'genericblock' : 'unsupported',
+      'genericblock': 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
      'inline-script': 'inline-script',
