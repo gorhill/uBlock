@@ -41,6 +41,8 @@
     'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist'
   ];
 
+  var removableBlockLists = [ 'hphosts', 'mvps-0', 'plowe-0' ];
+
   // targets on these domains are never internal (may need to be regex)
   var internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
     'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
@@ -1367,12 +1369,20 @@
 
   var exports = { log: log };
 
+  exports.removeBlockingLists = function (lists) {
+
+    removableBlockLists.forEach(function(l) {
+      delete lists[l];
+    });
+  };
+
   exports.adsForVault = function (request, pageStore, tabId) {
 
     return adsForUI();
   };
 
   exports.mustAllowRequest = function (result, context) {
+
     return result !== 0 && !isBlockableRequest(context);
   };
 
