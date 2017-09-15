@@ -62,6 +62,7 @@
       // disable pause & resume buttons for options, vault, about/chrome
       if (page === vAPI.getURL("vault.html") ||
         page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
+        page.indexOf("chrome-extension://") === 0 ||
         page.indexOf("chrome://") === 0 ||
         page.indexOf("about:") === 0) {
 
@@ -649,7 +650,7 @@
     uDom('#notifications').on('click', setBackBlockHeight);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
       .on('mouseleave', '[data-tip]', onHideTooltip);
-    
+
 
     //tmp Russian fix
     if(uDom('#vault-button').text()===" Просмотр хранилища рекламы") {

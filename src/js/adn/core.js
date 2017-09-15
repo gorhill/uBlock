@@ -1207,7 +1207,7 @@
     // block any incoming cookies later (see #301)
     allowedExceptions[url] = +new Date();
 
-    if (msg !== 'EasyList') {  // avoid excessive logging
+    if (true || msg !== 'EasyList') {  // avoid excessive logging
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     }
 
