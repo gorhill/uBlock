@@ -262,6 +262,7 @@
 		"content": "filters",
 		"group": "multipurpose",
 		"updateAfter": 13,
+		"off": true,
 		"title": "Peter Lowe’s Ad and tracking server list",
 		"contentURL": [
 			"https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
