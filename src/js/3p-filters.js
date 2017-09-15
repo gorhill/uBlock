@@ -745,7 +745,7 @@ uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
 uDom('#listsOfBlockedHostsPrompt').on('click', toggleUnusedLists);
 uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 uDom('#lists').on('change', '.listEntry input', onFilteringSettingsChanged);
-uDom('#lists').on('change', '.listEntry > a.remove', onRemoveExternalList);
+uDom('#lists').on('click', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);
 uDom('#externalLists').on('input', onFilteringSettingsChanged);
 
