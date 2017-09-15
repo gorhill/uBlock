@@ -225,7 +225,7 @@ var renderFilterLists = function(soft) {
             li.classList.remove('cached');
         }
 
-        //if (entry.hidden) li.classList.toggle('hidden', true); // ADN
+        if (entry.hidden) li.classList.toggle('hidden', true); // ADN
 
         li.classList.remove('discard');
 

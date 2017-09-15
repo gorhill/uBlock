@@ -242,6 +242,7 @@
 		"group": "multipurpose",
 		"updateAfter": 11,
 		"off": true,
+		"hidden": true,
 		"title": "hpHosts’ Ad and tracking servers",
 		"contentURL": [
 			"https://hosts-file.net/.%5Cad_servers.txt",
@@ -255,6 +256,7 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "MVPS HOSTS",
+		"hidden": true,
 		"contentURL": "http://winhelp2002.mvps.org/hosts.txt",
 		"supportURL": "http://winhelp2002.mvps.org/"
 	},
@@ -263,6 +265,7 @@
 		"group": "multipurpose",
 		"updateAfter": 13,
 		"off": true,
+		"hidden": true,
 		"title": "Peter Lowe’s Ad and tracking server list",
 		"contentURL": [
 			"https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
