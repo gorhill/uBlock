@@ -68,11 +68,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kontrol panelini açmak için tıklayın",
+    "message":"Kontrol panelini açar",
     "description":"English: Click to open the dashboard"
   },
+  "popupTipZapper":{
+    "message":"Öge silme moduna gir",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
+  },
   "popupTipPicker":{
-    "message":"Öğe seçme moduna gir",
+    "message":"Öge seçme moduna gir",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -84,7 +88,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Bu site için büyük medya öğelerini engellemeyi aç\/kapa",
+    "message":"Bu site için büyük medya ögelerini engellemeyi aç\/kapa",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -180,7 +184,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Ögeyi engelle",
+    "message":"Öge engelle",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -240,7 +244,7 @@
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
-    "message":"Belirlenenden büyük medya öğelerini engelle {{input:number}} kB",
+    "message":"Belirlenenden büyük medya ögelerini engelle {{input:number}} kB",
     "description":""
   },
   "settingsNoRemoteFontsPrompt":{
@@ -248,7 +252,7 @@
     "description":""
   },
   "settingsStorageUsed":{
-    "message":"Kullanılan Alan: {{value}} bayt",
+    "message":"Kullanılan Alan: {{value}} byte",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -276,7 +280,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll":{
-    "message":"Tüm önbelleği temizle",
+    "message":"Tüm önbellekleri temizle",
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -284,11 +288,11 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öğe gizleme&rdquo; süzgeçlerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu süzgeçler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı süzme motoru tarafından engellenemeyecek olan öğelerin gizlenmesine yarar.<\/p><p>Bu özelliği etkinleştirmek  uBlock₀'in bellek kullanımını artırır.<\/p>",
+    "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öge gizleme&rdquo; süzgeçlerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu süzgeçler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı süzme motoru tarafından engellenemeyecek olan ögelerin gizlenmesine yarar.<\/p><p>Bu özelliği etkinleştirmek uBlock₀'in bellek kullanımını artırır.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
-    "message":"Genel kozmetik süzgeçleri yoksay.",
+    "message":"Genel kozmetik süzgeçleri yok say",
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
@@ -332,28 +336,24 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Her satırda bir URL. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir. Geçersiz URL'ler sessizce yoksayılır.",
+    "message":"Her satırda bir URL. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir. Geçersiz URL'ler sessizce yok sayılır.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Uygula",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"önbelleği temizle",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"yeni sürüm mevcut",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"eski",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Güncel değil.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Son güncelleme: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Son güncelleme: {{ago}}.\nGüncelleştirmeye zorlamak için tıklayın.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Güncelleniyor...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Bir ağ hatası kaynağın güncellenmesini engelledi.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Her satırda bir süzgeç. Süzgeç bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. &lsquo;!&rsquo; ile başlayan satırlar yok sayılır.",
@@ -464,15 +464,15 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Sahne arkası",
+    "message":"Perde arkası",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"günlük kayıtlarını süz",
+    "message":"günlük girişlerini süz",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maksimum günlük kayıt sayısı",
+    "message":"Maksimum günlük giriş sayısı",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
@@ -568,11 +568,11 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tüm ayarlarınız {{time}} tarihinde yedeklenmiş veriler kullanarak değiştirilecek ve uBlock₀ yeniden başlayacak. \n\nYedeklenmiş verileriniz kullanılarak mevcut tüm ayarlarınız değiştirilsin mi?",
+    "message":"Tüm ayarlarınız {{time}} tarihinde yedeklenmiş veriler kullanarak değiştirilecek ve uBlock₀ yeniden başlayacak. \n\nYedeklenmiş verileriniz kullanılarak var olan tüm ayarlarınız değiştirilsin mi?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Veri okunamıyor ya da geçersiz",
+    "message":"Veri okunamadı veya geçersiz",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
@@ -580,15 +580,15 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}} adresine bağlanılamıyor",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Ağ hatası: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Aşağıdaki URL, özel süzgeç listenize eklensin mi?\n\nBaşlık: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"1 dakika önce",
+    "message":"bir dakika önce",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -596,7 +596,7 @@
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"1 saat önce",
+    "message":"bir saat önce",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
@@ -604,7 +604,7 @@
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"1 gün önce",
+    "message":"bir gün önce",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
@@ -628,7 +628,7 @@
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Aşağıdaki süzgeçten dolayı",
+    "message":"Bu süzgeç nedeniyle",
     "description":"English: Because of the following filter"
   },
   "docblockedNoParamsPrompt":{
@@ -640,7 +640,7 @@
     "description":"English: List of filter list names follows"
   },
   "docblockedBack":{
-    "message":"Geri dön",
+    "message":"Geri git",
     "description":"English: Go back"
   },
   "docblockedClose":{
@@ -664,11 +664,11 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Bulut depodan içe aktar",
+    "message":"Bulut depodan al",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
-    "message":"Bulut depodan içe aktar ve şu anki ayarlarla birleştir",
+    "message":"Bulut depodan al ve şu anki ayarlarla birleştir",
     "description":"tooltip"
   },
   "cloudNoData":{
@@ -700,7 +700,7 @@
     "description":""
   },
   "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Geçici olarak büyük medya öğelerine izin ver",
+    "message":"Geçici olarak büyük medya ögelerine izin ver",
     "description":"A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy":{

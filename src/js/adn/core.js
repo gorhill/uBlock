@@ -369,6 +369,7 @@
     vAPI.messaging.broadcast({
        what: 'notifications',
        notifications: notes
+       // TODO: do we need to make these cloneable ? see #1163
      });
   }
 
@@ -873,6 +874,7 @@
       prefs: contentPrefs(),
       current: activeVisit(),
       notifications: notifications
+      // TODO: do we need to make these cloneable ? see #1163
     };
   }
 
@@ -1135,8 +1137,8 @@
     }
 
     var snfe = µb.staticNetFilteringEngine,
-      compiled = snfe.toResultString(1).slice(3),
-      raw = snfe.filterStringFromCompiled(compiled),
+      compiled = snfe.toLogData().compiled,
+      raw = snfe.toLogData().raw,
       url = context.requestURL;
 
     /*
@@ -1214,7 +1216,6 @@
 
     return (automatedMode && automatedMode.length);
   }
-
 
   var saveVaultImages = function (jsonName) {
 
@@ -1372,13 +1373,8 @@
   };
 
   exports.mustAllowRequest = function (result, context) {
-
-    return result && result.length && !isBlockableRequest(context);
+    return result !== 0 && !isBlockableRequest(context);
   };
-
-  exports.isAllowedExceptions = function (url) {
-    return url && typeof allowedExceptions[url] !== undefined;
-  }
 
   exports.itemInspected = function (request, pageStore, tabId) {
 
@@ -1758,8 +1754,12 @@
 
     vAPI.getAddonInfo(function (UBlockConflict, AdBlockConflict) {
 
-      if(UBlockConflict || AdBlockConflict) modified = addNotification(notes, AdBlockerEnabled);
-      else modified = removeNotification(notes, AdBlockerEnabled);
+      if (UBlockConflict || AdBlockConflict) {
+        modified = addNotification(notes, AdBlockerEnabled);
+      }
+      else {
+        modified = removeNotification(notes, AdBlockerEnabled);
+      }
 
       modified && sendNotifications(notes);
     });
@@ -1793,6 +1793,9 @@
       for (var i = 0; i < lists.length; i++) {
         if (lists[i] === note.listName) {
             entry = lists[i];
+        } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
+            //Fanboy's Ultimate Merged List
+            entry = note.listName;
         }
       }
 
@@ -1876,7 +1879,9 @@
 
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
         var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
-        µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
+
+        // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
+        // µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
       }
 
       sendNotifications(notes);
@@ -1985,6 +1990,26 @@
 
     return jsonData;
   };
+
+  /*var downloadAds = exports.downloadAds = function (request) {
+
+    var count = adCount(),
+      jsonData = admapToJSON(request.sanitize);
+
+    if (!production && request.includeImages) saveVaultImages();
+
+    log('[EXPORT] ' + count + ' ads');
+
+    console.log('core.downloadAds', jsonData);
+
+    var filename = getExportFileName(),
+      url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+
+    chrome.downloads.download({
+      url : url,
+      filename : filename
+    });
+  };*/
 
   exports.closeExtPage = function (request) {
 

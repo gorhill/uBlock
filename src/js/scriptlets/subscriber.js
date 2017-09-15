@@ -48,26 +48,16 @@ if ( typeof vAPI !== 'object' ) {
 
 /******************************************************************************/
 
-// Only if at least one subscribe link exists on the page.
-
-var subscribeLinks = document.querySelectorAll('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]');
-if ( subscribeLinks.length === 0 ) {
-    return;
-}
-
-/******************************************************************************/
-
-var onAbpLinkClicked = function(ev) {
+var onMaybeAbpLinkClicked = function(ev) {
     if ( ev.button !== 0 ) {
         return;
     }
-    // This addresses https://github.com/ABPIsrael/EasyListHebrew/issues/89
+    // This addresses https://github.com/easylist/EasyListHebrew/issues/89
     // Also, as per feedback to original fix:
     // https://github.com/gorhill/uBlock/commit/99a3d9631047d33dc7a454296ab3dd0a1e91d6f1
     var target = ev.target;
     if (
         ev.isTrusted === false ||
-        target !== ev.currentTarget ||
         target instanceof HTMLAnchorElement === false
     ) {
         return;
@@ -115,9 +105,18 @@ var onAbpLinkClicked = function(ev) {
     );
 };
 
-for ( var i = 0; i < subscribeLinks.length; i++ ) {
-    subscribeLinks[i].addEventListener('click', onAbpLinkClicked);
-}
+/******************************************************************************/
+
+// Only if at least one subscribe link exists on the page.
+
+setTimeout(function() {
+    if (
+        document.querySelector('link[rel="canonical"][href="https://filterlists.com/"]') !== null ||
+        document.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') !== null
+    ) {
+        document.addEventListener('click', onMaybeAbpLinkClicked);
+    }
+}, 997);
 
 /******************************************************************************/
 

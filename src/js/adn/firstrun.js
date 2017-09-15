@@ -63,10 +63,12 @@
   }
 
   function hasEnabledToggle() {
+
     return switchValue('hidingAds') || switchValue('clickingAds') || switchValue('blockingMalware');
   }
 
   function toggleNum(){
+
     var toggleNum = 0;
     if(switchValue('hidingAds')) toggleNum++;
     if(switchValue('clickingAds')) toggleNum++;
@@ -95,6 +97,7 @@
   }
 
   function toggleFirstRunButton() {
+
     var button = uDom('#confirm-close > button');
 
     if (hasEnabledToggle()) {
@@ -157,7 +160,7 @@
                   this.checked
                 );
               }
-            
+
               if (!hideOrClick()) {
                 changeDNTexceptions(false);
               }
@@ -170,19 +173,23 @@
     });
 
     uDom('[data-setting-type="input"]').forEach(function (uNode) {
+
       uNode.val(details[uNode.attr('data-setting-name')])
         .on('change', onInputChanged);
     });
 
     uDom(document).on('click', 'p[data-i18n="adnFirstRunHideAllAdsDescription"] span, p[data-i18n="adnFirstRunClickingAdsDescription"] span', function() {
+
         openPage('/dashboard.html#3p-filters.html');
     });
 
     uDom(document).on('click', 'p[data-i18n="adnFirstRunBlockingMalwareDescription"] span',function (e) {
+
        openPage('/dashboard.html#options.html');
     });
 
     uDom('#confirm-close').on('click', function (e) {
+
       if (hasEnabledToggle()) {
         e.preventDefault();
         // handles #371
@@ -198,6 +205,10 @@
     });
 
     uDom('#app-version').text(details.appVersion);
+
+    uDom('#dnt-exception').on('change', function (e) {     // #1173
+      changeDNTexceptions(this.checked);
+    });
 
     toggleDNTException();
   };

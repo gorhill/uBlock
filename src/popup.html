@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html id="uBO-popup-panel">
 
 <head>
@@ -6,19 +6,23 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="css/common.css" type="text/css">
 <link rel="stylesheet" href="css/popup.css" type="text/css">
-<title>uBlock</title>
+<title>uBlock Origin</title>
 </head>
 
 <body>
-<a href="dashboard.html" target="_blank" id="gotoPrefs" data-i18n-tip="popupTipDashboard" data-tip-position="under"><span id="appname">µBlock</span> <span id="version">{UBLOCK_VERSION}</span><span class="fa">&#xf013;</span></a>
+<span id="appinfo"><span id="appname">&nbsp;</span> <span id="version">&nbsp;</span></span>
 <div id="panes">
     <div class="tooltipContainer">
         <p id="switch" data-i18n-tip="popupPowerSwitchInfo" data-tip-position="under"><span class="fa">&#xf011;</span></p>
+        <p id="basicTools">
+            <span id="gotoZap" class="fa tool" data-i18n-tip="popupTipZapper" data-tip-position="under">&#xf0e7;</span>
+            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-position="under">&#xf1fb;</span>
+            <a href="logger-ui.html" class="fa tool enabled" data-i18n-tip="popupTipLog" data-tip-position="under" target="uBOLogger">&#xf022;</a>
+            <a href="dashboard.html" class="fa tool enabled" data-i18n-tip="popupTipDashboard" data-tip-position="under" target="uBODashboard">&#xf085;</a>
+        </p>
         <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt">&nbsp;</h2>
         <p class="statName">
-            <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>&ensp;
-            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker">&#xf1fb;</span>&ensp;
-            <a href="logger-ui.html" class="fa tool enabled" data-i18n-tip="popupTipLog">&#xf022;</a>
+            <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>
         </p>
         <p class="statValue" id="page-blocked">?</p>
         <div id="refresh" class="fa">&#xf021;</div>
@@ -29,10 +33,10 @@
         <h2 data-i18n="popupHitDomainCountPrompt">&nbsp;</h2>
         <p class="statValue" id="popupHitDomainCount">&nbsp;</p>
         <div id="extraTools">
-            <span id="no-popups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups">&#xf0c5;<span class="badge"></span><span></span></span>
-            <span id="no-large-media" class="hnSwitch fa" data-i18n-tip="popupTipNoLargeMedia">&#xf008;<span class="badge"></span><span></span></span>
-            <span id="no-cosmetic-filtering" class="hnSwitch fa" data-i18n-tip="popupTipNoCosmeticFiltering">&#xf070;<span class="badge"></span><span></span></span>
-            <span id="no-remote-fonts" class="hnSwitch fa" data-i18n-tip="popupTipNoRemoteFonts">&#xf031;<span class="badge"></span><span></span></span>
+            <span id="no-popups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups">&#xf0c5;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-large-media" class="hnSwitch fa" data-i18n-tip="popupTipNoLargeMedia">&#xf008;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-cosmetic-filtering" class="hnSwitch fa" data-i18n-tip="popupTipNoCosmeticFiltering">&#xf070;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-remote-fonts" class="hnSwitch fa" data-i18n-tip="popupTipNoRemoteFonts">&#xf031;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
         </div>
     </div><!-- DO NOT REMOVE --><div class="tooltipContainer">
         <div id="firewallContainer" class="minimized">
@@ -48,7 +52,7 @@
 </div>
 
 <div id="templates" style="display: none">
-    <div><span></span><span data-src="/" data-des="" data-type="*"></span><span data-src="." data-des="" data-type="*"></span><span data-src="." data-des="" data-type="*"></span></div>
+    <div><span><sup></sup><span></span></span><span data-src="/" data-des="" data-type="*"></span><span data-src="." data-des="" data-type="*"></span><span data-src="." data-des="" data-type="*"></span></div>
     <div id="actionSelector"><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
     <div id="hotspotTip"></div>
     <div id="tooltip"></div>

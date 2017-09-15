@@ -68,8 +68,12 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clique para abrir o painel de controle",
+    "message":"Clique para abrir o painel",
     "description":"English: Click to open the dashboard"
+  },
+  "popupTipZapper":{
+    "message":"Entrar no modo elemento zapper",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
     "message":"Entrar no modo de seleção de elemento",
@@ -184,7 +188,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar os espaços ocupados por elementos bloqueados",
+    "message":"Ocultar espaços ocupados por elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -192,7 +196,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
-    "message":"Desativar dicas",
+    "message":"Desabilitar dicas de ferramentas",
     "description":"A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt":{
@@ -232,7 +236,7 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Estes comportamentos padrões podem ser substituídos em uma base por site",
+    "message":"Esses comportamentos padrões podem ser substituídos por site",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
@@ -335,25 +339,21 @@
     "message":"Uma URL por linha. As linhas prefixadas com &lsquo;!&rsquo; serão ignoradas. URLs inválidas serão silenciosamente ignoradas.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analisar",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"limpar cache",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"nova versão disponível",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
-    "message":"desatualizada",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "message":"Desatualizada.",
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Última atualização: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Última atualização: {{ago}}.\nClique para forçar uma atualização.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"Atualizando...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"Um erro de rede impediu a atualização desse recurso.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Adicione um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
@@ -388,7 +388,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Aplicar",
+    "message":"Confirmar",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -464,7 +464,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Bastidores",
+    "message":"Por trás da cena",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -580,8 +580,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Não foi possível conectar à {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Erro na rede: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Adicionar a seguinte URL na sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
@@ -664,7 +664,7 @@
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Importar do armazenamento em nuvem",
+    "message":"Importação do armazenamento na nuvem",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Atenção! Altere essas configurações avançadas por sua conta e risco.",
+    "message":"Atenção! Altere essas configurações avançadas por sua própria conta e risco.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{

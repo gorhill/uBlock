@@ -35,7 +35,13 @@ var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
-vAPI.cantWebsocket = true;
+vAPI.chromiumVersion = (function(){
+    var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
+    return matches !== null ? parseInt(matches[1], 10) : NaN;
+    })();
+vAPI.cantWebsocket =
+    chrome.webRequest.ResourceType instanceof Object === false  ||
+    chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
 var noopFunc = function(){};
 
@@ -472,12 +478,12 @@ vAPI.tabs.open = function(details) {
     var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        var tab = tabs[0];
+        if ( chrome.runtime.lastError ) { /* noop */ }
+        var tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
         }
-
         var _details = {
             active: true,
             url: undefined
@@ -691,11 +697,12 @@ vAPI.messaging.onPortMessage = (function() {
         }
         // https://github.com/chrisaljoudi/uBlock/issues/383
         if ( messaging.ports.hasOwnProperty(this.port.name) ) {
-            this.port.postMessage({
-                auxProcessId: this.request.auxProcessId,
-                channelName: this.request.channelName,
-                msg: response !== undefined ? response : null
-            });
+          var msg = {
+              auxProcessId: this.request.auxProcessId,
+              channelName: this.request.channelName,
+              msg: response !== undefined ? response : null
+          }
+          this.port.postMessage(msg);
         }
         // Mark for reuse
         this.port = this.request = null;
@@ -854,6 +861,12 @@ vAPI.messaging.setup = function(defaultHandler) {
 /******************************************************************************/
 
 vAPI.messaging.broadcast = function(message) {
+
+    if (message.what === 'notifications') { // ADN
+
+      makeCloneable(message.notifications); // #1163
+    }
+
     var messageWrapper = {
         broadcast: true,
         msg: message
@@ -1064,10 +1077,10 @@ vAPI.net.registerListeners = function() {
     // This is needed for Chromium 49-55.
     var onBeforeSendHeaders = validTypes.csp_report
         // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? function(details) { return onBeforeSendHeadersClient(details); }
+        ? function(details) {
+          return onBeforeSendHeadersClient(details); }
         // legacy Chromium
         : function(details) {
-
             var result = onBeforeSendHeadersClient(details);
 
             if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
@@ -1078,7 +1091,6 @@ vAPI.net.registerListeners = function() {
                 return onBeforeRequestClient(details);
             }
         };
-
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
@@ -1150,18 +1162,14 @@ vAPI.net.registerListeners = function() {
     // Chromium 48 and lower does not support `ping` type.
     // Chromium 56 and higher does support `csp_report` stype.
     if ( onBeforeSendHeaders ) {
-      // console.log('adding onBeforeSendHeaders');
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             {
                 'urls': [ '<all_urls>' ]
-                //,'types': [ 'ping' ]
+                //'types': [ 'ping' ]
             },
             [ 'blocking', 'requestHeaders' ]
         );
-    }
-    else {
-      // console.log('skipping onBeforeSendHeaders');
     }
 
     if ( onHeadersReceived ) {
@@ -1221,6 +1229,11 @@ vAPI.contextMenu = {
         }
     }
 };
+
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.commands = chrome.commands;
 
 /******************************************************************************/
 /******************************************************************************/

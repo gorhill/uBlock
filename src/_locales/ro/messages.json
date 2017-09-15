@@ -68,8 +68,12 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clic pentru a deschide panoul",
+    "message":"Clic pentru a deschide tabloul de bord",
     "description":"English: Click to open the dashboard"
+  },
+  "popupTipZapper":{
+    "message":"Accesați modul de eliminare elemente",
+    "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
     "message":"Modul alege element",
@@ -335,25 +339,21 @@
     "message":"O adresă pe linie. Liniile care încep cu &lsquo;!&rsquo; vor fi ignorate. Adresele nevalide vor fi ignorate fără avertizare.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
-  "3pExternalListsApply":{
-    "message":"Analizează",
-    "description":"English: Parse"
-  },
-  "3pExternalListPurge":{
-    "message":"golește memoria tampon",
-    "description":"English: purge cache"
-  },
-  "3pExternalListNew":{
-    "message":"versiune nouă disponibilă",
-    "description":"English: new version available"
-  },
   "3pExternalListObsolete":{
     "message":"învechit",
-    "description":"a filter list is 'out of date' (possibly needs to be updated)"
+    "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Ultima actualizare: {{ago}}",
-    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+    "message":"Ultima actualizare: {{ago}}.\nClic pentru a forța o actualizare.",
+    "description":"used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating":{
+    "message":"În curs de actualizare...",
+    "description":"used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError":{
+    "message":"O eroare de rețea a împiedicat actualizarea resursei.",
+    "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
     "message":"Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
@@ -540,7 +540,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"Ajutor",
+    "message":"Suport",
     "description":"A link for where to get support"
   },
   "aboutCode":{
@@ -580,8 +580,8 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nu mă pot conecta la {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "message":"Eroare de rețea: {{msg}}",
+    "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
     "message":"uBlock₀: Adaug următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
@@ -680,7 +680,7 @@
     "description":"used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning":{
-    "message":"Avertisment: schimbă aceste setări avansate pe propriul risc.",
+    "message":"Atenție: schimbă aceste setări avansate pe propriul risc.",
     "description":"A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit":{
