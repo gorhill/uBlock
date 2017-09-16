@@ -74,15 +74,15 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"abprotector-0": {
+	"aak-continued": {
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "uBlock Protector List",
-		"contentURL": "https://raw.githubusercontent.com/jspenguin2017/uBlockProtector/master/uBlockProtectorList.txt",
-		"supportURL": "https://github.com/jspenguin2017/uBlockProtector/blob/master/CONTRIBUTING.MD",
-		"instructionURL": "https://jspenguin2017.github.io/uBlockProtector/"
-	},
+		"title": "AAK-Cont Filters For uBlock Origin",
+		"contentURL": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-ubo.txt",
+		"supportURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont/issues",
+		"instructionURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont#installation-instruction"
+		},
 	"awrl-0": {
 		"content": "filters",
 		"group": "ads",
@@ -90,6 +90,14 @@
 		"title": "Adblock Warning Removal List",
 		"contentURL": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
 		"supportURL": "https://forums.lanik.us/"
+	},
+	"adguard-generic": {
+		"content": "filters",
+		"group": "ads",
+		"off": true,
+		"title": "Adguard Generic Filters",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues"
 	},
 	"easylist": {
 		"content": "filters",
@@ -102,14 +110,6 @@
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
-		"supportURL": "https://forums.lanik.us/"
-	},
-	"easylist-nocosmetic": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "EasyList without element hiding rules",
-		"contentURL": "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"disconnect-tracking": {
