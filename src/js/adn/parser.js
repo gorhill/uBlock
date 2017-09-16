@@ -36,6 +36,8 @@
     elem && vAPI.adParser.process(elem);
   }
 
+  var ignorableImages = [ 'mgid_logo_mini_43x20.png', 'data:image/gif;base64,R0lGODlh7AFIAfAAAAAAAAAAACH5BAEAAAAALAAAAADsAUgBAAL+hI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPExcbHyMnKy8zNzs/AwdLT1NXW19jZ2tvc3d7f0NHi4+Tl5ufo6err7O3u7+Dh8vP09fb3+Pn6+/z9/v/w8woMCBBAsaPIgwocKFDBs6fAgxosSJFCtavIgxo8b+jRw7evwIMqTIkSRLmjyJMqXKlSxbunwJM6bMmTRr2ryJM6fOnTx7+vwJNKjQoUSLGj2KNKnSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLmj2LNq3atWzbun0LN67cuXTr2r2LN6/evXz7+v0LOLDgwYQLGz6MOLHixYwbO34MObLkyZQrW76MObPmzZw7e/4MOrTo0aRLmz6NOrXq1axbu34NO7bs2bRr276NO7fu3bx7+/4NPLjw4cSLGz+OPLny5cybO38OPbr06dSrW7+OPbv27dy7e/8OPrz48eTLmz+PPr369ezbu38PP778+fTr27+PP7/+/fxR+/v/D2CAAg5IYIEGHohgggouyGCDDj4IYYQSTkhhhRZeiGGGGm7IYYcefghiiCKOSGKJJp6IYooqrshiiy6+CGOMMs5IY4023ohjjjruCFYBADs='];
+
   var createParser = function () {
 
     var findImageAds = function (imgs) {
@@ -166,10 +168,24 @@
       var ad, iw = img.naturalWidth || -1, ih = img.naturalHeight || -1,
         minDim = Math.min(iw, ih), maxDim = Math.max(iw, ih);
 
+      function isIgnorable(imgSrc) {
+        for (var i = 0; i < ignorableImages.length; i++) {
+          if (imgSrc.includes(ignorableImages[i])) {
+            return true;
+          }
+        }
+        return false;
+      }
+
       // Check size: require a min-size of 4x31, if we got a size
       if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 31)) {
 
-        return warnP("Ignoring Ad with size " + iw + "x" + ih, src, targetUrl);
+        return warnP('Ignoring Ad with size ' + iw + 'x' + ih + ': ', src, targetUrl);
+      }
+
+      if (isIgnorable(src)) { // check ignorables
+
+        return warnP('Ignorable image: ' + src);
       }
 
       ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih }, targetDomain);

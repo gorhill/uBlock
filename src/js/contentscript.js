@@ -1202,7 +1202,8 @@ vAPI.domCollapser = (function() {
             }
         }
 
-        if (!isFirefox()) { // ADN: inject content-scripts into dynamically-created iframes (ok in ff)
+        // ADN: inject content-scripts into dynamically-created iframes (ok in ff)
+        if (!navigator.userAgent.includes('Firefox/')) {
 
             var sendInjectScripts = function (f) {
 

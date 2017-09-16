@@ -1547,7 +1547,7 @@
 
     if (!validate(ad)) {
 
-      return warn("Invalid Ad: ", ad);
+      return warn(ad);
     }
 
     if (!internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
