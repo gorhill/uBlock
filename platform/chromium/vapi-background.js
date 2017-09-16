@@ -47,22 +47,6 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
-if ( 
-    typeof browser === 'object' &&
-    browser !== null &&
-    browser.runtime instanceof Object &&
-    typeof browser.runtime.getBrowserInfo === 'function'
-) {
-    browser.runtime.getBrowserInfo().then(function(info) {
-        vAPI.supportsUserStylesheets =
-            info.name === 'Firefox' &&
-            parseInt(info.version, 10) > 52;
-
-    });
-}
-
-/******************************************************************************/
-
 vAPI.app = {
     name: manifest.name,
     version: manifest.version
@@ -718,6 +702,13 @@ vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
         toAuxPending = {};
 
+    // https://issues.adblockplus.org/ticket/5695
+    // - Good idea, adopted: cleaner way to detect user-stylesheet support.
+    var supportsUserStylesheets = 
+        chrome.extensionTypes instanceof Object &&
+        chrome.extensionTypes.CSSOrigin instanceof Object &&
+        'USER' in chrome.extensionTypes.CSSOrigin;
+
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
         this.callback = this.proxy.bind(this); // bind once
@@ -831,7 +822,7 @@ vAPI.messaging.onPortMessage = (function() {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( vAPI.supportsUserStylesheets === true ) {
+            if ( supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
             var fn;
