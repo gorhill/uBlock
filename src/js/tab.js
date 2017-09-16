@@ -880,7 +880,7 @@ vAPI.tabs.registerListeners();
 
     var tabIdToTimer = Object.create(null);
 
-        var updateBadge = function(tabId, isClick) {
+    var updateBadge = function(tabId, isClick) {
         delete tabIdToTimer[tabId];
 
         var state = false;
@@ -902,8 +902,9 @@ vAPI.tabs.registerListeners();
 
         var iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
         if (iconStatus !== 'off') {
-          iconStatus += (isClick ? 'active' : '');
+            iconStatus += (isClick ? 'active' : '');
         }
+
         vAPI.setIcon(tabId, iconStatus, badge);
     };
 
