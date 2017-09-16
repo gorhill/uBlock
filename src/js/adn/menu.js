@@ -72,7 +72,7 @@
       }
     }
     else {
-      // for Firefox new tab page (see #1194)
+      // for Firefox new tab page (see #1196)
       disableMenu();
     }
 
