@@ -1,14 +1,14 @@
-uBlock₀ est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire & en utilisation du processeur, capable pourtant d'utiliser & de traiter des milliers de filtres de plus que la plupart des autres bloqueurs disponibles.
+uBlock₀ est un bloqueur efficace de publicités et de pisteurs; utilisant peu de mémoire vive & de ressources du processeur, il est pourtant capable de charger & d'appliquer des milliers de filtres de plus que d'autres bloqueurs populaires.
 
 Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Utilisation : Le gros bouton "Power" dans la fenêtre pop-up permet de désactiver/activer en permanence uBlock₀ pour le site Web en cours de consultation. Cela s'applique uniquement au site Web actuel, ce n'est pas un bouton "Power" qui affecte entièrement le fonctionnement de l'extension.
+Utilisation : Le gros bouton "Power" dans la fenêtre pop-up permet de désactiver/activer en permanence uBlock₀ pour le site Web en cours de consultation. Cela s'applique uniquement au site Web actuel, ce n'est pas un bouton "Power" global.
 
 ***
 
-Flexible, uBlock₀ ne prend pas en charge que les filtres de type Adblock, elle peut également lire et créer des filtres depuis des fichiers hosts.
+Flexible, uBlock₀ n'est pas qu'un simple bloqueur de publicités, il peut également lire et créer des filtres depuis des fichiers hosts.
 
-Par défaut, ces listes de filtrage sont chargées et traitées :
+Par défaut, ces listes de filtrage sont chargées et appliquées :
 
 - EasyList (Liste anti-publicités maintenue fréquemment à jour par la communauté)
 - Peter Lowe’s Ad server list (Liste de serveurs publicitaires maintenue à jour par Peter Lowe)
@@ -18,15 +18,15 @@ Par défaut, ces listes de filtrage sont chargées et traitées :
 Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 
 - Fanboy’s Enhanced Tracking List (Liste de protection avancée contre le pistage maintenue à jour par Fanboy)
-- Dan Pollock’s hosts file (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue fréquemment à jour par Dan Pollock)
-- hpHosts’s Ad and tracking servers (Fichier Hosts bloquant des serveurs publicitaires & des serveurs de pistage, maintenue à jour par hpHosts)
+- Dan Pollock’s hosts file (Fichier hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue fréquemment à jour par Dan Pollock)
+- hpHosts’s Ad and tracking servers (Fichier hosts bloquant des serveurs publicitaires & des serveurs de pistage, maintenue à jour par hpHosts)
 - MVPS HOSTS (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue à jour par MVPS)
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
 - Et de nombreuses autres
 
-Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier Hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
+Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
 
-Veuillez tout de même prendre en compte que le fait de choisir parmi ces listes supplémentaires peut conduire à quelques incompatibilités sur les sites Web que vous visitez, bien que ces listes soient maintenues à jour par leurs auteurs.
+Veuillez tout de même prendre en compte qu'utiliser certaines listes supplémentaires peut conduire à quelques incompatibilités sur les sites Web que vous visitez - en particulier les fichiers hosts.
 
 ***
 
@@ -35,8 +35,8 @@ Sans les listes prédéfinies de filtres, cette extension (comme d'autres) ne se
 ***
 
 Gratuit.
-Source libre avec une licence publique GPLv3
-Fait par des utilisateurs pour des utilisateurs.
+Source libre sous licence publique GPLv3
+Conçu par des utilisateurs pour des utilisateurs.
 
 Contributeurs sur Github: https://github.com/gorhill/uBlock/graphs/contributors
 Contributeurs sur Crowdin: https://crowdin.net/project/ublock
