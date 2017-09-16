@@ -69,11 +69,12 @@ var typeNameToTypeValue = {
           'popunder': 12 << 4,
         'main_frame': 13 << 4,  // start of 1st-party-only behavorial filtering
        'generichide': 14 << 4,
-     'inline-script': 15 << 4,
-              'data': 16 << 4,  // special: a generic data holder
-          'redirect': 17 << 4,
-            'webrtc': 18 << 4,
-       'unsupported': 19 << 4
+       'inline-font': 15 << 4,
+     'inline-script': 16 << 4,
+              'data': 17 << 4,  // special: a generic data holder
+          'redirect': 18 << 4,
+            'webrtc': 19 << 4,
+       'unsupported': 20 << 4
 };
 var otherTypeBitValue = typeNameToTypeValue.other;
 
@@ -92,11 +93,12 @@ var typeValueToTypeName = {
     12: 'popunder',
     13: 'document',
     14: 'generichide',
-    15: 'inline-script',
-    16: 'data',
-    17: 'redirect',
-    18: 'webrtc',
-    19: 'unsupported'
+    15: 'inline-font',
+    16: 'inline-script',
+    17: 'data',
+    18: 'redirect',
+    19: 'webrtc',
+    20: 'unsupported'
 };
 
 var BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
@@ -234,9 +236,9 @@ var toLogDataInternal = function(categoryBits, tokenHash, filter) {
     } else if ( categoryBits & 0x004 ) {
         opts.push('first-party');
     }
-    var type = (categoryBits >>> 4) & 0x1F;
-    if ( type !== 0 && type !== 16 /* data */ ) {
-        opts.push(typeValueToTypeName[type]);
+    var type = categoryBits & 0x1F0;
+    if ( type !== 0 && type !== typeNameToTypeValue.data ) {
+        opts.push(typeValueToTypeName[type >>> 4]);
     }
     if ( logData.opts !== undefined ) {
         opts.push(logData.opts);
@@ -1349,6 +1351,7 @@ FilterParser.prototype.toNormalizedType = {
       'genericblock': 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
+       'inline-font': 'inline-font',
      'inline-script': 'inline-script',
              'media': 'media',
             'object': 'object',
@@ -2219,6 +2222,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         filterPairId = FilterPair.fid,
         filterBucketId = FilterBucket.fid,
         filterDataHolderId = FilterDataHolder.fid,
+        redirectTypeValue = typeNameToTypeValue.redirect,
         args, bits, bucket, entry,
         tokenHash, fdata, fingerprint;
 
@@ -2233,7 +2237,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
         // Special cases: delegate to more specialized engines.
         // Redirect engine.
-        if ( (bits >>> 4) === 17 ) {
+        if ( (bits & 0x1F0) === redirectTypeValue ) {
             µb.redirectEngine.fromCompiledRule(args[1]);
             continue;
         }
