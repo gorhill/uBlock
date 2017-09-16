@@ -8,11 +8,11 @@
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"Derlenme tarihi",
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Sıkça sorulan sorular",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
@@ -28,299 +28,303 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Malware Engelle",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Block Malware",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
-    "message":"Hide Ads in your selected <span>filter lists<\/span>",
+    "message":"Seçili <span>süzgeç listeleriniz<\/span> deki reklamları gizle",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"Register visits on Ads found via your <span>filter lists<\/span>",
+    "message":"<span>Süzgeç listeleriniz<\/span> deki reklamlara ziyaretleri kaydet",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Protect against malicious Ads and trackers (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Block trackers and other malware (<span>customize<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Yeniden etkinleştir",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Devre dışı bırak",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Reklam gizlemeyi etkinleştir",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
-    "message":"Activate Ad clicking",
+    "message":"Reklam tıklamayı etkinleştir",
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate blocking of malicious ads",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Activate malware blocking",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"EasyList süzgecini etkinleştir",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList":{
-    "message":"Activate the AdNauseam filter",
+    "message":"AdNauseam süzgecini etkinleştir",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"Reklam engelleyiciniz AdNauseam ile çakışabilir!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock ile AdNauseam çakışabilir!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
-    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message":"Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, reklamlara izin verildi.",
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
-    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message":"Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, tıklamadan gizliyoruz.",
     "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding":{
-    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message":"Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, gizlemeden tıklıyoruz",
     "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow":{
-    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message":"Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, bilginiz olsun.",
     "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
-    "message":"TARGET",
+    "message":"HEDEF",
     "description":"English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn":{
-    "message":"FOUND ON",
+    "message":"BULUNDUĞU YER",
     "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
-    "message":"Not Yet Visited",
+    "message":"Henüz ziyaret edilmedi",
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
-    "message":"Switch me on",
+    "message":"Beni etkinleştir",
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
-    "message":"That's it? ok…",
+    "message":"Bu kadar mı? Tamam…",
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"Daha iyi, ama yine de…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
-    "message":"Let's go!",
+    "message":"Haydi başlayalım!",
     "description":"English: Firstrun.html -> Let's go!"
   },
+  "goToAdNauseamWebsite":{
+    "message":"AdNauseam Web sitesine git",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
+  },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"AdNauseam bu sayfada duraklatıldı",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
-    "message":"AdNauseam is not currently hiding Ads",
+    "message":"AdNauseam şu anda reklamları gizlemiyor",
     "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
-    "message":"AdNauseam — AdVault",
+    "message":"AdNauseam — ReklamMahzeni",
     "description":"English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds":{
-    "message":"No Ads collected on this page (showing recent)",
+    "message":"Bu sayfadan hiç reklam toplanmadı (en yeniler gösteriliyor)",
     "description":"shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
+    "message":"AdNauseam_Ciktisi_{{datetime}}.json",
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}} Ads were imported",
+    "message":"{{count}} reklam kayda geçirildi",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
-    "message":"This action will permanently remove ALL of your Ads",
+    "message":"Bu hamle TÜM reklamlarınızı kalıcı olarak siler",
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Kayıtlara Bak",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
-    "message":"clicked",
+    "message":"tıklandı",
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
-    "message":"of the",
+    "message":"ın",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
-    "message":"Ads detected",
+    "message":"Reklam tespit edildi",
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{
-    "message":"View Ad Vault",
+    "message":"Reklam Mahzenini Göster",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{
-    "message":"Resume",
+    "message":"Devam et",
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"Settings",
+    "message":"Ayarlar",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
-    "message":"Export Ads",
+    "message":"Reklamları Dışa Aktar",
     "description":"appears in ADN popup menu"
   },
   "adnMenuImportAds":{
-    "message":"Import Ads",
+    "message":"İçeriye Reklam Aktar",
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging":{
-    "message":"Disable all logging",
+    "message":"Tüm kayıt almaları durdur",
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer":{
-    "message":"Disable outgoing referrer",
+    "message":"Giden yönlendirmeyi devre dışı bırak",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAds":{
-    "message":"Clear Ads with browser history",
+    "message":"Tarayıcı geçmişli reklamları sil",
     "description":"appears in ADN popup menu"
   },
   "adnMenuHideBadge":{
-    "message":"Hide Ad count on icon",
+    "message":"Simgedeki reklam sayısını gizle",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAdsNow":{
-    "message":"Clear Ads",
+    "message":"Reklamları sil",
     "description":"appears in ADN popup menu"
   },
   "adnLogNoLog":{
-    "message":"No log available",
+    "message":"Kayıt yok",
     "description":"appears in ADN log page"
   },
   "adnLogViewFullLog":{
-    "message":"View full log",
+    "message":"Tam kayıtları göster",
     "description":"appears in ADN log page"
   },
   "adnVaultSince":{
-    "message":"Since",
+    "message":"Şu tarihten beri:",
     "description":"appears on vault page"
   },
   "adnVaultDefaultDate":{
-    "message":"Jan 1 1970 0:00am",
+    "message":"1 Ocak 1970 0:00",
     "description":"appears on vault page"
   },
   "adnVaultExport":{
-    "message":"Export",
+    "message":"Dışa Aktar",
     "description":"appears on vault page"
   },
   "adnVaultImport":{
-    "message":"Import",
+    "message":"İçeri Aktar",
     "description":"appears on vault page"
   },
   "adnVaultClear":{
-    "message":"Clear",
+    "message":"Sil",
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"reklam toplandı",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
-    "message":"showing",
+    "message":"gösterimde",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
-    "message":"delete this Ad",
+    "message":"bu reklamı sil",
     "description":"appears on vault page"
   },
   "adnVaultTotalEstimated":{
-    "message":"total estimated",
+    "message":"tahmini toplam",
     "description":"appears on vault page"
   },
   "adnVaultAdsCost":{
-    "message":"cost",
+    "message":"maliyet",
     "description":"appears on vault page"
   },
   "hidingAdsPrompt":{
-    "message":"Hide Ads identified by your chosen filter lists",
+    "message":"Seçilen süzgec listelerinde tanımlanan reklamları gizle",
     "description":"English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt":{
-    "message":"Click Ads identified by your chosen filter lists",
+    "message":"Seçilen süzgec listelerinde tanımlanan reklamlarına tıkla",
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Block malware and non-visual trackers",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Block trackers and other malware",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
-    "message":"Capture text-only Ads when possible",
+    "message":"Mümkünse metin bazlı reklamları yakala",
     "description":"English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt":{
-    "message":"Display the number of Ads on the icon",
+    "message":"Reklam sayısınını simgede göster",
     "description":"English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt":{
-    "message":"Extra Privacy",
+    "message":"Ekstra Gizlilik",
     "description":"English: Interface"
   },
   "settingsInterfacePrompt":{
-    "message":"Interface",
+    "message":"Arayüz",
     "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
-    "message":"Ignore cookies returned with clicks",
+    "message":"Tıklamalardan gelen çerezleri yoksay",
     "description":"English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt":{
-    "message":"Don't send cookies on visits",
+    "message":"Ziyaretlerde çerez gönderme",
     "description":"English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt":{
-    "message":"Hide user-agent header on visits",
+    "message":"Ziyaretlerde user-agent üstbilgisini gizle",
     "description":"English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt":{
-    "message":"Hide referring page on visits",
+    "message":"Ziyaretlerde yönlendiren sayfayı gizle",
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"Nadiren",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
-    "message":"Sometimes",
+    "message":"Bazen",
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"Her zaman",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
-    "message":"Make exceptions for non-tracking Ads",
+    "message":"İz sürmeyen reklamlar için istisna yap",
     "description":"English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt":{
-    "message":"Don't hide non-tracking Ads",
+    "message":"İz sürmeyen reklamları gizleme",
     "description":"English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt":{
-    "message":"Don't click non-tracking Ads",
+    "message":"İz sürmeyen reklamları tıklama",
     "description":"English: Don't click non-tracking Ads"
   },
   "extName":{
@@ -328,35 +332,35 @@
     "description":"extension name"
   },
   "extShortDesc":{
-    "message":"Fight back against advertising surveillance",
+    "message":"Reklamcılık gözetimine karşı koy",
     "description":"for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials":{
-    "message":"Essentials",
+    "message":"Esaslar",
     "description":"English: Essentials"
   },
   "3pGroupOther":{
-    "message":"Other",
+    "message":"Diğer",
     "description":"English: Other"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Kötü amaçlı yazılım",
     "description":"English: Malware"
   },
   "3pGroupRegions":{
-    "message":"Languages",
+    "message":"Diller",
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"Güncelle",
     "description":"English: update"
   },
   "whitelistPageName":{
-    "message":"Whitelists",
+    "message":"Beyaz liste",
     "description":"appears as tab name in dashboard"
   },
   "eventLoggingPrompt":{
-    "message":"Activate debugging mode",
+    "message":"Hata ayıklama modunu etkinleştir",
     "description":"prompt for toggle"
   }
 }

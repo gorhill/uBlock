@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"منع الإعلانات الخبيثة",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Block Malware",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"إخفاء الإعلانات في <span> قوائم التصفية<\/span> المحددة",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"تحسين الإعدادات الخاصة بك للحماية من الإعلانات الخبيثة (<span> تعديل<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Block trackers and other malware (<span>customize<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"اعادة تفعيل",
@@ -60,8 +60,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"تفعيل منع الإعلانات الخبيثة",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Activate malware blocking",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"تفعيل قائمة التصفية EasyList",
@@ -123,12 +123,16 @@
     "message":"لنبدأ!",
     "description":"English: Firstrun.html -> Let's go!"
   },
+  "goToAdNauseamWebsite":{
+    "message":"انتقل الى موقع أدنوزيوم الإلكتروني",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
+  },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"أدنوزيوم موّقف على هذا الموقع",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
-    "message":"AdNauseam is not currently hiding Ads",
+    "message":"أدنوزيوم لا يخبئ الإعلانات حاليًا",
     "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
@@ -148,7 +152,7 @@
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
-    "message":"This action will permanently remove ALL of your Ads",
+    "message":"هذا التصرّف سيُزيل كل إعلاناتك الى الابد",
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
@@ -180,7 +184,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
-    "message":"Export Ads",
+    "message":"تصدير الإعلانات",
     "description":"appears in ADN popup menu"
   },
   "adnMenuImportAds":{
@@ -236,7 +240,7 @@
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"الإعلانات التي تم جمعها",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
@@ -256,16 +260,16 @@
     "description":"appears on vault page"
   },
   "hidingAdsPrompt":{
-    "message":"Hide Ads identified by your chosen filter lists",
+    "message":"اخفاء الاعلانات بحسب تعليماتك السابقة",
     "description":"English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt":{
-    "message":"Click Ads identified by your chosen filter lists",
+    "message":"اضغط على الإعلانات بحسب تعليماتك السابقة",
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Block malware and non-visual trackers",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Block trackers and other malware",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Capture text-only Ads when possible",
@@ -280,7 +284,7 @@
     "description":"English: Interface"
   },
   "settingsInterfacePrompt":{
-    "message":"Interface",
+    "message":"واجهة",
     "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
@@ -300,19 +304,19 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"نادراً",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
-    "message":"Sometimes",
+    "message":"بعض الأحيان",
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"دائما",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
-    "message":"Make exceptions for non-tracking Ads",
+    "message":"إجراء استثناءات لعدم تعقب الإعلانات",
     "description":"English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt":{

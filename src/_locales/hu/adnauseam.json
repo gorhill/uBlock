@@ -4,7 +4,7 @@
     "description":"English: Firstrun.html page title"
   },
   "aboutSupport":{
-    "message":"Support",
+    "message":"Támogatás",
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
@@ -12,7 +12,7 @@
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Gyakran ismételt kérdések",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
@@ -20,7 +20,7 @@
     "description":"English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds":{
-    "message":"Hide Ads",
+    "message":"Reklámok elrejtése",
     "description":"English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds":{
@@ -28,31 +28,31 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Block Malicious Ads",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Block Malware",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"Hide Ads in your selected <span>filter lists<\/span>",
     "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription":{
-    "message":"Register visits on Ads found via your <span>filter lists<\/span>",
+    "message":"Regisztrálja a látogatásokat a <span>szűrőlistával<\/span> talált reklámokon",
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Protect against malicious Ads and trackers (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Block trackers and other malware (<span>customize<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Újraaktiválás",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Kikapcsolás",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
-    "message":"Activate Ad hiding",
+    "message":"Hirdetés elrejtése aktiválása",
     "description":"English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking":{
@@ -60,27 +60,27 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activate blocking of malicious ads",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Activate malware blocking",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
-    "message":"Activate the EasyList filter",
+    "message":"Aktiválja a EasyList szűrőt",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList":{
-    "message":"Activate the AdNauseam filter",
+    "message":"Aktiválja a AdNauseam szűrőt",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"A reklám blokkolója és az AdNauseam összeütközhet egymással!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock és AdNauseam összeütközhet egymással!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
-    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message":"Ez az oldal tiszteletben tartja, <b>Nem Követi<\/b>, hirdetések engedélyezettek.",
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
@@ -96,39 +96,43 @@
     "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
-    "message":"TARGET",
+    "message":"CÉL",
     "description":"English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn":{
-    "message":"FOUND ON",
+    "message":"Alapítva",
     "description":"English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited":{
-    "message":"Not Yet Visited",
+    "message":"Még nem látogatott",
     "description":"English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn":{
-    "message":"Switch me on",
+    "message":"Kapcsoljon be",
     "description":"English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt":{
-    "message":"That's it? ok…",
+    "message":"Hogy ez? oké…",
     "description":"English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill":{
-    "message":"Better, but still…",
+    "message":"Jobb, de még mindig…",
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
-    "message":"Let's go!",
+    "message":"Gyerünk!",
     "description":"English: Firstrun.html -> Let's go!"
   },
+  "goToAdNauseamWebsite":{
+    "message":"Tovább az AdNauseam weboldalára",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
+  },
   "adnPausedOnPage":{
-    "message":"AdNauseam is paused on this page",
+    "message":"AdNauseam szünetel, ezen az oldalon",
     "description":"English: Menu->display when paused on page\/site"
   },
   "adnNotHiding":{
-    "message":"AdNauseam is not currently hiding Ads",
+    "message":"AdNauseam hirdetések jelenleg nem takar",
     "description":"English: Menu->display when not hiding Ads"
   },
   "adnVaultName":{
@@ -136,7 +140,7 @@
     "description":"English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds":{
-    "message":"No Ads collected on this page (showing recent)",
+    "message":"Ezen az oldalon nem gyűjtött hirdetéseket (legfrissebbek mutatása)",
     "description":"shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename":{
@@ -144,19 +148,19 @@
     "description":"English: AdNauseam file export"
   },
   "adnImportAlert":{
-    "message":"{{count}} Ads were imported",
+    "message":"{{count}} Hirdetés lett importálva",
     "description":"appears in ADN settings"
   },
   "adnClearConfirm":{
-    "message":"This action will permanently remove ALL of your Ads",
+    "message":"Ez a művelet véglegesen törli az ÖSSZES hirdetést",
     "description":"appears in ADN settings"
   },
   "adnMenuViewLog":{
-    "message":"View Log",
+    "message":"Napló megtekintése",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsClicked":{
-    "message":"clicked",
+    "message":"kattintott",
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
@@ -176,7 +180,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuSettings":{
-    "message":"Settings",
+    "message":"Beállítások",
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Block malware and non-visual trackers",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Block trackers and other malware",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Capture text-only Ads when possible",
@@ -300,15 +304,15 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"Ritkán",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
-    "message":"Sometimes",
+    "message":"Néha",
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"Mindig",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
@@ -336,7 +340,7 @@
     "description":"English: Essentials"
   },
   "3pGroupOther":{
-    "message":"Other",
+    "message":"Egyéb",
     "description":"English: Other"
   },
   "3pGroupMalware":{
@@ -344,7 +348,7 @@
     "description":"English: Malware"
   },
   "3pGroupRegions":{
-    "message":"Languages",
+    "message":"Nyelvek",
     "description":"English: Languages"
   },
   "3pPageUpdate":{

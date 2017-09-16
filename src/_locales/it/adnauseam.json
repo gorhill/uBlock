@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Blocca malware",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Malware bloccato",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"Nascondi le pubblicità presenti nelle <span>liste selezionate<\/span>",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Ottimizza impostazioni per la protezione contro i malware (<span>personalizza<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Bloccare inseguitori e altri malware (<span>personalizzare<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Riattiva",
@@ -60,8 +60,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Blocca malware",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Attivare blocco malware",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"Attiva il filtro EasyList",
@@ -122,6 +122,10 @@
   "adnFirstRunLetsGo":{
     "message":"Andiamo!",
     "description":"English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite":{
+    "message":"Vai alla pagina di AdNauseam",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam è disattivato su questa pagina",
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Blocca malware e tracker non visibili",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Inseguitori di blocco e altro malware",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Cattura pubblicità che contengono solo testo quando possibile",

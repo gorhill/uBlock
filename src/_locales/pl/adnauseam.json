@@ -12,7 +12,7 @@
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Często zadawane pytania",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Blokuj złośliwe reklamy",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Zablokuj złośliwe oprogramowanie",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów<\/span>",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"zoptymalizuj ustawienia ochrony przed złośliwymi reklamami (<span class='link' id='ToOptions'> dostosuj<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Blokuj tropicieli i inne złośliwe oprogramowanie (<span>Dostosowywanie<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reaktywuj",
@@ -60,8 +60,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Włącz blokowanie złośliwych reklam",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Aktywuj blokowanie złośliwego oprogramowania",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"Aktywuj filtr EasyList",
@@ -72,7 +72,7 @@
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"Twoje oprogramowanie do blokowania reklam i AdNauseam mogą kolidować!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
@@ -123,6 +123,10 @@
     "message":"Zaczynajmy!",
     "description":"English: Firstrun.html -> Let's go!"
   },
+  "goToAdNauseamWebsite":{
+    "message":"Przejdź na stronę AdNauseam",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
+  },
   "adnPausedOnPage":{
     "message":"AdNauseam jest wstrzymane na tej stronie",
     "description":"English: Menu->display when paused on page\/site"
@@ -160,7 +164,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuOfThe":{
-    "message":"of the",
+    "message":"z",
     "description":"appears in ADN popup menu"
   },
   "adnMenuAdsDetected":{
@@ -236,11 +240,11 @@
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"zgromadzone reklamy",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
-    "message":"showing",
+    "message":"wyświetlając",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Blokuj złośliwe oprogramowanie i niewidzialne trackery",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Blokuj tropicieli i inne złośliwe oprogramowanie",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Przechwytuj reklamy tekstowe, gdy to możliwe",
@@ -300,15 +304,15 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"Rzadko",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
-    "message":"Sometimes",
+    "message":"Czasami",
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"Zawsze",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
@@ -348,7 +352,7 @@
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"Aktualizuj",
     "description":"English: update"
   },
   "whitelistPageName":{

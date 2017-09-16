@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Bloqueja publicitat maliciosa",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Block Malware",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"Hide Ads in your selected <span>filter lists<\/span>",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Protegeix contra publicitat maliciosa i rastrejadors (<span>personalitzar<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Block trackers and other malware (<span>customize<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Reactiva",
@@ -60,8 +60,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activa el bloqueig de publicitat maliciososa",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Activate malware blocking",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"Activa el filtre EasyList",
@@ -120,8 +120,12 @@
     "description":"English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo":{
-    "message":"Let's go!",
+    "message":"Som-hi!",
     "description":"English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite":{
+    "message":"Vull anar a la pàgina web AdNauseam",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam està aturat en aquesta pàgina",
@@ -180,11 +184,11 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuExportAds":{
-    "message":"Export Ads",
+    "message":"Exportar anuncis",
     "description":"appears in ADN popup menu"
   },
   "adnMenuImportAds":{
-    "message":"Import Ads",
+    "message":"Importar anuncis",
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging":{
@@ -200,15 +204,15 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuHideBadge":{
-    "message":"Hide Ad count on icon",
+    "message":"Amagar el contador a la icona d'anuncis",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAdsNow":{
-    "message":"Clear Ads",
+    "message":"Netejar borsa d'Anuncis",
     "description":"appears in ADN popup menu"
   },
   "adnLogNoLog":{
-    "message":"No log available",
+    "message":"No hi han dades disponible",
     "description":"appears in ADN log page"
   },
   "adnLogViewFullLog":{
@@ -216,7 +220,7 @@
     "description":"appears in ADN log page"
   },
   "adnVaultSince":{
-    "message":"Since",
+    "message":"Des de",
     "description":"appears on vault page"
   },
   "adnVaultDefaultDate":{
@@ -224,31 +228,31 @@
     "description":"appears on vault page"
   },
   "adnVaultExport":{
-    "message":"Export",
+    "message":"Exportar",
     "description":"appears on vault page"
   },
   "adnVaultImport":{
-    "message":"Import",
+    "message":"Importar",
     "description":"appears on vault page"
   },
   "adnVaultClear":{
-    "message":"Clear",
+    "message":"Netejar",
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"anuncis recol·lectats",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
-    "message":"showing",
+    "message":"mostrant",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
-    "message":"delete this Ad",
+    "message":"suprimir aquest anunci",
     "description":"appears on vault page"
   },
   "adnVaultTotalEstimated":{
-    "message":"total estimated",
+    "message":"total estimat",
     "description":"appears on vault page"
   },
   "adnVaultAdsCost":{
@@ -256,7 +260,7 @@
     "description":"appears on vault page"
   },
   "hidingAdsPrompt":{
-    "message":"Hide Ads identified by your chosen filter lists",
+    "message":"Amagar els anuncis seccionats a llista de filtres",
     "description":"English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt":{
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Block malware and non-visual trackers",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Block trackers and other malware",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Capture text-only Ads when possible",
@@ -276,11 +280,11 @@
     "description":"English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt":{
-    "message":"Extra Privacy",
+    "message":"Privacitat addicional",
     "description":"English: Interface"
   },
   "settingsInterfacePrompt":{
-    "message":"Interface",
+    "message":"Interfície",
     "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
@@ -300,7 +304,7 @@
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"Poques vegades",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
@@ -308,7 +312,7 @@
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"Sempre",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
@@ -348,11 +352,11 @@
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"Actualitza",
     "description":"English: update"
   },
   "whitelistPageName":{
-    "message":"Whitelists",
+    "message":"Llista blanca",
     "description":"appears as tab name in dashboard"
   },
   "eventLoggingPrompt":{

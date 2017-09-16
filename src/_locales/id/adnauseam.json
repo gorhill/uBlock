@@ -8,11 +8,11 @@
     "description":"English: links.html Support"
   },
   "aboutBuiltOn":{
-    "message":"Built on",
+    "message":"Dibuat di",
     "description":"English: links.html Built on"
   },
   "aboutFaq":{
-    "message":"Frequently asked questions",
+    "message":"Pertanyaan yang sering diajukan",
     "description":"English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease":{
@@ -29,7 +29,7 @@
   },
   "adnFirstRunBlockingMalware":{
     "message":"Memblokir Malware",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
@@ -40,15 +40,15 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"optimalkan pengaturan Anda untuk perlindungan terhadap malware dan pelacak non-visual (<span class='link' id='ToOptions'> Sesuaikan<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Blokir pelacak dan malware lainnya (<span>Kustomisasi<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
-    "message":"Reactivate",
+    "message":"Mengaktifkan kembali",
     "description":"English: Notifications -> Reactivate"
   },
   "adnNotificationDisable":{
-    "message":"Disable",
+    "message":"Nonaktifkan",
     "description":"English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding":{
@@ -61,38 +61,38 @@
   },
   "adnNotificationActivateBlocking":{
     "message":"Aktivasi blok malware",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"Aktivasi EasyList filter",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList":{
-    "message":"Activate the AdNauseam filter",
+    "message":"Aktifkan filter AdNauseam",
     "description":"English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
+    "message":"Ad-blocker Anda dan AdNauseam mungkin tidak cocok!",
     "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock":{
-    "message":"uBlock and AdNauseam may conflict!",
+    "message":"uBlock dan AdNauseam mungkin tidak cocok!",
     "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed":{
-    "message":"This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, Iklan diperbolehkan.",
     "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking":{
-    "message":"This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, menyembunyikan iklan tetapi tidak mengkliknya.",
     "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding":{
-    "message":"This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, mengkliknya tetapi tidak menyembunyikannya",
     "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow":{
-    "message":"This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message":"Halaman ini menyetujui <b>Do Not Track<\/b>, agar Anda tahu.",
     "description":"English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget":{
@@ -122,6 +122,10 @@
   "adnFirstRunLetsGo":{
     "message":"Ayo!",
     "description":"English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite":{
+    "message":"Pergi ke situs AdNauseam",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam sedang diberhentikan di halaman ini",
@@ -168,7 +172,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuViewVault":{
-    "message":"View Ad Vault",
+    "message":"Lihat Ad Vault",
     "description":"appears in ADN popup menu"
   },
   "adnMenuResume":{
@@ -192,7 +196,7 @@
     "description":"appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer":{
-    "message":"Disable outgoing referrer",
+    "message":"Menonaktifkan pengarah keluar",
     "description":"appears in ADN popup menu"
   },
   "adnMenuClearAds":{
@@ -236,11 +240,11 @@
     "description":"appears on vault page"
   },
   "adnVaultFound":{
-    "message":"ads collected",
+    "message":"iklan yang dikumpulkan",
     "description":"appears on vault page"
   },
   "adnVaultShowing":{
-    "message":"showing",
+    "message":"menampilkan",
     "description":"appears on vault page"
   },
   "adnVaultDeleteThisAd":{
@@ -264,15 +268,15 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Blok malware dan pelacak non-visual",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Blokir pelacak dan malware lainnya",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
-    "message":"Capture text-only Ads when possible",
+    "message":"Menangkap hanya iklan berbentuk teks jika memungkinkan",
     "description":"English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt":{
-    "message":"Display the number of Ads on the icon",
+    "message":"Menampilkan jumlah iklan pada ikon",
     "description":"English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt":{
@@ -284,31 +288,31 @@
     "description":"English: Interface"
   },
   "noIncomingCookiesPrompt":{
-    "message":"Ignore cookies returned with clicks",
+    "message":"Abaikan cookies yang dikembalikan dengan klik",
     "description":"English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt":{
-    "message":"Don't send cookies on visits",
+    "message":"Jangan mengirim cookies pada kunjungan",
     "description":"English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt":{
-    "message":"Hide user-agent header on visits",
+    "message":"Sembunyikan header user-agents pada kunjungan",
     "description":"English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt":{
-    "message":"Hide referring page on visits",
+    "message":"Sembunyikan halaman iklan reffering pada kunjungan",
     "description":"English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely":{
-    "message":"Rarely",
+    "message":"Jarang",
     "description":"English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes":{
-    "message":"Sometimes",
+    "message":"Terkadang",
     "description":"English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways":{
-    "message":"Always",
+    "message":"Selalu",
     "description":"English: Click Frequency - Always"
   },
   "respectDNTPrompt":{
@@ -348,7 +352,7 @@
     "description":"English: Languages"
   },
   "3pPageUpdate":{
-    "message":"Update",
+    "message":"Perbarui",
     "description":"English: update"
   },
   "whitelistPageName":{
