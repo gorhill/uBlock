@@ -55,20 +55,25 @@
 
   var renderPage = function (json) {
 
-    if (json) {
-      page = json.pageUrl;
-      ads = onPage(json.data, page);
+    var page = json && json.pageUrl;
 
+    function disableMenu() {
+      uDom.nodeFromId('pause-button').disabled = true;
+      uDom.nodeFromId('resume-button').disabled = true;
+    }
+
+    if (page) {
       // disable pause & resume buttons for options, vault, about/chrome
       if (page === vAPI.getURL("vault.html") ||
         page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
-        page.indexOf("chrome-extension://") === 0 ||
-        page.indexOf("chrome://") === 0 ||
-        page.indexOf("about:") === 0) {
-
-        uDom.nodeFromId('pause-button').disabled = true;
-        uDom.nodeFromId('resume-button').disabled = true;
+        page.indexOf("chrome") === 0 || page.indexOf("about:") === 0)
+      {
+        disableMenu();
       }
+    }
+    else {
+      // for Firefox new tab page (see #1194)
+      disableMenu();
     }
 
     uDom("#alert").addClass('hide'); // reset state
@@ -80,13 +85,15 @@
     var $items = uDom('#ad-list-items'); //$('#ad-list-items');
     $items.removeClass().empty();
 
+    var ads = json && onPage(json.data, page);
     if (ads) {
 
       // if we have no page ads, use the most recent
       if (!ads.length) ads = doRecent(json.data);
 
-      for (var i = 0, j = ads.length; i < j; i++)
+      for (var i = 0, j = ads.length; i < j; i++) {
         appendAd($items, ads[i]);
+      }
 
       setAttempting(json.current);
     }
@@ -244,25 +251,28 @@
 
   var onPage = function (ads, pageUrl) {
 
-    var res = [];
+    if (pageUrl) {
 
-    // first try current ads
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i] && ads[i].pageUrl === pageUrl && ads[i].current) {
-        res.push(ads[i]);
-      }
-    }
+      var res = [];
 
-    // then all page ads
-    if (res.length === 0) {
+      // first try current ads
       for (var i = 0; i < ads.length; i++) {
-        if (ads[i] && ads[i].pageUrl === pageUrl) {
+        if (ads[i] && ads[i].pageUrl === pageUrl && ads[i].current) {
           res.push(ads[i]);
         }
       }
-    }
 
-    return res.sort(byField('-foundTs'));
+      // then all page ads
+      if (res.length === 0) {
+        for (var i = 0; i < ads.length; i++) {
+          if (ads[i] && ads[i].pageUrl === pageUrl) {
+            res.push(ads[i]);
+          }
+        }
+      }
+
+      return res.sort(byField('-foundTs'));
+    }
   }
 
   var appendAd = function ($items, ad) {
@@ -587,8 +597,6 @@
 
   var toggleEnabled = function (ev) {
 
-    //console.log('toggleEnabled', ev);
-
     if (!popupData || !popupData.pageURL || (popupData.pageHostname ===
         'behind-the-scene' && !popupData.advancedUserEnabled)) {
 
@@ -650,7 +658,6 @@
     uDom('#notifications').on('click', setBackBlockHeight);
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
       .on('mouseleave', '[data-tip]', onHideTooltip);
-
 
     //tmp Russian fix
     if(uDom('#vault-button').text()===" Просмотр хранилища рекламы") {
