@@ -545,14 +545,6 @@
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
 	},
-	"RUS-1": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "RUS: BitBlock List (Дополнительная подписка фильтров)",
-		"contentURL": "https://easylist-downloads.adblockplus.org/bitblock.txt",
-		"supportURL": "https://forums.lanik.us/viewforum.php?f=102"
-	},
 	"RUS-2": {
 		"content": "filters",
 		"group": "regions",
