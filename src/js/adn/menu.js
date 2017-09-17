@@ -80,12 +80,15 @@
     uDom('#main').toggleClass('disabled', dval());
 
     updateMenuState();
-    setCounts(ads, json && json.data && json.data.length);
-
-    var $items = uDom('#ad-list-items'); //$('#ad-list-items');
-    $items.removeClass().empty();
 
     var ads = json && onPage(json.data, page);
+
+    setCounts(ads, json && json.data && json.data.length);
+
+    var $items = uDom('#ad-list-items');
+
+    $items.removeClass().empty();
+
     if (ads) {
 
       // if we have no page ads, use the most recent
