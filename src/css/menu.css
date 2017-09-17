@@ -345,7 +345,6 @@ header{
   -o-transition:z-index 1s step-end, max-height 1s linear, max-width 1s linear;
   transition:z-index 1s step-end, max-height 1s linear, max-width 1s linear;
 }
-}
 
 .zoomStage {
 /*  position:relative;
