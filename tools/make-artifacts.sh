@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-FIREFOX=/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin
+FIREFOX=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin
 OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
 # before running, check that above programs exist, as well as that 'webext' cmd exists 
