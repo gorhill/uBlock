@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"Bloquer les publicités malicieuses",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"Bloquer les malveillants",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"Cacher les publicités depuis vos <span> listes de filtres<\/span> sélectionnés",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"Optimiser vos paramètres de protection contre les malveillants publicités (<span> personnaliser<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"Bloquer les trackers et autres logiciels malveillants (<span>personnaliser<\/span>)",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"Réactiver",
@@ -60,8 +60,8 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"Activer le blocage des publicités malveillantes",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"Activer le blocage des logiciels malveillants",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
     "message":"Activer le filtre EasyList",
@@ -122,6 +122,10 @@
   "adnFirstRunLetsGo":{
     "message":"C'est parti !",
     "description":"English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite":{
+    "message":"Accéder au site Web AdNauseam",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam est en pause sur cette page",
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"Bloquer les publicités malveillantes et les traqueurs invisibles",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"Traqueurs de bloc et autres logiciels malveillants",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"Capturer les textes publicitaires si possible",

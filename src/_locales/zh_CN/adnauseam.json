@@ -28,8 +28,8 @@
     "description":"English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware":{
-    "message":"屏蔽恶意广告",
-    "description":"English: Firstrun.html -> Block Malicious Ads"
+    "message":"屏蔽恶意软件",
+    "description":"English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription":{
     "message":"隐藏由你的<span>筛选器列表<\/span>标记的广告",
@@ -40,8 +40,8 @@
     "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription":{
-    "message":"优化设定以屏蔽恶意广告 (<span>更改<\/span>)",
-    "description":"English: Firstrun.html -> Protect against malicious Ads and trackers (customize)"
+    "message":"阻止跟踪器和其他恶意软件 （<span>自定义<\/span>）",
+    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate":{
     "message":"启用",
@@ -60,11 +60,11 @@
     "description":"English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking":{
-    "message":"请启用“屏蔽恶意广告”功能",
-    "description":"English: Notifications -> Activate blocking of malicious ads"
+    "message":"启用“屏蔽恶意软件”功能",
+    "description":"English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList":{
-    "message":"请启用Easy List 筛选列表",
+    "message":"启用 Easy List 筛选列表",
     "description":"English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList":{
@@ -122,6 +122,10 @@
   "adnFirstRunLetsGo":{
     "message":"开始吧！",
     "description":"English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite":{
+    "message":"前往 AdNauseam 网站",
+    "description":"English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage":{
     "message":"AdNauseam 在本页面被暂停",
@@ -264,8 +268,8 @@
     "description":"English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt":{
-    "message":"屏蔽恶意软件和非可视的网络跟踪器",
-    "description":"English: Protect your browser from malware and non-visual trackers"
+    "message":"屏蔽追踪器和其他恶意软件",
+    "description":"English: lock trackers and other malware"
   },
   "parseTextAdsPrompt":{
     "message":"当可行时捕捉文字广告",
