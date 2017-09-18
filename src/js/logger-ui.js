@@ -294,8 +294,8 @@ var renderNetLogEntry = function(tr, entry) {
             trcl.add('redirect');
             td.textContent = '<<';
         } else if ( filter.result === 4) { // ADN
-          trcl.add('adnauseamAllowed');
-          td.textContent = '';
+            trcl.add('adnauseamAllowed');
+            td.textContent = '';
         }
 
     }
