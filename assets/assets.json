@@ -539,7 +539,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "RUS: RU AdList (Дополнительная региональная подписка)",
+		"title": "RUS: RU AdList",
 		"lang": "be ru uk",
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
