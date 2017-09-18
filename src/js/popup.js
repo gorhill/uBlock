@@ -46,7 +46,15 @@ if ( /[\?&]fullsize=1/.test(window.location.search) ) {
 }
 
 // Mobile device?
-if ( /[\?&]mobile=1/.test(window.location.search) ) {
+// https://github.com/gorhill/uBlock/issues/3032
+// - If at least one of the window's viewport dimension is larger than the
+//   corresponding device's screen dimension, assume uBO's popup panel sits in
+//   its own tab.
+if (
+    /[\?&]mobile=1/.test(window.location.search) ||
+    window.innerWidth >= window.screen.availWidth ||
+    window.innerHeight >= window.screen.availHeight
+) {
     document.body.classList.add('mobile');
 }
 
