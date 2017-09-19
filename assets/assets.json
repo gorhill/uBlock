@@ -95,7 +95,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "Adguard Generic Filters",
+		"title": "Adguard Base Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues"
 	},
