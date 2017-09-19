@@ -523,7 +523,8 @@ var renderOnce = function() {
     // scrollbar if ever its height is more than what is available.
     // For small displays: we use the whole viewport.
 
-    var rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
+    var panes = uDom.nodeFromId('panes'),
+        rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
         lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
 
     var fillViewport = function() {
@@ -534,7 +535,12 @@ var renderOnce = function() {
                 rpane.offsetHeight
             ) + 'px'
         );
-        lpane.style.setProperty('width', (window.innerWidth - rpane.offsetWidth) + 'px');
+        // https://github.com/gorhill/uBlock/issues/3038
+        // - Resize the firewall pane while minding the space between the panes.
+        lpane.style.setProperty(
+            'width',
+            (window.offsetWidth - panes.offsetWidth + lpane.offsetWidth) + 'px'
+        );
     };
 
     // https://github.com/gorhill/uBlock/issues/2274
