@@ -528,19 +528,19 @@ var renderOnce = function() {
         lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
 
     var fillViewport = function() {
-        lpane.style.setProperty(
-            'height',
-            Math.max(
-                window.innerHeight - uDom.nodeFromSelector('#appinfo').offsetHeight,
-                rpane.offsetHeight
-            ) + 'px'
+        var newHeight = Math.max(
+            window.innerHeight - uDom.nodeFromSelector('#appinfo').offsetHeight,
+            rpane.offsetHeight
         );
+        if ( newHeight !== lpane.offsetHeight ) {
+            lpane.style.setProperty('height', newHeight + 'px');
+        }
         // https://github.com/gorhill/uBlock/issues/3038
         // - Resize the firewall pane while minding the space between the panes.
-        lpane.style.setProperty(
-            'width',
-            (window.offsetWidth - panes.offsetWidth + lpane.offsetWidth) + 'px'
-        );
+        var newWidth = window.innerWidth - panes.offsetWidth + lpane.offsetWidth;
+        if ( newWidth !== lpane.offsetWidth ) {
+            lpane.style.setProperty('width', newWidth + 'px');
+        }
     };
 
     // https://github.com/gorhill/uBlock/issues/2274
