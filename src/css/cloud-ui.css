@@ -2,7 +2,7 @@
     background: url("../img/cloud.png") hsl(216, 100%, 93%);
     border-radius: 3px;
     margin: 0.5em 0;
-    padding: 1em;
+    padding: 1em 1em 0 1em;
     position: relative;
     }
 #cloudWidget.hide {
@@ -22,6 +22,9 @@
 #cloudWidget > button[disabled] {
     visibility: hidden;
     }
+#cloudWidget > button.error {
+    color: red;
+    }
 #cloudPush:after {
     content: '\f0ee';
     }
@@ -29,6 +32,9 @@
 #cloudPullAndMerge:before {
     content: '\f0ed';
 }
+#cloudPullAndMerge {
+    margin: 0 0.25em;
+    }
 #cloudPullAndMerge:after {
     content: '\f067';
     font-size: 50%;
@@ -45,7 +51,13 @@
     vertical-align: bottom;
     white-space: pre;
     }
-#cloudWidget > .nodata {
+#cloudError {
+    color: red;
+    margin: 0;
+    padding: 0.5em 0;
+    }
+#cloudError > span {
+    font-size: x-small;
     }
 #cloudWidget > #cloudCog {
     cursor: pointer;
