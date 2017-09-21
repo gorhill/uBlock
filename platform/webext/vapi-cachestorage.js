@@ -112,13 +112,13 @@ vAPI.cacheStorage = (function() {
         var req = indexedDB.open(STORAGE_NAME, 1);
         req.onupgradeneeded = function(ev) {
             db = ev.target.result;
-            db.onerror = genericErrorHandler;
+            db.onerror = db.onabort = genericErrorHandler;
             var table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
             table.createIndex('value', 'value', { unique: false });
         };
         req.onsuccess = function(ev) {
             db = ev.target.result;
-            db.onerror = genericErrorHandler;
+            db.onerror = db.onabort = genericErrorHandler;
             processPendings();
         };
         req.onerror = function() {
@@ -141,7 +141,9 @@ vAPI.cacheStorage = (function() {
         getDb(function(db) {
             if ( !db ) { return callback(); }
             var transaction = db.transaction(STORAGE_NAME);
-            transaction.oncomplete = transaction.onerror = function() {
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = function() {
                 // TODO: remove once storage.local is clean
                 if ( notfoundKeys.size === 0 ) {
                     vAPI.storage.remove(keys);
@@ -199,7 +201,9 @@ vAPI.cacheStorage = (function() {
             if ( !db ) { return callback(); }
             var output = {};
             var transaction = db.transaction(STORAGE_NAME);
-            transaction.oncomplete = transaction.onerror = function() {
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = function() {
                 callback(output);
             };
             var table = transaction.objectStore(STORAGE_NAME),
@@ -222,7 +226,9 @@ vAPI.cacheStorage = (function() {
         getDb(function(db) {
             if ( !db ) { return callback(); }
             var transaction = db.transaction(STORAGE_NAME, 'readwrite');
-            transaction.oncomplete = transaction.onerror = callback;
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = callback;
             var table = transaction.objectStore(STORAGE_NAME),
                 entry = {};
             for ( var key of keys ) {
@@ -242,7 +248,9 @@ vAPI.cacheStorage = (function() {
         getDb(function(db) {
             if ( !db ) { return callback(); }
             var transaction = db.transaction(STORAGE_NAME, 'readwrite');
-            transaction.oncomplete = transaction.onerror = callback;
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = callback;
             var table = transaction.objectStore(STORAGE_NAME);
             for ( var key of keys ) {
                 table.delete(key);
