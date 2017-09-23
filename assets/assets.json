@@ -97,7 +97,8 @@
 		"off": true,
 		"title": "Adguard Base Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"easylist": {
 		"content": "filters",
@@ -111,6 +112,15 @@
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
+	},
+	"adguard-spyware": {
+		"content": "filters",
+		"group": "privacy",
+		"off": true,
+		"title": "Adguard Spyware Filters",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"disconnect-tracking": {
 		"content": "filters",
