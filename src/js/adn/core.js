@@ -1915,6 +1915,8 @@
     storeUserData();
     computeNextId();
 
+    visitedURLs.clear(); // user visits #1214
+
     log('[CLEAR] ' + pre + ' ads cleared');
   };
 
