@@ -492,14 +492,6 @@
 		"contentURL": "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt",
 		"supportURL": "https://github.com/yous/YousList"
 	},
-	"KOR-2": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "KOR: Fanboy's Korean",
-		"contentURL": "https://www.fanboy.co.nz/fanboy-korean.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"LTU-0": {
 		"content": "filters",
 		"group": "regions",
