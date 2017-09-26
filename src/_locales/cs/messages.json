@@ -320,7 +320,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupAnnoyances":{
-    "message":"Annoyances",
+    "message":"Otravné",
     "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
