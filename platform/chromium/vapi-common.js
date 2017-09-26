@@ -79,21 +79,21 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 
 // https://github.com/gorhill/uBlock/issues/3057
 // - webNavigation.onCreatedNavigationTarget become broken on Firefox when we
-//   try to make the popup panel close itself.
+//   try to make the popup panel close itself using the original
+//   `window.open('', '_self').close()`. 
 
 vAPI.closePopup = function() {
     if (
         self.browser instanceof Object &&
         typeof self.browser.runtime.getBrowserInfo === 'function'
     ) {
-        self.browser.runtime.getBrowserInfo().then(function(info) {
-            if ( info.name !== 'Firefox' ) {
-                window.open('', '_self').close();
-            }
-        });
-    } else {
-        window.open('', '_self').close();
+        window.close();
+        return;
     }
+
+    // TODO: try to figure why this was used instead of a plain window.close().
+    // https://github.com/gorhill/uBlock/commit/b301ac031e0c2e9a99cb6f8953319d44e22f33d2#diff-bc664f26b9c453e0d43a9379e8135c6a
+    window.open('', '_self').close();
 };
 
 /******************************************************************************/
