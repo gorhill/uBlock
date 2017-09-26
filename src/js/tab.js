@@ -656,7 +656,7 @@ vAPI.tabs.onPopupUpdated = (function() {
     };
 
     var popunderMatch = function(openerURL, targetURL) {
-        var result = popupMatch(targetURL, openerURL, null, 'popunder');
+        var result = popupMatch(targetURL, openerURL, 'popunder');
         if ( result === 1 ) {
             return result;
         }
@@ -674,7 +674,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         result = mapPopunderResult(
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, null, 'popup')
+            popupMatch(targetURL, popunderURL, 'popup')
         );
         if ( result !== 0 ) {
             return result;
@@ -688,7 +688,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         return mapPopunderResult(
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, null, 'popup')
+            popupMatch(targetURL, popunderURL, 'popup')
         );
     };
 
@@ -725,18 +725,17 @@ vAPI.tabs.onPopupUpdated = (function() {
             }
         }
 
-        // https://github.com/gorhill/uBlock/issues/2919
-        // - The target tab matches a clicked link, assume it's legit.
-        if (
-            openerTabId === µb.mouseEventRegister.tabId &&
-            areDifferentURLs(targetURL, µb.mouseEventRegister.url) === false
-        ) {
-            return;
-        }
-
         // Popup test.
         var popupType = 'popup',
+            result = 0;
+        // https://github.com/gorhill/uBlock/issues/2919
+        // - If the target tab matches a clicked link, assume it's legit.
+        if (
+            openerTabId !== µb.mouseEventRegister.tabId ||
+            areDifferentURLs(targetURL, µb.mouseEventRegister.url)
+        ) {
             result = popupMatch(openerURL, targetURL, 'popup');
+        }
 
         // Popunder test.
         if ( result === 0 ) {
