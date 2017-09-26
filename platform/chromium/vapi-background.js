@@ -39,9 +39,20 @@ vAPI.chromiumVersion = (function(){
     var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
     return matches !== null ? parseInt(matches[1], 10) : NaN;
     })();
+
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
+
+vAPI.webextFlavor = '';
+if (
+    self.browser instanceof Object &&
+    typeof self.browser.runtime.getBrowserInfo === 'function'
+) {
+    self.browser.runtime.getBrowserInfo().then(function(info) {
+        vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
+    });
+}
 
 var noopFunc = function(){};
 
@@ -301,14 +312,19 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onCreatedNavigationTarget = function(details) {
-        //console.debug('onCreatedNavigationTarget: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        if ( typeof details.url !== 'string' ) {
+            details.url = '';
+        }
         if ( reGoodForWebRequestAPI.test(details.url) === false ) {
             details.frameId = 0;
             details.url = sanitizeURL(details.url);
             onNavigationClient(details);
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
-            vAPI.tabs.onPopupCreated(details.tabId.toString(), details.sourceTabId.toString());
+            vAPI.tabs.onPopupCreated(
+                details.tabId.toString(),
+                details.sourceTabId.toString()
+            );
         }
     };
 
@@ -472,12 +488,19 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
+    // - Do not try to lookup uBO's own pages with FF 55 or less.
+    if ( /^Mozilla-Firefox-5[2-5]\./.test(vAPI.webextFlavor) ) {
+        wrapper();
+        return;
+    }
+
     // https://developer.chrome.com/extensions/tabs#method-query
     // "Note that fragment identifiers are not matched."
     // It's a lie, fragment identifiers ARE matched. So we need to remove the
     // fragment.
-    var pos = targetURL.indexOf('#');
-    var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
+    var pos = targetURL.indexOf('#'),
+        targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         if ( chrome.runtime.lastError ) { /* noop */ }

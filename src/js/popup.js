@@ -632,7 +632,7 @@ var gotoPick = function() {
 /******************************************************************************/
 
 var gotoURL = function(ev) {
-    if ( this.hasAttribute('href') === false) {
+    if ( this.hasAttribute('href') === false ) {
         return;
     }
 
