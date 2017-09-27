@@ -1399,7 +1399,7 @@
 
     // setup the histogram layout
     var histogram = d3.layout.histogram()
-      .bins(120)(map);
+      .bins(400)(map);
 
     // setup the x axis
     var xAxis = d3.svg.axis()
