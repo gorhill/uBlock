@@ -250,14 +250,6 @@
 		"contentURL": "http://someonewhocares.org/hosts/hosts",
 		"supportURL": "http://someonewhocares.org/hosts/"
 	},
-	"fanboy-ultimate": {
-		"content": "filters",
-		"group": "multipurpose",
-		"off": true,
-		"title": "Fanboy+Easylist-Merged Ultimate List",
-		"contentURL": "https://www.fanboy.co.nz/r/fanboy-ultimate.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"hphosts": {
 		"content": "filters",
 		"group": "multipurpose",
