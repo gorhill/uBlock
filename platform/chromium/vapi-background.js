@@ -1152,7 +1152,7 @@ vAPI.cloud = (function() {
     //  actual data, but all of this is provided for free by browser vendors,
     //  so we need to accept and deal with these limitations.
     var initialize = function() {
-        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.5 : 0.75;
+        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75;
         maxChunkSize = Math.floor(maxChunkSize * ratio);
         initialize = function(){};
     };
@@ -1240,6 +1240,9 @@ vAPI.cloud = (function() {
             var errorStr;
             if ( chrome.runtime.lastError ) {
                 errorStr = chrome.runtime.lastError.message;
+                // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
+                // - Delete all that was pushed in case of failure.
+                chunkCount = 0;
             }
             callback(errorStr);
 
