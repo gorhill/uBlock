@@ -1460,6 +1460,11 @@
       .enter()
       .append("g");
 
+    // Y scale
+    var yScale = d3.scale.linear()
+        .domain([0, d3.max(histogram, function(d) { return d.length; })])
+        .range([-2, -50]);
+
     bars.append("line")
       .attr("x1", function (d) {
         return d.x + barw / 2;
@@ -1469,7 +1474,7 @@
         return d.x + barw / 2;
       })
       .attr("y2", function (d) {
-        return d.y * -3 - 2;
+        return yScale(d.y);
       })
       .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 1,0.5; stroke: #999");
 
