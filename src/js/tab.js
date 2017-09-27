@@ -577,7 +577,13 @@ vAPI.tabs.onPopupUpdated = (function() {
         //   URL.
         if ( openerHostname !== '' && targetURL !== 'about:blank' ) {
             // Check per-site switch first
-            if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) === true ) {
+            // https://github.com/gorhill/uBlock/issues/3060
+            // - The no-popups switch must apply only to popups, not to
+            //   popunders.
+            if (
+                popupType === 'popup' &&
+                µb.hnSwitches.evaluateZ('no-popups', openerHostname)
+            ) {
                 logData = {
                     source: 'switch',
                     raw: 'no-popups: ' + µb.hnSwitches.z + ' true'
@@ -586,9 +592,13 @@ vAPI.tabs.onPopupUpdated = (function() {
             }
 
             // https://github.com/gorhill/uBlock/issues/581
-            //   Take into account popup-specific rules in dynamic URL filtering, OR
-            //   generic allow rules.
-            result = µb.sessionURLFiltering.evaluateZ(openerHostname, targetURL, popupType);
+            //   Take into account popup-specific rules in dynamic URL
+            //   filtering, OR generic allow rules.
+            result = µb.sessionURLFiltering.evaluateZ(
+                openerHostname,
+                targetURL,
+                popupType
+            );
             if (
                 result === 1 && µb.sessionURLFiltering.type === popupType ||
                 result === 2
@@ -598,10 +608,14 @@ vAPI.tabs.onPopupUpdated = (function() {
             }
 
             // https://github.com/gorhill/uBlock/issues/581
-            //   Take into account `allow` rules in dynamic filtering: `block` rules
-            //   are ignored, as block rules are not meant to block specific types
-            //   like `popup` (just like with static filters).
-            result = µb.sessionFirewall.evaluateCellZY(openerHostname, context.requestHostname, popupType);
+            //   Take into account `allow` rules in dynamic filtering: `block`
+            //   rules are ignored, as block rules are not meant to block
+            //   specific types like `popup` (just like with static filters).
+            result = µb.sessionFirewall.evaluateCellZY(
+                openerHostname,
+                context.requestHostname,
+                popupType
+            );
             if ( result === 2 ) {
                 logData = µb.sessionFirewall.toLogData();
                 return 2;
