@@ -220,7 +220,7 @@ var FilterParser = function() {
     this.hostnames = [];
     this.invalid = false;
     this.cosmetic = true;
-    this.reNeedHostname = /^(?:script:contains|script:inject|.+?:has|.+?:has-text|.+?:if|.+?:if-not|.+?:matches-css(?:-before|-after)?|.*?:xpath)\(.+\)$/;
+    this.reNeedHostname = /^(?:script:contains|script:inject|.+?:-abp-contains|.+?:-abp-has|.+?:contains|.+?:has|.+?:has-text|.+?:if|.+?:if-not|.+?:matches-css(?:-before|-after)?|.*?:xpath)\(.+\)$/;
 };
 
 /******************************************************************************/
@@ -257,8 +257,8 @@ FilterParser.prototype.parse = function(raw) {
 
     // Coarse-check that the anchor is valid.
     // `##`: l = 1
-    // `#@#`, `#$#`, `#%#`: l = 2
-    // `#@$#`, `#@%#`: l = 3
+    // `#@#`, `#$#`, `#%#`, `#?#`: l = 2
+    // `#@$#`, `#@%#`, `#@?#`: l = 3
     if ( (rpos - lpos) > 3 ) {
         this.cosmetic = false;
         return this;
@@ -276,23 +276,28 @@ FilterParser.prototype.parse = function(raw) {
     // supported.
     var cCode = raw.charCodeAt(rpos - 1);
     if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
-        // We have an Adguard cosmetic filter if and only if the character is
-        // `$` or `%`, otherwise it's not a cosmetic filter.
-        // Not a cosmetic filter.
-        if ( cCode !== 0x24 /* '$' */ && cCode !== 0x25 /* '%' */ ) {
+        // We have an Adguard/ABP cosmetic filter if and only if the character
+        //  is `$`, `%` or `?`, otherwise it's not a cosmetic filter.
+        if (
+            cCode !== 0x24 /* '$' */ &&
+            cCode !== 0x25 /* '%' */ &&
+            cCode !== 0x3F /* '?' */
+        ) {
             this.cosmetic = false;
             return this;
         }
-        // Not supported.
-        if ( cCode !== 0x24 /* '$' */ ) {
+        // Adguard's scriptlet injection: not supported.
+        if ( cCode === 0x25 /* '%' */ ) {
             this.invalid = true;
             return this;
         }
-        // CSS injection rule: supported, but translate into uBO's own format.
-        raw = this.translateAdguardCSSInjectionFilter(raw);
-        if ( raw === '' ) {
-            this.invalid = true;
-            return this;
+        // Adguard's style injection: supported, but translate to uBO's format.
+        if ( cCode === 0x24 /* '$' */ ) {
+            raw = this.translateAdguardCSSInjectionFilter(raw);
+            if ( raw === '' ) {
+                this.invalid = true;
+                return this;
+            }
         }
         rpos = raw.indexOf('#', lpos + 1);
     }
@@ -332,6 +337,9 @@ FilterParser.prototype.parse = function(raw) {
     // For some selectors, it is mandatory to have a hostname or entity:
     //   ##script:contains(...)
     //   ##script:inject(...)
+    //   ##.foo:-abp-contains(...)
+    //   ##.foo:-abp-has(...)
+    //   ##.foo:contains(...)
     //   ##.foo:has(...)
     //   ##.foo:has-text(...)
     //   ##.foo:if(...)
@@ -800,7 +808,10 @@ FilterContainer.prototype.compileSelector = (function() {
                 return raw;
             }
             // :contains
-            if ( reIsRegexLiteral.test(matches[2]) === false || isBadRegex(matches[2].slice(1, -1)) === false ) {
+            if (
+                reIsRegexLiteral.test(matches[2]) === false ||
+                isBadRegex(matches[2].slice(1, -1)) === false
+            ) {
                 return raw;
             }
         }
@@ -823,7 +834,7 @@ FilterContainer.prototype.compileSelector = (function() {
 /******************************************************************************/
 
 FilterContainer.prototype.compileProceduralSelector = (function() {
-    var reOperatorParser = /(:(?:has|has-text|if|if-not|matches-css|matches-css-after|matches-css-before|xpath))\(.+\)$/,
+    var reOperatorParser = /(:(?:-abp-contains|-abp-has|contains|has|has-text|if|if-not|matches-css|matches-css-after|matches-css-before|xpath))\(.+\)$/,
         reFirstParentheses = /^\(*/,
         reLastParentheses = /\)*$/,
         reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
@@ -887,6 +898,13 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         return s;
     };
 
+    // https://github.com/gorhill/uBlock/issues/2793
+    var normalizedOperators = new Map([
+        [ ':-abp-contains', ':has-text' ],
+        [ ':-abp-has', ':if' ],
+        [ ':contains', ':has-text' ]
+    ]);
+
     var compileArgument = new Map([
         [ ':has', compileCSSSelector ],
         [ ':has-text', compileText ],
@@ -932,6 +950,7 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
             if ( depth !== 0 ) {
                 currentArgument += nextOperand + nextOperator;
             } else {
+                currentOperator = normalizedOperators.get(currentOperator) || currentOperator;
                 currentArgument = compileArgument.get(currentOperator)(nextOperand.slice(1, -1));
                 if ( currentArgument === undefined ) { return; }
                 tasks.push([ currentOperator, currentArgument ]);
