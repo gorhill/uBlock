@@ -975,31 +975,30 @@ var updaterStatus,
     updaterAssetDelayDefault = 120000,
     updaterAssetDelay = updaterAssetDelayDefault,
     updaterUpdated = [],
-    updaterFetched = new Set();
+    updaterFetched = new Set(),
+    noRemoteResources;
 
 var updateFirst = function() {
+    // Firefox extension reviewers do not want uBO/webext to fetch its own
+    // scriptlets/resources asset from the project's own repo (github.com).
+    // See: https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    if ( noRemoteResources === undefined ) {
+        noRemoteResources =
+            typeof vAPI.webextFlavor === 'string' &&
+            vAPI.webextFlavor.startsWith('Mozilla-Firefox-');
+    }
+    // This is to ensure the packaged version will always be used (in case
+    // there is a cache remnant from a pre-stable webext era).
+    // See https://github.com/uBlockOrigin/uAssets/commit/a6c77af4afb45800d4fd7c268a2a5eab5a64daf3#commitcomment-24642912
+    if ( noRemoteResources ) {
+        api.remove('ublock-resources');
+    }
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated = [];
     fireNotification('before-assets-updated');
     updateNext();
 };
-
-// Firefox extension reviewers do not want uBO/webext to fetch its *own*
-// scriptlets/resources asset from the project's *own* repo (github.com).
-var noRemoteResources = false;
-(function() {
-    if ( 
-        typeof browser === 'object' &&
-        browser !== null &&
-        browser.runtime instanceof Object &&
-        typeof browser.runtime.getBrowserInfo === 'function'
-    ) {
-        browser.runtime.getBrowserInfo().then(function(info) {
-            noRemoteResources = info.vendor === 'Mozilla';
-        });
-    }
-})();
 
 var updateNext = function() {
     var assetDict, cacheDict;
@@ -1024,7 +1023,7 @@ var updateNext = function() {
                 continue;
             }
             // Update of user scripts/resources forbidden?
-            if ( assetKey === 'ublock-resources' && noRemoteResources === true ) {
+            if ( assetKey === 'ublock-resources' && noRemoteResources ) {
                 continue;
             }
             if (
