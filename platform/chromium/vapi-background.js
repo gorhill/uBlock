@@ -1206,7 +1206,9 @@ vAPI.cloud = (function() {
         for ( var i = start; i < n; i++ ) {
             keys.push(dataKey + i.toString());
         }
-        chrome.storage.sync.remove(keys);
+        if ( keys.length !== 0 ) {
+            chrome.storage.sync.remove(keys);
+        }
     };
 
     var start = function(/* dataKeys */) {
@@ -1242,7 +1244,13 @@ vAPI.cloud = (function() {
                 errorStr = chrome.runtime.lastError.message;
                 // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
                 // - Delete all that was pushed in case of failure.
-                chunkCount = 0;
+                // - It's unknown whether such issue applies only to Firefox:
+                //   until such cases are reported for other browsers, we will
+                //   reset the (now corrupted) content of the cloud storage
+                //   only on Firefox.
+                if ( vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ) {
+                    chunkCount = 0;
+                }
             }
             callback(errorStr);
 
