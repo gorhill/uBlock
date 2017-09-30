@@ -323,17 +323,11 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "CHN: CJX's EasyList Lite (main focus on Chinese sites)",
+		"title": "CHN: CJX's EasyList Lite",
+		"lang": "zh",
 		"contentURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
-		"supportURL": "https://github.com/cjx82630/cjxlist"
-	},
-	"CHN-2": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "CHN: CJX's Annoyance List",
-		"contentURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt",
-		"supportURL": "https://github.com/cjx82630/cjxlist"
+		"supportURL": "https://github.com/cjx82630/cjxlist",
+		"instructionURL": "http://abpchina.org/forum/forum.php?mod=viewthread&tid=29667"
 	},
 	"CZE-0": {
 		"content": "filters",
@@ -553,6 +547,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: Adguard Russian Filter",
+		"lang": "be ru uk",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
 	},
