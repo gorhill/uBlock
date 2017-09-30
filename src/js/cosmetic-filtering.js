@@ -723,8 +723,16 @@ FilterContainer.prototype.compileSelector = (function() {
         reStyleBad = /url\([^)]+\)/,
         reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
         reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
-        reExtendedSyntaxHas = /\[-ext-has=(['"])(.+?)\1\]/,
+        reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/,
         div = document.createElement('div');
+
+    var normalizedExtendedSyntaxOperators = new Map([
+        [ 'contains', ':has-text' ],
+        [ 'has', ':if' ],
+        [ 'matches-css', ':matches-css' ],
+        [ 'matches-css-after', ':matches-css-after' ],
+        [ 'matches-css-before', ':matches-css-before' ],
+    ]);
 
     var isValidStyleProperty = function(cssText) {
         if ( reStyleBad.test(cssText) ) { return false; }
@@ -735,32 +743,32 @@ FilterContainer.prototype.compileSelector = (function() {
     };
 
     var entryPoint = function(raw) {
-        if ( isValidCSSSelector(raw) && reExtendedSyntax.test(raw) === false ) {
+        var extendedSyntax = reExtendedSyntax.test(raw);
+        if ( isValidCSSSelector(raw) && extendedSyntax === false ) {
             return raw;
         }
 
         // We  rarely reach this point -- majority of selectors are plain
         // CSS selectors.
 
-        // Unsupported ABP's advanced selector syntax.
-        if ( raw.indexOf('[-abp-properties=') !== -1 ) {
-            return;
-        }
+        var matches, operator;
 
-        var matches;
-
-        // Supported Adguard's advanced selector syntax: will translate into
+        // Supported Adguard/ABP advanced selector syntax: will translate into
         // uBO's syntax before further processing.
-        //
-        // [-ext-has=...]
-        // Converted to `:if(...)`, because Adguard accepts procedural
-        // selectors within its `:has(...)` selector.
-        if ( (matches = reExtendedSyntaxHas.exec(raw)) !== null ) {
-            return this.compileSelector(
-                raw.slice(0, matches.index) +
-                ':if('+ matches[2].replace(/:contains\(/g, ':has-text(') + ')' +
-                raw.slice(matches.index + matches[0].length)
-            );
+        // Mind unsupported advanced selector syntax, such as ABP's
+        // `-abp-properties`.
+        // Note: extended selector syntax has been deprecated in ABP, in favor
+        // of the procedural one (i.e. `:operator(...)`). See
+        // https://issues.adblockplus.org/ticket/5287
+        if ( extendedSyntax ) {
+            while ( (matches = reExtendedSyntaxParser.exec(raw)) !== null ) {
+                operator = normalizedExtendedSyntaxOperators.get(matches[1]);
+                if ( operator === undefined ) { return; }
+                raw = raw.slice(0, matches.index) +
+                      operator + '(' + matches[3] + ')' +
+                      raw.slice(matches.index + matches[0].length);
+            }
+            return this.compileSelector(raw);
         }
 
         var selector = raw,
@@ -838,7 +846,8 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         reFirstParentheses = /^\(*/,
         reLastParentheses = /\)*$/,
         reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
-        reNeedScope = /^\s*[+>~]/;
+        reNeedScope = /^\s*[+>~]/,
+        reAllForwardSlashes = /\//g;
 
     var lastProceduralSelector = '',
         lastProceduralSelectorCompiled;
@@ -916,6 +925,53 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         [ ':xpath', compileXpathExpression ]
     ]);
 
+    // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
+    // - Normalize (somewhat) the stringified version of procedural cosmetic
+    //   filters -- this increase the likelihood of detecting duplicates given
+    //   that uBO is able to understand syntax specific to other blockers.
+    //   The normalized string version is what is reported in the logger, by
+    //   design.
+    var decompile = function(compiled) {
+        var raw = [ compiled.selector ],
+            tasks = compiled.tasks;
+        if ( Array.isArray(tasks) ) {
+            for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
+                task = tasks[i];
+                switch ( task[0] ) {
+                case ':has':
+                case ':xpath':
+                    raw.push(task[0], '(', task[1], ')');
+                    break;
+                case ':has-text':
+                    raw.push(
+                        task[0],
+                        '(/',
+                        task[1].replace(reAllForwardSlashes, '\\/'),
+                        '/)'
+                    );
+                    break;
+                case ':matches-css':
+                case ':matches-css-after':
+                case ':matches-css-before':
+                    raw.push(
+                        task[0],
+                        '(',
+                        task[1].name,
+                        ': /',
+                        task[1].value.replace(reAllForwardSlashes, '\\/'),
+                        '/)'
+                    );
+                    break;
+                case ':if':
+                case ':if-not':
+                    raw.push(task[0], '(', decompile(task[1]), ')');
+                    break;
+                }
+            }
+        }
+        return raw.join('');
+    };
+
     var compile = function(raw) {
         var matches = reOperatorParser.exec(raw);
         if ( matches === null ) {
@@ -970,7 +1026,7 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         lastProceduralSelector = raw;
         var compiled = compile(raw);
         if ( compiled !== undefined ) {
-            compiled.raw = raw;
+            compiled.raw = decompile(compiled);
             compiled = JSON.stringify(compiled);
         }
         lastProceduralSelectorCompiled = compiled;
@@ -1027,7 +1083,6 @@ FilterContainer.prototype.compile = function(s, writer) {
         return false;
     }
     if ( parsed.invalid ) {
-        //console.error("uBlock Origin> discarding invalid cosmetic filter '%s'", s);
         return true;
     }
 
