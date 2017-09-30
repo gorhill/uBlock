@@ -351,10 +351,11 @@ vAPI.tabs.registerListeners = function() {
     // https://github.com/gorhill/uBlock/issues/3073
     // - Fall back to `tab.url` when `changeInfo.url` is not set.
     var onUpdated = function(tabId, changeInfo, tab) {
+        if ( typeof changeInfo.url !== 'string' ) {
+            changeInfo.url = tab && tab.url;
+        }
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
-        } else {
-            changeInfo.url = tab && tab.url;
         }
         onUpdatedClient(tabId.toString(), changeInfo, tab);
     };
