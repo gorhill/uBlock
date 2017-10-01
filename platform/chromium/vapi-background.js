@@ -59,7 +59,7 @@ var noopFunc = function(){};
 /******************************************************************************/
 
 vAPI.app = {
-    name: manifest.name,
+    name: manifest.name.replace(' dev build', ''),
     version: manifest.version
 };
 

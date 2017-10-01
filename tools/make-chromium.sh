@@ -5,11 +5,7 @@
 echo "*** uBlock0.chromium: Creating web store package"
 echo "*** uBlock0.chromium: Copying files"
 
-if [ "$1" = experimental ]; then
-    DES=dist/build/experimental/uBlock0.chromium
-else
-    DES=dist/build/uBlock0.chromium
-fi
+DES=dist/build/uBlock0.chromium
 rm -rf $DES
 mkdir -p $DES
 
@@ -27,6 +23,9 @@ cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp LICENSE.txt              $DES/
+
+echo "*** uBlock0.chromium: Generating meta..."
+python tools/make-chromium-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.chromium: Creating package..."
