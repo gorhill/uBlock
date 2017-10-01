@@ -33,7 +33,8 @@
       {
          "matches":[
             "http://*/*",
-            "https://*/*"
+            "https://*/*",
+            "file://*/*"
          ],
          "js":[
             "js/vapi-client.js",
