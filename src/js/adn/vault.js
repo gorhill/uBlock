@@ -1463,7 +1463,7 @@
     // Y scale
     var yScale = d3.scale.linear()
         .domain([0, d3.max(histogram, function(d) { return d.length; })])
-        .range([-2, -50]);
+        .range([-2, -46]);
 
     bars.append("line")
       .attr("x1", function (d) {
