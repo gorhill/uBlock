@@ -134,8 +134,6 @@ There is also a development version if you want to test uBlock Origin with the l
 
 uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox.
 
-Also of interest: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
-
 Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton), users of Debian 9 or later or Ubuntu 16.04 or later may simply
 `apt-get install xul-ext-ublock-origin`.
 
@@ -156,6 +154,14 @@ Development version available at <https://github.com/el1t/uBlock-Safari#ublock-o
 #### Note for all browsers
 
 To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers. Other blockers can also prevent uBlock₀'s privacy or anti-blocker features from working properly.
+
+#### Deploying
+
+Below is documentation to assist administrators in deploying uBlock Origin:
+
+- [Deploying uBlock Origin](https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin)
+    - Firefox: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/).
+    - Google Chrome: [Managing Google Chrome with adblocking and security](https://decentsecurity.com/ublock-for-google-chrome-deployment/).
 
 ## Release History
 
