@@ -846,11 +846,11 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         reFirstParentheses = /^\(*/,
         reLastParentheses = /\)*$/,
         reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
-        reNeedScope = /^\s*[+>~]/,
-        reAllForwardSlashes = /\//g;
+        reNeedScope = /^\s*[+>~]/;
 
     var lastProceduralSelector = '',
-        lastProceduralSelectorCompiled;
+        lastProceduralSelectorCompiled,
+        regexToRawValue = new Map();
 
     var compileCSSSelector = function(s) {
         // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
@@ -864,28 +864,31 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     };
 
     var compileText = function(s) {
+        var reText;
         if ( reIsRegexLiteral.test(s) ) {
-            s = s.slice(1, -1);
-            if ( isBadRegex(s) ) { return; }
+            reText = s.slice(1, -1);
+            if ( isBadRegex(reText) ) { return; }
         } else {
-            s = s.replace(reEscapeRegex, '\\$&');
+            reText = s.replace(reEscapeRegex, '\\$&');
+            regexToRawValue.set(reText, s);
         }
-        return s;
+        return reText;
     };
 
     var compileCSSDeclaration = function(s) {
-        var name, value,
+        var name, value, reText,
             pos = s.indexOf(':');
         if ( pos === -1 ) { return; }
         name = s.slice(0, pos).trim();
         value = s.slice(pos + 1).trim();
         if ( reIsRegexLiteral.test(value) ) {
-            value = value.slice(1, -1);
-            if ( isBadRegex(value) ) { return; }
+            reText = value.slice(1, -1);
+            if ( isBadRegex(reText) ) { return; }
         } else {
-            value = value.replace(reEscapeRegex, '\\$&');
+            reText = '^' + value.replace(reEscapeRegex, '\\$&') + '$';
+            regexToRawValue.set(reText, value);
         }
-        return { name: name, value: value };
+        return { name: name, value: reText };
     };
 
     var compileConditionalSelector = function(s) {
@@ -933,7 +936,8 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     //   design.
     var decompile = function(compiled) {
         var raw = [ compiled.selector ],
-            tasks = compiled.tasks;
+            tasks = compiled.tasks,
+            value;
         if ( Array.isArray(tasks) ) {
             for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
                 task = tasks[i];
@@ -943,23 +947,25 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
                     raw.push(task[0], '(', task[1], ')');
                     break;
                 case ':has-text':
+                    value = regexToRawValue.get(task[1]);
                     raw.push(
                         task[0],
-                        '(/',
-                        task[1].replace(reAllForwardSlashes, '\\/'),
-                        '/)'
+                        '(',
+                        value !== undefined ? value : '/' + task[1] + '/',
+                        ')'
                     );
                     break;
                 case ':matches-css':
                 case ':matches-css-after':
                 case ':matches-css-before':
+                    value = regexToRawValue.get(task[1].value);
                     raw.push(
                         task[0],
                         '(',
                         task[1].name,
-                        ': /',
-                        task[1].value.replace(reAllForwardSlashes, '\\/'),
-                        '/)'
+                        ': ',
+                        value !== undefined ? value : '/' + task[1].value + '/',
+                        ')'
                     );
                     break;
                 case ':if':
@@ -1034,6 +1040,7 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
     };
 
     entryPoint.reset = function() {
+        regexToRawValue = new Map();
         lastProceduralSelector = '';
         lastProceduralSelectorCompiled = undefined;
     };
