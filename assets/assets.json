@@ -106,8 +106,8 @@
 		"off": true,
 		"title": "Adguard Base Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#english-filter"
 	},
 	"easylist": {
 		"content": "filters",
@@ -128,8 +128,8 @@
 		"off": true,
 		"title": "Adguard Spyware Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters/issues",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#privacy"
 	},
 	"disconnect-tracking": {
 		"content": "filters",
@@ -208,7 +208,8 @@
 		"off": true,
 		"title": "Adguard’s Annoyance List",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#turkish"
 	},
 	"fanboy-thirdparty_social": {
 		"content": "filters",
@@ -549,7 +550,8 @@
 		"title": "RUS: Adguard Russian Filter",
 		"lang": "be ru uk",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
-		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard"
+		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard",
+		"instructionURL": "https://kb.adguard.com/ru/general/adguard-ad-filters#russian"
 	},
 	"spa-0": {
 		"content": "filters",
@@ -559,6 +561,16 @@
 		"lang": "es",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
+	},
+	"spa-1": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "spa, por: Adguard Spanish/Portuguese",
+		"lang": "es pt",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#spanish"
 	},
 	"SVN-0": {
 		"content": "filters",
@@ -585,7 +597,8 @@
 		"title": "TUR: Adguard Turkish Filter",
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
-		"supportURL": "https://forum.adguard.com/forumdisplay.php?51-Filter-Rules"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#turkish"
 	},
 	"VIE-1": {
 		"content": "filters",
