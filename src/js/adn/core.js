@@ -368,6 +368,7 @@
 
   /* send to vault/menu/dashboard if open */
   var sendNotifications = function(notes) {
+
     vAPI.messaging.broadcast({
        what: 'notifications',
        notifications: notes
@@ -868,7 +869,7 @@
   // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
-    //console.log('adsForUI.notes: ',notifications);
+console.log('adsForUI: ',pageUrl, adlist().length);
     return {
 
       data: adlist(),
@@ -876,7 +877,6 @@
       prefs: contentPrefs(),
       current: activeVisit(),
       notifications: notifications
-      // TODO: do we need to make these cloneable ? see #1163
     };
   }
 

@@ -21,6 +21,7 @@
 
 /* global vAPI, uDom, $ */
 
+
 (function () {
 
   'use strict';
@@ -28,6 +29,8 @@
   var ads, page; // remove? only if we can find an updated ad in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
+
+console.log('MENU', request.what, request, ads);
 
     switch (request.what) {
 
@@ -55,7 +58,7 @@
 
   var renderPage = function (json) {
 
-    var page = json && json.pageUrl;
+    page = json && json.pageUrl;
 
     function disableMenu() {
       uDom.nodeFromId('pause-button').disabled = true;
@@ -81,7 +84,7 @@
 
     updateMenuState();
 
-    var ads = json && onPage(json.data, page);
+    ads = json && onPage(json.data, page);
 
     setCounts(ads, json && json.data && json.data.length);
 
@@ -217,7 +220,7 @@
       $ad.descendants('cite').text(targetDomain(ad));
 
       // update the visited count
-      if (ad.pageUrl === page) {
+      if (ad.pageUrl === page) { // global page here
 
         var numVisits = visitedCount(ads);
         uDom('#visited-count').text(numVisits); // **uses global ads, page
@@ -648,7 +651,10 @@
 
   (function () {
 
+    console.log('MENU: init');
+
     var tabId = null;
+
     // Extract the tab id of the page this popup is for
     var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
     if (matches && matches.length === 2) {
@@ -662,10 +668,10 @@
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
       .on('mouseleave', '[data-tip]', onHideTooltip);
 
-    //tmp Russian fix
-    if(uDom('#vault-button').text()===" Просмотр хранилища рекламы") {
-     uDom('#vault-button').css("font-size","14px");
-     uDom('#stats').css("font-size","16px");
+    // tmp Russian fix
+    if (uDom('#vault-button').text() === " Просмотр хранилища рекламы") {
+      uDom('#vault-button').css("font-size","14px");
+      uDom('#stats').css("font-size","16px");
     }
 
   })();
