@@ -177,15 +177,26 @@
         return false;
       }
 
-      // Check size: require a min-size of 4x31, if we got a size
+      function isFacebookProfilePic(imgSrc, imgWidth) {
+        // hack to avoid facebook profile pics
+        return (imgSrc.includes("fbcdn.net") && // will fire if w > 0
+          imgSrc.includes("scontent") && imgWidth < 150);
+      }
+
+      // Check size: require a min-size of 4x31 (if we found a size)
       if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 31)) {
 
         return warnP('Ignoring Ad with size ' + iw + 'x' + ih + ': ', src, targetUrl);
       }
 
-      if (isIgnorable(src)) { // check ignorables
+      if (isIgnorable(src)) {
 
         return warnP('Ignorable image: ' + src);
+      }
+
+      if (isFacebookProfilePic(src, iw)) {
+
+        return warnP('Ignore fbProf: ' + src + ', w='+iw);
       }
 
       ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih }, targetDomain);
