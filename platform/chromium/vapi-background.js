@@ -647,7 +647,9 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
             iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };
     }
 
-    chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
+    if (chrome.browserAction && typeof chrome.browserAction.setIcon === 'function') { // ADN
+      chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
+    }
     vAPI.contextMenu.onMustUpdate(tabId);
 };
 
@@ -1190,12 +1192,14 @@ vAPI.contextMenu = {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
+        if (typeof chrome.contextMenus !== 'function') return; // ADN
         chrome.contextMenus.create(JSON.parse(JSON.stringify(entry)), function() {
             void chrome.runtime.lastError;
         });
     },
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
+        if (typeof chrome.contextMenus !== 'function') return; // ADN
         entries = entries || [];
         var n = Math.max(this._entries.length, entries.length),
             oldEntryId, newEntry;
