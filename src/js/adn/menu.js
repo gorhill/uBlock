@@ -21,16 +21,13 @@
 
 /* global vAPI, uDom, $ */
 
-
 (function () {
 
   'use strict';
 
-  var ads, page; // remove? only if we can find an updated ad in the DOM
+  var ads, page; // remove? only if we can find an updated ad already in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
-
-console.log('MENU', request.what, request, ads);
 
     switch (request.what) {
 
@@ -175,7 +172,7 @@ console.log('MENU', request.what, request, ads);
     uDom('#vault-count').text(json.data.length);
     uDom('#visited-count').text(visitedCount(ads));
     uDom('#found-count').text(ads.length);
-    //console.log("FOUND-COUNT: " + ads.length);
+    //console.log("FOUND: " + ads.length);
   }
 
   var layoutAds = function (json) {
@@ -295,9 +292,7 @@ console.log('MENU', request.what, request, ads);
 
   var removeClassFromAll = function (cls) {
 
-    //$('.ad-item').removeClass(cls);
     uDom('.ad-item').removeClass(cls);
-    //$('.ad-item-text').removeClass(cls);
     uDom('.ad-item-text').removeClass(cls);
   }
 
@@ -489,7 +484,6 @@ console.log('MENU', request.what, request, ads);
     return popupData;
   };
 
-  //$('#vault-button').click(
   uDom('#vault-button').on('click', function () {
 
     vAPI.messaging.send(
@@ -506,7 +500,6 @@ console.log('MENU', request.what, request, ads);
     vAPI.closePopup();
   });
 
-  //$('#settings-open')
   uDom('#settings-open').on('click', function () {
 
     vAPI.messaging.send(
@@ -539,18 +532,14 @@ console.log('MENU', request.what, request, ads);
     vAPI.closePopup();
   });
 
-  //$('#settings-close')
   uDom('#settings-close').on('click', function () {
 
-    //$('.page').toggleClass('hide');
     uDom('.page').toggleClass('hide');
-    //$('.settings').toggleClass('hide');
     uDom('.settings').toggleClass('hide');
   });
 
   var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/"; // keep
 
-  //$('#about-button')
   uDom('#about-button').on('click', function () {
 
     window.open("./popup.html", '_self');
@@ -619,19 +608,15 @@ console.log('MENU', request.what, request, ads);
       });
 
     updateMenuState();
-    //hashFromPopupData();
+    // hashFromPopupData();
   };
 
   var adjustBlockHeight = function () {
 
-    //recalculate the height of ad-list
+    // recalculate the height of ad-list
     var h = document.getElementById('notifications').offsetHeight;
     var newh = 350 - h;
     uDom('#ad-list').css('height', newh + 'px');
-    //*** Paused-menu always goes above the notifications
-    //adjust the starting point of paused-menu
-    // var newTop = 100 + h;
-    // uDom('#paused-menu').css('top', newTop + 'px');
   };
 
   var setBackBlockHeight = function () {
@@ -650,8 +635,6 @@ console.log('MENU', request.what, request, ads);
   /********************************************************************/
 
   (function () {
-
-    console.log('MENU: init');
 
     var tabId = null;
 
