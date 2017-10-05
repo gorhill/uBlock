@@ -869,7 +869,6 @@
   // return ALL ads, regardless of pageUrl param
   var adsForUI = function (pageUrl) {
 
-console.log('adsForUI: ',pageUrl, adlist().length);
     return {
 
       data: adlist(),
