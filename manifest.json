@@ -1,7 +1,8 @@
 {
   "manifest_version": 2,
   "name": "AdNauseam",
-  "version": "3.4.103",
+  "update_url": "https://rednoise.org/adnauseam/updates.xml",
+  "version": "3.4.106",
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {

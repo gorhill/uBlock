@@ -3,7 +3,11 @@
 
     "name": "AdNauseam",
     "version": "{version}",
-
+    "applications": {
+        "gecko": {
+           "id": "adnauseam@rednoise.org"
+        }
+     },
     "commands": {
         "launch-element-zapper": {
             "suggested_key": {
