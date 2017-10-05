@@ -948,25 +948,19 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
                     break;
                 case ':has-text':
                     value = regexToRawValue.get(task[1]);
-                    raw.push(
-                        task[0],
-                        '(',
-                        value !== undefined ? value : '/' + task[1] + '/',
-                        ')'
-                    );
+                    if ( value === undefined ) {
+                        value = '/' + task[1] + '/';
+                    }
+                    raw.push(task[0], '(', value, ')');
                     break;
                 case ':matches-css':
                 case ':matches-css-after':
                 case ':matches-css-before':
                     value = regexToRawValue.get(task[1].value);
-                    raw.push(
-                        task[0],
-                        '(',
-                        task[1].name,
-                        ': ',
-                        value !== undefined ? value : '/' + task[1].value + '/',
-                        ')'
-                    );
+                    if ( value === undefined ) {
+                        value = '/' + task[1].value + '/';
+                    }
+                    raw.push(task[0], '(', task[1].name, ': ', value, ')');
                     break;
                 case ':if':
                 case ':if-not':
@@ -1033,6 +1027,9 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         var compiled = compile(raw);
         if ( compiled !== undefined ) {
             compiled.raw = decompile(compiled);
+            if ( compiled.raw !== raw ) {
+                console.log(raw, '\n', compiled.raw, '\n');
+            }
             compiled = JSON.stringify(compiled);
         }
         lastProceduralSelectorCompiled = compiled;
