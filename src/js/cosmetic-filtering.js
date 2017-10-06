@@ -1027,9 +1027,6 @@ FilterContainer.prototype.compileProceduralSelector = (function() {
         var compiled = compile(raw);
         if ( compiled !== undefined ) {
             compiled.raw = decompile(compiled);
-            if ( compiled.raw !== raw ) {
-                console.log(raw, '\n', compiled.raw, '\n');
-            }
             compiled = JSON.stringify(compiled);
         }
         lastProceduralSelectorCompiled = compiled;
