@@ -538,6 +538,38 @@ registerFilterClass(FilterPlainRightAnchored);
 
 /******************************************************************************/
 
+var FilterExactMatch = function(s) {
+    this.s = s;
+};
+
+FilterExactMatch.prototype.match = function(url) {
+    return url === this.s;
+};
+
+FilterExactMatch.prototype.logData = function() {
+    return {
+        raw: '|' + this.s + '|',
+        regex: rawToRegexStr(this.s, 0x3),
+        compiled: this.compile()
+    };
+};
+
+FilterExactMatch.prototype.compile = function() {
+    return [ this.fid, this.s ];
+};
+
+FilterExactMatch.compile = function(details) {
+    return [ FilterExactMatch.fid, details.f ];
+};
+
+FilterExactMatch.load = function(args) {
+    return new FilterExactMatch(args[1]);
+};
+
+registerFilterClass(FilterExactMatch);
+
+/******************************************************************************/
+
 var FilterPlainHnAnchored = function(s) {
     this.s = s;
 };
@@ -2125,6 +2157,8 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata = FilterPlainLeftAnchored.compile(parsed);
     } else if ( parsed.anchor === 0x1 ) {
         fdata = FilterPlainRightAnchored.compile(parsed);
+    } else if ( parsed.anchor === 0x3 ) {
+        fdata = FilterExactMatch.compile(parsed);
     } else if ( parsed.tokenBeg === 0 ) {
         fdata = FilterPlainPrefix0.compile(parsed);
     } else if ( parsed.tokenBeg === 1 ) {
