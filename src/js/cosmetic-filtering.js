@@ -51,6 +51,14 @@ var isValidCSSSelector = (function() {
     } else {
         matchesFn = div.querySelector.bind(div);
     }
+    // https://github.com/gorhill/uBlock/issues/3111
+    //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
+    //   is fixed.
+    try {
+        matchesFn(':scope');
+    } catch (ex) {
+        matchesFn = div.querySelector.bind(div);
+    }
     return function(s) {
         try {
             matchesFn(s + ', ' + s + ':not(#foo)');
