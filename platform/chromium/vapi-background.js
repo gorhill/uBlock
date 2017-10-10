@@ -1192,14 +1192,14 @@ vAPI.contextMenu = {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
-        if (typeof chrome.contextMenus !== 'function') return; // ADN
+        if (typeof chrome.contextMenus !== 'object') return; // ADN
         chrome.contextMenus.create(JSON.parse(JSON.stringify(entry)), function() {
             void chrome.runtime.lastError;
         });
     },
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
-        if (typeof chrome.contextMenus !== 'function') return; // ADN
+        if (typeof chrome.contextMenus !== 'object') return; // ADN
         entries = entries || [];
         var n = Math.max(this._entries.length, entries.length),
             oldEntryId, newEntry;
