@@ -364,7 +364,7 @@
 		"group": "regions",
 		"lang": "el",
 		"supportURL": "https://github.com/kargig/greek-adblockplus-filter"
-	}
+	},
 	"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt": {
 		"off": true,
 		"title": "NOR: Dandelion Sprouts norske filtre for ryddigere nettsider",
