@@ -470,6 +470,16 @@
 		"contentURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt",
 		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
 	},
+	"JPN-1": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "JPN: Adguard Japan Filter",
+		"lang": "ja",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#japanese-filter"
+	},
 	"KOR-0": {
 		"content": "filters",
 		"group": "regions",
