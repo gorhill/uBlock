@@ -664,7 +664,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( logData.token === µb.staticNetFilteringEngine.dotTokenHash ) {
             return result;
         }
-        var re = new RegExp(logData.regex),
+        var re = new RegExp(logData.regex, 'i'),
             matches = re.exec(popunderURL);
         if ( matches === null ) { return 0; }
         var beg = matches.index,
