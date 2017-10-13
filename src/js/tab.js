@@ -177,7 +177,7 @@ housekeep itself.
             //   If the trigger is a change in the opener's URL, mark the entry
             //   as candidate for popunder filtering.
             if ( targetTabId === entry.opener.tabId ) {
-                entry.popunder = true;
+                entry.opener.popunder = true;
             }
             if ( vAPI.tabs.onPopupUpdated(tabId, entry.opener) === true ) {
                 entry.destroy();
