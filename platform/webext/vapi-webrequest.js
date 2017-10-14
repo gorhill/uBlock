@@ -93,16 +93,13 @@ vAPI.net.registerListeners = function() {
     };
 
     var punycode = self.punycode;
-    var reMustNormalizeHostname  = /[^0-9a-z._-]/;
+    var reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
     var parsedURL = new URL('about:blank');
 
     var normalizeRequestDetails = function(details) {
         details.tabId = details.tabId.toString();
 
-        if (
-            mustPunycode === true &&
-            reMustNormalizeHostname.test(details.url) === true
-        ) {
+        if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
             parsedURL.href = details.url;
             details.url = details.url.replace(
                 parsedURL.hostname,
