@@ -646,18 +646,21 @@ PageStore.prototype.filterRequest = function(context) {
     // Static filtering has lowest precedence.
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
-        if ( result !== 0) {
+       
           if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
-             result = 4;// ADN: adnauseamAllowed
+             // ADN: adnauseamAllowed
+             // console.warn("*** Blocking filterRequest *** AdNauseamAllowed");
+             result = 4;
           }
-          else if (µb.logger.isEnabled() ) {
+
+          if (result !== 0 && µb.logger.isEnabled() ) {
+             // ADN: log adnauseamAllowed
              this.logData = µb.staticNetFilteringEngine.toLogData();
              if (result === 4) this.logData.result = 4;
           }
-        }
     }
 
-    if ( cacheableResult ) {
+    if ( cacheableResult) {
         this.netFilteringCache.rememberResult(context, result, this.logData);
     } else if ( result === 1 && this.collapsibleResources[requestType] === true ) {
         this.netFilteringCache.rememberBlock(context, true);
@@ -724,6 +727,7 @@ PageStore.prototype.getBlockedResources = function(request, response) {
             this.filterRequest(context);
         }
     }
+
     if ( this.netFilteringCache.hash === response.hash ) {
         return;
     }
