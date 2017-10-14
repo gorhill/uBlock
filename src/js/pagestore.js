@@ -648,7 +648,7 @@ PageStore.prototype.filterRequest = function(context) {
     // Static filtering has lowest precedence.
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
-       
+
           if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
              // ADN: adnauseamAllowed
              // console.warn("*** Blocking filterRequest *** AdNauseamAllowed");
@@ -736,14 +736,8 @@ PageStore.prototype.getBlockedResources = function(request, response) {
             this.filterRequest(context);
         }
     }
-<<<<<<< HEAD
-
-    if ( this.netFilteringCache.hash === response.hash ) {
-        return;
-    }
-=======
     if ( this.netFilteringCache.hash === response.hash ) { return; }
->>>>>>> upstream1.14.12
+
     response.hash = this.netFilteringCache.hash;
     response.blockedResources = this.netFilteringCache.lookupAllBlocked(frameHostname);
 };

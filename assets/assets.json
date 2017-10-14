@@ -74,15 +74,6 @@
 			"assets/ublock/privacy.txt"
 		]
 	},
-	"ublock-abuse": {
-		"content": "filters",
-		"group": "default",
-		"title": "uBlock filters – Resource abuse",
-		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
-			"assets/ublock/resource-abuse.txt"
-		]
-	},
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",

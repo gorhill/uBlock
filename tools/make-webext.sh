@@ -12,7 +12,6 @@ mkdir -p $DES/webextension
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
-<<<<<<< HEAD
 bash ./tools/make-assets.sh $DES
 bash ./tools/make-locales.sh $DES
 
@@ -28,20 +27,7 @@ cp -R platform/chromium/img      $DES/
 cp platform/chromium/*.html      $DES/
 cp platform/chromium/*.json      $DES/
 cp LICENSE.txt                   $DES/
-=======
-cp -R src/css                           $DES/
-cp -R src/img                           $DES/
-cp -R src/js                            $DES/
-cp -R src/lib                           $DES/
-cp -R src/_locales                      $DES/
-cp -R $DES/_locales/nb                  $DES/_locales/no
-cp src/*.html                           $DES/
-cp -R platform/chromium/img             $DES/
-cp platform/chromium/*.js               $DES/js/
-cp platform/chromium/*.html             $DES/
-cp platform/chromium/*.json             $DES/
-cp LICENSE.txt                          $DES/
->>>>>>> upstream1.14.12
+
 
 cp platform/webext/manifest.json        $DES/
 cp platform/webext/polyfill.js          $DES/js/
