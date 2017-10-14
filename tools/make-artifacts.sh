@@ -4,8 +4,8 @@ CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 FIREFOX=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin
 OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
-# before running, check that above programs exist, as well as that 'webext' cmd exists 
-# if not, exit with error 
+# before running, check that above programs exist, as well as that 'webext' cmd exists
+# if not, exit with error
 command "${CHROME}" --version || { echo >&2 "Chrome is not installed."; exit 1; }
 command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
 command "${OPERA}" --version || { echo >&2 "Opera is not installed."; exit 1; }
@@ -30,7 +30,7 @@ rm -rf ${DES}/*
 # CHROME
 ./tools/make-chromium.sh
 "${CHROME}" "${CHROME_OPTS}"
-mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chrome.crx
+mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chrome-tmp.crx
 
 
 # OPERA
@@ -44,13 +44,13 @@ mv ${DES}/adnauseam.opera.nex ${ARTS}/adnauseam-${VERSION}.opera.nex
 pushd ${DES}/adnauseam.firefox
 jpm xpi
 popd
-cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox.xpi
+cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox-legacy.xpi
 
 
 # WEBEXT
 ./tools/make-webext.sh all
 web-ext build -s ${DES}/adnauseam.webext -a ${ARTS}
-mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.webext.zip
+mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox-webext.zip
 
 
 # CHROME-RAW
