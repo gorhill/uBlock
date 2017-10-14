@@ -142,7 +142,9 @@ vAPI.cacheStorage = (function() {
             if ( !db ) { return callback(); }
             var transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete = transaction.onerror = function() {
+                // TODO: remove once storage.local is clean
                 if ( notfoundKeys.size === 0 ) {
+                    vAPI.storage.remove(keys);
                     return callback(store);
                 }
                 maybeMigrate(Array.from(notfoundKeys), store, callback);
