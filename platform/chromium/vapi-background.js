@@ -719,11 +719,11 @@ vAPI.setIcon = (function() {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        if ( browserAction.setIcon !== undefined ) {
+        if ( browserAction && typeof browserAction.setIcon === 'function' ) {
+            
             browserAction.setIcon(
                 {
                     tabId: tabId,
-                    //path: iconPaths[iconStatus === 'on' ? 1 : 0]
                     path: iconPaths // ADN
                 },
                 function onIconReady() {
@@ -742,7 +742,7 @@ vAPI.setIcon = (function() {
             );
         }
 
-        if ( browserAction.setTitle !== undefined ) {
+        if ( browserAction && typeof browserAction.setTitle === 'function' ) {
             browserAction.setTitle({
                 tabId: tabId,
                 title: titleTemplate.replace(

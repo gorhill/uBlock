@@ -880,7 +880,7 @@ vAPI.tabs.registerListeners();
 
     var tabIdToTimer = Object.create(null);
 
-    var updateBadge = function(tabId, isClick) { // ADN: not sure if isClick is needed
+    var updateBadge = function(tabId, isClick) {
         delete tabIdToTimer[tabId];
 
         var state = false;
@@ -904,7 +904,6 @@ vAPI.tabs.registerListeners();
         if (iconStatus !== 'off') {
             iconStatus += (isClick ? 'active' : '');
         }
-
         vAPI.setIcon(tabId, iconStatus, badge);
     };
 
@@ -915,8 +914,7 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
-        // tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 701); // ADN
     };
 })();
 
