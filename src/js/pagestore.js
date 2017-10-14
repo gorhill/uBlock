@@ -724,38 +724,8 @@ PageStore.prototype.getBlockedResources = function(request, response) {
             this.filterRequest(context);
         }
     }
-
-    // ADN: now check our firewall (top precedence)
-   if ( result === 0 ) {
-         result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
-         // logger
-          if ( result === 2 && µb.logger.isEnabled() ) {
-             this.logData = µb.adnauseam.dnt.firewall.toLogData();
-         }
-    }
-
-    // Dynamic hostname/type filtering.
-    if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
-        result = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, requestType);
-        if ( result !== 0 && result !== 3 && µb.logger.isEnabled() ) {
-            this.logData = µb.sessionFirewall.toLogData();
-        }
-    }
-
-    // Static filtering has lowest precedence.
-    if ( result === 0 || result === 3 ) {
-        result = µb.staticNetFilteringEngine.matchString(context);
-
-        if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
-                 // console.warn("*** Blocking filterRequestNoCache *** AdNauseamAllowed");
-                 result = 4;// ADN: adnauseamAllowed
-          }
-
-        if ( result !== 0 && µb.logger.isEnabled() ) {
-            this.logData = µb.staticNetFilteringEngine.toLogData();
-            if (result === 4) this.logData.result = 4;
-
-        }
+    if ( this.netFilteringCache.hash === response.hash ) {
+        return;
     }
     response.hash = this.netFilteringCache.hash;
     response.blockedResources = this.netFilteringCache.lookupAllBlocked(request.pageHostname);
