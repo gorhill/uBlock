@@ -880,7 +880,7 @@ vAPI.tabs.registerListeners();
 
     var tabIdToTimer = Object.create(null);
 
-    var updateBadge = function(tabId, isClick) {
+    var updateBadge = function(tabId, isClick) { // ADN: not sure if isClick is needed
         delete tabIdToTimer[tabId];
 
         var state = false;
@@ -915,7 +915,8 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
+        // tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
     };
 })();
 

@@ -468,56 +468,6 @@ vAPI.messaging.listen('popupPanel', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
-
-/******************************************************************************/
-
-var tagNameToRequestTypeMap = {
-     'embed': 'object',
-    'iframe': 'sub_frame',
-       'img': 'image',
-    'object': 'object'
-};
-
-/******************************************************************************/
-
-// Evaluate many requests.
-
-// https://github.com/gorhill/uBlock/issues/1782
-//   Treat `data:` URIs as 1st-party resources.
-
-var filterRequests = function(pageStore, details) {
-    var requests = details.requests;
-    if ( µb.userSettings.collapseBlocked === false ) {
-        return requests;
-    }
-
-    //console.debug('messaging.js/contentscript-end.js: processing %d requests', requests.length);
-
-    var hostnameFromURI = µb.URI.hostnameFromURI,
-        redirectEngine = µb.redirectEngine,
-        punycodeURL = vAPI.punycodeURL;
-
-    // Create evaluation context
-    var context = pageStore.createContextFromFrameHostname(details.pageHostname),
-        request,
-        i = requests.length;
-    while ( i-- ) {
-        request = requests[i];
-        context.requestURL = punycodeURL(request.url);
-        context.requestHostname = hostnameFromURI(context.requestURL);
-        context.requestType = tagNameToRequestTypeMap[request.tag];
-        if ( pageStore.filterRequest(context) !== 1 ) { continue; }
-        // Redirected? (We do not hide redirected resources.)
-        request.collapse = redirectEngine.matches(context) !== true;
-    }
-
-    context.dispose();
-    return requests;
-};
-
-/******************************************************************************/
-
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -526,14 +476,29 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
-
-    var pageStore;
+    var µb = µBlock,
+        response,
+        pageStore;
     if ( sender && sender.tab ) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
 
     switch ( request.what ) {
+    case 'getCollapsibleBlockedRequests':
+        response = {
+            id: request.id,
+            hash: request.hash,
+            netSelectorCacheCountMax: µb.cosmeticFilteringEngine.netSelectorCacheCountMax
+        };
+        if (
+            µb.userSettings.collapseBlocked &&
+            pageStore &&
+            pageStore.getNetFilteringSwitch()
+        ) {
+            pageStore.getBlockedResources(request, response);
+        }
+        break;
+
     case 'retrieveContentScriptParameters':
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             response = {
@@ -554,15 +519,6 @@ var onMessage = function(request, sender, callback) {
         if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
             response = {
                 result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request)
-            };
-        }
-        break;
-
-    case 'filterRequests':
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = {
-                result: filterRequests(pageStore, request),
-                netSelectorCacheCountMax: µb.cosmeticFilteringEngine.netSelectorCacheCountMax
             };
         }
         break;

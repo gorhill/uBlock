@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
-        <em:id>uBlock0-webext@raymondhill.net</em:id>
+        <em:id>uBlock0@raymondhill.net</em:id>
         <em:version>{version}</em:version>
         <em:name>{name}</em:name>
         <em:description>{description}</em:description>
@@ -20,8 +20,8 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</em:id>
-                <em:minVersion>52.0a1</em:minVersion>
-                <em:maxVersion>*</em:maxVersion>
+                <em:minVersion>54.0</em:minVersion>
+                <em:maxVersion>56.*</em:maxVersion>
             </Description>
         </em:targetApplication>
 
@@ -30,7 +30,7 @@
             <Description>
                 <em:id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</em:id>
                 <em:minVersion>54.0</em:minVersion>
-                <em:maxVersion>*</em:maxVersion>
+                <em:maxVersion>56.*</em:maxVersion>
             </Description>
         </em:targetApplication>
 

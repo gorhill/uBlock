@@ -1546,6 +1546,7 @@ pickerRoot.style.cssText = [
     'left: 0',
     'margin: 0',
     'max-height: none',
+    'max-width: none',
     'opacity: 1',
     'outline: 0',
     'padding: 0',

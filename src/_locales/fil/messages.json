@@ -92,11 +92,11 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Palit-ayos ng panala ng itsura para sa site na ito",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Palit-ayos sa paghalang ng malayuang itsura ng titik para sa site na ito",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -116,15 +116,15 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"lahat",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"mga imahe",
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"Pang-tatlo na personalidad",
     "description":""
   },
   "popup3pPassiveRulePrompt":{
@@ -156,19 +156,19 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Gumawa",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Pili",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Tumigil",
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Paunang-tingin",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -184,7 +184,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Paghalang sa elemento",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{

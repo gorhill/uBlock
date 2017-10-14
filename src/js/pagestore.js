@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,56 +43,19 @@ var µb = µBlock;
 /******************************************************************************/
 
 // To mitigate memory churning
-var netFilteringResultCacheEntryJunkyard = [];
-var netFilteringResultCacheEntryJunkyardMax = 200;
-
-/******************************************************************************/
-
-var NetFilteringResultCacheEntry = function(result, type, logData) {
-    this.init(result, type, logData);
-};
-
-/******************************************************************************/
-
-NetFilteringResultCacheEntry.prototype.init = function(result, type, logData) {
-    this.result = result;
-    this.type = type;
-    this.time = Date.now();
-    this.logData = logData;
-    return this;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCacheEntry.prototype.dispose = function() {
-    this.result = this.type = '';
-    this.logData = undefined;
-    if ( netFilteringResultCacheEntryJunkyard.length < netFilteringResultCacheEntryJunkyardMax ) {
-        netFilteringResultCacheEntryJunkyard.push(this);
-    }
-};
-
-/******************************************************************************/
-
-NetFilteringResultCacheEntry.factory = function(result, type, logData) {
-    if ( netFilteringResultCacheEntryJunkyard.length ) {
-        return netFilteringResultCacheEntryJunkyard.pop().init(result, type, logData);
-    }
-    return new NetFilteringResultCacheEntry(result, type, logData);
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
-// To mitigate memory churning
-var netFilteringCacheJunkyard = [];
-var netFilteringCacheJunkyardMax = 10;
+var netFilteringCacheJunkyard = [],
+    netFilteringCacheJunkyardMax = 10;
 
 /******************************************************************************/
 
 var NetFilteringResultCache = function() {
+    this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
     this.init();
 };
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.shelfLife = 15 * 1000;
 
 /******************************************************************************/
 
@@ -109,18 +72,16 @@ NetFilteringResultCache.factory = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.init = function() {
-    this.urls = Object.create(null);
-    this.count = 0;
-    this.shelfLife = 15 * 1000;
+    this.blocked = new Map();
+    this.results = new Map();
+    this.hash = 0;
     this.timer = null;
-    this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
 };
 
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.dispose = function() {
     this.empty();
-    this.boundPruneAsyncCallback = null;
     if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
         netFilteringCacheJunkyard.push(this);
     }
@@ -129,68 +90,47 @@ NetFilteringResultCache.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.add = function(context, result, logData) {
-    var url = context.requestURL,
-        type = context.requestType,
-        key = type + ' ' + url,
-        entry = this.urls[key];
-    if ( entry !== undefined ) {
-        entry.result = result;
-        entry.type = type;
-        entry.time = Date.now();
-        entry.logData = logData;
-        return;
-    }
-    this.urls[key] = NetFilteringResultCacheEntry.factory(result, type, logData);
-    if ( this.count === 0 ) {
+NetFilteringResultCache.prototype.rememberResult = function(context, result, logData) {
+    if ( this.results.size === 0 ) {
         this.pruneAsync();
     }
-    this.count += 1;
+    var key = context.pageHostname + ' ' + context.requestType + ' ' + context.requestURL;
+    this.results.set(key, {
+        result: result,
+        logData: logData,
+        tstamp: Date.now()
+    });
+    if ( result !== 1 ) { return; }
+    var now = Date.now();
+    this.blocked.set(key, now);
+    this.hash = now;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.rememberBlock = function(details) {
+    if ( this.blocked.size === 0 ) {
+        this.pruneAsync();
+    }
+    var now = Date.now();
+    this.blocked.set(
+        details.pageHostname + ' ' + details.requestType + ' ' + details.requestURL,
+        now
+    );
+    this.hash = now;
 };
 
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.empty = function() {
-    for ( var key in this.urls ) {
-        this.urls[key].dispose();
-    }
-    this.urls = Object.create(null);
-    this.count = 0;
+    this.blocked.clear();
+    this.results.clear();
+    this.hash = 0;
     if ( this.timer !== null ) {
         clearTimeout(this.timer);
         this.timer = null;
     }
 };
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.compareEntries = function(a, b) {
-    return this.urls[b].time - this.urls[a].time;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.prune = function() {
-    var keys = Object.keys(this.urls).sort(this.compareEntries.bind(this));
-    var obsolete = Date.now() - this.shelfLife;
-    var key, entry;
-    var i = keys.length;
-    while ( i-- ) {
-        key = keys[i];
-        entry = this.urls[key];
-        if ( entry.time > obsolete ) {
-            break;
-        }
-        entry.dispose();
-        delete this.urls[key];
-    }
-    this.count -= keys.length - i - 1;
-    if ( this.count > 0 ) {
-        this.pruneAsync();
-    }
-};
-
-// https://www.youtube.com/watch?v=hcVpbsDyOhM
 
 /******************************************************************************/
 
@@ -202,13 +142,46 @@ NetFilteringResultCache.prototype.pruneAsync = function() {
 
 NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
     this.timer = null;
-    this.prune();
+    var obsolete = Date.now() - this.shelfLife,
+        entry;
+    for ( entry of this.blocked ) {
+        if ( entry[1] <= obsolete ) {
+            this.results.delete(entry[0]);
+            this.blocked.delete(entry[0]);
+        }
+    }
+    for ( entry of this.results ) {
+        if ( entry[1].tstamp <= obsolete ) {
+            this.results.delete(entry[0]);
+        }
+    }
+    if ( this.blocked.size !== 0 || this.results.size !== 0 ) {
+        this.pruneAsync();
+    }
 };
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.lookup = function(context) {
-    return this.urls[context.requestType + ' ' + context.requestURL] || undefined;
+NetFilteringResultCache.prototype.lookupResult = function(context) {
+    return this.results.get(
+        context.pageHostname + ' ' +
+        context.requestType + ' ' +
+        context.requestURL
+    );
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
+    var result = [],
+        pos;
+    for ( var entry of this.blocked ) {
+        pos = entry[0].indexOf(' ');
+        if ( entry[0].slice(0, pos) === hostname ) {
+            result[result.length] = entry[0].slice(pos + 1);
+        }
+    }
+    return result;
 };
 
 /******************************************************************************/
@@ -610,24 +583,39 @@ PageStore.prototype.journalProcess = function(fromTimer) {
 PageStore.prototype.filterRequest = function(context) {
     this.logData = undefined;
 
-    var requestType = context.requestType;
-
-    // We want to short-term cache filtering results of collapsible types,
-    // because they are likely to be reused, from network request handler and
-    // from content script handler.
-    if ( 'image media object sub_frame'.indexOf(requestType) === -1 ) {
-        return this.filterRequestNoCache(context);
-    }
-
     if ( this.getNetFilteringSwitch() === false ) {
-        this.netFilteringCache.add(context, 0);
         return 0;
     }
 
-    var entry = this.netFilteringCache.lookup(context);
-    if ( entry !== undefined ) {
-        this.logData = entry.logData;
-        return entry.result;
+    var requestType = context.requestType;
+
+    if ( requestType === 'csp_report' ) {
+        if ( this.internalRedirectionCount !== 0 ) {
+            if ( µb.logger.isEnabled() ) {
+                this.logData = { result: 1, source: 'global', raw: 'no-spurious-csp-report' };
+            }
+            return 1;
+        }
+    }
+
+    if ( requestType === 'font' ) {
+        this.remoteFontCount += 1;
+        if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
+            if ( µb.logger.isEnabled() ) {
+                this.logData = µb.hnSwitches.toLogData();
+            }
+            return 1;
+        }
+    }
+
+    var cacheableResult = this.cacheableResults[requestType] === true;
+
+    if ( cacheableResult ) {
+        var entry = this.netFilteringCache.lookupResult(context);
+        if ( entry !== undefined ) {
+            this.logData = entry.logData;
+            return entry.result;
+        }
     }
 
     // Dynamic URL filtering.
@@ -649,13 +637,13 @@ PageStore.prototype.filterRequest = function(context) {
 
     // Dynamic hostname/type filtering.
     if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
-        result = µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, requestType);
+        result = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, requestType);
         if ( result !== 0 && result !== 3 && µb.logger.isEnabled() ) {
             this.logData = µb.sessionFirewall.toLogData();
         }
     }
 
-    // Static filtering: lowest filtering precedence.
+    // Static filtering has lowest precedence.
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
         if ( result !== 0) {
@@ -669,9 +657,24 @@ PageStore.prototype.filterRequest = function(context) {
         }
     }
 
-    this.netFilteringCache.add(context, result, this.logData);
+    if ( cacheableResult ) {
+        this.netFilteringCache.rememberResult(context, result, this.logData);
+    } else if ( result === 1 && this.collapsibleResources[requestType] === true ) {
+        this.netFilteringCache.rememberBlock(context, true);
+    }
 
     return result;
+};
+
+PageStore.prototype.cacheableResults = {
+    sub_frame: true
+};
+
+PageStore.prototype.collapsibleResources = {
+    image: true,
+    media: true,
+    object: true,
+    sub_frame: true
 };
 
 /******************************************************************************/
@@ -706,43 +709,19 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
     return 1;
 };
 
+// https://www.youtube.com/watch?v=drW8p_dTLD4
+
 /******************************************************************************/
 
-PageStore.prototype.filterRequestNoCache = function(context) {
-    this.logData = undefined;
-
-    if ( this.getNetFilteringSwitch() === false ) {
-        return 0;
-    }
-
-    var requestType = context.requestType;
-
-    if ( requestType === 'csp_report' ) {
-        if ( this.internalRedirectionCount !== 0 ) {
-            if ( µb.logger.isEnabled() ) {
-                this.logData = { result: 1, source: 'global', raw: 'no-spurious-csp-report' };
-            }
-            return 1;
-        }
-    }
-
-    if ( requestType === 'font' ) {
-        this.remoteFontCount += 1;
-        if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
-            if ( µb.logger.isEnabled() ) {
-                this.logData = µb.hnSwitches.toLogData();
-            }
-            return 1;
-        }
-    }
-
-    var result = 0;
-
-    // Dynamic URL filtering.
-    if ( result === 0 ) {
-        result = µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
-        if ( result !== 0 && µb.logger.isEnabled() ) {
-            this.logData = µb.sessionURLFiltering.toLogData();
+PageStore.prototype.getBlockedResources = function(request, response) {
+    var resources = request.resources;
+    if ( Array.isArray(resources) && resources.length !== 0 ) {
+        var context = this.createContextFromFrameHostname(request.pageHostname);
+        for ( var resource of resources ) {
+            context.requestType = resource.type;
+            context.requestHostname = µb.URI.hostnameFromURI(resource.url);
+            context.requestURL = resource.url;
+            this.filterRequest(context);
         }
     }
 
@@ -778,11 +757,9 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
         }
     }
-
-    return result;
+    response.hash = this.netFilteringCache.hash;
+    response.blockedResources = this.netFilteringCache.lookupAllBlocked(request.pageHostname);
 };
-
-// https://www.youtube.com/watch?v=drW8p_dTLD4
 
 /******************************************************************************/
 

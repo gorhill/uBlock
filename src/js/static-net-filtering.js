@@ -200,7 +200,7 @@ var rawToRegexStr = function(s, anchor) {
                  .replace(me.escape3, '')
                  .replace(me.escape4, '[^ ]*?');
     if ( anchor & 0x4 ) {
-        reStr = '[0-9a-z.-]*?' + reStr;
+        reStr = rawToRegexStr.reTextHostnameAnchor + reStr;
     } else if ( anchor & 0x2 ) {
         reStr = '^' + reStr;
     }
@@ -213,6 +213,7 @@ rawToRegexStr.escape1 = /[.+?${}()|[\]\\]/g;
 rawToRegexStr.escape2 = /\^/g;
 rawToRegexStr.escape3 = /^\*|\*$/g;
 rawToRegexStr.escape4 = /\*/g;
+rawToRegexStr.reTextHostnameAnchor = '^[a-z-]+://(?:[^/?#]+\\.)?';
 
 var filterFingerprinter = µb.CompiledLineWriter.fingerprint;
 
@@ -627,10 +628,13 @@ FilterGenericHnAnchored.prototype.match = function(url) {
     return matchStart !== -1 && isHnAnchored(url, matchStart);
 };
 
+FilterGenericHnAnchored.prototype.reSourceOffset =
+    (new RegExp(rawToRegexStr.reTextHostnameAnchor)).source.length;
+
 FilterGenericHnAnchored.prototype.logData = function() {
     var out = {
         raw: '||' + this.s,
-        regex: this.re.source,
+        regex: this.re.source.slice(this.reSourceOffset),
         compiled: this.compile()
     };
     return out;

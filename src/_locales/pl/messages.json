@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliknij, aby otworzyć panel sterowania",
+    "message":"Otwórz panel sterowania",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -344,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Zaktualizowano: {{ago}}.\nKliknij by wymusić aktualizację.",
+    "message":"Zaktualizowano: {{ago}}.\nKliknij, aby wymusić aktualizację.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{

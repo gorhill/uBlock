@@ -1529,6 +1529,15 @@ FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/2835
+    //   Do not inject scriptlets if the site is under an `allow` rule.
+    if (
+        µb.userSettings.advancedUserEnabled === true &&
+        µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+    ) {
+        return;
+    }
+
     // Exceptions should be rare, so we check for exception only if there are
     // scriptlets returned.
     var exceptions = [], j, token;
