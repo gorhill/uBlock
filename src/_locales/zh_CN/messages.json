@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"进入元素临时移除模式",
+    "message":"进入元素移除模式",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -84,7 +84,7 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"禁止此网站弹出任何窗口",
+    "message":"是否禁止此网站弹出任何窗口",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
@@ -96,7 +96,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"阻止此网站的第三方字体",
+    "message":"是否阻止此网站的第三方字体",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -152,7 +152,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} \/ {{total}} 个域",
+    "message":"{{count}} \/ {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -236,11 +236,11 @@
     "description":""
   },
   "settingPerSiteSwitchGroupSynopsis":{
-    "message":"这些默认行为可以在各网站上覆盖",
+    "message":"默认设置会被具体站点设置覆盖",
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"禁用元素过滤规则",
+    "message":"停用元素过滤规则",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -272,7 +272,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"自动更新规则列表。",
+    "message":"自动更新规则列表",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -319,9 +319,9 @@
     "message":"恶意网站",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"社交",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"骚扰",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"多用途",
@@ -340,7 +340,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"已过时",
+    "message":"需要更新",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
@@ -384,7 +384,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"还原",
+    "message":"恢复",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{

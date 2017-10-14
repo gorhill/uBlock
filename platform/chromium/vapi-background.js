@@ -39,32 +39,27 @@ vAPI.chromiumVersion = (function(){
     var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
     return matches !== null ? parseInt(matches[1], 10) : NaN;
     })();
+
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
+
+vAPI.webextFlavor = '';
+if (
+    self.browser instanceof Object &&
+    typeof self.browser.runtime.getBrowserInfo === 'function'
+) {
+    self.browser.runtime.getBrowserInfo().then(function(info) {
+        vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
+    });
+}
 
 var noopFunc = function(){};
 
 /******************************************************************************/
 
-if ( 
-    typeof browser === 'object' &&
-    browser !== null &&
-    browser.runtime instanceof Object &&
-    typeof browser.runtime.getBrowserInfo === 'function'
-) {
-    browser.runtime.getBrowserInfo().then(function(info) {
-        vAPI.supportsUserStylesheets =
-            info.name === 'Firefox' &&
-            parseInt(info.version, 10) > 52;
-
-    });
-}
-
-/******************************************************************************/
-
 vAPI.app = {
-    name: manifest.name,
+    name: manifest.name.replace(' dev build', ''),
     version: manifest.version
 };
 
@@ -317,14 +312,19 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onCreatedNavigationTarget = function(details) {
-        //console.debug('onCreatedNavigationTarget: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        if ( typeof details.url !== 'string' ) {
+            details.url = '';
+        }
         if ( reGoodForWebRequestAPI.test(details.url) === false ) {
             details.frameId = 0;
             details.url = sanitizeURL(details.url);
             onNavigationClient(details);
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
-            vAPI.tabs.onPopupCreated(details.tabId.toString(), details.sourceTabId.toString());
+            vAPI.tabs.onPopupCreated(
+                details.tabId.toString(),
+                details.sourceTabId.toString()
+            );
         }
     };
 
@@ -348,7 +348,12 @@ vAPI.tabs.registerListeners = function() {
         }
     };
 
+    // https://github.com/gorhill/uBlock/issues/3073
+    // - Fall back to `tab.url` when `changeInfo.url` is not set.
     var onUpdated = function(tabId, changeInfo, tab) {
+        if ( typeof changeInfo.url !== 'string' ) {
+            changeInfo.url = tab && tab.url;
+        }
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
@@ -488,12 +493,19 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
+    // - Do not try to lookup uBO's own pages with FF 55 or less.
+    if ( /^Mozilla-Firefox-5[2-5]\./.test(vAPI.webextFlavor) ) {
+        wrapper();
+        return;
+    }
+
     // https://developer.chrome.com/extensions/tabs#method-query
     // "Note that fragment identifiers are not matched."
     // It's a lie, fragment identifiers ARE matched. So we need to remove the
     // fragment.
-    var pos = targetURL.indexOf('#');
-    var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
+    var pos = targetURL.indexOf('#'),
+        targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         if ( chrome.runtime.lastError ) { /* noop */ }
@@ -644,41 +656,44 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         }
     ];
 
-    return function(tabId, iconStatus, badge) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) { return; }
+    var onTabReady = function(tab, status, badge) {
+        if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            browserAction.setIcon(
-                {
-                    tabId: tabId,
-                    path: iconPaths[iconStatus === 'on' ? 1 : 0]
-                },
-                function onIconReady() {
-                    if ( vAPI.lastError() ) { return; }
-                    chrome.browserAction.setBadgeText({
-                        tabId: tabId,
-                        text: badge
-                    });
-                    if ( badge !== '' ) {
-                        chrome.browserAction.setBadgeBackgroundColor({
-                            tabId: tabId,
-                            color: '#666'
-                        });
-                    }
-                }
-            );
+            browserAction.setIcon({
+                tabId: tab.id,
+                path: iconPaths[status === 'on' ? 1 : 0]
+            });
+            browserAction.setBadgeText({
+                tabId: tab.id,
+                text: badge
+            });
+            if ( badge !== '' ) {
+                browserAction.setBadgeBackgroundColor({
+                    tabId: tab.id,
+                    color: '#666'
+                });
+            }
         }
 
         if ( browserAction.setTitle !== undefined ) {
             browserAction.setTitle({
-                tabId: tabId,
+                tabId: tab.id,
                 title: titleTemplate.replace(
                     '{badge}',
-                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
+    };
+
+    return function(tabId, iconStatus, badge) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.get(tabId, function(tab) {
+            onTabReady(tab, iconStatus, badge);
+        });
 
     var iconPaths;
 
@@ -804,6 +819,13 @@ vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
         toAuxPending = {};
 
+    // https://issues.adblockplus.org/ticket/5695
+    // - Good idea, adopted: cleaner way to detect user-stylesheet support.
+    var supportsUserStylesheets =
+        chrome.extensionTypes instanceof Object &&
+        chrome.extensionTypes.CSSOrigin instanceof Object &&
+        'USER' in chrome.extensionTypes.CSSOrigin;
+
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
         this.callback = this.proxy.bind(this); // bind once
@@ -918,17 +940,25 @@ vAPI.messaging.onPortMessage = (function() {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( vAPI.supportsUserStylesheets === true ) {
+            if ( supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
-            if ( msg.toRemove ) {
-                details.code = msg.toRemove;
-                chrome.tabs.removeCSS(tabId, details);
-            }
-            if ( msg.toAdd ) {
-                details.code = msg.toAdd;
+            var fn;
+            if ( msg.add ) {
                 details.runAt = 'document_start';
-                chrome.tabs.insertCSS(tabId, details);
+                fn = chrome.tabs.insertCSS;
+            } else {
+                fn = chrome.tabs.removeCSS;
+            }
+            var css = msg.css;
+            if ( typeof css === 'string' ) {
+                details.code = css;
+                fn(tabId, details);
+                return;
+            }
+            for ( var i = 0, n = css.length; i < n; i++ ) {
+                details.code = css[i];
+                fn(tabId, details);
             }
             break;
         }
@@ -1249,13 +1279,26 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 6144);
+    var maxChunkSize = chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192;
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     // Firefox:
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
     // > You can store up to 100KB of data using this API/
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
+
+    // Flavor-specific handling needs to be done here. Reason: to allow time
+    // for vAPI.webextFlavor to be properly set.
+    // https://github.com/gorhill/uBlock/issues/3006
+    //  For Firefox, we will use a lower ratio to allow for more overhead for
+    //  the infrastructure. Unfortunately this leads to less usable space for
+    //  actual data, but all of this is provided for free by browser vendors,
+    //  so we need to accept and deal with these limitations.
+    var initialize = function() {
+        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75;
+        maxChunkSize = Math.floor(maxChunkSize * ratio);
+        initialize = function(){};
+    };
 
     var options = {
         defaultDeviceName: window.navigator.platform,
@@ -1306,13 +1349,17 @@ vAPI.cloud = (function() {
         for ( var i = start; i < n; i++ ) {
             keys.push(dataKey + i.toString());
         }
-        chrome.storage.sync.remove(keys);
+        if ( keys.length !== 0 ) {
+            chrome.storage.sync.remove(keys);
+        }
     };
 
     var start = function(/* dataKeys */) {
     };
 
     var push = function(dataKey, data, callback) {
+        initialize();
+
         var bin = {
             'source': options.deviceName || options.defaultDeviceName,
             'tstamp': Date.now(),
@@ -1338,6 +1385,15 @@ vAPI.cloud = (function() {
             var errorStr;
             if ( chrome.runtime.lastError ) {
                 errorStr = chrome.runtime.lastError.message;
+                // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
+                // - Delete all that was pushed in case of failure.
+                // - It's unknown whether such issue applies only to Firefox:
+                //   until such cases are reported for other browsers, we will
+                //   reset the (now corrupted) content of the cloud storage
+                //   only on Firefox.
+                if ( vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ) {
+                    chunkCount = 0;
+                }
             }
             callback(errorStr);
 
@@ -1347,6 +1403,8 @@ vAPI.cloud = (function() {
     };
 
     var pull = function(dataKey, callback) {
+        initialize();
+
         var assembleChunks = function(bin) {
             if ( chrome.runtime.lastError ) {
                 callback(null, chrome.runtime.lastError.message);

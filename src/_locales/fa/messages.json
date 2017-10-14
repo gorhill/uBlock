@@ -319,9 +319,9 @@
     "message":"دامنه های مخرب",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"اجتماعی",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"چند منظوره",

@@ -319,9 +319,9 @@
     "message":"Вредоносни домейни",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Социални мрежи",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Досадни неща",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Универсални",

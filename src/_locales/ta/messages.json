@@ -319,9 +319,9 @@
     "message":"தீப்பொருள் ஆள்களங்கள்",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"சமூக",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"பல்நோக்கு வடிகட்டி",

@@ -69,10 +69,12 @@ var typeNameToTypeValue = {
           'popunder': 12 << 4,
         'main_frame': 13 << 4,  // start of 1st-party-only behavorial filtering
        'generichide': 14 << 4,
-     'inline-script': 15 << 4,
-              'data': 16 << 4,  // special: a generic data holder
-          'redirect': 17 << 4,
-            'webrtc': 18 << 4
+       'inline-font': 15 << 4,
+     'inline-script': 16 << 4,
+              'data': 17 << 4,  // special: a generic data holder
+          'redirect': 18 << 4,
+            'webrtc': 19 << 4,
+       'unsupported': 20 << 4
 };
 var otherTypeBitValue = typeNameToTypeValue.other;
 
@@ -91,17 +93,13 @@ var typeValueToTypeName = {
     12: 'popunder',
     13: 'document',
     14: 'generichide',
-    15: 'inline-script',
-    16: 'data',
-    17: 'redirect',
-    18: 'webrtc'
+    15: 'inline-font',
+    16: 'inline-script',
+    17: 'data',
+    18: 'redirect',
+    19: 'webrtc',
+    20: 'unsupported'
 };
-
-// All network request types to bitmap
-//   bring origin to 0 (from 4 -- see typeNameToTypeValue)
-//   left-shift 1 by the above-calculated value
-//   subtract 1 to set all type bits
-var allNetRequestTypesBitmap = (1 << (otherTypeBitValue >>> 4)) - 1;
 
 var BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 var BlockAnyType = BlockAction | AnyType;
@@ -238,9 +236,9 @@ var toLogDataInternal = function(categoryBits, tokenHash, filter) {
     } else if ( categoryBits & 0x004 ) {
         opts.push('first-party');
     }
-    var type = (categoryBits >>> 4) & 0x1F;
-    if ( type !== 0 && type !== 16 /* data */ ) {
-        opts.push(typeValueToTypeName[type]);
+    var type = categoryBits & 0x1F0;
+    if ( type !== 0 && type !== typeNameToTypeValue.data ) {
+        opts.push(typeValueToTypeName[type >>> 4]);
     }
     if ( logData.opts !== undefined ) {
         opts.push(logData.opts);
@@ -1330,6 +1328,12 @@ var FilterParser = function() {
     this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
     this.domainOpt = '';
     this.noTokenHash = µb.urlTokenizer.tokenHashFromString('*');
+    this.unsupportedTypeBit = this.bitFromType('unsupported');
+    // All network request types to bitmap
+    //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
+    //   left-shift 1 by the above-calculated value
+    //   subtract 1 to set all type bits
+    this.allNetRequestTypeBits = (1 << (otherTypeBitValue >>> 4)) - 1;
     this.reset();
 };
 
@@ -1344,8 +1348,10 @@ FilterParser.prototype.toNormalizedType = {
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',
+      'genericblock': 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
+       'inline-font': 'inline-font',
      'inline-script': 'inline-script',
              'media': 'media',
             'object': 'object',
@@ -1358,7 +1364,7 @@ FilterParser.prototype.toNormalizedType = {
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
     'xmlhttprequest': 'xmlhttprequest',
-            'webrtc': 'webrtc',
+            'webrtc': 'unsupported',
          'websocket': 'websocket'
 };
 
@@ -1410,16 +1416,16 @@ FilterParser.prototype.parseTypeOption = function(raw, not) {
     }
 
     // Non-discrete network types can't be negated.
-    if ( (typeBit & allNetRequestTypesBitmap) === 0 ) {
+    if ( (typeBit & this.allNetRequestTypeBits) === 0 ) {
         return;
     }
 
     // Negated type: set all valid network request type bits to 1
     if (
-        (typeBit & allNetRequestTypesBitmap) !== 0 &&
-        (this.types & allNetRequestTypesBitmap) === 0
+        (typeBit & this.allNetRequestTypeBits) !== 0 &&
+        (this.types & this.allNetRequestTypeBits) === 0
     ) {
-        this.types |= allNetRequestTypesBitmap;
+        this.types |= this.allNetRequestTypeBits;
     }
     this.types &= ~typeBit;
 };
@@ -1685,12 +1691,22 @@ FilterParser.prototype.parse = function(raw) {
         pos = s.lastIndexOf('$');
         if ( pos !== -1 ) {
             // https://github.com/gorhill/uBlock/issues/952
-            // Discard Adguard-specific `$$` filters.
+            //   Discard Adguard-specific `$$` filters.
             if ( s.indexOf('$$') !== -1 ) {
                 this.unsupported = true;
                 return this;
             }
             this.parseOptions(s.slice(pos + 1));
+            // https://github.com/gorhill/uBlock/issues/2283
+            //   Abort if type is only for unsupported types, otherwise
+            //   toggle off `unsupported` bit.
+            if ( this.types & this.unsupportedTypeBit ) {
+                this.types &= ~(this.unsupportedTypeBit | this.allNetRequestTypeBits);
+                if ( this.types === 0 ) {
+                    this.unsupported = true;
+                    return this;
+                }
+            }
             s = s.slice(0, pos);
         }
     }
@@ -1761,12 +1777,18 @@ FilterParser.prototype.parse = function(raw) {
 
     // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
     // remove pointless leading *.
+    // https://github.com/gorhill/uBlock/issues/3034
+    // - We can remove anchoring if we need to match all at the start.
     if ( s.startsWith('*') ) {
         s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+        this.anchor &= ~0x6;
     }
     // remove pointless trailing *
+    // https://github.com/gorhill/uBlock/issues/3034
+    // - We can remove anchoring if we need to match all at the end.
     if ( s.endsWith('*') ) {
         s = s.replace(/([^%0-9a-z])\*+$/, '$1');
+        this.anchor &= ~0x1;
     }
 
     // nothing left?
@@ -2206,6 +2228,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         filterPairId = FilterPair.fid,
         filterBucketId = FilterBucket.fid,
         filterDataHolderId = FilterDataHolder.fid,
+        redirectTypeValue = typeNameToTypeValue.redirect,
         args, bits, bucket, entry,
         tokenHash, fdata, fingerprint;
 
@@ -2220,7 +2243,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
         // Special cases: delegate to more specialized engines.
         // Redirect engine.
-        if ( (bits >>> 4) === 17 ) {
+        if ( (bits & 0x1F0) === redirectTypeValue ) {
             µb.redirectEngine.fromCompiledRule(args[1]);
             continue;
         }

@@ -204,7 +204,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Режим для дальтоников",
+    "message":"Цветовая схема для дальтоников",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -319,9 +319,9 @@
     "message":"Вредоносные программы",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Социальные",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Раздражающие элементы",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Многоцелевые",

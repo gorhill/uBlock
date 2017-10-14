@@ -1416,7 +1416,7 @@ var stopPicker = function() {
     svgRoot.removeEventListener('touchend', onSvgTouchStartStop);
     pickerStyle.parentNode.removeChild(pickerStyle);
     pickerRoot.parentNode.removeChild(pickerRoot);
-    pickerRoot.onload = null;
+    pickerRoot.removeEventListener('load', stopPicker);
     pickerRoot =
     pickerBody =
     dialog =
@@ -1429,7 +1429,7 @@ var stopPicker = function() {
 /******************************************************************************/
 
 var startPicker = function(details) {
-    pickerRoot.onload = stopPicker;
+    pickerRoot.addEventListener('load', stopPicker);
 
     var frameDoc = pickerRoot.contentDocument;
     var parsedDom = (new DOMParser()).parseFromString(
@@ -1534,6 +1534,18 @@ var startPicker = function(details) {
 
 /******************************************************************************/
 
+var bootstrapPicker = function() {
+    pickerRoot.removeEventListener('load', bootstrapPicker);
+    vAPI.shutdown.add(stopPicker);
+    vAPI.messaging.send(
+        'elementPicker',
+        { what: 'elementPickerArguments' },
+        startPicker
+    );
+};
+
+/******************************************************************************/
+
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
 pickerRoot.style.cssText = [
@@ -1581,18 +1593,8 @@ if ( vAPI.userCSS ) {
     vAPI.userCSS.add(pickerStyle.textContent);
 }
 
-pickerRoot.onload = function() {
-    vAPI.shutdown.add(stopPicker);
-    vAPI.messaging.send(
-        'elementPicker',
-        { what: 'elementPickerArguments' },
-        startPicker
-    );
-};
-
+pickerRoot.addEventListener('load', bootstrapPicker);
 document.documentElement.appendChild(pickerRoot);
-
-// https://www.youtube.com/watch?v=sociXdKnyr8
 
 /******************************************************************************/
 

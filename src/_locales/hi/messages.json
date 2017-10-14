@@ -319,9 +319,9 @@
     "message":"मैलवेयर डोमेन",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"सामाजिक",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"बहुउद्देशीय",

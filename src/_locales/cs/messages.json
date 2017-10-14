@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Řídící panel",
+    "message":"uBlock₀ — Ovládací panel",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Logger",
+    "message":"uBlock₀ — Protokol požadavků",
     "description":"Title for the logger window"
   },
   "aboutPageName":{
@@ -80,11 +80,11 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Otevřít logger",
+    "message":"Otevřít protokol požadavků",
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Přepnout blokování  všech vyskakovacích oken pro tento web",
+    "message":"Přepnout blokování všech vyskakovacích oken na tomto webu",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Přepnout kosmetické filtrování pro tento web",
+    "message":"Přepnout kosmetické filtrování na tomto webu",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -108,11 +108,11 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Kliknutím použijete změny.",
+    "message":"Kliknutím natrvalo uložíte provedené změny.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Kliknutím vrátíte změny.",
+    "message":"Kliknutím zrušíte provedené změny.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -319,9 +319,9 @@
     "message":"Malware domény",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Sociální",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Otravné",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Víceúčelové",

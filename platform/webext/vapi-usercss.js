@@ -29,48 +29,34 @@
     if ( typeof vAPI !== 'object' ) { return; }
 
     vAPI.userCSS = {
-        _userCSS: '',
+        _userCSS: new Set(),
         _disabled: false,
-        _send: function(toRemove, toAdd) {
+        _send: function(add, css) {
             vAPI.messaging.send('vapi-background', {
                 what: 'userCSS',
-                toRemove: toRemove,
-                toAdd: toAdd
+                add: add,
+                css: css
             });
         },
         add: function(cssText) {
-            if ( cssText === '' ) { return; }
-            var before = this._userCSS,
-                after = before;
-            if ( after !== '' ) { after += '\n'; }
-            after += cssText;
-            this._userCSS = after;
+            if ( cssText === '' || this._userCSS.has(cssText) ) { return; }
+            this._userCSS.add(cssText);
             if ( this._disabled ) { return; }
-            this._send(before, after);
+            this._send(true, cssText);
         },
         remove: function(cssText) {
-            if ( cssText === '' || this._userCSS === '' ) { return; }
-            var before = this._userCSS,
-                after = before;
-            after = before.replace(cssText, '').trim();
-            this._userCSS = after;
-            if ( this._disabled ) { return; }
-            this._send(before, after);
+            if ( cssText === '' ) { return; }
+            if ( this._userCSS.delete(cssText) && !this._disabled ) {
+                this._send(true, cssText);
+                this._send(false, cssText);
+            }
         },
         toggle: function(state) {
-            if ( state === undefined ) {
-                state = this._disabled;
-            }
+            if ( state === undefined ) { state = this._disabled; }
             if ( state !== this._disabled ) { return; }
             this._disabled = !state;
-            if ( this._userCSS === '' ) { return; }
-            var toAdd, toRemove; 
-            if ( state ) {
-                toAdd = this._userCSS;
-            } else {
-                toRemove = this._userCSS;
-            }
-            this._send(toRemove, toAdd);
+            if ( this._userCSS.size === 0 ) { return; }
+            this._send(state, Array.from(this._userCSS));
         }
     };
     vAPI.hideNode = vAPI.unhideNode = function(){};

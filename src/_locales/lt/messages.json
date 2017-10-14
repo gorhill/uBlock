@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Spustelėkite prietaisų skydui atverti",
+    "message":"Atverti prietaisų skydą",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -319,9 +319,9 @@
     "message":"Kenksmingos sritys",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Socialiniai",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Erzinimas",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Univarsalūs",

@@ -1130,20 +1130,10 @@ vAPI.domCollapser = (function() {
     var send = function() {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
-        // https://github.com/gorhill/uBlock/issues/1927
-        //   Normalize hostname to avoid trailing dot of FQHN.
-        var pageHostname = window.location.hostname || '';
-        if (
-            pageHostname.length &&
-            pageHostname.charCodeAt(pageHostname.length - 1) === 0x2e
-        ) {
-            pageHostname = pageHostname.slice(0, -1);
-        }
         var msg = {
             what: 'getCollapsibleBlockedRequests',
             id: resquestIdGenerator,
-            pageURL: window.location.href,
-            pageHostname: pageHostname,
+            frameURL: window.location.href,
             resources: toFilter,
             hash: cachedBlockedSetHash
         };
@@ -1714,7 +1704,7 @@ vAPI.domIsLoaded = function(ev) {
                 what: 'mouseClick',
                 x: ev.clientX,
                 y: ev.clientY,
-                url: elem !== null ? elem.href : ''
+                url: elem !== null && ev.isTrusted !== false ? elem.href : ''
             }
         );
     };

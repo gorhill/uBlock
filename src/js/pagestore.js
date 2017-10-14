@@ -485,10 +485,10 @@ PageStore.prototype.injectLargeMediaElementScriptlet = function() {
     µb.contextMenu.update(this.tabId);
 };
 
-PageStore.prototype.temporarilyAllowLargeMediaElements = function() {
+PageStore.prototype.temporarilyAllowLargeMediaElements = function(state) {
     this.largeMediaCount = 0;
     µb.contextMenu.update(this.tabId);
-    this.allowLargeMediaElementsUntil = Date.now() + 86400000;
+    this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
     µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
 };
 
@@ -598,8 +598,10 @@ PageStore.prototype.filterRequest = function(context) {
         }
     }
 
-    if ( requestType === 'font' ) {
-        this.remoteFontCount += 1;
+    if ( requestType.endsWith('font') ) {
+        if ( requestType === 'font' ) {
+            this.remoteFontCount += 1;
+        }
         if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
             if ( µb.logger.isEnabled() ) {
                 this.logData = µb.hnSwitches.toLogData();
@@ -717,22 +719,33 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
 /******************************************************************************/
 
 PageStore.prototype.getBlockedResources = function(request, response) {
-    var resources = request.resources;
+    var µburi = µb.URI,
+        normalURL = µb.normalizePageURL(this.tabId, request.frameURL),
+        frameHostname = µburi.hostnameFromURI(normalURL),
+        resources = request.resources;
+    // Force some resources to go through the filtering engine in order to
+    // populate the blocked-resources cache. This is required because for
+    // some resources it's not possible to detect whether they were blocked
+    // content script-side (i.e. `iframes` -- unlike `img`).
     if ( Array.isArray(resources) && resources.length !== 0 ) {
-        var context = this.createContextFromFrameHostname(request.pageHostname);
+        var context = this.createContextFromFrameHostname(frameHostname);
         for ( var resource of resources ) {
             context.requestType = resource.type;
-            context.requestHostname = µb.URI.hostnameFromURI(resource.url);
+            context.requestHostname = µburi.hostnameFromURI(resource.url);
             context.requestURL = resource.url;
             this.filterRequest(context);
         }
     }
+<<<<<<< HEAD
 
     if ( this.netFilteringCache.hash === response.hash ) {
         return;
     }
+=======
+    if ( this.netFilteringCache.hash === response.hash ) { return; }
+>>>>>>> upstream1.14.12
     response.hash = this.netFilteringCache.hash;
-    response.blockedResources = this.netFilteringCache.lookupAllBlocked(request.pageHostname);
+    response.blockedResources = this.netFilteringCache.lookupAllBlocked(frameHostname);
 };
 
 /******************************************************************************/

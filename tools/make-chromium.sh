@@ -5,11 +5,15 @@
 echo "*** AdNauseam::Chromium: Creating chrome package"
 echo "*** AdNauseam::Chromium: Copying files"
 
+<<<<<<< HEAD
 if [ "$1" = experimental ]; then
     DES=dist/build/experimental/adnauseam.chromium
 else
     DES=dist/build/adnauseam.chromium
 fi
+=======
+DES=dist/build/uBlock0.chromium
+>>>>>>> upstream1.14.12
 rm -rf $DES
 mkdir -p $DES
 
@@ -32,8 +36,13 @@ cp platform/chromium/*.json $DES/
 cp manifest.json $DES/            # new-manifest
 cp LICENSE.txt              $DES/
 
+<<<<<<< HEAD
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+=======
+echo "*** uBlock0.chromium: Generating meta..."
+python tools/make-chromium-meta.py $DES/
+>>>>>>> upstream1.14.12
 
 if [ "$1" = all ]; then
     echo "*** AdNauseam::Chromium: Creating package..."

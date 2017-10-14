@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"進入元素選擇器模式",
+    "message":"進入元素移除模式",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -296,7 +296,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>一般元素過濾規則是指會套用於所有網站的規則。<p>雖然 uBlock₀ 會有效率地處理這些規則，但這些規則還是可能會在某些網頁中造成許多多餘的記憶體與 CPU 使用率，尤其是在較長又較舊的網頁。<p>開啟此選項後將可避免處理一般元素過濾規則時，鎖造成多餘的記憶體與 CPU 使用率，也能降低 uBlock₀ 本身的記憶體用量。<p>建議您在效能較差的裝置中開啟此選項。",
+    "message":"<p>一般元素過濾規則是指會套用於所有網站的規則。<p>雖然 uBlock₀ 會有效率地處理這些規則，但這些規則還是可能會在某些網頁中造成許多多餘的記憶體與 CPU 使用率，尤其是在較長又較舊的網頁。<p>開啟此選項後將可避免處理一般元素過濾規則時，所造成多餘的記憶體與 CPU 使用率，也能降低 uBlock₀ 本身的記憶體用量。<p>建議您在效能較差的裝置中開啟此選項。",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -319,9 +319,9 @@
     "message":"惡意域名",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"社交",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"惱人的",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"多用途",
@@ -540,7 +540,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutSupport":{
-    "message":"支援",
+    "message":"支援網站",
     "description":"A link for where to get support"
   },
   "aboutCode":{

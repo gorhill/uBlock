@@ -176,7 +176,7 @@
     "description":"English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters":{
-    "message":"要素隠蔽フィルタ",
+    "message":"要素隠蔽フィルター",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -240,7 +240,7 @@
     "description":""
   },
   "settingsNoCosmeticFilteringPrompt":{
-    "message":"要素隠蔽フィルタを無効にする",
+    "message":"要素隠蔽フィルターを無効にする",
     "description":""
   },
   "settingsNoLargeMediaPrompt":{
@@ -264,7 +264,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}}ネットワークフィルタ＋{{cosmeticFilterCount}}コスメチックフィルタ：",
+    "message":"{{netFilterCount}}個のネットワークフィルター＋{{cosmeticFilterCount}}個の要素隠蔽フィルター:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -284,7 +284,7 @@
     "description":"A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"要素隠蔽フィルタを解析、施行する。",
+    "message":"要素隠蔽フィルターを解析、施行する",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -319,9 +319,9 @@
     "message":"ウイルス",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"ソーシャル",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"迷惑",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"多目的",
@@ -492,7 +492,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"ネットワークリクエストが {{type}} である場合に、{{br}}URLアドレスが {{url}} と一致し、{{br}}{{origin}} を発信源としている場合は {{action}} をします。{{br}}{{importance}} が存在する場合は例外フィルターと一致させます。",
+    "message":"URLアドレスが {{url}} と一致し、{{origin}} を発信源とする{{br}}ネットワークリクエストが {{type}} であれば、{{br}}要素を {{action}} する。{{br}}例外フィルターと一致する項目がある場合は {{importance}} とする。",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
