@@ -47,6 +47,22 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
+if ( 
+    typeof browser === 'object' &&
+    browser !== null &&
+    browser.runtime instanceof Object &&
+    typeof browser.runtime.getBrowserInfo === 'function'
+) {
+    browser.runtime.getBrowserInfo().then(function(info) {
+        vAPI.supportsUserStylesheets =
+            info.name === 'Firefox' &&
+            parseInt(info.version, 10) > 52;
+
+    });
+}
+
+/******************************************************************************/
+
 vAPI.app = {
     name: manifest.name,
     version: manifest.version
@@ -897,22 +913,22 @@ vAPI.messaging.onPortMessage = (function() {
         if ( !tabId ) { return; }
         switch ( msg.what ) {
         case 'userCSS':
+            var details = {
+                code: undefined,
+                frameId: sender.frameId,
+                matchAboutBlank: true
+            };
+            if ( vAPI.supportsUserStylesheets === true ) {
+                details.cssOrigin = 'user';
+            }
             if ( msg.toRemove ) {
-                chrome.tabs.removeCSS(tabId, {
-                    code: msg.toRemove,
-                    cssOrigin: 'user',
-                    frameId: sender.frameId,
-                    matchAboutBlank: true
-                });
+                details.code = msg.toRemove;
+                chrome.tabs.removeCSS(tabId, details);
             }
             if ( msg.toAdd ) {
-                chrome.tabs.insertCSS(tabId, {
-                    code: msg.toAdd,
-                    cssOrigin: 'user',
-                    frameId: sender.frameId,
-                    matchAboutBlank: true,
-                    runAt: 'document_start'
-                });
+                details.code = msg.toAdd;
+                details.runAt = 'document_start';
+                chrome.tabs.insertCSS(tabId, details);
             }
             break;
         }
