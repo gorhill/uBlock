@@ -915,12 +915,7 @@ vAPI.tabs.registerListeners();
         if (iconStatus !== 'off') {
             iconStatus += (isClick ? 'active' : '');
         }
-        vAPI.setIcon(tabId, iconStatus, badge, function() {
-            // ADN: tab may have been already closed
-            if (chrome.runtime.lastError) {
-                console.warn(chrome.runtime.lastError.message);
-            }
-        });
+        vAPI.setIcon(tabId, iconStatus, badge);
     };
 
     return function(tabId, isClick) {
