@@ -25,7 +25,7 @@
 
   'use strict';
 
-  const States = ['pending', 'visited', 'failed'],
+  const States = ['pending', 'visited', 'failed', 'dnt-allowed'],
     Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
     EnableContextMenu = 1,
     MaxStartNum = 300,
@@ -344,7 +344,7 @@
 
       id: 'target-date',
       class: 'inspected-date',
-      text: formatDate(ad.visitedTs)
+      text: formatTargetDate(ad)
 
     }).appendTo($target);
   }
@@ -359,7 +359,7 @@
   }
 
   /**
-   * Resets current bullet class to [active,ad.state]
+   * Resets current bullet class to [active, ad.state]
    * Shifts meta list to show correct item
    * Updates index-counter for the bullet
    */
@@ -368,6 +368,8 @@
     var $bullet = $div.find('.bullet[data-idx=' + (adset.index) + ']'),
       state = adset.state(),
       $ul;
+
+    if (!state) console.warn('[WARN] undefined state (dont we need an arg here?)');
 
     //log('bulletIndex: c["+adset.index+"]="+adset.child().id+"-> "+ adset.state());
 
@@ -606,6 +608,11 @@
     return formatDate(oldest);
   }
 
+  function formatTargetDate(ad) {
+
+    return ad.dntAllowed ? vAPI.i18n('adnAllowedByDNT') : formatDate(ad.visitedTs);
+  }
+
   function formatDate(ts) {
 
     if (!ts) return vAPI.i18n('adnNotYetVisited');
@@ -683,7 +690,7 @@
         //log("Too-large @ " + Zooms[zoomIdx] + "%");
         setZoom(++zoomIdx, true);
 
-        if (zoomIdx == Zooms.length - 1)
+        if (zoomIdx === Zooms.length - 1)
           break; // at smallest size, done
 
         i = 0;
@@ -975,9 +982,9 @@
 
     // calculate the suitable zoomIdx by userZoomScale
     var previousState = zoomIdx;
-    for (var i = 0; zoomIdx == previousState && i < Zooms.length; i++) {
+    for (var i = 0; zoomIdx === previousState && i < Zooms.length; i++) {
 
-      if (userZoomScale == Zooms[i])
+      if (userZoomScale === Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
         zoomIdx = i + 1;
@@ -990,9 +997,9 @@
 
     // calculate the suitable zoomIdx by userZoomScale
     var previousState = zoomIdx;
-    for (var i = 0; zoomIdx == previousState && i < Zooms.length - 1; i++) {
+    for (var i = 0; zoomIdx === previousState && i < Zooms.length - 1; i++) {
 
-      if (userZoomScale == Zooms[i])
+      if (userZoomScale === Zooms[i])
         zoomIdx = i;
       else if (userZoomScale < Zooms[i] && userZoomScale > Zooms[i + 1])
         zoomIdx = i;
@@ -1093,15 +1100,15 @@
 
     $(document).click(function (e) {
 
-      if (e.which == 1) // Left-button only
+      if (e.which === 1) // Left-button only
         lightboxMode(false);
     });
 
     $(document).keyup(function (e) {
 
-      (e.keyCode == 27) && lightboxMode(false); // esc
-      (e.keyCode == 73) && toggleInterface(); // 'i'
-      (e.keyCode == 68) && logAdSetInfo(); // 'd'
+      (e.keyCode === 27) && lightboxMode(false); // esc
+      (e.keyCode === 73) && toggleInterface(); // 'i'
+      (e.keyCode === 68) && logAdSetInfo(); // 'd'
       //console.log(e);
     });
 
@@ -1336,7 +1343,7 @@
         });
 
         computeZoom($items);
-      } else if (visible == 1) {
+      } else if (visible === 1) {
 
         $items.css({ // center single
 
@@ -1610,7 +1617,7 @@
         return;
 
       }
-      if (gSliderRight === lastgSliderRight && gSliderLeft == lastgSliderLeft) {
+      if (gSliderRight === lastgSliderRight && gSliderLeft === lastgSliderLeft) {
 
         return;
       } else {
@@ -1672,9 +1679,16 @@
 
     var ad = this.child(i) || i;
 
+    if (!ad) console.warn('invalid index!');
+
+    if (ad.dntAllowed) {
+      return 'dnt-allowed';
+    }
+
     // ad should not be 'failed' until 3 failed visits (gh #64)
-    if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0))
+    if (ad.visitedTs === 0 || (ad.attempts < 3 && ad.visitedTs < 0)) {
       return 'pending';
+    }
 
     return ad.visitedTs < 0 ? 'failed' : 'visited';
   };
@@ -1690,9 +1704,20 @@
 
     return this.children.filter(function (d) {
 
-      return containerObj.state(d) == 'failed';
+      return containerObj.state(d) === 'failed';
 
-    }).length == containerObj.children.length;
+    }).length;// === containerObj.children.length;
+  };
+
+  AdSet.prototype.dntCount = function () {
+
+    var containerObj = this;
+
+    return this.children.filter(function (d) {
+
+      return containerObj.state(d) === 'dnt-allowed';
+
+    }).length;// === containerObj.children.length;
   };
 
   AdSet.prototype.visitedCount = function () {
@@ -1747,16 +1772,25 @@
 
   /*
    * returns 'visited' if any are visited,
-   *      'failed' if all are failed or pending,
-   *      'pending' if all are pending.
+   *      'dnt-allowed' if all are dnt-allowed
+   *      'failed' if all are failed or pending or dnt-allowed,
+   *      'pending' if all are pending or dnt-allowed.
+   *
+   * what about dnt here ?
    */
   AdSet.prototype.groupState = function () {
 
-    var failed, visited = this.visitedCount();
+    var visited = this.visitedCount();
 
     if (visited) return 'visited';
 
-    failed = this.failedCount();
+    var dnts = this.dntCount();
+
+    if (dnts === this.children.length) {
+      return 'dnt-allowed';
+    }
+
+    var failed = this.failedCount();
 
     return failed ? 'failed' : 'pending';
   };
