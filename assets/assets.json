@@ -157,7 +157,7 @@
 		"off": true,
 		"title": "Fanboy’s Enhanced Tracking List",
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"disconnect-malvertising": {
 		"content": "filters",
@@ -217,7 +217,7 @@
 		"off": true,
 		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
 		"content": "filters",
@@ -598,7 +598,7 @@
 		"title": "SWE: Fanboy's Swedish",
 		"lang": "sv",
 		"contentURL": "https://www.fanboy.co.nz/fanboy-swedish.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"TUR-0": {
 		"content": "filters",
