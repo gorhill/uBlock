@@ -237,6 +237,10 @@ header{
   float:right;
 }
 
+#stats .dnt-allowed{
+  color: #96B96B;
+}
+
 #stats .visited{
   color: #BD10E0;
 }
@@ -365,6 +369,9 @@ header{
 .ad-item.visited img {
     border: 1px solid #BD10E0;
 }
+.ad-item.dnt-allowed img {
+    border: 1px solid #96B96B;
+}
 .ad-item::before,
 .ad-item-text::before {
   background: #0076FF;
@@ -461,6 +468,12 @@ header{
 
   border: 2px dashed #BD10E0;
   color: #BD10E0;
+}
+
+.ad-item-text.dnt-allowed .thumb {
+
+  border: 2px dashed #96B96B;
+  color: #96B96B;
 }
 
 .ad-item-text.failed .thumb {
