@@ -96,7 +96,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Укључи\/искључи блокирање спољних фонтова за овај сајт",
+    "message":"Укључи\/искључи блокирање удаљених фонтова за овај сајт",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -108,11 +108,11 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Кликните да бисте измене учинили трајним.",
+    "message":"Кликните да бисте промене учинили трајним.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"Кликните да бисте вратили измене.",
+    "message":"Кликните да бисте вратили промене.",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -304,7 +304,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Примени измене",
+    "message":"Примени промене",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -319,9 +319,9 @@
     "message":"Злонамерни домени",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Друштвени",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Сметње",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Вишенаменски",
@@ -372,7 +372,7 @@
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Примени измене",
+    "message":"Примени промене",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
@@ -440,7 +440,7 @@
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Примени измене",
+    "message":"Примени промене",
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{
@@ -532,7 +532,7 @@
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
-    "message":"Дневник измена",
+    "message":"Евиденција промена",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -688,7 +688,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Примени измене",
+    "message":"Примени промене",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{

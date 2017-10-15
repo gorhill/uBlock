@@ -406,8 +406,8 @@
 
   var visitedClass = function (ad) {
 
-    return ad.visitedTs > 0 ? 'visited' :
-      (ad.visitedTs < 0 && ad.attempts >= 3) ? 'failed' : '';
+    return ad.dntAllowed ? 'dnt-allowed' : (ad.visitedTs > 0 ? 'visited' :
+      (ad.visitedTs < 0 && ad.attempts >= 3) ? 'failed' : '');
   }
 
   var visitedCount = function (arr) {

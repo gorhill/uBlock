@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliknij, aby otworzyć panel sterowania",
+    "message":"Otwórz panel sterowania",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -88,7 +88,7 @@
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Włącz\/wyłącz blokowanie elementów multimedialnych",
+    "message":"Włącz\/wyłącz blokowanie dużych elementów multimedialnych na tej witrynie",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
@@ -96,7 +96,7 @@
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Włącz\/wyłącz blokowanie zdalnych czcionek na tej stronie",
+    "message":"Włącz\/wyłącz blokowanie zdalnych czcionek na tej witrynie",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -204,15 +204,15 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Zastosuj schemat kolorów przyjazny osobom niedowidzącym",
+    "message":"Interfejs przyjazny osobom z zaburzeniami widzenia kolorów",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
-    "message":"Włącz obsługę dysków w chmurze",
+    "message":"Włącz obsługę zapisu ustawień w chmurze",
     "description":""
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Funkcje dla zaawansowanych użytkowników (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Przeczytaj instrukcje<\/a>)",
+    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Wymagana lektura<\/a>)",
     "description":""
   },
   "settingsAdvancedUserSettings":{
@@ -264,7 +264,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"Filtry sieciowe: {{netFilterCount}} ÷ Filtry kosmetyczne: {{cosmeticFilterCount}} z:",
+    "message":"Filtry sieciowe: {{netFilterCount}} + filtry kosmetyczne: {{cosmeticFilterCount}} z:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -296,7 +296,7 @@
     "description":"This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Ogólne filtry kosmetyczne, to filtry przeznaczone do stosowania na wszystkich stronach internetowych.<p>Choć dobrze obsługiwane przez uBlock₀ mogą na niektórych stronach, szczególnie dużych i otwartych przez dłuższy czas, przyczyniać się do obciążenia procesora i pamięci operacyjnej.<p>Włącznie tej funkcji wyeliminuje obciążenie procesora i pamięci operacyjnej powodowane stosowaniem filtrów kosmetycznych, a także zmniejszy zapotrzebowanie na pamięć samego uBlocka₀.<p>Zaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
+    "message":"<p>Ogólne filtry kosmetyczne, to filtry które mają być zastosowane na wszystkich stronach internetowych.<p>Choć dobrze obsługiwane przez uBlock₀ mogą na niektórych stronach, szczególnie dużych i otwartych przez dłuższy czas, przyczyniać się do obciążenia procesora i pamięci operacyjnej.<p>Włącznie tej funkcji wyeliminuje obciążenie procesora i pamięci operacyjnej powodowane stosowaniem ogólnych filtrów kosmetycznych, a także zmniejszy zapotrzebowanie na pamięć samego uBlocka₀.<p>Zaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
     "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader":{
@@ -319,9 +319,9 @@
     "message":"Domeny ze złośliwym oprogramowaniem",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Serwisy społecznościowe",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Elementy irytujące",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Wielofunkcyjne",
@@ -332,7 +332,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Specjalne",
+    "message":"Własne",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -344,7 +344,7 @@
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Zaktualizowano: {{ago}}.\nKliknij by wymusić aktualizację.",
+    "message":"Zaktualizowano: {{ago}}.\nKliknij, aby wymusić aktualizację.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -624,7 +624,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ zablokował wczytywanie strony",
+    "message":"uBlock₀ zablokował wczytywanie następującej strony:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -660,11 +660,11 @@
     "description":"English: Permanently"
   },
   "cloudPush":{
-    "message":"Eksport do dysku w chmurze",
+    "message":"Eksport ustawień do chmury",
     "description":"tooltip"
   },
   "cloudPull":{
-    "message":"Import z dysku w chmurze",
+    "message":"Import ustawień z chmury",
     "description":"tooltip"
   },
   "cloudPullAndMerge":{

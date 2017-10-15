@@ -220,7 +220,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar \"pre-fetching\" (para impedir qualquer ligação para pedidos de rede bloqueados)",
+    "message":"Desativar pré-obtenção (para impedir qualquer ligação para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -319,9 +319,9 @@
     "message":"Domínios maliciosos",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Social",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Incómodos",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Multi-uso",

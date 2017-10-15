@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Ang iyong filters",
+    "message":"Ang iyong (mga) filters",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -36,7 +36,7 @@
     "description":"Title for the logger window"
   },
   "aboutPageName":{
-    "message":"About",
+    "message":"Tungkol dito",
     "description":"appears as tab name in dashboard"
   },
   "advancedSettingsPageName":{
@@ -44,11 +44,11 @@
     "description":"Title for the advanced settings page"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable µBlock para sa site na to.\n\nCtrl+click: disable µBlock para lang sa pahina na to.",
+    "message":"Click: paganahin (o 'wag paganahin) ang uBlock₀ para sa websayt na to.\n\nCtrl+click: 'wag paganahin ang uBlock₀ para lang sa pahina na to.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"i-block ang mga request",
+    "message":"mga na-block na request",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -60,7 +60,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"noong ininstall",
+    "message":"simula noong ininstall",
     "description":"English: since install"
   },
   "popupOr":{
@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"i-click para buksan ang dashboard",
+    "message":"Pindutin upang mabuksan ang dashboard",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -92,11 +92,11 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Palit-ayos ng panala ng itsura para sa site na ito",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Palit-ayos sa paghalang ng malayuang itsura ng titik para sa site na ito",
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
@@ -108,7 +108,7 @@
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
-    "message":"Click to make your changes permanent.",
+    "message":"Pindutin upang maging permanente ang mga pagbabago.",
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
@@ -116,15 +116,15 @@
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"lahat",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"mga imahe",
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"Pang-tatlo na personalidad",
     "description":""
   },
   "popup3pPassiveRulePrompt":{
@@ -148,27 +148,27 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"mga nakonektang domain",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} na domain sa {{total}} na domain",
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Idagdag ang rule",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Pumili ng bagong elemento",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Bumalik sa pahina",
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"Tingnan ang pagbabago",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -184,7 +184,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Paghalang sa elemento",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -319,9 +319,9 @@
     "message":"Mga Malware domains",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Social",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Multipurpose",
@@ -372,7 +372,7 @@
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Isumite ang mga pagbabago",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
@@ -440,7 +440,7 @@
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Isumite ang mga pagbabago",
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{

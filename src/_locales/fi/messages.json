@@ -68,11 +68,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Avaa hallintapaneeli napsauttamalla",
+    "message":"Hallintapaneelityökaluun",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Aktivoi elementtien piilotus\/palautus -poimintatyökalu",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -148,7 +148,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"yhdistetyt verkkotunnukset",
+    "message":"aktiiviset verkkotunnusyhteydet",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -204,7 +204,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Mukauta värisokeille",
+    "message":"Aktivoi vaihtoehtoiset värit puna-vihervärien sijaan",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -319,9 +319,9 @@
     "message":"Malware domains",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Sosiaalinen",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Harmit",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Monikäyttöinen",

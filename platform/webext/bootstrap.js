@@ -29,8 +29,8 @@ const hostName = 'ublock0';
 
 /******************************************************************************/
 
-function startup({ webExtension }) {
-    webExtension.startup().then(api => {
+function startup({ webExtension }, reason) {
+    webExtension.startup(reason).then(api => {
         let { browser } = api,
             storageMigrator;
         let onMessage = function(message, sender, callback) {

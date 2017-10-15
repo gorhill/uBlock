@@ -168,7 +168,7 @@
     "description":"English: Quit"
   },
   "pickerPreview":{
-    "message":"Preview",
+    "message":"पूर्वावलोकन",
     "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters":{
@@ -216,7 +216,7 @@
     "description":""
   },
   "settingsAdvancedUserSettings":{
-    "message":"advanced settings",
+    "message":"उन्नत सेटिंग्स",
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -272,7 +272,7 @@
     "description":"Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists",
+    "message":"स्व-अद्यतन फ़िल्टर सूचियां",
     "description":"A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow":{
@@ -319,9 +319,9 @@
     "message":"मैलवेयर डोमेन",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"सामाजिक",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"बहुउद्देशीय",

@@ -4,7 +4,8 @@
 	"eqeqeq": true,
 	"esnext": true,
 	"globals": {
-		"chrome": false,
+		"browser": false,    // global variable in Firefox, Edge
+		"chrome": false,     // global variable in Chromium, Chrome, Opera
 		"Components": false, // global variable in Firefox
 		"safari": false,
 		"self": false,

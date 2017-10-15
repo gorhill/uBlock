@@ -71,8 +71,8 @@
   /******************************************************************************/
 
   var resetUserData = function() {
-      var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam');
-      var proceed = vAPI.confirm(msg);
+      var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam'); // ADN
+      var proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
       if ( proceed ) {
           messager.send('dashboard', { what: 'resetUserData' });
       }

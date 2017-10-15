@@ -79,17 +79,15 @@
 
 */
 
-/******************************************************************************/
-/******************************************************************************/
-/******************************************************************************/
+// Abort execution if our global vAPI object does not exist.
+//   https://github.com/chrisaljoudi/uBlock/issues/456
+//   https://github.com/gorhill/uBlock/issues/2029
 
-// Abort execution by throwing if an unexpected condition arise.
-// - https://github.com/chrisaljoudi/uBlock/issues/456
+if ( typeof vAPI !== 'undefined' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
-if ( typeof vAPI !== 'object' ) {
-    throw new Error('uBlock Origin: aborting content scripts for ' + window.location);
-}
-vAPI.lock();
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
 
 vAPI.matchesProp = (function() {
     var docElem = document.documentElement;
@@ -135,6 +133,20 @@ vAPI.SafeAnimationFrame.prototype.clear = function() {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.injectScriptlet = function(doc, text) {
+    if ( !doc ) { return; }
+    try {
+        var script = doc.createElement('script');
+        script.appendChild(doc.createTextNode(text));
+        (doc.head || doc.documentElement).appendChild(script);
+    } catch (ex) {
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
 // The DOM filterer is the heart of uBO's cosmetic filtering.
 
 vAPI.domFilterer = (function() {
@@ -171,6 +183,10 @@ var cosmeticFiltersActivated = function() {
 // Probably no longer need to watch for style tags removal/tampering with fix
 // to https://github.com/gorhill/uBlock/issues/963
 
+// https://github.com/gorhill/uBlock/issues/2810
+//   With Firefox Nightly, it may happens style tags are injected before the
+//   head element is present.
+
 var platformUserCSS = (function() {
     if ( vAPI.userCSS instanceof Object ) {
         return vAPI.userCSS;
@@ -183,8 +199,9 @@ var platformUserCSS = (function() {
             var style = document.createElement('style');
             style.setAttribute('type', 'text/css');
             style.textContent = css;
-            if ( document.head ) {
-                document.head.appendChild(style);
+            var parent = document.head || document.documentElement;
+            if ( parent !== null ) {
+                parent.appendChild(style);
             }
             this.styles.push(style);
             if ( style.sheet ) {
@@ -816,7 +833,6 @@ return domFilterer;
         if ( !cfeDetails || !cfeDetails.ready ) {
             vAPI.domWatcher = vAPI.domCollapser = vAPI.domFilterer =
             vAPI.domSurveyor = vAPI.domIsLoaded = null;
-            vAPI.unlock();
             return;
         }
 
@@ -852,7 +868,6 @@ return domFilterer;
             // Library of resources is located at:
             // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
             if ( cfeDetails.scripts ) {
-                elem = document.createElement('script');
                 // Have the injected script tag remove itself when execution completes:
                 // to keep DOM as clean as possible.
                 text = cfeDetails.scripts +
@@ -864,8 +879,7 @@ return domFilterer;
                     "        p.removeChild(c);\n" +
                     "    }\n" +
                     "})();";
-                elem.appendChild(document.createTextNode(text));
-                parent.appendChild(elem);
+                vAPI.injectScriptlet(document, text);
                 vAPI.injectedScripts = text;
             }
         }
@@ -901,7 +915,7 @@ return domFilterer;
 vAPI.domWatcher = (function() {
 
     var domLayoutObserver = null,
-        ignoreTags = { 'head': 1, 'link': 1, 'meta': 1, 'script': 1, 'style': 1 },
+        ignoreTags = new Set([ 'head', 'link', 'meta', 'script', 'style' ]),
         addedNodeLists = [],
         addedNodes = [],
         removedNodes = false,
@@ -910,30 +924,30 @@ vAPI.domWatcher = (function() {
     var safeObserverHandler = function() {
         safeObserverHandlerTimer.clear();
         var i = addedNodeLists.length,
+            j = addedNodes.length,
             nodeList, iNode, node;
         while ( i-- ) {
             nodeList = addedNodeLists[i];
             iNode = nodeList.length;
             while ( iNode-- ) {
                 node = nodeList[iNode];
-                if ( node.nodeType !== 1 ) {
-                    continue;
+                if (
+                    node.nodeType === 1 &&
+                    ignoreTags.has(node.localName) === false &&
+                    node.parentElement !== null
+                ) {
+                    addedNodes[j++] = node;
                 }
-                if ( ignoreTags[node.localName] === 1 ) {
-                    continue;
-                }
-                addedNodes.push(node);
             }
         }
         addedNodeLists.length = 0;
-        if ( addedNodes.length !== 0 || removedNodes ) {
-            listeners[0](addedNodes);
-            if ( listeners[1] ) {
-                listeners[1](addedNodes);
-            }
-            addedNodes.length = 0;
-            removedNodes = false;
+        if ( j === 0 && removedNodes === false ) { return; }
+        listeners[0](addedNodes);
+        if ( listeners[1] ) {
+            listeners[1](addedNodes);
         }
+        addedNodes.length = 0;
+        removedNodes = false;
     };
 
     var safeObserverHandlerTimer = new vAPI.SafeAnimationFrame(safeObserverHandler);
@@ -1010,78 +1024,94 @@ vAPI.domWatcher = (function() {
 /******************************************************************************/
 
 vAPI.domCollapser = (function() {
-    var timer = null;
-    var pendingRequests = Object.create(null);
-    var roundtripRequests = [];
+    var resquestIdGenerator = 1,
+        processTimer,
+        toProcess = [],
+        toFilter = [],
+        toCollapse = new Map(),
+        cachedBlockedSet,
+        cachedBlockedSetHash,
+        cachedBlockedSetTimer;
     var src1stProps = {
         'embed': 'src',
+        'iframe': 'src',
         'img': 'src',
         'object': 'data'
     };
     var src2ndProps = {
         'img': 'srcset'
     };
-    var netSelectorCacheCount = 0;
-    var messaging = vAPI.messaging;
+    var tagToTypeMap = {
+        embed: 'object',
+        iframe: 'sub_frame',
+        img: 'image',
+        object: 'object'
+    };
+    var netSelectorCacheCount = 0,
+        messaging = vAPI.messaging;
 
-    // Because a while ago I have observed constructors are faster than
-    // literal object instanciations.
-    var RoundtripRequest = function(tag, attr, url) {
-        this.tag = tag;
-        this.attr = attr;
-        this.url = url;
-        this.collapse = false;
+    var cachedBlockedSetClear = function() {
+        cachedBlockedSet =
+        cachedBlockedSetHash =
+        cachedBlockedSetTimer = undefined;
     };
 
+    // https://github.com/chrisaljoudi/uBlock/issues/174
+    //   Do not remove fragment from src URL
     var onProcessed = function(response) {
-        // This can happens if uBO is restarted.
-        if ( !response ) {
+        if ( !response ) { // This happens if uBO is disabled or restarted.
+            toCollapse.clear();
             return;
         }
-        var requests = response.result;
-        if ( requests === null || Array.isArray(requests) === false ) {
+
+        var targets = toCollapse.get(response.id);
+        if ( targets === undefined ) { return; }
+        toCollapse.delete(response.id);
+        if ( cachedBlockedSetHash !== response.hash ) {
+            cachedBlockedSet = new Set(response.blockedResources);
+            cachedBlockedSetHash = response.hash;
+            if ( cachedBlockedSetTimer !== undefined ) {
+                clearTimeout(cachedBlockedSetTimer);
+            }
+            cachedBlockedSetTimer = vAPI.setTimeout(cachedBlockedSetClear, 30000);
+        }
+        if ( cachedBlockedSet === undefined || cachedBlockedSet.size === 0 ) {
             return;
         }
         var selectors = [],
+            iframeLoadEventPatch = vAPI.iframeLoadEventPatch,
             netSelectorCacheCountMax = response.netSelectorCacheCountMax,
-            aa = [ null ],
-            request, key, entry, target, value;
-        // https://github.com/gorhill/uBlock/issues/2256
-        var iframeLoadEventPatch = vAPI.iframeLoadEventPatch;
-        // Important: process in chronological order -- this ensures the
-        // cached selectors are the most useful ones.
-        for ( var i = 0, ni = requests.length; i < ni; i++ ) {
-            request = requests[i];
-            key = request.tag + ' ' + request.attr + ' ' + request.url;
-            entry = pendingRequests[key];
-            if ( entry === undefined ) {
+            tag, prop, src, value;
+
+        for ( var target of targets ) {
+            tag = target.localName;
+            prop = src1stProps[tag];
+            if ( prop === undefined ) { continue; }
+            src = target[prop];
+            if ( typeof src !== 'string' || src.length === 0 ) {
+                prop = src2ndProps[tag];
+                if ( prop === undefined ) { continue; }
+                src = target[prop];
+                if ( typeof src !== 'string' || src.length === 0 ) { continue; }
+            }
+            if ( cachedBlockedSet.has(tagToTypeMap[tag] + ' ' + src) === false ) {
                 continue;
             }
-            delete pendingRequests[key];
-            // https://github.com/chrisaljoudi/uBlock/issues/869
-            if ( !request.collapse ) {
-                continue;
+            // https://github.com/chrisaljoudi/uBlock/issues/399
+            // Never remove elements from the DOM, just hide them
+            target.style.setProperty('display', 'none', 'important');
+            target.hidden = true;
+            // https://github.com/chrisaljoudi/uBlock/issues/1048
+            // Use attribute to construct CSS rule
+            if (
+                netSelectorCacheCount <= netSelectorCacheCountMax &&
+                (value = target.getAttribute(prop))
+            ) {
+                selectors.push(tag + '[' + prop + '="' + value + '"]');
+                netSelectorCacheCount += 1;
             }
-            if ( Array.isArray(entry) === false ) {
-                aa[0] = entry;
-                entry = aa;
-            }
-            for ( var j = 0, nj = entry.length; j < nj; j++ ) {
-                target = entry[j];
-                // https://github.com/chrisaljoudi/uBlock/issues/399
-                // Never remove elements from the DOM, just hide them
-                target.style.setProperty('display', 'none', 'important');
-                target.hidden = true;
-                // https://github.com/chrisaljoudi/uBlock/issues/1048
-                // Use attribute to construct CSS rule
-                if (
-                    netSelectorCacheCount <= netSelectorCacheCountMax &&
-                    (value = target.getAttribute(request.attr))
-                ) {
-                    selectors.push(request.tag + '[' + request.attr + '="' + value + '"]');
-                    netSelectorCacheCount += 1;
-                }
-                if ( iframeLoadEventPatch ) { iframeLoadEventPatch(target); }
+            if ( iframeLoadEventPatch !== undefined ) {
+                iframeLoadEventPatch(target);
             }
         }
         if ( selectors.length !== 0 ) {
@@ -1098,72 +1128,35 @@ vAPI.domCollapser = (function() {
     };
 
     var send = function() {
-        timer = null;
-        // https://github.com/gorhill/uBlock/issues/1927
-        // Normalize hostname to avoid trailing dot of FQHN.
-        var pageHostname = window.location.hostname || '';
-        if (
-            pageHostname.length &&
-            pageHostname.charCodeAt(pageHostname.length - 1) === 0x2e
-        ) {
-            pageHostname = pageHostname.slice(0, -1);
-        }
-        messaging.send(
-            'contentscript',
-            {
-                what: 'filterRequests',
-                pageURL: window.location.href,
-                pageHostname: pageHostname,
-                requests: roundtripRequests
-            }, onProcessed
-        );
-        roundtripRequests = [];
+        processTimer = undefined;
+        toCollapse.set(resquestIdGenerator, toProcess);
+        var msg = {
+            what: 'getCollapsibleBlockedRequests',
+            id: resquestIdGenerator,
+            frameURL: window.location.href,
+            resources: toFilter,
+            hash: cachedBlockedSetHash
+        };
+        messaging.send('contentscript', msg, onProcessed);
+        toProcess = [];
+        toFilter = [];
+        resquestIdGenerator += 1;
     };
 
     var process = function(delay) {
-        if ( roundtripRequests.length === 0 ) {
-            return;
-        }
+        if ( toProcess.length === 0 ) { return; }
         if ( delay === 0 ) {
-            clearTimeout(timer);
+            if ( processTimer !== undefined ) {
+                clearTimeout(processTimer);
+            }
             send();
-        } else if ( timer === null ) {
-            timer = vAPI.setTimeout(send, delay || 20);
+        } else if ( processTimer === undefined ) {
+            processTimer = vAPI.setTimeout(send, delay || 20);
         }
     };
 
     var add = function(target) {
-        var tag = target.localName;
-        var prop = src1stProps[tag];
-        if ( prop === undefined ) {
-            return;
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/174
-        // Do not remove fragment from src URL
-        var src = target[prop];
-        if ( typeof src !== 'string' || src.length === 0 ) {
-            prop = src2ndProps[tag];
-            if ( prop === undefined ) {
-                return;
-            }
-            src = target[prop];
-            if ( typeof src !== 'string' || src.length === 0 ) {
-                return;
-            }
-        }
-        if ( src.lastIndexOf('http', 0) !== 0 ) {
-            return;
-        }
-        var key = tag + ' ' + prop + ' ' + src,
-            entry = pendingRequests[key];
-        if ( entry === undefined ) {
-            pendingRequests[key] = target;
-            roundtripRequests.push(new RoundtripRequest(tag, prop, src));
-        } else if ( Array.isArray(entry) ) {
-            entry.push(target);
-        } else {
-            pendingRequests[key] = [ entry, target ];
-        }
+        toProcess[toProcess.length] = target;
     };
 
     var addMany = function(targets) {
@@ -1194,12 +1187,7 @@ vAPI.domCollapser = (function() {
         // and which scripts are selectively looked-up from:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( vAPI.injectedScripts ) {
-            var scriptTag = document.createElement('script');
-            scriptTag.appendChild(document.createTextNode(vAPI.injectedScripts));
-            var parent = iframe.contentDocument && iframe.contentDocument.head;
-            if ( parent ) {
-                parent.appendChild(scriptTag);
-            }
+            vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
 
         // ADN: inject content-scripts into dynamically-created iframes (see #1197)
@@ -1246,24 +1234,19 @@ vAPI.domCollapser = (function() {
 
         var src = iframe.src;
         //console.log("iframe.src=\""+src+"\"");
-        if ( src === '' || typeof src !== 'string' ) {
+        if ( src === '' || typeof src !== 'string') {
             primeLocalIFrame(iframe);
             return;
         }
         if ( src.lastIndexOf('http', 0) !== 0 ) {
-            primeLocalIFrame(iframe); // ADN: handle cases where src is 'about:blank'
+            primeLocalIFrame(iframe);  // ADN: handle cases where src is 'about:blank'
             return;
         }
-        var key = 'iframe' + ' ' + 'src' + ' ' + src,
-            entry = pendingRequests[key];
-        if ( entry === undefined ) {
-            pendingRequests[key] = iframe;
-            roundtripRequests.push(new RoundtripRequest('iframe', 'src', src));
-        } else if ( Array.isArray(entry) ) {
-            entry.push(iframe);
-        } else {
-            pendingRequests[key] = [ entry, iframe ];
-        }
+        toFilter[toFilter.length] = {
+            type: 'sub_frame',
+            url: iframe.src
+        };
+        add(iframe);
     };
 
     var addIFrames = function(iframes) {
@@ -1274,8 +1257,10 @@ vAPI.domCollapser = (function() {
     };
 
     var onResourceFailed = function(ev) {
-        vAPI.domCollapser.add(ev.target);
-        vAPI.domCollapser.process();
+        if ( tagToTypeMap[ev.target.localName] !== undefined ) {
+            vAPI.domCollapser.add(ev.target);
+            vAPI.domCollapser.process();
+        }
     };
 
     var domChangedHandler = function(nodes) {
@@ -1300,7 +1285,6 @@ vAPI.domCollapser = (function() {
         // - Future requests not blocked yet
         // - Elements dynamically added to the page
         // - Elements which resource URL changes
-
         // https://github.com/chrisaljoudi/uBlock/issues/7
         // Preferring getElementsByTagName over querySelectorAll:
         //   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
@@ -1323,8 +1307,8 @@ vAPI.domCollapser = (function() {
         vAPI.shutdown.add(function() {
             document.removeEventListener('error', onResourceFailed, true);
             vAPI.domWatcher.removeListener(domChangedHandler);
-            if ( timer !== null ) {
-                clearTimeout(timer);
+            if ( processTimer !== undefined ) {
+                clearTimeout(processTimer);
             }
         });
     };
@@ -1612,7 +1596,7 @@ vAPI.domSurveyor = (function() {
             v = node.id;
             if ( typeof v !== 'string' ) { continue; }
             v = '#' + v.trim();
-            if ( !qq.has(v) && v.length !== 1 ) {
+            if ( qq.has(v) === false && v.length !== 1 ) {
                 ll[lli] = v; lli++; qq.add(v);
             }
         }
@@ -1622,9 +1606,9 @@ vAPI.domSurveyor = (function() {
             node = nodes[i];
             vv = node.className;
             if ( typeof vv !== 'string' ) { continue; }
-            if ( !rews.test(vv) ) {
+            if ( rews.test(vv) === false ) {
                 v = '.' + vv;
-                if ( !qq.has(v) && v.length !== 1 ) {
+                if ( qq.has(v) === false && v.length !== 1 ) {
                     ll[lli] = v; lli++; qq.add(v);
                 }
             } else {
@@ -1632,7 +1616,7 @@ vAPI.domSurveyor = (function() {
                 j = vv.length;
                 while ( j-- ) {
                     v = '.' + vv[j];
-                    if ( !qq.has(v) ) {
+                    if ( qq.has(v) === false ) {
                         ll[lli] = v; lli++; qq.add(v);
                     }
                 }
@@ -1676,9 +1660,7 @@ vAPI.domSurveyor = (function() {
 vAPI.domIsLoaded = function(ev) {
     // This can happen on Firefox. For instance:
     // https://github.com/gorhill/uBlock/issues/1893
-    if ( window.location === null ) {
-        return;
-    }
+    if ( window.location === null ) { return; }
 
     var slowLoad = ev instanceof Event;
     if ( slowLoad ) {
@@ -1722,7 +1704,7 @@ vAPI.domIsLoaded = function(ev) {
                 what: 'mouseClick',
                 x: ev.clientX,
                 y: ev.clientY,
-                url: elem !== null ? elem.href : ''
+                url: elem !== null && ev.isTrusted !== false ? elem.href : ''
             }
         );
     };
@@ -1743,3 +1725,5 @@ vAPI.domIsLoaded = function(ev) {
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
+
+} // <<<<<<<< end of HUGE-IF-BLOCK

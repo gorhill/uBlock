@@ -140,8 +140,8 @@ var µBlock = (function() { // jshint ignore:line
 
         // read-only
         systemSettings: {
-            compiledMagic: 'pwvcdyqfkuek',
-            selfieMagic: 'pwvcdyqfkuek'
+            compiledMagic: 'yfmwhprwlqes',
+            selfieMagic: 'yfmwhprwlqes'
         },
 
         restoreBackupSettings: {
@@ -173,9 +173,14 @@ var µBlock = (function() { // jshint ignore:line
         noopFunc: function(){},
 
         apiErrorCount: 0,
-        mouseX: -1,
-        mouseY: -1,
-        mouseURL: '',
+
+        mouseEventRegister: {
+            tabId: '',
+            x: -1,
+            y: -1,
+            url: ''
+        },
+
         epickerTarget: '',
         epickerZap: false,
         epickerEprom: null,

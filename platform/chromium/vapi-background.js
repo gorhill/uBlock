@@ -39,16 +39,27 @@ vAPI.chromiumVersion = (function(){
     var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
     return matches !== null ? parseInt(matches[1], 10) : NaN;
     })();
+
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
+
+vAPI.webextFlavor = '';
+if (
+    self.browser instanceof Object &&
+    typeof self.browser.runtime.getBrowserInfo === 'function'
+) {
+    self.browser.runtime.getBrowserInfo().then(function(info) {
+        vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
+    });
+}
 
 var noopFunc = function(){};
 
 /******************************************************************************/
 
 vAPI.app = {
-    name: manifest.name,
+    name: manifest.name.replace(' dev build', ''),
     version: manifest.version
 };
 
@@ -301,14 +312,19 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onCreatedNavigationTarget = function(details) {
-        //console.debug('onCreatedNavigationTarget: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        if ( typeof details.url !== 'string' ) {
+            details.url = '';
+        }
         if ( reGoodForWebRequestAPI.test(details.url) === false ) {
             details.frameId = 0;
             details.url = sanitizeURL(details.url);
             onNavigationClient(details);
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
-            vAPI.tabs.onPopupCreated(details.tabId.toString(), details.sourceTabId.toString());
+            vAPI.tabs.onPopupCreated(
+                details.tabId.toString(),
+                details.sourceTabId.toString()
+            );
         }
     };
 
@@ -327,10 +343,17 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onActivated = function(details) {
-        vAPI.contextMenu.onMustUpdate(details.tabId);
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(details.tabId);
+        }
     };
 
+    // https://github.com/gorhill/uBlock/issues/3073
+    // - Fall back to `tab.url` when `changeInfo.url` is not set.
     var onUpdated = function(tabId, changeInfo, tab) {
+        if ( typeof changeInfo.url !== 'string' ) {
+            changeInfo.url = tab && tab.url;
+        }
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
@@ -470,12 +493,19 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
+    // - Do not try to lookup uBO's own pages with FF 55 or less.
+    if ( /^Mozilla-Firefox-5[2-5]\./.test(vAPI.webextFlavor) ) {
+        wrapper();
+        return;
+    }
+
     // https://developer.chrome.com/extensions/tabs#method-query
     // "Note that fragment identifiers are not matched."
     // It's a lie, fragment identifiers ARE matched. So we need to remove the
     // fragment.
-    var pos = targetURL.indexOf('#');
-    var targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
+    var pos = targetURL.indexOf('#'),
+        targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
         if ( chrome.runtime.lastError ) { /* noop */ }
@@ -609,24 +639,61 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // Since we may be called asynchronously, the tab id may not exist
 // anymore, so this ensures it does still exist.
 
-vAPI.setIcon = function(tabId, iconStatus, badge) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
+//   Firefox for Android does no support browser.browserAction.setIcon().
 
-    var onIconReady = function() {
-        if ( vAPI.lastError() ) {
-            return;
+/*vAPI.setIcon = (function() { OLD-ADN
+    var browserAction = chrome.browserAction,
+        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+    var iconPaths = [
+        {
+            '19': 'img/browsericons/icon19-off.png',
+            '38': 'img/browsericons/icon38-off.png'
+        },
+        {
+            '19': 'img/browsericons/icon19.png',
+            '38': 'img/browsericons/icon38.png'
         }
-        chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
-        if ( badge !== '' ) {
-            chrome.browserAction.setBadgeBackgroundColor({
-                tabId: tabId,
-                color: '#666'
+    ];
+
+    var onTabReady = function(tab, status, badge) {
+        if ( vAPI.lastError() || !tab ) { return; }
+
+        if ( browserAction.setIcon !== undefined ) {
+            browserAction.setIcon({
+                tabId: tab.id,
+                path: iconPaths[status === 'on' ? 1 : 0]
+            });
+            browserAction.setBadgeText({
+                tabId: tab.id,
+                text: badge
+            });
+            if ( badge !== '' ) {
+                browserAction.setBadgeBackgroundColor({
+                    tabId: tab.id,
+                    color: '#666'
+                });
+            }
+        }
+
+        if ( browserAction.setTitle !== undefined ) {
+            browserAction.setTitle({
+                tabId: tab.id,
+                title: titleTemplate.replace(
+                    '{badge}',
+                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                )
             });
         }
     };
+
+    return function(tabId, iconStatus, badge) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.get(tabId, function(tab) {
+            onTabReady(tab, iconStatus, badge);
+        });
 
     var iconPaths;
 
@@ -650,8 +717,84 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     if (chrome.browserAction && typeof chrome.browserAction.setIcon === 'function') { // ADN
       chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
     }
-    vAPI.contextMenu.onMustUpdate(tabId);
-};
+    if ( vAPI.contextMenu instanceof Object ) {
+      vAPI.contextMenu.onMustUpdate(tabId);
+    }
+};*/
+
+vAPI.setIcon = (function() {
+    var browserAction = chrome.browserAction,
+        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+
+    return function(tabId, iconStatus, badge) {
+
+        var iconPaths; // ADN
+
+        switch(iconStatus) { // ADN
+            case 'dnt':
+                iconPaths = { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' };
+                break;
+            case 'dntactive':
+                iconPaths = { '16': 'img/adn_dnt_active_16.png', '32': 'img/adn_dnt_active_32.png' };
+                break;
+            case 'onactive':
+                iconPaths = { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png'};
+                break;
+            case 'off':
+                iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
+                break;
+            default://on
+                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };
+        }
+
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        if ( browserAction && typeof browserAction.setIcon === 'function' ) {
+
+            browserAction.setIcon(
+                {
+                    tabId: tabId,
+                    path: iconPaths // ADN
+                },
+                function onIconReady() {
+                    if ( vAPI.lastError() ) { return; }
+                    chrome.browserAction.setBadgeText({
+                        tabId: tabId,
+                        text: badge
+                    });
+                    if ( badge !== '' ) {
+                        chrome.browserAction.setBadgeBackgroundColor({
+                            tabId: tabId,
+                            color: '#666'
+                        });
+                    }
+                }
+            );
+        }
+
+        if ( browserAction && typeof browserAction.setTitle === 'function' ) {
+            browserAction.setTitle({
+                tabId: tabId,
+                title: titleTemplate.replace(
+                    '{badge}',
+                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                )
+            });
+        }
+
+        if ( vAPI.contextMenu instanceof Object ) {
+            vAPI.contextMenu.onMustUpdate(tabId);
+        }
+    };
+})();
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+    vAPI.tabs.open({
+        select: true,
+        url: 'popup.html?tabId=' + tab.id + '&mobile=1'
+    });
+});
 
 /******************************************************************************/
 /******************************************************************************/
@@ -673,8 +816,15 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging;
-    var toAuxPending = {};
+    var messaging = vAPI.messaging,
+        toAuxPending = {};
+
+    // https://issues.adblockplus.org/ticket/5695
+    // - Good idea, adopted: cleaner way to detect user-stylesheet support.
+    var supportsUserStylesheets =
+        chrome.extensionTypes instanceof Object &&
+        chrome.extensionTypes.CSSOrigin instanceof Object &&
+        'USER' in chrome.extensionTypes.CSSOrigin;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
@@ -722,8 +872,8 @@ vAPI.messaging.onPortMessage = (function() {
     };
 
     var toAux = function(details, portFrom) {
-        var port, portTo;
-        var chromiumTabId = toChromiumTabId(details.toTabId);
+        var port, portTo,
+            chromiumTabId = toChromiumTabId(details.toTabId);
 
         // TODO: This could be an issue with a lot of tabs: easy to address
         //       with a port name to tab id map.
@@ -780,6 +930,40 @@ vAPI.messaging.onPortMessage = (function() {
         wrapper.callback(details.msg);
     };
 
+    var toFramework = function(msg, sender) {
+        var tabId = sender && sender.tab && sender.tab.id;
+        if ( !tabId ) { return; }
+        switch ( msg.what ) {
+        case 'userCSS':
+            var details = {
+                code: undefined,
+                frameId: sender.frameId,
+                matchAboutBlank: true
+            };
+            if ( supportsUserStylesheets ) {
+                details.cssOrigin = 'user';
+            }
+            var fn;
+            if ( msg.add ) {
+                details.runAt = 'document_start';
+                fn = chrome.tabs.insertCSS;
+            } else {
+                fn = chrome.tabs.removeCSS;
+            }
+            var css = msg.css;
+            if ( typeof css === 'string' ) {
+                details.code = css;
+                fn(tabId, details);
+                return;
+            }
+            for ( var i = 0, n = css.length; i < n; i++ ) {
+                details.code = css[i];
+                fn(tabId, details);
+            }
+            break;
+        }
+    };
+
     return function(request, port) {
 
         //console.log('vAPI.messaging.onPortMessage: ', request.channelName
@@ -797,6 +981,13 @@ vAPI.messaging.onPortMessage = (function() {
             return;
         }
 
+        // Content process to main process: framework handler.
+        // No callback supported/needed for now.
+        if ( request.channelName === 'vapi-background' ) {
+            toFramework(request.msg, port.sender);
+            return;
+        }
+
         // Auxiliary process to main process: prepare response
         var callback = messaging.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
@@ -804,8 +995,8 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: specific handler
-        var r = messaging.UNHANDLED;
-        var listener = messaging.listeners[request.channelName];
+        var r = messaging.UNHANDLED,
+            listener = messaging.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
         }
@@ -885,310 +1076,10 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.net = {};
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
+//   Firefox for Android does no support browser.contextMenus.
 
-/******************************************************************************/
-
-vAPI.net.registerListeners = function() {
-    var µb = µBlock,
-        µburi = µb.URI,
-        wrApi = chrome.webRequest;
-
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=410382
-    // Between Chromium 38-48, plug-ins' network requests were reported as
-    // type "other" instead of "object".
-    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent);
-
-    // legacy Chromium understands only these network request types.
-    var validTypes = {
-        main_frame: true,
-        sub_frame: true,
-        stylesheet: true,
-        script: true,
-        image: true,
-        object: true,
-        xmlhttprequest: true,
-        other: true
-    };
-    // modern Chromium/WebExtensions: more types available.
-    if ( wrApi.ResourceType ) {
-        (function() {
-            for ( var typeKey in wrApi.ResourceType ) {
-                if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                    validTypes[wrApi.ResourceType[typeKey]] = true;
-                }
-            }
-        })();
-    }
-
-    var extToTypeMap = new Map([
-        ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
-        ['mp3','media'],['mp4','media'],['webm','media'],
-        ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['webp','image']
-    ]);
-
-    var denormalizeTypes = function(aa) {
-        if ( aa.length === 0 ) {
-            return Object.keys(validTypes);
-        }
-        var out = [];
-        var i = aa.length,
-            type,
-            needOther = true;
-        while ( i-- ) {
-            type = aa[i];
-            if ( validTypes[type] ) {
-                out.push(type);
-            }
-            if ( type === 'other' ) {
-                needOther = false;
-            }
-        }
-        if ( needOther ) {
-            out.push('other');
-        }
-        return out;
-    };
-
-    var headerValue = function(headers, name) {
-        var i = headers.length;
-        while ( i-- ) {
-            if ( headers[i].name.toLowerCase() === name ) {
-                return headers[i].value.trim();
-            }
-        }
-        return '';
-    };
-
-    var normalizeRequestDetails = function(details) {
-        details.tabId = details.tabId.toString();
-
-        var type = details.type;
-
-        // https://github.com/gorhill/uBlock/issues/1493
-        // Chromium 49+/WebExtensions support a new request type: `ping`,
-        // which is fired as a result of using `navigator.sendBeacon`.
-        if ( type === 'ping' ) {
-            details.type = 'beacon';
-            return;
-        }
-
-        if ( type === 'imageset' ) {
-            details.type = 'image';
-            return;
-        }
-
-        // The rest of the function code is to normalize type
-        if ( type !== 'other' ) {
-            return;
-        }
-
-        // Try to map known "extension" part of URL to request type.
-        var path = µburi.pathFromURI(details.url),
-            pos = path.indexOf('.', path.length - 6);
-        if ( pos !== -1 && (type = extToTypeMap.get(path.slice(pos + 1))) ) {
-            details.type = type;
-            return;
-        }
-
-        // Try to extract type from response headers if present.
-        if ( details.responseHeaders ) {
-            type = headerValue(details.responseHeaders, 'content-type');
-            if ( type.startsWith('font/') ) {
-                details.type = 'font';
-                return;
-            }
-            if ( type.startsWith('image/') ) {
-                details.type = 'image';
-                return;
-            }
-            if ( type.startsWith('audio/') || type.startsWith('video/') ) {
-                details.type = 'media';
-                return;
-            }
-        }
-
-        // https://github.com/chrisaljoudi/uBlock/issues/862
-        //   If no transposition possible, transpose to `object` as per
-        //   Chromium bug 410382
-        // https://code.google.com/p/chromium/issues/detail?id=410382
-        if ( is_v38_48 ) {
-            details.type = 'object';
-        }
-    };
-
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=129353
-    // https://github.com/gorhill/uBlock/issues/1497
-    // Expose websocket-based network requests to uBO's filtering engine,
-    // logger, etc.
-    // Counterpart of following block of code is found in "vapi-client.js" --
-    // search for "https://github.com/gorhill/uBlock/issues/1497".
-    //
-    // Once uBO 1.11.1 and uBO-Extra 2.12 are widespread, the image-based
-    // handling code can be removed.
-    var onBeforeWebsocketRequest = function(details) {
-        if ( (details.type !== 'image') &&
-             (details.method !== 'HEAD' || details.type !== 'xmlhttprequest')
-        ) {
-            return;
-        }
-        var requestURL = details.url,
-            matches = /[?&]u(?:rl)?=([^&]+)/.exec(requestURL);
-        if ( matches === null ) { return; }
-        details.type = 'websocket';
-        details.url = decodeURIComponent(matches[1]);
-        var r = onBeforeRequestClient(details);
-        if ( r && r.cancel ) { return r; }
-        // Redirect to the provided URL, or a 1x1 data: URI if none provided.
-        matches = /[?&]r=([^&]+)/.exec(requestURL);
-        return {
-            redirectUrl: matches !== null ?
-                decodeURIComponent(matches[1]) :
-                'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-        };
-    };
-
-    var onBeforeRequestClient = this.onBeforeRequest.callback;
-    var onBeforeRequest = validTypes.websocket
-        // modern Chromium/WebExtensions: type 'websocket' is supported
-        ? function(details) {
-            normalizeRequestDetails(details);
-            return onBeforeRequestClient(details);
-        }
-        // legacy Chromium
-        : function(details) {
-            // https://github.com/gorhill/uBlock/issues/1497
-            if ( details.url.endsWith('ubofix=f41665f3028c7fd10eecf573336216d3') ) {
-                var r = onBeforeWebsocketRequest(details);
-                if ( r !== undefined ) { return r; }
-            }
-            normalizeRequestDetails(details);
-            return onBeforeRequestClient(details);
-        };
-
-    // var onBeforeSendHeadersClientStub = function(details) {
-    //   console.log('onBeforeSendHeadersClientStub');
-    //   normalizeRequestDetails(details);
-    //   return onHeadersReceivedClient(details);
-    // };
-
-    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
-        onBeforeSendHeadersClientTypes = this.onBeforeSendHeaders.types ? this.onBeforeSendHeaders.types.slice(0) : [],
-        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
-
-    // This is needed for Chromium 49-55.
-    var onBeforeSendHeaders = validTypes.csp_report
-        // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? function(details) {
-          return onBeforeSendHeadersClient(details); }
-        // legacy Chromium
-        : function(details) {
-            var result = onBeforeSendHeadersClient(details);
-
-            if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
-            var type = headerValue(details.requestHeaders, 'content-type');
-            if ( type === '' ) { return; }
-            if ( type.endsWith('/csp-report') ) {
-                details.type = 'csp_report';
-                return onBeforeRequestClient(details);
-            }
-        };
-
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types ? this.onHeadersReceived.types.slice(0) : [],
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-
-    var onHeadersReceived = validTypes.font
-        // modern Chromium/WebExtensions: type 'font' is supported
-        ? function(details) {
-            normalizeRequestDetails(details);
-            if (
-                onHeadersReceivedClientTypes.length !== 0 &&
-                onHeadersReceivedClientTypes.indexOf(details.type) === -1
-            ) {
-                return;
-            }
-            return onHeadersReceivedClient(details);
-        }
-        // legacy Chromium
-        : function(details) {
-            normalizeRequestDetails(details);
-            // Hack to work around Chromium API limitations, where requests of
-            // type `font` are returned as `other`. For example, our normalization
-            // fail at transposing `other` into `font` for URLs which are outside
-            // what is expected. At least when headers are received we can check
-            // for content type `font/*`. Blocking at onHeadersReceived time is
-            // less worse than not blocking at all. Also, due to Chromium bug,
-            // `other` always becomes `object` when it can't be normalized into
-            // something else. Test case for "unfriendly" font URLs:
-            //   https://www.google.com/fonts
-            if ( details.type === 'font' ) {
-                var r = onBeforeRequestClient(details);
-                if ( typeof r === 'object' && r.cancel === true ) {
-                    return { cancel: true };
-                }
-            }
-            if (
-                onHeadersReceivedClientTypes.length !== 0 &&
-                onHeadersReceivedClientTypes.indexOf(details.type) === -1
-            ) {
-                return;
-            }
-            return onHeadersReceivedClient(details);
-        };
-
-    var urls, types;
-
-    if ( onBeforeRequest ) {
-        urls = this.onBeforeRequest.urls || ['<all_urls>'];
-        types = this.onBeforeRequest.types || undefined;
-        if (
-            (validTypes.websocket) &&
-            (types === undefined || types.indexOf('websocket') !== -1) &&
-            (urls.indexOf('<all_urls>') === -1)
-        ) {
-            if ( urls.indexOf('ws://*/*') === -1 ) {
-                urls.push('ws://*/*');
-            }
-            if ( urls.indexOf('wss://*/*') === -1 ) {
-                urls.push('wss://*/*');
-            }
-        }
-        wrApi.onBeforeRequest.addListener(
-            onBeforeRequest,
-            { urls: urls, types: types },
-            this.onBeforeRequest.extra
-        );
-    }
-
-    // Chromium 48 and lower does not support `ping` type.
-    // Chromium 56 and higher does support `csp_report` stype.
-    if ( onBeforeSendHeaders ) {
-        wrApi.onBeforeSendHeaders.addListener(
-            onBeforeSendHeaders,
-            {
-                'urls': [ '<all_urls>' ]
-                //'types': [ 'ping' ]
-            },
-            [ 'blocking', 'requestHeaders' ]
-        );
-    }
-
-    if ( onHeadersReceived ) {
-        urls = this.onHeadersReceived.urls || ['<all_urls>'];
-        types = onHeadersReceivedTypes;
-        wrApi.onHeadersReceived.addListener(
-            onHeadersReceived,
-            { urls: urls, types: types },
-            this.onHeadersReceived.extra
-        );
-    }
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
-vAPI.contextMenu = {
+vAPI.contextMenu = chrome.contextMenus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
@@ -1352,7 +1243,7 @@ vAPI.punycodeURL = function(url) {
 // https://github.com/gorhill/uBlock/issues/900
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
-vAPI.adminStorage = {
+vAPI.adminStorage = chrome.storage.managed && {
     getItem: function(key, callback) {
         var onRead = function(store) {
             var data;
@@ -1388,7 +1279,7 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.75 || 6144);
+    var maxChunkSize = chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192;
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     // Firefox:
@@ -1396,9 +1287,22 @@ vAPI.cloud = (function() {
     // > You can store up to 100KB of data using this API/
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
 
+    // Flavor-specific handling needs to be done here. Reason: to allow time
+    // for vAPI.webextFlavor to be properly set.
+    // https://github.com/gorhill/uBlock/issues/3006
+    //  For Firefox, we will use a lower ratio to allow for more overhead for
+    //  the infrastructure. Unfortunately this leads to less usable space for
+    //  actual data, but all of this is provided for free by browser vendors,
+    //  so we need to accept and deal with these limitations.
+    var initialize = function() {
+        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75;
+        maxChunkSize = Math.floor(maxChunkSize * ratio);
+        initialize = function(){};
+    };
+
     var options = {
         defaultDeviceName: window.navigator.platform,
-        deviceName: window.localStorage.getItem('deviceName') || ''
+        deviceName: vAPI.localStorage.getItem('deviceName') || ''
     };
 
     // This is used to find out a rough count of how many chunks exists:
@@ -1445,13 +1349,17 @@ vAPI.cloud = (function() {
         for ( var i = start; i < n; i++ ) {
             keys.push(dataKey + i.toString());
         }
-        chrome.storage.sync.remove(keys);
+        if ( keys.length !== 0 ) {
+            chrome.storage.sync.remove(keys);
+        }
     };
 
     var start = function(/* dataKeys */) {
     };
 
     var push = function(dataKey, data, callback) {
+        initialize();
+
         var bin = {
             'source': options.deviceName || options.defaultDeviceName,
             'tstamp': Date.now(),
@@ -1477,6 +1385,15 @@ vAPI.cloud = (function() {
             var errorStr;
             if ( chrome.runtime.lastError ) {
                 errorStr = chrome.runtime.lastError.message;
+                // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
+                // - Delete all that was pushed in case of failure.
+                // - It's unknown whether such issue applies only to Firefox:
+                //   until such cases are reported for other browsers, we will
+                //   reset the (now corrupted) content of the cloud storage
+                //   only on Firefox.
+                if ( vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ) {
+                    chunkCount = 0;
+                }
             }
             callback(errorStr);
 
@@ -1486,6 +1403,8 @@ vAPI.cloud = (function() {
     };
 
     var pull = function(dataKey, callback) {
+        initialize();
+
         var assembleChunks = function(bin) {
             if ( chrome.runtime.lastError ) {
                 callback(null, chrome.runtime.lastError.message);
@@ -1542,7 +1461,7 @@ vAPI.cloud = (function() {
         }
 
         if ( typeof details.deviceName === 'string' ) {
-            window.localStorage.setItem('deviceName', details.deviceName);
+            vAPI.localStorage.setItem('deviceName', details.deviceName);
             options.deviceName = details.deviceName;
         }
 

@@ -10,6 +10,7 @@ if [ "$1" = experimental ]; then
 else
     DES=dist/build/adnauseam.chromium
 fi
+
 rm -rf $DES
 mkdir -p $DES
 
@@ -29,11 +30,15 @@ cp platform/chromium/*.js   $DES/js/
 cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
-cp manifest.json $DES/            # new-manifest
+cp manifest.json $DES/            # use ADN manifest, not ublock's
 cp LICENSE.txt              $DES/
+
 
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
+
+#echo "*** uBlock0.chromium: Generating meta..."
+#python tools/make-chromium-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** AdNauseam::Chromium: Creating package..."
@@ -44,6 +49,3 @@ fi
 
 echo "*** AdNauseam::Chromium: Package done."
 echo
-
-#ls -lR $DES
-#cat $DES/popup.html | less

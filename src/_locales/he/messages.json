@@ -319,9 +319,9 @@
     "message":"דומיינים של תוכנות זדוניות",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"חברתי",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"מטרדים",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"רב תכליתי",

@@ -319,9 +319,9 @@
     "message":"Malware",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Socialt",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Störande objekt",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Universalfilter",

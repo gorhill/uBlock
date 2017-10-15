@@ -107,6 +107,10 @@
     "message": "Not Yet Visited",
     "description": "English: Not Yet Visited"
   },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
   "adnFirstRunSwitchMeOn": {
     "message": "Switch me on",
     "description": "English: Firstrun.html -> Switch me on"

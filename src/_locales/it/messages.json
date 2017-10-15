@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clicca per aprire il dashboard",
+    "message":"Apri la dashboard",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -224,7 +224,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disabilita la revisione degli hyperlink",
+    "message":"Disabilita la revisione dei collegamenti ipertestuali",
     "description":"English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt":{
@@ -319,9 +319,9 @@
     "message":"Domini con Malware",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Social",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Elementi fastidiosi",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Multiuso",

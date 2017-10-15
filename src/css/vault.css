@@ -498,6 +498,10 @@ div.bullets { display: none; } /* hide by default */
 .inspected .bullets .failed {
 	background-color: #B80606;
 }
+.inspected .bullets .dnt-allowed {
+	background-color: #96B96B;
+}
+
 
 .inspected.pending .target .inspected-title {
 	color: #0076FF;
@@ -508,6 +512,9 @@ div.bullets { display: none; } /* hide by default */
 .inspected.failed .target .inspected-title  {
 	color: #B80606;
 }
+.inspected.dnt-allowed .target .inspected-title  {
+	color: #96B96B;
+}
 
 .inspected .target cite{
 	font-style: normal;
@@ -517,6 +524,8 @@ div.bullets { display: none; } /* hide by default */
 .item.pending #index-counter, .item.pending span.counter { background-color: #0076FF;}
 .item.visited #index-counter, .item.visited span.counter { background-color: #A020F0;}
 .item.failed  #index-counter, .item.failed  span.counter { background-color: #B80606;}
+.item.dnt-allowed #index-counter, .item.dnt-allowed span.counter { background-color: #96B96B;}
+
 
 /* --------------------TEXT ADS----------------------- */
 
@@ -551,6 +560,11 @@ div.bullets { display: none; } /* hide by default */
 .inspected.failed .item-text-div,
 .item-text.failed .item-text-div:hover {
 	border-color: #B80606;
+}
+
+.inspected.dnt-allowed .item-text-div,
+.item-text.dnt-allowed .item-text-div:hover {
+	border-color: #96B96B;
 }
 
 .item-text-div > h3 {
@@ -638,6 +652,11 @@ div.bullets { display: none; } /* hide by default */
 .item-text.failed.inspected {
 	border-color: #B80606;
 }
+
+.item-text.dnt-allowed:hover,
+.item-text.dnt-allowed.inspected {
+	border-color: #96B96B;
+}
 /* ----------------------------------------------------- */
 
 @keyframes pop {
@@ -712,27 +731,7 @@ div.bullets { display: none; } /* hide by default */
 	background: #0076FF;
   animation: 200ms ease-in-out attempting-marker infinite alternate;
 }
-/*
-.item.just-visited img,
-.item-text.just-visited .item-text-div * {
-	animation: 1500ms ease-in-out just-visited-inside;
-}
-*/
 
-/*
-.item.just-failed img,
-.item-text.just-failed .item-text-div * {
-	animation: 1500ms ease-in-out just-visited-inside;
-}
-*/
-/*
-.item.attempting img,
-.item-text.attempting .item-text-div>h3,
-.item-text.attempting .item-text-div>cite,
-.item-text.attempting .item-text-div>div{
-	animation: 200ms ease-in-out attempting infinite alternate;
-}
-*/
 @keyframes visit-marker {
   0%   { width: 0 }
   50%  { width: 100%; left: 0 }
@@ -944,6 +943,10 @@ div.bullets { display: none; } /* hide by default */
 	border-radius: 3px;
 }
 
+.item.dnt-allowed:hover img {
+	border-color: #96B96B;
+	border-radius: 3px;
+}
 /******************************
 
 		D3 Slider

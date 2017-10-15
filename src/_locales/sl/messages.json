@@ -72,7 +72,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
-    "message":"Enter element zapper mode",
+    "message":"Vklopi način izbire elementov",
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
@@ -319,9 +319,9 @@
     "message":"Zlonamerne domene",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Socialno",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Annoyances",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Večnamenski",
@@ -348,11 +348,11 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Posodabljanje ...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Omrežna napaka je preprečila posodobitev virov.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{

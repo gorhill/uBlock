@@ -319,9 +319,9 @@
     "message":"مواقع مصابه او تحتوي على فايروسات",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"مواقع الاجتماعيه",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"عناصر مزعجة",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"متعددة الأغراض",

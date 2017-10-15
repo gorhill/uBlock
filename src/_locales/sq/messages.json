@@ -84,15 +84,15 @@
     "description":"Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups":{
-    "message":"Bllokoj të gjitha dritaret automatike që hap kjo faqja",
+    "message":"Bllokoj të gjitha dritaret automatike që hap faqja",
     "description":"Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia":{
-    "message":"Bllokoj elementet e mëdha mediatike te kjo faqja",
+    "message":"Bllokoj elementet e mëdha mediatike te faqja",
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Përdor filtrat kozmetikë te kjo faqja",
+    "message":"Përdor filtrat kozmetikë te faqja",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -104,7 +104,7 @@
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë faqen.\nAto kanë më përparësi sesa rregullat globale.",
+    "message":"Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë faqen dhe kanë përparësi mbi rregullat globale.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -319,9 +319,9 @@
     "message":"Domenet e dëmshme",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Rrjetet sociale",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Elementet e bezdisshme",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Për qëllime të ndryshme",
@@ -356,7 +356,7 @@
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
-    "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i ngjasojë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;.",
+    "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i përngjajë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -424,7 +424,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista e bardhë e detyron uBlock Origin që të mos veprojë në faqe të caktuara. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
+    "message":"Lista e bardhë e detyron uBlock Origin të mos veprojë në faqe të caktuara. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{

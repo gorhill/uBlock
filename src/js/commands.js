@@ -35,10 +35,8 @@
         case 'launch-element-zapper':
         case 'launch-element-picker':
             vAPI.tabs.get(null, function(tab) {
-                if ( tab instanceof Object === false ) {
-                    return;
-                }
-                µb.mouseX = µb.mouseY = -1;
+                if ( tab instanceof Object === false ) { return; }
+                µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
                 µb.elementPickerExec(tab.id, undefined, command === 'launch-element-zapper');
             });
             break;

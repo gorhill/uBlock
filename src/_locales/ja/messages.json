@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"クリックしてダッシュボードを開く",
+    "message":"ダッシュボードを開く",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -92,7 +92,7 @@
     "description":"Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"このサイトの要素隠蔽フィルターを切り替える",
+    "message":"このサイトの要素隠蔽フィルターを切り替えます",
     "description":"Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts":{
@@ -204,7 +204,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"uBlock₀を優しい色使いにする",
+    "message":"uBlock₀を色盲の方に優しい色にする",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -252,7 +252,7 @@
     "description":""
   },
   "settingsStorageUsed":{
-    "message":"使用中のストレージ:  {{value}} bytes",
+    "message":"使用中のストレージ: {{value}} バイト",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -264,7 +264,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ネットワークフィルター＋{{cosmeticFilterCount}} 要素隠蔽フィルター：",
+    "message":"{{netFilterCount}}個のネットワークフィルター＋{{cosmeticFilterCount}}個の要素隠蔽フィルター:",
     "description":"Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -319,9 +319,9 @@
     "message":"ウイルス",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"ソーシャル",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"迷惑",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"多目的",
@@ -340,11 +340,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"新しいバージョンがあります",
+    "message":"古いバージョンです",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"最終更新: {{ago}}\nクリックすると強制的に更新します",
+    "message":"最終更新: {{ago}}",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
@@ -492,7 +492,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"ネットワークリクエストが {{type}} である場合に、{{br}}URLアドレスが {{url}} と一致し、{{br}}{{origin}} を発信源としている場合は {{action}} をします。{{br}}{{importance}} が存在する場合は例外フィルターと一致させます。",
+    "message":"URLアドレスが {{url}} と一致し、{{origin}} を発信源とする{{br}}ネットワークリクエストが {{type}} であれば、{{br}}要素を {{action}} する。{{br}}例外フィルターと一致する項目がある場合は {{importance}} とする。",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{

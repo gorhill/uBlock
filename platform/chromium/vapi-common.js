@@ -67,12 +67,6 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.insertHTML = function(node, html) {
-    node.innerHTML = html;
-};
-
-/******************************************************************************/
-
 vAPI.getURL = chrome.runtime.getURL;
 
 /******************************************************************************/
@@ -83,24 +77,23 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 
 /******************************************************************************/
 
-vAPI.confirm = (function() {                                
-    return function(msg) {
-        return window.confirm(msg);
-    };
-})();
-
-/******************************************************************************/
-
-vAPI.alert = (function() {                                
-    return function(msg) {
-        window.alert(msg);
-    };
-})();
-
-/******************************************************************************/
+// https://github.com/gorhill/uBlock/issues/3057
+// - webNavigation.onCreatedNavigationTarget become broken on Firefox when we
+//   try to make the popup panel close itself using the original
+//   `window.open('', '_self').close()`.
 
 vAPI.closePopup = function() {
-    window.open('','_self').close();
+    if (
+        self.browser instanceof Object &&
+        typeof self.browser.runtime.getBrowserInfo === 'function'
+    ) {
+        window.close();
+        return;
+    }
+
+    // TODO: try to figure why this was used instead of a plain window.close().
+    // https://github.com/gorhill/uBlock/commit/b301ac031e0c2e9a99cb6f8953319d44e22f33d2#diff-bc664f26b9c453e0d43a9379e8135c6a
+    window.open('', '_self').close();
 };
 
 /******************************************************************************/
@@ -114,6 +107,26 @@ vAPI.closePopup = function() {
 try {
     vAPI.localStorage = window.localStorage;
 } catch (ex) {
+}
+
+// https://github.com/gorhill/uBlock/issues/2824
+//   Use a dummy localStorage if for some reasons it's not available.
+if ( vAPI.localStorage instanceof Object === false ) {
+    vAPI.localStorage = {
+        length: 0,
+        clear: function() {
+        },
+        getItem: function() {
+            return null;
+        },
+        key: function() {
+            throw new RangeError();
+        },
+        removeItem: function() {
+        },
+        setItem: function() {
+        }
+    };
 }
 
 /******************************************************************************/

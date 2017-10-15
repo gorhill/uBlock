@@ -319,9 +319,9 @@
     "message":"Domener med skadelig programvare",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Sosiale nettverk",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Irritasjonsmomenter",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Multi-formål",

@@ -76,7 +76,7 @@
     "description":"Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker":{
-    "message":"Войти в режим выбора элемента",
+    "message":"Войти в режим выбора элементов",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -100,11 +100,11 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Глобальные правила: эта колонка предназначена для правил, применяемых ко всем сайтам.",
+    "message":"Глобальные правила: этот столбец предназначен для правил, применяемых ко всем сайтам.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Локальные правила: эта колонка предназначена для правил, применяемых только к текущему сайту.\nЛокальные правила замещают глобальные.",
+    "message":"Локальные правила: этот столбец предназначен для правил, применяемых только к текущему сайту.\nЛокальные правила переопределяют глобальные.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -180,7 +180,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Щелчок, Ctrl+щелчок",
+    "message":"Клик, Ctrl+клик",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -204,7 +204,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Режим для дальтоников",
+    "message":"Цветовая схема для дальтоников",
     "description":"English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt":{
@@ -319,9 +319,9 @@
     "message":"Вредоносные программы",
     "description":"English: Malware domains"
   },
-  "3pGroupSocial":{
-    "message":"Социальные",
-    "description":"English: Social"
+  "3pGroupAnnoyances":{
+    "message":"Раздражающие элементы",
+    "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{
     "message":"Многоцелевые",

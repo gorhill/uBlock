@@ -27,6 +27,12 @@
 
 /******************************************************************************/
 
+if ( vAPI.contextMenu === undefined ) {
+    return {
+        update: function() {}
+    };
+}
+
 var µb = µBlock;
 
 /******************************************************************************/
@@ -63,14 +69,10 @@ var onBlockElement = function(details, tab) {
 /******************************************************************************/
 
 var onTemporarilyAllowLargeMediaElements = function(details, tab) {
-    if ( tab === undefined ) {
-        return;
-    }
+    if ( tab === undefined ) { return; }
     var pageStore = µb.pageStoreFromTabId(tab.id);
-    if ( pageStore === null ) {
-        return;
-    }
-    pageStore.temporarilyAllowLargeMediaElements();
+    if ( pageStore === null ) { return; }
+    pageStore.temporarilyAllowLargeMediaElements(true);
 };
 
 /******************************************************************************/
