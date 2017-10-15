@@ -80,32 +80,6 @@ var renderFilterLists = function(soft) {
         return listTitle;
     };
 
-    /*var liFromListEntry = function(listKey) {
-
-        var entry = listDetails.available[listKey];
-        var li = listEntryTemplate.clone();
-
-        if ( entry.off !== true ) {
-            li.descendants('input').attr('checked', '');
-        }
-
-        var elem = li.descendants('input');
-        elem.attr('id', listKey);
-
-        var elem = li.descendants('label');
-        elem.attr('for', listKey);
-
-        var elem = li.descendants('a:nth-of-type(1)');
-        elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
-        elem.attr('type', 'text/html');
-        elem.text(listNameFromListKey(listKey) + '\u200E');
-        elem.attr('data-listkey', listKey);
-
-        if ( entry.instructionURL ) {
-            elem = li.descendants('a:nth-of-type(2)');
-            elem.attr('href', entry.instructionURL);
-            elem.css('display', '');*/
-
     var liFromListEntry = function(listKey, li) {
         var entry = listDetails.available[listKey],
             elem;
@@ -142,14 +116,6 @@ var renderFilterLists = function(soft) {
                 li.classList.remove('mustread');
             }
         }
-
-        // elem = li.descendants('span.counts');
-        // var text = listStatsTemplate
-        //     .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
-        //     .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
-
-        // // ADN: only show counts if entry is on
-        // elem.text(entry.off ? '' : text);
 
         // // https://github.com/gorhill/uBlock/issues/78
         // // Badge for non-secure connection
@@ -230,7 +196,7 @@ var renderFilterLists = function(soft) {
 
         li.classList.remove('discard');
 
-        //add adnauseam update button
+        // ADN: add adnauseam update button
         if (listKey === "adnauseam-filters") {
             var button = document.getElementById("buttonUpdateAdNauseam");
             li.appendChild(button);
@@ -370,11 +336,12 @@ var renderFilterLists = function(soft) {
 
 
         // ADN: move these specific lists to 'essentials'
-        var toDefault = [ 'easylist','easyprivacy'];
-
+        var toDefault = [ 'easylist', 'easyprivacy'];
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
-            idx > -1 && groups['default'].push(groups['multipurpose'].splice(idx, 1));
+            if (idx > -1) {
+              groups['default'].push(groups['multipurpose'].splice(idx, 1)[0]);
+            }
         }
 
         for ( i = 0; i < groupKeys.length; i++ ) {

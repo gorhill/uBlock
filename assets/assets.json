@@ -74,6 +74,15 @@
 			"assets/ublock/privacy.txt"
 		]
 	},
+	"ublock-abuse": {
+		"content": "filters",
+		"group": "default",
+		"title": "uBlock filters – Resource abuse",
+		"contentURL": [
+			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
+			"assets/ublock/resource-abuse.txt"
+		]
+	},
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",
@@ -328,7 +337,6 @@
 	"CHN-1": {
 		"content": "filters",
 		"group": "regions",
-		"off": true,
 		"title": "CHN: CJX's EasyList Lite",
 		"lang": "zh",
 		"contentURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
@@ -443,7 +451,6 @@
 	"ISR-0": {
 		"content": "filters",
 		"group": "regions",
-		"off": true,
 		"title": "ISR: EasyList Hebrew",
 		"lang": "he",
 		"contentURL": "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt",
@@ -551,7 +558,6 @@
 	"RUS-2": {
 		"content": "filters",
 		"group": "regions",
-		"off": true,
 		"title": "RUS: Adguard Russian Filter",
 		"lang": "be ru uk",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
@@ -561,7 +567,6 @@
 	"spa-0": {
 		"content": "filters",
 		"group": "regions",
-		"off": true,
 		"title": "spa: EasyList Spanish",
 		"lang": "es",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
