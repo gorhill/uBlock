@@ -673,7 +673,7 @@ var startImportFilePicker = function () {
 var clearAds = function () {
 
   var msg = vAPI.i18n('adnClearConfirm');
-  var proceed = vAPI.confirm(msg);
+  var proceed = window.confirm(msg); // changed from vAPI.confirm merge1.14.12
   if (proceed) {
     vAPI.messaging.send('adnauseam', {
       what: 'clearAds'
