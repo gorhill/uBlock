@@ -221,7 +221,7 @@ vAPI.net.registerListeners = function() {
         };
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0), // ADN: fix to #1241
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = validTypes.font
         // modern Chromium/WebExtensions: type 'font' is supported
