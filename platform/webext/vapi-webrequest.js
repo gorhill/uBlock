@@ -34,7 +34,7 @@ vAPI.net.registerListeners = function() {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
     var mustPunycode = false;
     (function() {
-        if ( 
+        if (
             typeof browser === 'object' &&
             browser !== null &&
             browser.runtime instanceof Object &&
@@ -130,7 +130,7 @@ vAPI.net.registerListeners = function() {
     };
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
