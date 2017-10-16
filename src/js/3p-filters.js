@@ -325,7 +325,7 @@ var renderFilterLists = function(soft) {
             'regions'
         ];
 
-        // ADN: move the lists in these groups to 'other'
+        // ADN: move the lists in these groups to 'multipurpose(Other)'
         var toOther = ['ads', 'privacy'];
         for (i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups['multipurpose'], groups[toOther[i]]);
@@ -335,8 +335,8 @@ var renderFilterLists = function(soft) {
         }
 
 
-        // ADN: move these specific lists to 'essentials'
-        var toDefault = [ 'easylist', 'easyprivacy'];
+        // ADN: move these specific lists to 'default(Essentials)'
+        var toDefault = [ 'easylist', 'easyprivacy', 'ublock-abuse' ];
         for (i = 0; i < toDefault.length; i++) {
             var idx = groups['multipurpose'].indexOf(toDefault[i]);
             if (idx > -1) {
@@ -398,7 +398,8 @@ uDom('#buttonPurgeAll').toggleClass(
         document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
     );
     uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null);
-    uDom('#buttonUpdateAdNauseam').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .groupEntry:first-child .listEntry:first-child span.cache').offsetWidth > 0);
+    var dqs = document.querySelector('body:not(.updating) #lists .groupEntry:first-child .listEntry:first-child span.cache'); // ADN: fix to #1255
+    uDom('#buttonUpdateAdNauseam').toggleClass('disabled', dqs && dqs.offsetWidth > 0);
 
 };
 

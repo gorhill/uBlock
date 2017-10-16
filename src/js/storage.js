@@ -450,6 +450,12 @@
 /******************************************************************************/
 
 µBlock.getAvailableLists = function(callback) {
+
+    function adnListGroup(key) { // ADN tmp
+        return (key === 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt')
+            ? 'default' : 'custom';
+    }
+
     var µb = this,
         oldAvailableLists = {},
         newAvailableLists = {};
@@ -465,11 +471,12 @@
         i = importedListKeys.length, listKey, entry;
     while ( i-- ) {
         listKey = importedListKeys[i];
+        var newGroup = adnListGroup(listKey); // ADN
         entry = {
             content: 'filters',
             contentURL: listKey,
             external: true,
-            group: 'custom',
+            group: newGroup,
             submitter: 'user',
             title: ''
         };
@@ -485,11 +492,12 @@
         if ( Array.isArray(listURL) ) {
             listURL = listURL[0];
         }
+        var newGroup = adnListGroup(listURL); // ADN
         var newEntry = {
             content: 'filters',
             contentURL: listURL,
             external: true,
-            group: 'custom',
+            group: newGroup,
             submitter: 'user',
             title: oldEntry.title || ''
         };
