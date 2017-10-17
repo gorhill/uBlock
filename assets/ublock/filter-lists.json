@@ -365,14 +365,6 @@
 		"lang": "el",
 		"supportURL": "https://github.com/kargig/greek-adblockplus-filter"
 	},
-	"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt": {
-		"off": true,
-		"title": "NOR: Dandelion Sprouts norske filtre for ryddigere nettsider",
-		"group": "regions",
-		"lang": "nb",
-		"supportURL": "https://github.com/DandelionSprout/adfilt/issues"
-	},
-	},
 	"https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt": {
 		"off": true,
 		"title": "SVN: Slovenian List",
