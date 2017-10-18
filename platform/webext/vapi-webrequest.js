@@ -25,7 +25,14 @@
 
 /******************************************************************************/
 
-vAPI.net = {};
+vAPI.net = {
+    onBeforeRequest: {},
+    onBeforeMaybeSpuriousCSPReport: {},
+    onHeadersReceived: {},
+    nativeCSPReportFiltering: true
+};
+
+/******************************************************************************/
 
 vAPI.net.registerListeners = function() {
 
@@ -129,20 +136,6 @@ vAPI.net.registerListeners = function() {
         return onBeforeRequestClient(details);
     };
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
-        normalizeRequestDetails(details);
-        if (
-            onHeadersReceivedClientTypes.length !== 0 &&
-            onHeadersReceivedClientTypes.indexOf(details.type) === -1
-        ) {
-            return;
-        }
-        return onHeadersReceivedClient(details);
-    };
-
     if ( onBeforeRequest ) {
         let urls = this.onBeforeRequest.urls || ['<all_urls>'];
         let types = this.onBeforeRequest.types || undefined;
@@ -164,6 +157,32 @@ vAPI.net.registerListeners = function() {
             this.onBeforeRequest.extra
         );
     }
+
+    // https://github.com/gorhill/uBlock/issues/3140
+    if ( typeof this.onBeforeMaybeSpuriousCSPReport.callback === 'function' ) {
+        wrApi.onBeforeRequest.addListener(
+            this.onBeforeMaybeSpuriousCSPReport.callback,
+            {
+                urls: [ 'http://*/*', 'https://*/*' ],
+                types: [ 'csp_report' ]
+            },
+            [ 'blocking', 'requestBody' ]
+        );
+    }
+
+    var onHeadersReceivedClient = this.onHeadersReceived.callback,
+        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+    var onHeadersReceived = function(details) {
+        normalizeRequestDetails(details);
+        if (
+            onHeadersReceivedClientTypes.length !== 0 &&
+            onHeadersReceivedClientTypes.indexOf(details.type) === -1
+        ) {
+            return;
+        }
+        return onHeadersReceivedClient(details);
+    };
 
     if ( onHeadersReceived ) {
         let urls = this.onHeadersReceived.urls || ['<all_urls>'];

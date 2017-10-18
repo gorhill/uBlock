@@ -25,7 +25,12 @@
 
 /******************************************************************************/
 
-vAPI.net = {};
+vAPI.net = {
+    onBeforeRequest: {},
+    onBeforeMaybeSpuriousCSPReport: {},
+    onHeadersReceived: {},
+    nativeCSPReportFiltering: false
+};
 
 vAPI.net.registerListeners = function() {
 
@@ -283,6 +288,22 @@ vAPI.net.registerListeners = function() {
             onBeforeRequest,
             { urls: urls, types: types },
             this.onBeforeRequest.extra
+        );
+    }
+
+    // https://github.com/gorhill/uBlock/issues/3140
+    this.nativeCSPReportFiltering = validTypes.csp_report;
+    if (
+        this.nativeCSPReportFiltering &&
+        typeof this.onBeforeMaybeSpuriousCSPReport.callback === 'function'
+    ) {
+        wrApi.onBeforeRequest.addListener(
+            this.onBeforeMaybeSpuriousCSPReport.callback,
+            {
+                urls: [ 'http://*/*', 'https://*/*' ],
+                types: [ 'csp_report' ]
+            },
+            [ 'blocking', 'requestBody' ]
         );
     }
 
