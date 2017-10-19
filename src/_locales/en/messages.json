@@ -253,7 +253,7 @@
   },
   "settingsNoCSPReportsPrompt":{
     "message":"Block CSP reports",
-    "description": ""
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed":{
     "message":"Storage used: {{value}} bytes",
