@@ -435,17 +435,14 @@ var onBeforeMaybeSpuriousCSPReport = function(details) {
             if ( data instanceof Object ) {
                 var report = data['csp-report'];
                 if ( report instanceof Object ) {
-                    var blockedURI = report['blocked-uri'] ||
-                                     report['blockedURI'],
-                        sourceFile = report['source-file'] ||
-                                     report['sourceFile'];
+                    var blocked = report['blocked-uri'] || report['blockedURI'],
+                        validBlocked = typeof blocked === 'string',
+                        source = report['source-file'] || report['sourceFile'],
+                        validSource = typeof source === 'string';
                     if (
-                        (typeof blockedURI === 'string' ||
-                         typeof sourceFile === 'string') &&
-                        (typeof blockedURI !== 'string' ||
-                         blockedURI.startsWith('data') === false) &&
-                        (typeof sourceFile !== 'string' ||
-                         sourceFile.startsWith('data') === false)
+                        (validBlocked || validSource) &&
+                        (!validBlocked || !blocked.startsWith('data')) &&
+                        (!validSource || !source.startsWith('data'))
                     ) {
                         return;
                     }
