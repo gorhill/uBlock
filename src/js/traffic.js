@@ -440,6 +440,8 @@ var onBeforeMaybeSpuriousCSPReport = function(details) {
                         sourceFile = report['source-file'] ||
                                      report['sourceFile'];
                     if (
+                        (typeof blockedURI === 'string' ||
+                         typeof sourceFile === 'string') &&
                         (typeof blockedURI !== 'string' ||
                          blockedURI.startsWith('data') === false) &&
                         (typeof sourceFile !== 'string' ||
