@@ -304,6 +304,7 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
         us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
         us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;
         us.noRemoteFonts = this.hnSwitches.evaluate('no-remote-fonts', '*') === 1;
+        us.noCSPReports = this.hnSwitches.evaluate('no-csp-reports', '*') === 1;
         return us;
     }
 
@@ -368,6 +369,11 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
         break;
     case 'noRemoteFonts':
         if ( this.hnSwitches.toggle('no-remote-fonts', '*', value ? 1 : 0) ) {
+            this.saveHostnameSwitches();
+        }
+        break;
+    case 'noCSPReports':
+        if ( this.hnSwitches.toggle('no-csp-reports', '*', value ? 1 : 0) ) {
             this.saveHostnameSwitches();
         }
         break;

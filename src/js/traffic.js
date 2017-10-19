@@ -353,8 +353,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
-    // So we filter if and only if the "advanced user" mode is selected
-    if ( µb.userSettings.advancedUserEnabled ) {
+    // So we filter if and only if the "advanced user" mode is selected.
+    // https://github.com/gorhill/uBlock/issues/3150
+    //   Ability to globally block CSP reports MUST also apply to
+    //   behind-the-scene network requests.
+    if ( µb.userSettings.advancedUserEnabled || requestType === 'csp_report' ) {
         result = pageStore.filterRequest(context);
     }
 
