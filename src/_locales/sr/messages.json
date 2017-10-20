@@ -251,6 +251,10 @@
     "message":"Блокирај удаљене фонтове",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Блокирај CSP извештаје",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Искоришћеност складишта: {{value}} бајтова",
     "description":"English: Storage used: {{}} bytes"

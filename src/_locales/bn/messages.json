@@ -16,11 +16,11 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"তৃতীয় পক্ষের ফিল্টারস",
+    "message":"৩য়-দলের ফিল্টার",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"আমার ফিল্টারস",
+    "message":"আমার ফিল্টার",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"পরিচ্ছন্ন তালিকা",
+    "message":"সাদাতালিকা",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
@@ -112,7 +112,7 @@
     "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules":{
-    "message":"আপনার পরিবর্তনগুলি প্রত্যাবর্তন করতে ক্লিক করুন।",
+    "message":"আপনার পরিবর্তনগুলি ফেরত নিতে ক্লিক করুন।",
     "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt":{
@@ -251,6 +251,10 @@
     "message":"রিমোট ফন্ট অবরুদ্ধ করুন",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"CSP প্রতিবেদন অবরুদ্ধ করুন",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"সংগ্রহস্থল ব্যবহার: {{value}} বাইট",
     "description":"English: Storage used: {{}} bytes"
@@ -320,7 +324,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupAnnoyances":{
-    "message":"Annoyances",
+    "message":"বিরক্তিকর",
     "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{

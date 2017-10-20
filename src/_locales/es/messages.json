@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clic para abrir el panel de control",
+    "message":"Abrir Panel de control",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -250,6 +250,10 @@
   "settingsNoRemoteFontsPrompt":{
     "message":"Bloquear fuentes remotas",
     "description":""
+  },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Bloquear reportes CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
     "message":"Almacenamiento usado: {{value}} bytes",
@@ -612,11 +616,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Mostrar Panel de Control",
+    "message":"Mostrar Panel de control",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar Registro",
+    "message":"Mostrar registro",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

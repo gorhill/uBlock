@@ -251,6 +251,10 @@
     "message":"బయటి ఖతులను నిరోధించు",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"వాడుతున్న నిలువల పరిమాణం: {{value}} బైట్స్",
     "description":"English: Storage used: {{}} bytes"

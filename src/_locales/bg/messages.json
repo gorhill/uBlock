@@ -251,6 +251,10 @@
     "message":"Блокиране на външни шрифтове",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Блокиране на CSP отчетите",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Използвана памет за съхранение: {{value}} байта",
     "description":"English: Storage used: {{}} bytes"
@@ -564,7 +568,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Възстановяване на настройките по подразбиране...",
+    "message":"Възстановяване на първоначалните настройки...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

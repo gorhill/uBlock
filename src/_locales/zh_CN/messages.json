@@ -251,6 +251,10 @@
     "message":"屏蔽远程字体",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"屏蔽 CSP 报告",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"已用空间：{{value}} 字节",
     "description":"English: Storage used: {{}} bytes"

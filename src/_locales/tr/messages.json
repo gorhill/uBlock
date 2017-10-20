@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, etkili bir engelleyici. İşlemci ve belleği yormaz.",
+    "message":"Sonunda, etkili bir engelleyici. İşlemciyi ve belleği yormaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -250,6 +250,10 @@
   "settingsNoRemoteFontsPrompt":{
     "message":"Uzak yazıtiplerini engelle",
     "description":""
+  },
+  "settingsNoCSPReportsPrompt":{
+    "message":"CSP raporlarını engelle",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
     "message":"Kullanılan Alan: {{value}} byte",

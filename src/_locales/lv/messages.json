@@ -251,6 +251,10 @@
     "message":"Bloķēt ārējos fontus",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Izmantotais krātuves lielums: {{value}} baiti",
     "description":"English: Storage used: {{}} bytes"

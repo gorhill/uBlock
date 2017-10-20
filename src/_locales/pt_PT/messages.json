@@ -251,6 +251,10 @@
     "message":"Bloquear tipos de letra remotos",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Bloquear CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Armazenamento utilizado: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"

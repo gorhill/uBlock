@@ -251,6 +251,10 @@
     "message":"Blochează fonturile de la distanță",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blochează CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Spațiu de stocare utilizat: {{value}} octeți",
     "description":"English: Storage used: {{}} bytes"

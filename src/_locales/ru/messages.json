@@ -251,6 +251,10 @@
     "message":"Блокировать сторонние шрифты",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Блокировать CSP отчеты",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Места использовано: {{value}} байт",
     "description":"English: Storage used: {{}} bytes"

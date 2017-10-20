@@ -251,6 +251,10 @@
     "message":"Estä etäladattavat kirjasimet",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Tilaa käytetty: {{value}} tavua",
     "description":"English: Storage used: {{}} bytes"

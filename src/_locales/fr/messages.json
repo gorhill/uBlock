@@ -251,6 +251,10 @@
     "message":"Bloquer les polices d'écriture distantes",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Bloquer les rapports CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Espace de stockage utilisé : {{value}} octet(s)",
     "description":"English: Storage used: {{}} bytes"

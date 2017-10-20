@@ -251,6 +251,10 @@
     "message":"Blokir fon rajuh",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blokir laporan CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Penyimpanan terpakai: {{value}} bita",
     "description":"English: Storage used: {{}} bytes"

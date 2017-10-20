@@ -251,6 +251,10 @@
     "message":"Keela välised fondid",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Keela lehe turvareeglite (CSP-de) aruanded",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Mahtu kasutatud: {{value}} baiti",
     "description":"English: Storage used: {{}} bytes"

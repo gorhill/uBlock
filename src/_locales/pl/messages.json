@@ -251,6 +251,10 @@
     "message":"Blokuj zdalne czcionki",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blokuj raporty CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Użycie pamięci masowej: {{value}} bajtów",
     "description":"English: Storage used: {{}} bytes"

@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Apri la dashboard",
+    "message":"Clicca per aprire il pannello di controllo",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -250,6 +250,10 @@
   "settingsNoRemoteFontsPrompt":{
     "message":"Blocca font remoti",
     "description":""
+  },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blocca CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
     "message":"Spazio utilizzato: {{value}} byte",

@@ -251,6 +251,10 @@
     "message":"Externe lettertypen blokkeren",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"CSP-rapporten blokkeren",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Gebruikte opslagruimte: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"

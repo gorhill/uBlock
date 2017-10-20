@@ -48,7 +48,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"pedidos bloqueados",
+    "message":"solicitações bloqueadas",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -192,7 +192,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Mostrar o número de pedidos bloqueados no ícone",
+    "message":"Mostrar o número de solicitações bloqueadas no ícone",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt":{
@@ -220,7 +220,7 @@
     "description":"For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar pré-chamadas (para impedir qualquer conexão de pedidos de rede bloqueados)",
+    "message":"Desativar pré-chamadas (para impedir qualquer conexão de solicitações de rede bloqueadas)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
@@ -250,6 +250,10 @@
   "settingsNoRemoteFontsPrompt":{
     "message":"Bloquear fontes remotas",
     "description":""
+  },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Bloquear relatórios CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
     "message":"Armazenamento utilizado: {{value}} bytes",
@@ -288,7 +292,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros para &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros para &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em solicitações de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
     "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters":{
@@ -492,7 +496,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} pedidos de rede de {{type}} {{br}}que corresponde ao endereço de URL {{url}} {{br}}e que tem origem de {{origin}},{{br}}{{importance}} existir um filtro de exceção correspondente.",
+    "message":"{{action}} solicitações de rede de {{type}} {{br}}que corresponde ao endereço de URL {{url}} {{br}}e que tem origem de {{origin}},{{br}}{{importance}} existir um filtro de exceção correspondente.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{

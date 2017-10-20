@@ -251,6 +251,10 @@
     "message":"Blokovať vzdialené písma",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Zablokovať CSP hlásenia",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Využité miesto: {{value}} bajtov",
     "description":"English: Storage used: {{}} bytes"
