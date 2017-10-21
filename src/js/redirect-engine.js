@@ -338,11 +338,11 @@ RedirectEngine.prototype.toSelfie = function() {
     }
     var µb = µBlock;
     return {
-        resources: µb.mapToArray(this.resources),
+        resources: µb.arrayFrom(this.resources),
         rules: rules,
-        ruleTypes: µb.setToArray(this.ruleTypes),
-        ruleSources: µb.setToArray(this.ruleSources),
-        ruleDestinations: µb.setToArray(this.ruleDestinations)
+        ruleTypes: µb.arrayFrom(this.ruleTypes),
+        ruleSources: µb.arrayFrom(this.ruleSources),
+        ruleDestinations: µb.arrayFrom(this.ruleDestinations)
     };
 };
 
@@ -359,11 +359,10 @@ RedirectEngine.prototype.fromSelfie = function(selfie) {
     }
 
     // Rules.
-    var µb = µBlock;
-    this.rules = µb.mapFromArray(selfie.rules);
-    this.ruleTypes = µb.setFromArray(selfie.ruleTypes);
-    this.ruleSources = µb.setFromArray(selfie.ruleSources);
-    this.ruleDestinations = µb.setFromArray(selfie.ruleDestinations);
+    this.rules = new Map(selfie.rules);
+    this.ruleTypes = new Set(selfie.ruleTypes);
+    this.ruleSources = new Set(selfie.ruleSources);
+    this.ruleDestinations = new Set(selfie.ruleDestinations);
 
     return true;
 };

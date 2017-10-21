@@ -566,6 +566,7 @@ var contentObserver = {
         let sandbox = this.initContentScripts(win, true);
         try {
             lss(this.contentBaseURI + 'vapi-client.js', sandbox);
+            lss(this.contentBaseURI + 'vapi-usercss.js', sandbox);
             lss(this.contentBaseURI + 'contentscript.js', sandbox);
         } catch (ex) {
             //console.exception(ex.msg, ex.stack);

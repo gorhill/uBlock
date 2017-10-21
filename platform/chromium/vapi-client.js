@@ -171,14 +171,15 @@ vAPI.messaging = {
 
     portPoller: function() {
         this.portTimer = null;
-        if ( this.port !== null ) {
-            if ( this.channelCount !== 0 || this.pendingCount !== 0 ) {
-                this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
-                this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
-                return;
-            }
+        if (
+            this.port !== null &&
+            this.channelCount === 0 &&
+            this.pendingCount === 0
+        ) {
+            return this.destroyPort();
         }
-        this.destroyPort();
+        this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
+        this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
     },
     portPollerCallback: null,
 
@@ -324,15 +325,12 @@ vAPI.messaging = {
 
     sendToChannelListeners: function(channelName, msg) {
         var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
+        if ( listeners === undefined ) { return; }
+        listeners = listeners.slice(0);
         var response;
-        for ( var i = 0, n = listeners.length; i < n; i++ ) {
-            response = listeners[i](msg);
-            if ( response !== undefined ) {
-                break;
-            }
+        for ( var listener of listeners ) {
+            response = listener(msg);
+            if ( response !== undefined ) { break; }
         }
         return response;
     }

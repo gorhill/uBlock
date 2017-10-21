@@ -118,12 +118,11 @@
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
-
-// don't run in frames
-if ( window.top !== window ) {
+if (
+    window.top !== window ||
+    typeof vAPI !== 'object' ||
+    vAPI.domFilterer instanceof Object === false
+) {
     return;
 }
 
@@ -131,8 +130,8 @@ var pickerRoot = document.getElementById(vAPI.sessionId);
 if ( pickerRoot ) {
     return;
 }
+
 var pickerBody = null;
-var pickerStyle = null;
 var svgOcean = null;
 var svgIslands = null;
 var svgRoot = null;
@@ -1397,13 +1396,12 @@ var stopPicker = function() {
     candidateElements = [];
     bestCandidateFilter = null;
 
-    if ( pickerRoot === null ) {
-        return;
-    }
+    if ( pickerRoot === null ) { return; }
 
     // https://github.com/gorhill/uBlock/issues/2060
-    if ( vAPI.userCSS ) {
-        vAPI.userCSS.remove(pickerStyle.textContent);
+    if ( vAPI.domFilterer instanceof Object ) {
+        vAPI.domFilterer.removeCSSRule(pickerCSSSelector1, pickerCSSDeclaration1);
+        vAPI.domFilterer.removeCSSRule(pickerCSSSelector2, pickerCSSDeclaration2);
     }
 
     window.removeEventListener('scroll', onScrolled, true);
@@ -1414,7 +1412,6 @@ var stopPicker = function() {
     svgRoot.removeEventListener('click', onSvgClicked);
     svgRoot.removeEventListener('touchstart', onSvgTouchStartStop);
     svgRoot.removeEventListener('touchend', onSvgTouchStartStop);
-    pickerStyle.parentNode.removeChild(pickerStyle);
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.removeEventListener('load', stopPicker);
     pickerRoot =
@@ -1548,50 +1545,51 @@ var bootstrapPicker = function() {
 
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
-pickerRoot.style.cssText = [
-    'background: transparent',
-    'border: 0',
-    'border-radius: 0',
-    'box-shadow: none',
-    'display: block',
-    'height: 100%',
-    'left: 0',
-    'margin: 0',
-    'max-height: none',
-    'max-width: none',
-    'opacity: 1',
-    'outline: 0',
-    'padding: 0',
-    'position: fixed',
-    'top: 0',
-    'visibility: visible',
-    'width: 100%',
-    'z-index: 2147483647',
-    ''
-].join(' !important;');
+
+var pickerCSSSelector1 = '#' + pickerRoot.id;
+var pickerCSSDeclaration1 = [
+        'background: transparent',
+        'border: 0',
+        'border-radius: 0',
+        'box-shadow: none',
+        'display: block',
+        'height: 100%',
+        'left: 0',
+        'margin: 0',
+        'max-height: none',
+        'max-width: none',
+        'opacity: 1',
+        'outline: 0',
+        'padding: 0',
+        'position: fixed',
+        'top: 0',
+        'visibility: visible',
+        'width: 100%',
+        'z-index: 2147483647',
+        ''
+    ].join(' !important;');
+var pickerCSSSelector2 = '[' + pickerRoot.id + '-clickblind]';
+var pickerCSSDeclaration2 = 'pointer-events: none !important;';
+
+
+pickerRoot.style.cssText = pickerCSSDeclaration1;
 
 // https://github.com/gorhill/uBlock/issues/1529
-// In addition to inline styles, harden the element picker styles by using
-// a dedicated style tag.
-pickerStyle = document.createElement('style');
-pickerStyle.textContent = [
-    '#' + pickerRoot.id + ' {',
-        pickerRoot.style.cssText,
-    '}',
-    '[' + pickerRoot.id + '-clickblind] {',
-        'pointer-events: none !important;',
-    '}',
-    ''
-].join('\n');
-document.documentElement.appendChild(pickerStyle);
+//   In addition to inline styles, harden the element picker styles by using
+//   dedicated CSS rules.
+vAPI.domFilterer.addCSSRule(
+    pickerCSSSelector1,
+    pickerCSSDeclaration1,
+    { internal: true }
+);
+vAPI.domFilterer.addCSSRule(
+    pickerCSSSelector2,
+    pickerCSSDeclaration2,
+    { internal: true }
+);
 
 // https://github.com/gorhill/uBlock/issues/2060
-if ( vAPI.domFilterer ) {
-    pickerRoot[vAPI.domFilterer.getExcludeId()] = true;
-}
-if ( vAPI.userCSS ) {
-    vAPI.userCSS.add(pickerStyle.textContent);
-}
+vAPI.domFilterer.excludeNode(pickerRoot);
 
 pickerRoot.addEventListener('load', bootstrapPicker);
 document.documentElement.appendChild(pickerRoot);

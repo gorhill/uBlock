@@ -853,22 +853,17 @@ vAPI.messaging.onPortMessage = (function() {
             if ( supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
-            var fn;
             if ( msg.add ) {
                 details.runAt = 'document_start';
-                fn = chrome.tabs.insertCSS;
-            } else {
-                fn = chrome.tabs.removeCSS;
             }
-            var css = msg.css;
-            if ( typeof css === 'string' ) {
-                details.code = css;
-                fn(tabId, details);
-                return;
+            var cssText;
+            for ( cssText of msg.add ) {
+                details.code = cssText;
+                chrome.tabs.insertCSS(tabId, details);
             }
-            for ( var i = 0, n = css.length; i < n; i++ ) {
-                details.code = css[i];
-                fn(tabId, details);
+            for ( cssText of msg.remove ) {
+                details.code = cssText;
+                chrome.tabs.removeCSS(tabId, details);
             }
             break;
         }

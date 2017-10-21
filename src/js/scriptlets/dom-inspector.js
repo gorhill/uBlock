@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2016 Raymond Hill
+    Copyright (C) 2015-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -140,11 +140,16 @@ var cssEscape = (function(/*root*/) {
 // Highlighter-related
 var svgRoot = null;
 var pickerRoot = null;
-var highlightedElementLists = [ [], [], [] ];
 
 var nodeToIdMap = new WeakMap(); // No need to iterate
-var nodeToCosmeticFilterMap = new WeakMap();
-var toggledNodes = new Map();
+
+var blueNodes = [];
+var roRedNodes = new Map();    // node => current cosmetic filter
+var rwRedNodes = new Set();    // node => new cosmetic filter (toggle node)
+//var roGreenNodes = new Map();  // node => current exception cosmetic filter (can't toggle)
+var rwGreenNodes = new Set();  // node => new exception cosmetic filter (toggle filter)
+
+var reHasCSSCombinators = /[ >+~]/;
 
 /******************************************************************************/
 
@@ -224,7 +229,7 @@ var domLayout = (function() {
         this.lvl = 0;
         this.sel = 'body';
         this.cnt = 0;
-        this.filter = nodeToCosmeticFilterMap.get(document.body);
+        this.filter = roRedNodes.get(document.body);
     };
 
     var DomNode = function(node, level) {
@@ -232,7 +237,7 @@ var domLayout = (function() {
         this.lvl = level;
         this.sel = selectorFromNode(node);
         this.cnt = 0;
-        this.filter = nodeToCosmeticFilterMap.get(node);
+        this.filter = roRedNodes.get(node);
     };
 
     var domNodeFactory = function(level, node) {
@@ -687,20 +692,27 @@ var cosmeticFilterMapper = (function() {
     }
 
     var nodesFromStyleTag = function(rootNode) {
-        var filterMap = nodeToCosmeticFilterMap,
+        var filterMap = roRedNodes,
             selectors, selector,
             nodes, node,
             i, j;
 
-        // CSS-based selectors: simple one.
-        selectors = vAPI.domFilterer.simpleHideSelectors.entries;
+        // Declarative selectors.
+        selectors = vAPI.domFilterer.getAllDeclarativeSelectors().split(',\n');
         i = selectors.length;
         while ( i-- ) {
             selector = selectors[i];
-            if ( filterMap.has(rootNode) === false && rootNode[matchesFnName](selector) ) {
-                filterMap.set(rootNode, selector);
+            if ( reHasCSSCombinators.test(selector) ) {
+                nodes = document.querySelectorAll(selector);
+            } else {
+                if (
+                    filterMap.has(rootNode) === false &&
+                    rootNode[matchesFnName](selector)
+                ) {
+                    filterMap.set(rootNode, selector);
+                }
+                nodes = rootNode.querySelectorAll(selector);
             }
-            nodes = rootNode.querySelectorAll(selector);
             j = nodes.length;
             while ( j-- ) {
                 node = nodes[j];
@@ -710,42 +722,31 @@ var cosmeticFilterMapper = (function() {
             }
         }
 
-        // CSS-based selectors: complex one (must query from doc root).
-        selectors = vAPI.domFilterer.complexHideSelectors.entries;
-        i = selectors.length;
-        while ( i-- ) {
-            selector = selectors[i];
-            nodes = document.querySelectorAll(selector);
+        // Procedural selectors.
+        selectors = vAPI.domFilterer.getAllProceduralSelectors();
+        for ( var entry of selectors ) {
+            nodes = entry[1].exec();
             j = nodes.length;
             while ( j-- ) {
-                node = nodes[j];
                 if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, selector);
+                    filterMap.set(node, entry[0]);
                 }
             }
         }
-
-        // Non-CSS selectors.
-        var runJobCallback = function(node, pfilter) {
-            if ( filterMap.has(node) === false ) {
-                filterMap.set(node, pfilter.raw);
-            }
-        };
-        vAPI.domFilterer.proceduralSelectors.forEachNode(runJobCallback);
     };
 
     var incremental = function(rootNode) {
-        vAPI.domFilterer.userCSS.toggle(false);
+        vAPI.domFilterer.toggle(false);
         nodesFromStyleTag(rootNode);
     };
 
     var reset = function() {
-        nodeToCosmeticFilterMap = new WeakMap();
+        roRedNodes = new Map();
         incremental(document.documentElement);
     };
 
     var shutdown = function() {
-        vAPI.domFilterer.userCSS.toggle(true);
+        vAPI.domFilterer.toggle(true);
     };
 
     return {
@@ -824,55 +825,96 @@ var getSvgRootChildren = function() {
 var highlightElements = function(scrollTo) {
     var wv = pickerRoot.contentWindow.innerWidth;
     var hv = pickerRoot.contentWindow.innerHeight;
-    var ocean = ['M0 0h' + wv + 'v' + hv + 'h-' + wv, 'z'], islands;
-    var elems, elem, rect, poly;
+    var islands;
+    var elem, rect, poly;
     var xl, xr, yt, yb, w, h, ws;
     var xlu = Number.MAX_VALUE, xru = 0, ytu = Number.MAX_VALUE, ybu = 0;
-    var lists = highlightedElementLists;
     var svgRootChildren = getSvgRootChildren();
 
-    for ( var i = 0; i < lists.length; i++ ) {
-        elems = lists[i];
-        islands = [];
-        for ( var j = 0; j < elems.length; j++ ) {
-            elem = elems[j];
-            if ( elem === pickerRoot ) {
-                continue;
-            }
-            if ( typeof elem.getBoundingClientRect !== 'function' ) {
-                continue;
-            }
-
-            rect = elem.getBoundingClientRect();
-            xl = rect.left;
-            xr = rect.right;
-            w = rect.width;
-            yt = rect.top;
-            yb = rect.bottom;
-            h = rect.height;
-
-            ws = w.toFixed(1);
-            poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
-                   'h' + ws +
-                   'v' + h.toFixed(1) +
-                   'h-' + ws +
-                   'z';
-            ocean.push(poly);
-            islands.push(poly);
-
-            if ( !scrollTo ) {
-                continue;
-            }
-
-            if ( xl < xlu ) { xlu = xl; }
-            if ( xr > xru ) { xru = xr; }
-            if ( yt < ytu ) { ytu = yt; }
-            if ( yb > ybu ) { ybu = yb; }
-        }
-        svgRootChildren[i+1].setAttribute('d', islands.join('') || 'M0 0');
+    islands = [];
+    for ( elem of rwRedNodes.keys() ) {
+        if ( elem === pickerRoot ) { continue; }
+        if ( rwGreenNodes.has(elem) ) { continue; }
+        if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
+        rect = elem.getBoundingClientRect();
+        xl = rect.left;
+        xr = rect.right;
+        w = rect.width;
+        yt = rect.top;
+        yb = rect.bottom;
+        h = rect.height;
+        ws = w.toFixed(1);
+        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+               'h' + ws +
+               'v' + h.toFixed(1) +
+               'h-' + ws +
+               'z';
+        islands.push(poly);
     }
+    svgRootChildren[0].setAttribute('d', islands.join('') || 'M0 0');
 
-    svgRoot.firstElementChild.setAttribute('d', ocean.join(''));
+    islands = [];
+    for ( elem of rwGreenNodes ) {
+        if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
+        rect = elem.getBoundingClientRect();
+        xl = rect.left;
+        xr = rect.right;
+        w = rect.width;
+        yt = rect.top;
+        yb = rect.bottom;
+        h = rect.height;
+        ws = w.toFixed(1);
+        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+               'h' + ws +
+               'v' + h.toFixed(1) +
+               'h-' + ws +
+               'z';
+        islands.push(poly);
+    }
+    svgRootChildren[1].setAttribute('d', islands.join('') || 'M0 0');
+
+    islands = [];
+    for ( elem of roRedNodes.keys() ) {
+        if ( elem === pickerRoot ) { continue; }
+        if ( rwGreenNodes.has(elem) ) { continue; }
+        if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
+        rect = elem.getBoundingClientRect();
+        xl = rect.left;
+        xr = rect.right;
+        w = rect.width;
+        yt = rect.top;
+        yb = rect.bottom;
+        h = rect.height;
+        ws = w.toFixed(1);
+        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+               'h' + ws +
+               'v' + h.toFixed(1) +
+               'h-' + ws +
+               'z';
+        islands.push(poly);
+    }
+    svgRootChildren[2].setAttribute('d', islands.join('') || 'M0 0');
+
+    islands = [];
+    for ( elem of blueNodes ) {
+        if ( elem === pickerRoot ) { continue; }
+        if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
+        rect = elem.getBoundingClientRect();
+        xl = rect.left;
+        xr = rect.right;
+        w = rect.width;
+        yt = rect.top;
+        yb = rect.bottom;
+        h = rect.height;
+        ws = w.toFixed(1);
+        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+               'h' + ws +
+               'v' + h.toFixed(1) +
+               'h-' + ws +
+               'z';
+        islands.push(poly);
+    }
+    svgRootChildren[3].setAttribute('d', islands.join('') || 'M0 0');
 
     if ( !scrollTo ) {
         return;
@@ -913,34 +955,12 @@ var onScrolled = function() {
 
 /******************************************************************************/
 
-var resetToggledNodes = function() {
-    for ( var entry of toggledNodes ) {
-        if ( entry[1].show ) {
-            showNode(entry[0], entry[1].v1, entry[1].v2);
-        } else {
-            hideNode(entry[0]);
-        }
-    }
-    toggledNodes.clear();
-};
-
-/******************************************************************************/
-
-var forgetToggledNodes = function() {
-    toggledNodes.clear();
-};
-
-/******************************************************************************/
-
 var selectNodes = function(selector, nid) {
     var nodes = elementsFromSelector(selector);
-    if ( nid === '' ) {
-        return nodes;
-    }
-    var i = nodes.length;
-    while ( i-- ) {
-        if ( nodeToIdMap.get(nodes[i]) === nid ) {
-            return [nodes[i]];
+    if ( nid === '' ) { return nodes; }
+    for ( var node of nodes ) {
+        if ( nodeToIdMap.get(node) === nid ) {
+            return [ node ];
         }
     }
     return [];
@@ -950,83 +970,36 @@ var selectNodes = function(selector, nid) {
 
 var shutdown = function() {
     cosmeticFilterMapper.shutdown();
-    resetToggledNodes();
     domLayout.shutdown();
     vAPI.messaging.removeAllChannelListeners('domInspector');
     window.removeEventListener('scroll', onScrolled, true);
     document.documentElement.removeChild(pickerRoot);
     pickerRoot = svgRoot = null;
-    highlightedElementLists = [ [], [], [] ];
 };
 
 /******************************************************************************/
 
-// original, target = what to do
-//      any,    any = restore saved display property
-//      any, hidden = set display to `none`, remember original state
-//   hidden,    any = remove display property, don't remember original state
-//   hidden, hidden = set display to `none`
-
-var toggleNodes = function(nodes, originalState, targetState) {
-    var i = nodes.length;
-    if ( i === 0 ) {
-        return;
-    }
-    var node, details;
-    while ( i-- ) {
-        node = nodes[i];
-        // originally visible node
-        if ( originalState ) {
-            // unhide visible node
-            if ( targetState ) {
-                details = toggledNodes.get(node) || {};
-                showNode(node, details.v1, details.v2);
-                toggledNodes.delete(node);
-            }
-            // hide visible node
-            else {
-                toggledNodes.set(node, {
-                    show: true,
-                    v1: node.style.getPropertyValue('display') || '',
-                    v2: node.style.getPropertyPriority('display') || ''
-                });
-                hideNode(node);
-            }
+var toggleExceptions = function(nodes, targetState) {
+    for ( var node of nodes ) {
+        if ( targetState ) {
+            rwGreenNodes.add(node);
+        } else {
+            rwGreenNodes.delete(node);
         }
-        // originally hidden node
-        else {
-            // show hidden node
-            if ( targetState ) {
-                toggledNodes.set(node, { show: false });
-                showNode(node, 'initial', 'important');
-            }
-            // hide hidden node
-            else {
-                hideNode(node);
-                toggledNodes.delete(node);
-            }
+    }
+};
+
+var toggleFilter = function(nodes, targetState) {
+    for ( var node of nodes ) {
+        if ( targetState ) {
+            rwRedNodes.delete(node);
+        } else {
+            rwRedNodes.add(node);
         }
     }
 };
 
 // https://www.youtube.com/watch?v=L5jRewnxSBY
-
-/******************************************************************************/
-
-var showNode = function(node, v1, v2) {
-    vAPI.domFilterer.showNode(node);
-    if ( !v1 ) {
-        node.style.removeProperty('display');
-    } else {
-        node.style.setProperty('display', v1, v2);
-    }
-};
-
-/******************************************************************************/
-
-var hideNode = function(node) {
-    vAPI.domFilterer.unshowNode(node);
-};
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1036,11 +1009,6 @@ var onMessage = function(request) {
 
     switch ( request.what ) {
     case 'commitFilters':
-        resetToggledNodes();
-        toggleNodes(selectNodes(request.hide, ''), true, false);
-        toggleNodes(selectNodes(request.unhide, ''), false, true);
-        forgetToggledNodes();
-        highlightedElementLists = [ [], [], [] ];
         highlightElements();
         break;
 
@@ -1053,44 +1021,38 @@ var onMessage = function(request) {
         break;
 
     case 'highlightMode':
-        svgRoot.classList.toggle('invert', request.invert);
+        //svgRoot.classList.toggle('invert', request.invert);
         break;
 
     case 'highlightOne':
-        highlightedElementLists[0] = selectNodes(request.selector, request.nid);
+        blueNodes = selectNodes(request.selector, request.nid);
         highlightElements(request.scrollTo);
         break;
 
-    case 'resetToggledNodes':
-        resetToggledNodes();
-        break;
-
     case 'showCommitted':
-        resetToggledNodes();
-        highlightedElementLists[0] = [];
-        highlightedElementLists[1] = selectNodes(request.hide, '');
-        highlightedElementLists[2] = selectNodes(request.unhide, '');
-        toggleNodes(highlightedElementLists[2], false, true);
+        blueNodes = [];
+        // TODO: show only the new filters and exceptions.
         highlightElements(true);
         break;
 
     case 'showInteractive':
-        resetToggledNodes();
-        toggleNodes(selectNodes(request.hide, ''), true, false);
-        toggleNodes(selectNodes(request.unhide, ''), false, true);
-        highlightedElementLists = [ [], [], [] ];
+        blueNodes = [];
         highlightElements();
         break;
 
     case 'toggleFilter':
-        highlightedElementLists[0] = selectNodes(request.filter, request.nid);
-        toggleNodes(highlightedElementLists[0], request.original, request.target);
+        toggleExceptions(
+            selectNodes(request.filter, request.nid),
+            request.target
+        );
         highlightElements(true);
         break;
 
     case 'toggleNodes':
-        highlightedElementLists[0] = selectNodes(request.selector, request.nid);
-        toggleNodes(highlightedElementLists[0], request.original, request.target);
+        toggleFilter(
+            selectNodes(request.selector, request.nid),
+            request.target
+        );
         highlightElements(true);
         break;
 
@@ -1149,22 +1111,22 @@ pickerRoot.onload = function() {
             'top: 0;',
             'width: 100%;',
         '}',
-        'svg > path:first-child {',
-            'fill: rgba(0,0,0,0.75);',
-            'fill-rule: evenodd;',
+        'svg > path:nth-of-type(1) {',
+            'fill: rgba(255,0,0,0.2);',
+            'stroke: #F00;',
         '}',
         'svg > path:nth-of-type(2) {',
-            'fill: rgba(0,0,255,0.1);',
-            'stroke: #FFF;',
-            'stroke-width: 0.5px;',
+            'fill: rgba(0,255,0,0.2);',
+            'stroke: #0F0;',
         '}',
         'svg > path:nth-of-type(3) {',
             'fill: rgba(255,0,0,0.2);',
             'stroke: #F00;',
         '}',
         'svg > path:nth-of-type(4) {',
-            'fill: rgba(0,255,0,0.2);',
-            'stroke: #0F0;',
+            'fill: rgba(0,0,255,0.1);',
+            'stroke: #FFF;',
+            'stroke-width: 0.5px;',
         '}',
         ''
     ].join('\n');
@@ -1179,8 +1141,8 @@ pickerRoot.onload = function() {
 
     window.addEventListener('scroll', onScrolled, true);
 
-    highlightElements();
     cosmeticFilterMapper.reset();
+    highlightElements();
 
     vAPI.messaging.addChannelListener('domInspector', onMessage);
 };

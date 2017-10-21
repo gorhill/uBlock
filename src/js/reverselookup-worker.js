@@ -100,10 +100,27 @@ var fromCosmeticFilter = function(details) {
         prefix = match[0],
         filter = details.rawFilter.slice(prefix.length);
 
+    // With low generic simple cosmetic filters, the class or id prefix
+    // character is not part of the compiled data. So we must be ready to
+    // look-up version of the selector without the prefix character.
+    var idOrClassPrefix = filter.charAt(0),
+        cssPrefixMatcher;
+    if ( idOrClassPrefix === '#' ) {
+        cssPrefixMatcher = '#?';
+        filter = filter.slice(1);
+    } else if ( idOrClassPrefix === '.' ) {
+        cssPrefixMatcher = '\\.?';
+        filter = filter.slice(1);
+    } else {
+        idOrClassPrefix = '';
+        cssPrefixMatcher = '';
+    }
+
     // https://github.com/gorhill/uBlock/issues/3101
     //   Use `m` flag for efficient regex execution.
     var reFilter = new RegExp(
             '^\\[\\d,[^\\n]*\\\\*"' +
+            cssPrefixMatcher +
             reEscapeCosmetic(filter) +
             '\\\\*"[^\\n]*\\]$',
             'gm'
@@ -154,8 +171,10 @@ var fromCosmeticFilter = function(details) {
         while ( (match = reFilter.exec(content)) !== null ) {
             fargs = JSON.parse(match[0]);
             switch ( fargs[0] ) {
-            case 0:
-            case 2:
+            case 0: // id-based
+            case 2: // class-based
+                found = prefix + idOrClassPrefix + filter;
+                break;
             case 4:
             case 5:
             case 7:
@@ -169,6 +188,7 @@ var fromCosmeticFilter = function(details) {
                 break;
             case 6:
             case 8:
+            case 9:
                 if (
                     fargs[2] === '' ||
                     reHostname.test(fargs[2]) === true ||

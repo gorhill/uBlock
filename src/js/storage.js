@@ -211,7 +211,7 @@
             this.removeFilterList(oldKeys[i]);
         }
     }
-    newKeys = this.setToArray(newSet);
+    newKeys = this.arrayFrom(newSet);
     var bin = {
         selectedFilterLists: newKeys,
         remoteBlacklists: this.oldDataFromNewListKeys(newKeys)
@@ -342,10 +342,10 @@
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = this.setToArray(importedSet).sort().join('\n');
+        externalLists = this.arrayFrom(importedSet).sort().join('\n');
     }
 
-    var result = this.setToArray(selectedListKeySet);
+    var result = this.arrayFrom(selectedListKeySet);
     if ( externalLists !== this.userSettings.externalLists ) {
         this.userSettings.externalLists = externalLists;
         vAPI.storage.set({ externalLists: externalLists });
@@ -371,7 +371,7 @@
         }
         out.add(location);
     }
-    return this.setToArray(out);
+    return this.arrayFrom(out);
 };
 
 /******************************************************************************/

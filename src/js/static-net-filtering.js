@@ -1137,12 +1137,12 @@ FilterHostnameDict.prototype.logData = function() {
 };
 
 FilterHostnameDict.prototype.compile = function() {
-    return [ this.fid, µb.setToArray(this.dict) ];
+    return [ this.fid, µb.arrayFrom(this.dict) ];
 };
 
 FilterHostnameDict.load = function(args) {
     var f = new FilterHostnameDict();
-    f.dict = µb.setFromArray(args[1]);
+    f.dict = new Set(args[1]);
     return f;
 };
 
@@ -2006,8 +2006,8 @@ FilterContainer.prototype.freeze = function() {
     this.fdataLast = null;
     this.filterLast = null;
     this.frozen = true;
-    //console.log(JSON.stringify(Array.from(filterClassHistogram)));
-    //this.tokenHistogram = new Map(Array.from(this.tokenHistogram).sort(function(a, b) {
+    //console.log(JSON.stringify(µb.arrayFrom(filterClassHistogram)));
+    //this.tokenHistogram = new Map(µb.arrayFrom(this.tokenHistogram).sort(function(a, b) {
     //    return a[0].localeCompare(b[0]) || (b[1] - a[1]);
     //}));
 };
