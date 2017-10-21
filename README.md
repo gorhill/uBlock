@@ -2,16 +2,6 @@
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/ublock/localized.svg)](https://crowdin.com/project/ublock)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
 
-***
-
-##### BEWARE! uBlock Origin is (and has always been) COMPLETELY UNRELATED to the web site ublock.org
-
-The donations sought by the [individual](https://github.com/chrisaljoudi/) behind `ublock.org` (_"to keeps uBlock development possible"_, [a misrepresentation](https://en.wikipedia.org/wiki/UBlock_Origin#uBlock_.28ublock.org.29)) are _not_ benefiting any of those who contributed most to create uBlock Origin ([developers](https://github.com/gorhill/uBlock/graphs/contributors), [translators](https://crowdin.com/project/ublock), and all those who put efforts in opening detailed issues). For the differences between uBlock Origin and uBlock, see the unbiased [Wikipedia article](https://en.wikipedia.org/wiki/UBlock_Origin).
-
-***
-
-uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_](https://easylist.github.io/#easylist), [_EasyPrivacy_](https://easylist.github.io/#easyprivacy), [_Peter Lowe’s ad/tracking/malware servers_](https://pgl.yoyo.org/adservers/policy.php), various lists of [malware](http://www.malwaredomainlist.com/) [sites](http://www.malwaredomains.com/), and uBlock Origin's [own filter lists](https://github.com/uBlockOrigin/uAssets/tree/master/filters).
-
 *** 
 
 <h1 align="center">
@@ -39,7 +29,17 @@ uBlock Origin
 </p>
 
 
+***
+
+##### BEWARE! uBlock Origin is (and has always been) COMPLETELY UNRELATED to the web site ublock.org
+
+The donations sought by the [individual](https://github.com/chrisaljoudi/) behind `ublock.org` (_"to keeps uBlock development possible"_, [a misrepresentation](https://en.wikipedia.org/wiki/UBlock_Origin#uBlock_.28ublock.org.29)) are _not_ benefiting any of those who contributed most to create uBlock Origin ([developers](https://github.com/gorhill/uBlock/graphs/contributors), [translators](https://crowdin.com/project/ublock), and all those who put efforts in opening detailed issues). For the differences between uBlock Origin and uBlock, see the unbiased [Wikipedia article](https://en.wikipedia.org/wiki/UBlock_Origin).
+
+***
+
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
+
+uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https://github.com/gorhill/uBlock/wiki/Blocking-mode) -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_](https://easylist.github.io/#easylist), [_EasyPrivacy_](https://easylist.github.io/#easyprivacy), [_Peter Lowe’s ad/tracking/malware servers_](https://pgl.yoyo.org/adservers/policy.php), various lists of [malware](http://www.malwaredomainlist.com/) [sites](http://www.malwaredomains.com/), and uBlock Origin's [own filter lists](https://github.com/uBlockOrigin/uAssets/tree/master/filters).
 
 * [Documentation](#documentation)
 * [Purpose & General Info](#philosophy)
