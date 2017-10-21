@@ -110,18 +110,39 @@ vAPI.cacheStorage = (function() {
         if ( pending.length !== 1 ) { return; }
         // This will fail in private browsing mode.
         var req = indexedDB.open(STORAGE_NAME, 1);
+        // https://github.com/gorhill/uBlock/issues/3156
+        //   I have observed that no event was fired in Tor Browser 7.0.7 +
+        //   medium security level after the request to open the database was
+        //   created. When this occurs, I have also observed that the `error`
+        //   property was already set, so this means uBO can detect here whether
+        //   the database can be opened successfully. A try-catch block is
+        //   necessary when reading the `error` property because we are not
+        //   allowed to read this propery outside of event handlers in newer
+        //   implementation of IDBRequest (my understanding).
+        try {
+            if ( req.error ) {
+                console.log(req.error);
+                processPendings();
+                pending = undefined;
+                return;
+            }
+        } catch(ex) {
+        }
         req.onupgradeneeded = function(ev) {
+            req = undefined;
             db = ev.target.result;
             db.onerror = db.onabort = genericErrorHandler;
             var table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
             table.createIndex('value', 'value', { unique: false });
         };
         req.onsuccess = function(ev) {
+            req = undefined;
             db = ev.target.result;
             db.onerror = db.onabort = genericErrorHandler;
             processPendings();
         };
-        req.onerror = function() {
+        req.onerror = req.onblocked = function() {
+            req = undefined;
             console.log(this.error);
             processPendings();
             pending = undefined;
