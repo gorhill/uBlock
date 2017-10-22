@@ -1400,9 +1400,11 @@ var stopPicker = function() {
 
     // https://github.com/gorhill/uBlock/issues/2060
     if ( vAPI.domFilterer instanceof Object ) {
-        vAPI.domFilterer.removeCSSRule(pickerCSSSelector1, pickerCSSDeclaration1);
-        vAPI.domFilterer.removeCSSRule(pickerCSSSelector2, pickerCSSDeclaration2);
+        vAPI.userStylesheet.remove(pickerCSS1);
+        vAPI.userStylesheet.remove(pickerCSS2);
+        vAPI.userStylesheet.apply();
     }
+    vAPI.domFilterer.unexcludeNode(pickerRoot);
 
     window.removeEventListener('scroll', onScrolled, true);
     pickerRoot.contentWindow.removeEventListener('keydown', onKeyPressed, true);
@@ -1546,47 +1548,46 @@ var bootstrapPicker = function() {
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
 
-var pickerCSSSelector1 = '#' + pickerRoot.id;
-var pickerCSSDeclaration1 = [
-        'background: transparent',
-        'border: 0',
-        'border-radius: 0',
-        'box-shadow: none',
-        'display: block',
-        'height: 100%',
-        'left: 0',
-        'margin: 0',
-        'max-height: none',
-        'max-width: none',
-        'opacity: 1',
-        'outline: 0',
-        'padding: 0',
-        'position: fixed',
-        'top: 0',
-        'visibility: visible',
-        'width: 100%',
-        'z-index: 2147483647',
-        ''
-    ].join(' !important;');
-var pickerCSSSelector2 = '[' + pickerRoot.id + '-clickblind]';
-var pickerCSSDeclaration2 = 'pointer-events: none !important;';
+var pickerCSSStyle = [
+    'background: transparent',
+    'border: 0',
+    'border-radius: 0',
+    'box-shadow: none',
+    'display: block',
+    'height: 100%',
+    'left: 0',
+    'margin: 0',
+    'max-height: none',
+    'max-width: none',
+    'opacity: 1',
+    'outline: 0',
+    'padding: 0',
+    'position: fixed',
+    'top: 0',
+    'visibility: visible',
+    'width: 100%',
+    'z-index: 2147483647',
+    ''
+].join(' !important;');
+pickerRoot.style.cssText = pickerCSSStyle;
 
-
-pickerRoot.style.cssText = pickerCSSDeclaration1;
+var pickerCSS1 = [
+    '#' + pickerRoot.id + ' {',
+        pickerCSSStyle,
+    '}'
+].join('\n');
+var pickerCSS2 = [
+    '[' + pickerRoot.id + '-clickblind] {',
+        'pointer-events: none !important;',
+    '}'
+].join('\n');
 
 // https://github.com/gorhill/uBlock/issues/1529
 //   In addition to inline styles, harden the element picker styles by using
 //   dedicated CSS rules.
-vAPI.domFilterer.addCSSRule(
-    pickerCSSSelector1,
-    pickerCSSDeclaration1,
-    { internal: true }
-);
-vAPI.domFilterer.addCSSRule(
-    pickerCSSSelector2,
-    pickerCSSDeclaration2,
-    { internal: true }
-);
+vAPI.userStylesheet.add(pickerCSS1);
+vAPI.userStylesheet.add(pickerCSS2);
+vAPI.userStylesheet.apply();
 
 // https://github.com/gorhill/uBlock/issues/2060
 vAPI.domFilterer.excludeNode(pickerRoot);

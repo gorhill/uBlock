@@ -28,75 +28,43 @@ if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.userStylesheet = {
+    added: new Set(),
+    removed: new Set(),
+    apply: function() {
+        if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
+        vAPI.messaging.send('vapi-background', {
+            what: 'userCSS',
+            add: Array.from(this.added),
+            remove: Array.from(this.removed)
+        });
+        this.added.clear();
+        this.removed.clear();
+    },
+    add: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.added.add(cssText);
+        if ( now ) { this.apply(); }
+    },
+    remove: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.removed.add(cssText);
+        if ( now ) { this.apply(); }
+    }
+};
+
+/******************************************************************************/
+
 vAPI.DOMFilterer = function() {
     this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
     this.domIsReady = document.readyState !== 'loading';
+    this.disabled = false;
     this.listeners = [];
+    this.filterset = new Set();
     this.hideNodeId = vAPI.randomToken();
     this.hideNodeStylesheet = false;
     this.excludedNodeSet = new WeakSet();
-    this.addedCSSRules = [];
-    this.removedCSSRules = [];
-    this.internalRules = new Set();
-
-    this.userStylesheets = {
-        current: new Set(),
-        added: new Set(),
-        removed: new Set(),
-        disabled: false,
-        apply: function() {
-            for ( let cssText of this.added ) {
-                if ( this.current.has(cssText) || this.removed.has(cssText) ) {
-                    this.added.delete(cssText);
-                } else {
-                    this.current.add(cssText);
-                }
-            }
-            for ( let cssText of this.removed ) {
-                if ( this.current.has(cssText) === false ) {
-                    this.removed.delete(cssText);
-                } else {
-                    this.current.delete(cssText);
-                }
-            }
-            if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
-            if ( this.disabled === false ) {
-                vAPI.messaging.send('vapi-background', {
-                    what: 'userCSS',
-                    add: Array.from(this.added),
-                    remove: Array.from(this.removed)
-                });
-            }
-            this.added.clear();
-            this.removed.clear();
-        },
-        add: function(cssText) {
-            if ( cssText === '' ) { return; }
-            this.added.add(cssText);
-        },
-        remove: function(cssText) {
-            if ( cssText === '' ) { return; }
-            this.removed.add(cssText);
-        },
-        toggle: function(state) {
-            if ( state === undefined ) { state = this.disabled; }
-            if ( state !== this.disabled ) { return; }
-            this.disabled = !state;
-            if ( this.current.size === 0 ) { return; }
-            var all = Array.from(this.current);
-            var toAdd = [], toRemove = [];
-            if ( this.disabled ) {
-                toRemove = all;
-            } else {
-                toAdd = all;
-            }
-            vAPI.messaging.send('vapi-background', {
-                what: 'userCSS',
-                add: toAdd,
-                remove: toRemove
-            });
-        }
-    };
+    this.addedCSSRules = new Set();
 
     if ( this.domIsReady !== true ) {
         document.addEventListener('DOMContentLoaded', () => {
@@ -108,30 +76,27 @@ vAPI.DOMFilterer = function() {
 
 vAPI.DOMFilterer.prototype = {
     reOnlySelectors: /\n\{[^\n]+/g,
+
+    // Here we will deal with:
+    // - Injecting low priority user styles;
+    // - Notifying listeners about changed filterset.
     commitNow: function() {
         this.commitTimer.clear();
-        var i, entry, ruleText;
-        i = this.addedCSSRules.length;
-        while ( i-- ) {
-            entry = this.addedCSSRules[i];
-            if ( entry.lazy !== true || this.domIsReady ) {
-                ruleText = entry.selectors + '\n{ ' + entry.declarations + ' }';
-                this.userStylesheets.add(ruleText);
-                this.addedCSSRules.splice(i, 1);
-                if ( entry.internal ) {
-                    this.internalRules.add(ruleText);
-                }
+        var userStylesheet = vAPI.userStylesheet,
+            addedSelectors = [];
+        for ( var entry of this.addedCSSRules ) {
+            if ( this.disabled === false && entry.lazy ) {
+                userStylesheet.add(
+                    entry.selectors + '\n{' + entry.declarations + '}'
+                );
             }
+            addedSelectors.push(entry.selectors);
         }
-        i = this.removedCSSRules.length;
-        while ( i-- ) {
-            entry = this.removedCSSRules[i];
-            ruleText = entry.selectors + '\n{ ' + entry.declarations + ' }';
-            this.userStylesheets.remove(ruleText);
-            this.internalRules.delete(ruleText);
+        this.addedCSSRules.clear();
+        userStylesheet.apply();
+        if ( addedSelectors.length !== 0 ) {
+            this.triggerListeners('declarative', addedSelectors.join(',\n'));
         }
-        this.removedCSSRules = [];
-        this.userStylesheets.apply();
     },
 
     commit: function(commitNow) {
@@ -149,25 +114,17 @@ vAPI.DOMFilterer.prototype = {
                 ? selectors.join(',\n')
                 : selectors;
         if ( selectorsStr.length === 0 ) { return; }
-        this.addedCSSRules.push({
+        var entry = {
             selectors: selectorsStr,
             declarations,
-            lazy: details && details.lazy === true,
+            lazy: details !== undefined && details.lazy === true,
             internal: details && details.internal === true
-        });
-        this.commit();
-        this.triggerListeners('declarative', selectorsStr);
-    },
-
-    removeCSSRule: function(selectors, declarations) {
-        var selectorsStr = Array.isArray(selectors)
-                ? selectors.join(',\n')
-                : selectors;
-        if ( selectorsStr.length === 0 ) { return; }
-        this.removedCSSRules.push({
-            selectors: selectorsStr,
-            declarations,
-        });
+        };
+        this.addedCSSRules.add(entry);
+        this.filterset.add(entry);
+        if ( this.disabled === false && entry.lazy !== true ) {
+            vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
+        }
         this.commit();
     },
 
@@ -194,6 +151,10 @@ vAPI.DOMFilterer.prototype = {
         this.unhideNode(node);
     },
 
+    unexcludeNode: function(node) {
+        this.excludedNodeSet.delete(node);
+    },
+
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         node.setAttribute(this.hideNodeId, '');
@@ -212,16 +173,26 @@ vAPI.DOMFilterer.prototype = {
     },
 
     toggle: function(state) {
-        this.userStylesheets.toggle(state);
+        if ( state === undefined ) { state = this.disabled; }
+        if ( state !== this.disabled ) { return; }
+        this.disabled = !state;
+        var userStylesheet = vAPI.userStylesheet;
+        for ( var entry of this.filterset ) {
+            var rule = entry.selectors + '\n{' + entry.declarations + '}';
+            if ( this.disabled ) {
+                userStylesheet.remove(rule);
+            } else {
+                userStylesheet.add(rule);
+            }
+        }
+        userStylesheet.apply();
     },
 
     getAllDeclarativeSelectors_: function(all) {
         let selectors = [];
-        for ( var sheet of this.userStylesheets.current ) {
-            if ( all === false && this.internalRules.has(sheet) ) { continue; }
-            selectors.push(
-                sheet.replace(this.reOnlySelectors, ',').trim().slice(0, -1)
-            );
+        for ( var entry of this.filterset ) {
+            if ( all === false && entry.internal ) { continue; }
+            selectors.push(entry.selectors);
         }
         return selectors.join(',\n');
     },

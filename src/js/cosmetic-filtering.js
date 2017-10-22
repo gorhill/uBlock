@@ -408,7 +408,7 @@ SelectorCacheEntry.factory = function() {
 
 /******************************************************************************/
 
-// var netSelectorCacheLowWaterMark = 20;
+var netSelectorCacheLowWaterMark = 20;
 var netSelectorCacheHighWaterMark = 30;
 
 /******************************************************************************/
@@ -451,8 +451,7 @@ SelectorCacheEntry.prototype.addCosmetic = function(details) {
 
 /******************************************************************************/
 
-SelectorCacheEntry.prototype.addNet = function(/* selectors */) {
-/*
+SelectorCacheEntry.prototype.addNet = function(selectors) {
     if ( typeof selectors === 'string' ) {
         this.addNetOne(selectors, Date.now());
     } else {
@@ -470,7 +469,6 @@ SelectorCacheEntry.prototype.addNet = function(/* selectors */) {
     while ( i-- ) {
         dict.delete(keys[i]);
     }
-*/
 };
 
 /******************************************************************************/
@@ -515,11 +513,25 @@ SelectorCacheEntry.prototype.remove = function(type) {
 
 /******************************************************************************/
 
+SelectorCacheEntry.prototype.retrieveToArray = function(iterator, out) {
+    for ( var selector of iterator ) {
+        out.push(selector);
+    }
+};
+
+SelectorCacheEntry.prototype.retrieveToSet = function(iterator, out) {
+    for ( var selector of iterator ) {
+        out.add(selector);
+    }
+};
+
 SelectorCacheEntry.prototype.retrieve = function(type, out) {
     this.lastAccessTime = Date.now();
-    var dict = type === 'cosmetic' ? this.cosmetic : this.net;
-    for ( var selector of dict ) {
-        out.add(selector);
+    var iterator = type === 'cosmetic' ? this.cosmetic : this.net.keys();
+    if ( Array.isArray(out) ) {
+        this.retrieveToArray(iterator, out);
+    } else {
+        this.retrieveToSet(iterator, out);
     }
 };
 
@@ -1964,7 +1976,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     var hostname = this.µburi.hostnameFromURI(request.locationURL),
         domain = this.µburi.domainFromHostname(hostname) || hostname,
         pos = domain.indexOf('.'),
-        entity = pos === -1 ? '' : domain.slice(0, pos - domain.length) + '.*';
+        entity = pos === -1 ? '' : domain.slice(0, pos - domain.length) + '.*',
+        cacheEntry = this.selectorCache.get(hostname);
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
     // r.ready will tell the content script the cosmetic filtering engine is
@@ -1982,9 +1995,10 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         exceptionFilters: [],
         highGenericSimple: '',
         highGenericComplex: '',
-        netHide: [],
+        netFilters: '',
         proceduralFilters: [],
-        scripts: undefined
+        scripts: undefined,
+        cssRulesInjected: false
     };
 
     if ( options.noCosmeticFiltering !== true ) {
@@ -2038,7 +2052,6 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
             bucket.retrieve(hostname, specificSet);
         }
         // Cached cosmetic filters: these are always declarative.
-        var cacheEntry = this.selectorCache.get(hostname);
         if ( cacheEntry !== undefined ) {
             cacheEntry.retrieve('cosmetic', specificSet);
             if ( r.noDOMSurveying === false ) {
@@ -2107,13 +2120,11 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     // Scriptlet injection.
     r.scripts = this.retrieveUserScripts(domain, hostname);
 
-    // TODO: Is it *really* worth to cache selectors of collapsed resources?
-    //       This adds code complexity and I am having doubts about the
-    //       benefits. Investigate.
-    // Collapsible blocked resources.
-    //if ( cacheEntry ) {
-    //    cacheEntry.retrieve('net', r.netHide);
-    //}
+    if ( cacheEntry ) {
+        var netFilters = [];
+        cacheEntry.retrieve('net', netFilters);
+        r.netFilters = netFilters.join(',\n');
+    }
 
     console.timeEnd('cosmeticFilteringEngine.retrieveDomainSelectors');
 

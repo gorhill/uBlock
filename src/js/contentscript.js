@@ -774,7 +774,7 @@ vAPI.domCollapser = (function() {
                 iframeLoadEventPatch(target);
             }
         }
-        /*
+
         if ( selectors.length !== 0 ) {
             messaging.send(
                 'contentscript',
@@ -786,7 +786,6 @@ vAPI.domCollapser = (function() {
                 }
             );
         }
-        */
     };
 
     var send = function() {
@@ -1292,25 +1291,21 @@ vAPI.domSurveyor = (function() {
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
         }
 
+        if ( cfeDetails.netFilters.length !== 0 ) {
+            vAPI.userStylesheet.add(
+                cfeDetails.netFilters + '\n{ display: none !important; }');
+        }
+
+        vAPI.userStylesheet.apply();
+
         var parent = document.head || document.documentElement;
         if ( parent ) {
-            var elem, text;
-            if ( cfeDetails.netHide.length !== 0 ) {
-                elem = document.createElement('style');
-                elem.setAttribute('type', 'text/css');
-                text = cfeDetails.netHide.join(',\n');
-                text += response.collapseBlocked ?
-                    '\n{ display:none !important; }' :
-                    '\n{ visibility:hidden !important; }';
-                elem.appendChild(document.createTextNode(text));
-                parent.appendChild(elem);
-            }
             // Library of resources is located at:
             // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
             if ( cfeDetails.scripts ) {
                 // Have the injected script tag remove itself when execution completes:
                 // to keep DOM as clean as possible.
-                text = cfeDetails.scripts +
+                var text = cfeDetails.scripts +
                     "\n" +
                     "(function() {\n" +
                     "    var c = document.currentScript,\n" +
