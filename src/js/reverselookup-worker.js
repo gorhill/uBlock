@@ -98,7 +98,8 @@ var fromNetFilter = function(details) {
 var fromCosmeticFilter = function(details) {
     var match = /^#@?#/.exec(details.rawFilter),
         prefix = match[0],
-        filter = details.rawFilter.slice(prefix.length);
+        filter = details.rawFilter.slice(prefix.length),
+        selector = filter;
 
     // With low generic simple cosmetic filters, the class or id prefix
     // character is not part of the compiled data. So we must be ready to
@@ -173,28 +174,29 @@ var fromCosmeticFilter = function(details) {
             switch ( fargs[0] ) {
             case 0: // id-based
             case 2: // class-based
-                found = prefix + idOrClassPrefix + filter;
+                found = prefix + selector;
                 break;
             case 4:
             case 5:
             case 7:
-                found = prefix + filter;
+                found = prefix + selector;
                 break;
             case 1:
             case 3:
-                if ( fargs[2] === filter ) {
-                    found = prefix + filter;
+                if ( fargs[2] === selector ) {
+                    found = prefix + selector;
                 }
                 break;
             case 6:
             case 8:
             case 9:
+                if ( fargs[3] !== selector ) { break; }
                 if (
                     fargs[2] === '' ||
                     reHostname.test(fargs[2]) === true ||
                     reEntity !== undefined && reEntity.test(fargs[2]) === true
                 ) {
-                    found = fargs[2] + prefix + filter;
+                    found = fargs[2] + prefix + selector;
                 }
                 break;
             }

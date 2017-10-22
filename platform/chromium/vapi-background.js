@@ -54,6 +54,13 @@ if (
     });
 }
 
+// https://issues.adblockplus.org/ticket/5695
+// - Good idea, adopted: cleaner way to detect user-stylesheet support.
+vAPI.supportsUserStylesheets = 
+    chrome.extensionTypes instanceof Object &&
+    chrome.extensionTypes.CSSOrigin instanceof Object &&
+    'USER' in chrome.extensionTypes.CSSOrigin;
+
 var noopFunc = function(){};
 
 /******************************************************************************/
@@ -730,12 +737,7 @@ vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
         toAuxPending = {};
 
-    // https://issues.adblockplus.org/ticket/5695
-    // - Good idea, adopted: cleaner way to detect user-stylesheet support.
-    var supportsUserStylesheets = 
-        chrome.extensionTypes instanceof Object &&
-        chrome.extensionTypes.CSSOrigin instanceof Object &&
-        'USER' in chrome.extensionTypes.CSSOrigin;
+    var supportsUserStylesheets = vAPI.supportsUserStylesheets;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
