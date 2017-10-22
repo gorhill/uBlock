@@ -98,20 +98,20 @@ var fromNetFilter = function(details) {
 var fromCosmeticFilter = function(details) {
     var match = /^#@?#/.exec(details.rawFilter),
         prefix = match[0],
-        filter = details.rawFilter.slice(prefix.length),
-        selector = filter;
+        needle = details.rawFilter.slice(prefix.length),
+        selector = needle;
 
     // With low generic simple cosmetic filters, the class or id prefix
     // character is not part of the compiled data. So we must be ready to
     // look-up version of the selector without the prefix character.
-    var idOrClassPrefix = filter.charAt(0),
+    var idOrClassPrefix = needle.charAt(0),
         cssPrefixMatcher;
     if ( idOrClassPrefix === '#' ) {
         cssPrefixMatcher = '#?';
-        filter = filter.slice(1);
+        needle = needle.slice(1);
     } else if ( idOrClassPrefix === '.' ) {
         cssPrefixMatcher = '\\.?';
-        filter = filter.slice(1);
+        needle = needle.slice(1);
     } else {
         idOrClassPrefix = '';
         cssPrefixMatcher = '';
@@ -122,7 +122,7 @@ var fromCosmeticFilter = function(details) {
     var reFilter = new RegExp(
             '^\\[\\d,[^\\n]*\\\\*"' +
             cssPrefixMatcher +
-            reEscapeCosmetic(filter) +
+            reEscapeCosmetic(needle) +
             '\\\\*"[^\\n]*\\]$',
             'gm'
         );
