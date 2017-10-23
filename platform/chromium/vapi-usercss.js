@@ -119,7 +119,7 @@ vAPI.DOMFilterer = function() {
 };
 
 vAPI.DOMFilterer.prototype = {
-    reHideStyle: /^display: none !important;$/,
+    reHideStyle: /^display:none!important;$/,
 
     // https://www.w3.org/community/webed/wiki/CSS/Selectors#Combinators
     reCSSCombinators: /[ >+~]/,
@@ -224,7 +224,7 @@ vAPI.DOMFilterer.prototype = {
             selectors;
         if ( selectorsStr.length === 0 ) { return; }
 
-        vAPI.userStylesheet.add(selectorsStr + '\n{ ' + declarations + ' }');
+        vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         this.commit();
         this.triggerListeners('declarative', selectorsStr);
 
@@ -353,9 +353,9 @@ vAPI.DOMFilterer.prototype = {
                 attr.length !== 0 &&
                 attr.charCodeAt(attr.length - 1) !== 0x3B /* ';' */
             ) {
-                attr += '; ';
+                attr += ';';
             }
-            node.setAttribute('style', attr + 'display: none !important;');
+            node.setAttribute('style', attr + 'display:none!important;');
         }
         this.hiddenNodesetToProcess.clear();
     },
@@ -384,7 +384,7 @@ vAPI.DOMFilterer.prototype = {
         if ( this.hideNodeStylesheet === false ) {
             this.hideNodeStylesheet = true;
             vAPI.userStylesheet.add(
-                '[' + this.hideNodeAttr + ']\n{ display: none !important; }'
+                '[' + this.hideNodeAttr + ']\n{display:none!important;}'
             );
         }
     },

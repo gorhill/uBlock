@@ -455,6 +455,7 @@ vAPI.DOMFilterer = (function() {
             ]);
         }
         this.raw = o.raw;
+        this.cost = 0;
         this.selector = o.selector;
         this.tasks = [];
         var tasks = o.tasks;
@@ -520,7 +521,7 @@ vAPI.DOMFilterer = (function() {
                 if ( o.pseudoclass ) {
                     this.domFilterer.addCSSRule(
                         o.raw,
-                        'display: none !important;'
+                        'display:none!important;'
                     );
                     mustCommit = true;
                     continue;
@@ -575,16 +576,24 @@ vAPI.DOMFilterer = (function() {
 
             this.addedNodes = this.removedNodes = false;
 
-            var afterResultset = new Set();
+            var afterResultset = new Set(),
+                t0 = Date.now(), t1, pselector;
 
             for ( entry of this.selectors ) {
-                nodes = entry[1].exec();
+                pselector = entry[1];
+                if ( pselector.cost > 100 ) { continue; }
+                nodes = pselector.exec();
                 i = nodes.length;
                 while ( i-- ) {
                     node = nodes[i];
                     this.domFilterer.hideNode(node);
                     afterResultset.add(node);
                 }
+                t1 = Date.now();
+                pselector.cost += t1 - t0;
+                t0 = t1;
+                // TODO: Consider adding logging ability to report disabled
+                //       precedural filter in the logger.
             }
             if ( afterResultset.size !== currentResultset.size ) {
                 this.addedNodesHandlerMissCount = 0;
@@ -982,7 +991,7 @@ vAPI.domSurveyor = (function() {
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
                 domFilterer.addCSSRule(
                     selectors,
-                    'display: none !important;',
+                    'display:none!important;',
                     { type: 'simple' }
                 );
                 mustCommit = true;
@@ -991,7 +1000,7 @@ vAPI.domSurveyor = (function() {
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
                 domFilterer.addCSSRule(
                     selectors,
-                    'display: none !important;',
+                    'display:none!important;',
                     { type: 'complex' }
                 );
                 mustCommit = true;
@@ -1265,6 +1274,8 @@ vAPI.domSurveyor = (function() {
             return;
         }
 
+        var injected = cfeDetails.rulesInjected === true;
+
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
@@ -1276,47 +1287,45 @@ vAPI.domSurveyor = (function() {
             domFilterer.exceptions = cfeDetails.exceptionFilters;
             domFilterer.addCSSRule(
                 cfeDetails.declarativeFilters,
-                'display: none !important;'
+                'display:none!important;',
+                { injected: injected }
             );
             domFilterer.addCSSRule(
                 cfeDetails.highGenericHideSimple,
-                'display: none !important;',
-                { type: 'simple', lazy: true }
+                'display:none!important;',
+                { type: 'simple', lazy: true, injected: injected }
             );
             domFilterer.addCSSRule(
                 cfeDetails.highGenericHideComplex,
-                'display: none !important;',
-                { type: 'complex', lazy: true }
+                'display:none!important;',
+                { type: 'complex', lazy: true, injected: injected }
             );
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
         }
 
-        if ( cfeDetails.netFilters.length !== 0 ) {
+        if ( cfeDetails.netFilters.length !== 0 && injected !== true ) {
             vAPI.userStylesheet.add(
-                cfeDetails.netFilters + '\n{ display: none !important; }');
+                cfeDetails.netFilters + '\n{display:none!important;}');
         }
 
         vAPI.userStylesheet.apply();
 
-        var parent = document.head || document.documentElement;
-        if ( parent ) {
-            // Library of resources is located at:
-            // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
-            if ( cfeDetails.scripts ) {
-                // Have the injected script tag remove itself when execution completes:
-                // to keep DOM as clean as possible.
-                var text = cfeDetails.scripts +
-                    "\n" +
-                    "(function() {\n" +
-                    "    var c = document.currentScript,\n" +
-                    "        p = c && c.parentNode;\n" +
-                    "    if ( p ) {\n" +
-                    "        p.removeChild(c);\n" +
-                    "    }\n" +
-                    "})();";
-                vAPI.injectScriptlet(document, text);
-                vAPI.injectedScripts = text;
-            }
+        // Library of resources is located at:
+        // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
+        if ( cfeDetails.scripts ) {
+            // Have the injected script tag remove itself when execution completes:
+            // to keep DOM as clean as possible.
+            var text = cfeDetails.scripts +
+                "\n" +
+                "(function() {\n" +
+                "    var c = document.currentScript,\n" +
+                "        p = c && c.parentNode;\n" +
+                "    if ( p ) {\n" +
+                "        p.removeChild(c);\n" +
+                "    }\n" +
+                "})();";
+            vAPI.injectScriptlet(document, text);
+            vAPI.injectedScripts = text;
         }
 
         // https://github.com/chrisaljoudi/uBlock/issues/587

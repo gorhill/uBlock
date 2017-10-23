@@ -625,6 +625,8 @@ var FilterContainer = function() {
     this.netSelectorCacheCountMax = netSelectorCacheHighWaterMark;
     this.selectorCacheTimer = null;
 
+    this.supportsUserStylesheets = vAPI.supportsUserStylesheets;
+
     // generic exception filters
     this.genericDonthideSet = new Set();
 
@@ -1255,8 +1257,8 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
-    // All generic exception filters are put in the same bucket: they are
-    // expected to be very rare.
+    //   All generic exception filters are put in the same bucket: they are
+    //   expected to be very rare.
     writer.push([ 7 /* g1 */, compiled ]);
 };
 
@@ -1964,6 +1966,26 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.injectHideRules = function(
+    tabId,
+    frameId,
+    selectors,
+    runAt
+) {
+    var details = {
+        code: '',
+        cssOrigin: 'user',
+        frameId: frameId,
+        runAt: runAt
+    };
+    for ( var selector of selectors ) {
+        details.code = selector + '\n{display:none!important;}';
+        vAPI.insertCSS(tabId, details);
+    }
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.retrieveDomainSelectors = function(
     request,
     sender,
@@ -1972,6 +1994,9 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     if ( !request.locationURL ) { return; }
 
     console.time('cosmeticFilteringEngine.retrieveDomainSelectors');
+
+    // TODO: consider using MRUCache to quickly lookup all the previously
+    //       looked-up data.
 
     var hostname = this.µburi.hostnameFromURI(request.locationURL),
         domain = this.µburi.domainFromHostname(hostname) || hostname,
@@ -1998,7 +2023,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         netFilters: '',
         proceduralFilters: [],
         scripts: undefined,
-        cssRulesInjected: false
+        rulesInjected: false
     };
 
     if ( options.noCosmeticFiltering !== true ) {
@@ -2025,6 +2050,22 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         // Special bucket for those filters without a valid
         // domain name as per PSL.
         if ( (bucket = this.specificFilters.get('!' + this.noDomainHash)) ) {
+            bucket.retrieve(hostname, exceptionSet);
+        }
+
+        // Specific exception procedural cosmetic filters.
+        if ( (bucket = this.proceduralFilters.get('!' + domainHash)) ) {
+            bucket.retrieve(hostname, exceptionSet);
+        }
+        // Specific entity-based exception procedural cosmetic filters.
+        if ( entityHash !== undefined ) {
+            if ( (bucket = this.proceduralFilters.get('!' + entityHash)) ) {
+                bucket.retrieve(entity, exceptionSet);
+            }
+        }
+        // Special bucket for those filters without a valid
+        // domain name as per PSL.
+        if ( (bucket = this.proceduralFilters.get('!' + this.noDomainHash)) ) {
             bucket.retrieve(hostname, exceptionSet);
         }
         if ( exceptionSet.size !== 0 ) {
@@ -2124,6 +2165,27 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         var netFilters = [];
         cacheEntry.retrieve('net', netFilters);
         r.netFilters = netFilters.join(',\n');
+    }
+
+    if (
+        this.supportsUserStylesheets &&
+        sender instanceof Object &&
+        sender.tab instanceof Object &&
+        typeof sender.frameId === 'number'
+    ) {
+        this.injectHideRules(
+            sender.tab.id,
+            sender.frameId,
+            [ r.declarativeFilters.join(',\n'), r.netFilters ],
+            'document_start'
+        );
+        this.injectHideRules(
+            sender.tab.id,
+            sender.frameId,
+            [ r.highGenericHideSimple, r.highGenericHideComplex ],
+            'document_end'
+        );
+        r.rulesInjected = true;
     }
 
     console.timeEnd('cosmeticFilteringEngine.retrieveDomainSelectors');

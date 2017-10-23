@@ -85,7 +85,11 @@ vAPI.DOMFilterer.prototype = {
         var userStylesheet = vAPI.userStylesheet,
             addedSelectors = [];
         for ( var entry of this.addedCSSRules ) {
-            if ( this.disabled === false && entry.lazy ) {
+            if (
+                this.disabled === false &&
+                entry.lazy &&
+                entry.injected === false
+            ) {
                 userStylesheet.add(
                     entry.selectors + '\n{' + entry.declarations + '}'
                 );
@@ -114,15 +118,21 @@ vAPI.DOMFilterer.prototype = {
                 ? selectors.join(',\n')
                 : selectors;
         if ( selectorsStr.length === 0 ) { return; }
+        if ( details === undefined ) { details = {}; }
         var entry = {
             selectors: selectorsStr,
             declarations,
-            lazy: details !== undefined && details.lazy === true,
-            internal: details && details.internal === true
+            lazy: details.lazy === true,
+            internal: details.internal === true,
+            injected: details.injected === true
         };
         this.addedCSSRules.add(entry);
         this.filterset.add(entry);
-        if ( this.disabled === false && entry.lazy !== true ) {
+        if (
+            this.disabled === false &&
+            entry.lazy !== true &&
+            entry.injected !== true
+        ) {
             vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
         this.commit();
@@ -162,7 +172,7 @@ vAPI.DOMFilterer.prototype = {
             this.hideNodeStylesheet = true;
             this.addCSSRule(
                 '[' + this.hideNodeId + ']',
-                'display: none !important;',
+                'display:none!important;',
                 { internal: true }
             );
         }

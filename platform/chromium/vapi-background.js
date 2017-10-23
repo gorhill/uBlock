@@ -60,6 +60,7 @@ vAPI.supportsUserStylesheets =
     chrome.extensionTypes instanceof Object &&
     chrome.extensionTypes.CSSOrigin instanceof Object &&
     'USER' in chrome.extensionTypes.CSSOrigin;
+vAPI.insertCSS = chrome.tabs.insertCSS;
 
 var noopFunc = function(){};
 
