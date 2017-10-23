@@ -597,8 +597,6 @@
     }
     this.loadingFilterLists = true;
 
-    //quickProfiler.start('µBlock.loadFilterLists()');
-
     var µb = this,
         filterlistsCount = 0,
         loadedListKeys = [];
@@ -612,8 +610,6 @@
         µb.cosmeticFilteringEngine.freeze();
         µb.redirectEngine.freeze();
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
-
-        //quickProfiler.stop(0);
 
         vAPI.messaging.broadcast({
             what: 'staticFilteringDataChanged',
