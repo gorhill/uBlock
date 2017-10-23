@@ -156,7 +156,7 @@ vAPI.domWatcher = (function() {
         safeObserverHandlerTimer;
 
     var safeObserverHandler = function() {
-        console.time('dom watcher/safe observer handler');
+        //console.time('dom watcher/safe observer handler');
         safeObserverHandlerTimer.clear();
         var i = addedNodeLists.length,
             j = addedNodes.length,
@@ -184,7 +184,7 @@ vAPI.domWatcher = (function() {
             }
         }
         removedNodeLists.length = 0;
-        console.timeEnd('dom watcher/safe observer handler');
+        //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
         for ( var listener of getListenerIterator() ) {
             listener.onDOMChanged(addedNodes, removedNodes);
@@ -196,7 +196,7 @@ vAPI.domWatcher = (function() {
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     var observerHandler = function(mutations) {
-        console.time('dom watcher/observer handler');
+        //console.time('dom watcher/observer handler');
         var nodeList, mutation,
             i = mutations.length;
         while ( i-- ) {
@@ -214,7 +214,7 @@ vAPI.domWatcher = (function() {
         if ( addedNodeLists.length !== 0 || removedNodes ) {
             safeObserverHandlerTimer.start();
         }
-        console.timeEnd('dom watcher/observer handler');
+        //console.timeEnd('dom watcher/observer handler');
     };
 
     var startMutationObserver = function() {
@@ -557,7 +557,7 @@ vAPI.DOMFilterer = (function() {
                 entry, nodes, i, node;
 
             if ( this.addedSelectors.size !== 0 ) {
-                console.time('procedural filterset changed');
+                //console.time('procedural filterset changed');
                 for ( entry of this.addedSelectors ) {
                     nodes = entry[1].exec();
                     i = nodes.length;
@@ -568,11 +568,11 @@ vAPI.DOMFilterer = (function() {
                     }
                 }
                 this.addedSelectors.clear();
-                console.timeEnd('procedural filterset changed');
+                //console.timeEnd('procedural filterset changed');
                 return;
             }
 
-            console.time('dom layout changed/procedural selectors');
+            //console.time('dom layout changed/procedural selectors');
 
             this.addedNodes = this.removedNodes = false;
 
@@ -608,7 +608,7 @@ vAPI.DOMFilterer = (function() {
 
             this.currentResultset = afterResultset;
 
-            console.timeEnd('dom layout changed/procedural selectors');
+            //console.timeEnd('dom layout changed/procedural selectors');
         },
 
         createProceduralFilter: function(o) {
@@ -617,7 +617,7 @@ vAPI.DOMFilterer = (function() {
 
         onDOMCreated: function() {
             this.domIsReady = true;
-            this.domFilterer.commit();
+            this.domFilterer.commitNow();
         },
 
         onDOMChanged: function(addedNodes, removedNodes) {
@@ -634,6 +634,8 @@ vAPI.DOMFilterer = (function() {
         DOMFiltererBase.call(this);
         this.exceptions = [];
         this.proceduralFilterer = new DOMProceduralFilterer(this);
+        this.hideNodeAttr = undefined;
+        this.hideNodeStyleSheetInjected = false;
 
         // May or may not exist: cache locally since this may be called often.
         this.baseOnDOMChanged = DOMFiltererBase.prototype.onDOMChanged;
@@ -1084,7 +1086,7 @@ vAPI.domSurveyor = (function() {
     // http://jsperf.com/enumerate-classes/6
 
     var surveyPhase1 = function() {
-        console.time('dom surveyor/surveying');
+        //console.time('dom surveyor/surveying');
         surveyTimer.clear();
         var t0 = window.performance.now();
         var rews = reWhitespace,
@@ -1145,7 +1147,7 @@ vAPI.domSurveyor = (function() {
         } else {
             surveyPhase3(null);
         }
-        console.timeEnd('dom surveyor/surveying');
+        //console.timeEnd('dom surveyor/surveying');
     };
     var reWhitespace = /\s/;
 
@@ -1164,16 +1166,16 @@ vAPI.domSurveyor = (function() {
                 }
                 return;
             }
-            console.time('dom surveyor/dom layout created');
+            //console.time('dom surveyor/dom layout created');
             domFilterer = vAPI.domFilterer;
             addChunk(pendingIdNodes, document.querySelectorAll('[id]'));
             addChunk(pendingClassNodes, document.querySelectorAll('[class]'));
             surveyTimer.start();
-            console.timeEnd('dom surveyor/dom layout created');
+            //console.timeEnd('dom surveyor/dom layout created');
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
-            console.time('dom surveyor/dom layout changed');
+            //console.time('dom surveyor/dom layout changed');
             var idNodes = [], iid = 0,
                 classNodes = [], iclass = 0;
             var i = addedNodes.length,
@@ -1199,7 +1201,7 @@ vAPI.domSurveyor = (function() {
                 addChunk(pendingClassNodes, classNodes);
                 surveyTimer.start(1);
             }
-            console.timeEnd('dom surveyor/dom layout changed');
+            //console.timeEnd('dom surveyor/dom layout changed');
         }
     };
 
@@ -1274,8 +1276,6 @@ vAPI.domSurveyor = (function() {
             return;
         }
 
-        var injected = cfeDetails.rulesInjected === true;
-
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
@@ -1285,27 +1285,34 @@ vAPI.domSurveyor = (function() {
                 vAPI.domSurveyor = null;
             }
             domFilterer.exceptions = cfeDetails.exceptionFilters;
+            domFilterer.hideNodeAttr = cfeDetails.hideNodeAttr;
+            domFilterer.hideNodeStyleSheetInjected =
+                cfeDetails.hideNodeStyleSheetInjected === true;
             domFilterer.addCSSRule(
                 cfeDetails.declarativeFilters,
-                'display:none!important;',
-                { injected: injected }
+                'display:none!important;'
             );
             domFilterer.addCSSRule(
                 cfeDetails.highGenericHideSimple,
                 'display:none!important;',
-                { type: 'simple', lazy: true, injected: injected }
+                { type: 'simple', lazy: true }
             );
             domFilterer.addCSSRule(
                 cfeDetails.highGenericHideComplex,
                 'display:none!important;',
-                { type: 'complex', lazy: true, injected: injected }
+                { type: 'complex', lazy: true }
+            );
+            domFilterer.addCSSRule(
+                cfeDetails.injectedHideFilters,
+                'display:none!important;',
+                { injected: true }
             );
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
         }
 
-        if ( cfeDetails.netFilters.length !== 0 && injected !== true ) {
+        if ( cfeDetails.networkFilters.length !== 0 ) {
             vAPI.userStylesheet.add(
-                cfeDetails.netFilters + '\n{display:none!important;}');
+                cfeDetails.networkFilters + '\n{display:none!important;}');
         }
 
         vAPI.userStylesheet.apply();

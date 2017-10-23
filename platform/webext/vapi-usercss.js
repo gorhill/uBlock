@@ -61,8 +61,6 @@ vAPI.DOMFilterer = function() {
     this.disabled = false;
     this.listeners = [];
     this.filterset = new Set();
-    this.hideNodeId = vAPI.randomToken();
-    this.hideNodeStylesheet = false;
     this.excludedNodeSet = new WeakSet();
     this.addedCSSRules = new Set();
 
@@ -123,7 +121,6 @@ vAPI.DOMFilterer.prototype = {
             selectors: selectorsStr,
             declarations,
             lazy: details.lazy === true,
-            internal: details.internal === true,
             injected: details.injected === true
         };
         this.addedCSSRules.add(entry);
@@ -167,19 +164,20 @@ vAPI.DOMFilterer.prototype = {
 
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
-        node.setAttribute(this.hideNodeId, '');
-        if ( this.hideNodeStylesheet === false ) {
-            this.hideNodeStylesheet = true;
+        if ( this.hideNodeAttr === undefined ) { return; }
+        node.setAttribute(this.hideNodeAttr, '');
+        if ( this.hideNodeStyleSheetInjected === false ) {
+            this.hideNodeStyleSheetInjected = true;
             this.addCSSRule(
-                '[' + this.hideNodeId + ']',
-                'display:none!important;',
-                { internal: true }
+                '[' + this.hideNodeAttr + ']',
+                'display:none!important;'
             );
         }
     },
 
     unhideNode: function(node) {
-        node.removeAttribute(this.hideNodeId);
+        if ( this.hideNodeAttr === undefined ) { return; }
+        node.removeAttribute(this.hideNodeAttr);
     },
 
     toggle: function(state) {
@@ -204,7 +202,12 @@ vAPI.DOMFilterer.prototype = {
             if ( all === false && entry.internal ) { continue; }
             selectors.push(entry.selectors);
         }
-        return selectors.join(',\n');
+        var out = selectors.join(',\n');
+        if ( !all && this.hideNodeAttr !== undefined ) {
+            out = out.replace('[' + this.hideNodeAttr + ']', '')
+                     .replace(/^,\n|\n,|,\n$/, '');
+        }
+        return out;
     },
 
     getFilteredElementCount: function() {

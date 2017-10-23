@@ -119,7 +119,7 @@ ProceduralJob.prototype.lookup = function(out) {
 };
 
 var jobQueueTimer = new vAPI.SafeAnimationFrame(function processJobQueue() {
-    console.time('dom logger/scanning for matches');
+    //console.time('dom logger/scanning for matches');
     jobQueueTimer.clear();
     var toLog = [],
         t0 = Date.now(),
@@ -145,13 +145,13 @@ var jobQueueTimer = new vAPI.SafeAnimationFrame(function processJobQueue() {
     if ( jobQueue.length !== 0 ) {
         jobQueueTimer.start(100);
     }
-    console.timeEnd('dom logger/scanning for matches');
+    //console.timeEnd('dom logger/scanning for matches');
 });
 
 var handlers = {
 
     onFiltersetChanged: function(type, selectors) {
-        console.time('dom logger/filterset changed');
+        //console.time('dom logger/filterset changed');
         var selector,
             sanitized;
         if ( type === 'declarative' ) {
@@ -189,7 +189,7 @@ var handlers = {
         if ( jobQueue.length !== 0 ) {
             jobQueueTimer.start(1);
         }
-        console.timeEnd('dom logger/filterset changed');
+        //console.timeEnd('dom logger/filterset changed');
     },
 
     onDOMCreated: function() {

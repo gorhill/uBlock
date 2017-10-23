@@ -91,8 +91,6 @@ vAPI.DOMFilterer = function() {
     this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
     this.domIsReady = document.readyState !== 'loading';
     this.listeners = [];
-    this.hideNodeAttr = vAPI.randomToken();
-    this.hideNodeStylesheet = false;
     this.excludedNodeSet = new WeakSet();
     this.addedNodes = new Set();
     this.removedNodes = false;
@@ -119,8 +117,6 @@ vAPI.DOMFilterer = function() {
 };
 
 vAPI.DOMFilterer.prototype = {
-    reHideStyle: /^display:none!important;$/,
-
     // https://www.w3.org/community/webed/wiki/CSS/Selectors#Combinators
     reCSSCombinators: /[ >+~]/,
 
@@ -136,27 +132,27 @@ vAPI.DOMFilterer.prototype = {
         // Filterset changed.
 
         if ( this.addedSpecificSimpleHide.length !== 0 ) {
-            console.time('specific simple filterset changed');
-            console.log('added %d specific simple selectors', this.addedSpecificSimpleHide.length);
+            //console.time('specific simple filterset changed');
+            //console.log('added %d specific simple selectors', this.addedSpecificSimpleHide.length);
             nodes = document.querySelectorAll(this.addedSpecificSimpleHide.join(','));
             for ( node of nodes ) {
                 this.hideNode(node);
             }
             this.addedSpecificSimpleHide = [];
             this.specificSimpleHideAggregated = undefined;
-            console.timeEnd('specific simple filterset changed');
+            //console.timeEnd('specific simple filterset changed');
         }
 
         if ( this.addedSpecificComplexHide.length !== 0 ) {
-            console.time('specific complex filterset changed');
-            console.log('added %d specific complex selectors', this.addedSpecificComplexHide.length);
+            //console.time('specific complex filterset changed');
+            //console.log('added %d specific complex selectors', this.addedSpecificComplexHide.length);
             nodes = document.querySelectorAll(this.addedSpecificComplexHide.join(','));
             for ( node of nodes ) {
                 this.hideNode(node);
             }
             this.addedSpecificComplexHide = [];
             this.specificComplexHideAggregated = undefined;
-            console.timeEnd('specific complex filterset changed');
+            //console.timeEnd('specific complex filterset changed');
         }
 
         // DOM layout changed.
@@ -168,10 +164,10 @@ vAPI.DOMFilterer.prototype = {
             return;
         }
 
-        console.log('%d nodes added', this.addedNodes.size);
+        //console.log('%d nodes added', this.addedNodes.size);
 
         if ( this.specificSimpleHide.size !== 0 && domNodesAdded ) {
-            console.time('dom layout changed/specific simple selectors');
+            //console.time('dom layout changed/specific simple selectors');
             if ( this.specificSimpleHideAggregated === undefined ) {
                 this.specificSimpleHideAggregated =
                     Array.from(this.specificSimpleHide).join(',\n');
@@ -185,11 +181,11 @@ vAPI.DOMFilterer.prototype = {
                     this.hideNode(node);
                 }
             }
-            console.timeEnd('dom layout changed/specific simple selectors');
+            //console.timeEnd('dom layout changed/specific simple selectors');
         }
 
         if ( this.specificComplexHide.size !== 0 && domLayoutChanged ) {
-            console.time('dom layout changed/specific complex selectors');
+            //console.time('dom layout changed/specific complex selectors');
             if ( this.specificComplexHideAggregated === undefined ) {
                 this.specificComplexHideAggregated =
                     Array.from(this.specificComplexHide).join(',\n');
@@ -198,7 +194,7 @@ vAPI.DOMFilterer.prototype = {
             for ( node of nodes ) {
                 this.hideNode(node);
             }
-            console.timeEnd('dom layout changed/specific complex selectors');
+            //console.timeEnd('dom layout changed/specific complex selectors');
         }
 
         this.addedNodes.clear();
@@ -228,7 +224,7 @@ vAPI.DOMFilterer.prototype = {
         this.commit();
         this.triggerListeners('declarative', selectorsStr);
 
-        if ( this.reHideStyle.test(declarations) === false ) {
+        if ( declarations !== 'display:none!important;' ) {
             this.specificOthers.push({
                 selectors: selectorsStr,
                 declarations: declarations
@@ -381,8 +377,8 @@ vAPI.DOMFilterer.prototype = {
             new vAPI.SafeAnimationFrame(this.hideNodeBatchProcess.bind(this));
         this.hiddenNodeObserver =
             new MutationObserver(this.hideNodeObserverHandler.bind(this));
-        if ( this.hideNodeStylesheet === false ) {
-            this.hideNodeStylesheet = true;
+        if ( this.hideNodeStyleSheetInjected === false ) {
+            this.hideNodeStyleSheetInjected = true;
             vAPI.userStylesheet.add(
                 '[' + this.hideNodeAttr + ']\n{display:none!important;}'
             );
@@ -400,7 +396,9 @@ vAPI.DOMFilterer.prototype = {
 
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
+        if ( this.hideNodeAttr === undefined ) { return; }
         if ( this.hiddenNodeset.has(node) ) { return; }
+        node.hidden = true;
         this.hiddenNodeset.add(node);
         if ( this.hideNodeExpando === undefined ) { this.hideNodeInit(); }
         node.setAttribute(this.hideNodeAttr, '');
@@ -416,6 +414,7 @@ vAPI.DOMFilterer.prototype = {
 
     unhideNode: function(node) {
         if ( this.hiddenNodeset.has(node) === false ) { return; }
+        node.hidden = false;
         node.removeAttribute(this.hideNodeAttr);
         this.hiddenNodesetToProcess.delete(node);
         if ( this.hideNodeExpando === undefined ) { return; }
@@ -430,6 +429,7 @@ vAPI.DOMFilterer.prototype = {
     },
 
     showNode: function(node) {
+        node.hidden = false;
         var attr = node[this.hideNodeExpando];
         if ( attr === false ) {
             node.removeAttribute('style');
@@ -439,6 +439,7 @@ vAPI.DOMFilterer.prototype = {
     },
 
     unshowNode: function(node) {
+        node.hidden = true;
         this.hiddenNodesetToProcess.add(node);
     },
 

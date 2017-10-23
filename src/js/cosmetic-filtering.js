@@ -1887,11 +1887,63 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.randomAlphaToken = function() {
+    return String.fromCharCode(Date.now() % 26 + 97) +
+           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.injectRules = function(target, data) {
+    if (
+        target instanceof Object === false ||
+        target.tab instanceof Object === false ||
+        typeof target.frameId !== 'number'
+    ) {
+        return;
+    }
+    var details = {
+        code: '',
+        cssOrigin: 'user',
+        frameId: target.frameId,
+        runAt: 'document_start'
+    };
+    var injectedHideFilters = [];
+    if ( data.declarativeFilters.length !== 0 ) {
+        injectedHideFilters.push(data.declarativeFilters.join(',\n'));
+        data.declarativeFilters = [];
+    }
+    if ( data.proceduralFilters.length !== 0 ) {
+        injectedHideFilters.push('[' + data.hideNodeAttr + ']');
+        data.hideNodeStyleSheetInjected = true;
+    }
+    if ( data.highGenericHideSimple.length !== 0 ) {
+        injectedHideFilters.push(data.highGenericHideSimple);
+        data.highGenericHideSimple = '';
+    }
+    if ( data.highGenericHideComplex.length !== 0 ) {
+        injectedHideFilters.push(data.highGenericHideComplex);
+        data.highGenericHideComplex = '';
+    }
+    data.injectedHideFilters = injectedHideFilters.join(',\n');
+    if ( data.injectedHideFilters.length !== 0 ) {
+        details.code = data.injectedHideFilters + '\n{display:none!important;}';
+        vAPI.insertCSS(target.tab.id, details);
+    }
+    if ( data.networkFilters.length !== 0 ) {
+        details.code = data.networkFilters + '\n{display:none!important;}';
+        vAPI.insertCSS(target.tab.id, details);
+        data.networkFilters = '';
+    }
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     if ( this.acceptedCount === 0 ) { return; }
     if ( !request.ids && !request.classes ) { return; }
 
-    console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
+    //console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
 
     var simpleSelectors = this.setRegister0,
         complexSelectors = this.setRegister1;
@@ -1959,29 +2011,9 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     this.setRegister0.clear();
     this.setRegister1.clear();
 
-    console.timeEnd('cosmeticFilteringEngine.retrieveGenericSelectors');
+    //console.timeEnd('cosmeticFilteringEngine.retrieveGenericSelectors');
 
     return out;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.injectHideRules = function(
-    tabId,
-    frameId,
-    selectors,
-    runAt
-) {
-    var details = {
-        code: '',
-        cssOrigin: 'user',
-        frameId: frameId,
-        runAt: runAt
-    };
-    for ( var selector of selectors ) {
-        details.code = selector + '\n{display:none!important;}';
-        vAPI.insertCSS(tabId, details);
-    }
 };
 
 /******************************************************************************/
@@ -1993,7 +2025,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
 ) {
     if ( !request.locationURL ) { return; }
 
-    console.time('cosmeticFilteringEngine.retrieveDomainSelectors');
+    //console.time('cosmeticFilteringEngine.retrieveDomainSelectors');
 
     // TODO: consider using MRUCache to quickly lookup all the previously
     //       looked-up data.
@@ -2015,15 +2047,17 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         ready: this.frozen,
         domain: domain,
         entity: entity,
-        noDOMSurveying: this.hasGenericHide === false,
         declarativeFilters: [],
         exceptionFilters: [],
+        hideNodeAttr: this.randomAlphaToken(),
+        hideNodeStyleSheetInjected: false,
         highGenericSimple: '',
         highGenericComplex: '',
-        netFilters: '',
+        injectedHideFilters: '',
+        networkFilters: '',
+        noDOMSurveying: this.hasGenericHide === false,
         proceduralFilters: [],
-        scripts: undefined,
-        rulesInjected: false
+        scripts: undefined
     };
 
     if ( options.noCosmeticFiltering !== true ) {
@@ -2041,9 +2075,15 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         if ( (bucket = this.specificFilters.get('!' + domainHash)) ) {
             bucket.retrieve(hostname, exceptionSet);
         }
+        if ( (bucket = this.proceduralFilters.get('!' + domainHash)) ) {
+            bucket.retrieve(hostname, exceptionSet);
+        }
         // Specific entity-based exception cosmetic filters.
         if ( entityHash !== undefined ) {
             if ( (bucket = this.specificFilters.get('!' + entityHash)) ) {
+                bucket.retrieve(entity, exceptionSet);
+            }
+            if ( (bucket = this.proceduralFilters.get('!' + entityHash)) ) {
                 bucket.retrieve(entity, exceptionSet);
             }
         }
@@ -2052,19 +2092,6 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         if ( (bucket = this.specificFilters.get('!' + this.noDomainHash)) ) {
             bucket.retrieve(hostname, exceptionSet);
         }
-
-        // Specific exception procedural cosmetic filters.
-        if ( (bucket = this.proceduralFilters.get('!' + domainHash)) ) {
-            bucket.retrieve(hostname, exceptionSet);
-        }
-        // Specific entity-based exception procedural cosmetic filters.
-        if ( entityHash !== undefined ) {
-            if ( (bucket = this.proceduralFilters.get('!' + entityHash)) ) {
-                bucket.retrieve(entity, exceptionSet);
-            }
-        }
-        // Special bucket for those filters without a valid
-        // domain name as per PSL.
         if ( (bucket = this.proceduralFilters.get('!' + this.noDomainHash)) ) {
             bucket.retrieve(hostname, exceptionSet);
         }
@@ -2162,33 +2189,19 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     r.scripts = this.retrieveUserScripts(domain, hostname);
 
     if ( cacheEntry ) {
-        var netFilters = [];
-        cacheEntry.retrieve('net', netFilters);
-        r.netFilters = netFilters.join(',\n');
+        var networkFilters = [];
+        cacheEntry.retrieve('net', networkFilters);
+        r.networkFilters = networkFilters.join(',\n');
     }
 
-    if (
-        this.supportsUserStylesheets &&
-        sender instanceof Object &&
-        sender.tab instanceof Object &&
-        typeof sender.frameId === 'number'
-    ) {
-        this.injectHideRules(
-            sender.tab.id,
-            sender.frameId,
-            [ r.declarativeFilters.join(',\n'), r.netFilters ],
-            'document_start'
-        );
-        this.injectHideRules(
-            sender.tab.id,
-            sender.frameId,
-            [ r.highGenericHideSimple, r.highGenericHideComplex ],
-            'document_end'
-        );
-        r.rulesInjected = true;
+    // https://github.com/gorhill/uBlock/issues/3160
+    //   If user stylesheets are supported in the current process, inject the
+    //   cosmetic filter now.
+    if ( this.supportsUserStylesheets ) {
+        this.injectRules(sender, r);
     }
 
-    console.timeEnd('cosmeticFilteringEngine.retrieveDomainSelectors');
+    //console.timeEnd('cosmeticFilteringEngine.retrieveDomainSelectors');
 
     return r;
 };
