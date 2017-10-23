@@ -252,7 +252,7 @@
     "description":""
   },
   "settingsNoCSPReportsPrompt":{
-    "message":"Block CSP reports",
+    "message":"חסום דיווחי CSP",
     "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{

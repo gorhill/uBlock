@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clicca per aprire il pannello di controllo",
+    "message":"Apri il pannello di controllo",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -252,7 +252,7 @@
     "description":""
   },
   "settingsNoCSPReportsPrompt":{
-    "message":"Blocca CSP reports",
+    "message":"Blocca i report CSP",
     "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
@@ -584,7 +584,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Errore di connessione: {{msg}}",
+    "message":"Errore di rete: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

@@ -1,4 +1,4 @@
-Um bloqueador eficiente: com baixo consumo de memória e cpu, e ainda pode carregar e aplicar milhares de filtros a mais do quê qualquer outro bloqueador popular por aí.
+Um bloqueador eficiente: com baixo consumo de memória e CPU, e ainda pode carregar e aplicar milhares de filtros a mais do quê qualquer outro bloqueador popular por aí.
 
 Visão geral ilustrada de sua eficiência: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
@@ -6,7 +6,7 @@ Utilização: Use o botão de energia no pop-up para desativar/ativar o uBlock�
 
 ***
 
-Flexível, é mais do que um "ad blocker": também pode ler e criar filtros a partir de arquivos de hosts.
+Flexível, é mais do que um "ad blocker": ele também pode ler e criar filtros a partir de arquivos de hosts.
 
 Por padrão, essas listas de filtros são carregadas e aplicadas:
 
@@ -22,15 +22,15 @@ Mais listas estão disponíveis para você escolher, se desejar:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- E varios outros
+- E varias outras
 
 Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, uBlock₀ ainda tem o consumo de memória menor do que outros bloqueadores populares lá fora.
 
-Também, esteja ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do layout do site, especialmente aquelas listas que são normalmente usadas como arquivo hosts.
+Também, esteja ciente de que selecionar algumas dessas listas extras pode levar em uma maior probabilidade de quebrar o layout do site, especialmente aquelas listas que são normalmente usadas como arquivo hosts.
 
 ***
 
-Sem as listas predefinidas de filtros, esta extensão não é nada. Por isso, se você nunca contribuiu com alguma coisa, pense nas pessoas que trabalham duro para manter as listas de filtro que você está usando, que foram disponibilizadas para usar tudo de graça.
+Sem as listas predefinidas de filtros, esta extensão não é nada. Por isso, se você nunca contribuiu com alguma coisa, pense nas pessoas que trabalham duro para manter as listas de filtro que você está usando e que foram disponibilizadas para usar tudo de graça.
 
 ***
 

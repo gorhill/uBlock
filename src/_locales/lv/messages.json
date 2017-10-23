@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Noklikšķiniet, lai atvērtu vadības paneli",
+    "message":"Atvērt vadības paneli",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -252,7 +252,7 @@
     "description":""
   },
   "settingsNoCSPReportsPrompt":{
-    "message":"Block CSP reports",
+    "message":"Bloķēt CSP atskaites",
     "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
@@ -344,19 +344,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete":{
-    "message":"novecojis",
+    "message":"Novecojis.",
     "description":"used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate":{
-    "message":"Pēdējo reizi atjaunināts: {{ago}}",
+    "message":"Pēdējo reizi atjaunināts: {{ago}}.\nNoklikšķiniet, lai atjauninātu.",
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Atjaunina...",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
-    "message":"A network error prevented the resource from being updated.",
+    "message":"Tīkla kļūda neļāva atjaunināt resursu.",
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
@@ -428,7 +428,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock₀. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
+    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock Origin. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -584,7 +584,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nevar izveidot savienojumu ar {{url}}",
+    "message":"Tīkla kļūda: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{
@@ -692,7 +692,7 @@
     "description":"for generic 'Submit' buttons"
   },
   "genericApplyChanges":{
-    "message":"Apply changes",
+    "message":"Lietot izmaiņas",
     "description":"for generic 'Apply changes' buttons"
   },
   "genericRevert":{
