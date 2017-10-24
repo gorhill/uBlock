@@ -601,8 +601,9 @@ vAPI.tabs.onPopupUpdated = (function() {
                 µb.hnSwitches.evaluateZ('no-popups', openerHostname)
             ) {
                 logData = {
-                    source: 'switch',
-                    raw: 'no-popups: ' + µb.hnSwitches.z + ' true'
+                    raw: 'no-popups: ' + µb.hnSwitches.z + ' true',
+                    result: 1,
+                    source: 'switch'
                 };
                 return 1;
             }
