@@ -542,7 +542,7 @@
 		"off": true,
 		"title": "RUS: RU AdList",
 		"lang": "be ru uk",
-		"contentURL": "https://easylist-downloads.adblockplus.org/advblock.txt",
+		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
 	},
