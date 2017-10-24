@@ -131,13 +131,6 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#privacy"
 	},
-	"disconnect-tracking": {
-		"content": "filters",
-		"group": "privacy",
-		"off": true,
-		"title": "Basic tracking list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
-	},
 	"easyprivacy": {
 		"content": "filters",
 		"group": "privacy",
