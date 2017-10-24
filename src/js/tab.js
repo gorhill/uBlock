@@ -334,11 +334,16 @@ housekeep itself.
     // tab, there is no longer any ambiguity about which root URL is really
     // sitting in which tab.
     TabContext.prototype.commit = function(url) {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        if ( this.stack.length !== 0 ) {
+            var top = this.stack[this.stack.length - 1];
+            if ( top.url === url && top.committed ) {
+                return false;
+            }
         }
         this.stack = [new StackEntry(url, true)];
         this.update();
+        return true;
     };
 
     TabContext.prototype.getNetFilteringSwitch = function() {
@@ -411,8 +416,7 @@ housekeep itself.
         var entry = tabContexts[tabId];
         if ( entry === undefined ) {
             entry = push(tabId, url);
-        } else {
-            entry.commit(url);
+        } else if ( entry.commit(url) ) {
             popupCandidateTest(tabId);
         }
         return entry;
@@ -499,7 +503,6 @@ vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
     if ( !changeInfo.url ) {
         return;
     }
-
     µb.tabContextManager.commit(tabId, changeInfo.url);
     µb.bindTabToPageStats(tabId, 'tabUpdated');
 };
