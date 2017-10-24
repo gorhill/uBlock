@@ -1155,14 +1155,12 @@ vAPI.domSurveyor = (function() {
         onDOMCreated: function() {
             if (
                 vAPI instanceof Object === false ||
-                vAPI.domSurveyor instanceof Object === false ||
                 vAPI.domFilterer instanceof Object === false
             ) {
                 if ( vAPI instanceof Object ) {
                     if ( vAPI.domWatcher instanceof Object ) {
                         vAPI.domWatcher.removeListener(domWatcherInterface);
                     }
-                    vAPI.domSurveyor = null;
                 }
                 return;
             }
