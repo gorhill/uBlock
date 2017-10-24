@@ -109,13 +109,35 @@ if ( typeof vAPI !== 'undefined' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
 /******************************************************************************/
-/******************************************************************************/
+/*******************************************************************************
+
+  The purpose of SafeAnimationFrame is to take advantage of the behavior of
+  window.requestAnimationFrame[1]. If we use an animation frame as a timer,
+  then this timer is described as follow:
+
+  - time events are throttled by the browser when the viewport is not visible --
+    there is no point for uBO to play with the DOM if the document is not
+    visible.
+  - time events are micro tasks[2].
+  - time events are synchronized to monitor refresh, meaning that they can fire
+    at most 1/60 (typically).
+
+  If a delay value is provided, a plain timer is first used. Plain timers are
+  macro-tasks, so this is good when uBO wants to yield to more important tasks
+  on a page. Once the plain timer elapse, an animation frame is used to trigger
+  the next time at which to execute the job.
+
+  [1] https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+  [2] https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
+
+*/
 
 // https://github.com/gorhill/uBlock/issues/2147
 
 vAPI.SafeAnimationFrame = function(callback) {
     this.fid = this.tid = null;
     this.callback = callback;
+    this.boundMacroToMicro = this.macroToMicro.bind(this);
 };
 
 vAPI.SafeAnimationFrame.prototype = {
@@ -127,14 +149,20 @@ vAPI.SafeAnimationFrame.prototype = {
             if ( this.tid === null ) {
                 this.tid = vAPI.setTimeout(this.callback, 1200000);
             }
-        } else if ( this.fid === null && this.tid === null ) {
-            this.tid = vAPI.setTimeout(this.callback, delay);
+            return;
+        }
+        if ( this.fid === null && this.tid === null ) {
+            this.tid = vAPI.setTimeout(this.boundMacroToMicro, delay);
         }
     },
     clear: function() {
         if ( this.fid !== null ) { cancelAnimationFrame(this.fid); }
         if ( this.tid !== null ) { clearTimeout(this.tid); }
         this.fid = this.tid = null;
+    },
+    macroToMicro: function() {
+        this.tid = null;
+        this.start();
     }
 };
 
@@ -454,6 +482,7 @@ vAPI.DOMFilterer = (function() {
                 [ ':xpath', PSelectorXpathTask ]
             ]);
         }
+        this.budget = 250; // I arbitrary picked a 1/4 second
         this.raw = o.raw;
         this.cost = 0;
         this.selector = o.selector;
@@ -577,11 +606,11 @@ vAPI.DOMFilterer = (function() {
             this.addedNodes = this.removedNodes = false;
 
             var afterResultset = new Set(),
-                t0 = Date.now(), t1, pselector;
+                t0 = Date.now(), t1, cost, pselector;
 
             for ( entry of this.selectors ) {
                 pselector = entry[1];
-                if ( pselector.cost > 100 ) { continue; }
+                if ( pselector.budget <= 0 ) { continue; }
                 nodes = pselector.exec();
                 i = nodes.length;
                 while ( i-- ) {
@@ -590,10 +619,13 @@ vAPI.DOMFilterer = (function() {
                     afterResultset.add(node);
                 }
                 t1 = Date.now();
-                pselector.cost += t1 - t0;
+                cost = t1 - t0;
                 t0 = t1;
-                // TODO: Consider adding logging ability to report disabled
-                //       precedural filter in the logger.
+                if ( cost <= 8 ) { continue; }
+                pselector.budget -= cost;
+                if ( pselector.budget <= 0 ) {
+                    console.log('disabling %s', pselector.raw);
+                }
             }
             if ( afterResultset.size !== currentResultset.size ) {
                 this.addedNodesHandlerMissCount = 0;
@@ -979,8 +1011,12 @@ vAPI.domSurveyor = (function() {
         surveyCost = 0;
 
     // This is to shutdown the surveyor if result of surveying keeps being
-    // fruitless. This is useful on long-lived web page.
-    var surveyingMissCount = 0;
+    // fruitless. This is useful on long-lived web page. I arbitrarily
+    // picked 5 minutes before the surveyor is allowed to shutdown. I also
+    // arbitrarily picked 256 misses before the surveyor is allowed to
+    // shutdown.
+    var canShutdownAfter = Date.now() + 300000,
+        surveyingMissCount = 0;
 
     // Handle main process' response.
 
@@ -1015,14 +1051,18 @@ vAPI.domSurveyor = (function() {
 
         if ( mustCommit ) {
             surveyingMissCount = 0;
+            canShutdownAfter = Date.now() + 300000;
             return;
         }
 
         surveyingMissCount += 1;
-        if ( surveyingMissCount < 256 ) { return; }
+        if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
+            return;
+        }
 
-        console.log('dom surveyor shutting down: too many misses.');
+        console.log('dom surveyor shutting down: too many misses');
 
+        surveyTimer.clear();
         vAPI.domWatcher.removeListener(domWatcherInterface);
         vAPI.domSurveyor = null;
     };
@@ -1155,12 +1195,14 @@ vAPI.domSurveyor = (function() {
         onDOMCreated: function() {
             if (
                 vAPI instanceof Object === false ||
+                vAPI.domSurveyor instanceof Object === false ||
                 vAPI.domFilterer instanceof Object === false
             ) {
                 if ( vAPI instanceof Object ) {
                     if ( vAPI.domWatcher instanceof Object ) {
                         vAPI.domWatcher.removeListener(domWatcherInterface);
                     }
+                    vAPI.domSurveyor = null;
                 }
                 return;
             }
