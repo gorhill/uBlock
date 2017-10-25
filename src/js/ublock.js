@@ -533,7 +533,7 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 /******************************************************************************/
 
 µBlock.scriptlets = (function() {
-    var pendingEntries = Object.create(null);
+    var pendingEntries = new Map();
 
     var Entry = function(tabId, scriptlet, callback) {
         this.tabId = tabId;
@@ -545,8 +545,9 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
     Entry.prototype.service = function(response) {
         if ( this.timer !== null ) {
             clearTimeout(this.timer);
+            this.timer = null;
         }
-        delete pendingEntries[makeKey(this.tabId, this.scriptlet)];
+        pendingEntries.delete(makeKey(this.tabId, this.scriptlet));
         this.callback(response);
     };
 
@@ -556,10 +557,8 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
     var report = function(tabId, scriptlet, response) {
         var key = makeKey(tabId, scriptlet);
-        var entry = pendingEntries[key];
-        if ( entry === undefined ) {
-            return;
-        }
+        var entry = pendingEntries.get(key);
+        if ( entry === undefined ) { return; }
         entry.service(response);
     };
 
@@ -569,14 +568,19 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
                 callback();
                 return;
             }
-            var key = makeKey(tabId, scriptlet);
-            if ( pendingEntries[key] !== undefined ) {
-                callback();
+            var key = makeKey(tabId, scriptlet),
+                entry = pendingEntries.get(key);
+            if ( entry !== undefined ) {
+                if ( callback !== entry.callback ) {
+                    callback();
+                }
                 return;
             }
-            pendingEntries[key] = new Entry(tabId, scriptlet, callback);
+            pendingEntries.set(key, new Entry(tabId, scriptlet, callback));
         }
-        vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/' + scriptlet + '.js' });
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/scriptlets/' + scriptlet + '.js'
+        });
     };
 
     // TODO: think about a callback mechanism.
