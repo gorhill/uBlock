@@ -1949,7 +1949,10 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         complexSelectors = this.setRegister1;
     var entry, selectors,
         strEnd, sliceBeg, sliceEnd,
-        selector, bucket, item;
+        selector, bucket;
+
+    var cacheEntry = this.selectorCache.get(request.hostname),
+        previousHits = cacheEntry && cacheEntry.cosmetic || this.setRegister2;
 
     for ( var type in this.lowlyGeneric ) {
         entry = this.lowlyGeneric[type];
@@ -1965,14 +1968,19 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             if ( entry.simple.has(selector) === false ) { continue; }
             if ( (bucket = entry.complex.get(selector)) !== undefined ) {
                 if ( Array.isArray(bucket) ) {
-                    for ( item of bucket ) {
-                        complexSelectors.add(item);
+                    for ( selector of bucket ) {
+                        if ( previousHits.has(selector) === false ) {
+                            complexSelectors.add(selector);
+                        }
                     }
-                } else {
+                } else if ( previousHits.has(bucket) === false ) {
                     complexSelectors.add(bucket);
                 }
             } else {
-                simpleSelectors.add(entry.prefix + selector);
+                selector = entry.prefix + selector;
+                if ( previousHits.has(selector) === false ) {
+                    simpleSelectors.add(selector);
+                }
             }
         } while ( sliceBeg < strEnd );
     }
@@ -1994,17 +2002,15 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     // Cache looked-up low generic cosmetic filters.
     if (
         (simpleSelectors.size !== 0 || complexSelectors.size !== 0) &&
-        (typeof request.frameURL === 'string')
+        (typeof request.hostname === 'string') &&
+        (request.hostname !== '')
     ) {
-        var hostname = µb.URI.hostnameFromURI(request.frameURL);
-        if ( hostname !== '' ) {
-            this.addToSelectorCache({
-                selectors: out.simple.concat(out.complex),
-                type: 'cosmetic',
-                hostname: hostname,
-                cost: request.surveyCost || 0,
-            });
-        }
+        this.addToSelectorCache({
+            selectors: out.simple.concat(out.complex),
+            type: 'cosmetic',
+            hostname: request.hostname,
+            cost: request.surveyCost || 0,
+        });
     }
 
     // Important: always clear used registers before leaving.
@@ -2045,6 +2051,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
 
     var r = {
         ready: this.frozen,
+        hostname: hostname,
         domain: domain,
         entity: entity,
         declarativeFilters: [],

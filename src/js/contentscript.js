@@ -240,7 +240,7 @@ vAPI.domWatcher = (function() {
             }
         }
         if ( addedNodeLists.length !== 0 || removedNodes ) {
-            safeObserverHandlerTimer.start();
+            safeObserverHandlerTimer.start(1);
         }
         //console.timeEnd('dom watcher/observer handler');
     };
@@ -276,11 +276,9 @@ vAPI.domWatcher = (function() {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
-        if ( domIsReady ) {
-            listener.onDOMCreated();
-        } else {
-            startMutationObserver();
-        }
+        if ( domIsReady !== true ) { return; }
+        listener.onDOMCreated();
+        startMutationObserver();
     };
 
     var removeListener = function(listener) {
@@ -1004,6 +1002,7 @@ vAPI.domCollapser = (function() {
 vAPI.domSurveyor = (function() {
     var messaging = vAPI.messaging,
         domFilterer,
+        hostname = '',
         queriedIds = new Set(),
         queriedClasses = new Set(),
         pendingIdNodes = { nodes: [], added: [] },
@@ -1176,7 +1175,7 @@ vAPI.domSurveyor = (function() {
                 'contentscript',
                 {
                     what: 'retrieveGenericCosmeticSelectors',
-                    frameURL: window.location.href,
+                    hostname: hostname,
                     ids: ids.join('\n'),
                     classes: classes.join('\n'),
                     exceptions: domFilterer.exceptions,
@@ -1245,11 +1244,15 @@ vAPI.domSurveyor = (function() {
         }
     };
 
-    if ( vAPI.domWatcher instanceof Object ) {
+    var start = function(details) {
+        if ( vAPI.domWatcher instanceof Object === false ) { return; }
+        hostname = details.hostname;
         vAPI.domWatcher.addListener(domWatcherInterface);
-    }
+    };
 
-    return {};
+    return {
+        start: start
+    };
 })();
 
 /******************************************************************************/
@@ -1270,11 +1273,21 @@ vAPI.domSurveyor = (function() {
             document.removeEventListener('DOMContentLoaded', bootstrapPhase2);
         }
 
-        if ( vAPI instanceof Object && vAPI.domWatcher instanceof Object ) {
+        if ( vAPI instanceof Object === false ) {
+            return;
+        }
+
+        if ( vAPI.domWatcher instanceof Object ) {
             vAPI.domWatcher.start();
         }
 
-        if ( window !== window.top || !vAPI.domFilterer ) { return; }
+        // Element picker works only in top window for now.
+        if (
+            window !== window.top ||
+            vAPI.domFilterer instanceof Object === false
+        ) {
+            return;
+        }
 
         // To send mouse coordinates to main process, as the chrome API fails
         // to provide the mouse position to context menu listeners.
@@ -1373,6 +1386,10 @@ vAPI.domSurveyor = (function() {
                 "})();";
             vAPI.injectScriptlet(document, text);
             vAPI.injectedScripts = text;
+        }
+
+        if ( vAPI.domSurveyor instanceof Object ) {
+            vAPI.domSurveyor.start(cfeDetails);
         }
 
         // https://github.com/chrisaljoudi/uBlock/issues/587
