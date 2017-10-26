@@ -2190,8 +2190,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     //   cosmetic filters now.
     if (
         this.supportsUserStylesheets &&
-        sender instanceof Object ||
-        sender.tab instanceof Object ||
+        sender instanceof Object &&
+        sender.tab instanceof Object &&
         typeof sender.frameId === 'number'
     ) {
         var injectedHideFilters = [];
