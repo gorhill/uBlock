@@ -398,8 +398,8 @@ uDom('#buttonPurgeAll').toggleClass(
         document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
     );
     uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null);
-    var dqs = document.querySelector('body:not(.updating) #lists .groupEntry:first-child .listEntry:first-child span.cache'); // ADN: fix to #1255
-    uDom('#buttonUpdateAdNauseam').toggleClass('disabled', dqs && dqs.offsetWidth > 0);
+    // var dqs = document.querySelector('body:not(.updating) #lists .groupEntry:first-child .listEntry:first-child span.cache'); // ADN: fix to #1255
+    // uDom('#buttonUpdateAdNauseam').toggleClass('disabled', dqs && dqs.offsetWidth > 0);
 
 };
 
@@ -581,8 +581,12 @@ var buttonApplyHandler = function() {
 
 var buttonUpdateAdNauseam = function() {
     //only update adnauseam.txt
-    messaging.send('dashboard', { what: 'forceUpdateAdnauseam' });
-    renderWidgets();
+     var adnauseamEntry = uDom(".listEntry[data-listkey='adnauseam-filters']");
+     adnauseamEntry.addClass('obsolete');
+     adnauseamEntry.removeClass('cached');
+     setTimeout(function(){
+        messaging.send('dashboard', { what: 'forceUpdateAdnauseam' });
+     },200);
 };
 /******************************************************************************/
 
