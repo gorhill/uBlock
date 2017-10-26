@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam - Apie",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Pagalba",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Sukurta naudojant",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Dažniausiai užduodami klausimai",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Prašau:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Paslėpti skelbimus",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Spustelėti skelbimus",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Blokuoti kenkėjiškas programas",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"Paslėpti skelbimus jūsų pasirinktuose <span>filtruose<\/span>",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"Registruoti apsilankymus skelbimuose jūsų pasirinktuose <span>filtruose<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Blokuoti sekimo ir kitas kenkėjiškas programas (<span>Tinkinti<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Atstatyti",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Išjungti",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Aktyvus skelbimų slėpimas",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Aktyvuoti skelbimų paspaudimą",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Aktyvuoti kenkėjiškų programų blokavimą",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Aktyvuoti EasyList filtrą",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Aktyvuoti AdNauseam filtrą",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Jūsų skelbimų blokavimo programėlė ir AdNauseum gali neveikti kartu!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock ir AdNauseam gali neveikti kartu!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus leidžiami.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus paslėpti, bet nespaudžiami.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus paspaudžiami, bet nepaslėpti",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Jūsų žiniai, šis puslapis gerbia <b>Nesekti<\/b> nuostatą.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"TAIKINYS",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"RASTAS",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Dar neaplankytas",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Įjunkite mane",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"Viskas? Gerai…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Geriau, bet vis tiek…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Pirmyn!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Eikite į AdNauseam svetainę",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"Šiame puslapyje AdNauseam pristabdytas",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam šiuo metu neslėpia skelbimų",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — AdVault",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Jokių skelbimų nesurinktą šiame puslapyje (rodoma naujausius)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Exportuoti_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} skelbimų buvo importuoti",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Šis veiksmas visam laikui pašalins VISUS skelbimus",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Peržiūrėti žurnalą",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"paspausta",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"iš",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"aptiktų skelbimų",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Rodyti AdVault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Tęsti",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Nuostatos",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Eksportuoti Skelbimus",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Importuoti Skelbimus",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Išjungti žurnalo registrą",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Išjungti refererio šaltinį",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Išvalyti skelbimus ir naršyklės istoriją",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Slėpti skelbimų skaičių piktogramoje",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Išvalyti skelbimus",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Nėra įrašų",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Peržiūrėti visą žurnalą",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Nuo",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1 Sau 1970 00:00",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Eksportuoti",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Importuoti",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Išvalyti",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"surinktų skelbimų",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"rodoma",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"naikinti šį skelbimą",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"iš viso apskaičiuota",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"vertė",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Paslėpti skelbimus iš jūsų pasirinkto filtro sąrašo",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Paspausti skelbimus iš jūsų pasirinkto filtro sąrašo",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Blokuoti sekimo ir kitas kenkėjiškas programas",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Užfiksuoti teksto skelbimus kada įmanoma",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Rodyti skelbimų skaičių piktogramoje",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Papildomos Privatumo Nuostatos",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Sąsaja",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Ignoruoti slapukus atsiųstus iš paspaudimų",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Nesiųsti slapukus apsilankant",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Slėpti naudotojo priemonės antraštę apsilankant",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Slėpti nurodomajį puslapį apsilankant",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Retai",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Kartais",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Visada",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Padaryti išimtį nesekantiems skelbimams",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Neslėpti nesekančius skelbimus",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Nespausti nesekančius skelbimus",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Kovoti atgal prieš skelbimų sekimą",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Pagrindai",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Kita",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Kenkėjiškos programos",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Kalbos",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Atnaujinti",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Išimtys",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Įjungti derinimo režimą",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam - Apie",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Pagalba",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Sukurta naudojant",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Dažniausiai užduodami klausimai",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Prašau:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Paslėpti skelbimus",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Spustelėti skelbimus",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Blokuoti kenkėjiškas programas",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "Paslėpti skelbimus jūsų pasirinktuose <span>filtruose<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "Registruoti apsilankymus skelbimuose jūsų pasirinktuose <span>filtruose<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Blokuoti sekimo ir kitas kenkėjiškas programas (<span>Tinkinti<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Atstatyti",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Išjungti",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Aktyvus skelbimų slėpimas",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Aktyvuoti skelbimų paspaudimą",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Aktyvuoti kenkėjiškų programų blokavimą",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Aktyvuoti EasyList filtrą",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Aktyvuoti AdNauseam filtrą",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Jūsų skelbimų blokavimo programėlė ir AdNauseum gali neveikti kartu!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock ir AdNauseam gali neveikti kartu!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus leidžiami.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus paslėpti, bet nespaudžiami.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Šis puslapis gerbia <b>Nesekti<\/b> nuostatą, skelbimai bus paspaudžiami, bet nepaslėpti",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Jūsų žiniai, šis puslapis gerbia <b>Nesekti<\/b> nuostatą.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "TAIKINYS",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "RASTAS",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Dar neaplankytas",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Įjunkite mane",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "Viskas? Gerai…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Geriau, bet vis tiek…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Pirmyn!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Eikite į AdNauseam svetainę",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "Šiame puslapyje AdNauseam pristabdytas",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam šiuo metu neslėpia skelbimų",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Jokių skelbimų nesurinktą šiame puslapyje (rodoma naujausius)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Exportuoti_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} skelbimų buvo importuoti",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Šis veiksmas visam laikui pašalins VISUS skelbimus",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Peržiūrėti žurnalą",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "paspausta",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "iš",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "aptiktų skelbimų",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Rodyti AdVault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Tęsti",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Nuostatos",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Eksportuoti Skelbimus",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Importuoti Skelbimus",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Išjungti žurnalo registrą",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Išjungti refererio šaltinį",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Išvalyti skelbimus ir naršyklės istoriją",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Slėpti skelbimų skaičių piktogramoje",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Išvalyti skelbimus",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Nėra įrašų",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Peržiūrėti visą žurnalą",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Nuo",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1 Sau 1970 00:00",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Eksportuoti",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Importuoti",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Išvalyti",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "surinktų skelbimų",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "rodoma",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "naikinti šį skelbimą",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "iš viso apskaičiuota",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "vertė",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Paslėpti skelbimus iš jūsų pasirinkto filtro sąrašo",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Paspausti skelbimus iš jūsų pasirinkto filtro sąrašo",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Blokuoti sekimo ir kitas kenkėjiškas programas",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Užfiksuoti teksto skelbimus kada įmanoma",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Rodyti skelbimų skaičių piktogramoje",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Papildomos Privatumo Nuostatos",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Sąsaja",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Ignoruoti slapukus atsiųstus iš paspaudimų",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Nesiųsti slapukus apsilankant",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Slėpti naudotojo priemonės antraštę apsilankant",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Slėpti nurodomajį puslapį apsilankant",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Retai",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Kartais",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Visada",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Padaryti išimtį nesekantiems skelbimams",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Neslėpti nesekančius skelbimus",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Nespausti nesekančius skelbimus",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Kovoti atgal prieš skelbimų sekimą",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Pagrindai",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Kita",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Kenkėjiškos programos",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Kalbos",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Atnaujinti",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Išimtys",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Įjungti derinimo režimą",
+    "description": "prompt for toggle"
   }
 }

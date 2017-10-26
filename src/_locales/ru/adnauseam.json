@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — о дополнении",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Техподдержка",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Построенный на",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Часто задаваемые вопросы",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Пожалуйста:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Скрывать рекламу",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Кликать по рекламе",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Блокировать Вредоносы",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"Скрыть рекламу в выбранных <span>списках фильтров<\/span>",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"Регистрировать посещения рекламы в выбранных <span>списках фильтров<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Блокировать трекеры и других вредоносы (<span>настроить<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Активировать повторно",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Отключить",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Скрывать рекламу",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Включить клики по рекламе",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Включить блокировку вредоносов",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Включить EasyList фильтры",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Включить AdNauseam фильтры",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Ваш блокировщик рекламы и AdNauseam могут конфликтовать!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock и AdNauseam могут конфликтовать!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Страница поддерживает <b>Do Not Track<\/b>, реклама разрешена.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Страница поддерживает <b>Do Not Track<\/b>, реклама скрыта, но не прокликана.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Страница поддерживает <b>Do Not Track<\/b>, реклама прокликана, но не скрыта",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Страница поддерживает <b>Do Not Track<\/b>, просто чтобы вы знали.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"ЦЕЛЬ",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"НАЙДЕНО НА",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Еще не посетил",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Переключить",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"И всё? Хорошо…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Лучше, но…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Поехали!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Перейти на сайт AdNauseam",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam приостановлен на этой странице",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam сейчас не скрывает рекламу",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — хранилище рекламы",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Не найдено рекламы на этой странице (показана недавняя)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} объявления импортировано",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Это действие приведет к окончательному удалению ВСЕЙ вашей рекламы",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Просмотр журнала",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"кликнуто",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"из",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"Обнаружена реклама",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Просмотр хранилища рекламы",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Возобновить",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Настройки",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Экспортировать рекламу",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Импортировать рекламу",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Отключить ведение журнала",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Отключение исходящих реферер",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Очистить рекламу с историей браузера",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Скрыть счетчик рекламы на значке",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Очистить рекламу",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Нет доступных журналов",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Просмотр полного журнала",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"С",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1 января 1970 года 0:00",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Экспорт",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Импорт",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Очистить",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"собраны объявления",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"показано",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"удалить объявление",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"итого, по оценкам",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"стоимость",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Скрыть рекламу, соответствующую выбранным спискам фильтров",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Кликать на рекламу, соответствующую выбранным спискам фильтров",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Блокировать трекеры и другие вредоносы",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Захватывать только текстовую рекламу, если возможно",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Показывать количество рекламы на значке",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Дополнительная конфиденциальность",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Интерфейс",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Игнорировать куки, возвращаемые по кликам",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Не отправлять куки при посещениях",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Скрывать заголовок User-agent при посещении",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Скрывать исходную страницу при посещении",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Редко",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Иногда",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Всегда",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Сделать исключения для неследящей рекламы",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Не скрывать неследящую рекламу",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Не переходить по неследящей рекламе",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Противодействие рекламному шпионажу",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Важно",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Другое",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Вредоносное ПО",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Языки",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Обновить",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Белые списки",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Включить режим отладки",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — о дополнении",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Техподдержка",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Построенный на",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Часто задаваемые вопросы",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Пожалуйста:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Скрывать рекламу",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Кликать по рекламе",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Блокировать Вредоносы",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "Скрыть рекламу в выбранных <span>списках фильтров<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "Регистрировать посещения рекламы в выбранных <span>списках фильтров<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Блокировать трекеры и других вредоносы (<span>настроить<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Активировать повторно",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Отключить",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Скрывать рекламу",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Включить клики по рекламе",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Включить блокировку вредоносов",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Включить EasyList фильтры",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Включить AdNauseam фильтры",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Ваш блокировщик рекламы и AdNauseam могут конфликтовать!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock и AdNauseam могут конфликтовать!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Страница поддерживает <b>Do Not Track<\/b>, реклама разрешена.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Страница поддерживает <b>Do Not Track<\/b>, реклама скрыта, но не прокликана.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Страница поддерживает <b>Do Not Track<\/b>, реклама прокликана, но не скрыта",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Страница поддерживает <b>Do Not Track<\/b>, просто чтобы вы знали.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "ЦЕЛЬ",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "НАЙДЕНО НА",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Еще не посетил",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Разрешено через Do Not Track",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Переключить",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "И всё? Хорошо…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Лучше, но…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Поехали!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Перейти на сайт AdNauseam",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam приостановлен на этой странице",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam сейчас не скрывает рекламу",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — хранилище рекламы",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Не найдено рекламы на этой странице (показана недавняя)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} объявления импортировано",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Это действие приведет к окончательному удалению ВСЕЙ вашей рекламы",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Просмотр журнала",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "кликнуто",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "из",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "Обнаружена реклама",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Просмотр хранилища рекламы",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Возобновить",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Настройки",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Экспортировать рекламу",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Импортировать рекламу",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Отключить ведение журнала",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Отключение исходящих реферер",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Очистить рекламу с историей браузера",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Скрыть счетчик рекламы на значке",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Очистить рекламу",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Нет доступных журналов",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Просмотр полного журнала",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "С",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1 января 1970 года 0:00",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Экспорт",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Импорт",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Очистить",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "собраны объявления",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "показано",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "удалить объявление",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "итого, по оценкам",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "стоимость",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Скрыть рекламу, соответствующую выбранным спискам фильтров",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Кликать на рекламу, соответствующую выбранным спискам фильтров",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Блокировать трекеры и другие вредоносы",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Захватывать только текстовую рекламу, если возможно",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Показывать количество рекламы на значке",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Дополнительная конфиденциальность",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Интерфейс",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Игнорировать куки, возвращаемые по кликам",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Не отправлять куки при посещениях",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Скрывать заголовок User-agent при посещении",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Скрывать исходную страницу при посещении",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Редко",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Иногда",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Всегда",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Сделать исключения для неследящей рекламы",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Не скрывать неследящую рекламу",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Не переходить по неследящей рекламе",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Противодействие рекламному шпионажу",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Важно",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Другое",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Вредоносное ПО",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Языки",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Обновить",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Белые списки",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Включить режим отладки",
+    "description": "prompt for toggle"
   }
 }

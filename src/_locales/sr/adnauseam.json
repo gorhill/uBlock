@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"О АдНаузеам",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Подршка",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Саграђено на",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Често постављана питања",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Молимо:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Сакријте огласе",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Кликните огласе",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Блокирајте штетне програме",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"Сакријте огласе у изабраним <span>filter listama<\/span>",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"Региструј посете огласа нађених у <span>filter listama<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Блокирајте пратиоце и друге штетне програме (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Поново активирај",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Онемогући",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Активирајте сакривање огласа",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Активирајте кликтање на огласе",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Активирајте блокирање штетних програма",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Активирајте EazyList филтер",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Активирајте АдНаузеам филтер",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Твој блокер огласа и АдНаузеам могу бити у конфликту!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"уБлок и АдНаузеам могу бити у конфликту!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Ова страница поштује <b>Не прати<\/b>, огласи су дозвољени.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Ова страница поштује <b>Не прати<\/b>, сакивање, не кликтање.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Ова страница поштује <b>Не прати<\/b>, кликћући, не сакривајући",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Ова страница поштује <b>Не прати<\/b>, само да знате.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"МЕТА",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"НАЂЕН НА",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Још увек не посећен",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Пребаци ме на",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"То је све? У реду…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Боље, али ипак…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Хајмо!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Иди на АдНаузеам веб страницу",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"АдНаузеам је паузиран на овој страници",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"АдНаузеам тренутно не сакрива огласе",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"АдНаузеам — АдТрезор",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Огласи нису прикупљени на овој страници (приказује недавне)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Izvoz_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} Огласа су увезени",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Ова радња ће трајно уклонити СВЕ ваше огласе",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Погледајте евиденцију",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"кликнуто",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"од",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"Оглас примећен",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Погледај АдТрезор",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Настави",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Подешавања",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Извезите огласе",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Увезите огласе",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Онемогућите сво логовање",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Онемогућите излазне упућиваче",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Очисти огласе заједно са историјом прегледања",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Сакријте број огласа на иконици",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Уклоните огласе",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Ниједна евиденција није доступна",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Погледајте пуну евиденцију",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Од када",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"Јан 1 1970 0:00 пре подне",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Извезите",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Увезите",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Очистите",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"огласи прикупљени",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"показује",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"обриши овај оглас",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"укупна процена",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"цена",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Сакријте огласе идентификоване на изабраним филтер листама",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Кликните огласе идентификоване на изабраним филтер листама",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Блокирајте пратиоце и друге штетне програме",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Ухватите текстуалне огласе када је то могуће",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Прикажите број огласа на иконици",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Додатна приватност",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Интерфејс",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Игноришите колачиће враћене са кликовима",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Не шаљи колачиће код посета",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Сакриј корисник-агент заглавље на посетама",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Сакријте реферујуће странице на посети",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Ретко",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Понекад",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Увек",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Направите изузетке за огласе који не вас не прате",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Не сакривајте огласе који вас не прате",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Не кликћите на огласе који вас не прате",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"АдНаузеам",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Бори се против огласног надзора",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Основе",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Друго",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Злонамерни програми",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Језици",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Ажурирај",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Беле листе",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Активирајте режим да отклањање грешака",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "О АдНаузеам",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Подршка",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Саграђено на",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Често постављана питања",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Молимо:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Сакријте огласе",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Кликните огласе",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Блокирајте штетне програме",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "Сакријте огласе у изабраним <span>filter listama<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "Региструј посете огласа нађених у <span>filter listama<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Блокирајте пратиоце и друге штетне програме (<span>customize<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Поново активирај",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Онемогући",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Активирајте сакривање огласа",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Активирајте кликтање на огласе",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Активирајте блокирање штетних програма",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Активирајте EazyList филтер",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Активирајте АдНаузеам филтер",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Твој блокер огласа и АдНаузеам могу бити у конфликту!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "уБлок и АдНаузеам могу бити у конфликту!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Ова страница поштује <b>Не прати<\/b>, огласи су дозвољени.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Ова страница поштује <b>Не прати<\/b>, сакивање, не кликтање.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Ова страница поштује <b>Не прати<\/b>, кликћући, не сакривајући",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Ова страница поштује <b>Не прати<\/b>, само да знате.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "МЕТА",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "НАЂЕН НА",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Још увек не посећен",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Пребаци ме на",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "То је све? У реду…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Боље, али ипак…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Хајмо!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Иди на АдНаузеам веб страницу",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "АдНаузеам је паузиран на овој страници",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "АдНаузеам тренутно не сакрива огласе",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "АдНаузеам — АдТрезор",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Огласи нису прикупљени на овој страници (приказује недавне)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Izvoz_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} Огласа су увезени",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Ова радња ће трајно уклонити СВЕ ваше огласе",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Погледајте евиденцију",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "кликнуто",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "од",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "Оглас примећен",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Погледај АдТрезор",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Настави",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Подешавања",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Извезите огласе",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Увезите огласе",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Онемогућите сво логовање",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Онемогућите излазне упућиваче",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Очисти огласе заједно са историјом прегледања",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Сакријте број огласа на иконици",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Уклоните огласе",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Ниједна евиденција није доступна",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Погледајте пуну евиденцију",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Од када",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "Јан 1 1970 0:00 пре подне",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Извезите",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Увезите",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Очистите",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "огласи прикупљени",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "показује",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "обриши овај оглас",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "укупна процена",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "цена",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Сакријте огласе идентификоване на изабраним филтер листама",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Кликните огласе идентификоване на изабраним филтер листама",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Блокирајте пратиоце и друге штетне програме",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Ухватите текстуалне огласе када је то могуће",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Прикажите број огласа на иконици",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Додатна приватност",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Интерфејс",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Игноришите колачиће враћене са кликовима",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Не шаљи колачиће код посета",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Сакриј корисник-агент заглавље на посетама",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Сакријте реферујуће странице на посети",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Ретко",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Понекад",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Увек",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Направите изузетке за огласе који не вас не прате",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Не сакривајте огласе који вас не прате",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Не кликћите на огласе који вас не прате",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "АдНаузеам",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Бори се против огласног надзора",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Основе",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Друго",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Злонамерни програми",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Језици",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Ажурирај",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Беле листе",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Активирајте режим да отклањање грешака",
+    "description": "prompt for toggle"
   }
 }

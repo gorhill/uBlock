@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — 關於",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"支援",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"基於",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"常見問題",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"請:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"隱藏廣告",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"點擊廣告",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"遮蔽惡意軟體",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"隱藏由你的<span>篩選器列表<\/span>標記的廣告",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"訪問由你的<span>篩選器列表<\/span>標記的廣告",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"阻止追蹤器和其他惡意軟體 （<span>自訂<\/span>）",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"啟用",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"禁用",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"請啟用“隱藏廣告“功能",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"請啟用“點擊廣告“功能",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"啟用“遮蔽惡意軟體“功能",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"啟用 Easy List 篩選列表",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"請啟用 AdNauseam 篩選列表",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"廣告攔截插件和 AdNauseam 可能會發生衝突 ！",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock 同 AdNauseam 可能會衝突！",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"此頁尊重 <b>不跟蹤<\/b>準則，允許廣告。",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"此頁尊重 <b>不跟蹤<\/b>準則，隱藏但不點擊廣告。",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"此頁尊重 <b>不跟蹤<\/b>準則，點擊但顯示廣告。",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"此頁尊重 <b>不跟蹤<\/b>準則。",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"目標",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"發現於",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"尚未訪問",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"按下開關",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"只是這樣嗎？好吧...",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"好一些，不過...",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"開始吧！",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"前往 AdNauseam 網站",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam 在本頁面被暫停",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam 目前不隱藏廣告",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — 廣告庫",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"沒有在本頁收集到廣告 (顯示最近的)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam-已導出的廣告_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}}個廣告被導入",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"這操作會永久移除你全部已保存的廣告",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"查看日誌",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"已點擊",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"總共",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"已偵測廣告",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"查看廣告庫",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"恢復 Adnauseam",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"設置",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"導出廣告",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"導入廣告",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"關閉所有日誌紀錄",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"禁止發送參照位址",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"清除廣告與瀏覽器記錄",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"隱藏圖標上的廣告數目",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"清除廣告",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"沒有可用的日誌",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"查看完整日誌",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"自從",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1970 年 1 月 1 日 0:00",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"導出",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"導入",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"清空",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"已收集的廣告",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"顯示",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"刪除這個廣告",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"估計總",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"費用",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"隱藏由你的篩選器列表標記的廣告",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"點擊由你的篩選器列表標記的廣告",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"遮蔽追蹤器和其他惡意軟體",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"當可行時捕捉文字廣告",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"在圖標上顯示已找到的廣告數目",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"其它隱私選項",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"用戶介面",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"忽略由點擊廣告產生的 cookie",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"不要發送 cookie 訪問",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"當訪問廣告時隱藏瀏覽器識別符",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"當訪問廣告時隱藏引用頁面",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"較少",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"偶而",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"始終",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"排除非追蹤廣告",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"不隱藏非追蹤廣告",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"不點擊非追蹤廣告",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"一款被設計為對抗來自廣告網絡追蹤的擴展",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"基本",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"其它",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"惡意軟體",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"語言",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"更新",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"白名單",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"激活調試模式",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — 關於",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "支援",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "基於",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "常見問題",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "請:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "隱藏廣告",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "點擊廣告",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "遮蔽惡意軟體",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "隱藏由你的<span>篩選器列表<\/span>標記的廣告",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "訪問由你的<span>篩選器列表<\/span>標記的廣告",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "阻止追蹤器和其他惡意軟體 （<span>自訂<\/span>）",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "啟用",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "禁用",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "請啟用“隱藏廣告“功能",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "請啟用“點擊廣告“功能",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "啟用“遮蔽惡意軟體“功能",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "啟用 Easy List 篩選列表",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "請啟用 AdNauseam 篩選列表",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "廣告攔截插件和 AdNauseam 可能會發生衝突 ！",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock 同 AdNauseam 可能會衝突！",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "此頁尊重 <b>不跟蹤<\/b>準則，允許廣告。",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "此頁尊重 <b>不跟蹤<\/b>準則，隱藏但不點擊廣告。",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "此頁尊重 <b>不跟蹤<\/b>準則，點擊但顯示廣告。",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "此頁尊重 <b>不跟蹤<\/b>準則。",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "目標",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "發現於",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "尚未訪問",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "允許此廣告，遵循<b>不跟蹤<\/b>準則",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "按下開關",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "只是這樣嗎？好吧...",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "好一些，不過...",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "開始吧！",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "前往 AdNauseam 網站",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam 在本頁面被暫停",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam 目前不隱藏廣告",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — 廣告庫",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "沒有在本頁收集到廣告 (顯示最近的)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam-已導出的廣告_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}}個廣告被導入",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "這操作會永久移除你全部已保存的廣告",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "查看日誌",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "已點擊",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "總共",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "已偵測廣告",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "查看廣告庫",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "恢復 Adnauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "設置",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "導出廣告",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "導入廣告",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "關閉所有日誌紀錄",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "禁止發送參照位址",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "清除廣告與瀏覽器記錄",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "隱藏圖標上的廣告數目",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "清除廣告",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "沒有可用的日誌",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "查看完整日誌",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "自從",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1970 年 1 月 1 日 0:00",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "導出",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "導入",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "清空",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "已收集的廣告",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "顯示",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "刪除這個廣告",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "估計總",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "費用",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "隱藏由你的篩選器列表標記的廣告",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "點擊由你的篩選器列表標記的廣告",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "遮蔽追蹤器和其他惡意軟體",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "當可行時捕捉文字廣告",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "在圖標上顯示已找到的廣告數目",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "其它隱私選項",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "用戶介面",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "忽略由點擊廣告產生的 cookie",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "不要發送 cookie 訪問",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "當訪問廣告時隱藏瀏覽器識別符",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "當訪問廣告時隱藏引用頁面",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "較少",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "偶而",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "始終",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "排除非追蹤廣告",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "不隱藏非追蹤廣告",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "不點擊非追蹤廣告",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "一款被設計為對抗來自廣告網絡追蹤的擴展",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "基本",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "其它",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "惡意軟體",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "語言",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "更新",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "白名單",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "激活調試模式",
+    "description": "prompt for toggle"
   }
 }

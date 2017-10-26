@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — Acerca de",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Apoyo",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Construido con",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Preguntas frecuentes",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Por favor:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Ocultar anuncios",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Pulsar en anuncios",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Bloquear software malicioso",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"Ocultar anuncios selecionados en su <span>lista de filtros<\/span>",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"Registrar visitas en Anuncios encontrados via su <span>lista de filtros<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Bloquear seguidores y otros programas maliciosos (<span>personalizar<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Reactivar",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Desactivar",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Activar ocultación de Anuncios",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Activar clic en Anuncios",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Activar bloqueo de software malicioso",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Activar el filtro EasyList",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Activar el filtro AdNauseam",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Su bloqueador de anuncios y AdNauseam pudiesen confligir!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"¡uBlock y AdNauseam pueden entrar en conflicto!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Esta página respeta <b>Do Not Track<\/b>, anuncios permitidos.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Esta página respeta <b>Do Not Track<\/b>, escondiendo no haciendo clic.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Esta página respeta <b>Do Not Track<\/b>, haciendo clic, no escondiendo",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Esta página respeta <b>Do Not Track<\/b>, solo para que sepa.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"Objetivo",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"Encontrado En",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Todavía no visitado",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Me enciende",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"¿Eso es todo? Ok...",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Mejor todavía, pero...",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"¡Vamos!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Sitio web de AdNauseam",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam está en pausa en esta página",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam no esconde anuncios actualmente",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam - AdVault",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"No hay anuncios recogidos en esta página (mostrando recientes)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} anuncios fueron importados",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Esta acción removerá permanentemente TODOS sus anuncios",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Ver registro",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"ha hecho clic",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"de la",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"Anuncios detectados",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Ver AdVault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Reanudar",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Configuración",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Exportar Anuncios",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Importar anuncios",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Desactivar todos los registros",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Desactivar referencias de salida",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Vaciar anuncios con el historial del navegador",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Ocultar contador de anuncios del icono",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Vaciar anuncios",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"No hay ningún registro disponible",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Ver registro completo",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Desde",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1\/ene\/1970 0:00 a. m.",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Exportar",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Importar",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Vaciar",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"anuncios recopilados",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"se muestran",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"eliminar este anuncio",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"total estimado",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"costo",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Ocultar anuncios identificados por las listas de filtros elegidas",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Pulsar en anuncios identificados por las listas de filtros elegidas",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Bloquear seguidores y otros programas maliciosos",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Capturar anuncios de solo texto cuando sea posible",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Mostrar contador de anuncios en el icono",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Mayor privacidad",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Interfaz",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Ignorar cookies devueltas mediante clics",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"No enviar cookies con las visitas",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Ocultar cabecera de agente de usuario al realizar visitas",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Ocultar página de origen al realizar visitas",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Rara vez",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"A veces",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Siempre",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Hacer excepción para anuncios sin rastreadores",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"No ocultar anuncios sin rastreadores",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"No pulsar en anuncios sin rastreadores",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Combata la vigilancia publicitaria",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Fundamentos",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Otros",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Software malicioso",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Idiomas",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Actualizar",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Listas blancas",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Activar modo de depuración",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — Acerca de",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Apoyo",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Construido con",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Preguntas frecuentes",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Por favor:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Ocultar anuncios",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Pulsar en anuncios",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Bloquear software malicioso",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "Ocultar anuncios selecionados en su <span>lista de filtros<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "Registrar visitas en Anuncios encontrados via su <span>lista de filtros<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Bloquear seguidores y otros programas maliciosos (<span>personalizar<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Reactivar",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Desactivar",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Activar ocultación de Anuncios",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Activar clic en Anuncios",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Activar bloqueo de software malicioso",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Activar el filtro EasyList",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Activar el filtro AdNauseam",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Su bloqueador de anuncios y AdNauseam pudiesen confligir!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "¡uBlock y AdNauseam pueden entrar en conflicto!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Esta página respeta <b>Do Not Track<\/b>, anuncios permitidos.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Esta página respeta <b>Do Not Track<\/b>, escondiendo no haciendo clic.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Esta página respeta <b>Do Not Track<\/b>, haciendo clic, no escondiendo",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Esta página respeta <b>Do Not Track<\/b>, solo para que sepa.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "Objetivo",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "Encontrado En",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Todavía no visitado",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Permitido por Do Not Track",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Me enciende",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "¿Eso es todo? Ok...",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Mejor todavía, pero...",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "¡Vamos!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Sitio web de AdNauseam",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam está en pausa en esta página",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam no esconde anuncios actualmente",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam - AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "No hay anuncios recogidos en esta página (mostrando recientes)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} anuncios fueron importados",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Esta acción removerá permanentemente TODOS sus anuncios",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Ver registro",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "ha hecho clic",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "de la",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "Anuncios detectados",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Ver AdVault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Reanudar",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Configuración",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Exportar Anuncios",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Importar anuncios",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Desactivar todos los registros",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Desactivar referencias de salida",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Vaciar anuncios con el historial del navegador",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Ocultar contador de anuncios del icono",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Vaciar anuncios",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "No hay ningún registro disponible",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Ver registro completo",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Desde",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1\/ene\/1970 0:00 a. m.",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Exportar",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Importar",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Vaciar",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "anuncios recopilados",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "se muestran",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "eliminar este anuncio",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "total estimado",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "costo",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Ocultar anuncios identificados por las listas de filtros elegidas",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Pulsar en anuncios identificados por las listas de filtros elegidas",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Bloquear seguidores y otros programas maliciosos",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Capturar anuncios de solo texto cuando sea posible",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Mostrar contador de anuncios en el icono",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Mayor privacidad",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Interfaz",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Ignorar cookies devueltas mediante clics",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "No enviar cookies con las visitas",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Ocultar cabecera de agente de usuario al realizar visitas",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Ocultar página de origen al realizar visitas",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Rara vez",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "A veces",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Siempre",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Hacer excepción para anuncios sin rastreadores",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "No ocultar anuncios sin rastreadores",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "No pulsar en anuncios sin rastreadores",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Combata la vigilancia publicitaria",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Fundamentos",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Otros",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Software malicioso",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Idiomas",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Actualizar",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Listas blancas",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Activar modo de depuración",
+    "description": "prompt for toggle"
   }
 }
