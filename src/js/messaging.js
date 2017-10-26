@@ -512,7 +512,7 @@ var onMessage = function(request, sender, callback) {
         if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
             response = {
                 result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request)
+                          .retrieveGenericSelectors(request, sender)
             };
         }
         break;

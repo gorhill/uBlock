@@ -1894,52 +1894,10 @@ FilterContainer.prototype.randomAlphaToken = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.injectRules = function(target, data) {
-    if (
-        target instanceof Object === false ||
-        target.tab instanceof Object === false ||
-        typeof target.frameId !== 'number'
-    ) {
-        return;
-    }
-    var details = {
-        code: '',
-        cssOrigin: 'user',
-        frameId: target.frameId,
-        runAt: 'document_start'
-    };
-    var injectedHideFilters = [];
-    if ( data.declarativeFilters.length !== 0 ) {
-        injectedHideFilters.push(data.declarativeFilters.join(',\n'));
-        data.declarativeFilters = [];
-    }
-    if ( data.proceduralFilters.length !== 0 ) {
-        injectedHideFilters.push('[' + data.hideNodeAttr + ']');
-        data.hideNodeStyleSheetInjected = true;
-    }
-    if ( data.highGenericHideSimple.length !== 0 ) {
-        injectedHideFilters.push(data.highGenericHideSimple);
-        data.highGenericHideSimple = '';
-    }
-    if ( data.highGenericHideComplex.length !== 0 ) {
-        injectedHideFilters.push(data.highGenericHideComplex);
-        data.highGenericHideComplex = '';
-    }
-    data.injectedHideFilters = injectedHideFilters.join(',\n');
-    if ( data.injectedHideFilters.length !== 0 ) {
-        details.code = data.injectedHideFilters + '\n{display:none!important;}';
-        vAPI.insertCSS(target.tab.id, details);
-    }
-    if ( data.networkFilters.length !== 0 ) {
-        details.code = data.networkFilters + '\n{display:none!important;}';
-        vAPI.insertCSS(target.tab.id, details);
-        data.networkFilters = '';
-    }
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.retrieveGenericSelectors = function(request) {
+FilterContainer.prototype.retrieveGenericSelectors = function(
+    request,
+    sender
+) {
     if ( this.acceptedCount === 0 ) { return; }
     if ( !request.ids && !request.classes ) { return; }
 
@@ -1994,22 +1952,51 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         }
     }
 
+    if ( simpleSelectors.size === 0 && complexSelectors.size === 0 ) {
+        return;
+    }
+
     var out = {
         simple: µb.arrayFrom(simpleSelectors),
-        complex: µb.arrayFrom(complexSelectors)
+        complex: µb.arrayFrom(complexSelectors),
+        injected: ''
     };
 
-    // Cache looked-up low generic cosmetic filters.
-    if (
-        (simpleSelectors.size !== 0 || complexSelectors.size !== 0) &&
-        (typeof request.hostname === 'string') &&
-        (request.hostname !== '')
-    ) {
+    // Cache and inject (if user stylesheets supported) looked-up low generic
+    // cosmetic filters.
+    if ( typeof request.hostname === 'string' && request.hostname !== '' ) {
         this.addToSelectorCache({
-            selectors: out.simple.concat(out.complex),
-            type: 'cosmetic',
-            hostname: request.hostname,
             cost: request.surveyCost || 0,
+            hostname: request.hostname,
+            injectedHideFilters: '',
+            selectors: out.simple.concat(out.complex),
+            type: 'cosmetic'
+        });
+    }
+
+    // If user stylesheets are supported in the current process, inject the
+    // cosmetic filters now.
+    if (
+        this.supportsUserStylesheets &&
+        sender instanceof Object &&
+        sender.tab instanceof Object &&
+        typeof sender.frameId === 'number'
+    ) {
+        var injected = [];
+        if ( out.simple.length !== 0 ) {
+            injected.push(out.simple.join(',\n'));
+            out.simple = [];
+        }
+        if ( out.complex.length !== 0 ) {
+            injected.push(out.complex.join(',\n'));
+            out.complex = [];
+        }
+        out.injected = injected.join(',\n');
+        vAPI.insertCSS(sender.tab.id, {
+            code: out.injected + '\n{display:none!important;}',
+            cssOrigin: 'user',
+            frameId: sender.frameId,
+            runAt: 'document_start'
         });
     }
 
@@ -2033,9 +2020,6 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
 
     //console.time('cosmeticFilteringEngine.retrieveDomainSelectors');
 
-    // TODO: consider using MRUCache to quickly lookup all the previously
-    //       looked-up data.
-
     var hostname = this.µburi.hostnameFromURI(request.locationURL),
         domain = this.µburi.domainFromHostname(hostname) || hostname,
         pos = domain.indexOf('.'),
@@ -2043,13 +2027,13 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         cacheEntry = this.selectorCache.get(hostname);
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
-    // r.ready will tell the content script the cosmetic filtering engine is
+    // out.ready will tell the content script the cosmetic filtering engine is
     // up and ready.
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
     // Generic exception filters are to be applied on all pages.
 
-    var r = {
+    var out = {
         ready: this.frozen,
         hostname: hostname,
         domain: domain,
@@ -2103,7 +2087,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
             bucket.retrieve(hostname, exceptionSet);
         }
         if ( exceptionSet.size !== 0 ) {
-            r.exceptionFilters = µb.arrayFrom(exceptionSet);
+            out.exceptionFilters = µb.arrayFrom(exceptionSet);
         }
 
         // Declarative cosmetic filters.
@@ -2129,8 +2113,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         // Cached cosmetic filters: these are always declarative.
         if ( cacheEntry !== undefined ) {
             cacheEntry.retrieve('cosmetic', specificSet);
-            if ( r.noDOMSurveying === false ) {
-                r.noDOMSurveying = cacheEntry.cosmeticSurveyingMissCount >
+            if ( out.noDOMSurveying === false ) {
+                out.noDOMSurveying = cacheEntry.cosmeticSurveyingMissCount >
                                    cosmeticSurveyingMissCountMax;
             }
         }
@@ -2159,15 +2143,15 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
             proceduralSet.delete(exception);
         }
         if ( specificSet.size !== 0 ) {
-            r.declarativeFilters = µb.arrayFrom(specificSet);
+            out.declarativeFilters = µb.arrayFrom(specificSet);
         }
         if ( proceduralSet.size !== 0 ) {
-            r.proceduralFilters = µb.arrayFrom(proceduralSet);
+            out.proceduralFilters = µb.arrayFrom(proceduralSet);
         }
 
         // Highly generic cosmetic filters: sent once along with specific ones.
         if ( options.noGenericCosmeticFiltering !== true ) {
-            var exceptionHash = r.exceptionFilters.join(),
+            var exceptionHash = out.exceptionFilters.join(),
                 entry = this.mruHighlyGenericHideStrings.lookup(exceptionHash);
             if ( entry === undefined ) {
                 var simpleSet = new Set(this.highlyGenericSimpleHideSet),
@@ -2182,8 +2166,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
                 };
                 this.mruHighlyGenericHideStrings.add(exceptionHash, entry);
             }
-            r.highGenericHideSimple = entry.simple;
-            r.highGenericHideComplex = entry.complex;
+            out.highGenericHideSimple = entry.simple;
+            out.highGenericHideComplex = entry.complex;
         }
 
         // Important: always clear used registers before leaving.
@@ -2193,24 +2177,61 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     }
 
     // Scriptlet injection.
-    r.scripts = this.retrieveUserScripts(domain, hostname);
+    out.scripts = this.retrieveUserScripts(domain, hostname);
 
     if ( cacheEntry ) {
         var networkFilters = [];
         cacheEntry.retrieve('net', networkFilters);
-        r.networkFilters = networkFilters.join(',\n');
+        out.networkFilters = networkFilters.join(',\n');
     }
 
     // https://github.com/gorhill/uBlock/issues/3160
     //   If user stylesheets are supported in the current process, inject the
-    //   cosmetic filter now.
-    if ( this.supportsUserStylesheets ) {
-        this.injectRules(sender, r);
+    //   cosmetic filters now.
+    if (
+        this.supportsUserStylesheets &&
+        sender instanceof Object ||
+        sender.tab instanceof Object ||
+        typeof sender.frameId === 'number'
+    ) {
+        var injectedHideFilters = [];
+        if ( out.declarativeFilters.length !== 0 ) {
+            injectedHideFilters.push(out.declarativeFilters.join(',\n'));
+            out.declarativeFilters = [];
+        }
+        if ( out.proceduralFilters.length !== 0 ) {
+            injectedHideFilters.push('[' + out.hideNodeAttr + ']');
+            out.hideNodeStyleSheetInjected = true;
+        }
+        if ( out.highGenericHideSimple.length !== 0 ) {
+            injectedHideFilters.push(out.highGenericHideSimple);
+            out.highGenericHideSimple = '';
+        }
+        if ( out.highGenericHideComplex.length !== 0 ) {
+            injectedHideFilters.push(out.highGenericHideComplex);
+            out.highGenericHideComplex = '';
+        }
+        out.injectedHideFilters = injectedHideFilters.join(',\n');
+        var details = {
+            code: '',
+            cssOrigin: 'user',
+            frameId: sender.frameId,
+            runAt: 'document_start'
+        };
+        if ( out.injectedHideFilters.length !== 0 ) {
+            details.code = out.injectedHideFilters + '\n{display:none!important;}';
+            vAPI.insertCSS(sender.tab.id, details);
+        }
+        if ( out.networkFilters.length !== 0 ) {
+            details.code = out.networkFilters + '\n{display:none!important;}';
+            vAPI.insertCSS(sender.tab.id, details);
+            out.networkFilters = '';
+        }
     }
 
     //console.timeEnd('cosmeticFilteringEngine.retrieveDomainSelectors');
 
-    return r;
+    return out;
 };
 
 /******************************************************************************/

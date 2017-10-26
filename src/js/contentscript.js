@@ -1042,6 +1042,15 @@ vAPI.domSurveyor = (function() {
                 );
                 mustCommit = true;
             }
+            selectors = result.injected;
+            if ( typeof selectors === 'string' && selectors.length !== 0 ) {
+                domFilterer.addCSSRule(
+                    selectors,
+                    'display:none!important;',
+                    { injected: true }
+                );
+                mustCommit = true;
+            }
         }
 
         if ( hasChunk(pendingIdNodes) || hasChunk(pendingClassNodes) ) {
