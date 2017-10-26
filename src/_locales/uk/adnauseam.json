@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam - Про додаток",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Служба підтримки",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Побудований на",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Frequently asked questions",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Будь ласка:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Приховати рекламу",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Клікати рекламу",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"приховати оголошення у ваших вибраних <span class='link' id='To3pfilter'>списках фільтрів<\/span>",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"записувати візитіи на оголошення, знайдені через ваші <span class='link' id='To3pfilter'>списки фільтрів<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Block trackers and other malware (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Повторна активація",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Вимкнути",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Активувати приховування реклами",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Активувати, клікання реклами",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Activate malware blocking",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Активувати EasyList фільтр",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Активувати AdNauseam фільтр",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock і AdNauseam можуть конфліктувати!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Ця сторінка поважає <b>Do Not Track<\/b>, реклама дозволена.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Ця сторінка поважає <b>Do Not Track<\/b>, не клікати по рекламі, лише приховати.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Ця сторінка поважає <b>Do Not Track<\/b>, клікати по рекламі, не ховати її",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Ця сторінка поважає <b>Do Not Track<\/b>, ну такоє.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"МЕТА",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"ЗНАЙДЕНО НА",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Ще не відвідували",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Увімкніть мене",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"Що це? Гаразд…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Краще, але все ж…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Поїхали!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Go to AdNauseam website",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam зупинився на цій сторінці",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam в даний час не приховує реклами",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — AdVault",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Немає оголошень на цій сторінці (показано останні)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} оголошення були імпортовані",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Ця дія остаточно видалить УСІ ваші оголошення",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Переглянути журнал",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"натиснув",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"з на",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"Оголошень виявлено",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Перегляд Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Відновити AdNauseam",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Налаштування",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Експортувати рекламу",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Імпортування оголошень",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Вимкнути всі логи",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Вимкнути вихідний реферер",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Видалити рекламу з історії браузера",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Приховати кількість оголошень на значку",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Очистити Рекламу",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Логів немає",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Переглянути весь лог",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Починаючи з",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1 січня 1970 0:00 am",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Експорт",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Імпорт",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Очистити",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"ads collected",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"showing",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"видалити це оголошення",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"всього за оцінками",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"вартість",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Приховати оголошення визначені списком фільтрів",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Клікати на оголошення визначені списком фільтрів",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Block trackers and other malware",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Capture text-only Ads when possible",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Показувати кількість реклами на іконці",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Додаткова приватність",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Інтерфейс",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Ігнорувати куки повернені з кліками",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Не надсилати куки при переходах",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Приховувати user-agent хідери при переходах",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Hide referring page on visits",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Rarely",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Sometimes",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Always",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Робити виключення для не відслідковуючої реклами",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Не приховувати не відслідковуючу рекламу",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Не клікати на не відслідковуючу рекламу",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Боротись проти рекламного слідкування",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Необхідності",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Інше",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Небезпечна програма",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Мови",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Update",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Список винятків",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Активувати режим відлагодження",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam - Про додаток",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Служба підтримки",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Побудований на",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Frequently asked questions",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Будь ласка:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Приховати рекламу",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Клікати рекламу",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Block Malware",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "приховати оголошення у ваших вибраних <span class='link' id='To3pfilter'>списках фільтрів<\/span>",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "записувати візитіи на оголошення, знайдені через ваші <span class='link' id='To3pfilter'>списки фільтрів<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Повторна активація",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Вимкнути",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Активувати приховування реклами",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Активувати, клікання реклами",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Activate malware blocking",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Активувати EasyList фільтр",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Активувати AdNauseam фільтр",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Your ad blocker and AdNauseam may conflict!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock і AdNauseam можуть конфліктувати!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, реклама дозволена.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, не клікати по рекламі, лише приховати.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, клікати по рекламі, не ховати її",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, ну такоє.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "МЕТА",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "ЗНАЙДЕНО НА",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Ще не відвідували",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Увімкніть мене",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "Що це? Гаразд…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Краще, але все ж…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Поїхали!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Go to AdNauseam website",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam зупинився на цій сторінці",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam в даний час не приховує реклами",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Немає оголошень на цій сторінці (показано останні)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} оголошення були імпортовані",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Ця дія остаточно видалить УСІ ваші оголошення",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Переглянути журнал",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "натиснув",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "з на",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "Оголошень виявлено",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Перегляд Ad Vault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Відновити AdNauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Налаштування",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Експортувати рекламу",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Імпортування оголошень",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Вимкнути всі логи",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Вимкнути вихідний реферер",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Видалити рекламу з історії браузера",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Приховати кількість оголошень на значку",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Очистити Рекламу",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Логів немає",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Переглянути весь лог",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Починаючи з",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1 січня 1970 0:00 am",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Експорт",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Імпорт",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Очистити",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "ads collected",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "showing",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "видалити це оголошення",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "всього за оцінками",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "вартість",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Приховати оголошення визначені списком фільтрів",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Клікати на оголошення визначені списком фільтрів",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Block trackers and other malware",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Capture text-only Ads when possible",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Показувати кількість реклами на іконці",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Додаткова приватність",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Інтерфейс",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Ігнорувати куки повернені з кліками",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Не надсилати куки при переходах",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Приховувати user-agent хідери при переходах",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Hide referring page on visits",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Rarely",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Sometimes",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Always",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Робити виключення для не відслідковуючої реклами",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Не приховувати не відслідковуючу рекламу",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Не клікати на не відслідковуючу рекламу",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Боротись проти рекламного слідкування",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Необхідності",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Інше",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Небезпечна програма",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Мови",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Update",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Список винятків",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Активувати режим відлагодження",
+    "description": "prompt for toggle"
   }
 }

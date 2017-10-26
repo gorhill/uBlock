@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — Thông tin",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Hỗ trợ",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Được tạo vào",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Frequently asked questions",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Vui lòng:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Ẩn quảng cáo",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Mở quảng cáo",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"ẩn quảng cáo trong <span class='link' id='To3pfilter'>bộ lọc<\/span> bạn đã chọn",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"đăng ký truy cập vào quảng cáo được phát hiện qua <span class='link' id='To3pfilter'>bộ lọc của bạn<\/span>",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Block trackers and other malware (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Tái kích hoạt",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Tắt",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Kích hoạt ẩn quảng cáo",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Kích hoạt mở quảng cáo",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Activate malware blocking",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Kích hoạt bộ lọc EasyList",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Kích hoạt bộ lọc AdNauseam",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Your ad blocker and AdNauseam may conflict!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock và AdNauseam có thể xung đột với nhau!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Trang này tuân thủ <b>Do Not Track<\/b>, quảng cáo được cho phép.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Trang này tuân thủ <b>Do Not Track<\/b>, ẩn chứ không mở.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Trang này tuân thủ <b>Do Not Track<\/b>, mở chứ không ẩn",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Thông báo để bạn biết rằng trang này tuân thủ <b>Do Not Track<\/b>.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"MỤC TIÊU",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"PHÁT HIỆN ĐƯỢC TRÊN",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Chưa truy cập",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Bật lên",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"Có vậy thôi sao? OK…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Tốt hơn, nhưng vẫn…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Bắt đầu nào!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Go to AdNauseam website",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam đã được tạm dừng trên trang này",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam hiện không ẩn quảng cáo",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — AdVault",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Không có quảng cáo được thu thập trên trang này (hiện mục gần đây)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} quảng cáo đã được thêm vào",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Hành động này sẽ xoá vĩnh viễn TẤT CẢ quảng cáo của bạn",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Xem nhật ký",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"được mở",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"trên tổng",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"quảng cáo được phát hiện",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Xem Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Tiếp tục AdNauseam",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Thiết lập",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Xuất quảng cáo",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Nhập quảng cáo",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Tắt tất cả ghi nhận",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Tắt tham chiếu đi",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Xoá quảng cáo với lược sử trình duyệt",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Ẩn số quảng cáo trên biểu tượng",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Xoá quảng cáo",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Không có nhật ký",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Xem toàn bộ nhật ký",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Từ",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"0:00 SA, 1 tháng 1, 1970",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Xuất",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Nhập",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Xoá",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"ads collected",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"showing",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"xoá quảng cáo này",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"tổng ước tính",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"chi phí",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Ẩn quảng cáo được xác định bằng bộ lọc bạn đã chọn",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Mở quảng cáo được xác định bằng bộ lọc bạn đã chọn",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Block trackers and other malware",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Thu thập quảng cáo chỉ có văn bản khi có thể",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Hiện số quảng cáo trên biểu tượng",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Đảm bảo riêng tư",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Giao diện",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Bỏ qua các cookie trả lại với bấm chuột",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Không gửi cookie khi truy cập",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Ẩn thông tin trình duyệt khi truy cập",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Ẩn trang tham chiếu khi truy cập",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Rarely",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Sometimes",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Always",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Tạo loại trừ cho quảng cáo không theo dõi",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Không ẩn quảng cáo không theo dõi",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Không bấm vào quảng cáo không theo dõi",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Chống lại giám sát quảng cáo",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Thiết yếu",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Khác",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Phần mềm độc hại",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Ngôn ngữ",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Update",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Danh sách loại trừ",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Kích hoạt chế độ gỡ rối",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — Thông tin",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Hỗ trợ",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Được tạo vào",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Frequently asked questions",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Vui lòng:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Ẩn quảng cáo",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Mở quảng cáo",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Block Malware",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "ẩn quảng cáo trong <span class='link' id='To3pfilter'>bộ lọc<\/span> bạn đã chọn",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "đăng ký truy cập vào quảng cáo được phát hiện qua <span class='link' id='To3pfilter'>bộ lọc của bạn<\/span>",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Tái kích hoạt",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Tắt",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Kích hoạt ẩn quảng cáo",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Kích hoạt mở quảng cáo",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Activate malware blocking",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Kích hoạt bộ lọc EasyList",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Kích hoạt bộ lọc AdNauseam",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Your ad blocker and AdNauseam may conflict!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock và AdNauseam có thể xung đột với nhau!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, quảng cáo được cho phép.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, ẩn chứ không mở.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, mở chứ không ẩn",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Thông báo để bạn biết rằng trang này tuân thủ <b>Do Not Track<\/b>.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "MỤC TIÊU",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "PHÁT HIỆN ĐƯỢC TRÊN",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Chưa truy cập",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Bật lên",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "Có vậy thôi sao? OK…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Tốt hơn, nhưng vẫn…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Bắt đầu nào!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Go to AdNauseam website",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam đã được tạm dừng trên trang này",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam hiện không ẩn quảng cáo",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Không có quảng cáo được thu thập trên trang này (hiện mục gần đây)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} quảng cáo đã được thêm vào",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Hành động này sẽ xoá vĩnh viễn TẤT CẢ quảng cáo của bạn",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Xem nhật ký",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "được mở",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "trên tổng",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "quảng cáo được phát hiện",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Xem Ad Vault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Tiếp tục AdNauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Thiết lập",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Xuất quảng cáo",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Nhập quảng cáo",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Tắt tất cả ghi nhận",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Tắt tham chiếu đi",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Xoá quảng cáo với lược sử trình duyệt",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Ẩn số quảng cáo trên biểu tượng",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Xoá quảng cáo",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Không có nhật ký",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Xem toàn bộ nhật ký",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Từ",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "0:00 SA, 1 tháng 1, 1970",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Xuất",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Nhập",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Xoá",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "ads collected",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "showing",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "xoá quảng cáo này",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "tổng ước tính",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "chi phí",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Ẩn quảng cáo được xác định bằng bộ lọc bạn đã chọn",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Mở quảng cáo được xác định bằng bộ lọc bạn đã chọn",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Block trackers and other malware",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Thu thập quảng cáo chỉ có văn bản khi có thể",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Hiện số quảng cáo trên biểu tượng",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Đảm bảo riêng tư",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Giao diện",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Bỏ qua các cookie trả lại với bấm chuột",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Không gửi cookie khi truy cập",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Ẩn thông tin trình duyệt khi truy cập",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Ẩn trang tham chiếu khi truy cập",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Rarely",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Sometimes",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Always",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Tạo loại trừ cho quảng cáo không theo dõi",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Không ẩn quảng cáo không theo dõi",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Không bấm vào quảng cáo không theo dõi",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Chống lại giám sát quảng cáo",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Thiết yếu",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Khác",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Phần mềm độc hại",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Ngôn ngữ",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Update",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Danh sách loại trừ",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Kích hoạt chế độ gỡ rối",
+    "description": "prompt for toggle"
   }
 }

@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — אודות",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"תמיכה",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"מובנה",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"שאלות נפוצות",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"בבקשה:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"הסתר פרסומות",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"לחץ על פרסומות",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Block Malware",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"הסתר פרסומות על פי <span>רשימת המסננים<\/span> אשר בחרת",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"תעד ביקורים בפרסומות אשר נמצאו על ידי <span>רשימת המסננים<\/span> אשר בחרת",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Block trackers and other malware (<span>customize<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"הפעל מחדש",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"השבת",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"הפעל חסימת פרסומות",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"הפעל לחיצה על פרסומות",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Activate malware blocking",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"הפעל את מסנן ה-EasyList",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"הפעל את מסנן ה-AdNauseam",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"יתכן כי קיימת התנגשות בין חוסם הפרסומות שלך ו-AdNauseam!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"ייתכן וקיימת התנגשות בין uBlock ו- AdNauseam!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"דף זה מכבד <b>אל תעקוב<\/b>, פרסומות מאופשרות.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"דף זה מכבד <b>אל תעקוב<\/b>, מסתיר, לא לוחץ.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"דף זה מכבד <b>אל תעקוב<\/b>, לוחץ, לא מסתיר.",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"דף זה מכבד <b>אל תעקוב<\/b>, לידיעתך.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"יעד",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"אותר ב-",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"עדיין לא בוקר",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"הפעל אותי",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"זה הכל? בסדר...",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"יותר טוב, אבל עדיין…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"בא נתחיל!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"עבור אל אתר האינטרנט של AdNauseam",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam מושהה בדף זה",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam כרגע לא מסתיר פרסומות",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam — כספת פרסומות",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"אין פרסומות שנאספו בדף זה (מראה אחרונות)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Yitsu_{{datetime}}.json\n",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} פרסומות יובאו",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"פעולה זו תסיר לצמיתות את כל הפרסומות שלך",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"צפה ברישומת",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"נלחצו",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"מתוך ה-",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"פרסומות אותרו",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"הצג כספת פרסומות",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"המשך",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"הגדרות",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"ייצא פרסומות",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"ייבא פרסומות",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"בטל את כלל הרישומת",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"בטל את המפנה היוצא",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"נקה פרסומות עם היסטורית הדפדפן",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"הסתר ספירת פרסומות על הסמל",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"נקה פרסומות",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"אין רישומת זמינה",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"הצג רישומת מלאה",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"מ-",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"ינו' 1 1970 0:00 AM ",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"ייצא",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"ייבא",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"נקה",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"פרסומות שנאספו",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"מציג",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"מחיקת פרסומת זו",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"סה\"כ מוערך",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"עלות",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"הסתר הפרסומות המזוההות על-ידי רשימות המסננים שבחרת",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"לחץ על הפרסומות המזוההות על-ידי רשימות המסננים שבחרת",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Block trackers and other malware",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"לכוד פרסומות טקסט בלבד כאשר הדבר אפשרי",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"הצג את מספר הפרסומות על הסמל",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"פרטיות נוספת",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"ממשק",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"התעלם מעוגיות חוזרות עם לחיצות",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"אל תשלח עוגיות בביקורים",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"הסתר כותרת סוכן-משתמש במהלך ביקורים",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"הסתר עמוד מפנה בביקורים",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"לעיתים נדירות",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"לפעמים",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"תמיד",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"צור יוצאים מן הכלל עבור פרסומות ללא מעקב",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"אל תסתיר פרסומות ללא מעקב",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"אל תלחץ על פרסומות ללא מעקב",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"הלחם חזרה כנגד המעקב דרך הפרסום",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"כלי יסוד",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"אחר",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"תוכנות זדוניות",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"שפות",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"עדכן",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"רשימת מורשים",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"הפעל מצב איתור באגים",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — אודות",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "תמיכה",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "מובנה",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "שאלות נפוצות",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "בבקשה:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "הסתר פרסומות",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "לחץ על פרסומות",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Block Malware",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "הסתר פרסומות על פי <span>רשימת המסננים<\/span> אשר בחרת",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "תעד ביקורים בפרסומות אשר נמצאו על ידי <span>רשימת המסננים<\/span> אשר בחרת",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "הפעל מחדש",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "השבת",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "הפעל חסימת פרסומות",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "הפעל לחיצה על פרסומות",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Activate malware blocking",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "הפעל את מסנן ה-EasyList",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "הפעל את מסנן ה-AdNauseam",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "יתכן כי קיימת התנגשות בין חוסם הפרסומות שלך ו-AdNauseam!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "ייתכן וקיימת התנגשות בין uBlock ו- AdNauseam!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "דף זה מכבד <b>אל תעקוב<\/b>, פרסומות מאופשרות.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "דף זה מכבד <b>אל תעקוב<\/b>, מסתיר, לא לוחץ.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "דף זה מכבד <b>אל תעקוב<\/b>, לוחץ, לא מסתיר.",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "דף זה מכבד <b>אל תעקוב<\/b>, לידיעתך.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "יעד",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "אותר ב-",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "עדיין לא בוקר",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "הפעל אותי",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "זה הכל? בסדר...",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "יותר טוב, אבל עדיין…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "בא נתחיל!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "עבור אל אתר האינטרנט של AdNauseam",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam מושהה בדף זה",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam כרגע לא מסתיר פרסומות",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam — כספת פרסומות",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "אין פרסומות שנאספו בדף זה (מראה אחרונות)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Yitsu_{{datetime}}.json\n",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} פרסומות יובאו",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "פעולה זו תסיר לצמיתות את כל הפרסומות שלך",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "צפה ברישומת",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "נלחצו",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "מתוך ה-",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "פרסומות אותרו",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "הצג כספת פרסומות",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "המשך",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "הגדרות",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "ייצא פרסומות",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "ייבא פרסומות",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "בטל את כלל הרישומת",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "בטל את המפנה היוצא",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "נקה פרסומות עם היסטורית הדפדפן",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "הסתר ספירת פרסומות על הסמל",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "נקה פרסומות",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "אין רישומת זמינה",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "הצג רישומת מלאה",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "מ-",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "ינו' 1 1970 0:00 AM ",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "ייצא",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "ייבא",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "נקה",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "פרסומות שנאספו",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "מציג",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "מחיקת פרסומת זו",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "סה\"כ מוערך",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "עלות",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "הסתר הפרסומות המזוההות על-ידי רשימות המסננים שבחרת",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "לחץ על הפרסומות המזוההות על-ידי רשימות המסננים שבחרת",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Block trackers and other malware",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "לכוד פרסומות טקסט בלבד כאשר הדבר אפשרי",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "הצג את מספר הפרסומות על הסמל",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "פרטיות נוספת",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "ממשק",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "התעלם מעוגיות חוזרות עם לחיצות",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "אל תשלח עוגיות בביקורים",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "הסתר כותרת סוכן-משתמש במהלך ביקורים",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "הסתר עמוד מפנה בביקורים",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "לעיתים נדירות",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "לפעמים",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "תמיד",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "צור יוצאים מן הכלל עבור פרסומות ללא מעקב",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "אל תסתיר פרסומות ללא מעקב",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "אל תלחץ על פרסומות ללא מעקב",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "הלחם חזרה כנגד המעקב דרך הפרסום",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "כלי יסוד",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "אחר",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "תוכנות זדוניות",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "שפות",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "עדכן",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "רשימת מורשים",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "הפעל מצב איתור באגים",
+    "description": "prompt for toggle"
   }
 }

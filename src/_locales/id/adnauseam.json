@@ -1,366 +1,370 @@
 {
-  "adnAboutPageName":{
-    "message":"AdNauseam — Tentang Kami",
-    "description":"English: Firstrun.html page title"
-  },
-  "aboutSupport":{
-    "message":"Dukung Kami",
-    "description":"English: links.html Support"
-  },
-  "aboutBuiltOn":{
-    "message":"Dibuat di",
-    "description":"English: links.html Built on"
-  },
-  "aboutFaq":{
-    "message":"Pertanyaan yang sering diajukan",
-    "description":"English: links.html -> Frequently asked questions"
-  },
-  "adnFirstRunPlease":{
-    "message":"Mohon:",
-    "description":"English: Firstrun.html -> Please:"
-  },
-  "adnFirstRunHideAllAds":{
-    "message":"Sembunyikan iklan",
-    "description":"English: Firstrun.html -> Hide Ads:"
-  },
-  "adnFirstRunClickingAds":{
-    "message":"Klik iklan",
-    "description":"English: Firstrun.html -> Click Ads"
-  },
-  "adnFirstRunBlockingMalware":{
-    "message":"Memblokir Malware",
-    "description":"English: Firstrun.html -> Block Malware"
-  },
-  "adnFirstRunHideAllAdsDescription":{
-    "message":"sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
-    "description":"English: Firstrun.html -> Hide Ads in your selected filter lists"
-  },
-  "adnFirstRunClickingAdsDescription":{
-    "message":"daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
-    "description":"English: Firstrun.html -> Register visits on Ads found via your filter lists"
-  },
-  "adnFirstRunBlockingMalwareDescription":{
-    "message":"Blokir pelacak dan malware lainnya (<span>Kustomisasi<\/span>)",
-    "description":"English: Firstrun.html -> Block trackers and other malware (customize)"
-  },
-  "adnNotificationReactivate":{
-    "message":"Mengaktifkan kembali",
-    "description":"English: Notifications -> Reactivate"
-  },
-  "adnNotificationDisable":{
-    "message":"Nonaktifkan",
-    "description":"English: Notifications -> Disable"
-  },
-  "adnNotificationActivateHiding":{
-    "message":"Aktivasi sembunyikan iklan",
-    "description":"English: Notifications -> Activate Ad hiding"
-  },
-  "adnNotificationActivateClicking":{
-    "message":"Aktivasi klik iklan",
-    "description":"English: Notifications -> Activate Ad clicking"
-  },
-  "adnNotificationActivateBlocking":{
-    "message":"Aktivasi blok malware",
-    "description":"English: Notifications -> Activate malware blocking"
-  },
-  "adnNotificationActivateEasyList":{
-    "message":"Aktivasi EasyList filter",
-    "description":"English: Notifications -> Activate the EasyList filter"
-  },
-  "adnNotificationActivateAdNauseamList":{
-    "message":"Aktifkan filter AdNauseam",
-    "description":"English: Notifications -> Activate the AdNauseam filter"
-  },
-  "adnNotificationDisableAdBlocker":{
-    "message":"Ad-blocker Anda dan AdNauseam mungkin tidak cocok!",
-    "description":"English: Notifications -> Your ad blocker and AdNauseam may conflict!"
-  },
-  "adnNotificationDisableUBlock":{
-    "message":"uBlock dan AdNauseam mungkin tidak cocok!",
-    "description":"English: Notifications -> uBlock and AdNauseam may conflict!"
-  },
-  "adnNotificationDNTAllowed":{
-    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, Iklan diperbolehkan.",
-    "description":"English: Notifications -> This page respects Do Not Track, Ads are allowed."
-  },
-  "adnNotificationDNTHidingNotClicking":{
-    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, menyembunyikan iklan tetapi tidak mengkliknya.",
-    "description":"English: Notifications -> This page respects Do Not Track, hiding not clicking."
-  },
-  "adnNotificationDNTClickingNotHiding":{
-    "message":"Halaman ini menyetujui penggunaan <b>Do Not Track<b>, mengkliknya tetapi tidak menyembunyikannya",
-    "description":"English: Notifications -> This page respects Do Not Track, clicking not hiding."
-  },
-  "adnNotificationDNTJustSoYouKnow":{
-    "message":"Halaman ini menyetujui <b>Do Not Track<\/b>, agar Anda tahu.",
-    "description":"English: Notifications -> This page respects Do Not Track, just so you know."
-  },
-  "adnTarget":{
-    "message":"TARGET",
-    "description":"English: Vault.html -> inspected Ad -> TARGET"
-  },
-  "adnFoundOn":{
-    "message":"DITEMUKAN DI",
-    "description":"English: Vault.html -> inspected Ad -> FOUND ON"
-  },
-  "adnNotYetVisited":{
-    "message":"Belum dikunjungi",
-    "description":"English: Not Yet Visited"
-  },
-  "adnFirstRunSwitchMeOn":{
-    "message":"Nyalakan saya",
-    "description":"English: Firstrun.html -> Switch me on"
-  },
-  "adnFirstRunThatsIt":{
-    "message":"Itu saja? Baiklah…",
-    "description":"English: Firstrun.html -> That's it? ok…"
-  },
-  "adnFirstRunBetterButStill":{
-    "message":"Lebih baik, tapi…",
-    "description":"English: Firstrun.html -> Better, but still…"
-  },
-  "adnFirstRunLetsGo":{
-    "message":"Ayo!",
-    "description":"English: Firstrun.html -> Let's go!"
-  },
-  "goToAdNauseamWebsite":{
-    "message":"Pergi ke situs AdNauseam",
-    "description":"English: Menu icon title -> Go to AdNauseam website"
-  },
-  "adnPausedOnPage":{
-    "message":"AdNauseam sedang diberhentikan di halaman ini",
-    "description":"English: Menu->display when paused on page\/site"
-  },
-  "adnNotHiding":{
-    "message":"AdNauseam saat ini sedang tidak menyembunyikan iklan",
-    "description":"English: Menu->display when not hiding Ads"
-  },
-  "adnVaultName":{
-    "message":"AdNauseam-AdVault",
-    "description":"English: AdNauseam — Ad Vault"
-  },
-  "adnShowingRecentAds":{
-    "message":"Tidak ada iklan yang dapat dikumpulkan di halaman ini (menampilkan informasi terbaru)",
-    "description":"shown in menu when only 'recent' Ads are shown"
-  },
-  "adnExportedAdsFilename":{
-    "message":"AdNauseam_Export_{{datetime}}.json",
-    "description":"English: AdNauseam file export"
-  },
-  "adnImportAlert":{
-    "message":"{{count}} iklan telah diimpor",
-    "description":"appears in ADN settings"
-  },
-  "adnClearConfirm":{
-    "message":"Tindakan ini akan secara permanen menghapus SEMUA iklan Anda",
-    "description":"appears in ADN settings"
-  },
-  "adnMenuViewLog":{
-    "message":"Lihat log",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsClicked":{
-    "message":"diklik",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuOfThe":{
-    "message":"dari",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuAdsDetected":{
-    "message":"Iklan terdeteksi",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuViewVault":{
-    "message":"Lihat Ad Vault",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuResume":{
-    "message":"Melanjutkan AdNauseam",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuSettings":{
-    "message":"Pengaturan",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuExportAds":{
-    "message":"Ekspor iklan",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuImportAds":{
-    "message":"Impor iklan",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableAllLogging":{
-    "message":"Nonaktifkan semua log",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuDisableOutgoingReferrer":{
-    "message":"Menonaktifkan pengarah keluar",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAds":{
-    "message":"Hilangkan iklan dengan browser history",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuHideBadge":{
-    "message":"Sembunyikan jumlah iklan pada ikon",
-    "description":"appears in ADN popup menu"
-  },
-  "adnMenuClearAdsNow":{
-    "message":"Hapus iklan",
-    "description":"appears in ADN popup menu"
-  },
-  "adnLogNoLog":{
-    "message":"Log tidak tersedia",
-    "description":"appears in ADN log page"
-  },
-  "adnLogViewFullLog":{
-    "message":"Liat seluruh log",
-    "description":"appears in ADN log page"
-  },
-  "adnVaultSince":{
-    "message":"Sejak",
-    "description":"appears on vault page"
-  },
-  "adnVaultDefaultDate":{
-    "message":"1 Januari 1970 0:00 am",
-    "description":"appears on vault page"
-  },
-  "adnVaultExport":{
-    "message":"Ekspor",
-    "description":"appears on vault page"
-  },
-  "adnVaultImport":{
-    "message":"Impor",
-    "description":"appears on vault page"
-  },
-  "adnVaultClear":{
-    "message":"Hapus",
-    "description":"appears on vault page"
-  },
-  "adnVaultFound":{
-    "message":"iklan yang dikumpulkan",
-    "description":"appears on vault page"
-  },
-  "adnVaultShowing":{
-    "message":"menampilkan",
-    "description":"appears on vault page"
-  },
-  "adnVaultDeleteThisAd":{
-    "message":"hapus iklan ini",
-    "description":"appears on vault page"
-  },
-  "adnVaultTotalEstimated":{
-    "message":"estimasi total",
-    "description":"appears on vault page"
-  },
-  "adnVaultAdsCost":{
-    "message":"biaya",
-    "description":"appears on vault page"
-  },
-  "hidingAdsPrompt":{
-    "message":"Sembunyikan iklan yang termasuk dalam daftar filter yang telah Anda pilih",
-    "description":"English: Hide Ads identified by your chosen filter lists"
-  },
-  "clickingAdsPrompt":{
-    "message":"Klik iklan yang termasuk dalam daftar filter yang telah Anda pilih",
-    "description":"English: Click Ads identified by your chosen filter lists"
-  },
-  "blockingMalwarePrompt":{
-    "message":"Blokir pelacak dan malware lainnya",
-    "description":"English: lock trackers and other malware"
-  },
-  "parseTextAdsPrompt":{
-    "message":"Menangkap hanya iklan berbentuk teks jika memungkinkan",
-    "description":"English: Capture text-only Ads when possible"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Menampilkan jumlah iklan pada ikon",
-    "description":"English: Show the number of found Ads on the icon"
-  },
-  "settingsExtraPrivacyPrompt":{
-    "message":"Ekstra privasi",
-    "description":"English: Interface"
-  },
-  "settingsInterfacePrompt":{
-    "message":"Antarmuka",
-    "description":"English: Interface"
-  },
-  "noIncomingCookiesPrompt":{
-    "message":"Abaikan cookies yang dikembalikan dengan klik",
-    "description":"English: Ignore cookies returned with clicks"
-  },
-  "noOutgoingCookiesPrompt":{
-    "message":"Jangan mengirim cookies pada kunjungan",
-    "description":"English: Don't send cookies on visits"
-  },
-  "noOutgoingUserAgentPrompt":{
-    "message":"Sembunyikan header user-agents pada kunjungan",
-    "description":"English: Hide user-agent header on visits"
-  },
-  "noOutgoingRefererPrompt":{
-    "message":"Sembunyikan halaman iklan reffering pada kunjungan",
-    "description":"English: Hide referring page on visits"
-  },
-  "ClickingFrequencyRarely":{
-    "message":"Jarang",
-    "description":"English: Click Frequency - Rarely"
-  },
-  "ClickingFrequencySometimes":{
-    "message":"Terkadang",
-    "description":"English: Click Frequency - Sometimes"
-  },
-  "ClickingFrequencyAlways":{
-    "message":"Selalu",
-    "description":"English: Click Frequency - Always"
-  },
-  "respectDNTPrompt":{
-    "message":"Buat pengecualian untuk iklan yang tidak melacak",
-    "description":"English: Make exceptions for non-tracking Ads"
-  },
-  "disableHidingForDNTPrompt":{
-    "message":"Jangan sembunyikan iklan yang tidak melacak",
-    "description":"English: Don't hide non-tracking Ads"
-  },
-  "disableClickingForDNTPrompt":{
-    "message":"Jangan klik iklan yang tidak melacak",
-    "description":"English: Don't click non-tracking Ads"
-  },
-  "extName":{
-    "message":"AdNauseam",
-    "description":"extension name"
-  },
-  "extShortDesc":{
-    "message":"Lawan pemantauan iklan",
-    "description":"for the chrome web store: must be 132 characters or less"
-  },
-  "3pGroupEssentials":{
-    "message":"Bagian penting",
-    "description":"English: Essentials"
-  },
-  "3pGroupOther":{
-    "message":"Lainnya",
-    "description":"English: Other"
-  },
-  "3pGroupMalware":{
-    "message":"Malware",
-    "description":"English: Malware"
-  },
-  "3pGroupRegions":{
-    "message":"Daftar Bahasa",
-    "description":"English: Languages"
-  },
-  "3pPageUpdate":{
-    "message":"Perbarui",
-    "description":"English: update"
-  },
-  "whitelistPageName":{
-    "message":"Daftar yang dibolehkan",
-    "description":"appears as tab name in dashboard"
-  },
-  "eventLoggingPrompt":{
-    "message":"Aktifkan mode debugging",
-    "description":"prompt for toggle"
+  "adnAboutPageName": {
+    "message": "AdNauseam — Tentang Kami",
+    "description": "English: Firstrun.html page title"
+  },
+  "aboutSupport": {
+    "message": "Dukung Kami",
+    "description": "English: links.html Support"
+  },
+  "aboutBuiltOn": {
+    "message": "Dibuat di",
+    "description": "English: links.html Built on"
+  },
+  "aboutFaq": {
+    "message": "Pertanyaan yang sering diajukan",
+    "description": "English: links.html -> Frequently asked questions"
+  },
+  "adnFirstRunPlease": {
+    "message": "Mohon:",
+    "description": "English: Firstrun.html -> Please:"
+  },
+  "adnFirstRunHideAllAds": {
+    "message": "Sembunyikan iklan",
+    "description": "English: Firstrun.html -> Hide Ads:"
+  },
+  "adnFirstRunClickingAds": {
+    "message": "Klik iklan",
+    "description": "English: Firstrun.html -> Click Ads"
+  },
+  "adnFirstRunBlockingMalware": {
+    "message": "Memblokir Malware",
+    "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnFirstRunHideAllAdsDescription": {
+    "message": "sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
+    "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
+  },
+  "adnFirstRunClickingAdsDescription": {
+    "message": "daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
+    "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
+  },
+  "adnFirstRunBlockingMalwareDescription": {
+    "message": "Blokir pelacak dan malware lainnya (<span>Kustomisasi<\/span>)",
+    "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
+  },
+  "adnNotificationReactivate": {
+    "message": "Mengaktifkan kembali",
+    "description": "English: Notifications -> Reactivate"
+  },
+  "adnNotificationDisable": {
+    "message": "Nonaktifkan",
+    "description": "English: Notifications -> Disable"
+  },
+  "adnNotificationActivateHiding": {
+    "message": "Aktivasi sembunyikan iklan",
+    "description": "English: Notifications -> Activate Ad hiding"
+  },
+  "adnNotificationActivateClicking": {
+    "message": "Aktivasi klik iklan",
+    "description": "English: Notifications -> Activate Ad clicking"
+  },
+  "adnNotificationActivateBlocking": {
+    "message": "Aktivasi blok malware",
+    "description": "English: Notifications -> Activate malware blocking"
+  },
+  "adnNotificationActivateEasyList": {
+    "message": "Aktivasi EasyList filter",
+    "description": "English: Notifications -> Activate the EasyList filter"
+  },
+  "adnNotificationActivateAdNauseamList": {
+    "message": "Aktifkan filter AdNauseam",
+    "description": "English: Notifications -> Activate the AdNauseam filter"
+  },
+  "adnNotificationDisableAdBlocker": {
+    "message": "Ad-blocker Anda dan AdNauseam mungkin tidak cocok!",
+    "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
+  },
+  "adnNotificationDisableUBlock": {
+    "message": "uBlock dan AdNauseam mungkin tidak cocok!",
+    "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationDNTAllowed": {
+    "message": "Halaman ini menyetujui penggunaan <b>Do Not Track<b>, Iklan diperbolehkan.",
+    "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
+  },
+  "adnNotificationDNTHidingNotClicking": {
+    "message": "Halaman ini menyetujui penggunaan <b>Do Not Track<b>, menyembunyikan iklan tetapi tidak mengkliknya.",
+    "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
+  },
+  "adnNotificationDNTClickingNotHiding": {
+    "message": "Halaman ini menyetujui penggunaan <b>Do Not Track<b>, mengkliknya tetapi tidak menyembunyikannya",
+    "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
+  },
+  "adnNotificationDNTJustSoYouKnow": {
+    "message": "Halaman ini menyetujui <b>Do Not Track<\/b>, agar Anda tahu.",
+    "description": "English: Notifications -> This page respects Do Not Track, just so you know."
+  },
+  "adnTarget": {
+    "message": "TARGET",
+    "description": "English: Vault.html -> inspected Ad -> TARGET"
+  },
+  "adnFoundOn": {
+    "message": "DITEMUKAN DI",
+    "description": "English: Vault.html -> inspected Ad -> FOUND ON"
+  },
+  "adnNotYetVisited": {
+    "message": "Belum dikunjungi",
+    "description": "English: Not Yet Visited"
+  },
+  "adnAllowedByDNT": {
+    "message": "Allowed via Do Not Track policy",
+    "description": "English: Not Yet Visited"
+  },
+  "adnFirstRunSwitchMeOn": {
+    "message": "Nyalakan saya",
+    "description": "English: Firstrun.html -> Switch me on"
+  },
+  "adnFirstRunThatsIt": {
+    "message": "Itu saja? Baiklah…",
+    "description": "English: Firstrun.html -> That's it? ok…"
+  },
+  "adnFirstRunBetterButStill": {
+    "message": "Lebih baik, tapi…",
+    "description": "English: Firstrun.html -> Better, but still…"
+  },
+  "adnFirstRunLetsGo": {
+    "message": "Ayo!",
+    "description": "English: Firstrun.html -> Let's go!"
+  },
+  "goToAdNauseamWebsite": {
+    "message": "Pergi ke situs AdNauseam",
+    "description": "English: Menu icon title -> Go to AdNauseam website"
+  },
+  "adnPausedOnPage": {
+    "message": "AdNauseam sedang diberhentikan di halaman ini",
+    "description": "English: Menu->display when paused on page\/site"
+  },
+  "adnNotHiding": {
+    "message": "AdNauseam saat ini sedang tidak menyembunyikan iklan",
+    "description": "English: Menu->display when not hiding Ads"
+  },
+  "adnVaultName": {
+    "message": "AdNauseam-AdVault",
+    "description": "English: AdNauseam — Ad Vault"
+  },
+  "adnShowingRecentAds": {
+    "message": "Tidak ada iklan yang dapat dikumpulkan di halaman ini (menampilkan informasi terbaru)",
+    "description": "shown in menu when only 'recent' Ads are shown"
+  },
+  "adnExportedAdsFilename": {
+    "message": "AdNauseam_Export_{{datetime}}.json",
+    "description": "English: AdNauseam file export"
+  },
+  "adnImportAlert": {
+    "message": "{{count}} iklan telah diimpor",
+    "description": "appears in ADN settings"
+  },
+  "adnClearConfirm": {
+    "message": "Tindakan ini akan secara permanen menghapus SEMUA iklan Anda",
+    "description": "appears in ADN settings"
+  },
+  "adnMenuViewLog": {
+    "message": "Lihat log",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsClicked": {
+    "message": "diklik",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuOfThe": {
+    "message": "dari",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuAdsDetected": {
+    "message": "Iklan terdeteksi",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuViewVault": {
+    "message": "Lihat Ad Vault",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuResume": {
+    "message": "Melanjutkan AdNauseam",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuSettings": {
+    "message": "Pengaturan",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuExportAds": {
+    "message": "Ekspor iklan",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuImportAds": {
+    "message": "Impor iklan",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableAllLogging": {
+    "message": "Nonaktifkan semua log",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuDisableOutgoingReferrer": {
+    "message": "Menonaktifkan pengarah keluar",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAds": {
+    "message": "Hilangkan iklan dengan browser history",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuHideBadge": {
+    "message": "Sembunyikan jumlah iklan pada ikon",
+    "description": "appears in ADN popup menu"
+  },
+  "adnMenuClearAdsNow": {
+    "message": "Hapus iklan",
+    "description": "appears in ADN popup menu"
+  },
+  "adnLogNoLog": {
+    "message": "Log tidak tersedia",
+    "description": "appears in ADN log page"
+  },
+  "adnLogViewFullLog": {
+    "message": "Liat seluruh log",
+    "description": "appears in ADN log page"
+  },
+  "adnVaultSince": {
+    "message": "Sejak",
+    "description": "appears on vault page"
+  },
+  "adnVaultDefaultDate": {
+    "message": "1 Januari 1970 0:00 am",
+    "description": "appears on vault page"
+  },
+  "adnVaultExport": {
+    "message": "Ekspor",
+    "description": "appears on vault page"
+  },
+  "adnVaultImport": {
+    "message": "Impor",
+    "description": "appears on vault page"
+  },
+  "adnVaultClear": {
+    "message": "Hapus",
+    "description": "appears on vault page"
+  },
+  "adnVaultFound": {
+    "message": "iklan yang dikumpulkan",
+    "description": "appears on vault page"
+  },
+  "adnVaultShowing": {
+    "message": "menampilkan",
+    "description": "appears on vault page"
+  },
+  "adnVaultDeleteThisAd": {
+    "message": "hapus iklan ini",
+    "description": "appears on vault page"
+  },
+  "adnVaultTotalEstimated": {
+    "message": "estimasi total",
+    "description": "appears on vault page"
+  },
+  "adnVaultAdsCost": {
+    "message": "biaya",
+    "description": "appears on vault page"
+  },
+  "hidingAdsPrompt": {
+    "message": "Sembunyikan iklan yang termasuk dalam daftar filter yang telah Anda pilih",
+    "description": "English: Hide Ads identified by your chosen filter lists"
+  },
+  "clickingAdsPrompt": {
+    "message": "Klik iklan yang termasuk dalam daftar filter yang telah Anda pilih",
+    "description": "English: Click Ads identified by your chosen filter lists"
+  },
+  "blockingMalwarePrompt": {
+    "message": "Blokir pelacak dan malware lainnya",
+    "description": "English: lock trackers and other malware"
+  },
+  "parseTextAdsPrompt": {
+    "message": "Menangkap hanya iklan berbentuk teks jika memungkinkan",
+    "description": "English: Capture text-only Ads when possible"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Menampilkan jumlah iklan pada ikon",
+    "description": "English: Show the number of found Ads on the icon"
+  },
+  "settingsExtraPrivacyPrompt": {
+    "message": "Ekstra privasi",
+    "description": "English: Interface"
+  },
+  "settingsInterfacePrompt": {
+    "message": "Antarmuka",
+    "description": "English: Interface"
+  },
+  "noIncomingCookiesPrompt": {
+    "message": "Abaikan cookies yang dikembalikan dengan klik",
+    "description": "English: Ignore cookies returned with clicks"
+  },
+  "noOutgoingCookiesPrompt": {
+    "message": "Jangan mengirim cookies pada kunjungan",
+    "description": "English: Don't send cookies on visits"
+  },
+  "noOutgoingUserAgentPrompt": {
+    "message": "Sembunyikan header user-agents pada kunjungan",
+    "description": "English: Hide user-agent header on visits"
+  },
+  "noOutgoingRefererPrompt": {
+    "message": "Sembunyikan halaman iklan reffering pada kunjungan",
+    "description": "English: Hide referring page on visits"
+  },
+  "ClickingFrequencyRarely": {
+    "message": "Jarang",
+    "description": "English: Click Frequency - Rarely"
+  },
+  "ClickingFrequencySometimes": {
+    "message": "Terkadang",
+    "description": "English: Click Frequency - Sometimes"
+  },
+  "ClickingFrequencyAlways": {
+    "message": "Selalu",
+    "description": "English: Click Frequency - Always"
+  },
+  "respectDNTPrompt": {
+    "message": "Buat pengecualian untuk iklan yang tidak melacak",
+    "description": "English: Make exceptions for non-tracking Ads"
+  },
+  "disableHidingForDNTPrompt": {
+    "message": "Jangan sembunyikan iklan yang tidak melacak",
+    "description": "English: Don't hide non-tracking Ads"
+  },
+  "disableClickingForDNTPrompt": {
+    "message": "Jangan klik iklan yang tidak melacak",
+    "description": "English: Don't click non-tracking Ads"
+  },
+  "extName": {
+    "message": "AdNauseam",
+    "description": "extension name"
+  },
+  "extShortDesc": {
+    "message": "Lawan pemantauan iklan",
+    "description": "for the chrome web store: must be 132 characters or less"
+  },
+  "3pGroupEssentials": {
+    "message": "Bagian penting",
+    "description": "English: Essentials"
+  },
+  "3pGroupOther": {
+    "message": "Lainnya",
+    "description": "English: Other"
+  },
+  "3pGroupMalware": {
+    "message": "Malware",
+    "description": "English: Malware"
+  },
+  "3pGroupRegions": {
+    "message": "Daftar Bahasa",
+    "description": "English: Languages"
+  },
+  "3pPageUpdate": {
+    "message": "Perbarui",
+    "description": "English: update"
+  },
+  "whitelistPageName": {
+    "message": "Daftar yang dibolehkan",
+    "description": "appears as tab name in dashboard"
+  },
+  "eventLoggingPrompt": {
+    "message": "Aktifkan mode debugging",
+    "description": "prompt for toggle"
   }
 }
