@@ -19,58 +19,21 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global HTMLDocument, XMLDocument */
+// For non-background page
 
 'use strict';
 
-// For non background pages
-
 /******************************************************************************/
-
-(function(self) {
-
-/******************************************************************************/
-/******************************************************************************/
-
-// https://github.com/chrisaljoudi/uBlock/issues/464
-if ( document instanceof HTMLDocument === false ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/1528
-    // A XMLDocument can be a valid HTML document.
-    if (
-        document instanceof XMLDocument === false ||
-        document.createElement('div') instanceof HTMLDivElement === false
-    ) {
-        return;
-    }
-}
-
-// https://github.com/gorhill/uBlock/issues/1124
-// Looks like `contentType` is on track to be standardized:
-//   https://dom.spec.whatwg.org/#concept-document-content-type
-// https://forums.lanik.us/viewtopic.php?f=64&t=31522
-//   Skip text/plain documents.
-var contentType = document.contentType || '';
-if ( /^image\/|^text\/plain/.test(contentType) ) {
-    return; 
-}
-
-/******************************************************************************/
-
-// https://bugs.chromium.org/p/project-zero/issues/detail?id=1225&desc=6#c10
-if ( !self.vAPI || self.vAPI.uBO !== true ) {
-    self.vAPI = { uBO: true };
-}
-
-var vAPI = self.vAPI;
-var chrome = self.chrome;
 
 // https://github.com/chrisaljoudi/uBlock/issues/456
-// Already injected?
-if ( vAPI.sessionId ) {
-    return;
-}
+//   Skip if already injected.
+
+if ( typeof vAPI === 'object' && !vAPI.clientScript ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
+/******************************************************************************/
+
+vAPI.clientScript = true;
 
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +
@@ -102,7 +65,6 @@ vAPI.shutdown = {
     }
 };
 
-/******************************************************************************/
 /******************************************************************************/
 
 vAPI.messaging = {
@@ -349,6 +311,4 @@ vAPI.shutdown.add(function() {
 /******************************************************************************/
 /******************************************************************************/
 
-})(this);
-
-/******************************************************************************/
+} // <<<<<<<< end of HUGE-IF-BLOCK

@@ -37,6 +37,7 @@
             "file://*/*"
          ],
          "js":[
+            "js/vapi.js",
             "js/vapi-client.js",
             "js/contentscript.js"
          ],

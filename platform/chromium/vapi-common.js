@@ -28,12 +28,6 @@
 
 (function(self) {
 
-// https://bugs.chromium.org/p/project-zero/issues/detail?id=1225&desc=6#c10
-if ( !self.vAPI || self.vAPI.uBO !== true ) {
-    self.vAPI = { uBO: true };
-}
-
-var vAPI = self.vAPI;
 var chrome = self.chrome;
 
 /******************************************************************************/
