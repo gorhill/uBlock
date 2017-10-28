@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1092,7 +1092,14 @@ var filterChoiceFromEvent = function(ev) {
 /******************************************************************************/
 
 var onDialogClicked = function(ev) {
-    if ( ev.target === null ) {
+
+    // If the dialog is hidden, clicking on it force it to become visible.
+    if ( dialog.classList.contains('hide') ) {
+        dialog.classList.add('show');
+        dialog.classList.remove('hide');
+    }
+
+    else if ( ev.target === null ) {
         /* do nothing */
     }
 
@@ -1160,6 +1167,11 @@ var showDialog = function(options) {
     pausePicker();
 
     options = options || {};
+
+    // Typically the dialog will be forced to be visible when using a
+    // touch-aware device.
+    dialog.classList.toggle('show', options.show === true);
+    dialog.classList.remove('hide');
 
     // Create lists of candidate filters
     var populate = function(src, des) {
@@ -1262,7 +1274,17 @@ var onSvgHovered = (function() {
     };
 })();
 
-/******************************************************************************/
+/*******************************************************************************
+
+    Swipe right:
+        If picker not paused: quit picker
+        If picker paused and dialog visible: hide dialog
+        If picker paused and dialog not visible: quit picker
+
+    Swipe left:
+        If picker paused and dialog not visible: show dialog
+
+*/
 
 var onSvgTouchStartStop = (function() {
     var startX,
@@ -1277,22 +1299,43 @@ var onSvgTouchStartStop = (function() {
         if ( startX === undefined ) { return; }
         var stopX = ev.changedTouches[0].pageX,
             stopY = ev.changedTouches[0].pageY,
+            angle = Math.abs(Math.atan2(stopY - startY, stopX - startX)),
             distance = Math.sqrt(
                 Math.pow(stopX - startX, 2),
                 Math.pow(stopY - startY, 2)
             );
-        // Swipe = exit element zapper/picker.
-        if ( distance > 32 ) {
-            stopPicker();
+        var angleUpperBound = Math.PI * 0.25 * 0.5,
+            swipeRight = angle < angleUpperBound,
+            swipeInvalid = swipeRight === false &&
+                           angle < Math.PI - angleUpperBound;
+        // Interpret touch events as a click events if swipe is not valid.
+        if ( distance < 64 || swipeInvalid ) {
+            onSvgClicked({
+                type: 'touch',
+                target: ev.target,
+                clientX: startX,
+                clientY: startY
+            });
             return;
         }
-        // Interpret touch event as a click.
-        onSvgClicked({
-            type: 'click',
-            target: ev.target,
-            clientX: startX,
-            clientY: startY
-        });
+        // Swipe left.
+        if ( swipeRight === false ) {
+            if ( pickerBody.classList.contains('paused') ) {
+                dialog.classList.remove('hide');
+                dialog.classList.add('show');
+            }
+            return;
+        }
+        // Swipe right.
+        if (
+            pickerBody.classList.contains('paused') &&
+            dialog.classList.contains('show')
+        ) {
+            dialog.classList.remove('show');
+            dialog.classList.add('hide');
+            return;
+        }
+        stopPicker();
     };
 })();
 
@@ -1329,7 +1372,7 @@ var onSvgClicked = function(ev) {
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
-    showDialog();
+    showDialog({ show: ev.type === 'touch' });
 };
 
 /******************************************************************************/
