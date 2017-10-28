@@ -377,9 +377,9 @@ vAPI.DOMFilterer = (function() {
     };
     PSelectorHasTask.prototype.exec = function(input) {
         var output = [];
-        for ( var i = 0, n = input.length; i < n; i++ ) {
-            if ( input[i].querySelector(this.selector) !== null ) {
-                output.push(input[i]);
+        for ( var node of input ) {
+            if ( node.querySelector(this.selector) !== null ) {
+                output.push(node);
             }
         }
         return output;
@@ -390,9 +390,9 @@ vAPI.DOMFilterer = (function() {
     };
     PSelectorHasTextTask.prototype.exec = function(input) {
         var output = [];
-        for ( var i = 0, n = input.length; i < n; i++ ) {
-            if ( this.needle.test(input[i].textContent) ) {
-                output.push(input[i]);
+        for ( var node of input ) {
+            if ( this.needle.test(node.textContent) ) {
+                output.push(node);
             }
         }
         return output;
@@ -404,9 +404,9 @@ vAPI.DOMFilterer = (function() {
     PSelectorIfTask.prototype.target = true;
     PSelectorIfTask.prototype.exec = function(input) {
         var output = [];
-        for ( var i = 0, n = input.length; i < n; i++ ) {
-            if ( this.pselector.test(input[i]) === this.target ) {
-                output.push(input[i]);
+        for ( var node of input ) {
+            if ( this.pselector.test(node) === this.target ) {
+                output.push(node);
             }
         }
         return output;
@@ -426,11 +426,11 @@ vAPI.DOMFilterer = (function() {
     PSelectorMatchesCSSTask.prototype.pseudo = null;
     PSelectorMatchesCSSTask.prototype.exec = function(input) {
         var output = [], style;
-        for ( var i = 0, n = input.length; i < n; i++ ) {
-            style = window.getComputedStyle(input[i], this.pseudo);
+        for ( var node of input ) {
+            style = window.getComputedStyle(node, this.pseudo);
             if ( style === null ) { return null; } /* FF */
             if ( this.value.test(style[this.name]) ) {
-                output.push(input[i]);
+                output.push(node);
             }
         }
         return output;
@@ -455,10 +455,10 @@ vAPI.DOMFilterer = (function() {
         this.xpr = null;
     };
     PSelectorXpathTask.prototype.exec = function(input) {
-        var output = [], j, node;
-        for ( var i = 0, n = input.length; i < n; i++ ) {
+        var output = [], j;
+        for ( var node of input ) {
             this.xpr = this.xpe.evaluate(
-                input[i],
+                node,
                 XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
                 this.xpr
             );
@@ -493,10 +493,8 @@ vAPI.DOMFilterer = (function() {
         this.tasks = [];
         var tasks = o.tasks;
         if ( !tasks ) { return; }
-        for ( var i = 0, task, ctor; i < tasks.length; i++ ) {
-            task = tasks[i];
-            ctor = this.operatorToTaskMap.get(task[0]);
-            this.tasks.push(new ctor(task));
+        for ( var task of tasks ) {
+            this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
@@ -508,18 +506,20 @@ vAPI.DOMFilterer = (function() {
         return [ root ];
     };
     PSelector.prototype.exec = function(input) {
-        var tasks = this.tasks, nodes = this.prime(input);
-        for ( var i = 0, n = tasks.length; i < n && nodes.length !== 0; i++ ) {
-            nodes = tasks[i].exec(nodes);
+        var nodes = this.prime(input);
+        for ( var task of this.tasks ) {
+            if ( nodes.length === 0 ) { break; }
+            nodes = task.exec(nodes);
         }
         return nodes;
     };
     PSelector.prototype.test = function(input) {
-        var tasks = this.tasks, nodes = this.prime(input), AA = [ null ], aa;
-        for ( var i = 0, ni = nodes.length; i < ni; i++ ) {
-            AA[0] = nodes[i]; aa = AA;
-            for ( var j = 0, nj = tasks.length; j < nj && aa.length !== 0; j++ ) {
-                aa = tasks[j].exec(aa);
+        var nodes = this.prime(input), AA = [ null ], aa;
+        for ( var node of nodes ) {
+            AA[0] = node; aa = AA;
+            for ( var task of this.tasks ) {
+                aa = task.exec(aa);
+                if ( aa.length === 0 ) { break; }
             }
             if ( aa.length !== 0 ) { return true; }
         }
