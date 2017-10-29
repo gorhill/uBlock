@@ -650,9 +650,19 @@ var FilterContainer = function() {
     };
 
     // highly generic selectors sets
-    this.highlyGenericSimpleHideSet = new Set();
-    this.highlyGenericComplexHideSet = new Set();
-    this.mruHighlyGenericHideStrings = new µb.MRUCache(8);
+    this.highlyGeneric = Object.create(null);
+    this.highlyGeneric.simple = {
+        canonical: 'highGenericHideSimple',
+        dict: new Set(),
+        str: '',
+        mru: new µb.MRUCache(16)
+    };
+    this.highlyGeneric.complex = {
+        canonical: 'highGenericHideComplex',
+        dict: new Set(),
+        str: '',
+        mru: new µb.MRUCache(16)
+    };
 
     this.userScripts = new Map();
 
@@ -702,9 +712,12 @@ FilterContainer.prototype.reset = function() {
     this.lowlyGeneric.cl.complex.clear();
 
     // highly generic selectors sets
-    this.highlyGenericSimpleHideSet.clear();
-    this.highlyGenericComplexHideSet.clear();
-    this.mruHighlyGenericHideStrings.reset();
+    this.highlyGeneric.simple.dict.clear();
+    this.highlyGeneric.simple.str = '';
+    this.highlyGeneric.simple.mru.reset();
+    this.highlyGeneric.complex.dict.clear();
+    this.highlyGeneric.complex.str = '';
+    this.highlyGeneric.complex.mru.reset();
 
     this.scriptTagFilters = {};
     this.scriptTagFilterCount = 0;
@@ -722,8 +735,8 @@ FilterContainer.prototype.freeze = function() {
         this.lowlyGeneric.id.complex.size !== 0 ||
         this.lowlyGeneric.cl.simple.size !== 0 ||
         this.lowlyGeneric.cl.complex.size !== 0 ||
-        this.highlyGenericSimpleHideSet.size !== 0 ||
-        this.highlyGenericComplexHideSet.size !== 0;
+        this.highlyGeneric.simple.dict.size !== 0 ||
+        this.highlyGeneric.complex.dict.size !== 0;
 
     if ( this.genericDonthideSet.size !== 0 ) {
         for ( var selector of this.genericDonthideSet ) {
@@ -736,10 +749,12 @@ FilterContainer.prototype.freeze = function() {
             // TODO:
             //  this.lowlyGeneric.id.complex.delete(selector);
             //  this.lowlyGeneric.cl.complex.delete(selector);
-            this.highlyGenericSimpleHideSet.delete(selector);
-            this.highlyGenericComplexHideSet.delete(selector);
+            this.highlyGeneric.simple.dict.delete(selector);
+            this.highlyGeneric.complex.dict.delete(selector);
         }
     }
+    this.highlyGeneric.simple.str = µb.arrayFrom(this.highlyGeneric.simple.dict).join(',\n');
+    this.highlyGeneric.complex.str = µb.arrayFrom(this.highlyGeneric.complex.dict).join(',\n');
 
     this.parser.reset();
     this.compileSelector.reset();
@@ -1384,13 +1399,13 @@ FilterContainer.prototype.fromCompiledContent = function(
         // High-high generic hide/simple selectors
         // div[id^="allo"]
         case 4:
-            this.highlyGenericSimpleHideSet.add(args[1]);
+            this.highlyGeneric.simple.dict.add(args[1]);
             break;
 
         // High-high generic hide/complex selectors
         // div[id^="allo"] > span
         case 5:
-            this.highlyGenericComplexHideSet.add(args[1]);
+            this.highlyGeneric.complex.dict.add(args[1]);
             break;
 
         // js, hash, example.com, script:contains(...)
@@ -1742,8 +1757,8 @@ FilterContainer.prototype.toSelfie = function() {
         lowlyGenericCID: µb.arrayFrom(this.lowlyGeneric.id.complex),
         lowlyGenericSCL: µb.arrayFrom(this.lowlyGeneric.cl.simple),
         lowlyGenericCCL: µb.arrayFrom(this.lowlyGeneric.cl.complex),
-        highSimpleGenericHideArray: µb.arrayFrom(this.highlyGenericSimpleHideSet),
-        highComplexGenericHideArray: µb.arrayFrom(this.highlyGenericComplexHideSet),
+        highSimpleGenericHideArray: µb.arrayFrom(this.highlyGeneric.simple.dict),
+        highComplexGenericHideArray: µb.arrayFrom(this.highlyGeneric.complex.dict),
         genericDonthideArray: µb.arrayFrom(this.genericDonthideSet),
         scriptTagFilters: this.scriptTagFilters,
         scriptTagFilterCount: this.scriptTagFilterCount,
@@ -1775,8 +1790,10 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.lowlyGeneric.id.complex = new Map(selfie.lowlyGenericCID);
     this.lowlyGeneric.cl.simple = new Set(selfie.lowlyGenericSCL);
     this.lowlyGeneric.cl.complex = new Map(selfie.lowlyGenericCCL);
-    this.highlyGenericSimpleHideSet = new Set(selfie.highSimpleGenericHideArray);
-    this.highlyGenericComplexHideSet = new Set(selfie.highComplexGenericHideArray);
+    this.highlyGeneric.simple.dict = new Set(selfie.highSimpleGenericHideArray);
+    this.highlyGeneric.simple.str = selfie.highSimpleGenericHideArray.join(',\n');
+    this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
+    this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
     this.genericDonthideSet = new Set(selfie.genericDonthideArray);
     this.scriptTagFilters = selfie.scriptTagFilters;
     this.scriptTagFilterCount = selfie.scriptTagFilterCount;
@@ -2150,24 +2167,36 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         }
 
         // Highly generic cosmetic filters: sent once along with specific ones.
+        // A most-recent-used cache is used to skip computing the resulting set
+        //   of high generics for a given set of exceptions.
+        // The resulting set of high generics is stored as a string, ready to
+        //   be used as-is by the content script. The string is stored
+        //   indirectly in the mru cache: this is to prevent duplication of the
+        //   string in memory, which I have observed occurs when the string is
+        //   stored directly as a value in a Map.
         if ( options.noGenericCosmeticFiltering !== true ) {
-            var exceptionHash = out.exceptionFilters.join(),
-                entry = this.mruHighlyGenericHideStrings.lookup(exceptionHash);
-            if ( entry === undefined ) {
-                var simpleSet = new Set(this.highlyGenericSimpleHideSet),
-                    complexSet = new Set(this.highlyGenericComplexHideSet);
-                for ( exception of exceptionSet ) {
-                    simpleSet.delete(exception);
-                    complexSet.delete(exception);
+            var exceptionHash = out.exceptionFilters.join();
+            for ( var type in this.highlyGeneric ) {
+                var entry = this.highlyGeneric[type];
+                var str = entry.mru.lookup(exceptionHash);
+                if ( str === undefined ) {
+                    str = { s: entry.str };
+                    var genericSet = entry.dict;
+                    var hit = false;
+                    for ( exception of exceptionSet ) {
+                        if ( (hit = genericSet.has(exception)) ) { break; }
+                    }
+                    if ( hit ) {
+                        genericSet = new Set(entry.dict);
+                        for ( exception of exceptionSet ) {
+                            genericSet.delete(exception);
+                        }
+                        str.s = µb.arrayFrom(genericSet).join(',\n');
+                    }
+                    entry.mru.add(exceptionHash, str);
                 }
-                entry = {
-                    simple: µb.arrayFrom(simpleSet).join(',\n'),
-                    complex: µb.arrayFrom(complexSet).join(',\n')
-                };
-                this.mruHighlyGenericHideStrings.add(exceptionHash, entry);
+                out[entry.canonical] = str.s;
             }
-            out.highGenericHideSimple = entry.simple;
-            out.highGenericHideComplex = entry.complex;
         }
 
         // Important: always clear used registers before leaving.
