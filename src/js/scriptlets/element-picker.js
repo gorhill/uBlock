@@ -1290,34 +1290,38 @@ var onSvgTouchStartStop = (function() {
     var startX,
         startY;
     return function onTouch(ev) {
-        ev.preventDefault();
         if ( ev.type === 'touchstart' ) {
-            startX = ev.touches[0].pageX;
-            startY = ev.touches[0].pageY;
+            startX = ev.touches[0].screenX;
+            startY = ev.touches[0].screenY;
             return;
         }
         if ( startX === undefined ) { return; }
-        var stopX = ev.changedTouches[0].pageX,
-            stopY = ev.changedTouches[0].pageY,
+        if ( ev.cancelable === false ) { return; }
+        var stopX = ev.changedTouches[0].screenX,
+            stopY = ev.changedTouches[0].screenY,
             angle = Math.abs(Math.atan2(stopY - startY, stopX - startX)),
             distance = Math.sqrt(
                 Math.pow(stopX - startX, 2),
                 Math.pow(stopY - startY, 2)
             );
-        var angleUpperBound = Math.PI * 0.25 * 0.5,
-            swipeRight = angle < angleUpperBound,
-            swipeInvalid = swipeRight === false &&
-                           angle < Math.PI - angleUpperBound;
         // Interpret touch events as a click events if swipe is not valid.
-        if ( distance < 64 || swipeInvalid ) {
+        if ( distance < 32 ) {
             onSvgClicked({
                 type: 'touch',
                 target: ev.target,
-                clientX: startX,
-                clientY: startY
+                clientX: ev.changedTouches[0].pageX,
+                clientY: ev.changedTouches[0].pageY
             });
+            ev.preventDefault();
             return;
         }
+        if ( distance < 64 ) { return; }
+        var angleUpperBound = Math.PI * 0.25 * 0.5,
+            swipeRight = angle < angleUpperBound;
+        if ( swipeRight === false && angle < Math.PI - angleUpperBound ) {
+            return;
+        }
+        ev.preventDefault();
         // Swipe left.
         if ( swipeRight === false ) {
             if ( pickerBody.classList.contains('paused') ) {
