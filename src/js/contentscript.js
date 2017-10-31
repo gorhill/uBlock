@@ -153,7 +153,7 @@ vAPI.SafeAnimationFrame.prototype = {
                 this.fid = requestAnimationFrame(this.callback);
             }
             if ( this.tid === null ) {
-                this.tid = vAPI.setTimeout(this.callback, 1200000);
+                this.tid = vAPI.setTimeout(this.callback, 20000);
             }
             return;
         }
@@ -590,7 +590,7 @@ vAPI.DOMFilterer = (function() {
                 entry, nodes, i, node;
 
             if ( this.addedSelectors.size !== 0 ) {
-                //console.time('procedural filterset changed');
+                //console.time('procedural selectors/filterset changed');
                 for ( entry of this.addedSelectors ) {
                     nodes = entry[1].exec();
                     i = nodes.length;
@@ -601,11 +601,11 @@ vAPI.DOMFilterer = (function() {
                     }
                 }
                 this.addedSelectors.clear();
-                //console.timeEnd('procedural filterset changed');
+                //console.timeEnd('procedural selectors/filterset changed');
                 return;
             }
 
-            //console.time('dom layout changed/procedural selectors');
+            //console.time('procedural selectors/dom layout changed');
 
             this.addedNodes = this.removedNodes = false;
 
@@ -644,7 +644,7 @@ vAPI.DOMFilterer = (function() {
 
             this.currentResultset = afterResultset;
 
-            //console.timeEnd('dom layout changed/procedural selectors');
+            //console.timeEnd('procedural selectors/dom layout changed');
         },
 
         createProceduralFilter: function(o) {
