@@ -525,7 +525,7 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
 	},
 	"POL-1": {
 		"content": "filters",
@@ -534,7 +534,7 @@
 		"title": "POL: polskie filtry do uBlocka uzupelnienie",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
-		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
 	},
 	"RUS-0": {
 		"content": "filters",
