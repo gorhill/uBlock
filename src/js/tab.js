@@ -925,7 +925,7 @@ vAPI.tabs.registerListeners();
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 701); // ADN
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
     };
 })();
 
