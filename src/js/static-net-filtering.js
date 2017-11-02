@@ -1389,6 +1389,7 @@ FilterParser.prototype.toNormalizedType = {
             'object': 'object',
              'other': 'other',
  'object-subrequest': 'object',
+ 'object_subrequest': 'object',
               'ping': 'other',
           'popunder': 'popunder',
              'popup': 'popup',
