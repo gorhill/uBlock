@@ -99,9 +99,7 @@ HNTrieBuilder.print = function(trie) {
         if ( buf[i] !== 0 ) {
             forks.push(i, indent);
         }
-        if ( buf[i+2] !== 0 ) {
-            cc.unshift(buf[i+2]);
-        }
+        cc.unshift(buf[i+2]);
         for ( ic = 0; ic < buf[i+3]; ic++ ) {
             cc.unshift(buf[i+4+ic]);
         }
@@ -123,14 +121,14 @@ HNTrieBuilder.print = function(trie) {
   Since this trie is specialized for matching hostnames, the stored strings are
   reversed internally, because of hostname comparison logic:
 
-  Correct matching :
+  Correct matching:
     index      0123456
                abc.com
                      |
            www.abc.com
     index  01234567890
 
-  Incorrect matching:
+  Incorrect matching (typically used for plain strings):
     index  0123456
            abc.com
            |
@@ -166,9 +164,9 @@ HNTrieBuilder.prototype.add = function(hn) {
     this.buf[inext+2] = c;              // character code
     this.bufsz += 3;
     if ( c === 0 ) { return; }          // character zero is always last cell
-    do {                                // new branch sprouting made from
-        i = inext;                      // all characters left to store
-        ichar -= 1;
+    do {
+        i = inext;                      // new branch sprouting made from
+        ichar -= 1;                     // all characters left to store
         c = ichar === -1 ? 0 : hn.charCodeAt(ichar);
         inext = this.bufsz;
         this.buf[i+1] = inext;
@@ -236,22 +234,22 @@ HNTrieBuilder.prototype.matches = function(needle) {
 
   Cases, before vacuuming:
 
-    abc.com, abc.org:
+    abc.com, abc.org: 16 cells
                                          *
       _ -- a -- b -- c -- . -- c -- o -- m
       _ -- a -- b -- c -- . -- o -- r -- g
 
-    abc.com, xyz.com:
+    abc.com, xyz.com: 12 cells
                      *
       _ -- a -- b -- c -- . -- c -- o -- m
       _ -- x -- y -- z
 
-    ab.com, b.com:
+    ab.com, b.com: 8 cells
            *
       _ -- a -- b -- . -- c -- o -- m
            _
 
-    b.com, ab.com:
+    b.com, ab.com: 8 cells
            *
            _ -- b -- . -- c -- o -- m
       _ -- a
@@ -273,22 +271,22 @@ HNTrieBuilder.prototype.matches = function(needle) {
 
   Cases, after vacuuming:
 
-    abc.com, abc.org:
+    abc.com, abc.org: 2 cells
               *
       [abc.co]m
       [abc.or]g
 
-    abc.com, xyz.com:
+    abc.com, xyz.com: 3 cells
           *
       [ab]c -- [.co]m
       [xy]z
 
-    ab.com, b.com:
+    ab.com, b.com: 3 cells
       *
       a -- [b.co]m
       _
 
-    b.com, ab.com:
+    b.com, ab.com: 3 cells
       *
       _ -- [b.co]m
       a
@@ -310,6 +308,11 @@ HNTrieBuilder.prototype.matches = function(needle) {
   or not) into the set of strings originally added to it (in the order they
   were added with the current implementation), but so far I do not need this
   feature.
+
+  TODO: It's possible to build the vacuumed trie on the fly as items are
+  added to it. I need to carefully list all possible cases which can arise
+  at insertion time. The benefits will be: faster creation time (expected), no
+  longer read-only trie (items can be added at any time).
 
 */
 
