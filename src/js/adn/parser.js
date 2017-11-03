@@ -53,6 +53,30 @@
       }
     }
 
+    var findBackgroundImage = function (elem) {
+         logP('FindBackgroundImage', imgs);
+
+         var attribute =  elem.style.backgroundImage ? elem.style.backgroundImage : elem.style.background;
+        
+         if ( attribute != undefined && clickableParent(elem)) {
+           var targetUrl = getTargetUrl(elem);
+           if (!targetUrl) return;
+
+           var img, src;
+           src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+           //create Image for ad size
+           img = document.createElement("img");
+           img.src = src;
+
+           createImageAd(img, src, targetUrl);
+
+         } else {
+          // TODO: go though all children
+
+         }
+     
+    }
+
     var pageCount = function (ads, pageUrl) {
 
       var num = 0;
@@ -97,7 +121,7 @@
 
     var processImage = function (img) {
 
-      var target, targetUrl, loc = window.location, targetDomain,
+      var targetUrl,
         src = img.src || img.getAttribute("src");
 
       if (!src) { // no image src
@@ -106,7 +130,28 @@
         return;
       }
 
-      target = clickableParent(img);
+      targetUrl = getTargetUrl(img);
+      if (!targetUrl) return;
+
+      // we have an image and a click-target now
+      if (img.complete) {
+        // process the image now
+        return createImageAd(img, src, targetUrl);
+      } else {
+
+        // wait for loading to finish
+        img.onload = function() {
+
+          // can't return true here, so findImageAds() will still report
+          // 'No Ads found' for the image, but a hit will be still be logged
+          // in createImageAd() below
+          createImageAd(img, src, targetUrl);
+        }
+      }
+    }
+
+    var getTargetUrl = function(elem) {
+      var target = clickableParent(elem), targetUrl;
 
       if (!target) { // no clickable parent
 
@@ -119,15 +164,16 @@
         targetUrl = target.getAttribute("href");
 
         // do we have a relative url
-        if (targetUrl.indexOf("/") === 0 ) {
+        if (targetUrl.indexOf("/") === 0) {
 
-           // in case the ad is from an iframe
-           if (target.hasAttribute('data-original-click-url')) {
+          // in case the ad is from an iframe
+          if (target.hasAttribute('data-original-click-url')) {
+            var targetDomain = parseDomain(target.getAttribute("data-original-click-url"));
+            var proto = window.location.protocol || 'http';
+            targetUrl = normalizeUrl(proto, targetDomain, targetUrl);
+          }
 
-              targetDomain = parseDomain(target.getAttribute("data-original-click-url"));
-           }
-
-           // TODO: do we want to use the pageDomain here?
+          // TODO: do we want to use the pageDomain here?
         }
 
       } else if (target.hasAttribute('onclick')) {
@@ -144,26 +190,11 @@
         return warnP("Fail: no href for anchor", target, img);
       }
 
-      // we have an image and a click-target now
-      if (img.complete) {
-
-        // process the image now
-        return createImageAd(img, src, targetUrl, targetDomain);
-
-      } else {
-
-        // wait for loading to finish
-        img.onload = function() {
-
-          // can't return true here, so findImageAds() will still report
-          // 'No Ads found' for the image, but a hit will be still be logged
-          // in createImageAd() below
-          createImageAd(img, src, targetUrl, targetDomain);
-        }
-      }
+      return targetUrl;
     }
 
-    var createImageAd = function (img, src, targetUrl, targetDomain) {
+
+    var createImageAd = function (img, src, targetUrl) {
 
       var ad, iw = img.naturalWidth || -1, ih = img.naturalHeight || -1,
         minDim = Math.min(iw, ih), maxDim = Math.max(iw, ih);
@@ -199,7 +230,7 @@
         return warnP('Ignore fbProf: ' + src + ', w='+iw);
       }
 
-      ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih }, targetDomain);
+      ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih });
 
       if (ad) {
 
@@ -300,6 +331,7 @@
           findImageAds(imgs);
         }
         else {
+          findBackgroundImage(elem);
 
           logP('No images in children of', elem);
         }
@@ -339,16 +371,11 @@
       return true;
     };
 
-    var createAd = function (network, target, data, targetDomain) {
+    var createAd = function (network, target, data) {
 
       var domain = (parent !== window) ?
         parseDomain(document.referrer) : document.domain,
         proto = window.location.protocol || 'http';
-
-      if (targetDomain !== undefined)
-        domain = targetDomain;
-
-      target = normalizeUrl(proto, domain, target);
 
       // logP('createAd:', target, isValidDomain(parseDomain(target)));
 
