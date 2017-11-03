@@ -54,12 +54,14 @@ mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox-webext.
 
 
 # CHROME-RAW
-cd ${DES}
-zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
-cd -
+#cd ${DES}
+#zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
+#cd -
 
 # NO PEMS
 mv ${DES}/*.pem /tmp
 
 ls -l artifacts
 open artifacts
+
+echo Pack/sign, then do $ cp dist/build/adnauseam.chromium.crx artifacts/adnauseam-${VERSION}.chromium.crx 
