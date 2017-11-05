@@ -1380,7 +1380,7 @@ FilterContainer.prototype.fromCompiledContent = function(
         // low generic, complex
         case 1: // #tads + div + .c
         case 3: // .Mpopup + #Mad > #MadZone
-            db = args[0] === 0 ? this.lowlyGeneric.id : this.lowlyGeneric.cl;
+            db = args[0] === 1 ? this.lowlyGeneric.id : this.lowlyGeneric.cl;
             bucket = db.complex.get(args[1]);
             if ( bucket === undefined ) {
                 if ( db.simple.has(args[1]) ) {
