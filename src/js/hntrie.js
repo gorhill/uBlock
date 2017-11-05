@@ -400,8 +400,8 @@ HNTrieBuilder.prototype.HNTrie8.prototype.matches = function(needle) {
         }
         if ( c1 === 0 ) { return true; }
         ccnt = this.buf[i+3];
-        if ( ccnt > ichar ) { return false; }
         if ( ccnt !== 0 ) {                         // cell is only one character
+            if ( ccnt > ichar ) { return false; }
             ic = ccnt; i1 = ichar-1; i2 = i+4;
             while ( ic-- && needle.charCodeAt(i1-ic) === this.buf[i2+ic] );
             if ( ic !== -1 ) { return false; }
@@ -431,8 +431,8 @@ HNTrieBuilder.prototype.HNTrie16.prototype.matches = function(needle) {
         }
         if ( c1 === 0 ) { return true; }
         ccnt = this.buf[i+3];
-        if ( ccnt > ichar ) { return false; }
         if ( ccnt !== 0 ) {                         // cell is only one character
+            if ( ccnt > ichar ) { return false; }
             ic = ccnt; i1 = ichar-1; i2 = i+4;
             while ( ic-- && needle.charCodeAt(i1-ic) === this.buf[i2+ic] );
             if ( ic !== -1 ) { return false; }
@@ -462,8 +462,8 @@ HNTrieBuilder.prototype.HNTrie32.prototype.matches = function(needle) {
         }
         if ( c1 === 0 ) { return true; }
         ccnt = this.buf[i+3];
-        if ( ccnt > ichar ) { return false; }
         if ( ccnt !== 0 ) {                         // cell is only one character
+            if ( ccnt > ichar ) { return false; }
             ic = ccnt; i1 = ichar-1; i2 = i+4;
             while ( ic-- && needle.charCodeAt(i1-ic) === this.buf[i2+ic] );
             if ( ic !== -1 ) { return false; }
