@@ -505,7 +505,7 @@ var renderPopup = function() {
 // https://github.com/gorhill/uBlock/issues/2889
 //   Use tooltip for ARIA purpose.
 
-var renderTooltips = function() {
+var renderTooltips = function(selector) {
     var elem = uDom.nodeFromId('switch'),
         off = document.body.classList.contains('off'),
         text;
@@ -517,6 +517,10 @@ var renderTooltips = function() {
         text = vAPI.i18n('popupPowerSwitchOffInfo');
         elem.setAttribute('aria-label', text);
         elem.setAttribute('data-tip', text);
+    }
+    if ( typeof selector === 'string' ) {
+        uDom.nodeFromId('tooltip').textContent =
+            uDom.nodeFromSelector(selector).getAttribute('data-tip');
     }
 };
 
@@ -621,7 +625,7 @@ var toggleNetFilteringSwitch = function(ev) {
             tabId: popupData.tabId
         }
     );
-    renderTooltips();
+    renderTooltips('#switch');
     hashFromPopupData();
 };
 
