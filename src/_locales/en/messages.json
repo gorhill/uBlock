@@ -48,11 +48,11 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchOffInfo":{
-    "message":"Click to disable uBO for this site.\n\nCtrl+click to disable uBO only on this page.",
+    "message":"Click to disable uB₀ for this site.\n\nCtrl+click to disable uB₀ only on this page.",
     "description":"Message to be read by screen readers"
   },
   "popupPowerSwitchOnInfo":{
-    "message":"Click to enable uBO for this site.",
+    "message":"Click to enable uB₀ for this site.",
     "description":"Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt":{
@@ -68,7 +68,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"since installation",
     "description":"English: since install"
   },
   "popupOr":{
@@ -108,11 +108,11 @@
     "description":"Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules":{
-    "message":"Global rules: this column is for rules which apply to all sites.",
+    "message":"Global rules: Rules in this column apply to all sites.",
     "description":"Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules":{
-    "message":"Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message":"Local rules: Rules in this column only apply to the current site.\nLocal rules override global rules.",
     "description":"Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules":{
@@ -305,7 +305,7 @@
   },
   "3pIgnoreGenericCosmeticFilters":{
     "message":"Ignore generic cosmetic filters",
-    "description":"This will cause uBO to ignore all generic cosmetic filters."
+    "description":"This will cause uB₀ to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo":{
     "message":"<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
@@ -360,7 +360,7 @@
     "description":"used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating":{
-    "message":"Updating...",
+    "message":"Updating…",
     "description":"used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError":{
@@ -416,16 +416,16 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file...",
-    "description": ""
+    "message": "Import from file…",
+    "description": "imports rules from a file selected by the user"
   },
   "rulesExport": {
     "message": "Export to file",
-    "description": ""
+    "description": "exports rules to a file selected by the user"
   },
   "rulesDefaultFileName": {
     "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
-    "description": "default file name to use"
+    "description": "default filename to use"
   },
   "rulesHint": {
     "message": "List of your dynamic filtering rules.",
@@ -433,10 +433,10 @@
   },
   "rulesFormatHint": {
     "message": "Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
-    "description": "English: dynamic rule syntax and full documentation."
+    "description": "English: Dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"The whitelist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
+    "message":"The whitelist directives dictate which webpages uBlock Origin should be disabled for. One entry per line. Invalid directives will be silently ignored and commented out.",
     "description":"English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport":{
@@ -476,7 +476,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"Behind the scenes",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -544,12 +544,12 @@
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
-    "message":"Change log",
-    "description":"English: Change log"
+    "message":"Changelog",
+    "description":"English: Changelog"
   },
   "aboutWiki":{
     "message":"Wiki",
-    "description":"English: project' wiki on Github"
+    "description":"English: project' wiki on GitHub"
   },
   "aboutSupport":{
     "message":"Support",
@@ -572,12 +572,12 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton" : {
-    "message": "Restore from file...",
-    "description": "English: Restore from file..."
+    "message": "Restore from file…",
+    "description": "English: Restore from file…"
   },
   "aboutResetDataButton" : {
-    "message": "Reset to default settings...",
-    "description": "English: Reset to default settings..."
+    "message": "Reset to default settings…",
+    "description": "English: Reset to default settings…"
   },
   "aboutRestoreDataConfirm" : {
     "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
@@ -601,7 +601,7 @@
   },
   "elapsedOneMinuteAgo":{
     "message":"a minute ago",
-    "description":"English: a minute ago"
+    "description":"English: A minute ago"
   },
   "elapsedManyMinutesAgo":{
     "message":"{{value}} minutes ago",
@@ -609,7 +609,7 @@
   },
   "elapsedOneHourAgo":{
     "message":"an hour ago",
-    "description":"English: an hour ago"
+    "description":"English: An hour ago"
   },
   "elapsedManyHoursAgo":{
     "message":"{{value}} hours ago",
@@ -617,7 +617,7 @@
   },
   "elapsedOneDayAgo":{
     "message":"a day ago",
-    "description":"English: a day ago"
+    "description":"English: A day ago"
   },
   "elapsedManyDaysAgo":{
     "message":"{{value}} days ago",
@@ -661,7 +661,7 @@
   },
   "docblockedProceed": {
     "message": "Disable strict blocking for {{hostname}}",
-    "description": "English: Disable strict blocking for {{hostname}} ..."
+    "description": "English: Disable strict blocking for {{hostname}} …"
   },
   "docblockedDisableTemporary": {
     "message": "Temporarily",
@@ -684,7 +684,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -709,7 +709,7 @@
   },
   "genericBytes": {
     "message": "bytes",
-    "description": ""
+    "description": "a unit of measure for file storage"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Temporarily allow large media elements",
