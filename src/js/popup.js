@@ -401,25 +401,26 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
+    var elem, text;
+
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    uDom('body')
-        .toggleClass('advancedUser', popupData.advancedUserEnabled)
-        .toggleClass(
-            'off',
-            (popupData.pageURL === '') ||
-            (!popupData.netFilteringSwitch) ||
-            (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled)
-        );
+    elem = document.body;
+    elem.classList.toggle('advancedUser', popupData.advancedUserEnabled);
+    elem.classList.toggle(
+        'off',
+        popupData.pageURL === '' ||
+        !popupData.netFilteringSwitch ||
+        popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled
+    );
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', popupData.canElementPicker === true);
 
-    var text,
-        blocked = popupData.pageBlockedRequestCount,
+    var blocked = popupData.pageBlockedRequestCount,
         total = popupData.pageAllowedRequestCount + blocked;
     if ( total === 0 ) {
         text = formatNumber(0);
@@ -486,13 +487,36 @@ var renderPopup = function() {
     }
 
     uDom.nodeFromId('panes').classList.toggle('dfEnabled', dfPaneVisible);
-    uDom('#firewallContainer')
-        .toggleClass('minimized', popupData.firewallPaneMinimized)
-        .toggleClass('colorBlind', popupData.colorBlindFriendly);
+
+    elem = uDom.nodeFromId('firewallContainer');
+    elem.classList.toggle('minimized', popupData.firewallPaneMinimized);
+    elem.classList.toggle('colorBlind', popupData.colorBlindFriendly);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
         buildAllFirewallRows();
+    }
+
+    renderTooltips();
+};
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/2889
+//   Use tooltip for ARIA purpose.
+
+var renderTooltips = function() {
+    var elem = uDom.nodeFromId('switch'),
+        off = document.body.classList.contains('off'),
+        text;
+    if ( off ) {
+        text = vAPI.i18n('popupPowerSwitchOnInfo');
+        elem.setAttribute('aria-label', text);
+        elem.setAttribute('data-tip', text);
+    } else {
+        text = vAPI.i18n('popupPowerSwitchOffInfo');
+        elem.setAttribute('aria-label', text);
+        elem.setAttribute('data-tip', text);
     }
 };
 
@@ -580,10 +604,11 @@ messaging.addChannelListener('popup', onPopupMessage);
 /******************************************************************************/
 
 var toggleNetFilteringSwitch = function(ev) {
-    if ( !popupData || !popupData.pageURL ) {
-        return;
-    }
-    if ( popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled ) {
+    if ( !popupData || !popupData.pageURL ) { return; }
+    if (
+        popupData.pageHostname === 'behind-the-scene' &&
+        !popupData.advancedUserEnabled
+    ) {
         return;
     }
     messaging.send(
@@ -596,7 +621,7 @@ var toggleNetFilteringSwitch = function(ev) {
             tabId: popupData.tabId
         }
     );
-
+    renderTooltips();
     hashFromPopupData();
 };
 

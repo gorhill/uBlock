@@ -47,6 +47,14 @@
     "message":"Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
+  "popupPowerSwitchOffInfo":{
+    "message":"Click to disable uBO for this site.\n\nCtrl+click to disable uBO only on this page.",
+    "description":"Message to be read by screen readers"
+  },
+  "popupPowerSwitchOnInfo":{
+    "message":"Click to enable uBO for this site.",
+    "description":"Message to be read by screen readers"
+  },
   "popupBlockedRequestPrompt":{
     "message":"requests blocked",
     "description":"English: requests blocked"
