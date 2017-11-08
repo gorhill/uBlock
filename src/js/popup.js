@@ -506,23 +506,60 @@ var renderPopup = function() {
 //   Use tooltip for ARIA purpose.
 
 var renderTooltips = function(selector) {
-    var elem = uDom.nodeFromId('switch'),
-        off = document.body.classList.contains('off'),
-        text;
-    if ( off ) {
-        text = vAPI.i18n('popupPowerSwitchOnInfo');
+    var elem, text;
+    for ( var entry of tooltipTargetSelectors ) {
+        if ( selector !== undefined && entry[0] !== selector ) { continue; }
+        text = vAPI.i18n(
+            entry[1].i18n +
+            (uDom.nodeFromSelector(entry[1].state) === null ? '1' : '2')
+        );
+        elem = uDom.nodeFromSelector(entry[0]);
         elem.setAttribute('aria-label', text);
         elem.setAttribute('data-tip', text);
-    } else {
-        text = vAPI.i18n('popupPowerSwitchOffInfo');
-        elem.setAttribute('aria-label', text);
-        elem.setAttribute('data-tip', text);
-    }
-    if ( typeof selector === 'string' ) {
-        uDom.nodeFromId('tooltip').textContent =
-            uDom.nodeFromSelector(selector).getAttribute('data-tip');
+        if ( selector !== undefined ) {
+            uDom.nodeFromId('tooltip').textContent =
+                elem.getAttribute('data-tip');
+        }
     }
 };
+
+var tooltipTargetSelectors = new Map([
+    [
+        '#switch',
+        {
+            state: 'body.off',
+            i18n: 'popupPowerSwitchInfo',
+        }
+    ],
+    [
+        '#no-popups',
+        {
+            state: '#no-popups.on',
+            i18n: 'popupTipNoPopups'
+        }
+    ],
+    [
+        '#no-large-media',
+        {
+            state: '#no-large-media.on',
+            i18n: 'popupTipNoLargeMedia'
+        }
+    ],
+    [
+        '#no-cosmetic-filtering',
+        {
+            state: '#no-cosmetic-filtering.on',
+            i18n: 'popupTipNoCosmeticFiltering'
+        }
+    ],
+    [
+        '#no-remote-fonts',
+        {
+            state: '#no-remote-fonts.on',
+            i18n: 'popupTipNoRemoteFonts'
+        }
+    ]
+]);
 
 /******************************************************************************/
 
@@ -891,9 +928,7 @@ var revertFirewallRules = function() {
 var toggleHostnameSwitch = function(ev) {
     var target = ev.currentTarget;
     var switchName = target.getAttribute('id');
-    if ( !switchName ) {
-        return;
-    }
+    if ( !switchName ) { return; }
     target.classList.toggle('on');
     messaging.send(
         'popupPanel',
@@ -905,6 +940,7 @@ var toggleHostnameSwitch = function(ev) {
             tabId: popupData.tabId
         }
     );
+    renderTooltips('#' + switchName);
     hashFromPopupData();
 };
 
