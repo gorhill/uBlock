@@ -302,11 +302,13 @@ var onBeforeRootFrameRequest = function(details) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3208
+//   Mind case insensitivity.
 var toBlockDocResult = function(url, hostname, logData) {
     if ( typeof logData.regex !== 'string' ) { return; }
-    var re = new RegExp(logData.regex),
+    var re = new RegExp(logData.regex, 'i'),
         match = re.exec(url.toLowerCase());
-    if ( match === null ) { return ''; }
+    if ( match === null ) { return false; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
