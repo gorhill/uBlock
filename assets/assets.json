@@ -91,7 +91,7 @@
 		"contentURL": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-ubo.txt",
 		"supportURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont/issues",
 		"instructionURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont#installation-instruction"
-		},
+    },
 	"awrl-0": {
 		"content": "filters",
 		"group": "ads",
@@ -107,7 +107,16 @@
 		"title": "Adguard Base Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#english-filter"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-mobile": {
+		"content": "filters",
+		"group": "ads",
+		"off": true,
+		"title": "Adguard Mobile Filters",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/11.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"easylist": {
 		"content": "filters",
@@ -129,7 +138,7 @@
 		"title": "Adguard Spyware Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#privacy"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"easyprivacy": {
 		"content": "filters",
@@ -202,7 +211,7 @@
 		"title": "Adguard’s Annoyance List",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#annoyances-filter"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"fanboy-thirdparty_social": {
 		"content": "filters",
@@ -471,7 +480,7 @@
 		"lang": "ja",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#japanese-filter"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"KOR-0": {
 		"content": "filters",
@@ -573,7 +582,7 @@
 		"lang": "es pt",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#spanish"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"SVN-0": {
 		"content": "filters",
@@ -601,7 +610,7 @@
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#turkish"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"VIE-1": {
 		"content": "filters",
