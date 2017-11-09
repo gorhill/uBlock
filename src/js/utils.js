@@ -347,18 +347,6 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/2344
-
-µBlock.matchCurrentLanguage = function(s) {
-    if ( typeof s !== 'string' ) { return false; }
-    if ( this.matchCurrentLanguage.reLang === undefined ) {
-        this.matchCurrentLanguage.reLang = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
-    }
-    return this.matchCurrentLanguage.reLang.test(s);
-};
-
-/******************************************************************************/
-
 µBlock.MRUCache = function(size) {
     this.size = size;
     this.array = [];
@@ -393,6 +381,14 @@
         this.array = [];
         this.map.clear();
     }
+};
+
+/******************************************************************************/
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+
+µBlock.escapeRegex = function(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 /******************************************************************************/
