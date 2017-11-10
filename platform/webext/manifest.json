@@ -60,7 +60,8 @@
    "description":"__MSG_extShortDesc__",
    "icons":{
       "16":"img/icon_16.png",
-      "128":"img/icon_128.png"
+      "48":"img/ublock.svg",
+      "96":"img/ublock.svg"
    },
    "manifest_version":2,
    "name":"uBlock Origin",
