@@ -1223,6 +1223,7 @@
         switch ($(this).attr("data-action")) {
 
         case "delete":
+          var lastBrush = $('g.brush');
 
           var ids = selectedAdSet.childIds(),
             $item = findItemDivByGid(selectedAdSet.gid);
@@ -1248,8 +1249,9 @@
             ids: selectedAdSet.childIds()
           });
 
+          
           // recreate the slider, but don't redo layout
-          createSlider(false);
+          createSlider(false, lastBrush);
 
           break;
         }
@@ -1364,7 +1366,7 @@
 
   /********************************************************************/
 
-  function createSlider(relayout) {
+  function createSlider(relayout, lastBrush) {
 
     // console.log('Vault-Slider.createSlider: '+gAds.length);
 
@@ -1490,12 +1492,14 @@
       .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 1,0.5; stroke: #999");
 
     // setup the brush
-    var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
+     var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
       brush = d3.svg.brush()
       .x(xScale)
       .extent(bExtent)
       .on("brushend", brushend);
 
+    if (!lastBrush) {
+   
     // add the brush
     var gBrush = svg.append("g")
       .attr("class", "brush")
@@ -1512,7 +1516,6 @@
     // gBrush.selectAll("rect")
     //   .attr("y", -50);
 
-
     // attach handle image
     gBrush.selectAll(".resize").append("image")
       .attr("xlink:href","../img/timeline-handle.svg")
@@ -1520,6 +1523,10 @@
       .attr("height", 50)
       .attr("y", -50)
       .attr("x", -3);
+
+    } else {
+      $('#svgcon svg > g').append(lastBrush);
+    }
 
     // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
 
