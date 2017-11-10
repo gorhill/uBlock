@@ -54,7 +54,7 @@
     }
 
     var findBackgroundImage = function (elem) {
-         logP('FindBackgroundImage', imgs);
+         logP('FindBackgroundImage');
 
          var attribute =  elem.style.backgroundImage ? elem.style.backgroundImage : elem.style.background;
         

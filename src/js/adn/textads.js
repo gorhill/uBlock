@@ -156,7 +156,7 @@
 
     var googleText = function (li) {
 
-      var ad, title = $find(li, 'h3 a'),
+      var ad, title = $find(li, 'h3 a[onmousedown]'),
         text = $find(li, '.ads-creative'),
         site = $find(li, '.ads-visurl cite');
 
