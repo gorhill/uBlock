@@ -557,12 +557,16 @@
     $('.since').text(sinceTime(adsets));
     $('#clicked').text(numVisits);
     $('#total').text(numTotal());
-    $('#detected').text(numFound(adsets));
-    if(numTotal() != numFound(adsets))
+    $('#detected').text(numVisible());
+    if(numTotal() != numVisible())
       $('.showing').show();
     else
       $('.showing').hide();
     setCost(numVisits);
+  }
+
+  function numVisible() {
+    return $('.item').length;
   }
 
   function numVisited(adsets) {
