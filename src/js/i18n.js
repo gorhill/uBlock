@@ -165,7 +165,7 @@ vAPI.i18n.render = function(context) {
                    .replace(/<br>/g, '\n')
                    .replace(/\n{3,}/g, '\n\n');
         elem.setAttribute('data-tip', text);
-        if ( elem.getAttribute('aria-label') === 'data-i18n-tip' ) {
+        if ( elem.getAttribute('aria-label') === 'data-tip' ) {
             elem.setAttribute('aria-label', text);
         }
     }
