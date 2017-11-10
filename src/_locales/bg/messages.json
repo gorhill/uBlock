@@ -44,15 +44,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Щракване: изключва\/включва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
+    "message": "Щракване: изключва\/включва uBO за този сайт.\n\nCtrl + щракване: изключва uBO само за тази страница.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Щракване: забранява uBO за този сайт.\n\nCtrl + щракване: забранява uBO само за тази страница.",
+    "message": "Щракване: изключва uBO за този сайт.\n\nCtrl + щракване: изключва uBO само за тази страница.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Щракнете, за да разрешите uBO за този сайт.",
+    "message": "Щракнете, за да включите uBO за този сайт.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -68,7 +68,7 @@
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "от инсталацията",
+    "message": "досега",
     "description": "English: since install"
   },
   "popupOr": {
@@ -80,7 +80,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Премахване на отделен елемент",
+    "message": "Временно блокиране на отделен елемент",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -100,7 +100,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Щракнете, за да не блокирате повече всички изскачащи прозорци за този сайт",
+    "message": "Щракнете, за да разрешите всички изскачащи прозорци за този сайт",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -112,7 +112,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Щракнете, за да не блокирате повече големите мултимедийни елементи за този сайт",
+    "message": "Щракнете, за да разрешите големите мултимедийни елементи за този сайт",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Щракнете, за да не блокирате повече външните шрифтове за този сайт",
+    "message": "Щракнете, за да разрешите външните шрифтове за този сайт",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -612,7 +612,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Всички ваши настройки ще бъдат заместени с помощта на данни, архивирани на {{time}} и uBlock₀ ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивираните данни?",
+    "message": "Всички ваши настройки ще бъдат презаписани с данни, архивирани на {{time}} и uBlock₀ ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивираните данни?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {

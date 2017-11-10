@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Hier klicken, um Remote-Schriftarten für diese Seite zu blockieren",
+    "message": "Hier klicken, um Remote-Schriftarten auf dieser Website zu blockieren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Hier klicken, um Remote-Schriftarten für diese Seite nicht mehr zu blockieren",
+    "message": "Hier klicken, um Remote-Schriftarten auf dieser Website nicht mehr zu blockieren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Dieses Standardverhalten kann für jede Seite angepasst werden",
+    "message": "Dieses Standardverhalten kann für jede Webseite angepasst werden",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
