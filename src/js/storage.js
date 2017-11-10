@@ -295,7 +295,7 @@
             return haystack.replace(
                 new RegExp(
                     '(^|\\n)' +
-                    this.escapeRegex(needle) +
+                    µb.escapeRegex(needle) +
                     '(\\n|$)', 'g'),
                 '\n'
             ).trim();
