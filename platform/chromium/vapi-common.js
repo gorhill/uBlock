@@ -68,6 +68,7 @@ vAPI.download = function(details) {
 /******************************************************************************/
 
 vAPI.getURL = chrome.runtime.getURL;
+vAPI.getViews = chrome.extension.getViews; // ADN
 
 /******************************************************************************/
 

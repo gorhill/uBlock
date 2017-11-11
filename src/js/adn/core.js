@@ -323,6 +323,11 @@
     return pending;
   }
 
+  var isPopupOpen = function () {
+
+    return vAPI.getViews({ type: "popup" }).length;
+  }
+
   var getExtPageTabId = function (htmlPage) {
 
     var pageUrl = vAPI.getURL(htmlPage);
@@ -1017,14 +1022,19 @@
 
     log('[FOUND] ' + adinfo(ad), ad);
 
-    // if vault/menu is open, send the new ad
-    var json = adsForUI(ad.pageUrl);
-    json.what = 'adDetected';
-    json.ad = ad;
+    var vaultOpen = typeof getExtPageTabId('vault.html') !== 'undefined';
+    if (vaultOpen || isPopupOpen()) {
 
-    //if (automatedMode) json.automated = true; // not used ?
+      // if vault/menu is open, send the new ad
+      var json = adsForUI(ad.pageUrl);
+      json.what = 'adDetected';
+      json.ad = ad;
 
-    vAPI.messaging.broadcast(json);
+      //if (automatedMode) json.automated = true; // not used ?
+
+      vAPI.messaging.broadcast(json);
+    }
+    // else console.log('[FOUND] !Broadcast: no menu or vault');
 
     if (µb.userSettings.showIconBadge)
       µb.updateBadgeAsync(tabId);
