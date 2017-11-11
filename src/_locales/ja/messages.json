@@ -744,7 +744,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "一時的に大きなメディア要素を許可",
+    "message": "一時的に大部分のメディア要素を許可",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy": {
