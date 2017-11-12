@@ -1092,6 +1092,7 @@ var filterChoiceFromEvent = function(ev) {
 /******************************************************************************/
 
 var onDialogClicked = function(ev) {
+    if ( ev.isTrusted === false ) { return; }
 
     // If the dialog is hidden, clicking on it force it to become visible.
     if ( dialog.classList.contains('hide') ) {
@@ -1310,7 +1311,8 @@ var onSvgTouchStartStop = (function() {
                 type: 'touch',
                 target: ev.target,
                 clientX: ev.changedTouches[0].pageX,
-                clientY: ev.changedTouches[0].pageY
+                clientY: ev.changedTouches[0].pageY,
+                isTrusted: ev.isTrusted
             });
             ev.preventDefault();
             return;
@@ -1346,6 +1348,8 @@ var onSvgTouchStartStop = (function() {
 /******************************************************************************/
 
 var onSvgClicked = function(ev) {
+    if ( ev.isTrusted === false ) { return; }
+
     // If zap mode, highlight element under mouse, this makes the zapper usable
     // on touch screens.
     if ( pickerBody.classList.contains('zap') ) {
