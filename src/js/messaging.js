@@ -493,9 +493,7 @@ var onMessage = function(request, sender, callback) {
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             response = {
                 collapseBlocked: µb.userSettings.collapseBlocked,
-                noCosmeticFiltering:
-                    µb.cosmeticFilteringEngine.acceptedCount === 0 ||
-                    pageStore.noCosmeticFiltering === true,
+                noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
                 noGenericCosmeticFiltering:
                     pageStore.noGenericCosmeticFiltering === true
             };
