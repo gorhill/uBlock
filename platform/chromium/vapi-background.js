@@ -726,7 +726,7 @@ vAPI.setIcon = (function() {
     var browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
 
-    return function(tabId, iconStatus, badge) {
+    return function(tabId, iconStatus, badge, color) {
 
         var iconPaths; // ADN
 
@@ -764,9 +764,10 @@ vAPI.setIcon = (function() {
                         text: badge
                     });
                     if ( badge !== '' ) {
+
                         chrome.browserAction.setBadgeBackgroundColor({
                             tabId: tabId,
-                            color: '#666'
+                            color: color ? color : '#666'
                         });
                     }
                 }

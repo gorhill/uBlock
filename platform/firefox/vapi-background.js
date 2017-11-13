@@ -1538,7 +1538,7 @@ var tabWatcher = (function() {
 
 /******************************************************************************/
 
-vAPI.setIcon = function(tabId, iconStatus, badge) {
+vAPI.setIcon = function(tabId, iconStatus, badge, color) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var win = badge === undefined
         ? iconStatus
