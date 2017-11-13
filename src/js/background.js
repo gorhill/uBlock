@@ -54,6 +54,7 @@ var µBlock = (function() { // jshint ignore:line
             dntDomains: [],
             parseTextAds: true,
             eventLogging: false,
+            badgeBlockingCount: false,
 
             hidingAds: false,
             clickingAds: false,
