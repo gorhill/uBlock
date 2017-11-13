@@ -76,7 +76,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "Kattintson ide a vezérlőpult megnyitásához",
+    "message": "Vezérlőpult megnyitása",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -112,7 +112,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Kattints a nagyméretű médiaelemek blokkolásának visszavonásához ezen a webhelyen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Kattints a kozmetikai szűrés kikapcsolásához ezen a webhelyen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Kattints a kozmetikai szűrés bekapcsolásához ezen a webhelyen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Kattints a távoli fontok blokkolásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Kattints a távoli fontok blokkolásának visszavonásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
