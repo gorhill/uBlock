@@ -199,7 +199,7 @@
           what: 'closeExtPage',
           page: 'firstrun.html'
         }, function(n) {
-          console.log('closeExtPage done', n);
+          // console.log('closeExtPage done', n);
         });
       }
     });
