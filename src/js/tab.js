@@ -896,7 +896,6 @@ vAPI.tabs.registerListeners();
 
         var state = false;
         var badge = '';
-        var color;
 
         var pageStore = this.pageStoreFromTabId(tabId),
             pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
@@ -907,8 +906,7 @@ vAPI.tabs.registerListeners();
 
             if (state && this.userSettings.showIconBadge) {
 
-                var count = µb.userSettings.badgeBlockingCount ? pageStore.perLoadBlockedRequestCount : µb.adnauseam.currentCount(pageStore.rawURL); // ADN
-                color = µb.userSettings.badgeBlockingCount ? '#AA0114': '#0076FF';
+                var count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
                 badge = this.formatCount(count);
             }
         }
@@ -917,7 +915,7 @@ vAPI.tabs.registerListeners();
         if (iconStatus !== 'off') {
             iconStatus += (isClick ? 'active' : '');
         }
-        vAPI.setIcon(tabId, iconStatus, badge, color);
+        vAPI.setIcon(tabId, iconStatus, badge);
     };
 
     return function(tabId, isClick) {

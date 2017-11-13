@@ -82,7 +82,7 @@
 
   var changeUserSettings = function (name, value) {
 
-    // console.log('changeUserSettings',name, value);
+    //console.log('changeUserSettings',name, value);
 
     messager.send('dashboard', {
       what: 'userSettings',
@@ -155,6 +155,7 @@
       //updateSubgroupState(name, value);
 
       selection.val(details.clickProbability);
+
       uNode.prop('checked', value === true)
         .on('change', function () {
           changeUserSettings(

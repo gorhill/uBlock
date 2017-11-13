@@ -370,14 +370,5 @@
   "eventLoggingPrompt": {
     "message": "Activate debugging mode",
     "description": "prompt for toggle"
-  },
-  "adnShowBlockingInBadge": {
-    "message": "Show block ements in badge",
-    "description": "appears in ADN settings"
-  },
-    "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
-    "description": "appears in ADN settings"
   }
-
 }
