@@ -20,8 +20,8 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</em:id>
-                <em:minVersion>24.0</em:minVersion>
-                <em:maxVersion>57.0a1</em:maxVersion>
+                <em:minVersion>32.0</em:minVersion>
+                <em:maxVersion>56.0a1</em:maxVersion>
             </Description>
         </em:targetApplication>
 
@@ -29,8 +29,8 @@
         <em:targetApplication>
             <Description>
                 <em:id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</em:id>
-                <em:minVersion>27.0</em:minVersion>
-                <em:maxVersion>57.0a1</em:maxVersion>
+                <em:minVersion>32.0</em:minVersion>
+                <em:maxVersion>56.0a1</em:maxVersion>
             </Description>
         </em:targetApplication>
 
