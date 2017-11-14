@@ -222,7 +222,11 @@ vAPI.DOMFilterer.prototype = {
 
         vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         this.commit();
-        this.triggerListeners('declarative', selectorsStr);
+        if ( this.hasListeners() ) {
+            this.triggerListeners({
+                declarative: [ [ selectorsStr, declarations ] ]
+            });
+        }
 
         if ( declarations !== 'display:none!important;' ) {
             this.specificOthers.push({
@@ -309,10 +313,14 @@ vAPI.DOMFilterer.prototype = {
         this.listeners.splice(pos, 1);
     },
 
-    triggerListeners: function(type, selectors) {
+    hasListeners: function() {
+        return this.listeners.length !== 0;
+    },
+
+    triggerListeners: function(changes) {
         var i = this.listeners.length;
         while ( i-- ) {
-            this.listeners[i].onFiltersetChanged(type, selectors);
+            this.listeners[i].onFiltersetChanged(changes);
         }
     },
 
@@ -459,37 +467,59 @@ vAPI.DOMFilterer.prototype = {
         }
     },
 
-    getAllDeclarativeSelectors_: function(all) {
-        var out = [];
+    getAllSelectors_: function(all) {
+        var out = {
+            declarative: []
+        };
         if ( this.specificSimpleHide.size !== 0 ) {
-            out.push(Array.from(this.specificSimpleHide).join(',\n'));
+            out.declarative.push([
+                Array.from(this.specificSimpleHide).join(',\n'),
+                'display:none!important;'
+            ]);
         }
         if ( this.specificComplexHide.size !== 0 ) {
-            out.push(Array.from(this.specificComplexHide).join(',\n'));
+            out.declarative.push([
+                Array.from(this.specificComplexHide).join(',\n'),
+                'display:none!important;'
+            ]);
         }
         if ( this.genericSimpleHide.size !== 0 ) {
-            out.push(Array.from(this.genericSimpleHide).join(',\n'));
+            out.declarative.push([
+                Array.from(this.genericSimpleHide).join(',\n'),
+                'display:none!important;'
+            ]);
         }
         if ( this.genericComplexHide.size !== 0 ) {
-            out.push(Array.from(this.genericComplexHide).join(',\n'));
+            out.declarative.push([
+                Array.from(this.genericComplexHide).join(',\n'),
+                'display:none!important;'
+            ]);
         }
         if ( all ) {
-            out.push('[' + this.hideNodeAttr + ']');
+            out.declarative.push([
+                '[' + this.hideNodeAttr + ']',
+                'display:none!important;'
+            ]);
         }
         for ( var entry of this.specificOthers ) {
-            out.push(entry.selectors);
+            out.declarative.push([ entry.selectors, entry.declarations ]);
         }
-        return out.join(',\n');
+        return out;
     },
 
     getFilteredElementCount: function() {
-        var selectors = this.getAllDeclarativeSelectors_(true);
+        var details = this.getAllSelectors_(true);
+        if ( Array.isArray(details.declarative) === false ) { return 0; }
+        var selectors = details.declarative.reduce(function(acc, entry) {
+            acc.push(entry[0]);
+            return acc;
+        }, []);
         if ( selectors.length === 0 ) { return 0; }
-        return document.querySelectorAll(selectors).length;
+        return document.querySelectorAll(selectors.join(',\n')).length;
     },
 
-    getAllDeclarativeSelectors: function() {
-        return this.getAllDeclarativeSelectors_();
+    getAllSelectors: function() {
+        return this.getAllSelectors_(false);
     }
 };
 

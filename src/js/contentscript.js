@@ -571,10 +571,11 @@ vAPI.DOMFilterer = (function() {
             }
             if ( mustCommit === false ) { return; }
             this.domFilterer.commit();
-            this.domFilterer.triggerListeners(
-                'procedural',
-                new Map(this.addedSelectors)
-            );
+            if ( this.domFilterer.hasListeners() ) {
+                this.domFilterer.triggerListeners({
+                    procedural: Array.from(this.addedSelectors.values())
+                });
+            }
         },
 
         commitNow: function() {
@@ -696,8 +697,10 @@ vAPI.DOMFilterer = (function() {
         return this.proceduralFilterer.createProceduralFilter(o);
     };
 
-    domFilterer.prototype.getAllProceduralSelectors = function() {
-        return new Map(this.proceduralFilterer.selectors);
+    domFilterer.prototype.getAllSelectors = function() {
+        var out = DOMFiltererBase.prototype.getAllSelectors.call(this);
+        out.procedural = Array.from(this.proceduralFilterer.selectors.values());
+        return out;
     };
 
     domFilterer.prototype.getAllExceptionSelectors = function() {

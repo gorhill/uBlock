@@ -80,8 +80,7 @@ vAPI.DOMFilterer.prototype = {
     // - Notifying listeners about changed filterset.
     commitNow: function() {
         this.commitTimer.clear();
-        var userStylesheet = vAPI.userStylesheet,
-            addedSelectors = [];
+        var userStylesheet = vAPI.userStylesheet;
         for ( var entry of this.addedCSSRules ) {
             if (
                 this.disabled === false &&
@@ -92,13 +91,9 @@ vAPI.DOMFilterer.prototype = {
                     entry.selectors + '\n{' + entry.declarations + '}'
                 );
             }
-            addedSelectors.push(entry.selectors);
         }
         this.addedCSSRules.clear();
         userStylesheet.apply();
-        if ( addedSelectors.length !== 0 ) {
-            this.triggerListeners('declarative', addedSelectors.join(',\n'));
-        }
     },
 
     commit: function(commitNow) {
@@ -133,6 +128,11 @@ vAPI.DOMFilterer.prototype = {
             vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
         this.commit();
+        if ( this.hasListeners() ) {
+            this.triggerListeners({
+                declarative: [ [ selectorsStr, declarations ] ]
+            });
+        }
     },
 
     addListener: function(listener) {
@@ -146,10 +146,14 @@ vAPI.DOMFilterer.prototype = {
         this.listeners.splice(pos, 1);
     },
 
-    triggerListeners: function(type, selectors) {
+    hasListeners: function() {
+        return this.listeners.length !== 0;
+    },
+
+    triggerListeners: function(changes) {
         var i = this.listeners.length;
         while ( i-- ) {
-            this.listeners[i].onFiltersetChanged(type, selectors);
+            this.listeners[i].onFiltersetChanged(changes);
         }
     },
 
@@ -196,29 +200,30 @@ vAPI.DOMFilterer.prototype = {
         userStylesheet.apply();
     },
 
-    getAllDeclarativeSelectors_: function(all) {
-        let selectors = [];
+    getAllSelectors_: function(all) {
+        var out = {
+            declarative: []
+        };
         for ( var entry of this.filterset ) {
             if ( all === false && entry.internal ) { continue; }
-            selectors.push(entry.selectors);
-        }
-        var out = selectors.join(',\n');
-        if ( !all && this.hideNodeAttr !== undefined ) {
-            out = out.replace('[' + this.hideNodeAttr + ']', '')
-                     .replace(/^,\n|\n,|,\n$/, '');
+            out.declarative.push([ entry.selectors, entry.declarations ]);
         }
         return out;
     },
 
     getFilteredElementCount: function() {
-        let selectors = this.getAllDeclarativeSelectors_(true);
-        return selectors.length !== 0
-            ? document.querySelectorAll(selectors).length
-            : 0;
+        let details = this.getAllSelectors_(true);
+        if ( Array.isArray(details.declarative) === false ) { return 0; }
+        let selectors = details.declarative.reduce(function(acc, entry) {
+            acc.push(entry[0]);
+            return acc;
+        }, []);
+        if ( selectors.length === 0 ) { return 0; }
+        return document.querySelectorAll(selectors.join(',\n')).length;
     },
 
-    getAllDeclarativeSelectors: function() {
-        return this.getAllDeclarativeSelectors_(false);
+    getAllSelectors: function() {
+        return this.getAllSelectors_(false);
     }
 };
 

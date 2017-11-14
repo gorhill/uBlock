@@ -693,43 +693,42 @@ var cosmeticFilterMapper = (function() {
 
     var nodesFromStyleTag = function(rootNode) {
         var filterMap = roRedNodes,
-            selectors, selector,
-            nodes, node,
-            i, j;
+            entry, selector, canonical, nodes, node;
+
+        var details = vAPI.domFilterer.getAllSelectors();
 
         // Declarative selectors.
-        selectors = vAPI.domFilterer.getAllDeclarativeSelectors().split(',\n');
-        i = selectors.length;
-        while ( i-- ) {
-            selector = selectors[i];
-            if ( reHasCSSCombinators.test(selector) ) {
-                nodes = document.querySelectorAll(selector);
-            } else {
-                if (
-                    filterMap.has(rootNode) === false &&
-                    rootNode[matchesFnName](selector)
-                ) {
-                    filterMap.set(rootNode, selector);
+        for ( entry of (details.declarative || []) ) {
+            for ( selector of entry[0].split(',\n') ) {
+                canonical = selector;
+                if ( entry[1] !== 'display:none!important;' ) {
+                    canonical += ':style(' + entry[1] + ')';
                 }
-                nodes = rootNode.querySelectorAll(selector);
-            }
-            j = nodes.length;
-            while ( j-- ) {
-                node = nodes[j];
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, selector);
+                if ( reHasCSSCombinators.test(selector) ) {
+                    nodes = document.querySelectorAll(selector);
+                } else {
+                    if (
+                        filterMap.has(rootNode) === false &&
+                        rootNode[matchesFnName](selector)
+                    ) {
+                        filterMap.set(rootNode, canonical);
+                    }
+                    nodes = rootNode.querySelectorAll(selector);
+                }
+                for ( node of nodes ) {
+                    if ( filterMap.has(node) === false ) {
+                        filterMap.set(node, canonical);
+                    }
                 }
             }
         }
 
         // Procedural selectors.
-        selectors = vAPI.domFilterer.getAllProceduralSelectors();
-        for ( var entry of selectors ) {
-            nodes = entry[1].exec();
-            j = nodes.length;
-            while ( j-- ) {
+        for ( entry of (details.procedural || []) ) {
+            nodes = entry.exec();
+            for ( node of nodes ) {
                 if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, entry[0]);
+                    filterMap.set(node, entry.raw);
                 }
             }
         }
@@ -968,6 +967,18 @@ var selectNodes = function(selector, nid) {
 
 /******************************************************************************/
 
+var nodesFromFilter = function(selector) {
+    var out = [];
+    for ( var entry of roRedNodes ) {
+        if ( entry[1] === selector ) {
+            out.push(entry[0]);
+        }
+    }
+    return out;
+};
+
+/******************************************************************************/
+
 var shutdown = function() {
     cosmeticFilterMapper.shutdown();
     domLayout.shutdown();
@@ -1042,7 +1053,7 @@ var onMessage = function(request) {
 
     case 'toggleFilter':
         toggleExceptions(
-            selectNodes(request.filter, request.nid),
+            nodesFromFilter(request.filter),
             request.target
         );
         highlightElements(true);
