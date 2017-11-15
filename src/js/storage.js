@@ -1079,7 +1079,8 @@
     var re;
     // Matches language?
     if ( typeof details.lang === 'string' ) {
-        if ( this.listMatchesEnvironment.reLang === undefined ) {
+        re = this.listMatchesEnvironment.reLang;
+        if ( re === undefined ) {
             re = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
             this.listMatchesEnvironment.reLang = re;
         }
