@@ -46,6 +46,11 @@ var exports = {};
 
 var onBeforeReady = null;
 
+µBlock.onStartCompletedQueue.push(function(callback) {
+    vAPI.onLoadAllCompleted();
+    callback();
+});
+
 if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
     onBeforeReady = (function() {
         var suspendedTabs = new Set();
@@ -66,11 +71,6 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
             }
         };
     })();
-} else {
-    µBlock.onStartCompletedQueue.push(function(callback) {
-        vAPI.onLoadAllCompleted();
-        callback();
-    });
 }
 
 /******************************************************************************/

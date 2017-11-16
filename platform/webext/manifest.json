@@ -37,9 +37,9 @@
             "file://*/*"
          ],
          "js":[
-            "js/vapi.js",
-            "js/vapi-client.js",
-            "js/contentscript.js"
+            "/js/vapi.js",
+            "/js/vapi-client.js",
+            "/js/contentscript.js"
          ],
          "run_at":"document_start",
          "all_frames":true
@@ -50,7 +50,7 @@
             "https://*/*"
          ],
          "js":[
-            "js/scriptlets/subscriber.js"
+            "/js/scriptlets/subscriber.js"
          ],
          "run_at":"document_idle",
          "all_frames":false

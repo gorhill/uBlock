@@ -1031,20 +1031,21 @@ vAPI.onLoadAllCompleted = function() {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
-    var scriptDone = function() {
+    var onScriptInjected = function() {
         vAPI.lastError();
     };
     var scriptStart = function(tabId) {
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/vapi-client.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, function(){ });
-        vAPI.tabs.injectScript(tabId, {
-            file: 'js/contentscript.js',
-            allFrames: true,
-            runAt: 'document_idle'
-        }, scriptDone);
+        var manifest = chrome.runtime.getManifest();
+        if ( manifest instanceof Object === false ) { return; }
+        for ( var contentScript of manifest.content_scripts ) {
+            for ( var file of contentScript.js ) {
+                vAPI.tabs.injectScript(tabId, {
+                    file: file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at
+                }, onScriptInjected);
+            }
+        }
     };
     var bindToTabs = function(tabs) {
         var µb = µBlock;
