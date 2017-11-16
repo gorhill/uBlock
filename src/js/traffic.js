@@ -41,6 +41,9 @@ var exports = {};
 //       which blocks everything until all is ready.
 //       This would allow to avoid the permanent special test at the top of
 //       the main onBeforeRequest just to implement this.
+// https://github.com/gorhill/uBlock/issues/3130
+//   Don't block root frame.
+
 var onBeforeReady = null;
 
 if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
@@ -53,10 +56,14 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
             }
             callback();
         });
-        return function(tabId) {
-            if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-            suspendedTabs.add(tabId);
-            return true;
+        return function(details) {
+            if (
+                details.type !== 'main_frame' &&
+                vAPI.isBehindTheSceneTabId(details.tabId) === false
+            ) {
+                suspendedTabs.add(details.tabId);
+                return true;
+            }
         };
     })();
 } else {
@@ -71,8 +78,7 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
-    var tabId = details.tabId;
-    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+    if ( onBeforeReady !== null && onBeforeReady(details) ) {
         return { cancel: true };
     }
 
@@ -86,6 +92,7 @@ var onBeforeRequest = function(details) {
     }
 
     // Special treatment: behind-the-scene requests
+    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
