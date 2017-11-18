@@ -83,15 +83,6 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"aak-continued": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "AAK-Cont Filters For uBlock Origin",
-		"contentURL": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-ubo.txt",
-		"supportURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont/issues",
-		"instructionURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont#installation-instruction"
-    },
 	"awrl-0": {
 		"content": "filters",
 		"group": "ads",
