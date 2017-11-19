@@ -44,6 +44,10 @@
       updateAd(request.ad);
       break;
 
+    case 'updateDNT':
+      updateDNTClass(request.ad);
+      break;
+
     case 'notifications':
       renderNotifications(request.notifications);
       adjustBlockHeight();
@@ -205,7 +209,7 @@
   }
 
   var updateAd = function (ad) { // update class, title, counts
-
+    console.log(ad);
     if (verify(ad)) {
 
       var $ad = updateAdClasses(ad);
@@ -308,6 +312,12 @@
     }
   }
 
+  var updateDNTClass = function(ad) {
+    var $ad = uDom('#ad' + ad.id);
+    $ad.addClass("dnt-allowed");
+
+    $ad.descendants('.adStatus').text("skipped: dnt site");
+  }
   var updateAdClasses = function (ad) {
 
     var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
@@ -317,6 +327,10 @@
 
     // See https://github.com/dhowe/AdNauseam/issues/61
     var cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
+    // Update the status
+    var txt = cls === 'just-visited' ? 'visited' : 'failed';
+    $ad.descendants('.adStatus').text(txt);
+
     $ad.removeClass('failed visited attempting').addClass(cls);
 
     // timed for animation
@@ -329,7 +343,7 @@
 
   var appendImageAd = function (ad, $items) {
 
-    var $img, $a, $span, $li = uDom(document.createElement('li'))
+    var $img, $a, $span, $status, $li = uDom(document.createElement('li'))
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item ' + visitedClass(ad)).trim());
 
@@ -339,6 +353,9 @@
 
     $span = uDom(document.createElement('span')).addClass('thumb');
     $span.appendTo($a);
+    
+    $status = uDom(document.createElement('span')).addClass('adStatus').text("pending");
+    $status.appendTo($a);
 
     $img = uDom(document.createElement('img'))
       .attr('src', (ad.contentData.src || ad.contentData))
@@ -373,15 +390,30 @@
     $li.appendTo($items);
   }
 
+  var getAdStatus = function (ad) {
+    var status = "pending";
+    if (!ad.noVisit) {
+      if (ad.attempts > 0)
+        status = ad.visitedTs > 0 ? 'visited' : 'failed';
+    } else {
+      status = "skipped:" + ( ad.dntAllowed ? " dnt site" : " click frequency");
+    }
+
+    return status;
+  }
+
   var appendTextAd = function (ad, $items) {
 
-    var $cite, $h3, $li = uDom(document.createElement('li'))
+    var $cite, $h3, $status, $li = uDom(document.createElement('li'))
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item-text ' + visitedClass(ad)).trim());
 
     uDom(document.createElement('span'))
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
+
+    $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
+    $status.appendTo($li);
 
     $h3 = uDom(document.createElement('h3'));
 
