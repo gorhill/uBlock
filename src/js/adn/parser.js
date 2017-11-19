@@ -60,7 +60,7 @@
        if (attribute !== undefined && clickableParent(elem)) {
 
          var targetUrl = getTargetUrl(elem);
-         if (targetUrl) {
+         if (attribute && targetUrl) {
 
            var src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
 

@@ -557,8 +557,8 @@
     $('.since').text(sinceTime(adsets));
     $('#clicked').text(numVisits);
     $('#total').text(numTotal());
-    $('#detected').text(numVisible());
-    if(numTotal() != numVisible())
+    $('#detected').text(numFound(adsets));
+    if(numTotal() != numFound(adsets))
       $('.showing').show();
     else
       $('.showing').hide();
@@ -1223,7 +1223,7 @@
         switch ($(this).attr("data-action")) {
 
         case "delete":
-          var lastBrush = $('g.brush');
+          // var lastBrush = $('g.brush');
 
           var ids = selectedAdSet.childIds(),
             $item = findItemDivByGid(selectedAdSet.gid);
@@ -1249,10 +1249,9 @@
             ids: selectedAdSet.childIds()
           });
 
-          
           // recreate the slider, but don't redo layout
-          createSlider(false, lastBrush);
-
+          createSlider(false, true);
+      
           break;
         }
 
@@ -1366,7 +1365,7 @@
 
   /********************************************************************/
 
-  function createSlider(relayout, lastBrush) {
+  function createSlider(relayout, fromDelete) {
 
     // console.log('Vault-Slider.createSlider: '+gAds.length);
 
@@ -1498,8 +1497,6 @@
       .extent(bExtent)
       .on("brushend", brushend);
 
-    if (!lastBrush) {
-   
     // add the brush
     var gBrush = svg.append("g")
       .attr("class", "brush")
@@ -1523,15 +1520,11 @@
       .attr("height", 50)
       .attr("y", -50)
       .attr("x", -3);
-
-    } else {
-      $('#svgcon svg > g').append(lastBrush);
-    }
-
+ 
     // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
 
     // do filter, then call either doLayout or computeStats
-    (relayout ? doLayout : computeStats)(runFilter(bExtent));
+    (relayout ? doLayout : computeStats)(fromDelete ? gAdSets : runFilter(bExtent));
     // ---------------------------- functions ------------------------------
 
     // this is called on brushend() and createSlider()
