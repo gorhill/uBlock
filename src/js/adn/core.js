@@ -310,7 +310,8 @@
 
       log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
       ad.dntAllowed = true; // so we don't recheck it
-    
+      ad.noVisit = true;
+      
       vAPI.messaging.broadcast({
         what: 'updateDNT',
         ad: ad
