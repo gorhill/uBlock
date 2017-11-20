@@ -76,7 +76,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "클릭하여 대쉬보드 열기",
+    "message": "클릭하여 대시보드 열기",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "성가신것",
+    "message": "성가신 것",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {

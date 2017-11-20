@@ -68,7 +68,7 @@
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "досега",
+    "message": "общо досега",
     "description": "English: since install"
   },
   "popupOr": {
@@ -152,7 +152,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Щракнете, за да отмените вашите промени.",
+    "message": "Щракнете, за да отмените направените промени.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {

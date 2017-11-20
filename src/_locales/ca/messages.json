@@ -44,15 +44,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: habilita\/inhabilita l'µBlock per a aquest lloc.\n\nCtrl+clic: inhabilita l'µBlock només en aquesta pàgina.",
+    "message": "Clic: habilita\/inhabilita l'uBlock₀ per a aquest lloc.\n\nCtrl+clic: inhabilita l'uBlock₀ només en aquesta pàgina.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Feu clic per inhabilitar l'uBO en aquest web.\n\nCtrl+clic to inhabilitar l'uBO només en aquesta pàgina.",
+    "message": "Feu clic per desactivar l'uBlock₀ en aquest lloc.\n\nFeu Ctrl+clic per desactivar l'uBlock₀ només en aquesta pàgina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clic per habilitar en aquest web.",
+    "message": "Feu clic per activar l'uBlock₀ en aquest lloc.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -84,67 +84,67 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Entrar al mode de selecció d'elements",
+    "message": "Canvia al mode de selecció d'elements",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Registre de peticions",
+    "message": "Obre el registre d'esdeveniments",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "No permetis finestres emergents en aquest web",
+    "message": "Commuta el bloqueig de totes les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Clic per blocar totes les finestres emergents d'aquest lloc",
+    "message": "Feu clic per bloquejar totes les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Clic per desblocar les finestres emergents d'aquest lloc",
+    "message": "Feu clic per desbloquejar les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Alterna el bloqueig de fitxers multimèdia grans en aquest web",
+    "message": "Commuta el bloqueig d'elements multimèdia grans per a aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Clic per blocar tots els elements multimèdia grans d'aquest lloc",
+    "message": "Feu clic per bloquejar elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Clic per desblocar els elements multimèdia grans d'aquest Web",
+    "message": "Fes clic per no bloquejar els elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Habilita el filtre cosmètic en aquest web",
+    "message": "Commuta els filtres cosmètics d'aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Clic per inhabilitar el filtre cosmètic d'aquest Web",
+    "message": "Feu clic per desactivar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Clic per habilitar el filtre cosmètic d'aquest Web",
+    "message": "Feu clic per activar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Alterna el blocatge de tipografies remotes per aquest lloc",
+    "message": "Commuta el bloqueig de fonts remotes per a aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Clic per blocar les fonts remotes en aquest Web",
+    "message": "Feu clic per bloquejar fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Clic per desblocar les fonts remotes en aquest Web",
+    "message": "Feu clic per desbloquejar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Regles globals: Aquesta columna s'apliquen a tots els webs.",
+    "message": "Regles globals: les regles d'aquesta columna s'apliquen a tots els llocs.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Regles locals: Aquesta columna s'aplica només a aquest web.\nLes regles locals prevaleixen sobre les globals.",
+    "message": "Regles locals: les regles d'aquesta columna s'apliquen només al lloc actual.\nLes regles locals anul·len les regles globals.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -224,19 +224,19 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloquejar element",
+    "message": "Bloqueja l'element",
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Amagar marcardors de posició dels elements bloquejats",
+    "message": "Amaga els marcardors de posició dels elements bloquejats",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Mostrar el número de peticions bloquejades a l'icona",
+    "message": "Mostra el número de peticions bloquejades a la icona",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inhabilita els suggeriments",
+    "message": "Desactiva els suggeriments",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -248,7 +248,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Habilita el suport d'emmagatzematge al núvol",
+    "message": "Activa el suport d'emmagatzematge al núvol",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -272,7 +272,7 @@
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Opció per defecte",
+    "message": "Comportament per defecte",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
@@ -280,15 +280,15 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Inhabilita els filtres cosmètics",
+    "message": "Desactiva els filtres cosmètics",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloca els fitxers multimèdia més grans que {{input:number}} kB",
+    "message": "Bloqueja els fitxers multimèdia més grans que {{input:number}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bloca les fonts remotes",
+    "message": "Bloqueja les fonts remotes",
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
@@ -332,7 +332,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>µBlock<\/i>.<\/p>",
+    "message": "<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'uBlock₀.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Els Filtres cosmètics genèrics són filtres que no s'apliquen a tots els llocs web.<p>Tot i que l'uBlock₀ els gestiona de manera eficient, aquests filtres encara poden contribuir a un augment d'ús de la memòria o sobrecàrrega de la CPU en algunes pàgines web, especialment si tenen molt contingut, elements d'animació o temps real.<p>En habilitar aquesta opció s'elimina el risc de sobrecàrrega a la CPU i excés d'ús de la memòria com a resultat de la manipulació de filtres cosmètics genèrics i també es redueix el consum de memòria de l'uBlock₀.<p>Es recomana habilitar aquesta opció en dispositius poc potents.",
+    "message": "<p>Els filtres cosmètics genèrics són filtres que no s'apliquen a tots els llocs web.<p>Tot i que l'uBlock₀ els gestiona de manera eficient, aquests filtres encara poden contribuir a un augment d'ús de la memòria o sobrecàrrega de la CPU en algunes pàgines web, especialment si tenen molt contingut, elements d'animació o temps real.<p>En habilitar aquesta opció s'elimina el risc de sobrecàrrega a la CPU i excés d'ús de la memòria com a resultat de la manipulació de filtres cosmètics genèrics i també es redueix el consum de memòria de l'uBlock₀.<p>Es recomana habilitar aquesta opció en dispositius poc potents.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Inconvenients",
+    "message": "Elements molestos",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -448,11 +448,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importar des de fitxer...",
+    "message": "Importa des de...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportar a fitxer...",
+    "message": "Exporta a...",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -540,7 +540,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Bloca",
+    "message": "Bloqueja",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
@@ -572,7 +572,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "S'ha trobat el filtre {{filter}}:",
+    "message": "S'ha trobat el filtre estàtic {{filter}} a:",
     "description": "Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog": {
@@ -612,7 +612,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "La configuració es sobreescriurà amb la còpia de seguretat del {{time}}, i es reiniciarà l'µBlock.\n\nVoleu restaurar la configuració amb la còpia de seguretat?",
+    "message": "La configuració es sobreescriurà amb la còpia de seguretat del {{time}}, i l'uBlock₀ es reiniciarà.\n\nVoleu restaurar la configuració amb la còpia de seguretat?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -620,15 +620,15 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "La configuració serà suprimida i es reiniciarà l'µBlock.\n\nVoleu reiniciar l'µBlock als valors per defecte?",
+    "message": "La configuració serà suprimida i es reiniciarà l'uBlock₀.\n\nVoleu reiniciar l'uBlock₀ als valors per defecte?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "No es pot connectar a {{url}}",
+    "message": "Error de xarxa: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Voleu afegir aquest enllaç a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: Voleu afegir aquesta URL a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -660,7 +660,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Mostra el registre de peticions de la xarxa",
+    "message": "Mostra el registre d'esdeveniments",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -668,7 +668,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "L'ublock ha rebutjat contingut d'aquest web:",
+    "message": "L'uBlock Origin ha impedit que es carregui la pàgina:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -736,7 +736,7 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Desfer",
+    "message": "Desfés",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {

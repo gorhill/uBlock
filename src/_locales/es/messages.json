@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clic para deshabilitar uBO en este sitio. \n\nCtrl+clic para deshabilitar uBO solo en esta página.",
+    "message": "Clic para deshabilitar uBlock₀ en este sitio. \n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clic para habilitar uBO en este sitio.",
+    "message": "Clic para habilitar uBlock₀ en este sitio.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Haga clic para bloquear todas las ventanas emergentes en este sitio",
+    "message": "Clic para bloquear todas las ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Haga clic para no bloquear más todas las ventanas emergentes en este sitio",
+    "message": "Clic para no bloquear más todas las ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Haga clic para bloquear elementos grandes de medios en este sitio",
+    "message": "Clic para bloquear elementos multimedia grandes en este sitio",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Haga clic para no bloquear más elementos multimedia grandes en este sitio",
+    "message": "Clic para no bloquear más elementos multimedia grandes en este sitio",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Haga clic para desactivar el filtrado cosmético en este sitio",
+    "message": "Clic para deshabilitar el filtrado cosmético en este sitio",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Haga clic para habilitar el filtrado cosmético en este sitio",
+    "message": "Clic para habilitar el filtrado cosmético en este sitio",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Haga clic para bloquear fuentes remotas en este sitio",
+    "message": "Clic para bloquear fuentes remotas en este sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Haga clic para no bloquear las fuentes remotas en este sitio",
+    "message": "Clic para no bloquear más fuentes remotas en este sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
