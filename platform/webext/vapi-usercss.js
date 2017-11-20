@@ -33,7 +33,7 @@ vAPI.userStylesheet = {
     removed: new Set(),
     apply: function() {
         if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
-        vAPI.messaging.send('vapi-background', {
+        vAPI.messaging.send('vapi', {
             what: 'userCSS',
             add: Array.from(this.added),
             remove: Array.from(this.removed)

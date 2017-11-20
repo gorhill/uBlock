@@ -60,6 +60,7 @@ textarea {
 
 #inspectors {
     bottom: 0;
+    font: 13px sans-serif;
     position: absolute;
     top: 0;
     width: 100%;
@@ -80,17 +81,21 @@ textarea {
     width: 100%;
 }
 
-#netInspector {
-    font: 13px sans-serif;
-    }
-#inspectors.dom #netInspector {
-    display: none;
-    }
-#netInspector #compactViewToggler.button:before {
+.vCompactToggler.button:before {
     content: '\f102';
     }
-#netInspector.compactView #compactViewToggler.button:before {
+.vCompact .vCompactToggler.button:before {
     content: '\f103';
+    }
+.hCompactToggler.button:before {
+    content: '\f100';
+    }
+.hCompact .hCompactToggler.button:before {
+    content: '\f101';
+    }
+
+#inspectors.dom #netInspector {
+    display: none;
     }
 #netInspector #filterButton {
     opacity: 0.25;
@@ -190,7 +195,7 @@ body #netInspector td {
 #netInspector tr td:last-of-type {
     border-right: none;
     }
-#netInspector.compactView td {
+#netInspector.vCompact td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

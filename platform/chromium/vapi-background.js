@@ -735,32 +735,21 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
-        toAuxPending = new Map();
-
-    var supportsUserStylesheets = vAPI.supportsUserStylesheets;
+        supportsUserStylesheets = vAPI.supportsUserStylesheets;
 
     // Use a wrapper to avoid closure and to allow reuse.
-    var CallbackWrapper = function(port, request, timeout) {
+    var CallbackWrapper = function(port, request) {
         this.callback = this.proxy.bind(this); // bind once
-        this.init(port, request, timeout);
+        this.init(port, request);
     };
 
     CallbackWrapper.prototype = {
-        timerId: null,
-        init: function(port, request, timeout) {
+        init: function(port, request) {
             this.port = port;
             this.request = request;
-            if ( timeout !== undefined ) {
-                this.timerId = vAPI.setTimeout(this.callback, timeout);
-            }
             return this;
         },
         proxy: function(response) {
-            if ( this.timerId !== null ) {
-                clearTimeout(this.timerId);
-                toAuxPending.delete(this.timerId);
-                this.timerId = null;
-            }
             // https://github.com/chrisaljoudi/uBlock/issues/383
             if ( messaging.ports.has(this.port.name) ) {
                 this.port.postMessage({
@@ -777,67 +766,53 @@ vAPI.messaging.onPortMessage = (function() {
 
     var callbackWrapperJunkyard = [];
 
-    var callbackWrapperFactory = function(port, request, timeout) {
+    var callbackWrapperFactory = function(port, request) {
         var wrapper = callbackWrapperJunkyard.pop();
         if ( wrapper ) {
-            return wrapper.init(port, request, timeout);
+            return wrapper.init(port, request);
         }
-        return new CallbackWrapper(port, request, timeout);
+        return new CallbackWrapper(port, request);
     };
 
-    var toAux = function(details, portFrom) {
-        var port, portTo,
-            chromiumTabId = toChromiumTabId(details.toTabId);
-
-        // TODO: This could be an issue with a lot of tabs: easy to address
-        //       with a port name to tab id map.
-        // When sending to an auxiliary process, the target is always the
-        // port associated with the root frame.
-        for ( var entry of messaging.ports ) {
-            port = entry[1];
-            if ( port.sender.frameId === 0 && port.sender.tab.id === chromiumTabId ) {
-                portTo = port;
-                break;
-            }
-        }
-
-        var wrapper;
-        if ( details.auxProcessId !== undefined ) {
-            wrapper = callbackWrapperFactory(portFrom, details, 1023);
-        }
-
-        // Destination not found: 
-        if ( portTo === undefined ) {
-            if ( wrapper !== undefined ) {
-                wrapper.callback();
-            }
-            return;
-        }
-
-        if ( wrapper !== undefined ) {
-            toAuxPending.set(wrapper.timerId, wrapper);
-        }
-
-        portTo.postMessage({
-            mainProcessId: wrapper && wrapper.timerId,
-            channelName: details.toChannel,
-            msg: details.msg
-        });
-    };
-
-    var toAuxResponse = function(details) {
-        var mainProcessId = details.mainProcessId;
-        if ( mainProcessId === undefined ) { return; }
-        var wrapper = toAuxPending.get(mainProcessId);
-        if ( wrapper === undefined ) { return; }
-        toAuxPending.delete(mainProcessId);
-        wrapper.callback(details.msg);
-    };
-
-    var toFramework = function(msg, sender) {
-        var tabId = sender && sender.tab && sender.tab.id;
+    var toFramework = function(request, port) {
+        var sender = port && port.sender;
+        if ( !sender ) { return; }
+        var tabId = sender.tab && sender.tab.id;
         if ( !tabId ) { return; }
+        var msg = request.msg,
+            toPort;
         switch ( msg.what ) {
+        case 'connectionAccepted':
+        case 'connectionRefused':
+            toPort = messaging.ports.get(msg.fromToken);
+            if ( toPort !== undefined ) {
+                msg.tabId = tabId.toString();
+                toPort.postMessage(request);
+            } else {
+                msg.what = 'connectionBroken';
+                port.postMessage(request);
+            }
+            break;
+        case 'connectionRequested':
+            msg.tabId = '' + tabId.toString();
+            for ( toPort of messaging.ports.values() ) {
+                toPort.postMessage(request);
+            }
+            break;
+        case 'connectionBroken':
+        case 'connectionCheck':
+        case 'connectionMessage':
+            toPort = messaging.ports.get(
+                port.name === msg.fromToken ? msg.toToken : msg.fromToken
+            );
+            if ( toPort !== undefined ) {
+                msg.tabId = tabId.toString();
+                toPort.postMessage(request);
+            } else {
+                msg.what = 'connectionBroken';
+                port.postMessage(request);
+            }
+            break;
         case 'userCSS':
             var details = {
                 code: undefined,
@@ -863,23 +838,23 @@ vAPI.messaging.onPortMessage = (function() {
         }
     };
 
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1392067
+    //   Workaround: manually remove ports matching removed tab.
+    chrome.tabs.onRemoved.addListener(function(tabId) {
+        for ( var port of messaging.ports.values() ) {
+            var tab = port.sender && port.sender.tab;
+            if ( !tab ) { continue; }
+            if ( tab.id === tabId ) {
+                vAPI.messaging.onPortDisconnect(port);
+            }
+        }
+    });
+
     return function(request, port) {
-        // Auxiliary process to auxiliary process
-        if ( request.toTabId !== undefined ) {
-            toAux(request, port);
-            return;
-        }
-
-        // Auxiliary process to auxiliary process: response
-        if ( request.mainProcessId !== undefined ) {
-            toAuxResponse(request);
-            return;
-        }
-
         // Content process to main process: framework handler.
         // No callback supported/needed for now.
-        if ( request.channelName === 'vapi-background' ) {
-            toFramework(request.msg, port.sender);
+        if ( request.channelName === 'vapi' ) {
+            toFramework(request, port);
             return;
         }
 
@@ -952,8 +927,8 @@ vAPI.messaging.broadcast = function(message) {
         broadcast: true,
         msg: message
     };
-    for ( var entry of this.ports ) {
-        entry[1].postMessage(messageWrapper);
+    for ( var port of this.ports.values() ) {
+        port.postMessage(messageWrapper);
     }
 };
 

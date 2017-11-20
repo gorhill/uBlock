@@ -1572,31 +1572,22 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 vAPI.messaging.onMessage = (function() {
     var messaging = vAPI.messaging;
-    var toAuxPending = {};
 
     // Use a wrapper to avoid closure and to allow reuse.
-    var CallbackWrapper = function(messageManager, listenerId, channelName, auxProcessId, timeout) {
+    var CallbackWrapper = function(messageManager, listenerId, channelName, auxProcessId) {
         this.callback = this.proxy.bind(this); // bind once
-        this.init(messageManager, listenerId, channelName, auxProcessId, timeout);
+        this.init(messageManager, listenerId, channelName, auxProcessId);
     };
 
-    CallbackWrapper.prototype.init = function(messageManager, listenerId, channelName, auxProcessId, timeout) {
+    CallbackWrapper.prototype.init = function(messageManager, listenerId, channelName, auxProcessId) {
         this.messageManager = messageManager;
         this.listenerId = listenerId;
         this.channelName = channelName;
         this.auxProcessId = auxProcessId;
-        this.timerId = timeout !== undefined ?
-                            vAPI.setTimeout(this.callback, timeout) :
-                            null;
         return this;
     };
 
     CallbackWrapper.prototype.proxy = function(response) {
-        if ( this.timerId !== null ) {
-            clearTimeout(this.timerId);
-            delete toAuxPending[this.timerId];
-            this.timerId = null;
-        }
         var message = JSON.stringify({
             auxProcessId: this.auxProcessId,
             channelName: this.channelName,
@@ -1619,97 +1610,15 @@ vAPI.messaging.onMessage = (function() {
 
     var callbackWrapperJunkyard = [];
 
-    var callbackWrapperFactory = function(messageManager, listenerId, channelName, auxProcessId, timeout) {
+    var callbackWrapperFactory = function(messageManager, listenerId, channelName, auxProcessId) {
         var wrapper = callbackWrapperJunkyard.pop();
         if ( wrapper ) {
-            return wrapper.init(messageManager, listenerId, channelName, auxProcessId, timeout);
+            return wrapper.init(messageManager, listenerId, channelName, auxProcessId);
         }
-        return new CallbackWrapper(messageManager, listenerId, channelName, auxProcessId, timeout);
-    };
-
-    // "Auxiliary process": any process other than main process.
-    var toAux = function(target, details) {
-        var messageManagerFrom = target.messageManager;
-
-        // Message came from a popup, and its message manager is not usable.
-        // So instead we broadcast to the parent window.
-        if ( !messageManagerFrom ) {
-            messageManagerFrom = getOwnerWindow(
-                target.webNavigation.QueryInterface(Ci.nsIDocShell).chromeEventHandler
-            ).messageManager;
-        }
-
-        var wrapper;
-        if ( details.auxProcessId !== undefined ) {
-            var channelNameRaw = details.channelName;
-            var pos = channelNameRaw.indexOf('|');
-            wrapper = callbackWrapperFactory(
-                messageManagerFrom,
-                channelNameRaw.slice(0, pos),
-                channelNameRaw.slice(pos + 1),
-                details.auxProcessId,
-                1023
-            );
-        }
-
-        var messageManagerTo = null;
-        var browser = tabWatcher.browserFromTabId(details.toTabId);
-        if ( browser !== null && browser.messageManager ) {
-            messageManagerTo = browser.messageManager;
-        }
-        if ( messageManagerTo === null ) {
-            if ( wrapper !== undefined ) {
-                wrapper.callback();
-            }
-            return;
-        }
-
-        // As per HTML5, timer id is always an integer, thus suitable to be used
-        // as a key, and which value is safe to use across process boundaries.
-        if ( wrapper !== undefined ) {
-            toAuxPending[wrapper.timerId] = wrapper;
-        }
-
-        var targetId = location.host + ':broadcast';
-        var payload = JSON.stringify({
-            mainProcessId: wrapper && wrapper.timerId,
-            channelName: details.toChannel,
-            msg: details.msg
-        });
-
-        if ( messageManagerTo.sendAsyncMessage ) {
-            messageManagerTo.sendAsyncMessage(targetId, payload);
-        } else {
-            messageManagerTo.broadcastAsyncMessage(targetId, payload);
-        }
-    };
-
-    var toAuxResponse = function(details) {
-        var mainProcessId = details.mainProcessId;
-        if ( mainProcessId === undefined ) {
-            return;
-        }
-        if ( toAuxPending.hasOwnProperty(mainProcessId) === false ) {
-            return;
-        }
-        var wrapper = toAuxPending[mainProcessId];
-        delete toAuxPending[mainProcessId];
-        wrapper.callback(details.msg);
+        return new CallbackWrapper(messageManager, listenerId, channelName, auxProcessId);
     };
 
     return function({target, data}) {
-        // Auxiliary process to auxiliary process
-        if ( data.toTabId !== undefined ) {
-            toAux(target, data);
-            return;
-        }
-
-        // Auxiliary process to auxiliary process: response
-        if ( data.mainProcessId !== undefined ) {
-            toAuxResponse(data);
-            return;
-        }
-
         // Auxiliary process to main process
         var messageManager = target.messageManager;
 
@@ -1748,15 +1657,11 @@ vAPI.messaging.onMessage = (function() {
         if ( typeof listener === 'function' ) {
             r = listener(data.msg, sender, callback);
         }
-        if ( r !== messaging.UNHANDLED ) {
-            return;
-        }
+        if ( r !== messaging.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: default handler
         r = messaging.defaultHandler(data.msg, sender, callback);
-        if ( r !== messaging.UNHANDLED ) {
-            return;
-        }
+        if ( r !== messaging.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: no handler
         console.error('uBlock> messaging > unknown request: %o', data);

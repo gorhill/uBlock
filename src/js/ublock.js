@@ -579,14 +579,14 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
             pendingEntries.set(key, new Entry(tabId, scriptlet, callback));
         }
         vAPI.tabs.injectScript(tabId, {
-            file: 'js/scriptlets/' + scriptlet + '.js'
+            file: '/js/scriptlets/' + scriptlet + '.js'
         });
     };
 
     // TODO: think about a callback mechanism.
     var injectDeep = function(tabId, scriptlet) {
         vAPI.tabs.injectScript(tabId, {
-            file: 'js/scriptlets/' + scriptlet + '.js',
+            file: '/js/scriptlets/' + scriptlet + '.js',
             allFrames: true
         });
     };
