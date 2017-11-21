@@ -363,6 +363,7 @@ var domLayout = (function() {
 
     var journalFromMutations = function() {
         var nodelist, node, domNode, nid;
+        mutationTimer = undefined;
 
         // This is used to temporarily hold all added nodes, before resolving
         // their node id and relative position.
@@ -537,9 +538,8 @@ var cosmeticFilterMapper = (function() {
         for ( entry of (details.procedural || []) ) {
             nodes = entry.exec();
             for ( node of nodes ) {
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, entry.raw);
-                }
+                // Upgrade declarative selector to procedural one
+                filterMap.set(node, entry.raw);
             }
         }
     };
@@ -800,8 +800,7 @@ var start = function() {
             document.removeEventListener(ev.type, onReady);
         }
         vAPI.messaging.sendTo(loggerConnectionId, domLayout.get());
-        vAPI.domFilterer.toggle(false);
-        highlightElements();
+        vAPI.domFilterer.toggle(false, highlightElements);
     };
     if ( document.readyState === 'loading' ) {
         document.addEventListener('DOMContentLoaded', onReady);
@@ -950,9 +949,6 @@ var bootstrap = function(ev) {
     pickerDoc.body.appendChild(svgRoot);
 
     window.addEventListener('scroll', onScrolled, true);
-
-    cosmeticFilterMapper.reset();
-    highlightElements();
 
     vAPI.messaging.connectTo('domInspector', 'loggerUI', messagingHandler);
 };

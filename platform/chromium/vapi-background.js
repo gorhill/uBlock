@@ -774,7 +774,7 @@ vAPI.messaging.onPortMessage = (function() {
         return new CallbackWrapper(port, request);
     };
 
-    var toFramework = function(request, port) {
+    var toFramework = function(request, port, callback) {
         var sender = port && port.sender;
         if ( !sender ) { return; }
         var tabId = sender.tab && sender.tab.id;
@@ -826,13 +826,19 @@ vAPI.messaging.onPortMessage = (function() {
                 details.runAt = 'document_start';
             }
             var cssText;
+            const cssPromises = [];
             for ( cssText of msg.add ) {
                 details.code = cssText;
-                chrome.tabs.insertCSS(tabId, details);
+                cssPromises.push(chrome.tabs.insertCSS(tabId, details));
             }
             for ( cssText of msg.remove ) {
                 details.code = cssText;
-                chrome.tabs.removeCSS(tabId, details);
+                cssPromises.push(chrome.tabs.removeCSS(tabId, details));
+            }
+            if ( typeof callback === 'function' ) {
+                Promise.all(cssPromises).then(() => {
+                    callback();
+                }, null);
             }
             break;
         }
@@ -851,17 +857,16 @@ vAPI.messaging.onPortMessage = (function() {
     });
 
     return function(request, port) {
-        // Content process to main process: framework handler.
-        // No callback supported/needed for now.
-        if ( request.channelName === 'vapi' ) {
-            toFramework(request, port);
-            return;
-        }
-
-        // Auxiliary process to main process: prepare response
+        // prepare response
         var callback = this.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
             callback = callbackWrapperFactory(port, request).callback;
+        }
+
+        // Content process to main process: framework handler.
+        if ( request.channelName === 'vapi' ) {
+            toFramework(request, port, callback);
+            return;
         }
 
         // Auxiliary process to main process: specific handler

@@ -451,7 +451,7 @@ vAPI.DOMFilterer.prototype = {
         this.hiddenNodesetToProcess.add(node);
     },
 
-    toggle: function(state) {
+    toggle: function(state, callback) {
         vAPI.userStylesheet.toggle(state);
         var disabled = vAPI.userStylesheet.disabled,
             nodes = document.querySelectorAll('[' + this.hideNodeAttr + ']');
@@ -464,6 +464,9 @@ vAPI.DOMFilterer.prototype = {
         }
         if ( disabled === false && this.hideNodeExpando !== undefined ) {
             this.hideNodeBatchProcessTimer.start();
+        }
+        if ( typeof callback === 'function' ) {
+            callback();
         }
     },
 
