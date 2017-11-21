@@ -363,6 +363,7 @@ var domLayout = (function() {
 
     var journalFromMutations = function() {
         var nodelist, node, domNode, nid;
+        mutationTimer = undefined;
 
         // This is used to temporarily hold all added nodes, before resolving
         // their node id and relative position.
