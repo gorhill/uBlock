@@ -308,10 +308,10 @@
 
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
-      log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+'->'+ad.targetDomain);
-      ad.dntAllowed = true; // so we don't recheck it
-      ad.noVisit = true;
-      
+      log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+' => '+ad.targetDomain);
+      ad.noVisit = true; // so we don't recheck it
+      ad.dntAllowed = true;
+
       vAPI.messaging.broadcast({
         what: 'updateDNT',
         ad: ad

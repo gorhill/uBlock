@@ -308,7 +308,7 @@ var onBeforeRequest = function(details) {
     if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
         var url = µb.redirectEngine.toURL(requestContext);
         if ( url !== undefined ) {
-            µb.adnauseam.logRedirect(requestURL, url); // ADN, log redirects
+            // µb.adnauseam.logRedirect(requestURL, url); // ADN, log redirects (not needed)
             pageStore.internalRedirectionCount += 1;
             if ( µb.logger.isEnabled() ) {
                 µb.logger.writeOne(

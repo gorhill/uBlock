@@ -623,18 +623,20 @@ PageStore.prototype.filterRequest = function(context) {
     // Dynamic URL filtering.
     var result = µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
     if ( result !== 0) {
-      console.log('[WARN] sessionURLFiltering hit!', context, result); // ADN
-      if (µb.logger.isEnabled() )
-        this.logData = µb.sessionURLFiltering.toLogData();
+        console.log('[WARN] sessionURLFiltering hit!', context, result); // ADN
+        if (µb.logger.isEnabled() ) {
+            this.logData = µb.sessionURLFiltering.toLogData();
+        }
     }
 
     // ADN: now check our firewall (top precedence)
-   if ( result === 0 ) {
-        result = µb.adnauseam.dnt.mustAllowRequest(context) ? 2 : 0;
-        // logger
-        if ( result === 2 && µb.logger.isEnabled() ) {
-           this.logData = µb.adnauseam.dnt.firewall.toLogData();
-        }
+    if ( result === 0 ) {
+      if ( µb.adnauseam.dnt.mustAllow(context) ) {
+            result = 2;
+            if ( µb.logger.isEnabled() ) { // logger
+                this.logData = µb.adnauseam.dnt.firewall.toLogData();
+            }
+      }
     }
 
     // Dynamic hostname/type filtering.
@@ -650,15 +652,12 @@ PageStore.prototype.filterRequest = function(context) {
         result = µb.staticNetFilteringEngine.matchString(context);
 
           if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
-             // ADN: adnauseamAllowed
-             // console.warn("*** Blocking filterRequest *** AdNauseamAllowed");
-             result = 4;
+             result = 4; // ADN: adnauseamAllowed
           }
 
           if (result !== 0 && µb.logger.isEnabled() ) {
-             // ADN: log adnauseamAllowed
              this.logData = µb.staticNetFilteringEngine.toLogData();
-             if (result === 4) this.logData.result = 4;
+             if (result === 4) this.logData.result = 4; // ADN: log adnauseamAllowed
           }
     }
 

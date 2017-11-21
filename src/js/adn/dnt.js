@@ -5,7 +5,7 @@
   var µb = µBlock, adn = µb.adnauseam, log = adn.log;
   //var effList = 'https://www.eff.org/files/effdntlist.txt'; // old-list-key
   var effList = 'eff-dnt-whitelist';
-  
+
   var exports = {};
 
   var firewall = exports.firewall = new µb.Firewall();
@@ -128,23 +128,32 @@
     }
   };
 
-  exports.mustAllowRequest = function (context) {
+  exports.mustAllow = function (context) {
 
-    var action, result = '';
+    var action, result = '', requestHostname, requestDomain;
+
+    requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
+    requestDomain = µb.URI.domainFromHostname(requestHostname);
+
+    if (context.rootHostname !== requestDomain) {
+
+      µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.rootHostname + ' => '
+        + requestDomain + ' ' + context.requestURL ]); // suspicious: may want to check
+    }
 
     firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
 
     if (firewall.mustBlockOrAllow()) {
 
-      //result = firewall.toFilterString();
       result = firewall.r;
-      //action = firewall.mustBlock() ? 'Block' : 'Allow'; // ADN: we only allow here
 
-      if (firewall.mustBlock())
-        throw Error('Invalid Firewall State');
+      if (firewall.mustBlock()) err('Invalid Firewall State');
 
-      µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.rootHostname + ' => ' +
-        context.requestHostname, context.requestType, context.requestURL ]);
+      if (context.requestType === 'inline-script') { // #1271
+
+        µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.rootHostname + ' => ' +
+          context.requestHostname + ' ' + context.requestURL  ]);
+      }
     }
 
     return result;
