@@ -31,13 +31,13 @@ if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 vAPI.userStylesheet = {
     added: new Set(),
     removed: new Set(),
-    apply: function() {
+    apply: function(callback) {
         if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
         vAPI.messaging.send('vapi', {
             what: 'userCSS',
             add: Array.from(this.added),
             remove: Array.from(this.removed)
-        });
+        }, callback);
         this.added.clear();
         this.removed.clear();
     },
@@ -184,7 +184,7 @@ vAPI.DOMFilterer.prototype = {
         node.removeAttribute(this.hideNodeAttr);
     },
 
-    toggle: function(state) {
+    toggle: function(state, callback) {
         if ( state === undefined ) { state = this.disabled; }
         if ( state !== this.disabled ) { return; }
         this.disabled = !state;
@@ -197,7 +197,7 @@ vAPI.DOMFilterer.prototype = {
                 userStylesheet.add(rule);
             }
         }
-        userStylesheet.apply();
+        userStylesheet.apply(callback);
     },
 
     getAllSelectors_: function(all) {

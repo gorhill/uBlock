@@ -800,8 +800,7 @@ var start = function() {
             document.removeEventListener(ev.type, onReady);
         }
         vAPI.messaging.sendTo(loggerConnectionId, domLayout.get());
-        vAPI.domFilterer.toggle(false);
-        highlightElements();
+        vAPI.domFilterer.toggle(false, highlightElements);
     };
     if ( document.readyState === 'loading' ) {
         document.addEventListener('DOMContentLoaded', onReady);
@@ -950,9 +949,6 @@ var bootstrap = function(ev) {
     pickerDoc.body.appendChild(svgRoot);
 
     window.addEventListener('scroll', onScrolled, true);
-
-    cosmeticFilterMapper.reset();
-    highlightElements();
 
     vAPI.messaging.connectTo('domInspector', 'loggerUI', messagingHandler);
 };
