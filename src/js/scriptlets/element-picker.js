@@ -768,7 +768,7 @@ var filterToDOMInterface = (function() {
         var elems;
         if ( o.style ) {
             elems = document.querySelectorAll(o.style[0]);
-            lastAction = o.style.join(' ');
+            lastAction = o.style[0] + ' {' + o.style[1] + '}';
         } else if ( o.tasks ) {
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
