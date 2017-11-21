@@ -538,9 +538,8 @@ var cosmeticFilterMapper = (function() {
         for ( entry of (details.procedural || []) ) {
             nodes = entry.exec();
             for ( node of nodes ) {
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, entry.raw);
-                }
+                // Upgrade declarative selector to procedural one
+                filterMap.set(node, entry.raw);
             }
         }
     };
