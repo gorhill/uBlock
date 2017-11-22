@@ -667,7 +667,7 @@ PageStore.prototype.collapsibleResources = {
 /******************************************************************************/
 
 PageStore.prototype.filterCSPReport = function(context) {
-    if ( µb.hnSwitches.evaluateZ('no-csp-reports', context.rootHostname) !== false ) {
+    if ( µb.hnSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
         if ( µb.logger.isEnabled() ) {
             this.logData = µb.hnSwitches.toLogData();
         }
