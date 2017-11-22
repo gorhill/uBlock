@@ -205,20 +205,68 @@ vAPI.net.registerListeners = function() {
             return onBeforeRequestClient(details);
         };
 
-    // This is needed for Chromium 49-55.
-    var onBeforeSendHeaders = validTypes.csp_report
-        // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? null
-        // legacy Chromium
-        : function(details) {
-            if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
-            var type = headerValue(details.requestHeaders, 'content-type');
-            if ( type === '' ) { return; }
-            if ( type.endsWith('/csp-report') ) {
-                details.type = 'csp_report';
-                return onBeforeRequestClient(details);
+        var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback;
+        var onBeforeSendHeaders = function(details) {
+
+            normalizeRequestDetails(details);
+            var result = onBeforeSendHeadersClient(details);
+
+            if (result && result.requestHeaders) {
+
+                var headers = result.requestHeaders;
+                for (var i = 0; i < headers.length; i++) {
+
+                    var header = headers[i];
+                    if (!(header.value && header.value.length)) {
+
+                        headers.splice(i, 1); // remove
+                    }
+                }
             }
+
+            return result;
         };
+
+        var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback;
+        var onBeforeSendHeadersImpl = function (details) { // ADN
+
+          normalizeRequestDetails(details);
+          var result = onBeforeSendHeadersClient(details);
+
+          if (result && result.requestHeaders) {
+
+            var headers = result.requestHeaders;
+            for (var i = 0; i < headers.length; i++) {
+
+              var header = headers[i];
+              if (!(header.value && header.value.length)) {
+
+                headers.splice(i, 1); // remove
+              }
+            }
+          }
+          return result;
+        };
+
+    // This is needed for Chromium 49-55.
+    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
+        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
+        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
+
+    var onBeforeSendHeaders = validTypes.csp_report
+      // modern Chromium/WebExtensions: type 'csp_report' is supported
+      ? onBeforeSendHeadersImpl
+      // legacy Chromium
+      : function(details) {
+          if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
+          var type = headerValue(details.requestHeaders, 'content-type');
+          if ( type === '' ) { return; }
+          if ( type.endsWith('/csp-report') ) {
+              details.type = 'csp_report';
+              return onBeforeRequestClient(details);
+          }
+      };
+
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0), // ADN: fix to #1241
@@ -293,7 +341,7 @@ vAPI.net.registerListeners = function() {
             onBeforeSendHeaders,
             {
                 'urls': [ '<all_urls>' ],
-                'types': [ 'ping' ]
+                'types': undefined // ADN
             },
             [ 'blocking', 'requestHeaders' ]
         );

@@ -52,7 +52,7 @@ var onBeforeSendHeaders = function (details) {
     // add it only if the browser is not sending it already
     if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
-      if (false && details.type === 'main_frame') // minimize logging
+      if (details.type === 'main_frame') // minimize logging
         adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
 
       addHeader(headers, 'DNT', '1');
@@ -555,11 +555,9 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 var onHeadersReceived = function (details) {
 
-//console.log('traffic.onHeadersReceived',details);
-
     var µb = µBlock, ad, result, tabId = details.tabId, requestType = details.type, dbug = 0;
-    //ADN
 
+    //ADN
     if (vAPI.isBehindTheSceneTabId(tabId)) {
 
       // ADN: handle incoming cookies for our visits (ignore in ff for now)

@@ -130,16 +130,7 @@
 
   exports.mustAllow = function (context) {
 
-    var action, result = '', requestHostname, requestDomain;
-
-    requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
-    requestDomain = µb.URI.domainFromHostname(requestHostname);
-
-    if (context.rootHostname !== requestDomain) {
-
-      µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.rootHostname + ' => '
-        + requestDomain + ' ' + context.requestURL ]); // suspicious: may want to check
-    }
+    var action, requestHostname, requestDomain, result = '';
 
     firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
 
@@ -148,6 +139,15 @@
       result = firewall.r;
 
       if (firewall.mustBlock()) err('Invalid Firewall State');
+
+      requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
+      requestDomain = µb.URI.domainFromHostname(requestHostname);
+
+      if (context.rootHostname !== requestDomain) {
+
+        µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.rootHostname + ' => ' +
+          requestDomain + ' ' + context.requestURL ]); // suspicious: may want to check
+      }
 
       if (context.requestType === 'inline-script') { // #1271
 
