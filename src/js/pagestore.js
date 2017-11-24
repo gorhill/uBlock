@@ -623,20 +623,19 @@ PageStore.prototype.filterRequest = function(context) {
     // Dynamic URL filtering.
     var result = µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
     if ( result !== 0) {
-        console.log('[WARN] sessionURLFiltering hit!', context, result); // ADN
-        if (µb.logger.isEnabled() ) {
+        if ( µb.logger.isEnabled() ) {
             this.logData = µb.sessionURLFiltering.toLogData();
         }
     }
 
-    // ADN: now check our firewall (top precedence)
-    if ( result === 0 ) {
-      if ( µb.adnauseam.dnt.mustAllow(context) ) {
-            result = 2;
-            if ( µb.logger.isEnabled() ) { // logger
-                this.logData = µb.adnauseam.dnt.firewall.toLogData();
-            }
-      }
+    // ADN: now check our firewall (top precedence) if DNT enabled
+    if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
+        if ( µb.adnauseam.dnt.mustAllow(context) ) {
+              result = 2;
+              if ( µb.logger.isEnabled() ) { // logger
+                  this.logData = µb.adnauseam.dnt.firewall.toLogData();
+              }
+        }
     }
 
     // Dynamic hostname/type filtering.
@@ -651,17 +650,17 @@ PageStore.prototype.filterRequest = function(context) {
     if ( result === 0 || result === 3 ) {
         result = µb.staticNetFilteringEngine.matchString(context);
 
-          if (result !== 2 && µb.adnauseam.mustAllowRequest(result, context)) {
+          if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, context) ) {
              result = 4; // ADN: adnauseamAllowed
           }
 
-          if (result !== 0 && µb.logger.isEnabled() ) {
+          if ( result !== 0 && µb.logger.isEnabled() ) {
              this.logData = µb.staticNetFilteringEngine.toLogData();
-             if (result === 4) this.logData.result = 4; // ADN: log adnauseamAllowed
+             if ( result === 4 ) this.logData.result = 4; // ADN: log adnauseamAllowed
           }
     }
 
-    if ( cacheableResult) {
+    if ( cacheableResult ) {
         this.netFilteringCache.rememberResult(context, result, this.logData);
     } else if ( result === 1 && this.collapsibleResources[requestType] === true ) {
         this.netFilteringCache.rememberBlock(context, true);

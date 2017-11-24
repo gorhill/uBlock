@@ -30,7 +30,7 @@
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
 
-  // allow blocks only from this set of lists
+  // allow blocks only from this set of lists (recheck this)
   var enabledBlockLists = ['My filters', 'EasyPrivacy',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',

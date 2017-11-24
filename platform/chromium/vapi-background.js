@@ -1145,7 +1145,7 @@ vAPI.lastError = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 //
-// Also being used by adn to inject content-scripts into dynamically-created
+// Also being used by ADN to inject content-scripts into dynamically-created
 // iframes, as Chrome does not inject into these by default. This is needed
 // because we often can't block the iframe outright, as we need the ads inside.
 //
@@ -1161,13 +1161,6 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // TODO: this needs post-merge checking (adn)
     var scriptEnd = function(tabId, frameId) {
         var err = vAPI.lastError();
-
-        /* these errors happen on startup (tmp: remove)
-        if (err && !err.message.startsWith('Cannot access a chrome') &&
-          (!err.message.startsWith('Cannot access contents of url "chrome'))) {
-            console.warn('ERROR', err);
-            return;
-        }*/
     };
     var scriptStart = function(tabId, frameId) {
       var scripts = ['js/vapi-client.js', 'js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript.js'];

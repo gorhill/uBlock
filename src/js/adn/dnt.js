@@ -3,7 +3,6 @@
   'use strict';
 
   var µb = µBlock, adn = µb.adnauseam, log = adn.log;
-  //var effList = 'https://www.eff.org/files/effdntlist.txt'; // old-list-key
   var effList = 'eff-dnt-whitelist';
 
   var exports = {};
@@ -86,7 +85,7 @@
       || (prefs.clickingAds && prefs.disableClickingForDNT);
   }
 
-  var disableCosmeticFiltersFor = function (hostname, state) {
+  var disableCosmeticFiltersFor = function (hostname, state) { // not used ?
 
     µb.toggleHostnameSwitch({
 
@@ -137,8 +136,6 @@
     if (firewall.mustBlockOrAllow()) {
 
       result = firewall.r;
-
-      if (firewall.mustBlock()) err('Invalid Firewall State');
 
       requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
       requestDomain = µb.URI.domainFromHostname(requestHostname);
