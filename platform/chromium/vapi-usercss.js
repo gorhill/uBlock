@@ -38,19 +38,25 @@ vAPI.userStylesheet = {
     disabled: false,
     apply: function() {
     },
+    inject: function() {
+        this.style = document.createElement('style');
+        this.style.disabled = this.disabled;
+        var parent = document.head || document.documentElement;
+        if ( parent === null ) { return; }
+        parent.appendChild(this.style);
+        var observer = new MutationObserver(function() {
+            if ( this.style === null ) { return; }
+            if ( this.style.sheet !== null ) { return; }
+            parent.appendChild(this.style);
+        }.bind(this));
+        observer.observe(parent, { childList: true });
+    },
     add: function(cssText) {
         if ( cssText === '' || this.css.has(cssText) ) { return; }
-        if ( this.style === null ) {
-            this.style = document.createElement('style');
-            this.style.disabled = this.disabled;
-            var parent = document.head || document.documentElement;
-            if ( parent !== null ) {
-                parent.appendChild(this.style);
-            }
-        }
-        var sheet = this.style.sheet,
-            i = sheet.cssRules.length;
+        if ( this.style === null ) { this.inject(); }
+        var sheet = this.style.sheet;
         if ( !sheet ) { return; }
+        var i = sheet.cssRules.length;
         sheet.insertRule(cssText, i);
         this.css.set(cssText, sheet.cssRules[i]);
     },
@@ -67,12 +73,12 @@ vAPI.userStylesheet = {
             this.style.sheet.deleteRule(i);
             break;
         }
-        if ( rules.length === 0 ) {
-            var parent = this.style.parentNode;
-            if ( parent !== null ) {
-                parent.removeChild(this.style);
-            }
-            this.style = null;
+        if ( rules.length !== 0 ) { return; }
+        var style = this.style;
+        this.style = null;
+        var parent = style.parentNode;
+        if ( parent !== null ) {
+            parent.removeChild(style);
         }
     },
     toggle: function(state) {
