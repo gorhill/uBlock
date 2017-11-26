@@ -78,6 +78,15 @@
     return url.endsWith('effdntlist.txt');
   }
 
+  exports.isDoNotTrackRule = function (rule) {
+    var dntDomains = µb.userSettings.dntDomains;
+    for (var i = 0; i < dntDomains.length; i++) {
+      if (rule.indexOf(dntDomains[i]) != -1)
+        return true;
+    }
+    return false;
+  }
+
   var enabled = exports.enabled = function () {
 
     var prefs = µb.userSettings;
