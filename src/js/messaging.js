@@ -122,6 +122,10 @@ var onMessage = function(request, sender, callback) {
         µb.cosmeticFilteringEngine.removeFromSelectorCache(request.pageDomain);
         break;
 
+    case 'domainIsDNT':
+        response = µb.adnauseam.dnt.isDoNotTrackRule(request.rule);
+        break;
+
     case 'forceUpdateAssets':
         µb.scheduleAssetUpdater(0);
         µb.assets.updateStart({ delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod || 2000 });

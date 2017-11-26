@@ -287,6 +287,23 @@ var renderNetLogEntry = function(tr, entry) {
         } else if ( filter.result === 2 ) {
             trcl.add('allowed');
             td.textContent = '++';
+
+            var processDNTEntries = function (isDNT) {
+               if (!isDNT) return;
+               else {
+                 trcl.add('dnt');
+               }
+            }
+
+             messaging.send(
+                 'loggerUI',
+                {
+                    what: 'domainIsDNT',
+                    rule: filter.raw
+                },
+                processDNTEntries
+            );
+
         } else if ( filter.result === 3 ) {
             trcl.add('nooped');
             td.textContent = '**';
@@ -297,6 +314,8 @@ var renderNetLogEntry = function(tr, entry) {
             trcl.add('adnauseamAllowed');
             td.textContent = '';
         }
+
+        //TODO: case: adFound
 
     }
 
