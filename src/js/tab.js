@@ -551,6 +551,8 @@ vAPI.tabs.onPopupUpdated = (function() {
     //   scheme can be unilaterally changed by the browser.
     // https://github.com/gorhill/uBlock/issues/1378
     //   Maybe no link element was clicked.
+    // https://github.com/gorhill/uBlock/issues/3287
+    //   Do not bail out if the target URL has no hostname.
     var areDifferentURLs = function(a, b) {
         if ( b === '' ) { return true; }
         if ( b.startsWith('about:') ) { return false; }
