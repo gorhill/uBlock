@@ -124,3 +124,4 @@ cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
 rm -r $SRC
 echo "*** uBlock: Import done."
+git status
