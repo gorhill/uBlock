@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicka för att avaktivera uBO för hela den här webbplatsen.\n\nCtrl + klicka för att avaktivera uBO för bara den här sidan.",
+    "message": "Klicka för att avaktivera uBlock för den här webbplatsen.\n\nCtrl + klicka för att avaktivera uBlock för enbart den här sidan.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klicka för att aktivera uBO för hela den här webbplatsen.",
+    "message": "Klicka för att aktivera uBlock₀ för den här webbplatsen.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -120,7 +120,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Klicka för att avaktivera kosmetiska filter för den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {

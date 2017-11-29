@@ -100,7 +100,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Dați clic pentru a nu mai bloca popup-urile pentru acest sait",
+    "message": "Dați clic pentru a nu mai bloca popup-urile pentru acest site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

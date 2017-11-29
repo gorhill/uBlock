@@ -292,7 +292,7 @@
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "CSP 차단 보고서",
+    "message": "CSP 보고서 차단",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
