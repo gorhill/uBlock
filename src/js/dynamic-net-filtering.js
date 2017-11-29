@@ -26,6 +26,28 @@
 
 /******************************************************************************/
 
+(function() {
+
+µBlock.dynamicFilterScopeKeys = {
+       '*': '*',
+  'domain': '+',
+    'host': '.'
+};
+
+µBlock.dynamicFilterTypeScopes = {
+            '*': 'host',
+        'image': 'host',
+           '3p': 'domain',
+'inline-script': 'host',
+    '1p-script': 'domain',
+    '3p-script': 'domain',
+     '3p-frame': 'domain'
+};
+
+})();
+
+/******************************************************************************/
+
 µBlock.Firewall = (function() {
 
 /******************************************************************************/
@@ -58,6 +80,12 @@ var typeBitOffsets = {
         'image': 10,
            '3p': 12
 };
+var domainMask = 0;
+for (let [type, offset] of Object.entries(typeBitOffsets)) {
+    if (µBlock.dynamicFilterTypeScopes[type] === 'domain') {
+        domainMask |= (3 << offset);
+    }
+}
 
 var actionToNameMap = {
     '1': 'block',
@@ -147,44 +175,34 @@ Matrix.prototype.assign = function(other) {
 /******************************************************************************/
 
 Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
-    var thisRules = this.rules;
-    var otherRules = other.rules;
-    var ruleKey, ruleValue;
+    const thisRules = this.rules;
+    const otherRules = other.rules;
 
-    // Specific types
-    ruleValue = otherRules['* *'] || 0;
-    if ( ruleValue !== 0 ) {
-        thisRules['* *'] = ruleValue;
-    } else {
-        delete thisRules['* *'];
-    }
-    ruleKey = srcHostname + ' *';
-    ruleValue = otherRules[ruleKey] || 0;
-    if ( ruleValue !== 0 ) {
-        thisRules[ruleKey] = ruleValue;
-    } else {
-        delete thisRules[ruleKey];
-    }
+    const setRule = function(key, valFunc) {
+        const val = valFunc(key)
+        if ( val != 0 ) {
+            thisRules[key] = val;
+        } else {
+            delete thisRules[key];
+        }
+    };
+
+    // Global types
+    setRule('* *', k => otherRules[k])
+
+    // Domain scoped types - keep session host rules
+    setRule(domainFromHostname(srcHostname) + ' *', k => (thisRules[k] & ~domainMask) | (otherRules[k] & domainMask))
+
+    // Host scoped types - keep session domain rules
+    setRule(srcHostname + ' *', k => (thisRules[k] & domainMask) | (otherRules[k] & ~domainMask))
 
     // Specific destinations
-    for ( var desHostname in desHostnames ) {
+    for ( let desHostname in desHostnames ) {
         if ( desHostnames.hasOwnProperty(desHostname) === false ) {
             continue;
         }
-        ruleKey = '* ' + desHostname;
-        ruleValue = otherRules[ruleKey] || 0;
-        if ( ruleValue !== 0 ) {
-            thisRules[ruleKey] = ruleValue;
-        } else {
-            delete thisRules[ruleKey];
-        }
-        ruleKey = srcHostname + ' ' + desHostname ;
-        ruleValue = otherRules[ruleKey] || 0;
-        if ( ruleValue !== 0 ) {
-            thisRules[ruleKey] = ruleValue;
-        } else {
-            delete thisRules[ruleKey];
-        }
+        setRule('* ' + desHostname, k => otherRules[k])
+        setRule(srcHostname + ' ' + desHostname, k => otherRules[k])
     }
 
     return true;
@@ -207,8 +225,12 @@ Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
     if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
         return false;
     }
+    ruleKey = domainFromHostname(srcHostname) + ' *';
+    if ( (thisRules[ruleKey] & domainMask) !== (otherRules[ruleKey] & domainMask) ) {
+        return false;
+    }
     ruleKey = srcHostname + ' *';
-    if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
+    if ( (thisRules[ruleKey] & ~domainMask) !== (otherRules[ruleKey] & ~domainMask) ) {
         return false;
     }
 

@@ -83,13 +83,19 @@ if ( dfPaneVisibleStored ) {
 
 /******************************************************************************/
 
+const DOMAIN_SCOPE_KEY = '+';
+const HOST_SCOPE_KEY = '.';
+
+/******************************************************************************/
+
 var messaging = vAPI.messaging;
 var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
 var scopeToSrcHostnameMap = {
-    '/': '*',
-    '.': ''
+    '*': '*',
+    [DOMAIN_SCOPE_KEY]: '',
+    [HOST_SCOPE_KEY]: ''
 };
 var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
@@ -117,14 +123,16 @@ var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u04
 
 var cachePopupData = function(data) {
     popupData = {};
-    scopeToSrcHostnameMap['.'] = '';
+    scopeToSrcHostnameMap[DOMAIN_SCOPE_KEY] = '';
+    scopeToSrcHostnameMap[HOST_SCOPE_KEY] = '';
     hostnameToSortableTokenMap = {};
 
     if ( typeof data !== 'object' ) {
         return popupData;
     }
     popupData = data;
-    scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
+    scopeToSrcHostnameMap[DOMAIN_SCOPE_KEY] = popupData.pageDomain || '';
+    scopeToSrcHostnameMap[HOST_SCOPE_KEY] = popupData.pageHostname || '';
     var hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
         return popupData;
@@ -259,7 +267,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
     }
     cells.toggleClass('ownRule', ownRule);
 
-    if ( scope !== '.' || des === '*' ) {
+    if ( scope === '*' || des === '*' ) {
         return;
     }
 
@@ -309,12 +317,7 @@ var updateAllFirewallCells = function() {
         if ( rules.hasOwnProperty(key) === false ) {
             continue;
         }
-        updateFirewallCell(
-            key.charAt(0),
-            key.slice(2, key.indexOf(' ', 2)),
-            key.slice(key.lastIndexOf(' ') + 1),
-            rules[key]
-        );
+        updateFirewallCell(...key.split(' '), rules[key]);
     }
 
     positionRulesetTools();
@@ -778,7 +781,9 @@ var setFirewallRule = function(src, des, type, action, persist) {
             what: 'toggleFirewallRule',
             tabId: popupData.tabId,
             pageHostname: popupData.pageHostname,
-            srcHostname: src,
+            srcHostname: src === DOMAIN_SCOPE_KEY ? popupData.pageDomain :
+                         src === HOST_SCOPE_KEY ? popupData.pageHostname :
+                         src,
             desHostname: des,
             requestType: type,
             action: action,
@@ -793,7 +798,7 @@ var setFirewallRule = function(src, des, type, action, persist) {
 var unsetFirewallRuleHandler = function(ev) {
     var cell = uDom(this);
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
+        cell.attr('data-src'),
         cell.attr('data-des'),
         cell.attr('data-type'),
         0,
@@ -820,7 +825,7 @@ var setFirewallRuleHandler = function(ev) {
         action = 1;
     }
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
+        cell.attr('data-src'),
         cell.attr('data-des'),
         cell.attr('data-type'),
         action,
