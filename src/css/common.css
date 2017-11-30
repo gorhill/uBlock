@@ -749,7 +749,7 @@ input.cmn-toggle-round-flat.cmn-toggle-small:checked + label::after {
 	margin-left: 2px;
 }
 
-.help-mark.cost {
+.help-mark.cost, .help-mark.dnt {
   background-color: #85bb65;
 }
 
