@@ -1,74 +1,90 @@
 {
-    "manifest_version": 2,
-
-    "name": "uBlock Origin",
-    "version": "1.14.17.10",
-
-    "commands": {
-        "launch-element-zapper": {
-            "description": "__MSG_popupTipZapper__"
-        },
-        "launch-element-picker": {
-            "description": "__MSG_popupTipPicker__"
-        },
-        "launch-logger": {
-            "description": "__MSG_popupTipLog__"
-        }
+  "author": "All uBlock Origin contributors",
+  "background": {
+    "page": "background.html"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "img/browsericons/icon19.png",
+      "38": "img/browsericons/icon38.png"
     },
-    "default_locale": "en",
-    "description": "__MSG_extShortDesc__",
-    "icons": {
-        "16": "img/icon_16.png",
-        "128": "img/icon_128.png"
+    "default_popup": "popup.html",
+    "default_title": "uBlock Origin dev build"
+  },
+  "commands": {
+    "launch-element-picker": {
+      "description": "__MSG_popupTipPicker__"
     },
-
-    "browser_action": {
-        "default_icon": {
-            "19": "img/browsericons/icon19.png",
-            "38": "img/browsericons/icon38.png"
-        },
-        "default_title": "uBlock Origin",
-        "default_popup": "popup.html"
+    "launch-element-zapper": {
+      "description": "__MSG_popupTipZapper__"
     },
-
-    "author": "All uBlock Origin contributors",
-    "background": {
-        "page": "background.html"
-    },
-    "content_scripts": [
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/vapi.js", "js/vapi-client.js", "js/contentscript.js"],
-            "run_at": "document_start",
-            "all_frames": true
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/scriptlets/subscriber.js"],
-            "run_at": "document_idle",
-            "all_frames": false
-        }
-    ],
-    "incognito": "split",
-    "minimum_chrome_version": "38.0",
-    "optional_permissions": [ "file:///*" ],
-    "options_page": "dashboard.html",
-    "options_ui": {
-        "page": "options_ui.html"
-    },
-    "permissions": [
-        "contextMenus",
-        "privacy",
-        "storage",
-        "tabs",
-        "unlimitedStorage",
-        "webNavigation",
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>"
-    ],
-    "short_name": "uBlock₀",
-    "storage": {
-        "managed_schema": "managed_storage.json"
+    "launch-logger": {
+      "description": "__MSG_popupTipLog__"
     }
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "js/vapi.js",
+        "js/vapi-client.js",
+        "js/contentscript.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "js/scriptlets/subscriber.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "default_locale": "en",
+  "description": "__MSG_extShortDesc__",
+  "externally_connectable": {
+    "matches": [
+      "*://*.uw.edu/*",
+      "*://*.washington.edu/*"
+    ]
+  },
+  "icons": {
+    "128": "img/icon_128.png",
+    "16": "img/icon_16.png"
+  },
+  "incognito": "split",
+  "manifest_version": 2,
+  "minimum_chrome_version": "38.0",
+  "name": "uBlock Origin dev build",
+  "optional_permissions": [
+    "file:///*"
+  ],
+  "options_page": "dashboard.html",
+  "options_ui": {
+    "page": "options_ui.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "privacy",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "short_name": "uBlock\u2080 dev build",
+  "storage": {
+    "managed_schema": "managed_storage.json"
+  },
+  "version": "1.14.17.10"
 }
