@@ -83,7 +83,7 @@ vAPI.cacheStorage = (function() {
     }
 
     function genericErrorHandler(error) {
-        console.error('[uBlock0 cacheStorage]', error);
+        console.error('[%s]', STORAGE_NAME, error);
     }
 
     function noopfn() {
