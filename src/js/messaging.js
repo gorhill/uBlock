@@ -252,29 +252,24 @@ var getHostnameDict = function(hostnameToCountMap) {
 var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
     var df = µb.sessionFirewall;
-    r['/ * *'] = df.lookupRuleData('*', '*', '*');
-    r['/ * image'] = df.lookupRuleData('*', '*', 'image');
-    r['/ * 3p'] = df.lookupRuleData('*', '*', '3p');
-    r['/ * inline-script'] = df.lookupRuleData('*', '*', 'inline-script');
-    r['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
-    r['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
-    r['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
+
+    for (let type of Object.keys(µBlock.dynamicFilterTypeScopes)) {
+        r['* * ' + type] = df.lookupRuleData('*', '*', type);
+    }
+
     if ( typeof srcHostname !== 'string' ) {
         return r;
     }
 
-    r['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
-    r['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
-    r['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
-    r['. * inline-script'] = df.lookupRuleData(srcHostname, '*', 'inline-script');
-    r['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
-    r['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
-    r['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
+    for (let [type, scope] of Object.entries(µBlock.dynamicFilterTypeScopes)) {
+        r[µBlock.dynamicFilterScopeKeys[scope] + ' * ' + type] = df.lookupRuleData(srcHostname, '*', type);
+    }
 
     for ( var desHostname in desHostnames ) {
-        r['/ ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
+        r['* ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
         r['. ' + desHostname + ' *'] = df.lookupRuleData(srcHostname, desHostname, '*');
     }
+
     return r;
 };
 
