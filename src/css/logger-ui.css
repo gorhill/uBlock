@@ -140,7 +140,7 @@ textarea {
     width: 6em;
     }
 #netInspector table > colgroup > col:nth-of-type(6) {
-    width: calc(100% - 16em - 20%);
+    width: calc(100% - 15em - 20%);
     }
 #netInspector.f table tr.f {
     display: none;
