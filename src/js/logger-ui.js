@@ -285,23 +285,24 @@ var renderNetLogEntry = function(tr, entry) {
             trcl.add('blocked');
             td.textContent = '--';
         } else if ( filter.result === 2 ) {
+
             trcl.add('allowed');
             td.textContent = '++';
 
-            var processDNTEntries = function (isDNT) {
-               if (!isDNT) return;
-               else {
-                 trcl.add('dnt');
-               }
+            // Q: why not just get dnt-domains list once, at start, then
+            // check it locally, rather than messaging every log entry ?
+            var processDNTEntries = function (isDNT) { // ADN
+              if (!isDNT) return;
+              else {
+                trcl.add('dnt');
+              }
             }
-
-             messaging.send(
-                 'loggerUI',
-                {
-                    what: 'domainIsDNT',
-                    rule: filter.raw
-                },
-                processDNTEntries
+            messaging.send(
+              'loggerUI', {
+                what: 'domainIsDNT',
+                rule: filter.raw
+              },
+              processDNTEntries
             );
 
         } else if ( filter.result === 3 ) {
@@ -315,7 +316,7 @@ var renderNetLogEntry = function(tr, entry) {
             td.textContent = '';
         }
 
-        //TODO: case: adFound
+        // TODO: case: adFound
 
     }
 
