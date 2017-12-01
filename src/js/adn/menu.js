@@ -391,13 +391,13 @@
 
   var appendAdStatus = function(ad, parent) {
     var $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
-
     vAPI.messaging.send(
       'adnauseam', {
         what: 'isDNTVisible',
+        domain: parseDomain(ad.pageUrl)
       },
-      function (visible) {
-        visible && $status.addClass('visible');
+      function (dntVisible) {
+        dntVisible && $status.addClass('visible');
       });
 
     $status.appendTo(parent);
