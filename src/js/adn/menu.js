@@ -44,7 +44,7 @@
       updateAd(request.ad);
       break;
 
-    case 'updateDNT':
+    case 'updateDNT': // S: use-case? why do we need this ...
       updateDNTClass(request.ad);
       break;
 
@@ -305,19 +305,18 @@
     // one 'attempt' at a time
     removeClassFromAll('attempting');
 
-    if (ad) {
-      if (verify(ad))
-        uDom('#ad' + ad.id).addClass('attempting');
-      //else console.warn('Fail on setAttempting: ', ad);
+    if (verify(ad)) {
+      uDom('#ad' + ad.id).addClass('attempting');
     }
   }
 
   var updateDNTClass = function(ad) {
+
     var $ad = uDom('#ad' + ad.id);
     $ad.addClass("dnt-allowed");
-
-    $ad.descendants('.adStatus').text("skipped: dnt site");
+    $ad.descendants('.adStatus').text("skipped: dnt site"); // TODO: localize
   }
+
   var updateAdClasses = function (ad) {
 
     var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);

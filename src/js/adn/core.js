@@ -303,15 +303,17 @@
 
   var visitPending = function (ad) {
 
-    var pending = ad && ad.attempts < maxAttemptsPerAd
-      && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
+    var pending = ad && ad.attempts < maxAttemptsPerAd &&
+      ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
 
     if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
 
-      log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+' => '+ad.targetDomain);
+      log('[DNT] (NoVisit) ' + adinfo(ad), ad.pageDomain + ' => ' + ad.targetDomain);
+
       ad.noVisit = true; // so we don't recheck it
       ad.dntAllowed = true;
 
+      // S: why do we need this?
       vAPI.messaging.broadcast({
         what: 'updateDNT',
         ad: ad
@@ -322,9 +324,9 @@
 
     if (pending && visitedURLs.has(ad.targetUrl)) {
 
-     log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
-     ad.noVisit = true; // so we don't recheck it
-     pending = false;
+      log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
+      ad.noVisit = true; // so we don't recheck it
+      pending = false;
     }
 
     return pending;
@@ -1615,8 +1617,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    if (µb.userSettings.eventLogging)
-      log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
+    console.log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
