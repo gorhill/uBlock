@@ -1110,8 +1110,7 @@ var onMessage = function(request, sender, callback) {
             noTabId: vAPI.noTabId,
             tabIds: tabIds,
             tabIdsToken: µb.pageStoresToken,
-            dntDomains: µb.userSettings.dntDomains, // ADN
-            dntAdsVisible: µb.userSettings.disableHidingForDNT
+            dntDomains: µb.userSettings.dntDomains // ADN
         };
         break;
 

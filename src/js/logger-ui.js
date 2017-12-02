@@ -76,7 +76,7 @@ var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 var netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
-var dntDomains, dntAdsVisible; // ADN
+var dntDomains; // ADN
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
@@ -529,7 +529,6 @@ var onLogBufferRead = function(response) {
     noTabId = response.noTabId;
 
     dntDomains = response.dntDomains; // ADN
-    dntAdsVisible = response.dntAdsVisible;
 
     // This may have changed meanwhile
     if ( response.maxEntries !== maxEntries ) {

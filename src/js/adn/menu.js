@@ -390,6 +390,8 @@
 
   var appendAdStatus = function(ad, parent) {
     var $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
+
+    // S: shouldn't we be able to know this based on prefs when menu opened?
     vAPI.messaging.send(
       'adnauseam', {
         what: 'isDNTVisible',
