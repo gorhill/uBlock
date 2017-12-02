@@ -372,6 +372,43 @@ header{
 .ad-item.dnt-allowed img {
     border: 1px solid #96B96B;
 }
+span.adStatus.visible:before {
+ background-position: -25px 70px;
+}
+.visited span.adStatus.visible:before {
+ background-position: -54px 70px;
+}
+.visited span.adStatus:before {
+ background-position: -54px 40px;
+}
+.dnt-allowed span.adStatus.visible:before {
+ background-position: -84px 70px;
+}
+.dnt-allowed span.adStatus:before {
+ background-position: -84px 40px;
+}
+.failed span.adStatus.visible:before {
+ background-position: -113px 70px;
+}
+.failed span.adStatus:before {
+ background-position: -113px 40px;
+}
+
+span.adStatus:before {
+  background: url(../img/visibility.png);
+  background-position: -25px 40px;
+  background-size: 400px;
+  width:16px;
+  height:14px;
+  margin-right: 2px;
+  content:"";
+  display: inline-block;
+  position:relative; /*or absolute*/
+  z-index:100;
+  top:0;
+  left:0;
+}
+
 .ad-item::before,
 .ad-item-text::before {
   background: #0076FF;
@@ -425,7 +462,7 @@ header{
   text-overflow: ellipsis;
 }
 
-.ad-item span.adStatus, .ad-item-text span.adStatus{
+.ad-item span.adStatus, .ad-item-text span.adStatus {
   font-size:14px;
   font-family: 'bebas_neue';
   color:#666;

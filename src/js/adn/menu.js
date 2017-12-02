@@ -353,9 +353,8 @@
 
     $span = uDom(document.createElement('span')).addClass('thumb');
     $span.appendTo($a);
-    
-    $status = uDom(document.createElement('span')).addClass('adStatus').text("pending");
-    $status.appendTo($a);
+
+    appendAdStatus(ad,$a);
 
     $img = uDom(document.createElement('img'))
       .attr('src', (ad.contentData.src || ad.contentData))
@@ -390,6 +389,20 @@
     $li.appendTo($items);
   }
 
+  var appendAdStatus = function(ad, parent) {
+    var $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
+    vAPI.messaging.send(
+      'adnauseam', {
+        what: 'isDNTVisible',
+        domain: parseDomain(ad.pageUrl)
+      },
+      function (dntVisible) {
+        dntVisible && $status.addClass('visible');
+      });
+
+    $status.appendTo(parent);
+  }
+
   var getAdStatus = function (ad) {
     var status = "pending";
     if (!ad.noVisit) {
@@ -412,8 +425,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
-    $status.appendTo($li);
+    appendAdStatus(ad,$li);
 
     $h3 = uDom(document.createElement('h3'));
 

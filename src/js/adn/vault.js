@@ -344,7 +344,7 @@
 
       id: 'target-date',
       class: 'inspected-date',
-      text: formatTargetDate(ad)
+      html: formatTargetDate(ad)
 
     }).appendTo($target);
   }
@@ -613,8 +613,8 @@
   }
 
   function formatTargetDate(ad) {
-
-    return ad.dntAllowed ? vAPI.i18n('adnAllowedByDNT') : formatDate(ad.visitedTs);
+    var dntNote = vAPI.i18n('adnAllowedByDNT') + "<a class='help-mark dnt' href='https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam'> ? </a>"
+    return ad.dntAllowed ? dntNote : formatDate(ad.visitedTs);
   }
 
   function formatDate(ts) {

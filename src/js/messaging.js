@@ -126,6 +126,10 @@ var onMessage = function(request, sender, callback) {
         response = µb.adnauseam.dnt.isDoNotTrackRule(request.rule);
         break;*/
 
+    case 'isDNTVisible':
+        response = µb.userSettings.dntDomains.indexOf(request.domain) > -1 && µb.userSettings.disableHidingForDNT;
+        break;
+
     case 'forceUpdateAssets':
         µb.scheduleAssetUpdater(0);
         µb.assets.updateStart({ delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod || 2000 });
