@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klikimi do të çaktivizojë uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl do të çaktivizojë uBlock₀ vetëm te kjo faqja.",
+    "message": "Çaktivizoj uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl do të çaktivizojë uBlock₀ vetëm te kjo faqja.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klikimi do të aktivizojë uBlock₀ te ky uebsajti.",
+    "message": "Aktivizoj uBlock₀ te ky uebsajti.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klikimi do të bllokojë të gjitha dritaret automatike të faqes",
+    "message": "Bllokoj të gjitha dritaret automatike të faqes",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klikimi nuk do i bllokojë më dritaret automatike të faqes",
+    "message": "Zhbllokoj të gjitha dritaret automatike të faqes",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klikimi do të bllokojë elementet e mëdha mediatike te faqja",
+    "message": "Bllokoj elementet e mëdha mediatike te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klikimi nuk do i bllokojë më elementet e mëdha mediatike te faqja",
+    "message": "Zbllokoj elementet e mëdha mediatike te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klikimi do të çaktivizojë filtrat kozmetikë të faqes",
+    "message": "Çaktivizoj filtrat kozmetikë të faqes",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klikimi do të aktivizojë filtrat kozmetikë të faqes",
+    "message": "Aktivizoj filtrat kozmetikë të faqes",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klikimi do të bllokojë sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave në linjë",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klikimi nuk do e bllokojë më sistemin e shkronjave në linjë",
+    "message": "Zhbllokoj sistemin e shkronjave në linjë",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -332,7 +332,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën e filtrimit standard.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>uBlock₀<\/i> te memorja e kompjuterit.<\/p>",
+    "message": "<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën standarde të filtrimit.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>uBlock₀<\/i> te memorja e kompjuterit.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit.<p>Megjithëse uBlock₀ i përdor ata me efikasitet, filtrat kozmetikë jospecifikë përsëri mund të rëndojnë memorjen dhe procesorin e kompjuterit në faqet e gjata.<p>Aktivizimi i këtij opsioni eliminon peshën e tepërt te memorja dhe procesori, dhe ul impaktin e uBlock₀ te memorja e kompjuterit.<p>Rekomandohet që ky opsion të aktivizohet për aparatet jo shumë të shpejta.",
+    "message": "<p>Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit.<p>Megjithëse uBlock₀ i përdor ata me efikasitet, filtrat kozmetikë jospecifikë përsëri mund të rëndojnë memorjen dhe procesorin e kompjuterit në faqet e gjata.<p>Aktivizimi i këtij opsioni eliminon peshën e tepërt te memorja dhe procesori, dhe zvogëlon impaktin e uBlock₀ te memorja e kompjuterit.<p>Rekomandohet që ky opsion të aktivizohet për aparatet jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -380,7 +380,7 @@
     "description": "English: Custom"
   },
   "3pExternalListsHint": {
-    "message": "Një URL për rresht. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;, sikundër adresat e pasakta.",
+    "message": "Një URL për rresht. Nuk do të merren parasysh rreshtat që fillojnë me &lsquo;!&rsquo;, sikundër adresat e pasakta.",
     "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete": {
@@ -400,7 +400,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i përngjajë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që kanë si parashtesë &lsquo;!&rsquo;.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i përngjajë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me &lsquo;!&rsquo;.",
     "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport": {

@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Clique para bloquear elementos multimídia grandes neste site",
+    "message": "Clique para bloquear grandes elementos de mídia neste site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Clique para deixar de bloquear elementos multimídia grandes neste site",
+    "message": "Clique para não bloquear grandes elementos de mídia neste site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Clique para não bloquear mais fontes remotas neste site",
+    "message": "Clique para não bloquear as fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
