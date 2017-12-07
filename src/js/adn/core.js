@@ -324,7 +324,7 @@
 
     if (pending && visitedURLs.has(ad.targetUrl)) {
 
-      log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
+      log('[NOVISIT] User has already clicked the ad', ad.targetUrl);
       ad.noVisit = true; // so we don't recheck it
       pending = false;
     }
