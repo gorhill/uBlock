@@ -389,7 +389,9 @@
   }
 
   var appendAdStatus = function(ad, parent) {
-    var $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
+
+    var $status = uDom(document.createElement('span'))
+      .addClass('adStatus').text(adStatus(ad));
 
     // S: shouldn't we be able to know this based on prefs when menu opened?
     vAPI.messaging.send(
@@ -404,15 +406,16 @@
     $status.appendTo(parent);
   }
 
-  var getAdStatus = function (ad) {
+  var adStatus = function (ad) {
+
     var status = "pending";
     if (!ad.noVisit) {
-      if (ad.attempts > 0)
+      if (ad.attempts > 0) {
         status = ad.visitedTs > 0 ? 'visited' : 'failed';
+      }
     } else {
       status = "skipped:" + ( ad.dntAllowed ? " dnt site" : " click frequency");
     }
-
     return status;
   }
 
@@ -426,7 +429,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    appendAdStatus(ad,$li);
+    appendAdStatus(ad,$li); // S: we don't need to check DNT here, we know already
 
     $h3 = uDom(document.createElement('h3'));
 

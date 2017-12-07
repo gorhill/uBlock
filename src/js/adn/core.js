@@ -1592,7 +1592,15 @@
     }
 
     ad.id = ++idgen; // gets an id only if its not a duplicate
-    ad.noVisit = Math.random() > µb.userSettings.clickProbability; // if true, ad will never be visited
+
+    if (µb.adnauseam.dnt.mustNotVisit(ad)) { // see #1168
+      console.log('DNT-ALLOW');
+      ad.noVisit = true;
+      ad.dntAllowed = true;
+    }
+    else {
+      ad.noVisit = Math.random() > µb.userSettings.clickProbability; // if true, ad will never be visited
+    }
 
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
