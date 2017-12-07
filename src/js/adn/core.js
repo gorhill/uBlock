@@ -314,10 +314,10 @@
       ad.dntAllowed = true;
 
       // S: why do we need this?
-      vAPI.messaging.broadcast({
-        what: 'updateDNT',
-        ad: ad
-      });
+      // vAPI.messaging.broadcast({
+      //   what: 'updateDNT',
+      //   ad: ad
+      // });
 
       pending = false;
     }
