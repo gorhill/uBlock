@@ -306,21 +306,23 @@
     var pending = ad && ad.attempts < maxAttemptsPerAd &&
       ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
 
-    if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
-
-      log('[DNT] (NoVisit) ' + adinfo(ad), ad.pageDomain + ' => ' + ad.targetDomain);
-
-      ad.noVisit = true; // so we don't recheck it
-      ad.dntAllowed = true;
-
-      // S: why do we need this?
-      // vAPI.messaging.broadcast({
-      //   what: 'updateDNT',
-      //   ad: ad
-      // });
-
-      pending = false;
-    }
+    //  DH: moved to registerAd() as part of #1168
+    //
+    // if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
+    //
+    //   log('[DNT] (NoVisit) ' + adinfo(ad), ad.pageDomain + ' => ' + ad.targetDomain);
+    //
+    //   ad.noVisit = true; // so we don't recheck it
+    //   ad.dntAllowed = true;
+    //
+    //   // S: why do we need this?
+    //   // vAPI.messaging.broadcast({
+    //   //   what: 'updateDNT',
+    //   //   ad: ad
+    //   // });
+    //
+    //   pending = false;
+    // }
 
     if (pending && visitedURLs.has(ad.targetUrl)) {
 
@@ -1594,7 +1596,6 @@
     ad.id = ++idgen; // gets an id only if its not a duplicate
 
     if (µb.adnauseam.dnt.mustNotVisit(ad)) { // see #1168
-      console.log('DNT-ALLOW');
       ad.noVisit = true;
       ad.dntAllowed = true;
     }
