@@ -44,9 +44,9 @@
       updateAd(request.ad);
       break;
 
-    case 'updateDNT': // S: use-case? why do we need this ...
+    /*case 'updateDNT': // S: use-case? why do we need this ...
       updateDNTClass(request.ad);
-      break;
+      break;*/
 
     case 'notifications':
       renderNotifications(request.notifications);
@@ -310,12 +310,12 @@
     }
   }
 
-  var updateDNTClass = function(ad) {
+  /*var updateDNTClass = function(ad) {
 
     var $ad = uDom('#ad' + ad.id);
     $ad.addClass("dnt-allowed");
     $ad.descendants('.adStatus').text("skipped: dnt site"); // TODO: localize
-  }
+  }*/
 
   var updateAdClasses = function (ad) {
 

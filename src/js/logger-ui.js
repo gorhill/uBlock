@@ -326,7 +326,7 @@ var renderNetLogEntry = function(tr, entry) {
             td.textContent = '';
         }
 
-        // TODO: case: adFound
+        // TODO: case: adFound (blocked on #1288)
 
     }
 
