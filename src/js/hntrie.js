@@ -188,9 +188,12 @@ HNTrieBuilder.prototype.fromDomainOpt = function(hostnames) {
 };
 
 HNTrieBuilder.prototype.fromIterable = function(hostnames) {
+    var hns = Array.from(hostnames).sort(function(a, b) {
+        return a.length - b.length;
+    });
     // https://github.com/gorhill/uBlock/issues/3328
     //   Must sort from shortest to longest.
-    for ( var hn of hostnames.sort(function(a,b){return a.length-b.length;}) ) {
+    for ( var hn of hns ) {
         this.add(hn);
     }
     return this;
