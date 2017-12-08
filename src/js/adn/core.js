@@ -1423,6 +1423,7 @@
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
     return {
       hidingDisabled: !us.hidingAds || showDnt,
+      clickingDisabled: !us.clickingAds,
       textAdsDisabled: !us.parseTextAds,
       logEvents: us.eventLogging
     };

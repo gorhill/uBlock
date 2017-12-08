@@ -159,6 +159,30 @@
     "message": "This action will permanently remove ALL of your Ads",
     "description": "appears in ADN settings"
   },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: Clicking disabled"
+  },
   "adnMenuViewLog": {
     "message": "View Log",
     "description": "appears in ADN popup menu"

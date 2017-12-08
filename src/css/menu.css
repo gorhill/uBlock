@@ -372,7 +372,7 @@ header{
 .ad-item.dnt-allowed img {
     border: 1px solid #96B96B;
 }
-span.adStatus.visible:before {
+/*span.adStatus.visible:before {
  background-position: -25px 70px;
 }
 .visited span.adStatus.visible:before {
@@ -408,7 +408,7 @@ span.adStatus:before {
   top:0;
   left:0;
 }
-
+*/
 .ad-item::before,
 .ad-item-text::before {
   background: #0076FF;
