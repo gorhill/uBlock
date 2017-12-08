@@ -25,7 +25,7 @@
 
   'use strict';
 
-  var ads, page; // remove? only if we can find an updated ad already in the DOM
+  var ads, page, settings; // remove? only if we can find an updated ad already in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
@@ -44,10 +44,6 @@
       updateAd(request.ad);
       break;
 
-    /*case 'updateDNT': // S: use-case? why do we need this ...
-      updateDNTClass(request.ad);
-      break;*/
-
     case 'notifications':
       renderNotifications(request.notifications);
       adjustBlockHeight();
@@ -60,6 +56,7 @@
   var renderPage = function (json) {
 
     page = json && json.pageUrl;
+    settings = json && json.prefs;
 
     function disableMenu() {
       uDom.nodeFromId('pause-button').disabled = true;
@@ -310,13 +307,6 @@
     }
   }
 
-  /*var updateDNTClass = function(ad) {
-
-    var $ad = uDom('#ad' + ad.id);
-    $ad.addClass("dnt-allowed");
-    $ad.descendants('.adStatus').text("skipped: dnt site"); // TODO: localize
-  }*/
-
   var updateAdClasses = function (ad) {
 
     var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
@@ -389,32 +379,22 @@
   }
 
   var appendAdStatus = function(ad, parent) {
-
     var $status = uDom(document.createElement('span'))
-      .addClass('adStatus').text(adStatus(ad));
-
-    // S: shouldn't we be able to know this based on prefs when menu opened?
-    vAPI.messaging.send(
-      'adnauseam', {
-        what: 'isDNTVisible',
-        domain: parseDomain(ad.pageUrl)
-      },
-      function (dntVisible) {
-        dntVisible && $status.addClass('visible');
-      });
-
+        .addClass('adStatus').text(vAPI.i18n("adnAdClickingStatus" + adStatus(ad)));
     $status.appendTo(parent);
+
   }
 
   var adStatus = function (ad) {
 
-    var status = "pending";
+    var status = settings.clickingDisabled ? "SkippedDisabled" : "Pending";
+
     if (!ad.noVisit) {
       if (ad.attempts > 0) {
-        status = ad.visitedTs > 0 ? 'visited' : 'failed';
+        status = ad.visitedTs > 0 ? 'Visited' : 'Failed';
       }
-    } else {
-      status = "skipped:" + ( ad.dntAllowed ? " dnt site" : " click frequency");
+    } else if (status != "SkippedDisabled") {
+      status = "Skipped" +  (ad.dntAllowed ? "DNT" : "Frequency");
     }
     return status;
   }
@@ -429,7 +409,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    appendAdStatus(ad,$li); // S: we don't need to check DNT here, we know already
+    appendAdStatus(ad,$li); 
 
     $h3 = uDom(document.createElement('h3'));
 
