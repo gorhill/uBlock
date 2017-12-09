@@ -447,17 +447,27 @@ var onBeforeRootFrameRequest = function(details) {
     if ( logData === undefined  ) { return; }
 
     // Blocked
-    var query = btoa(JSON.stringify({
-        url: requestURL,
-        hn: requestHostname,
-        dn: requestDomain,
-        fc: logData.compiled,
-        fs: logData.raw
-    }));
+    
+    // ADN: return here if the tab is opened from Vault
+    vAPI.tabs.get(tabId, function(tab) {
+         vAPI.tabs.get(tab.openerTabId, function(parentTab) {
+            if (parentTab.title === "AdNauseam — AdVault") return;
 
-    vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
+            var query = btoa(JSON.stringify({
+              url: requestURL,
+              hn: requestHostname,
+              dn: requestDomain,
+              fc: logData.compiled,
+              fs: logData.raw
+            }));
 
-    return { cancel: true };
+            vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
+
+            return { cancel: true };
+            
+         })
+    })
+    
 };
 
 /******************************************************************************/
