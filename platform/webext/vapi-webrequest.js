@@ -142,6 +142,16 @@ vAPI.net.registerListeners = function() {
         }
         return onHeadersReceivedClient(details);
     };
+    
+    // ADN
+    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
+        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
+        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
+
+    var onBeforeSendHeaders = function(details) {
+        normalizeRequestDetails(details);
+        return onBeforeSendHeadersClient(details);
+    }
 
     if ( onBeforeRequest ) {
         let urls = this.onBeforeRequest.urls || ['<all_urls>'];
@@ -174,6 +184,16 @@ vAPI.net.registerListeners = function() {
             this.onHeadersReceived.extra
         );
     }
+
+     if ( onBeforeSendHeaders ) {
+        let urls = this.onBeforeSendHeaders.urls || ['<all_urls>'];
+        wrApi.onBeforeSendHeaders.addListener(
+            onBeforeSendHeaders,
+            { urls: urls, types: types },
+            this.onBeforeSendHeaders.extra
+        );
+    }
+
 };
 
 /******************************************************************************/
