@@ -76,6 +76,7 @@ var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 var netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
+var dntDomains; // ADN
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
@@ -237,6 +238,7 @@ var createGap = function(tabId, url) {
 /******************************************************************************/
 
 var renderNetLogEntry = function(tr, entry) {
+
     var trcl = tr.classList;
     var filter = entry.d0 || undefined;
     var type = entry.d1;
@@ -289,9 +291,17 @@ var renderNetLogEntry = function(tr, entry) {
             trcl.add('allowed');
             td.textContent = '++';
 
-            // Q: why not just get dnt-domains list once, at start, then
-            // check it locally, rather than messaging every log entry ?
-            var processDNTEntries = function (isDNT) { // ADN
+            var isDNTRule = function(rule) {
+                for (var i = 0; i < dntDomains.length; i++) {
+                  if (rule.indexOf(dntDomains[i]) != -1)
+                    return true;
+                }
+                return false;
+            }
+
+            if (isDNTRule(filter.raw)) trcl.add('dnt');
+
+            /*var processDNTEntries = function (isDNT) { // ADN
               if (!isDNT) return;
               else {
                 trcl.add('dnt');
@@ -303,7 +313,7 @@ var renderNetLogEntry = function(tr, entry) {
                 rule: filter.raw
               },
               processDNTEntries
-            );
+            );*/
 
         } else if ( filter.result === 3 ) {
             trcl.add('nooped');
@@ -316,7 +326,7 @@ var renderNetLogEntry = function(tr, entry) {
             td.textContent = '';
         }
 
-        // TODO: case: adFound
+        // TODO: case: adFound (blocked on #1288)
 
     }
 
@@ -517,6 +527,8 @@ var truncateLog = function(size) {
 var onLogBufferRead = function(response) {
     // This tells us the behind-the-scene tab id
     noTabId = response.noTabId;
+
+    dntDomains = response.dntDomains; // ADN
 
     // This may have changed meanwhile
     if ( response.maxEntries !== maxEntries ) {

@@ -476,6 +476,11 @@ div.bullets { display: none; } /* hide by default */
 	line-height: 13px;
 	margin-bottom: 4px;
 }
+.item.inspected .meta li>div.target span#target-date a.dnt.help-mark{
+	display: inline-block;
+	color:black;
+	bottom:0px;
+}
 .item.inspected .meta li>div.target a{
 	font-weight: 700;
 }

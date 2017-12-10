@@ -47,7 +47,7 @@
     zoomIdx = 0, // determined by zoom in / out buttons
     draggingVault = false;
 
-  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft; // stateful
+  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings; // stateful
 
   var messager = vAPI.messaging;
 
@@ -95,6 +95,7 @@
     // console.log('renderAds: ', json);
     gAds = json.data; // store
     addInterfaceHandlers();
+    settings = json.prefs;
     createSlider(true);
     setCurrent(json.current);
 
@@ -344,7 +345,7 @@
 
       id: 'target-date',
       class: 'inspected-date',
-      text: formatTargetDate(ad)
+      html: formatTargetDate(ad)
 
     }).appendTo($target);
   }
@@ -613,13 +614,14 @@
   }
 
   function formatTargetDate(ad) {
+    var dntNote = vAPI.i18n('adnAllowedByDNT') + "<a class='help-mark dnt' href='https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam'> ? </a>",
+        frequencyNote = vAPI.i18n('adnAdClickingStatusSkippedFrequency');
 
-    return ad.dntAllowed ? vAPI.i18n('adnAllowedByDNT') : formatDate(ad.visitedTs);
+    return ad.noVisit ? (ad.dntAllowed ? dntNote : frequencyNote) : formatDate(ad.visitedTs);
   }
 
   function formatDate(ts) {
-
-    if (!ts) return vAPI.i18n('adnNotYetVisited');
+    if (!ts) return settings.clickingDisabled ? vAPI.i18n('adnAdClickingStatusSkippedDisabled') : vAPI.i18n('adnNotYetVisited');
 
     function getLocale() {
       return navigator.languages[0] || navigator.language;

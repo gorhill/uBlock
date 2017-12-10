@@ -303,28 +303,32 @@
 
   var visitPending = function (ad) {
 
-    var pending = ad && ad.attempts < maxAttemptsPerAd
-      && ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
+    var pending = ad && ad.attempts < maxAttemptsPerAd &&
+      ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
 
-    if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
-
-      log('[DNT] (NoVisit) '+ adinfo(ad), ad.pageDomain+' => '+ad.targetDomain);
-      ad.noVisit = true; // so we don't recheck it
-      ad.dntAllowed = true;
-
-      vAPI.messaging.broadcast({
-        what: 'updateDNT',
-        ad: ad
-      });
-
-      pending = false;
-    }
+    //  DH: moved to registerAd() as part of #1168
+    //
+    // if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
+    //
+    //   log('[DNT] (NoVisit) ' + adinfo(ad), ad.pageDomain + ' => ' + ad.targetDomain);
+    //
+    //   ad.noVisit = true; // so we don't recheck it
+    //   ad.dntAllowed = true;
+    //
+    //   // S: why do we need this?
+    //   // vAPI.messaging.broadcast({
+    //   //   what: 'updateDNT',
+    //   //   ad: ad
+    //   // });
+    //
+    //   pending = false;
+    // }
 
     if (pending && visitedURLs.has(ad.targetUrl)) {
 
-     log('[NO AD VISIT] User has already clicked the ad', ad.targetUrl);
-     ad.noVisit = true; // so we don't recheck it
-     pending = false;
+      log('[NOVISIT] User has already clicked the ad', ad.targetUrl);
+      ad.noVisit = true; // so we don't recheck it
+      pending = false;
     }
 
     return pending;
@@ -1419,6 +1423,7 @@
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
     return {
       hidingDisabled: !us.hidingAds || showDnt,
+      clickingDisabled: !us.clickingAds,
       textAdsDisabled: !us.parseTextAds,
       logEvents: us.eventLogging
     };
@@ -1590,7 +1595,14 @@
     }
 
     ad.id = ++idgen; // gets an id only if its not a duplicate
-    ad.noVisit = Math.random() > µb.userSettings.clickProbability; // if true, ad will never be visited
+
+    if (µb.adnauseam.dnt.mustNotVisit(ad)) { // see #1168
+      ad.noVisit = true;
+      ad.dntAllowed = true;
+    }
+    else {
+      ad.noVisit = Math.random() > µb.userSettings.clickProbability; // if true, ad will never be visited
+    }
 
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
@@ -1615,8 +1627,7 @@
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
 
-    if (µb.userSettings.eventLogging)
-      log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
+    console.log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
 
     // Firefox already handles this correctly
     vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);

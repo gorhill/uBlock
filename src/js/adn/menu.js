@@ -25,7 +25,7 @@
 
   'use strict';
 
-  var ads, page; // remove? only if we can find an updated ad already in the DOM
+  var ads, page, settings; // remove? only if we can find an updated ad already in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
@@ -44,10 +44,6 @@
       updateAd(request.ad);
       break;
 
-    case 'updateDNT':
-      updateDNTClass(request.ad);
-      break;
-
     case 'notifications':
       renderNotifications(request.notifications);
       adjustBlockHeight();
@@ -60,6 +56,7 @@
   var renderPage = function (json) {
 
     page = json && json.pageUrl;
+    settings = json && json.prefs;
 
     function disableMenu() {
       uDom.nodeFromId('pause-button').disabled = true;
@@ -305,19 +302,11 @@
     // one 'attempt' at a time
     removeClassFromAll('attempting');
 
-    if (ad) {
-      if (verify(ad))
-        uDom('#ad' + ad.id).addClass('attempting');
-      //else console.warn('Fail on setAttempting: ', ad);
+    if (verify(ad)) {
+      uDom('#ad' + ad.id).addClass('attempting');
     }
   }
 
-  var updateDNTClass = function(ad) {
-    var $ad = uDom('#ad' + ad.id);
-    $ad.addClass("dnt-allowed");
-
-    $ad.descendants('.adStatus').text("skipped: dnt site");
-  }
   var updateAdClasses = function (ad) {
 
     var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
@@ -353,9 +342,8 @@
 
     $span = uDom(document.createElement('span')).addClass('thumb');
     $span.appendTo($a);
-    
-    $status = uDom(document.createElement('span')).addClass('adStatus').text("pending");
-    $status.appendTo($a);
+
+    appendAdStatus(ad,$a);
 
     $img = uDom(document.createElement('img'))
       .attr('src', (ad.contentData.src || ad.contentData))
@@ -390,15 +378,24 @@
     $li.appendTo($items);
   }
 
-  var getAdStatus = function (ad) {
-    var status = "pending";
-    if (!ad.noVisit) {
-      if (ad.attempts > 0)
-        status = ad.visitedTs > 0 ? 'visited' : 'failed';
-    } else {
-      status = "skipped:" + ( ad.dntAllowed ? " dnt site" : " click frequency");
-    }
+  var appendAdStatus = function(ad, parent) {
+    var $status = uDom(document.createElement('span'))
+        .addClass('adStatus').text(vAPI.i18n("adnAdClickingStatus" + adStatus(ad)));
+    $status.appendTo(parent);
 
+  }
+
+  var adStatus = function (ad) {
+
+    var status = settings.clickingDisabled ? "SkippedDisabled" : "Pending";
+
+    if (!ad.noVisit) {
+      if (ad.attempts > 0) {
+        status = ad.visitedTs > 0 ? 'Visited' : 'Failed';
+      }
+    } else if (status != "SkippedDisabled") {
+      status = "Skipped" +  (ad.dntAllowed ? "DNT" : "Frequency");
+    }
     return status;
   }
 
@@ -412,8 +409,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    $status = uDom(document.createElement('span')).addClass('adStatus').text(getAdStatus(ad));
-    $status.appendTo($li);
+    appendAdStatus(ad,$li); 
 
     $h3 = uDom(document.createElement('h3'));
 

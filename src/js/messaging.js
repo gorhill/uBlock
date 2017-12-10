@@ -122,8 +122,12 @@ var onMessage = function(request, sender, callback) {
         µb.cosmeticFilteringEngine.removeFromSelectorCache(request.pageDomain);
         break;
 
-    case 'domainIsDNT':
+    /*case 'domainIsDNT':
         response = µb.adnauseam.dnt.isDoNotTrackRule(request.rule);
+        break;*/
+
+    case 'isDNTVisible':
+        response = µb.userSettings.dntDomains.indexOf(request.domain) > -1 && µb.userSettings.disableHidingForDNT;
         break;
 
     case 'forceUpdateAssets':
@@ -1086,6 +1090,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
     case 'readAll':
+
         var tabIds = {}, pageStore;
         var loggerURL = vAPI.getURL('logger-ui.html');
         for ( var tabId in µb.pageStores ) {
@@ -1104,7 +1109,8 @@ var onMessage = function(request, sender, callback) {
             maxEntries: µb.userSettings.requestLogMaxEntries,
             noTabId: vAPI.noTabId,
             tabIds: tabIds,
-            tabIdsToken: µb.pageStoresToken
+            tabIdsToken: µb.pageStoresToken,
+            dntDomains: µb.userSettings.dntDomains // ADN
         };
         break;
 
