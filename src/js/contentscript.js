@@ -624,7 +624,7 @@ vAPI.DOMFilterer = (function() {
                 t1 = Date.now();
                 pselector.budget += t0 - t1;
                 if ( pselector.budget < -500 ) {
-                    console.log('uBO: disabling %s', pselector.raw);
+                    console.info('uBO: disabling %s', pselector.raw);
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
@@ -1066,7 +1066,7 @@ vAPI.domSurveyor = (function() {
             return;
         }
 
-        console.log('dom surveyor shutting down: too many misses');
+        //console.info('dom surveyor shutting down: too many misses');
 
         surveyTimer.clear();
         vAPI.domWatcher.removeListener(domWatcherInterface);
