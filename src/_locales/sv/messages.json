@@ -48,7 +48,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicka för att avaktivera uBlock för den här webbplatsen.\n\nCtrl + klicka för att avaktivera uBlock för enbart den här sidan.",
+    "message": "Klicka för att inaktivera uBlock₀ för den här webbplatsen.\n\nCtrl + klicka för att inaktivera uBlock₀ för enbart den här sidan.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Klicka för att blockera alla popup-fönster på denna sida",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Klicka för att inte längre blockera alla popup-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Klicka för att blockera stora medieelement på den här webbplatsen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Klicka för att inte längre blockera stora medieelement på den här webbplatsen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klicka för att avaktivera kosmetiska filter för den här webbplatsen",
+    "message": "Klicka för att inaktivera kosmetiska filter för den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Klicka för att aktivera kosmetisk filtrering på denna sida",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Klicka för att blockera externa typsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Klicka för att inte längre blockera externa typsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan de bidra mätbart till en högre minnes- och processoranvändning på vissa webbsidor, särskilt stora sidor och sidor som är öppna en länge tid.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för uBlock₀ som sådant.<p>Det rekommenderas att du aktiverar inställningen på mindre kraftfulla enheter.",
+    "message": "<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan generiska kosmetiska filter bidra till en högre minnes- och processoranvändning på vissa webbplatser, särskilt stora och långlivade.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för själva uBlock₀.<p>Det rekommenderas att du aktiverar denna inställning på mindre kraftfulla enheter.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -468,7 +468,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbsidor uBlock Origin ska avaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
+    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {

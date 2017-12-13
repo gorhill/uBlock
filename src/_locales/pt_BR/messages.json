@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clique para desativar uBlock₀ neste site.\n\nCtrl+clique para desativar o uBlock₀ apenas nesta página.",
+    "message": "Clique para desativar uBO neste site.\n\nCtrl+clique para desativar o uBO apenas nesta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clique para ativar o uBlock₀ neste site.",
+    "message": "Clique para ativar o uBO neste site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
