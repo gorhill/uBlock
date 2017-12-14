@@ -328,6 +328,7 @@
 
       log('[NOVISIT] User has already clicked the ad', ad.targetUrl);
       ad.noVisit = true; // so we don't recheck it
+      ad.clickedByUser = true;
       pending = false;
     }
 

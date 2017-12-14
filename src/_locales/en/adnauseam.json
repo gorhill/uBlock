@@ -173,15 +173,19 @@
   },
   "adnAdClickingStatusSkippedDNT": {
     "message": "SKIPPED: DNT Allowed",
-    "description": "Menu & AdVault: DNT Allowed"
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
     "message": "SKIPPED: Click Frequency",
-    "description": "Menu & AdVault: Click Frequency"
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
     "message": "SKIPPED: Clicking Disabled",
-    "description": "Menu & AdVault: Clicking disabled"
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
     "message": "View Log",
