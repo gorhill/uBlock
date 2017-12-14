@@ -711,15 +711,7 @@ var backupUserData = function(callback) {
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.hnSwitches.toString(),
-        userFilters: '',
-        // TODO(seamless migration):
-        // The following is strictly for convenience, to be minimally
-        // forward-compatible. This will definitely be removed in the
-        // short term, as I do not expect the need to install an older
-        // version of uBO to ever be needed beyond the short term.
-        // >>>>>>>>
-        filterLists: µb.oldDataFromNewListKeys(µb.selectedFilterLists)
-        // <<<<<<<<
+        userFilters: ''
     };
 
     var onUserFiltersReady = function(details) {
@@ -760,17 +752,8 @@ var restoreUserData = function(request) {
             lastBackupTime: 0
         });
         µb.assets.put(µb.userFiltersPath, userData.userFilters);
-
-        // 'filterLists' is available up to uBO v1.10.4, not beyond.
-        // 'selectedFilterLists' is available from uBO v1.11 and beyond.
-        var listKeys;
         if ( Array.isArray(userData.selectedFilterLists) ) {
-            listKeys = userData.selectedFilterLists;
-        } else if ( userData.filterLists instanceof Object ) {
-            listKeys = µb.newListKeysFromOldData(userData.filterLists);
-        }
-        if ( listKeys !== undefined ) {
-            µb.saveSelectedFilterLists(listKeys, restart);
+            µb.saveSelectedFilterLists(userData.selectedFilterLists, restart);
         } else {
             restart();
         }
@@ -828,8 +811,7 @@ var getLists = function(callback) {
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
-        userFiltersPath: µb.userFiltersPath,
-        aliases: µb.assets.listKeyAliases
+        userFiltersPath: µb.userFiltersPath
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;

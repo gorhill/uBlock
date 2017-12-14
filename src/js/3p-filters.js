@@ -547,16 +547,9 @@ var fromCloudData = function(data, append) {
     checked = data.ignoreGenericCosmeticFilters === true || append && elem.checked;
     elem.checked = listDetails.ignoreGenericCosmeticFilters = checked;
 
-    var listKey;
-    for ( i = 0, n = data.selectedLists.length; i < n; i++ ) {
-        listKey = data.selectedLists[i];
-        if ( listDetails.aliases[listKey] ) {
-            data.selectedLists[i] = listDetails.aliases[listKey];
-        }
-    }
     var selectedSet = new Set(data.selectedLists),
         listEntries = uDom('#lists .listEntry'),
-        listEntry, input;
+        listEntry, listKey, input;
     for ( i = 0, n = listEntries.length; i < n; i++ ) {
         listEntry = listEntries.at(i);
         listKey = listEntry.attr('data-listkey');

@@ -168,29 +168,16 @@
 
 µBlock.loadSelectedFilterLists = function(callback) {
     var µb = this;
-    vAPI.storage.get([ 'selectedFilterLists', 'remoteBlacklists' ], function(bin) {
-        if ( !bin || !bin.selectedFilterLists && !bin.remoteBlacklists ) {
-            // Select default filter lists if first-time launch.
+    vAPI.storage.get('selectedFilterLists', function(bin) {
+        // Select default filter lists if first-time launch.
+        if ( !bin || Array.isArray(bin.selectedFilterLists) === false ) {
             µb.assets.metadata(function(availableLists) {
                 µb.saveSelectedFilterLists(µb.autoSelectRegionalFilterLists(availableLists));
                 callback();
             });
             return;
         }
-        var listKeys = [];
-        if ( bin.selectedFilterLists ) {
-            listKeys = bin.selectedFilterLists;
-        } else if ( bin.remoteBlacklists ) {
-            var oldListKeys = µb.newListKeysFromOldData(bin.remoteBlacklists);
-            if ( oldListKeys.sort().join() !== listKeys.sort().join() ) {
-                listKeys = oldListKeys;
-                µb.saveSelectedFilterLists(listKeys);
-            }
-            // TODO(seamless migration):
-            // Uncomment when all have moved to v1.11 and beyond.
-            //vAPI.storage.remove('remoteBlacklists');
-        }
-        µb.selectedFilterLists = listKeys;
+        µb.selectedFilterLists = bin.selectedFilterLists;
         callback();
     });
 };
@@ -213,62 +200,11 @@
     }
     newKeys = this.arrayFrom(newSet);
     var bin = {
-        selectedFilterLists: newKeys,
-        remoteBlacklists: this.oldDataFromNewListKeys(newKeys)
+        selectedFilterLists: newKeys
     };
     this.selectedFilterLists = newKeys;
     vAPI.storage.set(bin, callback);
 };
-
-// TODO(seamless migration):
-// Remove when all have moved to v1.11 and beyond.
-// >>>>>>>>
-µBlock.newListKeysFromOldData = function(oldLists) {
-    var aliases = this.assets.listKeyAliases,
-        listKeys = [], newKey;
-    for ( var oldKey in oldLists ) {
-        if ( oldLists[oldKey].off !== true ) {
-            newKey = aliases[oldKey];
-            listKeys.push(newKey ? newKey : oldKey);
-        }
-    }
-    return listKeys;
-};
-
-µBlock.oldDataFromNewListKeys = function(selectedFilterLists) {
-    var µb = this,
-        remoteBlacklists = {};
-    var reverseAliases = Object.keys(this.assets.listKeyAliases).reduce(
-        function(a, b) {
-            a[µb.assets.listKeyAliases[b]] = b; return a;
-        },
-        {}
-    );
-    remoteBlacklists = selectedFilterLists.reduce(
-        function(a, b) {
-            a[reverseAliases[b] || b] = { off: false };
-            return a;
-        },
-        {}
-    );
-    remoteBlacklists = Object.keys(µb.assets.listKeyAliases).reduce(
-        function(a, b) {
-            var aliases = µb.assets.listKeyAliases;
-            if (
-                b.startsWith('assets/') &&
-                aliases[b] !== 'public_suffix_list.dat' &&
-                aliases[b] !== 'ublock-resources' &&
-                !a[b]
-            ) {
-                a[b] = { off: true };
-            }
-            return a;
-        },
-        remoteBlacklists
-    );
-    return remoteBlacklists;
-};
-// <<<<<<<<
 
 /******************************************************************************/
 
@@ -1027,9 +963,6 @@
         // is a reference to an asset in 'assets.json'.
         if ( Array.isArray(data.selectedFilterLists) ) {
             bin.selectedFilterLists = data.selectedFilterLists;
-            binNotEmpty = true;
-        } else if ( typeof data.filterLists === 'object' ) {
-            bin.selectedFilterLists = µb.newListKeysFromOldData(data.filterLists);
             binNotEmpty = true;
         }
 

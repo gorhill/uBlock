@@ -169,157 +169,6 @@ api.fetchText = function(url, onLoad, onError) {
 
 /*******************************************************************************
 
-    TODO(seamless migration):
-    This block of code will be removed when I am confident all users have
-    moved to a version of uBO which does not require the old way of caching
-    assets.
-
-    api.listKeyAliases: a map of old asset keys to new asset keys.
-
-    migrate(): to seamlessly migrate the old cache manager to the new one:
-    - attempt to preserve and move content of cached assets to new locations;
-    - removes all traces of now obsolete cache manager entries in cacheStorage.
-
-    This code will typically execute only once, when the newer version of uBO
-    is first installed and executed.
-
-**/
-
-api.listKeyAliases = {
-    "assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
-    "assets/user/filters.txt": "user-filters",
-    "assets/ublock/resources.txt": "ublock-resources",
-    "assets/ublock/filters.txt": "ublock-filters",
-    "assets/ublock/privacy.txt": "ublock-privacy",
-    "assets/ublock/unbreak.txt": "ublock-unbreak",
-    "assets/ublock/badware.txt": "ublock-badware",
-    "assets/ublock/experimental.txt": "ublock-experimental",
-    "https://easylist-downloads.adblockplus.org/easylistchina.txt": "CHN-0",
-    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "CHN-1",
-    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt": "CHN-2",
-    "https://easylist-downloads.adblockplus.org/easylistgermany.txt": "DEU-0",
-    "https://adblock.dk/block.csv": "DNK-0",
-    "assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt": "easylist",
-    "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": "easylist-nocosmetic",
-    "assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt": "easyprivacy",
-    "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": "fanboy-annoyance",
-    "https://easylist-downloads.adblockplus.org/fanboy-social.txt": "fanboy-social",
-    "https://easylist-downloads.adblockplus.org/liste_fr.txt": "FRA-0",
-    "http://adblock.gardar.net/is.abp.txt": "ISL-0",
-    "https://easylist-downloads.adblockplus.org/easylistitaly.txt": "ITA-0",
-    "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "ITA-1",
-    "https://easylist-downloads.adblockplus.org/advblock.txt": "RUS-0",
-    "https://easylist-downloads.adblockplus.org/bitblock.txt": "RUS-1",
-    "https://filters.adtidy.org/extension/chromium/filters/1.txt": "RUS-2",
-    "https://adguard.com/en/filter-rules.html?id=1": "RUS-2",
-    "https://easylist-downloads.adblockplus.org/easylistdutch.txt": "NLD-0",
-    "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": "LVA-0",
-    "http://hosts-file.net/.%5Cad_servers.txt": "hphosts",
-    "http://adblock.ee/list.php": "EST-0",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": "disconnect-malvertising",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": "disconnect-malware",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": "disconnect-tracking",
-    "https://www.certyficate.it/adblock/adblock.txt": "POL-0",
-    "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt": "POL-0",
-    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": "awrl-0",
-    "http://adb.juvander.net/Finland_adb.txt": "FIN-0",
-    "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": "KOR-0",
-    "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": "KOR-1",
-    "https://www.fanboy.co.nz/fanboy-korean.txt": "KOR-2",
-    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
-    "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
-    "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": "JPN-0",
-    "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": "EU-prebake",
-    "https://easylist-downloads.adblockplus.org/Liste_AR.txt": "ara-0",
-    "http://margevicius.lt/easylistlithuania.txt": "LTU-0",
-    "assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-0",
-    "assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-1",
-    "http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-2",
-    "assets/thirdparties/pgl.yoyo.org/as/serverlist": "plowe-0",
-    "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": "ISR-0",
-    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "reek-0",
-    "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": "HUN-0",
-    "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": "CZE-0",
-    "http://someonewhocares.org/hosts/hosts": "dpollock-0",
-    "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": "spam404-0",
-    "http://stanev.org/abp/adblock_bg.txt": "BGR-0",
-    "http://winhelp2002.mvps.org/hosts.txt": "mvps-0",
-    "https://www.fanboy.co.nz/enhancedstats.txt": "fanboy-enhanced",
-    "https://www.fanboy.co.nz/fanboy-antifacebook.txt": "fanboy-thirdparty_social",
-    "https://easylist-downloads.adblockplus.org/easylistspanish.txt": "spa-0",
-    "https://www.fanboy.co.nz/fanboy-swedish.txt": "SWE-0",
-    "https://www.fanboy.co.nz/r/fanboy-ultimate.txt": "fanboy-ultimate",
-    "https://filters.adtidy.org/extension/chromium/filters/13.txt": "TUR-0",
-    "https://adguard.com/filter-rules.html?id=13": "TUR-0",
-    "https://www.fanboy.co.nz/fanboy-vietnam.txt": "VIE-0",
-    "https://www.void.gr/kargig/void-gr-filters.txt": "GRC-0",
-    "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt": "SVN-0"
-};
-
-var migrate = function(callback) {
-    var entries,
-        moveCount = 0,
-        toRemove = [];
-
-    var countdown = function(change) {
-        moveCount -= (change || 0);
-        if ( moveCount !== 0 ) { return; }
-        vAPI.cacheStorage.remove(toRemove);
-        saveAssetCacheRegistry();
-        callback();
-    };
-
-    var onContentRead = function(oldKey, newKey, bin) {
-        var content = bin && bin['cached_asset_content://' + oldKey] || undefined;
-        if ( content ) {
-            assetCacheRegistry[newKey] = {
-                readTime: Date.now(),
-                writeTime: entries[oldKey]
-            };
-            if ( reIsExternalPath.test(oldKey) ) {
-                assetCacheRegistry[newKey].remoteURL = oldKey;
-            }
-            bin = {};
-            bin['cache/' + newKey] = content;
-            vAPI.cacheStorage.set(bin);
-        }
-        countdown(1);
-    };
-
-    var onEntries = function(bin) {
-        entries = bin && bin['cached_asset_entries'];
-        if ( !entries ) { return callback(); }
-        if ( bin && bin['assetCacheRegistry'] ) {
-            assetCacheRegistry = bin['assetCacheRegistry'];
-        }
-        var aliases = api.listKeyAliases;
-        for ( var oldKey in entries ) {
-            if ( oldKey.endsWith('assets/user/filters.txt') ) { continue; }
-            var newKey = aliases[oldKey];
-            if ( !newKey && /^https?:\/\//.test(oldKey) ) {
-                newKey = oldKey;
-            }
-            if ( newKey ) {
-                vAPI.cacheStorage.get(
-                    'cached_asset_content://' + oldKey,
-                    onContentRead.bind(null, oldKey, newKey)
-                );
-                moveCount += 1;
-            }
-            toRemove.push('cached_asset_content://' + oldKey);
-        }
-        toRemove.push('cached_asset_entries', 'extensionLastVersion');
-        countdown();
-    };
-
-    vAPI.cacheStorage.get(
-        [ 'cached_asset_entries', 'assetCacheRegistry' ],
-        onEntries
-    );
-};
-
-/*******************************************************************************
-
     The purpose of the asset source registry is to keep key detail information
     about an asset:
     - Where to load it from: this may consist of one or more URLs, either local
@@ -523,16 +372,12 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    var migrationDone = function() {
-        vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
-            if ( bin && bin.assetCacheRegistry ) {
-                assetCacheRegistry = bin.assetCacheRegistry;
-            }
-            registryReady();
-        });
-    };
-
-    migrate(migrationDone);
+    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+        if ( bin && bin.assetCacheRegistry ) {
+            assetCacheRegistry = bin.assetCacheRegistry;
+        }
+        registryReady();
+    });
 };
 
 var saveAssetCacheRegistry = (function() {
