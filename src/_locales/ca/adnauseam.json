@@ -8,7 +8,7 @@
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "Built on",
+    "message": "Construït sobre",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
@@ -28,19 +28,19 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Bloca el programari maliciós",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "Amaga anuncis en els vostres <span>filtres<\/span> sel·leccionats",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Register visits on Ads found via your <span>filter lists<\/span>",
+    "message": "Registra les visites als anuncis que es troben als vostres <span>filtres<\/span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Bloca els rastrejadors i altre programari maliciós (<span>personalitza-ho<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -60,7 +60,7 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Activa el blocatge de programari maliciós",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -84,43 +84,43 @@
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, els anuncis s'amaguen però no se'ls fa clic.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, es fa clic als anuncis però no s'amaguen.",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "OBJECTIU",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
-    "message": "FOUND ON",
+    "message": "S'HA TROBAT A",
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
-    "message": "Not Yet Visited",
+    "message": "Encara no s'ha visitat",
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Permès gràcies a la seva política de seguiment",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
-    "message": "Switch me on",
+    "message": "Activa-ho",
     "description": "English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt": {
-    "message": "That's it? ok…",
+    "message": "Això és tot? D'acord…",
     "description": "English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill": {
-    "message": "Better, but still…",
+    "message": "Millor, però…",
     "description": "English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo": {
@@ -144,7 +144,7 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No Ads collected on this page (showing recent)",
+    "message": "No s'ha recol·lectat cap anunci en aquesta pàgina (es mostren els recents)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
@@ -152,35 +152,63 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
+    "message": "S'han importat {{count}} anuncis",
     "description": "appears in ADN settings"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
+    "message": "Aquesta acció eliminarà de manera permanent tots els vostres anuncis",
     "description": "appears in ADN settings"
+  },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
     "message": "Mostra el registre",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicked",
+    "message": "s'ha fet clic a",
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": "dels",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "anuncis detectats",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
-    "message": "View Ad Vault",
+    "message": "Mostra l'AdVault",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "Reprèn",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
@@ -196,15 +224,15 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
-    "message": "Disable all logging",
+    "message": "Desactiva tot el registre",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer": {
-    "message": "Disable outgoing referrer",
+    "message": "Desactiva els referents externs",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
-    "message": "Clear Ads with browser history",
+    "message": "Esborra l'historial de navegació i els anuncis",
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {
@@ -220,7 +248,7 @@
     "description": "appears in ADN log page"
   },
   "adnLogViewFullLog": {
-    "message": "View full log",
+    "message": "Mostra el registre complet",
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
@@ -228,7 +256,7 @@
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "1 de gener de 1970, 0:00 h",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -268,19 +296,19 @@
     "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Click Ads identified by your chosen filter lists",
+    "message": "Fa clic als anuncis identificats per la vostra llista de filtres",
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Bloca els rastrejadors i altre programari maliciós",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
-    "message": "Capture text-only Ads when possible",
+    "message": "Captura anuncis de text si és possible",
     "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Display the number of Ads on the icon",
+    "message": "Mostra el nombre d'anuncis a la icona",
     "description": "English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt": {
@@ -292,19 +320,19 @@
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with clicks",
+    "message": "Ignora les galetes generades amb els clics",
     "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
-    "message": "Don't send cookies on visits",
+    "message": "No enviïs galetes en les visites",
     "description": "English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt": {
-    "message": "Hide user-agent header on visits",
+    "message": "Amaga la capçalera de l'agent d'usuari en les visites",
     "description": "English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt": {
-    "message": "Hide referring page on visits",
+    "message": "Amaga la pàgina referent en les visites",
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
@@ -312,7 +340,7 @@
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "De vegades",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
@@ -320,15 +348,15 @@
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
-    "message": "Make exceptions for non-tracking Ads",
+    "message": "Crea excepcions per als anuncis que no fan seguiment",
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Don't hide non-tracking Ads",
+    "message": "No amaguis els anuncis que no fan seguiment",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
-    "message": "Don't click non-tracking Ads",
+    "message": "No facis clic als anuncis que no fan seguiment",
     "description": "English: Don't click non-tracking Ads"
   },
   "extName": {
@@ -336,11 +364,11 @@
     "description": "extension name"
   },
   "extShortDesc": {
-    "message": "Fight back against advertising surveillance",
+    "message": "Lluiteu contra la vigilància de la publicitat",
     "description": "for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials": {
-    "message": "Essentials",
+    "message": "Elements essencials",
     "description": "English: Essentials"
   },
   "3pGroupOther": {
@@ -348,7 +376,7 @@
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "Programari maliciós",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
@@ -364,7 +392,7 @@
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "Activa el mode de depuració",
     "description": "prompt for toggle"
   }
 }
