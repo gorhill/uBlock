@@ -585,14 +585,14 @@
 		"contentURL": "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
 	},
-	"SWE-0": {
+	"SWE-1": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "SWE: Fanboy's Swedish",
+		"title": "SWE: Frellwit's Swedish Filter",
 		"lang": "sv",
-		"contentURL": "https://www.fanboy.co.nz/fanboy-swedish.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
+		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
+		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
 	},
 	"TUR-0": {
 		"content": "filters",
