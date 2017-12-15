@@ -194,7 +194,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
 
         if ( mainOriginURL !== '' ) {
             var subOriginURL,
-                reInclude = /^!# include (\S+)/gm,
+                reInclude = /^!#include (\S+)/gm,
                 match = reInclude.exec(details.content);
             while ( match !== null ) {
                 sublistURL = match[1];
