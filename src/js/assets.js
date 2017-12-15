@@ -167,6 +167,72 @@ api.fetchText = function(url, onLoad, onError) {
     }
 };
 
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/3331
+//   Support the seamless loading of sublists.
+
+api.fetchFilterList = function(mainlistURL, onLoad, onError) {
+    var µburi = µBlock.URI,
+        content = [],
+        errored = false,
+        pendingSublistURLs = new Set([ mainlistURL ]),
+        loadedSublistURLs = new Set(),
+        mainOriginURL = µburi.originFromURI(mainlistURL);
+
+    var onLocalLoadSuccess = function(details) {
+        if ( errored ) { return; }
+
+        var isSublist = details.url !== mainlistURL,
+            sublistURL;
+
+        pendingSublistURLs.delete(details.url);
+        loadedSublistURLs.add(details.url);
+        if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
+        content.push(details.content.trim());
+        if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
+
+        if ( mainOriginURL !== '' ) {
+            var subOriginURL,
+                reInclude = /^!# include (\S+)/gm,
+                match = reInclude.exec(details.content);
+            while ( match !== null ) {
+                sublistURL = match[1];
+                subOriginURL = µburi.originFromURI(sublistURL);
+                if ( subOriginURL !== '' && subOriginURL !== mainOriginURL ) {
+                    continue;
+                }
+                if ( subOriginURL === '' ) {
+                    sublistURL = mainOriginURL + '/' + sublistURL;
+                }
+                if ( loadedSublistURLs.has(sublistURL) ) { continue; }
+                pendingSublistURLs.add(sublistURL);
+                match = reInclude.exec(details.content);
+            }
+        }
+
+        if ( pendingSublistURLs.size !== 0 ) {
+            for ( sublistURL of pendingSublistURLs ) {
+                api.fetchText(sublistURL, onLocalLoadSuccess, onLocalLoadError);
+            }
+            return;
+        }
+
+        details.url = mainlistURL;
+        details.content = content.join('\n').trim();
+        onLoad(details);
+    };
+
+    var onLocalLoadError = function(details) {
+        errored = true;
+        details.url = mainlistURL;
+        details.content = '';
+        onError(details);
+    };
+
+    this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
+};
+
 /*******************************************************************************
 
     The purpose of the asset source registry is to keep key detail information
@@ -651,7 +717,11 @@ api.get = function(assetKey, options, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onContentLoaded, onContentNotLoaded);
+        } else {
+            api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        }
     };
 
     var onContentLoaded = function(details) {
@@ -735,7 +805,11 @@ var getRemote = function(assetKey, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        } else {
+            api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        }
     };
 
     getAssetSourceRegistry(function(registry) {

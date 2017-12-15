@@ -51,7 +51,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 // Derived
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
-var reOriginFromURI          = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]+)/;
+var reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/(?:[^\/?#]+)?/;
 var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
 var reMustNormalizeHostname  = /[^0-9a-z._-]/;
