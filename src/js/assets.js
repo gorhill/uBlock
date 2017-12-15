@@ -173,12 +173,12 @@ api.fetchText = function(url, onLoad, onError) {
 //   Support the seamless loading of sublists.
 
 api.fetchFilterList = function(mainlistURL, onLoad, onError) {
-    var µburi = µBlock.URI,
-        content = [],
+    var content = [],
         errored = false,
         pendingSublistURLs = new Set([ mainlistURL ]),
         loadedSublistURLs = new Set(),
-        mainOriginURL = µburi.originFromURI(mainlistURL);
+        toParsedURL = api.fetchFilterList.toParsedURL,
+        parsedMainURL = toParsedURL(mainlistURL);
 
     var onLocalLoadSuccess = function(details) {
         if ( errored ) { return; }
@@ -192,21 +192,20 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         content.push(details.content.trim());
         if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
 
-        if ( mainOriginURL !== '' ) {
-            var subOriginURL,
-                reInclude = /^!#include (\S+)/gm,
+        if ( parsedMainURL !== undefined ) {
+            var reInclude = /^!#include +(\S+)/gm,
                 match = reInclude.exec(details.content);
             while ( match !== null ) {
-                sublistURL = match[1];
-                subOriginURL = µburi.originFromURI(sublistURL);
-                if ( subOriginURL !== '' && subOriginURL !== mainOriginURL ) {
-                    continue;
+                var parsedSubURL = toParsedURL(match[1]);
+                if ( parsedSubURL === undefined ) {
+                    parsedSubURL = toParsedURL(
+                        parsedMainURL.href.replace(/[^/?]+(?:\?.*)?$/, match[1])
+                    );
+                    if ( parsedSubURL === undefined ) { continue; }
                 }
-                if ( subOriginURL === '' ) {
-                    sublistURL = mainOriginURL + '/' + sublistURL;
-                }
-                if ( loadedSublistURLs.has(sublistURL) ) { continue; }
-                pendingSublistURLs.add(sublistURL);
+                if ( parsedSubURL.origin !== parsedMainURL.origin ) { continue; }
+                if ( loadedSublistURLs.has(parsedSubURL.href) ) { continue; }
+                pendingSublistURLs.add(parsedSubURL.href);
                 match = reInclude.exec(details.content);
             }
         }
@@ -231,6 +230,13 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
     };
 
     this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
+};
+
+api.fetchFilterList.toParsedURL = function(url) {
+    try {
+        return new URL(url);
+    } catch (ex) {
+    }
 };
 
 /*******************************************************************************
