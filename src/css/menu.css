@@ -403,12 +403,12 @@ span.adStatus:before {
   margin-right: 2px;
   content:"";
   display: inline-block;
-  position:relative; /*or absolute*/
+  position:relative; 
   z-index:100;
   top:0;
   left:0;
-}
-*/
+}*/
+
 .ad-item::before,
 .ad-item-text::before {
   background: #0076FF;

@@ -394,7 +394,7 @@
         status = ad.visitedTs > 0 ? 'Visited' : 'Failed';
       }
     } else if (status != "SkippedDisabled") {
-      if (ad.clickedByUser) status = SkippedUser;
+      if (ad.clickedByUser) status = "SkippedUser";
       else status = "Skipped" +  (ad.dntAllowed ? "DNT" : "Frequency");
     }
     return status;
