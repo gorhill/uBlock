@@ -778,7 +778,6 @@ FilterContainer.prototype.compileSelector = (function() {
     var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
         reStyleSelector = /^(.+?):style\((.+?)\)$/,
         reStyleBad = /url\([^)]+\)/,
-        reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
         reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
         reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/,
         div = document.createElement('div');
@@ -865,7 +864,7 @@ FilterContainer.prototype.compileSelector = (function() {
         }
 
         // `script:` filter?
-        if ( (matches = reScriptSelector.exec(raw)) !== null ) {
+        if ( (matches = this.reScriptSelector.exec(raw)) !== null ) {
             // :inject
             if ( matches[1] === 'inject' ) {
                 return raw;
@@ -1258,17 +1257,25 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer) {
-    var selector = parsed.suffix;
+    var selector = parsed.suffix,
+        compiled;
 
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        writer.push([ 6 /* js */, '!', '', selector ]);
+        compiled = [ 6 /* js */, 0, '!', '', '' ];
+        if ( selector.startsWith('script:inject') ) {
+            compiled[4] = selector.slice(14, -1).trim();
+        } else {
+            compiled[1] = 1;
+            compiled[4] = selector.slice(16, -1).trim();
+        }
+        writer.push(compiled);
         return;
     }
 
     // Procedural cosmetic filters are acceptable as generic exception filters.
-    var compiled = this.compileSelector(selector);
+    compiled = this.compileSelector(selector);
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
@@ -1294,7 +1301,8 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
 
     var selector = parsed.suffix,
         domain = this.µburi.domainFromHostname(hostname),
-        hash;
+        hash,
+        compiled;
 
     // script:contains(...)
     // script:inject(...)
@@ -1303,11 +1311,18 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
         if ( unhide ) {
             hash = '!' + hash;
         }
-        writer.push([ 6 /* js */, hash, hostname, selector ]);
+        compiled = [ 6 /* js */, 0, hash, hostname, '' ];
+        if ( selector.startsWith('script:inject') ) {
+            compiled[4] = selector.slice(14, -1).trim();
+        } else {
+            compiled[1] = 1;
+            compiled[4] = selector.slice(16, -1).trim();
+        }
+        writer.push(compiled);
         return;
     }
 
-    var compiled = this.compileSelector(selector);
+    compiled = this.compileSelector(selector);
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/188
@@ -1411,7 +1426,7 @@ FilterContainer.prototype.fromCompiledContent = function(
         // js, hash, example.com, script:contains(...)
         // js, hash, example.com, script:inject(...)
         case 6:
-            this.createScriptFilter(args[1], args[2], args[3]);
+            this.createScriptFilter(args);
             break;
 
         // https://github.com/chrisaljoudi/uBlock/issues/497
@@ -1465,7 +1480,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         // js, hash, example.com, script:inject(...)
         case 6:
             this.duplicateBuster.add(fingerprint);
-            this.createScriptFilter(args[1], args[2], args[3]);
+            this.createScriptFilter(args);
             break;
 
         // https://github.com/chrisaljoudi/uBlock/issues/497
@@ -1515,7 +1530,7 @@ FilterContainer.prototype.skipCompiledContent = function(reader) {
             fingerprint = reader.fingerprint();
             if ( this.duplicateBuster.has(fingerprint) === false ) {
                 this.duplicateBuster.add(fingerprint);
-                this.createScriptFilter(args[1], args[2], args[3]);
+                this.createScriptFilter(args);
             }
             continue;
         }
@@ -1526,12 +1541,12 @@ FilterContainer.prototype.skipCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.createScriptFilter = function(hash, hostname, selector) {
-    if ( selector.startsWith('script:contains') ) {
-        return this.createScriptTagFilter(hash, hostname, selector);
+FilterContainer.prototype.createScriptFilter = function(args) {
+    if ( args[1] === 0 ) {
+        return this.createUserScriptRule(args);
     }
-    if ( selector.startsWith('script:inject') ) {
-        return this.createUserScriptRule(hash, hostname, selector);
+    if ( args[1] === 1 ) {
+        return this.createScriptTagFilter(args);
     }
 };
 
@@ -1542,8 +1557,9 @@ FilterContainer.prototype.createScriptFilter = function(hash, hostname, selector
 //                 ^   ^
 //                16   -1
 
-FilterContainer.prototype.createScriptTagFilter = function(hash, hostname, selector) {
-    var token = selector.slice(16, -1);
+FilterContainer.prototype.createScriptTagFilter = function(args) {
+    var hostname = args[3],
+        token = args[4];
     token = token.startsWith('/') && token.endsWith('/')
         ? token.slice(1, -1)
         : token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -1603,12 +1619,9 @@ FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
 
 // userScripts{hash} => FilterHostname | FilterBucket
 
-FilterContainer.prototype.createUserScriptRule = function(
-    hash,
-    hostname,
-    selector
-) {
-    var filter = new FilterHostname(selector.slice(14, -1).trim(), hostname);
+FilterContainer.prototype.createUserScriptRule = function(args) {
+    var hash = args[2],
+        filter = new FilterHostname(args[4], args[3]);
     var bucket = this.userScripts.get(hash);
     if ( bucket === undefined ) {
         this.userScripts.set(hash, filter);
