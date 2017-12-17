@@ -25,5 +25,7 @@ cp -R ../uAssets/thirdparties/www.malwaredomainlist.com          $DES/thirdparti
 
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
+# Optional filter lists: do not include in package
+rm    $DES/ublock/annoyances.txt
 
 echo "done."
