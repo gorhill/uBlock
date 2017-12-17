@@ -74,6 +74,13 @@
 			"assets/ublock/resource-abuse.txt"
 		]
 	},
+	"ublock-annoyances": {
+		"content": "filters",
+		"group": "default",
+		"title": "uBlock filters – Annoyances",
+		"off": true,
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+	},
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",
