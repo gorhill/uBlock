@@ -464,11 +464,12 @@ var onMessage = function(request, sender, callback) {
     // Sync
     var µb = µBlock,
         response,
-        tabId,
+        tabId, frameId,
         pageStore;
 
     if ( sender && sender.tab ) {
         tabId = sender.tab.id;
+        frameId = sender.frameId;
         pageStore = µb.pageStoreFromTabId(tabId);
     }
 
@@ -497,9 +498,11 @@ var onMessage = function(request, sender, callback) {
                 noGenericCosmeticFiltering:
                     pageStore.noGenericCosmeticFiltering === true
             };
+            request.tabId = tabId;
+            request.frameId = frameId;
             response.specificCosmeticFilters =
                 µb.cosmeticFilteringEngine
-                  .retrieveDomainSelectors(request, sender, response);
+                  .retrieveDomainSelectors(request, response);
             if ( request.isRootFrame && µb.logger.isEnabled() ) {
                 µb.logCosmeticFilters(tabId);
             }
@@ -508,9 +511,11 @@ var onMessage = function(request, sender, callback) {
 
     case 'retrieveGenericCosmeticSelectors':
         if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
+            request.tabId = tabId;
+            request.frameId = frameId;
             response = {
                 result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request, sender)
+                          .retrieveGenericSelectors(request)
             };
         }
         break;
