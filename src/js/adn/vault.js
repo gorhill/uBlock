@@ -615,9 +615,10 @@
 
   function formatTargetDate(ad) {
     var dntNote = vAPI.i18n('adnAllowedByDNT') + "<a class='help-mark dnt' href='https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam'> ? </a>",
-        frequencyNote = vAPI.i18n('adnAdClickingStatusSkippedFrequency');
+        frequencyNote = vAPI.i18n('adnAdClickingStatusSkippedFrequency'),
+        userNote = vAPI.i18n('adnAdClickingStatusSkippedUser');
 
-    return ad.noVisit ? (ad.dntAllowed ? dntNote : frequencyNote) : formatDate(ad.visitedTs);
+    return ad.noVisit ? (ad.clickedByUser ? userNote : (ad.dntAllowed ? dntNote : frequencyNote)) : formatDate(ad.visitedTs);
   }
 
   function formatDate(ts) {

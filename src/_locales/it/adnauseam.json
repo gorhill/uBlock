@@ -144,7 +144,7 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "Nessuna pubblicità raccolti in questa pagina (recenti)",
+    "message": "Nessuna pubblicità raccolta in questa pagina (recenti)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
@@ -159,12 +159,40 @@
     "message": "Questa operazione rimuoverà permanentemente TUTTI i tuoi annunci",
     "description": "appears in ADN settings"
   },
+  "adnAdClickingStatusPending": {
+    "message": "In sospeso",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visitato",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Fallimento",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SALTATO: DNT permesso",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SALTATI: Cliccato dall'utente",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SALTATO: Frequenza di clic",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SALTATO: Facendo clic su disabili",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
+  },
   "adnMenuViewLog": {
     "message": "Visualizza registro delle richieste",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "cliccato",
+    "message": "cliccati",
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
@@ -204,7 +232,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
-    "message": "Cancella conologia di navigazione e delle pubblicità",
+    "message": "Cancella pubblicità e cronologia del browser",
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {

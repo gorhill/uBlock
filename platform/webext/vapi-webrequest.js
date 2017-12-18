@@ -190,7 +190,7 @@ vAPI.net.registerListeners = function() {
         let types = this.onBeforeSendHeaders.types || undefined;
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
-            { urls: urls, types: types },
+            { urls: urls},
             this.onBeforeSendHeaders.extra
         );
     }

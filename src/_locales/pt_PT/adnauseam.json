@@ -159,6 +159,34 @@
     "message": "Esta ação irá remover permanentemente TODOS os seus anúncios",
     "description": "appears in ADN settings"
   },
+  "adnAdClickingStatusPending": {
+    "message": "Pendente",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visitado",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Falhou",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "IGNORADA: DNT permitido",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "IGNORADO: Clicado pelo usuário",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "IGNORADA: Frequência de clique",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "IGNORADA: Clicando desativado",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
+  },
   "adnMenuViewLog": {
     "message": "Ver registo",
     "description": "appears in ADN popup menu"

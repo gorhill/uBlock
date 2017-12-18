@@ -479,7 +479,7 @@ div.bullets { display: none; } /* hide by default */
 .item.inspected .meta li>div.target span#target-date a.dnt.help-mark{
 	display: inline-block;
 	color:black;
-	bottom:0px;
+    font-size: 12px;
 }
 .item.inspected .meta li>div.target a{
 	font-weight: 700;

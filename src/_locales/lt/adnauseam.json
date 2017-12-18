@@ -108,7 +108,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Leista per Do Not Track",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -158,6 +158,34 @@
   "adnClearConfirm": {
     "message": "Šis veiksmas visam laikui pašalins VISUS skelbimus",
     "description": "appears in ADN settings"
+  },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
     "message": "Peržiūrėti žurnalą",

@@ -1,50 +1,50 @@
 {
   "adnAboutPageName": {
-    "message": "RR fu",
+    "message": "AdNauseam-সম্পর্কে",
     "description": "English: Firstrun.html page title"
   },
   "aboutSupport": {
-    "message": "সহায়তা",
+    "message": "সমর্থন",
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "hacker",
+    "message": "তৈরি করেছিল",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
-    "message": "সচরাচর জিজ্ঞেস করা প্রশ্ন",
+    "message": "প্রায়শই জিজ্ঞাসা করা প্রশ্ন",
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
-    "message": "গেমটা খেলো:",
+    "message": "দয়া করে:",
     "description": "English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds": {
-    "message": "Hide Ads",
+    "message": "বিজ্ঞাপনগুলো আড়াল করুন",
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Click Ads",
+    "message": "বিজ্ঞাপন ক্লিক করুন",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "ব্লক ম্যালওয়্যার",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "আপনার নির্বাচিত<span>ফিল্টার তালিকাগুলিতে বিজ্ঞাপনগুলি লুকান<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Register visits on Ads found via your <span>filter lists<\/span>",
+    "message": "আপনার <span> ফিল্টার তালিকা <\/span> এর মাধ্যমে পাওয়া বিজ্ঞাপনগুলিতে নিবন্ধন করা নিবন্ধনগুলি",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "ব্লক ট্র্যাকার এবং অন্যান্য ম্যালওয়্যার (<span> কাস্টমাইজ করুন <\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
-    "message": "Reactivate",
+    "message": "পুন: ক্রিয়াশীল করা হল",
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
@@ -52,99 +52,99 @@
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
-    "message": "Activate Ad hiding",
+    "message": "বিজ্ঞাপন লুকিয়ে রাখা সক্রিয় করুন",
     "description": "English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking": {
-    "message": "Activate Ad clicking",
+    "message": "বিজ্ঞাপন ক্লিক সক্রিয় করুন",
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "ম্যালওয়্যার অবরোধ চালু",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
-    "message": "Activate the EasyList filter",
+    "message": "EasyList ফিল্টার সক্রিয় করুন",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
-    "message": "Activate the AdNauseam filter",
+    "message": "AdNauseam ফিল্টার সক্রিয় করুন",
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Your ad blocker and AdNauseam may conflict!",
+    "message": "আপনার বিজ্ঞাপন ব্লকার এবং AdNauseam মধ্যে দ্বন্দ্ব হতে পারে!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
-    "message": "uBlock and AdNauseam may conflict!",
+    "message": "uBlock ও AdNauseam দ্বন্দ্ব সৃষ্টি করতে পারে!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
-    "message": "This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message": "এই পৃষ্ঠাটি <b>Do Not Track<\/b> শ্রদ্ধা করে বিজ্ঞাপন দেওয়া হয়।",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "এই পাতায় ক্লিক না করে লুকিয়ে <b>অনুসরণ করবেন না<\/b>, সম্মান করে।",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না <\/b>, গোপন না ক্লিক করে",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না <\/b>, তাই আপনাকে জানার জন্য।",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "লক্ষ্য",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
-    "message": "FOUND ON",
+    "message": "পাওয়া",
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
-    "message": "Not Yet Visited",
+    "message": "এখনও দেখা হয়নি",
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "ডু নট ট্র্যাক নীতির মাধ্যমে অনুমোদিত",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
-    "message": "Switch me on",
+    "message": "আমাকে চালু করুন",
     "description": "English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt": {
-    "message": "That's it? ok…",
+    "message": "এটাই? ঠিক আছে…",
     "description": "English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill": {
-    "message": "Better, but still…",
+    "message": "ভাল, তবে এখনো…",
     "description": "English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo": {
-    "message": "Let's go!",
+    "message": "চলুন!",
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Go to AdNauseam website",
+    "message": "AdNauseam ওয়েবসাইটে যান",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
-    "message": "AdNauseam is paused on this page",
+    "message": "AdNauseam এই পাতা হতে বিরত রাখা হয়েছে",
     "description": "English: Menu->display when paused on page\/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam is not currently hiding Ads",
+    "message": "AdNauseam বর্তমানে বিজ্ঞাপন গোপন করা হয় না",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
-    "message": "AdNauseam — AdVault",
+    "message": "AdNauseam-AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No Ads collected on this page (showing recent)",
+    "message": "এই পৃষ্ঠায় কোনও বিজ্ঞাপন সংগ্রহ করা হয়নি (সাম্প্রতিক দেখানো হয়েছে)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
@@ -152,183 +152,211 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
+    "message": "{{count}} বিজ্ঞাপনগুলি আমদানি করা হয়েছিল",
     "description": "appears in ADN settings"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
+    "message": "এই পদক্ষেপ স্থায়ীভাবে আপনার সমস্ত বিজ্ঞাপন সরিয়ে ফেলবে",
     "description": "appears in ADN settings"
   },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
+  },
   "adnMenuViewLog": {
-    "message": "View Log",
+    "message": "লগ দেখুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicked",
+    "message": "ক্লিক করা",
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": "এর",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "বিজ্ঞাপন সনাক্ত করা হয়েছে",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
-    "message": "View Ad Vault",
+    "message": "বিজ্ঞাপন ভল্ট দেখুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "পুনঃসূচনা",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
-    "message": "Settings",
+    "message": "সেটিংস",
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportAds": {
-    "message": "Export Ads",
+    "message": "বিজ্ঞাপনগুলি রপ্তানি করুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuImportAds": {
-    "message": "Import Ads",
+    "message": "বিজ্ঞাপনগুলি আমদানি করুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
-    "message": "Disable all logging",
+    "message": "সব লগিং অক্ষম করুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer": {
-    "message": "Disable outgoing referrer",
+    "message": "বহির্মুখী রেফারার অক্ষম করুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
-    "message": "Clear Ads with browser history",
+    "message": "ব্রাউজারের ইতিহাসের সাথে বিজ্ঞাপন গুলি মুছে ফেলুন",
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {
-    "message": "Hide Ad count on icon",
+    "message": "আইকন নেভিগেশন বিজ্ঞাপন গণনা লুকান",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Clear Ads",
+    "message": "বিজ্ঞাপনগুলো মুছুন",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
-    "message": "No log available",
+    "message": "কন লগ পাওয়া জায়নি",
     "description": "appears in ADN log page"
   },
   "adnLogViewFullLog": {
-    "message": "View full log",
+    "message": "সম্পূর্ণ লগ দেখুন",
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Since",
+    "message": "থেকে",
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "জানুয়ারী ১ ১৯৭০ রাত 0:00",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Export",
+    "message": "এক্সপোর্ট",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Import",
+    "message": "আমদানি করুণ",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
-    "message": "Clear",
+    "message": "পরিষ্কার",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "বিজ্ঞাপনগুলোর সংগ্রহ",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
-    "message": "showing",
+    "message": "দেখাচ্ছে",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this Ad",
+    "message": "এই বিজ্ঞাপনটি মুছে দিন",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
-    "message": "total estimated",
+    "message": "মোট আনুমানিক হিসাব",
     "description": "appears on vault page"
   },
   "adnVaultAdsCost": {
-    "message": "cost",
+    "message": "মূল্য",
     "description": "appears on vault page"
   },
   "hidingAdsPrompt": {
-    "message": "Hide Ads identified by your chosen filter lists",
+    "message": "আপনার নির্বাচিত ফিল্টার তালিকা দ্বারা সনাক্ত বিজ্ঞাপন লুকান",
     "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Click Ads identified by your chosen filter lists",
+    "message": "আপনার নির্বাচিত ফিল্টার তালিকা দ্বারা সনাক্ত বিজ্ঞাপন ক্লিক করুন",
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "ট্রাকার এবং অন্যান্য ম্যালওয়্যার ব্লক করুন",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
-    "message": "Capture text-only Ads when possible",
+    "message": "সম্ভব হলে শুধুমাত্র পাঠ্য বিজ্ঞাপনগুলি ক্যাপচার করুন",
     "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Display the number of Ads on the icon",
+    "message": "আইকন এ বিজ্ঞাপন সংখ্যা প্রদর্শন",
     "description": "English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt": {
-    "message": "Extra Privacy",
+    "message": "অতিরিক্ত গোপনীয়তা",
     "description": "English: Interface"
   },
   "settingsInterfacePrompt": {
-    "message": "Interface",
+    "message": "ইন্টারফেস",
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with clicks",
+    "message": "ক্লীক সহ কুকিগুলি অবহেলা করুন",
     "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
-    "message": "Don't send cookies on visits",
+    "message": "ভ্রমনের উপর কুকিজ পাঠাতে না",
     "description": "English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt": {
-    "message": "Hide user-agent header on visits",
+    "message": "ভিজিট ব্যবহারকারী-এজেন্ট হেডার লুকান",
     "description": "English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt": {
-    "message": "Hide referring page on visits",
+    "message": "পরিদর্শন পৃষ্ঠার উল্লেখ পৃষ্ঠাকে লুকান",
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
-    "message": "Rarely",
+    "message": "কদাচিত্",
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "মাঝে মাঝে",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
-    "message": "Always",
+    "message": "সব সময়",
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
-    "message": "Make exceptions for non-tracking Ads",
+    "message": "অ-ট্র্যাকিং বিজ্ঞাপনগুলির জন্য ব্যতিক্রম কিছু করুন",
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Don't hide non-tracking Ads",
+    "message": "অ- ট্র্যাকিং বিজ্ঞাপন লুকান না",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
-    "message": "Don't click non-tracking Ads",
+    "message": "অ বিজ্ঞাপন ট্র্যাকিং ক্লিক করবেন না",
     "description": "English: Don't click non-tracking Ads"
   },
   "extName": {
@@ -336,35 +364,35 @@
     "description": "extension name"
   },
   "extShortDesc": {
-    "message": "Fight back against advertising surveillance",
+    "message": "নজরদারি বিজ্ঞাপনের বিরুদ্ধে লড়াই",
     "description": "for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials": {
-    "message": "Essentials",
+    "message": "অপরিহার্য",
     "description": "English: Essentials"
   },
   "3pGroupOther": {
-    "message": "Other",
+    "message": "অন্যান্য",
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "ম্যালওয়্যার",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
-    "message": "Languages",
+    "message": "ভাষাগুলো",
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "আপডেট",
     "description": "English: update"
   },
   "whitelistPageName": {
-    "message": "Whitelists",
+    "message": "সাদাতালিকা",
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "ডিবাগিং মোড সক্রিয় করুন",
     "description": "prompt for toggle"
   }
 }

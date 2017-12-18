@@ -1,334 +1,362 @@
 {
   "adnAboutPageName": {
-    "message": "AdNauseam — About",
+    "message": "AdNauseam — के बारे में",
     "description": "English: Firstrun.html page title"
   },
   "aboutSupport": {
-    "message": "Support",
+    "message": "सहायता",
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "Built on",
+    "message": "पर बनाया",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
-    "message": "Frequently asked questions",
+    "message": "अक्सर पूछे जाने वाले सवाल",
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
-    "message": "Please:",
+    "message": "कृपया:",
     "description": "English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds": {
-    "message": "Hide Ads",
+    "message": "विज्ञापन छुपाएं",
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Click Ads",
+    "message": "विज्ञापन क्लिक करें",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "मैलवेयर ब्लॉक करें",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "आपके चयनित <span> फ़िल्टर सूचियों <\/span> में विज्ञापनों को छुपाएं",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Register visits on Ads found via your <span>filter lists<\/span>",
+    "message": "आपके <span> फ़िल्टर सूचियों <\/span> के माध्यम से मिले विज्ञापन पर विज़िट्स रजिस्टर करें",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "ट्रैकर्स और अन्य मैलवेयर ब्लॉक करें (<span>अनुकूलित करें<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
-    "message": "Reactivate",
+    "message": "पुनः सक्रिय करें",
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
-    "message": "Disable",
+    "message": "अक्षम करें",
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
-    "message": "Activate Ad hiding",
+    "message": "विज्ञापन छुपाना सक्रिय करें",
     "description": "English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking": {
-    "message": "Activate Ad clicking",
+    "message": "विज्ञापन क्लिक सक्रिय करना",
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "मैलवेयर ब्लॉकिंग सक्रिय करें",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
-    "message": "Activate the EasyList filter",
+    "message": "EasyList फ़िल्टर सक्रिय करें",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
-    "message": "Activate the AdNauseam filter",
+    "message": "AdNauseam फ़िल्टर सक्रिय करें",
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Your ad blocker and AdNauseam may conflict!",
+    "message": "आपके विज्ञापन अवरोधक और AdNauseam संघर्ष कर सकते हैं!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
-    "message": "uBlock and AdNauseam may conflict!",
+    "message": "uBlock और AdNauseam संघर्ष कर सकते हैं!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
-    "message": "This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, विज्ञापनों की अनुमति है",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, क्लिक नहीं छिपाना",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, छुपना नहीं क्लिक करना",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, बस आपकी जानकारी के लिए",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "लक्ष्य",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
-    "message": "FOUND ON",
+    "message": "पर पाया गया",
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
-    "message": "Not Yet Visited",
+    "message": "अभी तक दौरा नहीं किया",
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "न ट्रैक करें नीति के द्वारा अनुमत",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
-    "message": "Switch me on",
+    "message": "मुझे स्विच करें",
     "description": "English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt": {
-    "message": "That's it? ok…",
+    "message": "बस? ठीक है...",
     "description": "English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill": {
-    "message": "Better, but still…",
+    "message": "बेहतर है, लेकिन फिर भी.. ।",
     "description": "English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo": {
-    "message": "Let's go!",
+    "message": "चलो चलें!",
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Go to AdNauseam website",
+    "message": "AdNauseam वेबसाइट पर जाएं",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
-    "message": "AdNauseam is paused on this page",
+    "message": "AdNauseam इस पृष्ठ पर रुका हुआ है",
     "description": "English: Menu->display when paused on page\/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam is not currently hiding Ads",
+    "message": "AdNauseam फिलहाल विज्ञापन नहीं छुपा रहे हैं",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
-    "message": "AdNauseam — AdVault",
+    "message": "AdNauseam — एडवॉल्ट",
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No Ads collected on this page (showing recent)",
+    "message": "इस पृष्ठ पर कोई विज्ञापन संग्रहीत नहीं है (हाल ही में दिखाए जा रहे)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
-    "message": "AdNauseam_Export_{{datetime}}.json",
+    "message": "AdNauseam_निर्यात_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
+    "message": "{{count}} विज्ञापन आयात किए गए",
     "description": "appears in ADN settings"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
+    "message": "यह क्रिया आपके सभी विज्ञापनों को स्थाई रूप से निकाल देगी",
     "description": "appears in ADN settings"
   },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
+  },
   "adnMenuViewLog": {
-    "message": "View Log",
+    "message": "लॉग देखें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicked",
+    "message": "क्लिक किया",
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": "की",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "विज्ञापनों का पता चला",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
-    "message": "View Ad Vault",
+    "message": "एड वॉल्ट देखें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "पुनः आरंभ",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
-    "message": "Settings",
+    "message": "सेटिंग्स",
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportAds": {
-    "message": "Export Ads",
+    "message": "विज्ञापन निर्यात करें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuImportAds": {
-    "message": "Import Ads",
+    "message": "विज्ञापन आयात करें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
-    "message": "Disable all logging",
+    "message": "सभी लॉगिंग अक्षम करें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer": {
-    "message": "Disable outgoing referrer",
+    "message": "आउटगोइंग रेफ़रल अक्षम करें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
-    "message": "Clear Ads with browser history",
+    "message": "ब्राउज़र इतिहास के साथ विज्ञापन साफ़ करें",
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {
-    "message": "Hide Ad count on icon",
+    "message": "आइकन पर विज्ञापन गणना छुपाएं",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Clear Ads",
+    "message": "विज्ञापन साफ़ करें",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
-    "message": "No log available",
+    "message": "कोई लॉग उपलब्ध नहीं",
     "description": "appears in ADN log page"
   },
   "adnLogViewFullLog": {
-    "message": "View full log",
+    "message": "पूर्ण लॉग देखें",
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Since",
+    "message": "से",
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "1 जनवरी 1970 0:00 पूर्वाह्न",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Export",
+    "message": "निर्यात",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Import",
+    "message": "आयात",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
-    "message": "Clear",
+    "message": "खाली करें",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "एकत्र विज्ञापन",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
-    "message": "showing",
+    "message": "दिखा रहा है",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this Ad",
+    "message": "इस विज्ञापन को हटाएं",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
-    "message": "total estimated",
+    "message": "कुल अनुमानित",
     "description": "appears on vault page"
   },
   "adnVaultAdsCost": {
-    "message": "cost",
+    "message": "लागत",
     "description": "appears on vault page"
   },
   "hidingAdsPrompt": {
-    "message": "Hide Ads identified by your chosen filter lists",
+    "message": "आपके चयनित फ़िल्टर सूचियों द्वारा पहचाने गए विज्ञापन छिपाएं",
     "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Click Ads identified by your chosen filter lists",
+    "message": "आपके चयनित फ़िल्टर सूचियों द्वारा पहचाने गए विज्ञापन पर क्लिक करें",
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "ट्रैकर्स और अन्य मैलवेयर ब्लॉक करें",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
-    "message": "Capture text-only Ads when possible",
+    "message": "संभव होने पर केवल-पाठ विज्ञापन कैप्चर करें",
     "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Display the number of Ads on the icon",
+    "message": "आइकन पर विज्ञापनों की संख्या प्रदर्शित करें",
     "description": "English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt": {
-    "message": "Extra Privacy",
+    "message": "अतिरिक्त गोपनीयता",
     "description": "English: Interface"
   },
   "settingsInterfacePrompt": {
-    "message": "Interface",
+    "message": "इंटरफेस",
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with clicks",
+    "message": "क्लिक के साथ लौटाए गए कुकीज़ पर ध्यान न दें",
     "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
-    "message": "Don't send cookies on visits",
+    "message": "विज़िट पर कुकीज़ न भेजें",
     "description": "English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt": {
-    "message": "Hide user-agent header on visits",
+    "message": "विज़िट पर उपयोगकर्ता-एजेंट हेडर छिपाएं",
     "description": "English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt": {
-    "message": "Hide referring page on visits",
+    "message": "विज़िट पर रेफरिंग पृष्ठ को छिपाएं",
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
-    "message": "Rarely",
+    "message": "शायद ही कभी",
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "कभी-कभी",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
-    "message": "Always",
+    "message": "हमेशा",
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
-    "message": "Make exceptions for non-tracking Ads",
+    "message": "गैर-ट्रैकिंग विज्ञापनों के लिए अपवाद बनाएं",
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Don't hide non-tracking Ads",
+    "message": "गैर-ट्रैकिंग विज्ञापन न छिपाएं",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
-    "message": "Don't click non-tracking Ads",
+    "message": "गैर-ट्रैकिंग विज्ञापन क्लिक न करें",
     "description": "English: Don't click non-tracking Ads"
   },
   "extName": {
@@ -336,35 +364,35 @@
     "description": "extension name"
   },
   "extShortDesc": {
-    "message": "Fight back against advertising surveillance",
+    "message": "विज्ञापन निगरानी के खिलाफ वापस लड़ो",
     "description": "for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials": {
-    "message": "Essentials",
+    "message": "अनिवार्य",
     "description": "English: Essentials"
   },
   "3pGroupOther": {
-    "message": "Other",
+    "message": "अन्य",
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "मालवेयर",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
-    "message": "Languages",
+    "message": "भाषाएँ",
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "अपडेट करें",
     "description": "English: update"
   },
   "whitelistPageName": {
-    "message": "Whitelists",
+    "message": "श्वेतसूचियाँ",
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "डिबगिंग मोड सक्रिय करें",
     "description": "prompt for toggle"
   }
 }

@@ -12,7 +12,7 @@
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
-    "message": "Frequently asked questions",
+    "message": "Các câu hỏi thường gặp",
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
@@ -28,7 +28,7 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Ngăn chặn phần mềm độc hại",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
@@ -40,7 +40,7 @@
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Chặn các trackers và phần mềm độc hại (<span>tùy chỉnh<\/span>) khác",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -60,7 +60,7 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Kích hoạt chặn phần mềm độc hại",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -72,7 +72,7 @@
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Your ad blocker and AdNauseam may conflict!",
+    "message": "Chương trình chặn quảng cáo của bạn và AdNauseam có thể xung đột!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
@@ -108,7 +108,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Cho phép qua chính sách Không theo dõi",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -128,7 +128,7 @@
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Go to AdNauseam website",
+    "message": "Đến trang web AdNauseam",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
@@ -158,6 +158,34 @@
   "adnClearConfirm": {
     "message": "Hành động này sẽ xoá vĩnh viễn TẤT CẢ quảng cáo của bạn",
     "description": "appears in ADN settings"
+  },
+  "adnAdClickingStatusPending": {
+    "message": "Pending",
+    "description": "Menu & AdVault: Pending"
+  },
+  "adnAdClickingStatusVisited": {
+    "message": "Visited",
+    "description": "Menu & AdVault: Visited"
+  },
+  "adnAdClickingStatusFailed": {
+    "message": "Failed",
+    "description": "Menu & AdVault: Failed"
+  },
+  "adnAdClickingStatusSkippedDNT": {
+    "message": "SKIPPED: DNT Allowed",
+    "description": "Menu & AdVault: SKIPPED: DNT Allowed"
+  },
+  "adnAdClickingStatusSkippedUser": {
+    "message": "SKIPPED: Clicked by user",
+    "description": "Menu & AdVault: SKIPPED: Clicked by User"
+  },
+  "adnAdClickingStatusSkippedFrequency": {
+    "message": "SKIPPED: Click Frequency",
+    "description": "Menu & AdVault: SKIPPED: Click Frequency"
+  },
+  "adnAdClickingStatusSkippedDisabled": {
+    "message": "SKIPPED: Clicking Disabled",
+    "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
     "message": "Xem nhật ký",
@@ -244,11 +272,11 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "quảng cáo được thu thập",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
-    "message": "showing",
+    "message": "hiển thị",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
@@ -272,7 +300,7 @@
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Chặn trackers và phần mềm độc hại khác",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
@@ -308,15 +336,15 @@
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
-    "message": "Rarely",
+    "message": "Hiếm khi",
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "Đôi khi",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
-    "message": "Always",
+    "message": "Luôn luôn",
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
@@ -356,7 +384,7 @@
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "Cập Nhật",
     "description": "English: update"
   },
   "whitelistPageName": {
