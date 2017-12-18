@@ -45,7 +45,10 @@ var onBeforeSendHeaders = function (details) {
   var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 
   // if clicking/hiding is enabled with DNT, then send the DNT header
-  if ((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) {
+  var respectDNT = ((prefs.clickingAds && prefs.disableClickingForDNT) ||
+    (prefs.hidingAds && prefs.disableHidingForDNT));
+
+  if (respectDNT) {
 
     var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
@@ -65,8 +68,10 @@ var onBeforeSendHeaders = function (details) {
     // If so, is it one of our Ad visits ?
     var ad = adn.lookupAd(details.url, details.requestId);
 
-    // if so, handle the headers (cookies, ua, referer)
-    ad && beforeAdVisit(details, headers, prefs, ad);
+    // if so, handle the headers (cookies, ua, referer, dnt)
+    ad && beforeAdVisit(details, headers, prefs, ad, respectDNT);
+
+    //if (ad) console.log('ADN=VISIT: '+details.url, 'DNT? '+hasDNT(headers), ad);
   }
 
   // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
@@ -74,7 +79,7 @@ var onBeforeSendHeaders = function (details) {
 };
 
 // ADN: remove outgoing cookies, reset user-agent, strip referer
-var beforeAdVisit = function (details, headers, prefs, ad) {
+var beforeAdVisit = function (details, headers, prefs, ad, respectDNT) {
 
   var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
 
@@ -117,12 +122,15 @@ var beforeAdVisit = function (details, headers, prefs, ad) {
     }
   }
 
-  if (vAPI.chrome && uirIdx < 0) { // Add UIR header if chrome
+  // Add UIR header if chrome
+  if (vAPI.chrome && uirIdx < 0) {
     addHeader(headers, 'Upgrade-Insecure-Requests', '1');
   }
 
-  if (((prefs.clickingAds && prefs.disableClickingForDNT) || (prefs.hidingAds && prefs.disableHidingForDNT)) && !hasDNT(headers))
+  // add DNT header if needed and not included
+  if (respectDNT && !hasDNT(headers)) {
     addHeader(headers, 'DNT', '1');
+  }
 
   handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
 };
@@ -164,7 +172,6 @@ var setHeader = function (header, value) {
 };
 
 var addHeader = function (headers, name, value) {
-
   headers.push({
     name: name,
     value: value
@@ -447,7 +454,7 @@ var onBeforeRootFrameRequest = function(details) {
     if ( logData === undefined  ) { return; }
 
     // Blocked
-    
+
     // ADN: return here if the tab is opened from Vault
     vAPI.tabs.get(tabId, function(tab) {
          vAPI.tabs.get(tab.openerTabId, function(parentTab) {
@@ -464,10 +471,10 @@ var onBeforeRootFrameRequest = function(details) {
             vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
             return { cancel: true };
-            
+
          })
     })
-    
+
 };
 
 /******************************************************************************/
