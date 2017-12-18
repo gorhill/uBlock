@@ -142,7 +142,7 @@ vAPI.net.registerListeners = function() {
         }
         return onHeadersReceivedClient(details);
     };
-    
+
     // ADN
     var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
         onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
@@ -187,6 +187,7 @@ vAPI.net.registerListeners = function() {
 
      if ( onBeforeSendHeaders ) {
         let urls = this.onBeforeSendHeaders.urls || ['<all_urls>'];
+        let types = this.onBeforeSendHeaders.types || undefined;
         wrApi.onBeforeSendHeaders.addListener(
             onBeforeSendHeaders,
             { urls: urls, types: types },
