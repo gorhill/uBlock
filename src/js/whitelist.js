@@ -30,7 +30,8 @@
 /******************************************************************************/
 
 var messaging = vAPI.messaging,
-    cachedWhitelist = '';
+    cachedWhitelist = '',
+    importAction = '';
 
 /******************************************************************************/
 
@@ -101,7 +102,11 @@ var renderWhitelist = function() {
 var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
         var textarea = getTextareaNode();
-        textarea.value = [textarea.value.trim(), this.result.trim()].join('\n').trim();
+        if ( importAction === 'append' ) {
+            textarea.value = [textarea.value.trim(), this.result.trim()].join('\n').trim();
+        } else if ( importAction === 'replace' ) {
+            textarea.value = [this.result.trim()].join('\n').trim();
+        }
         whitelistChanged();
     };
     var file = this.files[0];
@@ -180,7 +185,14 @@ self.cloud.onPull = setCloudData;
 
 /******************************************************************************/
 
-uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
+uDom('#importWhitelistFromFile').on('click', function() {
+    importAction = 'append';
+    startImportFilePicker();
+});
+uDom('#importWhitelistFromFileReplace').on('click', function() {
+    importAction = 'replace';
+    startImportFilePicker();
+});
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
 uDom('#whitelist textarea').on('input', whitelistChanged);

@@ -29,8 +29,9 @@
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
-var cachedUserFilters = '';
+var messaging = vAPI.messaging,
+    cachedUserFilters = '',
+    importAction = '';
 
 /******************************************************************************/
 
@@ -101,7 +102,11 @@ var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
         var sanitized = abpImporter(this.result);
         var textarea = uDom('#userFilters');
-        textarea.val(textarea.val().trim() + '\n' + sanitized);
+        if ( importAction === 'append' ) {
+            textarea.val(textarea.val().trim() + '\n' + sanitized);
+        } else if ( importAction === 'replace' ) {
+            textarea.val(sanitized);
+        }
         userFiltersChanged();
     };
     var file = this.files[0];
@@ -195,7 +200,14 @@ self.cloud.onPull = setCloudData;
 /******************************************************************************/
 
 // Handle user interaction
-uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
+uDom('#importUserFiltersFromFile').on('click', function() {
+    importAction = 'append';
+    startImportFilePicker();
+});
+uDom('#importUserFiltersFromFileReplace').on('click', function() {
+    importAction = 'replace';
+    startImportFilePicker();
+});
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
 uDom('#userFilters').on('input', userFiltersChanged);
