@@ -670,6 +670,13 @@
     ad.targetHostname = dInfo.hostname;
     ad.targetDomain = dInfo.domain;
 
+    // Check: a slash at the end of the domain https://github.com/dhowe/AdNauseam/issues/1304
+    
+    var idx = url.indexOf(ad.targetDomain) + ad.targetDomain.length;
+    if (idx < url.length - 1 && url.charAt(idx) != "/") {
+      ad.targetUrl = url.substring(0,idx) + "/" + url.substring(idx, url.length);
+    }
+
     return true;
   }
 
