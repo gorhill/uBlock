@@ -407,6 +407,10 @@
     "message": "İçe aktar ve sonuna ekle",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "İçe aktarma ve değiştirme",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "Dışa aktar",
     "description": "English: Export"
@@ -474,6 +478,10 @@
   "whitelistImport": {
     "message": "İçe aktar ve sonuna ekle",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "İçe aktarma ve değiştirme",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Dışa aktar",

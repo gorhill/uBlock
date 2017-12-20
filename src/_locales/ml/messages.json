@@ -407,6 +407,10 @@
     "message": "ഇമ്പോര്‍ട്ടും കൂട്ടിചേര്‍ക്കലും ചെയ്യുക",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "ഇറക്കുമതി ചെയ്ത് പകരം വയ്ക്കുക",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "എക്സ്പോര്‍ട്ട്‌",
     "description": "English: Export"
@@ -474,6 +478,10 @@
   "whitelistImport": {
     "message": "ഇമ്പോര്‍ട്ടും കൂട്ടിചേര്‍ക്കലും ചെയ്യുക",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "ഇറക്കുമതി ചെയ്ത് പകരം വയ്ക്കുക",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "എക്സ്പോര്‍ട്ട്‌",

@@ -407,6 +407,10 @@
     "message": "インポートと追加",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "インポートと置換",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "エクスポート",
     "description": "English: Export"
@@ -474,6 +478,10 @@
   "whitelistImport": {
     "message": "インポートと追加",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "インポートと置換",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "エクスポート",

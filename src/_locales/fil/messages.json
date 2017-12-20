@@ -407,6 +407,10 @@
     "message": "I-Import at idugtong",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "I-Import at palitan",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "I-Export",
     "description": "English: Export"
@@ -472,8 +476,12 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "I-Import at idugtong",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "I-Import at palitan",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Export",

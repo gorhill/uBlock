@@ -404,8 +404,12 @@
     "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "იმპორტი და დამატება",
     "description": "English: Import and append"
+  },
+  "1pImportReplace": {
+    "message": "იმპორტი და შეცვალეთ",
+    "description": "English: Import and replace"
   },
   "1pExport": {
     "message": "გამოტანა",
@@ -472,8 +476,12 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "იმპორტი და დამატება",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "იმპორტი და შეცვალეთ",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Export",

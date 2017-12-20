@@ -407,6 +407,10 @@
     "message": "Importovat a připojit",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "Importovat a výměna",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "Exportovat",
     "description": "English: Export"
@@ -474,6 +478,10 @@
   "whitelistImport": {
     "message": "Importovat a připojit",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "Importovat a výměna",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Exportovat",

@@ -407,6 +407,10 @@
     "message": "Importēt un pievienot",
     "description": "English: Import and append"
   },
+  "1pImportReplace": {
+    "message": "Importēt un nomainiet",
+    "description": "English: Import and replace"
+  },
   "1pExport": {
     "message": "Eksportēt",
     "description": "English: Export"
@@ -474,6 +478,10 @@
   "whitelistImport": {
     "message": "Importēt un pievienot",
     "description": "English: Import and append"
+  },
+  "whitelistImportReplace": {
+    "message": "Importēt un nomainiet",
+    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Eksportēt",
