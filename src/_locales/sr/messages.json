@@ -407,10 +407,6 @@
     "message": "Увези и додај",
     "description": "English: Import and append"
   },
-  "1pImportReplace": {
-    "message": "Увезите и замените",
-    "description": "English: Import and replace"
-  },
   "1pExport": {
     "message": "Извези",
     "description": "English: Export"
@@ -478,10 +474,6 @@
   "whitelistImport": {
     "message": "Увези и додај",
     "description": "English: Import and append"
-  },
-  "whitelistImportReplace": {
-    "message": "Увезите и замените",
-    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Извези",

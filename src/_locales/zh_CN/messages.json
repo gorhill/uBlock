@@ -407,10 +407,6 @@
     "message": "导入并添加",
     "description": "English: Import and append"
   },
-  "1pImportReplace": {
-    "message": "导入和替换",
-    "description": "English: Import and replace"
-  },
   "1pExport": {
     "message": "导出",
     "description": "English: Export"
@@ -478,10 +474,6 @@
   "whitelistImport": {
     "message": "导入并添加",
     "description": "English: Import and append"
-  },
-  "whitelistImportReplace": {
-    "message": "导入和替换",
-    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "导出",

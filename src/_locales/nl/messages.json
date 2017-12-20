@@ -407,10 +407,6 @@
     "message": "Importeren en toevoegen",
     "description": "English: Import and append"
   },
-  "1pImportReplace": {
-    "message": "Importeren en vervangen",
-    "description": "English: Import and replace"
-  },
   "1pExport": {
     "message": "Exporteren",
     "description": "English: Export"
@@ -478,10 +474,6 @@
   "whitelistImport": {
     "message": "Importeren en toevoegen",
     "description": "English: Import and append"
-  },
-  "whitelistImportReplace": {
-    "message": "Importeren en vervangen",
-    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Exporteren",

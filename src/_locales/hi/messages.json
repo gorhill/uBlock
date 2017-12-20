@@ -404,12 +404,8 @@
     "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport": {
-    "message": "आयात करें और संलग्न करें",
+    "message": "Import and append",
     "description": "English: Import and append"
-  },
-  "1pImportReplace": {
-    "message": "आयात और प्रतिस्थापित करें",
-    "description": "English: Import and replace"
   },
   "1pExport": {
     "message": "निर्यात करें",
@@ -476,12 +472,8 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "आयात करें और संलग्न करें",
+    "message": "Import and append",
     "description": "English: Import and append"
-  },
-  "whitelistImportReplace": {
-    "message": "आयात और प्रतिस्थापित करें",
-    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "निर्यात करें",

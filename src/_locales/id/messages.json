@@ -407,10 +407,6 @@
     "message": "Impor dan tambahkan",
     "description": "English: Import and append"
   },
-  "1pImportReplace": {
-    "message": "Impor dan ganti",
-    "description": "English: Import and replace"
-  },
   "1pExport": {
     "message": "Ekspor",
     "description": "English: Export"
@@ -478,10 +474,6 @@
   "whitelistImport": {
     "message": "Impor dan tambahkan",
     "description": "English: Import and append"
-  },
-  "whitelistImportReplace": {
-    "message": "Impor dan ganti",
-    "description": "English: Import and replace"
   },
   "whitelistExport": {
     "message": "Ekspor",
