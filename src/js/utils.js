@@ -351,6 +351,7 @@
     this.size = size;
     this.array = [];
     this.map = new Map();
+    this.resetTime = Date.now();
 };
 
 µBlock.MRUCache.prototype = {
@@ -380,6 +381,7 @@
     reset: function() {
         this.array = [];
         this.map.clear();
+        this.resetTime = Date.now();
     }
 };
 

@@ -665,6 +665,7 @@ var FilterContainer = function() {
     };
 
     this.userScripts = new Map();
+    this.userScriptCache = new µb.MRUCache(32);
 
     // Short-lived: content is valid only during one function call. These
     // is to prevent repeated allocation/deallocation overheads -- the
@@ -722,7 +723,9 @@ FilterContainer.prototype.reset = function() {
 
     this.scriptTagFilters = {};
     this.scriptTagFilterCount = 0;
+
     this.userScripts.clear();
+    this.userScriptCache.reset();
 };
 
 /******************************************************************************/
@@ -1734,19 +1737,26 @@ FilterContainer.prototype.retrieveUserScripts = function(
 
 FilterContainer.prototype._lookupUserScript = function(raw, reng, toInject) {
     if ( toInject.has(raw) ) { return; }
-    var token, args,
-        pos = raw.indexOf(',');
-    if ( pos === -1 ) {
-        token = raw;
-    } else {
-        token = raw.slice(0, pos).trim();
-        args = raw.slice(pos + 1).trim();
+    if ( this.userScriptCache.resetTime < reng.modifyTime ) {
+        this.userScriptCache.reset();
     }
-    var content = reng.resourceContentFromName(token, 'application/javascript');
-    if ( !content ) { return; }
-    if ( args ) {
-        content = this._fillupUserScript(content, args);
+    var content = this.userScriptCache.lookup(raw);
+    if ( content === undefined ) {
+        var token, args,
+            pos = raw.indexOf(',');
+        if ( pos === -1 ) {
+            token = raw;
+        } else {
+            token = raw.slice(0, pos).trim();
+            args = raw.slice(pos + 1).trim();
+        }
+        content = reng.resourceContentFromName(token, 'application/javascript');
         if ( !content ) { return; }
+        if ( args ) {
+            content = this._fillupUserScript(content, args);
+            if ( !content ) { return; }
+        }
+        this.userScriptCache.add(raw, content);
     }
     toInject.set(raw, content);
 };
