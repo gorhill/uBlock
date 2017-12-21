@@ -15,7 +15,9 @@ hash web-ext 2>/dev/null || { echo >&2 "Webext is not installed. Please do npm i
 DES=dist/build
 ARTS=artifacts
 
-CHROME_OPTS=--pack-extension=${DES}/adnauseam.chromium
+CHROME_OPTS1=--pack-extension=${DES}/adnauseam.chromium
+CHROME_OPTS2=--pack-extension-key=adnauseam.chromium.pem
+
 OPERA_OPTS=--pack-extension=${DES}/adnauseam.opera
 
 VERSION=`jq .version manifest.json | tr -d '"'`
@@ -29,8 +31,8 @@ rm -rf ${DES}/*
 
 # CHROME
 ./tools/make-chromium.sh
-"${CHROME}" "${CHROME_OPTS}"
-mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chrome-tmp.crx
+"${CHROME}" "${CHROME_OPTS1}" "${CHROME_OPTS2}"
+mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
 
 
 # OPERA
@@ -52,16 +54,10 @@ cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox-legacy
 web-ext build -s ${DES}/adnauseam.webext -a ${ARTS}
 mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox-webext.zip
 
-
-# CHROME-RAW
-#cd ${DES}
-#zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
-#cd -
-
 # NO PEMS
 mv ${DES}/*.pem /tmp
 
 ls -l artifacts
 open artifacts
 
-echo Pack/sign, then do $ cp dist/build/adnauseam.chromium.crx artifacts/adnauseam-${VERSION}.chromium.crx 
+#echo Pack/sign, then do $ cp dist/build/adnauseam.chromium.crx artifacts/adnauseam-${VERSION}.chromium.crx
