@@ -61,6 +61,11 @@ cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox-legacy
 web-ext build -s ${DES}/adnauseam.webext -a ${ARTS}
 mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox.zip
 
+# CHROME-RAW
+cd ${DES}
+zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
+cd -
+
 # NO PEMS
 mv ${DES}/*.pem /tmp
 
