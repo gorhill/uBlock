@@ -120,7 +120,7 @@ var µBlock = (function() { // jshint ignore:line
 
         // read-only
         systemSettings: {
-            compiledMagic: 'pxpclstriajk',
+            compiledMagic: 'vrgorlgelgws',
             selfieMagic: 'pxpclstriajk'
         },
 

@@ -1266,13 +1266,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        compiled = [ 6 /* js */, 0, '!', '', '' ];
-        if ( selector.startsWith('script:inject') ) {
-            compiled[4] = selector.slice(14, -1).trim();
-        } else {
-            compiled[1] = 1;
-            compiled[4] = selector.slice(16, -1).trim();
-        }
+        compiled = [ 6 /* js */, '!', '', selector ];
         writer.push(compiled);
         return;
     }
@@ -1314,13 +1308,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
         if ( unhide ) {
             hash = '!' + hash;
         }
-        compiled = [ 6 /* js */, 0, hash, hostname, '' ];
-        if ( selector.startsWith('script:inject') ) {
-            compiled[4] = selector.slice(14, -1).trim();
-        } else {
-            compiled[1] = 1;
-            compiled[4] = selector.slice(16, -1).trim();
-        }
+        compiled = [ 6 /* js */, hash, hostname, selector ];
         writer.push(compiled);
         return;
     }
@@ -1545,10 +1533,10 @@ FilterContainer.prototype.skipCompiledContent = function(reader) {
 /******************************************************************************/
 
 FilterContainer.prototype.createScriptFilter = function(args) {
-    if ( args[1] === 0 ) {
+    if ( args[3].startsWith('script:inject') ) {
         return this.createUserScriptRule(args);
     }
-    if ( args[1] === 1 ) {
+    if ( args[3].startsWith('script:contains') ) {
         return this.createScriptTagFilter(args);
     }
 };
@@ -1561,8 +1549,8 @@ FilterContainer.prototype.createScriptFilter = function(args) {
 //                16   -1
 
 FilterContainer.prototype.createScriptTagFilter = function(args) {
-    var hostname = args[3],
-        token = args[4];
+    var hostname = args[2],
+        token = args[3].slice(16, -1);
     token = token.startsWith('/') && token.endsWith('/')
         ? token.slice(1, -1)
         : token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -1623,8 +1611,8 @@ FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
 // userScripts{hash} => FilterHostname | FilterBucket
 
 FilterContainer.prototype.createUserScriptRule = function(args) {
-    var hash = args[2],
-        filter = new FilterHostname(args[4], args[3]);
+    var hash = args[1],
+        filter = new FilterHostname(args[3].slice(14, -1), args[2]);
     var bucket = this.userScripts.get(hash);
     if ( bucket === undefined ) {
         this.userScripts.set(hash, filter);
