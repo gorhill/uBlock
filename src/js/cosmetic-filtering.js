@@ -1260,19 +1260,17 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer) {
-    var selector = parsed.suffix,
-        compiled;
+    var selector = parsed.suffix;
 
     // script:contains(...)
     // script:inject(...)
     if ( this.reScriptSelector.test(selector) ) {
-        compiled = [ 6 /* js */, '!', '', selector ];
-        writer.push(compiled);
+        writer.push([ 6 /* js */, '!', '', selector ]);
         return;
     }
 
     // Procedural cosmetic filters are acceptable as generic exception filters.
-    compiled = this.compileSelector(selector);
+    var compiled = this.compileSelector(selector);
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
@@ -1298,8 +1296,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
 
     var selector = parsed.suffix,
         domain = this.µburi.domainFromHostname(hostname),
-        hash,
-        compiled;
+        hash;
 
     // script:contains(...)
     // script:inject(...)
@@ -1308,12 +1305,11 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
         if ( unhide ) {
             hash = '!' + hash;
         }
-        compiled = [ 6 /* js */, hash, hostname, selector ];
-        writer.push(compiled);
+        writer.push([ 6 /* js */, hash, hostname, selector ]);
         return;
     }
 
-    compiled = this.compileSelector(selector);
+    var compiled = this.compileSelector(selector);
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/188
