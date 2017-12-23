@@ -198,7 +198,7 @@ var fromCosmeticFilter = function(details) {
             case 8:
             case 9:
                 if (
-                    fargs[0] === 8 && fargs[3] !== selector ||
+                    fargs[0] !== 9 && fargs[3] !== selector ||
                     fargs[0] === 9 && JSON.parse(fargs[3]).raw !== selector
                 ) {
                     break;
