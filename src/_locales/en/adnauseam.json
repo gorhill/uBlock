@@ -215,9 +215,21 @@
     "message": "Settings",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Export Ads",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Export Options",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Ads Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Settings Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Settings and ads",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "Import Ads",
