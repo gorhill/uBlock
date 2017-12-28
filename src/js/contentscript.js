@@ -1379,20 +1379,9 @@ vAPI.domSurveyor = (function() {
 
         // Library of resources is located at:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
-        if ( cfeDetails.scripts ) {
-            // Have the injected script tag remove itself when execution completes:
-            // to keep DOM as clean as possible.
-            var text = cfeDetails.scripts +
-                "\n" +
-                "(function() {\n" +
-                "    var c = document.currentScript,\n" +
-                "        p = c && c.parentNode;\n" +
-                "    if ( p ) {\n" +
-                "        p.removeChild(c);\n" +
-                "    }\n" +
-                "})();";
-            vAPI.injectScriptlet(document, text);
-            vAPI.injectedScripts = text;
+        if ( response.scriptlets ) {
+            vAPI.injectScriptlet(document, response.scriptlets);
+            vAPI.injectedScripts = response.scriptlets;
         }
 
         if ( vAPI.domSurveyor instanceof Object ) {
@@ -1414,13 +1403,11 @@ vAPI.domSurveyor = (function() {
     };
 
     // This starts bootstrap process.
-    var url = window.location.href;
     vAPI.messaging.send(
         'contentscript',
         {
             what: 'retrieveContentScriptParameters',
-            pageURL: url,
-            locationURL: url,
+            url: window.location.href,
             isRootFrame: window === window.top
         },
         bootstrapPhase1

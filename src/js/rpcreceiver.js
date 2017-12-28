@@ -35,22 +35,21 @@ if ( typeof vAPI.rpcReceiver !== 'object' ) {
 
 vAPI.rpcReceiver.getScriptTagHostnames = function() {
     var µb = µBlock;
-    var cfe = µb.cosmeticFilteringEngine;
-    if ( !cfe ) { return; }
-    return cfe.retrieveScriptTagHostnames();
+    if ( µb.htmlFilteringEngine ) {
+        return µb.htmlFilteringEngine.retrieveScriptTagHostnames();
+    }
 };
 
 /******************************************************************************/
 
 vAPI.rpcReceiver.getScriptTagFilters = function(details) {
     var µb = µBlock;
-    var cfe = µb.cosmeticFilteringEngine;
-    if ( !cfe ) { return; }
+    if ( !µb.htmlFilteringEngine ) { return; }
     // Fetching the script tag filters first: assuming it is faster than
     // checking whether the site is whitelisted.
     var hostname = details.frameHostname;
-    var r = cfe.retrieveScriptTagRegex(
-        µb.URI.domainFromHostname(hostname) || hostname,
+    var r = µb.htmlFilteringEngine.retrieveScriptTagRegex(
+        µb.URI.domainFromHostname(hostname),
         hostname
     );
     // https://github.com/gorhill/uBlock/issues/838

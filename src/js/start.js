@@ -39,7 +39,7 @@ vAPI.app.onShutdown = function() {
     µb.staticFilteringReverseLookup.shutdown();
     µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
-    µb.cosmeticFilteringEngine.reset();
+    µb.staticExtFilteringEngine.reset();
     µb.sessionFirewall.reset();
     µb.permanentFirewall.reset();
     µb.permanentFirewall.reset();
@@ -139,7 +139,7 @@ var onSelfieReady = function(selfie) {
     µb.availableFilterLists = selfie.availableFilterLists;
     µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
     µb.redirectEngine.fromSelfie(selfie.redirectEngine);
-    µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
+    µb.staticExtFilteringEngine.fromSelfie(selfie.staticExtFilteringEngine);
     return true;
 };
 

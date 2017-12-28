@@ -480,9 +480,10 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 /******************************************************************************/
 
 // To handle:
-// - inline script tags
-// - websockets
-// - media elements larger than n kB
+// - Media elements larger than n kB
+// - Scriptlet injection (requires ability to modify response body)
+// - HTML filtering (requires ability to modify response body)
+// - CSP injection
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
@@ -490,15 +491,17 @@ var onHeadersReceived = function(details) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
 
     var µb = µBlock,
-        requestType = details.type;
+        requestType = details.type,
+        isRootDoc = requestType === 'main_frame',
+        isDoc = isRootDoc || requestType === 'sub_frame';
 
-    if ( requestType === 'main_frame' ) {
+    if ( isRootDoc ) {
         µb.tabContextManager.push(tabId, details.url);
     }
 
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) {
-        if ( requestType !== 'main_frame' ) { return; }
+        if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
     if ( pageStore.getNetFilteringSwitch() === false ) { return; }
@@ -507,23 +510,282 @@ var onHeadersReceived = function(details) {
         return foilLargeMediaElement(pageStore, details);
     }
 
+    if ( isDoc && µb.canFilterResponseBody ) {
+        filterDocument(details);
+    }
+
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
     //   a media element: the resource was not prevented from loading so no
     //   point to further block large media elements for the current document.
-    if ( requestType === 'main_frame' ) {
+    if ( isRootDoc ) {
         if ( reMediaContentTypes.test(headerValueFromName('content-type', details.responseHeaders)) ) {
             pageStore.allowLargeMediaElementsUntil = Date.now() + 86400000;
         }
         return injectCSP(pageStore, details);
     }
 
-    if ( requestType === 'sub_frame' ) {
+    if ( isDoc ) {
         return injectCSP(pageStore, details);
     }
 };
 
 var reMediaContentTypes = /^(?:audio|image|video)\//;
+
+/*******************************************************************************
+
+    The response body filterer is responsible for:
+
+    - Scriptlet filtering
+    - HTML filtering
+
+    In the spirit of efficiency, the response body filterer works this way:
+
+    If:
+        - HTML filtering: no.
+        - Scriptlet filtering: no.
+    Then:
+        No response body filtering is initiated.
+
+    If:
+        - HTML filtering: no.
+        - Scriptlet filtering: yes.
+    Then:
+        Inject scriptlets before first chunk of response body data reported
+        then immediately disconnect response body data listener.
+
+    If:
+        - HTML filtering: yes.
+        - Scriptlet filtering: no/yes.
+    Then:
+        Assemble all response body data into a single buffer. Once all the
+        response data has been received, create a document from it. Then:
+        - Inject scriptlets in the resulting DOM.
+        - Remove all DOM elements matching HTML filters.
+        Then serialize the resulting modified document as the new response
+        body.
+
+    This way, the overhead is minimal for when only scriptlets need to be
+    injected.
+
+    If the platform does not support response body filtering, the scriptlets
+    will be injected the old way, through the content script.
+
+**/
+
+var filterDocument = (function() {
+    var µb = µBlock,
+        filterers = new Map(),
+        reDoctype = /^\s*<!DOCTYPE\b[^>]+?>/,
+        reJustASCII = /^[\x00-\x7E]*$/,
+        domParser, xmlSerializer,
+        textDecoderCharset, textDecoder, textEncoder;
+
+    var streamJobDone = function(filterer, responseBytes) {
+        if (
+            filterer.scriptlets === undefined ||
+            filterer.selectors !== undefined ||
+            filterer.charset !== undefined
+        ) {
+            return false;
+        }
+        if ( textDecoder === undefined ) {
+            textDecoder = new TextDecoder();
+        }
+        // We need to insert after DOCTYPE, or else the browser may falls into
+        // quirks mode.
+        var responseStr = textDecoder.decode(responseBytes);
+        var match = reDoctype.exec(responseStr);
+        if ( match === null ) { return false; }
+        filterers.delete(filterer.stream);
+        if ( textEncoder === undefined ) {
+            textEncoder = new TextEncoder();
+        }
+        var beforeByteLength = match.index + match[0].length;
+        var beforeBytes = reJustASCII.test(match[0]) ?
+            new Uint8Array(responseBytes, 0, beforeByteLength) :
+            textEncoder.encode(responseStr.slice(0, beforeByteLength));
+        filterer.stream.write(beforeBytes);
+        filterer.stream.write(
+            textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
+        );
+        filterer.stream.write(
+            new Uint8Array(responseBytes, beforeBytes.byteLength)
+        );
+        filterer.stream.disconnect();
+        return true;
+    };
+
+    var streamClose = function(filterer, buffer) {
+        if ( buffer !== undefined ) {
+            filterer.stream.write(buffer);
+        } else if ( filterer.buffer !== undefined ) {
+            filterer.stream.write(filterer.buffer);
+        }
+        filterer.stream.close();
+    };
+
+    var onStreamData = function(ev) {
+        var filterer = filterers.get(this);
+        if ( filterer === undefined ) {
+            this.write(ev.data);
+            this.disconnect();
+            return;
+        }
+        if (
+            this.status !== 'transferringdata' &&
+            this.status !== 'finishedtransferringdata'
+        ) {
+            filterers.delete(this);
+            this.disconnect();
+            return;
+        }
+        // TODO: possibly improve buffer growth, if benchmarking shows it's
+        //       worth it.
+        if ( filterer.buffer === null ) {
+            if ( streamJobDone(filterer, ev.data) ) { return; }
+            filterer.buffer = new Uint8Array(ev.data);
+            return;
+        }
+        var buffer = new Uint8Array(
+            filterer.buffer.byteLength +
+            ev.data.byteLength
+        );
+        buffer.set(filterer.buffer);
+        buffer.set(new Uint8Array(ev.data), filterer.buffer.byteLength);
+        filterer.buffer = buffer;
+    };
+
+    var onStreamStop = function() {
+        var filterer = filterers.get(this);
+        filterers.delete(this);
+        if ( filterer === undefined || filterer.buffer === null ) {
+            this.close();
+            return;
+        }
+        if ( this.status !== 'finishedtransferringdata' ) { return; }
+
+        if ( domParser === undefined ) {
+            domParser = new DOMParser();
+            xmlSerializer = new XMLSerializer();
+        }
+        if ( textEncoder === undefined ) {
+            textEncoder = new TextEncoder();
+        }
+
+        // In case of unknown charset, assume utf-8.
+        if ( filterer.charset !== textDecoderCharset ) {
+            textDecoder = undefined;
+        }
+        if ( textDecoder === undefined ) {
+            try {
+                textDecoder = new TextDecoder(filterer.charset);
+                textDecoderCharset = filterer.charset;
+            } catch(ex) {
+                textDecoder = new TextDecoder();
+                textDecoderCharset = undefined;
+            }
+        }
+
+        var doc = domParser.parseFromString(
+            textDecoder.decode(filterer.buffer),
+            'text/html'
+        );
+
+        var modified = false;
+        if ( filterer.selectors !== undefined ) {
+            if ( µb.htmlFilteringEngine.apply(doc, filterer) ) {
+                modified = true;
+            }
+        }
+        if ( filterer.scriptlets !== undefined ) {
+            if ( µb.scriptletFilteringEngine.apply(doc, filterer) ) {
+                modified = true;
+            }
+        }
+
+        if ( modified === false ) {
+            streamClose(filterer);
+            return;
+        }
+
+        // If the charset of the document was not utf-8, we need to change it
+        // to utf-8.
+        if ( textDecoderCharset !== undefined ) {
+            var meta = doc.createElement('meta');
+            meta.setAttribute('charset', 'utf-8');
+            doc.head.insertBefore(meta, doc.head.firstChild);
+        }
+
+        // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
+        var doctypeStr = doc.doctype instanceof Object ?
+                xmlSerializer.serializeToString(doc.doctype) + '\n' :
+                '';
+
+        streamClose(
+            filterer,
+            textEncoder.encode(doctypeStr + doc.documentElement.outerHTML)
+        );
+    };
+
+    var onStreamError = function() {
+        filterers.delete(this);
+    };
+
+    return function(details) {
+        var hostname = µb.URI.hostnameFromURI(details.url);
+        if ( hostname === '' ) { return; }
+
+        var domain = µb.URI.domainFromHostname(hostname);
+
+        var request = {
+            stream: undefined,
+            tabId: details.tabId,
+            url: details.url,
+            hostname: hostname,
+            domain: domain,
+            entity: µb.URI.entityFromDomain(domain),
+            selectors: undefined,
+            scriptlets: undefined,
+            buffer: null,
+            charset: undefined
+        };
+        request.selectors = µb.htmlFilteringEngine.retrieve(request);
+        request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+
+        if (
+            request.selectors === undefined &&
+            request.scriptlets === undefined
+        ) {
+            return;
+        }
+
+        var headers = details.responseHeaders,
+            contentType = headerValueFromName('content-type', headers);
+        if ( contentType !== '' ) {
+            if ( reContentTypeDocument.test(contentType) === false ) { return; }
+            var match = reContentTypeCharset.exec(contentType);
+            if ( match !== null ) {
+                var charset = match[1].toLowerCase();
+                if ( charset !== 'utf-8' ) {
+                    request.charset = charset;
+                }
+            }
+        }
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
+        if ( headerValueFromName('content-disposition', headers) ) { return; }
+
+        var stream = request.stream =
+            vAPI.net.webRequest.filterResponseData(details.requestId);
+        stream.ondata = onStreamData;
+        stream.onstop = onStreamStop;
+        stream.onerror = onStreamError;
+        filterers.set(stream, request);
+    };
+})();
+
+var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i;
+var reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
 
 /******************************************************************************/
 

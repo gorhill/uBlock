@@ -29,7 +29,11 @@ vAPI.net = {
     onBeforeRequest: {},
     onBeforeMaybeSpuriousCSPReport: {},
     onHeadersReceived: {},
-    nativeCSPReportFiltering: true
+    nativeCSPReportFiltering: true,
+    webRequest: browser.webRequest,
+    canFilterResponseBody:
+        typeof browser.webRequest === 'object' &&
+        typeof browser.webRequest.filterResponseData === 'function'
 };
 
 /******************************************************************************/

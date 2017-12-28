@@ -53,11 +53,10 @@ api.removeObserver = function(observer) {
 };
 
 var fireNotification = function(topic, details) {
-    var result;
+    var result, r;
     for ( var i = 0; i < observers.length; i++ ) {
-        if ( observers[i](topic, details) === false ) {
-            result = false;
-        }
+        r = observers[i](topic, details);
+        if ( r !== undefined ) { result = r; }
     }
     return result;
 };
@@ -955,7 +954,7 @@ var updateNext = function() {
                 fireNotification(
                     'before-asset-updated',
                     { assetKey: assetKey,  type: assetEntry.content }
-                ) !== false
+                ) === true
             ) {
                 return assetKey;
             }

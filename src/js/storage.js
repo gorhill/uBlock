@@ -347,7 +347,7 @@
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
         µb.staticNetFilteringEngine.freeze();
         µb.redirectEngine.freeze();
-        µb.cosmeticFilteringEngine.freeze();
+        µb.staticExtFilteringEngine.freeze();
         µb.selfieManager.destroy();
     };
 
@@ -543,7 +543,7 @@
 
     var onDone = function() {
         µb.staticNetFilteringEngine.freeze();
-        µb.cosmeticFilteringEngine.freeze();
+        µb.staticExtFilteringEngine.freeze();
         µb.redirectEngine.freeze();
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 
@@ -586,7 +586,7 @@
         µb.availableFilterLists = lists;
 
         µb.redirectEngine.reset();
-        µb.cosmeticFilteringEngine.reset();
+        µb.staticExtFilteringEngine.reset();
         µb.staticNetFilteringEngine.reset();
         µb.selfieManager.destroy();
         µb.staticFilteringReverseLookup.resetLists();
@@ -703,23 +703,22 @@
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText) {
-    var networkFilters = new this.CompiledLineWriter(),
-        cosmeticFilters = new this.CompiledLineWriter();
+    var writer = new this.CompiledLineWriter();
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     var staticNetFilteringEngine = this.staticNetFilteringEngine,
-        cosmeticFilteringEngine = this.cosmeticFilteringEngine,
+        staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)(?=\s|$)/,
+        reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
-        line, lineRaw, c, pos,
+        line, c, pos,
         lineIter = new this.LineIterator(rawText);
 
     while ( lineIter.eot() === false ) {
-        line = lineRaw = lineIter.next().trim();
+        line = lineIter.next().trim();
 
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
@@ -733,9 +732,7 @@
 
         // Parse or skip cosmetic filters
         // All cosmetic filters are caught here
-        if ( cosmeticFilteringEngine.compile(line, cosmeticFilters) ) {
-            continue;
-        }
+        if ( staticExtFilteringEngine.compile(line, writer) ) { continue; }
 
         // Whatever else is next can be assumed to not be a cosmetic filter
 
@@ -767,12 +764,10 @@
 
         if ( line.length === 0 ) { continue; }
 
-        staticNetFilteringEngine.compile(line, networkFilters);
+        staticNetFilteringEngine.compile(line, writer);
     }
 
-    return networkFilters.toString() +
-           '\n/* end of network - start of cosmetic */\n' +
-           cosmeticFilters.toString();
+    return writer.toString();
 };
 
 /******************************************************************************/
@@ -783,15 +778,12 @@
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    var separator = '\n/* end of network - start of cosmetic */\n',
-        pos = rawText.indexOf(separator),
-        reader = new this.CompiledLineReader(rawText.slice(0, pos));
+    var reader = new this.CompiledLineReader(rawText);
     this.staticNetFilteringEngine.fromCompiledContent(reader);
-    this.cosmeticFilteringEngine.fromCompiledContent(
-        reader.reset(rawText.slice(pos + separator.length)),
-        this.userSettings.ignoreGenericCosmeticFilters,
-        !firstparty && !this.userSettings.parseAllABPHideFilters
-    );
+    this.staticExtFilteringEngine.fromCompiledContent(reader, {
+        skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,
+        skipCosmetic: !firstparty && !this.userSettings.parseAllABPHideFilters
+    });
 };
 
 /******************************************************************************/
@@ -885,7 +877,7 @@
             availableFilterLists: this.availableFilterLists,
             staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
             redirectEngine: this.redirectEngine.toSelfie(),
-            cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
+            staticExtFilteringEngine: this.staticExtFilteringEngine.toSelfie()
         };
         vAPI.cacheStorage.set({ selfie: selfie });
     }.bind(µBlock);
@@ -1068,7 +1060,7 @@
                 this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
                 this.selectedFilterLists.indexOf(details.assetKey) === -1
             ) {
-                return false;
+                return;
             }
         }
         // https://github.com/gorhill/uBlock/issues/2594
@@ -1077,10 +1069,10 @@
                 this.hiddenSettings.ignoreRedirectFilters === true &&
                 this.hiddenSettings.ignoreScriptInjectFilters === true
             ) {
-                return false;
+                return;
             }
         }
-        return;
+        return true;
     }
 
     // Compile the list while we have the raw version in memory

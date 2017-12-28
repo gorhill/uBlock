@@ -102,7 +102,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'compileCosmeticFilterSelector':
-        response = µb.cosmeticFilteringEngine.compileSelector(request.selector);
+        response = µb.staticExtFilteringEngine.compileSelector(request.selector);
         break;
 
     case 'cosmeticFiltersInjected':
@@ -465,7 +465,7 @@ var onMessage = function(request, sender, callback) {
     var µb = µBlock,
         response,
         tabId, frameId,
-        pageStore;
+        pageStore = null;
 
     if ( sender && sender.tab ) {
         tabId = sender.tab.id;
@@ -491,21 +491,33 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'retrieveContentScriptParameters':
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = {
-                collapseBlocked: µb.userSettings.collapseBlocked,
-                noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
-                noGenericCosmeticFiltering:
-                    pageStore.noGenericCosmeticFiltering === true
-            };
-            request.tabId = tabId;
-            request.frameId = frameId;
-            response.specificCosmeticFilters =
-                µb.cosmeticFilteringEngine
-                  .retrieveDomainSelectors(request, response);
-            if ( request.isRootFrame && µb.logger.isEnabled() ) {
-                µb.logCosmeticFilters(tabId);
-            }
+        if (
+            pageStore === null ||
+            pageStore.getNetFilteringSwitch() === false ||
+            !request.url
+        ) {
+            break;
+        }
+        response = {
+            collapseBlocked: µb.userSettings.collapseBlocked,
+            noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
+            noGenericCosmeticFiltering:
+                pageStore.noGenericCosmeticFiltering === true
+        };
+        request.tabId = tabId;
+        request.frameId = frameId;
+        request.hostname = µb.URI.hostnameFromURI(request.url);
+        request.domain = µb.URI.domainFromHostname(request.hostname);
+        request.entity = µb.URI.entityFromDomain(request.domain);
+        response.specificCosmeticFilters =
+            µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
+        // If response body filtering is supported, than the scriptlets have
+        // already been injected.
+        if ( µb.canFilterResponseBody === false ) {
+            response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        }
+        if ( request.isRootFrame && µb.logger.isEnabled() ) {
+            µb.logCosmeticFilters(tabId);
         }
         break;
 
