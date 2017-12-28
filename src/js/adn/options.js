@@ -134,6 +134,24 @@
     uDom('.blockingMalware-child').prop('disabled', !uDom('#blockingMalware').prop('checked'));
   }
 
+   /******************************************************************************/
+
+    var exportDialog = function() {
+       uDom('#export-dialog').removeClass("hide");
+     }
+    
+    var exportTo = function() {
+        var action = uDom('#export-dialog input:checked').nodes[0].id;
+        exportToFile(action)
+        closeDialog();
+    }
+
+    var closeDialog = function() {
+       uDom('#export-dialog').addClass("hide");
+    }
+
+
+
   /******************************************************************************/
 
   // TODO: use data-* to declare simple settings
@@ -181,10 +199,12 @@
       });
 
     uDom('#reset').on('click', clearAds);
-    uDom('#export').on('click', exportToFile);
+    uDom('#exportDialog').on('click', exportDialog);
+    uDom('#export').on('click', exportTo);
     uDom('#import').on('click', startImportFilePicker);
     uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#resetOptions').on('click', resetUserData);
+    uDom('#export-dialog .close').on('click', closeDialog);
     uDom('#confirm-close').on('click', function (e) {
       e.preventDefault();
       window.open(location, '_self').close();

@@ -147,3 +147,106 @@ input[type=range]::-moz-range-track{
 input[type=range]:disabled::-moz-range-progress {
   background-color: gray;
 }
+
+#export-dialog{
+    position: absolute;
+    width: 300px;
+    height: 190px;
+    background: black;
+    bottom: 0px;
+    margin-left: -150px;
+    left: 50%;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    padding: 10px 20px;
+}
+#export-dialog ul {
+  margin-bottom: 20px
+}
+#export-dialog .close {
+  float: right;
+    cursor:pointer;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 5px 11px 0;  
+}
+.close:before {
+    content: "×";
+}
+#export-dialog h5{
+  background:#0076FF;
+  margin:-10px -20px 20px -20px;
+  font-size:22px;
+  font-family: 'bebas_neue';
+  padding-top: 7px;
+  height:36px;
+  text-align: center;
+  color:white;
+}
+#export-dialog button {
+  width: 100%;
+}
+#export-dialog.hide{
+  display: none;
+}
+
+/* Customize the label (the container) */
+.radioContainer {
+  position: relative;
+  padding-left: 24px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radioContainer input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Create a custom radio button */
+.radiobtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: black;
+  border-color:#0076FF;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+}
+/* When the radio button is checked, add a blue background */
+.radioContainer input:checked ~ .radiobtn {
+  background-color: #0076FF;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radiobtn:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radioContainer input:checked ~ .radiobtn:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radioContainer .radiobtn:after {
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: black;
+}

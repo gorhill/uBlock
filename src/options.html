@@ -201,13 +201,39 @@
 
   <div style="margin: 2.5em 1em;">
     <p>
-      <button class="custom" type="button" id="export" data-i18n="adnMenuExportAds"></button>&ensp;
-      <button class="custom" type="button" id="import" data-i18n="adnMenuImportAds"></button>
+      <button class="custom" type="button" id="exportDialog" data-i18n="adnVaultExport"></button>&ensp;
+      <button class="custom" type="button" id="import" data-i18n="adnVaultImport"></button>
       <input id="importFilePicker" type="file" accept="application/json" class="hiddenFileInput">
-      <button class="custom warning" type="button" id="reset" data-i18n="adnMenuClearAdsNow"></button>
       <button class="custom pull-right" type="button" id="resetOptions" data-i18n="aboutResetDataButton"></button>
     </p>
   </div>
+
+<div id="export-dialog" class="hide">
+  <h5>Export Options   <span class="close"></span></h5>
+  <ul>
+    <li>
+        <label class="radioContainer"> Settings only
+            <input type="radio" id="exportSettings" checked="checked" name="radio">
+            <span class="radiobtn"></span>
+        </label>
+    </li>
+    <li>
+        <label class="radioContainer"> Settings and ads
+            <input type="radio" id="backupUserData" name="radio">
+            <span class="radiobtn"></span>
+        </label>
+    </li>
+    <li>
+        <label class="radioContainer"> Ads only
+            <input type="radio" id="exportAds" name="radio">
+            <span class="radiobtn"></span>
+        </label>
+    </li>
+  </ul>
+
+
+  <button class="custom" type="button" id="export" data-i18n="adnVaultExport"></button>
+</div>
 
   <script src="js/vapi-common.js"></script>
   <script src="js/vapi-client.js"></script>
