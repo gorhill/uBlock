@@ -137,7 +137,7 @@
         return [ root ];
     };
     PSelector.prototype.exec = function(input) {
-        if ( this.invalid ) { return; }
+        if ( this.invalid ) { return []; }
         var nodes = this.prime(input);
         for ( var task of this.tasks ) {
             if ( nodes.length === 0 ) { break; }
