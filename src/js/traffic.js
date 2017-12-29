@@ -577,7 +577,6 @@ var filterDocument = (function() {
     var µb = µBlock,
         filterers = new Map(),
         reDoctype = /^\s*<!DOCTYPE\b[^>]+?>/,
-        reJustASCII = /^[\x00-\x7E]*$/,
         domParser, xmlSerializer,
         textDecoderCharset, textDecoder, textEncoder;
 
@@ -592,25 +591,37 @@ var filterDocument = (function() {
         if ( textDecoder === undefined ) {
             textDecoder = new TextDecoder();
         }
-        // We need to insert after DOCTYPE, or else the browser may falls into
-        // quirks mode.
-        var responseStr = textDecoder.decode(responseBytes);
-        var match = reDoctype.exec(responseStr);
-        if ( match === null ) { return false; }
-        filterers.delete(filterer.stream);
         if ( textEncoder === undefined ) {
             textEncoder = new TextEncoder();
         }
-        var beforeByteLength = match.index + match[0].length;
-        var beforeBytes = reJustASCII.test(match[0]) ?
-            new Uint8Array(responseBytes, 0, beforeByteLength) :
-            textEncoder.encode(responseStr.slice(0, beforeByteLength));
-        filterer.stream.write(beforeBytes);
+        // We need to insert after DOCTYPE, or else the browser may falls into
+        // quirks mode.
+        var firstResponseBytes = new Uint8Array(responseBytes, 0, 512),
+            haystack = textDecoder.decode(firstResponseBytes),
+            match = reDoctype.exec(haystack);
+        if ( match === null ) { return false; }
+        filterers.delete(filterer.stream);
+        // Output bytes may be different than response bytes: the BOM sequence
+        // if present is removed by the decoder.
+        var firstOutputBytes = textEncoder.encode(
+            haystack.slice(0, match.index + match[0].length)
+        );
+        var insertAt = firstOutputBytes.byteLength;
+        // Mind BOM if present:
+        // https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+        if (
+            firstResponseBytes[0] === 0xEF &&
+            firstResponseBytes[0] === 0xBB &&
+            firstResponseBytes[0] === 0xBF
+        ) {
+            insertAt += 3;
+        }
+        filterer.stream.write(firstOutputBytes);
         filterer.stream.write(
             textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
         );
         filterer.stream.write(
-            new Uint8Array(responseBytes, beforeBytes.byteLength)
+            new Uint8Array(responseBytes, insertAt)
         );
         filterer.stream.disconnect();
         return true;
