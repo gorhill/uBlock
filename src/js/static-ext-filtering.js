@@ -580,8 +580,9 @@
         if ( (rpos - lpos) > 3 ) { return false; }
 
         // Extract the selector.
-        var suffix = parsed.suffix = raw.slice(rpos + 1).trim();
+        var suffix = raw.slice(rpos + 1).trim();
         if ( suffix.length === 0 ) { return false; }
+        parsed.suffix = suffix;
 
         // https://github.com/gorhill/uBlock/issues/952
         //   Find out whether we are dealing with an Adguard-specific cosmetic
@@ -602,6 +603,7 @@
             if ( cCode === 0x24 /* '$' */ ) {
                 suffix = translateAdguardCSSInjectionFilter(suffix);
                 if ( suffix === '' ) { return true; }
+                parsed.suffix = suffix;
             }
         }
 
@@ -628,15 +630,13 @@
                 return true;
             }
             // Script tag filtering: courtesy-conversion to HTML filtering.
-            if ( parsed.suffix.startsWith('script:contains') ) {
+            if ( suffix.startsWith('script:contains') ) {
                 console.info(
                     'uBO: ##script:contains(...) is deprecated, ' +
                     'converting to ##^script:has-text(...)'
                 );
-                suffix = parsed.suffix = suffix.replace(
-                    /^script:contains/,
-                    '^script:has-text'
-                );
+                suffix = suffix.replace(/^script:contains/, '^script:has-text');
+                parsed.suffix = suffix;
             }
         }
 
