@@ -62,6 +62,11 @@
         this.pselector = new PSelector(task[1]);
     };
     PSelectorIfTask.prototype.target = true;
+    Object.defineProperty(PSelectorIfTask.prototype, 'invalid', {
+        get: function() {
+            return this.pselector.invalid;
+        }
+    });
     PSelectorIfTask.prototype.exec = function(input) {
         var output = [];
         for ( var node of input ) {
@@ -113,7 +118,6 @@
                 [ ':xpath', PSelectorXpathTask ]
             ]);
         }
-        this.invalid = false;
         this.raw = o.raw;
         this.selector = o.selector;
         this.tasks = [];
@@ -125,10 +129,16 @@
                 this.invalid = true;
                 break;
             }
-            this.tasks.push(new ctor(task));
+            var pselector = new ctor(task);
+            if ( pselector instanceof PSelectorIfTask && pselector.invalid ) {
+                this.invalid = true;
+                break;
+            }
+            this.tasks.push(pselector);
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
+    PSelector.prototype.invalid = false;
     PSelector.prototype.prime = function(input) {
         var root = input || docRegister;
         if ( this.selector !== '' ) {
@@ -144,6 +154,19 @@
             nodes = task.exec(nodes);
         }
         return nodes;
+    };
+    PSelector.prototype.test = function(input) {
+        if ( this.invalid ) { return false; }
+        var nodes = this.prime(input), AA = [ null ], aa;
+        for ( var node of nodes ) {
+            AA[0] = node; aa = AA;
+            for ( var task of this.tasks ) {
+                aa = task.exec(aa);
+                if ( aa.length === 0 ) { break; }
+            }
+            if ( aa.length !== 0 ) { return true; }
+        }
+        return false;
     };
 
     var logOne = function(details, selector) {
