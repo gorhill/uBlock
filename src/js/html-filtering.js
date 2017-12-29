@@ -30,6 +30,8 @@
         filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
         pselectors = new Map(),
         duplicates = new Set(),
+        acceptedCount = 0,
+        discardedCount = 0,
         docRegister, loggerRegister;
 
     var PSelectorHasTask = function(task) {
@@ -224,6 +226,8 @@
         filterDB.clear();
         pselectors.clear();
         duplicates.clear();
+        acceptedCount = 0;
+        discardedCount = 0;
     };
 
     api.freeze = function() {
@@ -260,8 +264,12 @@
         reader.select(1002);
 
         while ( reader.next() ) {
+            acceptedCount += 1;
             var fingerprint = reader.fingerprint();
-            if ( duplicates.has(fingerprint) ) { continue; }
+            if ( duplicates.has(fingerprint) ) {
+                discardedCount += 1;
+                continue;
+            }
             duplicates.add(fingerprint);
             var args = reader.args();
             filterDB.add(args[1], {
@@ -373,6 +381,19 @@
             return Array.from(out).join('|');
         }
     };
+
+    Object.defineProperties(api, {
+        acceptedCount: {
+            get: function() {
+                return acceptedCount;
+            }
+        },
+        discardedCount: {
+            get: function() {
+                return discardedCount;
+            }
+        }
+    });
 
     return api;
 })();

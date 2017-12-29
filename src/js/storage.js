@@ -562,14 +562,16 @@
 
     var applyCompiledFilters = function(assetKey, compiled) {
         var snfe = µb.staticNetFilteringEngine,
-            cfe = µb.cosmeticFilteringEngine,
-            acceptedCount = snfe.acceptedCount + cfe.acceptedCount,
-            discardedCount = snfe.discardedCount + cfe.discardedCount;
+            sxfe = µb.staticExtFilteringEngine,
+            acceptedCount = snfe.acceptedCount + sxfe.acceptedCount,
+            discardedCount = snfe.discardedCount + sxfe.discardedCount;
         µb.applyCompiledFilters(compiled, assetKey === µb.userFiltersPath);
         if ( µb.availableFilterLists.hasOwnProperty(assetKey) ) {
             var entry = µb.availableFilterLists[assetKey];
-            entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
-            entry.entryUsedCount = entry.entryCount - (snfe.discardedCount + cfe.discardedCount - discardedCount);
+            entry.entryCount = snfe.acceptedCount + sxfe.acceptedCount -
+                acceptedCount;
+            entry.entryUsedCount = entry.entryCount -
+                (snfe.discardedCount + sxfe.discardedCount - discardedCount);
         }
         loadedListKeys.push(assetKey);
     };

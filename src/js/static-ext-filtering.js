@@ -668,6 +668,23 @@
         };
     };
 
+    Object.defineProperties(api, {
+        acceptedCount: {
+            get: function() {
+                return µb.cosmeticFilteringEngine.acceptedCount +
+                       µb.scriptletFilteringEngine.acceptedCount +
+                       µb.htmlFilteringEngine.acceptedCount;
+            }
+        },
+        discardedCount: {
+            get: function() {
+                return µb.cosmeticFilteringEngine.discardedCount +
+                       µb.scriptletFilteringEngine.discardedCount +
+                       µb.htmlFilteringEngine.discardedCount;
+            }
+        }
+    });
+
     api.fromSelfie = function(selfie) {
         µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmetic);
         µb.scriptletFilteringEngine.fromSelfie(selfie.scriptlets);

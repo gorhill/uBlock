@@ -29,6 +29,8 @@
     var µb = µBlock,
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
         duplicates = new Set(),
+        acceptedCount = 0,
+        discardedCount = 0,
         scriptletCache = new µb.MRUCache(32),
         exceptionsRegister = new Set(),
         scriptletsRegister = new Map(),
@@ -103,6 +105,8 @@
     api.reset = function() {
         scriptletDB.clear();
         duplicates.clear();
+        acceptedCount = 0;
+        discardedCount = 0;
     };
 
     api.freeze = function() {
@@ -154,8 +158,12 @@
         reader.select(1001);
 
         while ( reader.next() ) {
+            acceptedCount += 1;
             var fingerprint = reader.fingerprint();
-            if ( duplicates.has(fingerprint) ) { continue; }
+            if ( duplicates.has(fingerprint) ) {
+                discardedCount += 1;
+                continue;
+            }
             duplicates.add(fingerprint);
             var args = reader.args();
             if ( args.length < 4 ) { continue; }
@@ -263,6 +271,19 @@
     api.fromSelfie = function(selfie) {
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(selfie);
     };
+
+    Object.defineProperties(api, {
+        acceptedCount: {
+            get: function() {
+                return acceptedCount;
+            }
+        },
+        discardedCount: {
+            get: function() {
+                return discardedCount;
+            }
+        }
+    });
 
     return api;
 })();
