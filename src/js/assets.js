@@ -190,22 +190,22 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
         content.push(details.content.trim());
         if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
-
-        if ( parsedMainURL !== undefined ) {
+        if (
+            parsedMainURL !== undefined &&
+            parsedMainURL.pathname.length > 0
+        ) {
             var reInclude = /^!#include +(\S+)/gm,
+                match, subURL;
+            for (;;) {
                 match = reInclude.exec(details.content);
-            while ( match !== null ) {
-                var parsedSubURL = toParsedURL(match[1]);
-                if ( parsedSubURL === undefined ) {
-                    parsedSubURL = toParsedURL(
-                        parsedMainURL.href.replace(/[^/?]+(?:\?.*)?$/, match[1])
-                    );
-                    if ( parsedSubURL === undefined ) { continue; }
-                }
-                if ( parsedSubURL.origin !== parsedMainURL.origin ) { continue; }
-                if ( loadedSublistURLs.has(parsedSubURL.href) ) { continue; }
-                pendingSublistURLs.add(parsedSubURL.href);
-                match = reInclude.exec(details.content);
+                if ( match === null ) { break; }
+                if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                if ( match[1].indexOf('..') !== -1 ) { continue; }
+                subURL =
+                    parsedMainURL.origin +
+                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
+                if ( loadedSublistURLs.has(subURL) ) { continue; }
+                pendingSublistURLs.add(subURL);
             }
         }
 
