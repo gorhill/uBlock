@@ -576,9 +576,22 @@ var reMediaContentTypes = /^(?:audio|image|video)\//;
 var filterDocument = (function() {
     var µb = µBlock,
         filterers = new Map(),
-        reDoctype = /^\s*<!DOCTYPE\b[^>]+?>/,
         domParser, xmlSerializer,
         textDecoderCharset, textDecoder, textEncoder;
+
+    // Purpose of following helper is to disconnect from watching the stream
+    // if all the following conditions are fulfilled:
+    // - Only need to inject scriptlets.
+    // - Charset of resource is utf-8.
+    // - A well-formed doc type declaration is found at the top.
+    //
+    // When all the conditions are fulfilled, then the scriptlets are safely
+    // injected after the doc type declaration, and the stream listener is
+    // disconnected, thus removing overhead from future streaming data.
+    //
+    // If at least one of the condition is not fulfilled and scriptlets need
+    // to be injected, it will be done the longer way when the whole stream
+    // has been collated in memory.
 
     var streamJobDone = function(filterer, responseBytes) {
         if (
@@ -588,40 +601,51 @@ var filterDocument = (function() {
         ) {
             return false;
         }
-        if ( textDecoder === undefined ) {
-            textDecoder = new TextDecoder();
-        }
-        if ( textEncoder === undefined ) {
-            textEncoder = new TextEncoder();
-        }
         // We need to insert after DOCTYPE, or else the browser may falls into
         // quirks mode.
-        var firstResponseBytes = new Uint8Array(responseBytes, 0, 512),
-            haystack = textDecoder.decode(firstResponseBytes),
-            match = reDoctype.exec(haystack);
-        if ( match === null ) { return false; }
-        filterers.delete(filterer.stream);
-        // Output bytes may be different than response bytes: the BOM sequence
-        // if present is removed by the decoder.
-        var firstOutputBytes = textEncoder.encode(
-            haystack.slice(0, match.index + match[0].length)
-        );
-        var insertAt = firstOutputBytes.byteLength;
-        // Mind BOM if present:
-        // https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
-        if (
-            firstResponseBytes[0] === 0xEF &&
-            firstResponseBytes[0] === 0xBB &&
-            firstResponseBytes[0] === 0xBF
-        ) {
-            insertAt += 3;
+        var bb = new Uint8Array(responseBytes, 0, 256),
+            i = 0, b;
+        // Skip BOM if present.
+        if ( bb[0] === 0xEF && bb[1] === 0xBB && bb[2] === 0xBF ) { i += 3; }
+        // Scan for '<'
+        for (;;) {
+            b = bb[i++];
+            if ( b === 0x3C /* '<' */ ) { break; }
+            if ( b > 0x20 || b > 0x7F || i > 240 ) { return false; }
         }
-        filterer.stream.write(firstOutputBytes);
+        // Test for '!DOCTYPE'
+        if (
+            bb[i++] !== 0x21 /* '!' */ ||
+            bb[i++] !== 0x44 /* 'D' */ ||
+            bb[i++] !== 0x4F /* 'O' */ ||
+            bb[i++] !== 0x43 /* 'C' */ ||
+            bb[i++] !== 0x54 /* 'T' */ ||
+            bb[i++] !== 0x59 /* 'Y' */ ||
+            bb[i++] !== 0x50 /* 'P' */ ||
+            bb[i++] !== 0x45 /* 'E' */
+        ) {
+            return false;
+        }
+        // Scan for '>'.
+        var qcount = 0;
+        for (;;) {
+            b = bb[i++];
+            if ( b === 0x3E /* '>' */ ) { break; }
+            if ( b === 0x22 /* '"' */ || b === 0x27 /* "'" */ ) { qcount += 1; }
+            if ( b > 127 || i > 240 ) { return false; }
+        }
+        // Bail out if mismatched quotes.
+        if ( (qcount & 1) !== 0 ) { return false; }
+        // We found a valid insertion point.
+        if ( textEncoder === undefined ) { textEncoder = new TextEncoder(); }
+        filterer.stream.write(
+            new Uint8Array(responseBytes, 0, i)
+        );
         filterer.stream.write(
             textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
         );
         filterer.stream.write(
-            new Uint8Array(responseBytes, insertAt)
+            new Uint8Array(responseBytes, i)
         );
         filterer.stream.disconnect();
         return true;
