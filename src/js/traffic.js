@@ -672,8 +672,17 @@ var filterDocument = (function() {
             this.disconnect();
             return;
         }
-        // TODO: possibly improve buffer growth, if benchmarking shows it's
-        //       worth it.
+        // TODO:
+        // - Possibly improve buffer growth, if benchmarking shows it's worth
+        //   it.
+        // - Also evaluate whether keeping a list of buffers and then decoding
+        //   them in sequence using TextDecoder's "stream" option is more
+        //   efficient. Can the data buffers be safely kept around for later
+        //   use?
+        // - Informal, quick benchmarks seem to show most of the overhead is
+        //   from calling TextDecoder.decode() and TextEncoder.encode(), and if
+        //   confirmed, there is nothing which can be done uBO-side to reduce
+        //   overhead.
         if ( filterer.buffer === null ) {
             if ( streamJobDone(filterer, ev.data) ) { return; }
             filterer.buffer = new Uint8Array(ev.data);
