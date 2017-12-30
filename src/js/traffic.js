@@ -614,16 +614,16 @@ var filterDocument = (function() {
             if ( b === 0x3C /* '<' */ ) { break; }
             if ( b > 0x20 || b > 0x7F || i > 240 ) { return false; }
         }
-        // Test for '!DOCTYPE'
+        // Case insensitively test for '!doctype'.
         if (
-            bb[i++] !== 0x21 /* '!' */ ||
-            bb[i++] !== 0x44 /* 'D' */ ||
-            bb[i++] !== 0x4F /* 'O' */ ||
-            bb[i++] !== 0x43 /* 'C' */ ||
-            bb[i++] !== 0x54 /* 'T' */ ||
-            bb[i++] !== 0x59 /* 'Y' */ ||
-            bb[i++] !== 0x50 /* 'P' */ ||
-            bb[i++] !== 0x45 /* 'E' */
+              bb[i++]          !== 0x21 /* '!' */ ||
+            ( bb[i++] | 0x20 ) !== 0x64 /* 'd' */ ||
+            ( bb[i++] | 0x20 ) !== 0x6F /* 'o' */ ||
+            ( bb[i++] | 0x20 ) !== 0x63 /* 'c' */ ||
+            ( bb[i++] | 0x20 ) !== 0x74 /* 't' */ ||
+            ( bb[i++] | 0x20 ) !== 0x79 /* 'y' */ ||
+            ( bb[i++] | 0x20 ) !== 0x70 /* 'p' */ ||
+            ( bb[i++] | 0x20 ) !== 0x65 /* 'e' */
         ) {
             return false;
         }
