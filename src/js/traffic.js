@@ -603,6 +603,7 @@ var filterDocument = (function() {
         }
         // We need to insert after DOCTYPE, or else the browser may falls into
         // quirks mode.
+        if ( responseBytes.byteLength < 256 ) { return false; }
         var bb = new Uint8Array(responseBytes, 0, 256),
             i = 0, b;
         // Skip BOM if present.
@@ -638,15 +639,11 @@ var filterDocument = (function() {
         if ( (qcount & 1) !== 0 ) { return false; }
         // We found a valid insertion point.
         if ( textEncoder === undefined ) { textEncoder = new TextEncoder(); }
-        filterer.stream.write(
-            new Uint8Array(responseBytes, 0, i)
-        );
+        filterer.stream.write(new Uint8Array(responseBytes, 0, i));
         filterer.stream.write(
             textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
         );
-        filterer.stream.write(
-            new Uint8Array(responseBytes, i)
-        );
+        filterer.stream.write(new Uint8Array(responseBytes, i));
         filterer.stream.disconnect();
         return true;
     };
