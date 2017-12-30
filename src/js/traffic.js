@@ -601,7 +601,7 @@ var filterDocument = (function() {
         ) {
             return false;
         }
-        // We need to insert after DOCTYPE, or else the browser may falls into
+        // We need to insert after DOCTYPE, or else the browser may fall into
         // quirks mode.
         if ( responseBytes.byteLength < 256 ) { return false; }
         var bb = new Uint8Array(responseBytes, 0, 256),
@@ -612,7 +612,7 @@ var filterDocument = (function() {
         for (;;) {
             b = bb[i++];
             if ( b === 0x3C /* '<' */ ) { break; }
-            if ( b > 0x20 || b > 0x7F || i > 240 ) { return false; }
+            if ( b > 0x20 || i > 240 ) { return false; }
         }
         // Case insensitively test for '!doctype'.
         if (
@@ -633,7 +633,7 @@ var filterDocument = (function() {
             b = bb[i++];
             if ( b === 0x3E /* '>' */ ) { break; }
             if ( b === 0x22 /* '"' */ || b === 0x27 /* "'" */ ) { qcount += 1; }
-            if ( b > 127 || i > 240 ) { return false; }
+            if ( b > 0x7F || i > 240 ) { return false; }
         }
         // Bail out if mismatched quotes.
         if ( (qcount & 1) !== 0 ) { return false; }
