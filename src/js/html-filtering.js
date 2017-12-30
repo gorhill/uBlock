@@ -48,7 +48,11 @@
     };
 
     var PSelectorHasTextTask = function(task) {
-        this.needle = new RegExp(task[1]);
+        var arg0 = task[1], arg1;
+        if ( Array.isArray(task[1]) ) {
+            arg1 = arg0[1]; arg0 = arg0[0];
+        }
+        this.needle = new RegExp(arg0, arg1);
     };
     PSelectorHasTextTask.prototype.exec = function(input) {
         var output = [];

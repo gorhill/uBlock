@@ -53,7 +53,7 @@
     var µb = µBlock,
         reHostnameSeparator = /\s*,\s*/,
         reHasUnicode = /[^\x00-\x7F]/,
-        reIsRegexLiteral = /^\/.+\/$/,
+        reParseRegexLiteral = /^\/(.+)\/([im]+)?$/,
         emptyArray = [],
         parsed = {
             hostnames: [],
@@ -158,31 +158,39 @@
         };
 
         var compileText = function(s) {
-            var reText;
-            if ( reIsRegexLiteral.test(s) ) {
-                reText = s.slice(1, -1);
-                if ( isBadRegex(reText) ) { return; }
+            var regexDetails,
+                match = reParseRegexLiteral.exec(s);
+            if ( match !== null ) {
+                regexDetails = match[1];
+                if ( isBadRegex(regexDetails) ) { return; }
+                if ( match[2] ) {
+                    regexDetails = [ regexDetails, match[2] ];
+                }
             } else {
-                reText = s.replace(reEscapeRegex, '\\$&');
-                regexToRawValue.set(reText, s);
+                regexDetails = s.replace(reEscapeRegex, '\\$&');
+                regexToRawValue.set(regexDetails, s);
             }
-            return reText;
+            return regexDetails;
         };
 
         var compileCSSDeclaration = function(s) {
-            var name, value, reText,
+            var name, value, regexDetails,
                 pos = s.indexOf(':');
             if ( pos === -1 ) { return; }
             name = s.slice(0, pos).trim();
             value = s.slice(pos + 1).trim();
-            if ( reIsRegexLiteral.test(value) ) {
-                reText = value.slice(1, -1);
-                if ( isBadRegex(reText) ) { return; }
+            var match = reParseRegexLiteral.exec(value);
+            if ( match !== null ) {
+                regexDetails = match[1];
+                if ( isBadRegex(regexDetails) ) { return; }
+                if ( match[2] ) {
+                    regexDetails = [ regexDetails, match[2] ];
+                }
             } else {
-                reText = '^' + value.replace(reEscapeRegex, '\\$&') + '$';
-                regexToRawValue.set(reText, value);
+                regexDetails = '^' + value.replace(reEscapeRegex, '\\$&') + '$';
+                regexToRawValue.set(regexDetails, value);
             }
-            return { name: name, value: reText };
+            return { name: name, value: regexDetails };
         };
 
         var compileConditionalSelector = function(s) {
@@ -229,38 +237,47 @@
         //   The normalized string version is what is reported in the logger,
         //   by design.
         var decompile = function(compiled) {
+            var tasks = compiled.tasks;
+            if ( Array.isArray(tasks) === false ) {
+                return compiled.selector;
+            }
             var raw = [ compiled.selector ],
-                tasks = compiled.tasks,
-                value;
-            if ( Array.isArray(tasks) ) {
-                for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
-                    task = tasks[i];
-                    switch ( task[0] ) {
-                    case ':has':
-                    case ':xpath':
-                        raw.push(task[0], '(', task[1], ')');
-                        break;
-                    case ':has-text':
+                value;                
+            for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
+                task = tasks[i];
+                switch ( task[0] ) {
+                case ':has':
+                case ':xpath':
+                    raw.push(task[0], '(', task[1], ')');
+                    break;
+                case ':has-text':
+                    if ( Array.isArray(task[1]) ) {
+                        value = '/' + task[1][0] + '/' + task[1][1];
+                    } else {
                         value = regexToRawValue.get(task[1]);
                         if ( value === undefined ) {
                             value = '/' + task[1] + '/';
                         }
-                        raw.push(task[0], '(', value, ')');
-                        break;
-                    case ':matches-css':
-                    case ':matches-css-after':
-                    case ':matches-css-before':
+                    }
+                    raw.push(task[0], '(', value, ')');
+                    break;
+                case ':matches-css':
+                case ':matches-css-after':
+                case ':matches-css-before':
+                    if ( Array.isArray(task[1].value) ) {
+                        value = '/' + task[1].value[0] + '/' + task[1].value[1];
+                    } else {
                         value = regexToRawValue.get(task[1].value);
                         if ( value === undefined ) {
                             value = '/' + task[1].value + '/';
                         }
-                        raw.push(task[0], '(', task[1].name, ': ', value, ')');
-                        break;
-                    case ':if':
-                    case ':if-not':
-                        raw.push(task[0], '(', decompile(task[1]), ')');
-                        break;
                     }
+                    raw.push(task[0], '(', task[1].name, ': ', value, ')');
+                    break;
+                case ':if':
+                case ':if-not':
+                    raw.push(task[0], '(', decompile(task[1]), ')');
+                    break;
                 }
             }
             return raw.join('');
