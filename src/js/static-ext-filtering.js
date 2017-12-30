@@ -121,8 +121,8 @@
     };
 
     var compileProceduralSelector = (function() {
-        var reOperatorParser = new RegExp([
-            '(:(?:',
+        var reProceduralOperator = new RegExp([
+            '^(?:',
                 [
                 '-abp-contains',
                 '-abp-has',
@@ -136,12 +136,10 @@
                 'matches-css-before',
                 'xpath'
                 ].join('|'),
-            '))\\(.+\\)$'
+            ')\\('
         ].join(''));
 
-        var reFirstParentheses = /^\(*/,
-            reLastParentheses = /\)*$/,
-            reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
+        var reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
             reNeedScope = /^\s*[+>~]/;
 
         var lastProceduralSelector = '',
@@ -269,62 +267,65 @@
         };
 
         var compile = function(raw) {
-            var matches = reOperatorParser.exec(raw);
-            if ( matches === null ) {
-                if ( isValidCSSSelector(raw) ) { return { selector: raw }; }
-                return;
-            }
-            var tasks = [],
-                firstOperand = raw.slice(0, matches.index),
-                currentOperator = matches[1],
-                selector = raw.slice(matches.index + currentOperator.length),
-                currentArgument = '', nextOperand, nextOperator,
-                depth = 0, opening, closing;
-            if (
-                firstOperand !== '' &&
-                isValidCSSSelector(firstOperand) === false
-            ) {
-                return;
-            }
+            if ( raw === '' ) { return; }
+            var prefix = '',
+                tasks = [];
             for (;;) {
-                matches = reOperatorParser.exec(selector);
-                if ( matches !== null ) {
-                    nextOperand = selector.slice(0, matches.index);
-                    nextOperator = matches[1];
-                } else {
-                    nextOperand = selector;
-                    nextOperator = '';
-                }
-                opening = reFirstParentheses.exec(nextOperand)[0].length;
-                closing = reLastParentheses.exec(nextOperand)[0].length;
-                if ( opening > closing ) {
-                    if ( depth === 0 ) { currentArgument = ''; }
-                    depth += 1;
-                } else if ( closing > opening && depth > 0 ) {
-                    depth -= 1;
-                    if ( depth === 0 ) {
-                        nextOperand = currentArgument + nextOperand;
+                var i = 0,
+                    n = raw.length,
+                    c, match;
+                // Advance to next operator.
+                while ( i < n ) {
+                    c = raw.charCodeAt(i++);
+                    if ( c === 0x3A /* ':' */ ) {
+                        match = reProceduralOperator.exec(raw.slice(i));
+                        if ( match !== null ) { break; }
                     }
                 }
-                if ( depth !== 0 ) {
-                    currentArgument += nextOperand + nextOperator;
-                } else {
-                    currentOperator =
-                        normalizedOperators.get(currentOperator) ||
-                        currentOperator;
-                    currentArgument =
-                        compileArgument.get(currentOperator)(
-                            nextOperand.slice(1, -1)
-                        );
-                    if ( currentArgument === undefined ) { return; }
-                    tasks.push([ currentOperator, currentArgument ]);
-                    currentOperator = nextOperator;
+                if ( i === n ) { break; }
+                var opNameBeg = i - 1;
+                var opNameEnd = i + match[0].length - 1;
+                i += match[0].length;
+                // Find end of argument: first balanced closing parenthesis.
+                // Note: unbalanced parenthesis can be used in a regex literal
+                // when they are escaped using `\`.
+                var pcnt = 1;
+                while ( i < n ) {
+                    c = raw.charCodeAt(i++);
+                    if ( c === 0x5C /* '\\' */ ) {
+                        if ( i < n ) { i += 1; }
+                    } else if ( c === 0x28 /* '(' */ ) {
+                        pcnt +=1 ;
+                    } else if ( c === 0x29 /* ')' */ ) {
+                        pcnt -= 1;
+                        if ( pcnt === 0 ) { break; }
+                    }
                 }
-                if ( nextOperator === '' ) { break; }
-                selector = selector.slice(matches.index + nextOperator.length);
+                // Unbalanced parenthesis?
+                if ( pcnt !== 0 ) { return; }
+                // Extract and remember operator details.
+                var operator = raw.slice(opNameBeg, opNameEnd);
+                operator = normalizedOperators.get(operator) || operator;
+                var args = raw.slice(opNameEnd + 1, i - 1);
+                args = compileArgument.get(operator)(args);
+                if ( args === undefined ) { return; }
+                if ( tasks.length === 0 ) {
+                    prefix = raw.slice(0, opNameBeg);
+                } else if ( opNameBeg !== 0 ) {
+                    return;
+                }
+                tasks.push([ operator, args ]);
+                if ( i === n ) { break; }
+                raw = raw.slice(i);
             }
-            if ( tasks.length === 0 || depth !== 0 ) { return; }
-            return { selector: firstOperand, tasks: tasks };
+            if ( tasks.length === 0 ) {
+                prefix = raw;
+                tasks = undefined;
+            }
+            if ( prefix !== '' && isValidCSSSelector(prefix) === false ) {
+                return;
+            }
+            return { selector: prefix, tasks: tasks };
         };
 
         var entryPoint = function(raw) {
