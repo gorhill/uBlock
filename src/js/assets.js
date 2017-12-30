@@ -1011,7 +1011,9 @@ var updateDone = function() {
 
 api.updateStart = function(details) {
     var oldUpdateDelay = updaterAssetDelay,
-        newUpdateDelay = details.delay || updaterAssetDelayDefault;
+        newUpdateDelay = typeof details.delay === 'number' ?
+            details.delay :
+            updaterAssetDelayDefault;
     updaterAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
     if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {
