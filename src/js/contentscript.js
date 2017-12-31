@@ -374,19 +374,6 @@ vAPI.DOMFilterer = (function() {
 
     // 'P' stands for 'Procedural'
 
-    var PSelectorHasTask = function(task) {
-        this.selector = task[1];
-    };
-    PSelectorHasTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
-            if ( node.querySelector(this.selector) !== null ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
     var PSelectorHasTextTask = function(task) {
         var arg0 = task[1], arg1;
         if ( Array.isArray(task[1]) ) {
@@ -486,7 +473,7 @@ vAPI.DOMFilterer = (function() {
     var PSelector = function(o) {
         if ( PSelector.prototype.operatorToTaskMap === undefined ) {
             PSelector.prototype.operatorToTaskMap = new Map([
-                [ ':has', PSelectorHasTask ],
+                [ ':has', PSelectorIfTask ],
                 [ ':has-text', PSelectorHasTextTask ],
                 [ ':if', PSelectorIfTask ],
                 [ ':if-not', PSelectorIfNotTask ],

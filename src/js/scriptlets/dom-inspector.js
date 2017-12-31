@@ -589,7 +589,12 @@ var elementsFromSpecialSelector = function(selector) {
     var out = [], i;
     var matches = /^(.+?):has\((.+?)\)$/.exec(selector);
     if ( matches !== null ) {
-        var nodes = document.querySelectorAll(matches[1]);
+        var nodes;
+        try {
+            nodes = document.querySelectorAll(matches[1]);
+        } catch(ex) {
+            nodes = [];
+        }
         i = nodes.length;
         while ( i-- ) {
             var node = nodes[i];

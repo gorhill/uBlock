@@ -236,7 +236,6 @@
             for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
                 task = tasks[i];
                 switch ( task[0] ) {
-                case ':has':
                 case ':xpath':
                     raw.push(task[0], '(', task[1], ')');
                     break;
@@ -264,6 +263,7 @@
                     }
                     raw.push(task[0], '(', task[1].name, ': ', value, ')');
                     break;
+                case ':has':
                 case ':if':
                 case ':if-not':
                     raw.push(task[0], '(', decompile(task[1]), ')');
