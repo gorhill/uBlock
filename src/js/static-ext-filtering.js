@@ -140,22 +140,12 @@
         ].join(''));
 
         var reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
-            reNeedScope = /^\s*[+>~]/;
+            reNeedScope = /^\s*[+>~]/,
+            reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
 
         var lastProceduralSelector = '',
             lastProceduralSelectorCompiled,
             regexToRawValue = new Map();
-
-        var compileCSSSelector = function(s) {
-            // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-            // Prepend `:scope ` if needed.
-            if ( reNeedScope.test(s) ) {
-                s = ':scope ' + s;
-            }
-            if ( isValidCSSSelector(s) ) {
-                return s;
-            }
-        };
 
         var compileText = function(s) {
             var regexDetails,
@@ -219,7 +209,7 @@
         ]);
 
         var compileArgument = new Map([
-            [ ':has', compileCSSSelector ],
+            [ ':has', compileConditionalSelector ],
             [ ':has-text', compileText ],
             [ ':if', compileConditionalSelector ],
             [ ':if-not', compileConditionalSelector ],
@@ -332,15 +322,21 @@
                     return;
                 }
                 tasks.push([ operator, args ]);
-                if ( i === n ) { break; }
                 raw = raw.slice(i);
+                if ( i === n ) { break; }
             }
+            // No task found: then we have a CSS selector.
+            // At least one task found: nothing should be left to parse.
             if ( tasks.length === 0 ) {
                 prefix = raw;
                 tasks = undefined;
-            }
-            if ( prefix !== '' && isValidCSSSelector(prefix) === false ) {
+            } else if ( raw.length !== 0 ) {
                 return;
+            }
+            // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
+            if ( prefix !== '' ) {
+                if ( reIsDanglingSelector.test(prefix) ) { prefix += '*'; }
+                if ( isValidCSSSelector(prefix) === false ) { return; }
             }
             return { selector: prefix, tasks: tasks };
         };
