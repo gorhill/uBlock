@@ -113,11 +113,14 @@
         return matches[1].trim() + ':style(' +  matches[2].trim() + ')';
     };
 
-    var toASCIIHostname = function(hostname) {
-        if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
-            return '~' + punycode.toASCII(hostname.slice(1));
+    var toASCIIHostnames = function(hostnames) {
+        var i = hostnames.length;
+        while ( i-- ) {
+            var hostname = hostnames[i];
+            hostnames[i] = hostname.charCodeAt(0) === 0x7E /* '~' */ ?
+                '~' + punycode.toASCII(hostname.slice(1)) :
+                punycode.toASCII(hostname);
         }
-        return punycode.toASCII(hostname);
     };
 
     var compileProceduralSelector = (function() {
@@ -631,9 +634,7 @@
             var prefix = raw.slice(0, lpos);
             parsed.hostnames = prefix.split(reHostnameSeparator);
             if ( reHasUnicode.test(prefix) ) {
-                for ( var hostname of parsed.hostnames ) {
-                    parsed.hostnames = toASCIIHostname(hostname);
-                }
+                toASCIIHostnames(parsed.hostnames);
             }
         }
 
