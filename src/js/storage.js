@@ -172,11 +172,16 @@
         // Select default filter lists if first-time launch.
         if ( !bin || Array.isArray(bin.selectedFilterLists) === false ) {
             µb.assets.metadata(function(availableLists) {
-                µb.saveSelectedFilterLists(µb.autoSelectRegionalFilterLists(availableLists));
+                µb.saveSelectedFilterLists(
+                    µb.autoSelectRegionalFilterLists(availableLists)
+                );
                 callback();
             });
             return;
         }
+        // TODO: Removes once 1.1.15 is in widespread use.
+        // https://github.com/gorhill/uBlock/issues/3383
+        vAPI.storage.remove('remoteBlacklists');
         µb.selectedFilterLists = bin.selectedFilterLists;
         callback();
     });
