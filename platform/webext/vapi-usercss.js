@@ -204,9 +204,16 @@ vAPI.DOMFilterer.prototype = {
         var out = {
             declarative: []
         };
+        var selectors;
         for ( var entry of this.filterset ) {
-            if ( all === false && entry.internal ) { continue; }
-            out.declarative.push([ entry.selectors, entry.declarations ]);
+            selectors = entry.selectors;
+            if ( all !== true && this.hideNodeAttr !== undefined ) {
+                selectors = selectors
+                                .replace('[' + this.hideNodeAttr + ']', '')
+                                .replace(/^,\n|^\n/, '');
+                if ( selectors === '' ) { continue; }
+            }
+            out.declarative.push([ selectors, entry.declarations ]);
         }
         return out;
     },
