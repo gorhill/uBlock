@@ -597,9 +597,12 @@ var targetDomain = function (ad) {
 
 var exportToFile = function (action) {
   
-  var outputData = function (jsonData) {
+  var outputData = function (jsonData, fileType) {
     var filename = getExportFileName(),
        url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+    
+    if (fileType === undefined) fileType = "Ads";
+    filename = "AdNauseam_" + fileType + filename.substr(9,filename.length);
 
     if (isFirefox()) {
 
@@ -620,18 +623,18 @@ var exportToFile = function (action) {
   switch(action){
     case 'backupUserData':
        vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
-          outputData(JSON.stringify(response.userData, null, '  '));
+          outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
        });
       break;
     case 'exportSettings':
        vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
           delete response.userData.userSettings.admap
-          outputData(JSON.stringify(response.userData, null, '  '));
+          outputData(JSON.stringify(response.userData, null, '  '),"Settings");
        });
       break;
     default:
        vAPI.messaging.send('adnauseam', {
-         what: action,
+         what: "exportAds",
          includeImages: false
        }, outputData);
 
@@ -702,15 +705,23 @@ var adsOnLoadHandler = function(adData, file) {
 }
 
 function handleImportAds(evt) {
-
+ 
   var files = evt.target.files;
+
   var reader = new FileReader();
 
   reader.onload = function(e) {
 
      var adData;
      try {
-       adData = JSON.parse(e.target.result);
+       var data = JSON.parse(e.target.result);
+       adData = data.userSettings ? data.userSettings.admap : data;
+
+       if (adData === undefined && data.userSettings && data.timeStamp) {
+          window.alert(vAPI.i18n('adnImportAlertFormat'));
+          return;
+       }
+        
      } catch (e) {
        postImportAlert({
          count: -1,
@@ -728,7 +739,7 @@ function handleImportAds(evt) {
 
 var postImportAlert = function (msg) {
 
-  var text = msg.count > -1 ? msg.count : msg.error;
+  var text = msg.count > -1 ? msg.count : msg.error + "; 0";
   window.alert(vAPI.i18n('adnImportAlert')
     .replace('{{count}}', text));
 };

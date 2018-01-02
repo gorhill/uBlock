@@ -187,22 +187,26 @@
     <div style="margin: 2.5em 0; border-top: 1px solid #ccc;"></div>
     <ul>
       <li></li>
-      <li style="display: none;"><span data-i18n="settingsLastBackupPrompt"></span></li>
+      <li style="display: none;"><span data-i18n="settingsLastBackupPrompt"></span>
+        <ul>
+        <li></li>
+        </ul>
+    </li>
+
+    <li style="display: none;"><span data-i18n="settingsLastRestorePrompt"></span>
       <ul>
         <li></li>
-      </ul>
-      <li style="display: none;"><span data-i18n="settingsLastRestorePrompt"></span></li>
-      <ul>
-        <li></li>
         <li></li>
       </ul>
+    </li>
+      
     </ul>
   </div>
 
   <div style="margin: 2.5em 1em;">
     <p>
-      <button class="custom" type="button" id="exportDialog" data-i18n="adnVaultExport"></button>&ensp;
-      <button class="custom" type="button" id="import" data-i18n="adnVaultImport"></button>
+      <button class="custom" type="button" id="exportDialog" data-i18n="aboutBackupDataButton"></button>&ensp;
+      <button class="custom" type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
       <input id="importFilePicker" type="file" accept="application/json" class="hiddenFileInput">
       <button class="custom pull-right" type="button" id="resetOptions" data-i18n="aboutResetDataButton"></button>
     </p>

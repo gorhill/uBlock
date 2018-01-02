@@ -48,14 +48,14 @@
       minute: 'numeric',
       timeZoneName: 'short'
     };
-
-    var lastBackupFile = details.lastBackupFile || '';
-    if (lastBackupFile !== '') {
-      dt = new Date(details.lastBackupTime);
-      uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-      //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
-      uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
-    }
+    
+    // var lastBackupFile = details.lastBackupFile || '';
+    // if (lastBackupFile !== '') {
+    //   dt = new Date(details.lastBackupTime);
+    //   uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+    //   //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
+    //   uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
+    // }
 
     var lastRestoreFile = details.lastRestoreFile || '';
     elem = uDom('#localData > p:nth-of-type(3)');
@@ -197,7 +197,15 @@
         uNode.val(details[uNode.attr('data-setting-name')])
           .on('change', onInputChanged);
       });
+    
 
+    // Minor text fixes
+    if (uDom('#exportDialog').text() === "Back up to file")
+      uDom('#exportDialog').text("Backup to file");
+    uDom('#import').text(uDom('#import').text().replace('...',''));
+    uDom('#resetOptions').text(uDom('#resetOptions').text().replace('...',''));
+    
+    // On click events
     uDom('#reset').on('click', clearAds);
     uDom('#exportDialog').on('click', exportDialog);
     uDom('#export').on('click', exportTo);

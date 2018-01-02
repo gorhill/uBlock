@@ -117,8 +117,7 @@ var onAllReady = function() {
     //quickProfiler.stop(0);
 
     µb.contextMenu.update(null);
-
-    µb.adnauseam.onListsLoaded(µb.firstInstall); // ADN
+    µb.adnauseam.onListsLoaded(µb.firstInstall && µb.lastRestoreFile === ""); // ADN
 
     µb.firstInstall = false;
 
@@ -309,7 +308,6 @@ var onSelectedFilterListsLoaded = function() {
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
-
     vAPI.storage.get(fetchableProps, onFirstFetchReady);
 };
 

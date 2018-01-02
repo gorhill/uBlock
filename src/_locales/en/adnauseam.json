@@ -151,9 +151,13 @@
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "The file doesn't contain any Ads, please choose another file.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}} Ads were imported",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "This action will permanently remove ALL of your Ads",
@@ -228,7 +232,7 @@
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsAndAds": {
-    "message": "Settings and ads",
+    "message": "Settings and Ads",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
@@ -282,10 +286,6 @@
   "adnVaultClear": {
     "message": "Clear",
     "description": "appears on vault page"
-  },
-  "adnMenuImportAds": {
-    "message": "Import Ads",
-    "description": "appears in ADN popup menu"
   },
   "adnVaultFound": {
     "message": "ads collected",
