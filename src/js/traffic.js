@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -750,23 +750,24 @@ var filterDocument = (function() {
             return;
         }
 
-        // If the charset of the document was not utf-8, we need to change it
-        // to utf-8.
-        if ( textDecoderCharset !== undefined ) {
-            var meta = doc.createElement('meta');
-            meta.setAttribute('charset', 'utf-8');
-            doc.head.insertBefore(meta, doc.head.firstChild);
-        }
-
         // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
         var doctypeStr = doc.doctype instanceof Object ?
                 xmlSerializer.serializeToString(doc.doctype) + '\n' :
                 '';
 
-        streamClose(
-            filterer,
-            textEncoder.encode(doctypeStr + doc.documentElement.outerHTML)
+        // https://github.com/gorhill/uBlock/issues/3391
+        var encodedStream = textEncoder.encode(
+            doctypeStr +
+            doc.documentElement.outerHTML
         );
+        if ( textDecoderCharset !== undefined ) {
+            encodedStream = µb.textEncode.encode(
+                textDecoderCharset,
+                encodedStream
+            );
+        }
+
+        streamClose(filterer, encodedStream);
     };
 
     var onStreamError = function() {
@@ -809,7 +810,10 @@ var filterDocument = (function() {
             if ( match !== null ) {
                 var charset = match[1].toLowerCase();
                 if ( charset !== 'utf-8' ) {
-                    request.charset = charset;
+                    request.charset = µb.textEncode.normalizedCharset.get(charset);
+                    if ( request.charset === 'utf-8' ) {
+                        request.charset = undefined;
+                    }
                 }
             }
         }
