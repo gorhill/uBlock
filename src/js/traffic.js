@@ -511,7 +511,7 @@ var onHeadersReceived = function(details) {
     }
 
     if ( isDoc && µb.canFilterResponseBody ) {
-        filterDocument(details);
+        filterDocument(pageStore, details);
     }
 
     // https://github.com/gorhill/uBlock/issues/2813
@@ -578,6 +578,9 @@ var filterDocument = (function() {
         filterers = new Map(),
         domParser, xmlSerializer,
         textDecoderCharset, textDecoder, textEncoder;
+
+    var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
+        reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
 
     // Purpose of following helper is to disconnect from watching the stream
     // if all the following conditions are fulfilled:
@@ -774,7 +777,7 @@ var filterDocument = (function() {
         filterers.delete(this);
     };
 
-    return function(details) {
+    return function(pageStore, details) {
         var hostname = µb.URI.hostnameFromURI(details.url);
         if ( hostname === '' ) { return; }
 
@@ -808,12 +811,10 @@ var filterDocument = (function() {
             if ( reContentTypeDocument.test(contentType) === false ) { return; }
             var match = reContentTypeCharset.exec(contentType);
             if ( match !== null ) {
-                var charset = match[1].toLowerCase();
+                var charset = µb.textEncode.normalizeCharset(match[1]);
+                if ( charset === undefined ) { return; }
                 if ( charset !== 'utf-8' ) {
-                    request.charset = µb.textEncode.normalizedCharset.get(charset);
-                    if ( request.charset === 'utf-8' ) {
-                        request.charset = undefined;
-                    }
+                    request.charset = charset;
                 }
             }
         }
@@ -828,9 +829,6 @@ var filterDocument = (function() {
         filterers.set(stream, request);
     };
 })();
-
-var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i;
-var reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
 
 /******************************************************************************/
 

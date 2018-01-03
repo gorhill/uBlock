@@ -25,6 +25,39 @@
 
 µBlock.textEncode = (function() {
 
+    var normalizedCharset = new Map([
+        [ 'utf8', 'utf-8' ],
+        [ 'unicode-1-1-utf-8', 'utf-8' ],
+        [ 'utf-8', 'utf-8' ],
+        [ 'windows-1250', 'windows-1250' ],
+        [ 'cp1250', 'windows-1250' ],
+        [ 'x-cp1250', 'windows-1250' ],
+        [ 'windows-1251', 'windows-1251' ],
+        [ 'cp1251', 'windows-1251' ],
+        [ 'x-cp1251', 'windows-1251' ],
+    ]);
+
+    // http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1250.TXT
+    var cp1250_range0 = new Uint8Array([
+        /* 0x0100 */ 0x00, 0x00, 0xC3, 0xE3, 0xA5, 0xB9, 0xC6, 0xE6,
+        /* 0x0108 */ 0x00, 0x00, 0x00, 0x00, 0xC8, 0xE8, 0xCF, 0xEF,
+        /* 0x0110 */ 0xD0, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0118 */ 0xCA, 0xEA, 0xCC, 0xEC, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0120 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0128 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0130 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0138 */ 0x00, 0xC5, 0xE5, 0x00, 0x00, 0xBC, 0xBE, 0x00,
+        /* 0x0140 */ 0x00, 0xA3, 0xB3, 0xD1, 0xF1, 0x00, 0x00, 0xD2,
+        /* 0x0148 */ 0xF2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0150 */ 0xD5, 0xF5, 0x00, 0x00, 0xC0, 0xE0, 0x00, 0x00,
+        /* 0x0158 */ 0xD8, 0xF8, 0x8C, 0x9C, 0x00, 0x00, 0xAA, 0xBA,
+        /* 0x0160 */ 0x8A, 0x9A, 0xDE, 0xFE, 0x8D, 0x9D, 0x00, 0x00,
+        /* 0x0168 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xD9, 0xF9,
+        /* 0x0170 */ 0xDB, 0xFB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0178 */ 0x00, 0x8F, 0x9F, 0xAF, 0xBF, 0x8E, 0x9E, 0x00
+    ]);
+
+    // http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1251.TXT
     var cp1251_range0 = new Uint8Array([
         /* 0x0400 */ 0x00, 0xA8, 0x80, 0x81, 0xAA, 0xBD, 0xB2, 0xAF,
         /* 0x0408 */ 0xA3, 0x8A, 0x8C, 0x8E, 0x8D, 0x00, 0xA1, 0x8F,
@@ -47,7 +80,7 @@
         /* 0x0490 */ 0xA5, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     ]);
 
-    var cp1251_range1 = new Uint8Array([
+    var cp125x_range0 = new Uint8Array([
         /* 0x2010 */ 0x00, 0x00, 0x00, 0x96, 0x97, 0x00, 0x00, 0x00,
         /* 0x2018 */ 0x91, 0x92, 0x82, 0x00, 0x93, 0x94, 0x84, 0x00,
         /* 0x2020 */ 0x86, 0x87, 0x95, 0x00, 0x00, 0x00, 0x85, 0x00,
@@ -57,6 +90,51 @@
     ]);
 
     var encoders = {
+        'windows-1250': function(buf) {
+            var i = 0, n = buf.byteLength, o = 0, c;
+            while ( i < n ) {
+                c = buf[i++];
+                if ( c < 0x80 ) {
+                    buf[o++] = c;
+                } else {
+                    if ( (c & 0xE0) === 0xC0 ) {
+                        c  = (c        & 0x1F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF0) === 0xE0 ) {
+                        c  = (c        & 0x0F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF8) === 0xF0 ) {
+                        c  = (c        & 0x07) << 18;
+                        c |= (buf[i++] & 0x3F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    }
+                    if ( c < 0x100 ) {
+                        buf[o++] = c;
+                    } else if ( c >= 0x100 && c < 0x180 ) {
+                        buf[o++] = cp1250_range0[c - 0x100];
+                    } else if ( c >= 0x2010 && c < 0x2040 ) {
+                        buf[o++] = cp125x_range0[c - 0x2010];
+                    } else if ( c === 0x02C7 ) {
+                        buf[o++] = 0xA1;
+                    } else if ( c === 0x02D8 ) {
+                        buf[o++] = 0xA2;
+                    } else if ( c === 0x02D9 ) {
+                        buf[o++] = 0xFF;
+                    } else if ( c === 0x02DB ) {
+                        buf[o++] = 0xB2;
+                    } else if ( c === 0x02DD ) {
+                        buf[o++] = 0xBD;
+                    } else if ( c === 0x20AC ) {
+                        buf[o++] = 0x88;
+                    } else if ( c === 0x2122 ) {
+                        buf[o++] = 0x99;
+                    }
+                }
+            }
+            return buf.slice(0, o);
+        },
         'windows-1251': function(buf) {
             var i = 0, n = buf.byteLength, o = 0, c;
             while ( i < n ) {
@@ -71,24 +149,24 @@
                         c  = (c        & 0x0F) << 12;
                         c |= (buf[i++] & 0x3F) << 6;
                         c |= (buf[i++] & 0x3F);
-                    } else if ( (c & 0xF0) === 0xF0 ) {
+                    } else if ( (c & 0xF8) === 0xF0 ) {
                         c  = (c        & 0x07) << 18;
                         c |= (buf[i++] & 0x3F) << 12;
                         c |= (buf[i++] & 0x3F) << 6;
                         c |= (buf[i++] & 0x3F);
                     }
-                    if ( c >= 0x400 && c < 0x4A0 ) {
+                    if ( c < 0x100 ) {
+                        buf[o++] = c;
+                    } else if ( c >= 0x400 && c < 0x4A0 ) {
                         buf[o++] = cp1251_range0[c - 0x400];
                     } else if ( c >= 0x2010 && c < 0x2040 ) {
-                        buf[o++] = cp1251_range1[c - 0x2010];
+                        buf[o++] = cp125x_range0[c - 0x2010];
                     } else if ( c === 0x20AC ) {
                         buf[o++] = 0x88;
                     } else if ( c === 0x2116 ) {
                         buf[o++] = 0xB9;
                     } else if ( c === 0x2122 ) {
                         buf[o++] = 0x99;
-                    } else if ( c < 0xD800 || c >= 0xE000 ) {
-                        buf[o++] = c;
                     }
                 }
             }
@@ -96,22 +174,17 @@
         }
     };
 
-    var api = {};
-
-    api.normalizedCharset = new Map([
-        [ 'utf8', 'utf-8' ],
-        [ 'unicode-1-1-utf-8', 'utf-8' ],
-        [ 'utf-8', 'utf-8' ],
-        [ 'windows-1251', 'windows-1251' ],
-        [ 'cp1251', 'windows-1251' ],
-        [ 'x-cp1251', 'windows-1251' ],
-    ]);
-
-    api.encode = function(charset, buf) {
-        return encoders.hasOwnProperty(charset) ?
-            encoders[charset](buf) :
-            buf;
+    return {
+        encode: function(charset, buf) {
+            return encoders.hasOwnProperty(charset) ?
+                encoders[charset](buf) :
+                buf;
+        },
+        normalizeCharset: function(charset) {
+            if ( charset === undefined ) {
+                return 'utf-8';
+            }
+            return normalizedCharset.get(charset.toLowerCase());
+        }
     };
-
-    return api;
 })();

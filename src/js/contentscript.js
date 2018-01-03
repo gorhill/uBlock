@@ -1403,7 +1403,8 @@ vAPI.domSurveyor = (function() {
         {
             what: 'retrieveContentScriptParameters',
             url: window.location.href,
-            isRootFrame: window === window.top
+            isRootFrame: window === window.top,
+            charset: document.characterSet
         },
         bootstrapPhase1
     );

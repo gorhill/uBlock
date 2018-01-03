@@ -515,7 +515,10 @@ var onMessage = function(request, sender, callback) {
             µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
         // If response body filtering is supported, than the scriptlets have
         // already been injected.
-        if ( µb.canFilterResponseBody === false ) {
+        if (
+            µb.canFilterResponseBody === false ||
+            µb.textEncode.normalizeCharset(request.charset) === undefined
+        ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
         if ( request.isRootFrame && µb.logger.isEnabled() ) {
