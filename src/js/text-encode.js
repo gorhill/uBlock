@@ -112,7 +112,7 @@
                     }
                     if ( c < 0x100 ) {
                         buf[o++] = c;
-                    } else if ( c >= 0x100 && c < 0x180 ) {
+                    } else if ( c < 0x180 ) {
                         buf[o++] = cp1250_range0[c - 0x100];
                     } else if ( c >= 0x2010 && c < 0x2040 ) {
                         buf[o++] = cp125x_range0[c - 0x2010];
