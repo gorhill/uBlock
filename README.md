@@ -141,11 +141,15 @@ Stable version available in [Microsoft Store](https://www.microsoft.com/store/p/
 
 Development version available at <https://github.com/nikrolls/uBlock-Edge#edge>.
 
+Note that any issues specific to the Edge fork are the responsibility of the current maintainer, I have no control over the code base of the fork.
+
 #### Safari (macOS)
 
 Developer: [@el1t](https://github.com/el1t).
 
 Development version available at <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
+
+Note that any issues specific to the Safari fork are the responsibility of the current maintainer, I have no control over the code base of the fork.
 
 #### Note for all browsers
 
