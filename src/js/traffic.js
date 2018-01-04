@@ -582,6 +582,26 @@ var filterDocument = (function() {
     var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
         reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
 
+    var charsetFromContentType = function(contentType) {
+        var match = reContentTypeCharset.exec(contentType);
+        if ( match !== null ) {
+            return match[1].toLowerCase();
+        }
+    };
+
+    var charsetFromDoc = function(doc) {
+        var meta = doc.querySelector('meta[charset]');
+        if ( meta !== null ) {
+            return meta.getAttribute('charset').toLowerCase();
+        }
+        meta = doc.querySelector(
+            'meta[http-equiv="content-type" i][content]'
+        );
+        if ( meta !== null ) {
+            return charsetFromContentType(meta.getAttribute('content'));
+        }
+    };
+
     // Purpose of following helper is to disconnect from watching the stream
     // if all the following conditions are fulfilled:
     // - Only need to inject scriptlets.
@@ -600,7 +620,7 @@ var filterDocument = (function() {
         if (
             filterer.scriptlets === undefined ||
             filterer.selectors !== undefined ||
-            filterer.charset !== undefined
+            filterer.charset === undefined
         ) {
             return false;
         }
@@ -718,16 +738,19 @@ var filterDocument = (function() {
         }
 
         // In case of unknown charset, assume utf-8.
-        if ( filterer.charset !== textDecoderCharset ) {
+        if (
+            filterer.charset === undefined && textDecoderCharset !== 'utf-8' ||
+            filterer.charset !== undefined && filterer.charset !== textDecoderCharset
+        ) {
             textDecoder = undefined;
         }
         if ( textDecoder === undefined ) {
             try {
                 textDecoder = new TextDecoder(filterer.charset);
-                textDecoderCharset = filterer.charset;
+                textDecoderCharset = filterer.charset || 'utf-8';
             } catch(ex) {
                 textDecoder = new TextDecoder();
-                textDecoderCharset = undefined;
+                textDecoderCharset = 'utf-8';
             }
         }
 
@@ -735,6 +758,14 @@ var filterDocument = (function() {
             textDecoder.decode(filterer.buffer),
             'text/html'
         );
+
+        if ( filterer.charset === undefined ) {
+            filterer.charset = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
+            if ( filterer.charset === undefined ) {
+                streamClose(filterer);
+                return;
+            }
+        }
 
         var modified = false;
         if ( filterer.selectors !== undefined ) {
@@ -763,9 +794,9 @@ var filterDocument = (function() {
             doctypeStr +
             doc.documentElement.outerHTML
         );
-        if ( textDecoderCharset !== undefined ) {
+        if ( filterer.charset !== 'utf-8' ) {
             encodedStream = µb.textEncode.encode(
-                textDecoderCharset,
+                filterer.charset,
                 encodedStream
             );
         }
@@ -809,13 +840,11 @@ var filterDocument = (function() {
             contentType = headerValueFromName('content-type', headers);
         if ( contentType !== '' ) {
             if ( reContentTypeDocument.test(contentType) === false ) { return; }
-            var match = reContentTypeCharset.exec(contentType);
-            if ( match !== null ) {
-                var charset = µb.textEncode.normalizeCharset(match[1]);
+            var charset = charsetFromContentType(contentType);
+            if ( charset !== undefined ) {
+                charset = µb.textEncode.normalizeCharset(charset);
                 if ( charset === undefined ) { return; }
-                if ( charset !== 'utf-8' ) {
-                    request.charset = charset;
-                }
+                request.charset = charset;
             }
         }
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
