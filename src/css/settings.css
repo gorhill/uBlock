@@ -149,11 +149,11 @@ input[type=range]:disabled::-moz-range-progress {
 }
 
 #export-dialog{
-    position: absolute;
+    position: fixed;
     width: 300px;
     height: 190px;
     background: black;
-    bottom: 0px;
+    top: 150px;
     margin-left: -150px;
     left: 50%;
     border-style: solid;
