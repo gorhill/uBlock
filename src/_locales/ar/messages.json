@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "أضغط للسماح للخطوط الخارجية لهذا الموقع",
+    "message": "أضغط للوقف منع خطوط الطباعة الخارجية لهذا الموقع",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
