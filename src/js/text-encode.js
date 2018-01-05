@@ -25,16 +25,40 @@
 
 µBlock.textEncode = (function() {
 
+    if ( µBlock.canFilterResponseBody !== true ) { return; }
+
+    // charset aliases extracted from:
+    // https://github.com/inexorabletash/text-encoding/blob/b4e5bc26e26e51f56e3daa9f13138c79f49d3c34/lib/encoding.js#L342
     var normalizedCharset = new Map([
         [ 'utf8', 'utf-8' ],
         [ 'unicode-1-1-utf-8', 'utf-8' ],
         [ 'utf-8', 'utf-8' ],
+
         [ 'windows-1250', 'windows-1250' ],
         [ 'cp1250', 'windows-1250' ],
         [ 'x-cp1250', 'windows-1250' ],
+
         [ 'windows-1251', 'windows-1251' ],
         [ 'cp1251', 'windows-1251' ],
         [ 'x-cp1251', 'windows-1251' ],
+
+        [ 'windows-1252', 'windows-1252' ],
+        [ 'ansi_x3.4-1968', 'windows-1252' ],
+        [ 'ascii', 'windows-1252' ],
+        [ 'cp1252', 'windows-1252' ],
+        [ 'cp819', 'windows-1252' ],
+        [ 'csisolatin1', 'windows-1252' ],
+        [ 'ibm819', 'windows-1252' ],
+        [ 'iso-8859-1', 'windows-1252' ],
+        [ 'iso-ir-100', 'windows-1252' ],
+        [ 'iso8859-1', 'windows-1252' ],
+        [ 'iso88591', 'windows-1252' ],
+        [ 'iso_8859-1', 'windows-1252' ],
+        [ 'iso_8859-1:1987', 'windows-1252' ],
+        [ 'l1', 'windows-1252' ],
+        [ 'latin1', 'windows-1252' ],
+        [ 'us-ascii', 'windows-1252' ],
+        [ 'x-cp1252', 'windows-1252' ],
     ]);
 
     // http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1250.TXT
@@ -77,7 +101,17 @@
         /* 0x0478 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         /* 0x0480 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         /* 0x0488 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        /* 0x0490 */ 0xA5, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0490 */ 0xA5, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    ]);
+
+    // https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1252.TXT
+    var cp1252_range0 = new Uint8Array([
+        /* 0x0150 */ 0x00, 0x00, 0x8C, 0x9C, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0158 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0160 */ 0x8A, 0x9A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0168 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0170 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        /* 0x0178 */ 0x9F, 0x00, 0x00, 0x00, 0x00, 0x8E, 0x9E, 0x00
     ]);
 
     var cp125x_range0 = new Uint8Array([
@@ -165,6 +199,47 @@
                         buf[o++] = 0x88;
                     } else if ( c === 0x2116 ) {
                         buf[o++] = 0xB9;
+                    } else if ( c === 0x2122 ) {
+                        buf[o++] = 0x99;
+                    }
+                }
+            }
+            return buf.slice(0, o);
+        },
+        'windows-1252': function(buf) {
+            var i = 0, n = buf.byteLength, o = 0, c;
+            while ( i < n ) {
+                c = buf[i++];
+                if ( c < 0x80 ) {
+                    buf[o++] = c;
+                } else {
+                    if ( (c & 0xE0) === 0xC0 ) {
+                        c  = (c        & 0x1F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF0) === 0xE0 ) {
+                        c  = (c        & 0x0F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF8) === 0xF0 ) {
+                        c  = (c        & 0x07) << 18;
+                        c |= (buf[i++] & 0x3F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    }
+                    if ( c < 0x100 ) {
+                        buf[o++] = c;
+                    } else if ( c >= 0x150 && c < 0x180 ) {
+                        buf[o++] = cp1252_range0[c - 0x150];
+                    } else if ( c >= 0x2010 && c < 0x2040 ) {
+                        buf[o++] = cp125x_range0[c - 0x2010];
+                    } else if ( c === 0x192 ) {
+                        buf[o++] = 0x83;
+                    } else if ( c === 0x2C6 ) {
+                        buf[o++] = 0x88;
+                    } else if ( c === 0x2DC ) {
+                        buf[o++] = 0x98;
+                    } else if ( c === 0x20AC ) {
+                        buf[o++] = 0x80;
                     } else if ( c === 0x2122 ) {
                         buf[o++] = 0x99;
                     }

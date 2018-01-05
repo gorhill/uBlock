@@ -577,7 +577,7 @@ var filterDocument = (function() {
     var µb = µBlock,
         filterers = new Map(),
         domParser, xmlSerializer,
-        textDecoderCharset, textDecoder, textEncoder;
+        utf8TextDecoder, textDecoder, textEncoder;
 
     var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
         reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
@@ -737,35 +737,38 @@ var filterDocument = (function() {
             textEncoder = new TextEncoder();
         }
 
-        // In case of unknown charset, assume utf-8.
-        if (
-            filterer.charset === undefined && textDecoderCharset !== 'utf-8' ||
-            filterer.charset !== undefined && filterer.charset !== textDecoderCharset
-        ) {
-            textDecoder = undefined;
-        }
-        if ( textDecoder === undefined ) {
-            try {
-                textDecoder = new TextDecoder(filterer.charset);
-                textDecoderCharset = filterer.charset || 'utf-8';
-            } catch(ex) {
-                textDecoder = new TextDecoder();
-                textDecoderCharset = 'utf-8';
-            }
-        }
+        var doc;
 
-        var doc = domParser.parseFromString(
-            textDecoder.decode(filterer.buffer),
-            'text/html'
-        );
-
+        // If stream encoding is still unknnown, try to extract from document.
         if ( filterer.charset === undefined ) {
+            if ( utf8TextDecoder === undefined ) {
+                utf8TextDecoder = new TextDecoder();
+            }
+            doc = domParser.parseFromString(
+                utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
+                'text/html'
+            );
             filterer.charset = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
             if ( filterer.charset === undefined ) {
                 streamClose(filterer);
                 return;
             }
         }
+
+        if (
+            textDecoder !== undefined &&
+            textDecoder.encoding !== filterer.charset
+        ) {
+            textDecoder = undefined;
+        }
+        if ( textDecoder === undefined ) {
+            textDecoder = new TextDecoder(filterer.charset);
+        }
+
+        doc = domParser.parseFromString(
+            textDecoder.decode(filterer.buffer),
+            'text/html'
+        );
 
         var modified = false;
         if ( filterer.selectors !== undefined ) {
