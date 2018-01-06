@@ -156,7 +156,7 @@
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
+    "message": "{{count}} new Ads were imported",
     "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {

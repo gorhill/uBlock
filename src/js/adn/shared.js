@@ -739,7 +739,7 @@ function handleImportAds(evt) {
 
 var postImportAlert = function (msg) {
 
-  var text = msg.count > -1 ? msg.count : msg.error + "; 0";
+  var text = msg.count > -1 ? msg.count : (msg.error ? msg.error + ";" : "") + " 0";
   window.alert(vAPI.i18n('adnImportAlert')
     .replace('{{count}}', text));
 };
