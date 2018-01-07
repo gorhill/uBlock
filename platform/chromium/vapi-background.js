@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -579,11 +579,9 @@ vAPI.tabs.remove = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.reload = function(tabId /*, flags*/) {
+vAPI.tabs.reload = function(tabId, bypassCache) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var onReloaded = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -592,7 +590,11 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
         }
     };
 
-    chrome.tabs.reload(tabId, onReloaded);
+    chrome.tabs.reload(
+        tabId,
+        { bypassCache: bypassCache === true },
+        onReloaded
+    );
 };
 
 /******************************************************************************/
