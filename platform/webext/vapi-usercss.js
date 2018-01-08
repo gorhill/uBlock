@@ -210,7 +210,7 @@ vAPI.DOMFilterer.prototype = {
             if ( all !== true && this.hideNodeAttr !== undefined ) {
                 selectors = selectors
                                 .replace('[' + this.hideNodeAttr + ']', '')
-                                .replace(/^,\n|^\n/, '');
+                                .replace(/^,\n|,\n$/gm, '');
                 if ( selectors === '' ) { continue; }
             }
             out.declarative.push([ selectors, entry.declarations ]);
