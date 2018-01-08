@@ -79,7 +79,12 @@ messaging.addChannelListener('loggerUI', function(msg) {
         break;
     case 'connectionRequested':
         if ( msg.from !== 'domInspector' ) { return false; }
-        if ( msg.tabId !== inspectedTabId ) { return false; }
+        if (
+            msg.tabId === undefined ||
+            msg.tabId !== inspectedTabId
+        ) {
+            return false;
+        }
         filterToIdMap.clear();
         logger.removeAllChildren(domTree);
         inspectorConnectionId = msg.id;

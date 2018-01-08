@@ -779,8 +779,7 @@ vAPI.messaging.onPortMessage = (function() {
     var toFramework = function(request, port, callback) {
         var sender = port && port.sender;
         if ( !sender ) { return; }
-        var tabId = sender.tab && sender.tab.id;
-        if ( !tabId ) { return; }
+        var tabId = sender.tab && sender.tab.id || undefined;
         var msg = request.msg,
             toPort;
         switch ( msg.what ) {
@@ -788,7 +787,7 @@ vAPI.messaging.onPortMessage = (function() {
         case 'connectionRefused':
             toPort = messaging.ports.get(msg.fromToken);
             if ( toPort !== undefined ) {
-                msg.tabId = tabId.toString();
+                msg.tabId = tabId && tabId.toString();
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
@@ -796,7 +795,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             break;
         case 'connectionRequested':
-            msg.tabId = '' + tabId.toString();
+            msg.tabId = tabId && tabId.toString();
             for ( toPort of messaging.ports.values() ) {
                 toPort.postMessage(request);
             }
@@ -808,7 +807,7 @@ vAPI.messaging.onPortMessage = (function() {
                 port.name === msg.fromToken ? msg.toToken : msg.fromToken
             );
             if ( toPort !== undefined ) {
-                msg.tabId = tabId.toString();
+                msg.tabId = tabId && tabId.toString();
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
@@ -816,6 +815,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             break;
         case 'userCSS':
+            if ( tabId === undefined ) { break; }
             var details = {
                 code: undefined,
                 frameId: sender.frameId,

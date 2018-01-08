@@ -1010,7 +1010,8 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
+var µb = µBlock,
+    extensionPageURL = vAPI.getURL('');
 
 /******************************************************************************/
 
@@ -1057,26 +1058,34 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
     case 'readAll':
-        var tabIds = {}, pageStore;
-        var loggerURL = vAPI.getURL('logger-ui.html');
+        if (
+            µb.logger.ownerId !== undefined &&
+            µb.logger.ownerId !== request.ownerId
+        ) {
+            response = { unavailable: true };
+            break;
+        }
+        var tabIds = {};
         for ( var tabId in µb.pageStores ) {
-            pageStore = µb.pageStoreFromTabId(tabId);
-            if ( pageStore === null ) {
-                continue;
-            }
-            if ( pageStore.rawURL.startsWith(loggerURL) ) {
-                continue;
-            }
+            var pageStore = µb.pageStoreFromTabId(tabId);
+            if ( pageStore === null ) { continue; }
+            if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
             tabIds[tabId] = pageStore.title;
         }
         response = {
             colorBlind: µb.userSettings.colorBlindFriendly,
-            entries: µb.logger.readAll(),
+            entries: µb.logger.readAll(request.ownerId),
             maxEntries: µb.userSettings.requestLogMaxEntries,
             noTabId: vAPI.noTabId,
             tabIds: tabIds,
             tabIdsToken: µb.pageStoresToken
         };
+        break;
+
+    case 'releaseView':
+        if ( request.ownerId === µb.logger.ownerId ) {
+            µb.logger.ownerId = undefined;
+        }
         break;
 
     case 'saveURLFilteringRules':
@@ -1111,8 +1120,6 @@ vAPI.messaging.listen('loggerUI', onMessage);
 /******************************************************************************/
 
 })();
-
-// https://www.youtube.com/watch?v=3_WcygKJP1k
 
 /******************************************************************************/
 /******************************************************************************/

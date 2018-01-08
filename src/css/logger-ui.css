@@ -128,19 +128,19 @@ textarea {
     width: 4.6em;
     }
 #netInspector table > colgroup > col:nth-of-type(2) {
-    width: 2.2em;
+    width: 2.1em;
     }
 #netInspector table > colgroup > col:nth-of-type(3) {
     width: 20%;
     }
 #netInspector table > colgroup > col:nth-of-type(4) {
-    width: 2.2em;
+    width: 2.1em;
     }
 #netInspector table > colgroup > col:nth-of-type(5) {
-    width: 6em;
+    width: 5.8em;
     }
 #netInspector table > colgroup > col:nth-of-type(6) {
-    width: calc(100% - 15em - 20%);
+    width: calc(100% - 14.6em - 20%);
     }
 #netInspector.f table tr.f {
     display: none;
@@ -200,7 +200,7 @@ body #netInspector td {
 #netInspector tr td:last-of-type {
     border-right: none;
     }
-#netInspector.vCompact td {
+#netInspector.vCompact tr:not(.vExpanded) td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

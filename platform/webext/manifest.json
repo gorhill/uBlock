@@ -80,5 +80,13 @@
       "<all_urls>"
    ],
    "short_name":"uBlock₀",
+   "sidebar_action":{
+      "default_title":"__MSG_statsPageName__",
+      "default_panel":"logger-ui.html",
+      "default_icon":{
+         "16":"img/ublock.svg",
+         "48":"img/ublock.svg"
+      }
+   },
    "version":"1.9.15.101"
 }

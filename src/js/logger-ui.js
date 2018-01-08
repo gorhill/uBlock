@@ -31,6 +31,7 @@
 
 var logger = self.logger = {};
 var messaging = vAPI.messaging;
+var ownerId = Date.now();
 
 /******************************************************************************/
 
@@ -486,6 +487,11 @@ var truncateLog = function(size) {
 /******************************************************************************/
 
 var onLogBufferRead = function(response) {
+    if ( !response || response.unavailable ) {
+        readLogBufferAsync();
+        return;
+    }
+
     // This tells us the behind-the-scene tab id
     noTabId = response.noTabId;
 
@@ -521,7 +527,7 @@ var onLogBufferRead = function(response) {
         tbody.querySelector('tr') === null
     );
 
-    vAPI.setTimeout(readLogBuffer, 1200);
+    readLogBufferAsync();
 };
 
 /******************************************************************************/
@@ -531,9 +537,19 @@ var onLogBufferRead = function(response) {
 // require a bit more code to ensure no multi time out events.
 
 var readLogBuffer = function() {
-    messaging.send('loggerUI', { what: 'readAll' }, onLogBufferRead);
+    if ( ownerId === undefined ) { return; }
+    vAPI.messaging.send(
+        'loggerUI',
+        { what: 'readAll', ownerId: ownerId },
+        onLogBufferRead
+    );
 };
 
+var readLogBufferAsync = function() {
+    if ( ownerId === undefined ) { return; }
+    vAPI.setTimeout(readLogBuffer, 1200);
+};
+ 
 /******************************************************************************/
 
 var pageSelectorChanged = function() {
@@ -1511,6 +1527,11 @@ var cleanBuffer = function() {
 
 var toggleVCompactView = function() {
     uDom.nodeFromId('netInspector').classList.toggle('vCompact');
+    uDom('#netInspector .vExpanded').toggleClass('vExpanded');
+};
+
+var toggleVCompactRow = function(ev) {
+    ev.target.parentElement.classList.toggle('vExpanded');
 };
 
 /******************************************************************************/
@@ -1634,6 +1655,29 @@ var popupManager = (function() {
 
 /******************************************************************************/
 
+var grabView = function() {
+    if ( ownerId === undefined ) {
+        ownerId = Date.now();
+    }
+    readLogBufferAsync();
+};
+
+var releaseView = function() {
+    if ( ownerId === undefined ) { return; }
+    vAPI.messaging.send(
+        'loggerUI',
+        { what: 'releaseView', ownerId: ownerId }
+    );
+    ownerId = undefined;
+};
+
+window.addEventListener('pagehide', releaseView);
+window.addEventListener('pageshow', grabView);
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1398625
+window.addEventListener('beforeunload', releaseView);
+
+/******************************************************************************/
+
 readLogBuffer();
 
 uDom('#pageSelector').on('change', pageSelectorChanged);
@@ -1644,6 +1688,7 @@ uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
 uDom('#clean').on('click', cleanBuffer);
 uDom('#clear').on('click', clearBuffer);
 uDom('#maxEntries').on('change', onMaxEntriesChanged);
+uDom('#netInspector table').on('click', 'tr > td:nth-of-type(1)', toggleVCompactRow);
 uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
 uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
 uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
