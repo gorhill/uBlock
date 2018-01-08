@@ -838,7 +838,7 @@ var reloadTab = function(ev) {
             what: 'reloadTab',
             tabId: popupData.tabId,
             select: true,
-            bypassCache: ev.ctrlKey || ev.metaKey
+            bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey
         }
     );
 
