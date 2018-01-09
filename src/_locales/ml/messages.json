@@ -511,6 +511,10 @@
     "message": "സീനിനു പിന്നില്‍",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Current tab",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "ലോഗ് എന്‍ട്രി ഫില്‍ട്ടര്‍ ചെയ്യുക",
     "description": "English: filter log entries"

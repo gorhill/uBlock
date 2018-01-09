@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "کلیک کنید تا uBlock₀ برای این سایت غیر فعال شود.\n\nهمزمان کلیدکنترل را نگهدارید و کلیک کنید تا uBlock₀ فقط برای این صفحه غیر فعال شود.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "کلیک کنید تا uBlock₀ برای این سایت فعال شود.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -92,15 +92,15 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "تغییر وضعیت انسداد همه ی پنجره های این سایت",
+    "message": "تغییر وضعیت انسداد همه‌ی پنجره های بالاپَر برای این سایت",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "کلیک کنید تا همۀ پنجره های بالاپَر در این سایت مسدود شوند",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "کلیک کنید تا دیگر هیچ کدام از پنجره های بالاپَر این سایت مسدود نشوند",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,23 +108,23 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "کلیک کنید تا عناصر رسانه ای حجیم بر روی این سایت مسدود شوند",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "کلیک کنید تا دیگر عناصر رسانه ای حجیم روی این سایت مسدود نشوند",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "تغییر وضعیت فیلترزیباسازی در این صفحه",
+    "message": "تغییر وضعیت فیلترزیباسازی برای این سایت",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "کلیک کنید تا فیلتر زیبا سازی بر روی این سایت غیر فعال شود",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "کلیک کنید تا فیلتر زیبا سازی بر روی این سایت فعال شود",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "کلیک کنید تا فونت های راه دور در این سایت مسدود شوند",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "کلیک کنید تا دیگر فونت های راه دور در این سایت مسدود نشوند",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -264,11 +264,11 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "غیر فعال سازی پیوندهای نظارتی \/ هدایتی",
+    "message": "غیرفعال کردن حسابرسی پیوند",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "جلوگیری WebRTC از افشاسازی آدرس های IP محلی",
+    "message": "ممنوع کردن WebRTC از افشاسازی آدرس های IP محلی",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -276,23 +276,23 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "این رفتارهای پیش فرض بسته به هر وب‌گاهیی می تواند باطل شود",
+    "message": "تنظیمات مخصوص هر سایت این تنظیمات پیش فرض را لغو می‌کند",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "غیر فعال‌سازی انسداد تزیینی",
+    "message": "غیر فعال‌سازی فیلتر زیبا سازی",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "انسداد عناصر مدیایی حجیم تر از {{input:number}} کیلوبایت",
+    "message": "انسداد عناصر رسانه ای حجیم تر از {{input:number}} کیلوبایت",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "انسداد فونت های از راه دور",
+    "message": "انسداد فونت های راه دور",
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "مسدود کردن گزارشات سیاست امنیت محتوا",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -336,11 +336,11 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "نادیده گرفتن فیلترهای زیبا سازی عمومی",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
+    "message": "<p>فیلترهای زیبا سازی عمومی، آن دسته از فیلترهای زیبا سازی هستند که در همه وب سایت ها کاربرد دارند.\n<p>اگر چه بصورت موثر توسط uBlock₀ انجام شده، ولی فیلترهای عمومی زیبا سازی هنوز هم ممکن است سربار حافظه قابل اندازه گیری و سربار پردازنده در برخی از صفحات وب به جای بگذارد، به ویژه برای صفحات وب بزرگ و طولانی مدت.<p>فعال کردن این گزینه سربارهای حافظه و پردازنده را که به صفحات اضافه شده به عنوان نتیجۀ اجرای فیلترهای عمومی زیبا سازی برطرف می‌کند، و همچنین ردپای حافظۀ خود uBlock₀ را کمتر می‌کند<p>توصیه می شود این گزینه را در دستگاه های با قدرت کمتر فعال کنید.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "مزاحم‌ها",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -384,11 +384,11 @@
     "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete": {
-    "message": "منقضی شده",
+    "message": "منقضی شده.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "آخرین به روز رسانی: {{ago}}",
+    "message": "آخرین به روز رسانی: {{ago}}.\nبرای یک به روز رسانی اجباری کلیک کنید.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -468,7 +468,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "لیست شما از هاست هایی که uBlock₀ در آنها غیرفعال خواهد شد. یک ورودی در هر خط. هاست های نامعتبر بدون اشاره ای نادیده گرفته می شوند.",
+    "message": "دستور العمل‌های لیست سفید حکم می‌کند که uBlock₀ باید بر روی کدام یک از صفحات وب غیر فعال باشد. در هر خط فقط یک مورد. دستور العمل‌های نامعتبر بدون اشاره ای نادیده گرفته شده و بیرون انداخته می‌شوند.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -511,6 +511,10 @@
     "message": "پشت صحنه",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "برگۀ فعلی",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "فیلتر کردن مطالب لاگ",
     "description": "English: filter log entries"
@@ -520,7 +524,7 @@
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "زمینه:",
+    "message": "محتوی:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -528,7 +532,7 @@
     "description": "Label for the type selector"
   },
   "loggerURLFilteringHeader": {
-    "message": "فیلترینگ آدرس اینترنتی پویا",
+    "message": "فیلترینگ پویای آدرس اینترنتی",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
@@ -536,7 +540,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} درخواست های شبکه از {{type}} {{br}} هر آدرس اینترنتی مطابقت داده می شود {{url}} {{br}}و هر چه شد{{origin}},{{br}}{{importance}} یک فیلتر تطبیق استثنا وجود دارد.",
+    "message": "{{action}} درخواست های شبکه از نوع {{type}}{{br}} که مطابقت دارد با آدرس اینترنی {{url}}{{br}} و سرچشمه می‌گیرد از {{origin}}،{{br}}{{importance}} اینها یک فیلتر استثناء از تطبیق هستند.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -620,11 +624,11 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "تمام تنظیمات شده حذف و uBlock دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد uBlock به تنظیمات کارخانه؟",
+    "message": "تمام تنظیمات شده حذف و uBlock₀ دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد uBlock₀ به تنظیمات کارخانه؟",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "قادر به اتصال به {{url}}",
+    "message": "خطای شبکه: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -668,7 +672,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "ublock از بارگذاری این صفحات جلوگیری کرده:",
+    "message": "uBlock₀ از بارگذاری این صفحات جلوگیری کرده:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -676,7 +680,7 @@
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
-    "message": "بدون پارامترها",
+    "message": "بدون پارامتر",
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
@@ -708,11 +712,11 @@
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "ورود از فضای ذخیره سازی ابری",
+    "message": "وارد کردن از فضای ذخیره سازی ابری",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "ورود از فضای ذخیره سازی ابری و ادغام با تنظیمات فعلی",
+    "message": "وارد کردن از فضای ذخیره سازی ابری و ادغام با تنظیمات فعلی",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -728,7 +732,7 @@
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "ثبت",
+    "message": "ارسال",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -736,7 +740,7 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "بازگشت",
+    "message": "بازگرداندن",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
@@ -744,7 +748,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "اجازه موقت عناصر مدیای حجیم",
+    "message": "اجازه موقت عناصر رسانه‌ای حجیم",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy": {

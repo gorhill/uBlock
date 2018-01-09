@@ -511,6 +511,10 @@
     "message": "পর্দার আড়ালে",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Current tab",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "ফিল্টার লগের ভুক্তি",
     "description": "English: filter log entries"

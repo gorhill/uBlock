@@ -511,6 +511,10 @@
     "message": "Иза сцене",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Тренутна картица",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "филтрирај уносе дневника",
     "description": "English: filter log entries"

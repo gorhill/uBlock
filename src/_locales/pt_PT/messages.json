@@ -511,6 +511,10 @@
     "message": "Bastidores",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Separador atual",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "filtrar entradas de registo",
     "description": "English: filter log entries"

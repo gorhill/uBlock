@@ -511,6 +511,10 @@
     "message": "Perde arkası",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Geçerli sekme",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "günlük girişlerini süz",
     "description": "English: filter log entries"

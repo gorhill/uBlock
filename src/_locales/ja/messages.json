@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>要素隠蔽フィルターは、ほぼすべてのウェブサイトに適用することができるフィルターです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上ではメモリやCPUの処理に時間がかかる可能性があります。<p>このオプションを有効にすると、要素隠蔽フィルターの処理結果としてウェブページに追加されたメモリやCPUの処理時間を減らし、uBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
+    "message": "<p>汎用的な要素隠蔽フィルターとは、すべてのウェブサイトに適用される要素隠蔽フィルターのことです。<p>これはuBlock₀によって効率的に処理されますが、特に大規模で長期運営されている一部のウェブページ上では、メモリ使用量や処理時間に目に見える影響を与えることがあります。<p>このオプションを有効にすると、汎用的な要素隠蔽フィルターを処理するためにウェブページごとに追加されるメモリ使用量や処理時間を減らし、さらにuBlock₀自体のメモリ使用量を軽減できます。<p>低スペックの環境では、このオプションを有効にすることを推奨します。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "バックグラウンド通信",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Current tab",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "絞り込み",
