@@ -29,9 +29,12 @@
 
 /******************************************************************************/
 
-var logger = self.logger = {};
+var logger = self.logger = {
+    ownerId: Date.now()
+};
+
 var messaging = vAPI.messaging;
-var ownerId = Date.now();
+var activeTabId;
 
 /******************************************************************************/
 
@@ -44,11 +47,16 @@ var removeAllChildren = logger.removeAllChildren = function(node) {
 /******************************************************************************/
 
 var tabIdFromClassName = logger.tabIdFromClassName = function(className) {
-    var matches = className.match(/(?:^| )tab_([^ ]+)(?: |$)/);
-    if ( matches === null ) {
-        return '';
-    }
-    return matches[1];
+    var matches = className.match(/\btab_([^ ]+)\b/);
+    return matches !== null ? matches[1] : '';
+};
+
+var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
+    var tabClass = uDom.nodeFromId('pageSelector').value;
+    if ( tabClass === '' ) { return ''; }
+    if ( tabClass === 'tab_bts' ) { return noTabId; }
+    if ( tabClass === 'tab_active' ) { return activeTabId; }
+    return tabClass.slice(4);
 };
 
 /******************************************************************************/
@@ -408,15 +416,17 @@ var renderLogEntries = function(response) {
 /******************************************************************************/
 
 var synchronizeTabIds = function(newTabIds) {
+    var select = uDom.nodeFromId('pageSelector');
+    var selectValue = select.value;
+
     var oldTabIds = allTabIds;
-    var autoDeleteVoidRows = !!vAPI.localStorage.getItem('loggerAutoDeleteVoidRows');
+    var autoDeleteVoidRows = selectValue === 'tab_active';
     var rowVoided = false;
-    var trs;
     for ( var tabId in oldTabIds ) {
         if ( oldTabIds.hasOwnProperty(tabId) === false ) { continue; }
         if ( newTabIds.hasOwnProperty(tabId) ) { continue; }
         // Mark or remove voided rows
-        trs = uDom('.tab_' + tabId);
+        var trs = uDom('.tab_' + tabId);
         if ( autoDeleteVoidRows ) {
             toJunkyard(trs);
         } else {
@@ -429,13 +439,11 @@ var synchronizeTabIds = function(newTabIds) {
         }
     }
 
-    var select = uDom.nodeFromId('pageSelector');
-    var selectValue = select.value;
     var tabIds = Object.keys(newTabIds).sort(function(a, b) {
         return newTabIds[a].localeCompare(newTabIds[b]);
     });
     var option;
-    for ( var i = 0, j = 2; i < tabIds.length; i++ ) {
+    for ( var i = 0, j = 3; i < tabIds.length; i++ ) {
         tabId = tabIds[i];
         if ( tabId === noTabId ) { continue; }
         option = select.options[j];
@@ -495,6 +503,11 @@ var onLogBufferRead = function(response) {
     // This tells us the behind-the-scene tab id
     noTabId = response.noTabId;
 
+    // Tab id of currently active tab
+    if ( response.activeTabId ) {
+        activeTabId = response.activeTabId;
+    }
+
     // This may have changed meanwhile
     if ( response.maxEntries !== maxEntries ) {
         maxEntries = response.maxEntries;
@@ -537,62 +550,70 @@ var onLogBufferRead = function(response) {
 // require a bit more code to ensure no multi time out events.
 
 var readLogBuffer = function() {
-    if ( ownerId === undefined ) { return; }
+    if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
-        { what: 'readAll', ownerId: ownerId },
+        { what: 'readAll', ownerId: logger.ownerId },
         onLogBufferRead
     );
 };
 
 var readLogBufferAsync = function() {
-    if ( ownerId === undefined ) { return; }
+    if ( logger.ownerId === undefined ) { return; }
     vAPI.setTimeout(readLogBuffer, 1200);
 };
  
 /******************************************************************************/
 
 var pageSelectorChanged = function() {
-    window.location.replace('#' + uDom.nodeFromId('pageSelector').value);
+    var select = uDom.nodeFromId('pageSelector');
+    window.location.replace('#' + select.value);
     pageSelectorFromURLHash();
 };
 
-/******************************************************************************/
-
 var pageSelectorFromURLHash = (function() {
-    var lastHash = '';
+    var lastTabClass = '';
+    var lastEffectiveTabClass = '';
 
-    return function() {
-        var hash = window.location.hash;
-        if ( hash === lastHash ) {
-            return;
+    var selectRows = function(tabClass) {
+        if ( tabClass === 'tab_active' ) {
+            if ( activeTabId === undefined ) { return; }
+            tabClass = 'tab_' + activeTabId;
         }
+        if ( tabClass === lastEffectiveTabClass ) { return; }
+        lastEffectiveTabClass = tabClass;
 
-        var tabClass = hash.slice(1);
-        var select = uDom.nodeFromId('pageSelector');
-        var option = select.querySelector('option[value="' + tabClass + '"]');
-        if ( option === null ) {
-            hash = window.location.hash = '';
-            tabClass = '';
-            option = select.options[0];
-        }
-
-        lastHash = hash;
-
-        select.selectedIndex = option.index;
-        select.value = option.value;
+        document.dispatchEvent(new Event('tabIdChanged'));
 
         var style = uDom.nodeFromId('tabFilterer');
         var sheet = style.sheet;
         while ( sheet.cssRules.length !== 0 )  {
             sheet.deleteRule(0);
         }
-        if ( tabClass !== '' ) {
-            sheet.insertRule(
-                '#netInspector tr:not(.' + tabClass + ') { display: none; }',
-                0
-            );
+        if ( tabClass === '' ) { return; }
+        sheet.insertRule(
+            '#netInspector tr:not(.' + tabClass + '):not(.tab_bts) ' +
+            '{display:none;}'
+        );
+    };
+
+    return function() {
+        var tabClass = window.location.hash.slice(1);
+        selectRows(tabClass);
+        if ( tabClass === lastTabClass ) { return; }
+        lastTabClass = tabClass;
+
+        var select = uDom.nodeFromId('pageSelector');
+        var option = select.querySelector('option[value="' + tabClass + '"]');
+        if ( option === null ) {
+            window.location.hash = '';
+            tabClass = '';
+            option = select.options[0];
         }
+
+        select.selectedIndex = option.index;
+        select.value = option.value;
+
         uDom('.needtab').toggleClass(
             'disabled',
             tabClass === '' || tabClass === 'tab_bts'
@@ -603,11 +624,8 @@ var pageSelectorFromURLHash = (function() {
 /******************************************************************************/
 
 var reloadTab = function() {
-    var tabClass = uDom.nodeFromId('pageSelector').value;
-    var tabId = tabIdFromClassName(tabClass);
-    if ( tabId === 'bts' || tabId === '' ) {
-        return;
-    }
+    var tabId = tabIdFromPageSelector();
+    if ( tabId === '' || tabId === noTabId ) { return; }
     messaging.send('loggerUI', { what: 'reloadTab', tabId: tabId });
 };
 
@@ -1491,13 +1509,13 @@ var toJunkyard = function(trs) {
 /******************************************************************************/
 
 var clearBuffer = function() {
-    var tabId = uDom.nodeFromId('pageSelector').value || null;
+    var tabClass = uDom.nodeFromId('pageSelector').value || '';
     var tbody = document.querySelector('#netInspector tbody');
     var tr = tbody.lastElementChild;
     var trPrevious;
     while ( tr !== null ) {
         trPrevious = tr.previousElementSibling;
-        if ( tabId === null || tr.classList.contains(tabId) ) {
+        if ( tabClass === '' || tr.classList.contains(tabClass) ) {
             trJunkyard.push(tbody.removeChild(tr));
         }
         tr = trPrevious;
@@ -1656,19 +1674,19 @@ var popupManager = (function() {
 /******************************************************************************/
 
 var grabView = function() {
-    if ( ownerId === undefined ) {
-        ownerId = Date.now();
+    if ( logger.ownerId === undefined ) {
+        logger.ownerId = Date.now();
     }
     readLogBufferAsync();
 };
 
 var releaseView = function() {
-    if ( ownerId === undefined ) { return; }
+    if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
-        { what: 'releaseView', ownerId: ownerId }
+        { what: 'releaseView', ownerId: logger.ownerId }
     );
-    ownerId = undefined;
+    logger.ownerId = undefined;
 };
 
 window.addEventListener('pagehide', releaseView);

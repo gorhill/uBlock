@@ -207,6 +207,7 @@ body #netInspector td {
     }
 
 #netInspector tr td:nth-of-type(1) {
+    cursor: default;
     text-align: right;
     white-space: nowrap;
     }

@@ -1015,6 +1015,31 @@ var µb = µBlock,
 
 /******************************************************************************/
 
+var getLoggerData = function(ownerId, tab, callback) {
+    var tabIds = {};
+    for ( var tabId in µb.pageStores ) {
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) { continue; }
+        if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
+        tabIds[tabId] = pageStore.title;
+    }
+    var activeTabId;
+    if ( tabIds.hasOwnProperty(tab.id) ) {
+        activeTabId = tab.id;
+    }
+    callback({
+        colorBlind: µb.userSettings.colorBlindFriendly,
+        entries: µb.logger.readAll(ownerId),
+        maxEntries: µb.userSettings.requestLogMaxEntries,
+        noTabId: vAPI.noTabId,
+        activeTabId: activeTabId,
+        tabIds: tabIds,
+        tabIdsToken: µb.pageStoresToken
+    });
+};
+
+/******************************************************************************/
+
 var getURLFilteringData = function(details) {
     var colors = {};
     var response = {
@@ -1049,6 +1074,19 @@ var getURLFilteringData = function(details) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+    case 'readAll':
+        if (
+            µb.logger.ownerId !== undefined &&
+            µb.logger.ownerId !== request.ownerId
+        ) {
+            callback({ unavailable: true });
+            return;
+        }
+        vAPI.tabs.get(null, function(tab) {
+            getLoggerData(request.ownerId, tab, callback);
+        });
+        return;
+
     default:
         break;
     }
@@ -1057,31 +1095,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'readAll':
-        if (
-            µb.logger.ownerId !== undefined &&
-            µb.logger.ownerId !== request.ownerId
-        ) {
-            response = { unavailable: true };
-            break;
-        }
-        var tabIds = {};
-        for ( var tabId in µb.pageStores ) {
-            var pageStore = µb.pageStoreFromTabId(tabId);
-            if ( pageStore === null ) { continue; }
-            if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
-            tabIds[tabId] = pageStore.title;
-        }
-        response = {
-            colorBlind: µb.userSettings.colorBlindFriendly,
-            entries: µb.logger.readAll(request.ownerId),
-            maxEntries: µb.userSettings.requestLogMaxEntries,
-            noTabId: vAPI.noTabId,
-            tabIds: tabIds,
-            tabIdsToken: µb.pageStoresToken
-        };
-        break;
-
     case 'releaseView':
         if ( request.ownerId === µb.logger.ownerId ) {
             µb.logger.ownerId = undefined;

@@ -50,7 +50,6 @@ var inspectedURL = '';
 var inspectedHostname = '';
 var inspector = uDom.nodeFromId('domInspector');
 var domTree = uDom.nodeFromId('domTree');
-var tabSelector = uDom.nodeFromId('pageSelector');
 var uidGenerator = 1;
 var filterToIdMap = new Map();
 
@@ -562,7 +561,7 @@ var onMouseOver = (function() {
 
 var currentTabId = function() {
     if ( showdomButton.classList.contains('active') === false ) { return ''; }
-    var tabId = logger.tabIdFromClassName(tabSelector.value) || '';
+    var tabId = logger.tabIdFromPageSelector();
     return tabId !== 'bts' ? tabId : '';
 };
 
@@ -636,7 +635,7 @@ var revert = function() {
 
 var toggleOn = function() {
     window.addEventListener('beforeunload', toggleOff);
-    tabSelector.addEventListener('change', onTabIdChanged);
+    document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
     domTree.addEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').addEventListener('click', toggleVCompactView);
@@ -652,7 +651,7 @@ var toggleOn = function() {
 var toggleOff = function() {
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
-    tabSelector.removeEventListener('change', onTabIdChanged);
+    document.removeEventListener('tabIdChanged', onTabIdChanged);
     domTree.removeEventListener('click', onClicked, true);
     domTree.removeEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').removeEventListener('click', toggleVCompactView);
@@ -680,5 +679,3 @@ showdomButton.addEventListener('click', toggle);
 /******************************************************************************/
 
 })();
-
-

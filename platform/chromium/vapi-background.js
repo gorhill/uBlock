@@ -384,32 +384,33 @@ vAPI.tabs.registerListeners = function() {
 
 /******************************************************************************/
 
-vAPI.tabs.get = function(tabId, callback) {
-    var onTabReady = function(tab) {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-        // Caller must be prepared to deal with nil tab value
-        callback(tab);
-    };
+// Caller must be prepared to deal with nil tab argument.
 
-    if ( tabId !== null ) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) {
-            onTabReady(null);
-        } else {
-            chrome.tabs.get(tabId, onTabReady);
-        }
+// https://code.google.com/p/chromium/issues/detail?id=410868#c8
+
+vAPI.tabs.get = function(tabId, callback) {
+    if ( tabId === null ) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            if ( chrome.runtime.lastError ) { /* noop */ }
+            var tab = tabs && tabs[0];
+            if ( tab ) {
+                tab.id = tab.id.toString();
+            }
+            callback(tab);
+        });
         return;
     }
 
-    var onTabReceived = function(tabs) {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        void chrome.runtime.lastError;
-        callback(tabs[0]);
-    };
-    chrome.tabs.query({ active: true, currentWindow: true }, onTabReceived);
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        callback(null);
+        return;
+    }
+
+    chrome.tabs.get(tabId, function(tab) {
+        if ( chrome.runtime.lastError ) { /* noop */ }
+        callback(tab);
+    });
 };
 
 /******************************************************************************/
