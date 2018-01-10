@@ -512,7 +512,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Последно активен раздел",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
@@ -720,7 +720,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "...",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
