@@ -390,14 +390,15 @@ vAPI.tabs.registerListeners = function() {
 
 vAPI.tabs.get = function(tabId, callback) {
     if ( tabId === null ) {
-        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-            if ( chrome.runtime.lastError ) { /* noop */ }
-            var tab = tabs && tabs[0];
-            if ( tab ) {
-                tab.id = tab.id.toString();
+        chrome.tabs.query(
+            { active: true, currentWindow: true },
+            function(tabs) {
+                if ( chrome.runtime.lastError ) { /* noop */ }
+                callback(
+                    Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null
+                );
             }
-            callback(tab);
-        });
+        );
         return;
     }
 

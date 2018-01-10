@@ -1015,7 +1015,7 @@ var µb = µBlock,
 
 /******************************************************************************/
 
-var getLoggerData = function(ownerId, tab, callback) {
+var getLoggerData = function(ownerId, activeTabId, callback) {
     var tabIds = {};
     for ( var tabId in µb.pageStores ) {
         var pageStore = µb.pageStoreFromTabId(tabId);
@@ -1023,9 +1023,8 @@ var getLoggerData = function(ownerId, tab, callback) {
         if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
         tabIds[tabId] = pageStore.title;
     }
-    var activeTabId;
-    if ( tabIds.hasOwnProperty(tab.id) ) {
-        activeTabId = tab.id;
+    if ( activeTabId && tabIds.hasOwnProperty(activeTabId) === false ) {
+        activeTabId = undefined;
     }
     callback({
         colorBlind: µb.userSettings.colorBlindFriendly,
@@ -1083,7 +1082,11 @@ var onMessage = function(request, sender, callback) {
             return;
         }
         vAPI.tabs.get(null, function(tab) {
-            getLoggerData(request.ownerId, tab, callback);
+            getLoggerData(
+                request.ownerId,
+                tab && tab.id.toString(),
+                callback
+            );
         });
         return;
 
