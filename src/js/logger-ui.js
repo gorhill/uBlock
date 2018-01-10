@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,17 +46,17 @@ var removeAllChildren = logger.removeAllChildren = function(node) {
 
 /******************************************************************************/
 
-var tabIdFromClassName = logger.tabIdFromClassName = function(className) {
+var tabIdFromClassName = function(className) {
     var matches = className.match(/\btab_([^ ]+)\b/);
     return matches !== null ? matches[1] : '';
 };
 
 var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
     var tabClass = uDom.nodeFromId('pageSelector').value;
-    if ( tabClass === '' ) { return ''; }
-    if ( tabClass === 'tab_bts' ) { return noTabId; }
-    if ( tabClass === 'tab_active' ) { return activeTabId; }
-    return tabClass.slice(4);
+    if ( tabClass === 'tab_active' && activeTabId !== undefined ) {
+        return activeTabId;
+    }
+    return /^tab_\d+$/.test(tabClass) ? tabClass.slice(4) : '';
 };
 
 /******************************************************************************/
@@ -623,10 +623,14 @@ var pageSelectorFromURLHash = (function() {
 
 /******************************************************************************/
 
-var reloadTab = function() {
+var reloadTab = function(ev) {
     var tabId = tabIdFromPageSelector();
-    if ( tabId === '' || tabId === noTabId ) { return; }
-    messaging.send('loggerUI', { what: 'reloadTab', tabId: tabId });
+    if ( tabId === '' ) { return; }
+    messaging.send('loggerUI', {
+        what: 'reloadTab',
+        tabId: tabId,
+        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey)
+    });
 };
 
 /******************************************************************************/
@@ -1509,13 +1513,17 @@ var toJunkyard = function(trs) {
 /******************************************************************************/
 
 var clearBuffer = function() {
-    var tabClass = uDom.nodeFromId('pageSelector').value || '';
+    var tabClass = uDom.nodeFromId('pageSelector').value;
+    var btsAlso = tabClass === '' || tabClass === 'tab_bts';
     var tbody = document.querySelector('#netInspector tbody');
     var tr = tbody.lastElementChild;
     var trPrevious;
     while ( tr !== null ) {
         trPrevious = tr.previousElementSibling;
-        if ( tabClass === '' || tr.classList.contains(tabClass) ) {
+        if (
+            (tr.clientHeight > 0) &&
+            (tr.classList.contains('tab_bts') === false || btsAlso)
+        ) {
             trJunkyard.push(tbody.removeChild(tr));
         }
         tr = trPrevious;
