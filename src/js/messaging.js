@@ -780,7 +780,6 @@ var restoreUserData = function(request) {
             lastBackupTime: 0
         });
         µb.assets.put(µb.userFiltersPath, userData.userFilters);
-
         // 'filterLists' is available up to uBO v1.10.4, not beyond.
         // 'selectedFilterLists' is available from uBO v1.11 and beyond.
         var listKeys;

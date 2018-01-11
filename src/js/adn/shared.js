@@ -595,19 +595,14 @@ var targetDomain = function (ad) {
 
 /*** functions used to export/import/clear ads in vault.js and options.js ***/
 
-var exportToFile = function () {
-
-  vAPI.messaging.send('adnauseam', {
-
-    what: 'exportAds',
-    includeImages: false
-
-  }, function (jsonData) {
-
-    //console.log('shared.exportToFile', jsonData);
-
+var exportToFile = function (action) {
+  
+  var outputData = function (jsonData, fileType) {
     var filename = getExportFileName(),
        url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+    
+    if (fileType === undefined) fileType = "Ads";
+    filename = "AdNauseam_" + fileType + filename.substr(9,filename.length);
 
     if (isFirefox()) {
 
@@ -622,41 +617,130 @@ var exportToFile = function () {
         'filename': filename
       });
     }
-  });
+
+  }
+
+  switch(action){
+    case 'backupUserData':
+       vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
+          outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
+       });
+      break;
+    case 'exportSettings':
+       vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
+          delete response.userData.userSettings.admap
+          outputData(JSON.stringify(response.userData, null, '  '),"Settings");
+       });
+      break;
+    default:
+       vAPI.messaging.send('adnauseam', {
+         what: "exportAds",
+         includeImages: false
+       }, outputData);
+
+  }
+
 };
 
-function handleImportFilePicker(evt) {
 
-  var files = evt.target.files;
-  var reader = new FileReader();
+var handleImportFilePicker = function() {
 
-  reader.onload = function (e) {
-
-    var adData;
-    try {
-      adData = JSON.parse(e.target.result);
-    } catch (e) {
-      postImportAlert({
-        count: -1,
-        error: e
-      });
-      return;
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
     }
+    // if ( file.type.indexOf('text') !== 0 ) {
+    //     return;
+    // }
+    var filename = file.name;
 
+    var fileReaderOnLoadHandler = function() {
+        var userData;
+        try {
+            userData = JSON.parse(this.result);
+            if ( typeof userData !== 'object' ) {
+                throw 'Invalid';
+            }
+            if (typeof userData.userSettings !== 'object') {
+                  //adnauseam admap
+                  adsOnLoadHandler(userData);
+                  return;
+            }
+           
+        }
+        catch (e) {
+            userData = undefined;
+        }
+        if ( userData === undefined ) {
+            window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
+            return;
+        }
+        var time = new Date(userData.timeStamp);
+        var msg = vAPI.i18n('aboutRestoreDataConfirm')
+                      .replace('{{time}}', time.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam');
+        var proceed = window.confirm(msg);
+        if ( proceed ) {
+            vAPI.messaging.send(
+                'dashboard',
+                {
+                    what: 'restoreUserData',
+                    userData: userData,
+                    file: filename
+                }
+            );
+        }
+    };
+
+    var fr = new FileReader();
+    fr.onload = fileReaderOnLoadHandler;
+    fr.readAsText(file);
+};
+
+var adsOnLoadHandler = function(adData, file) {
     vAPI.messaging.send('adnauseam', {
       what: 'importAds',
       data: adData,
-      file: files[0].name
+      file: file
     }, postImportAlert);
-  }
+}
+
+function handleImportAds(evt) {
+ 
+  var files = evt.target.files;
+
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+
+     var adData;
+     try {
+       var data = JSON.parse(e.target.result);
+       adData = data.userSettings ? data.userSettings.admap : data;
+
+       if (adData === undefined && data.userSettings && data.timeStamp) {
+          window.alert(vAPI.i18n('adnImportAlertFormat'));
+          return;
+       }
+        
+     } catch (e) {
+       postImportAlert({
+         count: -1,
+         error: e
+       });
+       return;
+     }
+
+     adsOnLoadHandler(adData, files[0].name);
+
+   }
 
   reader.readAsText(files[0]);
 }
 
 var postImportAlert = function (msg) {
 
-  var text = msg.count > -1 ? msg.count : msg.error;
-  vAPI.alert(vAPI.i18n('adnImportAlert')
+  var text = msg.count > -1 ? msg.count : (msg.error ? msg.error + ";" : "") + " 0";
+  window.alert(vAPI.i18n('adnImportAlert')
     .replace('{{count}}', text));
 };
 
