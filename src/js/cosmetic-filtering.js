@@ -398,6 +398,7 @@ var FilterContainer = function() {
             '.+?:if-not',
             '.+?:matches-css(?:-before|-after)?',
             '.*?:xpath',
+            '.+?:style',
             '.+?:-abp-contains', // ABP-specific for `:has-text`
             '.+?:-abp-has',      // ABP-specific for `:if`
             '.+?:contains'       // Adguard-specific for `:has-text`
@@ -623,6 +624,8 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) {
+    var selector = parsed.suffix;
+
     // For some selectors, it is mandatory to have a hostname or entity:
     //   ##.foo:-abp-contains(...)
     //   ##.foo:-abp-has(...)
@@ -635,10 +638,17 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
     //   ##.foo:matches-css-after(...)
     //   ##.foo:matches-css-before(...)
     //   ##:xpath(...)
-    if ( this.reNeedHostname.test(selector) ) { return; }
+    //   ##.foo:style(...)
+    if ( this.reNeedHostname.test(selector) ) {
+        µb.logger.writeOne(
+            '',
+            'error',
+            'Cosmetic filtering – invalid generic filter: ##' + selector
+        );
+        return;
+    }
 
-    var selector = parsed.suffix,
-        type = selector.charCodeAt(0),
+    var type = selector.charCodeAt(0),
         key;
 
     if ( type === 0x23 /* '#' */ ) {
