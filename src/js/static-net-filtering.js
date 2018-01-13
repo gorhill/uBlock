@@ -954,7 +954,7 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
                 i = hostnames.length,
                 hostname;
             while ( i-- ) {
-                hostname = hostnames[i].replace(/\./g, '\\.');
+                hostname = hostnames[i];
                 if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
                     noneOf.push(hostname.slice(1));
                 } else {
