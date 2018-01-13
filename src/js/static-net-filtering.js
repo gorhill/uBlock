@@ -1735,7 +1735,7 @@ FilterParser.prototype.parse = function(raw) {
             //   Abort if type is only for unsupported types, otherwise
             //   toggle off `unsupported` bit.
             if ( this.types & this.unsupportedTypeBit ) {
-                this.types &= ~(this.unsupportedTypeBit | this.allNetRequestTypeBits);
+                this.types &= ~this.unsupportedTypeBit;
                 if ( this.types === 0 ) {
                     this.unsupported = true;
                     return this;
