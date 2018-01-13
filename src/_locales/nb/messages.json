@@ -344,7 +344,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Lister over blokkerte verter",
+    "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
