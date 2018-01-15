@@ -424,7 +424,7 @@
 		"off": true,
 		"title": "IRN: Adblock-Iran",
 		"lang": "fa",
-		"contentURL": "https://raw.githubusercontent.com/farrokhi/adblock-iran/master/filter.txt",
+		"contentURL": "https://cdn.rawgit.com/farrokhi/adblock-iran/master/filter.txt",
 		"supportURL": "https://github.com/farrokhi/adblock-iran"
 	},
 	"ISL-0": {
