@@ -268,7 +268,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "ممنوع کردن WebRTC از افشاسازی آدرس های IP محلی",
+    "message": "جلوگیری کردن از WebRTC از افشاسازی آدرس های IP محلی",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -292,7 +292,7 @@
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "مسدود کردن گزارشات سیاست امنیت محتوا",
+    "message": "مسدود کردن براساس گزارشات سیاست امنیت محتوا",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -332,7 +332,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>این گزینه <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> را  تجزیه و اجرا میکند. این فیلتر ها اساساً فنی هستند،  آنها اشیاء موجود در صفحه وب را که مزاحم تلقی میشوند و با موتور فیلترینگ شبکه قابل بلاک کردن نیستند را حذف میکنند.<\/p><p>فعال کردن این قابلیت مصرف حافظه ی  <i>uBlock<\/i>را افزایش میدهد.<\/p>",
+    "message": "<p>این گزینه <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">فیلترهای &ldquo;مخفی‌کردن اشیا&rdquo; سازگار با ادبلاک پلاس<\/a> را تجزیه و اجرا میکند. این فیلتر ها اساساً فنی هستند، آنها اشیاء موجود در صفحه وب را که مزاحم تلقی میشوند و با موتور فیلترینگ شبکه قابل بلاک کردن نیستند را حذف میکنند.<\/p><p>فعال کردن این قابلیت مصرف حافظه ی uBlock را افزایش میدهد.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -524,7 +524,7 @@
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "محتوی:",
+    "message": "زمینه:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -624,7 +624,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "تمام تنظیمات شده حذف و uBlock₀ دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد uBlock₀ به تنظیمات کارخانه؟",
+    "message": "تمام تنظیمات شما حذف شده و uBlock₀ دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد uBlock₀ به تنظیمات کارخانه؟",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -632,7 +632,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
+    "message": "uBlock₀: آدرس اینترنتی زیر به فهرست فیلتر های سفارشی شما اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
