@@ -107,7 +107,9 @@ var FilterHostname = function(s, hostname) {
 FilterHostname.prototype.fid = 8;
 
 FilterHostname.prototype.retrieve = function(hostname, out) {
-    if ( hostname.endsWith(this.hostname) ) {
+    if ( hostname.endsWith(this.hostname) === false ) { return; }
+    var i = hostname.length - this.hostname.length;
+    if ( i === 0 || hostname.charCodeAt(i-1) === 0x2E /* '.' */ ) {
         out.add(this.s);
     }
 };
