@@ -83,13 +83,18 @@ if ( dfPaneVisibleStored ) {
 
 /******************************************************************************/
 
+const GLOBAL_SCOPE_KEY = '/';
+const LOCAL_SCOPE_KEY = '.';
+
+/******************************************************************************/
+
 var messaging = vAPI.messaging;
 var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
 var scopeToSrcHostnameMap = {
-    '/': '*',
-    '.': ''
+    [GLOBAL_SCOPE_KEY]: '*',
+    [LOCAL_SCOPE_KEY]: ''
 };
 var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
@@ -117,14 +122,14 @@ var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u04
 
 var cachePopupData = function(data) {
     popupData = {};
-    scopeToSrcHostnameMap['.'] = '';
+    scopeToSrcHostnameMap[LOCAL_SCOPE_KEY] = '';
     hostnameToSortableTokenMap = {};
 
     if ( typeof data !== 'object' ) {
         return popupData;
     }
     popupData = data;
-    scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
+    scopeToSrcHostnameMap[LOCAL_SCOPE_KEY] = popupData.srcHostname || '';
     var hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
         return popupData;
@@ -259,7 +264,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
     }
     cells.toggleClass('ownRule', ownRule);
 
-    if ( scope !== '.' || des === '*' ) {
+    if ( scope === GLOBAL_SCOPE_KEY || des === '*' ) {
         return;
     }
 
@@ -762,7 +767,7 @@ var mouseleaveCellHandler = function() {
 
 /******************************************************************************/
 
-var setFirewallRule = function(src, des, type, action, persist) {
+var setFirewallRule = function(scope, des, type, action, persist) {
     // This can happen on pages where uBlock does not work
     if ( typeof popupData.pageHostname !== 'string' || popupData.pageHostname === '' ) {
         return;
@@ -778,7 +783,7 @@ var setFirewallRule = function(src, des, type, action, persist) {
             what: 'toggleFirewallRule',
             tabId: popupData.tabId,
             pageHostname: popupData.pageHostname,
-            srcHostname: src,
+            srcHostname: scopeToSrcHostnameMap[scope],
             desHostname: des,
             requestType: type,
             action: action,
@@ -793,7 +798,7 @@ var setFirewallRule = function(src, des, type, action, persist) {
 var unsetFirewallRuleHandler = function(ev) {
     var cell = uDom(this);
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
+        cell.attr('data-src'),
         cell.attr('data-des'),
         cell.attr('data-type'),
         0,
@@ -820,7 +825,7 @@ var setFirewallRuleHandler = function(ev) {
         action = 1;
     }
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
+        cell.attr('data-src'),
         cell.attr('data-des'),
         cell.attr('data-type'),
         action,
@@ -896,7 +901,7 @@ var saveFirewallRules = function() {
         'popupPanel',
         {
             what: 'saveFirewallRules',
-            srcHostname: popupData.pageHostname,
+            srcHostname: popupData.srcHostname,
             desHostnames: popupData.hostnameDict
         }
     );
@@ -915,7 +920,7 @@ var revertFirewallRules = function() {
         'popupPanel',
         {
             what: 'revertFirewallRules',
-            srcHostname: popupData.pageHostname,
+            srcHostname: popupData.srcHostname,
             desHostnames: popupData.hostnameDict,
             tabId: popupData.tabId
         },

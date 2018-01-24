@@ -254,29 +254,24 @@ var getHostnameDict = function(hostnameToCountMap) {
 var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
     var df = µb.sessionFirewall;
-    r['/ * *'] = df.lookupRuleData('*', '*', '*');
-    r['/ * image'] = df.lookupRuleData('*', '*', 'image');
-    r['/ * 3p'] = df.lookupRuleData('*', '*', '3p');
-    r['/ * inline-script'] = df.lookupRuleData('*', '*', 'inline-script');
-    r['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
-    r['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
-    r['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
+
+    for (let type of µBlock.dynamicFilterTypes) {
+        r['/ * ' + type] = df.lookupRuleData('*', '*', type);
+    }
+
     if ( typeof srcHostname !== 'string' ) {
         return r;
     }
 
-    r['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
-    r['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
-    r['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
-    r['. * inline-script'] = df.lookupRuleData(srcHostname, '*', 'inline-script');
-    r['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
-    r['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
-    r['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
+    for (let type of µBlock.dynamicFilterTypes) {
+        r['. * ' + type] = df.lookupRuleData(srcHostname, '*', type);
+    }
 
-    for ( var desHostname in desHostnames ) {
+    for ( let desHostname in desHostnames ) {
         r['/ ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
         r['. ' + desHostname + ' *'] = df.lookupRuleData(srcHostname, desHostname, '*');
     }
+
     return r;
 };
 
@@ -284,7 +279,8 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 
 var popupDataFromTabId = function(tabId, tabTitle) {
     var tabContext = µb.tabContextManager.mustLookup(tabId),
-        rootHostname = tabContext.rootHostname;
+        rootHostname = tabContext.rootHostname,
+        srcHostname = µBlock.hiddenSettings.dynamicRulesUseDomain ? tabContext.rootDomain : rootHostname;
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -301,6 +297,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         pageURL: tabContext.normalURL,
         pageHostname: rootHostname,
         pageDomain: tabContext.rootDomain,
+        srcHostname: srcHostname,
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
@@ -342,7 +339,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
     }
     r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
         µb.permanentFirewall,
-        rootHostname,
+        srcHostname,
         r.hostnameDict
     );
     return r;

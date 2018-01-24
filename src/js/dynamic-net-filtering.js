@@ -26,6 +26,22 @@
 
 /******************************************************************************/
 
+(function() {
+
+µBlock.dynamicFilterTypes = new Set([
+            '*',
+        'image',
+           '3p',
+'inline-script',
+    '1p-script',
+    '3p-script',
+     '3p-frame'
+]);
+
+})();
+
+/******************************************************************************/
+
 µBlock.Firewall = (function() {
 
 /******************************************************************************/
@@ -39,15 +55,6 @@ var Matrix = function() {
 };
 
 /******************************************************************************/
-
-var supportedDynamicTypes = {
-           '3p': true,
-        'image': true,
-'inline-script': true,
-    '1p-script': true,
-    '3p-script': true,
-     '3p-frame': true
-};
 
 var typeBitOffsets = {
             '*':  0,
@@ -147,44 +154,28 @@ Matrix.prototype.assign = function(other) {
 /******************************************************************************/
 
 Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
-    var thisRules = this.rules;
-    var otherRules = other.rules;
-    var ruleKey, ruleValue;
+    const thisRules = this.rules;
+    const otherRules = other.rules;
 
-    // Specific types
-    ruleValue = otherRules['* *'] || 0;
-    if ( ruleValue !== 0 ) {
-        thisRules['* *'] = ruleValue;
-    } else {
-        delete thisRules['* *'];
-    }
-    ruleKey = srcHostname + ' *';
-    ruleValue = otherRules[ruleKey] || 0;
-    if ( ruleValue !== 0 ) {
-        thisRules[ruleKey] = ruleValue;
-    } else {
-        delete thisRules[ruleKey];
-    }
+    const copyRule = function(key) {
+        const val = otherRules[key] || 0;
+        if ( val !== 0 ) {
+            thisRules[key] = val;
+        } else {
+            delete thisRules[key];
+        }
+    };
+
+    // Global types
+    copyRule('* *')
+
+    // type-based rules
+    copyRule(srcHostname + ' *')
 
     // Specific destinations
-    for ( var desHostname in desHostnames ) {
-        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
-            continue;
-        }
-        ruleKey = '* ' + desHostname;
-        ruleValue = otherRules[ruleKey] || 0;
-        if ( ruleValue !== 0 ) {
-            thisRules[ruleKey] = ruleValue;
-        } else {
-            delete thisRules[ruleKey];
-        }
-        ruleKey = srcHostname + ' ' + desHostname ;
-        ruleValue = otherRules[ruleKey] || 0;
-        if ( ruleValue !== 0 ) {
-            thisRules[ruleKey] = ruleValue;
-        } else {
-            delete thisRules[ruleKey];
-        }
+    for ( let desHostname in desHostnames ) {
+        copyRule('* ' + desHostname)
+        copyRule(srcHostname + ' ' + desHostname)
     }
 
     return true;
@@ -196,35 +187,22 @@ Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
 // - from *  type
 // - *    to *
 // - from to *
-
 Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
-    var thisRules = this.rules;
-    var otherRules = other.rules;
-    var ruleKey;
+    const thisRules = this.rules;
+    const otherRules = other.rules;
 
-    // Specific types
-    ruleKey = '* *';
-    if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
-        return false;
-    }
-    ruleKey = srcHostname + ' *';
-    if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
-        return false;
-    }
+    const equal = ruleKey => (thisRules[ruleKey] || 0) === (otherRules[ruleKey] || 0);
 
     // Specific destinations
-    for ( var desHostname in desHostnames ) {
-        ruleKey = '* ' + desHostname;
-        if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
-            return false;
+    const hostKeys = function*() {
+        for ( let desHostname in desHostnames ) {
+            yield '* ' + desHostname;
+            yield srcHostname + ' ' + desHostname;
         }
-        ruleKey = srcHostname + ' ' + desHostname ;
-        if ( (thisRules[ruleKey] || 0) !== (otherRules[ruleKey] || 0) ) {
-            return false;
-        }
-    }
+    };
 
-    return true;
+            // Specific types
+    return ['* *', srcHostname + ' *', ...hostKeys()].every(equal);
 };
 
 /******************************************************************************/
@@ -385,7 +363,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     }
 
     // Any destination, any party, specific type
-    if ( supportedDynamicTypes.hasOwnProperty(type) ) {
+    if ( µBlock.dynamicFilterTypes.has(type) ) {
         if ( this.evaluateCellZ(srcHostname, '*', type, broadenSource) !== 0 ) {
             return this.r;
         }
