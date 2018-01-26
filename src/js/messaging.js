@@ -525,7 +525,8 @@ var onMessage = function(request, sender, callback) {
             };
             response.specificCosmeticFilters = µb.cosmeticFilteringEngine.retrieveDomainSelectors(
                 request,
-                response.noCosmeticFiltering
+                sender,
+                response
             );
             response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
         }
