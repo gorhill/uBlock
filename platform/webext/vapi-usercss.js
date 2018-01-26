@@ -23,41 +23,206 @@
 
 // For content pages
 
+if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
+
+/******************************************************************************/
 /******************************************************************************/
 
-(function() {
-    if ( typeof vAPI !== 'object' ) { return; }
+vAPI.userStylesheet = {
+    added: new Set(),
+    removed: new Set(),
+    apply: function() {
+        if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
+        vAPI.messaging.send('vapi-background', {
+            what: 'userCSS',
+            add: Array.from(this.added),
+            remove: Array.from(this.removed)
+        });
+        this.added.clear();
+        this.removed.clear();
+    },
+    add: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.added.add(cssText);
+        if ( now ) { this.apply(); }
+    },
+    remove: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.removed.add(cssText);
+        if ( now ) { this.apply(); }
+    }
+};
 
-    vAPI.userCSS = {
-        _userCSS: new Set(),
-        _disabled: false,
-        _send: function(add, css) {
-            vAPI.messaging.send('vapi-background', {
-                what: 'userCSS',
-                add: add,
-                css: css
-            });
-        },
-        add: function(cssText) {
-            if ( cssText === '' || this._userCSS.has(cssText) ) { return; }
-            this._userCSS.add(cssText);
-            if ( this._disabled ) { return; }
-            this._send(true, cssText);
-        },
-        remove: function(cssText) {
-            if ( cssText === '' ) { return; }
-            if ( this._userCSS.delete(cssText) && !this._disabled ) {
-                this._send(true, cssText);
-                this._send(false, cssText);
+/******************************************************************************/
+
+vAPI.DOMFilterer = function() {
+    this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
+    this.domIsReady = document.readyState !== 'loading';
+    this.disabled = false;
+    this.listeners = [];
+    this.filterset = new Set();
+    this.excludedNodeSet = new WeakSet();
+    this.addedCSSRules = new Set();
+
+    if ( this.domIsReady !== true ) {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.domIsReady = true;
+            this.commit();
+        });
+    }
+};
+
+vAPI.DOMFilterer.prototype = {
+    reOnlySelectors: /\n\{[^\n]+/g,
+
+    // Here we will deal with:
+    // - Injecting low priority user styles;
+    // - Notifying listeners about changed filterset.
+    commitNow: function() {
+        this.commitTimer.clear();
+        var userStylesheet = vAPI.userStylesheet,
+            addedSelectors = [];
+        for ( var entry of this.addedCSSRules ) {
+            if (
+                this.disabled === false &&
+                entry.lazy &&
+                entry.injected === false
+            ) {
+                userStylesheet.add(
+                    entry.selectors + '\n{' + entry.declarations + '}'
+                );
             }
-        },
-        toggle: function(state) {
-            if ( state === undefined ) { state = this._disabled; }
-            if ( state !== this._disabled ) { return; }
-            this._disabled = !state;
-            if ( this._userCSS.size === 0 ) { return; }
-            this._send(state, Array.from(this._userCSS));
+            addedSelectors.push(entry.selectors);
         }
-    };
-    vAPI.hideNode = vAPI.unhideNode = function(){};
-})();
+        this.addedCSSRules.clear();
+        userStylesheet.apply();
+        if ( addedSelectors.length !== 0 ) {
+            this.triggerListeners('declarative', addedSelectors.join(',\n'));
+        }
+    },
+
+    commit: function(commitNow) {
+        if ( commitNow ) {
+            this.commitTimer.clear();
+            this.commitNow();
+        } else {
+            this.commitTimer.start();
+        }
+    },
+
+    addCSSRule: function(selectors, declarations, details) {
+        if ( selectors === undefined ) { return; }
+        var selectorsStr = Array.isArray(selectors)
+                ? selectors.join(',\n')
+                : selectors;
+        if ( selectorsStr.length === 0 ) { return; }
+        if ( details === undefined ) { details = {}; }
+        var entry = {
+            selectors: selectorsStr,
+            declarations,
+            lazy: details.lazy === true,
+            injected: details.injected === true
+        };
+        this.addedCSSRules.add(entry);
+        this.filterset.add(entry);
+        if (
+            this.disabled === false &&
+            entry.lazy !== true &&
+            entry.injected !== true
+        ) {
+            vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
+        }
+        this.commit();
+    },
+
+    addListener: function(listener) {
+        if ( this.listeners.indexOf(listener) !== -1 ) { return; }
+        this.listeners.push(listener);
+    },
+
+    removeListener: function(listener) {
+        var pos = this.listeners.indexOf(listener);
+        if ( pos === -1 ) { return; }
+        this.listeners.splice(pos, 1);
+    },
+
+    triggerListeners: function(type, selectors) {
+        var i = this.listeners.length;
+        while ( i-- ) {
+            this.listeners[i].onFiltersetChanged(type, selectors);
+        }
+    },
+
+    excludeNode: function(node) {
+        this.excludedNodeSet.add(node);
+        this.unhideNode(node);
+    },
+
+    unexcludeNode: function(node) {
+        this.excludedNodeSet.delete(node);
+    },
+
+    hideNode: function(node) {
+        if ( this.excludedNodeSet.has(node) ) { return; }
+        if ( this.hideNodeAttr === undefined ) { return; }
+        node.setAttribute(this.hideNodeAttr, '');
+        if ( this.hideNodeStyleSheetInjected === false ) {
+            this.hideNodeStyleSheetInjected = true;
+            this.addCSSRule(
+                '[' + this.hideNodeAttr + ']',
+                'display:none!important;'
+            );
+        }
+    },
+
+    unhideNode: function(node) {
+        if ( this.hideNodeAttr === undefined ) { return; }
+        node.removeAttribute(this.hideNodeAttr);
+    },
+
+    toggle: function(state) {
+        if ( state === undefined ) { state = this.disabled; }
+        if ( state !== this.disabled ) { return; }
+        this.disabled = !state;
+        var userStylesheet = vAPI.userStylesheet;
+        for ( var entry of this.filterset ) {
+            var rule = entry.selectors + '\n{' + entry.declarations + '}';
+            if ( this.disabled ) {
+                userStylesheet.remove(rule);
+            } else {
+                userStylesheet.add(rule);
+            }
+        }
+        userStylesheet.apply();
+    },
+
+    getAllDeclarativeSelectors_: function(all) {
+        let selectors = [];
+        for ( var entry of this.filterset ) {
+            if ( all === false && entry.internal ) { continue; }
+            selectors.push(entry.selectors);
+        }
+        var out = selectors.join(',\n');
+        if ( !all && this.hideNodeAttr !== undefined ) {
+            out = out.replace('[' + this.hideNodeAttr + ']', '')
+                     .replace(/^,\n|\n,|,\n$/, '');
+        }
+        return out;
+    },
+
+    getFilteredElementCount: function() {
+        let selectors = this.getAllDeclarativeSelectors_(true);
+        return selectors.length !== 0
+            ? document.querySelectorAll(selectors).length
+            : 0;
+    },
+
+    getAllDeclarativeSelectors: function() {
+        return this.getAllDeclarativeSelectors_(false);
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
+} // <<<<<<<< end of HUGE-IF-BLOCK

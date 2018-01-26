@@ -251,6 +251,10 @@
     "message":"انسداد فونت های از راه دور",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"فضای مصرفی: {{value}} بایت",
     "description":"English: Storage used: {{}} bytes"

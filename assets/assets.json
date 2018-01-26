@@ -139,13 +139,6 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#privacy"
 	},
-	"disconnect-tracking": {
-		"content": "filters",
-		"group": "privacy",
-		"off": true,
-		"title": "Basic tracking list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
-	},
 	"easyprivacy": {
 		"content": "filters",
 		"group": "privacy",
@@ -560,7 +553,7 @@
 		"off": true,
 		"title": "RUS: RU AdList",
 		"lang": "be ru uk",
-		"contentURL": "https://easylist-downloads.adblockplus.org/advblock.txt",
+		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
 	},

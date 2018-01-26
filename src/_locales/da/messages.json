@@ -251,6 +251,10 @@
     "message":"Bloker skrifttyper fra nettet",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Brugt plads: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"

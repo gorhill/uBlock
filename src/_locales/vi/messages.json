@@ -251,6 +251,10 @@
     "message":"Chặn font từ xa",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Chặn các báo cáo CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Bộ nhớ đã dùng: {{value}} byte",
     "description":"English: Storage used: {{}} bytes"
@@ -320,7 +324,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupAnnoyances":{
-    "message":"Annoyances",
+    "message":"Những bất tiện",
     "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{

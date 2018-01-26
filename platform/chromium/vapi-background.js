@@ -28,8 +28,7 @@
 (function() {
 
 /******************************************************************************/
-
-var vAPI = self.vAPI = self.vAPI || {};
+/******************************************************************************/
 
 var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
@@ -53,6 +52,14 @@ if (
         vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
     });
 }
+
+// https://issues.adblockplus.org/ticket/5695
+// - Good idea, adopted: cleaner way to detect user-stylesheet support.
+vAPI.supportsUserStylesheets =
+    chrome.extensionTypes instanceof Object &&
+    chrome.extensionTypes.CSSOrigin instanceof Object &&
+    'USER' in chrome.extensionTypes.CSSOrigin;
+vAPI.insertCSS = chrome.tabs.insertCSS;
 
 var noopFunc = function(){};
 
@@ -800,7 +807,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 /******************************************************************************/
 
 vAPI.messaging = {
-    ports: {},
+    ports: new Map(),
     listeners: {},
     defaultHandler: null,
     NOOPFUNC: noopFunc,
@@ -817,14 +824,9 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
-        toAuxPending = {};
+        toAuxPending = new Map();
 
-    // https://issues.adblockplus.org/ticket/5695
-    // - Good idea, adopted: cleaner way to detect user-stylesheet support.
-    var supportsUserStylesheets =
-        chrome.extensionTypes instanceof Object &&
-        chrome.extensionTypes.CSSOrigin instanceof Object &&
-        'USER' in chrome.extensionTypes.CSSOrigin;
+    var supportsUserStylesheets = vAPI.supportsUserStylesheets;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request, timeout) {
@@ -832,33 +834,34 @@ vAPI.messaging.onPortMessage = (function() {
         this.init(port, request, timeout);
     };
 
-    CallbackWrapper.prototype.init = function(port, request, timeout) {
-        this.port = port;
-        this.request = request;
-        this.timerId = timeout !== undefined ?
-                            vAPI.setTimeout(this.callback, timeout) :
-                            null;
-        return this;
-    };
-
-    CallbackWrapper.prototype.proxy = function(response) {
-        if ( this.timerId !== null ) {
-            clearTimeout(this.timerId);
-            delete toAuxPending[this.timerId];
-            this.timerId = null;
+    CallbackWrapper.prototype = {
+        timerId: null,
+        init: function(port, request, timeout) {
+            this.port = port;
+            this.request = request;
+            if ( timeout !== undefined ) {
+                this.timerId = vAPI.setTimeout(this.callback, timeout);
+            }
+            return this;
+        },
+        proxy: function(response) {
+            if ( this.timerId !== null ) {
+                clearTimeout(this.timerId);
+                toAuxPending.delete(this.timerId);
+                this.timerId = null;
+            }
+            // https://github.com/chrisaljoudi/uBlock/issues/383
+            if ( messaging.ports.has(this.port.name) ) {
+                this.port.postMessage({
+                    auxProcessId: this.request.auxProcessId,
+                    channelName: this.request.channelName,
+                    msg: response !== undefined ? response : null
+                });
+            }
+            // Mark for reuse
+            this.port = this.request = null;
+            callbackWrapperJunkyard.push(this);
         }
-        // https://github.com/chrisaljoudi/uBlock/issues/383
-        if ( messaging.ports.hasOwnProperty(this.port.name) ) {
-          var msg = {
-              auxProcessId: this.request.auxProcessId,
-              channelName: this.request.channelName,
-              msg: response !== undefined ? response : null
-          }
-          this.port.postMessage(msg);
-        }
-        // Mark for reuse
-        this.port = this.request = null;
-        callbackWrapperJunkyard.push(this);
     };
 
     var callbackWrapperJunkyard = [];
@@ -877,13 +880,10 @@ vAPI.messaging.onPortMessage = (function() {
 
         // TODO: This could be an issue with a lot of tabs: easy to address
         //       with a port name to tab id map.
-        for ( var portName in messaging.ports ) {
-            if ( messaging.ports.hasOwnProperty(portName) === false ) {
-                continue;
-            }
-            // When sending to an auxiliary process, the target is always the
-            // port associated with the root frame.
-            port = messaging.ports[portName];
+        // When sending to an auxiliary process, the target is always the
+        // port associated with the root frame.
+        for ( var entry of messaging.ports ) {
+            port = entry[1];
             if ( port.sender.frameId === 0 && port.sender.tab.id === chromiumTabId ) {
                 portTo = port;
                 break;
@@ -903,11 +903,8 @@ vAPI.messaging.onPortMessage = (function() {
             return;
         }
 
-        // As per HTML5, timer id is always an integer, thus suitable to be
-        // used as a key, and which value is safe to use across process
-        // boundaries.
         if ( wrapper !== undefined ) {
-            toAuxPending[wrapper.timerId] = wrapper;
+            toAuxPending.set(wrapper.timerId, wrapper);
         }
 
         portTo.postMessage({
@@ -919,14 +916,10 @@ vAPI.messaging.onPortMessage = (function() {
 
     var toAuxResponse = function(details) {
         var mainProcessId = details.mainProcessId;
-        if ( mainProcessId === undefined ) {
-            return;
-        }
-        if ( toAuxPending.hasOwnProperty(mainProcessId) === false ) {
-            return;
-        }
-        var wrapper = toAuxPending[mainProcessId];
-        delete toAuxPending[mainProcessId];
+        if ( mainProcessId === undefined ) { return; }
+        var wrapper = toAuxPending.get(mainProcessId);
+        if ( wrapper === undefined ) { return; }
+        toAuxPending.delete(mainProcessId);
         wrapper.callback(details.msg);
     };
 
@@ -943,22 +936,17 @@ vAPI.messaging.onPortMessage = (function() {
             if ( supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
-            var fn;
             if ( msg.add ) {
                 details.runAt = 'document_start';
-                fn = chrome.tabs.insertCSS;
-            } else {
-                fn = chrome.tabs.removeCSS;
             }
-            var css = msg.css;
-            if ( typeof css === 'string' ) {
-                details.code = css;
-                fn(tabId, details);
-                return;
+            var cssText;
+            for ( cssText of msg.add ) {
+                details.code = cssText;
+                chrome.tabs.insertCSS(tabId, details);
             }
-            for ( var i = 0, n = css.length; i < n; i++ ) {
-                details.code = css[i];
-                fn(tabId, details);
+            for ( cssText of msg.remove ) {
+                details.code = cssText;
+                chrome.tabs.removeCSS(tabId, details);
             }
             break;
         }
@@ -989,51 +977,50 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: prepare response
-        var callback = messaging.NOOPFUNC;
+        var callback = this.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
             callback = callbackWrapperFactory(port, request).callback;
         }
 
         // Auxiliary process to main process: specific handler
-        var r = messaging.UNHANDLED,
-            listener = messaging.listeners[request.channelName];
+        var r = this.UNHANDLED,
+            listener = this.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
         }
-        if ( r !== messaging.UNHANDLED ) {
-            return;
-        }
+        if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: default handler
-        r = messaging.defaultHandler(request.msg, port.sender, callback);
-        if ( r !== messaging.UNHANDLED ) {
-            return;
-        }
+        r = this.defaultHandler(request.msg, port.sender, callback);
+        if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: no handler
-        console.error('uBlock> messaging > unknown request: %o', request);
+        console.error(
+            'vAPI.messaging.onPortMessage > unhandled request: %o',
+            request
+        );
 
         // Need to callback anyways in case caller expected an answer, or
         // else there is a memory leak on caller's side
         callback();
-    };
+    }.bind(vAPI.messaging);
 })();
 
 /******************************************************************************/
 
 vAPI.messaging.onPortDisconnect = function(port) {
-    port.onDisconnect.removeListener(vAPI.messaging.onPortDisconnect);
-    port.onMessage.removeListener(vAPI.messaging.onPortMessage);
-    delete vAPI.messaging.ports[port.name];
-};
+    port.onDisconnect.removeListener(this.onPortDisconnect);
+    port.onMessage.removeListener(this.onPortMessage);
+    this.ports.delete(port.name);
+}.bind(vAPI.messaging);
 
 /******************************************************************************/
 
 vAPI.messaging.onPortConnect = function(port) {
-    port.onDisconnect.addListener(vAPI.messaging.onPortDisconnect);
-    port.onMessage.addListener(vAPI.messaging.onPortMessage);
-    vAPI.messaging.ports[port.name] = port;
-};
+    port.onDisconnect.addListener(this.onPortDisconnect);
+    port.onMessage.addListener(this.onPortMessage);
+    this.ports.set(port.name, port);
+}.bind(vAPI.messaging);
 
 /******************************************************************************/
 
@@ -1064,12 +1051,8 @@ vAPI.messaging.broadcast = function(message) {
         broadcast: true,
         msg: message
     };
-
-    for ( var portName in this.ports ) {
-        if ( this.ports.hasOwnProperty(portName) === false ) {
-            continue;
-        }
-        this.ports[portName].postMessage(messageWrapper);
+    for ( var entry of this.ports ) {
+        entry[1].postMessage(messageWrapper);
     }
 };
 

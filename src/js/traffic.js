@@ -533,8 +533,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
-    // So we filter if and only if the "advanced user" mode is selected
-    if ( µb.userSettings.advancedUserEnabled ) {
+    // So we filter if and only if the "advanced user" mode is selected.
+    // https://github.com/gorhill/uBlock/issues/3150
+    //   Ability to globally block CSP reports MUST also apply to
+    //   behind-the-scene network requests.
+    if ( µb.userSettings.advancedUserEnabled || requestType === 'csp_report' ) {
         result = pageStore.filterRequest(context);
     }
 
@@ -562,6 +565,96 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
 };
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/3140
+
+var onBeforeMaybeSpuriousCSPReport = function(details) {
+    var tabId = details.tabId;
+
+    // Ignore behind-the-scene requests.
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+
+    // Lookup the page store associated with this tab id.
+    var µb = µBlock,
+        pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null ) { return; }
+
+    // If uBO is disabled for the page, it can't possibly causes CSP reports
+    // to be triggered.
+    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+
+    // A resource was redirected to a neutered one?
+    // TODO: mind injected scripts/styles as well.
+    if ( pageStore.internalRedirectionCount === 0 ) { return; }
+
+    var textDecoder = onBeforeMaybeSpuriousCSPReport.textDecoder;
+    if (
+        textDecoder === undefined &&
+        typeof self.TextDecoder === 'function'
+    ) {
+        textDecoder =
+        onBeforeMaybeSpuriousCSPReport.textDecoder = new TextDecoder();
+    }
+
+    // Find out whether the CSP report is a potentially spurious CSP report.
+    // If from this point on we are unable to parse the CSP report data, the
+    // safest assumption to protect users is to assume the CSP report is
+    // spurious.
+    if (
+        textDecoder !== undefined &&
+        details.method === 'POST'
+    ) {
+        var raw = details.requestBody && details.requestBody.raw;
+        if (
+            Array.isArray(raw) &&
+            raw.length !== 0 &&
+            raw[0] instanceof Object &&
+            raw[0].bytes instanceof ArrayBuffer
+        ) {
+            var data;
+            try {
+                data = JSON.parse(textDecoder.decode(raw[0].bytes));
+            } catch (ex) {
+            }
+            if ( data instanceof Object ) {
+                var report = data['csp-report'];
+                if ( report instanceof Object ) {
+                    var blocked = report['blocked-uri'] || report['blockedURI'],
+                        validBlocked = typeof blocked === 'string',
+                        source = report['source-file'] || report['sourceFile'],
+                        validSource = typeof source === 'string';
+                    if (
+                        (validBlocked || validSource) &&
+                        (!validBlocked || !blocked.startsWith('data')) &&
+                        (!validSource || !source.startsWith('data'))
+                    ) {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    // Potentially spurious CSP report.
+    if ( µb.logger.isEnabled() ) {
+        var hostname = µb.URI.hostnameFromURI(details.url);
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            { result: 1, source: 'global', raw: 'no-spurious-csp-report' },
+            'csp_report',
+            details.url,
+            hostname,
+            hostname
+        );
+    }
+
+    return { cancel: true };
+};
+
+onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 
 /******************************************************************************/
 
@@ -868,6 +961,10 @@ vAPI.net.onBeforeRequest = {
     ],
     extra: [ 'blocking' ],
     callback: onBeforeRequest
+};
+
+vAPI.net.onBeforeMaybeSpuriousCSPReport = {
+    callback: onBeforeMaybeSpuriousCSPReport
 };
 
 vAPI.net.onHeadersReceived = {

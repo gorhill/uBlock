@@ -74,6 +74,7 @@ section > div:first-child > textarea {
     height: 8em;
     margin: 0;
     overflow: hidden;
+    overflow-y: auto;
     padding: 2px;
     resize: none;
     width: 100%;
@@ -165,10 +166,11 @@ aside {
     border: 1px solid #aaa;
     bottom: 4px;
     box-sizing: border-box;
-    visibility: hidden;
+    min-width: 24em;
     padding: 4px;
     position: fixed;
     right: 4px;
+    visibility: hidden;
     width: calc(40% - 4px);
 }
 body.paused > aside {
@@ -178,6 +180,12 @@ body.paused > aside {
 }
 body.paused > aside:hover {
     opacity: 1;
+}
+body.paused > aside.show {
+    opacity: 1;
+}
+body.paused > aside.hide {
+    opacity: 0.1;
 }
 </style>
 </head>

@@ -251,6 +251,10 @@
     "message":"Blokiraj oddaljene pisave",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Uporabljenega prostora: {{value}} bajtov",
     "description":"English: Storage used: {{}} bytes"

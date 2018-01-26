@@ -37,6 +37,13 @@ cp platform/webext/vapi-usercss.js      $DES/js/
 rm $DES/options_ui.html
 rm $DES/js/options_ui.js
 
+echo "*** AdNauseam.webext: concatenating content scripts"
+cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
+mv /tmp/contentscript.js $DES/js/contentscript.js
+rm $DES/js/vapi-usercss.js
+
 echo "*** AdNauseam::WebExt: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version
 #

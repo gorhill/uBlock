@@ -251,6 +251,10 @@
     "message":"Blokuoti nuotolinius šriftus",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blokuoti CSP ataskaitas",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Naudojama vietos: {{value}} baitų",
     "description":"English: Storage used: {{}} bytes"

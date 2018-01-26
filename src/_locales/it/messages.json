@@ -68,7 +68,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Apri la dashboard",
+    "message":"Apri il pannello di controllo",
     "description":"English: Click to open the dashboard"
   },
   "popupTipZapper":{
@@ -250,6 +250,10 @@
   "settingsNoRemoteFontsPrompt":{
     "message":"Blocca font remoti",
     "description":""
+  },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blocca i report CSP",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed":{
     "message":"Spazio utilizzato: {{value}} byte",
@@ -580,7 +584,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Errore di connessione: {{msg}}",
+    "message":"Errore di rete: {{msg}}",
     "description":"English: Network error: {{msg}}"
   },
   "subscriberConfirm":{

@@ -19,57 +19,21 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global HTMLDocument, XMLDocument */
+// For non-background page
 
 'use strict';
 
-// For non background pages
-
 /******************************************************************************/
-
-(function(self) {
-
-/******************************************************************************/
-
-// https://github.com/chrisaljoudi/uBlock/issues/464
-if ( document instanceof HTMLDocument === false ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/1528
-    // A XMLDocument can be a valid HTML document.
-    if (
-        document instanceof XMLDocument === false ||
-        document.createElement('div') instanceof HTMLDivElement === false
-    ) {
-        return;
-    }
-}
-
-// https://github.com/gorhill/uBlock/issues/1124
-// Looks like `contentType` is on track to be standardized:
-//   https://dom.spec.whatwg.org/#concept-document-content-type
-// https://forums.lanik.us/viewtopic.php?f=64&t=31522
-//   Skip text/plain documents.
-var contentType = document.contentType || '';
-if ( /^image\/|^text\/plain/.test(contentType) ) {
-    return;
-}
-
-/******************************************************************************/
-
-// https://bugs.chromium.org/p/project-zero/issues/detail?id=1225&desc=6#c10
-if ( !self.vAPI || self.vAPI.uBO !== true ) {
-    self.vAPI = { uBO: true };
-}
-
-var vAPI = self.vAPI;
-var chrome = self.chrome;
 
 // https://github.com/chrisaljoudi/uBlock/issues/456
-// Already injected?
-if ( vAPI.sessionId ) {
-    return;
-}
+//   Skip if already injected.
+
+if ( typeof vAPI === 'object' && !vAPI.clientScript ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
+/******************************************************************************/
+
+vAPI.clientScript = true;
 
 vAPI.randomToken = function() {
     return String.fromCharCode(Date.now() % 26 + 97) +
@@ -169,14 +133,15 @@ vAPI.messaging = {
 
     portPoller: function() {
         this.portTimer = null;
-        if ( this.port !== null ) {
-            if ( this.channelCount !== 0 || this.pendingCount !== 0 ) {
-                this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
-                this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
-                return;
-            }
+        if (
+            this.port !== null &&
+            this.channelCount === 0 &&
+            this.pendingCount === 0
+        ) {
+            return this.destroyPort();
         }
-        this.destroyPort();
+        this.portTimer = vAPI.setTimeout(this.portPollerCallback, this.portTimerDelay);
+        this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
     },
     portPollerCallback: null,
 
@@ -322,15 +287,12 @@ vAPI.messaging = {
 
     sendToChannelListeners: function(channelName, msg) {
         var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
+        if ( listeners === undefined ) { return; }
+        listeners = listeners.slice(0);
         var response;
-        for ( var i = 0, n = listeners.length; i < n; i++ ) {
-            response = listeners[i](msg);
-            if ( response !== undefined ) {
-                break;
-            }
+        for ( var listener of listeners ) {
+            response = listener(msg);
+            if ( response !== undefined ) { break; }
         }
         return response;
     }
@@ -351,6 +313,4 @@ vAPI.extensionsPage = 'chrome://extensions/';
 /******************************************************************************/
 /******************************************************************************/
 
-})(this);
-
-/******************************************************************************/
+} // <<<<<<<< end of HUGE-IF-BLOCK

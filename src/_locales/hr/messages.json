@@ -251,6 +251,10 @@
     "message":"Blokiraj udaljene fontove",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blokiraj CSP izvješća",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Korišteno prostora: {{value}} bajtova",
     "description":"English: Storage used: {{}} bytes"

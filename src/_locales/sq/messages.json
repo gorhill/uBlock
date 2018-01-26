@@ -251,6 +251,10 @@
     "message":"Bllokoj sistemin e shkronjave në linjë",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Bllokoj raportet e CSP-së",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Hapësira e përdorur: {{value}} bajt",
     "description":"English: Storage used: {{}} bytes"

@@ -137,6 +137,7 @@ var janitor = function() {
     ) {
         api.writeOne = writeOneNoop;
         logBuffer = null;
+        vAPI.messaging.broadcast({ what: 'loggerDisabled' });
     }
     if ( logBuffer !== null ) {
         vAPI.setTimeout(janitor, logBufferObsoleteAfter);

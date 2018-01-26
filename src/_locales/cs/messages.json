@@ -251,6 +251,10 @@
     "message":"Blokovat externí fonty",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Blokovat CSP reporty",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Prostoru využito: {{value}} bajtů",
     "description":"English: Storage used: {{}} bytes"
@@ -320,7 +324,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupAnnoyances":{
-    "message":"Otravné",
+    "message":"Dotěrnosti",
     "description":"The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose":{

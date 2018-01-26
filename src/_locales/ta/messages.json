@@ -251,6 +251,10 @@
     "message":"தொலை எழுத்துருக்களை தடு",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"பயன்படுத்தப்பட்ட சேமிப்பகத்தின் அளவு: {{value}} பைட்டுகள்",
     "description":"English: Storage used: {{}} bytes"

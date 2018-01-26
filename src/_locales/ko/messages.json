@@ -251,6 +251,10 @@
     "message":"글꼴 조종 차단",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"Block CSP reports",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"스토리지 사용량: {{value}} 바이트",
     "description":"English: Storage used: {{}} bytes"

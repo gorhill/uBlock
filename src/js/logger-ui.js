@@ -98,6 +98,7 @@ var staticFilterTypes = {
     'css': 'stylesheet',
     'frame': 'subdocument',
     'ping': 'other',
+    'object_subrequest': 'object',
     'xhr': 'xmlhttprequest'
 };
 

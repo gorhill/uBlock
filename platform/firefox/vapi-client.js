@@ -157,8 +157,35 @@ vAPI.shutdown = {
 
 /******************************************************************************/
 
-vAPI.prefs = {}; // ADN, for content-scripts
-vAPI.extensionsPage = 'about:addons';
+var insertUserCSS = self.injectCSS || function(){},
+    removeUserCSS = self.removeCSS || function(){};
+
+var processUserCSS = function(details, callback) {
+    var cssText;
+    var aa = details.add;
+    if ( Array.isArray(aa) ) {
+        for ( cssText of aa ) {
+            insertUserCSS(
+                'data:text/css;charset=utf-8,' +
+                encodeURIComponent(cssText)
+            );
+        }
+    }
+    aa = details.remove;
+    if ( Array.isArray(aa) ) {
+        for ( cssText of aa ) {
+            removeUserCSS(
+                'data:text/css;charset=utf-8,' +
+                encodeURIComponent(cssText)
+            );
+        }
+    }
+    if ( typeof callback === 'function' ) {
+        callback();
+    }
+};
+
+/******************************************************************************/
 
 vAPI.messaging = {
     channels: Object.create(null),
@@ -317,6 +344,10 @@ vAPI.messaging = {
     },
 
     send: function(channelName, message, callback) {
+        // User stylesheets are handled content-side on legacy Firefox.
+        if ( channelName === 'vapi-background' && message.what === 'userCSS' ) {
+            return processUserCSS(message, callback);
+        }
         this.sendTo(channelName, message, undefined, undefined, callback);
     },
 
@@ -399,15 +430,12 @@ vAPI.messaging = {
 
     sendToChannelListeners: function(channelName, msg) {
         var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
+        if ( listeners === undefined ) { return; }
+        listeners = listeners.slice(0);
         var response;
-        for ( var i = 0, n = listeners.length; i < n; i++ ) {
-            response = listeners[i](msg);
-            if ( response !== undefined ) {
-                break;
-            }
+        for ( var listener of listeners ) {
+            response = listener(msg);
+            if ( response !== undefined ) { break; }
         }
         return response;
     }
@@ -416,46 +444,6 @@ vAPI.messaging = {
 vAPI.messaging.start();
 
 // https://www.youtube.com/watch?v=Cg0cmhjdiLs
-
-/******************************************************************************/
-
-if ( self.injectCSS ) {
-    vAPI.userCSS = {
-        _userCSS: '',
-        _sheetURI: '',
-        _load: function() {
-            if ( this._userCSS === '' || this._sheetURI !== '' ) { return; }
-            this._sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(this._userCSS);
-            self.injectCSS(this._sheetURI);
-        },
-        _unload: function() {
-            if ( this._sheetURI === '' ) { return; }
-            self.removeCSS(this._sheetURI);
-            this._sheetURI = '';
-        },
-        add: function(cssText) {
-            if ( cssText === '' ) { return; }
-            if ( this._userCSS !== '' ) { this._userCSS += '\n'; }
-            this._userCSS += cssText;
-            this._unload();
-            this._load();
-        },
-        remove: function(cssText) {
-            if ( cssText === '' || this._userCSS === '' ) { return; }
-            this._userCSS = this._userCSS.replace(cssText, '').trim();
-            this._unload();
-            this._load();
-        },
-        toggle: function(state) {
-            if ( this._userCSS === '' ) { return; }
-            if ( state === undefined ) {
-                state = this._sheetURI === '';
-            }
-            return state ? this._load() : this._unload();
-        }
-    };
-    vAPI.hideNode = vAPI.unhideNode = function(){};
-}
 
 /******************************************************************************/
 

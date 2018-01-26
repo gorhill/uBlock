@@ -251,6 +251,10 @@
     "message":"Távoli betűkészletek blokkolása",
     "description":""
   },
+  "settingsNoCSPReportsPrompt":{
+    "message":"CSP jelentések blokkolása",
+    "description":"background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
   "settingsStorageUsed":{
     "message":"Tárolóhely használat: {{value}} byte",
     "description":"English: Storage used: {{}} bytes"

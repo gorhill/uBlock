@@ -29,8 +29,6 @@
 
 µBlock.restart = (function() {
 
-//quickProfiler.start('start.js');
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -113,8 +111,6 @@ var onAllReady = function() {
             'whitelistPane'
         ]);
     }
-
-    //quickProfiler.stop(0);
 
     µb.contextMenu.update(null);
     µb.adnauseam.onListsLoaded(µb.firstInstall && µb.lastRestoreFile === ""); // ADN

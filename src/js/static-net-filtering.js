@@ -58,6 +58,7 @@ var typeNameToTypeValue = {
         'stylesheet':  1 << 4,
              'image':  2 << 4,
             'object':  3 << 4,
+ 'object_subrequest':  3 << 4,
             'script':  4 << 4,
     'xmlhttprequest':  5 << 4,
          'sub_frame':  6 << 4,
@@ -1137,12 +1138,12 @@ FilterHostnameDict.prototype.logData = function() {
 };
 
 FilterHostnameDict.prototype.compile = function() {
-    return [ this.fid, µb.setToArray(this.dict) ];
+    return [ this.fid, µb.arrayFrom(this.dict) ];
 };
 
 FilterHostnameDict.load = function(args) {
     var f = new FilterHostnameDict();
-    f.dict = µb.setFromArray(args[1]);
+    f.dict = new Set(args[1]);
     return f;
 };
 
@@ -1387,8 +1388,8 @@ FilterParser.prototype.toNormalizedType = {
      'inline-script': 'inline-script',
              'media': 'media',
             'object': 'object',
-             'other': 'other',
  'object-subrequest': 'object',
+             'other': 'other',
               'ping': 'other',
           'popunder': 'popunder',
              'popup': 'popup',
@@ -2006,8 +2007,8 @@ FilterContainer.prototype.freeze = function() {
     this.fdataLast = null;
     this.filterLast = null;
     this.frozen = true;
-    //console.log(JSON.stringify(Array.from(filterClassHistogram)));
-    //this.tokenHistogram = new Map(Array.from(this.tokenHistogram).sort(function(a, b) {
+    //console.log(JSON.stringify(µb.arrayFrom(filterClassHistogram)));
+    //this.tokenHistogram = new Map(µb.arrayFrom(this.tokenHistogram).sort(function(a, b) {
     //    return a[0].localeCompare(b[0]) || (b[1] - a[1]);
     //}));
 };
