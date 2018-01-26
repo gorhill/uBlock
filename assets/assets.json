@@ -165,7 +165,7 @@
 		"off": true,
 		"title": "Fanboy’s Enhanced Tracking List",
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"malware-0": {
 		"content": "filters",
@@ -218,7 +218,7 @@
 		"off": true,
 		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
 		"content": "filters",
@@ -481,6 +481,16 @@
 		"contentURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt",
 		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
 	},
+	"JPN-1": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "JPN: Adguard Japan Filter",
+		"lang": "ja",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#japanese-filter"
+	},
 	"KOR-0": {
 		"content": "filters",
 		"group": "regions",
@@ -597,7 +607,7 @@
 		"title": "SWE: Fanboy's Swedish",
 		"lang": "sv",
 		"contentURL": "https://www.fanboy.co.nz/fanboy-swedish.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"TUR-0": {
 		"content": "filters",

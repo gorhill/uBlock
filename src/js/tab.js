@@ -140,7 +140,13 @@ housekeep itself.
 
     var PopupCandidate = function(targetTabId, openerTabId) {
         this.targetTabId = targetTabId;
-        this.openerTabId = openerTabId;
+        this.opener = {
+            tabId: openerTabId,
+            popunder: false,
+            trustedURL: openerTabId === µb.mouseEventRegister.tabId ?
+                µb.mouseEventRegister.url :
+                ''
+        };
         this.selfDestructionTimer = null;
         this.launchSelfDestruction();
     };
@@ -160,13 +166,20 @@ housekeep itself.
     };
 
     var popupCandidateTest = function(targetTabId) {
-        var candidates = popupCandidates, entry;
+        var candidates = popupCandidates,
+            entry;
         for ( var tabId in candidates ) {
             entry = candidates[tabId];
-            if ( targetTabId !== tabId && targetTabId !== entry.openerTabId ) {
+            if ( targetTabId !== tabId && targetTabId !== entry.opener.tabId ) {
                 continue;
             }
-            if ( vAPI.tabs.onPopupUpdated(tabId, entry.openerTabId) === true ) {
+            // https://github.com/gorhill/uBlock/issues/3129
+            //   If the trigger is a change in the opener's URL, mark the entry
+            //   as candidate for popunder filtering.
+            if ( targetTabId === entry.opener.tabId ) {
+                entry.opener.popunder = true;
+            }
+            if ( vAPI.tabs.onPopupUpdated(tabId, entry.opener) === true ) {
                 entry.destroy();
             } else {
                 entry.launchSelfDestruction();
@@ -651,7 +664,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( logData.token === µb.staticNetFilteringEngine.dotTokenHash ) {
             return result;
         }
-        var re = new RegExp(logData.regex),
+        var re = new RegExp(logData.regex, 'i'),
             matches = re.exec(popunderURL);
         if ( matches === null ) { return 0; }
         var beg = matches.index,
@@ -706,8 +719,9 @@ vAPI.tabs.onPopupUpdated = (function() {
         );
     };
 
-    return function(targetTabId, openerTabId) {
+    return function(targetTabId, openerDetails) {
         // Opener details.
+        var openerTabId = openerDetails.tabId;
         var tabContext = µb.tabContextManager.lookup(openerTabId);
         if ( tabContext === null ) { return; }
         var openerURL = tabContext.rawURL;
@@ -744,15 +758,12 @@ vAPI.tabs.onPopupUpdated = (function() {
             result = 0;
         // https://github.com/gorhill/uBlock/issues/2919
         // - If the target tab matches a clicked link, assume it's legit.
-        if (
-            openerTabId !== µb.mouseEventRegister.tabId ||
-            areDifferentURLs(targetURL, µb.mouseEventRegister.url)
-        ) {
+        if ( areDifferentURLs(targetURL, openerDetails.trustedURL) ) {
             result = popupMatch(openerURL, targetURL, 'popup');
         }
 
         // Popunder test.
-        if ( result === 0 ) {
+        if ( result === 0 && openerDetails.popunder ) {
             result = popunderMatch(openerURL, targetURL);
             if ( result === 1 ) {
                 popupType = 'popunder';
