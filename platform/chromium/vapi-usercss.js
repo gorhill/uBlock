@@ -395,22 +395,28 @@ vAPI.DOMFilterer.prototype = {
     },
 
     hideNode: function(node) {
-        if ( this.excludedNodeSet.has(node) ) { return; }
-        if ( this.hideNodeAttr === undefined ) { return; }
-        if ( this.hiddenNodeset.has(node) ) { return; }
+      if (this.excludedNodeSet.has(node)) { return; }
+      if (this.hideNodeAttr === undefined) { return; }
+      if (this.hiddenNodeset.has(node)) { return; }
+      vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
+
+      if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
         node.hidden = true;
         this.hiddenNodeset.add(node);
-        if ( this.hideNodeExpando === undefined ) { this.hideNodeInit(); }
+        if (this.hideNodeExpando === undefined) { this.hideNodeInit(); }
         node.setAttribute(this.hideNodeAttr, '');
-        if ( node[this.hideNodeExpando] === undefined ) {
-            node[this.hideNodeExpando] =
-                node.hasAttribute('style') &&
-               (node.getAttribute('style') || '');
+        if (node[this.hideNodeExpando] === undefined) {
+          node[this.hideNodeExpando] =
+            node.hasAttribute('style') &&
+            (node.getAttribute('style') || '');
         }
         this.hiddenNodesetToProcess.add(node);
+
         this.hideNodeBatchProcessTimer.start();
         this.hiddenNodeObserver.observe(node, this.hiddenNodeObserverOptions);
+      }
     },
+
 
     unhideNode: function(node) {
         if ( this.hiddenNodeset.has(node) === false ) { return; }

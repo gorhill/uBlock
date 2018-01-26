@@ -531,22 +531,6 @@ vAPI.DOMFilterer = (function() {
         this.selectors = new Map();
     };
 
-    // hideNode: function(node) {
-    //     if ( node[this.hiddenId] !== undefined ) { return; }
-    //     if ( this.excludeId !== undefined && node[this.excludeId] ) { return; }
-    //
-    //     vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
-    //
-    //     if (!vAPI.prefs.hidingDisabled) { // ADN: only if we are hiding
-    //
-    //       node.setAttribute(this.hiddenId, '');
-    //       this.hiddenNodeCount += 1;
-    //       node.hidden = true;
-    //       node[this.hiddenId] = null;
-    //       platformHideNode(node);
-    //     }
-    // },
-
     DOMProceduralFilterer.prototype = {
 
         addProceduralSelectors: function(aa) {

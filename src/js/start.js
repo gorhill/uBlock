@@ -113,7 +113,7 @@ var onAllReady = function() {
     }
 
     µb.contextMenu.update(null);
-    µb.adnauseam.onListsLoaded(µb.firstInstall && µb.lastRestoreFile === ""); // ADN
+    µb.adnauseam.onListsLoaded(µb.firstInstall && (µb.lastRestoreFile === undefined || µb.lastRestoreFile === "")); // ADN
 
     µb.firstInstall = false;
 
