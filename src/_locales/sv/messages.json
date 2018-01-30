@@ -52,7 +52,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klicka för att aktivera uBlock₀ för den här webbplatsen.",
+    "message": "Klicka för att aktivera uBlock₀ på den här webbplatsen.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klicka för att blockera alla popup-fönster på denna sida",
+    "message": "Klicka för att blockera alla poppupp-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klicka för att inte längre blockera alla popup-fönster på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera alla poppupp-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klicka för att inaktivera kosmetiska filter för den här webbplatsen",
+    "message": "Klicka för att inaktivera kosmetiska filter på den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klicka för att aktivera kosmetisk filtrering på denna sida",
+    "message": "Klicka för att aktivera kosmetisk filtrering på den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {

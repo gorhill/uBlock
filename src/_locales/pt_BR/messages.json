@@ -432,7 +432,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Confirmar",
+    "message": "Aplicar",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {

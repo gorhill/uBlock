@@ -68,7 +68,7 @@
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "इंस्टॉल से अब तक",
+    "message": "स्थापना से अब तक",
     "description": "English: since install"
   },
   "popupOr": {
@@ -296,11 +296,11 @@
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
-    "message": "Storage used: {{value}} bytes",
+    "message": "प्रचलित मैमोरी: {{value}} बाइट्स",
     "description": "English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "अंतिम बहाल:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
@@ -320,11 +320,11 @@
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "अभी अपडेट करें",
+    "message": "अभी नवीकृत करें",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "सभी अस्थायी मेमोरी को शुद्ध करे",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "सतानेवाले विज्ञापन",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -388,11 +388,11 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Last update: {{ago}}.\nClick to force an update.",
+    "message": "अन्तिम अद्यातन: {{ago}}. कृत्रिम नवीकरण के लिए क्लिक की जिए",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating...",
+    "message": "नवीकरण प्रगति में हैं...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -448,7 +448,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file...",
+    "message": "फाइल से आयात करे...",
     "description": ""
   },
   "rulesExport": {
@@ -512,7 +512,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "वर्तमान टैब",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
@@ -524,11 +524,11 @@
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Context:",
+    "message": "सन्दर्भ:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "प्रकार",
+    "message": "प्रकार:",
     "description": "Label for the type selector"
   },
   "loggerURLFilteringHeader": {
@@ -568,11 +568,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "सिवाय",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "even if",
+    "message": "भले ही",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
@@ -580,7 +580,7 @@
     "description": "Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog": {
-    "message": "Change log",
+    "message": "परिवर्तन सूची",
     "description": "English: Change log"
   },
   "aboutWiki": {
@@ -668,11 +668,11 @@
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "बंद",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin ने इस पेज को चालु होने से रोका हैं:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -684,15 +684,15 @@
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "इन में पायी है:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "वापस जाएँ",
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "इस विंडो को बंद करे",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
@@ -700,11 +700,11 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "कुछ समय के लिए",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "हमेशा",
+    "message": "स्थायी",
     "description": "English: Permanently"
   },
   "cloudPush": {
@@ -724,7 +724,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "इस साधन का नाम:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
@@ -736,7 +736,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "परिवर्तन लागू करें",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -748,7 +748,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "कुछ समय के लिए विशाल तत्वोंको चलने की अनुमति दे",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy": {

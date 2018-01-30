@@ -512,7 +512,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "বর্তমান ট্যাব",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
