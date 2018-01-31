@@ -35,6 +35,7 @@ cp platform/opera/manifest.json $DES/
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/ka
+rm -r $DES/_locales/kk
 rm -r $DES/_locales/mr
 rm -r $DES/_locales/ta
 
