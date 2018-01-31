@@ -228,7 +228,7 @@
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Sembunyikan tempat elemen yang diblokir",
+    "message": "Sembunyikan wadah elemen yang diblokir",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
