@@ -375,14 +375,25 @@ vAPI.DOMFilterer = (function() {
 
     // 'P' stands for 'Procedural'
 
+    var PSelectorHasTask = function(task) {
+        this.selector = task[1];
+    };
+    PSelectorHasTask.prototype.exec = function(input) {
+        var output = [];
+        for ( var node of input ) {
+            if ( node.querySelector(this.selector) !== null ) {
+                output.push(node);
+            }
+        }
+        return output;
+    };
+
     var PSelectorHasTextTask = function(task) {
         this.needle = new RegExp(task[1]);
     };
-
     PSelectorHasTextTask.prototype.exec = function(input) {
         var output = [];
         for ( var node of input ) {
-            // ADN: don't if not hiding
             if ( this.needle.test(node.textContent) ) {
                 output.push(node);
             }
