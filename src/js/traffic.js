@@ -812,6 +812,12 @@ var filterDocument = (function() {
     };
 
     return function(pageStore, details) {
+        // https://github.com/gorhill/uBlock/issues/3478
+        var statusCode = details.statusCode || 0;
+        if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {
+            return;
+        }
+
         var hostname = µb.URI.hostnameFromURI(details.url);
         if ( hostname === '' ) { return; }
 
