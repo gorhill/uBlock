@@ -337,9 +337,7 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
     // Post-change
     switch ( name ) {
     case 'advancedUserEnabled':
-        if ( value === true ) {
-            us.dynamicFilteringEnabled = true;
-        }
+        us.dynamicFilteringEnabled = value;
         break;
     case 'autoUpdate':
         this.scheduleAssetUpdater(value ? 7 * 60 * 1000 : 0);
