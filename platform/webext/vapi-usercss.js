@@ -95,12 +95,6 @@ vAPI.DOMFilterer.prototype = {
             addedSelectors.push(entry.selectors);
         }
 
-        // ADN adCheck
-        var nodes = document.querySelectorAll(addedSelectors.join(',\n'));
-        for ( var node of nodes ) {
-            vAPI.adCheck && vAPI.adCheck(node);
-        }
-
         this.addedCSSRules.clear();
         
         if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
@@ -134,9 +128,15 @@ vAPI.DOMFilterer.prototype = {
             injected: details.injected === true
         };
 
-        if (!vAPI.prefs.hidingDisabled) { //ADN
+        if (!vAPI.prefs.hidingDisabled) { // ADN
           this.addedCSSRules.add(entry);
         } 
+
+        // ADN adCheck
+        var nodes = document.querySelectorAll(selectorsStr);
+        for ( var node of nodes ) {
+            vAPI.adCheck && vAPI.adCheck(node);
+        }
 
         this.filterset.add(entry);
 
