@@ -219,8 +219,10 @@ vAPI.DOMFilterer.prototype = {
             selectors.join(',\n') :
             selectors;
         if ( selectorsStr.length === 0 ) { return; }
-
-        vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
+        
+        if (!vAPI.prefs.hidingDisabled) { //ADN
+          vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
+        }
         this.commit();
         this.triggerListeners('declarative', selectorsStr);
 
@@ -399,7 +401,7 @@ vAPI.DOMFilterer.prototype = {
       if (this.hideNodeAttr === undefined) { return; }
       if (this.hiddenNodeset.has(node)) { return; }
       vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
-      // TODO: vAPI.prefs is not defined
+     
       if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
         node.hidden = true;
         this.hiddenNodeset.add(node);

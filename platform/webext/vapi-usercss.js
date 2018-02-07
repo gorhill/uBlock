@@ -103,7 +103,6 @@ vAPI.DOMFilterer.prototype = {
 
         this.addedCSSRules.clear();
         
-        // TODO: vAPI.prefs is not defined
         if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
             userStylesheet.apply();
             if ( addedSelectors.length !== 0 ) {
@@ -134,8 +133,13 @@ vAPI.DOMFilterer.prototype = {
             lazy: details.lazy === true,
             injected: details.injected === true
         };
-        this.addedCSSRules.add(entry);
+
+        if (!vAPI.prefs.hidingDisabled) { //ADN
+          this.addedCSSRules.add(entry);
+        } 
+
         this.filterset.add(entry);
+
         if (
             this.disabled === false &&
             entry.lazy !== true &&

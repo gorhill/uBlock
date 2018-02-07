@@ -1379,6 +1379,7 @@ vAPI.domSurveyor = (function() {
     };
 
     var bootstrapPhase1 = function(response) {
+        if (response && response.prefs) vAPI.prefs = response.prefs; // ADN
         // cosmetic filtering engine aka 'cfe'
         var cfeDetails = response && response.specificCosmeticFilters;
         if ( !cfeDetails || !cfeDetails.ready ) {
@@ -1466,6 +1467,7 @@ vAPI.domSurveyor = (function() {
 
     // This starts bootstrap process.
     var url = window.location.href;
+
     vAPI.messaging.send(
         'contentscript',
         {
