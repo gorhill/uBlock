@@ -94,10 +94,21 @@ vAPI.DOMFilterer.prototype = {
             }
             addedSelectors.push(entry.selectors);
         }
+
+        // ADN adCheck
+        var nodes = document.querySelectorAll(addedSelectors.join(',\n'));
+        for ( var node of nodes ) {
+            vAPI.adCheck && vAPI.adCheck(node);
+        }
+
         this.addedCSSRules.clear();
-        userStylesheet.apply();
-        if ( addedSelectors.length !== 0 ) {
-            this.triggerListeners('declarative', addedSelectors.join(',\n'));
+        
+        // TODO: vAPI.prefs is not defined
+        if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
+            userStylesheet.apply();
+            if ( addedSelectors.length !== 0 ) {
+                this.triggerListeners('declarative', addedSelectors.join(',\n'));
+            }
         }
     },
 
@@ -165,6 +176,7 @@ vAPI.DOMFilterer.prototype = {
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         if ( this.hideNodeAttr === undefined ) { return; }
+        
         node.setAttribute(this.hideNodeAttr, '');
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;

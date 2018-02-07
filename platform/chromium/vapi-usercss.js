@@ -399,7 +399,7 @@ vAPI.DOMFilterer.prototype = {
       if (this.hideNodeAttr === undefined) { return; }
       if (this.hiddenNodeset.has(node)) { return; }
       vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
-
+      // TODO: vAPI.prefs is not defined
       if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
         node.hidden = true;
         this.hiddenNodeset.add(node);
