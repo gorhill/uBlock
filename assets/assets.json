@@ -533,7 +533,8 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
+		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
 	},
 	"POL-1": {
 		"content": "filters",
