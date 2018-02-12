@@ -13,9 +13,10 @@
 
 ### Steps for anyone to reproduce the issue
 
-1. Be as detailed as possible:
-1. Because we are not looking over your shoulder and
-1. Keep in mind: Nobody can read your mind.
+<!-- 1. Do this
+2. Then do this
+3. Observe this
+4. Etc. -->
 
 ### Your settings
 
