@@ -76,7 +76,7 @@ var nameToActionMap = {
 // For performance purpose, as simple tests as possible
 var reHostnameVeryCoarse = /[g-z_-]/;
 var reIPv4VeryCoarse = /\.\d+$/;
-var reBadHostname = /[^0-9a-z_.\[\]:-]/;
+var reBadHostname = /[^0-9a-z_.\[\]:%-]/;
 
 // http://tools.ietf.org/html/rfc5952
 // 4.3: "MUST be represented in lowercase"

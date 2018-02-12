@@ -869,6 +869,7 @@ var untangleRules = function(s) {
     var firewallRules = [];
     var urlRules = [];
     var switches = [];
+    var reIsSwitchRule = /^[a-z-]+:\s/;
 
     while ( lineBeg < textEnd ) {
         lineEnd = s.indexOf('\n', lineBeg);
@@ -881,12 +882,12 @@ var untangleRules = function(s) {
         line = s.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
 
-        if ( line.indexOf('://') !== -1 ) {
-            urlRules.push(line);
-        } else if ( line.indexOf(':') === -1 ) {
-            firewallRules.push(line);
-        } else {
+        if ( reIsSwitchRule.test(line) ) {
             switches.push(line);
+        } else if ( line.indexOf('://') !== -1 ) {
+            urlRules.push(line);
+        } else {
+            firewallRules.push(line);
         }
     }
 
