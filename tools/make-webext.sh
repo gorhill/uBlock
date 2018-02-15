@@ -42,6 +42,10 @@ rm $DES/img/icon_128.png
 rm $DES/options_ui.html
 rm $DES/js/options_ui.js
 
+echo "*** uBlock0.chromium: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
+
 echo "*** uBlock0.webext: Generating meta..."
 python tools/make-webext-meta.py $DES/
 

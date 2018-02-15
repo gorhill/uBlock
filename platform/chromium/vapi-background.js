@@ -944,6 +944,38 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3474
+// https://github.com/gorhill/uBlock/issues/2823
+// - foil ability of web pages to identify uBO through
+//   its web accessible resources.
+// https://github.com/gorhill/uBlock/issues/3497
+// - prevent web pages from interfering with uBO's element picker
+
+(function() {
+    vAPI.warSecret =
+        Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
+        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+
+    var key = 'secret=' + vAPI.warSecret;
+    var root = vAPI.getURL('/');
+    var guard = function(details) {
+        if ( details.url.indexOf(key) === -1 ) {
+            return { redirectUrl: root };
+        }
+    };
+
+    chrome.webRequest.onBeforeRequest.addListener(
+        guard,
+        {
+            urls: [ root + 'web_accessible_resources/*' ]
+        },
+        [ 'blocking' ]
+    );
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
 //   Firefox for Android does no support browser.contextMenus.
 

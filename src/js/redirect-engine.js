@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,14 +28,97 @@
 /******************************************************************************/
 /******************************************************************************/
 
+var warResolve = (function() {
+    var timer;
+    var toResolve = new Set();
+    var toProcess = new Set();
+    var reMimeParser = /^[^/]+\/([^\s;]+)/;
+
+    var replacer = function(s) {
+        if ( s === '+' ) { return '-'; }
+        if ( s === '/' ) { return '_'; }
+        if ( s === '=' ) { return ''; }
+        return s;
+    };
+
+    var filenameFromToken = function(token, mime) {
+        var name = btoa(token).replace(/[+/=]/g, replacer);
+        var match = reMimeParser.exec(mime);
+        if ( match !== null ) {
+            name += '.' + match[1];
+        }
+        return name;
+    };
+
+    var onResolved = function(success, token, url) {
+        var reng = µBlock.redirectEngine;
+        this.onload = this.onerror = null;
+        var resource = reng.resources.get(token);
+        if ( resource !== undefined && success ) {
+            resource.warURL = url;
+        }
+        toProcess.delete(token);
+        if ( toResolve.size === 0 && toProcess.size === 0 ) {
+            reng.selfieFromResources();
+        }
+    };
+
+    var resolvePending = function() {
+        timer = undefined;
+        var reng = µBlock.redirectEngine,
+            resources = reng.resources,
+            n = 8; // max number of xhr at once
+        for ( var token of toResolve ) {
+            var resource = resources.get(token);
+            toResolve.delete(token);
+            if ( resource === undefined ) { continue; }
+            toProcess.add(token);
+            var url = vAPI.getURL(
+                '/web_accessible_resources/' +
+                filenameFromToken(token, resource.mime)
+            );
+            var xhr = new XMLHttpRequest();
+            xhr.timeout = 1000;
+            xhr.open('head', url + '?secret=' + vAPI.warSecret);
+            xhr.onload = onResolved.bind(this, true, token, url);
+            xhr.onerror = onResolved.bind(this, false, token, url);
+            xhr.responseType = 'text';
+            xhr.send();
+            n -= 1;
+            if ( n === 0 ) { break; }
+        }
+        if ( toResolve.size !== 0 ) {
+            timer = vAPI.setTimeout(resolvePending, 5);
+        } else if ( toProcess.size === 0 ) {
+            reng.selfieFromResources();
+        }
+    };
+
+    return function(token) {
+        if ( vAPI.warSecret !== undefined ) {
+            toResolve.add(token);
+        }
+        if ( timer === undefined ) {
+            timer = vAPI.setTimeout(resolvePending, 1);
+        }
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 var RedirectEntry = function() {
     this.mime = '';
     this.data = '';
+    this.warURL = undefined;
 };
 
 /******************************************************************************/
 
 RedirectEntry.prototype.toURL = function() {
+    if ( this.warURL !== undefined ) {
+        return this.warURL + '?secret=' + vAPI.warSecret;
+    }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
             this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
@@ -75,6 +158,7 @@ RedirectEntry.fromSelfie = function(selfie) {
     var r = new RedirectEntry();
     r.mime = selfie.mime;
     r.data = selfie.data;
+    r.warURL = selfie.warURL;
     return r;
 };
 
@@ -340,7 +424,6 @@ RedirectEngine.prototype.toSelfie = function() {
     }
     var µb = µBlock;
     return {
-        resources: µb.arrayFrom(this.resources),
         rules: rules,
         ruleTypes: µb.arrayFrom(this.ruleTypes),
         ruleSources: µb.arrayFrom(this.ruleSources),
@@ -351,22 +434,11 @@ RedirectEngine.prototype.toSelfie = function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.fromSelfie = function(selfie) {
-    // Resources.
-    this.resources = new Map();
-    var resources = selfie.resources,
-        item;
-    for ( var i = 0, n = resources.length; i < n; i++ ) {
-        item = resources[i];
-        this.resources.set(item[0], RedirectEntry.fromSelfie(item[1]));
-    }
-
-    // Rules.
     this.rules = new Map(selfie.rules);
     this.ruleTypes = new Set(selfie.ruleTypes);
     this.ruleSources = new Set(selfie.ruleSources);
     this.ruleDestinations = new Set(selfie.ruleDestinations);
     this.modifyTime = Date.now();
-
     return true;
 };
 
@@ -428,6 +500,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         // No more data, add the resource.
         this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
+        warResolve(fields[0]);
 
         fields = undefined;
     }
@@ -435,7 +508,50 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     // Process pending resource data.
     if ( fields !== undefined ) {
         this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
+        warResolve(fields[0]);
     }
+};
+
+/******************************************************************************/
+
+var resourcesSelfieVersion = 1;
+
+RedirectEngine.prototype.selfieFromResources = function() {
+    vAPI.cacheStorage.set({
+        resourcesSelfie: {
+            version: resourcesSelfieVersion,
+            resources: µBlock.arrayFrom(this.resources)
+        }
+    });
+};
+
+RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
+    var me = this;
+
+    var onSelfieReady = function(bin) {
+        if ( bin instanceof Object === false ) {
+            return callback(false);
+        }
+        var selfie = bin.resourcesSelfie;
+        if (
+            selfie instanceof Object === false ||
+            selfie.version !== resourcesSelfieVersion ||
+            Array.isArray(selfie.resources) === false
+        ) {
+            return callback(false);
+        }
+        me.resources = new Map();
+        for ( var entry of bin.resourcesSelfie.resources ) {
+            me.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
+        }
+        callback(true);
+    };
+
+    vAPI.cacheStorage.get('resourcesSelfie', onSelfieReady);
+};
+
+RedirectEngine.prototype.invalidateResourcesSelfie = function() {
+    vAPI.cacheStorage.remove('resourcesSelfie');
 };
 
 /******************************************************************************/

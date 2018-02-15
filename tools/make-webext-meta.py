@@ -31,6 +31,9 @@ if match:
     else:
         builttype = 'rc' + str(buildtype - 100)
     webext_manifest['version'] = match.group(1) + builttype
+    gecko = webext_manifest['applications']['gecko']
+    gecko['id'] = gecko['id'].replace('uBlock0', 'uBlock0.dev-build')
+    webext_manifest['name'] = webext_manifest['name'] + ' dev build'
 else:
     webext_manifest['version'] = chromium_manifest['version']
 

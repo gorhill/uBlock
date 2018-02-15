@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -795,17 +795,12 @@
 
 /******************************************************************************/
 
-µBlock.loadRedirectResources = function(callback) {
+µBlock.loadRedirectResources = function(updatedContent) {
     var µb = this,
         content = '';
 
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
-    }
-
     var onDone = function() {
         µb.redirectEngine.resourcesFromString(content);
-        callback();
     };
 
     var onUserResourcesLoaded = function(details) {
@@ -825,7 +820,17 @@
         µb.assets.fetchText(µb.hiddenSettings.userResourcesLocation, onUserResourcesLoaded);
     };
 
-    this.assets.get('ublock-resources', onResourcesLoaded);
+    if ( typeof updatedContent === 'string' && updatedContent.length !== 0 ) {
+        return onResourcesLoaded({ content: updatedContent });
+    }
+
+    var onSelfieReady = function(success) {
+        if ( success !== true ) {
+            µb.assets.get('ublock-resources', onResourcesLoaded);
+        }
+    };
+
+    µb.redirectEngine.resourcesFromSelfie(onSelfieReady);
 };
 
 /******************************************************************************/
@@ -1105,8 +1110,9 @@
                 this.compilePublicSuffixList(details.content);
             }
         } else if ( details.assetKey === 'ublock-resources' ) {
+            this.redirectEngine.invalidateResourcesSelfie();
             if ( cached ) {
-                this.redirectEngine.resourcesFromString(details.content);
+                this.loadRedirectResources(details.content);
             }
         }
         vAPI.messaging.broadcast({

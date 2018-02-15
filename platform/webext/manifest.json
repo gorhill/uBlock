@@ -88,5 +88,8 @@
          "48":"img/ublock.svg"
       }
    },
-   "version":"1.9.15.101"
+   "version":"1.9.15.101",
+   "web_accessible_resources": [
+      "/web_accessible_resources/*"
+   ]
 }

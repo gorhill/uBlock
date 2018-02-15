@@ -70,5 +70,8 @@
     "short_name": "uBlock₀",
     "storage": {
         "managed_schema": "managed_storage.json"
-    }
+    },
+    "web_accessible_resources": [
+        "/web_accessible_resources/*"
+    ]
 }
