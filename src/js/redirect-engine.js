@@ -81,9 +81,20 @@ var RedirectEntry = function() {
 
 /******************************************************************************/
 
-RedirectEntry.prototype.toURL = function() {
+// Prevent redirection to web accessible resources when the request is
+// of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
+// cause leakage of extension id. See:
+// - https://stackoverflow.com/a/8056313
+// - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
+
+RedirectEntry.prototype.toURL = function(details) {
     if ( this.warURL !== undefined ) {
-        return this.warURL + '?secret=' + vAPI.warSecret;
+        if (
+            details instanceof Object === false ||
+            details.requestType !== 'xmlhttprequest'
+        ) {
+            return this.warURL + '?secret=' + vAPI.warSecret;
+        }
     }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
@@ -214,12 +225,10 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 
 RedirectEngine.prototype.toURL = function(context) {
     var token = this.lookup(context);
-    if ( token === undefined ) {
-        return;
-    }
+    if ( token === undefined ) { return; }
     var entry = this.resources.get(token);
     if ( entry !== undefined ) {
-        return entry.toURL();
+        return entry.toURL(context);
     }
 };
 
