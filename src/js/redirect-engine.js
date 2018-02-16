@@ -29,78 +29,44 @@
 /******************************************************************************/
 
 var warResolve = (function() {
-    var timer;
-    var toResolve = new Set();
-    var toProcess = new Set();
-    var reMimeParser = /^[^/]+\/([^\s;]+)/;
+    var warPairs = [];
 
-    var replacer = function(s) {
-        if ( s === '+' ) { return '-'; }
-        if ( s === '/' ) { return '_'; }
-        if ( s === '=' ) { return ''; }
-        return s;
-    };
-
-    var filenameFromToken = function(token, mime) {
-        var name = btoa(token).replace(/[+/=]/g, replacer);
-        var match = reMimeParser.exec(mime);
-        if ( match !== null ) {
-            name += '.' + match[1];
-        }
-        return name;
-    };
-
-    var onResolved = function(success, token, url) {
+    var onPairsReady = function() {
         var reng = µBlock.redirectEngine;
-        this.onload = this.onerror = null;
-        var resource = reng.resources.get(token);
-        if ( resource !== undefined && success ) {
-            resource.warURL = url;
-        }
-        toProcess.delete(token);
-        if ( toResolve.size === 0 && toProcess.size === 0 ) {
-            reng.selfieFromResources();
-        }
-    };
-
-    var resolvePending = function() {
-        timer = undefined;
-        var reng = µBlock.redirectEngine,
-            resources = reng.resources,
-            n = 8; // max number of xhr at once
-        for ( var token of toResolve ) {
-            var resource = resources.get(token);
-            toResolve.delete(token);
+        for ( var i = 0; i < warPairs.length; i += 2 ) {
+            var resource = reng.resources.get(warPairs[i+0]);
             if ( resource === undefined ) { continue; }
-            toProcess.add(token);
-            var url = vAPI.getURL(
-                '/web_accessible_resources/' +
-                filenameFromToken(token, resource.mime)
+            resource.warURL = vAPI.getURL(
+                '/web_accessible_resources/' + warPairs[i+1]
             );
-            var xhr = new XMLHttpRequest();
-            xhr.timeout = 1000;
-            xhr.open('head', url + '?secret=' + vAPI.warSecret);
-            xhr.onload = onResolved.bind(this, true, token, url);
-            xhr.onerror = onResolved.bind(this, false, token, url);
-            xhr.responseType = 'text';
-            xhr.send();
-            n -= 1;
-            if ( n === 0 ) { break; }
         }
-        if ( toResolve.size !== 0 ) {
-            timer = vAPI.setTimeout(resolvePending, 5);
-        } else if ( toProcess.size === 0 ) {
-            reng.selfieFromResources();
-        }
+        reng.selfieFromResources();
     };
 
-    return function(token) {
-        if ( vAPI.warSecret !== undefined ) {
-            toResolve.add(token);
+    return function() {
+        if ( vAPI.warSecret === undefined || warPairs.length !== 0 ) {
+            return onPairsReady();
         }
-        if ( timer === undefined ) {
-            timer = vAPI.setTimeout(resolvePending, 1);
-        }
+
+        var onPairsLoaded = function(details) {
+            var marker = '>>>>>';
+            var pos = details.content.indexOf(marker);
+            if ( pos === -1 ) { return; }
+            var pairs = details.content.slice(pos + marker.length)
+                                      .trim()
+                                      .split('\n');
+            if ( (pairs.length & 1) !== 0 ) { return; }
+            for ( var i = 0; i < pairs.length; i++ ) {
+                pairs[i] = pairs[i].trim();
+            }
+            warPairs = pairs;
+            onPairsReady();
+        };
+
+        µBlock.assets.fetchText(
+            '/web_accessible_resources/imported.txt?secret=' + vAPI.warSecret,
+            onPairsLoaded
+        );
     };
 })();
 
@@ -500,7 +466,6 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         // No more data, add the resource.
         this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
-        warResolve(fields[0]);
 
         fields = undefined;
     }
@@ -508,13 +473,14 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     // Process pending resource data.
     if ( fields !== undefined ) {
         this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
-        warResolve(fields[0]);
     }
+
+    warResolve();
 };
 
 /******************************************************************************/
 
-var resourcesSelfieVersion = 1;
+var resourcesSelfieVersion = 2;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     vAPI.cacheStorage.set({

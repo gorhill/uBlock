@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import base64
+import hashlib
 import os
 import re
 import sys
@@ -19,6 +20,8 @@ with open('./src/web_accessible_resources/to-import.txt', 'r') as f:
         if len(line) != 0 and line[0] != '#':
             to_import.add(line)
 
+imported = []
+
 # scan the file until a resource to import is found
 def find_next_resource(f):
     for line in f:
@@ -31,7 +34,9 @@ def find_next_resource(f):
     return ('', '')
 
 def safe_filename_from_token(token, mime):
-    name = str(base64.b64encode(bytes(token, 'utf-8'), b'-_'), 'utf-8').strip('=')
+    h = hashlib.md5()
+    h.update(bytes(token, 'utf-8'))
+    name = h.hexdigest()
     # extract file extension from mime
     match = re.search('^[^/]+/([^\s;]+)', mime)
     if match:
@@ -58,6 +63,7 @@ def import_resource(f, token, mime):
         filedata = bytes(filedata, 'utf-8')
     with open(filepath, 'wb') as fo:
         fo.write(filedata)
+    imported.append(token + '\n\t' + filename)
 
 # Read content of the resources to convert
 # - At this point, it is assumed resources.txt has been imported into the
@@ -69,4 +75,12 @@ with open(resources_filename, 'r') as f:
         if token == '':
             break
         import_resource(f, token, mime)
+
+# Output associations
+content = ''
+with open('./src/web_accessible_resources/imported.txt', 'r') as f:
+    content = f.read() + '\n'.join(imported)
+    filename = os.path.join(build_dir, 'web_accessible_resources/imported.txt')
+    with open(filename, 'w') as f:
+        f.write(content)
 

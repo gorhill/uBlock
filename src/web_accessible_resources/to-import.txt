@@ -11,9 +11,8 @@
 # page to use one of these  "web accessible resource" to directly
 # detect the presence of uBO.
 #
-# To ensure valid filename on any platform OS, the resource tokens are
-# converted to base64 (https://tools.ietf.org/html/rfc7515#appendix-C),
-# and the result is used as filename.
+# To ensure valid filename characters on any platform OS, the filenames are
+# constructed using the md5 hash of the respective tokens.
 #
 # In case uBO redirects to a resource which has not been converted into
 # a "web accessible resource", the redirection code will fall back to
