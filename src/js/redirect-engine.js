@@ -88,13 +88,12 @@ var RedirectEntry = function() {
 // - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
 
 RedirectEntry.prototype.toURL = function(details) {
-    if ( this.warURL !== undefined ) {
-        if (
-            details instanceof Object === false ||
-            details.requestType !== 'xmlhttprequest'
-        ) {
-            return this.warURL + '?secret=' + vAPI.warSecret;
-        }
+    if (
+        this.warURL !== undefined &&
+        details instanceof Object &&
+        details.requestType !== 'xmlhttprequest'
+    ) {
+        return this.warURL + '?secret=' + vAPI.warSecret;
     }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
