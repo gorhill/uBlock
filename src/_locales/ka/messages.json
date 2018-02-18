@@ -88,7 +88,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "ქსელის მოთხოვნების ჟურნალი",
+    "message": "ქსელის მოთხოვნების ჩანაწერები",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -208,7 +208,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "გადახედვა",
+    "message": "შეთვალიერება",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -348,7 +348,7 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "ცვლილებების მისადაგება",
+    "message": "ცვლილებების ასახვა",
     "description": "English: Apply changes"
   },
   "3pGroupAds": {
@@ -380,7 +380,7 @@
     "description": "English: Custom"
   },
   "3pExternalListsHint": {
-    "message": "თითო URL ცალკეულ ხაზზე. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
+    "message": "თითოეული URL ცალკეულ ხაზზე. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
     "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete": {
@@ -400,7 +400,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "თითო ფილტრი ცალკეულ ხაზზე. ფილტრი შეიძლება იყოს საიტის უბრალო დასახელება, ან Adblock Plus-სთან თავსებადი ფილტრი. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება.",
+    "message": "თითოეული ფილტრი ცალკეულ ხაზზე. ფილტრი შეიძლება იყოს საიტის უბრალო დასახელება, ან Adblock Plus-სთან თავსებადი ფილტრი. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება.",
     "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport": {
@@ -416,7 +416,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "ცვლილებების მისადაგება",
+    "message": "ცვლილებების ასახვა",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -468,7 +468,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "მითითებული გამონაკლისები განსაზღვრავს, თუ რომელ ვებგვერდზე უნდა გამოირთოს uBlock Origin. თითო ჩანაწერი ცალკეულ ხაზზე უნდა იყოს. არასწორი მითითებები უგულებელყოფილი იქნება გაფრთხილების გარეშე და იქცევა კომენტარად.",
+    "message": "მითითებული გამონაკლისები განსაზღვრავს, თუ რომელ ვებგვერდზე უნდა გამოირთოს uBlock Origin. თითოეული ჩანაწერი ცალკეულ ხაზზე უნდა იყოს. არასწორი მითითებები უგულებელყოფილი იქნება გაფრთხილების გარეშე და იქცევა კომენტარად.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -484,7 +484,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "ცვლილებების მისადაგება",
+    "message": "ცვლილებების ასახვა",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -736,7 +736,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "ცვლილებების მისადაგება",
+    "message": "ცვლილებების ასახვა",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
