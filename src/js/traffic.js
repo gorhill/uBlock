@@ -579,6 +579,19 @@ var filterDocument = (function() {
         domParser, xmlSerializer,
         utf8TextDecoder, textDecoder, textEncoder;
 
+    var textDecode = function(encoding, buffer) {
+        if (
+            textDecoder !== undefined &&
+            textDecoder.encoding !== encoding
+        ) {
+            textDecoder = undefined;
+        }
+        if ( textDecoder === undefined ) {
+            textDecoder = new TextDecoder(encoding);
+        }
+        return textDecoder.decode(buffer);
+    };
+
     var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
         reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
 
@@ -740,35 +753,44 @@ var filterDocument = (function() {
         var doc;
 
         // If stream encoding is still unknnown, try to extract from document.
-        if ( filterer.charset === undefined ) {
+        var charsetFound = filterer.charset,
+            charsetUsed = charsetFound;
+        if ( charsetFound === undefined ) {
             if ( utf8TextDecoder === undefined ) {
                 utf8TextDecoder = new TextDecoder();
             }
             doc = domParser.parseFromString(
-                utf8TextDecoder.decode(filterer.buffer.slice(0, 4096)),
+                utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
                 'text/html'
             );
-            filterer.charset = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
-            if ( filterer.charset === undefined ) {
-                streamClose(filterer);
-                return;
+            charsetFound = charsetFromDoc(doc);
+            charsetUsed = µb.textEncode.normalizeCharset(charsetFound);
+            if ( charsetUsed === undefined ) {
+                return streamClose(filterer);
             }
         }
 
-        if (
-            textDecoder !== undefined &&
-            textDecoder.encoding !== filterer.charset
-        ) {
-            textDecoder = undefined;
-        }
-        if ( textDecoder === undefined ) {
-            textDecoder = new TextDecoder(filterer.charset);
-        }
-
         doc = domParser.parseFromString(
-            textDecoder.decode(filterer.buffer),
+            textDecode(charsetUsed, filterer.buffer),
             'text/html'
         );
+
+        // https://github.com/gorhill/uBlock/issues/3507
+        //   In case of no explicit charset found, try to find one again, but
+        //   this time with the whole document parsed.
+        if ( charsetFound === undefined ) {
+            charsetFound = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
+            if ( charsetFound !== charsetUsed ) {
+                if ( charsetFound === undefined ) {
+                    return streamClose(filterer);
+                }
+                charsetUsed = charsetFound;
+                doc = domParser.parseFromString(
+                    textDecode(charsetFound, filterer.buffer),
+                    'text/html'
+                );
+            }
+        }
 
         var modified = false;
         if ( filterer.selectors !== undefined ) {
@@ -783,8 +805,7 @@ var filterDocument = (function() {
         }
 
         if ( modified === false ) {
-            streamClose(filterer);
-            return;
+            return streamClose(filterer);
         }
 
         // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
@@ -797,9 +818,9 @@ var filterDocument = (function() {
             doctypeStr +
             doc.documentElement.outerHTML
         );
-        if ( filterer.charset !== 'utf-8' ) {
+        if ( charsetUsed !== 'utf-8' ) {
             encodedStream = µb.textEncode.encode(
-                filterer.charset,
+                charsetUsed,
                 encodedStream
             );
         }
