@@ -707,7 +707,10 @@ var filterDocument = (function() {
         //   confirmed, there is nothing which can be done uBO-side to reduce
         //   overhead.
         if ( filterer.buffer === null ) {
-            if ( streamJobDone(filterer, ev.data) ) { return; }
+            if ( streamJobDone(filterer, ev.data) ) {
+                filterers.delete(this);
+                return;
+            }
             filterer.buffer = new Uint8Array(ev.data);
             return;
         }
