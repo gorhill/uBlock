@@ -513,15 +513,25 @@ var onMessage = function(request, sender, callback) {
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
             µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
+
+        // https://github.com/gorhill/uBlock/issues/3526
+        // https://github.com/uBlockOrigin/uAssets/issues/1492
+        //   Two distinct issues, but both are arising as a result of
+        //   injecting scriptlets through stream filtering. So falling back
+        //   to "slow" scriplet injection for the time being. Stream filtering
+        //   (`##^`) should be used for when scriptlets are defeated by early
+        //   script tags on a page.
+        //
         // If response body filtering is supported, than the scriptlets have
         // already been injected.
-        if (
-            µb.canFilterResponseBody === false ||
-            µb.textEncode === undefined ||
-            µb.textEncode.normalizeCharset(request.charset) === undefined
-        ) {
+        //if (
+        //    µb.canFilterResponseBody === false ||
+        //    µb.textEncode === undefined ||
+        //    µb.textEncode.normalizeCharset(request.charset) === undefined
+        //) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
-        }
+        //}
+
         if ( request.isRootFrame && µb.logger.isEnabled() ) {
             µb.logCosmeticFilters(tabId);
         }

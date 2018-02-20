@@ -839,7 +839,16 @@ var filterDocument = (function() {
             charset: undefined
         };
         request.selectors = µb.htmlFilteringEngine.retrieve(request);
-        request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+
+        // https://github.com/gorhill/uBlock/issues/3526
+        // https://github.com/uBlockOrigin/uAssets/issues/1492
+        //   Two distinct issues, but both are arising as a result of
+        //   injecting scriptlets through stream filtering. So falling back
+        //   to "slow" scriplet injection for the time being. Stream filtering
+        //   (`##^`) should be used for when scriptlets are defeated by early
+        //   script tags on a page.
+        //
+        //request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
 
         if (
             request.selectors === undefined &&
