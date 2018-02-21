@@ -80,7 +80,48 @@
 
 /******************************************************************************/
 
-// For now, only boolean type is supported.
+µBlock.loadHiddenSettings = function() {
+    var onLoaded = function(bin) {
+        if ( bin instanceof Object === false ) { return; }
+        var µb = µBlock,
+            hs = bin.hiddenSettings;
+        // Remove following condition once 1.15.12+ is widespread.
+        if (
+            hs instanceof Object === false &&
+            typeof bin.hiddenSettingsString === 'string'
+        ) {
+            vAPI.storage.remove('hiddenSettingsString');
+            hs = µBlock.hiddenSettingsFromString(bin.hiddenSettingsString);
+        }
+        if ( hs instanceof Object ) {
+            var hsDefault = µb.hiddenSettingsDefault;
+            for ( var key in hsDefault ) {
+                if (
+                    hsDefault.hasOwnProperty(key) &&
+                    hs.hasOwnProperty(key) &&
+                    typeof hs[key] === typeof hsDefault[key]
+                ) {
+                    µb.hiddenSettings[key] = hs[key];
+                }
+            }
+        }
+        if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
+            µb.saveImmediateHiddenSettings();
+        }
+    };
+
+    vAPI.storage.get(
+        [ 'hiddenSettings', 'hiddenSettingsString'],
+        onLoaded
+    );
+};
+
+µBlock.saveHiddenSettings = function(callback) {
+    vAPI.storage.set({ hiddenSettings: this.hiddenSettings, callback });
+    this.saveImmediateHiddenSettings();
+};
+
+/******************************************************************************/
 
 µBlock.hiddenSettingsFromString = function(raw) {
     var out = objectAssign({}, this.hiddenSettingsDefault),
@@ -114,23 +155,35 @@
             break;
         }
     }
-    this.hiddenSettings = out;
-    vAPI.localStorage.setItem('hiddenSettings', JSON.stringify(out));
-    vAPI.storage.set({ hiddenSettingsString: this.stringFromHiddenSettings() });
+    return out;
 };
-
-/******************************************************************************/
 
 µBlock.stringFromHiddenSettings = function() {
     var out = [],
-        keys = Object.keys(this.hiddenSettings).sort(),
-        key;
-    for ( var i = 0; i < keys.length; i++ ) {
-        key = keys[i];
+        keys = Object.keys(this.hiddenSettings).sort();
+    for ( var key of keys ) {
         out.push(key + ' ' + this.hiddenSettings[key]);
     }
     return out.join('\n');
 };
+
+/******************************************************************************/
+
+// These settings must be available immediately on startup, without delay
+// through the vAPI.localStorage. Add/remove settings as needed.
+
+µBlock.saveImmediateHiddenSettings = function() {
+    vAPI.localStorage.setItem(
+        'immediateHiddenSettings',
+        JSON.stringify({
+            suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
+            userResourcesLocation: this.hiddenSettings.userResourcesLocation
+        })
+    );
+};
+
+// Do this here to have these hidden settings loaded ASAP.
+µBlock.loadHiddenSettings();
 
 /******************************************************************************/
 

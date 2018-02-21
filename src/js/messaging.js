@@ -730,7 +730,7 @@ var backupUserData = function(callback) {
         version: vAPI.app.version,
         userSettings: µb.userSettings,
         selectedFilterLists: µb.selectedFilterLists,
-        hiddenSettingsString: µb.stringFromHiddenSettings(),
+        hiddenSettings: µb.hiddenSettings,
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
@@ -764,8 +764,14 @@ var restoreUserData = function(request) {
     var onAllRemoved = function() {
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings);
-        µb.hiddenSettingsFromString(userData.hiddenSettingsString || '');
+        var hiddenSettings = userData.hiddenSettings;
+        if ( hiddenSettings instanceof Object === false ) {
+            hiddenSettings = µBlock.hiddenSettingsFromString(
+                userData.hiddenSettingsString || ''
+            );
+        }
         vAPI.storage.set({
+            hiddenSettings: hiddenSettings,
             netWhitelist: userData.netWhitelist || '',
             dynamicFilteringString: userData.dynamicFilteringString || '',
             urlFilteringString: userData.urlFilteringString || '',
@@ -791,12 +797,13 @@ var restoreUserData = function(request) {
     // storage
     vAPI.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
+    vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
 var resetUserData = function() {
     vAPI.cacheStorage.clear();
     vAPI.storage.clear();
-    vAPI.localStorage.removeItem('hiddenSettings');
+    vAPI.localStorage.removeItem('immediateHiddenSettings');
 
     // Keep global counts, people can become quite attached to numbers
     µb.saveLocalSettings();
@@ -988,7 +995,8 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'writeHiddenSettings':
-        µb.hiddenSettingsFromString(request.content);
+        µb.hiddenSettings = µb.hiddenSettingsFromString(request.content);
+        µb.saveHiddenSettings();
         break;
 
     default:

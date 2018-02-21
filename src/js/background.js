@@ -75,7 +75,7 @@ var µBlock = (function() { // jshint ignore:line
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
             var out = objectAssign({}, hiddenSettingsDefault),
-                json = vAPI.localStorage.getItem('hiddenSettings');
+                json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json === 'string' ) {
                 try {
                     var o = JSON.parse(json);
@@ -90,6 +90,8 @@ var µBlock = (function() { // jshint ignore:line
                 catch(ex) {
                 }
             }
+            // Remove once 1.15.12+ is widespread.
+            vAPI.localStorage.removeItem('hiddenSettings');
             return out;
         })(),
 
