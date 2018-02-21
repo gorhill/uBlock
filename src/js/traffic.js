@@ -652,15 +652,26 @@ var filterDocument = (function() {
         }
         // Case insensitively test for '!doctype'.
         if (
-              bb[i++]          !== 0x21 /* '!' */ ||
-            ( bb[i++] | 0x20 ) !== 0x64 /* 'd' */ ||
-            ( bb[i++] | 0x20 ) !== 0x6F /* 'o' */ ||
-            ( bb[i++] | 0x20 ) !== 0x63 /* 'c' */ ||
-            ( bb[i++] | 0x20 ) !== 0x74 /* 't' */ ||
-            ( bb[i++] | 0x20 ) !== 0x79 /* 'y' */ ||
-            ( bb[i++] | 0x20 ) !== 0x70 /* 'p' */ ||
-            ( bb[i++] | 0x20 ) !== 0x65 /* 'e' */
+              bb[i+0]          === 0x21 /* '!' */ &&
+            ( bb[i+1] | 0x20 ) === 0x64 /* 'd' */ &&
+            ( bb[i+2] | 0x20 ) === 0x6F /* 'o' */ &&
+            ( bb[i+3] | 0x20 ) === 0x63 /* 'c' */ &&
+            ( bb[i+4] | 0x20 ) === 0x74 /* 't' */ &&
+            ( bb[i+5] | 0x20 ) === 0x79 /* 'y' */ &&
+            ( bb[i+6] | 0x20 ) === 0x70 /* 'p' */ &&
+            ( bb[i+7] | 0x20 ) === 0x65 /* 'e' */
         ) {
+            i += 8;
+        }
+        // Case insensitively test for 'html'.
+        else if (
+            ( bb[i+0] | 0x20 ) === 0x68 /* 'h' */ &&
+            ( bb[i+1] | 0x20 ) === 0x74 /* 't' */ &&
+            ( bb[i+2] | 0x20 ) === 0x6D /* 'm' */ &&
+            ( bb[i+3] | 0x20 ) === 0x6C /* 'l' */
+        ) {
+            i += 4;
+        } else {
             return false;
         }
         // Scan for '>'.
@@ -680,7 +691,6 @@ var filterDocument = (function() {
             textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
         );
         filterer.stream.write(new Uint8Array(responseBytes, i));
-        filterer.stream.disconnect();
         return true;
     };
 
@@ -720,7 +730,11 @@ var filterDocument = (function() {
         //   confirmed, there is nothing which can be done uBO-side to reduce
         //   overhead.
         if ( filterer.buffer === null ) {
-            if ( streamJobDone(filterer, ev.data) ) { return; }
+            if ( streamJobDone(filterer, ev.data) ) {
+                filterers.delete(this);
+                this.disconnect();
+                return;
+            }
             filterer.buffer = new Uint8Array(ev.data);
             return;
         }
@@ -856,7 +870,18 @@ var filterDocument = (function() {
             buffer: null,
             charset: undefined
         };
-        request.selectors = µb.htmlFilteringEngine.retrieve(request);
+
+        // https://github.com/gorhill/uBlock/issues/3526
+        // https://github.com/uBlockOrigin/uAssets/issues/1492
+        //   Two distinct issues, but both are arising as a result of
+        //   injecting scriptlets through stream filtering. So falling back
+        //   to "slow" scriplet injection for the time being. Stream filtering
+        //   (`##^`) should be used for when scriptlets are defeated by early
+        //   script tags on a page.
+        //
+        if ( µb.hiddenSettings.streamScriptInjectFilters ) {
+            request.selectors = µb.htmlFilteringEngine.retrieve(request);
+        }
         request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
 
         if (

@@ -517,6 +517,7 @@ var onMessage = function(request, sender, callback) {
         // already been injected.
         if (
             µb.canFilterResponseBody === false ||
+            µb.hiddenSettings.streamScriptInjectFilters !== true ||
             µb.textEncode === undefined ||
             µb.textEncode.normalizeCharset(request.charset) === undefined
         ) {
