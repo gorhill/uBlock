@@ -871,6 +871,8 @@ var filterDocument = (function() {
             charset: undefined
         };
 
+        request.selectors = µb.htmlFilteringEngine.retrieve(request);
+
         // https://github.com/gorhill/uBlock/issues/3526
         // https://github.com/uBlockOrigin/uAssets/issues/1492
         //   Two distinct issues, but both are arising as a result of
@@ -880,9 +882,8 @@ var filterDocument = (function() {
         //   script tags on a page.
         //
         if ( µb.hiddenSettings.streamScriptInjectFilters ) {
-            request.selectors = µb.htmlFilteringEngine.retrieve(request);
+            request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
 
         if (
             request.selectors === undefined &&
