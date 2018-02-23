@@ -206,7 +206,7 @@
   }
 
   var updateAd = function (ad) { // update class, title, counts
-    console.log(ad);
+    // console.log(ad);
     if (verify(ad)) {
 
       var $ad = updateAdClasses(ad);
