@@ -721,6 +721,9 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3406
+//   Lower minimum update period to 1 day.
+
 µBlock.extractFilterListMetadata = function(assetKey, raw) {
     var listEntry = this.availableFilterLists[assetKey];
     if ( listEntry === undefined ) { return; }
@@ -742,7 +745,7 @@
     // Extract update frequency information
     matches = head.match(/(?:^|\n)![\t ]*Expires:[\t ]*([\d]+)[\t ]*days?/i);
     if ( matches !== null ) {
-        v = Math.max(parseInt(matches[1], 10), 2);
+        v = Math.max(parseInt(matches[1], 10), 1);
         if ( v !== listEntry.updateAfter ) {
             this.assets.registerAssetSource(assetKey, { updateAfter: v });
         }
