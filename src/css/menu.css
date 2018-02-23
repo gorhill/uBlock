@@ -27,6 +27,15 @@ body {
   height: 500px;
   width: 400px;
   font-size: 75%;
+  border: 0;
+  margin: 0;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+}
+body.mobile {
+  overflow-y: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -819,7 +828,7 @@ select {
     margin: 0 auto;
     margin-bottom: 15px;
   }
-  body {
+  body.mobile {
     min-width: 320px;
     width:100%;
     height:100%;
