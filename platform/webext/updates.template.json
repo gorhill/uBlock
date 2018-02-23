@@ -1,0 +1,11 @@
+{
+ "addons": {
+  "uBlock0@raymondhill.net": {
+   "updates": {
+    "update_link": "https://github.com/gorhill/uBlock/releases/download/{version}/uBlock0.webext.signed.xpi",
+    "version": "{version}",
+    "applications": { "gecko": { "strict_min_version": "52" } }
+   }
+  }
+ }
+}
