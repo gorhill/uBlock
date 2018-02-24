@@ -295,7 +295,7 @@
             return haystack.replace(
                 new RegExp(
                     '(^|\\n)' +
-                    needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+                    µb.escapeRegex(needle) +
                     '(\\n|$)', 'g'),
                 '\n'
             ).trim();
@@ -439,7 +439,7 @@
             selectedListKeys.push(key);
             continue;
         }
-        if ( this.matchCurrentLanguage(list.lang) ) {
+        if ( this.listMatchesEnvironment(list) ) {
             selectedListKeys.push(key);
             list.off = false;
         }
@@ -1139,6 +1139,33 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2344
+//   Support mutliple locales per filter list.
+
+// https://github.com/gorhill/uBlock/issues/3210
+//   Support ability to auto-enable a filter list based on user agent.
+
+µBlock.listMatchesEnvironment = function(details) {
+    var re;
+    // Matches language?
+    if ( typeof details.lang === 'string' ) {
+        re = this.listMatchesEnvironment.reLang;
+        if ( re === undefined ) {
+            re = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
+            this.listMatchesEnvironment.reLang = re;
+        }
+        if ( re.test(details.lang) ) { return true; }
+    }
+    // Matches user agent?
+    if ( typeof details.ua === 'string' ) {
+        re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
+        if ( re.test(self.navigator.userAgent) ) { return true; }
+    }
+    return false;
+};
+
+/******************************************************************************/
+
 µBlock.scheduleAssetUpdater = (function() {
     var timer, next = 0;
     return function(updateDelay) {
@@ -1290,7 +1317,7 @@
         if ( details.entry.content === 'filters' ) {
             if (
                 details.entry.off !== true ||
-                this.matchCurrentLanguage(details.entry.lang)
+                this.listMatchesEnvironment(details.entry)
             ) {
                 this.saveSelectedFilterLists([ details.assetKey ], true);
             }

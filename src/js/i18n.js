@@ -133,9 +133,7 @@ vAPI.i18n.render = function(context) {
     for ( i = 0; i < n; i++ ) {
         elem = elems[i];
         text = vAPI.i18n(elem.getAttribute('data-i18n'));
-        if ( !text ) {
-            continue;
-        }
+        if ( !text ) { continue; }
         // TODO: remove once it's all replaced with <input type="...">
         if ( text.indexOf('{') !== -1 ) {
             text = text.replace(/\{\{input:([^}]+)\}\}/g, '<input type="$1">');
@@ -150,9 +148,8 @@ vAPI.i18n.render = function(context) {
     for ( i = 0; i < n; i++ ) {
         elem = elems[i];
         text = vAPI.i18n(elem.getAttribute('title'));
-        if ( text ) {
-            elem.setAttribute('title', text);
-        }
+        if ( !text ) { continue; }
+        elem.setAttribute('title', text);
     }
 
     elems = root.querySelectorAll('[placeholder]');
@@ -166,10 +163,14 @@ vAPI.i18n.render = function(context) {
     n = elems.length;
     for ( i = 0; i < n; i++ ) {
         elem = elems[i];
-        elem.setAttribute(
-            'data-tip',
-            vAPI.i18n(elem.getAttribute('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/uBlock₀/g, 'AdNauseam')
-        );
+        text = vAPI.i18n(elem.getAttribute('data-i18n-tip'))
+                   .replace(/<br>/g, '\n')
+                   .replace(/\n{3,}/g, '\n\n')
+                   .replace(/uBlock₀/g, 'AdNauseam');
+        elem.setAttribute('data-tip', text);
+        if ( elem.getAttribute('aria-label') === 'data-tip' ) {
+            elem.setAttribute('aria-label', text);
+        }
     }
 };
 

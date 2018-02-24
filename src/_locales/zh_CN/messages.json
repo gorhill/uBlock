@@ -47,6 +47,14 @@
     "message": "单击：对此网站禁用\/启用 uBlock₀。\n\nCtrl + 单击：在此页面上禁用 uBlock₀。",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
+  "popupPowerSwitchInfo1": {
+    "message": "单击：对此网站禁用 uBlock₀ 。\n\nCtrl + 单击：仅在此页面上禁用 uBlock₀ 。",
+    "description": "Message to be read by screen readers"
+  },
+  "popupPowerSwitchInfo2": {
+    "message": "单击：对此网站启用 uBlock₀ 。",
+    "description": "Message to be read by screen readers"
+  },
   "popupBlockedRequestPrompt": {
     "message": "请求已拦截",
     "description": "English: requests blocked"
@@ -87,16 +95,48 @@
     "message": "是否禁止此网站弹出任何窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
+  "popupTipNoPopups1": {
+    "message": "单击屏蔽此网站所有弹窗",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups2": {
+    "message": "单击取消屏蔽此网站所有弹窗",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
   "popupTipNoLargeMedia": {
     "message": "是否屏蔽在此网站上较大的媒体元素",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia1": {
+    "message": "单击屏蔽此网站大型媒体元素",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia2": {
+    "message": "单击取消屏蔽此网站大型媒体元素",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
     "message": "是否对此网站应用修饰规则",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
+  "popupTipNoCosmeticFiltering1": {
+    "message": "单击禁用此网站上的元素过滤",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering2": {
+    "message": "单击启用此网站上的元素过滤",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
   "popupTipNoRemoteFonts": {
     "message": "是否阻止此网站的第三方字体",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts1": {
+    "message": "单击屏蔽此网站上的远程字体",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts2": {
+    "message": "单击取消屏蔽此网站上的远程字体",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {

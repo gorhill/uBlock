@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global punycode */
+/* global punycode, HNTrieBuilder */
 
 'use strict';
 
@@ -887,9 +887,9 @@ FilterOriginHitSet.prototype = Object.create(FilterOrigin.prototype, {
     matchOrigin: {
         value: function() {
             if ( this.oneOf === null ) {
-                this.oneOf = new RegExp('(?:^|\\.)(?:' + this.domainOpt.replace(/\./g, '\\.') + ')$');
+                this.oneOf = HNTrieBuilder.fromDomainOpt(this.domainOpt);
             }
-            return this.oneOf.test(pageHostnameRegister);
+            return this.oneOf.matches(pageHostnameRegister);
         }
     },
 });
@@ -919,9 +919,9 @@ FilterOriginMissSet.prototype = Object.create(FilterOrigin.prototype, {
     matchOrigin: {
         value: function() {
             if ( this.noneOf === null ) {
-                this.noneOf = new RegExp('(?:^|\\.)(?:' + this.domainOpt.replace(/~/g, '').replace(/\./g, '\\.') + ')$');
+                this.noneOf = HNTrieBuilder.fromDomainOpt(this.domainOpt.replace(/~/g, ''));
             }
-            return this.noneOf.test(pageHostnameRegister) === false;
+            return this.noneOf.matches(pageHostnameRegister) === false;
         }
     },
 });
@@ -961,8 +961,8 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
                     oneOf.push(hostname);
                 }
             }
-            this.oneOf = new RegExp('(?:^|\\.)(?:' + oneOf.join('|') + ')$');
-            this.noneOf = new RegExp('(?:^|\\.)(?:' + noneOf.join('|') + ')$');
+            this.oneOf = HNTrieBuilder.fromIterable(oneOf);
+            this.noneOf = HNTrieBuilder.fromIterable(noneOf);
         }
     },
     toDomainOpt: {
@@ -974,7 +974,8 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
         value: function() {
             if ( this.oneOf === null ) { this.init(); }
             var needle = pageHostnameRegister;
-            return this.oneOf.test(needle) && this.noneOf.test(needle) === false;
+            return this.oneOf.matches(needle) &&
+                   this.noneOf.matches(needle) === false;
         }
     },
 });

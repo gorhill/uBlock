@@ -824,32 +824,21 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 vAPI.messaging.onPortMessage = (function() {
     var messaging = vAPI.messaging,
-        toAuxPending = new Map();
-
-    var supportsUserStylesheets = vAPI.supportsUserStylesheets;
+        supportsUserStylesheets = vAPI.supportsUserStylesheets;
 
     // Use a wrapper to avoid closure and to allow reuse.
-    var CallbackWrapper = function(port, request, timeout) {
+    var CallbackWrapper = function(port, request) {
         this.callback = this.proxy.bind(this); // bind once
-        this.init(port, request, timeout);
+        this.init(port, request);
     };
 
     CallbackWrapper.prototype = {
-        timerId: null,
-        init: function(port, request, timeout) {
+        init: function(port, request) {
             this.port = port;
             this.request = request;
-            if ( timeout !== undefined ) {
-                this.timerId = vAPI.setTimeout(this.callback, timeout);
-            }
             return this;
         },
         proxy: function(response) {
-            if ( this.timerId !== null ) {
-                clearTimeout(this.timerId);
-                toAuxPending.delete(this.timerId);
-                this.timerId = null;
-            }
             // https://github.com/chrisaljoudi/uBlock/issues/383
             if ( messaging.ports.has(this.port.name) ) {
                 this.port.postMessage({
@@ -866,67 +855,53 @@ vAPI.messaging.onPortMessage = (function() {
 
     var callbackWrapperJunkyard = [];
 
-    var callbackWrapperFactory = function(port, request, timeout) {
+    var callbackWrapperFactory = function(port, request) {
         var wrapper = callbackWrapperJunkyard.pop();
         if ( wrapper ) {
-            return wrapper.init(port, request, timeout);
+            return wrapper.init(port, request);
         }
-        return new CallbackWrapper(port, request, timeout);
+        return new CallbackWrapper(port, request);
     };
 
-    var toAux = function(details, portFrom) {
-        var port, portTo,
-            chromiumTabId = toChromiumTabId(details.toTabId);
-
-        // TODO: This could be an issue with a lot of tabs: easy to address
-        //       with a port name to tab id map.
-        // When sending to an auxiliary process, the target is always the
-        // port associated with the root frame.
-        for ( var entry of messaging.ports ) {
-            port = entry[1];
-            if ( port.sender.frameId === 0 && port.sender.tab.id === chromiumTabId ) {
-                portTo = port;
-                break;
-            }
-        }
-
-        var wrapper;
-        if ( details.auxProcessId !== undefined ) {
-            wrapper = callbackWrapperFactory(portFrom, details, 1023);
-        }
-
-        // Destination not found:
-        if ( portTo === undefined ) {
-            if ( wrapper !== undefined ) {
-                wrapper.callback();
-            }
-            return;
-        }
-
-        if ( wrapper !== undefined ) {
-            toAuxPending.set(wrapper.timerId, wrapper);
-        }
-
-        portTo.postMessage({
-            mainProcessId: wrapper && wrapper.timerId,
-            channelName: details.toChannel,
-            msg: details.msg
-        });
-    };
-
-    var toAuxResponse = function(details) {
-        var mainProcessId = details.mainProcessId;
-        if ( mainProcessId === undefined ) { return; }
-        var wrapper = toAuxPending.get(mainProcessId);
-        if ( wrapper === undefined ) { return; }
-        toAuxPending.delete(mainProcessId);
-        wrapper.callback(details.msg);
-    };
-
-    var toFramework = function(msg, sender) {
-        var tabId = sender && sender.tab && sender.tab.id;
+    var toFramework = function(request, port, callback) {
+        var sender = port && port.sender;
+        if ( !sender ) { return; }
+        var tabId = sender.tab && sender.tab.id;
         if ( !tabId ) { return; }
+        var msg = request.msg,
+            toPort;
         switch ( msg.what ) {
+        case 'connectionAccepted':
+        case 'connectionRefused':
+            toPort = messaging.ports.get(msg.fromToken);
+            if ( toPort !== undefined ) {
+                msg.tabId = tabId.toString();
+                toPort.postMessage(request);
+            } else {
+                msg.what = 'connectionBroken';
+                port.postMessage(request);
+            }
+            break;
+        case 'connectionRequested':
+            msg.tabId = '' + tabId.toString();
+            for ( toPort of messaging.ports.values() ) {
+                toPort.postMessage(request);
+            }
+            break;
+        case 'connectionBroken':
+        case 'connectionCheck':
+        case 'connectionMessage':
+            toPort = messaging.ports.get(
+                port.name === msg.fromToken ? msg.toToken : msg.fromToken
+            );
+            if ( toPort !== undefined ) {
+                msg.tabId = tabId.toString();
+                toPort.postMessage(request);
+            } else {
+                msg.what = 'connectionBroken';
+                port.postMessage(request);
+            }
+            break;
         case 'userCSS':
             var details = {
                 code: undefined,
@@ -940,46 +915,47 @@ vAPI.messaging.onPortMessage = (function() {
                 details.runAt = 'document_start';
             }
             var cssText;
+            const cssPromises = [];
             for ( cssText of msg.add ) {
                 details.code = cssText;
-                chrome.tabs.insertCSS(tabId, details);
+                cssPromises.push(chrome.tabs.insertCSS(tabId, details));
             }
             for ( cssText of msg.remove ) {
                 details.code = cssText;
-                chrome.tabs.removeCSS(tabId, details);
+                cssPromises.push(chrome.tabs.removeCSS(tabId, details));
+            }
+            if ( typeof callback === 'function' ) {
+                Promise.all(cssPromises).then(() => {
+                    callback();
+                }, null);
             }
             break;
         }
     };
 
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1392067
+    //   Workaround: manually remove ports matching removed tab.
+    chrome.tabs.onRemoved.addListener(function(tabId) {
+        for ( var port of messaging.ports.values() ) {
+            var tab = port.sender && port.sender.tab;
+            if ( !tab ) { continue; }
+            if ( tab.id === tabId ) {
+                vAPI.messaging.onPortDisconnect(port);
+            }
+        }
+    });
+
     return function(request, port) {
-
-        //console.log('vAPI.messaging.onPortMessage: ', request.channelName
-          //+ '::' + request.msg.what, port.sender.frameId, request, port);
-
-        // Auxiliary process to auxiliary process
-        if ( request.toTabId !== undefined ) {
-            toAux(request, port);
-            return;
-        }
-
-        // Auxiliary process to auxiliary process: response
-        if ( request.mainProcessId !== undefined ) {
-            toAuxResponse(request);
-            return;
-        }
-
-        // Content process to main process: framework handler.
-        // No callback supported/needed for now.
-        if ( request.channelName === 'vapi-background' ) {
-            toFramework(request.msg, port.sender);
-            return;
-        }
-
-        // Auxiliary process to main process: prepare response
+        // prepare response
         var callback = this.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
             callback = callbackWrapperFactory(port, request).callback;
+        }
+
+        // Content process to main process: framework handler.
+        if ( request.channelName === 'vapi' ) {
+            toFramework(request, port, callback);
+            return;
         }
 
         // Auxiliary process to main process: specific handler
@@ -1051,8 +1027,8 @@ vAPI.messaging.broadcast = function(message) {
         broadcast: true,
         msg: message
     };
-    for ( var entry of this.ports ) {
-        entry[1].postMessage(messageWrapper);
+    for ( var port of this.ports.values() ) {
+        port.postMessage(messageWrapper);
     }
 };
 
@@ -1137,20 +1113,21 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
-    var scriptDone = function() {
+    var onScriptInjected = function() {
         vAPI.lastError();
     };
-
-    // TODO: this needs post-merge checking (adn)
-    var scriptEnd = function(tabId, frameId) {
-        var err = vAPI.lastError();
-    };
-    var scriptStart = function(tabId, frameId) {
-      var scripts = ['js/vapi-client.js', 'js/adn/parser.js', 'js/adn/textads.js', 'js/contentscript.js'];
-      for (var i = 0; i < scripts.length; i++) {
-        injectOne(tabId, frameId, scripts[i], i==scripts.length - 1 ?
-          function() { scriptEnd(tabId, frameId); } : 0);
-      }
+    var scriptStart = function(tabId) {
+        var manifest = chrome.runtime.getManifest();
+        if ( manifest instanceof Object === false ) { return; }
+        for ( var contentScript of manifest.content_scripts ) {
+            for ( var file of contentScript.js ) {
+                vAPI.tabs.injectScript(tabId, {
+                    file: file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at
+                }, onScriptInjected);
+            }
+        }
     };
     var startInTab = function(tab, frameId) { // ADN
         var µb = µBlock;

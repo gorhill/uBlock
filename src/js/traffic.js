@@ -198,7 +198,15 @@ var hasDNT = function (headers) {
 //       which blocks everything until all is ready.
 //       This would allow to avoid the permanent special test at the top of
 //       the main onBeforeRequest just to implement this.
+// https://github.com/gorhill/uBlock/issues/3130
+//   Don't block root frame.
+
 var onBeforeReady = null;
+
+µBlock.onStartCompletedQueue.push(function(callback) {
+    vAPI.onLoadAllCompleted();
+    callback();
+});
 
 if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
     onBeforeReady = (function() {
@@ -210,17 +218,16 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
             }
             callback();
         });
-        return function(tabId) {
-            if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-            suspendedTabs.add(tabId);
-            return true;
+        return function(details) {
+            if (
+                details.type !== 'main_frame' &&
+                vAPI.isBehindTheSceneTabId(details.tabId) === false
+            ) {
+                suspendedTabs.add(details.tabId);
+                return true;
+            }
         };
     })();
-} else {
-    µBlock.onStartCompletedQueue.push(function(callback) {
-        vAPI.onLoadAllCompleted();
-        callback();
-    });
 }
 
 /******************************************************************************/
@@ -228,8 +235,7 @@ if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
-    var tabId = details.tabId;
-    if ( onBeforeReady !== null && onBeforeReady(tabId) ) {
+    if ( onBeforeReady !== null && onBeforeReady(details) ) {
         return { cancel: true };
     }
 
@@ -246,6 +252,7 @@ var onBeforeRequest = function(details) {
     if (µBlock.userSettings.blockingMalware === false) return;
 
     // Special treatment: behind-the-scene requests
+    var tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
@@ -479,23 +486,20 @@ var onBeforeRootFrameRequest = function(details) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3208
+//   Mind case insensitivity.
+
 var toBlockDocResult = function(url, hostname, logData) {
-    if ( typeof logData.regex !== 'string' ) { return; }
-    var re = new RegExp(logData.regex),
+    if ( typeof logData.regex !== 'string' ) { return false; }
+    var re = new RegExp(logData.regex, 'i'),
         match = re.exec(url.toLowerCase());
-    if ( match === null ) { return ''; }
+    if ( match === null ) { return false; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
     // Relax the rule: verify that the match is completely before the path part
-    if (
-        (match.index + match[0].length) <=
-        (url.indexOf(hostname) + hostname.length + 1)
-    ) {
-        return true;
-    }
-
-    return false;
+    return (match.index + match[0].length) <=
+           (url.indexOf(hostname) + hostname.length + 1);
 };
 
 /******************************************************************************/

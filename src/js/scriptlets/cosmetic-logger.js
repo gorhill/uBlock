@@ -149,40 +149,55 @@ var jobQueueTimer = new vAPI.SafeAnimationFrame(function processJobQueue() {
 });
 
 var handlers = {
-
-    onFiltersetChanged: function(type, selectors) {
+    onFiltersetChanged: function(changes) {
         //console.time('dom logger/filterset changed');
-        var selector,
-            sanitized;
-        if ( type === 'declarative' ) {
-            var simpleSizeBefore = simple.dict.size,
-                complexSizeBefore = complex.dict.size;
-            for ( selector of selectors.split(',\n') ) {
-                if ( reHasPseudoClass.test(selector) ) {
-                    sanitized = selector.replace(reHasPseudoClass, '');
-                    sanitizedSelectors.set(sanitized, selector);
-                    selector = sanitized;
-                }
-                if ( reHasCSSCombinators.test(selector) ) {
-                    complex.dict.add(selector);
-                    complex.str = undefined;
+        var selector, sanitized, entry,
+            simpleSizeBefore = simple.dict.size,
+            complexSizeBefore = complex.dict.size,
+            logNow = [];
+        for ( entry of (changes.declarative || []) ) {
+            for ( selector of entry[0].split(',\n') ) {
+                if ( entry[1] === 'display:none!important;' ) {
+                    if ( reHasPseudoClass.test(selector) ) {
+                        sanitized = selector.replace(reHasPseudoClass, '');
+                        sanitizedSelectors.set(sanitized, selector);
+                        selector = sanitized;
+                    }
+                    if ( reHasCSSCombinators.test(selector) ) {
+                        complex.dict.add(selector);
+                        complex.str = undefined;
+                    } else {
+                        simple.dict.add(selector);
+                        simple.str = undefined;
+                    }
                 } else {
-                    simple.dict.add(selector);
-                    simple.str = undefined;
+                    logNow.push(selector + ':style(' + entry[1] + ')');
                 }
             }
-            if ( simple.dict.size !== simpleSizeBefore ) {
-                jobQueue.push(DeclarativeSimpleJob.create(document));
+        }
+        if ( simple.dict.size !== simpleSizeBefore ) {
+            jobQueue.push(DeclarativeSimpleJob.create(document));
+        }
+        if ( complex.dict.size !== complexSizeBefore ) {
+            complex.str = Array.from(complex.dict).join(',\n');
+            jobQueue.push(DeclarativeComplexJob.create());
+        }
+        if ( logNow.length !== 0 ) {
+            vAPI.messaging.send(
+                'scriptlets',
+                {
+                    what: 'logCosmeticFilteringData',
+                    frameURL: window.location.href,
+                    frameHostname: window.location.hostname,
+                    matchedSelectors: logNow
+                }
+            );
+        }
+        if ( Array.isArray(changes.procedural) ) {
+            for ( selector of changes.procedural ) {
+                procedural.dict.set(selector.raw, selector);
             }
-            if ( complex.dict.size !== complexSizeBefore ) {
-                complex.str = Array.from(complex.dict).join(',\n');
-                jobQueue.push(DeclarativeComplexJob.create());
-            }
-        } else if ( type === 'procedural' ) {
-            for ( selector of selectors ) {
-                procedural.dict.set(selector[0], selector[1]);
-            }
-            if ( selectors.size !== 0 ) {
+            if ( changes.procedural.size !== 0 ) {
                 jobQueue.push(ProceduralJob.create());
             }
         }
@@ -193,14 +208,7 @@ var handlers = {
     },
 
     onDOMCreated: function() {
-        handlers.onFiltersetChanged(
-            'declarative',
-            vAPI.domFilterer.getAllDeclarativeSelectors()
-        );
-        handlers.onFiltersetChanged(
-            'procedural',
-            vAPI.domFilterer.getAllProceduralSelectors()
-        );
+        handlers.onFiltersetChanged(vAPI.domFilterer.getAllSelectors());
         vAPI.domFilterer.addListener(handlers);
     },
 
@@ -225,7 +233,6 @@ var handlers = {
             jobQueueTimer.start(100);
         }
     }
-
 };
 
 /******************************************************************************/

@@ -31,13 +31,13 @@ if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 vAPI.userStylesheet = {
     added: new Set(),
     removed: new Set(),
-    apply: function() {
+    apply: function(callback) {
         if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
-        vAPI.messaging.send('vapi-background', {
+        vAPI.messaging.send('vapi', {
             what: 'userCSS',
             add: Array.from(this.added),
             remove: Array.from(this.removed)
-        });
+        }, callback);
         this.added.clear();
         this.removed.clear();
     },
@@ -80,8 +80,7 @@ vAPI.DOMFilterer.prototype = {
     // - Notifying listeners about changed filterset.
     commitNow: function() {
         this.commitTimer.clear();
-        var userStylesheet = vAPI.userStylesheet,
-            addedSelectors = [];
+        var userStylesheet = vAPI.userStylesheet;
         for ( var entry of this.addedCSSRules ) {
             if (
                 this.disabled === false &&
@@ -92,16 +91,12 @@ vAPI.DOMFilterer.prototype = {
                     entry.selectors + '\n{' + entry.declarations + '}'
                 );
             }
-            addedSelectors.push(entry.selectors);
         }
 
         this.addedCSSRules.clear();
-        
+
         if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
             userStylesheet.apply();
-            if ( addedSelectors.length !== 0 ) {
-                this.triggerListeners('declarative', addedSelectors.join(',\n'));
-            }
         }
     },
 
@@ -130,7 +125,7 @@ vAPI.DOMFilterer.prototype = {
 
         if (!vAPI.prefs.hidingDisabled) { // ADN
           this.addedCSSRules.add(entry);
-        } 
+        }
 
         // ADN adCheck
         var nodes = document.querySelectorAll(selectorsStr);
@@ -148,6 +143,11 @@ vAPI.DOMFilterer.prototype = {
             vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
         this.commit();
+        if ( this.hasListeners() ) {
+            this.triggerListeners({
+                declarative: [ [ selectorsStr, declarations ] ]
+            });
+        }
     },
 
     addListener: function(listener) {
@@ -161,10 +161,14 @@ vAPI.DOMFilterer.prototype = {
         this.listeners.splice(pos, 1);
     },
 
-    triggerListeners: function(type, selectors) {
+    hasListeners: function() {
+        return this.listeners.length !== 0;
+    },
+
+    triggerListeners: function(changes) {
         var i = this.listeners.length;
         while ( i-- ) {
-            this.listeners[i].onFiltersetChanged(type, selectors);
+            this.listeners[i].onFiltersetChanged(changes);
         }
     },
 
@@ -180,7 +184,7 @@ vAPI.DOMFilterer.prototype = {
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         if ( this.hideNodeAttr === undefined ) { return; }
-        
+
         node.setAttribute(this.hideNodeAttr, '');
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;
@@ -196,7 +200,7 @@ vAPI.DOMFilterer.prototype = {
         node.removeAttribute(this.hideNodeAttr);
     },
 
-    toggle: function(state) {
+    toggle: function(state, callback) {
         if ( state === undefined ) { state = this.disabled; }
         if ( state !== this.disabled ) { return; }
         this.disabled = !state;
@@ -209,32 +213,33 @@ vAPI.DOMFilterer.prototype = {
                 userStylesheet.add(rule);
             }
         }
-        userStylesheet.apply();
+        userStylesheet.apply(callback);
     },
 
-    getAllDeclarativeSelectors_: function(all) {
-        let selectors = [];
+    getAllSelectors_: function(all) {
+        var out = {
+            declarative: []
+        };
         for ( var entry of this.filterset ) {
             if ( all === false && entry.internal ) { continue; }
-            selectors.push(entry.selectors);
-        }
-        var out = selectors.join(',\n');
-        if ( !all && this.hideNodeAttr !== undefined ) {
-            out = out.replace('[' + this.hideNodeAttr + ']', '')
-                     .replace(/^,\n|\n,|,\n$/, '');
+            out.declarative.push([ entry.selectors, entry.declarations ]);
         }
         return out;
     },
 
     getFilteredElementCount: function() {
-        let selectors = this.getAllDeclarativeSelectors_(true);
-        return selectors.length !== 0
-            ? document.querySelectorAll(selectors).length
-            : 0;
+        let details = this.getAllSelectors_(true);
+        if ( Array.isArray(details.declarative) === false ) { return 0; }
+        let selectors = details.declarative.reduce(function(acc, entry) {
+            acc.push(entry[0]);
+            return acc;
+        }, []);
+        if ( selectors.length === 0 ) { return 0; }
+        return document.querySelectorAll(selectors.join(',\n')).length;
     },
 
-    getAllDeclarativeSelectors: function() {
-        return this.getAllDeclarativeSelectors_(false);
+    getAllSelectors: function() {
+        return this.getAllSelectors_(false);
     }
 };
 

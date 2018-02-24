@@ -137,6 +137,8 @@ var cssEscape = (function(/*root*/) {
 /******************************************************************************/
 /******************************************************************************/
 
+var loggerConnectionId;
+
 // Highlighter-related
 var svgRoot = null;
 var pickerRoot = null;
@@ -153,29 +155,16 @@ var reHasCSSCombinators = /[ >+~]/;
 
 /******************************************************************************/
 
-// Some kind of fingerprint for the DOM, without incurring too much overhead.
-
-var domFingerprint = function() {
-    return sessionId;
-};
-
-/******************************************************************************/
-
 var domLayout = (function() {
-    var skipTagNames = {
-        'br': true,
-        'link': true,
-        'meta': true,
-        'script': true,
-        'style': true
-    };
-
-    var resourceAttrNames = {
-        'a': 'href',
-        'iframe': 'src',
-        'img': 'src',
-        'object': 'data'
-    };
+    var skipTagNames = new Set([
+        'br', 'head', 'link', 'meta', 'script', 'style', 'title'
+    ]);
+    var resourceAttrNames = new Map([
+        [ 'a', 'href' ],
+        [ 'iframe', 'src' ],
+        [ 'img', 'src' ],
+        [ 'object', 'data' ]
+    ]);
 
     var idGenerator = 0;
 
@@ -206,11 +195,15 @@ var domLayout = (function() {
             }
         }
         // Tag-specific attributes
-        if ( resourceAttrNames.hasOwnProperty(tag) ) {
-            attr = resourceAttrNames[tag];
+        attr = resourceAttrNames.get(tag);
+        if ( attr !== undefined ) {
             str = node.getAttribute(attr) || '';
             str = str.trim();
-            pos = str.indexOf('#');
+            if ( str.startsWith('data:') ) {
+                pos = 5;
+            } else {
+                pos = str.search(/[#?]/);
+            }
             if ( pos !== -1 ) {
                 str = str.slice(0, pos);
                 sw = '^';
@@ -242,13 +235,9 @@ var domLayout = (function() {
 
     var domNodeFactory = function(level, node) {
         var localName = node.localName;
-        if ( skipTagNames.hasOwnProperty(localName) ) {
-            return null;
-        }
+        if ( skipTagNames.has(localName) ) { return null; }
         // skip uBlock's own nodes
-        if ( node.classList.contains(sessionId) ) {
-            return null;
-        }
+        if ( node.classList.contains(sessionId) ) { return null; }
         if ( level === 0 && localName === 'body' ) {
             return new DomRoot();
         }
@@ -260,7 +249,7 @@ var domLayout = (function() {
     var getLayoutData = function() {
         var layout = [];
         var stack = [];
-        var node = document.body;
+        var node = document.documentElement;
         var domNode;
         var lvl = 0;
 
@@ -324,37 +313,31 @@ var domLayout = (function() {
         return layout;
     };
 
-    // Track and report mutations to the DOM
+    // Track and report mutations of the DOM
 
     var mutationObserver = null;
-    var mutationTimer = null;
+    var mutationTimer;
     var addedNodelists = [];
     var removedNodelist = [];
-    var journalEntries = [];
-    var journalNodes = Object.create(null);
 
     var previousElementSiblingId = function(node) {
         var sibling = node;
         for (;;) {
             sibling = sibling.previousElementSibling;
-            if ( sibling === null ) {
-                return null;
-            }
-            if ( skipTagNames.hasOwnProperty(sibling.localName) ) {
-                continue;
-            }
+            if ( sibling === null ) { return null; }
+            if ( skipTagNames.has(sibling.localName) ) { continue; }
             return nodeToIdMap.get(sibling);
         }
     };
 
-    var journalFromBranch = function(root, added) {
+    var journalFromBranch = function(root, newNodes, newNodeToIdMap) {
         var domNode;
         var node = root.firstElementChild;
         while ( node !== null ) {
             domNode = domNodeFactory(undefined, node);
             if ( domNode !== null ) {
-                journalNodes[domNode.nid] = domNode;
-                added.push(node);
+                newNodeToIdMap.set(domNode.nid, domNode);
+                newNodes.push(node);
             }
             // down
             if ( node.firstElementChild !== null ) {
@@ -368,9 +351,7 @@ var domLayout = (function() {
             }
             // up then right
             for (;;) {
-                if ( node.parentElement === root ) {
-                    return;
-                }
+                if ( node.parentElement === root ) { return; }
                 node = node.parentElement;
                 if ( node.nextElementSibling !== null ) {
                     node = node.nextElementSibling;
@@ -381,51 +362,34 @@ var domLayout = (function() {
     };
 
     var journalFromMutations = function() {
-        mutationTimer = null;
-        if ( mutationObserver === null ) {
-            addedNodelists = [];
-            removedNodelist = [];
-            return;
-        }
-
-        var i, m, nodelist, j, n, node, domNode, nid;
+        var nodelist, node, domNode, nid;
+        mutationTimer = undefined;
 
         // This is used to temporarily hold all added nodes, before resolving
         // their node id and relative position.
-        var added = [];
+        var newNodes = [];
+        var journalEntries = [];
+        var newNodeToIdMap = new Map();
 
-        for ( i = 0, m = addedNodelists.length; i < m; i++ ) {
-            nodelist = addedNodelists[i];
-            for ( j = 0, n = nodelist.length; j < n; j++ ) {
-                node = nodelist[j];
-                if ( node.nodeType !== 1 ) {
-                    continue;
-                }
-                // I don't think this can ever happen
-                if ( node.parentElement === null ) {
-                    continue;
-                }
+        for ( nodelist of addedNodelists ) {
+            for ( node of nodelist ) {
+                if ( node.nodeType !== 1 ) { continue; }
+                if ( node.parentElement === null ) { continue; }
                 cosmeticFilterMapper.incremental(node);
                 domNode = domNodeFactory(undefined, node);
                 if ( domNode !== null ) {
-                    journalNodes[domNode.nid] = domNode;
-                    added.push(node);
+                    newNodeToIdMap.set(domNode.nid, domNode);
+                    newNodes.push(node);
                 }
-                journalFromBranch(node, added);
+                journalFromBranch(node, newNodes, newNodeToIdMap);
             }
         }
         addedNodelists = [];
-        for ( i = 0, m = removedNodelist.length; i < m; i++ ) {
-            nodelist = removedNodelist[i];
-            for ( j = 0, n = nodelist.length; j < n; j++ ) {
-                node = nodelist[j];
-                if ( node.nodeType !== 1 ) {
-                    continue;
-                }
+        for ( nodelist of removedNodelist ) {
+            for ( node of nodelist ) {
+                if ( node.nodeType !== 1 ) { continue; }
                 nid = nodeToIdMap.get(node);
-                if ( nid === undefined ) {
-                    continue;
-                }
+                if ( nid === undefined ) { continue; }
                 journalEntries.push({
                     what: -1,
                     nid: nid
@@ -433,8 +397,7 @@ var domLayout = (function() {
             }
         }
         removedNodelist = [];
-        for ( i = 0, n = added.length; i < n; i++ ) {
-            node = added[i];
+        for ( node of newNodes ) {
             journalEntries.push({
                 what: 1,
                 nid: nodeToIdMap.get(node),
@@ -442,12 +405,20 @@ var domLayout = (function() {
                 l: previousElementSiblingId(node)
             });
         }
+
+        if ( journalEntries.length === 0 ) { return; }
+
+        vAPI.messaging.sendTo(loggerConnectionId, {
+            what: 'domLayoutIncremental',
+            url: window.location.href,
+            hostname: window.location.hostname,
+            journal: journalEntries,
+            nodes: Array.from(newNodeToIdMap)
+        });
     };
 
     var onMutationObserved = function(mutationRecords) {
-        var record;
-        for ( var i = 0, n = mutationRecords.length; i < n; i++ ) {
-            record = mutationRecords[i];
+        for ( var record of mutationRecords ) {
             if ( record.addedNodes.length !== 0 ) {
                 addedNodelists.push(record.addedNodes);
             }
@@ -455,55 +426,27 @@ var domLayout = (function() {
                 removedNodelist.push(record.removedNodes);
             }
         }
-        if ( mutationTimer === null ) {
+        if ( mutationTimer === undefined ) {
             mutationTimer = vAPI.setTimeout(journalFromMutations, 1000);
         }
     };
 
     // API
 
-    var getLayout = function(fingerprint) {
-        if ( fingerprint !== domFingerprint() ) {
-            reset();
-        }
+    var getLayout = function() {
+        cosmeticFilterMapper.reset();
+        mutationObserver = new MutationObserver(onMutationObserved);
+        mutationObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
 
-        var response = {
-            what: 'domLayout',
-            fingerprint: domFingerprint(),
+        return {
+            what: 'domLayoutFull',
             url: window.location.href,
-            hostname: window.location.hostname
+            hostname: window.location.hostname,
+            layout: patchLayoutData(getLayoutData())
         };
-
-        if ( document.readyState !== 'complete' ) {
-            response.status = 'busy';
-            return response;
-        }
-
-        // No mutation observer means we need to send full layout
-        if ( mutationObserver === null ) {
-            cosmeticFilterMapper.reset();
-            mutationObserver = new MutationObserver(onMutationObserved);
-            mutationObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-            response.status = 'full';
-            response.layout = patchLayoutData(getLayoutData());
-            return response;
-        }
-
-        // Incremental layout
-        if ( journalEntries.length !== 0 ) {
-            response.status = 'incremental';
-            response.journal = journalEntries;
-            response.nodes = journalNodes;
-            journalEntries = [];
-            journalNodes = Object.create(null);
-            return response;
-        }
-
-        response.status = 'nochange';
-        return response;
     };
 
     var reset = function() {
@@ -511,9 +454,9 @@ var domLayout = (function() {
     };
 
     var shutdown = function() {
-        if ( mutationTimer !== null ) {
+        if ( mutationTimer !== undefined ) {
             clearTimeout(mutationTimer);
-            mutationTimer = null;
+            mutationTimer = undefined;
         }
         if ( mutationObserver !== null ) {
             mutationObserver.disconnect();
@@ -521,8 +464,6 @@ var domLayout = (function() {
         }
         addedNodelists = [];
         removedNodelist = [];
-        journalEntries = [];
-        journalNodes = Object.create(null);
         nodeToIdMap = new WeakMap();
     };
 
@@ -550,136 +491,6 @@ try {
 
 /******************************************************************************/
 
-var cosmeticFilterFromEntries = function(entries) {
-    var out = [];
-    var entry, i = entries.length;
-    while ( i-- ) {
-        entry = entries[i];
-        out.push(cosmeticFilterFromTarget(entry.nid, entry.selector));
-    }
-    return out;
-};
-
-/******************************************************************************/
-
-// Extract the best possible cosmetic filter, i.e. as specific as possible.
-
-var cosmeticFilterFromNode = function(elem) {
-    var tagName = elem.localName;
-    var prefix = '';
-    var suffix = [];
-    var v, i;
-
-    // Id
-    v = typeof elem.id === 'string' && cssEscape(elem.id);
-    if ( v ) {
-        suffix.push('#', v);
-    }
-
-    // Class(es)
-    if ( suffix.length === 0 ) {
-        v = elem.classList;
-        if ( v ) {
-            i = v.length || 0;
-            while ( i-- ) {
-                suffix.push('.' + cssEscape(v.item(i)));
-            }
-        }
-    }
-
-    // Tag name
-    if ( suffix.length === 0 ) {
-        prefix = tagName;
-    }
-
-    // Attributes (depends on tag name)
-    var attributes = [], attr;
-    switch ( tagName ) {
-    case 'a':
-        v = elem.getAttribute('href');
-        if ( v ) {
-            v = v.replace(/\?.*$/, '');
-            if ( v.length ) {
-                attributes.push({ k: 'href', v: v });
-            }
-        }
-        break;
-    case 'img':
-        v = elem.getAttribute('alt');
-        if ( v && v.length !== 0 ) {
-            attributes.push({ k: 'alt', v: v });
-        }
-        break;
-    default:
-        break;
-    }
-    while ( (attr = attributes.pop()) ) {
-        if ( attr.v.length === 0 ) {
-            continue;
-        }
-        suffix.push('[', attr.k, '="', cssEscape(attr.v, true), '"]');
-    }
-
-    var selector = prefix + suffix.join('');
-
-    // https://github.com/chrisaljoudi/uBlock/issues/637
-    // If the selector is still ambiguous at this point, further narrow using
-    // `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
-    // `nth-child`, as `nth-of-type` is less volatile.
-    var parent = elem.parentElement;
-    if ( elementsFromSelector(cssScope + selector, parent).length > 1 ) {
-        i = 1;
-        while ( elem.previousElementSibling !== null ) {
-            elem = elem.previousElementSibling;
-            if ( elem.localName !== tagName ) {
-                continue;
-            }
-            i++;
-        }
-        selector += ':nth-of-type(' + i + ')';
-    }
-
-    return selector;
-};
-
-/******************************************************************************/
-
-var cosmeticFilterFromTarget = function(nid, coarseSelector) {
-    var elems = elementsFromSelector(coarseSelector);
-    var target = null;
-    var i = elems.length;
-    while ( i-- ) {
-        if ( nodeToIdMap.get(elems[i]) === nid ) {
-            target = elems[i];
-            break;
-        }
-    }
-    if ( target === null ) {
-        return coarseSelector;
-    }
-    // Find the most concise selector from the target node
-    var segments = [], segment;
-    var node = target;
-    while ( node !== document.body ) {
-        segment = cosmeticFilterFromNode(node);
-        segments.unshift(segment);
-        if ( segment.charAt(0) === '#' ) {
-            break;
-        }
-        node = node.parentElement;
-    }
-    var fineSelector = segments.join(' > ');
-    if ( fineSelector.charAt(0) === '#' ) {
-        return fineSelector;
-    }
-    if ( fineSelector.charAt(0) === '.' && elementsFromSelector(fineSelector).length === 1 ) {
-        return fineSelector;
-    }
-    return 'body > ' + fineSelector;
-};
-
-/******************************************************************************/
-
 var cosmeticFilterMapper = (function() {
     // https://github.com/gorhill/uBlock/issues/546
     var matchesFnName;
@@ -693,50 +504,47 @@ var cosmeticFilterMapper = (function() {
 
     var nodesFromStyleTag = function(rootNode) {
         var filterMap = roRedNodes,
-            selectors, selector,
-            nodes, node,
-            i, j;
+            entry, selector, canonical, nodes, node;
+
+        var details = vAPI.domFilterer.getAllSelectors();
 
         // Declarative selectors.
-        selectors = vAPI.domFilterer.getAllDeclarativeSelectors().split(',\n');
-        i = selectors.length;
-        while ( i-- ) {
-            selector = selectors[i];
-            if ( reHasCSSCombinators.test(selector) ) {
-                nodes = document.querySelectorAll(selector);
-            } else {
-                if (
-                    filterMap.has(rootNode) === false &&
-                    rootNode[matchesFnName](selector)
-                ) {
-                    filterMap.set(rootNode, selector);
+        for ( entry of (details.declarative || []) ) {
+            for ( selector of entry[0].split(',\n') ) {
+                canonical = selector;
+                if ( entry[1] !== 'display:none!important;' ) {
+                    canonical += ':style(' + entry[1] + ')';
                 }
-                nodes = rootNode.querySelectorAll(selector);
-            }
-            j = nodes.length;
-            while ( j-- ) {
-                node = nodes[j];
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, selector);
+                if ( reHasCSSCombinators.test(selector) ) {
+                    nodes = document.querySelectorAll(selector);
+                } else {
+                    if (
+                        filterMap.has(rootNode) === false &&
+                        rootNode[matchesFnName](selector)
+                    ) {
+                        filterMap.set(rootNode, canonical);
+                    }
+                    nodes = rootNode.querySelectorAll(selector);
+                }
+                for ( node of nodes ) {
+                    if ( filterMap.has(node) === false ) {
+                        filterMap.set(node, canonical);
+                    }
                 }
             }
         }
 
         // Procedural selectors.
-        selectors = vAPI.domFilterer.getAllProceduralSelectors();
-        for ( var entry of selectors ) {
-            nodes = entry[1].exec();
-            j = nodes.length;
-            while ( j-- ) {
-                if ( filterMap.has(node) === false ) {
-                    filterMap.set(node, entry[0]);
-                }
+        for ( entry of (details.procedural || []) ) {
+            nodes = entry.exec();
+            for ( node of nodes ) {
+                // Upgrade declarative selector to procedural one
+                filterMap.set(node, entry.raw);
             }
         }
     };
 
     var incremental = function(rootNode) {
-        vAPI.domFilterer.toggle(false);
         nodesFromStyleTag(rootNode);
     };
 
@@ -822,13 +630,10 @@ var getSvgRootChildren = function() {
     }
 };
 
-var highlightElements = function(scrollTo) {
-    var wv = pickerRoot.contentWindow.innerWidth;
-    var hv = pickerRoot.contentWindow.innerHeight;
+var highlightElements = function() {
     var islands;
     var elem, rect, poly;
     var xl, xr, yt, yb, w, h, ws;
-    var xlu = Number.MAX_VALUE, xru = 0, ytu = Number.MAX_VALUE, ybu = 0;
     var svgRootChildren = getSvgRootChildren();
 
     islands = [];
@@ -915,43 +720,23 @@ var highlightElements = function(scrollTo) {
         islands.push(poly);
     }
     svgRootChildren[3].setAttribute('d', islands.join('') || 'M0 0');
-
-    if ( !scrollTo ) {
-        return;
-    }
-
-    // Highlighted area completely within viewport
-    if ( xlu >= 0 && xru <= wv && ytu >= 0 && ybu <= hv ) {
-        return;
-    }
-
-    var dx = 0, dy = 0;
-
-    if ( xru > wv ) {
-        dx = xru - wv;
-        xlu -= dx;
-    }
-    if ( xlu <  0 ) {
-        dx += xlu;
-    }
-    if ( ybu > hv ) {
-        dy = ybu - hv;
-        ytu -= dy;
-    }
-    if ( ytu <  0 ) {
-        dy += ytu;
-    }
-
-    if ( dx !== 0 || dy !== 0 ) {
-        window.scrollBy(dx, dy);
-    }
 };
 
 /******************************************************************************/
 
-var onScrolled = function() {
-    highlightElements();
-};
+var onScrolled = (function() {
+    var buffered = false;
+    var timerHandler = function() {
+        buffered = false;
+        highlightElements();
+    };
+    return function() {
+        if ( buffered === false ) {
+            window.requestAnimationFrame(timerHandler);
+            buffered = true;
+        }
+    };
+})();
 
 /******************************************************************************/
 
@@ -968,13 +753,14 @@ var selectNodes = function(selector, nid) {
 
 /******************************************************************************/
 
-var shutdown = function() {
-    cosmeticFilterMapper.shutdown();
-    domLayout.shutdown();
-    vAPI.messaging.removeAllChannelListeners('domInspector');
-    window.removeEventListener('scroll', onScrolled, true);
-    document.documentElement.removeChild(pickerRoot);
-    pickerRoot = svgRoot = null;
+var nodesFromFilter = function(selector) {
+    var out = [];
+    for ( var entry of roRedNodes ) {
+        if ( entry[1] === selector ) {
+            out.push(entry[0]);
+        }
+    }
+    return out;
 };
 
 /******************************************************************************/
@@ -999,25 +785,56 @@ var toggleFilter = function(nodes, targetState) {
     }
 };
 
+var resetToggledNodes = function() {
+    rwGreenNodes.clear();
+    rwRedNodes.clear();
+};
+
 // https://www.youtube.com/watch?v=L5jRewnxSBY
+
+/******************************************************************************/
+
+var start = function() {
+    var onReady = function(ev) {
+        if ( ev ) {
+            document.removeEventListener(ev.type, onReady);
+        }
+        vAPI.messaging.sendTo(loggerConnectionId, domLayout.get());
+        vAPI.domFilterer.toggle(false, highlightElements);
+    };
+    if ( document.readyState === 'loading' ) {
+        document.addEventListener('DOMContentLoaded', onReady);
+    } else {
+        onReady();
+    }
+};
+
+/******************************************************************************/
+
+var shutdown = function() {
+    cosmeticFilterMapper.shutdown();
+    domLayout.shutdown();
+    vAPI.messaging.disconnectFrom(loggerConnectionId);
+    window.removeEventListener('scroll', onScrolled, true);
+    document.documentElement.removeChild(pickerRoot);
+    pickerRoot = svgRoot = null;
+};
 
 /******************************************************************************/
 /******************************************************************************/
 
 var onMessage = function(request) {
-    var response;
+    var response,
+        nodes;
 
     switch ( request.what ) {
     case 'commitFilters':
         highlightElements();
         break;
 
-    case 'cookFilters':
-        response = cosmeticFilterFromEntries(request.entries);
-        break;
-
     case 'domLayout':
-        response = domLayout.get(request.fingerprint);
+        response = domLayout.get();
+        highlightElements();
         break;
 
     case 'highlightMode':
@@ -1026,13 +843,18 @@ var onMessage = function(request) {
 
     case 'highlightOne':
         blueNodes = selectNodes(request.selector, request.nid);
-        highlightElements(request.scrollTo);
+        highlightElements();
+        break;
+
+    case 'resetToggledNodes':
+        resetToggledNodes();
+        highlightElements();
         break;
 
     case 'showCommitted':
         blueNodes = [];
         // TODO: show only the new filters and exceptions.
-        highlightElements(true);
+        highlightElements();
         break;
 
     case 'showInteractive':
@@ -1041,23 +863,17 @@ var onMessage = function(request) {
         break;
 
     case 'toggleFilter':
-        toggleExceptions(
-            selectNodes(request.filter, request.nid),
-            request.target
-        );
-        highlightElements(true);
+        nodes = selectNodes(request.selector, request.nid);
+        if ( nodes.length !== 0 ) { nodes[0].scrollIntoView(); }
+        toggleExceptions(nodesFromFilter(request.filter), request.target);
+        highlightElements();
         break;
 
     case 'toggleNodes':
-        toggleFilter(
-            selectNodes(request.selector, request.nid),
-            request.target
-        );
-        highlightElements(true);
-        break;
-
-    case 'shutdown':
-        shutdown();
+        nodes = selectNodes(request.selector, request.nid);
+        if ( nodes.length !== 0 ) { nodes[0].scrollIntoView(); }
+        toggleFilter(nodes, request.target);
+        highlightElements();
         break;
 
     default:
@@ -1067,42 +883,35 @@ var onMessage = function(request) {
     return response;
 };
 
+var messagingHandler = function(msg) {
+    switch ( msg.what ) {
+    case 'connectionAccepted':
+        loggerConnectionId = msg.id;
+        start();
+        break;
+    case 'connectionBroken':
+        shutdown();
+        break;
+    case 'connectionMessage':
+        onMessage(msg.payload);
+        break;
+    }
+};
+
 /******************************************************************************/
 
 // Install DOM inspector widget
 
-pickerRoot = document.createElement('iframe');
-pickerRoot.classList.add(sessionId);
-pickerRoot.classList.add('dom-inspector');
-pickerRoot.style.cssText = [
-    'background: transparent',
-    'border: 0',
-    'border-radius: 0',
-    'box-shadow: none',
-    'display: block',
-    'height: 100%',
-    'left: 0',
-    'margin: 0',
-    'opacity: 1',
-    'position: fixed',
-    'outline: 0',
-    'padding: 0',
-    'top: 0',
-    'visibility: visible',
-    'width: 100%',
-    'z-index: 2147483647',
-    ''
-].join(' !important;\n');
-
-pickerRoot.onload = function() {
-    pickerRoot.onload = null;
+var bootstrap = function(ev) {
+    if ( ev ) {
+        pickerRoot.removeEventListener(ev.type, bootstrap);
+    }
     var pickerDoc = this.contentDocument;
 
     var style = pickerDoc.createElement('style');
     style.textContent = [
         'body {',
             'background-color: transparent;',
-            'cursor: not-allowed;',
         '}',
         'svg {',
             'height: 100%;',
@@ -1141,12 +950,34 @@ pickerRoot.onload = function() {
 
     window.addEventListener('scroll', onScrolled, true);
 
-    cosmeticFilterMapper.reset();
-    highlightElements();
-
-    vAPI.messaging.addChannelListener('domInspector', onMessage);
+    vAPI.messaging.connectTo('domInspector', 'loggerUI', messagingHandler);
 };
 
+pickerRoot = document.createElement('iframe');
+pickerRoot.classList.add(sessionId);
+pickerRoot.classList.add('dom-inspector');
+pickerRoot.style.cssText = [
+    'background: transparent',
+    'border: 0',
+    'border-radius: 0',
+    'box-shadow: none',
+    'display: block',
+    'height: 100%',
+    'left: 0',
+    'margin: 0',
+    'opacity: 1',
+    'position: fixed',
+    'outline: 0',
+    'padding: 0',
+    'pointer-events:none;',
+    'top: 0',
+    'visibility: visible',
+    'width: 100%',
+    'z-index: 2147483647',
+    ''
+].join(' !important;\n');
+
+pickerRoot.addEventListener('load', bootstrap);
 document.documentElement.appendChild(pickerRoot);
 
 /******************************************************************************/

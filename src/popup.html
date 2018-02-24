@@ -13,12 +13,12 @@
 <span id="appinfo"><span id="appname">&nbsp;</span> <span id="version">&nbsp;</span></span>
 <div id="panes">
     <div class="tooltipContainer">
-        <p id="switch" data-i18n-tip="popupPowerSwitchInfo" data-tip-position="under"><span class="fa">&#xf011;</span></p>
+        <p id="switch" role="button" aria-label data-tip-position="under" tabindex="0"><span class="fa">&#xf011;</span></p>
         <p id="basicTools">
             <span id="gotoZap" class="fa tool" data-i18n-tip="popupTipZapper" data-tip-position="under">&#xf0e7;</span>
             <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-position="under">&#xf1fb;</span>
-            <a href="logger-ui.html" class="fa tool enabled" data-i18n-tip="popupTipLog" data-tip-position="under" target="uBOLogger">&#xf022;</a>
-            <a href="dashboard.html" class="fa tool enabled" data-i18n-tip="popupTipDashboard" data-tip-position="under" target="uBODashboard">&#xf1de;</a>
+            <a href="logger-ui.html" class="fa tool enabled" aria-label="data-tip" data-i18n-tip="popupTipLog" data-tip-position="under" target="uBOLogger" tabindex="0">&#xf022;</a>
+            <a href="dashboard.html" class="fa tool enabled" aria-label="data-tip" data-i18n-tip="popupTipDashboard" data-tip-position="under" target="uBODashboard" tabindex="0">&#xf1de;</a>
         </p>
         <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt">&nbsp;</h2>
         <p class="statName">
@@ -33,10 +33,10 @@
         <h2 data-i18n="popupHitDomainCountPrompt">&nbsp;</h2>
         <p class="statValue" id="popupHitDomainCount">&nbsp;</p>
         <div id="extraTools">
-            <span id="no-popups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups">&#xf0c5;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
-            <span id="no-large-media" class="hnSwitch fa" data-i18n-tip="popupTipNoLargeMedia">&#xf008;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
-            <span id="no-cosmetic-filtering" class="hnSwitch fa" data-i18n-tip="popupTipNoCosmeticFiltering">&#xf070;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
-            <span id="no-remote-fonts" class="hnSwitch fa" data-i18n-tip="popupTipNoRemoteFonts">&#xf031;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-popups" class="hnSwitch fa" role="button" aria-label tabindex="0">&#xf0c5;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-large-media" class="hnSwitch fa" role="button" aria-label tabindex="0">&#xf008;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-cosmetic-filtering" class="hnSwitch fa" role="button" aria-label tabindex="0">&#xf070;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
+            <span id="no-remote-fonts" class="hnSwitch fa" role="button" aria-label tabindex="0">&#xf031;<span class="badge"></span><span><svg viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span></span>
         </div>
     </div><!-- DO NOT REMOVE --><div class="tooltipContainer">
         <div id="firewallContainer" class="minimized">

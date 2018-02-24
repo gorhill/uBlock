@@ -28,7 +28,7 @@
 /******************************************************************************/
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1408996#c9
-var vAPI; // jshint ignore:line
+var vAPI = window.vAPI; // jshint ignore:line
 
 // https://github.com/chrisaljoudi/uBlock/issues/464
 // https://github.com/chrisaljoudi/uBlock/issues/1528
@@ -48,7 +48,9 @@ if (
     ) &&
     (/^image\/|^text\/plain/.test(document.contentType || '') === false)
 ) {
-    vAPI = vAPI instanceof Object && vAPI.uBO === true ? vAPI : { uBO: true };
+    vAPI = window.vAPI = vAPI instanceof Object && vAPI.uBO === true
+        ? vAPI
+        : { uBO: true };
 }
 
 /******************************************************************************/
