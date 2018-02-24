@@ -34,6 +34,7 @@ if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
 
 vAPI.userStylesheet = {
     style: null,
+    styleFixCount: 0,
     css: new Map(),
     disabled: false,
     apply: function() {
@@ -47,7 +48,12 @@ vAPI.userStylesheet = {
         var observer = new MutationObserver(function() {
             if ( this.style === null ) { return; }
             if ( this.style.sheet !== null ) { return; }
-            parent.appendChild(this.style);
+            this.styleFixCount += 1;
+            if ( this.styleFixCount < 32 ) {
+                parent.appendChild(this.style);
+            } else {
+                observer.disconnect();
+            }
         }.bind(this));
         observer.observe(parent, { childList: true });
     },
@@ -66,11 +72,13 @@ vAPI.userStylesheet = {
         if ( cssRule === undefined ) { return; }
         this.css.delete(cssText);
         if ( this.style === null ) { return; }
-        var rules = this.style.sheet.cssRules,
+        var sheet = this.style.sheet;
+        if ( !sheet ) { return; }
+        var rules = sheet.cssRules,
             i = rules.length;
         while ( i-- ) {
             if ( rules[i] !== cssRule ) { continue; }
-            this.style.sheet.deleteRule(i);
+            sheet.deleteRule(i);
             break;
         }
         if ( rules.length !== 0 ) { return; }

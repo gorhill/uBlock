@@ -184,19 +184,16 @@ HNTrieBuilder.prototype.add = function(hn) {
 */
 
 HNTrieBuilder.prototype.fromDomainOpt = function(hostnames) {
-    var len = hostnames.length,
-        beg = 0, end;
-    while ( beg < len ) {
-        end = hostnames.indexOf('|', beg);
-        if ( end === -1 ) { end = len; }
-        this.add(hostnames.slice(beg, end));
-        beg = end + 1;
-    }
-    return this;
+    return this.fromIterable(hostnames.split('|'));
 };
 
 HNTrieBuilder.prototype.fromIterable = function(hostnames) {
-    for ( var hn of hostnames ) {
+    var hns = Array.from(hostnames).sort(function(a, b) {
+        return a.length - b.length;
+    });
+    // https://github.com/gorhill/uBlock/issues/3328
+    //   Must sort from shortest to longest.
+    for ( var hn of hns ) {
         this.add(hn);
     }
     return this;

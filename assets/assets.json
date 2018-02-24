@@ -341,8 +341,8 @@
 		"group": "regions",
 		"off": true,
 		"title": "CZE, SVK: EasyList Czech and Slovak",
-		"lang": "cs",
-		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
+		"lang": "cs sk",
+		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt",
 		"supportURL": "https://github.com/tomasko126/easylistczechandslovak"
 	},
 	"DEU-0": {

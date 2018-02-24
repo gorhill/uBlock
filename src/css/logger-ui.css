@@ -60,9 +60,14 @@ textarea {
     padding: 0.2em 0;
     }
 
+/*
+    https://github.com/gorhill/uBlock/issues/3293
+    => https://devhints.io/css-system-font-stack
+*/
 #inspectors {
     bottom: 0;
-    font: 13px sans-serif;
+    font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 13px;
     position: absolute;
     top: 0;
     width: 100%;
@@ -122,22 +127,22 @@ textarea {
     width: 100%;
     }
 #netInspector table > colgroup > col:nth-of-type(1) {
-    width: 5em;
+    width: 4.6em;
     }
 #netInspector table > colgroup > col:nth-of-type(2) {
-    width: 2.5em;
+    width: 2.2em;
     }
 #netInspector table > colgroup > col:nth-of-type(3) {
     width: 20%;
     }
 #netInspector table > colgroup > col:nth-of-type(4) {
-    width: 2.5em;
+    width: 2.2em;
     }
 #netInspector table > colgroup > col:nth-of-type(5) {
     width: 6em;
     }
 #netInspector table > colgroup > col:nth-of-type(6) {
-    width: calc(100% - 16em - 20%);
+    width: calc(100% - 15em - 20%);
     }
 #netInspector.f table tr.f {
     display: none;

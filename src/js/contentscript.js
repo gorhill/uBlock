@@ -249,7 +249,9 @@ vAPI.domWatcher = (function() {
             }
         }
         if ( addedNodeLists.length !== 0 || removedNodes ) {
-            safeObserverHandlerTimer.start(1);
+            safeObserverHandlerTimer.start(
+                addedNodeLists.length < 100 ? 1 : undefined
+            );
         }
         //console.timeEnd('dom watcher/observer handler');
     };
@@ -490,9 +492,10 @@ vAPI.DOMFilterer = (function() {
                 [ ':xpath', PSelectorXpathTask ]
             ]);
         }
-        this.budget = 250; // I arbitrary picked a 1/4 second
+        this.budget = 200; // I arbitrary picked a 1/5 second
         this.raw = o.raw;
         this.cost = 0;
+        this.lastAllowanceTime = 0;
         this.selector = o.selector;
         this.tasks = [];
         var tasks = o.tasks;
@@ -537,8 +540,6 @@ vAPI.DOMFilterer = (function() {
         this.addedSelectors = new Map();
         this.addedNodes = false;
         this.removedNodes = false;
-        this.addedNodesHandlerMissCount = 0;
-        this.currentResultset = new Set();
         this.selectors = new Map();
     };
 
@@ -591,8 +592,7 @@ vAPI.DOMFilterer = (function() {
                 this.addedSelectors.clear();
             }
 
-            var currentResultset = this.currentResultset,
-                entry, nodes, i, node;
+            var entry, nodes, i;
 
             if ( this.addedSelectors.size !== 0 ) {
                 //console.time('procedural selectors/filterset changed');
@@ -600,9 +600,7 @@ vAPI.DOMFilterer = (function() {
                     nodes = entry[1].exec();
                     i = nodes.length;
                     while ( i-- ) {
-                        node = nodes[i];
-                        this.domFilterer.hideNode(node);
-                        currentResultset.add(node);
+                        this.domFilterer.hideNode(nodes[i]);
                     }
                 }
                 this.addedSelectors.clear();
@@ -614,40 +612,31 @@ vAPI.DOMFilterer = (function() {
 
             this.addedNodes = this.removedNodes = false;
 
-            var afterResultset = new Set(),
-                t0 = Date.now(), t1, cost, pselector;
+            var t0 = Date.now(),
+                t1, pselector, allowance;
 
             for ( entry of this.selectors ) {
                 pselector = entry[1];
+                allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
+                if ( allowance >= 1 ) {
+                    pselector.budget += allowance * 50;
+                    if ( pselector.budget > 200 ) { pselector.budget = 200; }
+                    pselector.lastAllowanceTime = t0;
+                }
                 if ( pselector.budget <= 0 ) { continue; }
                 nodes = pselector.exec();
+                t1 = Date.now();
+                pselector.budget += t0 - t1;
+                if ( pselector.budget < -500 ) {
+                    console.info('uBO: disabling %s', pselector.raw);
+                    pselector.budget = -0x7FFFFFFF;
+                }
+                t0 = t1;
                 i = nodes.length;
                 while ( i-- ) {
-                    node = nodes[i];
-                    this.domFilterer.hideNode(node);
-                    afterResultset.add(node);
-                }
-                t1 = Date.now();
-                cost = t1 - t0;
-                t0 = t1;
-                if ( cost <= 8 ) { continue; }
-                pselector.budget -= cost;
-                if ( pselector.budget <= 0 ) {
-                    console.log('disabling %s', pselector.raw);
+                    this.domFilterer.hideNode(nodes[i]);
                 }
             }
-            if ( afterResultset.size !== currentResultset.size ) {
-                this.addedNodesHandlerMissCount = 0;
-            } else {
-                this.addedNodesHandlerMissCount += 1;
-            }
-            for ( node of currentResultset ) {
-                if ( afterResultset.has(node) === false ) {
-                    this.domFilterer.unhideNode(node);
-                }
-            }
-
-            this.currentResultset = afterResultset;
 
             //console.timeEnd('procedural selectors/dom layout changed');
         },
@@ -1120,7 +1109,7 @@ vAPI.domSurveyor = (function() {
             return;
         }
 
-        console.log('dom surveyor shutting down: too many misses');
+        //console.info('dom surveyor shutting down: too many misses');
 
         surveyTimer.clear();
         vAPI.domWatcher.removeListener(domWatcherInterface);
