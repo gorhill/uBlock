@@ -1,11 +1,14 @@
 {
  "addons": {
   "uBlock0@raymondhill.net": {
-   "updates": {
-    "update_link": "https://github.com/gorhill/uBlock/releases/download/1.15.11b0/uBlock0.webext.signed.xpi",
-    "version": "1.15.11b0",
-    "applications": { "gecko": { "strict_min_version": "52" } }
-   }
+   "updates": [
+    {
+     "version": "1.15.11b1",
+     "applications": { "gecko": { "strict_min_version": "52" } },
+     "update_info_url": "https://github.com/gorhill/uBlock/releases/tag/1.15.11b1",
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/1.15.11b1/uBlock0.webext.signed.xpi"
+    }
+   ]
   }
  }
 }
