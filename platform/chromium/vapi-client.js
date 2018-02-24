@@ -115,6 +115,8 @@ vAPI.messaging = {
         if ( !details ) { return; }
 
         // Sent to all channels
+        if ( details.broadcast ) {
+            for ( var channelName of this.channels.keys() ) {
                 this.sendToChannelListeners(channelName, details.msg);
             }
             return;
