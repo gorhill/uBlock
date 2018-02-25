@@ -526,6 +526,15 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
+	"NOR-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "NOR: Dandelion Sprouts norske filtre",
+		"lang": "nb",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt",
+		"supportURL": "https://github.com/DandelionSprout/adfilt"
+	},
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
