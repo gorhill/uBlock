@@ -48,7 +48,9 @@ var removeAllChildren = logger.removeAllChildren = function(node) {
 
 var tabIdFromClassName = function(className) {
     var matches = className.match(/\btab_([^ ]+)\b/);
-    return matches !== null ? matches[1] : '';
+    if ( matches === null ) { return 0; }
+    if ( matches[1] === 'bts' ) { return -1; }
+    return parseInt(matches[1], 10);
 };
 
 var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
@@ -1609,12 +1611,7 @@ var popupManager = (function() {
     var toggleOn = function(td) {
         var tr = td.parentNode;
         realTabId = localTabId = tabIdFromClassName(tr.className);
-        if ( realTabId === '' ) {
-            return;
-        }
-        if ( localTabId === 'bts' ) {
-            realTabId = -1;
-        }
+        if ( realTabId === 0 ) { return; }
 
         container = uDom.nodeFromId('popupContainer');
 
