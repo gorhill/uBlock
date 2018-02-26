@@ -14,6 +14,7 @@ import time
 import zipfile
 
 from distutils.version import StrictVersion
+from string import Template
 
 # - Download target (raw) uBlock0.webext.xpi from GitHub
 #   - This is referred to as "raw" package
@@ -239,21 +240,15 @@ updates_json_filepath = os.path.join(projdir, 'dist', 'firefox', 'updates.json')
 with open(updates_json_filepath) as f:
     updates_json = json.load(f)
     f.close()
-    update_entry = updates_json['addons'][extension_id]['updates'][0]
-    previous_version = update_entry['version']
+    previous_version = updates_json['addons'][extension_id]['updates'][0]['version']
     if StrictVersion(version) > StrictVersion(previous_version):
         with open(os.path.join(projdir, 'platform', 'webext', 'updates.template.json')) as f:
-            template_json = json.load(f)
+            template_json = Template(f.read())
             f.close()
-            update_entry = updates_json['addons'][extension_id]['updates'][0]
-            update_entry['version'] = version
-            update_entry['update_info_url'] = update_entry['update_info_url'].format(version=version)
-            update_entry['update_link'] = update_entry['update_link'].format(version=version)
+            updates_json = template_json.substitute(version=version)
             with open(updates_json_filepath, 'w') as f:
-                json.dump(template_json, f, indent=1, separators=(',', ': '))
-                f.write('\n')
-                f.close()
-        subprocess.run('git status')
+               f.write(updates_json)
+               f.close()
         # TODO: automatically git add/commit?
 
 print('All done.')
