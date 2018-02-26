@@ -148,7 +148,7 @@ var µBlock = (function() { // jshint ignore:line
 
         selfieAfter: 17 * oneMinute,
 
-        pageStores: {},
+        pageStores: new Map(),
         pageStoresToken: 0,
 
         storageQuota: vAPI.storage.QUOTA_BYTES,

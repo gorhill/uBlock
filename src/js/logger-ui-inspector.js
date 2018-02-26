@@ -45,7 +45,7 @@ if (
 
 var logger = self.logger;
 var inspectorConnectionId;
-var inspectedTabId = '';
+var inspectedTabId = 0;
 var inspectedURL = '';
 var inspectedHostname = '';
 var inspector = uDom.nodeFromId('domInspector');
@@ -468,7 +468,7 @@ var startDialog = (function() {
 var onClicked = function(ev) {
     ev.stopPropagation();
 
-    if ( inspectedTabId === '' ) { return; }
+    if ( inspectedTabId === 0 ) { return; }
 
     var target = ev.target;
     var parent = target.parentElement;
@@ -540,7 +540,7 @@ var onMouseOver = (function() {
     };
 
     return function(ev) {
-        if ( inspectedTabId === '' ) { return; }
+        if ( inspectedTabId === 0 ) { return; }
         // Convenience: skip real-time highlighting if shift key is pressed.
         if ( ev.shiftKey ) { return; }
         // Find closest `li`
@@ -560,7 +560,7 @@ var onMouseOver = (function() {
 /******************************************************************************/
 
 var currentTabId = function() {
-    if ( showdomButton.classList.contains('active') === false ) { return ''; }
+    if ( showdomButton.classList.contains('active') === false ) { return 0; }
     return logger.tabIdFromPageSelector();
 };
 
@@ -568,7 +568,7 @@ var currentTabId = function() {
 
 var injectInspector = function() {
     var tabId = currentTabId();
-    if ( tabId === '' ) { return; }
+    if ( tabId === 0 ) { return; }
     inspectedTabId = tabId;
     messaging.send('loggerUI', {
         what: 'scriptlet',
@@ -586,7 +586,7 @@ var shutdownInspector = function() {
     }
     logger.removeAllChildren(domTree);
     inspector.classList.add('vCompact');
-    inspectedTabId = '';
+    inspectedTabId = 0;
 };
 
 /******************************************************************************/
@@ -658,7 +658,7 @@ var toggleOff = function() {
     uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').removeEventListener('click', toggleHighlightMode);
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').removeEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').removeEventListener('click', startDialog);
-    inspectedTabId = '';
+    inspectedTabId = 0;
 };
 
 /******************************************************************************/

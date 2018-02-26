@@ -336,8 +336,8 @@ var toBlockDocResult = function(url, hostname, logData) {
 
 var onBeforeBehindTheSceneRequest = function(details) {
     var µb = µBlock,
-        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if ( !pageStore ) { return; }
+        pageStore = µb.pageStoreFromTabId(details.tabId);
+    if ( pageStore === null ) { return; }
 
     var result = 0,
         context = pageStore.createContextFromPage(),
@@ -347,6 +347,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     context.requestType = requestType;
+
+    if ( details.tabId === vAPI.anyTabId && context.pageHostname === '' ) {
+        context.pageHostname = µb.URI.hostnameFromURI(details.documentUrl);
+        context.pageDomain = µb.URI.domainFromHostname(context.pageHostname);
+        context.rootHostname = context.pageHostname;
+        context.rootDomain = context.pageDomain;
+    }
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
     //   Do not filter behind-the-scene network request of type `beacon`: there
@@ -361,7 +368,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/3150
     //   Ability to globally block CSP reports MUST also apply to
     //   behind-the-scene network requests.
-    if ( µb.userSettings.advancedUserEnabled || requestType === 'csp_report' ) {
+    if (
+        details.tabId !== vAPI.noTabId ||
+        µb.userSettings.advancedUserEnabled ||
+        requestType === 'csp_report'
+    ) {
         result = pageStore.filterRequest(context);
     }
 
@@ -369,7 +380,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
-            vAPI.noTabId,
+            details.tabId,
             'net',
             pageStore.logData,
             requestType,

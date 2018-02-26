@@ -265,18 +265,29 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3546
+//   Added a new flavor of behind-the-scene tab id: vAPI.anyTabId.
+//   vAPI.anyTabId will be used for network requests which can be filtered,
+//   because they comes with enough contextual information. It's just not
+//   possible to pinpoint exactly from which tab it comes from. For example,
+//   with Firefox/webext, the `documentUrl` property is available for every
+//   network requests.
+
 vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId.toString() === '-1';
+    if ( typeof tabId === 'string' ) { debugger; }
+    return tabId < 0;
 };
 
-vAPI.noTabId = '-1';
+vAPI.unsetTabId = 0;
+vAPI.noTabId = -1;      // definitely not any existing tab
+vAPI.anyTabId = -2;     // one of the existing tab
 
 /******************************************************************************/
 
+// To remove when tabId-as-integer has been tested enough.
+
 var toChromiumTabId = function(tabId) {
-    if ( typeof tabId === 'string' ) {
-        tabId = parseInt(tabId, 10);
-    }
+    if ( typeof tabId === 'string' ) { debugger; }
     if ( typeof tabId !== 'number' || isNaN(tabId) || tabId === -1 ) {
         return 0;
     }
@@ -329,8 +340,8 @@ vAPI.tabs.registerListeners = function() {
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
             vAPI.tabs.onPopupCreated(
-                details.tabId.toString(),
-                details.sourceTabId.toString()
+                details.tabId,
+                details.sourceTabId
             );
         }
     };
@@ -364,7 +375,7 @@ vAPI.tabs.registerListeners = function() {
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
-        onUpdatedClient(tabId.toString(), changeInfo, tab);
+        onUpdatedClient(tabId, changeInfo, tab);
     };
 
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
@@ -542,9 +553,7 @@ vAPI.tabs.open = function(details) {
 
 vAPI.tabs.replace = function(tabId, url) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var targetURL = url;
 
@@ -565,9 +574,7 @@ vAPI.tabs.replace = function(tabId, url) {
 
 vAPI.tabs.remove = function(tabId) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var onTabRemoved = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -605,9 +612,7 @@ vAPI.tabs.reload = function(tabId, bypassCache) {
 
 vAPI.tabs.select = function(tabId) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     chrome.tabs.update(tabId, { active: true }, function(tab) {
         if ( chrome.runtime.lastError ) {
@@ -789,7 +794,7 @@ vAPI.messaging.onPortMessage = (function() {
         case 'connectionRefused':
             toPort = messaging.ports.get(msg.fromToken);
             if ( toPort !== undefined ) {
-                msg.tabId = tabId && tabId.toString();
+                msg.tabId = tabId;
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
@@ -797,7 +802,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             break;
         case 'connectionRequested':
-            msg.tabId = tabId && tabId.toString();
+            msg.tabId = tabId;
             for ( toPort of messaging.ports.values() ) {
                 toPort.postMessage(request);
             }
@@ -809,7 +814,7 @@ vAPI.messaging.onPortMessage = (function() {
                 port.name === msg.fromToken ? msg.toToken : msg.fromToken
             );
             if ( toPort !== undefined ) {
-                msg.tabId = tabId && tabId.toString();
+                msg.tabId = tabId;
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';

@@ -56,7 +56,7 @@ var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
     if ( tabClass === 'tab_active' && activeTabId !== undefined ) {
         return activeTabId;
     }
-    return /^tab_\d+$/.test(tabClass) ? tabClass.slice(4) : '';
+    return /^tab_\d+$/.test(tabClass) ? parseInt(tabClass.slice(4), 10) : 0;
 };
 
 /******************************************************************************/
@@ -79,8 +79,7 @@ var tdJunkyard = [];
 var firstVarDataCol = 2;  // currently, column 2 (0-based index)
 var lastVarDataIndex = 4; // currently, d0-d3
 var maxEntries = 5000;
-var noTabId = '';
-var allTabIds = {};
+var allTabIds = new Map();
 var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
@@ -113,7 +112,7 @@ var staticFilterTypes = {
 /******************************************************************************/
 
 var classNameFromTabId = function(tabId) {
-    if ( tabId === noTabId ) {
+    if ( tabId < 0 ) {
         return 'tab_bts';
     }
     if ( tabId !== '' ) {
@@ -353,7 +352,7 @@ var renderLogEntry = function(entry) {
     if ( entry.tab ) {
         tr.classList.add('tab');
         tr.classList.add(classNameFromTabId(entry.tab));
-        if ( entry.tab === noTabId ) {
+        if ( entry.tab < 0 ) {
             tr.cells[1].appendChild(createHiddenTextNode('bts'));
         }
     }
@@ -392,7 +391,7 @@ var renderLogEntries = function(response) {
         // https://github.com/gorhill/uBlock/issues/1613#issuecomment-217637122
         // Unlikely, but it may happen: mark as void if associated tab no
         // longer exist.
-        if ( entry.tab && tabIds.hasOwnProperty(entry.tab) === false ) {
+        if ( entry.tab && tabIds.has(entry.tab) === false ) {
             tr.classList.remove('canMtx');
         }
     }
@@ -422,9 +421,8 @@ var synchronizeTabIds = function(newTabIds) {
     var oldTabIds = allTabIds;
     var autoDeleteVoidRows = selectValue === 'tab_active';
     var rowVoided = false;
-    for ( var tabId in oldTabIds ) {
-        if ( oldTabIds.hasOwnProperty(tabId) === false ) { continue; }
-        if ( newTabIds.hasOwnProperty(tabId) ) { continue; }
+    for ( var tabId of oldTabIds.keys() ) {
+        if ( newTabIds.has(tabId) ) { continue; }
         // Mark or remove voided rows
         var trs = uDom('.tab_' + tabId);
         if ( autoDeleteVoidRows ) {
@@ -439,20 +437,20 @@ var synchronizeTabIds = function(newTabIds) {
         }
     }
 
-    var tabIds = Object.keys(newTabIds).sort(function(a, b) {
-        return newTabIds[a].localeCompare(newTabIds[b]);
+    var tabIds = Array.from(newTabIds.keys()).sort(function(a, b) {
+        return newTabIds.get(a).localeCompare(newTabIds.get(b));
     });
     var option;
     for ( var i = 0, j = 3; i < tabIds.length; i++ ) {
         tabId = tabIds[i];
-        if ( tabId === noTabId ) { continue; }
+        if ( tabId < 0 ) { continue; }
         option = select.options[j];
         if ( !option ) {
             option = document.createElement('option');
             select.appendChild(option);
         }
         // Truncate too long labels.
-        option.textContent = newTabIds[tabId].slice(0, 80);
+        option.textContent = newTabIds.get(tabId).slice(0, 80);
         option.value = classNameFromTabId(tabId);
         if ( option.value === selectValue ) {
             select.selectedIndex = j;
@@ -500,12 +498,13 @@ var onLogBufferRead = function(response) {
         return;
     }
 
-    // This tells us the behind-the-scene tab id
-    noTabId = response.noTabId;
-
     // Tab id of currently active tab
     if ( response.activeTabId ) {
         activeTabId = response.activeTabId;
+    }
+
+    if ( Array.isArray(response.tabIds) ) {
+        response.tabIds = new Map(response.tabIds);
     }
 
     // This may have changed meanwhile
@@ -625,7 +624,7 @@ var pageSelectorFromURLHash = (function() {
 
 var reloadTab = function(ev) {
     var tabId = tabIdFromPageSelector();
-    if ( tabId === '' ) { return; }
+    if ( tabId === 0 ) { return; }
     messaging.send('loggerUI', {
         what: 'reloadTab',
         tabId: tabId,
@@ -965,7 +964,7 @@ var netFilteringManager = (function() {
         // First, whether picker can be used
         dialog.querySelector('.picker').classList.toggle(
             'hide',
-            targetTabId === noTabId ||
+            targetTabId < 0 ||
             targetType !== 'image' ||
             /(?:^| )[dlsu]b(?: |$)/.test(targetRow.className)
         );
@@ -1614,7 +1613,7 @@ var popupManager = (function() {
             return;
         }
         if ( localTabId === 'bts' ) {
-            realTabId = noTabId;
+            realTabId = -1;
         }
 
         container = uDom.nodeFromId('popupContainer');

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -510,20 +510,18 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 /******************************************************************************/
 
 µBlock.logCosmeticFilters = (function() {
-    var tabIdToTimerMap = {};
+    var tabIdToTimerMap = new Map();
 
     var injectNow = function(tabId) {
-        delete tabIdToTimerMap[tabId];
+        tabIdToTimerMap.delete(tabId);
         µBlock.scriptlets.injectDeep(tabId, 'cosmetic-logger');
     };
 
     var injectAsync = function(tabId) {
-        if ( tabIdToTimerMap.hasOwnProperty(tabId) ) {
-            return;
-        }
-        tabIdToTimerMap[tabId] = vAPI.setTimeout(
-            injectNow.bind(null, tabId),
-            100
+        if ( tabIdToTimerMap.has(tabId) ) { return; }
+        tabIdToTimerMap.set(
+            tabId,
+            vAPI.setTimeout(injectNow.bind(null, tabId), 100)
         );
     };
 

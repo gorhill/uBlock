@@ -1022,28 +1022,26 @@ vAPI.messaging.listen('dashboard', onMessage);
 /******************************************************************************/
 
 var µb = µBlock,
-    extensionPageURL = vAPI.getURL('');
+    extensionOriginURL = vAPI.getURL('');
 
 /******************************************************************************/
 
 var getLoggerData = function(ownerId, activeTabId, callback) {
-    var tabIds = {};
-    for ( var tabId in µb.pageStores ) {
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore === null ) { continue; }
-        if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
-        tabIds[tabId] = pageStore.title;
+    var tabIds = new Map();
+    for ( var entry of µb.pageStores ) {
+        var pageStore = entry[1];
+        if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
+        tabIds.set(entry[0], pageStore.title);
     }
-    if ( activeTabId && tabIds.hasOwnProperty(activeTabId) === false ) {
+    if ( activeTabId && tabIds.has(activeTabId) === false ) {
         activeTabId = undefined;
     }
     callback({
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(ownerId),
         maxEntries: µb.userSettings.requestLogMaxEntries,
-        noTabId: vAPI.noTabId,
         activeTabId: activeTabId,
-        tabIds: tabIds,
+        tabIds: Array.from(tabIds),
         tabIdsToken: µb.pageStoresToken
     });
 };
@@ -1093,11 +1091,7 @@ var onMessage = function(request, sender, callback) {
             return;
         }
         vAPI.tabs.get(null, function(tab) {
-            getLoggerData(
-                request.ownerId,
-                tab && tab.id.toString(),
-                callback
-            );
+            getLoggerData(request.ownerId, tab && tab.id, callback);
         });
         return;
 

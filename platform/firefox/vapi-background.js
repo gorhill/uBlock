@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2107 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -833,10 +833,11 @@ var getOwnerWindow = function(target) {
 /******************************************************************************/
 
 vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId.toString() === '-1';
+    return tabId < 0;
 };
 
-vAPI.noTabId = '-1';
+vAPI.noTabId = -1;
+vAPI.anyTabId = -2;
 
 /******************************************************************************/
 
@@ -1283,7 +1284,7 @@ var tabWatcher = (function() {
         }
         var tabId = browserToTabIdMap.get(browser);
         if ( tabId === undefined ) {
-            tabId = '' + tabIdGenerator++;
+            tabId = tabIdGenerator++;
             browserToTabIdMap.set(browser, tabId);
             tabIdToBrowserMap.set(tabId, Cu.getWeakReference(browser));
         }
@@ -1316,7 +1317,7 @@ var tabWatcher = (function() {
     var removeBrowserEntry = function(tabId, browser) {
         if ( tabId && tabId !== vAPI.noTabId ) {
             vAPI.tabs.onClosed(tabId);
-            delete vAPI.toolbarButton.tabs[tabId];
+            vAPI.toolbarButton.tabs.delete(tabId);
             tabIdToBrowserMap.delete(tabId);
         }
         if ( browser ) {
@@ -1539,7 +1540,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     if ( tabId === undefined ) {
         tabId = curTabId;
     } else if ( badge !== undefined ) {
-        tb.tabs[tabId] = { badge: badge, img: iconStatus === 'on' };
+        tb.tabs.set(tabId, { badge: badge, img: iconStatus === 'on' });
     }
 
     if ( curTabId && tabId === curTabId ) {
@@ -2028,7 +2029,7 @@ var httpObserver = {
     },
 
     // https://github.com/gorhill/uBlock/issues/959
-    syntheticPendingRequest: { frameId: 0, parentFrameId: -1, tabId: '', rawtype: 1 },
+    syntheticPendingRequest: { frameId: 0, parentFrameId: -1, tabId: 0, rawtype: 1 },
 
     handleRequest: function(channel, URI, details) {
         var type = this.typeMap[details.rawtype] || 'other';
@@ -2437,7 +2438,7 @@ vAPI.toolbarButton = {
     viewId: location.host + '-panel',
     label: vAPI.app.name,
     tooltiptext: vAPI.app.name,
-    tabs: {/*tabId: {badge: 0, img: boolean}*/},
+    tabs: new Map(/* tabId: { badge: 0, img: boolean } */),
     init: null,
     codePath: ''
 };
@@ -2473,8 +2474,8 @@ vAPI.toolbarButton = {
         if ( tabId === undefined ) {
             return label;
         }
-        var tabDetails = this.tabs[tabId];
-        if ( !tabDetails ) {
+        var tabDetails = this.tabs.get(tabId);
+        if ( tabDetails === undefined ) {
             return label;
         }
         if ( !tabDetails.img ) {
@@ -2563,7 +2564,7 @@ vAPI.toolbarButton = {
             return;
         }
 
-        var icon = this.tabs[tabId];
+        var icon = this.tabs.get(tabId);
 
         button.setAttribute('badge', icon && icon.badge || '');
         button.classList.toggle('off', !icon || !icon.img);
@@ -3502,9 +3503,8 @@ vAPI.onLoadAllCompleted = function() {
     // TODO: vAPI shouldn't know about uBlock. Just like in uMatrix, uBlock
     // should collect on its side all the opened tabs whenever it is ready.
     var µb = µBlock;
-    var tabId;
     for ( var browser of tabWatcher.browsers() ) {
-        tabId = tabWatcher.tabIdFromTarget(browser);
+        var tabId = tabWatcher.tabIdFromTarget(browser);
         µb.tabContextManager.commit(tabId, browser.currentURI.asciiSpec);
         µb.bindTabToPageStats(tabId);
     }
