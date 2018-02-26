@@ -32,8 +32,12 @@ from string import Template
 # - Modify updates.json to point to new version
 #   - Commit changes to repo
 
+# Find path to project root
+projdir = os.path.split(os.path.abspath(__file__))[0]
+while not os.path.isdir(os.path.join(projdir, '.git')):
+    projdir = os.path.normpath(os.path.join(projdir, '..'))
+
 extension_id = 'uBlock0@raymondhill.net'
-projdir = os.path.join(os.path.split(os.path.abspath(__file__))[0], '..', '..')
 tmpdir = tempfile.TemporaryDirectory()
 raw_xpi_filename = 'uBlock0.webext.xpi'
 raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
