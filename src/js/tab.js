@@ -136,7 +136,7 @@ housekeep itself.
     var mostRecentRootDocURL = '';
     var mostRecentRootDocURLTimestamp = 0;
 
-    var popupCandidates = Object.create(null);
+    var popupCandidates = new Map();
 
     var PopupCandidate = function(targetTabId, openerTabId) {
         this.targetTabId = targetTabId;
@@ -155,7 +155,7 @@ housekeep itself.
         if ( this.selfDestructionTimer !== null ) {
             clearTimeout(this.selfDestructionTimer);
         }
-        delete popupCandidates[this.targetTabId];
+        popupCandidates.delete(this.targetTabId);
     };
 
     PopupCandidate.prototype.launchSelfDestruction = function() {
@@ -166,31 +166,36 @@ housekeep itself.
     };
 
     var popupCandidateTest = function(targetTabId) {
-        var candidates = popupCandidates,
-            entry;
-        for ( var tabId in candidates ) {
-            entry = candidates[tabId];
-            if ( targetTabId !== tabId && targetTabId !== entry.opener.tabId ) {
+        for ( var entry of popupCandidates ) {
+            var tabId = entry[0];
+            var candidate = entry[1];
+            if (
+                targetTabId !== tabId &&
+                targetTabId !== candidate.opener.tabId
+            ) {
                 continue;
             }
             // https://github.com/gorhill/uBlock/issues/3129
             //   If the trigger is a change in the opener's URL, mark the entry
             //   as candidate for popunder filtering.
-            if ( targetTabId === entry.opener.tabId ) {
-                entry.opener.popunder = true;
+            if ( targetTabId === candidate.opener.tabId ) {
+                candidate.opener.popunder = true;
             }
-            if ( vAPI.tabs.onPopupUpdated(tabId, entry.opener) === true ) {
-                entry.destroy();
+            if ( vAPI.tabs.onPopupUpdated(tabId, candidate.opener) === true ) {
+                candidate.destroy();
             } else {
-                entry.launchSelfDestruction();
+                candidate.launchSelfDestruction();
             }
         }
     };
 
     vAPI.tabs.onPopupCreated = function(targetTabId, openerTabId) {
-        var popup = popupCandidates[targetTabId];
+        var popup = popupCandidates.get(targetTabId);
         if ( popup === undefined ) {
-            popupCandidates[targetTabId] = new PopupCandidate(targetTabId, openerTabId);
+            popupCandidates.set(
+                targetTabId,
+                new PopupCandidate(targetTabId, openerTabId)
+            );
         }
         popupCandidateTest(targetTabId);
     };

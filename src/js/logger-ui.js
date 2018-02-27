@@ -117,7 +117,7 @@ var classNameFromTabId = function(tabId) {
     if ( tabId < 0 ) {
         return 'tab_bts';
     }
-    if ( tabId !== '' ) {
+    if ( tabId !== 0 ) {
         return 'tab_' + tabId;
     }
     return '';
