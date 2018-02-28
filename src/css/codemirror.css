@@ -1,0 +1,10 @@
+.codeMirrorContainer {
+    font-size: 12px;
+    overflow: hidden;
+}
+.CodeMirror {
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}

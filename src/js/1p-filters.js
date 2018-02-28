@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,18 +19,26 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom, uBlockDashboard */
-
-/******************************************************************************/
-
-(function() {
+/* global CodeMirror, uDom, uBlockDashboard */
 
 'use strict';
 
 /******************************************************************************/
 
+(function() {
+
+/******************************************************************************/
+
 var messaging = vAPI.messaging;
 var cachedUserFilters = '';
+
+var cmEditor = new CodeMirror(
+    document.getElementById('userFilters'),
+    {
+        lineNumbers: true,
+        lineWrapping: true,
+    }
+);
 
 /******************************************************************************/
 
@@ -38,7 +46,7 @@ var cachedUserFilters = '';
 
 function userFiltersChanged(changed) {
     if ( typeof changed !== 'boolean' ) {
-        changed = uDom.nodeFromId('userFilters').value.trim() !== cachedUserFilters;
+        changed = cmEditor.getValue().trim() !== cachedUserFilters;
     }
     uDom.nodeFromId('userFiltersApply').disabled = !changed;
     uDom.nodeFromId('userFiltersRevert').disabled = !changed;
@@ -49,14 +57,14 @@ function userFiltersChanged(changed) {
 function renderUserFilters(first) {
     var onRead = function(details) {
         if ( details.error ) { return; }
-        var textarea = uDom.nodeFromId('userFilters');
-        cachedUserFilters = details.content.trim();
-        textarea.value = details.content;
+        var content = details.content.trim();
+        cachedUserFilters = content;
+        if ( content.length !== 0 ) {
+            content += '\n';
+        }
+        cmEditor.setValue(content);
         if ( first ) {
-            textarea.value += '\n';
-            var textlen = textarea.value.length;
-            textarea.setSelectionRange(textlen, textlen);
-            textarea.focus();
+            cmEditor.clearHistory();
         }
         userFiltersChanged(false);
     };
@@ -146,35 +154,33 @@ var exportUserFiltersToFile = function() {
 /******************************************************************************/
 
 var applyChanges = function() {
-    var textarea = uDom.nodeFromId('userFilters');
-
     var onWritten = function(details) {
-        if ( details.error ) {
-            return;
-        }
-        textarea.value = details.content;
+        if ( details.error ) { return; }
         cachedUserFilters = details.content.trim();
         userFiltersChanged();
         allFiltersApplyHandler();
-        textarea.focus();
     };
 
     var request = {
         what: 'writeUserFilters',
-        content: textarea.value
+        content: cmEditor.getValue()
     };
     messaging.send('dashboard', request, onWritten);
 };
 
 var revertChanges = function() {
-    uDom.nodeFromId('userFilters').value = cachedUserFilters + '\n';
+    var content = cachedUserFilters;
+    if ( content.length !== 0 ) {
+        content += '\n';
+    }
+    cmEditor.setValue(content);
     userFiltersChanged();
 };
 
 /******************************************************************************/
 
 var getCloudData = function() {
-    return uDom.nodeFromId('userFilters').value;
+    return cmEditor.getValue();
 };
 
 var setCloudData = function(data, append) {
@@ -185,7 +191,7 @@ var setCloudData = function(data, append) {
     if ( append ) {
         data = uBlockDashboard.mergeNewLines(textarea.value, data);
     }
-    textarea.value = data;
+    cmEditor.setValue(data);
     userFiltersChanged();
 };
 
@@ -198,11 +204,12 @@ self.cloud.onPull = setCloudData;
 uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
-uDom('#userFilters').on('input', userFiltersChanged);
 uDom('#userFiltersApply').on('click', applyChanges);
 uDom('#userFiltersRevert').on('click', revertChanges);
 
 renderUserFilters(true);
+
+cmEditor.on('changes', userFiltersChanged);
 
 /******************************************************************************/
 
