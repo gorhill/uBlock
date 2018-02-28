@@ -126,9 +126,9 @@ It is expected that uBlock Origin is compatible with any Chromium-based browsers
 
 [Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/).
 
-There is also a development version if you want to test uBlock Origin with the latest changes: see [_beta channel for uBlock Origin_](https://addons.mozilla.org/addon/ublock-origin/versions/beta)
+There is also a development version if you want to test uBlock Origin with the latest changes: for installation, see [Install / Firefox webext / For beta version](https://github.com/gorhill/uBlock/blob/master/dist/README.md#for-beta-version)
 
-uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox.
+uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox: for installation, see [Install / Firefox legacy](https://github.com/gorhill/uBlock/blob/master/dist/README.md#firefox-legacy).
 
 Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton), users of Debian 9 or later or Ubuntu 16.04 or later may simply
 `apt-get install xul-ext-ublock-origin`.
