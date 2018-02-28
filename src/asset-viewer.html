@@ -3,17 +3,28 @@
 <head>
 <meta charset="utf-8">
 <title>uBlock — Asset</title>
+<link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
 <style>
+body {
+    border: 0;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    }
 #content {
     font: 12px monospace;
+    height: 100%;
     white-space: pre;
+    }
+.CodeMirror {
+    height: 100%;
     }
 </style>
 </head>
 <body>
 <div id="content"></div>
 
-
+<script src="lib/codemirror/lib/codemirror.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

@@ -19,37 +19,35 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
-/******************************************************************************/
-
-(function() {
+/* global CodeMirror */
 
 'use strict';
 
 /******************************************************************************/
 
-var onAssetContentReceived = function(details) {
-    uDom('#content').text(details && (details.content || ''));
-};
+(function() {
 
-/******************************************************************************/
+    var q = window.location.search;
+    var matches = q.match(/^\?url=([^&]+)/);
+    if ( !matches || matches.length !== 2 ) { return; }
 
-var q = window.location.search;
-var matches = q.match(/^\?url=([^&]+)/);
-if ( !matches || matches.length !== 2 ) {
-    return;
-}
+    vAPI.messaging.send(
+        'default',
+        {
+            what : 'getAssetContent',
+            url: decodeURIComponent(matches[1])
+        },
+        function(details) {
+            cmEditor.setValue(details && (details.content || ''));
+        }   
+    );
 
-vAPI.messaging.send(
-    'default',
-    {
-        what : 'getAssetContent',
-        url: decodeURIComponent(matches[1])
-    },
-    onAssetContentReceived
-);
-
-/******************************************************************************/
+    var cmEditor = new CodeMirror(
+        document.getElementById('content'),
+        {
+            lineNumbers: true,
+            readOnly: true
+        }
+    );
 
 })();
