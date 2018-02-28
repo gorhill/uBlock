@@ -36,6 +36,11 @@ from string import Template
 projdir = os.path.split(os.path.abspath(__file__))[0]
 while not os.path.isdir(os.path.join(projdir, '.git')):
     projdir = os.path.normpath(os.path.join(projdir, '..'))
+# Check that found project root is valid
+version_filepath = os.path.join(projdir, 'dist', 'version')
+if not os.path.isfile(version_filepath):
+    print('Version file not found.')
+    exit(1)
 
 extension_id = 'uBlock0@raymondhill.net'
 tmpdir = tempfile.TemporaryDirectory()
