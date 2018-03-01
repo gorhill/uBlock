@@ -603,8 +603,15 @@ var filterDocument = (function() {
         return textDecoder.decode(buffer);
     };
 
-    var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
+    var reContentTypeDocument = /^(?:text\/html|application\/xhtml\+xml)/i,
         reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
+
+    var mimeFromContentType = function(contentType) {
+        var match = reContentTypeDocument.exec(contentType);
+        if ( match !== null ) {
+            return match[0].toLowerCase();
+        }
+    };
 
     var charsetFromContentType = function(contentType) {
         var match = reContentTypeCharset.exec(contentType);
@@ -786,7 +793,7 @@ var filterDocument = (function() {
             }
             doc = domParser.parseFromString(
                 utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
-                'text/html'
+                filterer.mime
             );
             charsetFound = charsetFromDoc(doc);
             charsetUsed = µb.textEncode.normalizeCharset(charsetFound);
@@ -797,7 +804,7 @@ var filterDocument = (function() {
 
         doc = domParser.parseFromString(
             textDecode(charsetUsed, filterer.buffer),
-            'text/html'
+            filterer.mime
         );
 
         // https://github.com/gorhill/uBlock/issues/3507
@@ -812,7 +819,7 @@ var filterDocument = (function() {
                 charsetUsed = charsetFound;
                 doc = domParser.parseFromString(
                     textDecode(charsetFound, filterer.buffer),
-                    'text/html'
+                    filterer.mime
                 );
             }
         }
@@ -879,6 +886,7 @@ var filterDocument = (function() {
             selectors: undefined,
             scriptlets: undefined,
             buffer: null,
+            mime: undefined,
             charset: undefined
         };
 
@@ -906,7 +914,8 @@ var filterDocument = (function() {
         var headers = details.responseHeaders,
             contentType = headerValueFromName('content-type', headers);
         if ( contentType !== '' ) {
-            if ( reContentTypeDocument.test(contentType) === false ) { return; }
+            request.mime = mimeFromContentType(contentType);
+            if ( request.mime === undefined ) { return; }
             var charset = charsetFromContentType(contentType);
             if ( charset !== undefined ) {
                 charset = µb.textEncode.normalizeCharset(charset);
