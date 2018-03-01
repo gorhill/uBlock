@@ -30,13 +30,13 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
                 return null;
             }
             stream.eatSpace();
-            var c = stream.peek();
+            var c = stream.next();
             if ( c === '!' ) {
                 stream.skipToEnd();
                 return 'comment';
             }
             if ( c === '#' ) {
-                c = stream.peek();
+                c = stream.next();
                 if ( c !== '#' && c !== '@' ) {
                     stream.skipToEnd();
                     return 'comment';
