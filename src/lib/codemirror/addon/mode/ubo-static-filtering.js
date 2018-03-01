@@ -24,26 +24,29 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
+    var reNotSpace = /\S/;
+    var reComment = /^(?:!|#[^#@]|#@[^#])/;
+    var reExt = /^[^#]*#(?:#[^#]|##[^#]|@#)/;
+    var reNetAllow = /^@@/;
+
     return {
         token: function(stream) {
-            if ( stream.sol() === false ) {
-                return null;
-            }
-            stream.eatSpace();
-            var c = stream.next();
-            if ( c === '!' ) {
-                stream.skipToEnd();
-                return 'comment';
-            }
-            if ( c === '#' ) {
-                c = stream.next();
-                if ( c !== '#' && c !== '@' ) {
-                    stream.skipToEnd();
-                    return 'comment';
+            var style = null;
+            var pos = stream.string.search(reNotSpace);
+            if ( pos !== -1 ) {
+                var s = stream.string.slice(pos);
+                if ( reComment.test(s) ) {
+                    style = 'comment';
+                } else if ( reExt.test(s) ) {
+                    style = 'staticext';
+                } else if ( reNetAllow.test(s) ) {
+                    style = 'staticnet allow';
+                } else {
+                    style = 'staticnet block';
                 }
             }
             stream.skipToEnd();
-            return null;
+            return style;
         }
     };
 });
