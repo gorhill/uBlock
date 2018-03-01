@@ -178,7 +178,7 @@ with open(unsigned_xpi_filepath, 'rb') as f:
         sys.stdout.write('.')
         sys.stdout.flush()
         time.sleep(5)
-        countdown -= 5
+        countdown -= 1
         if countdown <= 0:
             print('Error: AMO signing timed out')
             exit(1)
