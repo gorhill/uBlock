@@ -210,6 +210,7 @@ uDom('#userFiltersRevert').on('click', revertChanges);
 renderUserFilters(true);
 
 cmEditor.on('changes', userFiltersChanged);
+CodeMirror.commands.save = applyChanges;
 
 /******************************************************************************/
 
