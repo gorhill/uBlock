@@ -157,26 +157,49 @@ vAPI.shutdown = {
 
 /******************************************************************************/
 
-vAPI.prefs = {}; // ADN, for content-scripts
-vAPI.extensionsPage = 'about:addons';
+var insertUserCSS = self.injectCSS || function(){},
+    removeUserCSS = self.removeCSS || function(){};
+
+var processUserCSS = function(details, callback) {
+    var cssText;
+    var aa = details.add;
+    if ( Array.isArray(aa) ) {
+        for ( cssText of aa ) {
+            insertUserCSS(
+                'data:text/css;charset=utf-8,' +
+                encodeURIComponent(cssText)
+            );
+        }
+    }
+    aa = details.remove;
+    if ( Array.isArray(aa) ) {
+        for ( cssText of aa ) {
+            removeUserCSS(
+                'data:text/css;charset=utf-8,' +
+                encodeURIComponent(cssText)
+            );
+        }
+    }
+    if ( typeof callback === 'function' ) {
+        callback();
+    }
+};
+
+/******************************************************************************/
 
 vAPI.messaging = {
-    channels: Object.create(null),
-    channelCount: 0,
-    pending: Object.create(null),
-    pendingCount: 0,
+    channels: new Map(),
+    pending: new Map(),
     auxProcessId: 1,
     connected: false,
 
     messageListener: function(msg) {
         var details = JSON.parse(msg);
-        if ( !details ) {
-            return;
-        }
+        if ( !details ) { return; }
 
         // Sent to all channels
         if ( details.broadcast && !details.channelName ) {
-            for ( var channelName in this.channels ) {
+            for ( var channelName of this.channels.keys() ) {
                 this.sendToChannelListeners(channelName, details.msg);
             }
             return;
@@ -184,18 +207,16 @@ vAPI.messaging = {
 
         // Response to specific message previously sent
         if ( details.auxProcessId ) {
-            var listener = this.pending[details.auxProcessId];
-            delete this.pending[details.auxProcessId];
-            delete details.auxProcessId; // TODO: why?
+            var listener = this.pending.get(details.auxProcessId);
+            this.pending.delete(details.auxProcessId);
             if ( listener ) {
-                this.pendingCount -= 1;
                 listener(details.msg);
                 return;
             }
         }
 
         // Sent to a specific channel
-        var response = this.sendToChannelListeners(details.channelName, details.msg);
+          this.sendToChannelListeners(details.channelName, details.msg);
 
         // Respond back if required
         if ( details.mainProcessId === undefined ) {
@@ -211,15 +232,11 @@ vAPI.messaging = {
         if ( msg.cmd === 'injectScript' ) {
             // injectScript is not always present.
             // - See contentObserver.initContentScripts in frameModule.js
-            if ( typeof self.injectScript !== 'function' )  {
-                return;
-            }
+            if ( typeof self.injectScript !== 'function' )  { return; }
             var details = msg.details;
             // Whether to inject in all child frames. Default to only top frame.
             var allFrames = details.allFrames || false;
-            if ( allFrames !== true && window !== window.top ) {
-                return;
-            }
+            if ( allFrames !== true && window !== window.top ) { return; }
             // https://github.com/gorhill/uBlock/issues/876
             // Enforce `details.runAt`. Default to `document_end`.
             var runAt = details.runAt || 'document_end';
@@ -236,7 +253,7 @@ vAPI.messaging = {
         }
         if ( msg.cmd === 'shutdownSandbox' ) {
             vAPI.shutdown.exec();
-            this.stop();
+            vAPI.messaging.stop();
             if ( typeof self.outerShutdown === 'function' ) {
                 outerShutdown();
             }
@@ -274,7 +291,7 @@ vAPI.messaging = {
     toggleListenerCallback: null,
 
     start: function() {
-        this.addChannelListener('vAPI', this.builtinListener.bind(this));
+        this.addChannelListener('vAPI', this.builtinListener);
         if ( this.toggleListenerCallback === null ) {
             this.toggleListenerCallback = this.toggleListener.bind(this);
         }
@@ -288,14 +305,11 @@ vAPI.messaging = {
             window.removeEventListener('pageshow', this.toggleListenerCallback, true);
         }
         this.disconnect();
-        this.channels = Object.create(null);
-        this.channelCount = 0;
+        this.channels.clear();
         // service pending callbacks
-        var pending = this.pending, callback;
-        this.pending = Object.create(null);
-        this.pendingCount = 0;
-        for ( var auxId in pending ) {
-            callback = pending[auxId];
+        var pending = this.pending;
+        this.pending = new Map();
+        for ( var callback of pending.values() ) {
             if ( typeof callback === 'function' ) {
                 callback(null);
             }
@@ -317,14 +331,12 @@ vAPI.messaging = {
     },
 
     send: function(channelName, message, callback) {
-        this.sendTo(channelName, message, undefined, undefined, callback);
-    },
-
-    sendTo: function(channelName, message, toTabId, toChannel, callback) {
+        // User stylesheets are handled content-side on legacy Firefox.
+        if ( channelName === 'vapi' && message.what === 'userCSS' ) {
+            return processUserCSS(message, callback);
+        }
         if ( !this.connected ) {
-            if ( typeof callback === 'function' ) {
-                callback();
-            }
+            if ( typeof callback === 'function' ) { callback(); }
             return;
         }
         // Too large a gap between the last request and the last response means
@@ -338,76 +350,63 @@ vAPI.messaging = {
         var auxProcessId;
         if ( callback ) {
             auxProcessId = this.auxProcessId++;
-            this.pending[auxProcessId] = callback;
-            this.pendingCount += 1;
+            this.pending.set(auxProcessId, callback);
         }
         sendAsyncMessage('adnauseam:background', {
             channelName: self._sandboxId_ + '|' + channelName,
             auxProcessId: auxProcessId,
-            toTabId: toTabId,
-            toChannel: toChannel,
             msg: message
         });
     },
 
-    addChannelListener: function(channelName, callback) {
-        if ( typeof callback !== 'function' ) {
-            return;
-        }
-        var listeners = this.channels[channelName];
-        if ( listeners !== undefined && listeners.indexOf(callback) !== -1 ) {
-            console.error('Duplicate listener on channel "%s"', channelName);
-            return;
-        }
+    // TODO: implement as time permits.
+    connectTo: function(from, to, handler) {
+        handler({
+            what: 'connectionRefused',
+            from: from,
+            to: to
+        });
+    },
+
+    disconnectFrom: function() {
+    },
+
+    sendTo: function() {
+    },
+
+    addChannelListener: function(channelName, listener) {
+        var listeners = this.channels.get(channelName);
         if ( listeners === undefined ) {
-            this.channels[channelName] = [callback];
-            this.channelCount += 1;
-        } else {
-            listeners.push(callback);
+            this.channels.set(channelName, [ listener ]);
+        } else if ( listeners.indexOf(listener) === -1 ) {
+            listeners.push(listener);
         }
         this.connect();
     },
 
-    removeChannelListener: function(channelName, callback) {
-        if ( typeof callback !== 'function' ) {
-            return;
-        }
-        var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
-        var pos = this.listeners.indexOf(callback);
-        if ( pos === -1 ) {
-            console.error('Listener not found on channel "%s"', channelName);
-            return;
-        }
+    removeChannelListener: function(channelName, listener) {
+        var listeners = this.channels.get(channelName);
+        if ( listeners === undefined ) { return; }
+        var pos = this.listeners.indexOf(listener);
+        if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
         if ( listeners.length === 0 ) {
-            delete this.channels[channelName];
-            this.channelCount -= 1;
+            this.channels.delete(channelName);
         }
     },
 
     removeAllChannelListeners: function(channelName) {
-        var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
-        delete this.channels[channelName];
-        this.channelCount -= 1;
+        this.channels.delete(channelName);
     },
 
     sendToChannelListeners: function(channelName, msg) {
-        var listeners = this.channels[channelName];
-        if ( listeners === undefined ) {
-            return;
-        }
+        var listeners = this.channels.get(channelName);
+        if ( listeners === undefined ) { return; }
+        listeners = listeners.slice(0);
         var response;
-        for ( var i = 0, n = listeners.length; i < n; i++ ) {
-            response = listeners[i](msg);
-            if ( response !== undefined ) {
-                break;
-            }
+        for ( var listener of listeners ) {
+            response = listener(msg);
+            if ( response !== undefined ) { break; }
         }
         return response;
     }
@@ -416,46 +415,6 @@ vAPI.messaging = {
 vAPI.messaging.start();
 
 // https://www.youtube.com/watch?v=Cg0cmhjdiLs
-
-/******************************************************************************/
-
-if ( self.injectCSS ) {
-    vAPI.userCSS = {
-        _userCSS: '',
-        _sheetURI: '',
-        _load: function() {
-            if ( this._userCSS === '' || this._sheetURI !== '' ) { return; }
-            this._sheetURI = 'data:text/css;charset=utf-8,' + encodeURIComponent(this._userCSS);
-            self.injectCSS(this._sheetURI);
-        },
-        _unload: function() {
-            if ( this._sheetURI === '' ) { return; }
-            self.removeCSS(this._sheetURI);
-            this._sheetURI = '';
-        },
-        add: function(cssText) {
-            if ( cssText === '' ) { return; }
-            if ( this._userCSS !== '' ) { this._userCSS += '\n'; }
-            this._userCSS += cssText;
-            this._unload();
-            this._load();
-        },
-        remove: function(cssText) {
-            if ( cssText === '' || this._userCSS === '' ) { return; }
-            this._userCSS = this._userCSS.replace(cssText, '').trim();
-            this._unload();
-            this._load();
-        },
-        toggle: function(state) {
-            if ( this._userCSS === '' ) { return; }
-            if ( state === undefined ) {
-                state = this._sheetURI === '';
-            }
-            return state ? this._load() : this._unload();
-        }
-    };
-    vAPI.hideNode = vAPI.unhideNode = function(){};
-}
 
 /******************************************************************************/
 

@@ -98,16 +98,13 @@ var fromNetFilter = function(details) {
 var fromCosmeticFilter = function(details) {
     var match = /^#@?#/.exec(details.rawFilter),
         prefix = match[0],
-        filter = details.rawFilter.slice(prefix.length);
+        selector = details.rawFilter.slice(prefix.length);
 
-    // https://github.com/gorhill/uBlock/issues/3101
-    //   Use `m` flag for efficient regex execution.
-    var reFilter = new RegExp(
-            '^\\[\\d,[^\\n]*\\\\*"' +
-            reEscapeCosmetic(filter) +
-            '\\\\*"[^\\n]*\\]$',
-            'gm'
-        );
+    // The longer the needle, the lower the number of false positives.
+    var needles = selector.match(/\w+/g).sort(function(a, b) {
+        return b.length - a.length;
+    });
+    var reNeedle = new RegExp(needles[0], 'g');
 
     var reHostname = new RegExp(
         '^' +
@@ -141,7 +138,7 @@ var fromCosmeticFilter = function(details) {
     }
         
     var response = Object.create(null),
-        assetKey, entry, content, found, fargs;
+        assetKey, entry, content, found, beg, end, fargs;
 
     for ( assetKey in listEntries ) {
         entry = listEntries[assetKey];
@@ -151,30 +148,67 @@ var fromCosmeticFilter = function(details) {
             filterClassSeparator.length
         );
         found = undefined;
-        while ( (match = reFilter.exec(content)) !== null ) {
-            fargs = JSON.parse(match[0]);
+        while ( (match = reNeedle.exec(content)) !== null ) {
+            beg = content.lastIndexOf('\n', match.index);
+            if ( beg === -1 ) { beg = 0; }
+            end = content.indexOf('\n', reNeedle.lastIndex);
+            if ( end === -1 ) { end = content.length; }
+            fargs = JSON.parse(content.slice(beg, end));
             switch ( fargs[0] ) {
-            case 0:
-            case 2:
+            case 0: // id-based
+                if (
+                    fargs[1] === selector.slice(1) &&
+                    selector.charAt(0) === '#'
+                ) {
+                    found = prefix + selector;
+                }
+                break;
+            case 1: // id-based
+                if (
+                    fargs[2] === selector.slice(1) &&
+                    selector.charAt(0) === '#'
+                ) {
+                    found = prefix + selector;
+                }
+                break;
+            case 2: // class-based
+                if (
+                    fargs[1] === selector.slice(1) &&
+                    selector.charAt(0) === '.'
+                ) {
+                    found = prefix + selector;
+                }
+                break;
+            case 3:
+                if (
+                    fargs[2] === selector.slice(1) &&
+                    selector.charAt(0) === '.'
+                ) {
+                    found = prefix + selector;
+                }
+                break;
             case 4:
             case 5:
             case 7:
-                found = prefix + filter;
-                break;
-            case 1:
-            case 3:
-                if ( fargs[2] === filter ) {
-                    found = prefix + filter;
+                if ( fargs[1] === selector ) {
+                    found = prefix + selector;
                 }
                 break;
             case 6:
             case 8:
+            case 9:
+                if (
+                    fargs[0] === 8 && fargs[3] !== selector ||
+                    fargs[0] === 9 && JSON.parse(fargs[3]).raw !== selector
+                ) {
+                    break;
+                }
                 if (
                     fargs[2] === '' ||
                     reHostname.test(fargs[2]) === true ||
                     reEntity !== undefined && reEntity.test(fargs[2]) === true
                 ) {
-                    found = fargs[2] + prefix + filter;
+                    found = fargs[2] + prefix + selector;
                 }
                 break;
             }
@@ -195,15 +229,6 @@ var fromCosmeticFilter = function(details) {
         id: details.id,
         response: response
     });
-};
-
-// https://github.com/gorhill/uBlock/issues/2666
-//   Raw filters in compiled filter lists may have been JSON-stringified one or
-//   multiple times.
-
-var reEscapeCosmetic = function(s) {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-            .replace(/"/g, '\\\\*"');
 };
 
 /******************************************************************************/

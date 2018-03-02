@@ -240,8 +240,8 @@ var pageStoreJunkyardMax = 10;
 
 /******************************************************************************/
 
-var PageStore = function(tabId) {
-    this.init(tabId);
+var PageStore = function(tabId, context) {
+    this.init(tabId, context);
     this.journal = [];
     this.journalTimer = null;
     this.journalLastCommitted = this.journalLastUncommitted = undefined;
@@ -250,19 +250,23 @@ var PageStore = function(tabId) {
 
 /******************************************************************************/
 
-PageStore.factory = function(tabId) {
+PageStore.factory = function(tabId, context) {
     var entry = pageStoreJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new PageStore(tabId);
+        entry = new PageStore(tabId, context);
     } else {
-        entry.init(tabId);
+        entry.init(tabId, context);
     }
     return entry;
 };
 
 /******************************************************************************/
 
-PageStore.prototype.init = function(tabId) {
+// https://github.com/gorhill/uBlock/issues/3201
+//   The context is used to determine whether we report behavior change to the
+//   logger.
+
+PageStore.prototype.init = function(tabId, context) {
     var tabContext = µb.tabContextManager.mustLookup(tabId);
     this.tabId = tabId;
 
@@ -292,8 +296,15 @@ PageStore.prototype.init = function(tabId) {
     this.netFilteringCache = NetFilteringResultCache.factory();
     this.internalRedirectionCount = 0;
 
-    this.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname) === true;
-    if ( this.noCosmeticFiltering && µb.logger.isEnabled() ) {
+    this.noCosmeticFiltering = µb.hnSwitches.evaluateZ(
+        'no-cosmetic-filtering',
+        tabContext.rootHostname
+    ) === true;
+    if (
+        this.noCosmeticFiltering &&
+        µb.logger.isEnabled() &&
+        context === 'tabCommitted'
+    ) {
         µb.logger.writeOne(
             tabId,
             'cosmetic',
@@ -314,7 +325,11 @@ PageStore.prototype.init = function(tabId) {
             'generichide'
         );
         this.noGenericCosmeticFiltering = result === 2;
-        if ( result !== 0 && µb.logger.isEnabled() ) {
+        if (
+            result !== 0 &&
+            µb.logger.isEnabled() &&
+            context === 'tabCommitted'
+        ) {
             µb.logger.writeOne(
                 tabId,
                 'net',
@@ -360,7 +375,7 @@ PageStore.prototype.reuse = function(context) {
     }
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
-    this.init(this.tabId);
+    this.init(this.tabId, context);
     return this;
 };
 
@@ -589,25 +604,12 @@ PageStore.prototype.filterRequest = function(context) {
 
     var requestType = context.requestType;
 
-    if ( requestType === 'csp_report' ) {
-        if ( this.internalRedirectionCount !== 0 ) {
-            if ( µb.logger.isEnabled() ) {
-                this.logData = { result: 1, source: 'global', raw: 'no-spurious-csp-report' };
-            }
-            return 1;
-        }
+    if ( requestType === 'csp_report' && this.filterCSPReport(context) === 1 ) {
+        return 1;
     }
 
-    if ( requestType.endsWith('font') ) {
-        if ( requestType === 'font' ) {
-            this.remoteFontCount += 1;
-        }
-        if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
-            if ( µb.logger.isEnabled() ) {
-                this.logData = µb.hnSwitches.toLogData();
-            }
-            return 1;
-        }
+    if ( requestType.endsWith('font') && this.filterFont(context) === 1 ) {
+        return 1;
     }
 
     var cacheableResult = this.cacheableResults[requestType] === true;
@@ -678,6 +680,49 @@ PageStore.prototype.collapsibleResources = {
     media: true,
     object: true,
     sub_frame: true
+};
+
+/******************************************************************************/
+
+PageStore.prototype.filterCSPReport = function(context) {
+    if ( µb.hnSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
+        if ( µb.logger.isEnabled() ) {
+            this.logData = µb.hnSwitches.toLogData();
+        }
+        return 1;
+    }
+    // https://github.com/gorhill/uBlock/issues/3140
+    //   Special handling of CSP reports if and only if these can't be filtered
+    //   natively.
+    if (
+        vAPI.net.nativeCSPReportFiltering !== true &&
+        this.internalRedirectionCount !== 0
+    ) {
+        if ( µb.logger.isEnabled() ) {
+            this.logData = {
+                result: 1,
+                source: 'global',
+                raw: 'no-spurious-csp-report'
+            };
+        }
+        return 1;
+    }
+    return 0;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.filterFont = function(context) {
+    if ( context.requestType === 'font' ) {
+        this.remoteFontCount += 1;
+    }
+    if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
+        if ( µb.logger.isEnabled() ) {
+            this.logData = µb.hnSwitches.toLogData();
+        }
+        return 1;
+    }
+    return 0;
 };
 
 /******************************************************************************/

@@ -1,710 +1,754 @@
 {
-  "extName":{
-    "message":"uBlock₀",
-    "description":"extension name."
-  },
-  "extShortDesc":{
-    "message":"Endelig en effektiv blokkeringsutvidelse. Lavt CPU- og minnebruk.",
-    "description":"this will be in the chrome web store: must be 132 characters or less"
-  },
-  "dashboardName":{
-    "message":"uBlock₀ — Dashbord",
-    "description":"English: uBlock₀ — Dashboard"
-  },
-  "settingsPageName":{
-    "message":"Innstillinger",
-    "description":"appears as tab name in dashboard"
-  },
-  "3pPageName":{
-    "message":"Tredjeparts filtre",
-    "description":"appears as tab name in dashboard"
-  },
-  "1pPageName":{
-    "message":"Mine filtre",
-    "description":"appears as tab name in dashboard"
-  },
-  "rulesPageName":{
-    "message":"Mine regler",
-    "description":"appears as tab name in dashboard"
-  },
-  "whitelistPageName":{
-    "message":"Hviteliste",
-    "description":"appears as tab name in dashboard"
-  },
-  "statsPageName":{
-    "message":"uBlock₀ — Logg",
-    "description":"Title for the logger window"
-  },
-  "aboutPageName":{
-    "message":"Om",
-    "description":"appears as tab name in dashboard"
-  },
-  "advancedSettingsPageName":{
-    "message":"Avanserte innstillinger",
-    "description":"Title for the advanced settings page"
-  },
-  "popupPowerSwitchInfo":{
-    "message":"Klikk: Deaktiver\/aktiver uBlock₀ for dette nettstedet.\n\nCtrl+klikk: Deaktiver uBlock₀ bare på denne siden.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
-  },
-  "popupBlockedRequestPrompt":{
-    "message":"forespørsler blokkert",
-    "description":"English: requests blocked"
-  },
-  "popupBlockedOnThisPagePrompt":{
-    "message":"på denne siden",
-    "description":"English: on this page"
-  },
-  "popupBlockedStats":{
-    "message":"{{count}} eller {{percent}}%",
-    "description":"Example: 15 or 13%"
-  },
-  "popupBlockedSinceInstallPrompt":{
-    "message":"siden installering",
-    "description":"English: since install"
-  },
-  "popupOr":{
-    "message":"eller",
-    "description":"English: or"
-  },
-  "popupTipDashboard":{
-    "message":"Åpne dashbordet",
-    "description":"English: Click to open the dashboard"
-  },
-  "popupTipZapper":{
-    "message":"Gå til element-fjerningsmodus",
-    "description":"Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker":{
-    "message":"Gå til element-velgermodus",
-    "description":"English: Enter element picker mode"
-  },
-  "popupTipLog":{
-    "message":"Åpne loggen",
-    "description":"Tooltip used for the logger icon in the panel"
-  },
-  "popupTipNoPopups":{
-    "message":"Slå av\/på blokkering av alle oppspretts-vinduer for dette nettstedet",
-    "description":"Tooltip for the no-popups per-site switch"
-  },
-  "popupTipNoLargeMedia":{
-    "message":"Slå av\/på blokkering av store mediaelementer for dette nettstedet",
-    "description":"Tooltip for the no-large-media per-site switch"
-  },
-  "popupTipNoCosmeticFiltering":{
-    "message":"Slå av\/på kosmetisk filtrering for dette nettstedet",
-    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
-  },
-  "popupTipNoRemoteFonts":{
-    "message":"Slå av\/på blokkering av eksterne skrifttyper for dette nettstedet",
-    "description":"Tooltip for the no-remote-fonts per-site switch"
-  },
-  "popupTipGlobalRules":{
-    "message":"Globale regler: Denne kolonnen er for regler som gjelder alle nettsteder.",
-    "description":"Tooltip when hovering the top-most cell of the global-rules column."
-  },
-  "popupTipLocalRules":{
-    "message":"Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.\nLokale regler har prioritet foran globale regler.",
-    "description":"Tooltip when hovering the top-most cell of the local-rules column."
-  },
-  "popupTipSaveRules":{
-    "message":"Klikk for å gjøre endringer permanente.",
-    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules":{
-    "message":"Klikk for å tilbakestille endringer.",
-    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
-  "popupAnyRulePrompt":{
-    "message":"alle",
-    "description":""
-  },
-  "popupImageRulePrompt":{
-    "message":"bilder",
-    "description":""
-  },
-  "popup3pAnyRulePrompt":{
-    "message":"tredjepart",
-    "description":""
-  },
-  "popup3pPassiveRulePrompt":{
-    "message":"tredjeparts css\/bilder",
-    "description":""
-  },
-  "popupInlineScriptRulePrompt":{
-    "message":"integrerte skript",
-    "description":""
-  },
-  "popup1pScriptRulePrompt":{
-    "message":"førsteparts skript",
-    "description":""
-  },
-  "popup3pScriptRulePrompt":{
-    "message":"tredjeparts skript",
-    "description":""
-  },
-  "popup3pFrameRulePrompt":{
-    "message":"tredjeparts rammer",
-    "description":""
-  },
-  "popupHitDomainCountPrompt":{
-    "message":"domener tilkoblet",
-    "description":"appears in popup"
-  },
-  "popupHitDomainCount":{
-    "message":"{{count}} av {{total}}",
-    "description":"appears in popup"
-  },
-  "pickerCreate":{
-    "message":"Opprett",
-    "description":"English: Create"
-  },
-  "pickerPick":{
-    "message":"Velg",
-    "description":"English: Pick"
-  },
-  "pickerQuit":{
-    "message":"Avslutt",
-    "description":"English: Quit"
-  },
-  "pickerPreview":{
-    "message":"Forhåndsvis",
-    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
-  },
-  "pickerNetFilters":{
-    "message":"Nettfiltre",
-    "description":"English: header for a type of filter in the element picker dialog"
-  },
-  "pickerCosmeticFilters":{
-    "message":"Kosmetiske filtre",
-    "description":"English: Cosmetic filters"
-  },
-  "pickerCosmeticFiltersHint":{
-    "message":"Klikk, Ctrl-klikk",
-    "description":"English: Click, Ctrl-click"
-  },
-  "pickerContextMenuEntry":{
-    "message":"Blokker element",
-    "description":"English: Block element"
-  },
-  "settingsCollapseBlockedPrompt":{
-    "message":"Skjul blokkerte elementers plassholdere",
-    "description":"English: Hide placeholders of blocked elements"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Vis antall blokkerte forespørsler på ikonet",
-    "description":"English: Show the number of blocked requests on the icon"
-  },
-  "settingsTooltipsPrompt":{
-    "message":"Deaktiver hjelpetekst (verktøytips)",
-    "description":"A checkbox in the Settings pane"
-  },
-  "settingsContextMenuPrompt":{
-    "message":"Gjør bruk av høyreklikkmeny der det er hensiktsmessig",
-    "description":"English: Make use of context menu where appropriate"
-  },
-  "settingsColorBlindPrompt":{
-    "message":"Fargeblind-vennlig",
-    "description":"English: Color-blind friendly"
-  },
-  "settingsCloudStorageEnabledPrompt":{
-    "message":"Aktiver støtte for nettlagring",
-    "description":""
-  },
-  "settingsAdvancedUserPrompt":{
-    "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
-    "description":""
-  },
-  "settingsAdvancedUserSettings":{
-    "message":"Avanserte innstillinger",
-    "description":"For the tooltip of a link which gives access to advanced settings"
-  },
-  "settingsPrefetchingDisabledPrompt":{
-    "message":"Deaktiver forhåndshenting (for å hindre enhver tilkobling for blokkerte nettverksforespørsler)",
-    "description":"English: "
-  },
-  "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiver lenkesporing",
-    "description":"English: "
-  },
-  "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Hindre WebRTC i å lekke lokale IP-adresser",
-    "description":"English: "
-  },
-  "settingPerSiteSwitchGroup":{
-    "message":"Standard virkemåte",
-    "description":""
-  },
-  "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Disse standard virkemåtene kan overstyres for hvert enkelt nettsted",
-    "description":""
-  },
-  "settingsNoCosmeticFilteringPrompt":{
-    "message":"Deaktiver kosmetisk filtrering",
-    "description":""
-  },
-  "settingsNoLargeMediaPrompt":{
-    "message":"Blokker mediaelementer større enn {{input:number}} kB",
-    "description":""
-  },
-  "settingsNoRemoteFontsPrompt":{
-    "message":"Blokker eksterne skrifttyper",
-    "description":""
-  },
-  "settingsStorageUsed":{
-    "message":"Brukt lagringsplass: {{value}} bytes",
-    "description":"English: Storage used: {{}} bytes"
-  },
-  "settingsLastRestorePrompt":{
-    "message":"Siste gjenoppretting:",
-    "description":"English: Last restore:"
-  },
-  "settingsLastBackupPrompt":{
-    "message":"Siste sikkerhetskopi:",
-    "description":"English: Last backup:"
-  },
-  "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} nettverksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
-    "description":"Appears at the top of the _3rd-party filters_ pane"
-  },
-  "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} brukt av {{total}}",
-    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
-  },
-  "3pAutoUpdatePrompt1":{
-    "message":"Automatisk oppdatering av filterlister",
-    "description":"A checkbox in the _3rd-party filters_ pane"
-  },
-  "3pUpdateNow":{
-    "message":"Oppdater nå",
-    "description":"A button in the in the _3rd-party filters_ pane"
-  },
-  "3pPurgeAll":{
-    "message":"Tøm alle hurtigbuffere",
-    "description":"A button in the in the _3rd-party filters_ pane"
-  },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyser og bruk kosmetiske filtre",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener den hensikt å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørselsbaserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>uBlock₀<\/i>.<\/p>",
-    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
-  },
-  "3pIgnoreGenericCosmeticFilters":{
-    "message":"Ignorer generelle kosmetiske filtre",
-    "description":"This will cause uBO to ignore all generic cosmetic filters."
-  },
-  "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Generelle kosmetiske filtre er de kosmetiske filtrene som er ment å brukes på alle nettsteder.<p>Selv om de håndteres effektivt av uBlock₀, kan generelle kosmetiske filtre likevel ende opp med å bidra til målbar ekstra minne- og prosessorbruk på noen nettsider, særlig de store og de som er åpne lenge.<p>Aktivering av dette alternativet vil eliminere ekstra minne- og prosessorbruk på nettsider grunnet håndteringen av generelle kosmetiske filtre, og også redusere minnebruken til selve uBlock₀.<p>Det anbefales å aktivere dette alternativet på mindre kraftige enheter.",
-    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
-  },
-  "3pListsOfBlockedHostsHeader":{
-    "message":"Lister over blokkerte verter",
-    "description":"English: Lists of blocked hosts"
-  },
-  "3pApplyChanges":{
-    "message":"Bruk endringer",
-    "description":"English: Apply changes"
-  },
-  "3pGroupAds":{
-    "message":"Reklame",
-    "description":"English: Ads"
-  },
-  "3pGroupPrivacy":{
-    "message":"Personvern",
-    "description":"English: Privacy"
-  },
-  "3pGroupMalware":{
-    "message":"Domener med skadelig programvare",
-    "description":"English: Malware domains"
-  },
-  "3pGroupAnnoyances":{
-    "message":"Irritasjonsmomenter",
-    "description":"The header identifying the filter lists in the category 'annoyances'"
-  },
-  "3pGroupMultipurpose":{
-    "message":"Multi-formål",
-    "description":"English: Multipurpose"
-  },
-  "3pGroupRegions":{
-    "message":"Regioner, språk",
-    "description":"English: Regions, languages"
-  },
-  "3pGroupCustom":{
-    "message":"Egendefinert",
-    "description":"English: Custom"
-  },
-  "3pExternalListsHint":{
-    "message":"En nettadresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige nettadresser ignoreres stille.",
-    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
-  },
-  "3pExternalListObsolete":{
-    "message":"Utgått på dato",
-    "description":"used as a tooltip for the out-of-date icon beside a list"
-  },
-  "3pLastUpdate":{
-    "message":"Siste oppdatering: {{ago}}.\nKlikk for å framtvinge en oppdatering.",
-    "description":"used as a tooltip for the clock icon beside a list"
-  },
-  "3pUpdating":{
-    "message":"Oppdaterer…",
-    "description":"used as a tooltip for the spinner icon beside a list"
-  },
-  "3pNetworkError":{
-    "message":"En nettverksfeil forhindret ressursen i å bli oppdatert.",
-    "description":"used as a tooltip for error icon beside a list"
-  },
-  "1pFormatHint":{
-    "message":"Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
-    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
-  },
-  "1pImport":{
-    "message":"Importer og legg til",
-    "description":"English: Import and append"
-  },
-  "1pExport":{
-    "message":"Eksporter",
-    "description":"English: Export"
-  },
-  "1pExportFilename":{
-    "message":"mine-ublock-statiske-filtre_{{datetime}}.txt",
-    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "1pApplyChanges":{
-    "message":"Bruk endringer",
-    "description":"English: Apply changes"
-  },
-  "rulesPermanentHeader":{
-    "message":"Permanente regler",
-    "description":"header"
-  },
-  "rulesTemporaryHeader":{
-    "message":"Midlertidige regler",
-    "description":"header"
-  },
-  "rulesRevert":{
-    "message":"Tilbakestill",
-    "description":"This will remove all temporary rules"
-  },
-  "rulesCommit":{
-    "message":"Send",
-    "description":"This will persist temporary rules"
-  },
-  "rulesEdit":{
-    "message":"Rediger",
-    "description":"Will enable manual-edit mode (textarea)"
-  },
-  "rulesEditSave":{
-    "message":"Lagre",
-    "description":"Will save manually-edited content and exit manual-edit mode"
-  },
-  "rulesEditDiscard":{
-    "message":"Forkast",
-    "description":"Will discard manually-edited content and exit manual-edit mode"
-  },
-  "rulesImport":{
-    "message":"Importer fra fil",
-    "description":""
-  },
-  "rulesExport":{
-    "message":"Eksporter til fil",
-    "description":""
-  },
-  "rulesDefaultFileName":{
-    "message":"mine-ublock-dynamiske-regler_{{datetime}}.txt",
-    "description":"default file name to use"
-  },
-  "rulesHint":{
-    "message":"Liste over dine dynamiske filtreringsregler.",
-    "description":"English: List of your dynamic filtering rules."
-  },
-  "rulesFormatHint":{
-    "message":"Regelsyntaks: <code>kilde destinasjon type handling<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentasjon<\/a>).",
-    "description":"English: dynamic rule syntax and full documentation."
-  },
-  "whitelistPrompt":{
-    "message":"Hvitelistedirektivene bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
-    "description":"English: An overview of the content of the dashboard's Whitelist pane."
-  },
-  "whitelistImport":{
-    "message":"Importer og legg til",
-    "description":"English: Import and append"
-  },
-  "whitelistExport":{
-    "message":"Eksporter",
-    "description":"English: Export"
-  },
-  "whitelistExportFilename":{
-    "message":"min-ublock-hviteliste_{{datetime}}.txt",
-    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
-  },
-  "whitelistApply":{
-    "message":"Bruk endringer",
-    "description":"English: Apply changes"
-  },
-  "logRequestsHeaderType":{
-    "message":"Type",
-    "description":"English: Type"
-  },
-  "logRequestsHeaderDomain":{
-    "message":"Domene",
-    "description":"English: Domain"
-  },
-  "logRequestsHeaderURL":{
-    "message":"Nettadresse",
-    "description":"English: URL"
-  },
-  "logRequestsHeaderFilter":{
-    "message":"Filter",
-    "description":"English: Filter"
-  },
-  "logAll":{
-    "message":"Alle",
-    "description":"Appears in the logger's tab selector"
-  },
-  "logBehindTheScene":{
-    "message":"Bak kulissene",
-    "description":"Pretty name for behind-the-scene network requests"
-  },
-  "logFilterPrompt":{
-    "message":"filtrer loggoppføringer",
-    "description":"English: filter log entries"
-  },
-  "logMaxEntriesTip":{
-    "message":"Maksimum antall loggoppføringer",
-    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
-  },
-  "loggerURLFilteringContextLabel":{
-    "message":"Kontekst:",
-    "description":"Label for the context selector"
-  },
-  "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
-    "description":"Label for the type selector"
-  },
-  "loggerURLFilteringHeader":{
-    "message":"Dynamisk adressefiltrering",
-    "description":"Small header to identify the dynamic URL filtering section"
-  },
-  "loggerStaticFilteringHeader":{
-    "message":"Statisk filtrering",
-    "description":"Small header to identify the static filtering section"
-  },
-  "loggerStaticFilteringSentence":{
-    "message":"{{action}} nettverksforespørsler av {{type}} {{br}}som matcher nettadressen {{url}} {{br}}og som stammer {{origin}},{{br}}{{importance}} det er et matchende unntaksfilter.",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartBlock":{
-    "message":"Blokker",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAllow":{
-    "message":"Tillat",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAnyType":{
-    "message":"enhver type",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartOrigin":{
-    "message":"fra “{{origin}}”",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"fra hvor som helst",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"unntatt når",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartImportant":{
-    "message":"selv om",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringFinderSentence1":{
-    "message":"Statisk filter {{filter}} funnet i:",
-    "description":"Below this sentence, the filter lists in which the filter was found"
-  },
-  "aboutChangelog":{
-    "message":"Endringslogg",
-    "description":"English: Change log"
-  },
-  "aboutWiki":{
-    "message":"Wiki",
-    "description":"English: project' wiki on Github"
-  },
-  "aboutSupport":{
-    "message":"Brukerstøtte",
-    "description":"A link for where to get support"
-  },
-  "aboutCode":{
-    "message":"Kildekode (GPLv3)",
-    "description":"English: Source code (GPLv3)"
-  },
-  "aboutContributors":{
-    "message":"Bidragsytere",
-    "description":"English: Contributors"
-  },
-  "aboutBackupDataButton":{
-    "message":"Sikkerhetskopier til fil",
-    "description":"Text for button to create a backup of all settings"
-  },
-  "aboutBackupFilename":{
-    "message":"min-ublock-sikkerhetskopi_{{datetime}}.txt",
-    "description":"English: my-ublock-backup_{{datetime}}.txt"
-  },
-  "aboutRestoreDataButton":{
-    "message":"Gjenopprett fra fil",
-    "description":"English: Restore from file..."
-  },
-  "aboutResetDataButton":{
-    "message":"Tilbakestill til standardinnstillinger",
-    "description":"English: Reset to default settings..."
-  },
-  "aboutRestoreDataConfirm":{
-    "message":"Alle dine innstillinger vil bli overskrevet med data sikkerhetskopiert {{time}}, og uBlock₀ vil starte på nytt.\n\nOverskrive alle eksisterende innstillinger med sikkerhetskopierte data?",
-    "description":"Message asking user to confirm restore"
-  },
-  "aboutRestoreDataError":{
-    "message":"Dataene kunne ikke leses eller er ugyldige",
-    "description":"Message to display when an error occurred during restore"
-  },
-  "aboutResetDataConfirm":{
-    "message":"Alle dine innstillinger blir fjernet, og uBlock₀ vil starte på nytt.\n\nTilbakestille uBlock₀ til opprinnelige innstillinger?",
-    "description":"Message asking user to confirm reset"
-  },
-  "errorCantConnectTo":{
-    "message":"Nettverksfeil: {{msg}}",
-    "description":"English: Network error: {{msg}}"
-  },
-  "subscriberConfirm":{
-    "message":"uBlock₀: Legge til følgende nettadresse i din egendefinerte filterliste?\n\nTittel: \"{{title}}\"\nNettadresse: {{url}}",
-    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
-  },
-  "elapsedOneMinuteAgo":{
-    "message":"et minutt siden",
-    "description":"English: a minute ago"
-  },
-  "elapsedManyMinutesAgo":{
-    "message":"{{value}} minutter siden",
-    "description":"English: {{value}} minutes ago"
-  },
-  "elapsedOneHourAgo":{
-    "message":"en time siden",
-    "description":"English: an hour ago"
-  },
-  "elapsedManyHoursAgo":{
-    "message":"{{value}} timer siden",
-    "description":"English: {{value}} hours ago"
-  },
-  "elapsedOneDayAgo":{
-    "message":"en dag siden",
-    "description":"English: a day ago"
-  },
-  "elapsedManyDaysAgo":{
-    "message":"{{value}} dager siden",
-    "description":"English: {{value}} days ago"
-  },
-  "showDashboardButton":{
-    "message":"Vis dashbord",
-    "description":"Firefox\/Fennec-specific: Show Dashboard"
-  },
-  "showNetworkLogButton":{
-    "message":"Vis logg",
-    "description":"Firefox\/Fennec-specific: Show Logger"
-  },
-  "fennecMenuItemBlockingOff":{
-    "message":"av",
-    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
-  },
-  "docblockedPrompt1":{
-    "message":"uBlock Origin har forhindret lasting av følgende side:",
-    "description":"English: uBlock₀ has prevented the following page from loading:"
-  },
-  "docblockedPrompt2":{
-    "message":"På grunn av følgende filter:",
-    "description":"English: Because of the following filter"
-  },
-  "docblockedNoParamsPrompt":{
-    "message":"uten parametere",
-    "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
-  },
-  "docblockedFoundIn":{
-    "message":"Funnet i:",
-    "description":"English: List of filter list names follows"
-  },
-  "docblockedBack":{
-    "message":"Gå tilbake",
-    "description":"English: Go back"
-  },
-  "docblockedClose":{
-    "message":"Lukk dette vinduet",
-    "description":"English: Close this window"
-  },
-  "docblockedProceed":{
-    "message":"Slå av streng (fullstendig) blokkering for {{hostname}}",
-    "description":"English: Disable strict blocking for {{hostname}} ..."
-  },
-  "docblockedDisableTemporary":{
-    "message":"Midlertidig",
-    "description":"English: Temporarily"
-  },
-  "docblockedDisablePermanent":{
-    "message":"Permanent",
-    "description":"English: Permanently"
-  },
-  "cloudPush":{
-    "message":"Eksporter til nettlagring",
-    "description":"tooltip"
-  },
-  "cloudPull":{
-    "message":"Importer fra nettlagring",
-    "description":"tooltip"
-  },
-  "cloudPullAndMerge":{
-    "message":"Importer fra nettlagring og slå sammen med gjeldende innstillinger",
-    "description":"tooltip"
-  },
-  "cloudNoData":{
-    "message":"...\n...",
-    "description":""
-  },
-  "cloudDeviceNamePrompt":{
-    "message":"Denne enhets navn:",
-    "description":"used as a prompt for the user to provide a custom device name"
-  },
-  "advancedSettingsWarning":{
-    "message":"Advarsel! Endringer av de avanserte innstillingene skjer på eget ansvar.",
-    "description":"A warning to users at the top of 'Advanced settings' page"
-  },
-  "genericSubmit":{
-    "message":"Send",
-    "description":"for generic 'Submit' buttons"
-  },
-  "genericApplyChanges":{
-    "message":"Bruk endringer",
-    "description":"for generic 'Apply changes' buttons"
-  },
-  "genericRevert":{
-    "message":"Tilbakestill",
-    "description":"for generic 'Revert' buttons"
-  },
-  "genericBytes":{
-    "message":"bytes",
-    "description":""
-  },
-  "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Tillat store mediaelementer midlertidig",
-    "description":"A context menu entry, present when large media elements have been blocked on the current site"
-  },
-  "dummy":{
-    "message":"This entry must be the last one",
-    "description":"so we dont need to deal with comma for last entry"
+  "extName": {
+    "message": "uBlock₀",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Endelig en effektiv blokkeringsutvidelse. Lavt CPU- og minnebruk.",
+    "description": "this will be in the chrome web store: must be 132 characters or less"
+  },
+  "dashboardName": {
+    "message": "uBlock₀ — Dashbord",
+    "description": "English: uBlock₀ — Dashboard"
+  },
+  "settingsPageName": {
+    "message": "Innstillinger",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Tredjeparts filtre",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Mine filtre",
+    "description": "appears as tab name in dashboard"
+  },
+  "rulesPageName": {
+    "message": "Mine regler",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Hviteliste",
+    "description": "appears as tab name in dashboard"
+  },
+  "statsPageName": {
+    "message": "uBlock₀ — Logg",
+    "description": "Title for the logger window"
+  },
+  "aboutPageName": {
+    "message": "Om",
+    "description": "appears as tab name in dashboard"
+  },
+  "advancedSettingsPageName": {
+    "message": "Avanserte innstillinger",
+    "description": "Title for the advanced settings page"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Klikk: Deaktiver\/aktiver uBlock₀ for dette nettstedet.\n\nCtrl+klikk: Deaktiver uBlock₀ bare på denne siden.",
+    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+  },
+  "popupPowerSwitchInfo1": {
+    "message": "Klikk for å deaktivere uBlock₀ for dette nettstedet.\n\nCtrl+klikk for å deaktivere uBlock₀ bare på denne siden.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupPowerSwitchInfo2": {
+    "message": "Klikk for å aktivere uBlock₀ for dette nettstedet.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupBlockedRequestPrompt": {
+    "message": "forespørsler blokkert",
+    "description": "English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt": {
+    "message": "på denne siden",
+    "description": "English: on this page"
+  },
+  "popupBlockedStats": {
+    "message": "{{count}} eller {{percent}}%",
+    "description": "Example: 15 or 13%"
+  },
+  "popupBlockedSinceInstallPrompt": {
+    "message": "siden installering",
+    "description": "English: since install"
+  },
+  "popupOr": {
+    "message": "eller",
+    "description": "English: or"
+  },
+  "popupTipDashboard": {
+    "message": "Åpne dashbordet",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Gå til element-fjerningsmodus",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Gå til element-velgermodus",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipLog": {
+    "message": "Åpne loggen",
+    "description": "Tooltip used for the logger icon in the panel"
+  },
+  "popupTipNoPopups": {
+    "message": "Slå av\/på blokkering av alle oppspretts-vinduer for dette nettstedet",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups1": {
+    "message": "Klikk for å blokkere alle oppspretts-vinduer på dette nettstedet",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups2": {
+    "message": "Klikk for å ikke lenger blokkere alle oppspretts-vinduer på dette nettstedet",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoLargeMedia": {
+    "message": "Slå av\/på blokkering av store mediaelementer for dette nettstedet",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia1": {
+    "message": "Klikk for å blokkere store mediaelementer på dette nettstedet",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia2": {
+    "message": "Klikk for å ikke lenger blokkere store mediaelementer på dette nettstedet",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoCosmeticFiltering": {
+    "message": "Slå av\/på kosmetisk filtrering for dette nettstedet",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering1": {
+    "message": "Klikk for å slå av kosmetisk filtrering på dette nettstedet",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering2": {
+    "message": "Klikk for å slå på kosmetisk filtrering på dette nettstedet",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoRemoteFonts": {
+    "message": "Slå av\/på blokkering av eksterne skrifttyper for dette nettstedet",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts1": {
+    "message": "Klikk for å blokkere eksterne skrifttyper på dette nettstedet",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts2": {
+    "message": "Klikk for å ikke lenger blokkere eksterne skrifttyper på dette nettstedet",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipGlobalRules": {
+    "message": "Globale regler: Denne kolonnen er for regler som gjelder alle nettsteder.",
+    "description": "Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules": {
+    "message": "Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.\nLokale regler har prioritet foran globale regler.",
+    "description": "Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules": {
+    "message": "Klikk for å gjøre endringer permanente.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Klikk for å tilbakestille endringer.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "popupAnyRulePrompt": {
+    "message": "alle",
+    "description": ""
+  },
+  "popupImageRulePrompt": {
+    "message": "bilder",
+    "description": ""
+  },
+  "popup3pAnyRulePrompt": {
+    "message": "tredjepart",
+    "description": ""
+  },
+  "popup3pPassiveRulePrompt": {
+    "message": "tredjeparts css\/bilder",
+    "description": ""
+  },
+  "popupInlineScriptRulePrompt": {
+    "message": "integrerte skript",
+    "description": ""
+  },
+  "popup1pScriptRulePrompt": {
+    "message": "førsteparts skript",
+    "description": ""
+  },
+  "popup3pScriptRulePrompt": {
+    "message": "tredjeparts skript",
+    "description": ""
+  },
+  "popup3pFrameRulePrompt": {
+    "message": "tredjeparts rammer",
+    "description": ""
+  },
+  "popupHitDomainCountPrompt": {
+    "message": "domener tilkoblet",
+    "description": "appears in popup"
+  },
+  "popupHitDomainCount": {
+    "message": "{{count}} av {{total}}",
+    "description": "appears in popup"
+  },
+  "pickerCreate": {
+    "message": "Opprett",
+    "description": "English: Create"
+  },
+  "pickerPick": {
+    "message": "Velg",
+    "description": "English: Pick"
+  },
+  "pickerQuit": {
+    "message": "Avslutt",
+    "description": "English: Quit"
+  },
+  "pickerPreview": {
+    "message": "Forhåndsvis",
+    "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
+  "pickerNetFilters": {
+    "message": "Nettfiltre",
+    "description": "English: header for a type of filter in the element picker dialog"
+  },
+  "pickerCosmeticFilters": {
+    "message": "Kosmetiske filtre",
+    "description": "English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint": {
+    "message": "Klikk, Ctrl-klikk",
+    "description": "English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry": {
+    "message": "Blokker element",
+    "description": "English: Block element"
+  },
+  "settingsCollapseBlockedPrompt": {
+    "message": "Skjul blokkerte elementers plassholdere",
+    "description": "English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Vis antall blokkerte forespørsler på ikonet",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsTooltipsPrompt": {
+    "message": "Deaktiver hjelpetekst (verktøytips)",
+    "description": "A checkbox in the Settings pane"
+  },
+  "settingsContextMenuPrompt": {
+    "message": "Gjør bruk av høyreklikkmeny der det er hensiktsmessig",
+    "description": "English: Make use of context menu where appropriate"
+  },
+  "settingsColorBlindPrompt": {
+    "message": "Fargeblind-vennlig",
+    "description": "English: Color-blind friendly"
+  },
+  "settingsCloudStorageEnabledPrompt": {
+    "message": "Aktiver støtte for nettlagring",
+    "description": ""
+  },
+  "settingsAdvancedUserPrompt": {
+    "message": "Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
+    "description": ""
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "Avanserte innstillinger",
+    "description": "For the tooltip of a link which gives access to advanced settings"
+  },
+  "settingsPrefetchingDisabledPrompt": {
+    "message": "Deaktiver forhåndshenting (for å hindre enhver tilkobling for blokkerte nettverksforespørsler)",
+    "description": "English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt": {
+    "message": "Deaktiver lenkesporing",
+    "description": "English: "
+  },
+  "settingsWebRTCIPAddressHiddenPrompt": {
+    "message": "Hindre WebRTC i å lekke lokale IP-adresser",
+    "description": "English: "
+  },
+  "settingPerSiteSwitchGroup": {
+    "message": "Standard virkemåte",
+    "description": ""
+  },
+  "settingPerSiteSwitchGroupSynopsis": {
+    "message": "Disse standard virkemåtene kan overstyres for hvert enkelt nettsted",
+    "description": ""
+  },
+  "settingsNoCosmeticFilteringPrompt": {
+    "message": "Deaktiver kosmetisk filtrering",
+    "description": ""
+  },
+  "settingsNoLargeMediaPrompt": {
+    "message": "Blokker mediaelementer større enn {{input:number}} kB",
+    "description": ""
+  },
+  "settingsNoRemoteFontsPrompt": {
+    "message": "Blokker eksterne skrifttyper",
+    "description": ""
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Blokker CSP-rapporter",
+    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
+  "settingsStorageUsed": {
+    "message": "Brukt lagringsplass: {{value}} bytes",
+    "description": "English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt": {
+    "message": "Siste gjenoppretting:",
+    "description": "English: Last restore:"
+  },
+  "settingsLastBackupPrompt": {
+    "message": "Siste sikkerhetskopi:",
+    "description": "English: Last backup:"
+  },
+  "3pListsOfBlockedHostsPrompt": {
+    "message": "{{netFilterCount}} nettverksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
+    "description": "Appears at the top of the _3rd-party filters_ pane"
+  },
+  "3pListsOfBlockedHostsPerListStats": {
+    "message": "{{used}} brukt av {{total}}",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "3pAutoUpdatePrompt1": {
+    "message": "Automatisk oppdatering av filterlister",
+    "description": "A checkbox in the _3rd-party filters_ pane"
+  },
+  "3pUpdateNow": {
+    "message": "Oppdater nå",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pPurgeAll": {
+    "message": "Tøm alle hurtigbuffere",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pParseAllABPHideFiltersPrompt1": {
+    "message": "Analyser og bruk kosmetiske filtre",
+    "description": "English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo": {
+    "message": "<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener den hensikt å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørselsbaserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>uBlock₀<\/i>.<\/p>",
+    "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters": {
+    "message": "Ignorer generelle kosmetiske filtre",
+    "description": "This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo": {
+    "message": "<p>Generelle kosmetiske filtre er de kosmetiske filtrene som er ment å brukes på alle nettsteder.<p>Selv om de håndteres effektivt av uBlock₀, kan generelle kosmetiske filtre likevel ende opp med å bidra til målbar ekstra minne- og prosessorbruk på noen nettsider, særlig de store og de som er åpne lenge.<p>Aktivering av dette alternativet vil eliminere ekstra minne- og prosessorbruk på nettsider grunnet håndteringen av generelle kosmetiske filtre, og også redusere minnebruken til selve uBlock₀.<p>Det anbefales å aktivere dette alternativet på mindre kraftige enheter.",
+    "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
+  },
+  "3pListsOfBlockedHostsHeader": {
+    "message": "Lister over blokkerte verter",
+    "description": "English: Lists of blocked hosts"
+  },
+  "3pApplyChanges": {
+    "message": "Bruk endringer",
+    "description": "English: Apply changes"
+  },
+  "3pGroupAds": {
+    "message": "Reklame",
+    "description": "English: Ads"
+  },
+  "3pGroupPrivacy": {
+    "message": "Personvern",
+    "description": "English: Privacy"
+  },
+  "3pGroupMalware": {
+    "message": "Domener med skadelig programvare",
+    "description": "English: Malware domains"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Irritasjonsmomenter",
+    "description": "The header identifying the filter lists in the category 'annoyances'"
+  },
+  "3pGroupMultipurpose": {
+    "message": "Multi-formål",
+    "description": "English: Multipurpose"
+  },
+  "3pGroupRegions": {
+    "message": "Regioner, språk",
+    "description": "English: Regions, languages"
+  },
+  "3pGroupCustom": {
+    "message": "Egendefinert",
+    "description": "English: Custom"
+  },
+  "3pExternalListsHint": {
+    "message": "En nettadresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige nettadresser ignoreres stille.",
+    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListObsolete": {
+    "message": "Utgått på dato",
+    "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pLastUpdate": {
+    "message": "Siste oppdatering: {{ago}}.\nKlikk for å framtvinge en oppdatering.",
+    "description": "used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating": {
+    "message": "Oppdaterer…",
+    "description": "used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError": {
+    "message": "En nettverksfeil forhindret ressursen i å bli oppdatert.",
+    "description": "used as a tooltip for error icon beside a list"
+  },
+  "1pFormatHint": {
+    "message": "Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
+    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport": {
+    "message": "Importer og legg til",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Eksporter",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "mine-ublock-statiske-filtre_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "1pApplyChanges": {
+    "message": "Bruk endringer",
+    "description": "English: Apply changes"
+  },
+  "rulesPermanentHeader": {
+    "message": "Permanente regler",
+    "description": "header"
+  },
+  "rulesTemporaryHeader": {
+    "message": "Midlertidige regler",
+    "description": "header"
+  },
+  "rulesRevert": {
+    "message": "Tilbakestill",
+    "description": "This will remove all temporary rules"
+  },
+  "rulesCommit": {
+    "message": "Send",
+    "description": "This will persist temporary rules"
+  },
+  "rulesEdit": {
+    "message": "Rediger",
+    "description": "Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave": {
+    "message": "Lagre",
+    "description": "Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard": {
+    "message": "Forkast",
+    "description": "Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport": {
+    "message": "Importer fra fil",
+    "description": ""
+  },
+  "rulesExport": {
+    "message": "Eksporter til fil",
+    "description": ""
+  },
+  "rulesDefaultFileName": {
+    "message": "mine-ublock-dynamiske-regler_{{datetime}}.txt",
+    "description": "default file name to use"
+  },
+  "rulesHint": {
+    "message": "Liste over dine dynamiske filtreringsregler.",
+    "description": "English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint": {
+    "message": "Regelsyntaks: <code>kilde destinasjon type handling<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentasjon<\/a>).",
+    "description": "English: dynamic rule syntax and full documentation."
+  },
+  "whitelistPrompt": {
+    "message": "Hvitelistedirektivene bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
+    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+  },
+  "whitelistImport": {
+    "message": "Importer og legg til",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Eksporter",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "min-ublock-hviteliste_{{datetime}}.txt",
+    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+  },
+  "whitelistApply": {
+    "message": "Bruk endringer",
+    "description": "English: Apply changes"
+  },
+  "logRequestsHeaderType": {
+    "message": "Type",
+    "description": "English: Type"
+  },
+  "logRequestsHeaderDomain": {
+    "message": "Domene",
+    "description": "English: Domain"
+  },
+  "logRequestsHeaderURL": {
+    "message": "Nettadresse",
+    "description": "English: URL"
+  },
+  "logRequestsHeaderFilter": {
+    "message": "Filter",
+    "description": "English: Filter"
+  },
+  "logAll": {
+    "message": "Alle",
+    "description": "Appears in the logger's tab selector"
+  },
+  "logBehindTheScene": {
+    "message": "Bak kulissene",
+    "description": "Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt": {
+    "message": "filtrer loggoppføringer",
+    "description": "English: filter log entries"
+  },
+  "logMaxEntriesTip": {
+    "message": "Maksimum antall loggoppføringer",
+    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel": {
+    "message": "Kontekst:",
+    "description": "Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel": {
+    "message": "Type:",
+    "description": "Label for the type selector"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "Dynamisk adressefiltrering",
+    "description": "Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader": {
+    "message": "Statisk filtrering",
+    "description": "Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence": {
+    "message": "{{action}} nettverksforespørsler av {{type}} {{br}}som matcher nettadressen {{url}} {{br}}og som stammer {{origin}},{{br}}{{importance}} det er et matchende unntaksfilter.",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock": {
+    "message": "Blokker",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow": {
+    "message": "Tillat",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType": {
+    "message": "type “{{type}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType": {
+    "message": "enhver type",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin": {
+    "message": "fra “{{origin}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin": {
+    "message": "fra hvor som helst",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant": {
+    "message": "unntatt når",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant": {
+    "message": "selv om",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1": {
+    "message": "Statisk filter {{filter}} funnet i:",
+    "description": "Below this sentence, the filter lists in which the filter was found"
+  },
+  "aboutChangelog": {
+    "message": "Endringslogg",
+    "description": "English: Change log"
+  },
+  "aboutWiki": {
+    "message": "Wiki",
+    "description": "English: project' wiki on Github"
+  },
+  "aboutSupport": {
+    "message": "Brukerstøtte",
+    "description": "A link for where to get support"
+  },
+  "aboutCode": {
+    "message": "Kildekode (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Bidragsytere",
+    "description": "English: Contributors"
+  },
+  "aboutBackupDataButton": {
+    "message": "Sikkerhetskopier til fil",
+    "description": "Text for button to create a backup of all settings"
+  },
+  "aboutBackupFilename": {
+    "message": "min-ublock-sikkerhetskopi_{{datetime}}.txt",
+    "description": "English: my-ublock-backup_{{datetime}}.txt"
+  },
+  "aboutRestoreDataButton": {
+    "message": "Gjenopprett fra fil",
+    "description": "English: Restore from file..."
+  },
+  "aboutResetDataButton": {
+    "message": "Tilbakestill til standardinnstillinger",
+    "description": "English: Reset to default settings..."
+  },
+  "aboutRestoreDataConfirm": {
+    "message": "Alle dine innstillinger vil bli overskrevet med data sikkerhetskopiert {{time}}, og uBlock₀ vil starte på nytt.\n\nOverskrive alle eksisterende innstillinger med sikkerhetskopierte data?",
+    "description": "Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError": {
+    "message": "Dataene kunne ikke leses eller er ugyldige",
+    "description": "Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm": {
+    "message": "Alle dine innstillinger blir fjernet, og uBlock₀ vil starte på nytt.\n\nTilbakestille uBlock₀ til opprinnelige innstillinger?",
+    "description": "Message asking user to confirm reset"
+  },
+  "errorCantConnectTo": {
+    "message": "Nettverksfeil: {{msg}}",
+    "description": "English: Network error: {{msg}}"
+  },
+  "subscriberConfirm": {
+    "message": "uBlock₀: Legge til følgende nettadresse i din egendefinerte filterliste?\n\nTittel: \"{{title}}\"\nNettadresse: {{url}}",
+    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo": {
+    "message": "et minutt siden",
+    "description": "English: a minute ago"
+  },
+  "elapsedManyMinutesAgo": {
+    "message": "{{value}} minutter siden",
+    "description": "English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo": {
+    "message": "en time siden",
+    "description": "English: an hour ago"
+  },
+  "elapsedManyHoursAgo": {
+    "message": "{{value}} timer siden",
+    "description": "English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo": {
+    "message": "en dag siden",
+    "description": "English: a day ago"
+  },
+  "elapsedManyDaysAgo": {
+    "message": "{{value}} dager siden",
+    "description": "English: {{value}} days ago"
+  },
+  "showDashboardButton": {
+    "message": "Vis dashbord",
+    "description": "Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton": {
+    "message": "Vis logg",
+    "description": "Firefox\/Fennec-specific: Show Logger"
+  },
+  "fennecMenuItemBlockingOff": {
+    "message": "av",
+    "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
+  },
+  "docblockedPrompt1": {
+    "message": "uBlock Origin har forhindret lasting av følgende side:",
+    "description": "English: uBlock₀ has prevented the following page from loading:"
+  },
+  "docblockedPrompt2": {
+    "message": "På grunn av følgende filter:",
+    "description": "English: Because of the following filter"
+  },
+  "docblockedNoParamsPrompt": {
+    "message": "uten parametere",
+    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+  },
+  "docblockedFoundIn": {
+    "message": "Funnet i:",
+    "description": "English: List of filter list names follows"
+  },
+  "docblockedBack": {
+    "message": "Gå tilbake",
+    "description": "English: Go back"
+  },
+  "docblockedClose": {
+    "message": "Lukk dette vinduet",
+    "description": "English: Close this window"
+  },
+  "docblockedProceed": {
+    "message": "Slå av streng (fullstendig) blokkering for {{hostname}}",
+    "description": "English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary": {
+    "message": "Midlertidig",
+    "description": "English: Temporarily"
+  },
+  "docblockedDisablePermanent": {
+    "message": "Permanent",
+    "description": "English: Permanently"
+  },
+  "cloudPush": {
+    "message": "Eksporter til nettlagring",
+    "description": "tooltip"
+  },
+  "cloudPull": {
+    "message": "Importer fra nettlagring",
+    "description": "tooltip"
+  },
+  "cloudPullAndMerge": {
+    "message": "Importer fra nettlagring og slå sammen med gjeldende innstillinger",
+    "description": "tooltip"
+  },
+  "cloudNoData": {
+    "message": "...\n...",
+    "description": ""
+  },
+  "cloudDeviceNamePrompt": {
+    "message": "Denne enhets navn:",
+    "description": "used as a prompt for the user to provide a custom device name"
+  },
+  "advancedSettingsWarning": {
+    "message": "Advarsel! Endringer av de avanserte innstillingene skjer på eget ansvar.",
+    "description": "A warning to users at the top of 'Advanced settings' page"
+  },
+  "genericSubmit": {
+    "message": "Send",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Bruk endringer",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Tilbakestill",
+    "description": "for generic 'Revert' buttons"
+  },
+  "genericBytes": {
+    "message": "bytes",
+    "description": ""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements": {
+    "message": "Tillat store mediaelementer midlertidig",
+    "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "dummy": {
+    "message": "This entry must be the last one",
+    "description": "so we dont need to deal with comma for last entry"
   }
 }

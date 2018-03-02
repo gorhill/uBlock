@@ -29,8 +29,6 @@
 
 µBlock.restart = (function() {
 
-//quickProfiler.start('start.js');
-
 /******************************************************************************/
 
 var µb = µBlock;
@@ -114,10 +112,8 @@ var onAllReady = function() {
         ]);
     }
 
-    //quickProfiler.stop(0);
-
     µb.contextMenu.update(null);
-    µb.adnauseam.onListsLoaded(µb.firstInstall && µb.lastRestoreFile === ""); // ADN
+    µb.adnauseam.onListsLoaded(µb.firstInstall && µb.restoreBackupSettings.lastRestoreFile === ""); // ADN
 
     µb.firstInstall = false;
 

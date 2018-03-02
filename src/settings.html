@@ -23,6 +23,7 @@
         <li><input id="prefetching-disabled" type="checkbox" data-setting-name="prefetchingDisabled" data-setting-type="bool"><label data-i18n="settingsPrefetchingDisabledPrompt" for="prefetching-disabled"></label> <a class="fa info" href="https://wikipedia.org/wiki/Link_prefetching#Issues_and_criticisms" target="_blank">&#xf05a;</a>
         <li><input id="hyperlink-auditing-disabled" type="checkbox" data-setting-name="hyperlinkAuditingDisabled" data-setting-type="bool"><label data-i18n="settingsHyperlinkAuditingDisabledPrompt" for="hyperlink-auditing-disabled"></label> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Disable-hyperlink-auditing-beacon" target="_blank">&#xf05a;</a>
         <li><input id="webrtc-ipaddress-hidden" type="checkbox" data-setting-name="webrtcIPAddressHidden" data-setting-type="bool"><label data-i18n="settingsWebRTCIPAddressHiddenPrompt" for="webrtc-ipaddress-hidden"></label> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Prevent-WebRTC-from-leaking-local-IP-address" target="_blank">&#xf05a;</a>
+        <li><input id="no-csp-reports" type="checkbox" data-setting-name="noCSPReports" data-setting-type="bool"><label data-i18n="settingsNoCSPReportsPrompt" for="no-csp-reports"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#block-csp-reports" target="_blank">&#xf05a;</a>
         </ul>
     <li class="subgroup"><span data-i18n="settingPerSiteSwitchGroup"></span><ul>
         <li><label class="synopsis"><span data-i18n="settingPerSiteSwitchGroupSynopsis"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches" target="_blank">&#xf05a;</a></label>
@@ -54,6 +55,7 @@
     <p><button class="custom" type="button" id="reset" data-i18n="aboutResetDataButton"></button>
     </div>
 
+<script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
 <script src="js/udom.js"></script>

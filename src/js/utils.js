@@ -320,33 +320,15 @@
 
 /******************************************************************************/
 
-µBlock.mapToArray = typeof Array.from === 'function'
+µBlock.arrayFrom = typeof Array.from === 'function'
     ? Array.from
-    : function(map) {
-        var out = [];
-        for ( var entry of map ) {
-            out.push(entry);
+    : function(iterable) {
+        var out = [], i = 0;
+        for ( var value of iterable ) {
+            out[i++] = value;
         }
         return out;
     };
-
-µBlock.mapFromArray = function(arr) {
-    return new Map(arr);
-};
-
-µBlock.setToArray = typeof Array.from === 'function'
-    ? Array.from
-    : function(dict) {
-        var out = [];
-        for ( var value of dict ) {
-            out.push(value);
-        }
-        return out;
-    };
-
-µBlock.setFromArray = function(arr) {
-    return new Set(arr);
-};
 
 /******************************************************************************/
 
@@ -365,14 +347,48 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/2344
+µBlock.MRUCache = function(size) {
+    this.size = size;
+    this.array = [];
+    this.map = new Map();
+};
 
-µBlock.matchCurrentLanguage = function(s) {
-    if ( typeof s !== 'string' ) { return false; }
-    if ( this.matchCurrentLanguage.reLang === undefined ) {
-        this.matchCurrentLanguage.reLang = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
+µBlock.MRUCache.prototype = {
+    add: function(key, value) {
+        var found = this.map.has(key);
+        this.map.set(key, value);
+        if ( !found ) {
+            if ( this.array.length === this.size ) {
+                this.map.delete(this.array.pop());
+            }
+            this.array.unshift(key);
+        }
+    },
+    remove: function(key) {
+        if ( this.map.has(key) ) {
+            this.array.splice(this.array.indexOf(key), 1);
+        }
+    },
+    lookup: function(key) {
+        var value = this.map.get(key);
+        if ( value !== undefined && this.array[0] !== key ) {
+            this.array.splice(this.array.indexOf(key), 1);
+            this.array.unshift(key);
+        }
+        return value;
+    },
+    reset: function() {
+        this.array = [];
+        this.map.clear();
     }
-    return this.matchCurrentLanguage.reLang.test(s);
+};
+
+/******************************************************************************/
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+
+µBlock.escapeRegex = function(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 /******************************************************************************/

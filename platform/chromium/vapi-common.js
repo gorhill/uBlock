@@ -28,12 +28,6 @@
 
 (function(self) {
 
-// https://bugs.chromium.org/p/project-zero/issues/detail?id=1225&desc=6#c10
-if ( !self.vAPI || self.vAPI.uBO !== true ) {
-    self.vAPI = { uBO: true };
-}
-
-var vAPI = self.vAPI;
 var chrome = self.chrome;
 
 /******************************************************************************/
@@ -104,31 +98,39 @@ vAPI.closePopup = function() {
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
 
-// This can throw in some contexts (like in devtool).
-try {
-    vAPI.localStorage = window.localStorage;
-} catch (ex) {
-}
-
 // https://github.com/gorhill/uBlock/issues/2824
 //   Use a dummy localStorage if for some reasons it's not available.
-if ( vAPI.localStorage instanceof Object === false ) {
-    vAPI.localStorage = {
-        length: 0,
-        clear: function() {
-        },
-        getItem: function() {
-            return null;
-        },
-        key: function() {
-            throw new RangeError();
-        },
-        removeItem: function() {
-        },
-        setItem: function() {
+
+// https://github.com/gorhill/uMatrix/issues/840
+//   Always use a wrapper to seamlessly handle exceptions
+
+vAPI.localStorage = {
+    clear: function() {
+        try {
+            window.localStorage.clear();
+        } catch(ex) {
         }
-    };
-}
+    },
+    getItem: function(key) {
+        try {
+            return window.localStorage.getItem(key);
+        } catch(ex) {
+        }
+        return null;
+    },
+    removeItem: function(key) {
+        try {
+            window.localStorage.removeItem(key);
+        } catch(ex) {
+        }
+    },
+    setItem: function(key, value) {
+        try {
+            window.localStorage.setItem(key, value);
+        } catch(ex) {
+        }
+    }
+};
 
 /******************************************************************************/
 

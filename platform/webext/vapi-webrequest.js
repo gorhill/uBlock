@@ -25,7 +25,14 @@
 
 /******************************************************************************/
 
-vAPI.net = {};
+vAPI.net = {
+    onBeforeRequest: {},
+    onBeforeMaybeSpuriousCSPReport: {},
+    onHeadersReceived: {},
+    nativeCSPReportFiltering: true
+};
+
+/******************************************************************************/
 
 vAPI.net.registerListeners = function() {
 
@@ -174,6 +181,32 @@ vAPI.net.registerListeners = function() {
             this.onBeforeRequest.extra
         );
     }
+
+    // https://github.com/gorhill/uBlock/issues/3140
+    if ( typeof this.onBeforeMaybeSpuriousCSPReport.callback === 'function' ) {
+        wrApi.onBeforeRequest.addListener(
+            this.onBeforeMaybeSpuriousCSPReport.callback,
+            {
+                urls: [ 'http://*/*', 'https://*/*' ],
+                types: [ 'csp_report' ]
+            },
+            [ 'blocking', 'requestBody' ]
+        );
+    }
+
+    var onHeadersReceivedClient = this.onHeadersReceived.callback,
+        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),// ADN : fix to #1241
+        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+    var onHeadersReceived = function(details) {
+        normalizeRequestDetails(details);
+        if (
+            onHeadersReceivedClientTypes.length !== 0 &&
+            onHeadersReceivedClientTypes.indexOf(details.type) === -1
+        ) {
+            return;
+        }
+        return onHeadersReceivedClient(details);
+    };
 
     if ( onHeadersReceived ) {
         let urls = this.onHeadersReceived.urls || ['<all_urls>'];

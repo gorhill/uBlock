@@ -83,7 +83,7 @@ vAPI.cacheStorage = (function() {
     }
 
     function genericErrorHandler(error) {
-        console.error('[uBlock0 cacheStorage]', error);
+        console.error('[%s]', STORAGE_NAME, error);
     }
 
     function noopfn() {
@@ -108,20 +108,44 @@ vAPI.cacheStorage = (function() {
         }
         pending.push(callback);
         if ( pending.length !== 1 ) { return; }
-        // This will fail in private browsing mode.
-        var req = indexedDB.open(STORAGE_NAME, 1);
+        // https://github.com/gorhill/uBlock/issues/3156
+        //   I have observed that no event was fired in Tor Browser 7.0.7 +
+        //   medium security level after the request to open the database was
+        //   created. When this occurs, I have also observed that the `error`
+        //   property was already set, so this means uBO can detect here whether
+        //   the database can be opened successfully. A try-catch block is
+        //   necessary when reading the `error` property because we are not
+        //   allowed to read this propery outside of event handlers in newer
+        //   implementation of IDBRequest (my understanding).
+        var req;
+        try {
+            req = indexedDB.open(STORAGE_NAME, 1);
+            if ( req.error ) {
+                console.log(req.error);
+                req = undefined;
+            }
+        } catch(ex) {
+        }
+        if ( req === undefined ) {
+            processPendings();
+            pending = undefined;
+            return;
+        }
         req.onupgradeneeded = function(ev) {
+            req = undefined;
             db = ev.target.result;
             db.onerror = db.onabort = genericErrorHandler;
             var table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
             table.createIndex('value', 'value', { unique: false });
         };
         req.onsuccess = function(ev) {
+            req = undefined;
             db = ev.target.result;
             db.onerror = db.onabort = genericErrorHandler;
             processPendings();
         };
-        req.onerror = function() {
+        req.onerror = req.onblocked = function() {
+            req = undefined;
             console.log(this.error);
             processPendings();
             pending = undefined;
@@ -131,11 +155,9 @@ vAPI.cacheStorage = (function() {
     function getFromDb(keys, store, callback) {
         if ( typeof callback !== 'function' ) { return; }
         if ( keys.length === 0 ) { return callback(store); }
-        var notfoundKeys = new Set(keys);
         var gotOne = function() {
             if ( typeof this.result === 'object' ) {
                 store[this.result.key] = this.result.value;
-                notfoundKeys.delete(this.result.key);
             }
         };
         getDb(function(db) {
@@ -144,52 +166,15 @@ vAPI.cacheStorage = (function() {
             transaction.oncomplete =
             transaction.onerror =
             transaction.onabort = function() {
-                // TODO: remove once storage.local is clean
-                if ( notfoundKeys.size === 0 ) {
-                    vAPI.storage.remove(keys);
-                    return callback(store);
-                }
-                maybeMigrate(Array.from(notfoundKeys), store, callback);
+                return callback(store);
             };
             var table = transaction.objectStore(STORAGE_NAME);
             for ( var key of keys ) {
                 var req = table.get(key);
                 req.onsuccess = gotOne;
                 req.onerror = noopfn;
+                req = undefined;
             }
-        });
-    }
-
-    // Migrate from storage API
-    // TODO: removes once all users are migrated to the new cacheStorage.
-    function maybeMigrate(keys, store, callback) {
-        var toMigrate = new Set(),
-            i = keys.length;
-        while ( i-- ) {
-            var key = keys[i];
-            toMigrate.add(key);
-            // If migrating a compiled list, also migrate the non-compiled
-            // counterpart.
-            if ( /^cache\/compiled\//.test(key) ) {
-                toMigrate.add(key.replace('/compiled', ''));
-            }
-        }
-        vAPI.storage.get(Array.from(toMigrate), function(bin) {
-            if ( bin instanceof Object === false ) {
-                return callback(store);
-            }
-            var migratedKeys = Object.keys(bin);
-            if ( migratedKeys.length === 0 ) {
-                return callback(store);
-            }
-            var i = migratedKeys.length;
-            while ( i-- ) {
-                var key = migratedKeys[i];
-                store[key] = bin[key];
-            }
-            vAPI.storage.remove(migratedKeys);
-            vAPI.cacheStorage.set(bin);
-            callback(store);
         });
     }
 
@@ -229,12 +214,13 @@ vAPI.cacheStorage = (function() {
             transaction.oncomplete =
             transaction.onerror =
             transaction.onabort = callback;
-            var table = transaction.objectStore(STORAGE_NAME),
-                entry = {};
+            var table = transaction.objectStore(STORAGE_NAME);
             for ( var key of keys ) {
+                var entry = {};
                 entry.key = key;
                 entry.value = input[key];
                 table.put(entry);
+                entry = undefined;
             }
         });
     }
@@ -256,8 +242,6 @@ vAPI.cacheStorage = (function() {
                 table.delete(key);
             }
         });
-        // TODO: removes once all users are migrated to the new cacheStorage.
-        vAPI.storage.remove(keys);
     }
 
     function clearDb(callback) {

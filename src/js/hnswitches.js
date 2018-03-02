@@ -37,19 +37,12 @@ var HnSwitches = function() {
 /******************************************************************************/
 
 var switchBitOffsets = {
-       'no-strict-blocking': 0,
-                'no-popups': 2,
-    'no-cosmetic-filtering': 4,
-          'no-remote-fonts': 6,
-           'no-large-media': 8
-};
-
-var fromLegacySwitchNames = {
-           'dontBlockDoc': 'no-strict-blocking',
-       'doBlockAllPopups': 'no-popups',
-       'noStrictBlocking': 'no-strict-blocking',
-               'noPopups': 'no-popups',
-    'noCosmeticFiltering': 'no-cosmetic-filtering'
+       'no-strict-blocking':  0,
+                'no-popups':  2,
+    'no-cosmetic-filtering':  4,
+          'no-remote-fonts':  6,
+           'no-large-media':  8,
+           'no-csp-reports': 10
 };
 
 var switchStateToNameMap = {
@@ -315,7 +308,6 @@ HnSwitches.prototype.fromString = function(text) {
             continue;
         }
         switchName = switchName.slice(0, pos);
-        switchName = fromLegacySwitchNames[switchName] || switchName;
         if ( switchBitOffsets.hasOwnProperty(switchName) === false ) {
             continue;
         }

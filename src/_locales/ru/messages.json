@@ -1,710 +1,754 @@
 {
-  "extName":{
-    "message":"uBlock₀",
-    "description":"extension name."
-  },
-  "extShortDesc":{
-    "message":"Наконец-то, быстрый и эффективный блокировщик для браузеров.",
-    "description":"this will be in the chrome web store: must be 132 characters or less"
-  },
-  "dashboardName":{
-    "message":"uBlock₀ — Панель управления",
-    "description":"English: uBlock₀ — Dashboard"
-  },
-  "settingsPageName":{
-    "message":"Настройки",
-    "description":"appears as tab name in dashboard"
-  },
-  "3pPageName":{
-    "message":"Сторонние фильтры",
-    "description":"appears as tab name in dashboard"
-  },
-  "1pPageName":{
-    "message":"Мои фильтры",
-    "description":"appears as tab name in dashboard"
-  },
-  "rulesPageName":{
-    "message":"Мои правила",
-    "description":"appears as tab name in dashboard"
-  },
-  "whitelistPageName":{
-    "message":"Белый список",
-    "description":"appears as tab name in dashboard"
-  },
-  "statsPageName":{
-    "message":"uBlock₀ — Журнал сетевых запросов",
-    "description":"Title for the logger window"
-  },
-  "aboutPageName":{
-    "message":"О расширении",
-    "description":"appears as tab name in dashboard"
-  },
-  "advancedSettingsPageName":{
-    "message":"Расширенные настройки",
-    "description":"Title for the advanced settings page"
-  },
-  "popupPowerSwitchInfo":{
-    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ только на этой странице.",
-    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
-  },
-  "popupBlockedRequestPrompt":{
-    "message":"запросов заблокировано",
-    "description":"English: requests blocked"
-  },
-  "popupBlockedOnThisPagePrompt":{
-    "message":"на этой странице",
-    "description":"English: on this page"
-  },
-  "popupBlockedStats":{
-    "message":"{{count}} или {{percent}}%",
-    "description":"Example: 15 or 13%"
-  },
-  "popupBlockedSinceInstallPrompt":{
-    "message":"с момента установки",
-    "description":"English: since install"
-  },
-  "popupOr":{
-    "message":"или",
-    "description":"English: or"
-  },
-  "popupTipDashboard":{
-    "message":"Открыть панель управления",
-    "description":"English: Click to open the dashboard"
-  },
-  "popupTipZapper":{
-    "message":"Войти в режим затирания элементов",
-    "description":"Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker":{
-    "message":"Войти в режим выбора элементов",
-    "description":"English: Enter element picker mode"
-  },
-  "popupTipLog":{
-    "message":"Открыть журнал сетевых запросов",
-    "description":"Tooltip used for the logger icon in the panel"
-  },
-  "popupTipNoPopups":{
-    "message":"Вкл\/Выкл блокировку всех всплывающих окон на этом сайте",
-    "description":"Tooltip for the no-popups per-site switch"
-  },
-  "popupTipNoLargeMedia":{
-    "message":"Вкл\/Выкл блокировку больших медиа-элементов на этом сайте",
-    "description":"Tooltip for the no-large-media per-site switch"
-  },
-  "popupTipNoCosmeticFiltering":{
-    "message":"Вкл\/Выкл косметические фильтры на этом сайте",
-    "description":"Tooltip for the no-cosmetic-filtering per-site switch"
-  },
-  "popupTipNoRemoteFonts":{
-    "message":"Вкл\/Выкл блокировку сторонних шрифтов на этом сайте",
-    "description":"Tooltip for the no-remote-fonts per-site switch"
-  },
-  "popupTipGlobalRules":{
-    "message":"Глобальные правила: этот столбец предназначен для правил, применяемых ко всем сайтам.",
-    "description":"Tooltip when hovering the top-most cell of the global-rules column."
-  },
-  "popupTipLocalRules":{
-    "message":"Локальные правила: этот столбец предназначен для правил, применяемых только к текущему сайту.\nЛокальные правила переопределяют глобальные.",
-    "description":"Tooltip when hovering the top-most cell of the local-rules column."
-  },
-  "popupTipSaveRules":{
-    "message":"Нажмите, чтобы сохранить изменения.",
-    "description":"Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules":{
-    "message":"Нажмите, чтобы отменить изменения.",
-    "description":"Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
-  "popupAnyRulePrompt":{
-    "message":"все",
-    "description":""
-  },
-  "popupImageRulePrompt":{
-    "message":"изображения",
-    "description":""
-  },
-  "popup3pAnyRulePrompt":{
-    "message":"сторонние ресурсы",
-    "description":""
-  },
-  "popup3pPassiveRulePrompt":{
-    "message":"сторонние css\/изображения",
-    "description":""
-  },
-  "popupInlineScriptRulePrompt":{
-    "message":"inline-скрипты",
-    "description":""
-  },
-  "popup1pScriptRulePrompt":{
-    "message":"собственные скрипты",
-    "description":""
-  },
-  "popup3pScriptRulePrompt":{
-    "message":"сторонние скрипты",
-    "description":""
-  },
-  "popup3pFrameRulePrompt":{
-    "message":"сторонние фреймы",
-    "description":""
-  },
-  "popupHitDomainCountPrompt":{
-    "message":"доменов подключено",
-    "description":"appears in popup"
-  },
-  "popupHitDomainCount":{
-    "message":"{{count}} из {{total}}",
-    "description":"appears in popup"
-  },
-  "pickerCreate":{
-    "message":"Создать",
-    "description":"English: Create"
-  },
-  "pickerPick":{
-    "message":"Выбрать",
-    "description":"English: Pick"
-  },
-  "pickerQuit":{
-    "message":"Выйти",
-    "description":"English: Quit"
-  },
-  "pickerPreview":{
-    "message":"Предпросмотр",
-    "description":"Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
-  },
-  "pickerNetFilters":{
-    "message":"Сетевые фильтры",
-    "description":"English: header for a type of filter in the element picker dialog"
-  },
-  "pickerCosmeticFilters":{
-    "message":"Косметические фильтры",
-    "description":"English: Cosmetic filters"
-  },
-  "pickerCosmeticFiltersHint":{
-    "message":"Клик, Ctrl+клик",
-    "description":"English: Click, Ctrl-click"
-  },
-  "pickerContextMenuEntry":{
-    "message":"Заблокировать элемент",
-    "description":"English: Block element"
-  },
-  "settingsCollapseBlockedPrompt":{
-    "message":"Скрыть оставшееся от заблокированных элементов место",
-    "description":"English: Hide placeholders of blocked elements"
-  },
-  "settingsIconBadgePrompt":{
-    "message":"Показывать количество заблокированных запросов на иконке",
-    "description":"English: Show the number of blocked requests on the icon"
-  },
-  "settingsTooltipsPrompt":{
-    "message":"Отключить всплывающие подсказки",
-    "description":"A checkbox in the Settings pane"
-  },
-  "settingsContextMenuPrompt":{
-    "message":"Использовать контекстное меню, где возможно",
-    "description":"English: Make use of context menu where appropriate"
-  },
-  "settingsColorBlindPrompt":{
-    "message":"Цветовая схема для дальтоников",
-    "description":"English: Color-blind friendly"
-  },
-  "settingsCloudStorageEnabledPrompt":{
-    "message":"Включить поддержку облачного хранилища",
-    "description":""
-  },
-  "settingsAdvancedUserPrompt":{
-    "message":"Я опытный пользователь (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обязательно к прочтению<\/a>)",
-    "description":""
-  },
-  "settingsAdvancedUserSettings":{
-    "message":"расширенные настройки",
-    "description":"For the tooltip of a link which gives access to advanced settings"
-  },
-  "settingsPrefetchingDisabledPrompt":{
-    "message":"Отключить предзагрузку для предотвращения подключений для заблокированных запросов",
-    "description":"English: "
-  },
-  "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Отключить проверку гиперссылок",
-    "description":"English: "
-  },
-  "settingsWebRTCIPAddressHiddenPrompt":{
-    "message":"Предотвратить утечку локального IP-адреса через WebRTC",
-    "description":"English: "
-  },
-  "settingPerSiteSwitchGroup":{
-    "message":"Поведение по умолчанию",
-    "description":""
-  },
-  "settingPerSiteSwitchGroupSynopsis":{
-    "message":"Эти настройки могут быть указаны для каждого сайта отдельно",
-    "description":""
-  },
-  "settingsNoCosmeticFilteringPrompt":{
-    "message":"Отключить косметические фильтры",
-    "description":""
-  },
-  "settingsNoLargeMediaPrompt":{
-    "message":"Блокировать медиа-элементы больше {{input:number}} КБ",
-    "description":""
-  },
-  "settingsNoRemoteFontsPrompt":{
-    "message":"Блокировать сторонние шрифты",
-    "description":""
-  },
-  "settingsStorageUsed":{
-    "message":"Места использовано: {{value}} байт",
-    "description":"English: Storage used: {{}} bytes"
-  },
-  "settingsLastRestorePrompt":{
-    "message":"Последнее восстановление:",
-    "description":"English: Last restore:"
-  },
-  "settingsLastBackupPrompt":{
-    "message":"Последняя резервная копия:",
-    "description":"English: Last backup:"
-  },
-  "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} сетевых фильтров ＋ {{cosmeticFilterCount}} косметических фильтров из:",
-    "description":"Appears at the top of the _3rd-party filters_ pane"
-  },
-  "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} используется из {{total}}",
-    "description":"Appears aside each filter list in the _3rd-party filters_ pane"
-  },
-  "3pAutoUpdatePrompt1":{
-    "message":"Автообновление списков фильтров.",
-    "description":"A checkbox in the _3rd-party filters_ pane"
-  },
-  "3pUpdateNow":{
-    "message":"Обновить сейчас",
-    "description":"A button in the in the _3rd-party filters_ pane"
-  },
-  "3pPurgeAll":{
-    "message":"Очистить все кэши",
-    "description":"A button in the in the _3rd-party filters_ pane"
-  },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Парсить и применять косметические фильтры.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Эта опция включает использование анализатора <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых фильтров &ldquo;скрытия элементов&rdquo;<\/a>. Это косметические фильтры, дающие возможность скрыть ненужные элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Использование данной опции увеличивает потребление памяти uBlock₀.<\/p>",
-    "description":"Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
-  },
-  "3pIgnoreGenericCosmeticFilters":{
-    "message":"Игнорировать общие косметические фильтры.",
-    "description":"This will cause uBO to ignore all generic cosmetic filters."
-  },
-  "3pIgnoreGenericCosmeticFiltersInfo":{
-    "message":"<p>Общие косметические фильтры — это те косметические фильтры, которые должны применяться на всех веб-сайтах.<p>Хотя uBlock₀ и обращается с ними эффективно, общие косметические фильтры всё равно могут потреблять ощутимое количество оперативной памяти и нагружать ЦПУ на некоторых, в особенности больших, страницах.<p>Включение этой опции снизит потребление памяти веб-страницами, и избавит процессор от обработки общих косметических фильтров, а также снизит потребление памяти самого uBlock₀.<p>Рекомендуется включить этот параметр на слабых устройствах.",
-    "description":"Describes the purpose of the 'Ignore generic cosmetic filters' feature."
-  },
-  "3pListsOfBlockedHostsHeader":{
-    "message":"Список заблокированных хостов",
-    "description":"English: Lists of blocked hosts"
-  },
-  "3pApplyChanges":{
-    "message":"Применить изменения",
-    "description":"English: Apply changes"
-  },
-  "3pGroupAds":{
-    "message":"Реклама",
-    "description":"English: Ads"
-  },
-  "3pGroupPrivacy":{
-    "message":"Приватность",
-    "description":"English: Privacy"
-  },
-  "3pGroupMalware":{
-    "message":"Вредоносные программы",
-    "description":"English: Malware domains"
-  },
-  "3pGroupAnnoyances":{
-    "message":"Раздражающие элементы",
-    "description":"The header identifying the filter lists in the category 'annoyances'"
-  },
-  "3pGroupMultipurpose":{
-    "message":"Многоцелевые",
-    "description":"English: Multipurpose"
-  },
-  "3pGroupRegions":{
-    "message":"Регионы, языки",
-    "description":"English: Regions, languages"
-  },
-  "3pGroupCustom":{
-    "message":"Пользовательские",
-    "description":"English: Custom"
-  },
-  "3pExternalListsHint":{
-    "message":"Один URL на строку. Строки, начинающиеся с символа &lsquo;!&rsquo;, будут игнорироваться. Неверные ссылки будут игнорироваться без предупреждения.",
-    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
-  },
-  "3pExternalListObsolete":{
-    "message":"Устарел.",
-    "description":"used as a tooltip for the out-of-date icon beside a list"
-  },
-  "3pLastUpdate":{
-    "message":"Последнее обновление: {{ago}}.\nКликните для принудительного обновления.",
-    "description":"used as a tooltip for the clock icon beside a list"
-  },
-  "3pUpdating":{
-    "message":"Обновляется...",
-    "description":"used as a tooltip for the spinner icon beside a list"
-  },
-  "3pNetworkError":{
-    "message":"В результате ошибки сети обновление не произошло.",
-    "description":"used as a tooltip for error icon beside a list"
-  },
-  "1pFormatHint":{
-    "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Строки, начинающиеся с &lsquo;!&rsquo;, будут игнорироваться.",
-    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
-  },
-  "1pImport":{
-    "message":"Импортировать и добавить",
-    "description":"English: Import and append"
-  },
-  "1pExport":{
-    "message":"Экспортировать",
-    "description":"English: Export"
-  },
-  "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "1pApplyChanges":{
-    "message":"Применить изменения",
-    "description":"English: Apply changes"
-  },
-  "rulesPermanentHeader":{
-    "message":"Постоянные правила",
-    "description":"header"
-  },
-  "rulesTemporaryHeader":{
-    "message":"Временные правила",
-    "description":"header"
-  },
-  "rulesRevert":{
-    "message":"Вернуть",
-    "description":"This will remove all temporary rules"
-  },
-  "rulesCommit":{
-    "message":"Утвердить",
-    "description":"This will persist temporary rules"
-  },
-  "rulesEdit":{
-    "message":"Изменить",
-    "description":"Will enable manual-edit mode (textarea)"
-  },
-  "rulesEditSave":{
-    "message":"Сохранить",
-    "description":"Will save manually-edited content and exit manual-edit mode"
-  },
-  "rulesEditDiscard":{
-    "message":"Сбросить",
-    "description":"Will discard manually-edited content and exit manual-edit mode"
-  },
-  "rulesImport":{
-    "message":"Импорт из файла...",
-    "description":""
-  },
-  "rulesExport":{
-    "message":"Экспорт в файл...",
-    "description":""
-  },
-  "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
-    "description":"default file name to use"
-  },
-  "rulesHint":{
-    "message":"Список ваших правил динамической фильтрации.",
-    "description":"English: List of your dynamic filtering rules."
-  },
-  "rulesFormatHint":{
-    "message":"Синтаксис правил: <code>источник назначение тип действие<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>полная документация<\/a>).",
-    "description":"English: dynamic rule syntax and full documentation."
-  },
-  "whitelistPrompt":{
-    "message":"Белый список указывает на каких веб-страницах uBlock Origin должен быть отключен. Одна запись на строку. Некорректные записи будут без предупреждений проигнорированы и закомментированы.",
-    "description":"English: An overview of the content of the dashboard's Whitelist pane."
-  },
-  "whitelistImport":{
-    "message":"Импортировать и добавить",
-    "description":"English: Import and append"
-  },
-  "whitelistExport":{
-    "message":"Экспортировать",
-    "description":"English: Export"
-  },
-  "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
-    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
-  },
-  "whitelistApply":{
-    "message":"Применить изменения",
-    "description":"English: Apply changes"
-  },
-  "logRequestsHeaderType":{
-    "message":"Тип",
-    "description":"English: Type"
-  },
-  "logRequestsHeaderDomain":{
-    "message":"Домен",
-    "description":"English: Domain"
-  },
-  "logRequestsHeaderURL":{
-    "message":"URL",
-    "description":"English: URL"
-  },
-  "logRequestsHeaderFilter":{
-    "message":"Фильтр",
-    "description":"English: Filter"
-  },
-  "logAll":{
-    "message":"Все",
-    "description":"Appears in the logger's tab selector"
-  },
-  "logBehindTheScene":{
-    "message":"Скрытые запросы",
-    "description":"Pretty name for behind-the-scene network requests"
-  },
-  "logFilterPrompt":{
-    "message":"фильтр записей в журнале",
-    "description":"English: filter log entries"
-  },
-  "logMaxEntriesTip":{
-    "message":"Максимальное число записей логгера",
-    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
-  },
-  "loggerURLFilteringContextLabel":{
-    "message":"Контекст:",
-    "description":"Label for the context selector"
-  },
-  "loggerURLFilteringTypeLabel":{
-    "message":"Тип:",
-    "description":"Label for the type selector"
-  },
-  "loggerURLFilteringHeader":{
-    "message":"Динамическая фильтрация URL",
-    "description":"Small header to identify the dynamic URL filtering section"
-  },
-  "loggerStaticFilteringHeader":{
-    "message":"Статическая фильтрация",
-    "description":"Small header to identify the static filtering section"
-  },
-  "loggerStaticFilteringSentence":{
-    "message":"{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}} {{br}} и которые происходят из {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartBlock":{
-    "message":"Блокировать",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAllow":{
-    "message":"Разрешить",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartType":{
-    "message":"типа “{{type}}”",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAnyType":{
-    "message":"любой тип",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartOrigin":{
-    "message":"из “{{origin}}”",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"откуда угодно",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"кроме случаев, когда",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringSentencePartImportant":{
-    "message":"даже если",
-    "description":"Used in the static filtering wizard"
-  },
-  "loggerStaticFilteringFinderSentence1":{
-    "message":"Статический фильтр {{filter}} найден в:",
-    "description":"Below this sentence, the filter lists in which the filter was found"
-  },
-  "aboutChangelog":{
-    "message":"Список изменений",
-    "description":"English: Change log"
-  },
-  "aboutWiki":{
-    "message":"Вики",
-    "description":"English: project' wiki on Github"
-  },
-  "aboutSupport":{
-    "message":"Поддержка",
-    "description":"A link for where to get support"
-  },
-  "aboutCode":{
-    "message":"Исходный код (GPLv3)",
-    "description":"English: Source code (GPLv3)"
-  },
-  "aboutContributors":{
-    "message":"Участники",
-    "description":"English: Contributors"
-  },
-  "aboutBackupDataButton":{
-    "message":"Резервное копирование в файл...",
-    "description":"Text for button to create a backup of all settings"
-  },
-  "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: my-ublock-backup_{{datetime}}.txt"
-  },
-  "aboutRestoreDataButton":{
-    "message":"Восстановление из файла...",
-    "description":"English: Restore from file..."
-  },
-  "aboutResetDataButton":{
-    "message":"Восстановить настройки по умолчанию...",
-    "description":"English: Reset to default settings..."
-  },
-  "aboutRestoreDataConfirm":{
-    "message":"Текущие настройки будут заменены данными из резервной копии от {{time}}, и uBlock₀ будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
-    "description":"Message asking user to confirm restore"
-  },
-  "aboutRestoreDataError":{
-    "message":"Данные не могут быть прочитаны или ошибочны",
-    "description":"Message to display when an error occurred during restore"
-  },
-  "aboutResetDataConfirm":{
-    "message":"Все ваши настройки будут удалены, uBlock₀ будет перезапущен. \n\nВосстановить настройки по умолчанию?",
-    "description":"Message asking user to confirm reset"
-  },
-  "errorCantConnectTo":{
-    "message":"Ошибка сети: {{msg}}",
-    "description":"English: Network error: {{msg}}"
-  },
-  "subscriberConfirm":{
-    "message":"uBlock₀: добавить следующий адрес в ваш список фильтров?\n\nНазвание: \"{{title}}\"\nURL-адрес: {{url}}",
-    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
-  },
-  "elapsedOneMinuteAgo":{
-    "message":"минуту назад",
-    "description":"English: a minute ago"
-  },
-  "elapsedManyMinutesAgo":{
-    "message":"{{value}} минут(-ы) назад",
-    "description":"English: {{value}} minutes ago"
-  },
-  "elapsedOneHourAgo":{
-    "message":"час назад",
-    "description":"English: an hour ago"
-  },
-  "elapsedManyHoursAgo":{
-    "message":"{{value}} часа(-ов) назад",
-    "description":"English: {{value}} hours ago"
-  },
-  "elapsedOneDayAgo":{
-    "message":"день назад",
-    "description":"English: a day ago"
-  },
-  "elapsedManyDaysAgo":{
-    "message":"{{value}} дня(-ей) назад",
-    "description":"English: {{value}} days ago"
-  },
-  "showDashboardButton":{
-    "message":"Показать панель управления",
-    "description":"Firefox\/Fennec-specific: Show Dashboard"
-  },
-  "showNetworkLogButton":{
-    "message":"Показать журнал сетевых запросов",
-    "description":"Firefox\/Fennec-specific: Show Logger"
-  },
-  "fennecMenuItemBlockingOff":{
-    "message":"выключен",
-    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
-  },
-  "docblockedPrompt1":{
-    "message":"uBlock Origin предотвратил загрузку следующей страницы:",
-    "description":"English: uBlock₀ has prevented the following page from loading:"
-  },
-  "docblockedPrompt2":{
-    "message":"Из-за следующего фильтра",
-    "description":"English: Because of the following filter"
-  },
-  "docblockedNoParamsPrompt":{
-    "message":"без параметров",
-    "description":"label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
-  },
-  "docblockedFoundIn":{
-    "message":"Найден в:",
-    "description":"English: List of filter list names follows"
-  },
-  "docblockedBack":{
-    "message":"Вернуться",
-    "description":"English: Go back"
-  },
-  "docblockedClose":{
-    "message":"Закрыть это окно",
-    "description":"English: Close this window"
-  },
-  "docblockedProceed":{
-    "message":"Отключить строгую блокировку для {{hostname}}",
-    "description":"English: Disable strict blocking for {{hostname}} ..."
-  },
-  "docblockedDisableTemporary":{
-    "message":"Временно",
-    "description":"English: Temporarily"
-  },
-  "docblockedDisablePermanent":{
-    "message":"Навсегда",
-    "description":"English: Permanently"
-  },
-  "cloudPush":{
-    "message":"Экспорт в облачное хранилище",
-    "description":"tooltip"
-  },
-  "cloudPull":{
-    "message":"Импорт из облачного хранилища",
-    "description":"tooltip"
-  },
-  "cloudPullAndMerge":{
-    "message":"Импортировать из облачного хранилища и объединить с текущими настройками",
-    "description":"tooltip"
-  },
-  "cloudNoData":{
-    "message":"...\n...",
-    "description":""
-  },
-  "cloudDeviceNamePrompt":{
-    "message":"Имя этого устройства:",
-    "description":"used as a prompt for the user to provide a custom device name"
-  },
-  "advancedSettingsWarning":{
-    "message":"Внимание! Изменяйте эти настройки на свой страх и риск.",
-    "description":"A warning to users at the top of 'Advanced settings' page"
-  },
-  "genericSubmit":{
-    "message":"Принять",
-    "description":"for generic 'Submit' buttons"
-  },
-  "genericApplyChanges":{
-    "message":"Применить изменения",
-    "description":"for generic 'Apply changes' buttons"
-  },
-  "genericRevert":{
-    "message":"Вернуть",
-    "description":"for generic 'Revert' buttons"
-  },
-  "genericBytes":{
-    "message":"байт",
-    "description":""
-  },
-  "contextMenuTemporarilyAllowLargeMediaElements":{
-    "message":"Временно разрешить большие медиа-элементы",
-    "description":"A context menu entry, present when large media elements have been blocked on the current site"
-  },
-  "dummy":{
-    "message":"Эта запись должна быть последней",
-    "description":"so we dont need to deal with comma for last entry"
+  "extName": {
+    "message": "uBlock₀",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Наконец-то, быстрый и эффективный блокировщик для браузеров.",
+    "description": "this will be in the chrome web store: must be 132 characters or less"
+  },
+  "dashboardName": {
+    "message": "uBlock₀ — Панель управления",
+    "description": "English: uBlock₀ — Dashboard"
+  },
+  "settingsPageName": {
+    "message": "Настройки",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Сторонние фильтры",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Мои фильтры",
+    "description": "appears as tab name in dashboard"
+  },
+  "rulesPageName": {
+    "message": "Мои правила",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Белый список",
+    "description": "appears as tab name in dashboard"
+  },
+  "statsPageName": {
+    "message": "uBlock₀ — Журнал сетевых запросов",
+    "description": "Title for the logger window"
+  },
+  "aboutPageName": {
+    "message": "О расширении",
+    "description": "appears as tab name in dashboard"
+  },
+  "advancedSettingsPageName": {
+    "message": "Расширенные настройки",
+    "description": "Title for the advanced settings page"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ только на этой странице.",
+    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+  },
+  "popupPowerSwitchInfo1": {
+    "message": "Кликните, чтобы отключить uBlock₀ для этого сайта.\nCtrl+клик, чтобы отключить uBlock₀ только на этой странице.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupPowerSwitchInfo2": {
+    "message": "Кликните, чтобы активировать uBlock₀ для этого сайта.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupBlockedRequestPrompt": {
+    "message": "запросов заблокировано",
+    "description": "English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt": {
+    "message": "на этой странице",
+    "description": "English: on this page"
+  },
+  "popupBlockedStats": {
+    "message": "{{count}} или {{percent}}%",
+    "description": "Example: 15 or 13%"
+  },
+  "popupBlockedSinceInstallPrompt": {
+    "message": "с момента установки",
+    "description": "English: since install"
+  },
+  "popupOr": {
+    "message": "или",
+    "description": "English: or"
+  },
+  "popupTipDashboard": {
+    "message": "Открыть панель управления",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Войти в режим затирания элементов",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Войти в режим выбора элементов",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipLog": {
+    "message": "Открыть журнал сетевых запросов",
+    "description": "Tooltip used for the logger icon in the panel"
+  },
+  "popupTipNoPopups": {
+    "message": "Вкл\/Выкл блокировку всех всплывающих окон на этом сайте",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups1": {
+    "message": "Кликните для блокировки всех всплывающих окон на этом сайте",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups2": {
+    "message": "Кликните для отключения блокировки всех всплывающих окон на этом сайте",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoLargeMedia": {
+    "message": "Вкл\/Выкл блокировку больших медиа-элементов на этом сайте",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia1": {
+    "message": "Кликните для включения блокировки больших элементов мультимедиа на этом сайте",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia2": {
+    "message": "Кликните для отключения блокировки больших элементов мультимедиа на этом сайте",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoCosmeticFiltering": {
+    "message": "Вкл\/Выкл косметические фильтры на этом сайте",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering1": {
+    "message": "Кликните для отключения косметических фильтров на этом сайте",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering2": {
+    "message": "Кликните для включения косметических фильтров на этом сайте",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoRemoteFonts": {
+    "message": "Вкл\/Выкл блокировку сторонних шрифтов на этом сайте",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts1": {
+    "message": "Кликните для включения блокировки удаленных шрифтов на этом сайте",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts2": {
+    "message": "Кликните для отключения блокировки удаленных шрифтов на этом сайте",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipGlobalRules": {
+    "message": "Глобальные правила: этот столбец предназначен для правил, применяемых ко всем сайтам.",
+    "description": "Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules": {
+    "message": "Локальные правила: этот столбец предназначен для правил, применяемых только к текущему сайту.\nЛокальные правила переопределяют глобальные.",
+    "description": "Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules": {
+    "message": "Нажмите, чтобы сохранить изменения.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Нажмите, чтобы отменить изменения.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "popupAnyRulePrompt": {
+    "message": "все",
+    "description": ""
+  },
+  "popupImageRulePrompt": {
+    "message": "изображения",
+    "description": ""
+  },
+  "popup3pAnyRulePrompt": {
+    "message": "сторонние ресурсы",
+    "description": ""
+  },
+  "popup3pPassiveRulePrompt": {
+    "message": "сторонние css\/изображения",
+    "description": ""
+  },
+  "popupInlineScriptRulePrompt": {
+    "message": "inline-скрипты",
+    "description": ""
+  },
+  "popup1pScriptRulePrompt": {
+    "message": "собственные скрипты",
+    "description": ""
+  },
+  "popup3pScriptRulePrompt": {
+    "message": "сторонние скрипты",
+    "description": ""
+  },
+  "popup3pFrameRulePrompt": {
+    "message": "сторонние фреймы",
+    "description": ""
+  },
+  "popupHitDomainCountPrompt": {
+    "message": "доменов подключено",
+    "description": "appears in popup"
+  },
+  "popupHitDomainCount": {
+    "message": "{{count}} из {{total}}",
+    "description": "appears in popup"
+  },
+  "pickerCreate": {
+    "message": "Создать",
+    "description": "English: Create"
+  },
+  "pickerPick": {
+    "message": "Выбрать",
+    "description": "English: Pick"
+  },
+  "pickerQuit": {
+    "message": "Выйти",
+    "description": "English: Quit"
+  },
+  "pickerPreview": {
+    "message": "Предпросмотр",
+    "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
+  "pickerNetFilters": {
+    "message": "Сетевые фильтры",
+    "description": "English: header for a type of filter in the element picker dialog"
+  },
+  "pickerCosmeticFilters": {
+    "message": "Косметические фильтры",
+    "description": "English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint": {
+    "message": "Клик, Ctrl+клик",
+    "description": "English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry": {
+    "message": "Заблокировать элемент",
+    "description": "English: Block element"
+  },
+  "settingsCollapseBlockedPrompt": {
+    "message": "Скрыть оставшееся от заблокированных элементов место",
+    "description": "English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Показывать количество заблокированных запросов на иконке",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsTooltipsPrompt": {
+    "message": "Отключить всплывающие подсказки",
+    "description": "A checkbox in the Settings pane"
+  },
+  "settingsContextMenuPrompt": {
+    "message": "Использовать контекстное меню, где возможно",
+    "description": "English: Make use of context menu where appropriate"
+  },
+  "settingsColorBlindPrompt": {
+    "message": "Цветовая схема для дальтоников",
+    "description": "English: Color-blind friendly"
+  },
+  "settingsCloudStorageEnabledPrompt": {
+    "message": "Включить поддержку облачного хранилища",
+    "description": ""
+  },
+  "settingsAdvancedUserPrompt": {
+    "message": "Я опытный пользователь (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обязательно к прочтению<\/a>)",
+    "description": ""
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "расширенные настройки",
+    "description": "For the tooltip of a link which gives access to advanced settings"
+  },
+  "settingsPrefetchingDisabledPrompt": {
+    "message": "Отключить предзагрузку для предотвращения подключений для заблокированных запросов",
+    "description": "English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt": {
+    "message": "Отключить проверку гиперссылок",
+    "description": "English: "
+  },
+  "settingsWebRTCIPAddressHiddenPrompt": {
+    "message": "Предотвратить утечку локального IP-адреса через WebRTC",
+    "description": "English: "
+  },
+  "settingPerSiteSwitchGroup": {
+    "message": "Поведение по умолчанию",
+    "description": ""
+  },
+  "settingPerSiteSwitchGroupSynopsis": {
+    "message": "Эти настройки могут быть указаны для каждого сайта отдельно",
+    "description": ""
+  },
+  "settingsNoCosmeticFilteringPrompt": {
+    "message": "Отключить косметические фильтры",
+    "description": ""
+  },
+  "settingsNoLargeMediaPrompt": {
+    "message": "Блокировать медиа-элементы больше {{input:number}} КБ",
+    "description": ""
+  },
+  "settingsNoRemoteFontsPrompt": {
+    "message": "Блокировать сторонние шрифты",
+    "description": ""
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Блокировать CSP отчеты",
+    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+  },
+  "settingsStorageUsed": {
+    "message": "Места использовано: {{value}} байт",
+    "description": "English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt": {
+    "message": "Последнее восстановление:",
+    "description": "English: Last restore:"
+  },
+  "settingsLastBackupPrompt": {
+    "message": "Последняя резервная копия:",
+    "description": "English: Last backup:"
+  },
+  "3pListsOfBlockedHostsPrompt": {
+    "message": "{{netFilterCount}} сетевых фильтров ＋ {{cosmeticFilterCount}} косметических фильтров из:",
+    "description": "Appears at the top of the _3rd-party filters_ pane"
+  },
+  "3pListsOfBlockedHostsPerListStats": {
+    "message": "{{used}} используется из {{total}}",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "3pAutoUpdatePrompt1": {
+    "message": "Автообновление списков фильтров.",
+    "description": "A checkbox in the _3rd-party filters_ pane"
+  },
+  "3pUpdateNow": {
+    "message": "Обновить сейчас",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pPurgeAll": {
+    "message": "Очистить все кэши",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pParseAllABPHideFiltersPrompt1": {
+    "message": "Парсить и применять косметические фильтры.",
+    "description": "English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo": {
+    "message": "<p>Эта опция включает использование анализатора <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых фильтров &ldquo;скрытия элементов&rdquo;<\/a>. Это косметические фильтры, дающие возможность скрыть ненужные элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Использование данной опции увеличивает потребление памяти uBlock₀.<\/p>",
+    "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters": {
+    "message": "Игнорировать общие косметические фильтры.",
+    "description": "This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo": {
+    "message": "<p>Общие косметические фильтры — это те косметические фильтры, которые должны применяться на всех веб-сайтах.<p>Хотя uBlock₀ и обращается с ними эффективно, общие косметические фильтры всё равно могут потреблять ощутимое количество оперативной памяти и нагружать ЦПУ на некоторых, в особенности больших, страницах.<p>Включение этой опции снизит потребление памяти веб-страницами, и избавит процессор от обработки общих косметических фильтров, а также снизит потребление памяти самого uBlock₀.<p>Рекомендуется включить этот параметр на слабых устройствах.",
+    "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
+  },
+  "3pListsOfBlockedHostsHeader": {
+    "message": "Список заблокированных хостов",
+    "description": "English: Lists of blocked hosts"
+  },
+  "3pApplyChanges": {
+    "message": "Применить изменения",
+    "description": "English: Apply changes"
+  },
+  "3pGroupAds": {
+    "message": "Реклама",
+    "description": "English: Ads"
+  },
+  "3pGroupPrivacy": {
+    "message": "Приватность",
+    "description": "English: Privacy"
+  },
+  "3pGroupMalware": {
+    "message": "Вредоносные программы",
+    "description": "English: Malware domains"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Раздражающие элементы",
+    "description": "The header identifying the filter lists in the category 'annoyances'"
+  },
+  "3pGroupMultipurpose": {
+    "message": "Многоцелевые",
+    "description": "English: Multipurpose"
+  },
+  "3pGroupRegions": {
+    "message": "Регионы, языки",
+    "description": "English: Regions, languages"
+  },
+  "3pGroupCustom": {
+    "message": "Пользовательские",
+    "description": "English: Custom"
+  },
+  "3pExternalListsHint": {
+    "message": "Один URL на строку. Строки, начинающиеся с символа &lsquo;!&rsquo;, будут игнорироваться. Неверные ссылки будут игнорироваться без предупреждения.",
+    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListObsolete": {
+    "message": "Устарел.",
+    "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pLastUpdate": {
+    "message": "Последнее обновление: {{ago}}.\nКликните для принудительного обновления.",
+    "description": "used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating": {
+    "message": "Обновляется...",
+    "description": "used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError": {
+    "message": "В результате ошибки сети обновление не произошло.",
+    "description": "used as a tooltip for error icon beside a list"
+  },
+  "1pFormatHint": {
+    "message": "Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Строки, начинающиеся с &lsquo;!&rsquo;, будут игнорироваться.",
+    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport": {
+    "message": "Импортировать и добавить",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Экспортировать",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "ublock-custom-filters_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "1pApplyChanges": {
+    "message": "Применить изменения",
+    "description": "English: Apply changes"
+  },
+  "rulesPermanentHeader": {
+    "message": "Постоянные правила",
+    "description": "header"
+  },
+  "rulesTemporaryHeader": {
+    "message": "Временные правила",
+    "description": "header"
+  },
+  "rulesRevert": {
+    "message": "Вернуть",
+    "description": "This will remove all temporary rules"
+  },
+  "rulesCommit": {
+    "message": "Утвердить",
+    "description": "This will persist temporary rules"
+  },
+  "rulesEdit": {
+    "message": "Изменить",
+    "description": "Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave": {
+    "message": "Сохранить",
+    "description": "Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard": {
+    "message": "Сбросить",
+    "description": "Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport": {
+    "message": "Импорт из файла...",
+    "description": ""
+  },
+  "rulesExport": {
+    "message": "Экспорт в файл...",
+    "description": ""
+  },
+  "rulesDefaultFileName": {
+    "message": "my-ublock-dynamic-rules.txt",
+    "description": "default file name to use"
+  },
+  "rulesHint": {
+    "message": "Список ваших правил динамической фильтрации.",
+    "description": "English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint": {
+    "message": "Синтаксис правил: <code>источник назначение тип действие<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>полная документация<\/a>).",
+    "description": "English: dynamic rule syntax and full documentation."
+  },
+  "whitelistPrompt": {
+    "message": "Белый список указывает на каких веб-страницах uBlock Origin должен быть отключен. Одна запись на строку. Некорректные записи будут без предупреждений проигнорированы и закомментированы.",
+    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+  },
+  "whitelistImport": {
+    "message": "Импортировать и добавить",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Экспортировать",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+  },
+  "whitelistApply": {
+    "message": "Применить изменения",
+    "description": "English: Apply changes"
+  },
+  "logRequestsHeaderType": {
+    "message": "Тип",
+    "description": "English: Type"
+  },
+  "logRequestsHeaderDomain": {
+    "message": "Домен",
+    "description": "English: Domain"
+  },
+  "logRequestsHeaderURL": {
+    "message": "URL",
+    "description": "English: URL"
+  },
+  "logRequestsHeaderFilter": {
+    "message": "Фильтр",
+    "description": "English: Filter"
+  },
+  "logAll": {
+    "message": "Все",
+    "description": "Appears in the logger's tab selector"
+  },
+  "logBehindTheScene": {
+    "message": "Скрытые запросы",
+    "description": "Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt": {
+    "message": "фильтр записей в журнале",
+    "description": "English: filter log entries"
+  },
+  "logMaxEntriesTip": {
+    "message": "Максимальное число записей логгера",
+    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel": {
+    "message": "Контекст:",
+    "description": "Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel": {
+    "message": "Тип:",
+    "description": "Label for the type selector"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "Динамическая фильтрация URL",
+    "description": "Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader": {
+    "message": "Статическая фильтрация",
+    "description": "Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence": {
+    "message": "{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}} {{br}} и которые происходят из {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock": {
+    "message": "Блокировать",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow": {
+    "message": "Разрешить",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType": {
+    "message": "типа “{{type}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType": {
+    "message": "любой тип",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin": {
+    "message": "из “{{origin}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin": {
+    "message": "откуда угодно",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant": {
+    "message": "кроме случаев, когда",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant": {
+    "message": "даже если",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1": {
+    "message": "Статический фильтр {{filter}} найден в:",
+    "description": "Below this sentence, the filter lists in which the filter was found"
+  },
+  "aboutChangelog": {
+    "message": "Список изменений",
+    "description": "English: Change log"
+  },
+  "aboutWiki": {
+    "message": "Вики",
+    "description": "English: project' wiki on Github"
+  },
+  "aboutSupport": {
+    "message": "Поддержка",
+    "description": "A link for where to get support"
+  },
+  "aboutCode": {
+    "message": "Исходный код (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Участники",
+    "description": "English: Contributors"
+  },
+  "aboutBackupDataButton": {
+    "message": "Резервное копирование в файл...",
+    "description": "Text for button to create a backup of all settings"
+  },
+  "aboutBackupFilename": {
+    "message": "ublock-backup_{{datetime}}.txt",
+    "description": "English: my-ublock-backup_{{datetime}}.txt"
+  },
+  "aboutRestoreDataButton": {
+    "message": "Восстановление из файла...",
+    "description": "English: Restore from file..."
+  },
+  "aboutResetDataButton": {
+    "message": "Восстановить настройки по умолчанию...",
+    "description": "English: Reset to default settings..."
+  },
+  "aboutRestoreDataConfirm": {
+    "message": "Текущие настройки будут заменены данными из резервной копии от {{time}}, и uBlock₀ будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
+    "description": "Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError": {
+    "message": "Данные не могут быть прочитаны или ошибочны",
+    "description": "Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm": {
+    "message": "Все ваши настройки будут удалены, uBlock₀ будет перезапущен. \n\nВосстановить настройки по умолчанию?",
+    "description": "Message asking user to confirm reset"
+  },
+  "errorCantConnectTo": {
+    "message": "Ошибка сети: {{msg}}",
+    "description": "English: Network error: {{msg}}"
+  },
+  "subscriberConfirm": {
+    "message": "uBlock₀: добавить следующий адрес в ваш список фильтров?\n\nНазвание: \"{{title}}\"\nURL-адрес: {{url}}",
+    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo": {
+    "message": "минуту назад",
+    "description": "English: a minute ago"
+  },
+  "elapsedManyMinutesAgo": {
+    "message": "{{value}} минут(-ы) назад",
+    "description": "English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo": {
+    "message": "час назад",
+    "description": "English: an hour ago"
+  },
+  "elapsedManyHoursAgo": {
+    "message": "{{value}} часа(-ов) назад",
+    "description": "English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo": {
+    "message": "день назад",
+    "description": "English: a day ago"
+  },
+  "elapsedManyDaysAgo": {
+    "message": "{{value}} дня(-ей) назад",
+    "description": "English: {{value}} days ago"
+  },
+  "showDashboardButton": {
+    "message": "Показать панель управления",
+    "description": "Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton": {
+    "message": "Показать журнал сетевых запросов",
+    "description": "Firefox\/Fennec-specific: Show Logger"
+  },
+  "fennecMenuItemBlockingOff": {
+    "message": "выключен",
+    "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
+  },
+  "docblockedPrompt1": {
+    "message": "uBlock Origin предотвратил загрузку следующей страницы:",
+    "description": "English: uBlock₀ has prevented the following page from loading:"
+  },
+  "docblockedPrompt2": {
+    "message": "Из-за следующего фильтра",
+    "description": "English: Because of the following filter"
+  },
+  "docblockedNoParamsPrompt": {
+    "message": "без параметров",
+    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+  },
+  "docblockedFoundIn": {
+    "message": "Найден в:",
+    "description": "English: List of filter list names follows"
+  },
+  "docblockedBack": {
+    "message": "Вернуться",
+    "description": "English: Go back"
+  },
+  "docblockedClose": {
+    "message": "Закрыть это окно",
+    "description": "English: Close this window"
+  },
+  "docblockedProceed": {
+    "message": "Отключить строгую блокировку для {{hostname}}",
+    "description": "English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary": {
+    "message": "Временно",
+    "description": "English: Temporarily"
+  },
+  "docblockedDisablePermanent": {
+    "message": "Навсегда",
+    "description": "English: Permanently"
+  },
+  "cloudPush": {
+    "message": "Экспорт в облачное хранилище",
+    "description": "tooltip"
+  },
+  "cloudPull": {
+    "message": "Импорт из облачного хранилища",
+    "description": "tooltip"
+  },
+  "cloudPullAndMerge": {
+    "message": "Импортировать из облачного хранилища и объединить с текущими настройками",
+    "description": "tooltip"
+  },
+  "cloudNoData": {
+    "message": "...\n...",
+    "description": ""
+  },
+  "cloudDeviceNamePrompt": {
+    "message": "Имя этого устройства:",
+    "description": "used as a prompt for the user to provide a custom device name"
+  },
+  "advancedSettingsWarning": {
+    "message": "Внимание! Изменяйте эти настройки на свой страх и риск.",
+    "description": "A warning to users at the top of 'Advanced settings' page"
+  },
+  "genericSubmit": {
+    "message": "Принять",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Применить изменения",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Вернуть",
+    "description": "for generic 'Revert' buttons"
+  },
+  "genericBytes": {
+    "message": "байт",
+    "description": ""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements": {
+    "message": "Временно разрешить большие медиа-элементы",
+    "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "dummy": {
+    "message": "Эта запись должна быть последней",
+    "description": "so we dont need to deal with comma for last entry"
   }
 }
