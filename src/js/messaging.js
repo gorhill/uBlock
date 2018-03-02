@@ -527,6 +527,9 @@ var onMessage = function(request, sender, callback) {
                 response
             );
             response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
+            if ( request.isRootFrame && µb.logger.isEnabled() ) {
+                µb.logCosmeticFilters(tabId);
+            }
         }
         break;
 
