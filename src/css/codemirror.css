@@ -1,6 +1,7 @@
 .codeMirrorContainer {
     font-size: 12px;
     overflow: hidden;
+    position: relative;
 }
 .CodeMirror {
     border: 1px solid #ddd;
@@ -12,3 +13,50 @@
 .cm-staticext {color: #008;}
 .cm-staticnet.cm-block {color: #800;}
 .cm-staticnet.cm-allow {color: #004f00;}
+
+
+.cm-search-widget {
+    align-items: center;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    padding: 4px 8px;
+    /* position: absolute; */
+    right: 2em;
+    top: 0;
+    z-index: 1000;
+    }
+.cm-search-widget > span {
+    position: relative;
+    }
+.cm-search-widget .cm-search-widget-count {
+    align-items: center;
+    bottom: 0;
+    color: #888;
+    display: none;
+    margin-right: 4px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+.cm-search-widget[data-query] .cm-search-widget-count {
+    display: flex;
+    }
+.cm-search-widget .cm-search-widget-svg {
+    height: 1.2em;
+    padding: 4px;
+    width: 1.2em;
+    }
+.cm-search-widget .cm-search-widget-arrow {
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 1.4em;
+    }
+.cm-search-widget .cm-search-widget-svg:hover {
+    background-color: #fff;
+    }
+.cm-search-widget svg {
+    height: 100%;
+    pointer-events: none;
+    width: 100%;
+    }

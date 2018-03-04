@@ -45,6 +45,7 @@
     var cmEditor = new CodeMirror(
         document.getElementById('content'),
         {
+            autofocus: true,
             lineNumbers: true,
             lineWrapping: true,
             readOnly: true

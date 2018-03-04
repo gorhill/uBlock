@@ -35,6 +35,7 @@ var cachedUserFilters = '';
 var cmEditor = new CodeMirror(
     document.getElementById('userFilters'),
     {
+        autofocus: true,
         lineNumbers: true,
         lineWrapping: true,
     }
