@@ -130,7 +130,6 @@
     }
 
     function SearchState(cm) {
-        this.posFrom = this.posTo = null;
         this.query = null;
         this.overlay = null;
         this.panel = null;
@@ -176,7 +175,11 @@
 
     function getSearchCursor(cm, query, pos) {
         // Heuristic: if the query string is all lowercase, do a case insensitive search.
-        return cm.getSearchCursor(query, pos, {caseFold: queryCaseInsensitive(query), multiline: true});
+        return cm.getSearchCursor(
+            query,
+            pos,
+            {caseFold: queryCaseInsensitive(query), multiline: true}
+        );
     }
 
     function parseString(string) {
@@ -226,7 +229,11 @@
     function findNext(cm, rev, callback) {
         cm.operation(function() {
             var state = getSearchState(cm);
-            var cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
+            var cursor = getSearchCursor(
+                cm,
+                state.query,
+                rev ? cm.getCursor('from') : cm.getCursor('to')
+            );
             if (!cursor.find(rev)) {
                 cursor = getSearchCursor(
                     cm,
@@ -237,7 +244,6 @@
             }
             cm.setSelection(cursor.from(), cursor.to());
             cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
-            state.posFrom = cursor.from(); state.posTo = cursor.to();
             if (callback) callback(cursor.from(), cursor.to());
         });
     }
@@ -280,7 +286,6 @@
         } else {
             cm.operation(function() {
                 startSearch(cm, state);
-                state.posFrom = state.posTo = cm.getCursor();
                 findNext(cm, false);
             });
         }
