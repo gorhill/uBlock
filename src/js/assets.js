@@ -859,7 +859,10 @@ api.metadata = function(callback) {
                 obsoleteAfter = cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
                 assetEntry.obsolete = obsoleteAfter < now;
                 assetEntry.remoteURL = cacheEntry.remoteURL;
-            } else {
+            } else if (
+                assetEntry.contentURL &&
+                assetEntry.contentURL.length !== 0
+            ) {
                 assetEntry.writeTime = 0;
                 obsoleteAfter = 0;
                 assetEntry.obsolete = true;
