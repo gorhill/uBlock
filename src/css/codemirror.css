@@ -24,7 +24,14 @@
     /* position: absolute; */
     right: 2em;
     top: 0;
+    user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
     z-index: 1000;
+    }
+.cm-search-widget .fa {
+    color: #888;
+    font-size: 140%;
     }
 .cm-search-widget > span {
     position: relative;
@@ -35,6 +42,7 @@
     color: #888;
     display: none;
     margin-right: 4px;
+    pointer-events: none;
     position: absolute;
     right: 0;
     top: 0;
@@ -42,21 +50,6 @@
 .cm-search-widget[data-query] .cm-search-widget-count {
     display: flex;
     }
-.cm-search-widget .cm-search-widget-svg {
-    height: 1.2em;
-    padding: 4px;
-    width: 1.2em;
-    }
-.cm-search-widget .cm-search-widget-arrow {
-    padding-left: 2px;
-    padding-right: 2px;
-    width: 1.4em;
-    }
-.cm-search-widget .cm-search-widget-svg:hover {
-    background-color: #fff;
-    }
-.cm-search-widget svg {
-    height: 100%;
-    pointer-events: none;
-    width: 100%;
+.cm-search-widget .cm-search-widget-button:hover {
+    color: #000;
     }

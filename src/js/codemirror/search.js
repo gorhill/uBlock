@@ -53,21 +53,15 @@
 
     var searchWidgetHtml =
         '<div class="cm-search-widget">' +
+            '<span class="fa">&#xf002;</span>&emsp;' +
             '<span>' +
                 '<input type="text" size="32">' +
                 '<span class="cm-search-widget-count">' +
                     '<span><!-- future use --></span><span>0</span>' +
                 '</span>' +
             '</span>&ensp;' +
-            '<span class="cm-search-widget-svg cm-search-widget-arrow cm-search-widget-up">' +
-                '<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32" preserveAspectRatio="none"><path d="M2,28l14,-24l14,24" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;" /></svg>' +
-            '</span> ' +
-            '<span class="cm-search-widget-svg cm-search-widget-arrow cm-search-widget-down">' +
-                '<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32" preserveAspectRatio="none"><path d="M2,4l14,24l14,-24" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;" /></svg>' +
-            '</span>' +
-            '<span class="cm-search-widget-svg cm-search-widget-close">' +
-                '<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32" preserveAspectRatio="none"><path d="M4,4l24,24M4,28l24,-24" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;" /></svg>' +
-            '</span>' +
+            '<span class="cm-search-widget-up cm-search-widget-button fa">&#xf077;</span>&ensp;' +
+            '<span class="cm-search-widget-down cm-search-widget-button fa">&#xf078;</span>&ensp;' +
         '</div>';
 
     function searchWidgetKeydownHandler(cm, ev) {
@@ -110,9 +104,11 @@
             findNext(cm, true);
         } else if ( tcl.contains('cm-search-widget-down') ) {
             findNext(cm, false);
-        } else if ( tcl.contains('cm-search-widget-close') ) {
-            clearSearch(cm, true);
-            cm.focus();
+        }
+        if ( ev.target.localName !== 'input' ) {
+            ev.preventDefault();
+        } else {
+            ev.stopImmediatePropagation();
         }
     }
 
@@ -139,7 +135,7 @@
         this.widget = document.adoptNode(doc.body.firstElementChild);
         this.widget.addEventListener('keydown', searchWidgetKeydownHandler.bind(null, cm));
         this.widget.addEventListener('input', searchWidgetInputHandler.bind(null, cm));
-        this.widget.addEventListener('click', searchWidgetClickHandler.bind(null, cm));
+        this.widget.addEventListener('mousedown', searchWidgetClickHandler.bind(null, cm));
         if ( typeof cm.addPanel === 'function' ) {
             this.panel = cm.addPanel(this.widget);
         }
@@ -219,9 +215,10 @@
                 state.query,
                 queryCaseInsensitive(state.query)
             );
+            var count = state.annotate.matches.length;
             state.widget
                  .querySelector('.cm-search-widget-count > span:nth-of-type(2)')
-                 .textContent = state.annotate.matches.length;
+                 .textContent = count > 1000 ? '1000+' : count;
             state.widget.setAttribute('data-query', state.queryText);
         }
     }
@@ -229,6 +226,7 @@
     function findNext(cm, rev, callback) {
         cm.operation(function() {
             var state = getSearchState(cm);
+            if ( !state.query ) { return; }
             var cursor = getSearchCursor(
                 cm,
                 state.query,
@@ -318,4 +316,8 @@
     CodeMirror.commands.find = findCommand;
     CodeMirror.commands.findNext = findNextCommand;
     CodeMirror.commands.findPrev = findPrevCommand;
+
+    CodeMirror.defineInitHook(function(cm) {
+        getSearchState(cm);
+    });
 });
