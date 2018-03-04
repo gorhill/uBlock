@@ -76,7 +76,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "Apri il pannello di controllo",
+    "message": "Aprire il cruscotto",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -264,7 +264,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disabilita la revisione dei collegamenti ipertestuali",
+    "message": "Disattivare l' auditing del collegamento ipertestuale",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
