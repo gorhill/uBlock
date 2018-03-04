@@ -2,13 +2,22 @@
     font-size: 12px;
     overflow: hidden;
     position: relative;
-}
+    }
 .CodeMirror {
     border: 1px solid #ddd;
     box-sizing: border-box;
+    flex-grow: 1;
     height: 100%;
     width: 100%;
-}
+    }
+
+/* For when panels are used */
+.codeMirrorContainer > div:not(.CodeMirror) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    }
+
 .cm-s-default .cm-comment {color: #777;}
 .cm-staticext {color: #008;}
 .cm-staticnet.cm-block {color: #800;}
