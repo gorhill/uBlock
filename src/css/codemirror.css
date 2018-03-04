@@ -28,6 +28,7 @@
     align-items: center;
     background-color: #eee;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     padding: 4px 8px;
     /* position: absolute; */
