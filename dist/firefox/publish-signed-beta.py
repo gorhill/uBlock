@@ -256,8 +256,19 @@ with open(updates_json_filepath) as f:
             f.close()
             updates_json = template_json.substitute(version=version)
             with open(updates_json_filepath, 'w') as f:
-               f.write(updates_json)
-               f.close()
-        # TODO: automatically git add/commit?
+                f.write(updates_json)
+                f.close()
+        # Automatically git add/commit if needed.
+        # - Stage the changed file
+        r = subprocess.run(['git', 'status', '-s', updates_json_filepath], stdout=subprocess.PIPE)
+        rout = bytes.decode(r.stdout).strip()
+        if len(rout) >= 2 and rout[1] == 'M':
+            subprocess.run(['git', 'add', updates_json_filepath])
+        # - Commit the staged file
+        r = subprocess.run(['git', 'status', '-s', updates_json_filepath], stdout=subprocess.PIPE)
+        rout = bytes.decode(r.stdout).strip()
+        if len(rout) >= 2 and rout[0] == 'M':
+            subprocess.run(['git', 'commit', '-m', 'make Firefox dev build auto-update', updates_json_filepath])
+            subprocess.run(['git', 'push', 'origin', 'master'])
 
 print('All done.')
