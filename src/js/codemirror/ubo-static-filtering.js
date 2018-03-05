@@ -27,21 +27,25 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     var reComment1 = /^\s*!/;
     var reComment2 = /^\s*#/;
     var reExt = /^(\s*[^#]*)(#(?:#|@#|\$#|@\$#|\?#|@\?#))(.+)$/;
+    var reNet = /^(.*?)(?:(\$)([^$]+)?)?$/;
     var reNetAllow = /^\s*@@/;
     var lineStyle = null;
     var lineMatches = null;
 
-    var lineStyles = {
-        staticext: [ '', 'staticextA', '' ]
-    };
+    var lineStyles = new Map([
+        [ 'staticext',      [ '', 'staticextAnchor', '' ] ],
+        [ 'staticnetAllow', [ '', 'staticnetOpt', '' ] ],
+        [ 'staticnetBlock', [ '', 'staticnetOpt', '' ] ],
+    ]);
 
     var styleFromStream = function(stream) {
         for ( var i = 1, l = 0; i < lineMatches.length; i++ ) {
+            if ( typeof lineMatches[i] !== 'string' ) { continue; }
             l += lineMatches[i].length;
             if ( stream.pos < l ) {
                 stream.pos = l;
                 var style = lineStyle;
-                var xstyle = lineStyles[style][i-1];
+                var xstyle = lineStyles.get(style)[i-1];
                 if ( xstyle !== '' ) { style += ' ' + xstyle; }
                 return style;
             }
@@ -76,12 +80,15 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
                     return 'comment';
                 }
             }
-            if ( reNetAllow.test(stream.string) ) {
-                stream.skipToEnd();
-                return 'staticnet allow';
+            lineMatches = reNet.exec(stream.string);
+            if ( lineMatches !== null ) {
+                lineStyle = reNetAllow.test(stream.string) ?
+                    'staticnetAllow' :
+                    'staticnetBlock';
+                return styleFromStream(stream);
             }
             stream.skipToEnd();
-            return 'staticnet block';
+            return null;
         }
     };
 });
