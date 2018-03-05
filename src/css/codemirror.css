@@ -18,10 +18,11 @@
     height: 100%;
     }
 
-.cm-s-default .cm-comment {color: #777;}
-.cm-staticext {color: #008;}
-.cm-staticnet.cm-block {color: #800;}
-.cm-staticnet.cm-allow {color: #004f00;}
+.cm-s-default .cm-comment { color: #777; }
+.cm-staticext { color: #008; }
+.cm-staticextA { font-weight: bold; }
+.cm-staticnet.cm-block { color: #800; }
+.cm-staticnet.cm-allow { color: #004f00; }
 
 .cm-search-widget {
     align-items: center;

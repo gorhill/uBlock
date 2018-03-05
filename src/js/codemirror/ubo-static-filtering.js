@@ -24,29 +24,64 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
-    var reNotSpace = /\S/;
-    var reComment = /^(?:!|#[^#@]|#@[^#])/;
-    var reExt = /^[^#]*#(?:#[^#]|##[^#]|@#)/;
-    var reNetAllow = /^@@/;
+    var reComment1 = /^\s*!/;
+    var reComment2 = /^\s*#/;
+    var reExt = /^(\s*[^#]*)(#(?:#|@#|\$#|@\$#|\?#|@\?#))(.+)$/;
+    var reNetAllow = /^\s*@@/;
+    var lineStyle = null;
+    var lineMatches = null;
+
+    var lineStyles = {
+        staticext: [ '', 'staticextA', '' ]
+    };
+
+    var styleFromStream = function(stream) {
+        for ( var i = 1, l = 0; i < lineMatches.length; i++ ) {
+            l += lineMatches[i].length;
+            if ( stream.pos < l ) {
+                stream.pos = l;
+                var style = lineStyle;
+                var xstyle = lineStyles[style][i-1];
+                if ( xstyle !== '' ) { style += ' ' + xstyle; }
+                return style;
+            }
+        }
+        stream.skipToEnd();
+        return '';
+    };
 
     return {
         token: function(stream) {
-            var style = null;
-            var pos = stream.string.search(reNotSpace);
-            if ( pos !== -1 ) {
-                var s = stream.string.slice(pos);
-                if ( reComment.test(s) ) {
-                    style = 'comment';
-                } else if ( reExt.test(s) ) {
-                    style = 'staticext';
-                } else if ( reNetAllow.test(s) ) {
-                    style = 'staticnet allow';
-                } else {
-                    style = 'staticnet block';
+            if ( stream.sol() ) {
+                lineStyle = null;
+                lineMatches = null;
+            } else if ( lineStyle !== null ) {
+                return styleFromStream(stream);
+            }
+            if ( reComment1.test(stream.string) ) {
+                stream.skipToEnd();
+                return 'comment';
+            }
+            if ( stream.string.indexOf('#') !== -1 ) {
+                lineMatches = reExt.exec(stream.string);
+                if (
+                    lineMatches !== null &&
+                    lineMatches[3].startsWith('##') === false
+                ) {
+                    lineStyle = 'staticext';
+                    return styleFromStream(stream);
+                }
+                if ( reComment2.test(stream.string) ) {
+                    stream.skipToEnd();
+                    return 'comment';
                 }
             }
+            if ( reNetAllow.test(stream.string) ) {
+                stream.skipToEnd();
+                return 'staticnet allow';
+            }
             stream.skipToEnd();
-            return style;
+            return 'staticnet block';
         }
     };
 });
