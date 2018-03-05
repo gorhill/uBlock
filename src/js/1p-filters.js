@@ -38,6 +38,7 @@ var cmEditor = new CodeMirror(
         autofocus: true,
         lineNumbers: true,
         lineWrapping: true,
+        styleActiveLine: true
     }
 );
 

@@ -48,7 +48,8 @@
             autofocus: true,
             lineNumbers: true,
             lineWrapping: true,
-            readOnly: true
+            readOnly: true,
+            styleActiveLine: true
         }
     );
 
