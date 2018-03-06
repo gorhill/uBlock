@@ -62,6 +62,13 @@
             suffix: ''
         };
 
+    // To be called to ensure no big parent string of a string slice is
+    // left into memory after parsing filter lists is over.
+    var resetParsed = function() {
+        parsed.hostnames = [];
+        parsed.suffix = '';
+    };
+
     var isValidCSSSelector = (function() {
         var div = document.createElement('div'),
             matchesFn;
@@ -458,6 +465,7 @@
         µb.cosmeticFilteringEngine.reset();
         µb.scriptletFilteringEngine.reset();
         µb.htmlFilteringEngine.reset();
+        resetParsed(parsed);
     };
 
     api.freeze = function() {
@@ -465,6 +473,7 @@
         µb.cosmeticFilteringEngine.freeze();
         µb.scriptletFilteringEngine.freeze();
         µb.htmlFilteringEngine.freeze();
+        resetParsed(parsed);
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1004
@@ -691,7 +700,6 @@
             cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
             scriptlets: µb.scriptletFilteringEngine.toSelfie(),
             html: µb.htmlFilteringEngine.toSelfie()
-            
         };
     };
 
