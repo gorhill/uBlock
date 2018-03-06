@@ -33,9 +33,9 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     var lineMatches = null;
 
     var lineStyles = new Map([
-        [ 'staticext',      [ '', 'staticextAnchor', '' ] ],
-        [ 'staticnetAllow', [ '', 'staticnetOpt', '' ] ],
-        [ 'staticnetBlock', [ '', 'staticnetOpt', '' ] ],
+        [ 'staticext',      [ '', 'staticOpt', '' ] ],
+        [ 'staticnetAllow', [ '', 'staticOpt', '' ] ],
+        [ 'staticnetBlock', [ '', 'staticOpt', '' ] ],
     ]);
 
     var styleFromStream = function(stream) {

@@ -20,10 +20,9 @@
 
 .cm-s-default .cm-comment { color: #777; }
 .cm-staticext { color: #008; }
-.cm-staticextAnchor { font-weight: bold; }
 .cm-staticnetBlock { color: #800; }
 .cm-staticnetAllow { color: #004f00; }
-.cm-staticnetOpt { font-weight: bold; }
+.cm-staticOpt { background-color: #ddd; font-weight: bold; }
 
 .cm-search-widget {
     align-items: center;
