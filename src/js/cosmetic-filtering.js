@@ -393,7 +393,6 @@ var FilterContainer = function() {
         '^',
         '(?:',
             [
-            'script:contains',
             '.+?:has',
             '.+?:has-text',
             '.+?:if',

@@ -37,6 +37,7 @@
 
   - cosmetic filtering (aka "element hiding" in Adblock Plus)
   - scriptlet injection: selector starts with `script:inject`
+    - New shorter syntax (1.15.12): `example.com##+js(bab-defuser.js)`
   - html filtering: selector starts with `^`
 
   Depending on the specialized filtering engine, field 1 may or may not be
@@ -655,10 +656,21 @@
             }
         }
 
+        var c0 = suffix.charCodeAt(0);
+
+        // New shorter syntax for scriptlet injection engine.
+        if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {
+            // Convert to deprecated syntax for now. Once 1.15.12 is
+            // widespread, `+js` form will be the official syntax.
+            parsed.suffix = 'script:inject' + parsed.suffix.slice(3);
+            µb.scriptletFilteringEngine.compile(parsed, writer);
+            return true;
+        }
+
         // HTML filtering engine.
         // TODO: evaluate converting Adguard's `$$` syntax into uBO's HTML
         //       filtering syntax.
-        if ( suffix.charCodeAt(0) === 0x5E /* '^' */ ) {
+        if ( c0 === 0x5E /* '^' */ ) {
             µb.htmlFilteringEngine.compile(parsed, writer);
             return true;
         }
