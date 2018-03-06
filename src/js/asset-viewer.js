@@ -46,6 +46,7 @@
         document.getElementById('content'),
         {
             autofocus: true,
+            inputStyle: 'contenteditable',
             lineNumbers: true,
             lineWrapping: true,
             readOnly: true,
