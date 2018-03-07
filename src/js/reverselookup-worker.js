@@ -181,14 +181,6 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 1: // id-based
-                if (
-                    fargs[2] === selector.slice(1) &&
-                    selector.charAt(0) === '#'
-                ) {
-                    found = prefix + selector;
-                }
-                break;
             case 2: // class-based
                 if (
                     fargs[1] === selector.slice(1) &&
@@ -197,11 +189,9 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 3:
-                if (
-                    fargs[2] === selector.slice(1) &&
-                    selector.charAt(0) === '.'
-                ) {
+            case 1: // id-based
+            case 3: // class-based
+                if ( fargs[2] === selector ) {
                     found = prefix + selector;
                 }
                 break;
