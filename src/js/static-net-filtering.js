@@ -1817,14 +1817,14 @@ FilterParser.prototype.parse = function(raw) {
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the start.
     if ( s.startsWith('*') ) {
-        s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+        s = s.replace(/^\*+([^%0-9a-z])/i, '$1');
         this.anchor &= ~0x6;
     }
     // remove pointless trailing *
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the end.
     if ( s.endsWith('*') ) {
-        s = s.replace(/([^%0-9a-z])\*+$/, '$1');
+        s = s.replace(/([^%0-9a-z])\*+$/i, '$1');
         this.anchor &= ~0x1;
     }
 
