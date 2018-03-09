@@ -33,6 +33,13 @@ cp platform/chromium/*.json $DES/
 cp manifest.json $DES/            # use ADN manifest, not ublock's
 cp LICENSE.txt              $DES/
 
+echo "*** AdNauseam.chromium: concatenating content scripts"
+cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
+mv /tmp/contentscript.js $DES/js/contentscript.js
+rm $DES/js/vapi-usercss.js
+
 
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html

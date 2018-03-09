@@ -211,7 +211,7 @@
             this.removeFilterList(oldKeys[i]);
         }
     }
-    newKeys = this.setToArray(newSet);
+    newKeys = this.arrayFrom(newSet);
     var bin = {
         selectedFilterLists: newKeys,
         remoteBlacklists: this.oldDataFromNewListKeys(newKeys)
@@ -295,7 +295,7 @@
             return haystack.replace(
                 new RegExp(
                     '(^|\\n)' +
-                    needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+                    µb.escapeRegex(needle) +
                     '(\\n|$)', 'g'),
                 '\n'
             ).trim();
@@ -342,10 +342,10 @@
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = this.setToArray(importedSet).sort().join('\n');
+        externalLists = this.arrayFrom(importedSet).sort().join('\n');
     }
 
-    var result = this.setToArray(selectedListKeySet);
+    var result = this.arrayFrom(selectedListKeySet);
     if ( externalLists !== this.userSettings.externalLists ) {
         this.userSettings.externalLists = externalLists;
         vAPI.storage.set({ externalLists: externalLists });
@@ -371,7 +371,7 @@
         }
         out.add(location);
     }
-    return this.setToArray(out);
+    return this.arrayFrom(out);
 };
 
 /******************************************************************************/
@@ -439,7 +439,7 @@
             selectedListKeys.push(key);
             continue;
         }
-        if ( this.matchCurrentLanguage(list.lang) ) {
+        if ( this.listMatchesEnvironment(list) ) {
             selectedListKeys.push(key);
             list.off = false;
         }
@@ -605,8 +605,6 @@
     }
     this.loadingFilterLists = true;
 
-    //quickProfiler.start('µBlock.loadFilterLists()');
-
     var µb = this,
         filterlistsCount = 0,
         loadedListKeys = [];
@@ -620,8 +618,6 @@
         µb.cosmeticFilteringEngine.freeze();
         µb.redirectEngine.freeze();
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
-
-        //quickProfiler.stop(0);
 
         vAPI.messaging.broadcast({
             what: 'staticFilteringDataChanged',
@@ -1143,6 +1139,33 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/2344
+//   Support mutliple locales per filter list.
+
+// https://github.com/gorhill/uBlock/issues/3210
+//   Support ability to auto-enable a filter list based on user agent.
+
+µBlock.listMatchesEnvironment = function(details) {
+    var re;
+    // Matches language?
+    if ( typeof details.lang === 'string' ) {
+        re = this.listMatchesEnvironment.reLang;
+        if ( re === undefined ) {
+            re = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
+            this.listMatchesEnvironment.reLang = re;
+        }
+        if ( re.test(details.lang) ) { return true; }
+    }
+    // Matches user agent?
+    if ( typeof details.ua === 'string' ) {
+        re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
+        if ( re.test(self.navigator.userAgent) ) { return true; }
+    }
+    return false;
+};
+
+/******************************************************************************/
+
 µBlock.scheduleAssetUpdater = (function() {
     var timer, next = 0;
     return function(updateDelay) {
@@ -1294,7 +1317,7 @@
         if ( details.entry.content === 'filters' ) {
             if (
                 details.entry.off !== true ||
-                this.matchCurrentLanguage(details.entry.lang)
+                this.listMatchesEnvironment(details.entry)
             ) {
                 this.saveSelectedFilterLists([ details.assetKey ], true);
             }

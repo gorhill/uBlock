@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AdNauseam",
   "update_url": "https://rednoise.org/adnauseam/updates.xml",
-  "version": "3.5.201",
+  "version": "3.6.101",
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
@@ -23,7 +23,7 @@
   },
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
+    "js": ["js/vapi.js", "js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
     "run_at": "document_start",
     "all_frames": true
   }, {

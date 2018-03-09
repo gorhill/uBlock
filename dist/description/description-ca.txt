@@ -1,8 +1,8 @@
-Un blocador eficient: Amb un consum discret de memòria i de processador, pot carregar i aplicar milers de filtres més que altres aplicacions semblants.
+Un bloquejador eficient: amb un consum discret de memòria i de processador, pot carregar i aplicar milers de filtres més que altres aplicacions semblants.
 
 Gràfic de l'eficiència: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Ús: El gran botó d'engegada de la finestra emergent serveix per a desactivar/activar permanentment el uBlock per al lloc web actual. No és un botó d'engegada general de l'extensió.
+Ús: el botó gran d'engegada de la finestra emergent serveix per a desactivar/activar permanentment l'uBlock per al lloc web actual. Només s'aplica al lloc web actual, no és un botó d'engegada global.
 
 ***
 
@@ -22,11 +22,11 @@ Si voleu, podeu seleccionar altres llistes disponibles:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- I altres
+- I moltes més
 
-Òbviament, com més filtres activeu, més gran serà el consum de memòria. Però fins i tot després d'afegir dues llistes extra de Fanboy, hpHosts’s Ad and tracking servers, el uBlock₀ encara té un consum de memòria inferior al d'altres bloquejadors coneguts.
+Per descomptat, com més filtres activeu, més gran serà el consum de memòria. Però fins i tot després d'afegir les dues llistes extra de Fanboy, els servidors d'anuncis i rastreig d'hpHosts, l'uBlock encara té un consum de memòria inferior al d'altres bloquejadors coneguts.
 
-També heu de ser conscient que seleccionant algunes d'aquestes llistes extra és més probable trobar-se amb llocs webs inservibles -- especialment aquelles llistes que s'utilitzen normalment com a fitxer de hosts.
+Tingueu en compte també que és més probable trobar-se amb llocs web inservibles en seleccionar algunes d'aquestes llistes extra, especialment aquelles llistes que s'utilitzen normalment com a fitxer de hosts.
 
 ***
 

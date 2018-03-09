@@ -22,9 +22,10 @@ Remember that you have to update manually also. For some users, updating manuall
 
 ### Firefox webext
 
-Compatible with Firefox 52 and beyond.
+Compatible with Firefox 52 and beyond. This works only if you set `xpinstall.signatures.required` to `false` in `about:config`.
 
-- Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
+- Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+    - Right-click and choose _"Save As..."_.
 - Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
 
 On Linux, the settings are saved in a JSON file located at `~/.mozilla/firefox/[profile name]/browser-extension-data/uBlock0@raymondhill.net/storage.js`.

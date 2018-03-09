@@ -42,7 +42,7 @@ cp $SRC/lt/messages.json    $DES/lt/messages.json
 cp $SRC/lv/messages.json    $DES/lv/messages.json
 cp $SRC/ml-IN/messages.json $DES/ml/messages.json
 cp $SRC/mr/messages.json    $DES/mr/messages.json
-#cp $SRC/ms/messages.json    $DES/ms/messages.json
+cp $SRC/ms/messages.json    $DES/ms/messages.json
 cp $SRC/no/messages.json    $DES/nb/messages.json
 cp $SRC/nl/messages.json    $DES/nl/messages.json
 cp $SRC/pl/messages.json    $DES/pl/messages.json
@@ -124,3 +124,4 @@ cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
 rm -r $SRC
 echo "*** uBlock: Import done."
+git status

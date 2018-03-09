@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2017 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -118,12 +118,11 @@
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' ) {
-    return;
-}
-
-// don't run in frames
-if ( window.top !== window ) {
+if (
+    window.top !== window ||
+    typeof vAPI !== 'object' ||
+    vAPI.domFilterer instanceof Object === false
+) {
     return;
 }
 
@@ -131,8 +130,8 @@ var pickerRoot = document.getElementById(vAPI.sessionId);
 if ( pickerRoot ) {
     return;
 }
+
 var pickerBody = null;
-var pickerStyle = null;
 var svgOcean = null;
 var svgIslands = null;
 var svgRoot = null;
@@ -769,7 +768,7 @@ var filterToDOMInterface = (function() {
         var elems;
         if ( o.style ) {
             elems = document.querySelectorAll(o.style[0]);
-            lastAction = o.style.join(' ');
+            lastAction = o.style[0] + ' {' + o.style[1] + '}';
         } else if ( o.tasks ) {
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
@@ -1093,7 +1092,15 @@ var filterChoiceFromEvent = function(ev) {
 /******************************************************************************/
 
 var onDialogClicked = function(ev) {
-    if ( ev.target === null ) {
+    if ( ev.isTrusted === false ) { return; }
+
+    // If the dialog is hidden, clicking on it force it to become visible.
+    if ( dialog.classList.contains('hide') ) {
+        dialog.classList.add('show');
+        dialog.classList.remove('hide');
+    }
+
+    else if ( ev.target === null ) {
         /* do nothing */
     }
 
@@ -1161,6 +1168,11 @@ var showDialog = function(options) {
     pausePicker();
 
     options = options || {};
+
+    // Typically the dialog will be forced to be visible when using a
+    // touch-aware device.
+    dialog.classList.toggle('show', options.show === true);
+    dialog.classList.remove('hide');
 
     // Create lists of candidate filters
     var populate = function(src, des) {
@@ -1263,43 +1275,81 @@ var onSvgHovered = (function() {
     };
 })();
 
-/******************************************************************************/
+/*******************************************************************************
+
+    Swipe right:
+        If picker not paused: quit picker
+        If picker paused and dialog visible: hide dialog
+        If picker paused and dialog not visible: quit picker
+
+    Swipe left:
+        If picker paused and dialog not visible: show dialog
+
+*/
 
 var onSvgTouchStartStop = (function() {
     var startX,
         startY;
     return function onTouch(ev) {
-        ev.preventDefault();
         if ( ev.type === 'touchstart' ) {
-            startX = ev.touches[0].pageX;
-            startY = ev.touches[0].pageY;
+            startX = ev.touches[0].screenX;
+            startY = ev.touches[0].screenY;
             return;
         }
         if ( startX === undefined ) { return; }
-        var stopX = ev.changedTouches[0].pageX,
-            stopY = ev.changedTouches[0].pageY,
+        if ( ev.cancelable === false ) { return; }
+        var stopX = ev.changedTouches[0].screenX,
+            stopY = ev.changedTouches[0].screenY,
+            angle = Math.abs(Math.atan2(stopY - startY, stopX - startX)),
             distance = Math.sqrt(
                 Math.pow(stopX - startX, 2),
                 Math.pow(stopY - startY, 2)
             );
-        // Swipe = exit element zapper/picker.
-        if ( distance > 32 ) {
-            stopPicker();
+        // Interpret touch events as a click events if swipe is not valid.
+        if ( distance < 32 ) {
+            onSvgClicked({
+                type: 'touch',
+                target: ev.target,
+                clientX: ev.changedTouches[0].pageX,
+                clientY: ev.changedTouches[0].pageY,
+                isTrusted: ev.isTrusted
+            });
+            ev.preventDefault();
             return;
         }
-        // Interpret touch event as a click.
-        onSvgClicked({
-            type: 'click',
-            target: ev.target,
-            clientX: startX,
-            clientY: startY
-        });
+        if ( distance < 64 ) { return; }
+        var angleUpperBound = Math.PI * 0.25 * 0.5,
+            swipeRight = angle < angleUpperBound;
+        if ( swipeRight === false && angle < Math.PI - angleUpperBound ) {
+            return;
+        }
+        ev.preventDefault();
+        // Swipe left.
+        if ( swipeRight === false ) {
+            if ( pickerBody.classList.contains('paused') ) {
+                dialog.classList.remove('hide');
+                dialog.classList.add('show');
+            }
+            return;
+        }
+        // Swipe right.
+        if (
+            pickerBody.classList.contains('paused') &&
+            dialog.classList.contains('show')
+        ) {
+            dialog.classList.remove('show');
+            dialog.classList.add('hide');
+            return;
+        }
+        stopPicker();
     };
 })();
 
 /******************************************************************************/
 
 var onSvgClicked = function(ev) {
+    if ( ev.isTrusted === false ) { return; }
+
     // If zap mode, highlight element under mouse, this makes the zapper usable
     // on touch screens.
     if ( pickerBody.classList.contains('zap') ) {
@@ -1330,7 +1380,7 @@ var onSvgClicked = function(ev) {
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
-    showDialog();
+    showDialog({ show: ev.type === 'touch' });
 };
 
 /******************************************************************************/
@@ -1397,14 +1447,15 @@ var stopPicker = function() {
     candidateElements = [];
     bestCandidateFilter = null;
 
-    if ( pickerRoot === null ) {
-        return;
-    }
+    if ( pickerRoot === null ) { return; }
 
     // https://github.com/gorhill/uBlock/issues/2060
-    if ( vAPI.userCSS ) {
-        vAPI.userCSS.remove(pickerStyle.textContent);
+    if ( vAPI.domFilterer instanceof Object ) {
+        vAPI.userStylesheet.remove(pickerCSS1);
+        vAPI.userStylesheet.remove(pickerCSS2);
+        vAPI.userStylesheet.apply();
     }
+    vAPI.domFilterer.unexcludeNode(pickerRoot);
 
     window.removeEventListener('scroll', onScrolled, true);
     pickerRoot.contentWindow.removeEventListener('keydown', onKeyPressed, true);
@@ -1414,7 +1465,6 @@ var stopPicker = function() {
     svgRoot.removeEventListener('click', onSvgClicked);
     svgRoot.removeEventListener('touchstart', onSvgTouchStartStop);
     svgRoot.removeEventListener('touchend', onSvgTouchStartStop);
-    pickerStyle.parentNode.removeChild(pickerStyle);
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.removeEventListener('load', stopPicker);
     pickerRoot =
@@ -1548,7 +1598,8 @@ var bootstrapPicker = function() {
 
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
-pickerRoot.style.cssText = [
+
+var pickerCSSStyle = [
     'background: transparent',
     'border: 0',
     'border-radius: 0',
@@ -1569,29 +1620,28 @@ pickerRoot.style.cssText = [
     'z-index: 2147483647',
     ''
 ].join(' !important;');
+pickerRoot.style.cssText = pickerCSSStyle;
 
-// https://github.com/gorhill/uBlock/issues/1529
-// In addition to inline styles, harden the element picker styles by using
-// a dedicated style tag.
-pickerStyle = document.createElement('style');
-pickerStyle.textContent = [
+var pickerCSS1 = [
     '#' + pickerRoot.id + ' {',
-        pickerRoot.style.cssText,
-    '}',
+        pickerCSSStyle,
+    '}'
+].join('\n');
+var pickerCSS2 = [
     '[' + pickerRoot.id + '-clickblind] {',
         'pointer-events: none !important;',
-    '}',
-    ''
+    '}'
 ].join('\n');
-document.documentElement.appendChild(pickerStyle);
+
+// https://github.com/gorhill/uBlock/issues/1529
+//   In addition to inline styles, harden the element picker styles by using
+//   dedicated CSS rules.
+vAPI.userStylesheet.add(pickerCSS1);
+vAPI.userStylesheet.add(pickerCSS2);
+vAPI.userStylesheet.apply();
 
 // https://github.com/gorhill/uBlock/issues/2060
-if ( vAPI.domFilterer ) {
-    pickerRoot[vAPI.domFilterer.getExcludeId()] = true;
-}
-if ( vAPI.userCSS ) {
-    vAPI.userCSS.add(pickerStyle.textContent);
-}
+vAPI.domFilterer.excludeNode(pickerRoot);
 
 pickerRoot.addEventListener('load', bootstrapPicker);
 document.documentElement.appendChild(pickerRoot);

@@ -16,15 +16,17 @@
             <option value="" data-i18n="logAll">
             <option value="tab_bts" data-i18n="logBehindTheScene">
         </select>
-        <span id="refresh" class="button disabled fa needtab">&#xf021;</span>
+        <span id="refresh" class="button fa disabled needtab">&#xf021;</span>
         <span id="showdom" class="button fa">&#xf121;</span>
     </div>
 </div>
 
 <div id="inspectors">
-    <div id="domInspector" class="inspector">
+    <div id="domInspector" class="inspector vCompact hCompact">
         <div class="permatoolbar">
             <div>
+                <span class="button fa vCompactToggler"></span>
+                <span class="button fa hCompactToggler"></span>
                 <span class="button fa highlightMode" style="display: none">&#xf042;</span>
                 <span class="button fa revert disabled">&#xf12d;</span>
                 <span class="button fa commit disabled">&#xf0c7;</span>
@@ -35,10 +37,10 @@
         </div>
     </div>
 
-    <div id="netInspector" class="inspector compactView f">
+    <div id="netInspector" class="inspector vCompact f">
         <div class="permatoolbar">
             <div>
-                <span id="compactViewToggler" class="button fa"></span>
+                <span class="button fa vCompactToggler"></span>
                 <span id="clean" class="button fa disabled">&#xf00d;</span>
                 <span id="clear" class="button fa disabled">&#xf12d;</span>
                 <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
@@ -112,6 +114,7 @@
     <div id="filterFinderDialogSentence1"><span><span></span><code></code><span></span></span></div>
 </div>
 
+<script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
 <script src="js/udom.js"></script>

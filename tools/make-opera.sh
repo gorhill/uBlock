@@ -31,8 +31,10 @@ cp -R src/lib $DES/
 cp src/*.html $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.js   $DES/js/
-cp platform/chromium/*.json $DES/
 cp -R platform/chromium/img $DES/
+cp platform/chromium/*.html $DES/
+cp platform/chromium/*.json $DES/
+cp LICENSE.txt              $DES/
 
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
 cp LICENSE.txt $DES/

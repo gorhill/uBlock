@@ -32,7 +32,6 @@ body {
   opacity: 1;
   overflow: hidden;
   padding: 0;
-  white-space: nowrap;
 }
 body.mobile {
   overflow-y: auto;

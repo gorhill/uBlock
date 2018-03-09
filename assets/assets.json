@@ -91,15 +91,6 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"aak-continued": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "AAK-Cont Filters For uBlock Origin",
-		"contentURL": "https://xuhaiyang1234.gitlab.io/AAK-Cont/dist/aak-cont-list-ubo.txt",
-		"supportURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont/issues",
-		"instructionURL": "https://gitlab.com/xuhaiyang1234/AAK-Cont#installation-instruction"
-		},
 	"awrl-0": {
 		"content": "filters",
 		"group": "ads",
@@ -115,7 +106,17 @@
 		"title": "Adguard Base Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#english-filter"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-mobile": {
+		"content": "filters",
+		"group": "ads",
+		"off": true,
+		"title": "Adguard Mobile Filters",
+		"ua": "mobile",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/11.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"easylist": {
 		"content": "filters",
@@ -137,14 +138,7 @@
 		"title": "Adguard Spyware Filters",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#privacy"
-	},
-	"disconnect-tracking": {
-		"content": "filters",
-		"group": "privacy",
-		"off": true,
-		"title": "Basic tracking list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"easyprivacy": {
 		"content": "filters",
@@ -165,7 +159,7 @@
 		"off": true,
 		"title": "Fanboy’s Enhanced Tracking List",
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"malware-0": {
 		"content": "filters",
@@ -210,7 +204,7 @@
 		"title": "Adguard’s Annoyance List",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#annoyances-filter"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"fanboy-thirdparty_social": {
 		"content": "filters",
@@ -218,7 +212,7 @@
 		"off": true,
 		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
 		"content": "filters",
@@ -347,8 +341,8 @@
 		"group": "regions",
 		"off": true,
 		"title": "CZE, SVK: EasyList Czech and Slovak",
-		"lang": "cs",
-		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
+		"lang": "cs sk",
+		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt",
 		"supportURL": "https://github.com/tomasko126/easylistczechandslovak"
 	},
 	"DEU-0": {
@@ -481,6 +475,16 @@
 		"contentURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt",
 		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
 	},
+	"JPN-1": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "JPN: Adguard Japan Filter",
+		"lang": "ja",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
 	"KOR-0": {
 		"content": "filters",
 		"group": "regions",
@@ -533,7 +537,7 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
 	},
 	"POL-1": {
 		"content": "filters",
@@ -542,7 +546,7 @@
 		"title": "POL: polskie filtry do uBlocka uzupelnienie",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
-		"supportURL": "https://www.certyficate.it/adblock-ublock-polish-filters/"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
 	},
 	"RUS-0": {
 		"content": "filters",
@@ -550,7 +554,7 @@
 		"off": true,
 		"title": "RUS: RU AdList",
 		"lang": "be ru uk",
-		"contentURL": "https://easylist-downloads.adblockplus.org/advblock.txt",
+		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
 	},
@@ -579,7 +583,7 @@
 		"lang": "es pt",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#spanish"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"SVN-0": {
 		"content": "filters",
@@ -597,7 +601,7 @@
 		"title": "SWE: Fanboy's Swedish",
 		"lang": "sv",
 		"contentURL": "https://www.fanboy.co.nz/fanboy-swedish.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"TUR-0": {
 		"content": "filters",
@@ -607,7 +611,7 @@
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters#turkish"
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
 	"VIE-1": {
 		"content": "filters",

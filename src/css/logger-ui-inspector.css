@@ -28,16 +28,23 @@
     background-color: #fee;
     }
 #domInspector li > * {
+    font-size: 0.8rem;
+    display: inline-block;
+    line-height: 1.2;
     margin-right: 1em;
+    vertical-align: middle;
+    }
+#domInspector li > span {
+    color: #aaa;
     }
 #domInspector li > span:first-child {
     color: #000;
     cursor: default;
-    display: inline-block;
+    font-size: 1rem;
     margin-right: 0;
     opacity: 0.5;
+    padding: 0 4px 0 1px;
     visibility: hidden;
-    width: 1em;
     }
 #domInspector li > span:first-child:hover {
     opacity: 1;
@@ -54,29 +61,50 @@
     }
 #domInspector li.branch.show > span:first-child:before {
     content: '\25be';
-    visibility: visible;
     }
 #domInspector li.branch.hasCosmeticHide > span:first-child:before {
     color: red;
     }
 #domInspector li > code {
     cursor: pointer;
-    font: 12px/1.4 monospace;
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
     }
 #domInspector li > code.off {
     text-decoration: line-through;
     }
-#domInspector li > span {
-    color: #aaa;
-    }
 #domInspector li > code.filter {
     color: red;
     }
+
 #domInspector li > ul {
+    display: block;
+    }
+#domInspector li:not(.hasCosmeticHide):not(.isCosmeticHide):not(.show) > ul {
     display: none;
     }
-#domInspector li.show > ul {
+
+#domInspector.vCompact li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+    display: none;
+    }
+#domInspector #domTree > li {
     display: block;
+    }
+#domInspector.vCompact ul {
+    display: block;
+    }
+#domInspector li > ul > li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+    display: none;
+    }
+#domInspector li.show > ul > li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+    display: block;
+    }
+#domInspector li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+    display: block;
+    }
+#domInspector.hCompact li > code:first-of-type {
+    max-width: 12em;
     }
 
 #cosmeticFilteringDialog .dialog {

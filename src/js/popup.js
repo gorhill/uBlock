@@ -401,25 +401,26 @@ var renderPrivacyExposure = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
+    var elem, text;
+
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    uDom('body')
-        .toggleClass('advancedUser', popupData.advancedUserEnabled)
-        .toggleClass(
-            'off',
-            (popupData.pageURL === '') ||
-            (!popupData.netFilteringSwitch) ||
-            (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled)
-        );
+    elem = document.body;
+    elem.classList.toggle('advancedUser', popupData.advancedUserEnabled);
+    elem.classList.toggle(
+        'off',
+        popupData.pageURL === '' ||
+        !popupData.netFilteringSwitch ||
+        popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled
+    );
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', popupData.canElementPicker === true);
 
-    var text,
-        blocked = popupData.pageBlockedRequestCount,
+    var blocked = popupData.pageBlockedRequestCount,
         total = popupData.pageAllowedRequestCount + blocked;
     if ( total === 0 ) {
         text = formatNumber(0);
@@ -486,15 +487,79 @@ var renderPopup = function() {
     }
 
     uDom.nodeFromId('panes').classList.toggle('dfEnabled', dfPaneVisible);
-    uDom('#firewallContainer')
-        .toggleClass('minimized', popupData.firewallPaneMinimized)
-        .toggleClass('colorBlind', popupData.colorBlindFriendly);
+
+    elem = uDom.nodeFromId('firewallContainer');
+    elem.classList.toggle('minimized', popupData.firewallPaneMinimized);
+    elem.classList.toggle('colorBlind', popupData.colorBlindFriendly);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
         buildAllFirewallRows();
     }
+
+    renderTooltips();
 };
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/2889
+//   Use tooltip for ARIA purpose.
+
+var renderTooltips = function(selector) {
+    var elem, text;
+    for ( var entry of tooltipTargetSelectors ) {
+        if ( selector !== undefined && entry[0] !== selector ) { continue; }
+        text = vAPI.i18n(
+            entry[1].i18n +
+            (uDom.nodeFromSelector(entry[1].state) === null ? '1' : '2')
+        );
+        elem = uDom.nodeFromSelector(entry[0]);
+        elem.setAttribute('aria-label', text);
+        elem.setAttribute('data-tip', text);
+        if ( selector !== undefined ) {
+            uDom.nodeFromId('tooltip').textContent =
+                elem.getAttribute('data-tip');
+        }
+    }
+};
+
+var tooltipTargetSelectors = new Map([
+    [
+        '#switch',
+        {
+            state: 'body.off',
+            i18n: 'popupPowerSwitchInfo',
+        }
+    ],
+    [
+        '#no-popups',
+        {
+            state: '#no-popups.on',
+            i18n: 'popupTipNoPopups'
+        }
+    ],
+    [
+        '#no-large-media',
+        {
+            state: '#no-large-media.on',
+            i18n: 'popupTipNoLargeMedia'
+        }
+    ],
+    [
+        '#no-cosmetic-filtering',
+        {
+            state: '#no-cosmetic-filtering.on',
+            i18n: 'popupTipNoCosmeticFiltering'
+        }
+    ],
+    [
+        '#no-remote-fonts',
+        {
+            state: '#no-remote-fonts.on',
+            i18n: 'popupTipNoRemoteFonts'
+        }
+    ]
+]);
 
 /******************************************************************************/
 
@@ -580,10 +645,11 @@ messaging.addChannelListener('popup', onPopupMessage);
 /******************************************************************************/
 
 var toggleNetFilteringSwitch = function(ev) {
-    if ( !popupData || !popupData.pageURL ) {
-        return;
-    }
-    if ( popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled ) {
+    if ( !popupData || !popupData.pageURL ) { return; }
+    if (
+        popupData.pageHostname === 'behind-the-scene' &&
+        !popupData.advancedUserEnabled
+    ) {
         return;
     }
     messaging.send(
@@ -596,7 +662,7 @@ var toggleNetFilteringSwitch = function(ev) {
             tabId: popupData.tabId
         }
     );
-
+    renderTooltips('#switch');
     hashFromPopupData();
 };
 
@@ -862,9 +928,7 @@ var revertFirewallRules = function() {
 var toggleHostnameSwitch = function(ev) {
     var target = ev.currentTarget;
     var switchName = target.getAttribute('id');
-    if ( !switchName ) {
-        return;
-    }
+    if ( !switchName ) { return; }
     target.classList.toggle('on');
     messaging.send(
         'popupPanel',
@@ -876,6 +940,7 @@ var toggleHostnameSwitch = function(ev) {
             tabId: popupData.tabId
         }
     );
+    renderTooltips('#' + switchName);
     hashFromPopupData();
 };
 
