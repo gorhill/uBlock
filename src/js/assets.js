@@ -906,13 +906,20 @@ var updaterStatus,
     noRemoteResources;
 
 var updateFirst = function() {
-    // Firefox extension reviewers do not want uBO/webext to fetch its own
-    // scriptlets/resources asset from the project's own repo (github.com).
-    // See: https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    //   Firefox extension reviewers do not want uBO/webext to fetch its own
+    //   scriptlets/resources asset from the project's own repo (github.com).
+    // https://github.com/uBlockOrigin/uAssets/issues/1647#issuecomment-371456830
+    //   Allow self-hosted dev build to update: if update_url is present but
+    //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
+        var manifest = chrome.runtime.getManifest();
         noRemoteResources =
             typeof vAPI.webextFlavor === 'string' &&
-            vAPI.webextFlavor.startsWith('Mozilla-Firefox-');
+            vAPI.webextFlavor.startsWith('Mozilla-Firefox-') &&
+            manifest.applications instanceof Object &&
+            manifest.applications.gecko instanceof Object &&
+            manifest.applications.gecko.update_url === null;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();
