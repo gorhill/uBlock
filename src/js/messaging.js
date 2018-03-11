@@ -863,47 +863,57 @@ var getLists = function(callback) {
 
 var getRules = function() {
     return {
-        permanentRules: µb.permanentFirewall.toString() + '\n' + µb.permanentURLFiltering.toString(),
-        sessionRules: µb.sessionFirewall.toString() + '\n' + µb.sessionURLFiltering.toString(),
-        hnSwitches: µb.hnSwitches.toString()
+        permanentRules: µb.permanentFirewall.toArray().concat(
+                            µb.permanentURLFiltering.toArray()
+                        ),
+          sessionRules: µb.sessionFirewall.toArray().concat(
+                            µb.sessionURLFiltering.toArray()
+                        ),
+            hnSwitches: µb.hnSwitches.toArray()
     };
 };
 
-// Untangle firewall rules, url rules and switches.
-var untangleRules = function(s) {
-    var textEnd = s.length;
-    var lineBeg = 0, lineEnd;
-    var line;
-    var firewallRules = [];
-    var urlRules = [];
-    var switches = [];
-    var reIsSwitchRule = /^[a-z-]+:\s/;
-
-    while ( lineBeg < textEnd ) {
-        lineEnd = s.indexOf('\n', lineBeg);
-        if ( lineEnd < 0 ) {
-            lineEnd = s.indexOf('\r', lineBeg);
-            if ( lineEnd < 0 ) {
-                lineEnd = textEnd;
-            }
+var modifyRuleset = function(details) {
+    var swRuleset = µb.hnSwitches,
+        hnRuleset, urlRuleset;
+    if ( details.permanent ) {
+        hnRuleset = µb.permanentFirewall;
+        urlRuleset = µb.permanentURLFiltering;
+    } else {
+        hnRuleset = µb.sessionFirewall;
+        urlRuleset = µb.sessionURLFiltering;
+    }
+    var toRemove = new Set(details.toRemove.trim().split(/\s*[\n\r]+\s*/));
+    var rule, parts, _;
+    for ( rule of toRemove ) {
+        if ( rule === '' ) { continue; }
+        parts = rule.split(/\s/);
+        _ = hnRuleset.removeFromRuleParts(parts) ||
+            swRuleset.removeFromRuleParts(parts) ||
+            urlRuleset.removeFromRuleParts(parts);
+    }
+    var toAdd = new Set(details.toAdd.trim().split(/\s*[\n\r]+\s*/));
+    for ( rule of toAdd ) {
+        if ( rule === '' ) { continue; }
+        parts = rule.split(/\s/);
+        _ = hnRuleset.addFromRuleParts(parts) ||
+            swRuleset.addFromRuleParts(parts) ||
+            urlRuleset.addFromRuleParts(parts);
+    }
+    if ( details.permanent ) {
+        if ( hnRuleset.changed ) {
+            µb.savePermanentFirewallRules();
+            hnRuleset.changed = false;
         }
-        line = s.slice(lineBeg, lineEnd).trim();
-        lineBeg = lineEnd + 1;
-
-        if ( reIsSwitchRule.test(line) ) {
-            switches.push(line);
-        } else if ( line.indexOf('://') !== -1 ) {
-            urlRules.push(line);
-        } else {
-            firewallRules.push(line);
+        if ( urlRuleset.changed ) {
+            µb.savePermanentURLFilteringRules();
+            urlRuleset.changed = false;
         }
     }
-
-    return {
-        firewallRules: firewallRules.join('\n'),
-        urlRules: urlRules.join('\n'),
-        switches: switches.join('\n')
-    };
+    if ( swRuleset.changed ) {
+        µb.saveHostnameSwitches();
+        swRuleset.changed = false;
+    }
 };
 
 /******************************************************************************/
@@ -938,6 +948,13 @@ var onMessage = function(request, sender, callback) {
         response = getRules();
         break;
 
+    case 'modifyRuleset':
+        // https://github.com/chrisaljoudi/uBlock/issues/772
+        µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
+        modifyRuleset(request);
+        response = getRules();
+        break;
+
     case 'purgeAllCaches':
         if ( request.hard ) {
             µb.assets.remove(/./);
@@ -966,28 +983,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
-        break;
-
-    case 'setSessionRules':
-        // https://github.com/chrisaljoudi/uBlock/issues/772
-        µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
-        response = untangleRules(request.rules);
-        µb.sessionFirewall.fromString(response.firewallRules);
-        µb.sessionURLFiltering.fromString(response.urlRules);
-        µb.hnSwitches.fromString(response.switches);
-        µb.saveHostnameSwitches();
-        response = getRules();
-        break;
-
-    case 'setPermanentRules':
-        response = untangleRules(request.rules);
-        µb.permanentFirewall.fromString(response.firewallRules);
-        µb.savePermanentFirewallRules();
-        µb.permanentURLFiltering.fromString(response.urlRules);
-        µb.savePermanentURLFilteringRules();
-        µb.hnSwitches.fromString(response.switches);
-        µb.saveHostnameSwitches();
-        response = getRules();
         break;
 
     case 'validateWhitelistString':

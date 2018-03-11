@@ -12,7 +12,7 @@
     }
 
 /* For when panels are used */
-.codeMirrorContainer > div:not(.CodeMirror) {
+.codeMirrorContainer > div:not([class^="CodeMirror"]) {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -62,4 +62,13 @@
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
+    }
+
+.CodeMirror-merge-l-deleted {
+    background-image: none;
+    font-weight: bold;
+    }
+.CodeMirror-merge-l-inserted {
+    background-image: none;
+    font-weight: bold;
     }
