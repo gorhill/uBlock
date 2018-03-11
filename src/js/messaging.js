@@ -887,7 +887,7 @@ var modifyRuleset = function(details) {
     var rule, parts, _;
     for ( rule of toRemove ) {
         if ( rule === '' ) { continue; }
-        parts = rule.split(/\s/);
+        parts = rule.split(/\s+/);
         _ = hnRuleset.removeFromRuleParts(parts) ||
             swRuleset.removeFromRuleParts(parts) ||
             urlRuleset.removeFromRuleParts(parts);
@@ -895,7 +895,7 @@ var modifyRuleset = function(details) {
     var toAdd = new Set(details.toAdd.trim().split(/\s*[\n\r]+\s*/));
     for ( rule of toAdd ) {
         if ( rule === '' ) { continue; }
-        parts = rule.split(/\s/);
+        parts = rule.split(/\s+/);
         _ = hnRuleset.addFromRuleParts(parts) ||
             swRuleset.addFromRuleParts(parts) ||
             urlRuleset.addFromRuleParts(parts);
