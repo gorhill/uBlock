@@ -913,10 +913,13 @@ var updateFirst = function() {
     //   Allow self-hosted dev build to update: if update_url is present but
     //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
-        var manifest = chrome.runtime.getManifest();
+        var manifest =
+            typeof browser === 'object' &&
+            browser.runtime.getManifest();
         noRemoteResources =
             typeof vAPI.webextFlavor === 'string' &&
             vAPI.webextFlavor.startsWith('Mozilla-Firefox-') &&
+            manifest instanceof Object &&
             manifest.applications instanceof Object &&
             manifest.applications.gecko instanceof Object &&
             manifest.applications.gecko.update_url === null;
