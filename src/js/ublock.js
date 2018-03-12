@@ -219,7 +219,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         }
         // Plain hostname
         else if ( line.indexOf('/') === -1 ) {
-            if ( reInvalidHostname.test(line) ) {
+            if ( this.reWhitelistBadHostname.test(line) ) {
                 key = '#';
                 directive = '# ' + line;
             } else {
@@ -242,7 +242,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         // label (or else it would be just impossible to make an efficient
         // dict.
         else {
-            matches = reHostnameExtractor.exec(line);
+            matches = this.reWhitelistHostnameExtractor.exec(line);
             if ( !matches || matches.length !== 2 ) {
                 key = '#';
                 directive = '# ' + line;
@@ -266,27 +266,8 @@ var matchBucket = function(url, hostname, bucket, start) {
     return whitelist;
 };
 
-µBlock.validateWhitelistString = function(s) {
-    var lineIter = new this.LineIterator(s), line;
-    while ( !lineIter.eot() ) {
-        line = lineIter.next().trim();
-        if ( line === '' ) { continue; }
-        if ( line.startsWith('#') ) { continue; } // Comment
-        if ( line.indexOf('/') === -1 ) { // Plain hostname
-            if ( reInvalidHostname.test(line) ) { return false; }
-            continue;
-        }
-        if ( line.length > 2 && line.startsWith('/') && line.endsWith('/') ) { // Regex-based
-            try { new RegExp(line.slice(1, -1)); } catch(ex) { return false; }
-            continue;
-        }
-        if ( reHostnameExtractor.test(line) === false ) { return false; } // URL
-    }
-    return true;
-};
-
-var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
-    reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
+µBlock.reWhitelistBadHostname = /[^a-z0-9.\-\[\]:]/;
+µBlock.reWhitelistHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
 /******************************************************************************/
 

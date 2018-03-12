@@ -135,7 +135,11 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'getWhitelist':
-        response = µb.stringFromWhitelist(µb.netWhitelist);
+        response = {
+            whitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            reBadHostname: µb.reWhitelistBadHostname.source,
+            reHostnameExtractor: µb.reWhitelistHostnameExtractor.source
+        };
         break;
 
     case 'launchElementPicker':
@@ -983,10 +987,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
-        break;
-
-    case 'validateWhitelistString':
-        response = µb.validateWhitelistString(request.raw);
         break;
 
     case 'writeHiddenSettings':
