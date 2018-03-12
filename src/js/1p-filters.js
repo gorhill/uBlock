@@ -111,9 +111,7 @@ var handleImportFilePicker = function() {
 
     var fileReaderOnLoadHandler = function() {
         var sanitized = abpImporter(this.result);
-        var textarea = uDom('#userFilters');
-        textarea.val(textarea.val().trim() + '\n' + sanitized);
-        userFiltersChanged();
+        cmEditor.setValue(cmEditor.getValue().trim() + '\n' + sanitized);
     };
     var file = this.files[0];
     if ( file === undefined || file.name === '' ) {
@@ -141,10 +139,8 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 var exportUserFiltersToFile = function() {
-    var val = uDom('#userFilters').val().trim();
-    if ( val === '' ) {
-        return;
-    }
+    var val = cmEditor.getValue().trim();
+    if ( val === '' ) { return; }
     var filename = vAPI.i18n('1pExportFilename')
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
@@ -160,15 +156,16 @@ var applyChanges = function() {
     var onWritten = function(details) {
         if ( details.error ) { return; }
         cachedUserFilters = details.content.trim();
-        userFiltersChanged();
         allFiltersApplyHandler();
     };
-
-    var request = {
-        what: 'writeUserFilters',
-        content: cmEditor.getValue()
-    };
-    messaging.send('dashboard', request, onWritten);
+    messaging.send(
+        'dashboard',
+        {
+            what: 'writeUserFilters',
+            content: cmEditor.getValue()
+        },
+        onWritten
+    );
 };
 
 var revertChanges = function() {
@@ -177,7 +174,6 @@ var revertChanges = function() {
         content += '\n';
     }
     cmEditor.setValue(content);
-    userFiltersChanged();
 };
 
 /******************************************************************************/
@@ -187,15 +183,11 @@ var getCloudData = function() {
 };
 
 var setCloudData = function(data, append) {
-    if ( typeof data !== 'string' ) {
-        return;
-    }
-    var textarea = uDom.nodeFromId('userFilters');
+    if ( typeof data !== 'string' ) { return; }
     if ( append ) {
-        data = uBlockDashboard.mergeNewLines(textarea.value, data);
+        data = uBlockDashboard.mergeNewLines(cmEditor.getValue(), data);
     }
     cmEditor.setValue(data);
-    userFiltersChanged();
 };
 
 self.cloud.onPush = getCloudData;
