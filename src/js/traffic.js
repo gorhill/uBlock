@@ -1073,24 +1073,17 @@ var injectCSP = function(pageStore, details) {
 
     µb.updateBadgeAsync(tabId);
 
-    var csp,
-        headers = details.responseHeaders,
-        i = headerIndexFromName('content-security-policy', headers);
-    if ( i !== -1 ) {
-        csp = headers[i].value.trim();
-        headers.splice(i, 1);
-    }
-    cspSubsets = cspSubsets.join(', ');
-    // Use comma to add a new subset to potentially existing one(s). This new
-    // subset has its own reporting options and won't cause spurious CSP
-    // reports to outside world.
+    // Use comma to merge CSP directives.
     // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
-    headers.push({
+    //
+    // https://github.com/gorhill/uMatrix/issues/967
+    //   Inject a new CSP header rather than modify an existing one.
+    details.responseHeaders.push({
         name: 'Content-Security-Policy',
-        value: csp === undefined ? cspSubsets : csp + ', ' + cspSubsets
+        value: cspSubsets.join(', ')
     });
 
-    return { 'responseHeaders': headers };
+    return { 'responseHeaders': details.responseHeaders };
 };
 
 /******************************************************************************/
