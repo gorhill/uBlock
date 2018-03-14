@@ -549,11 +549,11 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ROU: Romanian Ad (ROad) Block List",
+		"title": "ROU: Romanian Ad (ROad) Block List Light",
 		"lang": "ro",
 		"contentURL": [
 			"https://road.adblock.ro/lista.txt",
-			"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters.txt"
+			"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters-light.txt"
 		],
 		"supportURL": "https://github.com/tcptomato/ROad-Block"
 	},
