@@ -1077,14 +1077,44 @@ var injectCSP = function(pageStore, details) {
     // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
     //
     // https://github.com/gorhill/uMatrix/issues/967
-    //   Inject a new CSP header rather than modify an existing one.
-    details.responseHeaders.push({
+    //   Inject a new CSP header rather than modify an existing one, except
+    //   if the current environment does not support merging headers:
+    //   Firefox 58/webext and less can't merge CSP headers, so we will merge
+    //   them here.
+    var headers = details.responseHeaders;
+
+    if ( cantMergeCSPHeaders ) {
+        var i = headerIndexFromName('content-security-policy', headers);
+        if ( i !== -1 ) {
+            cspSubsets.unshift(headers[i].value.trim());
+            headers.splice(i, 1);
+        }
+    }
+
+    headers.push({
         name: 'Content-Security-Policy',
         value: cspSubsets.join(', ')
     });
 
-    return { 'responseHeaders': details.responseHeaders };
+    return { 'responseHeaders': headers };
 };
+
+// https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
+//   This can be removed once Firefox 60 ESR is released.
+var cantMergeCSPHeaders = (function() {
+    if (
+        self.browser instanceof Object &&
+        typeof self.browser.runtime.getBrowserInfo === 'function'
+    ) {
+        self.browser.runtime.getBrowserInfo().then(function(info) {
+            cantMergeCSPHeaders =
+                info.vendor === 'Mozilla' &&
+                info.name === 'Firefox' &&
+                parseInt(info.version, 10) < 59;
+        });
+    }
+    return false;
+})();
 
 /******************************************************************************/
 
