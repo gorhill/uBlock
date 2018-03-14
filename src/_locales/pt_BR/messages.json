@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Clique para não bloquear as fontes remotas neste site",
+    "message": "Clique para não bloquear fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -144,7 +144,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Regras locais: esta coluna é para as regras que se aplicam somente ao site atual.\nRegras locais substituem regras globais.",
+    "message": "Regras locais: esta coluna é para regras que se aplicam somente ao site atual.\nRegras locais substituem regras globais.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -208,7 +208,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Pré-visualizar",
+    "message": "Visualizar",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Desativar dicas de balão",
+    "message": "Desativar dicas",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -260,7 +260,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Desativar pré-chamadas (para impedir qualquer conexão de solicitações de rede bloqueadas)",
+    "message": "Desativar serviço de previsão (para prevenir qualquer solicitação de redes bloqueadas)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "message": "<p>Os filtros cosméticos genéricos são filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
