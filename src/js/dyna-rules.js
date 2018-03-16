@@ -139,6 +139,13 @@ mergeView.options.revertChunk = function(
     from, fromStart, fromEnd,
     to, toStart, toEnd
 ) {
+    // https://github.com/gorhill/uBlock/issues/3611
+    if ( document.body.getAttribute('dir') === 'rtl' ) {
+        var tmp;
+        tmp = from; from = to; to = tmp;
+        tmp = fromStart; fromStart = toStart; toStart = tmp;
+        tmp = fromEnd; fromEnd = toEnd; toEnd = tmp;
+    }
     if ( typeof fromStart.ch !== 'number' ) { fromStart.ch = 0; }
     if ( fromEnd.ch !== 0 ) { fromEnd.line += 1; }
     var toAdd = from.getRange(
