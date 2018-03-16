@@ -35,7 +35,7 @@ var mergeView = new CodeMirror.MergeView(
     document.querySelector('.codeMirrorMergeContainer'),
     {
         allowEditingOriginals: true,
-        connect: 'align', // size of svg is not managed properly with `true`
+        connect: 'align',
         inputStyle: 'contenteditable',
         lineNumbers: true,
         lineWrapping: false,
