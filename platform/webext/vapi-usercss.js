@@ -90,7 +90,14 @@ vAPI.DOMFilterer.prototype = {
                 userStylesheet.add(
                     entry.selectors + '\n{' + entry.declarations + '}'
                 );
+
+            } 
+            // Adcheck
+            var nodes = document.querySelectorAll(entry.selectors + '');
+            for ( var node of nodes ) {
+               vAPI.adCheck && vAPI.adCheck(node);
             }
+
         }
 
         this.addedCSSRules.clear();
@@ -127,7 +134,7 @@ vAPI.DOMFilterer.prototype = {
           this.addedCSSRules.add(entry);
         }
 
-        // ADN adCheck
+         // ADN adCheck
         var nodes = document.querySelectorAll(selectorsStr);
         for ( var node of nodes ) {
             vAPI.adCheck && vAPI.adCheck(node);
@@ -184,7 +191,7 @@ vAPI.DOMFilterer.prototype = {
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         if ( this.hideNodeAttr === undefined ) { return; }
-
+        
         node.setAttribute(this.hideNodeAttr, '');
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;
