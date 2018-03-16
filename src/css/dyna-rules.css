@@ -107,5 +107,5 @@ body[dir="rtl"] #commitButton:before {
     }
 body[dir="rtl"] .CodeMirror-merge-pane-rightmost {
     right: unset;
-    left: 0px;
+    left: 0;
 }
