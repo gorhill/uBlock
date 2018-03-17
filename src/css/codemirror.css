@@ -62,7 +62,7 @@
     display: flex;
     }
 .cm-search-widget .cm-search-widget-button {
-    cursor: pointer;
+    cursor: default;
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
