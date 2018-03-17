@@ -36,7 +36,6 @@ var mergeView = new CodeMirror.MergeView(
     {
         allowEditingOriginals: true,
         connect: 'align',
-        inputStyle: 'contenteditable',
         lineNumbers: true,
         lineWrapping: false,
         origLeft: '',

@@ -36,7 +36,6 @@ var cmEditor = new CodeMirror(
     document.getElementById('userFilters'),
     {
         autofocus: true,
-        inputStyle: 'contenteditable',
         lineNumbers: true,
         lineWrapping: true,
         styleActiveLine: true
