@@ -42,9 +42,9 @@ vAPI.app.onShutdown = function() {
     µb.staticExtFilteringEngine.reset();
     µb.sessionFirewall.reset();
     µb.permanentFirewall.reset();
-    µb.permanentFirewall.reset();
     µb.sessionURLFiltering.reset();
     µb.permanentURLFiltering.reset();
+    µb.hnSwitches.reset();
 };
 
 /******************************************************************************/
