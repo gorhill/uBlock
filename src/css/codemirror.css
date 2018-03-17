@@ -27,6 +27,7 @@
 .cm-search-widget {
     align-items: center;
     background-color: #eee;
+    cursor: default;
     direction: ltr;
     display: flex;
     flex-shrink: 0;
@@ -60,9 +61,6 @@
     }
 .cm-search-widget[data-query] .cm-search-widget-count {
     display: flex;
-    }
-.cm-search-widget .cm-search-widget-button {
-    cursor: default;
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
