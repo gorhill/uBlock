@@ -87,6 +87,10 @@
     "message":"Enter element picker mode",
     "description":"English: Enter element picker mode"
   },
+  "popupTipOverview":{
+    "message":"Toggle overview panel",
+    "description":"Click to toggle the overview panel"
+  },
   "popupTipLog":{
     "message":"Open the logger",
     "description":"Tooltip used for the logger icon in the panel"
