@@ -182,8 +182,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
     var onLocalLoadSuccess = function(details) {
         if ( errored ) { return; }
 
-        var isSublist = details.url !== mainlistURL,
-            sublistURL;
+        var isSublist = details.url !== mainlistURL;
 
         pendingSublistURLs.delete(details.url);
         loadedSublistURLs.add(details.url);
@@ -194,27 +193,23 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
             parsedMainURL !== undefined &&
             parsedMainURL.pathname.length > 0
         ) {
-            var reInclude = /^!#include +(\S+)/gm,
-                match, subURL;
+            var reInclude = /^!#include +(\S+)/gm;
             for (;;) {
-                match = reInclude.exec(details.content);
+                var match = reInclude.exec(details.content);
                 if ( match === null ) { break; }
                 if ( toParsedURL(match[1]) !== undefined ) { continue; }
                 if ( match[1].indexOf('..') !== -1 ) { continue; }
-                subURL =
+                var subURL =
                     parsedMainURL.origin +
                     parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
+                if ( pendingSublistURLs.has(subURL) ) { continue; }
                 if ( loadedSublistURLs.has(subURL) ) { continue; }
                 pendingSublistURLs.add(subURL);
+                api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
             }
         }
 
-        if ( pendingSublistURLs.size !== 0 ) {
-            for ( sublistURL of pendingSublistURLs ) {
-                api.fetchText(sublistURL, onLocalLoadSuccess, onLocalLoadError);
-            }
-            return;
-        }
+        if ( pendingSublistURLs.size !== 0 ) { return; }
 
         details.url = mainlistURL;
         details.content = content.join('\n').trim();
