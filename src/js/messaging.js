@@ -990,8 +990,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'writeHiddenSettings':
-        µb.hiddenSettings = µb.hiddenSettingsFromString(request.content);
-        µb.saveHiddenSettings();
+        µb.changeHiddenSettings(µb.hiddenSettingsFromString(request.content));
         break;
 
     default:

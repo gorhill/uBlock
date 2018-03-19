@@ -484,6 +484,8 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     }
 
     warResolve();
+
+    this.modifyTime = Date.now();
 };
 
 /******************************************************************************/

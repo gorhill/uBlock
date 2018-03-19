@@ -379,6 +379,21 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
+// https://www.reddit.com/r/uBlockOrigin/comments/8524cf/my_custom_scriptlets_doesnt_work_what_am_i_doing/
+
+µBlock.changeHiddenSettings = function(hs) {
+    var mustReloadResources =
+        hs.userResourcesLocation !== this.hiddenSettings.userResourcesLocation;
+    this.hiddenSettings = hs;
+    this.saveHiddenSettings();
+    if ( mustReloadResources ) {
+        this.redirectEngine.invalidateResourcesSelfie();
+        this.loadRedirectResources();
+    }
+};
+
+/******************************************************************************/
+
 µBlock.elementPickerExec = function(tabId, targetElement, zap) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
