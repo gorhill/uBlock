@@ -284,15 +284,14 @@ var onFilterChanged = (function() {
     var process = function() {
         timer = undefined;
         if ( mergeView.editor().isClean(cleanEditToken) === false ) { return; }
+        var filter = uDom('#ruleFilter input').val();
+        if ( filter === last ) { return; }
+        last = filter;
         if ( overlay !== null ) {
             mergeView.leftOriginal().removeOverlay(overlay);
             mergeView.editor().removeOverlay(overlay);
             overlay = null;
         }
-        var filter = uDom('#ruleFilter input').val();
-        if ( filter === last ) { return; }
-        last = filter;
-        
         if ( filter !== '' ) {
             overlay = updateOverlay(filter);
             mergeView.leftOriginal().addOverlay(overlay);

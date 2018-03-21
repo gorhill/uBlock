@@ -37,6 +37,9 @@ body {
 #ruleFilter {
     text-align: center;
     }
+#ruleFilter .fa {
+    color: #888;
+    }
 body[dir="ltr"] #revertButton:after {
     content: '\2009\f061';
     font-family: FontAwesome;
