@@ -34,7 +34,7 @@ body {
     font-weight: normal;
     margin: 0.5em 0;
     }
-#diff .ruleFilter {
+#ruleFilter {
     text-align: center;
     }
 body[dir="ltr"] #revertButton:after {

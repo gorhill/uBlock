@@ -664,6 +664,7 @@
 
   function getChunks(diff) {
     var chunks = [];
+    if (!diff.length) return chunks;
     var startEdit = 0, startOrig = 0;
     var edit = Pos(0, 0), orig = Pos(0, 0);
     for (var i = 0; i < diff.length; ++i) {
