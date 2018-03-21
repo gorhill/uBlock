@@ -35,6 +35,7 @@ body {
     margin: 0.5em 0;
     }
 #ruleFilter {
+    direction: ltr;
     text-align: center;
     }
 #ruleFilter .fa {
