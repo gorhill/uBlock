@@ -490,7 +490,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
 /******************************************************************************/
 
-var resourcesSelfieVersion = 2;
+var resourcesSelfieVersion = 3;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     vAPI.cacheStorage.set({
