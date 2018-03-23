@@ -179,7 +179,7 @@ var renderRules = (function() {
 
 /******************************************************************************/
 
-var applyDiff = function(permanent, toAdd, toRemove, callback) {
+var applyDiff = function(permanent, toAdd, toRemove) {
     messaging.send(
         'dashboard',
         {
@@ -188,7 +188,7 @@ var applyDiff = function(permanent, toAdd, toRemove, callback) {
             toAdd: toAdd,
             toRemove: toRemove
         },
-        callback
+        renderRules
     );
 };
 
@@ -221,7 +221,7 @@ mergeView.options.revertChunk = function(
         { line: toStart.line, ch: 0 },
         { line: toEnd.line, ch: 0 }
     );
-    applyDiff(from === mv.editor(), toAdd, toRemove, renderRules);
+    applyDiff(from === mv.editor(), toAdd, toRemove);
 };
 
 /******************************************************************************/
@@ -238,7 +238,7 @@ function handleImportFilePicker() {
                                .replace(/\|/g, ' ')
                                .replace(/\n/g, ' * noop\n');
         }
-        applyDiff(false, result, '', renderRules);
+        applyDiff(false, result, '');
     };
     var file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
@@ -359,7 +359,7 @@ var revertAllHandler = function() {
         toAdd.push(addedLines.trim());
         toRemove.push(removedLines.trim());
     }
-    applyDiff(false, toAdd.join('\n'), toRemove.join('\n'), renderRules);
+    applyDiff(false, toAdd.join('\n'), toRemove.join('\n'));
 };
 
 /******************************************************************************/
@@ -380,7 +380,7 @@ var commitAllHandler = function() {
         toAdd.push(addedLines.trim());
         toRemove.push(removedLines.trim());
     }
-    applyDiff(true, toAdd.join('\n'), toRemove.join('\n'), renderRules);
+    applyDiff(true, toAdd.join('\n'), toRemove.join('\n'));
 };
 
 /******************************************************************************/
@@ -402,27 +402,23 @@ var editSaveHandler = function() {
             toRemove.push(diff[1]);
         }
     }
-    applyDiff(false, toAdd.join(''), toRemove.join(''), renderRules);
+    applyDiff(false, toAdd.join(''), toRemove.join(''));
 };
 
 /******************************************************************************/
 
-var getCloudData = function() {
+self.cloud.onPush = function() {
     return mergeView.leftOriginal().getValue().trim();
 };
 
-var setCloudData = function(data, append) {
+self.cloud.onPull = function(data, append) {
     if ( typeof data !== 'string' ) { return; }
     applyDiff(
         false,
         data,
-        append ? '' : mergeView.editor().getValue().trim(),
-        renderRules
+        append ? '' : mergeView.editor().getValue().trim()
     );
 };
-
-self.cloud.onPush = getCloudData;
-self.cloud.onPull = setCloudData;
 
 /******************************************************************************/
 
