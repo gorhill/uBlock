@@ -78,6 +78,8 @@ var cmEditor = new CodeMirror(
     }
 );
 
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
+
 /******************************************************************************/
 
 var whitelistChanged = function() {

@@ -112,6 +112,33 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 
 /******************************************************************************/
 
+self.uBlockDashboard.patchCodeMirrorEditor = (function() {
+    // https://github.com/gorhill/uBlock/issues/3646
+    var patchSelectAll = function(cm, details) {
+        var vp = cm.getViewport();
+        if ( details.ranges.length !== 1 ) { return; }
+        var range = details.ranges[0],
+            lineFrom = range.anchor.line,
+            lineTo = range.head.line;
+        if ( range.head.ch !== 0 ) { lineTo += 1; }
+        if ( lineFrom !== vp.from || lineTo !== vp.to ) { return; }
+        details.update([
+            {
+                anchor: { line: 0, ch: 0 },
+                head: { line: cm.lineCount(), ch: 0 }
+            }
+        ]);
+    };
+
+    return function(cm) {
+        if ( cm.options.inputStyle === 'contenteditable' ) {
+            cm.on('beforeSelectionChange', patchSelectAll);
+        }
+    };
+})();
+
+/******************************************************************************/
+
 // Open links in the proper window
 uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');

@@ -48,6 +48,8 @@ mergeView.editor().setOption('styleActiveLine', true);
 mergeView.editor().setOption('lineNumbers', false);
 mergeView.leftOriginal().setOption('readOnly', 'nocursor');
 
+uBlockDashboard.patchCodeMirrorEditor(mergeView.editor());
+
 var unfilteredRules = {
     orig: { doc: mergeView.leftOriginal(), rules: [] },
     edit: { doc: mergeView.editor(), rules: [] }
