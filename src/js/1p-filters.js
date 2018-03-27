@@ -36,6 +36,7 @@ var cmEditor = new CodeMirror(
     document.getElementById('userFilters'),
     {
         autofocus: true,
+        inputStyle: 'textarea',
         lineNumbers: true,
         lineWrapping: true,
         styleActiveLine: true

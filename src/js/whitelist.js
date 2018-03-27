@@ -72,6 +72,7 @@ var cmEditor = new CodeMirror(
     document.getElementById('whitelist'),
     {
         autofocus: true,
+        inputStyle: 'textarea',
         lineNumbers: true,
         lineWrapping: true,
         styleActiveLine: true
