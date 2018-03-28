@@ -29,6 +29,7 @@ body {
     text-align: center;
     vertical-align: top;
     width: 50%;
+    white-space: normal;
     }
 #diff .ruleActions h3 {
     font-weight: normal;

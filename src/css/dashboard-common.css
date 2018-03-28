@@ -90,3 +90,8 @@ input[type="checkbox"][disabled] + label {
     padding: 5px;
     background-color: #FEDAE0;
     }
+@media (max-height: 640px) {
+    .vverbose {
+        display: none !important;
+        }
+    }

@@ -113,6 +113,19 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 /******************************************************************************/
 
 self.uBlockDashboard.patchCodeMirrorEditor = (function() {
+    var grabFocusTimer;
+    var grabFocusTarget;
+    var grabFocus = function() {
+        grabFocusTarget.focus();
+        grabFocusTimer = grabFocusTarget = undefined;
+    };
+    var grabFocusAsync = function(cm) {
+        grabFocusTarget = cm;
+        if ( grabFocusTimer === undefined ) {
+            grabFocusTimer = vAPI.setTimeout(grabFocus, 1);
+        }
+    };
+
     // https://github.com/gorhill/uBlock/issues/3646
     var patchSelectAll = function(cm, details) {
         var vp = cm.getViewport();
@@ -128,12 +141,37 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
                 head: { line: cm.lineCount(), ch: 0 }
             }
         ]);
+        grabFocusAsync(cm);
+    };
+
+    var lastGutterClick = 0;
+    var lastGutterLine = 0;
+
+    var onGutterClicked = function(cm, line) {
+        var delta = Date.now() - lastGutterClick;
+        if ( delta >= 500 || line !== lastGutterLine ) {
+            cm.setSelection(
+                { line: line, ch: 0 },
+                { line: line + 1, ch: 0 }
+            );
+            lastGutterClick = Date.now();
+            lastGutterLine = line;
+        } else {
+            cm.setSelection(
+                { line: 0, ch: 0 },
+                { line: cm.lineCount(), ch: 0 },
+                { scroll: false }
+            );
+            lastGutterClick = 0;
+        }
+        grabFocusAsync(cm);
     };
 
     return function(cm) {
         if ( cm.options.inputStyle === 'contenteditable' ) {
             cm.on('beforeSelectionChange', patchSelectAll);
         }
+        cm.on('gutterClick', onGutterClicked);
     };
 })();
 

@@ -53,4 +53,5 @@
         }
     );
 
+    uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 })();
