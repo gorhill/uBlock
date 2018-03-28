@@ -327,6 +327,10 @@ var onTextChanged = (function() {
         }
         diff.classList.toggle('editing', isClean === false);
         diff.classList.toggle('dirty', mergeView.leftChunks().length !== 0);
+        document.getElementById('editSaveButton').classList.toggle(
+            'disabled',
+            isClean
+        );
         var input = document.querySelector('#ruleFilter input');
         if ( isClean ) {
             input.removeAttribute('disabled');

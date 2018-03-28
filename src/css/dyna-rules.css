@@ -1,11 +1,7 @@
 body {
-    bottom: 0;
     display: flex;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
     flex-direction: column;
+    overflow: hidden;
     }
 #diff {
     border: 0;
@@ -42,53 +38,16 @@ body {
 #ruleFilter .fa {
     color: #888;
     }
-body[dir="ltr"] #revertButton:after {
-    content: '\2009\f061';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="rtl"] #revertButton:after {
-    content: '\2009\f060';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="ltr"] #commitButton:before {
-    content: '\f060\2009';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="rtl"] #commitButton:before {
-    content: '\f061\2009';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
 #revertButton,
 #commitButton,
 #diff.editing #exportButton,
-#diff.editing #importButton,
-#editSaveButton {
+#diff.editing #importButton {
     opacity: 0.25;
     pointer-events: none;
     }
 #diff.dirty:not(.editing) #revertButton,
 #diff.dirty:not(.editing) #commitButton,
-#diff.editing #editSaveButton {
+#diff.editing {
     opacity: 1;
     pointer-events: auto;
     }

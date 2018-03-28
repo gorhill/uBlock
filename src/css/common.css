@@ -20,6 +20,10 @@ body {
     color: black;
     font: 14px sans-serif;
     }
+code {
+    background-color: #eee;
+    padding: 0 0.25em;
+    }
 textarea {
     font-size: 90%;
     }
@@ -35,8 +39,18 @@ button.custom {
     color: #000;
     opacity: 0.8;
     }
+button.custom:hover {
+    opacity: 1.0;
+    }
+button.custom.important {
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    background-color: hsl(36, 100%, 75%);
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    }
 button.custom.disabled,
-button.custom[disabled] {
+button.custom[disabled],
+button.custom.important.disabled,
+button.custom.important[disabled] {
     border-color: #ddd #ddd hsl(36, 0%, 85%);
     background-color: hsl(36, 0%, 72%);
     background-image: linear-gradient(#f2f2f2, #dddddd);
@@ -44,25 +58,25 @@ button.custom[disabled] {
     opacity: 0.6;
     pointer-events: none;
     }
-button.custom:hover {
-    opacity: 1.0;
+button.custom.iconifiable > .fa {
+    padding-right: 0.5em;
     }
-button.important {
-    padding: 0.6em 1em;
-    border: 1px solid transparent;
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
-    border-radius: 3px;
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
-    background-repeat: repeat-x;
-    color: #222;
-    opacity: 0.8;
+body[dir="rtl"] button.custom.iconifiable > .fa {
+    padding-left: 0.5em;
     }
-button.important:hover {
-    opacity: 1.0;
-    }
-.hiddenFileInput {
+.hidden {
+    display: none;
     height: 0;
     visibility: hidden;
     width: 0;
+    }
+
+@media (max-width: 640px) {
+    button.custom.iconifiable > .fa {
+        font-size: 150%;
+        padding: 0;
+        }
+    button.custom.iconifiable > [data-i18n] {
+        display: none;
+        }
     }

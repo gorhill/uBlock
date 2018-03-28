@@ -1,5 +1,15 @@
 body {
+    box-sizing: border-box;
+    left: 0;
+    height: 100vh;
     margin: 0;
+    overflow: auto;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+body > div.body {
     padding: 0 0.5em 0.5em 0.5em;
     }
 @media screen and (max-device-width: 960px) {
@@ -32,12 +42,6 @@ a.info.important {
     }
 button {
     padding: 0.33em;
-    }
-div > p:first-child {
-    margin-top: 0;
-    }
-div > p:last-child {
-    margin-bottom: 0;
     }
 input[type="number"] {
     width: 5em;

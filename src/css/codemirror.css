@@ -4,7 +4,6 @@
     position: relative;
     }
 .CodeMirror {
-    border: 1px solid #ddd;
     box-sizing: border-box;
     flex-grow: 1;
     height: 100%;
