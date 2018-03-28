@@ -133,6 +133,7 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
         var range = details.ranges[0],
             lineFrom = range.anchor.line,
             lineTo = range.head.line;
+        if ( lineTo === lineFrom ) { return; }
         if ( range.head.ch !== 0 ) { lineTo += 1; }
         if ( lineFrom !== vp.from || lineTo !== vp.to ) { return; }
         details.update([
