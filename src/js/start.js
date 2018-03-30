@@ -116,7 +116,7 @@ var onVersionReady = function(lastVersion) {
     // see ALL network requests.
     // Remove when everybody is beyond 1.15.19b8.
     if ( vAPI.firefox === undefined ) {
-        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D(\d+))?/.exec(lastVersion);
+        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D+(\d+))?/.exec(lastVersion);
         if ( match !== null ) {
             var v1 =
                 parseInt(match[1], 10) * 1000 * 1000 * 1000 +
