@@ -106,7 +106,6 @@ var µBlock = (function() { // jshint ignore:line
         netWhitelistModifyTime: 0,
         netWhitelistDefault: [
             'about-scheme',
-            'behind-the-scene',
             'chrome-extension-scheme',
             'chrome-scheme',
             'moz-extension-scheme',

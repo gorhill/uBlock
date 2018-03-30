@@ -103,9 +103,33 @@ var onPSLReady = function() {
 // To bring older versions up to date
 
 var onVersionReady = function(lastVersion) {
-    if ( lastVersion !== vAPI.app.version ) {
-        vAPI.storage.set({ version: vAPI.app.version });
+    if ( lastVersion === vAPI.app.version ) { return; }
+
+    // From 1.15.19b9 and above, the `behind-the-scene` scope is no longer
+    // whitelisted by default, and network requests from that scope will be
+    // subject to filtering by default.
+    //
+    // Following code is to remove the `behind-the-scene` scope when updating
+    // from a version older than 1.15.19b9.
+    // This will apply only to webext versions of uBO, as the following would
+    // certainly cause too much breakage in Firefox legacy given that uBO can
+    // see ALL network requests.
+    // Remove when everybody is beyond 1.15.19b8.
+    if ( vAPI.firefox === undefined ) {
+        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D(\d+))?/.exec(lastVersion);
+        if ( match !== null ) {
+            var v1 =
+                parseInt(match[1], 10) * 1000 * 1000 * 1000 +
+                parseInt(match[2], 10) * 1000 * 1000 +
+                parseInt(match[3], 10) * 1000 +
+                (match[4] ? parseInt(match[4], 10) : 0);
+            if ( v1 <= 1015019008 ) {
+                µb.toggleNetFilteringSwitch('http://behind-the-scene/', '', true);
+            }
+        }
     }
+
+    vAPI.storage.set({ version: vAPI.app.version });
 };
 
 /******************************************************************************/

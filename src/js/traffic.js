@@ -339,8 +339,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
         pageStore = µb.pageStoreFromTabId(details.tabId);
     if ( pageStore === null ) { return; }
 
-    var result = 0,
-        context = pageStore.createContextFromPage(),
+    var context = pageStore.createContextFromPage(),
         requestType = details.type,
         requestURL = details.url;
 
@@ -368,13 +367,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/3150
     //   Ability to globally block CSP reports MUST also apply to
     //   behind-the-scene network requests.
-    if (
-        details.tabId !== vAPI.noTabId ||
-        µb.userSettings.advancedUserEnabled ||
-        requestType === 'csp_report'
-    ) {
-        result = pageStore.filterRequest(context);
-    }
+
+    // 2018-03-30:
+    //   Filter all behind-the-scene network requests like any other network
+    //   requests. Hopefully this will not break stuff as it used to be the
+    //   case.
+
+    var result = pageStore.filterRequest(context);
 
     pageStore.journalAddRequest(context.requestHostname, result);
 
