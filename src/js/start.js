@@ -115,19 +115,38 @@ var onVersionReady = function(lastVersion) {
     // certainly cause too much breakage in Firefox legacy given that uBO can
     // see ALL network requests.
     // Remove when everybody is beyond 1.15.19b8.
-    if ( vAPI.firefox === undefined ) {
-        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D+(\d+))?/.exec(lastVersion);
-        if ( match !== null ) {
-            var v1 =
-                parseInt(match[1], 10) * 1000 * 1000 * 1000 +
-                parseInt(match[2], 10) * 1000 * 1000 +
-                parseInt(match[3], 10) * 1000 +
-                (match[4] ? parseInt(match[4], 10) : 0);
-            if ( v1 <= 1015019008 ) {
-                µb.toggleNetFilteringSwitch('http://behind-the-scene/', '', true);
-            }
+    (function patch1015019008(s) {
+        if ( vAPI.firefox !== undefined ) { return; }
+        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D+(\d+))?/.exec(s);
+        if ( match === null ) { return; }
+        var v =
+            parseInt(match[1], 10) * 1000 * 1000 * 1000 +
+            parseInt(match[2], 10) * 1000 * 1000 +
+            parseInt(match[3], 10) * 1000 +
+            (match[4] ? parseInt(match[4], 10) : 0);
+        if ( /rc\d+$/.test(s) ) { v += 100; }
+        if ( v > 1015019008 ) { return; }
+        if ( µb.getNetFilteringSwitch('http://behind-the-scene/') !== true ) {
+            return;
         }
-    }
+        var fwRules = [
+            'behind-the-scene * * noop',
+            'behind-the-scene * image noop',
+            'behind-the-scene * 3p noop',
+            'behind-the-scene * inline-script noop',
+            'behind-the-scene * 1p-script noop',
+            'behind-the-scene * 3p-script noop',
+            'behind-the-scene * 3p-frame noop'
+        ].join('\n');
+        µb.sessionFirewall.fromString(fwRules, true);
+        µb.permanentFirewall.fromString(fwRules, true);
+        µb.savePermanentFirewallRules();
+        µb.hnSwitches.fromString([
+            'behind-the-scene: no-large-media false'
+        ].join('\n'), true);
+        µb.saveHostnameSwitches();
+        µb.toggleNetFilteringSwitch('http://behind-the-scene/', '', true);
+    })(lastVersion);
 
     vAPI.storage.set({ version: vAPI.app.version });
 };
@@ -271,9 +290,19 @@ var fromFetch = function(to, fetched) {
 var onSelectedFilterListsLoaded = function() {
     var fetchableProps = {
         'compiledMagic': '',
-        'dynamicFilteringString': 'behind-the-scene * 3p noop\nbehind-the-scene * 3p-frame noop',
+        'dynamicFilteringString': [
+            'behind-the-scene * * noop',
+            'behind-the-scene * image noop',
+            'behind-the-scene * 3p noop',
+            'behind-the-scene * inline-script noop',
+            'behind-the-scene * 1p-script noop',
+            'behind-the-scene * 3p-script noop',
+            'behind-the-scene * 3p-frame noop'
+        ].join('\n'),
         'urlFilteringString': '',
-        'hostnameSwitchesString': '',
+        'hostnameSwitchesString': [
+            'behind-the-scene: no-large-media false'
+        ].join('\n'),
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
         'lastBackupFile': '',

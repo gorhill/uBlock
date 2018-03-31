@@ -277,9 +277,9 @@ HnSwitches.prototype.toString = function() {
 
 /******************************************************************************/
 
-HnSwitches.prototype.fromString = function(text) {
+HnSwitches.prototype.fromString = function(text, append) {
     var lineIter = new µBlock.LineIterator(text);
-    this.reset();
+    if ( append !== true ) { this.reset(); }
     while ( lineIter.eot() === false ) {
         this.addFromRuleParts(lineIter.next().trim().split(/\s+/));
     }
