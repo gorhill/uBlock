@@ -178,15 +178,13 @@ vAPI.net.registerListeners = function() {
                 bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
                 bufOut[iOut++] = (b2 << 6) & 0xC0 |  b3;
             }
-            if ( n < sizeIn ) {
+            if ( iIn !== sizeIn ) {
                 let b0 = dec[bufIn.charCodeAt(iIn++)];
                 let b1 = dec[bufIn.charCodeAt(iIn++)];
-                if ( (sizeIn & 3) === 2 ) {
+                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
+                if ( iIn !== sizeIn ) {
                     let b2 = dec[bufIn.charCodeAt(iIn++)];
-                    bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
                     bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
-                } else {
-                    bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
                 }
             }
             this.write(bufOut);
