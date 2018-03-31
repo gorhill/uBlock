@@ -411,9 +411,7 @@ var renderPopup = function() {
     elem.classList.toggle('advancedUser', popupData.advancedUserEnabled);
     elem.classList.toggle(
         'off',
-        popupData.pageURL === '' ||
-        !popupData.netFilteringSwitch ||
-        popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled
+        popupData.pageURL === '' || !popupData.netFilteringSwitch
     );
 
     // If you think the `=== true` is pointless, you are mistaken
@@ -649,12 +647,6 @@ messaging.addChannelListener('popup', onPopupMessage);
 
 var toggleNetFilteringSwitch = function(ev) {
     if ( !popupData || !popupData.pageURL ) { return; }
-    if (
-        popupData.pageHostname === 'behind-the-scene' &&
-        !popupData.advancedUserEnabled
-    ) {
-        return;
-    }
     messaging.send(
         'popupPanel',
         {
