@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "advancedSettingsPageName": {
-    "message": "Advanced settings",
+    "message": "प्रगत सेटिंग्ज",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "Ctrl क्लिक करा फक्त या साइटवर म्यूब्लॉक बंद करण्यासाठी.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "Ctrl क्लिक करा फक्त या साइटवर म्यूब्लॉक चालू करण्यासाठी.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -164,11 +164,11 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "तृतीय पक्ष",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party css\/images",
+    "message": "तृतीय पक्षी css\/चित्रे",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -256,7 +256,7 @@
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "advanced settings",
+    "message": "प्रगत सेटिंग्ज",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -304,7 +304,7 @@
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Last backup:",
+    "message": "अंतिम बॅकअप:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "चिडवणाऱ्या गोष्टी",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -428,7 +428,7 @@
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "मागे जा",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {

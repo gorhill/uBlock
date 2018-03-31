@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Stäng av kosmetisk filtrering",
+    "message": "Inaktivera kosmetisk filtrering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {

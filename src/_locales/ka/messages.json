@@ -84,7 +84,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "პიპეტის გამოყენება",
+    "message": "ელემენტის შერჩევა",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
