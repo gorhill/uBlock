@@ -126,9 +126,7 @@ var onVersionReady = function(lastVersion) {
             (match[4] ? parseInt(match[4], 10) : 0);
         if ( /rc\d+$/.test(s) ) { v += 100; }
         if ( v > 1015019008 ) { return; }
-        if ( µb.getNetFilteringSwitch('http://behind-the-scene/') !== true ) {
-            return;
-        }
+        if ( µb.getNetFilteringSwitch('http://behind-the-scene/') ) { return; }
         var fwRules = [
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
@@ -142,7 +140,7 @@ var onVersionReady = function(lastVersion) {
         µb.permanentFirewall.fromString(fwRules, true);
         µb.savePermanentFirewallRules();
         µb.hnSwitches.fromString([
-            'behind-the-scene: no-large-media false'
+            'no-large-media: behind-the-scene false'
         ].join('\n'), true);
         µb.saveHostnameSwitches();
         µb.toggleNetFilteringSwitch('http://behind-the-scene/', '', true);
@@ -301,7 +299,7 @@ var onSelectedFilterListsLoaded = function() {
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
-            'behind-the-scene: no-large-media false'
+            'no-large-media: behind-the-scene false'
         ].join('\n'),
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
