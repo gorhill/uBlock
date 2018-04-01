@@ -136,7 +136,7 @@ vAPI.net.registerListeners = function() {
     };
 
     // This is to work around Firefox's inability to redirect xmlhttprequest
-    // to data: URI.
+    // requests to data: URIs.
     let pseudoRedirector = {
         filters: new Map(),
         reDataURI: /^data:\w+\/\w+;base64,/,
@@ -147,9 +147,9 @@ vAPI.net.registerListeners = function() {
             for ( let i = 0, n = s.length; i < n; i++ ) {
                 this.dec[s.charCodeAt(i)] = i;
             }
+            return this.dec;
         },
         start: function(requestId, redirectUrl) {
-            if ( this.dec === null ) { this.init(); }
             let match = this.reDataURI.exec(redirectUrl);
             if ( match === null ) { return redirectUrl; }
             let s = redirectUrl.slice(match[0].length).replace(/=*$/, '');
@@ -162,7 +162,7 @@ vAPI.net.registerListeners = function() {
             let pr = pseudoRedirector;
             let bufIn = pr.filters.get(this);
             if ( bufIn === undefined ) { return pr.disconnect(this); }
-            let dec = pr.dec;
+            let dec = pr.dec || pr.init();
             let sizeIn = bufIn.length;
             let iIn = 0;
             let sizeOut = sizeIn * 6 >>> 3;
