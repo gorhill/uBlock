@@ -911,7 +911,7 @@ var filterDocument = (function() {
             selectors: undefined,
             scriptlets: undefined,
             buffer: null,
-            mime: undefined,
+            mime: 'text/html',
             charset: undefined
         };
 
