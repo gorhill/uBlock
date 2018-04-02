@@ -339,20 +339,25 @@ var onBeforeBehindTheSceneRequest = function(details) {
         pageStore = µb.pageStoreFromTabId(details.tabId);
     if ( pageStore === null ) { return; }
 
-    var context = pageStore.createContextFromPage(),
+    var µburi = µb.URI,
+        context = pageStore.createContextFromPage(),
         requestType = details.type,
         requestURL = details.url;
 
     context.requestURL = requestURL;
-    context.requestHostname = µb.URI.hostnameFromURI(requestURL);
+    context.requestHostname = µburi.hostnameFromURI(requestURL);
     context.requestType = requestType;
 
+    var normalURL;
     if ( details.tabId === vAPI.anyTabId && context.pageHostname === '' ) {
-        context.pageHostname = µb.URI.hostnameFromURI(details.documentUrl);
-        context.pageDomain = µb.URI.domainFromHostname(context.pageHostname);
+        normalURL = µb.normalizePageURL(0, details.documentUrl);
+        context.pageHostname = µburi.hostnameFromURI(normalURL);
+        context.pageDomain = µburi.domainFromHostname(context.pageHostname);
         context.rootHostname = context.pageHostname;
         context.rootDomain = context.pageDomain;
     }
+
+    pageStore.logData = undefined;
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
     //   Do not filter behind-the-scene network request of type `beacon`: there
@@ -373,7 +378,28 @@ var onBeforeBehindTheSceneRequest = function(details) {
     //   requests. Hopefully this will not break stuff as it used to be the
     //   case.
 
-    var result = pageStore.filterRequest(context);
+    var result = 0;
+
+    if (
+        µburi.isNetworkURI(details.documentUrl) ||
+        µb.userSettings.advancedUserEnabled ||
+        requestType === 'csp_report'
+    ) {
+        result = pageStore.filterRequest(context);
+
+        // The "any-tab" scope is not whitelist-able, and in such case we must
+        // use the origin URL as the scope. Most such requests aren't going to
+        // be blocked, so we further test for whitelisting and modify the
+        // result only when the request is being blocked.
+        if (
+            result === 1 &&
+            normalURL !== undefined &&
+            µb.getNetFilteringSwitch(normalURL) === false
+        ) {
+            result = 2;
+            pageStore.logData = { engine: 'u', result: 2, raw: 'whitelisted' };
+        }
+    }
 
     pageStore.journalAddRequest(context.requestHostname, result);
 
