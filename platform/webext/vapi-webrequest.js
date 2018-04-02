@@ -200,18 +200,7 @@ vAPI.net.registerListeners = function() {
     let onBeforeRequestClient = this.onBeforeRequest.callback;
     let onBeforeRequest = function(details) {
         normalizeRequestDetails(details);
-        let r = onBeforeRequestClient(details);
-        if (
-            r !== undefined &&
-            r.redirectUrl !== undefined &&
-            details.type === 'xmlhttprequest'
-        ) {
-            r.redirectUrl = pseudoRedirector.start(
-                details.requestId,
-                r.redirectUrl
-            );
-        }
-        return r;
+        return onBeforeRequestClient(details);
     };
 
     if ( onBeforeRequest ) {
