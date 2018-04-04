@@ -33,25 +33,9 @@
 var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
-vAPI.chrome = true;
-vAPI.chromiumVersion = (function(){
-    var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
-    return matches !== null ? parseInt(matches[1], 10) : NaN;
-    })();
-
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
-
-vAPI.webextFlavor = '';
-if (
-    self.browser instanceof Object &&
-    typeof self.browser.runtime.getBrowserInfo === 'function'
-) {
-    self.browser.runtime.getBrowserInfo().then(function(info) {
-        vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
-    });
-}
 
 // https://issues.adblockplus.org/ticket/5695
 // - Good idea, adopted: cleaner way to detect user-stylesheet support.
@@ -1147,26 +1131,31 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192;
+    // https://github.com/gorhill/uBlock/issues/3006
+    //  For Firefox, we will use a lower ratio to allow for more overhead for
+    //  the infrastructure. Unfortunately this leads to less usable space for
+    //  actual data, but all of this is provided for free by browser vendors,
+    //  so we need to accept and deal with these limitations.
+    var evalMaxChunkSize = function() {
+        return Math.floor(
+            (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
+            (vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75)
+        );
+    };
+
+    var maxChunkSize = evalMaxChunkSize();
+
+    // The real actual webextFlavor value may not be set in stone, so listen
+    // for possible future changes.
+    window.addEventListener('webextFlavor', function() {
+        maxChunkSize = evalMaxChunkSize();
+    }, { once: true });
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     // Firefox:
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
     // > You can store up to 100KB of data using this API/
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
-
-    // Flavor-specific handling needs to be done here. Reason: to allow time
-    // for vAPI.webextFlavor to be properly set.
-    // https://github.com/gorhill/uBlock/issues/3006
-    //  For Firefox, we will use a lower ratio to allow for more overhead for
-    //  the infrastructure. Unfortunately this leads to less usable space for
-    //  actual data, but all of this is provided for free by browser vendors,
-    //  so we need to accept and deal with these limitations.
-    var initialize = function() {
-        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75;
-        maxChunkSize = Math.floor(maxChunkSize * ratio);
-        initialize = function(){};
-    };
 
     var options = {
         defaultDeviceName: window.navigator.platform,
@@ -1226,7 +1215,6 @@ vAPI.cloud = (function() {
     };
 
     var push = function(dataKey, data, callback) {
-        initialize();
 
         var bin = {
             'source': options.deviceName || options.defaultDeviceName,
@@ -1271,7 +1259,6 @@ vAPI.cloud = (function() {
     };
 
     var pull = function(dataKey, callback) {
-        initialize();
 
         var assembleChunks = function(bin) {
             if ( chrome.runtime.lastError ) {

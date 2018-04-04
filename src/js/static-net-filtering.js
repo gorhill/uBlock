@@ -1605,7 +1605,7 @@ FilterParser.prototype.translate = function() {
         this.dataStr = "connect-src https: http:";
         // https://bugs.chromium.org/p/chromium/issues/detail?id=669086
         // TODO: remove when most users are beyond Chromium v56
-        if ( vAPI.chromiumVersion < 57 ) {
+        if ( /-Chromium-(?:4|5[0-6])/.test(vAPI.webextFlavor) ) {
             this.dataStr += '; frame-src *';
         }
         return;

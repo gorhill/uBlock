@@ -43,20 +43,17 @@ vAPI.net.registerListeners = function() {
     // https://github.com/gorhill/uBlock/issues/2950
     // Firefox 55 does not normalize URLs to ASCII, uBO must do this itself.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
-    let mustPunycode = false;
-    (function() {
-        if ( 
-            typeof browser === 'object' &&
-            browser !== null &&
-            browser.runtime instanceof Object &&
-            typeof browser.runtime.getBrowserInfo === 'function'
-        ) {
-            browser.runtime.getBrowserInfo().then(info => {
-                mustPunycode = info.name === 'Firefox' &&
-                               /^5[0-6]\./.test(info.version);
-            });
-        }
-    })();
+    let evalMustPunycode = function() {
+        return /^Mozilla-Firefox-5[0-6]/.test(vAPI.webextFlavor);
+    };
+
+    let mustPunycode = evalMustPunycode();
+
+    // The real actual webextFlavor value may not be set in stone, so listen
+    // for possible future changes.
+    window.addEventListener('webextFlavor', function() {
+        mustPunycode = evalMustPunycode();
+    }, { once: true });
 
     let wrApi = browser.webRequest;
 

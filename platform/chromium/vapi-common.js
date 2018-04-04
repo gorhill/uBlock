@@ -36,6 +36,50 @@ vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 /******************************************************************************/
 
+vAPI.webextFlavor = (function() {
+    var ua = navigator.userAgent,
+        match, reEx;
+    var dispatch = function() {
+        window.dispatchEvent(new CustomEvent('webextFlavor'));
+    };
+
+    // Order of tests is important!
+
+    // Asynchronous
+    if (
+        self.browser instanceof Object &&
+        typeof self.browser.runtime.getBrowserInfo === 'function'
+    ) {
+        self.browser.runtime.getBrowserInfo().then(function(info) {
+            vAPI.webextFlavor =
+                info.vendor + '-' + info.name + '-' + info.version;
+            dispatch();
+        });
+        match = /Firefox\/([\d.]+)/.exec(ua);
+        return match !== null ? 'Mozilla-Firefox-' + match[1] : '';
+    }
+
+    // Synchronous
+    /* Don't starve potential listeners: */ vAPI.setTimeout(dispatch, 97);
+    match = /OPR\/([\d.]+)/.exec(ua);
+    if ( match !== null ) {
+        reEx = /Chrom(?:e|ium)\/([\d.]+)/;
+        if ( reEx.test(ua) ) { match = reEx.exec(ua); }
+        return 'Opera-Chromium-' + match[1];
+    }
+    match = /Chromium\/([\d.]+)/.exec(ua);
+    if ( match !== null ) {
+        return 'Chromium-Chromium-' + match[1];
+    }
+    match = /Chrome\/([\d.]+)/.exec(ua);
+    if ( match !== null ) {
+        return 'Google-Chromium-' + match[1];
+    }
+    return '';
+})();
+
+/******************************************************************************/
+
 // http://www.w3.org/International/questions/qa-scripts#directions
 
 var setScriptDirection = function(language) {
@@ -77,10 +121,7 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 //   `window.open('', '_self').close()`. 
 
 vAPI.closePopup = function() {
-    if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
-    ) {
+    if ( /^Mozilla-Firefox-/.test(vAPI.webextFlavor) ) {
         window.close();
         return;
     }
