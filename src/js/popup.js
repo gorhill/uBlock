@@ -61,12 +61,11 @@ if (
 // The padlock/eraser must be manually positioned:
 // - Its vertical position depends on the height of the popup title bar
 // - Its horizontal position depends on whether there is a vertical scrollbar.
-document.getElementById('rulesetTools').style.setProperty(
-    'top',
-    (document.getElementById('appinfo').getBoundingClientRect().bottom + 3) + 'px'
-);
-
 var positionRulesetTools = function() {
+    document.getElementById('rulesetTools').style.setProperty(
+        'top',
+        (document.getElementById('appinfo').getBoundingClientRect().bottom + 3) + 'px'
+    );
     document.getElementById('rulesetTools').style.setProperty(
         'left',
         (document.getElementById('firewallContainer').getBoundingClientRect().left + 3) + 'px'
@@ -317,12 +316,11 @@ var updateAllFirewallCells = function() {
         );
     }
 
-    positionRulesetTools();
-
-    uDom.nodeFromId('firewallContainer').classList.toggle(
-        'dirty',
-        popupData.matrixIsDirty === true
-    );
+    var dirty = popupData.matrixIsDirty === true;
+    if ( dirty ) {
+        positionRulesetTools();
+    }
+    uDom.nodeFromId('firewallContainer').classList.toggle('dirty', dirty);
 };
 
 /******************************************************************************/
