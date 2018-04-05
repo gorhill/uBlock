@@ -733,7 +733,7 @@
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
     if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        matches = head.match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+        matches = head.match(/(?:^|\n)(?:!|#)\s*Title:([^\n]+)/i);
         if ( matches !== null ) {
             // https://bugs.chromium.org/p/v8/issues/detail?id=2869
             // JSON.stringify/JSON.parse is to work around String.slice()
@@ -743,7 +743,7 @@
         }
     }
     // Extract update frequency information
-    matches = head.match(/(?:^|\n)![\t ]*Expires:[\t ]*([\d]+)[\t ]*days?/i);
+    matches = head.match(/(?:^|\n)(?:!|#)[\t ]*Expires:[\t ]*(\d+)[\t ]*day/i);
     if ( matches !== null ) {
         v = Math.max(parseInt(matches[1], 10), 1);
         if ( v !== listEntry.updateAfter ) {
