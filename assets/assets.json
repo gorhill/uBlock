@@ -188,13 +188,6 @@
 		],
 		"supportURL": "https://www.malwaredomains.com/"
 	},
-	"disconnect-malware": {
-		"content": "filters",
-		"group": "malware",
-		"off": true,
-		"title": "Malware filter list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt"
-	},
 	"spam404-0": {
 		"content": "filters",
 		"group": "malware",
