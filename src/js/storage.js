@@ -778,15 +778,13 @@
         reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
         line, c, pos,
-        lineIter = new this.LineIterator(rawText);
+        lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next().trim();
-
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
         // following parsing code.
-
+        line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
 
         // Strip comments
@@ -848,6 +846,61 @@
         skipCosmetic: !firstparty && !this.userSettings.parseAllABPHideFilters
     });
 };
+
+/******************************************************************************/
+
+// https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
+
+µBlock.processDirectives = function(content) {
+    var reIf = /^!#(if|endif)\b([^\n]*)/gm,
+        parts = [],
+        beg = 0, depth = 0, discard = false;
+    while ( beg < content.length ) {
+        var match = reIf.exec(content);
+        if ( match === null ) { break; }
+        if ( match[1] === 'if' ) {
+            var expr = match[2].trim();
+            var target = expr.startsWith('!');
+            if ( target ) { expr = expr.slice(1); }
+            var token = this.processDirectives.tokens.get(expr);
+            if (
+                depth === 0 &&
+                discard === false &&
+                token !== undefined &&
+                vAPI.webextFlavor.soup.has(token) === target
+            ) {
+                parts.push(content.slice(beg, match.index));
+                discard = true;
+            }
+            depth += 1;
+            continue;
+        }
+        depth -= 1;
+        if ( depth < 0 ) { break; }
+        if ( depth === 0 && discard ) {
+            beg = match.index + match[0].length + 1;
+            discard = false;
+        }
+    }
+    if ( depth === 0 && parts.length !== 0 ) {
+        parts.push(content.slice(beg));
+        content = parts.join('\n');
+    }
+    return content.trim();
+};
+
+µBlock.processDirectives.tokens = new Map([
+    [ 'ext_chromium', 'chromium' ],
+    [ 'ext_edge', 'edge' ],
+    [ 'ext_firefox', 'firefox' ],
+    [ 'ext_mobile', 'mobile' ],
+    [ 'ext_safari', 'safari' ],
+    [ 'adguard_ext_chromium', 'chromium' ],
+    [ 'adguard_ext_edge', 'edge' ],
+    [ 'adguard_ext_firefox', 'firefox' ],
+    [ 'adguard_ext_mobile', 'mobile' ],
+    [ 'adguard_ext_safari', 'safari' ],
+]);
 
 /******************************************************************************/
 

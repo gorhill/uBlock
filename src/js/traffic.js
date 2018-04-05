@@ -1127,7 +1127,8 @@ var injectCSP = function(pageStore, details) {
 // https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
 //   This can be removed once Firefox 60 ESR is released.
 var evalCantMergeCSPHeaders = function() {
-    return /^Mozilla-Firefox-5[2-8]/.test(vAPI.webextFlavor);
+    return vAPI.webextFlavor.soup.has('firefox') &&
+           vAPI.webextFlavor.major < 59;
 };
 
 var cantMergeCSPHeaders = evalCantMergeCSPHeaders();

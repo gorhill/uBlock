@@ -499,7 +499,10 @@ vAPI.tabs.open = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
     // - Do not try to lookup uBO's own pages with FF 55 or less.
-    if ( /^Mozilla-Firefox-5[2-5]\./.test(vAPI.webextFlavor) ) {
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        vAPI.webextFlavor.major < 56
+    ) {
         wrapper();
         return;
     }
@@ -1139,7 +1142,7 @@ vAPI.cloud = (function() {
     var evalMaxChunkSize = function() {
         return Math.floor(
             (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
-            (vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75)
+            (vAPI.webextFlavor.soup.has('firefox') ? 0.6 : 0.75)
         );
     };
 
@@ -1247,7 +1250,7 @@ vAPI.cloud = (function() {
                 //   until such cases are reported for other browsers, we will
                 //   reset the (now corrupted) content of the cloud storage
                 //   only on Firefox.
-                if ( vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ) {
+                if ( vAPI.webextFlavor.soup.has('firefox') ) {
                     chunkCount = 0;
                 }
             }

@@ -109,7 +109,7 @@ var onVersionReady = function(lastVersion) {
     // new version is detected, as resources.txt may have changed since last
     // release. This will be done only for release versions of Firefox.
     if (
-        /^Mozilla-Firefox-/.test(vAPI.webextFlavor) &&
+        vAPI.webextFlavor.soup.has('firefox') &&
         /(b|rc)\d+$/.test(vAPI.app.version) === false
     ) {
         µb.redirectEngine.invalidateResourcesSelfie();

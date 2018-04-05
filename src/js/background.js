@@ -26,6 +26,14 @@
 
 /******************************************************************************/
 
+// Not all platforms may have properly declared vAPI.webextFlavor.
+
+if ( vAPI.webextFlavor === undefined ) {
+    vAPI.webextFlavor = { major: 0, soup: new Set() };
+}
+
+/******************************************************************************/
+
 var µBlock = (function() { // jshint ignore:line
 
     var oneSecond = 1000,
@@ -111,6 +119,7 @@ var µBlock = (function() { // jshint ignore:line
             'moz-extension-scheme',
             'opera-scheme',
             'vivaldi-scheme',
+            'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
             ''
         ].join('\n'),
 

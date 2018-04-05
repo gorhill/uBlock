@@ -41,10 +41,11 @@ vAPI.net = {
 vAPI.net.registerListeners = function() {
 
     // https://github.com/gorhill/uBlock/issues/2950
-    // Firefox 55 does not normalize URLs to ASCII, uBO must do this itself.
+    // Firefox 56 does not normalize URLs to ASCII, uBO must do this itself.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
     let evalMustPunycode = function() {
-        return /^Mozilla-Firefox-5[0-6]/.test(vAPI.webextFlavor);
+        return vAPI.webextFlavor.soup.has('firefox') &&
+               vAPI.webextFlavor.major < 57;
     };
 
     let mustPunycode = evalMustPunycode();

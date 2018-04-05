@@ -177,7 +177,24 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         pendingSublistURLs = new Set([ mainlistURL ]),
         loadedSublistURLs = new Set(),
         toParsedURL = api.fetchFilterList.toParsedURL,
-        parsedMainURL = toParsedURL(mainlistURL);
+        parsedURL = toParsedURL(mainlistURL);
+
+    var processIncludeDirectives = function(details) {
+        var reInclude = /^!#include +(\S+)/gm;
+        for (;;) {
+            var match = reInclude.exec(details.content);
+            if ( match === null ) { break; }
+            if ( toParsedURL(match[1]) !== undefined ) { continue; }
+            if ( match[1].indexOf('..') !== -1 ) { continue; }
+            var subURL =
+                parsedURL.origin +
+                parsedURL.pathname.replace(/[^/]+$/, match[1]);
+            if ( pendingSublistURLs.has(subURL) ) { continue; }
+            if ( loadedSublistURLs.has(subURL) ) { continue; }
+            pendingSublistURLs.add(subURL);
+            api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
+        }
+    };
 
     var onLocalLoadSuccess = function(details) {
         if ( errored ) { return; }
@@ -189,24 +206,8 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
         content.push(details.content.trim());
         if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
-        if (
-            parsedMainURL !== undefined &&
-            parsedMainURL.pathname.length > 0
-        ) {
-            var reInclude = /^!#include +(\S+)/gm;
-            for (;;) {
-                var match = reInclude.exec(details.content);
-                if ( match === null ) { break; }
-                if ( toParsedURL(match[1]) !== undefined ) { continue; }
-                if ( match[1].indexOf('..') !== -1 ) { continue; }
-                var subURL =
-                    parsedMainURL.origin +
-                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
-                if ( pendingSublistURLs.has(subURL) ) { continue; }
-                if ( loadedSublistURLs.has(subURL) ) { continue; }
-                pendingSublistURLs.add(subURL);
-                api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
-            }
+        if ( parsedURL !== undefined && parsedURL.pathname.length > 0 ) {
+            processIncludeDirectives(details);
         }
 
         if ( pendingSublistURLs.size !== 0 ) { return; }
@@ -912,7 +913,7 @@ var updateFirst = function() {
             typeof browser === 'object' &&
             browser.runtime.getManifest();
         noRemoteResources =
-            /^Mozilla-Firefox-/.test(vAPI.webextFlavor) &&
+            vAPI.webextFlavor.soup.has('firefox') &&
             manifest instanceof Object &&
             manifest.applications instanceof Object &&
             manifest.applications.gecko instanceof Object &&

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,14 +36,24 @@ vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 /******************************************************************************/
 
-vAPI.webextFlavor = (function() {
+vAPI.webextFlavor = {
+    major: 0,
+    soup: new Set()
+};
+
+(function() {
     var ua = navigator.userAgent,
-        match, reEx;
+        match, reEx,
+        flavor = vAPI.webextFlavor;
     var dispatch = function() {
         window.dispatchEvent(new CustomEvent('webextFlavor'));
     };
 
     // Order of tests is important!
+
+    if ( /\bMobile\b/.test(ua) ) {
+        flavor.soup.add('mobile');
+    }
 
     // Asynchronous
     if (
@@ -51,31 +61,42 @@ vAPI.webextFlavor = (function() {
         typeof self.browser.runtime.getBrowserInfo === 'function'
     ) {
         self.browser.runtime.getBrowserInfo().then(function(info) {
-            vAPI.webextFlavor =
-                info.vendor + '-' + info.name + '-' + info.version;
+            flavor.major = parseInt(info.version, 10) || 0;
+            flavor.soup.add(info.vendor.toLowerCase())
+                       .add(info.name.toLowerCase());
             dispatch();
         });
         match = /Firefox\/([\d.]+)/.exec(ua);
-        return match !== null ? 'Mozilla-Firefox-' + match[1] : '';
+        if ( match !== null ) {
+            flavor.major = parseInt(match[1], 10) || 0;
+            flavor.soup.add('mozilla').add('firefox');
+        }
+        return;
     }
 
     // Synchronous
     /* Don't starve potential listeners: */ vAPI.setTimeout(dispatch, 97);
+
     match = /OPR\/([\d.]+)/.exec(ua);
     if ( match !== null ) {
         reEx = /Chrom(?:e|ium)\/([\d.]+)/;
         if ( reEx.test(ua) ) { match = reEx.exec(ua); }
-        return 'Opera-Chromium-' + match[1];
+        flavor.major = parseInt(match[1], 10) || 0;
+        flavor.soup.add('opera').add('chromium');
+        return;
     }
     match = /Chromium\/([\d.]+)/.exec(ua);
     if ( match !== null ) {
-        return 'Chromium-Chromium-' + match[1];
+        flavor.major = parseInt(match[1], 10) || 0;
+        flavor.soup.add('chromium');
+        return;
     }
     match = /Chrome\/([\d.]+)/.exec(ua);
     if ( match !== null ) {
-        return 'Google-Chromium-' + match[1];
+        flavor.major = parseInt(match[1], 10) || 0;
+        flavor.soup.add('google').add('chromium');
+        return;
     }
-    return '';
 })();
 
 /******************************************************************************/
@@ -121,7 +142,7 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 //   `window.open('', '_self').close()`. 
 
 vAPI.closePopup = function() {
-    if ( /^Mozilla-Firefox-/.test(vAPI.webextFlavor) ) {
+    if ( vAPI.webextFlavor.soup.has('firefox') ) {
         window.close();
         return;
     }
