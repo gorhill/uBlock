@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -299,6 +299,10 @@ URI.domainFromHostname = function(hostname) {
     return domainCacheAdd(hostname, hostname);
 };
 
+URI.domainFromHostnameNoCache = function(hostname) {
+    return reIPAddressNaive.test(hostname) ? hostname : psl.getDomain(hostname);
+};
+
 URI.domain = function() {
     return this.domainFromHostname(this.hostname);
 };
@@ -328,11 +332,11 @@ URI.pathFromURI = function(uri) {
 // specific set of hostnames within a narrow time span -- in other words, I
 // believe probability of cache hit are high in uBlock.
 
-var domainCache = Object.create(null);
-var domainCacheCount = 0;
-var domainCacheCountLowWaterMark = 35;
-var domainCacheCountHighWaterMark = 50;
-var domainCacheEntryJunkyardMax = domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
+var domainCache = new Map();
+var domainCacheCountLowWaterMark = 40;
+var domainCacheCountHighWaterMark = 60;
+var domainCacheEntryJunkyardMax =
+    domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
 
 var DomainCacheEntry = function(domain) {
     this.init(domain);
@@ -352,23 +356,20 @@ DomainCacheEntry.prototype.dispose = function() {
 };
 
 var domainCacheEntryFactory = function(domain) {
-    var entry = domainCacheEntryJunkyard.pop();
-    if ( entry ) {
-        return entry.init(domain);
-    }
-    return new DomainCacheEntry(domain);
+    return domainCacheEntryJunkyard.length !== 0 ?
+        domainCacheEntryJunkyard.pop().init(domain) :
+        new DomainCacheEntry(domain);
 };
 
 var domainCacheEntryJunkyard = [];
 
 var domainCacheAdd = function(hostname, domain) {
-    var entry = domainCache[hostname];
+    var entry = domainCache.get(hostname);
     if ( entry !== undefined ) {
         entry.tstamp = Date.now();
     } else {
-        domainCache[hostname] = domainCacheEntryFactory(domain);
-        domainCacheCount += 1;
-        if ( domainCacheCount === domainCacheCountHighWaterMark ) {
+        domainCache.set(hostname, domainCacheEntryFactory(domain));
+        if ( domainCache.size === domainCacheCountHighWaterMark ) {
             domainCachePrune();
         }
     }
@@ -376,29 +377,24 @@ var domainCacheAdd = function(hostname, domain) {
 };
 
 var domainCacheEntrySort = function(a, b) {
-    return domainCache[b].tstamp - domainCache[a].tstamp;
+    return domainCache.get(b).tstamp - domainCache.get(a).tstamp;
 };
 
 var domainCachePrune = function() {
-    var hostnames = Object.keys(domainCache)
-                          .sort(domainCacheEntrySort)
-                          .slice(domainCacheCountLowWaterMark);
+    var hostnames = Array.from(domainCache.keys())
+                         .sort(domainCacheEntrySort)
+                         .slice(domainCacheCountLowWaterMark);
     var i = hostnames.length;
-    domainCacheCount -= i;
-    var hostname;
     while ( i-- ) {
-        hostname = hostnames[i];
-        domainCache[hostname].dispose();
-        delete domainCache[hostname];
+        var hostname = hostnames[i];
+        domainCache.get(hostname).dispose();
+        domainCache.delete(hostname);
     }
 };
 
-var domainCacheReset = function() {
-    domainCache = Object.create(null);
-    domainCacheCount = 0;
-};
-
-psl.onChanged.addListener(domainCacheReset);
+window.addEventListener('publicSuffixList', function() {
+    domainCache.clear();
+});
 
 /******************************************************************************/
 

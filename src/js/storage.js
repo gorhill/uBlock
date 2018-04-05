@@ -960,11 +960,18 @@
     };
 
     var onCompiledListLoaded = function(details) {
-        if ( details.content === '' ) {
+        var selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch (ex) {
+        }
+        if (
+            selfie === undefined ||
+            publicSuffixList.fromSelfie(selfie) === false
+        ) {
             µb.assets.get(assetKey, onRawListLoaded);
             return;
         }
-        publicSuffixList.fromSelfie(JSON.parse(details.content));
         callback();
     };
 
