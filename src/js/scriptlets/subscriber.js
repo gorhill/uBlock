@@ -66,7 +66,7 @@ var onMaybeAbpLinkClicked = function(ev) {
     if ( href === '' ) {
         return;
     }
-    var matches = /^abp:\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
+    var matches = /^(?:abp|ubo):\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
     if ( matches === null ) {
         matches = /^https?:\/\/.*?[&?]location=([^&]+).*?&title=([^&]+)/.exec(href);
         if ( matches === null ) { return; }
@@ -112,7 +112,7 @@ var onMaybeAbpLinkClicked = function(ev) {
 setTimeout(function() {
     if (
         document.querySelector('link[rel="canonical"][href="https://filterlists.com/"]') !== null ||
-        document.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') !== null
+        document.querySelector('a[href^="abp:"],a[href^="ubo:"],a[href^="https://subscribe.adblockplus.org/?"]') !== null
     ) {
         document.addEventListener('click', onMaybeAbpLinkClicked);
     }
