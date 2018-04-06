@@ -92,7 +92,19 @@ vAPI.browserSettings = (function() {
     }
 
     return {
-        webRTCSupported: undefined,
+        // Whether the WebRTC-related privacy API is crashy is an open question
+        // only for Chromium proper (because it can be compiled without the
+        // WebRTC feature): hence avoid overhead of the evaluation (which uses
+        // an iframe) for platforms where it's a non-issue.
+        webRTCSupported: (function() {
+            var flavor = vAPI.webextFlavor.soup;
+            if ( 
+                flavor.has('chromium') === false ||
+                flavor.has('google') || flavor.has('opera')
+            ) {
+                return true;
+            }
+        })(),
 
         // https://github.com/gorhill/uBlock/issues/875
         // Must not leave `lastError` unchecked.
@@ -112,6 +124,10 @@ vAPI.browserSettings = (function() {
         setWebrtcIPAddress: function(setting) {
             // We don't know yet whether this browser supports WebRTC: find out.
             if ( this.webRTCSupported === undefined ) {
+                // If asked to leave WebRTC setting alone at this point in the
+                // code, this means we never grabbed the setting in the first
+                // place.
+                if ( setting ) { return; }
                 this.webRTCSupported = { setting: setting };
                 var iframe = document.createElement('iframe');
                 var me = this;
