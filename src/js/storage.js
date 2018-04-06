@@ -1001,7 +1001,6 @@
         timer = null;
         var selfie = {
             magic: this.systemSettings.selfieMagic,
-            publicSuffixList: publicSuffixList.toSelfie(),
             availableFilterLists: this.availableFilterLists,
             staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
             redirectEngine: this.redirectEngine.toSelfie(),
@@ -1009,6 +1008,25 @@
         };
         vAPI.cacheStorage.set({ selfie: selfie });
     }.bind(µBlock);
+
+    var load = function(callback) {
+        vAPI.cacheStorage.get('selfie', function(bin) {
+            var µb = µBlock;
+            if (
+                bin instanceof Object === false ||
+                bin.selfie instanceof Object === false ||
+                bin.selfie.magic !== µb.systemSettings.selfieMagic ||
+                bin.selfie.redirectEngine === undefined
+            ) {
+                return callback(false);
+            }
+            µb.availableFilterLists = bin.selfie.availableFilterLists;
+            µb.staticNetFilteringEngine.fromSelfie(bin.selfie.staticNetFilteringEngine);
+            µb.redirectEngine.fromSelfie(bin.selfie.redirectEngine);
+            µb.staticExtFilteringEngine.fromSelfie(bin.selfie.staticExtFilteringEngine);
+            callback(true);
+        });
+    };
 
     var destroy = function() {
         if ( timer !== null ) {
@@ -1020,6 +1038,7 @@
     }.bind(µBlock);
 
     return {
+        load: load,
         destroy: destroy
     };
 })();

@@ -132,8 +132,8 @@ var µBlock = (function() { // jshint ignore:line
 
         // read-only
         systemSettings: {
-            compiledMagic: 'puuijtkfpspv',
-            selfieMagic: 'tuqilngsxkwo'
+            compiledMagic: 1,
+            selfieMagic: 1
         },
 
         restoreBackupSettings: {
@@ -177,11 +177,7 @@ var µBlock = (function() { // jshint ignore:line
         epickerZap: false,
         epickerEprom: null,
 
-        scriptlets: {
-        },
-
-        // so that I don't have to care for last comma
-        dummy: 0
+        scriptlets: {},
     };
 
 })();
