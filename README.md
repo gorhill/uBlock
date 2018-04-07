@@ -84,10 +84,10 @@ Once you install uBlock₀, you may easily un-select any of the pre-selected fil
 On average, uBlock Origin does make your browser run leaner. <sup>[1]</sup><br><br>
 
 Chromium<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074141/15f04128-629c-11e5-9155-177fd4909083.png" /><br><br>
+<img src="https://user-images.githubusercontent.com/585534/38453883-09446c74-3a2b-11e8-9440-dbeb319b0f28.png" /><br><br>
 
 Firefox<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074130/0577118c-629c-11e5-9902-bf367c6a96c3.png" /><br><br>
+<img src="https://user-images.githubusercontent.com/585534/38453884-0bb2ac8c-3a2b-11e8-942a-16071cc8f855.png" /><br><br>
 
 </div>
 
