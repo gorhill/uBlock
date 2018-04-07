@@ -58,7 +58,7 @@ uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https:
  Basic mode | Advanced-user mode
 :----------:|:------------------:
 [Popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface) | [A point-and-click firewall which can be configured on a per-site basis](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) 
-[![](doc/img/readme-popup-1.png)](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface) | [![](doc/img/readme-popup-2.png)](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) <br><sup>Configure as you wish:<br>picture shows 3rd-party scripts and frames blocked by default everywhere</sup>
+[![](doc/img/readme-popup-1.png)](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)<br><sup>.<br>.</sup> | [![](doc/img/readme-popup-2.png)](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide)<br><sup>Configure as you wish:<br>picture shows 3rd-party scripts and frames blocked by default everywhere</sup>
 
 Visit the [uBlock Origin's wiki](https://github.com/gorhill/uBlock/wiki) for documentation.
 
