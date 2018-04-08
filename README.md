@@ -112,7 +112,7 @@ Being lean and efficient doesn't mean blocking less<br>
 
 ## Installation
 
-Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
+Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/Permissions).
 
 #### Chromium
 
