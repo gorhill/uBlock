@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -351,6 +351,10 @@
     "message": "Módosítások alkalmazása",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Helyi",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Hirdetések",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Saját",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importálás...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Soronként egy URL. A &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak. A szabálytalan URL-ek szintén figyelmen kívül maradnak, hibajelzés nélkül.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Elavult.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importál és hozzáad",

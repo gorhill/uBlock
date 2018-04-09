@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "3. taraf süzgeçler",
+    "message": "Süzgeç listeleri",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Değişiklikleri uygula",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Yerel",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklamlar",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Özel",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "İçe aktar...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Her satırda bir URL. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir. Geçersiz URL'ler sessizce yok sayılır.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Her satırda bir URL. Geçersiz URL'ler sessizce yok sayılacaktır.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Güncel değil.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Her satırda bir süzgeç. Süzgeç bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. &lsquo;!&rsquo; ile başlayan satırlar yok sayılır.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Her satırda bir süzgeç. Bir süzgeç yalın bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. <code>!<\/code> ile başlayan satırlar yok sayılır.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "İçe aktar ve sonuna ekle",

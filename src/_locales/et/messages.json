@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Kolmanda osapoole filtrid",
+    "message": "Filtri loendid",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Kinnita muudatused",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Seadmes",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklaamid",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Kohandatud",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Impordi...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Üks URL rea kohta, märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Üks URL rea kohta. Vigased URLid jäetakse taustal vahele.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "vananenud",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Üks filter rea kohta, filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Impordi ja lisa",

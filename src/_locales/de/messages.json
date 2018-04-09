@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Vorgegebene Filter",
+    "message": "Filter von Drittanbietern",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Änderungen anwenden",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Lokal",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Werbung",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Benutzerdefiniert",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importieren …",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Eine URL pro Zeile. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert. Ungültige URLs werden stillschweigend ignoriert.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "veraltet",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock-Plus-kompatibler Filter. Zeilen mit vorangestelltem <code>!<\/code> werden ignoriert.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importieren und anfügen",

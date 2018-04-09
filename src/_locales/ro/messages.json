@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtre terțe",
+    "message": "Liste de filtre",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clic ca să dezactivezi uBo pentru acest site.\n\nCtrl+clic ca sa dezactivezi uBo doar pe această pagină.",
+    "message": "Clic ca să dezactivezi uBlock₀ pe acest site.\n\nCtrl+clic ca să dezactivezi uBlock₀ doar pe această pagină.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Dați clic pentru a activa uBlock₀ pentru acest site.",
+    "message": "Clic pentru a activa uBlock₀ pe acest site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Dați clic pentru a bloca popup-urile pentru acest site",
+    "message": "Clic pentru a bloca toate popup-urile pe acest site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Dați clic pentru a nu mai bloca popup-urile pentru acest site",
+    "message": "Clic pentru a nu mai bloca toate popup-urile pe acest site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Dați clic pentru a bloca elementele media de mari dimensiuni pentru acest site",
+    "message": "Clic pentru a bloca elementele media de mari dimensiuni pe acest site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Dați clic pentru a nu mai bloca elementele media de mari dimensiuni pentru acest site",
+    "message": "Clic pentru a nu mai bloca elementele media de mari dimensiuni pe acest site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Dați clic pentru a dezactiva filtrele vizuale pentru acest site",
+    "message": "Clic pentru a dezactiva filtrele vizuale pe acest site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Dați clic pentru a activa filtrele vizuale pentru acest site",
+    "message": "Clic pentru a activa filtrele vizuale pe acest site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Dați clic pentru a bloca fonturile externe pentru acest site",
+    "message": "Clic pentru a bloca fonturile externe pe acest site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Dați clic pentru a nu mai bloca fonturile externe pentru acest site",
+    "message": "Clic pentru a nu mai bloca fonturile externe pe acest site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -351,6 +351,10 @@
     "message": "Aplică modificările",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Locale",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reclame",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Personalizare",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importă...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "O adresă pe linie. Liniile care încep cu &lsquo;!&rsquo; vor fi ignorate. Adresele nevalide vor fi ignorate fără avertizare.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "O adresă pe linie. Adresele nevalide vor fi ignorate fără avertizare.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "învechit",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de <code>!<\/code> vor fi ignorate.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importă și adaugă",
@@ -468,7 +476,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "message": "Lista ta de nume de gazde unde uBlock Origin va fi dezactivat. O înregistrare pe linie. Directivele nevalide vor fi ignorate automat și comentate.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -512,7 +520,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Fila actuală",
+    "message": "Fila curentă",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filters van derden",
+    "message": "Filterlijsten",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Wijzigingen toepassen",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Lokaal",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Advertenties",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Aangepast",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importeren...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Eén URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL’s worden zonder mededeling genegeerd.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Eén URL per regel. Ongeldige URL’s worden zonder mededeling genegeerd.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Verouderd.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibel filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibel filter zijn. Regels beginnend met <code>!<\/code> worden genegeerd.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importeren en toevoegen",

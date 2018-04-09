@@ -351,6 +351,10 @@
     "message": "Wizigingen tapasse",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Local",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Advertinsjes",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Oanpast",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Import...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Ien URL per rigel. Rigels begjinnend mei &lsquo;!&rsquo; wurde negearre. Unjildige URL's wurde stil negearre.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Ferâldere.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Ien filter per rigel. Ien filter kin in gewoane hostnamme of ien Adblock Plus-kompatibel filter wêze. Rigels begjinnend mei &lsquo;!&rsquo; wurde negearre.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Ymportearje en tafoegje",
