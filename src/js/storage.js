@@ -104,6 +104,15 @@
                     µb.hiddenSettings[key] = hs[key];
                 }
             }
+            // To remove once 1.15.26 is widespread. The reason is to ensure
+            // the change in the following commit is taken into account:
+            // https://github.com/gorhill/uBlock/commit/8071321e9104
+            if ( hs.manualUpdateAssetFetchPeriod === 2000 ) {
+                µb.hiddenSettings.manualUpdateAssetFetchPeriod =
+                    µb.hiddenSettingsDefault.manualUpdateAssetFetchPeriod;
+                hs.manualUpdateAssetFetchPeriod = undefined;
+                µb.saveHiddenSettings();
+            }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
             µb.saveImmediateHiddenSettings();
@@ -116,8 +125,21 @@
     );
 };
 
+// Note: Save only the settings which values differ from the default ones.
+// This way the new default values in the future will properly apply for those
+// which were not modified by the user.
+
 µBlock.saveHiddenSettings = function(callback) {
-    vAPI.storage.set({ hiddenSettings: this.hiddenSettings, callback });
+    var bin = { hiddenSettings: {} };
+    for ( var prop in this.hiddenSettings ) {
+        if (
+            this.hiddenSettings.hasOwnProperty(prop) &&
+            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
+        ) {
+            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
+        }
+    }
+    vAPI.storage.set(bin, callback);
     this.saveImmediateHiddenSettings();
 };
 
