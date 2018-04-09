@@ -46,7 +46,7 @@ var µBlock = (function() { // jshint ignore:line
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         streamScriptInjectFilters: false,
-        manualUpdateAssetFetchPeriod: 2000,
+        manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
         suspendTabsUntilReady: false,
         userResourcesLocation: 'unset'
