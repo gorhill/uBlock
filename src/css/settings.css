@@ -1,5 +1,10 @@
 ul {
     padding-left: 1em;
+    padding-right: 0;
+    }
+body[dir="rtl"] ul {
+    padding-left: 0;
+    padding-right: 1em;
     }
 ul#userSettings {
     padding-left: 0;
