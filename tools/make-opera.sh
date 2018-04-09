@@ -39,6 +39,10 @@ rm -r $DES/_locales/kk
 rm -r $DES/_locales/mr
 rm -r $DES/_locales/ta
 
+echo "*** uBlock0.opera: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
+
 echo "*** uBlock0.opera: Generating meta..."
 python tools/make-opera-meta.py $DES/
 
