@@ -82,5 +82,8 @@
     "default_panel": "logger-ui.html",
     "default_title": "__MSG_statsPageName__"
   },
-  "version": "1.14.23.17"
+  "version": "1.14.23.17",
+  "web_accessible_resources": [
+    "/web_accessible_resources/*"
+  ]
 }
