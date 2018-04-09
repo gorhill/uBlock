@@ -3,8 +3,16 @@
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
 ul {
-    padding: 0;
     list-style-type: none;
+    padding-left: 1em;
+    padding-right: 0;
+    }
+body[dir="rtl"] ul {
+    padding-left: 0;
+    padding-right: 1em;
+    }
+ul.root {
+    padding: 0;
     }
 #options li {
     margin-bottom: 0.5em;
@@ -13,7 +21,7 @@ ul {
     cursor: pointer;
     }
 #listsOfBlockedHostsPrompt:before {
-    color: #aaa;
+    color: #888;
     content: '\2212  ';
     }
 body.hideUnused #listsOfBlockedHostsPrompt:before {
@@ -21,53 +29,46 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     }
 #lists {
     margin: 0.5em 0 0 0;
-    padding-left: 0.5em;
-    padding-right: 0em;
-    }
-body[dir="rtl"] #lists {
-    padding-left: 0em;
-    padding-right: 0.5em;
+    padding: 0;
     }
 #lists > li {
     margin: 0.5em 0 0 0;
     padding: 0;
     list-style-type: none;
     }
-#lists > .groupEntry > .geName {
+#lists > .groupEntry .geDetails {
     cursor: pointer;
-    font-size: 110%;
     }
-#lists > .groupEntry > .geCount {
-    font-size: 90%;
-    }
-#lists > .groupEntry:not(:first-child) > .geName:before {
-    color: #aaa;
+#lists > .groupEntry .geDetails:before {
+    color: #888;
     content: '\2212  ';
     }
-#lists > .groupEntry.collapsed > .geName:before {
-    color: #aaa;
+#lists > .groupEntry.hideUnused .geDetails:before {
     content: '+  ';
+    }
+#lists > .groupEntry .geName {
+    pointer-events: none;
+    }
+#lists > .groupEntry .geCount {
+    font-size: 90%;
+    pointer-events: none;
     }
 #lists > .groupEntry > ul {
     margin: 0.25em 0 0 0;
-    }
-#lists > .groupEntry.collapsed > ul {
-    display: none;
+    padding-left: 1em;
     }
 li.listEntry {
-    line-height: 150%;
     margin: 0 auto 0 auto;
-    margin-left: 2.5em;
-    margin-right: 0;
-    text-indent: -2em;
+    padding: 0.2em 0;
+    white-space: nowrap;
     }
 body[dir="rtl"] li.listEntry {
-    margin-left: 0em;
-    margin-right: 2.5em;
+    }
+li.listEntry.unused {
+    display: none;
     }
 li.listEntry > * {
     margin-right: 0.5em;
-    text-indent: 0;
     unicode-bidi: embed;
     }
 li.listEntry.toRemove > input[type="checkbox"] {
@@ -82,6 +83,9 @@ li.listEntry > .fa {
     font-size: 110%;
     opacity: 0.5;
     vertical-align: baseline;
+    }
+li.listEntry > a.towiki {
+    display: inline-block;
     }
 li.listEntry > a.fa:hover {
     opacity: 1;
@@ -164,17 +168,18 @@ body.updating li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.upda
     animation: spin 2s linear infinite;
     display: inline-block;
     }
-#externalListsDiv {
-    margin: 1.5em auto 0 1.5em;
-    }
-body[dir=rtl] #externalListsDiv {
-    margin: 1.5em 1.5em 0 auto;
-    }
-#externalLists {
+li.listEntry.toImport > input[type="checkbox"] ~ textarea {
+    border: 1px solid #ccc;
     box-sizing: border-box;
-    height: 8em;
-    margin-top: 0.25em;
+    display: block;
+    font-size: smaller;
+    height: 6em;
+    margin-left: 2em;
+    resize: vertical;
+    visibility: hidden;
     white-space: pre;
-    width: 100%;
-    word-wrap: normal;
+    width: calc(100% - 4em);
+    }
+li.listEntry.toImport > input[type="checkbox"]:checked ~ textarea {
+    visibility: visible;
     }
