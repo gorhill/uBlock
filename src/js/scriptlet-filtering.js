@@ -65,6 +65,10 @@
                 content = patchScriptlet(content, args);
                 if ( !content ) { return; }
             }
+            content =
+                'try {\n' +
+                    content + '\n' +
+                '} catch ( e ) { }';
             scriptletCache.add(raw, content);
         }
         toInject.set(raw, content);
