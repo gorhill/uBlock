@@ -234,6 +234,10 @@ var renderFilterLists = function(soft) {
         // Before all, set context vars
         listDetails = details;
 
+        // "My filters" will now sit in its own group. The following code
+        // ensures smooth transition.
+        listDetails.available['user-filters'].group = 'user';
+
         // Incremental rendering: this will allow us to easily discard unused
         // DOM list entries.
         uDom('#lists .listEntries .listEntry[data-listkey]').addClass('discard');
@@ -246,6 +250,7 @@ var renderFilterLists = function(soft) {
             groups = groupsFromLists(details.available),
             liGroup, i, groupKey,
             groupKeys = [
+                'user',
                 'default',
                 'ads',
                 'privacy',

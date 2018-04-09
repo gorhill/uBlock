@@ -450,7 +450,7 @@
 
     // User filter list.
     newAvailableLists[this.userFiltersPath] = {
-        group: 'default',
+        group: 'user',
         title: vAPI.i18n('1pPageName')
     };
 
