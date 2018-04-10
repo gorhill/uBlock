@@ -6,7 +6,7 @@ body {
     padding: 0;
     }
 body > div.body {
-    padding: 0 0.5em 0.5em 0.5em;
+    padding: 0 0.5em;
     }
 @media screen and (max-device-width: 960px) {
     body {
@@ -91,7 +91,17 @@ input[type="checkbox"][disabled] + label {
     background-color: #FEDAE0;
     }
 @media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
+    .body > p,
+    .body > ul {
+        margin: 0.5em 0;
+        }
     .vverbose {
         display: none !important;
+        }
+    }
+@media (max-height: 400px) {
+    html {
+        min-height: 400px !important;
+        overflow: auto !important;
         }
     }

@@ -5,11 +5,13 @@
 <title></title>
 </head>
 <body>
-<button id="cloudPush" type="button" title="cloudPush"></button>
-<span data-i18n="cloudNoData"></span>
-<button id="cloudPull" type="button" title="cloudPull" disabled></button>
-<button id="cloudPullAndMerge" type="button" title="cloudPullAndMerge" disabled></button>
-<p id="cloudError"><span></span></p>
+<div class="cloudTools">
+    <button id="cloudPush" type="button" class="custom" title="cloudPush"><span class="fa">&#xf0ee;</span></button>
+    <span id="cloudInfo" data-i18n="cloudNoData"></span>
+    <button id="cloudPull" type="button" class="custom" title="cloudPull" disabled><span class="fa">&#xf0ed;</span></button>
+    <button id="cloudPullAndMerge" type="button" class="custom" title="cloudPullAndMerge" disabled><span class="fa">&#xf0ed;<span>&#xf067;</span></span></button>
+</div>
+<p id="cloudError"></p>
 <span id="cloudCog" class="fa">&#xf013;</span>
 <div id="cloudOptions">
     <div>
