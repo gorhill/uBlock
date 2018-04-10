@@ -1,3 +1,7 @@
+html {
+    height: 100vh;
+    overflow: hidden;
+    }
 body {
     display: flex;
     flex-direction: column;
@@ -25,7 +29,7 @@ body {
     text-align: center;
     vertical-align: top;
     width: 50%;
-    white-space: normal;
+    white-space: nowrap;
     }
 #diff .ruleActions h3 {
     font-weight: normal;

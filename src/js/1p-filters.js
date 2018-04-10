@@ -68,7 +68,6 @@ function renderUserFilters(first) {
         }
         cmEditor.setValue(content);
         if ( first ) {
-            cmEditor.setCursor(cmEditor.lineCount(), 0);
             cmEditor.clearHistory();
         }
         userFiltersChanged(false);

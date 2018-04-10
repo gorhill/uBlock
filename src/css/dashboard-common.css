@@ -1,13 +1,9 @@
 body {
+    background-color: #fff;
     box-sizing: border-box;
-    left: 0;
-    height: 100vh;
+    color: #000;
     margin: 0;
-    overflow: auto;
     padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
     }
 body > div.body {
     padding: 0 0.5em 0.5em 0.5em;
@@ -94,7 +90,7 @@ input[type="checkbox"][disabled] + label {
     padding: 5px;
     background-color: #FEDAE0;
     }
-@media (max-height: 640px) {
+@media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
     .vverbose {
         display: none !important;
         }
