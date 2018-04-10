@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Tredjepartsfiltre",
+    "message": "Filterlister",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Local",
+    "message": "Lokalt",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,11 +384,11 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importer...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En URL pr. linje. Linjer der starter med <code>!<\/code> bliver ignoreret. Ugyldige URL'er bliver ignoreret.",
+    "message": "En URL pr. linje. Ugyldige URL'er bliver ignoreret.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -668,7 +668,7 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Vis instrumentpanel",
+    "message": "Vis kontrolpanel",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {

@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "每行一個網址。以 <code>!<\/code> 開頭的行將被忽略。無效的網址也將被忽略。",
+    "message": "每行一個網址。無效網址將被忽略。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {

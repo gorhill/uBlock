@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtros de terceiros",
+    "message": "Listas de filtros",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Um endereço por linha. Linhas começadas com &lsquo;!&rsquo; serão ignoradas. Endereços inválidos serão ignorados silenciosamente.",
+    "message": "Um URL por linha. Os URL inválidos serão ignorados silenciosamente.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Um filtro por linha. Um filtro pode ser um simples nome de servidor, ou um filtro compatível com o Adblock Plus. Linhas começadas por &lsquo;!&rsquo; serão ignoradas.",
+    "message": "Um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas começadas por <code>!<\/code> serão ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {

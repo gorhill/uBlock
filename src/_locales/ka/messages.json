@@ -8,7 +8,7 @@
     "description": "this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — სამართავი გვერდი",
+    "message": "uBlock₀ — სამართავი დაფა",
     "description": "English: uBlock₀ — Dashboard"
   },
   "settingsPageName": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Local",
+    "message": "ლოკალური",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,7 +384,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "შემოტანა...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {

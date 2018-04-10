@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Zewnętrzne filtry",
+    "message": "Listy filtrów",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone <code>!<\/code> będą pomijane. Błędne adresy URL zostaną bez powiadomienia zignorowane.",
+    "message": "Jeden adres URL na linię. Błędne adresy URL będą pomijane.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem Adblock Plus. Wiersze poprzedzone <code>!<\/code> będą pomijane.",
+    "message": "Jeden filtr na linię. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem Adblock Plus. Wiersze poprzedzone <code>!<\/code> będą pomijane.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
