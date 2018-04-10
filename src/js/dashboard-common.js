@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
+/* global CodeMirror, uDom */
+
 'use strict';
 
 /******************************************************************************/
