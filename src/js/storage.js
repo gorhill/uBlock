@@ -912,16 +912,14 @@
 };
 
 µBlock.processDirectives.tokens = new Map([
-    [ 'ext_chromium', 'chromium' ],
-    [ 'ext_edge', 'edge' ],
-    [ 'ext_firefox', 'firefox' ],
-    [ 'ext_mobile', 'mobile' ],
-    [ 'ext_safari', 'safari' ],
-    [ 'adguard_ext_chromium', 'chromium' ],
-    [ 'adguard_ext_edge', 'edge' ],
-    [ 'adguard_ext_firefox', 'firefox' ],
-    [ 'adguard_ext_mobile', 'mobile' ],
-    [ 'adguard_ext_safari', 'safari' ],
+    [ 'ext_ublock', 'ublock' ],
+    [ 'env_chromium', 'chromium' ],
+    [ 'env_edge', 'edge' ],
+    [ 'env_firefox', 'firefox' ],
+    [ 'env_mobile', 'mobile' ],
+    [ 'env_safari', 'safari' ],
+    [ 'cap_html_filtering', 'html_filtering' ],
+    [ 'cap_user_stylesheet', 'user_stylesheet' ]
 ]);
 
 /******************************************************************************/
