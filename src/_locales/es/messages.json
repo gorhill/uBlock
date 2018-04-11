@@ -384,7 +384,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importar...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {

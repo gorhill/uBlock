@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter Pihak ke-3",
+    "message": "Daftar Filter",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Local",
+    "message": "Lokal",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,11 +384,11 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Impor...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Satu URL per baris. Baris yang diawali dengan <code>!<\/code> akan diabaikan. URL yang tidak valid akan diabaikan tanpa peringatan.",
+    "message": "Satu URL per baris. URL yang tidak valid akan diabaikan tanpa peringatan.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {

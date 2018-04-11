@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Um URL por linha. Os URL inválidos serão ignorados silenciosamente.",
+    "message": "Um URL por linha. Os URLs inválidos serão ignorados silenciosamente.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -504,7 +504,7 @@
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
-    "message": "Endereço",
+    "message": "URL",
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
