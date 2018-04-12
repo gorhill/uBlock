@@ -100,7 +100,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Cliquez pour cesser de bloquer toutes les pop-up de ce site",
+    "message": "Cliquez pour cesser de bloquer toutes les pop-ups de ce site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

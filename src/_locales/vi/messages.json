@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Bộ lọc bên thứ ba",
+    "message": "Bộ lọc",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Nhấp chuột: vô hiệu hoá uBlock₀ cho trang này.\nCtrl + nhấp chuột: chỉ vô hiệu hoá uBlock₀ trên trang này.",
+    "message": "Nhấp chuột để vô hiệu uBlock₀ cho trang này. \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ trên trang này.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Nhấp để bật uBO trên trang này.",
+    "message": "Nhấp để bật uBlock₀ trên trang này.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -744,7 +744,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Áp dụng các thay đổi",
+    "message": "Lưu thay đổi",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

@@ -64,7 +64,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} 或称 {{percent}}%",
+    "message": "{{count}} 占 {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -72,7 +72,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "或",
+    "message": "占",
     "description": "English: or"
   },
   "popupTipDashboard": {
