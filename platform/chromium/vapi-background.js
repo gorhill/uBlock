@@ -39,10 +39,7 @@ vAPI.cantWebsocket =
 
 // https://issues.adblockplus.org/ticket/5695
 // - Good idea, adopted: cleaner way to detect user-stylesheet support.
-vAPI.supportsUserStylesheets = 
-    chrome.extensionTypes instanceof Object &&
-    chrome.extensionTypes.CSSOrigin instanceof Object &&
-    'USER' in chrome.extensionTypes.CSSOrigin;
+vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 vAPI.insertCSS = chrome.tabs.insertCSS;
 
 var noopFunc = function(){};
@@ -843,9 +840,11 @@ vAPI.messaging.onPortMessage = (function() {
                 details.code = cssText;
                 cssPromises.push(chrome.tabs.insertCSS(tabId, details));
             }
-            for ( cssText of msg.remove ) {
-                details.code = cssText;
-                cssPromises.push(chrome.tabs.removeCSS(tabId, details));
+            if ( typeof chrome.tabs.removeCSS === 'function' ) {
+                for ( cssText of msg.remove ) {
+                    details.code = cssText;
+                    cssPromises.push(chrome.tabs.removeCSS(tabId, details));
+                }
             }
             if ( typeof callback === 'function' ) {
                 Promise.all(cssPromises).then(() => {

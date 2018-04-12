@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +27,15 @@
 //   https://github.com/chrisaljoudi/uBlock/issues/456
 //   https://github.com/gorhill/uBlock/issues/2029
 
-if ( typeof vAPI === 'object' ) { // >>>>>>>> start of HUGE-IF-BLOCK
+// https://github.com/gorhill/uBlock/issues/3588
+//   Chromium 66+ supports user stylesheets. Testing support against a regex is
+//   (unfortunately) necessary from content scripts.
+
+if (
+    typeof vAPI === 'object' &&
+    /\bEdge\/\d+|\bChrom(?:e|ium)\/(?:[45][0-9]|6[0-5])/.test(navigator.userAgent)
+) {
+// >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
 /******************************************************************************/
@@ -543,4 +551,5 @@ vAPI.DOMFilterer.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-} // <<<<<<<< end of HUGE-IF-BLOCK
+// <<<<<<<< end of HUGE-IF-BLOCK
+}
