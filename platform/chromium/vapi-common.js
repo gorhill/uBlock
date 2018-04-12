@@ -70,38 +70,35 @@ vAPI.webextFlavor = {
         });
     }
 
-    // Synchronous
-    var match = /Firefox\/([\d.]+)/.exec(ua);
-    if ( match !== null ) {
+    // Synchronous -- order of tests is important
+    var match;
+    if ( (match = /\bFirefox\/(\d+)/.exec(ua)) !== null ) {
         flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('mozilla')
-            .add('firefox');
+        soup.add('mozilla').add('firefox');
         if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
         if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
-    } else {
-        match = /OPR\/([\d.]+)/.exec(ua);
-        if ( match !== null ) {
-            var reEx = /Chrom(?:e|ium)\/([\d.]+)/;
-            if ( reEx.test(ua) ) { match = reEx.exec(ua); }
-            flavor.major = parseInt(match[1], 10) || 0;
-            soup.add('opera').add('chromium');
-        } else {
-            match = /Chromium\/([\d.]+)/.exec(ua);
-            if ( match !== null ) {
-                flavor.major = parseInt(match[1], 10) || 0;
-                soup.add('chromium');
-            } else {
-                match = /Chrome\/([\d.]+)/.exec(ua);
-                if ( match !== null ) {
-                    flavor.major = parseInt(match[1], 10) || 0;
-                    soup.add('google').add('chromium');
-                }
-            }
-        }
-        // https://github.com/gorhill/uBlock/issues/3588
-        if ( soup.has('chromium') && flavor.major >= 67 ) {
-            soup.add('user_stylesheet');
-        }
+    } else if ( (match = /\bEdge\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('microsoft').add('edge');
+    } else if ( (match = /\bOPR\/(\d+)/.exec(ua)) !== null ) {
+        var reEx = /\bChrom(?:e|ium)\/([\d.]+)/;
+        if ( reEx.test(ua) ) { match = reEx.exec(ua); }
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('opera').add('chromium');
+    } else if ( (match = /\bChromium\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('chromium');
+    } else if ( (match = /\bChrome\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('google').add('chromium');
+    } else if ( (match = /\bSafari\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('apple').add('safari');
+    }
+
+    // https://github.com/gorhill/uBlock/issues/3588
+    if ( soup.has('chromium') && flavor.major >= 66 ) {
+        soup.add('user_stylesheet');
     }
 
     // Don't starve potential listeners
