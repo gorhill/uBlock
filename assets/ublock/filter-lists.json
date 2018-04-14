@@ -197,11 +197,11 @@
 		"lang": "ja",
 		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
 	},
-	"https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": {
+	"https://raw.githubusercontent.com/IsaakGroepT/Custom-Prebake/master/filterlist.txt": {
 		"off": true,
-		"title": "EU: Prebake - Filter Obtrusive Cookie Notices",
+		"title": "EU: Custom Prebake - Filter Obtrusive Cookie Notices",
 		"group": "regions",
-		"supportURL": "https://github.com/liamja/Prebake"
+		"supportURL": "https://github.com/IsaakGroepT/Custom-Prebake"
 	},
 	"https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": {
 		"off": true,
