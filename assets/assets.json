@@ -210,7 +210,10 @@
 		"group": "social",
 		"off": true,
 		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
-		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
+		"contentURL": [
+			"https://raw.githubusercontent.com/ryanbr/fanboy-adblock/master/fanboy-antifacebook.txt",
+			"https://fanboy.co.nz/fanboy-antifacebook.txt",
+		],
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
@@ -219,6 +222,7 @@
 		"off": true,
 		"title": "Fanboy’s Annoyance List",
 		"contentURL": [
+			"https://raw.githubusercontent.com/ryanbr/fanboy-adblock/master/enhancedstats-addon.txt",
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
 			"https://fanboy.co.nz/fanboy-annoyance.txt",
 			"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
@@ -230,7 +234,10 @@
 		"group": "social",
 		"off": true,
 		"title": "Fanboy’s Cookiemonster List",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+		"contentURL": [
+			"https://raw.githubusercontent.com/ryanbr/fanboy-adblock/master/fanboy-cookiemonster.txt",
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+		],
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-social": {
