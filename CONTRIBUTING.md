@@ -1,5 +1,7 @@
 # Submitting issues
 
+Submit on <https://www.reddit.com/r/uBlockOrigin/>.
+
 Despite all the guidelines and warnings I added over the years about how to use it, the GitHub issue tracker always end up being used as a [help desk](https://en.wikipedia.org/wiki/Help_desk) rather than a place to report actual, real and proven issues.
 
 Typically help desk are best handled by enthusiast volunteers -- so hopefully this is what will happen.
