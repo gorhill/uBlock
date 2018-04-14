@@ -909,15 +909,10 @@ var updateFirst = function() {
     //   Allow self-hosted dev build to update: if update_url is present but
     //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
-        var manifest =
-            typeof browser === 'object' &&
-            browser.runtime.getManifest();
         noRemoteResources =
             vAPI.webextFlavor.soup.has('firefox') &&
-            manifest instanceof Object &&
-            manifest.applications instanceof Object &&
-            manifest.applications.gecko instanceof Object &&
-            manifest.applications.gecko.update_url === null;
+            vAPI.webextFlavor.soup.has('webext') &&
+            vAPI.webextFlavor.soup.has('devbuild') === false;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();

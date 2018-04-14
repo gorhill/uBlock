@@ -50,7 +50,12 @@ vAPI.webextFlavor = {
     };
 
     // This is always true.
-    soup.add('ublock');
+    soup.add('ublock').add('webext');
+
+    // Whether this is a dev build.
+    if ( /^\d+\.\d+\.\d+\D/.test(chrome.runtime.getManifest().version) ) {
+        soup.add('devbuild');
+    }
 
     if ( /\bMobile\b/.test(ua) ) {
         soup.add('mobile');
