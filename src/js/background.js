@@ -29,8 +29,9 @@
 // Not all platforms may have properly declared vAPI.webextFlavor.
 
 if ( vAPI.webextFlavor === undefined ) {
-    vAPI.webextFlavor = { major: 0, soup: new Set() };
+    vAPI.webextFlavor = { major: 0, soup: new Set([ 'ublock' ]) };
 }
+
 
 /******************************************************************************/
 
