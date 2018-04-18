@@ -352,7 +352,7 @@
     "description":"English: Apply changes"
   },
   "3pGroupDefault":{
-    "message":"Local",
+    "message":"Built-in",
     "description":"Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds":{
