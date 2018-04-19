@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Hirugarrengoen iragazkiak",
+    "message": "Iragazki-zerrendak",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Local",
+    "message": "Tokikoa",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,11 +384,11 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Inportatu...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL bat lerroko. Hasieran &lsquo;&rsquo; duten lerroak ezikusiko dira. Baliogabeko URLak isilean ezikusiko dira.",
+    "message": "URL bat lerroko. Baliogabeko URL-ak ezikusiko dira.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran &lsquo;&rsquo; duten lerroak ezikusiko dira.",
+    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran <code>!<\/code> duten lerroak ezikusiko dira.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {

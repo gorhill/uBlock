@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Local",
+    "message": "Built-in",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "ఒక్కో పంక్తిలో ఒక URL. పంక్తిలో మొదలు &lsquo;!&rsquo; ఉన్నచో అది పరిగనించబడదు. చెల్లని URLలు మౌనంగా విస్మరించబడుతాయి.",
+    "message": "ఒక్కో పంక్తిలో ఒక URL. పంక్తిలో మొదట &lsquo;!&rsquo; ఉన్నచో ఆ పంక్తి పరిగనించబడదు. చెల్లని URLలు మౌనంగా విస్మరించబడుతాయి.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
