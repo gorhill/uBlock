@@ -46,6 +46,7 @@ ligatus.com/*/angular-tag.js
 noopframe
 noopjs
 noopmp3-0.1s
+noopmp4-1s
 nooptext
 popads-dummy.js
 popads.net.js
