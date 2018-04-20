@@ -266,8 +266,8 @@ var matchBucket = function(url, hostname, bucket, start) {
     return whitelist;
 };
 
-µBlock.reWhitelistBadHostname = /[^a-z0-9.\-\[\]:]/;
-µBlock.reWhitelistHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
+µBlock.reWhitelistBadHostname = /[^a-z0-9.\-\[\]:_]/;
+µBlock.reWhitelistHostnameExtractor = /([a-z0-9.\-\[\]]+)(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
 /******************************************************************************/
 
