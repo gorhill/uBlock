@@ -53,6 +53,20 @@ var µBlock = (function() { // jshint ignore:line
         userResourcesLocation: 'unset'
     };
 
+    var whitelistDefault = [
+        'about-scheme',
+        'chrome-extension-scheme',
+        'chrome-scheme',
+        'moz-extension-scheme',
+        'opera-scheme',
+        'vivaldi-scheme',
+        'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
+    ];
+    // https://github.com/gorhill/uBlock/issues/3693#issuecomment-379782428
+    if ( vAPI.webextFlavor.soup.has('webext') === false ) {
+        whitelistDefault.push('behind-the-scene');
+    }
+
     return {
         firstInstall: false,
 
@@ -113,16 +127,7 @@ var µBlock = (function() { // jshint ignore:line
         // Whitelist directives need to be loaded once the PSL is available
         netWhitelist: {},
         netWhitelistModifyTime: 0,
-        netWhitelistDefault: [
-            'about-scheme',
-            'chrome-extension-scheme',
-            'chrome-scheme',
-            'moz-extension-scheme',
-            'opera-scheme',
-            'vivaldi-scheme',
-            'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
-            ''
-        ].join('\n'),
+        netWhitelistDefault: whitelistDefault.join('\n'),
 
         localSettings: {
             blockedRequestCount: 0,
