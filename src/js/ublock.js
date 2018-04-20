@@ -266,6 +266,7 @@ var matchBucket = function(url, hostname, bucket, start) {
     return whitelist;
 };
 
+// https://github.com/gorhill/uBlock/issues/3717
 µBlock.reWhitelistBadHostname = /[^a-z0-9.\-_\[\]:]/;
 µBlock.reWhitelistHostnameExtractor = /([a-z0-9.\-_\[\]]+)(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
