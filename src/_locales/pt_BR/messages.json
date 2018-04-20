@@ -44,15 +44,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
+    "message": "Clique: desativa\/ativa o uBlock₀ neste site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clique para desativar uBO neste site.\n\nCtrl+clique para desativar o uBO apenas nesta página.",
+    "message": "Clique para desativar uBlock₀ neste site.\n\nCtrl+clique para desativar o uBlock₀ apenas nesta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clique para ativar o uBO neste site.",
+    "message": "Clique para ativar o uBlock₀ neste site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Esses comportamentos padrões podem ser substituídos por site",
+    "message": "Estes comportamentos padrões podem ser substituídos por site",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {

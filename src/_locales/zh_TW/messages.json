@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "第三方過濾規則",
+    "message": "過濾器清單",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {

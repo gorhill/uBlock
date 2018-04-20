@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter von Drittanbietern",
+    "message": "Filterlisten",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Lokal",
+    "message": "uBlock-eigene Filterlisten",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Eine URL pro Zeile. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert. Ungültige URLs werden stillschweigend ignoriert.",
+    "message": "Eine URL pro Zeile. Ungültige URLs werden stillschweigend ignoriert.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
