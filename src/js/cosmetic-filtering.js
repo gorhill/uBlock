@@ -543,6 +543,11 @@ FilterContainer.prototype.freeze = function() {
     this.highlyGeneric.simple.str = µb.arrayFrom(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.complex.str = µb.arrayFrom(this.highlyGeneric.complex.dict).join(',\n');
 
+    // https://www.reddit.com/r/uBlockOrigin/comments/8dkvqn/116_broken_loading_custom_filters_from_my_filters/
+    //   Just in case. This can be removed once Firefox 60 ESR is out
+    //   and widespread.
+    this.supportsUserStylesheets = vAPI.supportsUserStylesheets;
+
     this.frozen = true;
 };
 

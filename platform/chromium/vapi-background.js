@@ -49,6 +49,12 @@ vAPI.resetLastError = function() {
 };
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+// The real actual webextFlavor value may not be set in stone, so listen
+// for possible future changes.
+window.addEventListener('webextFlavor', function() {
+    vAPI.supportsUserStylesheets =
+        vAPI.webextFlavor.soup.has('user_stylesheet');
+}, { once: true });
 
 vAPI.insertCSS = function(tabId, details) {
     return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
@@ -721,8 +727,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging,
-        supportsUserStylesheets = vAPI.supportsUserStylesheets;
+    var messaging = vAPI.messaging;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request) {
@@ -806,7 +811,7 @@ vAPI.messaging.onPortMessage = (function() {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( supportsUserStylesheets ) {
+            if ( vAPI.supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
             if ( msg.add ) {
