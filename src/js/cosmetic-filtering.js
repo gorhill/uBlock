@@ -30,6 +30,12 @@
 var µb = µBlock;
 var cosmeticSurveyingMissCountMax = parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) || 15;
 
+var supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+// https://www.reddit.com/r/uBlockOrigin/comments/8dkvqn/116_broken_loading_custom_filters_from_my_filters/
+window.addEventListener('webextFlavor', function() {
+    supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+}, { once: true });
+
 /******************************************************************************/
 /*
 var histogram = function(label, buckets) {
@@ -416,8 +422,6 @@ var FilterContainer = function() {
     this.netSelectorCacheCountMax = netSelectorCacheHighWaterMark;
     this.selectorCacheTimer = null;
 
-    this.supportsUserStylesheets = vAPI.supportsUserStylesheets;
-
     // generic exception filters
     this.genericDonthideSet = new Set();
 
@@ -542,11 +546,6 @@ FilterContainer.prototype.freeze = function() {
     }
     this.highlyGeneric.simple.str = µb.arrayFrom(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.complex.str = µb.arrayFrom(this.highlyGeneric.complex.dict).join(',\n');
-
-    // https://www.reddit.com/r/uBlockOrigin/comments/8dkvqn/116_broken_loading_custom_filters_from_my_filters/
-    //   Just in case. This can be removed once Firefox 60 ESR is out
-    //   and widespread.
-    this.supportsUserStylesheets = vAPI.supportsUserStylesheets;
 
     this.frozen = true;
 };
@@ -1201,7 +1200,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     // If user stylesheets are supported in the current process, inject the
     // cosmetic filters now.
     if (
-        this.supportsUserStylesheets &&
+        supportsUserStylesheets &&
         request.tabId !== undefined &&
         request.frameId !== undefined
     ) {
@@ -1416,7 +1415,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     //   If user stylesheets are supported in the current process, inject the
     //   cosmetic filters now.
     if (
-        this.supportsUserStylesheets &&
+        supportsUserStylesheets &&
         request.tabId !== undefined &&
         request.frameId !== undefined
     ) {
