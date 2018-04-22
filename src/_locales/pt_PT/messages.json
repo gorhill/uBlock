@@ -268,7 +268,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Impedir que o WebRTC divulgue endereços de IP locais",
+    "message": "Impedir o WebRTC de vazar endereços IP locais",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Locais",
+    "message": "Integrados",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
