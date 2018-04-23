@@ -330,7 +330,7 @@
 		"off": true,
 		"title": "CZE, SVK: EasyList Czech and Slovak",
 		"lang": "cs sk",
-		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt",
+		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
 		"supportURL": "https://github.com/tomasko126/easylistczechandslovak"
 	},
 	"DEU-0": {
