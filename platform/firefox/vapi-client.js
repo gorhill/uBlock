@@ -296,7 +296,7 @@ vAPI.messaging = {
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pendingCount > 25 ) {
+        if ( this.pending.size > 25 ) {
             vAPI.shutdown.exec();
         }
         this.connect();
@@ -340,7 +340,7 @@ vAPI.messaging = {
     removeChannelListener: function(channelName, listener) {
         var listeners = this.channels.get(channelName);
         if ( listeners === undefined ) { return; }
-        var pos = this.listeners.indexOf(listener);
+        var pos = listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
         if ( listeners.length === 0 ) {
