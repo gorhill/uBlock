@@ -197,7 +197,7 @@ var handlers = {
             for ( selector of changes.procedural ) {
                 procedural.dict.set(selector.raw, selector);
             }
-            if ( changes.procedural.size !== 0 ) {
+            if ( changes.procedural.length !== 0 ) {
                 jobQueue.push(ProceduralJob.create());
             }
         }
