@@ -572,40 +572,23 @@ var reMediaContentTypes = /^(?:audio|image|video)\//;
 
     The response body filterer is responsible for:
 
-    - Scriptlet filtering
     - HTML filtering
 
     In the spirit of efficiency, the response body filterer works this way:
 
     If:
         - HTML filtering: no.
-        - Scriptlet filtering: no.
     Then:
         No response body filtering is initiated.
 
     If:
-        - HTML filtering: no.
-        - Scriptlet filtering: yes.
-    Then:
-        Inject scriptlets before first chunk of response body data reported
-        then immediately disconnect response body data listener.
-
-    If:
         - HTML filtering: yes.
-        - Scriptlet filtering: no/yes.
     Then:
         Assemble all response body data into a single buffer. Once all the
         response data has been received, create a document from it. Then:
-        - Inject scriptlets in the resulting DOM.
         - Remove all DOM elements matching HTML filters.
         Then serialize the resulting modified document as the new response
         body.
-
-    This way, the overhead is minimal for when only scriptlets need to be
-    injected.
-
-    If the platform does not support response body filtering, the scriptlets
-    will be injected the old way, through the content script.
 
 **/
 
@@ -658,85 +641,6 @@ var filterDocument = (function() {
         }
     };
 
-    // Purpose of following helper is to disconnect from watching the stream
-    // if all the following conditions are fulfilled:
-    // - Only need to inject scriptlets.
-    // - Charset of resource is utf-8.
-    // - A well-formed doc type declaration is found at the top.
-    //
-    // When all the conditions are fulfilled, then the scriptlets are safely
-    // injected after the doc type declaration, and the stream listener is
-    // disconnected, thus removing overhead from future streaming data.
-    //
-    // If at least one of the condition is not fulfilled and scriptlets need
-    // to be injected, it will be done the longer way when the whole stream
-    // has been collated in memory.
-
-    var streamJobDone = function(filterer, responseBytes) {
-        if (
-            filterer.scriptlets === undefined ||
-            filterer.selectors !== undefined ||
-            filterer.charset === undefined
-        ) {
-            return false;
-        }
-        // We need to insert after DOCTYPE, or else the browser may fall into
-        // quirks mode.
-        if ( responseBytes.byteLength < 256 ) { return false; }
-        var bb = new Uint8Array(responseBytes, 0, 256),
-            i = 0, b;
-        // Skip BOM if present.
-        if ( bb[0] === 0xEF && bb[1] === 0xBB && bb[2] === 0xBF ) { i += 3; }
-        // Scan for '<'
-        for (;;) {
-            b = bb[i++];
-            if ( b === 0x3C /* '<' */ ) { break; }
-            if ( b > 0x20 || i > 240 ) { return false; }
-        }
-        // Case insensitively test for '!doctype'.
-        if (
-              bb[i+0]          === 0x21 /* '!' */ &&
-            ( bb[i+1] | 0x20 ) === 0x64 /* 'd' */ &&
-            ( bb[i+2] | 0x20 ) === 0x6F /* 'o' */ &&
-            ( bb[i+3] | 0x20 ) === 0x63 /* 'c' */ &&
-            ( bb[i+4] | 0x20 ) === 0x74 /* 't' */ &&
-            ( bb[i+5] | 0x20 ) === 0x79 /* 'y' */ &&
-            ( bb[i+6] | 0x20 ) === 0x70 /* 'p' */ &&
-            ( bb[i+7] | 0x20 ) === 0x65 /* 'e' */
-        ) {
-            i += 8;
-        }
-        // Case insensitively test for 'html'.
-        else if (
-            ( bb[i+0] | 0x20 ) === 0x68 /* 'h' */ &&
-            ( bb[i+1] | 0x20 ) === 0x74 /* 't' */ &&
-            ( bb[i+2] | 0x20 ) === 0x6D /* 'm' */ &&
-            ( bb[i+3] | 0x20 ) === 0x6C /* 'l' */
-        ) {
-            i += 4;
-        } else {
-            return false;
-        }
-        // Scan for '>'.
-        var qcount = 0;
-        for (;;) {
-            b = bb[i++];
-            if ( b === 0x3E /* '>' */ ) { break; }
-            if ( b === 0x22 /* '"' */ || b === 0x27 /* "'" */ ) { qcount += 1; }
-            if ( b > 0x7F || i > 240 ) { return false; }
-        }
-        // Bail out if mismatched quotes.
-        if ( (qcount & 1) !== 0 ) { return false; }
-        // We found a valid insertion point.
-        if ( textEncoder === undefined ) { textEncoder = new TextEncoder(); }
-        filterer.stream.write(new Uint8Array(responseBytes, 0, i));
-        filterer.stream.write(
-            textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
-        );
-        filterer.stream.write(new Uint8Array(responseBytes, i));
-        return true;
-    };
-
     var streamClose = function(filterer, buffer) {
         if ( buffer !== undefined ) {
             filterer.stream.write(buffer);
@@ -773,11 +677,6 @@ var filterDocument = (function() {
         //   confirmed, there is nothing which can be done uBO-side to reduce
         //   overhead.
         if ( filterer.buffer === null ) {
-            if ( streamJobDone(filterer, ev.data) ) {
-                filterers.delete(this);
-                this.disconnect();
-                return;
-            }
             filterer.buffer = new Uint8Array(ev.data);
             return;
         }
@@ -855,11 +754,6 @@ var filterDocument = (function() {
                 modified = true;
             }
         }
-        if ( filterer.scriptlets !== undefined ) {
-            if ( µb.scriptletFilteringEngine.apply(doc, filterer) ) {
-                modified = true;
-            }
-        }
 
         if ( modified === false ) {
             return streamClose(filterer);
@@ -909,32 +803,13 @@ var filterDocument = (function() {
             domain: domain,
             entity: µb.URI.entityFromDomain(domain),
             selectors: undefined,
-            scriptlets: undefined,
             buffer: null,
             mime: 'text/html',
             charset: undefined
         };
 
         request.selectors = µb.htmlFilteringEngine.retrieve(request);
-
-        // https://github.com/gorhill/uBlock/issues/3526
-        // https://github.com/uBlockOrigin/uAssets/issues/1492
-        //   Two distinct issues, but both are arising as a result of
-        //   injecting scriptlets through stream filtering. So falling back
-        //   to "slow" scriplet injection for the time being. Stream filtering
-        //   (`##^`) should be used for when scriptlets are defeated by early
-        //   script tags on a page.
-        //
-        if ( µb.hiddenSettings.streamScriptInjectFilters ) {
-            request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
-        }
-
-        if (
-            request.selectors === undefined &&
-            request.scriptlets === undefined
-        ) {
-            return;
-        }
+        if ( request.selectors === undefined ) { return; }
 
         var headers = details.responseHeaders,
             contentType = headerValueFromName('content-type', headers);

@@ -517,16 +517,7 @@ var onMessage = function(request, sender, callback) {
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
             µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
-        // If response body filtering is supported, than the scriptlets have
-        // already been injected.
-        if (
-            µb.canFilterResponseBody === false ||
-            µb.hiddenSettings.streamScriptInjectFilters !== true ||
-            µb.textEncode === undefined ||
-            µb.textEncode.normalizeCharset(request.charset) === undefined
-        ) {
-            response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
-        }
+        response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( request.isRootFrame && µb.logger.isEnabled() ) {
             µb.logCosmeticFilters(tabId);
         }
