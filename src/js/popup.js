@@ -579,6 +579,11 @@ var renderOnce = function() {
     uDom.nodeFromId('appname').textContent = popupData.appName;
     uDom.nodeFromId('version').textContent = popupData.appVersion;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/22
+    if ( popupData.advancedUserEnabled !== true ) {
+        uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
+    }
+
     // For large displays: we do not want the left pane -- optional and
     // hidden by defaut -- to dictate the height of the popup. The right pane
     // dictates the height of the popup, and the left pane will have a
