@@ -22,8 +22,8 @@
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {
-        "48": "img/icon_48.png",
-        "96": "img/icon_96.png",
+        "48": "img/icon-48.png",
+        "96": "img/icon-96.png"
     },
     "browser_action": {
         "browser_style": false,
