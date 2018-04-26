@@ -8,7 +8,7 @@
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "Built on",
+    "message": "내장",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
@@ -24,7 +24,7 @@
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Click Ads",
+    "message": "광고를 클릭하세요",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
@@ -32,7 +32,7 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "선택한 <span>필터 목록<\/span>에서 광고 숨기기",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
@@ -44,39 +44,39 @@
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
-    "message": "Reactivate",
+    "message": "다시 활성화하기",
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
-    "message": "Disable",
+    "message": "비활성화",
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
-    "message": "Activate Ad hiding",
+    "message": "광고 차단 활성화",
     "description": "English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking": {
-    "message": "Activate Ad clicking",
+    "message": "광고 클릭 활성화",
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "멀웨어 차단 활성화",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
-    "message": "Activate the EasyList filter",
+    "message": "EasyList 필터 활성화",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
-    "message": "Activate the AdNauseam filter",
+    "message": "AdNauseam 필터 활성화",
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Your ad blocker and AdNauseam may conflict!",
+    "message": "당신의 광고 차단 프로그램과 AdNauseam이 충돌할 수 있습니다!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
-    "message": "uBlock and AdNauseam may conflict!",
+    "message": "uBlock와 AdNauseam이 충돌할 수 있습니다!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
@@ -96,7 +96,7 @@
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "타겟",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
@@ -104,7 +104,7 @@
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
-    "message": "Not Yet Visited",
+    "message": "아직 방문하지 않음",
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
@@ -128,15 +128,15 @@
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Go to AdNauseam website",
+    "message": "AdNauseam 웹사이트 방문하기",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
-    "message": "AdNauseam is paused on this page",
+    "message": "AdNauseam가 이 페이지에서 일시적으로 중지되었습니다",
     "description": "English: Menu->display when paused on page\/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam is not currently hiding Ads",
+    "message": "AdNauseam이 현재 광고를 숨기고 있지 않습니다",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
@@ -148,27 +148,31 @@
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
-    "message": "AdNauseam_Export_{{datetime}}.json",
+    "message": "AdNauseam_내보내기_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "The file doesn't contain any Ads, please choose another file.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
-    "description": "appears in ADN settings"
+    "message": "광고 {{count}} 개를 불러왔습니다",
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
+    "message": "이 작업으로 모든 광고가 영구적으로 제거됩니다",
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "대기중",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "방문함",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "실패함",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
@@ -188,7 +192,7 @@
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
-    "message": "View Log",
+    "message": "로그 보기",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
@@ -200,7 +204,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "광고 발견됨",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -208,19 +212,31 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "개요",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
-    "message": "Settings",
+    "message": "설정",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Export Ads",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Export Options",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Ads Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Settings Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Settings and Ads",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
-    "message": "Import Ads",
+    "message": "광고 불러오기",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
@@ -256,15 +272,15 @@
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "1970년 1월 1일 AM 0:00",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Export",
+    "message": "내보내기",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Import",
+    "message": "불러오기",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
@@ -280,7 +296,7 @@
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this Ad",
+    "message": "선택한 광고 지우기",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
@@ -308,19 +324,19 @@
     "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Display the number of Ads on the icon",
+    "message": "아이콘에 광고 개수 표시하기",
     "description": "English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt": {
-    "message": "Extra Privacy",
+    "message": "추가적인 개인정보보호정책",
     "description": "English: Interface"
   },
   "settingsInterfacePrompt": {
-    "message": "Interface",
+    "message": "인터페이스",
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with clicks",
+    "message": "클릭과 동시에 생성된 쿠키 무시",
     "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
@@ -336,15 +352,15 @@
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
-    "message": "Rarely",
+    "message": "드물게",
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "가끔",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
-    "message": "Always",
+    "message": "항상",
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
@@ -372,27 +388,27 @@
     "description": "English: Essentials"
   },
   "3pGroupOther": {
-    "message": "Other",
+    "message": "기타",
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "멀웨어",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
-    "message": "Languages",
+    "message": "언어",
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "업데이트",
     "description": "English: update"
   },
   "whitelistPageName": {
-    "message": "Whitelists",
+    "message": "화이트리스트",
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "디버깅 모드 활성화",
     "description": "prompt for toggle"
   }
 }

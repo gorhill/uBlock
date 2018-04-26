@@ -12,7 +12,7 @@
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
-    "message": "Preguntes freqüents",
+    "message": "Preguntes més freqüents",
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
@@ -20,11 +20,11 @@
     "description": "English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds": {
-    "message": "Oculta publicitat",
+    "message": "Amaga els anuncis",
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Clica la publicitat",
+    "message": "Fes clic als anuncis",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
@@ -72,15 +72,15 @@
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "El teu bloquejador de publicitat i AdNauseam poden entrar en conflicte!",
+    "message": "El vostre blocador de publicitat i l'AdNauseam poden entrar en conflicte!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
-    "message": "uBlock i AdNauseam poden entrar en conflicte!",
+    "message": "L'uBlock i l'AdNauseam poden entrar en conflicte!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
-    "message": "Aquesta pàgina respecta <b>No rastregis<\/b>, la publicitat és permesa.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, es permeten els anuncis.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
@@ -128,7 +128,7 @@
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Vull anar a la pàgina web AdNauseam",
+    "message": "Obre el lloc web de l'AdNauseam",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
@@ -136,7 +136,7 @@
     "description": "English: Menu->display when paused on page\/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam actualment no està ocultant publicitat",
+    "message": "L'AdNauseam no està amagant els anuncis",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
@@ -151,9 +151,13 @@
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "The file doesn't contain any Ads, please choose another file.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "S'han importat {{count}} anuncis",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "Aquesta acció eliminarà de manera permanent tots els vostres anuncis",
@@ -215,12 +219,24 @@
     "message": "Configuració",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Exportar anuncis",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Export Options",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Ads Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Settings Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Settings and Ads",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
-    "message": "Importar anuncis",
+    "message": "Importa els anuncis",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
@@ -236,15 +252,15 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {
-    "message": "Amagar el contador a la icona d'anuncis",
+    "message": "Amaga el nombre d'anuncis a la icona",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Netejar borsa d'Anuncis",
+    "message": "Esborra els anuncis",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
-    "message": "No hi han dades disponible",
+    "message": "No hi ha cap registre disponible",
     "description": "appears in ADN log page"
   },
   "adnLogViewFullLog": {
@@ -260,15 +276,15 @@
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Exportar",
+    "message": "Exporta",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Importar",
+    "message": "Importa",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
-    "message": "Netejar",
+    "message": "Esborra",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
@@ -280,7 +296,7 @@
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "suprimir aquest anunci",
+    "message": "elimina aquest anunci",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
@@ -292,7 +308,7 @@
     "description": "appears on vault page"
   },
   "hidingAdsPrompt": {
-    "message": "Amagar els anuncis seccionats a llista de filtres",
+    "message": "Amaga els anuncis identificats per la vostra llista de filtres",
     "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {

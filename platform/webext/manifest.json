@@ -1,6 +1,5 @@
 {
     "manifest_version": 2,
-
     "name": "AdNauseam",
     "version": "{version}",
     "applications": {
@@ -11,18 +10,12 @@
      },
     "commands": {
         "launch-element-zapper": {
-            "suggested_key": {
-            },
             "description": "__MSG_popupTipZapper__"
         },
         "launch-element-picker": {
-            "suggested_key": {
-            },
             "description": "__MSG_popupTipPicker__"
         },
         "launch-logger": {
-            "suggested_key": {
-            },
             "description": "__MSG_popupTipLog__"
         }
     },
@@ -74,7 +67,8 @@
        }
     ],
     "options_ui": {
-        "page": "options.html"
+        "page": "options.html",
+        "open_in_tab": true
     },
     "permissions": [
         "contextMenus",

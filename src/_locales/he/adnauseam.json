@@ -28,7 +28,7 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "חסום תוכנה זדונית",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
@@ -40,7 +40,7 @@
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "חסום טראקרים ותוכנות זדוניות אחרות (<span>customize<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -60,7 +60,7 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "הפעלת חסימת תוכנות זדוניות",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -108,7 +108,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "מותר ממדיניות Do Not Track",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -151,24 +151,28 @@
     "message": "AdNauseam_Yitsu_{{datetime}}.json\n",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "The file doesn't contain any Ads, please choose another file.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}} פרסומות יובאו",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "פעולה זו תסיר לצמיתות את כל הפרסומות שלך",
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "בהמתנה",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "מבוקר",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "נכשל",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
@@ -215,9 +219,21 @@
     "message": "הגדרות",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "ייצא פרסומות",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "ייצא אפשרויות",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "פרסומות בלבד",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "הגדרות בלבד",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "הגדרות ופרסומות",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "ייבא פרסומות",
@@ -300,7 +316,7 @@
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "חסום טראקרים ותוכנות זדוניות אחרות",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {

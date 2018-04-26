@@ -151,9 +151,13 @@
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "В файле нет рекламы, выберите другой файл.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}} объявления импортировано",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "Это действие приведет к окончательному удалению ВСЕЙ вашей рекламы",
@@ -215,9 +219,21 @@
     "message": "Настройки",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Экспортировать рекламу",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Настройки экспорта",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Только рекламные объявления",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Только настройки",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Настройки и рекламные объявления",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "Импортировать рекламу",
