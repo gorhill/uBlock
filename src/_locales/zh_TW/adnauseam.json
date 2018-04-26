@@ -151,9 +151,13 @@
     "message": "AdNauseam-已導出的廣告_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "該文檔內沒有廣告信息，請選擇另一個文檔",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}}個廣告被導入",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "這操作會永久移除你全部已保存的廣告",
@@ -215,9 +219,21 @@
     "message": "設置",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "導出廣告",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "導出選項",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "僅限廣告",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "僅限設置",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "設置和廣告",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "導入廣告",

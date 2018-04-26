@@ -151,9 +151,13 @@
     "message": "AdNauseam_निर्यात_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "फ़ाइल में कोई विज्ञापन नहीं हैं, कृपया कोई दूसरी फ़ाइल चुनें ।",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}} विज्ञापन आयात किए गए",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "यह क्रिया आपके सभी विज्ञापनों को स्थाई रूप से निकाल देगी",
@@ -215,9 +219,21 @@
     "message": "सेटिंग्स",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "विज्ञापन निर्यात करें",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "निर्यात विकल्प",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "केवल विज्ञापन",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "केवल सेटिंग्स",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "सेटिंग्स और विज्ञापन",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "विज्ञापन आयात करें",

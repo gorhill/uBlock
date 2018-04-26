@@ -24,119 +24,119 @@
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Click Ads",
+    "message": "Κλίκαρε τις διαφημίσεις",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Απέκλεισε τα κακόβουλα λογισμικά",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "Κρύψε τις διαφημίσεις στην επιλεγμένη <span>λίστα<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Register visits on Ads found via your <span>filter lists<\/span>",
+    "message": "Καταχώριση επισκέψεων σε διαφημίσεις που βρέθηκαν με βάση την <span>λίστα<\/span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Απέκλεισε τα κακόβουλα λογισμικά και τα λογισμικά παρακολούθησης (<span>εξατομίκευση<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
-    "message": "Reactivate",
+    "message": "Επανενεργοποίηση",
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
-    "message": "Disable",
+    "message": "Απενεργοποίηση",
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
-    "message": "Activate Ad hiding",
+    "message": "Ενεργοποίηση απόκρυψης διαφημίσεων",
     "description": "English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking": {
-    "message": "Activate Ad clicking",
+    "message": "Ενεργοποίηση κλικαρίσματος διαφημίσεων",
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Ενεργοποίηση μπλοκαρίσματος κακόβουλου λογισμικού",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
-    "message": "Activate the EasyList filter",
+    "message": "Ενεργοποίηση του φίλτρου EasyList",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
-    "message": "Activate the AdNauseam filter",
+    "message": "Ενεργοποίηση του φίλτρου AdNauseam",
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Your ad blocker and AdNauseam may conflict!",
+    "message": "Ο ad blocker και το AdNauseam τρέχουν ταυτόχρονα! Αύτο μπορεί να δημιουργήσει προβλήματα",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
-    "message": "uBlock and AdNauseam may conflict!",
+    "message": "Το uBlock και το AdNauseam τρέχουν ταυτόχρονα! Αύτο μπορεί να δημιουργήσει προβλήματα",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationDNTAllowed": {
-    "message": "This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, Οι διαφημίσεις επιτρέπονται.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, απόκρυψη, όχι κλικάρισμα.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, κλικάρισμα, όχι απόκρυψη",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, πληροφοριακά.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "Στόχος",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
-    "message": "FOUND ON",
+    "message": "Βρέθηκε",
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
-    "message": "Not Yet Visited",
+    "message": "Δεν επισκέφτηκε ακόμα",
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Επιτράπηκε μέσω του προτύπου Μην Με Παρακολουθήτε",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
-    "message": "Switch me on",
+    "message": "Ενεργοποίησε με",
     "description": "English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt": {
-    "message": "That's it? ok…",
+    "message": "Αυτό ήταν? ok...",
     "description": "English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill": {
-    "message": "Better, but still…",
+    "message": "Καλύτερα, αλλά ακόμα...",
     "description": "English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo": {
-    "message": "Let's go!",
+    "message": "Πάμε!",
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Go to AdNauseam website",
+    "message": "Επίσκεψη στην σελίδα του AdNauseam",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
-    "message": "AdNauseam is paused on this page",
+    "message": "Το AdNauseam είναι σταματημένο για αυτήν την σελίδα ",
     "description": "English: Menu->display when paused on page\/site"
   },
   "adnNotHiding": {
-    "message": "AdNauseam is not currently hiding Ads",
+    "message": "Το AdNauseam δεν κρύβει τις διαφημίσεις αυτήν την στιγμή",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
@@ -144,59 +144,63 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "No Ads collected on this page (showing recent)",
+    "message": "Καμία διαφήμιση δεν βρέθηκε σε αυτήν την σελίδα (πρόσφατα)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "The file doesn't contain any Ads, please choose another file.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
-    "message": "{{count}} Ads were imported",
-    "description": "appears in ADN settings"
+    "message": "{{count}} διαφημίσεις προστέθηκαν",
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
-    "message": "This action will permanently remove ALL of your Ads",
+    "message": "Αυτή η κίνηση θα διαγράψει όλες τις διαφημίσεις για πάντα",
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "Εκκρεμή",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "επισκεφτήκαν",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "Απέτυχαν",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "Προσπεράστηκε: Το DNT επιτρέπεται",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "Προσπεράστηκε: Clicked by user",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "Προσπεράστηκε: Συχνό κλικάρισμα",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "Προσπεράστηκε: Απενεργποιημένο κλικάρισμα",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
-    "message": "View Log",
+    "message": "Ιστορικό",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicked",
+    "message": "κλικαρίστικε",
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": "από το",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
@@ -204,35 +208,47 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
-    "message": "View Ad Vault",
+    "message": "Δες το Ad Vault",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "Συνέχηση",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
-    "message": "Settings",
+    "message": "Ρυθμίσεις",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Export Ads",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Export Options",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Ads Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Settings Only",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Settings and Ads",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
-    "message": "Import Ads",
+    "message": "Εισαγωγή διαφημίσεων",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
-    "message": "Disable all logging",
+    "message": "Απενεργοποίηση όλης της καταγραφής ιστορικού",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer": {
-    "message": "Disable outgoing referrer",
+    "message": "Απενεργοποίηση εξωτερικής αναφοράς",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
-    "message": "Clear Ads with browser history",
+    "message": "Καθαρισμός διαφημίσεων με το ιστορικού του περιηγητή",
     "description": "appears in ADN popup menu"
   },
   "adnMenuHideBadge": {
@@ -240,7 +256,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Clear Ads",
+    "message": "Καθαρισμός διαφημίσεων",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
@@ -248,11 +264,11 @@
     "description": "appears in ADN log page"
   },
   "adnLogViewFullLog": {
-    "message": "View full log",
+    "message": "Πλήρες αρχείο καταγραφής",
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Since",
+    "message": "Από",
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
@@ -260,47 +276,47 @@
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Export",
+    "message": "Εξαγωγή",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Import",
+    "message": "Εισαγωγή",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
-    "message": "Clear",
+    "message": "Καθαρισμός",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "Διαφημίσεις συγκεντρώθηκαν",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
-    "message": "showing",
+    "message": "Εμφανίζονται",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this Ad",
+    "message": "Διαγραφή αυτής της διαφημίσης",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
-    "message": "total estimated",
+    "message": "Συνολικός εκτιμώμενος",
     "description": "appears on vault page"
   },
   "adnVaultAdsCost": {
-    "message": "cost",
+    "message": "κόστος",
     "description": "appears on vault page"
   },
   "hidingAdsPrompt": {
-    "message": "Hide Ads identified by your chosen filter lists",
+    "message": "Απόκρυψη διαφημίσεων όπου αναγνωρίστηκαν από την επιλεγμένη λίστα φίλτρων",
     "description": "English: Hide Ads identified by your chosen filter lists"
   },
   "clickingAdsPrompt": {
-    "message": "Click Ads identified by your chosen filter lists",
+    "message": "Κλικάρισμα διαφημίσεων όπου αναγνωρίστηκαν από την επιλεγμένη λίστα φίλτρων",
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Μπλοκάρισμα λογισμικών παρακολούθησης και άλλων κακόβουλων λογισμικών",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
@@ -308,55 +324,55 @@
     "description": "English: Capture text-only Ads when possible"
   },
   "settingsIconBadgePrompt": {
-    "message": "Display the number of Ads on the icon",
+    "message": "Εμφάνιση μετρητή διαφημίσεων στο εικονίδιο",
     "description": "English: Show the number of found Ads on the icon"
   },
   "settingsExtraPrivacyPrompt": {
-    "message": "Extra Privacy",
+    "message": "Έξτρα ασφάλεια",
     "description": "English: Interface"
   },
   "settingsInterfacePrompt": {
-    "message": "Interface",
+    "message": "Διεπαφή χρήστη",
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
-    "message": "Ignore cookies returned with clicks",
+    "message": "Αγνόηση των cookies που επιστράφηκαν από τα κλικ",
     "description": "English: Ignore cookies returned with clicks"
   },
   "noOutgoingCookiesPrompt": {
-    "message": "Don't send cookies on visits",
+    "message": "Να μην αποστέλλετε τα cookies κατά την επίσκεψη των σελίδων",
     "description": "English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt": {
-    "message": "Hide user-agent header on visits",
+    "message": "Απόκρυψη των κεφαλίδων τύπου user-agent κατά την επίσκεψη",
     "description": "English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt": {
-    "message": "Hide referring page on visits",
+    "message": "Απόκρυψη σελίδας παραπομπής κατά την επίσκεψη",
     "description": "English: Hide referring page on visits"
   },
   "ClickingFrequencyRarely": {
-    "message": "Rarely",
+    "message": "Σπάνια",
     "description": "English: Click Frequency - Rarely"
   },
   "ClickingFrequencySometimes": {
-    "message": "Sometimes",
+    "message": "Μερικές φορές",
     "description": "English: Click Frequency - Sometimes"
   },
   "ClickingFrequencyAlways": {
-    "message": "Always",
+    "message": "Πάντα",
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
-    "message": "Make exceptions for non-tracking Ads",
+    "message": "Εξαίρεση των διαφημίσεων χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Don't hide non-tracking Ads",
+    "message": "Να μην γίνεται απόκρυψη διαφημίσεων χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
-    "message": "Don't click non-tracking Ads",
+    "message": "Να μην κλικάρονται οι διαφημίσεις χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
     "description": "English: Don't click non-tracking Ads"
   },
   "extName": {
@@ -368,23 +384,23 @@
     "description": "for the chrome web store: must be 132 characters or less"
   },
   "3pGroupEssentials": {
-    "message": "Essentials",
+    "message": "Κυρίως μενού",
     "description": "English: Essentials"
   },
   "3pGroupOther": {
-    "message": "Other",
+    "message": "Άλλο",
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "Κακόβουλα λογισμικά",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
-    "message": "Languages",
+    "message": "Γλώσσες",
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "Αναβάθμιση",
     "description": "English: update"
   },
   "whitelistPageName": {
@@ -392,7 +408,7 @@
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "Ενεργοποίηση διαγνωστηκής κατάστασης",
     "description": "prompt for toggle"
   }
 }
