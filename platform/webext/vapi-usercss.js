@@ -23,4 +23,6 @@
 
 // User stylesheets are always supported with Firefox/webext .
 
-vAPI.supportsUserStylesheets = true;
+if ( typeof vAPI === 'object' ) {
+    vAPI.supportsUserStylesheets = true;
+}

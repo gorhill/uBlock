@@ -28,5 +28,7 @@
 // Chromium 66 and above supports user stylesheets:
 // https://github.com/gorhill/uBlock/issues/3588
 
-vAPI.supportsUserStylesheets =
-    /\bChrom(?:e|ium)\/(?:6[6789]|[789]|1\d\d)/.test(navigator.userAgent);
+if ( typeof vAPI === 'object' ) {
+    vAPI.supportsUserStylesheets =
+        /\bChrom(?:e|ium)\/(?:6[6789]|[789]|1\d\d)/.test(navigator.userAgent);
+}
