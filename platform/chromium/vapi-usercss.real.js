@@ -21,12 +21,10 @@
 
 'use strict';
 
-// For content pages
+// Packaging this file is optional: it is not necessary to package it if the
+// platform is known to not support user stylesheets.
 
-if (
-    typeof vAPI === 'object' &&
-    vAPI.userStylesheet === undefined
-) {
+if ( typeof vAPI === 'object' && vAPI.supportsUserStylesheets ) {
 // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/
