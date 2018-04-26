@@ -80,6 +80,10 @@ vAPI.DOMFilterer.prototype = {
     // - Notifying listeners about changed filterset.
     commitNow: function() {
         this.commitTimer.clear();
+        if (vAPI.prefs.hidingDisabled) {
+          this.toggle(false);
+          return; // ADN: only if we are hiding
+        }
         var userStylesheet = vAPI.userStylesheet;
         for ( var entry of this.addedCSSRules ) {
             if (
@@ -101,10 +105,8 @@ vAPI.DOMFilterer.prototype = {
         }
 
         this.addedCSSRules.clear();
+        userStylesheet.apply();
 
-        if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
-            userStylesheet.apply();
-        }
     },
 
     commit: function(commitNow) {
@@ -129,10 +131,9 @@ vAPI.DOMFilterer.prototype = {
             lazy: details.lazy === true,
             injected: details.injected === true
         };
-
-        if (!vAPI.prefs.hidingDisabled) { // ADN
-          this.addedCSSRules.add(entry);
-        }
+        
+        this.addedCSSRules.add(entry);
+        this.filterset.add(entry);
 
          // ADN adCheck
         var nodes = document.querySelectorAll(selectorsStr);
@@ -140,12 +141,11 @@ vAPI.DOMFilterer.prototype = {
             vAPI.adCheck && vAPI.adCheck(node);
         }
 
-        this.filterset.add(entry);
-
         if (
             this.disabled === false &&
             entry.lazy !== true &&
             entry.injected !== true
+            && !vAPI.prefs.hidingDisabled  // ADN
         ) {
             vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }

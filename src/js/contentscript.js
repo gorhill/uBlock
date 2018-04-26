@@ -1414,13 +1414,12 @@ vAPI.domSurveyor = (function() {
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
         }
 
-        if ( cfeDetails.networkFilters.length !== 0 ) {
+        if ( cfeDetails.networkFilters.length !== 0 && !vAPI.prefs.hidingDisabled) {
             vAPI.userStylesheet.add(
                 cfeDetails.networkFilters + '\n{display:none!important;}');
         }
-
         vAPI.userStylesheet.apply();
-
+         
         // Library of resources is located at:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( cfeDetails.scripts ) {
