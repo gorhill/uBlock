@@ -8,11 +8,11 @@
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "Základ Aplikace",
+    "message": "Postaven na",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
-    "message": "Často Kladené dotazy",
+    "message": "Často kladené otázky (FAQ)",
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
@@ -24,27 +24,27 @@
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Klikat Na Reklamy",
+    "message": "Klikat na reklamy",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Blokování malware (škodlivých programů)",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů<\/span>",
+    "message": "Skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registrace návštěv na reklamy nalezené prostřednictvím vašich<span> seznamů filtrů<\/span>",
+    "message": "Registrace návštěv reklam nalezených prostřednictvím vašich<span> seznamů filtrů<\/span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Blokovat trackery a další malware (<span>upravit nastavení<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
-    "message": "Obnovit",
+    "message": "Znovu aktivovat",
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
@@ -52,15 +52,15 @@
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
-    "message": "Aktivuj skrytí reklam",
+    "message": "Aktivuj Skrytí reklam",
     "description": "English: Notifications -> Activate Ad hiding"
   },
   "adnNotificationActivateClicking": {
-    "message": "Aktivuj klikání reklam",
+    "message": "Aktivuj Klikání na reklamy",
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Aktivuj blokování malware",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -68,7 +68,7 @@
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
-    "message": "Aktivovat AdNauseam filtr",
+    "message": "Aktivuj AdNauseam filtr",
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
@@ -84,15 +84,15 @@
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Tato stránka respektuje <b>Do Not Track<\/b>, reklamy jsou skryty a není na ně klikáno.",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, reklamy jsou skryty a není na ně kliknuto.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Tato stránka respektuje <b>Do Not Track<\/b>, na reklamy je klikáno a nejsou skryty",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, na reklamy je kliknuto místo skrytí",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Tato stránka respektuje <b>Do Not Track<\/b>, jen abyste věděli.",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, jen pro Vaši informaci.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -108,7 +108,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Povoleno prostřednictvím 'Politiky \"Nesledovat\"'",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -128,7 +128,7 @@
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Přejděte na webové stránky AdNauseam",
+    "message": "Přejít na webové stránky AdNauseam",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
@@ -144,47 +144,51 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
-    "message": "Na této stránce nebyly nasbírány žádné reklamy (ukaž poslední)",
+    "message": "Na této stránce nebyly nasbírány žádné reklamy (zobrazeny aktuální)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
     "message": "AdNauseam_Export_{{datetime}}.json",
     "description": "English: AdNauseam file export"
   },
+  "adnImportAlertFormat": {
+    "message": "Tento soubor neobsahuje žádné reklamy, vyberte prosím jiný.",
+    "description": "appears in ADN vault, after import"
+  },
   "adnImportAlert": {
     "message": "{{count}} Reklam bylo importováno",
-    "description": "appears in ADN settings"
+    "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {
     "message": "Tato akce trvale odstraní VŠECHNY vaše reklamy",
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "Čekající na potvrzení",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "Navštívené",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "Neúspěšné",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "VYNECHANÉ: 'Nesledovat' povoleno",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "VYNECHANÉ: Kliknuto uživatelem",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "VYNECHANÉ: Frekvence kliknutí",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "VYNECHANÉ: Kliknutí zakázané",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
@@ -215,9 +219,21 @@
     "message": "Nastavení",
     "description": "appears in ADN popup menu"
   },
-  "adnMenuExportAds": {
-    "message": "Exportovat reklamy",
-    "description": "appears in ADN popup menu"
+  "adnMenuExportOptions": {
+    "message": "Nastavení exportu",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportAdsOnly": {
+    "message": "Pouze reklamy",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsOnly": {
+    "message": "Pouze nastavení",
+    "description": "appears in Menu - Export Dialog box"
+  },
+  "adnMenuExportSettingsAndAds": {
+    "message": "Nastavení a reklamy",
+    "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
     "message": "Importovat reklamy",
@@ -300,7 +316,7 @@
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Blokovat sledovače (trackers) a další škodlivé programy (malware)",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
