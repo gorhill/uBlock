@@ -51,8 +51,10 @@
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
-    "128": "img/icon_128.png",
-    "16": "img/icon_16.png"
+    "16": "img/icon_16.png",
+    "32": "img/icon_32.png",
+    "64": "img/icon_64.png",
+    "128": "img/icon_128.png"
   },
   "incognito": "split",
   "manifest_version": 2,
@@ -73,7 +75,7 @@
     "webRequestBlocking",
     "<all_urls>"
   ],
-  "short_name": "uBlock\u2080",
+  "short_name": "uBlock₀",
   "sidebar_action": {
     "default_icon": {
       "19": "img/browsericons/icon19.png",

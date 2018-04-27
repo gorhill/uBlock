@@ -1,7 +1,7 @@
 {
   "applications": {
     "gecko": {
-      "id": "uBlock0@raymondhill.net",
+      "id": "uBlock0-webext@raymondhill.net",
       "strict_min_version": "52.0"
     }
   },
@@ -59,12 +59,18 @@
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
-    "16": "img/ublock.svg",
-    "48": "img/ublock.svg",
-    "96": "img/ublock.svg"
+    "16": "img/icon_16.png",
+    "32": "img/icon_32.png",
+    "64": "img/icon_64.png",
+    "128": "img/icon_128.png"
   },
+  "incognito": "split",
   "manifest_version": 2,
+  "minimum_chrome_version": "45.0",
   "name": "uBlock Origin",
+  "optional_permissions": [
+    "file:///*"
+  ],
   "options_ui": {
     "page": "dashboard.html",
     "open_in_tab": true
@@ -74,6 +80,7 @@
     "privacy",
     "storage",
     "tabs",
+    "unlimitedStorage",
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
@@ -87,6 +94,9 @@
       "16": "img/ublock.svg",
       "48": "img/ublock.svg"
     }
+  },
+  "storage": {
+    "managed_schema": "managed_storage.json"
   },
   "version": "1.9.15.101",
   "web_accessible_resources": [
