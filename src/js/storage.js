@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global objectAssign, punycode, publicSuffixList */
+/* global punycode, publicSuffixList */
 
 'use strict';
 
@@ -146,7 +146,7 @@
 /******************************************************************************/
 
 µBlock.hiddenSettingsFromString = function(raw) {
-    var out = objectAssign({}, this.hiddenSettingsDefault),
+    var out = Object.assign({}, this.hiddenSettingsDefault),
         lineIter = new this.LineIterator(raw),
         line, matches, name, value;
     while ( lineIter.eot() === false ) {
@@ -575,7 +575,7 @@
             if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
             entry = entries[assetKey];
             if ( entry.content !== 'filters' ) { continue; }
-            newAvailableLists[assetKey] = objectAssign({}, entry);
+            newAvailableLists[assetKey] = Object.assign({}, entry);
         }
 
         // Load set of currently selected filter lists.
