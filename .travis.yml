@@ -3,7 +3,7 @@ sudo: false
 env:
   matrix:
   - BROWSER=chromium EXT=zip
-  - BROWSER=firefox EXT=xpi
+  - BROWSER=debian EXT=zip
   - BROWSER=webext EXT=xpi
 script: ./tools/make-${BROWSER}.sh all
 deploy:
