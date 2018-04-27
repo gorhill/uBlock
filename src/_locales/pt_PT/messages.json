@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -456,7 +456,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importar do ficheiro...",
+    "message": "Importar a partir de ficheiro...",
     "description": ""
   },
   "rulesExport": {
@@ -608,7 +608,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Cópia para ficheiro",
+    "message": "Copiar para ficheiro",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -616,7 +616,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restaurar a partir de um ficheiro...",
+    "message": "Restaurar a partir de ficheiro...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
