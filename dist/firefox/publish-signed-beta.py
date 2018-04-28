@@ -16,6 +16,26 @@ import zipfile
 from distutils.version import LooseVersion
 from string import Template
 
+# Load/save auth secrets
+ubo_secrets = dict()
+if 'UBO_SECRETS' in os.environ:
+    ubo_secrets = json.loads(os.environ['UBO_SECRETS'])
+
+def input_secret(prompt, token):
+    if token in ubo_secrets:
+        prompt += ' ✔'
+    prompt += ': '
+    value = input(prompt).strip()
+    if len(value) == 0:
+        if token not in ubo_secrets:
+            print('Token error:', token)
+            exit(1)
+        value = ubo_secrets[token]
+    elif token not in ubo_secrets or value != ubo_secrets[token]:
+        ubo_secrets[token] = value
+        os.environ['UBO_SECRETS'] = json.dumps(ubo_secrets, indent=None, separators=(',',':'))
+    return value
+
 # - Download target (raw) uBlock0.firefox.xpi from GitHub
 #   - This is referred to as "raw" package
 #   - This will fail if not a dev build
@@ -63,11 +83,7 @@ if not re.search('^\d+\.\d+\.\d+(b|rc)\d+$', version):
     exit(1)
 
 # GitHub API token
-# TODO: support as environment variable? (see os.environ)
-github_token = input("Github token: ").strip()
-if len(github_token) == 0:
-    print('Error: invalid GitHub token')
-    exit(1)
+github_token = input_secret('Github token', 'github_token')
 github_auth = 'token ' + github_token
 
 #
@@ -145,9 +161,8 @@ with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
 
 print('Ask AMO to sign self-hosted xpi package...')
 with open(unsigned_xpi_filepath, 'rb') as f:
-    # TODO: support use of env variables for key/secret?
-    amo_api_key = input("AMO API key: ").strip()
-    amo_secret = input("AMO API secret: ").strip()
+    amo_api_key = input_secret('AMO API key', 'amo_api_key')
+    amo_secret = input_secret('AMO API secret', 'amo_secret')
     amo_nonce = os.urandom(8).hex()
     jwt_payload = {
         'iss': amo_api_key,
