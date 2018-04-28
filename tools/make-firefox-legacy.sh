@@ -41,7 +41,7 @@ rm $DES/js/vapi-usercss.js
 rm $DES/js/vapi-usercss.real.js
 
 echo "*** uBlock0.firefox-legacy: Generating meta..."
-python tools/make-firefox-meta.py $DES/
+python tools/make-firefox-legacy-meta.py $DES/
 
 if [ "$1" = all ]; then
     set +v
