@@ -564,7 +564,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "elk type",
+    "message": "alle typen",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
@@ -598,6 +598,10 @@
   "aboutSupport": {
     "message": "Ondersteuning",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Probleemtracker",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Broncode (GPLv3)",

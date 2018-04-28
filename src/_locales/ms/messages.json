@@ -599,6 +599,10 @@
     "message": "Support",
     "description": "A link for where to get support"
   },
+  "aboutIssues": {
+    "message": "Issue tracker",
+    "description": "Text for a link to official issue tracker"
+  },
   "aboutCode": {
     "message": "Kod sumber (GPLv3)",
     "description": "English: Source code (GPLv3)"

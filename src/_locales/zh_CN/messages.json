@@ -599,6 +599,10 @@
     "message": "支持",
     "description": "A link for where to get support"
   },
+  "aboutIssues": {
+    "message": "问题报告",
+    "description": "Text for a link to official issue tracker"
+  },
   "aboutCode": {
     "message": "源代码 (GPLv3)",
     "description": "English: Source code (GPLv3)"
