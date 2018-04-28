@@ -16,21 +16,11 @@ import zipfile
 from distutils.version import StrictVersion
 from string import Template
 
-# - Download target (raw) uBlock0.webext.xpi from GitHub
+# - Download target (raw) uBlock0.chromium.zip from GitHub
 #   - This is referred to as "raw" package
 #   - This will fail if not a dev build
-# - Modify raw package to make it self-hosted
-#   - This is referred to as "unsigned" package
-# - Ask AMO to sign uBlock0.webext.xpi
-#   - Generate JWT to be used for communication with server
-#   - Upload unsigned package to AMO
-#   - Wait for a valid download URL for signed package
-#   - Download signed package as uBlock0.webext.signed.xpi
-#     - This is referred to as "signed" package
-# - Upload uBlock0.webext.signed.xpi to GitHub
-# - Remove uBlock0.webext.xpi from GitHub
-# - Modify updates.json to point to new version
-#   - Commit changes to repo
+# - Upload uBlock0.chromium.zip to Chrome store
+# - Publish uBlock0.chromium.zip to Chrome store
 
 # Load/save auth secrets
 ubo_secrets = dict()
