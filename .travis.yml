@@ -2,7 +2,7 @@ language: ruby
 sudo: false
 env:
   matrix:
-  - BROWSER=firefox EXT=xpi
+  - BROWSER=firefox-legacy EXT=xpi
 script: ./tools/make-${BROWSER}.sh all
 deploy:
   provider: releases
