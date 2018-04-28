@@ -16,19 +16,19 @@ import zipfile
 from distutils.version import LooseVersion
 from string import Template
 
-# - Download target (raw) uBlock0.webext.xpi from GitHub
+# - Download target (raw) uBlock0.firefox.xpi from GitHub
 #   - This is referred to as "raw" package
 #   - This will fail if not a dev build
 # - Modify raw package to make it self-hosted
 #   - This is referred to as "unsigned" package
-# - Ask AMO to sign uBlock0.webext.xpi
+# - Ask AMO to sign uBlock0.firefox.xpi
 #   - Generate JWT to be used for communication with server
 #   - Upload unsigned package to AMO
 #   - Wait for a valid download URL for signed package
-#   - Download signed package as uBlock0.webext.signed.xpi
+#   - Download signed package as uBlock0.firefox.signed.xpi
 #     - This is referred to as "signed" package
-# - Upload uBlock0.webext.signed.xpi to GitHub
-# - Remove uBlock0.webext.xpi from GitHub
+# - Upload uBlock0.firefox.signed.xpi to GitHub
+# - Remove uBlock0.firefox.xpi from GitHub
 # - Modify updates.json to point to new version
 #   - Commit changes to repo
 
@@ -44,10 +44,10 @@ if not os.path.isfile(version_filepath):
 
 extension_id = 'uBlock0@raymondhill.net'
 tmpdir = tempfile.TemporaryDirectory()
-raw_xpi_filename = 'uBlock0.webext.xpi'
+raw_xpi_filename = 'uBlock0.firefox.xpi'
 raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
-unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.webext.unsigned.xpi')
-signed_xpi_filename = 'uBlock0.webext.signed.xpi'
+unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
+signed_xpi_filename = 'uBlock0.firefox.signed.xpi'
 signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
 github_owner = 'gorhill'
 github_repo = 'uBlock'
@@ -88,7 +88,7 @@ release_info = response.json()
 # Extract URL to raw package from metadata
 #
 
-# Find url for uBlock0.webext.xpi
+# Find url for uBlock0.firefox.xpi
 raw_xpi_url = ''
 for asset in release_info['assets']:
     if asset['name'] == signed_xpi_filename:
