@@ -200,7 +200,7 @@ var onUserSettingsReady = function(fetched) {
     // https://github.com/gorhill/uBlock/issues/1892
     // For first installation on a battery-powered device, disable generic
     // cosmetic filtering.
-    if ( µb.firstInstall && vAPI.battery ) {
+    if ( µb.firstInstall && vAPI.webextFlavor.soup.has('mobile') ) {
         userSettings.ignoreGenericCosmeticFilters = true;
     }
 };
