@@ -22,26 +22,6 @@ from string import Template
 # - Upload uBlock0.chromium.zip to Chrome store
 # - Publish uBlock0.chromium.zip to Chrome store
 
-# Load/save auth secrets
-ubo_secrets = dict()
-if 'UBO_SECRETS' in os.environ:
-    ubo_secrets = json.loads(os.environ['UBO_SECRETS'])
-
-def input_secret(prompt, token):
-    if token in ubo_secrets:
-        prompt += ' ✔'
-    prompt += ': '
-    value = input(prompt).strip()
-    if len(value) == 0:
-        if token not in ubo_secrets:
-            print('Token error:', token)
-            exit(1)
-        value = ubo_secrets[token]
-    elif token not in ubo_secrets or value != ubo_secrets[token]:
-        ubo_secrets[token] = value
-        os.environ['UBO_SECRETS'] = json.dumps(ubo_secrets, indent=None, separators=(',',':'))
-    return value
-
 # Find path to project root
 projdir = os.path.split(os.path.abspath(__file__))[0]
 while not os.path.isdir(os.path.join(projdir, '.git')):
@@ -63,6 +43,31 @@ version.strip()
 if not re.search('^\d+\.\d+\.\d+(b|rc)\d+$', version):
     print('Error: Invalid version string.')
     exit(1)
+
+# Load/save auth secrets
+# The build directory is excluded from git
+ubo_secrets = dict()
+ubo_secrets_filename = os.path.join(projdir, 'dist', 'build', 'ubo_secrets')
+if os.path.isfile(ubo_secrets_filename):
+    with open(ubo_secrets_filename) as f:
+        ubo_secrets = json.load(f)
+
+def input_secret(prompt, token):
+    if token in ubo_secrets:
+        prompt += ' ✔'
+    prompt += ': '
+    value = input(prompt).strip()
+    if len(value) == 0:
+        if token not in ubo_secrets:
+            print('Token error:', token)
+            exit(1)
+        value = ubo_secrets[token]
+    elif token not in ubo_secrets or value != ubo_secrets[token]:
+        ubo_secrets[token] = value
+        with open(ubo_secrets_filename, 'w') as f:
+            json.dump(ubo_secrets, f, indent=2)
+    return value
+
 
 # GitHub API token
 github_token = input_secret('Github token', 'github_token')
