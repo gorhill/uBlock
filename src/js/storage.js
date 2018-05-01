@@ -797,7 +797,7 @@
         staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|ip6-all(?:nodes|routers)|local|localhost|localhost\.localdomain)\b/,
+        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
         line, c, pos,
         lineIter = new this.LineIterator(this.processDirectives(rawText));
