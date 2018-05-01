@@ -82,8 +82,11 @@ def input_secret(prompt, token):
         value = ubo_secrets[token]
     elif token not in ubo_secrets or value != ubo_secrets[token]:
         ubo_secrets[token] = value
+        exists = os.path.isfile(ubo_secrets_filename)
         with open(ubo_secrets_filename, 'w') as f:
             json.dump(ubo_secrets, f, indent=2)
+        if not exists:
+            os.chmod(ubo_secrets_filename, 0o600)
     return value
 
 # GitHub API token
