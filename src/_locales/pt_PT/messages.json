@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Acompanhamento de erros",
+    "message": "Monitorizador de problemas",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
