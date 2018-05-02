@@ -1,3 +1,8 @@
+html {
+    align-items: align-items;
+    display: flex;
+    justify-content: flex-end;
+    }
 body {
     background-color: white;
     border: 0;
