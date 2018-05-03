@@ -24,8 +24,8 @@
 // Packaging this file is optional: it is not necessary to package it if the
 // platform is known to not support user stylesheets.
 
-if ( typeof vAPI === 'object' && vAPI.supportsUserStylesheets ) {
 // >>>>>>>> start of HUGE-IF-BLOCK
+if ( typeof vAPI === 'object' && vAPI.supportsUserStylesheets ) {
 
 /******************************************************************************/
 /******************************************************************************/
@@ -239,5 +239,25 @@ vAPI.DOMFilterer.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-// <<<<<<<< end of HUGE-IF-BLOCK
 }
+// <<<<<<<< end of HUGE-IF-BLOCK
+
+
+
+
+
+
+
+
+/*******************************************************************************
+
+    DO NOT:
+    - Remove the following code
+    - Add code beyond the following code
+    Reason:
+    - https://github.com/gorhill/uBlock/pull/3721
+    - uBO never uses the return value from injected content scripts
+
+**/
+
+void 0;

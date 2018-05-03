@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@
 // https://github.com/chrisaljoudi/uBlock/issues/456
 //   Skip if already injected.
 
-if ( typeof vAPI === 'object' && !vAPI.clientScript ) { // >>>>>>>> start of HUGE-IF-BLOCK
+// >>>>>>>> start of HUGE-IF-BLOCK
+if ( typeof vAPI === 'object' && !vAPI.clientScript ) {
 
 /******************************************************************************/
 /******************************************************************************/
@@ -444,4 +445,25 @@ vAPI.shutdown.add(function() {
 /******************************************************************************/
 /******************************************************************************/
 
-} // <<<<<<<< end of HUGE-IF-BLOCK
+}
+// <<<<<<<< end of HUGE-IF-BLOCK
+
+
+
+
+
+
+
+
+/*******************************************************************************
+
+    DO NOT:
+    - Remove the following code
+    - Add code beyond the following code
+    Reason:
+    - https://github.com/gorhill/uBlock/pull/3721
+    - uBO never uses the return value from injected content scripts
+
+**/
+
+void 0;
