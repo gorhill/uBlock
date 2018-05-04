@@ -1,25 +1,15 @@
 body {
     background-color: white;
     border: 0;
-    float: left;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     opacity: 1;
     overflow: hidden;
     padding: 0;
     white-space: nowrap;
-    }
-body.fullsize {
-    overflow: auto;
-    }
-body.mobile {
-    overflow-y: auto;
-    }
-/**
- https://github.com/gorhill/uBlock/issues/83
- .portrait = portrait mode = width is constrained = optimize layout accordingly.
- */
-body.portrait {
-    width: 100%;
+    width: fit-content;
+    width: -moz-fit-content;
     }
 
 h2 {
@@ -50,29 +40,21 @@ a {
     padding: calc(0.1em + 1px) 0;
     position: relative;
     text-align: center;
+    width: 100%;
     }
 #version {
     font-size: 90%;
     font-weight: normal;
     }
-body[dir="ltr"] #panes {
-    direction: rtl;
-    }
-body[dir="rtl"] #panes {
-    direction: ltr;
-    }
-body, #panes {
-    text-align: right; /* this helps the popup render better at "intermediate" widths */
-    }
 
+#panes {
+    display: flex;
+    flex-direction: row-reverse;
+    }
 #panes > div {
     display: inline-block;
     position: relative;
     vertical-align: top;
-    }
-body.portrait #panes > div {
-    display: block;
-    width: 100%;
     }
 body[dir="ltr"] #panes > div {
     direction: ltr;
@@ -81,6 +63,7 @@ body[dir="rtl"] #panes > div {
     direction: rtl;
     }
 #panes > div:nth-of-type(2) {
+    flex-shrink: 0;
     font-family: "Noto Sans", sans-serif;
     overflow-y: auto;
     overflow-x: hidden;
@@ -93,14 +76,7 @@ body[dir="ltr"] #panes > div:nth-of-type(2) {
     direction: rtl;
     margin-right: 1px;
     }
-/**
- Scroll bar to the right.
- Firefox bug: when popup is rendered inside hamburger menu panel, Firefox is
-              unable to render the scroll bar to the left.
-              Maybe <https://bugzilla.mozilla.org/show_bug.cgi?id=1139306>?
- */
-body[dir="rtl"] #panes > div:nth-of-type(2),
-body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
+body[dir="rtl"] #panes > div:nth-of-type(2) {
     direction: ltr;
     margin-left: 1px;
     }
@@ -542,4 +518,22 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     }
 #firewallContainer.dirty ~ #rulesetTools > span:hover {
     color: black;
+    }
+
+
+body.responsive {
+    overflow-y: auto;
+    width: auto;
+    }
+body.responsive #panes {
+    flex-wrap: wrap;
+    }
+body.responsive #panes > div:nth-of-type(1) {
+    flex-shrink: 0;
+    flex-grow: 1;
+    }
+body.responsive #panes > div:nth-of-type(2) {
+    flex-grow: 8;
+    flex-shrink: 1;
+    width: auto;
     }
