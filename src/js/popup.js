@@ -34,34 +34,24 @@ if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
     document.body.style.setProperty('font-size', popupFontSize);
 }
 
-// Ensure the popup is properly sized as soon as possible. It is assume the DOM
-// content is ready at this point, which should be the case given where this
-// script file is included in the HTML file.
-
-var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'true';
-
+// https://github.com/gorhill/uBlock/issues/3032
 // Popup panel can be in one of two modes:
 // - not responsive: viewport is expected to adjust to popup panel size
-// - responsive: popup panel must adjust to viewport size -- this happens when
-//   the viewport is not resized by the browser to perfectly fits uBO's popup
-//   panel.
-if ( /[\?&]responsive=1/.test(window.location.search) ) {
-    document.body.classList.add('responsive');
-}
-
-// Mobile device?
-// https://github.com/gorhill/uBlock/issues/3032
-// - If at least one of the window's viewport dimension is larger than the
-//   corresponding device's screen dimension, assume uBO's popup panel sits in
-//   its own tab.
-if ( vAPI.webextFlavor.soup.has('mobile') ) {
+// - responsive: popup panel must adjust to viewport size -- this happens
+//   when the viewport is not resized by the browser to perfectly fits uBO's
+//   popup panel.
+if (
+    vAPI.webextFlavor.soup.has('mobile') ||
+    /[\?&]responsive=1/.test(window.location.search)
+) {
     document.body.classList.add('responsive');
 }
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
-// Experimental: mitigate glitchy popup UI: immediately set the firewall pane
-// visibility to its last known state. By default the pane is hidden.
-// Will remove if it makes no difference.
+// Experimental: mitigate glitchy popup UI: immediately set the firewall
+// pane visibility to its last known state. By default the pane is hidden.
+let dfPaneVisibleStored =
+    vAPI.localStorage.getItem('popupFirewallPane') === 'true';
 if ( dfPaneVisibleStored ) {
     document.getElementById('panes').classList.add('dfEnabled');
 }
