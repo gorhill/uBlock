@@ -351,6 +351,10 @@
     "message": "Lietot izmaiņas",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Built-in",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklāmas",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Lietotāja",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Import...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Vienu URL katrā rindiņā. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas. Nederīgs URL tiks ignorēts bez brīdinājuma.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Novecojis.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai saderīgs ar Adblock Plus filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai ar Adblock Plus saderīgs filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importēt un pievienot",
@@ -512,7 +520,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Šī cilne",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
@@ -590,6 +598,10 @@
   "aboutSupport": {
     "message": "Atbalsts",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Issue tracker",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Pirmkods (GPLv3)",

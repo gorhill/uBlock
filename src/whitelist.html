@@ -4,30 +4,48 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>uBlock — Whitelist</title>
-<link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
-<link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
-<link rel="stylesheet" type="text/css" href="css/whitelist.css">
+
+<link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
+
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/cloud-ui.css">
+<link rel="stylesheet" href="css/whitelist.css">
+<link rel="stylesheet" href="css/codemirror.css">
 </head>
 
 <body>
 
-<div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
+<div class="body">
+    <div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
 
-<p><span data-i18n="whitelistPrompt"></span> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Whitelist">&#xf05a;</a>
-<p>
-    <button id="whitelistApply" class="custom important" type="button" disabled="true" data-i18n="whitelistApply"></button>&ensp;
-    <button id="whitelistRevert" class="custom" type="button" disabled="true" data-i18n="genericRevert"></button>
-<p><section id="whitelist">
-    <textarea dir="auto" spellcheck="false"></textarea>
-    <div>E</div>
-    </section>
-<p>
-    <button id="importWhitelistFromFile" class="custom" data-i18n="whitelistImport"></button>&ensp;
-    <button id="exportWhitelistToFile" class="custom" data-i18n="whitelistExport"></button>
-    <input id="importFilePicker" type="file" accept="text/plain" class="hiddenFileInput">
+    <p class="vverbose"><span data-i18n="whitelistPrompt"></span> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Whitelist">&#xf05a;</a>
+    </p>
+    <p>
+        <button id="whitelistApply" class="custom important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="whitelistApply"></span></button>
+        <button id="whitelistRevert" class="custom iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        &emsp;&emsp;
+        <button id="importWhitelistFromFile" class="custom iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="whitelistImport"></span></button>
+        <button id="exportWhitelistToFile" class="custom iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="whitelistExport"></span></button>
+    </p>
+</div>
+<div id="whitelist" class="codeMirrorContainer codeMirrorFillVertical"></div>
 
+<div class="hidden">
+    <input id="importFilePicker" type="file" accept="text/plain">
+</div>
+
+<script src="lib/codemirror/lib/codemirror.js"></script>
+<script src="lib/codemirror/addon/display/panel.js"></script>
+<script src="lib/codemirror/addon/scroll/annotatescrollbar.js"></script>
+<script src="lib/codemirror/addon/search/matchesonscrollbar.js"></script>
+<script src="lib/codemirror/addon/search/searchcursor.js"></script>
+<script src="lib/codemirror/addon/selection/active-line.js"></script>
 <script src="lib/punycode.js"></script>
+
+<script src="js/codemirror/search.js"></script>
+
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

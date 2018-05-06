@@ -1,49 +1,49 @@
-En effektiv blocker: let på hukommelse og CPU forbrug,. Kan indlæse og anvende tusindvis af flere filtre end andre populære blockere derude.
+En effektiv blocker: Bruger kun lidt hukommelse og CPU, men kan alligevel indlæse og anvende langt flere filtre end andre populære blockere.
 
 Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-compared
 
-Anvendelse: Den store tænd-sluk-knap i pop op-vinduet bruges til permanent at deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global afbryderknap.
+Anvendelse: Den store tænd-sluk-knap i pop op-vinduet bruges til permanent at deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted; det er ikke en global afbryderknap.
 
 ***
 
-Fleksibel, det er mere end en "ad blocker": den kan også læse og oprette filtre fra hosts-filer.
+Fleksibel og mere end en "ad blocker": den kan også læse og oprette filtre fra hosts-filer.
 
-Fra starten af er disse lister over filtre indlæst og anvendt:
+Fra starten bliver disse filterlister indlæst og anvendt:
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Malware domains
+- Malware-domæner
 
 Flere lister er tilgængelige hvis du ønsker det:
 
 - Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
+- Dan Pollock’s hosts fil
+-Hphosts's annonce og sporings servere
 - MVPS HOSTS
 - Spam404
-- Osv.
+- Og mange andre
 
 Selvfølgelig vil flere aktive filtre betyde højere hukommelsesforbrug. Men selv efter tilføjelse af Fanboys to ekstra lister, samt hpHosts’s Ad and tracking servers, har uBlock stadig et lavere hukommelsesforbrug end andre meget populære blockere derude.
 
-Vær desuden opmærksom på, at hvis du vælger nogle af disse ekstra lister kan det føre til højere sandsynlighed for, at webstedet bliver vist forkert - især de lister der normalt anvendes som hosts-fil.
+Vær desuden opmærksom på, at hvis du vælger nogle af disse ekstra lister, kan det øge risikoen for, at webstedet ikke bliver vist korrekt – især for de lister, der normalt anvendes som hosts-fil.
 
 ***
 
-Uden de forudindstillede lister med filtre er denne udvidelse intet. Hvis du nogensinde  virkelig ønsker at bidrage med noget, så tænk på de mennesker der arbejder hårdt for at vedligeholde de filterlister du bruger, som alle blev stillet gratis til rådighed for alle.
+Uden de forudindstillede lister med filtre er denne udvidelse intet. Hvis du nogensinde virkelig ønsker at bidrage med noget, så tænk på de mennesker der arbejder hårdt for at vedligeholde de filterlister du bruger, som alle blev stillet gratis til rådighed for alle.
 
 ***
 
 Gratis.
 Open source med offentlig licens (GPLv3)
-For brugere, af brugere.
+Til brugere, af brugere.
 
-Bidragydere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Bidragydere @ Crowdin: https://crowdin.net/project/ublock
+Bidragydere på Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragydere på Crowdin: https://crowdin.net/project/ublock
 
 ***
 
 Dette er en tidlig version. Hav dette i tankerne når du skriver en anmeldelse.
 
-Projekt changelog:
+Projekt ændringslog:
 https://github.com/gorhill/uBlock/releases

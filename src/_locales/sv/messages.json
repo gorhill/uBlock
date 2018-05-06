@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -52,7 +52,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klicka för att aktivera uBlock₀ för den här webbplatsen.",
+    "message": "Klicka för att aktivera uBlock₀ på den här webbplatsen.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,7 +96,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klicka för att blockera alla popup-fönster på denna sida",
+    "message": "Klicka för att blockera alla popup-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klicka för att inaktivera kosmetiska filter för den här webbplatsen",
+    "message": "Klicka för att inaktivera kosmetiska filter på den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klicka för att aktivera kosmetisk filtrering på denna sida",
+    "message": "Klicka för att aktivera kosmetisk filtrering på den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Avaktivera verktygstips",
+    "message": "Inaktivera tipsrutor",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -260,11 +260,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Avaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
+    "message": "Inaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Avaktivera hyperlänksrevidering",
+    "message": "Inaktivera hyperlänksrevidering",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Avaktivera kosmetisk filtrering",
+    "message": "Inaktivera kosmetisk filtrering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -351,6 +351,10 @@
     "message": "Verkställ ändringar",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Lokalt",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Annonser",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Egna filter",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importera...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "En adress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga adresser kommer också ignoreras.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "En webbadress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga webbadresser kommer också ignoreras.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Föråldrad.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importera och lägg till",
@@ -468,7 +476,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
+    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En artikel per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -590,6 +598,10 @@
   "aboutSupport": {
     "message": "Hjälp",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Issue tracker",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Källkod (GPLv3)",

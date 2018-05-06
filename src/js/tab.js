@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ housekeep itself.
 */
 
 µb.tabContextManager = (function() {
-    var tabContexts = Object.create(null);
+    var tabContexts = new Map();
 
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This is to be used as last-resort fallback in case a tab is found to not
@@ -136,7 +136,7 @@ housekeep itself.
     var mostRecentRootDocURL = '';
     var mostRecentRootDocURLTimestamp = 0;
 
-    var popupCandidates = Object.create(null);
+    var popupCandidates = new Map();
 
     var PopupCandidate = function(targetTabId, openerTabId) {
         this.targetTabId = targetTabId;
@@ -155,7 +155,7 @@ housekeep itself.
         if ( this.selfDestructionTimer !== null ) {
             clearTimeout(this.selfDestructionTimer);
         }
-        delete popupCandidates[this.targetTabId];
+        popupCandidates.delete(this.targetTabId);
     };
 
     PopupCandidate.prototype.launchSelfDestruction = function() {
@@ -166,31 +166,36 @@ housekeep itself.
     };
 
     var popupCandidateTest = function(targetTabId) {
-        var candidates = popupCandidates,
-            entry;
-        for ( var tabId in candidates ) {
-            entry = candidates[tabId];
-            if ( targetTabId !== tabId && targetTabId !== entry.opener.tabId ) {
+        for ( var entry of popupCandidates ) {
+            var tabId = entry[0];
+            var candidate = entry[1];
+            if (
+                targetTabId !== tabId &&
+                targetTabId !== candidate.opener.tabId
+            ) {
                 continue;
             }
             // https://github.com/gorhill/uBlock/issues/3129
             //   If the trigger is a change in the opener's URL, mark the entry
             //   as candidate for popunder filtering.
-            if ( targetTabId === entry.opener.tabId ) {
-                entry.opener.popunder = true;
+            if ( targetTabId === candidate.opener.tabId ) {
+                candidate.opener.popunder = true;
             }
-            if ( vAPI.tabs.onPopupUpdated(tabId, entry.opener) === true ) {
-                entry.destroy();
+            if ( vAPI.tabs.onPopupUpdated(tabId, candidate.opener) === true ) {
+                candidate.destroy();
             } else {
-                entry.launchSelfDestruction();
+                candidate.launchSelfDestruction();
             }
         }
     };
 
     vAPI.tabs.onPopupCreated = function(targetTabId, openerTabId) {
-        var popup = popupCandidates[targetTabId];
+        var popup = popupCandidates.get(targetTabId);
         if ( popup === undefined ) {
-            popupCandidates[targetTabId] = new PopupCandidate(targetTabId, openerTabId);
+            popupCandidates.set(
+                targetTabId,
+                new PopupCandidate(targetTabId, openerTabId)
+            );
         }
         popupCandidateTest(targetTabId);
     };
@@ -206,7 +211,7 @@ housekeep itself.
     };
 
     var TabContext = function(tabId) {
-        this.tabId = tabId.toString();
+        this.tabId = tabId;
         this.stack = [];
         this.rawURL =
         this.normalURL =
@@ -218,18 +223,16 @@ housekeep itself.
         this.netFiltering = true;
         this.netFilteringReadTime = 0;
 
-        tabContexts[tabId] = this;
+        tabContexts.set(tabId, this);
     };
 
     TabContext.prototype.destroy = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
         if ( this.gcTimer !== null ) {
             clearTimeout(this.gcTimer);
             this.gcTimer = null;
         }
-        delete tabContexts[this.tabId];
+        tabContexts.delete(this.tabId);
     };
 
     TabContext.prototype.onTab = function(tab) {
@@ -363,7 +366,7 @@ housekeep itself.
     // These are to be used for the API of the tab context manager.
 
     var push = function(tabId, url) {
-        var entry = tabContexts[tabId];
+        var entry = tabContexts.get(tabId);
         if ( entry === undefined ) {
             entry = new TabContext(tabId);
             entry.autodestroy();
@@ -376,13 +379,13 @@ housekeep itself.
 
     // Find a tab context for a specific tab.
     var lookup = function(tabId) {
-        return tabContexts[tabId] || null;
+        return tabContexts.get(tabId) || null;
     };
 
     // Find a tab context for a specific tab. If none is found, attempt to
     // fix this. When all fail, the behind-the-scene context is returned.
     var mustLookup = function(tabId) {
-        var entry = tabContexts[tabId];
+        var entry = tabContexts.get(tabId);
         if ( entry !== undefined ) {
             return entry;
         }
@@ -407,13 +410,13 @@ housekeep itself.
         // about to fall through the cracks.
         // Example: Chromium + case #12 at
         //          http://raymondhill.net/ublock/popup.html
-        return tabContexts[vAPI.noTabId];
+        return tabContexts.get(vAPI.noTabId);
     };
 
     // https://github.com/gorhill/uBlock/issues/1735
     //   Filter for popups if actually committing.
     var commit = function(tabId, url) {
-        var entry = tabContexts[tabId];
+        var entry = tabContexts.get(tabId);
         if ( entry === undefined ) {
             entry = push(tabId, url);
         } else if ( entry.commit(url) ) {
@@ -423,7 +426,7 @@ housekeep itself.
     };
 
     var exists = function(tabId) {
-        return tabContexts[tabId] !== undefined;
+        return tabContexts.get(tabId) !== undefined;
     };
 
     // Behind-the-scene tab context
@@ -434,6 +437,9 @@ housekeep itself.
         entry.normalURL = µb.normalizePageURL(entry.tabId);
         entry.rootHostname = µb.URI.hostnameFromURI(entry.normalURL);
         entry.rootDomain = µb.URI.domainFromHostname(entry.rootHostname);
+
+        entry = new TabContext(vAPI.anyTabId);
+        entry.stack.push(new StackEntry('', true));
     })();
 
     // Context object, typically to be used to feed filtering engines.
@@ -445,7 +451,7 @@ housekeep itself.
         var tabContext = lookup(tabId);
         this.rootHostname = tabContext.rootHostname;
         this.rootDomain = tabContext.rootDomain;
-        this.pageHostname = 
+        this.pageHostname =
         this.pageDomain =
         this.requestURL =
         this.requestHostname =
@@ -842,13 +848,15 @@ vAPI.tabs.registerListeners();
     }
 
     // Reuse page store if one exists: this allows to guess if a tab is a popup
-    var pageStore = this.pageStores[tabId];
+    var pageStore = this.pageStores.get(tabId);
 
     // Tab is not bound
-    if ( !pageStore ) {
+    if ( pageStore === undefined ) {
         this.updateTitle(tabId);
         this.pageStoresToken = Date.now();
-        return (this.pageStores[tabId] = this.PageStore.factory(tabId, context));
+        pageStore = this.PageStore.factory(tabId, context);
+        this.pageStores.set(tabId, pageStore);
+        return pageStore;
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/516
@@ -878,10 +886,10 @@ vAPI.tabs.registerListeners();
 
 µb.unbindTabFromPageStats = function(tabId) {
     //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
-    var pageStore = this.pageStores[tabId];
+    var pageStore = this.pageStores.get(tabId);
     if ( pageStore !== undefined ) {
         pageStore.dispose();
-        delete this.pageStores[tabId];
+        this.pageStores.delete(tabId);
         this.pageStoresToken = Date.now();
     }
 };
@@ -889,29 +897,36 @@ vAPI.tabs.registerListeners();
 /******************************************************************************/
 
 µb.pageStoreFromTabId = function(tabId) {
-    return this.pageStores[tabId] || null;
+    return this.pageStores.get(tabId) || null;
 };
 
 µb.mustPageStoreFromTabId = function(tabId) {
-    return this.pageStores[tabId] || this.pageStores[vAPI.noTabId];
+    return this.pageStores.get(tabId) || this.pageStores.get(vAPI.noTabId);
 };
 
 /******************************************************************************/
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
 
-µb.pageStores[vAPI.noTabId] = µb.PageStore.factory(vAPI.noTabId);
-µb.pageStores[vAPI.noTabId].title = vAPI.i18n('logBehindTheScene');
+(function() {
+    var pageStore = µb.PageStore.factory(vAPI.noTabId);
+    µb.pageStores.set(pageStore.tabId, pageStore);
+    pageStore.title = vAPI.i18n('logBehindTheScene');
+
+    pageStore = µb.PageStore.factory(vAPI.anyTabId);
+    µb.pageStores.set(pageStore.tabId, pageStore);
+    pageStore.title = '[Any one of the known tabs]';
+})();
 
 /******************************************************************************/
 
 // Update visual of extension icon.
 
 µb.updateBadgeAsync = (function() {
-    var tabIdToTimer = Object.create(null);
+    var tabIdToTimer = new Map();
 
     var updateBadge = function(tabId) {
-        delete tabIdToTimer[tabId];
+        tabIdToTimer.delete(tabId);
 
         var state = false;
         var badge = '';
@@ -928,82 +943,70 @@ vAPI.tabs.registerListeners();
     };
 
     return function(tabId) {
-        if ( tabIdToTimer[tabId] ) {
-            return;
-        }
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-            return;
-        }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
+        if ( tabIdToTimer.has(tabId) ) { return; }
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        tabIdToTimer.set(
+            tabId,
+            vAPI.setTimeout(updateBadge.bind(this, tabId), 701)
+        );
     };
 })();
 
 /******************************************************************************/
 
 µb.updateTitle = (function() {
-    var tabIdToTimer = Object.create(null);
-    var tabIdToTryCount = Object.create(null);
+    var tabIdToTimer = new Map();
     var delay = 499;
 
-    var tryNoMore = function(tabId) {
-        delete tabIdToTryCount[tabId];
-    };
-
-    var tryAgain = function(tabId) {
-        var count = tabIdToTryCount[tabId];
-        if ( count === undefined ) {
-            return false;
-        }
-        if ( count === 1 ) {
-            delete tabIdToTryCount[tabId];
-            return false;
-        }
-        tabIdToTryCount[tabId] = count - 1;
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateTitle.bind(µb, tabId), delay);
+    var tryAgain = function(entry) {
+        if ( entry.count === 1 ) { return false; }
+        entry.count -= 1;
+        tabIdToTimer.set(
+            entry.tabId,
+            vAPI.setTimeout(updateTitle.bind(null, entry), delay)
+        );
         return true;
     };
 
-    var onTabReady = function(tabId, tab) {
-        if ( !tab ) {
-            return tryNoMore(tabId);
-        }
-        var pageStore = this.pageStoreFromTabId(tabId);
-        if ( pageStore === null ) {
-            return tryNoMore(tabId);
-        }
+    var onTabReady = function(entry, tab) {
+        if ( !tab ) { return; }
+        var µb = µBlock;
+        var pageStore = µb.pageStoreFromTabId(entry.tabId);
+        if ( pageStore === null ) { return; }
         // Firefox needs this: if you detach a tab, the new tab won't have
         // its rawURL set. Concretely, this causes the logger to report an
         // entry to itself in the logger's tab selector.
         // TODO: Investigate for a fix vAPI-side.
         pageStore.rawURL = tab.url;
-        this.pageStoresToken = Date.now();
-        if ( !tab.title && tryAgain(tabId) ) {
-            return;
-        }
+        µb.pageStoresToken = Date.now();
+        if ( !tab.title && tryAgain(entry) ) { return; }
         // https://github.com/gorhill/uMatrix/issues/225
         // Sometimes title changes while page is loading.
         var settled = tab.title && tab.title === pageStore.title;
         pageStore.title = tab.title || tab.url || '';
-        this.pageStoresToken = Date.now();
-        if ( settled || !tryAgain(tabId) ) {
-            tryNoMore(tabId);
+        if ( !settled ) {
+            tryAgain(entry);
         }
     };
 
-    var updateTitle = function(tabId) {
-        delete tabIdToTimer[tabId];
-        vAPI.tabs.get(tabId, onTabReady.bind(this, tabId));
+    var updateTitle = function(entry) {
+        tabIdToTimer.delete(entry.tabId);
+        vAPI.tabs.get(entry.tabId, onTabReady.bind(null, entry));
     };
 
     return function(tabId) {
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-            return;
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        var timer = tabIdToTimer.get(tabId);
+        if ( timer !== undefined ) {
+            clearTimeout(timer);
         }
-        if ( tabIdToTimer[tabId] ) {
-            clearTimeout(tabIdToTimer[tabId]);
-        }
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateTitle.bind(this, tabId), delay);
-        tabIdToTryCount[tabId] = 5;
+        tabIdToTimer.set(
+            tabId,
+            vAPI.setTimeout(
+                updateTitle.bind(null, { tabId: tabId, count: 5 }),
+                delay
+            )
+        );
     };
 })();
 
@@ -1018,11 +1021,10 @@ var pageStoreJanitorSampleSize = 10;
 
 var pageStoreJanitor = function() {
     var vapiTabs = vAPI.tabs;
-    var tabIds = Object.keys(µb.pageStores).sort();
+    var tabIds = Array.from(µb.pageStores.keys()).sort();
     var checkTab = function(tabId) {
         vapiTabs.get(tabId, function(tab) {
             if ( !tab ) {
-                //console.error('tab.js> pageStoreJanitor(): stale page store found:', µtabId);
                 µb.unbindTabFromPageStats(tabId);
             }
         });
@@ -1030,14 +1032,10 @@ var pageStoreJanitor = function() {
     if ( pageStoreJanitorSampleAt >= tabIds.length ) {
         pageStoreJanitorSampleAt = 0;
     }
-    var tabId;
     var n = Math.min(pageStoreJanitorSampleAt + pageStoreJanitorSampleSize, tabIds.length);
     for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
-        tabId = tabIds[i];
-        // Do not remove behind-the-scene page store
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-            continue;
-        }
+        var tabId = tabIds[i];
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { continue; }
         checkTab(tabId);
     }
     pageStoreJanitorSampleAt = n;

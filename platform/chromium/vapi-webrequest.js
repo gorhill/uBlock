@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -105,7 +105,15 @@ vAPI.net.registerListeners = function() {
     };
 
     var normalizeRequestDetails = function(details) {
-        details.tabId = details.tabId.toString();
+        // Chromium 63+ supports the `initiator` property, which contains
+        // the URL of the origin from which the network request was made.
+        if (
+            details.tabId === vAPI.noTabId &&
+            typeof details.initiator === 'string'
+        ) {
+            details.tabId = vAPI.anyTabId;
+            details.documentUrl = details.initiator;
+        }
 
         var type = details.type;
 
@@ -161,54 +169,11 @@ vAPI.net.registerListeners = function() {
         }
     };
 
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=129353
-    // https://github.com/gorhill/uBlock/issues/1497
-    // Expose websocket-based network requests to uBO's filtering engine,
-    // logger, etc.
-    // Counterpart of following block of code is found in "vapi-client.js" --
-    // search for "https://github.com/gorhill/uBlock/issues/1497".
-    //
-    // Once uBO 1.11.1 and uBO-Extra 2.12 are widespread, the image-based
-    // handling code can be removed.
-    var onBeforeWebsocketRequest = function(details) {
-        if ( (details.type !== 'image') &&
-             (details.method !== 'HEAD' || details.type !== 'xmlhttprequest')
-        ) {
-            return;
-        }
-        var requestURL = details.url,
-            matches = /[?&]u(?:rl)?=([^&]+)/.exec(requestURL);
-        if ( matches === null ) { return; }
-        details.type = 'websocket';
-        details.url = decodeURIComponent(matches[1]);
-        var r = onBeforeRequestClient(details);
-        if ( r && r.cancel ) { return r; }
-        // Redirect to the provided URL, or a 1x1 data: URI if none provided.
-        matches = /[?&]r=([^&]+)/.exec(requestURL);
-        return {
-            redirectUrl: matches !== null ?
-                decodeURIComponent(matches[1]) :
-                'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-        };
-    };
-
     var onBeforeRequestClient = this.onBeforeRequest.callback;
-    var onBeforeRequest = validTypes.websocket
-        // modern Chromium/WebExtensions: type 'websocket' is supported
-        ? function(details) {
-            normalizeRequestDetails(details);
-            return onBeforeRequestClient(details);
-        }
-        // legacy Chromium
-        : function(details) {
-            // https://github.com/gorhill/uBlock/issues/1497
-            if ( details.url.endsWith('ubofix=f41665f3028c7fd10eecf573336216d3') ) {
-                var r = onBeforeWebsocketRequest(details);
-                if ( r !== undefined ) { return r; }
-            }
-            normalizeRequestDetails(details);
-            return onBeforeRequestClient(details);
-        };
+    var onBeforeRequest = function(details) {
+        normalizeRequestDetails(details);
+        return onBeforeRequestClient(details);
+    };
 
     // This is needed for Chromium 49-55.
     var onBeforeSendHeaders = validTypes.csp_report
@@ -228,44 +193,16 @@ vAPI.net.registerListeners = function() {
     var onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = validTypes.font
-        // modern Chromium/WebExtensions: type 'font' is supported
-        ? function(details) {
-            normalizeRequestDetails(details);
-            if (
-                onHeadersReceivedClientTypes.length !== 0 &&
-                onHeadersReceivedClientTypes.indexOf(details.type) === -1
-            ) {
-                return;
-            }
-            return onHeadersReceivedClient(details);
+    var onHeadersReceived = function(details) {
+        normalizeRequestDetails(details);
+        if (
+            onHeadersReceivedClientTypes.length !== 0 &&
+            onHeadersReceivedClientTypes.indexOf(details.type) === -1
+        ) {
+            return;
         }
-        // legacy Chromium
-        : function(details) {
-            normalizeRequestDetails(details);
-            // Hack to work around Chromium API limitations, where requests of
-            // type `font` are returned as `other`. For example, our normalization
-            // fail at transposing `other` into `font` for URLs which are outside
-            // what is expected. At least when headers are received we can check
-            // for content type `font/*`. Blocking at onHeadersReceived time is
-            // less worse than not blocking at all. Also, due to Chromium bug,
-            // `other` always becomes `object` when it can't be normalized into
-            // something else. Test case for "unfriendly" font URLs:
-            //   https://www.google.com/fonts
-            if ( details.type === 'font' ) {
-                var r = onBeforeRequestClient(details);
-                if ( typeof r === 'object' && r.cancel === true ) {
-                    return { cancel: true };
-                }
-            }
-            if (
-                onHeadersReceivedClientTypes.length !== 0 &&
-                onHeadersReceivedClientTypes.indexOf(details.type) === -1
-            ) {
-                return;
-            }
-            return onHeadersReceivedClient(details);
-        };
+        return onHeadersReceivedClient(details);
+    };
 
     var urls, types;
 

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,86 @@ var chrome = self.chrome;
 /******************************************************************************/
 
 vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+
+/******************************************************************************/
+
+vAPI.webextFlavor = {
+    major: 0,
+    soup: new Set()
+};
+
+(function() {
+    var ua = navigator.userAgent,
+        flavor = vAPI.webextFlavor,
+        soup = flavor.soup;
+    var dispatch = function() {
+        window.dispatchEvent(new CustomEvent('webextFlavor'));
+    };
+
+    // This is always true.
+    soup.add('ublock').add('webext');
+
+    // Whether this is a dev build.
+    if ( /^\d+\.\d+\.\d+\D/.test(chrome.runtime.getManifest().version) ) {
+        soup.add('devbuild');
+    }
+
+    if ( /\bMobile\b/.test(ua) ) {
+        soup.add('mobile');
+    }
+
+    // Asynchronous
+    var async = self.browser instanceof Object &&
+                typeof self.browser.runtime.getBrowserInfo === 'function';
+    if ( async ) {
+        self.browser.runtime.getBrowserInfo().then(function(info) {
+            flavor.major = parseInt(info.version, 10) || 0;
+            soup.add(info.vendor.toLowerCase())
+                .add(info.name.toLowerCase());
+            soup.delete('user_stylesheet');
+            if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
+            soup.delete('html_filtering');
+            if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
+            dispatch();
+        });
+    }
+
+    // Synchronous -- order of tests is important
+    var match;
+    if ( (match = /\bFirefox\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('mozilla').add('firefox');
+        if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
+        if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
+    } else if ( (match = /\bEdge\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('microsoft').add('edge');
+    } else if ( (match = /\bOPR\/(\d+)/.exec(ua)) !== null ) {
+        var reEx = /\bChrom(?:e|ium)\/([\d.]+)/;
+        if ( reEx.test(ua) ) { match = reEx.exec(ua); }
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('opera').add('chromium');
+    } else if ( (match = /\bChromium\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('chromium');
+    } else if ( (match = /\bChrome\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('google').add('chromium');
+    } else if ( (match = /\bSafari\/(\d+)/.exec(ua)) !== null ) {
+        flavor.major = parseInt(match[1], 10) || 0;
+        soup.add('apple').add('safari');
+    }
+
+    // https://github.com/gorhill/uBlock/issues/3588
+    if ( soup.has('chromium') && flavor.major >= 66 ) {
+        soup.add('user_stylesheet');
+    }
+
+    // Don't starve potential listeners
+    if ( !async ) {
+        vAPI.setTimeout(dispatch, 97);
+    }
+})();
 
 /******************************************************************************/
 
@@ -77,10 +157,7 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 //   `window.open('', '_self').close()`. 
 
 vAPI.closePopup = function() {
-    if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
-    ) {
+    if ( vAPI.webextFlavor.soup.has('firefox') ) {
         window.close();
         return;
     }
@@ -135,4 +212,22 @@ vAPI.localStorage = {
 
 })(this);
 
-/******************************************************************************/
+
+
+
+
+
+
+
+/*******************************************************************************
+
+    DO NOT:
+    - Remove the following code
+    - Add code beyond the following code
+    Reason:
+    - https://github.com/gorhill/uBlock/pull/3721
+    - uBO never uses the return value from injected content scripts
+
+**/
+
+void 0;

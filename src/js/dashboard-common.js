@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
+/* global CodeMirror, uDom */
+
 'use strict';
 
 /******************************************************************************/
@@ -109,6 +110,106 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
                             .replace(/:/g, '.')
                             .replace('T', '_');
 };
+
+/******************************************************************************/
+
+self.uBlockDashboard.patchCodeMirrorEditor = (function() {
+    var grabFocusTimer;
+    var grabFocusTarget;
+    var grabFocus = function() {
+        grabFocusTarget.focus();
+        grabFocusTimer = grabFocusTarget = undefined;
+    };
+    var grabFocusAsync = function(cm) {
+        grabFocusTarget = cm;
+        if ( grabFocusTimer === undefined ) {
+            grabFocusTimer = vAPI.setTimeout(grabFocus, 1);
+        }
+    };
+
+    // https://github.com/gorhill/uBlock/issues/3646
+    var patchSelectAll = function(cm, details) {
+        var vp = cm.getViewport();
+        if ( details.ranges.length !== 1 ) { return; }
+        var range = details.ranges[0],
+            lineFrom = range.anchor.line,
+            lineTo = range.head.line;
+        if ( lineTo === lineFrom ) { return; }
+        if ( range.head.ch !== 0 ) { lineTo += 1; }
+        if ( lineFrom !== vp.from || lineTo !== vp.to ) { return; }
+        details.update([
+            {
+                anchor: { line: 0, ch: 0 },
+                head: { line: cm.lineCount(), ch: 0 }
+            }
+        ]);
+        grabFocusAsync(cm);
+    };
+
+    var lastGutterClick = 0;
+    var lastGutterLine = 0;
+
+    var onGutterClicked = function(cm, line) {
+        var delta = Date.now() - lastGutterClick;
+        if ( delta >= 500 || line !== lastGutterLine ) {
+            cm.setSelection(
+                { line: line, ch: 0 },
+                { line: line + 1, ch: 0 }
+            );
+            lastGutterClick = Date.now();
+            lastGutterLine = line;
+        } else {
+            cm.setSelection(
+                { line: 0, ch: 0 },
+                { line: cm.lineCount(), ch: 0 },
+                { scroll: false }
+            );
+            lastGutterClick = 0;
+        }
+        grabFocusAsync(cm);
+    };
+
+    var resizeTimer,
+        resizeObserver;
+    var resize = function(cm) {
+        resizeTimer = undefined;
+        var child = document.querySelector('.codeMirrorFillVertical');
+        if ( child === null ) { return; }
+        var prect = document.documentElement.getBoundingClientRect();
+        var crect = child.getBoundingClientRect();
+        var cssHeight = Math.floor(Math.max(prect.bottom - crect.top, 80)) + 'px';
+        if ( child.style.height !== cssHeight ) {
+            child.style.height = cssHeight;
+            if ( cm instanceof CodeMirror ) {
+                cm.refresh();
+            }
+        }
+    };
+    var resizeAsync = function(cm, delay) {
+        if ( resizeTimer !== undefined ) { return; }
+        resizeTimer = vAPI.setTimeout(
+            resize.bind(null, cm),
+            typeof delay === 'number' ? delay : 66
+        );
+    };
+
+    return function(cm) {
+        if ( document.querySelector('.codeMirrorFillVertical') !== null ) {
+            var boundResizeAsync = resizeAsync.bind(null, cm);
+            window.addEventListener('resize', boundResizeAsync);
+            resizeObserver = new MutationObserver(boundResizeAsync);
+            resizeObserver.observe(document.querySelector('.body'), {
+                childList: true,
+                subtree: true
+            });
+            resizeAsync(cm, 1);
+        }
+        if ( cm.options.inputStyle === 'contenteditable' ) {
+            cm.on('beforeSelectionChange', patchSelectAll);
+        }
+        cm.on('gutterClick', onGutterClicked);
+    };
+})();
 
 /******************************************************************************/
 

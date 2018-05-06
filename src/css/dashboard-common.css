@@ -1,6 +1,12 @@
 body {
+    background-color: #fff;
+    box-sizing: border-box;
+    color: #000;
     margin: 0;
-    padding: 0 0.5em 0.5em 0.5em;
+    padding: 0;
+    }
+body > div.body {
+    padding: 0 0.5em;
     }
 @media screen and (max-device-width: 960px) {
     body {
@@ -32,12 +38,6 @@ a.info.important {
     }
 button {
     padding: 0.33em;
-    }
-div > p:first-child {
-    margin-top: 0;
-    }
-div > p:last-child {
-    margin-bottom: 0;
     }
 input[type="number"] {
     width: 5em;
@@ -89,4 +89,19 @@ input[type="checkbox"][disabled] + label {
     margin: 0;
     padding: 5px;
     background-color: #FEDAE0;
+    }
+@media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
+    .body > p,
+    .body > ul {
+        margin: 0.5em 0;
+        }
+    .vverbose {
+        display: none !important;
+        }
+    }
+@media (max-height: 400px) {
+    html {
+        min-height: 400px !important;
+        overflow: auto !important;
+        }
     }

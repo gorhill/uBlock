@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtros de terceiros",
+    "message": "Listas de filtros",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -44,15 +44,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clique: desativa\/ativa o uBlock₀ para este site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
+    "message": "Clique: desativa\/ativa o uBlock₀ neste site.\n\nCtrl+clique: desativa o uBlock₀ apenas nesta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clique para desativar uBO neste site.\n\nCtrl+clique para desativar o uBO apenas nesta página.",
+    "message": "Clique para desativar uBlock₀ neste site.\n\nCtrl+clique para desativar o uBlock₀ apenas nesta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clique para ativar o uBO neste site.",
+    "message": "Clique para ativar o uBlock₀ neste site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Clique para não bloquear as fontes remotas neste site",
+    "message": "Clique para não bloquear fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -144,7 +144,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Regras locais: esta coluna é para as regras que se aplicam somente ao site atual.\nRegras locais substituem regras globais.",
+    "message": "Regras locais: esta coluna é para regras que se aplicam somente ao site atual.\nRegras locais substituem regras globais.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -208,7 +208,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Pré-visualizar",
+    "message": "Visualizar",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Desativar dicas de balão",
+    "message": "Desativar dicas",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -260,7 +260,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Desativar pré-chamadas (para impedir qualquer conexão de solicitações de rede bloqueadas)",
+    "message": "Desativar serviço de previsão (para prevenir qualquer solicitação de redes bloqueadas)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Esses comportamentos padrões podem ser substituídos por site",
+    "message": "Estes comportamentos padrões podem ser substituídos por site",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Os filtros cosméticos genéricos são os filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "message": "<p>Os filtros cosméticos genéricos são filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -350,6 +350,10 @@
   "3pApplyChanges": {
     "message": "Aplicar alterações",
     "description": "English: Apply changes"
+  },
+  "3pGroupDefault": {
+    "message": "Local",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
     "message": "Anúncios",
@@ -379,9 +383,13 @@
     "message": "Personalizado",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importar...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Uma URL por linha. As linhas prefixadas com &lsquo;!&rsquo; serão ignoradas. URLs inválidas serão silenciosamente ignoradas.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Uma URL por linha. URLs inválidas serão silenciosamente ignoradas.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Desatualizada.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Um filtro por linha. O filtro pode ser um simples nome de servidor ou um filtro compatível com Adblock Plus. Linhas com prefixo <code>!<\/code> serão ignoradas.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importar e adicionar",
@@ -432,7 +440,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Confirmar",
+    "message": "Aplicar",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -460,7 +468,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Lista de suas regras de filtragem dinâmica.",
+    "message": "Lista das suas regras de filtragem dinâmica.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -508,7 +516,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Por trás da cena",
+    "message": "Em segundo plano",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -590,6 +598,10 @@
   "aboutSupport": {
     "message": "Suporte",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Rastreador de problemas",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Código-fonte (GPLv3)",

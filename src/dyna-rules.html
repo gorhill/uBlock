@@ -4,51 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>uBlock — Dynamic filtering rules</title>
+<link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" type="text/css" href="lib/codemirror/addon/merge/merge.css">
+
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/dyna-rules.css">
+<link rel="stylesheet" type="text/css" href="css/codemirror.css">
 </head>
 
 <body>
 
-<div id="cloudWidget" class="hide" data-cloud-entry="myRulesPane"></div>
-
-<p data-i18n="rulesHint"></p>
-<p data-i18n="rulesFormatHint"></p>
-<div id="diff">
-    <div class="pane left">
-        <div class="ruleActions">
-            <h2 data-i18n="rulesPermanentHeader"></h2>
-            <button type="button" class="custom" id="exportButton" data-i18n="rulesExport"></button>
-            <button type="button" class="custom" id="revertButton" data-i18n="rulesRevert"></button>
-        </div>
-        <div class="rulesContainer">
-            <ul></ul>
-        </div>
-        </div>
-    <div class="pane right">
-        <div class="ruleActions">
-            <h2 data-i18n="rulesTemporaryHeader"></h2>
-            <button type="button" class="custom" id="commitButton" data-i18n="rulesCommit"></button>
-            <button type="button" class="custom" id="editEnterButton" data-i18n="rulesEdit"></button>
-            <button type="button" class="custom" id="editStopButton" data-i18n="rulesEditSave"></button>
-            <button type="button" class="custom" id="editCancelButton" data-i18n="rulesEditDiscard"></button>
-            <button type="button" class="custom" id="importButton" data-i18n="rulesImport"></button>
-        </div>
-        <div class="rulesContainer">
-            <textarea spellcheck="false"></textarea>
-            <ul></ul>
+<div class="body">
+    <div id="cloudWidget" class="hide" data-cloud-entry="myRulesPane"></div>
+    <p class="vverbose"><span data-i18n="rulesHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax" target="_blank">&#xf05a;</a></p>
+    <div id="diff">
+        <div class="tools">
+            <div class="ruleActions">
+                <h3 data-i18n="rulesPermanentHeader"></h3>
+                <button type="button" class="custom iconifiable" id="exportButton"><span class="fa">&#xf093;</span><span data-i18n="rulesExport"></span></button>
+                <button type="button" class="custom iconifiable" id="revertButton"><span class="fa">&#xf061;</span><span data-i18n="rulesRevert"></span></button>
+            </div>
+            <div class="ruleActions">
+                <h3 data-i18n="rulesTemporaryHeader"></h3>
+                <button type="button" class="custom iconifiable" id="commitButton"><span class="fa">&#xf060;</span><span data-i18n="rulesCommit"></span></button>
+                <button type="button" class="custom iconifiable" id="importButton"><span class="fa">&#xf019;</span><span data-i18n="rulesImport"></span></button>
+                <button type="button" class="custom iconifiable important disabled" id="editSaveButton"><span class="fa">&#xf0c7;</span><span data-i18n="rulesEditSave"></span></button>
+            </div>
+            <div id="ruleFilter"><span class="fa">&#xf0b0;</span>&ensp;<input type="text" size="20"></div>
         </div>
     </div>
+</div>
+<div class="codeMirrorContainer codeMirrorMergeContainer codeMirrorFillVertical"></div>
 
 <div id="templates" style="display: none;">
     <input class="hidden" id="importFilePicker" type="file" accept="text/plain">
     <span class="hidden" data-i18n="rulesDefaultFileName"></span>
-    <ul>
-        <li>&nbsp;</li>
-        </ul>
-    </div>
+</div>
+
+<script src="lib/diff/swatinem_diff.js"></script>
+<script src="lib/codemirror/lib/codemirror.js"></script>
+<script src="lib/codemirror/addon/merge/merge.js"></script>
+<script src="lib/codemirror/addon/selection/active-line.js"></script>
 
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>

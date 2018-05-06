@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,14 +28,85 @@
 /******************************************************************************/
 /******************************************************************************/
 
+var warResolve = (function() {
+    var warPairs = [];
+
+    var onPairsReady = function() {
+        var reng = µBlock.redirectEngine;
+        for ( var i = 0; i < warPairs.length; i += 2 ) {
+            var resource = reng.resources.get(warPairs[i+0]);
+            if ( resource === undefined ) { continue; }
+            resource.warURL = vAPI.getURL(
+                '/web_accessible_resources/' + warPairs[i+1]
+            );
+        }
+        reng.selfieFromResources();
+    };
+
+    return function() {
+        if ( vAPI.warSecret === undefined || warPairs.length !== 0 ) {
+            return onPairsReady();
+        }
+
+        var onPairsLoaded = function(details) {
+            var marker = '>>>>>';
+            var pos = details.content.indexOf(marker);
+            if ( pos === -1 ) { return; }
+            var pairs = details.content.slice(pos + marker.length)
+                                      .trim()
+                                      .split('\n');
+            if ( (pairs.length & 1) !== 0 ) { return; }
+            for ( var i = 0; i < pairs.length; i++ ) {
+                pairs[i] = pairs[i].trim();
+            }
+            warPairs = pairs;
+            onPairsReady();
+        };
+
+        µBlock.assets.fetchText(
+            '/web_accessible_resources/imported.txt?secret=' + vAPI.warSecret,
+            onPairsLoaded
+        );
+    };
+})();
+
+// https://github.com/gorhill/uBlock/issues/3639
+// https://github.com/EFForg/https-everywhere/issues/14961
+// https://bugs.chromium.org/p/chromium/issues/detail?id=111700
+//   Do not redirect to a WAR if the platform suffers from spurious redirect
+//   conflicts, and the request to redirect is not `https:`.
+//   This special handling code can removed once the Chromium issue is fixed.
+var suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
+
+/******************************************************************************/
+/******************************************************************************/
+
 var RedirectEntry = function() {
     this.mime = '';
     this.data = '';
+    this.warURL = undefined;
 };
 
 /******************************************************************************/
 
-RedirectEntry.prototype.toURL = function() {
+// Prevent redirection to web accessible resources when the request is
+// of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
+// cause leakage of extension id. See:
+// - https://stackoverflow.com/a/8056313
+// - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
+
+RedirectEntry.prototype.toURL = function(details) {
+    if (
+        this.warURL !== undefined &&
+        details instanceof Object &&
+        details.requestType !== 'xmlhttprequest' &&
+        (
+            suffersSpuriousRedirectConflicts === false ||
+            details.requestURL.startsWith('https:')
+        )
+    ) {
+        return this.warURL + '?secret=' + vAPI.warSecret;
+    }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
             this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
@@ -75,6 +146,7 @@ RedirectEntry.fromSelfie = function(selfie) {
     var r = new RedirectEntry();
     r.mime = selfie.mime;
     r.data = selfie.data;
+    r.warURL = selfie.warURL;
     return r;
 };
 
@@ -164,12 +236,10 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 
 RedirectEngine.prototype.toURL = function(context) {
     var token = this.lookup(context);
-    if ( token === undefined ) {
-        return;
-    }
+    if ( token === undefined ) { return; }
     var entry = this.resources.get(token);
     if ( entry !== undefined ) {
-        return entry.toURL();
+        return entry.toURL(context);
     }
 };
 
@@ -340,7 +410,6 @@ RedirectEngine.prototype.toSelfie = function() {
     }
     var µb = µBlock;
     return {
-        resources: µb.arrayFrom(this.resources),
         rules: rules,
         ruleTypes: µb.arrayFrom(this.ruleTypes),
         ruleSources: µb.arrayFrom(this.ruleSources),
@@ -351,22 +420,11 @@ RedirectEngine.prototype.toSelfie = function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.fromSelfie = function(selfie) {
-    // Resources.
-    this.resources = new Map();
-    var resources = selfie.resources,
-        item;
-    for ( var i = 0, n = resources.length; i < n; i++ ) {
-        item = resources[i];
-        this.resources.set(item[0], RedirectEntry.fromSelfie(item[1]));
-    }
-
-    // Rules.
     this.rules = new Map(selfie.rules);
     this.ruleTypes = new Set(selfie.ruleTypes);
     this.ruleSources = new Set(selfie.ruleSources);
     this.ruleDestinations = new Set(selfie.ruleDestinations);
     this.modifyTime = Date.now();
-
     return true;
 };
 
@@ -436,6 +494,52 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     if ( fields !== undefined ) {
         this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
     }
+
+    warResolve();
+
+    this.modifyTime = Date.now();
+};
+
+/******************************************************************************/
+
+var resourcesSelfieVersion = 3;
+
+RedirectEngine.prototype.selfieFromResources = function() {
+    vAPI.cacheStorage.set({
+        resourcesSelfie: {
+            version: resourcesSelfieVersion,
+            resources: µBlock.arrayFrom(this.resources)
+        }
+    });
+};
+
+RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
+    var me = this;
+
+    var onSelfieReady = function(bin) {
+        if ( bin instanceof Object === false ) {
+            return callback(false);
+        }
+        var selfie = bin.resourcesSelfie;
+        if (
+            selfie instanceof Object === false ||
+            selfie.version !== resourcesSelfieVersion ||
+            Array.isArray(selfie.resources) === false
+        ) {
+            return callback(false);
+        }
+        me.resources = new Map();
+        for ( var entry of bin.resourcesSelfie.resources ) {
+            me.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
+        }
+        callback(true);
+    };
+
+    vAPI.cacheStorage.get('resourcesSelfie', onSelfieReady);
+};
+
+RedirectEngine.prototype.invalidateResourcesSelfie = function() {
+    vAPI.cacheStorage.remove('resourcesSelfie');
 };
 
 /******************************************************************************/

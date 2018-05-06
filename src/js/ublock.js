@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         }
         // Plain hostname
         else if ( line.indexOf('/') === -1 ) {
-            if ( reInvalidHostname.test(line) ) {
+            if ( this.reWhitelistBadHostname.test(line) ) {
                 key = '#';
                 directive = '# ' + line;
             } else {
@@ -242,7 +242,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         // label (or else it would be just impossible to make an efficient
         // dict.
         else {
-            matches = reHostnameExtractor.exec(line);
+            matches = this.reWhitelistHostnameExtractor.exec(line);
             if ( !matches || matches.length !== 2 ) {
                 key = '#';
                 directive = '# ' + line;
@@ -266,27 +266,9 @@ var matchBucket = function(url, hostname, bucket, start) {
     return whitelist;
 };
 
-µBlock.validateWhitelistString = function(s) {
-    var lineIter = new this.LineIterator(s), line;
-    while ( !lineIter.eot() ) {
-        line = lineIter.next().trim();
-        if ( line === '' ) { continue; }
-        if ( line.startsWith('#') ) { continue; } // Comment
-        if ( line.indexOf('/') === -1 ) { // Plain hostname
-            if ( reInvalidHostname.test(line) ) { return false; }
-            continue;
-        }
-        if ( line.length > 2 && line.startsWith('/') && line.endsWith('/') ) { // Regex-based
-            try { new RegExp(line.slice(1, -1)); } catch(ex) { return false; }
-            continue;
-        }
-        if ( reHostnameExtractor.test(line) === false ) { return false; } // URL
-    }
-    return true;
-};
-
-var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
-    reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-]*[a-z0-9\]])(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
+// https://github.com/gorhill/uBlock/issues/3717
+µBlock.reWhitelistBadHostname = /[^a-z0-9.\-_\[\]:]/;
+µBlock.reWhitelistHostnameExtractor = /([a-z0-9.\-_\[\]]+)(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
 /******************************************************************************/
 
@@ -393,6 +375,21 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 
     if ( mustSave ) {
         this.saveUserSettings();
+    }
+};
+
+/******************************************************************************/
+
+// https://www.reddit.com/r/uBlockOrigin/comments/8524cf/my_custom_scriptlets_doesnt_work_what_am_i_doing/
+
+µBlock.changeHiddenSettings = function(hs) {
+    var mustReloadResources =
+        hs.userResourcesLocation !== this.hiddenSettings.userResourcesLocation;
+    this.hiddenSettings = hs;
+    this.saveHiddenSettings();
+    if ( mustReloadResources ) {
+        this.redirectEngine.invalidateResourcesSelfie();
+        this.loadRedirectResources();
     }
 };
 
@@ -510,20 +507,18 @@ var reInvalidHostname = /[^a-z0-9.\-\[\]:]/,
 /******************************************************************************/
 
 µBlock.logCosmeticFilters = (function() {
-    var tabIdToTimerMap = {};
+    var tabIdToTimerMap = new Map();
 
     var injectNow = function(tabId) {
-        delete tabIdToTimerMap[tabId];
+        tabIdToTimerMap.delete(tabId);
         µBlock.scriptlets.injectDeep(tabId, 'cosmetic-logger');
     };
 
     var injectAsync = function(tabId) {
-        if ( tabIdToTimerMap.hasOwnProperty(tabId) ) {
-            return;
-        }
-        tabIdToTimerMap[tabId] = vAPI.setTimeout(
-            injectNow.bind(null, tabId),
-            100
+        if ( tabIdToTimerMap.has(tabId) ) { return; }
+        tabIdToTimerMap.set(
+            tabId,
+            vAPI.setTimeout(injectNow.bind(null, tabId), 100)
         );
     };
 

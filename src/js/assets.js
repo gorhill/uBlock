@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -177,44 +177,40 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         pendingSublistURLs = new Set([ mainlistURL ]),
         loadedSublistURLs = new Set(),
         toParsedURL = api.fetchFilterList.toParsedURL,
-        parsedMainURL = toParsedURL(mainlistURL);
+        parsedURL = toParsedURL(mainlistURL);
+
+    var processIncludeDirectives = function(details) {
+        var reInclude = /^!#include +(\S+)/gm;
+        for (;;) {
+            var match = reInclude.exec(details.content);
+            if ( match === null ) { break; }
+            if ( toParsedURL(match[1]) !== undefined ) { continue; }
+            if ( match[1].indexOf('..') !== -1 ) { continue; }
+            var subURL =
+                parsedURL.origin +
+                parsedURL.pathname.replace(/[^/]+$/, match[1]);
+            if ( pendingSublistURLs.has(subURL) ) { continue; }
+            if ( loadedSublistURLs.has(subURL) ) { continue; }
+            pendingSublistURLs.add(subURL);
+            api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
+        }
+    };
 
     var onLocalLoadSuccess = function(details) {
         if ( errored ) { return; }
 
-        var isSublist = details.url !== mainlistURL,
-            sublistURL;
+        var isSublist = details.url !== mainlistURL;
 
         pendingSublistURLs.delete(details.url);
         loadedSublistURLs.add(details.url);
         if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
         content.push(details.content.trim());
         if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
-        if (
-            parsedMainURL !== undefined &&
-            parsedMainURL.pathname.length > 0
-        ) {
-            var reInclude = /^!#include +(\S+)/gm,
-                match, subURL;
-            for (;;) {
-                match = reInclude.exec(details.content);
-                if ( match === null ) { break; }
-                if ( toParsedURL(match[1]) !== undefined ) { continue; }
-                if ( match[1].indexOf('..') !== -1 ) { continue; }
-                subURL =
-                    parsedMainURL.origin +
-                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
-                if ( loadedSublistURLs.has(subURL) ) { continue; }
-                pendingSublistURLs.add(subURL);
-            }
+        if ( parsedURL !== undefined && parsedURL.pathname.length > 0 ) {
+            processIncludeDirectives(details);
         }
 
-        if ( pendingSublistURLs.size !== 0 ) {
-            for ( sublistURL of pendingSublistURLs ) {
-                api.fetchText(sublistURL, onLocalLoadSuccess, onLocalLoadError);
-            }
-            return;
-        }
+        if ( pendingSublistURLs.size !== 0 ) { return; }
 
         details.url = mainlistURL;
         details.content = content.join('\n').trim();
@@ -859,7 +855,10 @@ api.metadata = function(callback) {
                 obsoleteAfter = cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
                 assetEntry.obsolete = obsoleteAfter < now;
                 assetEntry.remoteURL = cacheEntry.remoteURL;
-            } else {
+            } else if (
+                assetEntry.contentURL &&
+                assetEntry.contentURL.length !== 0
+            ) {
                 assetEntry.writeTime = 0;
                 obsoleteAfter = 0;
                 assetEntry.obsolete = true;
@@ -903,19 +902,17 @@ var updaterStatus,
     noRemoteResources;
 
 var updateFirst = function() {
-    // Firefox extension reviewers do not want uBO/webext to fetch its own
-    // scriptlets/resources asset from the project's own repo (github.com).
-    // See: https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    //   Firefox extension reviewers do not want uBO/webext to fetch its own
+    //   scriptlets/resources asset from the project's own repo (github.com).
+    // https://github.com/uBlockOrigin/uAssets/issues/1647#issuecomment-371456830
+    //   Allow self-hosted dev build to update: if update_url is present but
+    //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
         noRemoteResources =
-            typeof vAPI.webextFlavor === 'string' &&
-            vAPI.webextFlavor.startsWith('Mozilla-Firefox-');
-    }
-    // This is to ensure the packaged version will always be used (in case
-    // there is a cache remnant from a pre-stable webext era).
-    // See https://github.com/uBlockOrigin/uAssets/commit/a6c77af4afb45800d4fd7c268a2a5eab5a64daf3#commitcomment-24642912
-    if ( noRemoteResources ) {
-        api.remove('ublock-resources');
+            vAPI.webextFlavor.soup.has('firefox') &&
+            vAPI.webextFlavor.soup.has('webext') &&
+            vAPI.webextFlavor.soup.has('devbuild') === false;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();

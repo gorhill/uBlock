@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtros de terceros",
+    "message": "Listas de filtros",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Aplicar cambios",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Incluidos",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Anuncios",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Personalizada",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importar...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Una URL por línea. Las líneas que empiezan con &lsquo;!&rsquo; serán ignoradas. Se omitirán las URL no válidas.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Una URL por línea. Las URL inválidas serán ignoradas.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Desactualizado.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con &lsquo;!&rsquo; serán ignoradas.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importar y anexar",
@@ -590,6 +598,10 @@
   "aboutSupport": {
     "message": "Soporte",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Registro de problemas",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Código fuente (GPLv3)",

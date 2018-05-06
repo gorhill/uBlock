@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to black/white list requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -136,23 +136,23 @@ URLNetFiltering.prototype.reset = function() {
     this.url = '';
     this.type = '';
     this.r = 0;
+    this.changed = false;
 };
 
 /******************************************************************************/
 
 URLNetFiltering.prototype.assign = function(other) {
-    var thisRules = this.rules,
-        otherRules = other.rules;
     // Remove rules not in other
-    for ( var key of thisRules.keys() ) {
-        if ( otherRules.has(key) === false ) {
-            thisRules.delete(key);
+    for ( var key of this.rules.keys() ) {
+        if ( other.rules.has(key) === false ) {
+            this.rules.delete(key);
         }
     }
     // Add/change rules in other
-    for ( var entry of otherRules ) {
-        thisRules.set(entry[0], entry[1].slice());
+    for ( var entry of other.rules ) {
+        this.rules.set(entry[0], entry[1].slice());
     }
+    this.changed = true;
 };
 
 /******************************************************************************/
@@ -176,6 +176,7 @@ URLNetFiltering.prototype.setRule = function(srcHostname, url, type, action) {
     } else {
         addRuleEntry(entries, url, action);
     }
+    this.changed = true;
     return true;
 };
 
@@ -195,6 +196,7 @@ URLNetFiltering.prototype.removeRule = function(srcHostname, url, type) {
     if ( entries.length === 0 ) {
         this.rules.delete(bucketKey);
     }
+    this.changed = true;
     return true;
 };
 
@@ -276,7 +278,6 @@ URLNetFiltering.prototype.intToActionMap = new Map([
 /******************************************************************************/
 
 URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
-    var changed = false;
     var url, otherOwn, thisOwn;
     var i = urls.length;
     while ( i-- ) {
@@ -287,21 +288,21 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
         thisOwn = this.r !== 0 && this.context === context && this.url === url && this.type === type;
         if ( otherOwn && !thisOwn ) {
             this.setRule(context, url, type, other.r);
-            changed = true;
+            this.changed = true;
         }
         if ( !otherOwn && thisOwn ) {
             this.removeRule(context, url, type);
-            changed = true;
+            this.changed = true;
         }
     }
-    return changed;
+    return this.changed;
 };
 
 /******************************************************************************/
 
 // "url-filtering:" hostname url type action
 
-URLNetFiltering.prototype.toString = function() {
+URLNetFiltering.prototype.toArray = function() {
     var out = [],
         key, pos, hn, type, entries, i, entry;
     for ( var item of this.rules ) {
@@ -321,36 +322,48 @@ URLNetFiltering.prototype.toString = function() {
             );
         }
     }
-    return out.sort().join('\n');
+    return out;
+};
+
+URLNetFiltering.prototype.toString = function() {
+    return this.toArray().sort().join('\n');
 };
 
 /******************************************************************************/
 
 URLNetFiltering.prototype.fromString = function(text) {
     this.reset();
-
-    var lineIter = new µBlock.LineIterator(text),
-        line, fields;
+    var lineIter = new µBlock.LineIterator(text);
     while ( lineIter.eot() === false ) {
-        line = lineIter.next().trim();
-        if ( line === '' ) { continue; }
-        // Coarse test
-        if ( line.indexOf('://') === -1 ) {
-            continue;
-        }
-        fields = line.split(/\s+/);
-        if ( fields.length !== 4 ) {
-            continue;
-        }
-        // Finer test
-        if ( fields[1].indexOf('://') === -1 ) {
-            continue;
-        }
-        if ( nameToActionMap.hasOwnProperty(fields[3]) === false ) {
-            continue;
-        }
-        this.setRule(fields[0], fields[1], fields[2], nameToActionMap[fields[3]]);
+        this.addFromRuleParts(lineIter.next().trim().split(/\s+/));
     }
+};
+
+/******************************************************************************/
+
+URLNetFiltering.prototype.validateRuleParts = function(parts) {
+    if ( parts.length !== 4 ) { return; }
+    if ( parts[1].indexOf('://') === -1 ) { return; }
+    if ( nameToActionMap.hasOwnProperty(parts[3]) === false ) { return; }
+    return parts;
+};
+
+/******************************************************************************/
+
+URLNetFiltering.prototype.addFromRuleParts = function(parts) {
+    if ( this.validateRuleParts(parts) !== undefined ) {
+        this.setRule(parts[0], parts[1], parts[2], nameToActionMap[parts[3]]);
+        return true;
+    }
+    return false;
+};
+
+URLNetFiltering.prototype.removeFromRuleParts = function(parts) {
+    if ( this.validateRuleParts(parts) !== undefined ) {
+        this.removeRule(parts[0], parts[1], parts[2]);
+        return true;
+    }
+    return false;
 };
 
 /******************************************************************************/

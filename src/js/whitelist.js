@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,79 +19,95 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom, uBlockDashboard */
-
-/******************************************************************************/
-
-(function() {
+/* global CodeMirror, uDom, uBlockDashboard */
 
 'use strict';
 
 /******************************************************************************/
 
+(function() {
+
+/******************************************************************************/
+
+CodeMirror.defineMode("ubo-whitelist-directives", function() {
+    var reComment = /^\s*#/,
+        reRegex = /^\/.+\/$/;
+
+    return {
+        token: function(stream) {
+            var line = stream.string.trim();
+            stream.skipToEnd();
+            if ( reBadHostname === undefined ) {
+                return null;
+            }
+            if ( reComment.test(line) ) {
+                return 'comment';
+            }
+            if ( line.indexOf('/') === -1 ) {
+                return reBadHostname.test(line) ? 'error' : null;
+            }
+            if ( reRegex.test(line) ) {
+                try {
+                    new RegExp(line.slice(1, -1));
+                } catch(ex) {
+                    return 'error';
+                }
+                return null;
+            }
+            return reHostnameExtractor.test(line) ? null : 'error';
+        }
+    };
+});
+
+var reBadHostname,
+    reHostnameExtractor;
+
+/******************************************************************************/
+
 var messaging = vAPI.messaging,
-    cachedWhitelist = '';
+    cachedWhitelist = '',
+    noopFunc = function(){};
+
+var cmEditor = new CodeMirror(
+    document.getElementById('whitelist'),
+    {
+        autofocus: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        styleActiveLine: true
+    }
+);
+
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-var getTextareaNode = function() {
-    var me = getTextareaNode,
-        node = me.theNode;
-    if ( node === undefined ) {
-        node = me.theNode = uDom.nodeFromSelector('#whitelist textarea');
-    }
-    return node;
+var whitelistChanged = function() {
+    var whitelistElem = uDom.nodeFromId('whitelist');
+    var bad = whitelistElem.querySelector('.cm-error') !== null;
+    var changedWhitelist = cmEditor.getValue().trim();
+    var changed = changedWhitelist !== cachedWhitelist;
+    uDom.nodeFromId('whitelistApply').disabled = !changed || bad;
+    uDom.nodeFromId('whitelistRevert').disabled = !changed;
+    CodeMirror.commands.save = changed && !bad ? applyChanges : noopFunc;
 };
 
-var setErrorNodeHorizontalOffset = function(px) {
-    var me = setErrorNodeHorizontalOffset,
-        offset = me.theOffset || 0;
-    if ( px === offset ) { return; }
-    var node = me.theNode;
-    if ( node === undefined ) {
-        node = me.theNode = uDom.nodeFromSelector('#whitelist textarea + div');
-    }
-    node.style.right = px + 'px';
-    me.theOffset = px;
-};
-
-/******************************************************************************/
-
-var whitelistChanged = (function() {
-    var changedWhitelist, changed, timer;
-
-    var updateUI = function(good) {
-        uDom.nodeFromId('whitelistApply').disabled = changed || !good;
-        uDom.nodeFromId('whitelistRevert').disabled = changed;
-        uDom.nodeFromId('whitelist').classList.toggle('invalid', !good);
-    };
-
-    var validate = function() {
-        timer = undefined;
-        messaging.send(
-            'dashboard',
-            { what: 'validateWhitelistString', raw: changedWhitelist },
-            updateUI
-        );
-    };
-
-    return function() {
-        changedWhitelist = getTextareaNode().value.trim();
-        changed = changedWhitelist === cachedWhitelist;
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = vAPI.setTimeout(validate, 251);
-        var textarea = getTextareaNode();
-        setErrorNodeHorizontalOffset(textarea.offsetWidth - textarea.clientWidth);
-    };
-})();
+cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
 var renderWhitelist = function() {
-    var onRead = function(whitelist) {
-        cachedWhitelist = whitelist.trim();
-        getTextareaNode().value = cachedWhitelist + '\n';
-        whitelistChanged();
+    var onRead = function(details) {
+        var first = reBadHostname === undefined;
+        if ( first ) {
+            reBadHostname = new RegExp(details.reBadHostname);
+            reHostnameExtractor = new RegExp(details.reHostnameExtractor);
+        }
+        cachedWhitelist = details.whitelist.trim();
+        cmEditor.setValue(cachedWhitelist + '\n');
+        if ( first ) {
+            cmEditor.clearHistory();
+        }
     };
     messaging.send('dashboard', { what: 'getWhitelist' }, onRead);
 };
@@ -100,17 +116,16 @@ var renderWhitelist = function() {
 
 var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
-        var textarea = getTextareaNode();
-        textarea.value = [textarea.value.trim(), this.result.trim()].join('\n').trim();
-        whitelistChanged();
+        cmEditor.setValue(
+            [
+                cmEditor.getValue().trim(),
+                this.result.trim()
+            ].join('\n').trim()
+        );
     };
     var file = this.files[0];
-    if ( file === undefined || file.name === '' ) {
-        return;
-    }
-    if ( file.type.indexOf('text') !== 0 ) {
-        return;
-    }
+    if ( file === undefined || file.name === '' ) { return; }
+    if ( file.type.indexOf('text') !== 0 ) { return; }
     var fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
@@ -130,7 +145,7 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 var exportWhitelistToFile = function() {
-    var val = getTextareaNode().value.trim();
+    var val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
     var filename = vAPI.i18n('whitelistExportFilename')
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
@@ -144,35 +159,35 @@ var exportWhitelistToFile = function() {
 /******************************************************************************/
 
 var applyChanges = function() {
-    cachedWhitelist = getTextareaNode().value.trim();
-    var request = {
-        what: 'setWhitelist',
-        whitelist: cachedWhitelist
-    };
-    messaging.send('dashboard', request, renderWhitelist);
+    cachedWhitelist = cmEditor.getValue().trim();
+    messaging.send(
+        'dashboard',
+        {
+            what: 'setWhitelist',
+            whitelist: cachedWhitelist
+        },
+        renderWhitelist
+    );
 };
 
 var revertChanges = function() {
-    getTextareaNode().value = cachedWhitelist + '\n';
-    whitelistChanged();
+    var content = cachedWhitelist;
+    if ( content !== '' ) { content += '\n'; }
+    cmEditor.setValue(content);
 };
 
 /******************************************************************************/
 
 var getCloudData = function() {
-    return getTextareaNode().value;
+    return cmEditor.getValue();
 };
 
 var setCloudData = function(data, append) {
-    if ( typeof data !== 'string' ) {
-        return;
-    }
-    var textarea = getTextareaNode();
+    if ( typeof data !== 'string' ) { return; }
     if ( append ) {
-        data = uBlockDashboard.mergeNewLines(textarea.value.trim(), data);
+        data = uBlockDashboard.mergeNewLines(cmEditor.getValue().trim(), data);
     }
-    textarea.value = data.trim() + '\n';
-    whitelistChanged();
+    cmEditor.setValue(data.trim() + '\n');
 };
 
 self.cloud.onPush = getCloudData;
@@ -183,7 +198,6 @@ self.cloud.onPull = setCloudData;
 uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
-uDom('#whitelist textarea').on('input', whitelistChanged);
 uDom('#whitelistApply').on('click', applyChanges);
 uDom('#whitelistRevert').on('click', revertChanges);
 

@@ -4,27 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>uBlock — Your filters</title>
-<link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
-<link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
-<link rel="stylesheet" type="text/css" href="css/1p-filters.css">
+
+<link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
+
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/cloud-ui.css">
+<link rel="stylesheet" href="css/1p-filters.css">
+<link rel="stylesheet" href="css/codemirror.css">
 </head>
 
 <body>
 
-<div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
+<div class="body">
+    <div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
 
-<p><span data-i18n="1pFormatHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Static-filter-syntax" target="_blank">&#xf05a;</a></p>
-<p>
-    <button id="userFiltersApply" class="custom important" type="button" disabled="true" data-i18n="1pApplyChanges"></button>&ensp;
-    <button id="userFiltersRevert" class="custom" type="button" disabled="true" data-i18n="genericRevert"></button>
-</p>
-<p><textarea class="userFilters" id="userFilters" dir="auto" spellcheck="false"></textarea></p>
-<p>
-    <button id="importUserFiltersFromFile" class="custom" data-i18n="1pImport"></button>&ensp;
-    <button id="exportUserFiltersToFile" class="custom" data-i18n="1pExport"></button>
-    <input id="importFilePicker" type="file" accept="text/plain" class="hiddenFileInput">
-</p>
+    <p class="vverbose"><span data-i18n="1pFormatHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Static-filter-syntax" target="_blank">&#xf05a;</a></p>
+    <p>
+        <button id="userFiltersApply" class="custom important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="1pApplyChanges"></span></button>
+        <button id="userFiltersRevert" class="custom iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        &emsp;&emsp;
+        <button id="importUserFiltersFromFile" class="custom iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="1pImport"></span></button>
+        <button id="exportUserFiltersToFile" class="custom iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="1pExport"></span></button>
+    </p>
+</div>
+<div id="userFilters" class="codeMirrorContainer codeMirrorFillVertical" spellcheck="false"></div>
+<div class="hidden">
+    <input id="importFilePicker" type="file" accept="text/plain">
+</div>
+
+<script src="lib/codemirror/lib/codemirror.js"></script>
+<script src="lib/codemirror/addon/display/panel.js"></script>
+<script src="lib/codemirror/addon/scroll/annotatescrollbar.js"></script>
+<script src="lib/codemirror/addon/search/matchesonscrollbar.js"></script>
+<script src="lib/codemirror/addon/search/searchcursor.js"></script>
+<script src="lib/codemirror/addon/selection/active-line.js"></script>
+
+<script src="js/codemirror/search.js"></script>
+<script src="js/codemirror/ubo-static-filtering.js"></script>
 
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>

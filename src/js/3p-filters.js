@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@
 var listDetails = {},
     filteringSettingsHash = '',
     lastUpdateTemplateString = vAPI.i18n('3pLastUpdate'),
-    reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
+    reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/,
+    hideUnusedSet = new Set();
 
 /******************************************************************************/
 
@@ -69,7 +70,6 @@ var renderFilterLists = function(soft) {
         listEntryTemplate = uDom('#templates .listEntry'),
         listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats'),
         renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString,
-        hideUnusedLists = document.body.classList.contains('hideUnused'),
         groupNames = new Map();
 
     // Assemble a pretty list name if possible
@@ -80,16 +80,17 @@ var renderFilterLists = function(soft) {
         return listTitle;
     };
 
-    var liFromListEntry = function(listKey, li) {
+    var liFromListEntry = function(listKey, li, hideUnused) {
         var entry = listDetails.available[listKey],
             elem;
         if ( !li ) {
             li = listEntryTemplate.clone().nodeAt(0);
         }
+        var on = entry.off !== true;
         if ( li.getAttribute('data-listkey') !== listKey ) {
             li.setAttribute('data-listkey', listKey);
             elem = li.querySelector('input[type="checkbox"]');
-            elem.checked = entry.off !== true;
+            elem.checked = on;
             elem = li.querySelector('a:nth-of-type(1)');
             elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
             elem.setAttribute('type', 'text/html');
@@ -115,18 +116,17 @@ var renderFilterLists = function(soft) {
             } else {
                 li.classList.remove('mustread');
             }
+            li.classList.toggle('unused', hideUnused && !on);
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {
-            elem = li.querySelector('input[type="checkbox"]');
-            elem.checked = entry.off !== true;
+            li.querySelector('input[type="checkbox"]').checked = on;
         }
-        li.style.setProperty('display', hideUnusedLists && entry.off === true ? 'none' : '');
         elem = li.querySelector('span.counts');
         var text = '';
         if ( !isNaN(+entry.entryUsedCount) && !isNaN(+entry.entryCount) ) {
             text = listStatsTemplate
-                .replace('{{used}}', renderNumber(entry.off ? 0 : entry.entryUsedCount))
+                .replace('{{used}}', renderNumber(on ? entry.entryUsedCount : 0))
                 .replace('{{total}}', renderNumber(entry.entryCount));
         }
         elem.textContent = text;
@@ -157,14 +157,18 @@ var renderFilterLists = function(soft) {
 
     var listEntryCountFromGroup = function(listKeys) {
         if ( Array.isArray(listKeys) === false ) { return ''; }
-        var count = 0;
+        var count = 0,
+            total = 0;
         var i = listKeys.length;
         while ( i-- ) {
             if ( listDetails.available[listKeys[i]].off !== true ) {
                 count += 1;
             }
+            total += 1;
         }
-        return count === 0 ? '' : '(' + count.toLocaleString() + ')';
+        return total !== 0 ?
+            '(' + count.toLocaleString() + '/' + total.toLocaleString() + ')' :
+            '';
     };
 
     var liFromListGroup = function(groupKey, listKeys) {
@@ -189,13 +193,19 @@ var renderFilterLists = function(soft) {
         if ( liGroup.querySelector('.geName:empty') === null ) {
             liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
         }
+        var hideUnused = mustHideUnusedLists(groupKey);
+        liGroup.classList.toggle('hideUnused', hideUnused);
         var ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
-            var liEntry = liFromListEntry(listKeys[i], ulGroup.children[i]);
+            var liEntry = liFromListEntry(
+                listKeys[i],
+                ulGroup.children[i],
+                hideUnused
+            );
             if ( liEntry.parentElement === null ) {
                 ulGroup.appendChild(liEntry);
             }
@@ -224,15 +234,23 @@ var renderFilterLists = function(soft) {
         // Before all, set context vars
         listDetails = details;
 
+        // "My filters" will now sit in its own group. The following code
+        // ensures smooth transition.
+        listDetails.available['user-filters'].group = 'user';
+
         // Incremental rendering: this will allow us to easily discard unused
         // DOM list entries.
-        uDom('#lists .listEntries .listEntry').addClass('discard');
+        uDom('#lists .listEntries .listEntry[data-listkey]').addClass('discard');
+
+        // Remove import widget while we recreate list of lists.
+        var importWidget = uDom('.listEntry.toImport').detach();
 
         // Visually split the filter lists in purpose-based groups
         var ulLists = document.querySelector('#lists'),
             groups = groupsFromLists(details.available),
             liGroup, i, groupKey,
             groupKeys = [
+                'user',
                 'default',
                 'ads',
                 'privacy',
@@ -242,6 +260,7 @@ var renderFilterLists = function(soft) {
                 'regions',
                 'custom'
             ];
+        document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
             liGroup = liFromListGroup(groupKey, groups[groupKey]);
@@ -263,17 +282,28 @@ var renderFilterLists = function(soft) {
         }
 
         uDom('#lists .listEntries .listEntry.discard').remove();
-        uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
-        uDom('#listsOfBlockedHostsPrompt').text(
+
+        // Re-insert import widget.
+        uDom('[data-groupkey="custom"] .listEntries').append(importWidget);
+
+        uDom.nodeFromId('autoUpdate').checked = listDetails.autoUpdate === true;
+        uDom.nodeFromId('listsOfBlockedHostsPrompt').textContent =
             vAPI.i18n('3pListsOfBlockedHostsPrompt')
-                .replace('{{netFilterCount}}', renderNumber(details.netFilterCount))
-                .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
-        );
+                .replace(
+                    '{{netFilterCount}}',
+                    renderNumber(details.netFilterCount)
+                )
+                .replace(
+                    '{{cosmeticFilterCount}}',
+                    renderNumber(details.cosmeticFilterCount)
+                );
+        uDom.nodeFromId('parseCosmeticFilters').checked =
+            listDetails.parseCosmeticFilters === true;
+        uDom.nodeFromId('ignoreGenericCosmeticFilters').checked =
+            listDetails.ignoreGenericCosmeticFilters === true;
 
         // Compute a hash of the settings so that we can keep track of changes
         // affecting the loading of filter lists.
-        uDom('#parseCosmeticFilters').prop('checked', listDetails.parseCosmeticFilters === true);
-        uDom('#ignoreGenericCosmeticFilters').prop('checked', listDetails.ignoreGenericCosmeticFilters === true);
         if ( !soft ) {
             filteringSettingsHash = hashFromCurrentFromSettings();
         }
@@ -286,12 +316,18 @@ var renderFilterLists = function(soft) {
 /******************************************************************************/
 
 var renderWidgets = function() {
-    uDom('#buttonApply').toggleClass('disabled', filteringSettingsHash === hashFromCurrentFromSettings());
+    uDom('#buttonApply').toggleClass(
+        'disabled',
+        filteringSettingsHash === hashFromCurrentFromSettings()
+    );
     uDom('#buttonPurgeAll').toggleClass(
         'disabled',
         document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
     );
-    uDom('#buttonUpdate').toggleClass('disabled', document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null);
+    uDom('#buttonUpdate').toggleClass(
+        'disabled',
+        document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null
+    );
 };
 
 /******************************************************************************/
@@ -323,8 +359,8 @@ var updateAssetStatus = function(details) {
 
 var hashFromCurrentFromSettings = function() {
     var hash = [
-        document.getElementById('parseCosmeticFilters').checked,
-        document.getElementById('ignoreGenericCosmeticFilters').checked
+        uDom.nodeFromId('parseCosmeticFilters').checked,
+        uDom.nodeFromId('ignoreGenericCosmeticFilters').checked
     ];
     var listHash = [],
         listEntries = document.querySelectorAll('#lists .listEntry[data-listkey]:not(.toRemove)'),
@@ -338,7 +374,8 @@ var hashFromCurrentFromSettings = function() {
     }
     hash.push(
         listHash.sort().join(),
-        reValidExternalList.test(document.getElementById('externalLists').value),
+        uDom.nodeFromId('importLists').checked &&
+            reValidExternalList.test(uDom.nodeFromId('externalLists').value),
         document.querySelector('#lists .listEntry.toRemove') !== null
     );
     return hash.join();
@@ -424,6 +461,7 @@ var selectFilterLists = function(callback) {
     var externalListsElem = document.getElementById('externalLists'),
         toImport = externalListsElem.value.trim();
     externalListsElem.value = '';
+    uDom.nodeFromId('importLists').checked = false;
 
     messaging.send(
         'dashboard',
@@ -490,36 +528,89 @@ var autoUpdateCheckboxChanged = function() {
 
 /******************************************************************************/
 
-var toggleUnusedLists = function() {
-    document.body.classList.toggle('hideUnused');
-    var hide = document.body.classList.contains('hideUnused');
-    uDom('#lists li.listEntry > input[type="checkbox"]:not(:checked)')
-        .ancestors('li.listEntry[data-listkey]')
-        .css('display', hide ? 'none' : '');
-    vAPI.localStorage.setItem('hideUnusedFilterLists', hide ? '1' : '0');
+// Collapsing of unused lists.
+
+var mustHideUnusedLists = function(which) {
+    var hideAll = hideUnusedSet.has('*');
+    if ( which === '*' ) { return hideAll; }
+    return hideUnusedSet.has(which) !== hideAll;
 };
 
-/******************************************************************************/
-
-var groupEntryClickHandler = function() {
-    var li = uDom(this).ancestors('.groupEntry');
-    li.toggleClass('collapsed');
-    var key = 'collapseGroup' + li.nthOfType();
-    if ( li.hasClass('collapsed') ) {
-        vAPI.localStorage.setItem(key, 'y');
+var toggleHideUnusedLists = function(which) {
+    var groupSelector,
+        doesHideAll = hideUnusedSet.has('*'),
+        mustHide;
+    if ( which === '*' ) {
+        mustHide = doesHideAll === false;
+        groupSelector = '';
+        hideUnusedSet.clear();
+        if ( mustHide ) {
+            hideUnusedSet.add(which);
+        }
+        document.body.classList.toggle('hideUnused', mustHide);
+        uDom('.groupEntry[data-groupkey]').toggleClass('hideUnused', mustHide);
     } else {
-        vAPI.localStorage.removeItem(key);
+        var doesHide = hideUnusedSet.has(which);
+        if ( doesHide ) {
+            hideUnusedSet.delete(which);
+        } else {
+            hideUnusedSet.add(which);
+        }
+        mustHide = doesHide === doesHideAll;
+        groupSelector = '.groupEntry[data-groupkey="' + which + '"] ';
+        uDom(groupSelector).toggleClass('hideUnused', mustHide);
     }
+    uDom(groupSelector + '.listEntry > input[type="checkbox"]:not(:checked)')
+        .ancestors('.listEntry[data-listkey]')
+        .toggleClass('unused', mustHide);
+    vAPI.localStorage.setItem(
+        'hideUnusedFilterLists',
+        JSON.stringify(Array.from(hideUnusedSet))
+    );
 };
 
+var revealHiddenUsedLists = function() {
+    uDom('#lists .listEntry.unused > input[type="checkbox"]:checked')
+        .ancestors('.listEntry[data-listkey]')
+        .removeClass('unused');
+};
+
+uDom('#listsOfBlockedHostsPrompt').on('click', function() {
+    toggleHideUnusedLists('*');
+});
+
+uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(ev) {
+    toggleHideUnusedLists(
+        uDom(ev.target)
+            .ancestors('.groupEntry[data-groupkey]')
+            .attr('data-groupkey')
+    );
+});
+
+(function() {
+    var aa;
+    try {
+        var json = vAPI.localStorage.getItem('hideUnusedFilterLists');
+        if ( json !== null ) {
+            aa = JSON.parse(json);
+        }
+    } catch (ex) {
+    }
+    if ( Array.isArray(aa) === false ) {
+        aa = [ '*' ];
+    }
+    hideUnusedSet = new Set(aa);
+})();
+
 /******************************************************************************/
+
+// Cloud-related.
 
 var toCloudData = function() {
     var bin = {
         parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
         ignoreGenericCosmeticFilters: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
-        selectedLists: [],
-        externalLists: listDetails.externalLists
+        selectedLists: []
     };
 
     var liEntries = uDom('#lists .listEntry'), liEntry;
@@ -537,7 +628,7 @@ var toCloudData = function() {
 var fromCloudData = function(data, append) {
     if ( typeof data !== 'object' || data === null ) { return; }
 
-    var elem, checked, i, n;
+    var elem, checked;
 
     elem = uDom.nodeFromId('parseCosmeticFilters');
     checked = data.parseCosmeticFilters === true || append && elem.checked;
@@ -549,19 +640,35 @@ var fromCloudData = function(data, append) {
 
     var selectedSet = new Set(data.selectedLists),
         listEntries = uDom('#lists .listEntry'),
-        listEntry, listKey, input;
-    for ( i = 0, n = listEntries.length; i < n; i++ ) {
+        listEntry, listKey;
+    for ( var i = 0, n = listEntries.length; i < n; i++ ) {
         listEntry = listEntries.at(i);
         listKey = listEntry.attr('data-listkey');
-        input = listEntry.descendants('input').first();
+        var hasListKey = selectedSet.has(listKey);
+        selectedSet.delete(listKey);
+        var input = listEntry.descendants('input').first();
         if ( append && input.prop('checked') ) { continue; }
-        input.prop('checked', selectedSet.has(listKey) );
+        input.prop('checked', hasListKey);
     }
 
-    elem = uDom.nodeFromId('externalLists');
-    if ( !append ) { elem.value = ''; }
-    elem.value += data.externalLists || '';
+    // If there are URL-like list keys left in the selected set, import them.
+    for ( listKey of selectedSet ) {
+        if ( reValidExternalList.test(listKey) === false ) {
+            selectedSet.delete(listKey);
+        }
+    }
+    if ( selectedSet.size !== 0 ) {
+        elem = uDom.nodeFromId('externalLists');
+        if ( append ) {
+            if ( elem.value.trim() !== '' ) { elem.value += '\n'; }
+        } else {
+            elem.value = '';
+        }
+        elem.value += Array.from(selectedSet).join('\n');
+        uDom.nodeFromId('importLists').checked = true;
+    }
 
+    revealHiddenUsedLists();
     renderWidgets();
 };
 
@@ -570,23 +677,18 @@ self.cloud.onPull = fromCloudData;
 
 /******************************************************************************/
 
-document.body.classList.toggle(
-    'hideUnused',
-    vAPI.localStorage.getItem('hideUnusedFilterLists') === '1'
-);
-
 uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
 uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#buttonApply').on('click', buttonApplyHandler);
 uDom('#buttonUpdate').on('click', buttonUpdateHandler);
 uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
-uDom('#listsOfBlockedHostsPrompt').on('click', toggleUnusedLists);
-uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 uDom('#lists').on('change', '.listEntry > input', onFilteringSettingsChanged);
 uDom('#lists').on('click', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);
 uDom('#externalLists').on('input', onFilteringSettingsChanged);
+
+/******************************************************************************/
 
 renderFilterLists();
 

@@ -12,33 +12,29 @@
 
 <body>
 
+<div class="body">
+
 <div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
-
-<div>
-    <ul id="options">
-        <li><button id="buttonUpdate" class="custom important disabled" data-i18n="3pUpdateNow"></button>
-            <button id="buttonPurgeAll" class="custom disabled" data-i18n="3pPurgeAll"></button>
-            <button id="buttonApply" class="custom important disabled" data-i18n="3pApplyChanges"></button>
-        <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;
-        <li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
-            <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
-        <li><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
-            <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div>
-    </ul>
-    <p><span id="listsOfBlockedHostsPrompt"></span></p>
+<ul id="options" class="root">
+<li><button id="buttonUpdate" class="custom important disabled" data-i18n="3pUpdateNow"></button>
+    <button id="buttonPurgeAll" class="custom disabled" data-i18n="3pPurgeAll"></button>
+    <button id="buttonApply" class="custom important disabled" data-i18n="3pApplyChanges"></button>
+<li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;
+<li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
+<li><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div>
+</ul>
+<ul class="root">
+<li><span id="listsOfBlockedHostsPrompt"></span>
     <ul id="lists"></ul>
-</div>
+</ul>
 
-<div id="externalListsDiv">
-    <p>
-        <span data-i18n="3pExternalListsHint" style="margin: 0 0 0.25em 0; font-size: 13px;"></span>
-        <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">&#xf05a;</a>
-        <textarea id="externalLists" dir="ltr" spellcheck="false"></textarea>
-    </div>
+</div>
 
 <div id="templates" style="display: none;">
     <ul>
-        <li class="groupEntry"><span class="geName"></span> <span class="geCount dim"></span>
+        <li class="groupEntry"><span class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></span>
             <ul class="listEntries"></ul>
             </li>
         <li class="listEntry">
@@ -54,6 +50,9 @@
          --><span class="fa status updating" title="3pUpdating">&#xf110;</span>&#8203;<!--
          --><span class="fa status failed" title="3pNetworkError">&#xf127;</span>
             </li>
+        <li class="listEntry toImport"><input type="checkbox" id="importLists"><label for="importLists" data-i18n="3pImport"></label><!--
+            --><a class="fa info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">&#xf05a;</a><!--
+            --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
         </ul>
     </div>
 

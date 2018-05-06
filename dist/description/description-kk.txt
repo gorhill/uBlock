@@ -1,0 +1,49 @@
+An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+
+Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
+
+***
+
+Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+
+Out of the box, these lists of filters are loaded and enforced:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+More lists are available for you to select if you wish:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- And many others
+
+Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+
+Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+
+***
+
+Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+
+***
+
+Еркін.
+Open source with public license (GPLv3)
+For users by users.
+
+Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contributors @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+It's quite an early version, keep this in mind when you review.
+
+Project change log:
+https://github.com/gorhill/uBlock/releases

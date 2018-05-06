@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 
   - cosmetic filtering (aka "element hiding" in Adblock Plus)
   - scriptlet injection: selector starts with `script:inject`
+    - New shorter syntax (1.15.12): `example.com##+js(bab-defuser.js)`
   - html filtering: selector starts with `^`
 
   Depending on the specialized filtering engine, field 1 may or may not be
@@ -53,13 +54,20 @@
     var µb = µBlock,
         reHostnameSeparator = /\s*,\s*/,
         reHasUnicode = /[^\x00-\x7F]/,
-        reParseRegexLiteral = /^\/(.+)\/([im]+)?$/,
+        reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/,
         emptyArray = [],
         parsed = {
             hostnames: [],
             exception: false,
             suffix: ''
         };
+
+    // To be called to ensure no big parent string of a string slice is
+    // left into memory after parsing filter lists is over.
+    var resetParsed = function() {
+        parsed.hostnames = [];
+        parsed.suffix = '';
+    };
 
     var isValidCSSSelector = (function() {
         var div = document.createElement('div'),
@@ -86,7 +94,11 @@
         } catch (ex) {
             matchesFn = div.querySelector.bind(div);
         }
+        // Quick regex-based validation -- most cosmetic filters are of the
+        // simple form and in such case a regex is much faster.
+        var reSimple = /^[#.][\w-]+$/;
         return function(s) {
+            if ( reSimple.test(s) ) { return true; }
             try {
                 matchesFn(s + ', ' + s + ':not(#foo)');
             } catch (ex) {
@@ -457,6 +469,7 @@
         µb.cosmeticFilteringEngine.reset();
         µb.scriptletFilteringEngine.reset();
         µb.htmlFilteringEngine.reset();
+        resetParsed(parsed);
     };
 
     api.freeze = function() {
@@ -464,6 +477,7 @@
         µb.cosmeticFilteringEngine.freeze();
         µb.scriptletFilteringEngine.freeze();
         µb.htmlFilteringEngine.freeze();
+        resetParsed(parsed);
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1004
@@ -655,10 +669,21 @@
             }
         }
 
+        var c0 = suffix.charCodeAt(0);
+
+        // New shorter syntax for scriptlet injection engine.
+        if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {
+            // Convert to deprecated syntax for now. Once 1.15.12 is
+            // widespread, `+js` form will be the official syntax.
+            parsed.suffix = 'script:inject' + parsed.suffix.slice(3);
+            µb.scriptletFilteringEngine.compile(parsed, writer);
+            return true;
+        }
+
         // HTML filtering engine.
         // TODO: evaluate converting Adguard's `$$` syntax into uBO's HTML
         //       filtering syntax.
-        if ( suffix.charCodeAt(0) === 0x5E /* '^' */ ) {
+        if ( c0 === 0x5E /* '^' */ ) {
             µb.htmlFilteringEngine.compile(parsed, writer);
             return true;
         }
@@ -679,7 +704,6 @@
             cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
             scriptlets: µb.scriptletFilteringEngine.toSelfie(),
             html: µb.htmlFilteringEngine.toSelfie()
-            
         };
     };
 

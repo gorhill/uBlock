@@ -1,9 +1,18 @@
 @keyframes spin {
+    0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); }
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
 ul {
-    padding: 0;
     list-style-type: none;
+    padding-left: 1em;
+    padding-right: 0;
+    }
+body[dir="rtl"] ul {
+    padding-left: 0;
+    padding-right: 1em;
+    }
+ul.root {
+    padding: 0;
     }
 #options li {
     margin-bottom: 0.5em;
@@ -12,7 +21,7 @@ ul {
     cursor: pointer;
     }
 #listsOfBlockedHostsPrompt:before {
-    color: #aaa;
+    color: #888;
     content: '\2212  ';
     }
 body.hideUnused #listsOfBlockedHostsPrompt:before {
@@ -20,92 +29,86 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     }
 #lists {
     margin: 0.5em 0 0 0;
-    padding-left: 0.5em;
-    padding-right: 0em;
-    }
-body[dir="rtl"] #lists {
-    padding-left: 0em;
-    padding-right: 0.5em;
+    padding: 0;
     }
 #lists > li {
     margin: 0.5em 0 0 0;
     padding: 0;
     list-style-type: none;
     }
-#lists > .groupEntry > .geName {
+.groupEntry .geDetails {
     cursor: pointer;
-    font-size: 110%;
     }
-#lists > .groupEntry > .geCount {
-    font-size: 90%;
-    }
-#lists > .groupEntry:not(:first-child) > .geName:before {
-    color: #aaa;
+.groupEntry:not([data-groupkey="user"]) .geDetails:before {
+    color: #888;
     content: '\2212  ';
     }
-#lists > .groupEntry.collapsed > .geName:before {
-    color: #aaa;
+.groupEntry.hideUnused:not([data-groupkey="user"]) .geDetails:before {
     content: '+  ';
     }
-#lists > .groupEntry > ul {
-    margin: 0.25em 0 0 0;
+.groupEntry .geName {
+    pointer-events: none;
     }
-#lists > .groupEntry.collapsed > ul {
+.groupEntry .geCount {
+    font-size: 90%;
+    pointer-events: none;
+    }
+.groupEntry > ul {
+    margin: 0.25em 0 0 0;
+    padding-left: 1em;
+    }
+.listEntry {
+    margin: 0 auto 0 auto;
+    padding: 0.2em 0;
+    white-space: nowrap;
+    }
+.groupEntry:not([data-groupkey="user"]) .listEntry.unused {
     display: none;
     }
-li.listEntry {
-    line-height: 150%;
-    margin: 0 auto 0 auto;
-    margin-left: 2.5em;
-    margin-right: 0;
-    text-indent: -2em;
-    }
-body[dir="rtl"] li.listEntry {
-    margin-left: 0em;
-    margin-right: 2.5em;
-    }
-li.listEntry > * {
+.listEntry > * {
     margin-right: 0.5em;
-    text-indent: 0;
     unicode-bidi: embed;
     }
-li.listEntry.toRemove > input[type="checkbox"] {
+.listEntry.toRemove > input[type="checkbox"] {
     visibility: hidden;
     }
-li.listEntry.toRemove > a.content {
+.listEntry.toRemove > a.content {
     text-decoration: line-through;
     }
-li.listEntry > .fa {
+.listEntry > .fa {
     color: inherit;
     display: none;
     font-size: 110%;
     opacity: 0.5;
     vertical-align: baseline;
     }
-li.listEntry > a.fa:hover {
+.listEntry > a.towiki {
+    display: inline-block;
+    }
+.listEntry > a.fa:hover {
     opacity: 1;
     }
-li.listEntry.support > a.support {
+.listEntry.support > a.support {
     display: inline-block;
     }
-li.listEntry > a.remove,
-li.listEntry > a.remove:visited {
+.listEntry > a.remove,
+.listEntry > a.remove:visited {
     color: darkred;
     }
-li.listEntry.external > a.remove {
+.listEntry.external > a.remove {
     display: inline-block;
     }
-li.listEntry.mustread > a.mustread {
+.listEntry.mustread > a.mustread {
     display: inline-block;
     }
-li.listEntry.mustread > a.mustread:hover {
+.listEntry.mustread > a.mustread:hover {
     color: mediumblue;
     }
-li.listEntry > .counts {
+.listEntry > .counts {
     display: none;
     font-size: smaller;
 }
-li.listEntry > input[type="checkbox"]:checked ~ .counts {
+.listEntry > input[type="checkbox"]:checked ~ .counts {
     display: inline;
 }
 .dim {
@@ -124,56 +127,57 @@ body[dir=rtl] #buttonApply {
 #buttonApply.disabled {
     display: none;
     }
-li.listEntry span.status {
+.listEntry span.status {
     color: #444;
     cursor: default;
     display: none;
 }
-li.listEntry span.status:hover {
+.listEntry span.status:hover {
     opacity: 1;
     }
-li.listEntry span.unsecure {
+.listEntry span.unsecure {
     color: darkred;
     }
-li.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure {
+.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure {
     display: inline-block;
     }
-li.listEntry span.failed {
+.listEntry span.failed {
     color: darkred;
     }
-li.listEntry.failed span.failed {
+.listEntry.failed span.failed {
     display: inline-block;
     }
-li.listEntry span.cache {
+.listEntry span.cache {
     cursor: pointer;
     }
-li.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
+.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
     display: inline-block;
     }
-li.listEntry span.obsolete {
+.listEntry span.obsolete {
     color: hsl(36, 100%, 40%);
     }
-body:not(.updating) li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
+body:not(.updating) .listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
     display: inline-block;
     }
-li.listEntry span.updating {
+.listEntry span.updating {
     transform-origin: 50% 46%;
     }
-body.updating li.listEntry.obsolete > input[type="checkbox"]:checked ~ span.updating {
+body.updating .listEntry.obsolete > input[type="checkbox"]:checked ~ span.updating {
     animation: spin 2s linear infinite;
     display: inline-block;
     }
-#externalListsDiv {
-    margin: 1.5em auto 0 1.5em;
-    }
-body[dir=rtl] #externalListsDiv {
-    margin: 1.5em 1.5em 0 auto;
-    }
-#externalLists {
+.listEntry.toImport > input[type="checkbox"] ~ textarea {
+    border: 1px solid #ccc;
     box-sizing: border-box;
-    height: 8em;
-    margin-top: 0.25em;
+    display: block;
+    font-size: smaller;
+    height: 6em;
+    margin-left: 2em;
+    resize: vertical;
+    visibility: hidden;
     white-space: pre;
-    width: 100%;
-    word-wrap: normal;
+    width: calc(100% - 4em);
+    }
+.listEntry.toImport > input[type="checkbox"]:checked ~ textarea {
+    visibility: visible;
     }

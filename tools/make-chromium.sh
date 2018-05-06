@@ -26,12 +26,22 @@ cp LICENSE.txt              $DES/
 echo "*** uBlock0.chromium: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
 rm $DES/js/vapi-usercss.js
+rm $DES/js/vapi-usercss.real.js
+rm $DES/js/vapi-usercss.pseudo.js
 
 # Chrome store-specific
-cp -R $DES/_locales/nb      $DES/_locales/no
+cp -R $DES/_locales/nb $DES/_locales/no
+
+echo "*** uBlock0.chromium: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
 
 echo "*** uBlock0.chromium: Generating meta..."
 python tools/make-chromium-meta.py $DES/

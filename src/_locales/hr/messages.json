@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filteri treće strane",
+    "message": "Liste filtera",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Primijeni promjene",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Ugrađeno",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklame",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Prilagođeno",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Uvoz...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Jedan URL po retku. Linije sa prefiksom &lsquo;!&rsquo; zanemarit će se. Nevaljani URL-ovi će biti tiho ignorirani.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Jedan URL po retku. Nevaljani URL-ovi će biti tiho ignorirani.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Zastarjelo.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jedan filtar po retku. Filtar može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom &lsquo;!&rsquo;  zanemarit će se.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Jedan filter po retku. Filter može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom <code>!<\/code> zanemarit će se.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Uvesti i dodati",
@@ -590,6 +598,10 @@
   "aboutSupport": {
     "message": "Podrška",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Praćenje problema",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Izvorni kôd (GPLv3)",
