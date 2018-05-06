@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL1つにつき1行です。&lsquo;!&rsquo; が先頭にある行は無視されます。無効なURLもそのまま無視されます。",
+    "message": "URL1つにつき1行です。無効なURLは無視されます。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "問題追跡システム",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

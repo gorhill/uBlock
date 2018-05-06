@@ -56,7 +56,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "Zablokowane żądania",
+    "message": "zablokowane żądania",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -188,7 +188,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "Podłączone domeny",
+    "message": "podłączone domeny",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {

@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inaktivera verktygstips",
+    "message": "Inaktivera tipsrutor",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
