@@ -5,8 +5,8 @@
   },
   "browser_action": {
     "default_icon": {
-      "19": "img/browsericons/icon19.png",
-      "38": "img/browsericons/icon19.png"
+      "16": "img/icon_16.png",
+      "32": "img/icon_32.png"
     },
     "default_popup": "popup.html",
     "default_title": "uBlock Origin"
@@ -78,8 +78,8 @@
   "short_name": "uBlock₀",
   "sidebar_action": {
     "default_icon": {
-      "19": "img/browsericons/icon19.png",
-      "38": "img/browsericons/icon19.png"
+      "16": "img/icon_16.png",
+      "32": "img/icon_32.png"
     },
     "default_panel": "logger-ui.html",
     "default_title": "__MSG_statsPageName__"

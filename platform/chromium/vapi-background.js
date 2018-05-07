@@ -638,29 +638,65 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
 //   Firefox for Android does no support browser.browserAction.setIcon().
+//   Performance: use ImageData for platforms supporting it.
 
 vAPI.setIcon = (function() {
-    var browserAction = chrome.browserAction,
+    let browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
-    var iconPaths = [
+    let icons = [
         {
-            '19': 'img/browsericons/icon19-off.png',
-            '38': 'img/browsericons/icon38-off.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
         },
         {
-            '19': 'img/browsericons/icon19.png',
-            '38': 'img/browsericons/icon38.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
         }
     ];
+
+    (function() {
+        if ( browserAction.setIcon === undefined ) { return; }
+        if (
+            vAPI.webextFlavor.soup.has('chromium') === false &&
+            vAPI.webextFlavor.soup.has('firefox') === false
+        ) {
+            return;
+        }
+        let imgs = [
+            { i: 0, p: '16' }, { i: 0, p: '32' },
+            { i: 1, p: '16' }, { i: 1, p: '32' },
+        ];
+        let onLoaded = function() {
+            for ( let img of imgs ) {
+                if ( img.r.complete === false ) { return; }
+            }
+            let ctx = document.createElement('canvas').getContext('2d');
+            let iconData = [ null, null ];
+            for ( let img of imgs ) {
+                let w = img.r.naturalWidth, h = img.r.naturalHeight;
+                ctx.width = w; ctx.height = h;
+                ctx.clearRect(0, 0, w, h);
+                ctx.drawImage(img.r, 0, 0);
+                if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
+                iconData[img.i][img.p] = ctx.getImageData(0, 0, w, h);
+            }
+            icons[0] = { tabId: 0, imageData: iconData[0] };
+            icons[1] = { tabId: 0, imageData: iconData[1] };
+        };
+        for ( let img of imgs ) {
+            img.r = new Image();
+            img.r.addEventListener('load', onLoaded, { once: true });
+            img.r.src = icons[img.i].path[img.p];
+        }
+    })();
 
     var onTabReady = function(tab, status, badge) {
         if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            browserAction.setIcon({
-                tabId: tab.id,
-                path: iconPaths[status === 'on' ? 1 : 0]
-            });
+            let details = icons[status === 'on' ? 1 : 0];
+            details.tabId = tab.id;
+            browserAction.setIcon(details);
             browserAction.setBadgeText({
                 tabId: tab.id,
                 text: badge
