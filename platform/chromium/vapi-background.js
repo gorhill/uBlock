@@ -656,6 +656,14 @@ vAPI.setIcon = (function() {
 
     (function() {
         if ( browserAction.setIcon === undefined ) { return; }
+
+        // The global badge background color.
+        if ( browserAction.setBadgeBackgroundColor !== undefined ) {
+            browserAction.setBadgeBackgroundColor({
+                color: [ 0x66, 0x66, 0x66, 0xFF ]
+            });
+        }
+
         if (
             vAPI.webextFlavor.soup.has('chromium') === false &&
             vAPI.webextFlavor.soup.has('firefox') === false
@@ -690,23 +698,15 @@ vAPI.setIcon = (function() {
         }
     })();
 
-    var onTabReady = function(tab, status, badge) {
+    var onTabReady = function(tab, state, badge, parts) {
         if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            let details = icons[status === 'on' ? 1 : 0];
-            details.tabId = tab.id;
-            browserAction.setIcon(details);
-            browserAction.setBadgeText({
-                tabId: tab.id,
-                text: badge
-            });
-            if ( badge !== '' ) {
-                browserAction.setBadgeBackgroundColor({
-                    tabId: tab.id,
-                    color: '#666'
-                });
+            if ( parts === undefined || (parts & 0x01) !== 0 ) {
+                icons[state].tabId = tab.id;
+                browserAction.setIcon(icons[state]);
             }
+            browserAction.setBadgeText({ tabId: tab.id, text: badge });
         }
 
         if ( browserAction.setTitle !== undefined ) {
@@ -714,18 +714,21 @@ vAPI.setIcon = (function() {
                 tabId: tab.id,
                 title: titleTemplate.replace(
                     '{badge}',
-                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    state === 1 ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
     };
 
-    return function(tabId, iconStatus, badge) {
+    // parts: bit 0 = icon
+    //        bit 1 = badge
+
+    return function(tabId, state, badge, parts) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
         chrome.tabs.get(tabId, function(tab) {
-            onTabReady(tab, iconStatus, badge);
+            onTabReady(tab, state, badge, parts);
         });
 
         if ( vAPI.contextMenu instanceof Object ) {
