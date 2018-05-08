@@ -640,6 +640,9 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 //   Firefox for Android does no support browser.browserAction.setIcon().
 //   Performance: use ImageData for platforms supporting it.
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/32
+//   Ensure ImageData for toolbar icon is valid before use.
+
 vAPI.setIcon = (function() {
     let browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
@@ -686,7 +689,18 @@ vAPI.setIcon = (function() {
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(img.r, 0, 0);
                 if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
-                iconData[img.i][img.p] = ctx.getImageData(0, 0, w, h);
+                let imgData = ctx.getImageData(0, 0, w, h);
+                if (
+                    imgData instanceof Object === false ||
+                    imgData.data instanceof Uint8ClampedArray === false ||
+                    imgData.data[0] !== 0 ||
+                    imgData.data[1] !== 0 ||
+                    imgData.data[2] !== 0 ||
+                    imgData.data[3] !== 0
+                ) {
+                    return;
+                }
+                iconData[img.i][img.p] = imgData;
             }
             icons[0] = { tabId: 0, imageData: iconData[0] };
             icons[1] = { tabId: 0, imageData: iconData[1] };
