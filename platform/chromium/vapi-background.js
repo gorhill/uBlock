@@ -667,12 +667,17 @@ vAPI.setIcon = (function() {
             });
         }
 
-        if (
-            vAPI.webextFlavor.soup.has('chromium') === false &&
-            vAPI.webextFlavor.soup.has('firefox') === false
-        ) {
-            return;
-        }
+        // As of 2018-05, benchmarks show that only Chromium benefits for sure
+        // from using ImageData.
+        //
+        // Chromium creates a new ImageData instance every call to setIcon
+        // with paths:
+        // https://cs.chromium.org/chromium/src/extensions/renderer/resources/set_icon.js?l=56&rcl=99be185c25738437ecfa0dafba72a26114196631
+        //
+        // Firefox uses an internal cache for each setIcon's paths:
+        // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
+        if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+
         let imgs = [
             { i: 0, p: '16' }, { i: 0, p: '32' },
             { i: 1, p: '16' }, { i: 1, p: '32' },
