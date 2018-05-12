@@ -24,13 +24,13 @@ Mais listas estão disponíveis para você escolher, se desejar:
 - Spam404
 - E varias outras
 
-Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, uBlock₀ ainda tem o consumo de memória menor do que outros bloqueadores populares lá fora.
+Claro, quanto mais filtros ativados, maior o consumo de memória. Ainda, mesmo após adicionar duas listas extras Fanboy's e hpHosts’s, o uBlock₀ ainda tem o consumo de memória menor do que outros bloqueadores populares lá fora.
 
 Também, esteja ciente de que selecionar algumas dessas listas extras pode levar em uma maior probabilidade de quebrar o layout do site, especialmente aquelas listas que são normalmente usadas como arquivo hosts.
 
 ***
 
-Sem as listas predefinidas de filtros, esta extensão não é nada. Por isso, se você nunca contribuiu com alguma coisa, pense nas pessoas que trabalham duro para manter as listas de filtro que você está usando e que foram disponibilizadas para usar tudo de graça.
+Sem as listas de filtros predefinidas, esta extensão não é nada. Por isso, se você nunca contribuiu com alguma coisa, pense nas pessoas que trabalham duro para manter as listas de filtro que você está usando e que foram disponibilizadas para usar tudo de graça.
 
 ***
 
