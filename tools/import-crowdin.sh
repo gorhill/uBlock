@@ -64,6 +64,13 @@ cp $SRC/vi/messages.json    $DES/vi/messages.json
 cp $SRC/zh-CN/messages.json $DES/zh_CN/messages.json
 cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 
+# Output files with possible misuse of `$`, as this can lead to severe
+# consequences, such as not being able to run the extension at all.
+# uBO does not use `$`, so any instance of `$` must be investigated.
+# See https://issues.adblockplus.org/ticket/6666
+echo "*** uBlock: Instances of '\$':"
+grep -FR "$" $DES/
+
 #
 
 DES=./dist/description

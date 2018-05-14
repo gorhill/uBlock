@@ -2,7 +2,7 @@ Een efficiënte adblocker: gebruikt weinig processorkracht en geheugen. Toch kan
 
 Geïllustreerde efficiëntievergelijking: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Gebruik: met de grote aan-uitknop in de pop-up kan uBlock voor de huidige website permanent worden in- of uitgeschakeld. Het wordt alleen op de huidige website toegepast; dit is geen algemene aan-uitknop.
+Gebruik: met de grote aan-uitknop in de pop-up kan uBlock voor de huidige website permanent worden in- of uitgeschakeld. Dit wordt alleen op de huidige website toegepast; het is geen algemene aan-uitknop.
 
 ***
 
