@@ -33,6 +33,31 @@ var exports = {};
 
 /******************************************************************************/
 
+// Platform-specific behavior.
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/42
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
+//   Add proper version number detection once issue is fixed in Firefox.
+let dontCacheResponseHeaders =
+    vAPI.webextFlavor.soup.has('firefox');
+
+// https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
+//   This can be removed once Firefox 60 ESR is released.
+let cantMergeCSPHeaders =
+    vAPI.webextFlavor.soup.has('firefox') && vAPI.webextFlavor.major < 59;
+
+
+// The real actual webextFlavor value may not be set in stone, so listen
+// for possible future changes.
+window.addEventListener('webextFlavor', function() {
+    dontCacheResponseHeaders =
+        vAPI.webextFlavor.soup.has('firefox');
+    cantMergeCSPHeaders =
+        vAPI.webextFlavor.soup.has('firefox') && vAPI.webextFlavor.major < 59;
+}, { once: true });
+
+/******************************************************************************/
+
 // https://github.com/gorhill/uBlock/issues/2067
 //   Experimental: Block everything until uBO is fully ready.
 // TODO: re-work vAPI code to match more closely how listeners are
@@ -523,10 +548,10 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
-    var tabId = details.tabId;
+    let tabId = details.tabId;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
 
-    var µb = µBlock,
+    let µb = µBlock,
         requestType = details.type,
         isRootDoc = requestType === 'main_frame',
         isDoc = isRootDoc || requestType === 'sub_frame';
@@ -535,7 +560,7 @@ var onHeadersReceived = function(details) {
         µb.tabContextManager.push(tabId, details.url);
     }
 
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    let pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
@@ -546,23 +571,50 @@ var onHeadersReceived = function(details) {
         return foilLargeMediaElement(pageStore, details);
     }
 
-    if ( isDoc && µb.canFilterResponseBody ) {
-        filterDocument(pageStore, details);
-    }
+    if ( isDoc === false ) { return; }
+
+    // Keep in mind response headers will be modified in-place if needed, so
+    // `details.responseHeaders` will always point to the modified response
+    // headers.
+    let responseHeaders = details.responseHeaders;
 
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
     //   a media element: the resource was not prevented from loading so no
     //   point to further block large media elements for the current document.
     if ( isRootDoc ) {
-        if ( reMediaContentTypes.test(headerValueFromName('content-type', details.responseHeaders)) ) {
+        let contentType = headerValueFromName('content-type', responseHeaders);
+        if ( reMediaContentTypes.test(contentType) ) {
             pageStore.allowLargeMediaElementsUntil = Date.now() + 86400000;
+            return;
         }
-        return injectCSP(pageStore, details);
     }
 
-    if ( isDoc ) {
-        return injectCSP(pageStore, details);
+    // At this point we have a HTML document.
+
+    let filteredHTML = µb.canFilterResponseBody &&
+                       filterDocument(pageStore, details) === true;
+
+    let modifiedHeaders = injectCSP(pageStore, details) === true;
+
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
+    //   Prevent document from being cached by the browser if we modified it,
+    //   either through HTML filtering and/or modified response headers.
+    if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
+        let i = headerIndexFromName('cache-control', responseHeaders);
+        if ( i !== -1 ) {
+            responseHeaders[i].value = 'no-cache, no-store, must-revalidate';
+        } else {
+            responseHeaders[responseHeaders.length] = {
+                name: 'Cache-Control',
+                value: 'no-cache, no-store, must-revalidate'
+            };
+        }
+        modifiedHeaders = true;
+    }
+
+    if ( modifiedHeaders ) {
+        return { responseHeaders: responseHeaders };
     }
 };
 
@@ -832,20 +884,22 @@ var filterDocument = (function() {
         stream.onstop = onStreamStop;
         stream.onerror = onStreamError;
         filterers.set(stream, request);
+
+        return true;
     };
 })();
 
 /******************************************************************************/
 
 var injectCSP = function(pageStore, details) {
-    var µb = µBlock,
+    let µb = µBlock,
         tabId = details.tabId,
         requestURL = details.url,
         loggerEnabled = µb.logger.isEnabled(),
         logger = µb.logger,
         cspSubsets = [];
 
-    var context = pageStore.createContextFromPage();
+    let context = pageStore.createContextFromPage();
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     if ( details.type !== 'main_frame' ) {
         context.pageHostname = context.pageDomain = context.requestHostname;
@@ -856,7 +910,7 @@ var injectCSP = function(pageStore, details) {
 
     // ======== built-in policies
 
-    var builtinDirectives = [];
+    let builtinDirectives = [];
 
     context.requestType = 'inline-script';
     if ( pageStore.filterRequest(context) === 1 ) {
@@ -900,7 +954,7 @@ var injectCSP = function(pageStore, details) {
 
     // Static filtering.
 
-    var logDataEntries = [];
+    let logDataEntries = [];
 
     µb.staticNetFilteringEngine.matchAndFetchData(
         'csp',
@@ -953,7 +1007,7 @@ var injectCSP = function(pageStore, details) {
     // <<<<<<<< All policies have been collected
 
     // Static CSP policies will be applied.
-    for ( var entry of logDataEntries ) {
+    for ( let entry of logDataEntries ) {
         logger.writeOne(
             tabId,
             'net',
@@ -981,10 +1035,10 @@ var injectCSP = function(pageStore, details) {
     //   if the current environment does not support merging headers:
     //   Firefox 58/webext and less can't merge CSP headers, so we will merge
     //   them here.
-    var headers = details.responseHeaders;
+    let headers = details.responseHeaders;
 
     if ( cantMergeCSPHeaders ) {
-        var i = headerIndexFromName('content-security-policy', headers);
+        let i = headerIndexFromName('content-security-policy', headers);
         if ( i !== -1 ) {
             cspSubsets.unshift(headers[i].value.trim());
             headers.splice(i, 1);
@@ -996,23 +1050,8 @@ var injectCSP = function(pageStore, details) {
         value: cspSubsets.join(', ')
     });
 
-    return { 'responseHeaders': headers };
+    return true;
 };
-
-// https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
-//   This can be removed once Firefox 60 ESR is released.
-var evalCantMergeCSPHeaders = function() {
-    return vAPI.webextFlavor.soup.has('firefox') &&
-           vAPI.webextFlavor.major < 59;
-};
-
-var cantMergeCSPHeaders = evalCantMergeCSPHeaders();
-
-// The real actual webextFlavor value may not be set in stone, so listen
-// for possible future changes.
-window.addEventListener('webextFlavor', function() {
-    cantMergeCSPHeaders = evalCantMergeCSPHeaders();
-}, { once: true });
 
 /******************************************************************************/
 
