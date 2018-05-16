@@ -768,7 +768,7 @@
     matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires:[\t ]*(\d+)[\t ]*(day|hour)/i);
     if ( matches !== null ) {
         v = Math.max(parseInt(matches[1], 10), 1);
-        if ( matches[2] === "hour" ) {
+        if ( matches[2].toLowerCase() === 'hour' ) {
             v = Math.ceil(v / 24);
         }
         if ( v !== listEntry.updateAfter ) {
