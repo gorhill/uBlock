@@ -36,14 +36,16 @@
         scriptletsRegister = new Map(),
         reEscapeScriptArg = /[\\'"]/g;
 
-    let contentscriptCodeParts = [
-        '(',
-            function() {
+    let contentscriptCode = (function() {
+        let parts = [
+            '(',
+            function(hostname, scriptlets) {
+                if ( hostname !== window.location.hostname ) { return; }
                 let d = document;
                 let script = d.createElement('script');
                 try {
                     script.appendChild(d.createTextNode(
-                        decodeURIComponent(arguments[0]))
+                        decodeURIComponent(scriptlets))
                     );
                     (d.head || d.documentElement).appendChild(script);
                 } catch (ex) {
@@ -52,12 +54,24 @@
                     script.parentNode.removeChild(script);
                 }
             }.toString(),
-        ')("', 'scriptlets-slot', '");\n',
-        'void 0;',
-    ];
-    let contentscriptCodeScriptletsSlot =
-        contentscriptCodeParts.indexOf('scriptlets-slot');
-
+            ')(',
+                '"', 'hostname-slot', '", ',
+                '"', 'scriptlets-slot', '"',
+            '); void 0;',
+        ];
+        return {
+            parts: parts,
+            hostnameSlot: parts.indexOf('hostname-slot'),
+            scriptletsSlot: parts.indexOf('scriptlets-slot'),
+            assemble: function(hostname, scriptlets) {
+                this.parts[this.hostnameSlot] = hostname;
+                this.parts[this.scriptletsSlot] =
+                    encodeURIComponent(scriptlets);
+                return this.parts.join('');
+            }
+        };
+    })();
+    
     let lookupScriptlet = function(raw, reng, toInject) {
         if ( toInject.has(raw) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
@@ -288,15 +302,14 @@
         request.entity = µb.URI.entityFromDomain(request.domain);
         let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
+        let code = contentscriptCode.assemble(request.hostname, scriptlets);
         if ( µb.hiddenSettings.debugScriptlets ) {
-            scriptlets = 'debugger;\n' + scriptlets;
+            code = 'debugger;\n' + code;
         }
-        contentscriptCodeParts[contentscriptCodeScriptletsSlot] =
-            encodeURIComponent(scriptlets);
         chrome.tabs.executeScript(
             details.tabId,
             {
-                code: contentscriptCodeParts.join(''),
+                code: code,
                 frameId: details.frameId,
                 matchAboutBlank: true,
                 runAt: 'document_start'
