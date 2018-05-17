@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
 /******************************************************************************/
 
 µBlock.scriptletFilteringEngine = (function() {
-    var api = {};
+    let api = {};
 
-    var µb = µBlock,
+    let µb = µBlock,
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
         duplicates = new Set(),
         acceptedCount = 0,
@@ -36,15 +36,29 @@
         scriptletsRegister = new Map(),
         reEscapeScriptArg = /[\\'"]/g;
 
-    var scriptletRemover = [
-        '(function() {',
-        '  var c = document.currentScript, p = c && c.parentNode;',
-        '  if ( p ) { p.removeChild(c); }',
-        '})();'
-    ].join('\n');
+    let contentscriptCodeParts = [
+        '(',
+            function() {
+                let d = document;
+                let script = d.createElement('script');
+                try {
+                    script.appendChild(d.createTextNode(
+                        decodeURIComponent(arguments[0]))
+                    );
+                    (d.head || d.documentElement).appendChild(script);
+                } catch (ex) {
+                }
+                if ( script.parentNode ) {
+                    script.parentNode.removeChild(script);
+                }
+            }.toString(),
+        ')("', 'scriptlets-slot', '");\n',
+        'void 0;',
+    ];
+    let contentscriptCodeScriptletsSlot =
+        contentscriptCodeParts.indexOf('scriptlets-slot');
 
-
-    var lookupScriptlet = function(raw, reng, toInject) {
+    let lookupScriptlet = function(raw, reng, toInject) {
         if ( toInject.has(raw) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
@@ -77,7 +91,7 @@
     // Fill template placeholders. Return falsy if:
     // - At least one argument contains anything else than /\w/ and `.`
 
-    var patchScriptlet = function(content, args) {
+    let patchScriptlet = function(content, args) {
         var i = 1,
             pos, arg;
         while ( args !== '' ) {
@@ -91,7 +105,7 @@
         return content;
     };
 
-    var logOne = function(isException, token, details) {
+    let logOne = function(isException, token, details) {
         µb.logger.writeOne(
             details.tabId,
             'cosmetic',
@@ -256,16 +270,38 @@
 
         if ( out.length === 0 ) { return; }
 
-        out.push(scriptletRemover);
-
         return out.join('\n');
     };
 
-    api.apply = function(doc, details) {
-        var script = doc.createElement('script');
-        script.textContent = details.scriptlets;
-        doc.head.insertBefore(script, doc.head.firstChild);
-        return true;
+    api.injectNow = function(details) {
+        if ( typeof details.frameId !== 'number' ) { return; }
+        if ( µb.URI.isNetworkURI(details.url) === false ) { return; }
+        let request = {
+            tabId: details.tabId,
+            frameId: details.frameId,
+            url: details.url,
+            hostname: µb.URI.hostnameFromURI(details.url),
+            domain: undefined,
+            entity: undefined
+        };
+        request.domain = µb.URI.domainFromHostname(request.hostname);
+        request.entity = µb.URI.entityFromDomain(request.domain);
+        let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        if ( scriptlets === undefined ) { return; }
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            scriptlets = 'debugger;\n' + scriptlets;
+        }
+        contentscriptCodeParts[contentscriptCodeScriptletsSlot] =
+            encodeURIComponent(scriptlets);
+        chrome.tabs.executeScript(
+            details.tabId,
+            {
+                code: contentscriptCodeParts.join(''),
+                frameId: details.frameId,
+                matchAboutBlank: true,
+                runAt: 'document_start'
+            }
+        );
     };
 
     api.toSelfie = function() {

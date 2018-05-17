@@ -486,14 +486,14 @@ housekeep itself.
 // content has changed.
 
 vAPI.tabs.onNavigation = function(details) {
-    if ( details.frameId !== 0 ) {
-        return;
+    if ( details.frameId === 0 ) {
+        µb.tabContextManager.commit(details.tabId, details.url);
+        let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
+        if ( pageStore ) {
+            pageStore.journalAddRootFrame('committed', details.url);
+        }
     }
-    µb.tabContextManager.commit(details.tabId, details.url);
-    var pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
-    if ( pageStore ) {
-        pageStore.journalAddRootFrame('committed', details.url);
-    }
+    µb.scriptletFilteringEngine.injectNow(details);
 };
 
 /******************************************************************************/

@@ -42,6 +42,7 @@ var µBlock = (function() { // jshint ignore:line
         assetFetchTimeout: 30,
         autoUpdateAssetFetchPeriod: 120,
         autoUpdatePeriod: 7,
+        debugScriptlets: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 500,

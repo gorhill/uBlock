@@ -350,16 +350,7 @@ vAPI.tabs.registerListeners = function() {
         }
     };
 
-    var onBeforeNavigate = function(details) {
-        if ( details.frameId !== 0 ) {
-            return;
-        }
-    };
-
     var onCommitted = function(details) {
-        if ( details.frameId !== 0 ) {
-            return;
-        }
         details.url = sanitizeURL(details.url);
         onNavigationClient(details);
     };
@@ -382,7 +373,6 @@ vAPI.tabs.registerListeners = function() {
         onUpdatedClient(tabId, changeInfo, tab);
     };
 
-    chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
     // Not supported on Firefox WebExtensions yet.
     if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
