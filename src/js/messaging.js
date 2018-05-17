@@ -127,7 +127,10 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'getAppData':
-        response = {name: vAPI.app.name, version: vAPI.app.version};
+        response = {
+            name: chrome.runtime.getManifest().name,
+            version: vAPI.app.version
+        };
         break;
 
     case 'getDomainNames':
