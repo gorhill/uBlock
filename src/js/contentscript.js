@@ -349,11 +349,15 @@ vAPI.matchesProp = (function() {
 
 vAPI.injectScriptlet = function(doc, text) {
     if ( !doc ) { return; }
+    let script;
     try {
-        var script = doc.createElement('script');
+        script = doc.createElement('script');
         script.appendChild(doc.createTextNode(text));
         (doc.head || doc.documentElement).appendChild(script);
     } catch (ex) {
+    }
+    if ( script && script.parentNode ) {
+        script.parentNode.removeChild(script);
     }
 };
 

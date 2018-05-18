@@ -224,9 +224,8 @@
             return;
         }
 
-        var domain = request.domain,
-            entity = request.entity,
-            entries, entry;
+        let domain = request.domain,
+            entity = request.entity;
 
         // https://github.com/gorhill/uBlock/issues/1954
         // Implicit
@@ -243,13 +242,13 @@
         }
 
         // Explicit
-        entries = [];
+        let entries = [];
         if ( domain !== '' ) {
             scriptletDB.retrieve(domain, hostname, entries);
             scriptletDB.retrieve(entity, entity, entries);
         }
         scriptletDB.retrieve('', hostname, entries);
-        for ( entry of entries ) {
+        for ( let entry of entries ) {
             lookupScriptlet(entry.token, reng, scriptletsRegister);
         }
 
@@ -262,15 +261,15 @@
             scriptletDB.retrieve('!' + entity, entity, entries);
         }
         scriptletDB.retrieve('!', hostname, entries);
-        for ( entry of entries ) {
+        for ( let entry of entries ) {
             exceptionsRegister.add(entry.token);
         }
 
         // Return an array of scriptlets, and log results if needed. 
-        var out = [],
+        let out = [],
             logger = µb.logger.isEnabled() ? µb.logger : null,
             isException;
-        for ( entry of scriptletsRegister ) {
+        for ( let entry of scriptletsRegister ) {
             if ( (isException = exceptionsRegister.has(entry[0])) === false ) {
                 out.push(entry[1]);
             }
@@ -284,6 +283,9 @@
 
         if ( out.length === 0 ) { return; }
 
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            out.unshift('debugger;');
+        }
         return out.join('\n');
     };
 
@@ -303,9 +305,6 @@
         let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
         let code = contentscriptCode.assemble(request.hostname, scriptlets);
-        if ( µb.hiddenSettings.debugScriptlets ) {
-            code = 'debugger;\n' + code;
-        }
         chrome.tabs.executeScript(
             details.tabId,
             {

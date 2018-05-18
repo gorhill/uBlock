@@ -493,7 +493,9 @@ vAPI.tabs.onNavigation = function(details) {
             pageStore.journalAddRootFrame('committed', details.url);
         }
     }
-    µb.scriptletFilteringEngine.injectNow(details);
+    if ( µb.canInjectScriptletsNow ) {
+        µb.scriptletFilteringEngine.injectNow(details);
+    }
 };
 
 /******************************************************************************/

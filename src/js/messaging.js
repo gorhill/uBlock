@@ -520,6 +520,9 @@ var onMessage = function(request, sender, callback) {
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
             µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
+        if ( µb.canInjectScriptletsNow === false ) {
+            response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        }
         if ( request.isRootFrame && µb.logger.isEnabled() ) {
             µb.logCosmeticFilters(tabId);
         }
