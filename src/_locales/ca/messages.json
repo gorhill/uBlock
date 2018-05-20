@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Feu clic per desactivar l'uBlock₀ en aquest lloc.\n\nFeu Ctrl+clic per desactivar l'uBlock₀ només en aquesta pàgina.",
+    "message": "Feu clic per inhabilitar l'uBlock₀ en aquest lloc.\n\nFeu Ctrl+clic per inhabilitar l'uBlock₀ només en aquesta pàgina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Feu clic per activar l'uBlock₀ en aquest lloc.",
+    "message": "Feu clic per habilitar l'uBlock₀ en aquest lloc.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Feu clic per bloquejar totes les finestres emergents d'aquest lloc",
+    "message": "Feu clic per blocar totes les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Feu clic per desbloquejar les finestres emergents d'aquest lloc",
+    "message": "Feu clic per desblocar les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Feu clic per bloquejar elements multimèdia grans en aquest lloc",
+    "message": "Feu clic per blocar elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Fes clic per no bloquejar els elements multimèdia grans en aquest lloc",
+    "message": "Feu clic per desblocar elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Feu clic per desactivar els filtres cosmètics en aquest lloc",
+    "message": "Feu clic per inhabilitar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Feu clic per activar els filtres cosmètics en aquest lloc",
+    "message": "Feu clic per habilitar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Feu clic per bloquejar fonts remotes en aquest lloc",
+    "message": "Feu clic per blocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Feu clic per desbloquejar les fonts remotes en aquest lloc",
+    "message": "Feu clic per desblocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -224,19 +224,19 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloqueja l'element",
+    "message": "Bloca l'element",
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Amaga els marcardors de posició dels elements bloquejats",
+    "message": "Amaga els marcadors de posició dels elements blocats",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Mostra el número de peticions bloquejades a la icona",
+    "message": "Mostra el número de peticions blocades a l'icona",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Desactiva els suggeriments",
+    "message": "Inhabilita els suggeriments",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -248,7 +248,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Activa el suport d'emmagatzematge al núvol",
+    "message": "Habilita el suport d'emmagatzematge al núvol",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -280,19 +280,19 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Desactiva els filtres cosmètics",
+    "message": "Inhabilita els filtres cosmètics",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloqueja els fitxers multimèdia més grans que {{input:number}} kB",
+    "message": "Bloca els fitxers multimèdia més grans que {{input:number}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bloqueja les fonts remotes",
+    "message": "Bloca les fonts remotes",
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Bloqueja informes CSP",
+    "message": "Bloca els informes CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -548,11 +548,11 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} peticions de la xarxa {{type}} {{br}}amb l'URL coincidint {{url}} {{br}}originada des de {{origin}},{{br}}{{importance}} si és una concordança d'un filtre d'excepció.",
+    "message": "{{action}} peticions de la xarxa {{type}} {{br}}amb l'URL coincidint {{url}} {{br}}originada des de {{origin}},{{br}}{{importance}} si és una concordança d'un filtre d'excepció.\nhttps:\/\/github.com\/gorhill\/uBlock\/issues\/235#issuecomment-109745745.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Bloqueja",
+    "message": "Bloca",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
