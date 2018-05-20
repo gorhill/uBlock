@@ -67,7 +67,7 @@ var noopFunc = function(){};
 vAPI.app = (function() {
     let version = manifest.version;
     let match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
-    if ( match !== null ) {
+    if ( match && match[2] ) {
         let v = parseInt(match[2], 10);
         version = match[1] + (v < 100 ? 'b' + v : 'rc' + (v - 100));
     }
