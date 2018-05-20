@@ -23,14 +23,17 @@ cp platform/chromium/*.json $DES/
 cp LICENSE.txt              $DES/
 
 echo "*** uBlock0.opera: concatenating content scripts"
-cat $DES/js/vapi-usercss.pseudo.js > /tmp/contentscript.js
+cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
 echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.pseudo.js
+rm $DES/js/vapi-usercss.js
 rm $DES/js/vapi-usercss.real.js
+rm $DES/js/vapi-usercss.pseudo.js
 
 # Opera-specific
 cp platform/opera/manifest.json $DES/
