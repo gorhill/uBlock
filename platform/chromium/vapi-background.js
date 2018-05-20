@@ -64,10 +64,19 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
-vAPI.app = {
-    name: manifest.name.replace(' dev build', ''),
-    version: manifest.version
-};
+vAPI.app = (function() {
+    let version = manifest.version;
+    let match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
+    if ( match !== null ) {
+        let v = parseInt(match[2], 10);
+        version = match[1] + (v < 100 ? 'b' + v : 'rc' + (v - 100));
+    }
+
+    return {
+        name: manifest.name.replace(/ dev\w+ build/, ''),
+        version: version
+    };
+})();
 
 /******************************************************************************/
 
@@ -635,7 +644,9 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 vAPI.setIcon = (function() {
     let browserAction = chrome.browserAction,
-        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
+        titleTemplate =
+            chrome.runtime.getManifest().browser_action.default_title +
+            ' ({badge})';
     let icons = [
         {
             tabId: 0,
