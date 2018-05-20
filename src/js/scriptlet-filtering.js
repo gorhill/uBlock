@@ -36,22 +36,109 @@
         scriptletsRegister = new Map(),
         reEscapeScriptArg = /[\\'"]/g;
 
+    // Purpose of `contentscriptCode` below is too programmatically inject
+    // content script code which only purpose is to inject scriptlets. This
+    // essentially does the same as what uBO's declarative content script does,
+    // except that this allows to inject the scriptlets earlier than it is
+    // possible through the declarative content script.
+    //
+    // Declaratively:
+    //  1. Browser injects generic content script =>
+    //      2. Content script queries scriptlets =>
+    //          3. Main process sends scriptlets =>
+    //              4. Content script injects scriptlets
+    //
+    // Programmatically:
+    //  1. uBO injects specific scriptlets-aware content script =>
+    //      2. Content script injects scriptlets
+    //
+    // However currently this programmatic injection works well only on
+    // Chromium-based browsers, it does not work properly with Firefox. More
+    // investigations is needed to find out why this fails with Firefox.
+    // Consequently, the programmatic-injection code path is taken only with
+    // Chromium-based browsers.
+
     let contentscriptCode = (function() {
         let parts = [
             '(',
             function(hostname, scriptlets) {
-                if ( hostname !== window.location.hostname ) { return; }
-                let d = document;
-                let script = d.createElement('script');
-                try {
-                    script.appendChild(d.createTextNode(
-                        decodeURIComponent(scriptlets))
-                    );
-                    (d.head || d.documentElement).appendChild(script);
-                } catch (ex) {
+                if (
+                    document.location === null ||
+                    hostname !== document.location.hostname
+                ) {
+                    return;
                 }
-                if ( script.parentNode ) {
-                    script.parentNode.removeChild(script);
+                let injectScriptlets = function(d) {
+                    let script = d.createElement('script');
+                    try {
+                        script.appendChild(d.createTextNode(
+                            decodeURIComponent(scriptlets))
+                        );
+                        (d.head || d.documentElement).appendChild(script);
+                    } catch (ex) {
+                    }
+                    if ( script.parentNode ) {
+                        script.parentNode.removeChild(script);
+                    }
+                };
+                injectScriptlets(document);
+                let processIFrame = function(iframe) {
+                    let src = iframe.src;
+                    if ( /^https?:\/\//.test(src) === false ) {
+                        injectScriptlets(iframe.contentDocument);
+                    }
+                };
+                let observerTimer,
+                    observerLists = [];
+                let observerAsync = function() {
+                    for ( let nodelist of observerLists ) {
+                        for ( let node of nodelist ) {
+                            if ( node.nodeType !== 1 ) { continue; }
+                            if ( node.parentElement === null ) { continue; }
+                            if ( node.localName === 'iframe' ) {
+                                processIFrame(node);
+                            }
+                            if ( node.childElementCount === 0 ) { continue; }
+                            let iframes = node.querySelectorAll('iframe');
+                            for ( let iframe of iframes ) {
+                                processIFrame(iframe);
+                            }
+                        }
+                    }
+                    observerLists = [];
+                    observerTimer = undefined;
+                };
+                let ready = function(ev) {
+                    if ( ev !== undefined ) {
+                        window.removeEventListener(ev.type, ready);
+                    }
+                    let iframes = document.getElementsByTagName('iframe');
+                    if ( iframes.length !== 0 ) {
+                        observerLists.push(iframes);
+                        observerTimer = setTimeout(observerAsync, 1);
+                    }
+                    let observer = new MutationObserver(function(mutations) {
+                        for ( let mutation of mutations ) {
+                            if ( mutation.addedNodes.length !== 0 ) {
+                                observerLists.push(mutation.addedNodes);
+                            }
+                        }
+                        if (
+                            observerLists.length !== 0 &&
+                            observerTimer === undefined
+                        ) {
+                            observerTimer = setTimeout(observerAsync, 1);
+                        }
+                    });
+                    observer.observe(
+                        document.documentElement,
+                        { childList: true, subtree: true }
+                    );
+                };
+                if ( document.readyState === 'loading' ) {
+                    window.addEventListener('DOMContentLoaded', ready);
+                } else {
+                    ready();
                 }
             }.toString(),
             ')(',
@@ -283,9 +370,6 @@
 
         if ( out.length === 0 ) { return; }
 
-        if ( µb.hiddenSettings.debugScriptlets ) {
-            out.unshift('debugger;');
-        }
         return out.join('\n');
     };
 
@@ -305,12 +389,15 @@
         let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
         let code = contentscriptCode.assemble(request.hostname, scriptlets);
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            code = 'debugger;\n' + code;
+        }
         chrome.tabs.executeScript(
             details.tabId,
             {
                 code: code,
                 frameId: details.frameId,
-                matchAboutBlank: true,
+                matchAboutBlank: false,
                 runAt: 'document_start'
             }
         );
