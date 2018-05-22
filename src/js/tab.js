@@ -494,7 +494,10 @@ vAPI.tabs.onNavigation = function(details) {
         }
     }
     if ( µb.canInjectScriptletsNow ) {
-        µb.scriptletFilteringEngine.injectNow(details);
+        let pageStore = µb.pageStoreFromTabId(details.tabId);
+        if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
+            µb.scriptletFilteringEngine.injectNow(details);
+        }
     }
 };
 
@@ -505,12 +508,8 @@ vAPI.tabs.onNavigation = function(details) {
 // the extension icon won't be properly refreshed.
 
 vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
-    if ( !tab.url || tab.url === '' ) {
-        return;
-    }
-    if ( !changeInfo.url ) {
-        return;
-    }
+    if ( !tab.url || tab.url === '' ) { return; }
+    if ( !changeInfo.url ) { return; }
     µb.tabContextManager.commit(tabId, changeInfo.url);
     µb.bindTabToPageStats(tabId, 'tabUpdated');
 };

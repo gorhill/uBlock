@@ -69,15 +69,16 @@
                     return;
                 }
                 let injectScriptlets = function(d) {
-                    let script = d.createElement('script');
+                    let script;
                     try {
+                        script = d.createElement('script');
                         script.appendChild(d.createTextNode(
                             decodeURIComponent(scriptlets))
                         );
                         (d.head || d.documentElement).appendChild(script);
                     } catch (ex) {
                     }
-                    if ( script.parentNode ) {
+                    if ( script && script.parentNode ) {
                         script.parentNode.removeChild(script);
                     }
                 };
