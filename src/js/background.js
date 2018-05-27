@@ -73,7 +73,7 @@ var µBlock = (function() { // jshint ignore:line
 
         userSettings: {
             advancedUserEnabled: false,
-            alwaysDetachLogger: false,
+            alwaysDetachLogger: true,
             autoUpdate: true,
             cloudStorageEnabled: false,
             collapseBlocked: true,

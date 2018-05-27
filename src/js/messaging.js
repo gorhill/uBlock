@@ -1016,24 +1016,33 @@ var µb = µBlock,
 
 /******************************************************************************/
 
-var getLoggerData = function(ownerId, activeTabId, callback) {
-    var tabIds = new Map();
-    for ( var entry of µb.pageStores ) {
-        var pageStore = entry[1];
-        if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
-        tabIds.set(entry[0], pageStore.title);
-    }
-    if ( activeTabId && tabIds.has(activeTabId) === false ) {
-        activeTabId = undefined;
-    }
-    callback({
+var getLoggerData = function(details, activeTabId, callback) {
+    let response = {
         colorBlind: µb.userSettings.colorBlindFriendly,
-        entries: µb.logger.readAll(ownerId),
+        entries: µb.logger.readAll(details.ownerId),
         maxEntries: µb.userSettings.requestLogMaxEntries,
         activeTabId: activeTabId,
-        tabIds: Array.from(tabIds),
         tabIdsToken: µb.pageStoresToken
-    });
+    };
+    if ( µb.pageStoresToken !== details.tabIdsToken ) {
+        let tabIds = new Map();
+        for ( let entry of µb.pageStores ) {
+            let pageStore = entry[1];
+            if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
+            tabIds.set(entry[0], pageStore.title);
+        }
+        response.tabIds = Array.from(tabIds);
+    }
+    if ( activeTabId ) {
+        let pageStore = µb.pageStoreFromTabId(activeTabId);
+        if (
+            pageStore === null ||
+            pageStore.rawURL.startsWith(extensionOriginURL)
+        ) {
+            response.activeTabId = undefined;
+        }
+    }
+    callback(response);
 };
 
 /******************************************************************************/
@@ -1081,7 +1090,7 @@ var onMessage = function(request, sender, callback) {
             return;
         }
         vAPI.tabs.get(null, function(tab) {
-            getLoggerData(request.ownerId, tab && tab.id, callback);
+            getLoggerData(request, tab && tab.id, callback);
         });
         return;
 
