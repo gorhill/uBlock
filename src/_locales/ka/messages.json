@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "თითოეული URL ცალკეულ ხაზზე. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
+    "message": "თითოეული URL ცალკეულ ხაზზე. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {

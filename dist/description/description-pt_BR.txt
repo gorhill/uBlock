@@ -43,7 +43,6 @@ Contribuidores no Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Esta é uma versão ainda em desenvolvimento, tenha isso em mente quando você avaliar.
 
 Registro de alterações do projeto:
 https://github.com/gorhill/uBlock/releases

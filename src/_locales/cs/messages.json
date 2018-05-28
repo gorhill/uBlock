@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Interní",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,7 +384,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importovat…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
