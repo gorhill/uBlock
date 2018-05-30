@@ -172,7 +172,11 @@
 		"group": "malware",
 		"title": "Malware Domain List",
 		"contentURL": [
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/hosts.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/filter.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
 			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
 		]
 	},
