@@ -1,7 +1,7 @@
 {
   "applications": {
     "gecko": {
-      "id": "uBlock0-webext@raymondhill.net",
+      "id": "uBlock0@raymondhill.net",
       "strict_min_version": "52.0"
     }
   },
