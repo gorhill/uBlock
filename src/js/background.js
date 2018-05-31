@@ -135,10 +135,10 @@ var µBlock = (function() { // jshint ignore:line
         localSettingsLastModified: 0,
         localSettingsLastSaved: 0,
 
-        // read-only
+        // Read-only
         systemSettings: {
-            compiledMagic: 1,
-            selfieMagic: 1
+            compiledMagic: 2,   // Increase when compiled format changes
+            selfieMagic: 2      // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
