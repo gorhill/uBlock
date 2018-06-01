@@ -278,7 +278,7 @@
             this.removeFilterList(oldKeys[i]);
         }
     }
-    newKeys = this.arrayFrom(newSet);
+    newKeys = Array.from(newSet);
     var bin = {
         selectedFilterLists: newKeys
     };
@@ -358,10 +358,10 @@
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = this.arrayFrom(importedSet).sort().join('\n');
+        externalLists = Array.from(importedSet).sort().join('\n');
     }
 
-    var result = this.arrayFrom(selectedListKeySet);
+    var result = Array.from(selectedListKeySet);
     if ( externalLists !== this.userSettings.externalLists ) {
         this.userSettings.externalLists = externalLists;
         vAPI.storage.set({ externalLists: externalLists });
@@ -387,7 +387,7 @@
         }
         out.add(location);
     }
-    return this.arrayFrom(out);
+    return Array.from(out);
 };
 
 /******************************************************************************/
@@ -1018,23 +1018,27 @@
 // some set time.
 
 µBlock.selfieManager = (function() {
-    var timer = null;
+    let µb = µBlock;
+    let timer = null;
 
-    var create = function() {
+    // As of 2018-05-31:
+    // JSON.stringify-ing ourselves results in a better baseline
+    // memory usage at selfie-load time. For some reasons.
+
+    let create = function() {
         timer = null;
-        var selfie = {
-            magic: this.systemSettings.selfieMagic,
-            availableFilterLists: this.availableFilterLists,
-            staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
-            redirectEngine: this.redirectEngine.toSelfie(),
-            staticExtFilteringEngine: this.staticExtFilteringEngine.toSelfie()
+        let selfie = {
+            magic: µb.systemSettings.selfieMagic,
+            availableFilterLists: JSON.stringify(µb.availableFilterLists),
+            staticNetFilteringEngine: JSON.stringify(µb.staticNetFilteringEngine.toSelfie()),
+            redirectEngine: JSON.stringify(µb.redirectEngine.toSelfie()),
+            staticExtFilteringEngine: JSON.stringify(µb.staticExtFilteringEngine.toSelfie())
         };
         vAPI.cacheStorage.set({ selfie: selfie });
-    }.bind(µBlock);
+    };
 
-    var load = function(callback) {
+    let load = function(callback) {
         vAPI.cacheStorage.get('selfie', function(bin) {
-            var µb = µBlock;
             if (
                 bin instanceof Object === false ||
                 bin.selfie instanceof Object === false ||
@@ -1043,22 +1047,22 @@
             ) {
                 return callback(false);
             }
-            µb.availableFilterLists = bin.selfie.availableFilterLists;
-            µb.staticNetFilteringEngine.fromSelfie(bin.selfie.staticNetFilteringEngine);
-            µb.redirectEngine.fromSelfie(bin.selfie.redirectEngine);
-            µb.staticExtFilteringEngine.fromSelfie(bin.selfie.staticExtFilteringEngine);
+            µb.availableFilterLists = JSON.parse(bin.selfie.availableFilterLists);
+            µb.staticNetFilteringEngine.fromSelfie(JSON.parse(bin.selfie.staticNetFilteringEngine));
+            µb.redirectEngine.fromSelfie(JSON.parse(bin.selfie.redirectEngine));
+            µb.staticExtFilteringEngine.fromSelfie(JSON.parse(bin.selfie.staticExtFilteringEngine));
             callback(true);
         });
     };
 
-    var destroy = function() {
+    let destroy = function() {
         if ( timer !== null ) {
             clearTimeout(timer);
             timer = null;
         }
         vAPI.cacheStorage.remove('selfie');
-        timer = vAPI.setTimeout(create, this.selfieAfter);
-    }.bind(µBlock);
+        timer = vAPI.setTimeout(create, µb.selfieAfter);
+    };
 
     return {
         load: load,

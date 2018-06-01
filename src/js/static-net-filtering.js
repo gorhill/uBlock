@@ -1139,7 +1139,7 @@ FilterHostnameDict.prototype.logData = function() {
 };
 
 FilterHostnameDict.prototype.compile = function() {
-    return [ this.fid, µb.arrayFrom(this.dict) ];
+    return [ this.fid, Array.from(this.dict) ];
 };
 
 FilterHostnameDict.load = function(args) {
@@ -2014,8 +2014,8 @@ FilterContainer.prototype.freeze = function() {
     this.fdataLast = null;
     this.filterLast = null;
     this.frozen = true;
-    //console.log(JSON.stringify(µb.arrayFrom(filterClassHistogram)));
-    //this.tokenHistogram = new Map(µb.arrayFrom(this.tokenHistogram).sort(function(a, b) {
+    //console.log(JSON.stringify(Array.from(filterClassHistogram)));
+    //this.tokenHistogram = new Map(Array.from(this.tokenHistogram).sort(function(a, b) {
     //    return a[0].localeCompare(b[0]) || (b[1] - a[1]);
     //}));
 };
@@ -2023,27 +2023,27 @@ FilterContainer.prototype.freeze = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.toSelfie = function() {
-    var categoriesToSelfie = function(categoryMap) {
-        var categoryEntries = [];
-        for ( var categoryEntry of categoryMap ) {
-            var tokenEntries = [];
-            for ( var tokenEntry of categoryEntry[1] ) {
+    let categoriesToSelfie = function(categoryMap) {
+        let selfie = [];
+        for ( let categoryEntry of categoryMap ) {
+            let tokenEntries = [];
+            for ( let tokenEntry of categoryEntry[1] ) {
                 tokenEntries.push([ tokenEntry[0], tokenEntry[1].compile() ]);
             }
-            categoryEntries.push([ categoryEntry[0], tokenEntries ]);
+            selfie.push([ categoryEntry[0], tokenEntries ]);
         }
-        return JSON.stringify(categoryEntries);
+        return selfie;
     };
 
-    var dataFiltersToSelfie = function(dataFilters) {
-        var selfie = [];
-        for ( var entry of dataFilters.values() ) {
+    let dataFiltersToSelfie = function(dataFilters) {
+        let selfie = [];
+        for ( let entry of dataFilters.values() ) {
             do {
                 selfie.push(entry.compile());
                 entry = entry.next;
             } while ( entry !== undefined );
         }
-        return JSON.stringify(selfie);
+        return selfie;
     };
 
     return {
@@ -2069,28 +2069,17 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.blockFilterCount = selfie.blockFilterCount;
     this.discardedCount = selfie.discardedCount;
 
-    var entries;
-
-    var categoryMap = new Map();
-    entries = JSON.parse(selfie.categories);
-    for ( var i = 0, ni = entries.length; i < ni; i++ ) {
-        var categoryEntry = entries[i],
-            tokenMap = new Map();
-        var tokenEntries = categoryEntry[1];
-        for ( var j = 0, nj = tokenEntries.length; j < nj; j++ ) {
-            var tokenEntry = tokenEntries[j];
+    for ( let categoryEntry of selfie.categories ) {
+        let tokenMap = new Map();
+        for ( let tokenEntry of categoryEntry[1] ) {
             tokenMap.set(tokenEntry[0], filterFromCompiledData(tokenEntry[1]));
         }
-        categoryMap.set(categoryEntry[0], tokenMap);
+        this.categories.set(categoryEntry[0], tokenMap);
     }
-    this.categories = categoryMap;
 
-    entries = JSON.parse(selfie.dataFilters);
-    var entry, bucket;
-    i = entries.length;
-    while ( i-- ) {
-        entry = FilterDataHolderEntry.load(entries[i]);
-        bucket = this.dataFilters.get(entry.tokenHash);
+    for ( let dataEntry of selfie.dataFilters ) {
+        let entry = FilterDataHolderEntry.load(dataEntry);
+        let bucket = this.dataFilters.get(entry.tokenHash);
         if ( bucket !== undefined ) {
             entry.next = bucket;
         }

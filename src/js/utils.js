@@ -357,18 +357,6 @@
 
 /******************************************************************************/
 
-µBlock.arrayFrom = typeof Array.from === 'function'
-    ? Array.from
-    : function(iterable) {
-        var out = [], i = 0;
-        for ( var value of iterable ) {
-            out[i++] = value;
-        }
-        return out;
-    };
-
-/******************************************************************************/
-
 µBlock.openNewTab = function(details) {
     if ( details.url.startsWith('logger-ui.html') ) {
         if ( details.shiftKey ) {
