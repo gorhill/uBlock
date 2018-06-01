@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -322,32 +322,26 @@
 // longer needed. A timer will be used for self-garbage-collect.
 // Cleaning up 10s after last hit sounds reasonable.
 
-// https://github.com/gorhill/uBlock/issues/2656
-// Can't use chained calls if we want to support legacy Map().
-
 µBlock.stringDeduplicater = {
     strings: new Map(),
     timer: undefined,
     last: 0,
 
     lookup: function(s) {
-        var t = this.strings.get(s);
+        let t = this.strings.get(s);
         if ( t === undefined ) {
-            this.strings.set(s, s);
-            t = this.strings.get(s);
-            if ( this.timer === undefined ) { this.cleanupAsync(); }
+            t = this.strings.set(s, s).get(s);
+            if ( this.timer === undefined ) {
+                this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
+            }
         }
         this.last = Date.now();
         return t;
     },
 
-    cleanupAsync: function() {
-        this.timer = vAPI.setTimeout(this.cleanup.bind(this), 10000);
-    },
-
     cleanup: function() {
         if ( (Date.now() - this.last) < 10000 ) {
-            this.timer = vAPI.setTimeout(this.cleanup.bind(this), 10000);
+            this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
         } else {
             this.timer = undefined;
             this.strings.clear();
