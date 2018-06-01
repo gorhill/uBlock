@@ -78,8 +78,11 @@
                         (d.head || d.documentElement).appendChild(script);
                     } catch (ex) {
                     }
-                    if ( script && script.parentNode ) {
-                        script.parentNode.removeChild(script);
+                    if ( script ) {
+                        if ( script.parentNode ) {
+                            script.parentNode.removeChild(script);
+                        }
+                        script.textContent = '';
                     }
                 };
                 injectScriptlets(document);
