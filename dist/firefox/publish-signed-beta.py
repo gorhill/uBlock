@@ -278,7 +278,7 @@ updates_json_filepath = os.path.join(projdir, 'dist', 'firefox', 'updates.json')
 with open(updates_json_filepath) as f:
     updates_json = json.load(f)
     f.close()
-    previous_version = updates_json['addons'][extension_id]['updates'][0]['ext_version']
+    previous_version = updates_json['addons'][extension_id]['updates'][0]['version']
     if LooseVersion(ext_version) > LooseVersion(previous_version):
         with open(os.path.join(projdir, 'dist', 'firefox', 'updates.template.json')) as f:
             template_json = Template(f.read())
