@@ -60,39 +60,11 @@ var nameToSwitchStateMap = {
 /******************************************************************************/
 
 // For performance purpose, as simple tests as possible
-var reHostnameVeryCoarse = /[g-z_-]/;
-var reIPv4VeryCoarse = /\.\d+$/;
 var reNotASCII = /[^\x20-\x7F]/;
 
 // http://tools.ietf.org/html/rfc5952
 // 4.3: "MUST be represented in lowercase"
 // Also: http://en.wikipedia.org/wiki/IPv6_address#Literal_IPv6_addresses_in_network_resource_identifiers
-
-var isIPAddress = function(hostname) {
-    if ( reHostnameVeryCoarse.test(hostname) ) {
-        return false;
-    }
-    if ( reIPv4VeryCoarse.test(hostname) ) {
-        return true;
-    }
-    return hostname.startsWith('[');
-};
-
-var toBroaderHostname = function(hostname) {
-    var pos = hostname.indexOf('.');
-    if ( pos !== -1 ) {
-        return hostname.slice(pos + 1);
-    }
-    return hostname !== '*' && hostname !== '' ? '*' : '';
-};
-
-var toBroaderIPAddress = function(ipaddress) {
-    return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
-};
-
-var selectHostnameBroadener = function(hostname) {
-    return isIPAddress(hostname) ? toBroaderIPAddress : toBroaderHostname;
-};
 
 /******************************************************************************/
 
@@ -102,6 +74,7 @@ HnSwitches.prototype.reset = function() {
     this.z = '';
     this.r = 0;
     this.changed = true;
+    this.decomposedSource = [];
 };
 
 /******************************************************************************/
@@ -220,21 +193,17 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
         return false;
     }
     this.n = switchName;
-    var bits,
-        hn = hostname,
-        broadenSource = selectHostnameBroadener(hn);
-    for (;;) {
-        bits = this.switches.get(hn);
+    µBlock.decomposeHostname(hostname, this.decomposedSource);
+    for ( let shn of this.decomposedSource ) {
+        let bits = this.switches.get(shn);
         if ( bits !== undefined ) {
             bits = bits >>> bitOffset & 3;
             if ( bits !== 0 ) {
-                this.z = hn;
+                this.z = shn;
                 this.r = bits;
                 return bits === 1;
             }
         }
-        hn = broadenSource(hn);
-        if ( hn === '' ) { break; }
     }
     this.r = 0;
     return false;

@@ -416,3 +416,48 @@
 };
 
 /******************************************************************************/
+
+µBlock.decomposeHostname = (function() {
+    // For performance purpose, as simple tests as possible
+    let reHostnameVeryCoarse = /[g-z_-]/;
+    let reIPv4VeryCoarse = /\.\d+$/;
+
+    let isIPAddress = function(hostname) {
+        if ( reHostnameVeryCoarse.test(hostname) ) {
+            return false;
+        }
+        if ( reIPv4VeryCoarse.test(hostname) ) {
+            return true;
+        }
+        return hostname.startsWith('[');
+    };
+
+    let toBroaderHostname = function(hostname) {
+        let pos = hostname.indexOf('.');
+        if ( pos !== -1 ) {
+            return hostname.slice(pos + 1);
+        }
+        return hostname !== '*' && hostname !== '' ? '*' : '';
+    };
+
+    let toBroaderIPAddress = function(ipaddress) {
+        return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
+    };
+
+    return function decomposeHostname(hostname, decomposed) {
+        if ( decomposed.length === 0 || decomposed[0] !== hostname ) {
+            let broaden = isIPAddress(hostname) ?
+                toBroaderIPAddress :
+                toBroaderHostname;
+            decomposed[0] = hostname;
+            let i = 1;
+            for (;;) {
+                hostname = broaden(hostname);
+                if ( hostname === '' ) { break; }
+                decomposed[i++] = hostname;
+            }
+            decomposed.length = i;
+        }
+        return decomposed;
+    };
+})();
