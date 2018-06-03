@@ -43,7 +43,7 @@
         case 'launch-logger':
             vAPI.tabs.get(null, function(tab) {
                 µb.openNewTab({
-                    url: 'logger-ui.html#tab_' + tab.id,
+                    url: 'logger-ui.html#tab_active+' + tab.id,
                     select: true,
                     index: -1
                 });
