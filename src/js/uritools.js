@@ -287,7 +287,7 @@ URI.hostnameFromURI = function(uri) {
 
 URI.domainFromHostname = function(hostname) {
     // Try to skip looking up the PSL database
-    var entry = domainCache[hostname];
+    var entry = domainCache.get(hostname);
     if ( entry !== undefined ) {
         entry.tstamp = Date.now();
         return entry.domain;
