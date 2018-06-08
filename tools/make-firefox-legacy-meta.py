@@ -83,15 +83,7 @@ with open(chromium_manifest, encoding='utf-8') as m:
 version = ''
 with open(version_filepath) as f:
     version = f.read().strip()
-match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
-if match:
-    buildtype = int(match.group(2)[1:])
-    if buildtype < 100:
-        builttype = 'b' + str(buildtype)
-    else:
-        builttype = 'rc' + str(buildtype - 100)
-    version = match.group(1) + builttype
-manifest['version'] = version
+    manifest['version'] = version
 
 manifest['homepage'] = 'https://github.com/gorhill/uBlock'
 manifest['description'] = descriptions['en']
