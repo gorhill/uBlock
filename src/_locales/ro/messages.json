@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Detector de probleme (în engleză)",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
