@@ -591,9 +591,11 @@ var renderOnce = function() {
         resizeTimer = undefined;
         // Do not use equality, fractional pixel dimension occurs and must
         // be ignored.
+        // https://www.reddit.com/r/uBlockOrigin/comments/8qodpw/how_to_hide_the_info_shown_of_what_is_currently/e0lglrr/
+        //   Tolerance of 2px fixes the issue.
         if (
-            Math.abs(document.body.offsetWidth - window.innerWidth) < 2 &&
-            Math.abs(document.body.offsetHeight - window.innerHeight) < 2
+            Math.abs(document.body.offsetWidth - window.innerWidth) <= 2 &&
+            Math.abs(document.body.offsetHeight - window.innerHeight) <= 2
         ) {
             return;
         }
