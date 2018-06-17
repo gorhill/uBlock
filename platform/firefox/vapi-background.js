@@ -2694,6 +2694,8 @@ vAPI.toolbarButton = {
         tbb.populatePanel(document, toolbarButtonPanel);
         toolbarButtonPanel.addEventListener('popupshowing', tbb.onViewShowing);
         toolbarButtonPanel.addEventListener('popuphiding', tbb.onViewHiding);
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/63#issuecomment-397901987
+        toolbarButtonPanel.setAttribute('tooltiptext', '');
         toolbarButton.appendChild(toolbarButtonPanel);
 
         return toolbarButton;
