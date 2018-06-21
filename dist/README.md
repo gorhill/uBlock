@@ -20,7 +20,7 @@ Remember that you have to update manually also. For some users, updating manuall
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
 
-### Firefox webext
+### Firefox
 
 Compatible with Firefox 52 and beyond. 
 
@@ -34,7 +34,7 @@ This works only if you set `xpinstall.signatures.required` to `false` in `about:
 
 #### For beta version
 
-- Click on `ublock0.webext.signed.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Click on `ublock0.firefox.signed.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
 
 #### Location of uBO settings
 
