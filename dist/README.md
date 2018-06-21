@@ -28,9 +28,9 @@ Compatible with Firefox 52 and beyond.
 
 This works only if you set `xpinstall.signatures.required` to `false` in `about:config`.<sup>[see "Add-on signing in Firefox"](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox)</sup>
 
-- Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
     - Right-click and choose _"Save As..."_.
-- Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
+- Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
 
 #### For beta version
 
@@ -65,9 +65,11 @@ On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozill
 - Optional: Select the version to build: `git checkout <tag>`
 - Build the plugin:
     - Chromium: `./tools/make-chromium.sh`
-    - Firefox webext: `./tools/make-webext.sh all`
-    - Firefox legacy: `./tools/make-firefox.sh all`
+    - Firefox webext: `./tools/make-firefox.sh all`
+    - Firefox legacy:
+        - checkout the `firefox-legacy` branch
+        - `./tools/make-firefox.sh all`
 - Load the result of the build into your browser:
     - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
-    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.webext.xpi` into Firefox.
+    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.firefox-legacy.xpi` into Firefox.
    
