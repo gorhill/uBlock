@@ -608,7 +608,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "დამხმარეები",
+    "message": "მოხალისეები",
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
@@ -740,7 +740,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "გაფრთხილება! დამატებითი პარამეტრებს ცვლილების შედეგებზე, თავად ხართ პასუხისმგებელი.",
+    "message": "გაფრთხილება! დამატებითი პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
