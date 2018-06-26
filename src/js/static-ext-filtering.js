@@ -494,7 +494,7 @@
     //   Do not discard unknown pseudo-elements.
 
     api.compileSelector = (function() {
-        var reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-])$/,
+        var reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/,
             reStyleSelector = /^(.+?):style\((.+?)\)$/,
             reStyleBad = /url\([^)]+\)/,
             reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
