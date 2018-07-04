@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Interní",
+    "message": "Integrované",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Jedna URL adresa na řádek. Řádky začínající vykřičníkem „!“ budou ignorovány. Neplatné URL adresy budou tiše ignorovány.",
+    "message": "Jedna URL adresa na řádek. Neplatné URL adresy budou tiše ignorovány.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Evidence problémů",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
