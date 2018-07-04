@@ -506,24 +506,14 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.logCosmeticFilters = (function() {
-    var tabIdToTimerMap = new Map();
-
-    var injectNow = function(tabId) {
-        tabIdToTimerMap.delete(tabId);
-        µBlock.scriptlets.injectDeep(tabId, 'cosmetic-logger');
-    };
-
-    var injectAsync = function(tabId) {
-        if ( tabIdToTimerMap.has(tabId) ) { return; }
-        tabIdToTimerMap.set(
-            tabId,
-            vAPI.setTimeout(injectNow.bind(null, tabId), 100)
-        );
-    };
-
-    return injectAsync;
-})();
+µBlock.logCosmeticFilters = function(tabId, frameId) {
+    if ( this.logger.isEnabled() ) {
+        vAPI.tabs.injectScript(tabId, {
+            file: '/js/scriptlets/cosmetic-logger.js',
+            frameId: frameId
+        });
+    }
+};
 
 /******************************************************************************/
 

@@ -107,10 +107,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'cosmeticFiltersInjected':
         µb.cosmeticFilteringEngine.addToSelectorCache(request);
-        // Net-based cosmetic filters are of no interest for logging purpose.
-        if ( µb.logger.isEnabled() && request.type !== 'net' ) {
-            µb.logCosmeticFilters(tabId);
-        }
         break;
 
     case 'createUserFilter':
@@ -523,8 +519,8 @@ var onMessage = function(request, sender, callback) {
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        if ( request.isRootFrame && µb.logger.isEnabled() ) {
-            µb.logCosmeticFilters(tabId);
+        if ( response.noCosmeticFiltering !== true ) {
+            µb.logCosmeticFilters(tabId, frameId);
         }
         break;
 
