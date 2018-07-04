@@ -1226,7 +1226,6 @@
         switch ($(this).attr("data-action")) {
 
         case "delete":
-          // var lastBrush = $('g.brush');
 
           var ids = selectedAdSet.childIds(),
             $item = findItemDivByGid(selectedAdSet.gid);
@@ -1252,9 +1251,8 @@
             ids: selectedAdSet.childIds()
           });
 
-          // recreate the slider, but don't redo layout
           createSlider(false, true);
-      
+        
           break;
         }
 
@@ -1371,10 +1369,15 @@
   function createSlider(relayout, fromDelete) {
 
     // console.log('Vault-Slider.createSlider: '+gAds.length);
+    
+    // remember brush if it is fromDelete
+    var lastBrush;
+    if (fromDelete)  lastBrush = document.getElementsByClassName("brush")[0];
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
     d3.select("svg").remove();
+   
 
     if (!gAds || !gAds.length) {
       computeStats();
@@ -1501,6 +1504,11 @@
       .on("brushend", brushend);
 
     // add the brush
+    if (fromDelete) {
+      // append the old brus
+      document.getElementById("svgcon").getElementsByTagName("svg")[0].firstChild.appendChild(lastBrush);
+    }
+    else {
     var gBrush = svg.append("g")
       .attr("class", "brush")
       .call(brush);
@@ -1523,6 +1531,7 @@
       .attr("height", 50)
       .attr("y", -50)
       .attr("x", -3);
+    }
  
     // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
 
