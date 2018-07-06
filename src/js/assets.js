@@ -217,7 +217,13 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         onLoad(details);
     };
 
+    // https://github.com/AdguardTeam/FiltersRegistry/issues/82
+    //   Not checking for `errored` status was causing repeated notifications
+    //   to the caller. This can happens when more than one out of multiple
+    //   sublists can't be fetched.
     var onLocalLoadError = function(details) {
+        if ( errored ) { return; }
+
         errored = true;
         details.url = mainlistURL;
         details.content = '';
