@@ -152,7 +152,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "Το αρχείο δε περιέχει καθόλου διαφημίσεις, παρακαλώ επιλέξτε ένα άλλο αρχείο.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
@@ -220,19 +220,19 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportOptions": {
-    "message": "Export Options",
+    "message": "Επιλογές εξαγωγής",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
-    "message": "Ads Only",
+    "message": "Μόνο διαφημίσεις",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsOnly": {
-    "message": "Settings Only",
+    "message": "Μόνο ρυθμίσεις",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsAndAds": {
-    "message": "Settings and Ads",
+    "message": "Ρυθμίσεις και διαφημίσεις",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
