@@ -188,6 +188,17 @@ var renderFilterLists = function(soft) {
                     renderElapsedTimeToString(asset.writeTime)
                 )
             );
+            // AdNauseam update button
+            var button = li.querySelector('#buttonUpdateAdNauseam');
+            if ( button != null ) {
+                button.setAttribute(
+                    'title',
+                    lastUpdateTemplateString.replace(
+                        '{{ago}}',
+                        renderElapsedTimeToString(asset.writeTime)
+                    )
+                );
+          }
         } else {
             li.classList.remove('cached');
         }
