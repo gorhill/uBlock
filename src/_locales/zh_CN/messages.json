@@ -8,7 +8,7 @@
     "description": "this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ 控制面板",
+    "message": "uBlock₀ — 控制面板",
     "description": "English: uBlock₀ — Dashboard"
   },
   "settingsPageName": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ 网络请求日志",
+    "message": "uBlock₀ — 网络请求日志",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
