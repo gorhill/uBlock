@@ -554,7 +554,9 @@ FilterContainer.prototype.freeze = function() {
         }
     }
     this.highlyGeneric.simple.str = Array.from(this.highlyGeneric.simple.dict).join(',\n');
+    this.highlyGeneric.simple.mru.reset();
     this.highlyGeneric.complex.str = Array.from(this.highlyGeneric.complex.dict).join(',\n');
+    this.highlyGeneric.complex.mru.reset();
 
     this.frozen = true;
 };
