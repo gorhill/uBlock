@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -914,6 +914,43 @@ var modifyRuleset = function(details) {
 
 /******************************************************************************/
 
+// Shortcuts pane
+
+let getShortcuts = function(callback) {
+    if ( vAPI.commands !== undefined ) {
+        vAPI.commands.getAll(commands => {
+            let response = [];
+            for ( let command of commands ) {
+                let desc = command.description;
+                let match = /^__MSG_(.+?)__$/.exec(desc);
+                if ( match !== null ) {
+                    desc = vAPI.i18n(match[1]);
+                }
+                if ( desc === '' ) { continue; }
+                command.description = desc;
+                response.push(command);
+            }
+            callback(response);
+        });
+    } else {
+        callback([]);
+    }
+};
+
+let setShortcut = function(details) {
+    if  ( typeof vAPI.commands.update !== 'function' ) { return; }
+    if ( details.shortcut === undefined ) {
+        vAPI.commands.reset(details.name);
+        µb.commandShortcuts.delete(details.name);
+    } else {
+        vAPI.commands.update({ name: details.name, shortcut: details.shortcut });
+        µb.commandShortcuts.set(details.name, details.shortcut);
+    }
+    vAPI.storage.set({ commandShortcuts: Array.from(µb.commandShortcuts) });
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -925,6 +962,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'getLocalData':
         return getLocalData(callback);
+
+    case 'getShortcuts':
+        return getShortcuts(callback);
 
     case 'readUserFilters':
         return µb.loadUserFilters(callback);
@@ -940,6 +980,10 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+    case 'canUpdateShortcuts':
+        response = typeof vAPI.commands.update === 'function';
+        break;
+
     case 'getRules':
         response = getRules();
         break;
@@ -979,6 +1023,10 @@ var onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
+        break;
+
+    case 'setShortcut':
+        setShortcut(request);
         break;
 
     case 'writeHiddenSettings':

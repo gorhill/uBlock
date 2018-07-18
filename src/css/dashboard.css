@@ -73,6 +73,10 @@ iframe {
     width: 100%;
     }
 
+body:not(.canUpdateShortcuts) .tabButton[href="#shortcuts.html"] {
+    display: none;
+    }
+
 @media (max-width: 640px) {
     #dashboard-nav {
         position: relative;

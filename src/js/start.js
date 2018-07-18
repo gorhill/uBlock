@@ -103,6 +103,17 @@ var onPSLReady = function() {
 
 /******************************************************************************/
 
+var onCommandShortcutsReady = function(commandShortcuts) {
+    if ( Array.isArray(commandShortcuts) === false ) { return; }
+    µb.commandShortcuts = new Map(commandShortcuts);
+    if ( typeof vAPI.commands.update !== 'function' ) { return; }
+    for ( let entry of commandShortcuts ) {
+        vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
+    }
+};
+
+/******************************************************************************/
+
 // To bring older versions up to date
 
 var onVersionReady = function(lastVersion) {
@@ -238,6 +249,7 @@ var onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
+    onCommandShortcutsReady(fetched.commandShortcuts);
 
     µb.loadPublicSuffixList(onPSLReady);
     µb.loadRedirectResources();
@@ -270,6 +282,7 @@ var fromFetch = function(to, fetched) {
 
 var onSelectedFilterListsLoaded = function() {
     var fetchableProps = {
+        'commandShortcuts': [],
         'compiledMagic': '',
         'dynamicFilteringString': [
             'behind-the-scene * * noop',
