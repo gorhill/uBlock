@@ -786,7 +786,7 @@ var getTabBrowser = (function() {
 
     if ( vAPI.thunderbird ) {
         return function(win) {
-            return win.document.getElementById('tabmail') || null;
+            return win && win.document.getElementById('tabmail') || null;
         };
     }
 
@@ -1376,7 +1376,9 @@ var tabWatcher = (function() {
         } else if ( tabBrowser.tabContainer ) {     // Firefox
             tabContainer = tabBrowser.tabContainer;
             vAPI.contextMenu.register(window);
-            vAPI.commands.register(window);
+            if ( vAPI.commands ) {
+                vAPI.commands.register(window);
+            }
         }
 
         // https://github.com/gorhill/uBlock/issues/697
@@ -1421,7 +1423,9 @@ var tabWatcher = (function() {
 
     var onWindowUnload = function(win) {
         vAPI.contextMenu.unregister(win);
-        vAPI.commands.unregister(win);
+        if ( vAPI.commands ) {
+            vAPI.commands.unregister(win);
+        }
 
         var tabBrowser = getTabBrowser(win);
         if ( tabBrowser === null ) {
