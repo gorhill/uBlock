@@ -146,19 +146,20 @@
                 }
                 return;
             }
-            /* status === 1 */
-            let key = validStatus1Codes.get(ev.code);
-            if ( key === 'Shift' ) {
-                after.add('Shift');
-                input.value = Array.from(after).join('+');
-                return;
-            }
-            if ( key !== undefined ) {
-                after.add(key);
-                updateCapturedShortcut();
-                status = 2;
-                input.blur();
-                return;
+            if ( status === 1 ) {
+                let key = validStatus1Codes.get(ev.code);
+                if ( key === 'Shift' ) {
+                    after.add('Shift');
+                    updateCapturedShortcut();
+                    return;
+                }
+                if ( key !== undefined ) {
+                    after.add(key);
+                    updateCapturedShortcut();
+                    status = 2;
+                    input.blur();
+                    return;
+                }
             }
         };
 
