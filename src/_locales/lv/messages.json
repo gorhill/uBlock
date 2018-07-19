@@ -31,6 +31,10 @@
     "message": "Atļautais saraksts",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Tīkla pieprasījumu žurnāls",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Īslaicīgi atļaut lielos multivides elementus",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Šim ierakstam ir jābūt pēdējam",

@@ -31,6 +31,10 @@
     "message": "ホワイトリスト",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "ショートカットキー",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — ネットワークリクエストログ",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "一時的に大部分のメディア要素を許可",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "ショートカットキーを入力",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "これは最後のエントリである必要があります",

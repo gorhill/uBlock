@@ -31,6 +31,10 @@
     "message": "Valge loend",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Otseteed",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Võrgutaotluste logi",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Luba ajutiselt mahukad meediaelemendid",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Kirjuta otsetee",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "See sisestus peab olema viimane",

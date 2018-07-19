@@ -31,6 +31,10 @@
     "message": "Lista branca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atalhos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registador",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporariamente elementos multimédia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Digite um atalho",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

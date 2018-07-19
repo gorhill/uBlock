@@ -31,6 +31,10 @@
     "message": "Whitelist",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Fluchkeppelingen",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Lochboek",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Grutte media-eleminten tydlik tastean",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type in fluchkeppeling",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

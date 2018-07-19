@@ -31,6 +31,10 @@
     "message": "నేను నమ్మే సైట్ల జాబితా",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — నెట్వర్కు అభ్యర్ధనల చిట్టా",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "భారి దృశ్య\/శ్రవణ అంశాలను తాత్కాలికంగా అనుమతించు",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "ఇది అంతిమంగా వుండాల్సిన నమోదు",

@@ -31,6 +31,10 @@
     "message": "Lista branca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atalhos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registro de Eventos",
     "description": "Title for the logger window"
@@ -340,7 +344,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Os filtros cosméticos genéricos são filtros cosméticos que são destinados a serem aplicados em todos os sites.<p>Embora manuseados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem ainda contribuir para um grande uso de memória e CPU em algumas páginas, especialmente as grandes e duradouras.<p>Ativando esta opção irá eliminar a sobrecarga da memória e cpu adicionadas nas páginas de web como resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
+    "message": "<p>Os filtros cosméticos genéricos são filtros que são destinados a serem aplicados em todos os sites.<p>Embora utilizados eficientemente pelo uBlock₀, os filtros cosméticos genéricos podem contribuir para o aumento de uso da memória e CPU, especialmente em páginas grandes e as que estão a um bom tempo ativas.<p>Ativando esta opção irá eliminar a sobrecarga da memória e CPU adicionadas nas páginas, resultado da aplicação dos filtros cosméticos genéricos e também irá reduzir o consumo da memória pelo uBlock₀ em si.<p>É recomendado que ative esta opção em dispositivos menos poderosos.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporariamente grandes elementos de mídia",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Digite um atalho",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

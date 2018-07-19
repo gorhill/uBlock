@@ -31,6 +31,10 @@
     "message": "제외 목록",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — 로그",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "이번만 대형 미디어 구성요소 허용",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

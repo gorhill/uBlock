@@ -31,6 +31,10 @@
     "message": "அனுமதிப்பட்டியல்",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — பிணையக் கோரிக்கைப் பதிகை",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "தற்காலிகமாகப் பெரிய ஒலி‍-ஒளி-படத்தொகுப்புகளின் கூறுகளை அனுமதி",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

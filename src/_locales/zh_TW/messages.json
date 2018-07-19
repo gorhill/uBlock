@@ -31,6 +31,10 @@
     "message": "白名單",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "快速鍵",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — 連線請求記錄工具",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "暫時允許大型媒體元素",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "鍵入快速鍵",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "此條目須為最後一個",

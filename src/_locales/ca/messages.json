@@ -31,6 +31,10 @@
     "message": "Llista blanca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Dreceres",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registre de peticions de xarxa",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permet temporalment els fitxers multimèdia grans",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Escriviu una drecera",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Aquesta entrada ha de ser l'última",

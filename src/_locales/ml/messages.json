@@ -31,6 +31,10 @@
     "message": "വൈറ്റ് ലിസ്റ്റ്",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "യുബ്ലോക്ക്ഒ - നെറ്റ്‌വര്‍ക്ക് അപേക്ഷാ ലോഗ്",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "താൽക്കാലികമായി വലിയ മീഡിയ അനുവദിക്കുക",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

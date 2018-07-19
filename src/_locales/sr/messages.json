@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -29,6 +29,10 @@
   },
   "whitelistPageName": {
     "message": "Дозвољени домени",
+    "description": "appears as tab name in dashboard"
+  },
+  "shortcutsPageName": {
+    "message": "Пречице",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Привремено дозволи велике мултимедијалне елементе",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Укуцајте пречицу",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

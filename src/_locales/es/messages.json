@@ -31,6 +31,10 @@
     "message": "Lista blanca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atajos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registro de peticiones de red",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporalmente elementos multimedia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Escriba un atajo",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada debe ser la última",

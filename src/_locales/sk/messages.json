@@ -31,6 +31,10 @@
     "message": "Biela listina",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Klávesové skratky",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Zaznamenávač",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Dočasne povoliť veľké multimediálne prvky",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Zadajte klávesovú skratku",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

@@ -31,6 +31,10 @@
     "message": "Wyjątki",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Skróty",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock — Dziennik żądań sieciowych",
     "description": "Title for the logger window"
@@ -762,6 +766,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tymczasowo zezwalaj na wyświetlanie dużych elementów multimedialnych",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Wprowadź skrót",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Ten wpis musi być ostatni",
