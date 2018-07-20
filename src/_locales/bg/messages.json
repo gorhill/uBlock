@@ -768,7 +768,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Натиснете клавишна комбинация",
+    "message": "Натиснете клавиши",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
