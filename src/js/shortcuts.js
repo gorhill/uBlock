@@ -29,70 +29,69 @@
         [ 'ControlLeft', 'Ctrl' ],
         [ 'ControlRight', 'Ctrl' ],
     ]);
-    let validStatus1Codes = new Map([
-        [ 'KeyA', 'A' ],
-        [ 'KeyB', 'B' ],
-        [ 'KeyC', 'C' ],
-        [ 'KeyD', 'D' ],
-        [ 'KeyE', 'E' ],
-        [ 'KeyF', 'F' ],
-        [ 'KeyG', 'G' ],
-        [ 'KeyH', 'H' ],
-        [ 'KeyI', 'I' ],
-        [ 'KeyJ', 'J' ],
-        [ 'KeyK', 'K' ],
-        [ 'KeyL', 'L' ],
-        [ 'KeyM', 'M' ],
-        [ 'KeyN', 'N' ],
-        [ 'KeyO', 'O' ],
-        [ 'KeyP', 'P' ],
-        [ 'KeyQ', 'Q' ],
-        [ 'KeyR', 'R' ],
-        [ 'KeyS', 'S' ],
-        [ 'KeyT', 'T' ],
-        [ 'KeyU', 'U' ],
-        [ 'KeyV', 'V' ],
-        [ 'KeyW', 'W' ],
-        [ 'KeyX', 'X' ],
-        [ 'KeyY', 'Y' ],
-        [ 'KeyZ', 'Z' ],
-        [ 'Digit0', '0' ],
-        [ 'Digit1', '1' ],
-        [ 'Digit2', '2' ],
-        [ 'Digit3', '3' ],
-        [ 'Digit4', '4' ],
-        [ 'Digit5', '5' ],
-        [ 'Digit6', '6' ],
-        [ 'Digit7', '7' ],
-        [ 'Digit8', '8' ],
-        [ 'Digit9', '9' ],
-        [ 'F1', 'F1' ],
-        [ 'F2', 'F2' ],
-        [ 'F3', 'F3' ],
-        [ 'F4', 'F4' ],
-        [ 'F5', 'F5' ],
-        [ 'F6', 'F6' ],
-        [ 'F7', 'F7' ],
-        [ 'F8', 'F8' ],
-        [ 'F9', 'F9' ],
-        [ 'F10', 'F10' ],
-        [ 'F11', 'F11' ],
-        [ 'F12', 'F12' ],
-        [ 'Comma', 'Comma' ],
-        [ 'Period', 'Period' ],
-        [ 'Home', 'Home' ],
-        [ 'End', 'End' ],
-        [ 'PageUp', 'PageUp' ],
-        [ 'PageDown', 'PageDown' ],
-        [ 'Space', 'Space' ],
-        [ 'Insert', 'Insert' ],
-        [ 'Delete', 'Delete' ],
-        [ 'ArrowUp', 'Up' ],
-        [ 'ArrowDown', 'Down' ],
-        [ 'ArrowLeft', 'Left' ],
-        [ 'ArrowRight', 'Right' ],
-        [ 'ShiftLeft', 'Shift' ],
-        [ 'ShiftRight', 'Shift' ],
+    let validStatus1Keys = new Map([
+        [ 'a', 'A' ],
+        [ 'b', 'B' ],
+        [ 'c', 'C' ],
+        [ 'd', 'D' ],
+        [ 'e', 'E' ],
+        [ 'f', 'F' ],
+        [ 'g', 'G' ],
+        [ 'h', 'H' ],
+        [ 'i', 'I' ],
+        [ 'j', 'J' ],
+        [ 'k', 'K' ],
+        [ 'l', 'L' ],
+        [ 'm', 'M' ],
+        [ 'n', 'N' ],
+        [ 'o', 'O' ],
+        [ 'p', 'P' ],
+        [ 'q', 'Q' ],
+        [ 'r', 'R' ],
+        [ 's', 'S' ],
+        [ 't', 'T' ],
+        [ 'u', 'U' ],
+        [ 'v', 'V' ],
+        [ 'w', 'W' ],
+        [ 'x', 'X' ],
+        [ 'y', 'Y' ],
+        [ 'z', 'Z' ],
+        [ '0', '0' ],
+        [ '1', '1' ],
+        [ '2', '2' ],
+        [ '3', '3' ],
+        [ '4', '4' ],
+        [ '5', '5' ],
+        [ '6', '6' ],
+        [ '7', '7' ],
+        [ '8', '8' ],
+        [ '9', '9' ],
+        [ 'f1', 'F1' ],
+        [ 'f2', 'F2' ],
+        [ 'f3', 'F3' ],
+        [ 'f4', 'F4' ],
+        [ 'f5', 'F5' ],
+        [ 'f6', 'F6' ],
+        [ 'f7', 'F7' ],
+        [ 'f8', 'F8' ],
+        [ 'f9', 'F9' ],
+        [ 'f10', 'F10' ],
+        [ 'f11', 'F11' ],
+        [ 'f12', 'F12' ],
+        [ ' ', 'Space' ],
+        [ ',', 'Comma' ],
+        [ '.', 'Period' ],
+        [ 'home', 'Home' ],
+        [ 'end', 'End' ],
+        [ 'pageup', 'PageUp' ],
+        [ 'pagedown', 'PageDown' ],
+        [ 'insert', 'Insert' ],
+        [ 'delete', 'Delete' ],
+        [ 'arrowup', 'Up' ],
+        [ 'arrowdown', 'Down' ],
+        [ 'arrowleft', 'Left' ],
+        [ 'arrowright', 'Right' ],
+        [ 'shift', 'Shift' ],
     ]);
 
     let commandNameFromElement = function(elem) {
@@ -147,14 +146,14 @@
                 return;
             }
             if ( status === 1 ) {
-                let key = validStatus1Codes.get(ev.code);
-                if ( key === 'Shift' ) {
+                if ( ev.key === 'Shift' ) {
                     after.add('Shift');
                     updateCapturedShortcut();
                     return;
                 }
-                if ( key !== undefined ) {
-                    after.add(key);
+                let keyName = validStatus1Keys.get(ev.key.toLowerCase());
+                if ( keyName !== undefined ) {
+                    after.add(keyName);
                     updateCapturedShortcut();
                     status = 2;
                     input.blur();
@@ -174,8 +173,7 @@
                 status = 0;
                 return;
             }
-            key = validStatus1Codes.get(ev.code);
-            if ( key === 'Shift' ) {
+            if ( ev.key === 'Shift' ) {
                 after.delete('Shift');
                 updateCapturedShortcut();
                 return;
