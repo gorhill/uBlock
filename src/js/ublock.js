@@ -396,15 +396,14 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.elementPickerExec = function(tabId, targetElement, zap) {
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-        return;
-    }
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+
     this.epickerTarget = targetElement || '';
     this.epickerZap = zap || false;
-    this.scriptlets.inject(tabId, 'element-picker');
-    if ( typeof vAPI.tabs.select === 'function' ) {
-        vAPI.tabs.select(tabId);
-    }
+    vAPI.tabs.injectScript(tabId, {
+        file: '/js/scriptlets/element-picker.js',
+        runAt: 'document_end'
+    });
 };
 
 /******************************************************************************/
