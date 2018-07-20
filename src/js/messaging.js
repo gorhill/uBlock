@@ -917,28 +917,28 @@ var modifyRuleset = function(details) {
 // Shortcuts pane
 
 let getShortcuts = function(callback) {
-    if ( vAPI.commands !== undefined ) {
-        vAPI.commands.getAll(commands => {
-            let response = [];
-            for ( let command of commands ) {
-                let desc = command.description;
-                let match = /^__MSG_(.+?)__$/.exec(desc);
-                if ( match !== null ) {
-                    desc = vAPI.i18n(match[1]);
-                }
-                if ( desc === '' ) { continue; }
-                command.description = desc;
-                response.push(command);
-            }
-            callback(response);
-        });
-    } else {
-        callback([]);
+    if ( µb.canUseShortcuts === false ) {
+        return callback([]);
     }
+
+    vAPI.commands.getAll(commands => {
+        let response = [];
+        for ( let command of commands ) {
+            let desc = command.description;
+            let match = /^__MSG_(.+?)__$/.exec(desc);
+            if ( match !== null ) {
+                desc = vAPI.i18n(match[1]);
+            }
+            if ( desc === '' ) { continue; }
+            command.description = desc;
+            response.push(command);
+        }
+        callback(response);
+    });
 };
 
 let setShortcut = function(details) {
-    if  ( typeof vAPI.commands.update !== 'function' ) { return; }
+    if  ( µb.canUpdateShortcuts === false ) { return; }
     if ( details.shortcut === undefined ) {
         vAPI.commands.reset(details.name);
         µb.commandShortcuts.delete(details.name);
@@ -981,7 +981,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
     case 'canUpdateShortcuts':
-        response = typeof vAPI.commands.update === 'function';
+        response = µb.canUpdateShortcuts;
         break;
 
     case 'getRules':
