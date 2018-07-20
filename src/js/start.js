@@ -106,7 +106,12 @@ var onPSLReady = function() {
 var onCommandShortcutsReady = function(commandShortcuts) {
     if ( Array.isArray(commandShortcuts) === false ) { return; }
     µb.commandShortcuts = new Map(commandShortcuts);
-    if ( typeof vAPI.commands.update !== 'function' ) { return; }
+    if (
+        vAPI.commands === undefined ||
+        typeof vAPI.commands.update !== 'function'
+    ) {
+        return;
+    }
     for ( let entry of commandShortcuts ) {
         vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
     }
