@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,21 +51,20 @@ var extractBlocks = function(content, begId, endId) {
 
 var fromNetFilter = function(details) {
     var lists = [],
-        compiledFilter = details.compiledFilter,
-        entry, content, pos, notFound;
+        compiledFilter = details.compiledFilter;
 
-    for ( var assetKey in listEntries ) {
-        entry = listEntries[assetKey];
+    for ( let assetKey in listEntries ) {
+        let entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        content = extractBlocks(entry.content, 0, 1000);
-        pos = 0;
+        let content = extractBlocks(entry.content, 0, 1000);
+        let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
             if ( pos === -1 ) { break; }
             // We need an exact match.
             // https://github.com/gorhill/uBlock/issues/1392
             // https://github.com/gorhill/uBlock/issues/835
-            notFound = pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A;
+            let notFound = pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A;
             pos += compiledFilter.length;
             if (
                 notFound ||
@@ -74,6 +73,7 @@ var fromNetFilter = function(details) {
                 continue;
             }
             lists.push({
+                assetKey: assetKey,
                 title: entry.title,
                 supportURL: entry.supportURL
             });
@@ -81,7 +81,7 @@ var fromNetFilter = function(details) {
         }
     }
 
-    var response = {};
+    let response = {};
     response[details.rawFilter] = lists;
 
     postMessage({
