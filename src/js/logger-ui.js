@@ -1363,7 +1363,7 @@ var reverseLookupManager = (function() {
                 'loggerUI',
                 {
                     what: 'listsFromCosmeticFilter',
-                    hostname: row.getAttribute('data-hn-frame') || '',
+                    url: row.cells[5].textContent,
                     rawFilter: rawFilter,
                 },
                 reverseLookupDone

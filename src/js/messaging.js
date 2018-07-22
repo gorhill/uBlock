@@ -69,11 +69,7 @@ var onMessage = function(request, sender, callback) {
         return;
 
     case 'listsFromCosmeticFilter':
-        µb.staticFilteringReverseLookup.fromCosmeticFilter(
-            request.hostname,
-            request.rawFilter,
-            callback
-        );
+        µb.staticFilteringReverseLookup.fromCosmeticFilter(request, callback);
         return;
 
     case 'reloadAllFilters':

@@ -172,6 +172,12 @@ var fromCosmeticFilter = function(details) {
             if ( end === -1 ) { end = content.length; }
             pos = end;
             fargs = JSON.parse(content.slice(beg, end));
+
+            // https://github.com/gorhill/uBlock/issues/2763
+            if ( fargs[0] >= 0 && fargs[0] <= 5 && details.ignoreGeneric ) {
+                continue;
+            }
+
             switch ( fargs[0] ) {
             case 0: // id-based
                 if (

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2525,14 +2525,14 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 // https://github.com/gorhill/uBlock/issues/2103
 //   User may want to override `generichide` exception filters.
 
-FilterContainer.prototype.matchStringGenericHide = function(context, requestURL) {
-    var url = this.urlTokenizer.setURL(requestURL);
+FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
+    let url = this.urlTokenizer.setURL(requestURL);
 
     // https://github.com/gorhill/uBlock/issues/2225
     //   Important: this is used by FilterHostnameDict.match().
     requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
-    var bucket = this.categories.get(genericHideException);
+    let bucket = this.categories.get(genericHideException);
     if ( !bucket || this.matchTokens(bucket, url) === false ) {
         this.fRegister = null;
         return 0;
@@ -2557,7 +2557,7 @@ FilterContainer.prototype.matchStringGenericHide = function(context, requestURL)
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
     // Special cases.
     if ( requestType === 'generichide' ) {
-        return this.matchStringGenericHide(context, requestURL);
+        return this.matchStringGenericHide(requestURL);
     }
     var type = typeNameToTypeValue[requestType];
     if ( type === undefined ) {
