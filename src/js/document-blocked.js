@@ -21,11 +21,11 @@
 
 /* global uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -44,14 +44,11 @@ var details = {};
 
 (function() {
     var onReponseReady = function(response) {
-        if ( typeof response !== 'object' ) {
-            return;
-        }
-        var lists;
-        for ( var rawFilter in response ) {
-            if ( response.hasOwnProperty(rawFilter) === false ) {
-                continue;
-            }
+        if ( response instanceof Object === false ) { return; }
+
+        let lists;
+        for ( let rawFilter in response ) {
+            if ( response.hasOwnProperty(rawFilter) === false ) { continue; }
             lists = response[rawFilter];
             break;
         }
@@ -59,19 +56,20 @@ var details = {};
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return;
         }
+
         let parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
-        for ( let i = 0; i < lists.length; i++ ) {
-            let entry = lists[i];
-            let elem = document.querySelector('#templates .filterList').cloneNode(true);
+        for ( let list of lists ) {
+            let elem = document.querySelector('#templates .filterList')
+                               .cloneNode(true);
             let source = elem.querySelector('.filterListSource');
-            source.href = 'asset-viewer.html?url=' + entry.assetKey;
-            source.textContent = entry.title;
+            source.href += encodeURIComponent(list.assetKey);
+            source.textContent = list.title;
             if (
-                typeof entry.supportURL === 'string' &&
-                entry.supportURL !== ''
+                typeof list.supportURL === 'string' &&
+                list.supportURL !== ''
             ) {
                 elem.querySelector('.filterListSupport')
-                    .setAttribute('href', entry.supportURL);
+                    .setAttribute('href', list.supportURL);
             }
             parent.appendChild(elem);
         }

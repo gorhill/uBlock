@@ -24,10 +24,9 @@
 (function() {
 
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/commands#Shortcut_values
-    let validStatus0Codes = new Map([
-        [ 'AltLeft', 'Alt' ],
-        [ 'ControlLeft', 'Ctrl' ],
-        [ 'ControlRight', 'Ctrl' ],
+    let validStatus0Keys = new Map([
+        [ 'alt', 'Alt' ],
+        [ 'control', 'Ctrl' ],
     ]);
     let validStatus1Keys = new Map([
         [ 'a', 'A' ],
@@ -137,9 +136,9 @@
                 return;
             }
             if ( status === 0 ) {
-                let key = validStatus0Codes.get(ev.code);
-                if ( key !== undefined ) {
-                    after.add(key);
+                let keyName = validStatus0Keys.get(ev.key.toLowerCase());
+                if ( keyName !== undefined ) {
+                    after.add(keyName);
                     updateCapturedShortcut();
                     status = 1;
                 }
@@ -166,8 +165,8 @@
             ev.preventDefault();
             ev.stopImmediatePropagation();
             if ( status !== 1 ) { return; }
-            let key = validStatus0Codes.get(ev.code);
-            if ( key !== undefined && after.has(key) ) {
+            let keyName = validStatus0Keys.get(ev.key.toLowerCase());
+            if ( keyName !== undefined && after.has(keyName) ) {
                 after.clear();
                 updateCapturedShortcut();
                 status = 0;
