@@ -83,7 +83,8 @@
   "sidebar_action": {
     "default_title": "__MSG_statsPageName__",
     "default_panel": "logger-ui.html",
-    "default_icon": "img/ublock.svg"
+    "default_icon": "img/ublock.svg",
+    "open_at_install": false
   },
   "version": "1.9.15.101",
   "web_accessible_resources": [
