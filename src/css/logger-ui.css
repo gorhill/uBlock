@@ -595,6 +595,7 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
     background: #eee;
     font-size: 85%;
     padding: 3px;
+    unicode-bidi: plaintext;
     }
 #filterFinderDialog .dialog ul {
     font-size: larger;
