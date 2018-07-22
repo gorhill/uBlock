@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -94,7 +94,8 @@ var safeTextToDOM = function(text, parent) {
     if ( text === '' ) { return; }
     // Fast path (most common).
     if ( text.indexOf('<') === -1 ) {
-        return parent.appendChild(safeTextToTextNode(text));
+        parent.appendChild(safeTextToTextNode(text));
+        return;
     }
     // Slow path.
     // `<p>` no longer allowed. Code below can be remove once all <p>'s are
@@ -102,7 +103,7 @@ var safeTextToDOM = function(text, parent) {
     text = text.replace(/^<p>|<\/p>/g, '')
                .replace(/<p>/g, '\n\n');
     // Parse allowed HTML tags.
-    var matches = reSafeTags.exec(text);
+    let matches = reSafeTags.exec(text);
     if ( matches === null ) {
         matches = reSafeLink.exec(text);
         if ( matches === null ) {
@@ -114,10 +115,46 @@ var safeTextToDOM = function(text, parent) {
         }
     }
     safeTextToDOM(matches[1], parent);
-    var node = safeTextToTagNode(matches[2]) || parent;
+    let node = safeTextToTagNode(matches[2]) || parent;
     safeTextToDOM(matches[3], node);
     parent.appendChild(node);
     safeTextToDOM(matches[4], parent);
+};
+
+/******************************************************************************/
+
+vAPI.i18n.safeTemplateToDOM = function(id, dict, parent) {
+    if ( parent === undefined ) {
+        parent = document.createDocumentFragment();
+    }
+    let textin = vAPI.i18n(id);
+    if ( textin === '' ) {
+        return parent;
+    }
+    if ( textin.indexOf('{{') === -1 ) {
+        safeTextToDOM(textin, parent);
+        return parent;
+    }
+    let re = /\{\{\w+\}\}/g;
+    let textout = '';
+    for (;;) {
+        let match = re.exec(textin);
+        if ( match === null ) {
+            textout += textin;
+            break;
+        }
+        textout += textin.slice(0, match.index);
+        let prop = match[0].slice(2, -2);
+        if ( dict.hasOwnProperty(prop) ) {
+            textout += dict[prop].replace(/</g, '&lt;')
+                                 .replace(/>/g, '&gt;');
+        } else {
+            textout += prop;
+        }
+        textin = textin.slice(re.lastIndex);
+    }
+    safeTextToDOM(textout, parent);
+    return parent;
 };
 
 /******************************************************************************/

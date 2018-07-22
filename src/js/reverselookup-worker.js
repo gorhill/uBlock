@@ -238,6 +238,7 @@ var fromCosmeticFilter = function(details) {
                     response[found] = [];
                 }
                 response[found].push({
+                    assetKey: assetKey,
                     title: entry.title,
                     supportURL: entry.supportURL
                 });
