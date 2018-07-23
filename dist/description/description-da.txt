@@ -1,6 +1,6 @@
 En effektiv blocker: Bruger kun lidt hukommelse og CPU, men kan alligevel indlæse og anvende langt flere filtre end andre populære blockere.
 
-Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-compared
+Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Anvendelse: Den store tænd-sluk-knap i pop op-vinduet bruges til permanent at deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted; det er ikke en global afbryderknap.
 
