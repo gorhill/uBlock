@@ -45,7 +45,8 @@ let reHasCSSCombinators = /[ >+~]/,
     proceduralDict = new Map(),
     nodesToProcess = new Set(),
     shouldProcessDeclarativeComplex = false,
-    shouldProcessProcedural = false;
+    shouldProcessProcedural = false,
+    loggedSelectors = new Set();
 
 /******************************************************************************/
 
@@ -70,14 +71,16 @@ let processDeclarativeSimple = function(node, out) {
     }
     for ( let selector of simpleDeclarativeSet ) {
         if (
-            node !== document && node.matches(selector) ||
-            node.querySelector(selector) !== null
+            (node === document || node.matches(selector) === false) &&
+            (node.querySelector(selector) === null)
         ) {
-            out.push(sanitizedSelectors.get(selector) || selector);
-            simpleDeclarativeSet.delete(selector);
-            simpleDeclarativeStr = undefined;
-            if ( simpleDeclarativeSet.size === 0 ) { return; }
+            continue;
         }
+        out.push(sanitizedSelectors.get(selector) || selector);
+        simpleDeclarativeSet.delete(selector);
+        simpleDeclarativeStr = undefined;
+        loggedSelectors.add(selector);
+        if ( simpleDeclarativeSet.size === 0 ) { return; }
     }
 };
 
@@ -94,6 +97,7 @@ let processDeclarativeComplex = function(out) {
         out.push(sanitizedSelectors.get(selector) || selector);
         complexDeclarativeSet.delete(selector);
         complexDeclarativeStr = undefined;
+        loggedSelectors.add(selector);
         if ( complexDeclarativeSet.size === 0 ) { return; }
     }
 };
@@ -117,8 +121,9 @@ let processTimer = new vAPI.SafeAnimationFrame(() => {
     processTimer.clear();
     let toLog = [];
     if ( nodesToProcess.size !== 0 && simpleDeclarativeSet.size !== 0 ) {
-        if ( nodesToProcess.has(document) ) {
-            nodesToProcess = new Set([ document ]);
+        if ( nodesToProcess.size !== 1 && nodesToProcess.has(document) ) {
+            nodesToProcess.clear();
+            nodesToProcess.add(document);
         }
         for ( let node of nodesToProcess ) {
             processDeclarativeSimple(node, toLog);
@@ -177,21 +182,22 @@ let handlers = {
             logNow = [];
         for ( let entry of (changes.declarative || []) ) {
             for ( let selector of entry[0].split(',\n') ) {
-                if ( entry[1] === 'display:none!important;' ) {
-                    if ( reHasPseudoClass.test(selector) ) {
-                        let sanitized = selector.replace(reHasPseudoClass, '');
-                        sanitizedSelectors.set(sanitized, selector);
-                        selector = sanitized;
-                    }
-                    if ( reHasCSSCombinators.test(selector) ) {
-                        complexDeclarativeSet.add(selector);
-                        complexDeclarativeStr = undefined;
-                    } else {
-                        simpleDeclarativeSet.add(selector);
-                        simpleDeclarativeStr = undefined;
-                    }
-                } else {
+                if ( entry[1] !== 'display:none!important;' ) {
                     logNow.push(selector + ':style(' + entry[1] + ')');
+                    continue;
+                }
+                if ( reHasPseudoClass.test(selector) ) {
+                    let sanitized = selector.replace(reHasPseudoClass, '');
+                    sanitizedSelectors.set(sanitized, selector);
+                    selector = sanitized;
+                }
+                if ( loggedSelectors.has(selector) ) { continue; }
+                if ( reHasCSSCombinators.test(selector) ) {
+                    complexDeclarativeSet.add(selector);
+                    complexDeclarativeStr = undefined;
+                } else {
+                    simpleDeclarativeSet.add(selector);
+                    simpleDeclarativeStr = undefined;
                 }
             }
         }
