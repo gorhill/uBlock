@@ -792,15 +792,21 @@ var restoreUserData = function(request) {
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
+// Remove all stored data but keep global counts, people can become
+// quite attached to numbers
+
 var resetUserData = function() {
-    vAPI.cacheStorage.clear();
-    vAPI.storage.clear();
+    let count = 3;
+    let countdown = ( ) => {
+        count -= 1;
+        if ( count === 0 ) {
+            vAPI.app.restart();
+        }
+    };
+    vAPI.cacheStorage.clear(countdown); // 1
+    vAPI.storage.clear(countdown);      // 2
+    µb.saveLocalSettings(countdown);    // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
-
-    // Keep global counts, people can become quite attached to numbers
-    µb.saveLocalSettings();
-
-    vAPI.app.restart();
 };
 
 /******************************************************************************/
