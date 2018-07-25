@@ -54,11 +54,6 @@
 µBlock.saveLocalSettings = (function() {
     let saveAfter = 4 * 60 * 1000;
 
-    let save = function(callback) {
-        this.localSettingsLastSaved = Date.now();
-        vAPI.storage.set(this.localSettings, callback);
-    };
-
     let onTimeout = ( ) => {
         let µb = µBlock;
         if ( µb.localSettingsLastModified > µb.localSettingsLastSaved ) {
@@ -69,7 +64,10 @@
 
     vAPI.setTimeout(onTimeout, saveAfter);
 
-    return save;
+    return function(callback) {
+        this.localSettingsLastSaved = Date.now();
+        vAPI.storage.set(this.localSettings, callback);
+    };
 })();
 
 /******************************************************************************/
