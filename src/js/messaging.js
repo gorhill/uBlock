@@ -796,16 +796,21 @@ var restoreUserData = function(request) {
 // quite attached to numbers
 
 var resetUserData = function() {
-    let count = 3;
-    let countdown = ( ) => {
-        count -= 1;
-        if ( count === 0 ) {
-            vAPI.app.restart();
+    const onSaveLocalSettingsDone = ( ) => {
+        vAPI.app.restart();
+    };
+
+    let cleared = 0;
+    const onStorageClearDone = ( ) => {
+        cleared += 1;
+        if ( cleared === 2 ) {
+            µb.saveLocalSettings(onSaveLocalSettingsDone);
         }
     };
-    vAPI.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);      // 2
-    µb.saveLocalSettings(countdown);    // 3
+
+    vAPI.cacheStorage.clear(onStorageClearDone); // 1
+    vAPI.storage.clear(onStorageClearDone);      // 2
+
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
