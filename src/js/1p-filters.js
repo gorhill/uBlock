@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+window.hasUnsavedChanges = false;
+
+/******************************************************************************/
+
 (function() {
 
 /******************************************************************************/
@@ -54,6 +58,7 @@ function userFiltersChanged(changed) {
     }
     uDom.nodeFromId('userFiltersApply').disabled = !changed;
     uDom.nodeFromId('userFiltersRevert').disabled = !changed;
+    hasUnsavedChanges = changed;
 }
 
 /******************************************************************************/

@@ -56,6 +56,10 @@ let loadDashboardPanel = function() {
 };
 
 let onTabClickHandler = function(e) {
+    e.preventDefault();
+    if ( checkUnsavedChanges() && !confirm(checkUnsavedChanges.msg) ) { 
+        return;
+    }
     let url = window.location.href,
         pos = url.indexOf('#');
     if ( pos !== -1 ) {
@@ -66,7 +70,6 @@ let onTabClickHandler = function(e) {
         window.location.replace(url);
         loadDashboardPanel();
     }
-    e.preventDefault();
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/106
@@ -78,6 +81,34 @@ resizeFrame();
 window.addEventListener('resize', resizeFrame);
 uDom('.tabButton').on('click', onTabClickHandler);
 loadDashboardPanel();
+
+/******************************************************************************/
+
+let checkUnsavedChanges = function() {
+    const iframe = checkUnsavedChanges.iframe;
+    if ( iframe.src == '' ) {
+        return false;
+    } else {
+        return iframe.contentWindow.hasUnsavedChanges === true;
+    }
+};
+checkUnsavedChanges.iframe = document.getElementById('iframe');
+checkUnsavedChanges.msg = vAPI.i18n('dashboardUnsavedWarning');
+
+addEventListener('beforeunload', function(e) {
+    if ( checkUnsavedChanges() ) {
+        const msg = checkUnsavedChanges.msg;
+        // Old standard
+        e.returnValue = msg;
+        // New standard
+        if ( typeof e.preventDefault === 'function' ) {
+            e.preventDefault();
+        }
+        // Just in case
+        return msg;
+    }
+});
+DOMListFactory.noUnload = true;
 
 /******************************************************************************/
 

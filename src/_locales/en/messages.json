@@ -11,6 +11,10 @@
     "message":"uBlock₀ — Dashboard",
     "description":"English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning":{
+    "message":"Leave tab?\nChanges you made will not be saved.",
+    "description":"warning message for unsaved changes"
+  },
   "settingsPageName":{
     "message":"Settings",
     "description":"appears as tab name in dashboard"
