@@ -108,7 +108,7 @@ addEventListener('beforeunload', function(e) {
         return msg;
     }
 });
-DOMListFactory.noUnload = true;
+uDom.noUnload = true;
 
 /******************************************************************************/
 
