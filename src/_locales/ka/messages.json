@@ -592,7 +592,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {

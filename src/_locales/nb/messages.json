@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Snarveier",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -592,7 +592,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "Statisk filter <code>{{filter}}<\/code> ble ikke funnet i noen av filterlistene som er aktiverte nå",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
@@ -772,7 +772,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Oppfør en snarvei",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
