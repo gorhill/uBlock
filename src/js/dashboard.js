@@ -56,20 +56,20 @@ let loadDashboardPanel = function() {
 };
 
 let onTabClickHandler = function(e) {
-    e.preventDefault();
-    if ( checkUnsavedChanges() && !confirm(checkUnsavedChanges.msg) ) { 
-        return;
-    }
     let url = window.location.href,
         pos = url.indexOf('#');
     if ( pos !== -1 ) {
         url = url.slice(0, pos);
     }
     url += this.hash;
-    if ( url !== window.location.href ) {
+    if (
+        url !== window.location.href &&
+        ( !checkUnsavedChanges() || confirm(checkUnsavedChanges.msg) )
+    ) { 
         window.location.replace(url);
         loadDashboardPanel();
     }
+    e.preventDefault();
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/106

@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+window.hasUnsavedChanges = false;
+
+/******************************************************************************/
+
 (function() {
 
 /******************************************************************************/
@@ -339,6 +343,7 @@ var onTextChanged = (function() {
             input.setAttribute('disabled', '');
             CodeMirror.commands.save = editSaveHandler;
         }
+        hasUnsavedChanges = !isClean;
     };
 
     return function(now) {

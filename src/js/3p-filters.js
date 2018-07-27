@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+window.hasUnsavedChanges = false;
+
+/******************************************************************************/
+
 (function() {
 
 /******************************************************************************/
@@ -316,9 +320,11 @@ var renderFilterLists = function(soft) {
 /******************************************************************************/
 
 var renderWidgets = function() {
+    var isClean = filteringSettingsHash === hashFromCurrentFromSettings();
+    hasUnsavedChanges = !isClean;
     uDom('#buttonApply').toggleClass(
         'disabled',
-        filteringSettingsHash === hashFromCurrentFromSettings()
+        isClean
     );
     uDom('#buttonPurgeAll').toggleClass(
         'disabled',
