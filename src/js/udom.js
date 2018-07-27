@@ -80,8 +80,6 @@ DOMListFactory.onLoad = function(callback) {
     window.addEventListener('load', callback);
 };
 
-DOMListFactory.noUnload = false;
-
 /******************************************************************************/
 
 DOMListFactory.nodeFromId = function(id) {
@@ -674,22 +672,6 @@ DOMList.prototype.trigger = function(etype) {
     }
     return this;
 };
-
-/******************************************************************************/
-
-// Cleanup
-
-var onBeforeUnload = function() {
-    if ( DOMListFactory.noUnload ) { return; }
-
-    var entry;
-    while ( (entry = listenerEntries.pop()) ) {
-        entry.dispose();
-    }
-    window.removeEventListener('beforeunload', onBeforeUnload);
-};
-
-window.addEventListener('beforeunload', onBeforeUnload);
 
 /******************************************************************************/
 

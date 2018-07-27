@@ -108,7 +108,6 @@ addEventListener('beforeunload', function(e) {
         return msg;
     }
 });
-uDom.noUnload = true;
 
 /******************************************************************************/
 
