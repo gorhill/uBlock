@@ -29,7 +29,7 @@ uDom.onLoad(() => {
 
 /******************************************************************************/
 
-var onAppDataReady = function(appData) {
+var onAppDataReady = (appData) => {
     uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
 };
 

@@ -48,7 +48,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-function userFiltersChanged(changed) {
+const userFiltersChanged = (changed) => {
     if ( typeof changed !== 'boolean' ) {
         changed = cmEditor.getValue().trim() !== cachedUserFilters;
     }
@@ -58,8 +58,8 @@ function userFiltersChanged(changed) {
 
 /******************************************************************************/
 
-function renderUserFilters(first) {
-    var onRead = function(details) {
+const renderUserFilters = (first) => {
+    const onRead = (details) => {
         if ( details.error ) { return; }
         var content = details.content.trim();
         cachedUserFilters = content;
@@ -77,17 +77,17 @@ function renderUserFilters(first) {
 
 /******************************************************************************/
 
-function allFiltersApplyHandler() {
+const allFiltersApplyHandler = () => {
     messaging.send('dashboard', { what: 'reloadAllFilters' });
     uDom('#userFiltersApply').prop('disabled', true );
 }
 
 /******************************************************************************/
 
-var handleImportFilePicker = () => {
+const handleImportFilePicker = () => {
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
-    var abpImporter = function(s) {
+    let abpImporter = (s) => {
         var reAbpSubscriptionExtractor = /\n\[Subscription\]\n+url=~[^\n]+([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
         var reAbpFilterExtractor = /\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/i;
         var matches = reAbpSubscriptionExtractor.exec(s);
@@ -128,7 +128,7 @@ var handleImportFilePicker = () => {
 
 /******************************************************************************/
 
-var startImportFilePicker = () => {
+const startImportFilePicker = () => {
     var input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -139,7 +139,7 @@ var startImportFilePicker = () => {
 
 /******************************************************************************/
 
-var exportUserFiltersToFile = () => {
+const exportUserFiltersToFile = () => {
     var val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
     var filename = vAPI.i18n('1pExportFilename')
@@ -154,7 +154,7 @@ var exportUserFiltersToFile = () => {
 /******************************************************************************/
 
 var applyChanges = () => {
-    var onWritten = function(details) {
+    var onWritten = (details) => {
         if ( details.error ) { return; }
         cachedUserFilters = details.content.trim();
         allFiltersApplyHandler();
@@ -179,9 +179,7 @@ var revertChanges = () => {
 
 /******************************************************************************/
 
-var getCloudData = () => {
-    return cmEditor.getValue();
-};
+var getCloudData = () => {return cmEditor.getValue();};
 
 var setCloudData = function(data, append) {
     if ( typeof data !== 'string' ) { return; }

@@ -37,7 +37,7 @@
             what : 'getAssetContent',
             url: decodeURIComponent(matches[1])
         },
-        function(details) {
+        (details) => {
             cmEditor.setValue(details && details.content || '');
         }
     );

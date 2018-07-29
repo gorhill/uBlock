@@ -53,7 +53,7 @@ var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
-var onCloudDataReceived = function(entry) {
+var onCloudDataReceived = (entry) => {
     if ( entry instanceof Object === false ) {
         return;
     }
@@ -106,7 +106,7 @@ var pushData = () => {
             datakey: self.cloud.datakey,
             data: self.cloud.onPush()
         },
-        function(error) {
+        (error) => {
             var failed = typeof error === 'string';
             document.getElementById('cloudPush')
                     .classList
@@ -145,7 +145,7 @@ var openOptions = () => {
 
 /******************************************************************************/
 
-var closeOptions = function(ev) {
+var closeOptions = (ev) => {
     var root = uDom.nodeFromId('cloudOptions');
     if ( ev.target !== root ) {
         return;
@@ -156,7 +156,7 @@ var closeOptions = function(ev) {
 /******************************************************************************/
 
 var submitOptions = () => {
-    var onOptions = function(options) {
+    var onOptions = (options) => {
         if ( options instanceof Object === false ) {
             return;
         }
@@ -178,7 +178,7 @@ var submitOptions = () => {
 
 /******************************************************************************/
 
-var onInitialize = function(options) {
+var onInitialize = (options) => {
     if ( typeof options !== 'object' || options === null ) {
         return;
     }

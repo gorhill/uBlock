@@ -37,7 +37,7 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var onBlockElement = function(details, tab) {
+var onBlockElement = (details, tab) => {
     if ( tab === undefined ) {
         return;
     }
@@ -68,7 +68,7 @@ var onBlockElement = function(details, tab) {
 
 /******************************************************************************/
 
-var onTemporarilyAllowLargeMediaElements = function(details, tab) {
+var onTemporarilyAllowLargeMediaElements = (details, tab) => {
     if ( tab === undefined ) { return; }
     var pageStore = µb.pageStoreFromTabId(tab.id);
     if ( pageStore === null ) { return; }
@@ -77,7 +77,7 @@ var onTemporarilyAllowLargeMediaElements = function(details, tab) {
 
 /******************************************************************************/
 
-var onEntryClicked = function(details, tab) {
+var onEntryClicked = (details, tab) => {
     if ( details.menuItemId === 'uBlock0-blockElement' ) {
         return onBlockElement(details, tab);
     }
@@ -105,7 +105,7 @@ var menuEntries = [
 
 /******************************************************************************/
 
-var update = function(tabId) {
+var update = (tabId) => {
     var newBits = 0;
     if ( µb.userSettings.contextMenuEnabled && tabId !== null ) {
         var pageStore = µb.pageStoreFromTabId(tabId);
@@ -137,9 +137,9 @@ vAPI.contextMenu.onMustUpdate = update;
 /******************************************************************************/
 
 return {
-    update: function(tabId) {
+    update: (tabId) => {
         if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
-            vAPI.tabs.get(null, function(tab) {
+            vAPI.tabs.get(null, (tab) => {
                 if ( tab ) {
                     update(tab.id);
                 }

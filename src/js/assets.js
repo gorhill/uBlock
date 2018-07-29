@@ -39,20 +39,20 @@ var api = {
 
 var observers = [];
 
-api.addObserver = function(observer) {
+api.addObserver = (observer) => {
     if ( observers.indexOf(observer) === -1 ) {
         observers.push(observer);
     }
 };
 
-api.removeObserver = function(observer) {
+api.removeObserver = (observer) => {
     var pos;
     while ( (pos = observers.indexOf(observer)) !== -1 ) {
         observers.splice(pos, 1);
     }
 };
 
-var fireNotification = function(topic, details) {
+var fireNotification = (topic, details) => {
     var result, r;
     for ( var i = 0; i < observers.length; i++ ) {
         r = observers[i](topic, details);
@@ -63,7 +63,7 @@ var fireNotification = function(topic, details) {
 
 /******************************************************************************/
 
-api.fetchText = function(url, onLoad, onError) {
+api.fetchText = (url, onLoad, onError) => {
     var isExternal = reIsExternalPath.test(url),
         actualUrl = isExternal ? url : vAPI.getURL(url);
 
@@ -140,7 +140,7 @@ api.fetchText = function(url, onLoad, onError) {
 
     // https://github.com/gorhill/uBlock/issues/2526
     // - Timeout only when there is no progress.
-    var onProgressEvent = function(ev) {
+    var onProgressEvent = (ev) => {
         if ( ev.loaded === contentLoaded ) { return; }
         contentLoaded = ev.loaded;
         if ( timeoutTimer !== undefined ) {
@@ -171,7 +171,7 @@ api.fetchText = function(url, onLoad, onError) {
 // https://github.com/gorhill/uBlock/issues/3331
 //   Support the seamless loading of sublists.
 
-api.fetchFilterList = function(mainlistURL, onLoad, onError) {
+api.fetchFilterList = (mainlistURL, onLoad, onError) => {
     var content = [],
         errored = false,
         pendingSublistURLs = new Set([ mainlistURL ]),
@@ -179,7 +179,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         toParsedURL = api.fetchFilterList.toParsedURL,
         parsedURL = toParsedURL(mainlistURL);
 
-    var processIncludeDirectives = function(details) {
+    var processIncludeDirectives = (details) => {
         var reInclude = /^!#include +(\S+)/gm;
         for (;;) {
             var match = reInclude.exec(details.content);
@@ -196,7 +196,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         }
     };
 
-    var onLocalLoadSuccess = function(details) {
+    var onLocalLoadSuccess = (details) => {
         if ( errored ) { return; }
 
         var isSublist = details.url !== mainlistURL;
@@ -221,7 +221,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
     //   Not checking for `errored` status was causing repeated notifications
     //   to the caller. This can happen when more than one out of multiple
     //   sublists can't be fetched.
-    var onLocalLoadError = function(details) {
+    var onLocalLoadError = (details) => {
         if ( errored ) { return; }
 
         errored = true;
@@ -233,7 +233,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
     this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
 };
 
-api.fetchFilterList.toParsedURL = function(url) {
+api.fetchFilterList.toParsedURL = (url) => {
     try {
         return new URL(url);
     } catch (ex) {
@@ -256,7 +256,7 @@ api.fetchFilterList.toParsedURL = function(url) {
 var assetSourceRegistryStatus,
     assetSourceRegistry = Object.create(null);
 
-var registerAssetSource = function(assetKey, dict) {
+var registerAssetSource = (assetKey, dict) => {
     var entry = assetSourceRegistry[assetKey] || {};
     for ( var prop in dict ) {
         if ( dict.hasOwnProperty(prop) === false ) { continue; }
@@ -293,7 +293,7 @@ var registerAssetSource = function(assetKey, dict) {
     assetSourceRegistry[assetKey] = entry;
 };
 
-var unregisterAssetSource = function(assetKey) {
+var unregisterAssetSource = (assetKey) => {
     assetCacheRemove(assetKey);
     delete assetSourceRegistry[assetKey];
 };
@@ -304,7 +304,7 @@ var saveAssetSourceRegistry = (() => {
         timer = undefined;
         vAPI.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
     };
-    return function(lazily) {
+    return (lazily) => {
         if ( timer !== undefined ) {
             clearTimeout(timer);
         }
@@ -316,7 +316,7 @@ var saveAssetSourceRegistry = (() => {
     };
 })();
 
-var updateAssetSourceRegistry = function(json, silent) {
+var updateAssetSourceRegistry = (json, silent) => {
     var newDict;
     try {
         newDict = JSON.parse(json);
@@ -349,7 +349,7 @@ var updateAssetSourceRegistry = function(json, silent) {
     saveAssetSourceRegistry();
 };
 
-var getAssetSourceRegistry = function(callback) {
+var getAssetSourceRegistry = (callback) => {
     // Already loaded.
     if ( assetSourceRegistryStatus === 'ready' ) {
         callback(assetSourceRegistry);
@@ -378,14 +378,14 @@ var getAssetSourceRegistry = function(callback) {
     var createRegistry = () => {
         api.fetchText(
             µBlock.assetsBootstrapLocation || 'assets/assets.json',
-            function(details) {
+            (details) => {
                 updateAssetSourceRegistry(details.content, true);
                 registryReady();
             }
         );
     };
 
-    vAPI.cacheStorage.get('assetSourceRegistry', function(bin) {
+    vAPI.cacheStorage.get('assetSourceRegistry', (bin) => {
         if ( !bin || !bin.assetSourceRegistry ) {
             createRegistry();
             return;
@@ -395,14 +395,14 @@ var getAssetSourceRegistry = function(callback) {
     });
 };
 
-api.registerAssetSource = function(assetKey, details) {
+api.registerAssetSource = (assetKey, details) => {
     getAssetSourceRegistry(() => {
         registerAssetSource(assetKey, details);
         saveAssetSourceRegistry(true);
     });
 };
 
-api.unregisterAssetSource = function(assetKey) {
+api.unregisterAssetSource = (assetKey) => {
     getAssetSourceRegistry(() => {
         unregisterAssetSource(assetKey);
         saveAssetSourceRegistry(true);
@@ -420,7 +420,7 @@ var assetCacheRegistryStatus,
     assetCacheRegistryStartTime = Date.now(),
     assetCacheRegistry = {};
 
-var getAssetCacheRegistry = function(callback) {
+var getAssetCacheRegistry = (callback) => {
     // Already loaded.
     if ( assetCacheRegistryStatus === 'ready' ) {
         callback(assetCacheRegistry);
@@ -445,7 +445,7 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+    vAPI.cacheStorage.get('assetCacheRegistry', (bin) => {
         if ( bin && bin.assetCacheRegistry ) {
             assetCacheRegistry = bin.assetCacheRegistry;
         }
@@ -459,7 +459,7 @@ var saveAssetCacheRegistry = (() => {
         timer = undefined;
         vAPI.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
     };
-    return function(lazily) {
+    return (lazily) => {
         if ( timer !== undefined ) { clearTimeout(timer); }
         if ( lazily ) {
             timer = vAPI.setTimeout(save, 500);
@@ -469,16 +469,16 @@ var saveAssetCacheRegistry = (() => {
     };
 })();
 
-var assetCacheRead = function(assetKey, callback) {
+var assetCacheRead = (assetKey, callback) => {
     let internalKey = 'cache/' + assetKey;
 
-    let reportBack = function(content, err) {
+    let reportBack = (content, err) => {
         let details = { assetKey: assetKey, content: content };
         if ( err ) { details.error = err; }
         callback(details);
     };
 
-    let onAssetRead = function(bin) {
+    let onAssetRead = (bin) => {
         if (
             bin instanceof Object === false ||
             stringIsNotEmpty(bin[internalKey]) === false
@@ -501,7 +501,7 @@ var assetCacheRead = function(assetKey, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheWrite = function(assetKey, details, callback) {
+var assetCacheWrite = (assetKey, details, callback) => {
     var internalKey = 'cache/' + assetKey;
     var content = '';
     if ( typeof details === 'string' ) {
@@ -514,7 +514,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
         return assetCacheRemove(assetKey, callback);
     }
 
-    var reportBack = function(content) {
+    var reportBack = (content) => {
         var details = { assetKey: assetKey, content: content };
         if ( typeof callback === 'function' ) {
             callback(details);
@@ -539,7 +539,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheRemove = function(pattern, callback) {
+var assetCacheRemove = (pattern, callback) => {
     var onReady = () => {
         var cacheDict = assetCacheRegistry,
             removedEntries = [],
@@ -571,7 +571,7 @@ var assetCacheRemove = function(pattern, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
+var assetCacheMarkAsDirty = (pattern, exclude, callback) => {
     var onReady = () => {
         var cacheDict = assetCacheRegistry,
             cacheEntry,
@@ -613,7 +613,7 @@ var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
 
 /******************************************************************************/
 
-var stringIsNotEmpty = function(s) {
+var stringIsNotEmpty = (s) => {
     return typeof s === 'string' && s !== '';
 };
 
@@ -628,12 +628,12 @@ var stringIsNotEmpty = function(s) {
 
 **/
 
-var readUserAsset = function(assetKey, callback) {
-    var reportBack = function(content) {
+var readUserAsset = (assetKey, callback) => {
+    var reportBack = (content) => {
         callback({ assetKey: assetKey, content: content });
     };
 
-    var onLoaded = function(bin) {
+    var onLoaded = (bin) => {
         if ( !bin ) { return reportBack(''); }
         var content = '';
         if ( typeof bin['cached_asset_content://assets/user/filters.txt'] === 'string' ) {
@@ -668,7 +668,7 @@ var readUserAsset = function(assetKey, callback) {
     vAPI.storage.get(toRead, onLoaded);
 };
 
-var saveUserAsset = function(assetKey, content, callback) {
+var saveUserAsset = (assetKey, content, callback) => {
     var bin = {};
     bin[assetKey] = content;
     // TODO(seamless migration):
@@ -689,7 +689,7 @@ var saveUserAsset = function(assetKey, content, callback) {
 
 /******************************************************************************/
 
-api.get = function(assetKey, options, callback) {
+api.get = (assetKey, options, callback) => {
     if ( typeof options === 'function' ) {
         callback = options;
         options = {};
@@ -706,7 +706,7 @@ api.get = function(assetKey, options, callback) {
         contentURLs,
         contentURL;
 
-    var reportBack = function(content, err) {
+    var reportBack = (content, err) => {
         var details = { assetKey: assetKey, content: content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
@@ -734,7 +734,7 @@ api.get = function(assetKey, options, callback) {
         }
     };
 
-    var onContentLoaded = function(details) {
+    var onContentLoaded = (details) => {
         if ( stringIsNotEmpty(details.content) === false ) {
             onContentNotLoaded();
             return;
@@ -748,11 +748,11 @@ api.get = function(assetKey, options, callback) {
         reportBack(details.content);
     };
 
-    var onCachedContentLoaded = function(details) {
+    var onCachedContentLoaded = (details) => {
         if ( details.content !== '' ) {
             return reportBack(details.content);
         }
-        getAssetSourceRegistry(function(registry) {
+        getAssetSourceRegistry((registry) => {
             assetDetails = registry[assetKey] || {};
             if ( typeof assetDetails.contentURL === 'string' ) {
                 contentURLs = [ assetDetails.contentURL ];
@@ -770,12 +770,12 @@ api.get = function(assetKey, options, callback) {
 
 /******************************************************************************/
 
-var getRemote = function(assetKey, callback) {
+var getRemote = (assetKey, callback) => {
    var assetDetails = {},
         contentURLs,
         contentURL;
 
-    var reportBack = function(content, err) {
+    var reportBack = (content, err) => {
         var details = { assetKey: assetKey, content: content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
@@ -785,7 +785,7 @@ var getRemote = function(assetKey, callback) {
         callback(details);
     };
 
-    var onRemoteContentLoaded = function(details) {
+    var onRemoteContentLoaded = (details) => {
         if ( stringIsNotEmpty(details.content) === false ) {
             registerAssetSource(assetKey, { error: { time: Date.now(), error: 'No content' } });
             tryLoading();
@@ -799,7 +799,7 @@ var getRemote = function(assetKey, callback) {
         reportBack(details.content);
     };
 
-    var onRemoteContentError = function(details) {
+    var onRemoteContentError = (details) => {
         var text = details.statusText;
         if ( details.statusCode === 0 ) {
             text = 'network error';
@@ -822,7 +822,7 @@ var getRemote = function(assetKey, callback) {
         }
     };
 
-    getAssetSourceRegistry(function(registry) {
+    getAssetSourceRegistry((registry) => {
         assetDetails = registry[assetKey] || {};
         if ( typeof assetDetails.contentURL === 'string' ) {
             contentURLs = [ assetDetails.contentURL ];
@@ -837,7 +837,7 @@ var getRemote = function(assetKey, callback) {
 
 /******************************************************************************/
 
-api.put = function(assetKey, content, callback) {
+api.put = (assetKey, content, callback) => {
     if ( reIsUserAsset.test(assetKey) ) {
         return saveUserAsset(assetKey, content, callback);
     }
@@ -846,7 +846,7 @@ api.put = function(assetKey, content, callback) {
 
 /******************************************************************************/
 
-api.metadata = function(callback) {
+api.metadata = (callback) => {
     var assetRegistryReady = false,
         cacheRegistryReady = false;
 
@@ -891,7 +891,7 @@ api.metadata = function(callback) {
 
 api.purge = assetCacheMarkAsDirty;
 
-api.remove = function(pattern, callback) {
+api.remove = (pattern, callback) => {
     assetCacheRemove(pattern, callback);
 };
 
@@ -934,7 +934,7 @@ var updateNext = () => {
     var assetDict, cacheDict;
 
     // This will remove a cached asset when it's no longer in use.
-    var garbageCollectOne = function(assetKey) {
+    var garbageCollectOne = (assetKey) => {
         var cacheEntry = cacheDict[assetKey];
         if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
             assetCacheRemove(assetKey);
@@ -968,7 +968,7 @@ var updateNext = () => {
         }
     };
 
-    var updatedOne = function(details) {
+    var updatedOne = (details) => {
         if ( details.content !== '' ) {
             updaterUpdated.push(details.assetKey);
             if ( details.assetKey === 'assets.json' ) {
@@ -993,13 +993,13 @@ var updateNext = () => {
         getRemote(assetKey, updatedOne);
     };
 
-    getAssetSourceRegistry(function(dict) {
+    getAssetSourceRegistry((dict) => {
         assetDict = dict;
         if ( !cacheDict ) { return; }
         updateOne();
     });
 
-    getAssetCacheRegistry(function(dict) {
+    getAssetCacheRegistry((dict) => {
         cacheDict = dict;
         if ( !assetDict ) { return; }
         updateOne();
@@ -1015,7 +1015,7 @@ var updateDone = () => {
     fireNotification('after-assets-updated', { assetKeys: assetKeys });
 };
 
-api.updateStart = function(details) {
+api.updateStart = (details) => {
     var oldUpdateDelay = updaterAssetDelay,
         newUpdateDelay = typeof details.delay === 'number' ?
             details.delay :

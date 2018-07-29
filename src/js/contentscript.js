@@ -140,14 +140,14 @@ vAPI.contentScript = true;
 
 // https://github.com/gorhill/uBlock/issues/2147
 
-vAPI.SafeAnimationFrame = function(callback) {
+vAPI.SafeAnimationFrame = (callback) => {
     this.fid = this.tid = null;
     this.callback = callback;
     this.boundMacroToMicro = this.macroToMicro.bind(this);
 };
 
 vAPI.SafeAnimationFrame.prototype = {
-    start: function(delay) {
+    start: (delay) => {
         if ( delay === undefined ) {
             if ( this.fid === null ) {
                 this.fid = requestAnimationFrame(this.callback);
@@ -229,7 +229,7 @@ vAPI.domWatcher = (() => {
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
-    var observerHandler = function(mutations) {
+    var observerHandler = (mutations) => {
         //console.time('dom watcher/observer handler');
         var nodeList, mutation,
             i = mutations.length;
@@ -280,7 +280,7 @@ vAPI.domWatcher = (() => {
         return listenerIterator;
     };
 
-    var addListener = function(listener) {
+    var addListener = (listener) => {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
@@ -289,7 +289,7 @@ vAPI.domWatcher = (() => {
         startMutationObserver();
     };
 
-    var removeListener = function(listener) {
+    var removeListener = (listener) => {
         var pos = listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
@@ -347,7 +347,7 @@ vAPI.matchesProp = (() => {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.injectScriptlet = function(doc, text) {
+vAPI.injectScriptlet = (doc, text) => {
     if ( !doc ) { return; }
     let script;
     try {
@@ -381,14 +381,14 @@ vAPI.DOMFilterer = (() => {
 
     // 'P' stands for 'Procedural'
 
-    var PSelectorHasTextTask = function(task) {
+    var PSelectorHasTextTask = (task) => {
         var arg0 = task[1], arg1;
         if ( Array.isArray(task[1]) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
         }
         this.needle = new RegExp(arg0, arg1);
     };
-    PSelectorHasTextTask.prototype.exec = function(input) {
+    PSelectorHasTextTask.prototype.exec = (input) => {
         var output = [];
         for ( var node of input ) {
             if ( this.needle.test(node.textContent) ) {
@@ -398,11 +398,11 @@ vAPI.DOMFilterer = (() => {
         return output;
     };
 
-    var PSelectorIfTask = function(task) {
+    var PSelectorIfTask = (task) => {
         this.pselector = new PSelector(task[1]);
     };
     PSelectorIfTask.prototype.target = true;
-    PSelectorIfTask.prototype.exec = function(input) {
+    PSelectorIfTask.prototype.exec = (input) => {
         var output = [];
         for ( var node of input ) {
             if ( this.pselector.test(node) === this.target ) {
@@ -412,14 +412,14 @@ vAPI.DOMFilterer = (() => {
         return output;
     };
 
-    var PSelectorIfNotTask = function(task) {
+    var PSelectorIfNotTask = (task) => {
         PSelectorIfTask.call(this, task);
         this.target = false;
     };
     PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
     PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
 
-    var PSelectorMatchesCSSTask = function(task) {
+    var PSelectorMatchesCSSTask = (task) => {
         this.name = task[1].name;
         var arg0 = task[1].value, arg1;
         if ( Array.isArray(arg0) ) {
@@ -428,7 +428,7 @@ vAPI.DOMFilterer = (() => {
         this.value = new RegExp(arg0, arg1);
     };
     PSelectorMatchesCSSTask.prototype.pseudo = null;
-    PSelectorMatchesCSSTask.prototype.exec = function(input) {
+    PSelectorMatchesCSSTask.prototype.exec = (input) => {
         var output = [], style;
         for ( var node of input ) {
             style = window.getComputedStyle(node, this.pseudo);
@@ -440,25 +440,25 @@ vAPI.DOMFilterer = (() => {
         return output;
     };
 
-    var PSelectorMatchesCSSAfterTask = function(task) {
+    var PSelectorMatchesCSSAfterTask = (task) => {
         PSelectorMatchesCSSTask.call(this, task);
         this.pseudo = ':after';
     };
     PSelectorMatchesCSSAfterTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
     PSelectorMatchesCSSAfterTask.prototype.constructor = PSelectorMatchesCSSAfterTask;
 
-    var PSelectorMatchesCSSBeforeTask = function(task) {
+    var PSelectorMatchesCSSBeforeTask = (task) => {
         PSelectorMatchesCSSTask.call(this, task);
         this.pseudo = ':before';
     };
     PSelectorMatchesCSSBeforeTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
     PSelectorMatchesCSSBeforeTask.prototype.constructor = PSelectorMatchesCSSBeforeTask;
 
-    var PSelectorXpathTask = function(task) {
+    var PSelectorXpathTask = (task) => {
         this.xpe = document.createExpression(task[1], null);
         this.xpr = null;
     };
-    PSelectorXpathTask.prototype.exec = function(input) {
+    PSelectorXpathTask.prototype.exec = (input) => {
         var output = [], j;
         for ( var node of input ) {
             this.xpr = this.xpe.evaluate(
@@ -477,7 +477,7 @@ vAPI.DOMFilterer = (() => {
         return output;
     };
 
-    var PSelector = function(o) {
+    var PSelector = (o) => {
         if ( PSelector.prototype.operatorToTaskMap === undefined ) {
             PSelector.prototype.operatorToTaskMap = new Map([
                 [ ':has', PSelectorIfTask ],
@@ -503,14 +503,14 @@ vAPI.DOMFilterer = (() => {
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
-    PSelector.prototype.prime = function(input) {
+    PSelector.prototype.prime = (input) => {
         var root = input || document;
         if ( this.selector !== '' ) {
             return root.querySelectorAll(this.selector);
         }
         return [ root ];
     };
-    PSelector.prototype.exec = function(input) {
+    PSelector.prototype.exec = (input) => {
         var nodes = this.prime(input);
         for ( var task of this.tasks ) {
             if ( nodes.length === 0 ) { break; }
@@ -518,7 +518,7 @@ vAPI.DOMFilterer = (() => {
         }
         return nodes;
     };
-    PSelector.prototype.test = function(input) {
+    PSelector.prototype.test = (input) => {
         var nodes = this.prime(input), AA = [ null ], aa;
         for ( var node of nodes ) {
             AA[0] = node; aa = AA;
@@ -531,7 +531,7 @@ vAPI.DOMFilterer = (() => {
         return false;
     };
 
-    var DOMProceduralFilterer = function(domFilterer) {
+    var DOMProceduralFilterer = (domFilterer) => {
         this.domFilterer = domFilterer;
         this.domIsReady = false;
         this.domIsWatched = false;
@@ -543,7 +543,7 @@ vAPI.DOMFilterer = (() => {
 
     DOMProceduralFilterer.prototype = {
 
-        addProceduralSelectors: function(aa) {
+        addProceduralSelectors: (aa) => {
             var raw, o, pselector,
                 mustCommit = this.domIsWatched;
             for ( var i = 0, n = aa.length; i < n; i++ ) {
@@ -639,7 +639,7 @@ vAPI.DOMFilterer = (() => {
             //console.timeEnd('procedural selectors/dom layout changed');
         },
 
-        createProceduralFilter: function(o) {
+        createProceduralFilter: (o) => {
             return new PSelector(o);
         },
 
@@ -648,7 +648,7 @@ vAPI.DOMFilterer = (() => {
             this.domFilterer.commitNow();
         },
 
-        onDOMChanged: function(addedNodes, removedNodes) {
+        onDOMChanged: (addedNodes, removedNodes) => {
             if ( this.selectors.size === 0 ) { return; }
             this.addedNodes = this.addedNodes || addedNodes.length !== 0;
             this.removedNodes = this.removedNodes || removedNodes;
@@ -680,11 +680,11 @@ vAPI.DOMFilterer = (() => {
         this.proceduralFilterer.commitNow();
     };
 
-    domFilterer.prototype.addProceduralSelectors = function(aa) {
+    domFilterer.prototype.addProceduralSelectors = (aa) => {
         this.proceduralFilterer.addProceduralSelectors(aa);
     };
 
-    domFilterer.prototype.createProceduralFilter = function(o) {
+    domFilterer.prototype.createProceduralFilter = (o) => {
         return this.proceduralFilterer.createProceduralFilter(o);
     };
 
@@ -759,7 +759,7 @@ vAPI.domCollapser = (() => {
 
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
-    var onProcessed = function(response) {
+    var onProcessed = (response) => {
         if ( !response ) { // This happens if uBO is disabled or restarted.
             toCollapse.clear();
             return;
@@ -845,7 +845,7 @@ vAPI.domCollapser = (() => {
         resquestIdGenerator += 1;
     };
 
-    var process = function(delay) {
+    var process = (delay) => {
         if ( toProcess.length === 0 ) { return; }
         if ( delay === 0 ) {
             if ( processTimer !== undefined ) {
@@ -857,18 +857,18 @@ vAPI.domCollapser = (() => {
         }
     };
 
-    var add = function(target) {
+    var add = (target) => {
         toProcess[toProcess.length] = target;
     };
 
-    var addMany = function(targets) {
+    var addMany = (targets) => {
         var i = targets.length;
         while ( i-- ) {
             add(targets[i]);
         }
     };
 
-    var iframeSourceModified = function(mutations) {
+    var iframeSourceModified = (mutations) => {
         var i = mutations.length;
         while ( i-- ) {
             addIFrame(mutations[i].target, true);
@@ -885,7 +885,7 @@ vAPI.domCollapser = (() => {
     // document, from within `bootstrapPhase1`, and which scriptlets are
     // selectively looked-up from:
     // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
-    var primeLocalIFrame = function(iframe) {
+    var primeLocalIFrame = (iframe) => {
         if ( vAPI.injectedScripts ) {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
@@ -893,7 +893,7 @@ vAPI.domCollapser = (() => {
 
     // https://github.com/gorhill/uBlock/issues/162
     // Be prepared to deal with possible change of src attribute.
-    var addIFrame = function(iframe, dontObserve) {
+    var addIFrame = (iframe, dontObserve) => {
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
@@ -910,14 +910,14 @@ vAPI.domCollapser = (() => {
         add(iframe);
     };
 
-    var addIFrames = function(iframes) {
+    var addIFrames = (iframes) => {
         var i = iframes.length;
         while ( i-- ) {
             addIFrame(iframes[i]);
         }
     };
 
-    var onResourceFailed = function(ev) {
+    var onResourceFailed = (ev) => {
         if ( tagToTypeMap[ev.target.localName] !== undefined ) {
             add(ev.target);
             process();
@@ -962,7 +962,7 @@ vAPI.domCollapser = (() => {
                 }
             });
         },
-        onDOMChanged: function(addedNodes) {
+        onDOMChanged: (addedNodes) => {
             var ni = addedNodes.length;
             if ( ni === 0 ) { return; }
             for ( var i = 0, node; i < ni; i++ ) {
@@ -1017,7 +1017,7 @@ vAPI.domSurveyor = (() => {
 
     // Handle main process' response.
 
-    var surveyPhase3 = function(response) {
+    var surveyPhase3 = (response) => {
         var result = response && response.result,
             mustCommit = false;
 
@@ -1080,12 +1080,12 @@ vAPI.domSurveyor = (() => {
     // The purpose of "chunkification" is to ensure the surveyor won't unduly
     // block the main event loop.
 
-    var hasChunk = function(pending) {
+    var hasChunk = (pending) => {
         return pending.nodes.length !== 0 ||
                pending.added.length !== 0;
     };
 
-    var addChunk = function(pending, added) {
+    var addChunk = (pending, added) => {
         if ( added.length === 0 ) { return; }
         if (
             Array.isArray(added) === false ||
@@ -1099,7 +1099,7 @@ vAPI.domSurveyor = (() => {
         }
     };
 
-    var nextChunk = function(pending) {
+    var nextChunk = (pending) => {
         var added = pending.added.length !== 0 ? pending.added.shift() : [],
             nodes;
         if ( pending.nodes.length === 0 ) {
@@ -1219,7 +1219,7 @@ vAPI.domSurveyor = (() => {
             surveyTimer.start();
             //console.timeEnd('dom surveyor/dom layout created');
         },
-        onDOMChanged: function(addedNodes) {
+        onDOMChanged: (addedNodes) => {
             if ( addedNodes.length === 0 ) { return; }
             //console.time('dom surveyor/dom layout changed');
             var idNodes = [], iid = 0,
@@ -1251,7 +1251,7 @@ vAPI.domSurveyor = (() => {
         }
     };
 
-    var start = function(details) {
+    var start = (details) => {
         if ( vAPI.domWatcher instanceof Object === false ) { return; }
         hostname = details.hostname;
         vAPI.domWatcher.addListener(domWatcherInterface);
@@ -1269,9 +1269,9 @@ vAPI.domSurveyor = (() => {
 // Bootstrapping allows all components of the content script to be launched
 // if/when needed.
 
-(function bootstrap() {
+(const bootstrap = () => {
 
-    var bootstrapPhase2 = function(ev) {
+    var bootstrapPhase2 = (ev) => {
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
@@ -1303,7 +1303,7 @@ vAPI.domSurveyor = (() => {
         // as nuisance popups.
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
-        var onMouseClick = function(ev) {
+        var onMouseClick = (ev) => {
             var elem = ev.target;
             while ( elem !== null && elem.localName !== 'a' ) {
                 elem = elem.parentElement;
@@ -1327,7 +1327,7 @@ vAPI.domSurveyor = (() => {
         });
     };
 
-    var bootstrapPhase1 = function(response) {
+    var bootstrapPhase1 = (response) => {
         // cosmetic filtering engine aka 'cfe'
         var cfeDetails = response && response.specificCosmeticFilters;
         if ( !cfeDetails || !cfeDetails.ready ) {
